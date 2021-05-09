@@ -108,8 +108,8 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	{
 		HTMLHelper::_('bootstrap.dropdown');
 		HTMLHelper::_('bootstrap.tooltip');
-
 		HTMLHelper::_('bootstrap.renderModal');
+		HTMLHelper::_('bootstrap.collapse');
 
 		$this->addScript('assets/js/main.js');
 

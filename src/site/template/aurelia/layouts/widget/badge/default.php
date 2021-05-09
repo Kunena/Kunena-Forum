@@ -17,7 +17,7 @@ defined('_JEXEC') or die();
 use function defined;
 
 $label       = $this->label;
-$tooltip     = 'data-toggle="tooltip"';
+$tooltip     = 'data-bs-toggle="tooltip"';
 $description = isset($this->description) ? ' ' . $tooltip . ' title="' . $this->description . '"' : '';
 $class       = ' class="' . ' badge badge-' . $this->state . '"';
 ?>

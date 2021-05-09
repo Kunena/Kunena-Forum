@@ -19,42 +19,42 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 ?>
 
 <div class="kfrontend shadow-lg rounded mt-4 border">
-	<div class="btn-toolbar float-right">
-		<div class="btn-group">
-			<div class="btn btn-outline-primary border btn-sm" data-toggle="collapse"
-				 data-target="#kwho"><?php echo KunenaIcons::collapse(); ?></div>
-		</div>
-	</div>
-	<h2 class="card-header">
+    <div class="btn-toolbar float-end">
+        <div class="btn-group">
+            <div class="btn btn-outline-primary border btn-sm" data-bs-toggle="collapse"
+                 data-bs-target="#kwho"><?php echo KunenaIcons::collapse(); ?></div>
+        </div>
+    </div>
+    <h2 class="card-header">
 		<?php if ($this->usersUrl)
 			:
 			?>
-			<a href="<?php echo $this->usersUrl; ?>">
+            <a href="<?php echo $this->usersUrl; ?>">
 				<?php echo Text::_('COM_KUNENA_MEMBERS'); ?>
-			</a>
+            </a>
 		<?php else
 
 			:
 			?>
 			<?php echo Text::_('COM_KUNENA_MEMBERS'); ?>
 		<?php endif; ?>
-	</h2>
+    </h2>
 
-	<div class="shadow-lg rounded " id="kwho">
-		<div class="card-body">
-			<div class="container">
-				<div class="row">
+    <div class="shadow-lg rounded " id="kwho">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
 
-					<div class="col-md-1">
-						<ul class="list-unstyled">
-							<li class="btn-link">
+                    <div class="col-md-1">
+                        <ul class="list-unstyled">
+                            <li class="btn-link">
 								<?php echo KunenaIcons::members(); ?>
-							</li>
-						</ul>
-					</div>
+                            </li>
+                        </ul>
+                    </div>
 
-					<div class="col-md-11">
-						<ul class="list-unstyled">
+                    <div class="col-md-11">
+                        <ul class="list-unstyled">
 							<span>
 								<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
 							</span>
@@ -65,17 +65,17 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 							if ($direction == 'both')
 								:
 								?>
-								<div><?php echo $this->setLayout('both'); ?></div>
+                                <div><?php echo $this->setLayout('both'); ?></div>
 							<?php
-							elseif ($direction == 'avatar')
+                            elseif ($direction == 'avatar')
 								:
 								?>
-								<div><?php echo $this->setLayout('avatar'); ?></div>
+                                <div><?php echo $this->setLayout('avatar'); ?></div>
 							<?php else
 
 								:
 								?>
-								<div><?php echo $this->setLayout('name'); ?></div>
+                                <div><?php echo $this->setLayout('name'); ?></div>
 							<?php
 							endif;
 							?>
@@ -83,32 +83,32 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 							<?php if (!empty($this->onlineList))
 								:
 								?>
-								<div>
-									<span><?php echo Text::_('COM_KUNENA_LEGEND'); ?>:</span>
-									<span class="kwho-admin">
+                                <div>
+                                    <span><?php echo Text::_('COM_KUNENA_LEGEND'); ?>:</span>
+                                    <span class="kwho-admin">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
 									</span>
-									<span class="kwho-globalmoderator">
+                                    <span class="kwho-globalmoderator">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
 									</span>
-									<span class="kwho-moderator">
+                                    <span class="kwho-moderator">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_MODERATOR'); ?>
 									</span>
-									<span class="kwho-banned">
+                                    <span class="kwho-banned">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?>
 									</span>
-									<span class="kwho-user">
+                                    <span class="kwho-user">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?>
 									</span>
-									<span class="kwho-guest">
+                                    <span class="kwho-guest">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>
 									</span>
-								</div>
+                                </div>
 							<?php endif; ?>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

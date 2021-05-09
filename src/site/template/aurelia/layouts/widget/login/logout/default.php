@@ -34,7 +34,7 @@ $config         = KunenaFactory::getTemplate()->params;
 	<?php if ($config->get('displayDropdownMenu'))
 		:
 		?>
-        <ul class="nav nav-tabs float-right">
+        <ul class="nav nav-tabs float-end">
             <li class="dropdown mobile-user">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">
@@ -135,7 +135,7 @@ $config         = KunenaFactory::getTemplate()->params;
 
                         <div id="statustext">
 							<?php HTMLHelper::_('bootstrap.renderModal', 'statusText'); ?>
-                            <a data-toggle="modal" data-target="#statusTextModal" class="btn btn-link">
+                            <a data-bs-toggle="modal" data-bs-target="#statusTextModal" class="btn btn-link">
 								<?php echo KunenaIcons::edit(); ?>
 								<?php echo Text::_('COM_KUNENA_STATUS') ?>
                             </a>

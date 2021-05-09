@@ -18,7 +18,7 @@ use function defined;
 
 $showAll = isset($this->showAll) ? $this->showAll : false;
 ?>
-<div class="inline float-right">
+<div class="inline float-end">
 	<?php foreach ($this->socials as $key => $social)
 	{
 		if (!empty($this->profile->$key))

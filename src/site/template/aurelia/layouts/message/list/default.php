@@ -30,7 +30,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 
 <div class="row">
     <div class="col-md-12">
-        <div class="float-left">
+        <div class="float-start">
             <h1>
 				<?php echo $this->escape($this->headerText); ?>
                 <small class="hidden-xs-down">
@@ -46,8 +46,8 @@ $view    = Factory::getApplication()->input->getWord('view');
 		<?php if ($view != 'user')
 			:
 			?>
-            <h2 class="filter-time float-right" id="filter-time">
-                <div class="filter-sel float-right">
+            <h2 class="filter-time float-end" id="filter-time">
+                <div class="filter-sel float-end">
                     <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
                           id="timeselect" name="timeselect"
                           method="post" target="_self" class="form-inline hidden-xs-down">
@@ -60,13 +60,13 @@ $view    = Factory::getApplication()->input->getWord('view');
     </div>
 </div>
 
-<div class="float-right">
+<div class="float-end">
 	<?php echo $this->subLayout('Widget/Search')
 		->set('catid', 'all')
 		->setLayout('topic'); ?>
 </div>
 
-<div class="float-left">
+<div class="float-start">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>
@@ -118,7 +118,7 @@ $view    = Factory::getApplication()->input->getWord('view');
                                     <label>
 										<?php if (!empty($this->moreUri))
 										{
-											echo HTMLHelper::_('link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-left', 'nofollow');
+											echo HTMLHelper::_('link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-start', 'nofollow');
 										} ?>
 										<?php
 										if (!empty($this->actions))
@@ -158,7 +158,7 @@ $view    = Factory::getApplication()->input->getWord('view');
     </table>
 </form>
 
-<div class="float-left">
+<div class="float-start">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>
@@ -169,7 +169,7 @@ $view    = Factory::getApplication()->input->getWord('view');
 	?>
     <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>" id="timeselect"
           name="timeselect"
-          method="post" target="_self" class="timefilter float-right">
+          method="post" target="_self" class="timefilter float-end">
 		<?php $this->displayTimeFilter('sel'); ?>
     </form>
 <?php endif; ?>

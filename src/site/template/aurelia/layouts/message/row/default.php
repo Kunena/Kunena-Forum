@@ -35,7 +35,7 @@ $config          = KunenaFactory::getConfig();
 $avatar          = $config->avatarOnCategory ? $topic->getLastPostAuthor()->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb') : null;
 $cols            = empty($this->checkbox) ? 5 : 6;
 $txt             = $topic->getActions();
-$topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messagesPerPage, 3); 
+$topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messagesPerPage, 3);
 
 ?>
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
@@ -75,7 +75,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 
 			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $topic)->setLayout('default'); ?>
         </div>
-        <div class="float-right">
+        <div class="float-end">
 			<?php if ($userTopic->favorite)
 				:
 				?>
@@ -114,7 +114,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 			<?php endif; ?>
 			<?php echo Text::_('COM_KUNENA_BY') ?>
 			<?php echo $topic->getAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $topic->getFirstPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
-            <div class="float-right">
+            <div class="float-end">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">
 				 * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
@@ -123,7 +123,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 					:
 					?>
                     <span class="label label-warning">
-							<span data-toggle="tooltip"
+							<span data-bs-toggle="tooltip"
                                   title="<?php echo Text::_('COM_KUNENA_LOCKED'); ?>"><?php echo KunenaIcons::lock(); ?></span>
 						</span>
 				<?php endif; ?>
@@ -141,7 +141,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 			<?php echo Text::_('COM_KUNENA_BY') . ' ' . $topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id); ?>
         </div>
 
-        <div class="float-left">
+        <div class="float-start">
 			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
         </div>
     </td>

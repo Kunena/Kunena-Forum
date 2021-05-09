@@ -26,8 +26,8 @@ $this->addScript('poll.js');
 <?php if ($this->show_title)
 :
 	?>
-	<button class="btn btn-outline-primary border float-right" type="button" data-toggle="collapse"
-			data-target="#poll-results"
+	<button class="btn btn-outline-primary border float-end" type="button" data-bs-toggle="collapse"
+			data-bs-target="#poll-results"
 			aria-expanded="false"
 			aria-controls="poll-results">
 		&times;
@@ -114,7 +114,7 @@ $this->addScript('poll.js');
 				<?php if ($this->me->isModerator($this->category))
 				:
 					?>
-				<a href="#resetVotes" role="button" class="btn btn-outline-primary border" data-toggle="modal">
+				<a href="#resetVotes" role="button" class="btn btn-outline-primary border" data-bs-toggle="modal">
 					<?php echo Text::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?>
 				</a>
 				<div id="resetVotes" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel"

@@ -36,9 +36,9 @@ HTMLHelper::_('behavior.core');
 				:
 				?>
 				<div class="form-group">
-					<div class="input-group float-right" role="group">
+					<div class="input-group float-end" role="group">
 						<div class="input-group-btn">
-							<?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-control float-left"', 'value', 'text', 0, 'kchecktask'); ?>
+							<?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-control float-start"', 'value', 'text', 0, 'kchecktask'); ?>
 							<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
 								   value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
 							<a class="btn btn-outline-primary border"
@@ -100,7 +100,7 @@ HTMLHelper::_('behavior.core');
 			<tfoot>
 			<tr>
 				<td colspan="<?php echo $options ? 8 : 3; ?>">
-					<div class="float-right">
+					<div class="float-end">
 						<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
 					</div>
 				</td>

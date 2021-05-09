@@ -22,9 +22,9 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 use function defined;
 
 ?>
-<ul class="nav float-right">
+<ul class="nav float-end">
     <li class="dropdown mobile-user">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="klogin-mobile">
+        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" id="klogin-mobile">
 			<?php echo KunenaIcons::user(); ?>
             <span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>
             <b class="caret"></b>

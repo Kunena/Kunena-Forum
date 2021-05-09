@@ -98,7 +98,7 @@ if (!empty($this->spacing)) : ?>
 			}
 			echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default'); ?>
         </div>
-        <div class="float-right">
+        <div class="float-end">
 			<?php if ($userTopic->favorite) : ?>
                 <span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
 						title="<?php echo Text::_('COM_KUNENA_FAVORITE') ?>"><?php echo KunenaIcons::star(); ?></span>
@@ -127,14 +127,14 @@ if (!empty($this->spacing)) : ?>
 				<?php echo Text::_('COM_KUNENA_TOPIC_STARTED_ON') ?>
 				<?php echo $topic->getFirstPostTime()->toKunena('config_postDateFormat'); ?>
 			<?php endif; ?>
-            <div class="float-right">
+            <div class="float-end">
 				<?php /** TODO: New Feature - LABELS
 				 * <span class="label label-info">
 				 * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
 				 * </span>    */ ?>
 				<?php if ($topic->locked != 0) : ?>
                     <span class="label label-warning">
-						<span data-toggle="tooltip"
+						<span data-bs-toggle="tooltip"
                               title="<?php echo Text::_('COM_KUNENA_LOCKED'); ?>"><?php echo KunenaIcons::lock(); ?></span>
 					</span>
 				<?php endif; ?>
@@ -149,7 +149,7 @@ if (!empty($this->spacing)) : ?>
 			<?php echo Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, null, '', '', null, $category->id); ?>
         </div>
 
-        <div class="float-left">
+        <div class="float-start">
 			<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $topicPages)->setLayout('simple'); ?>
         </div>
     </td>

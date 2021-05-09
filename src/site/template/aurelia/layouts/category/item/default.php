@@ -42,13 +42,13 @@ $this->addStyleSheet('rating.css');
 	<?php if (!empty($this->topics)) : ?>
         <div class="row">
             <div class="col-md-12">
-                <h2 class="float-right">
+                <h2 class="float-end">
 					<?php echo $this->subLayout('Widget/Search')
 						->set('catid', $this->category->id)
 						->setLayout('topic'); ?>
                 </h2>
 
-                <div class="float-left">
+                <div class="float-start">
 					<?php echo $this->subLayout('Widget/Pagination/List')
 						->set('pagination', $this->pagination)
 						->set('display', true); ?>
@@ -156,7 +156,7 @@ $this->addStyleSheet('rating.css');
     </form>
 
 	<?php if ($this->topics) : ?>
-        <div class="float-left">
+        <div class="float-start">
 			<?php echo $this->subLayout('Widget/Pagination/List')
 				->set('pagination', $this->pagination)
 				->set('display', true); ?>

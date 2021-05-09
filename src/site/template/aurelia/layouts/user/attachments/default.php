@@ -126,7 +126,7 @@ $attachments = $this->attachments;
 							?>
                             <td class="center">
                                 <a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
-                                   data-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
+                                   data-bs-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
 
                                 <div class="modal fade" id="modaldelete<?php echo $i ?>" tabindex="-1" role="dialog"
                                      aria-labelledby="modaldelete<?php echo $i ?>Label">
@@ -160,7 +160,7 @@ $attachments = $this->attachments;
 		<?php endif; ?>
         </tbody>
     </table>
-    <div class="float-left">
+    <div class="float-start">
 		<?php echo $this->subLayout('Widget/Pagination/List')
 			->set('pagination', $this->pagination->setDisplayedPages(4))
 			->set('display', true); ?>
@@ -168,8 +168,8 @@ $attachments = $this->attachments;
 	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && KunenaUserHelper::getMyself()->isModerator())
 		:
 		?>
-        <a href="#modaldeleteall" class="btn btn-outline-primary border float-right"
-           data-toggle="modal"><?php echo Text::_('COM_KUNENA_FILES_DELETE'); ?></a>
+        <a href="#modaldeleteall" class="btn btn-outline-primary border float-end"
+           data-bs-toggle="modal"><?php echo Text::_('COM_KUNENA_FILES_DELETE'); ?></a>
 
         <div class="modal fade" id="modaldeleteall" tabindex="-1" role="dialog" aria-labelledby="modaldeleteallLabel">
             <div class="modal-dialog" role="document">

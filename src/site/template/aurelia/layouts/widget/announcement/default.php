@@ -18,38 +18,39 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement'); ?>
 <div class="shadow-lg rounded" id="announcement<?php echo $this->announcement->id; ?>">
-	<div class="alert alert-info">
-		<div class="close" data-toggle="collapse" data-target="#announcement<?php echo $this->announcement->id; ?>">
-			&times;
-		</div>
-		<h5>
-			<a class="btn-link"
-			   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=listing'); ?>"
-			   title="<?php echo Text::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>">
+    <div class="alert alert-info">
+        <div class="close" data-bs-toggle="collapse"
+             data-bs-target="#announcement<?php echo $this->announcement->id; ?>">
+            &times;
+        </div>
+        <h5>
+            <a class="btn-link"
+               href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=listing'); ?>"
+               title="<?php echo Text::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>">
 				<?php echo $this->announcement->displayField('title'); ?>
-			</a>
+            </a>
 
 			<?php if ($this->announcement->showdate)
 				:
 				?>
-				<small>(<?php echo $this->announcement->displayField('created', 'date_today'); ?>)</small>
+                <small>(<?php echo $this->announcement->displayField('created', 'date_today'); ?>)</small>
 			<?php endif; ?>
-		</h5>
+        </h5>
 
-		<div>
-			<p><?php echo $this->announcement->displayField('sdescription'); ?></p>
-		</div>
+        <div>
+            <p><?php echo $this->announcement->displayField('sdescription'); ?></p>
+        </div>
 		<?php if (!empty($this->announcement->description))
 			:
 			?>
-			<div>
-				<a class="btn-link"
-				   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>"
-				   title="<?php echo $this->announcement->displayField('title') ?>">
+            <div>
+                <a class="btn-link"
+                   href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>"
+                   title="<?php echo $this->announcement->displayField('title') ?>">
 					<?php echo Text::_('COM_KUNENA_ANN_READMORE'); ?>
-				</a>
-			</div>
+                </a>
+            </div>
 		<?php endif; ?>
-	</div>
+    </div>
 </div>
 

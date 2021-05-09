@@ -202,7 +202,7 @@ if ($this->config->showUserStats)
 			<?php endif; ?>
         </ul>
         <br>
-        <div class="float-right">
+        <div class="float-end">
 			<?php if ($this->private)
 				:
 				?>

@@ -67,15 +67,17 @@ foreach ($this->sections as $section) :
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
 	} ?>
     <div class="kfrontend shadow-lg rounded border section">
-        <h2 class="btn-toolbar float-right">
+        <h2 class="btn-toolbar float-end">
 			<?php if (count($this->sections) > 0) : ?>
 				<?php if ($this->me->isAdmin()) : ?>
                     <a class="btn btn-outline-primary btn-sm"
                        href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
 				<?php endif; ?>
-                <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="collapse"
-                        data-target="#section<?php echo $section->id; ?>" aria-expanded="false"
-                        aria-controls="section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
+
+                <button class="btn btn-outline-primary btn-sm" type="button" aria-expanded="false"
+                        aria-controls="section<?php echo $section->id; ?>"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#section<?php echo $section->id; ?>"><?php echo KunenaIcons::collapse(); ?></button>
 			<?php endif; ?>
         </h2>
 

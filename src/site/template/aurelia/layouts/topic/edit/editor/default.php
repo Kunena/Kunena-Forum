@@ -34,9 +34,9 @@ $this->getBBcodesEnabled();
             <div class="form-group shadow-textarea" id="kbbcode-preview-real">
                 <ul id="tabs_kunena_editor" class="nav nav-tabs">
                     <li class="active"><a href="#write"
-                                          data-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a>
+                                          data-bs-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a>
                     </li>
-                    <li><a href="#preview" data-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
+                    <li><a href="#preview" data-bs-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
                 </ul>
                 <textarea class="md-textarea form-control z-depth-1" name="message" id="kbbcode-message" rows="12"
                           tabindex="7"

@@ -38,7 +38,7 @@ $quick           = $this->ktemplate->params->get('quick');
 			?>
             <a id="btn_qreply" href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
                class="btn btn-outline-primary border Kreplyclick"
-               data-toggle="modal" data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form"
+               data-bs-toggle="modal" data-bs-target="#kreply<?php echo $this->message->displayField('id'); ?>_form"
                rel="nofollow">
 				<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
             </a>
@@ -92,15 +92,15 @@ endif; ?>
 			?>
             <a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
                class="btn btn-outline-primary border Kreplyclick"
-               data-toggle="modal" rel="nofollow">
+               data-bs-toggle="modal" rel="nofollow">
 				<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
             </a>
 		<?php endif; ?>
         <div class="btn-group">
-            <button class="btn btn-outline-primary border" data-toggle="dropdown">
+            <button class="btn btn-outline-primary border" data-bs-toggle="dropdown">
 				<?php echo KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
             </button>
-            <button class="btn btn-outline-primary border dropdown-toggle" data-toggle="dropdown">
+            <button class="btn btn-outline-primary border dropdown-toggle" data-bs-toggle="dropdown">
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -120,10 +120,10 @@ endif; ?>
 			:
 			?>
             <div class="btn-group">
-                <button class="btn btn-outline-primary border" data-toggle="dropdown">
+                <button class="btn btn-outline-primary border" data-bs-toggle="dropdown">
 					<?php echo KunenaIcons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
                 </button>
-                <button class="btn btn-outline-primary border dropdown-toggle" data-toggle="dropdown">
+                <button class="btn btn-outline-primary border dropdown-toggle" data-bs-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">

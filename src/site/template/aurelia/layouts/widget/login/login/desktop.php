@@ -19,7 +19,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 
 ?>
-<ul class="nav float-right">
+<ul class="nav float-end">
     <li class="dropdown mobile-user">
         <a href="#" class="dropdown-toggle" id="klogin-desktop" role="button" data-bs-toggle="dropdown"
            aria-expanded="false">

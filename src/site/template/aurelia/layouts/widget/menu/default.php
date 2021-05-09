@@ -53,7 +53,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 		{
 			$class .= ' active';
 		}
-		elseif ($item->type == 'alias')
+        elseif ($item->type == 'alias')
 		{
 			$aliasToId = $item->params->get('aliasoptions');
 
@@ -61,7 +61,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			{
 				$class .= ' active';
 			}
-			elseif (in_array($aliasToId, $this->path))
+            elseif (in_array($aliasToId, $this->path))
 			{
 				$class .= ' alias-parent-active';
 			}
@@ -105,7 +105,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 				echo '<li class="dropdown-divider"></li>';
 			}
 		}
-		elseif ($item->deeper)
+        elseif ($item->deeper)
 		{
 			if ($item->level > 1)
 			{
@@ -113,7 +113,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			}
 			else
 			{
-				echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
+				echo '<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">';
 				require ModuleHelper::getLayoutPath('mod_menu', 'default_url');
 				echo ' <b class="caret"></b></a>';
 			}
@@ -159,7 +159,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 							$attributes['rel'] .= ' nofollow';
 						}
 					}
-					elseif ($item->browserNav == 2)
+                    elseif ($item->browserNav == 2)
 					{
 						$options = 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,';
 
@@ -183,7 +183,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			{
 				echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
 			}
-			elseif ($item->level == 3)
+            elseif ($item->level == 3)
 			{
 				echo '<ul class="dropdown-menu" role="menu">';
 			}
@@ -193,7 +193,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			}
 		}
 		// The next item is shallower.
-		elseif ($item->shallower)
+        elseif ($item->shallower)
 		{
 			echo '</li>';
 			$nlevel = $item->level;

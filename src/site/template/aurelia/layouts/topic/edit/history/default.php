@@ -22,8 +22,8 @@ use function defined;
 
 $k = 0;
 ?>
-<div class="float-right">
-    <div class="btn btn-outline-primary border btn-small" data-toggle="collapse" data-target="#history">X</div>
+<div class="float-end">
+    <div class="btn btn-outline-primary border btn-small" data-bs-toggle="collapse" data-bs-target="#history">X</div>
 </div>
 <h3>
 	<?php echo Text::_('COM_KUNENA_POST_TOPIC_HISTORY') ?>:
@@ -58,7 +58,7 @@ $k = 0;
                 </ul>
             </div>
             <div class="col-md-10">
-                <small class="text-muted float-right hidden-xs-down" style="margin-top:-5px;">
+                <small class="text-muted float-end hidden-xs-down" style="margin-top:-5px;">
 					<?php echo KunenaIcons::clock(); ?><?php echo $this->message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
                 </small>
                 <div class="badger-left badger-info khistory"

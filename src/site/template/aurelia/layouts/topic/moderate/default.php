@@ -56,12 +56,12 @@ $labels          = $this->ktemplate->params->get('labels');
             <div>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
+                        <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab"
                            aria-controls="tab1"
                            aria-selected="true"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BASIC_INFO'); ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab"
+                        <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab"
                            aria-controls="tab2"
                            aria-selected="false"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_MOVE_OPTIONS'); ?></a>
                     </li>
@@ -69,11 +69,11 @@ $labels          = $this->ktemplate->params->get('labels');
 						:
 						?>
                         <li class="nav-item">
-                            <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab"
+                            <a class="nav-link" id="tab3-tab" data-bs-toggle="tab" href="#tab3" role="tab"
                                aria-controls="tab3"
                                aria-selected="false"><?php echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_BAN_HISTORY'); ?></a>
                         </li>
-                        <!--  <li><a href="#tab4" data-toggle="tab"><?php // Echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN');
+                        <!--  <li><a href="#tab4" data-bs-toggle="tab"><?php // Echo Text::_('COM_KUNENA_TITLE_MODERATE_TAB_NEW_BAN');
 						?></a></li> -->
 					<?php endif; ?>
                 </ul>
@@ -191,7 +191,7 @@ $labels          = $this->ktemplate->params->get('labels');
                             <hr/>
                             <br/>
                             <h3>
-                                <div class="float-left">
+                                <div class="float-start">
 									<?php echo $this->message->getAuthor()->getAvatarImage('img-thumbnail', 'list'); ?>
                                 </div>
 								<?php echo $this->message->displayField('subject'); ?>

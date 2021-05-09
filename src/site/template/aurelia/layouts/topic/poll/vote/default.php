@@ -22,7 +22,7 @@ use function defined;
 
 $this->addScript('poll.js');
 ?>
-	<div class="float-right btn btn-outline-primary border btn-small" data-toggle="collapse" data-target="#poll-vote">
+	<div class="float-end btn btn-outline-primary border btn-small" data-bs-toggle="collapse" data-bs-target="#poll-vote">
 		&times;
 	</div>
 	<h2>

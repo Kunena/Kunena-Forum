@@ -35,7 +35,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 
 	<?php echo $this->profile->getLink(
 		KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
-		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-outline-primary border float-right'
+		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-outline-primary border float-end'
 	); ?>
 </h2>
 
@@ -56,7 +56,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 			<?php else : ?>
                 <li class="nav-item <?php echo $tab->active ? 'active' : ''; ?>">
                     <a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
-                            href="#edit<?php echo $name; ?>" data-toggle="tab"
+                            href="#edit<?php echo $name; ?>" data-bs-toggle="tab"
                             rel="nofollow"><?php echo $tab->title; ?></a>
                 </li>
 			<?php endif; ?>

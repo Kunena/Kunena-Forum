@@ -50,12 +50,12 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                         <div class="tabbable-line">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item active">
-                                    <a class="nav-link active" href="#tab-general" data-toggle="tab">
+                                    <a class="nav-link active" href="#tab-general" data-bs-toggle="tab">
 										<?php echo Text::_('COM_KUNENA_BASICSFORUMINFO'); ?>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#tab-access" data-toggle="tab">
+                                    <a class="nav-link" href="#tab-access" data-bs-toggle="tab">
 										<?php echo Text::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?>
                                     </a>
                                 </li>
@@ -63,13 +63,13 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 									:
 									?>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#tab-settings" data-toggle="tab">
+                                        <a class="nav-link" href="#tab-settings" data-bs-toggle="tab">
 											<?php echo Text::_('COM_KUNENA_ADVANCEDDESCINFO'); ?>
                                         </a>
                                     </li>
 								<?php endif; ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#tab-display" data-toggle="tab">
+                                    <a class="nav-link" href="#tab-display" data-bs-toggle="tab">
 										<?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_TAB_DISPLAY'); ?>
                                     </a>
                                 </li>
@@ -77,7 +77,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 									:
 									?>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#tab-mods" data-toggle="tab">
+                                        <a class="nav-link" href="#tab-mods" data-bs-toggle="tab">
 											<?php echo Text::_('COM_KUNENA_MODHEADER'); ?>
                                         </a>
                                     </li>

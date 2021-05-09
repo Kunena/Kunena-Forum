@@ -45,7 +45,7 @@ else
 }
 ?>
 
-<small class="text-muted float-right">
+<small class="text-muted float-end">
 	<?php if ($this->ipLink && !empty($this->message->ip))
 		:
 		?>

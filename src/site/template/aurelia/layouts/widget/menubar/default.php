@@ -17,21 +17,21 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg rounded border"
-	 itemscope="" itemtype="https://schema.org/SiteNavigationElement">
-	<button class="navbar-toggler" aria-expanded="false" aria-controls="knav-collapse" aria-label="Toggle navigation"
-			type="button" data-target=".knav-collapse" data-toggle="collapse">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="knav-collapse collapse navbar-collapse">
+     itemscope="" itemtype="https://schema.org/SiteNavigationElement">
+    <button class="navbar-toggler" aria-expanded="false" aria-controls="knav-collapse" aria-label="Toggle navigation"
+            type="button" data-bs-target=".knav-collapse" data-bs-toggle="collapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="knav-collapse collapse navbar-collapse">
 		<?php echo $this->subRequest('Widget/Menu');
 		?>
-	</div>
-	<button class="navbar-toggler float-right" aria-expanded="false" aria-controls="knav-usercollapse"
-			aria-label="Toggle navigation" type="button" data-target=".knav-usercollapse" data-toggle="collapse">
+    </div>
+    <button class="navbar-toggler float-end" aria-expanded="false" aria-controls="knav-usercollapse"
+            aria-label="Toggle navigation" type="button" data-bs-target=".knav-usercollapse" data-bs-toggle="collapse">
 		<?php echo KunenaIcons::user(); ?>
-	</button>
-	<div class="knav-usercollapse navbar-collapse collapse">
+    </button>
+    <div class="knav-usercollapse navbar-collapse collapse">
 		<?php echo $this->subRequest('Widget/Login');
 		?>
-	</div>
+    </div>
 </nav>

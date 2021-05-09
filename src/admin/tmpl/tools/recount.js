@@ -66,7 +66,7 @@
 				});
 		};
 
-		$(document).on('click.bs.ajaxmodal.data-api', '[data-toggle="ajaxmodal"]', function (e) {
+		$(document).on('click.bs.ajaxmodal.data-api', '[data-bs-toggle="ajaxmodal"]', function (e) {
 			// Reset modal.
 			const $this = $(this);
 			const href = $this.attr('href');

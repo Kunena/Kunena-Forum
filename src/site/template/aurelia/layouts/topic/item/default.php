@@ -79,12 +79,12 @@ if ($topic->locked)
 
     <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
 
-    <div class="float-left">
+    <div class="float-start">
 		<?php echo $this->subLayout('Widget/Pagination/List')
 			->set('pagination', $this->pagination)
 			->set('display', true); ?>
     </div>
-    <h2 class="float-right">
+    <h2 class="float-end">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
 			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
@@ -140,12 +140,12 @@ if ($topic->locked)
 	}
 	?>
 
-    <div class="float-left">
+    <div class="float-start">
 		<?php echo $this->subLayout('Widget/Pagination/List')
 			->set('pagination', $this->pagination)
 			->set('display', true); ?>
     </div>
-    <div class="float-right">
+    <div class="float-end">
 		<?php echo $this->subLayout('Widget/Search')
 			->set('id', $topic->id)
 			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
@@ -164,5 +164,5 @@ if ($topic->locked)
 		echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 	} ?>
     <div class="clearfix"></div>
-    <div class="float-right"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
+    <div class="float-end"><?php echo $this->subLayout('Category/Moderators')->set('moderators', $this->category->getModerators(false)); ?></div>
 </div>

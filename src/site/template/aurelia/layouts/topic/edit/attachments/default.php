@@ -33,7 +33,7 @@ use function defined;
 				<?php echo $attachment->getFilename(); ?>
 				<?php echo '(' . number_format(intval($attachment->size) / 1024, 0, '', ',') . 'KB)'; ?>
 			</span>
-				<a href="#" class="btn border float-right">
+				<a href="#" class="btn border float-end">
 					<?php echo Text::_('COM_KUNENA_EDITOR_INSERT'); ?>
 				</a>
 			</div>

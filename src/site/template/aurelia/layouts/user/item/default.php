@@ -24,12 +24,12 @@ HTMLHelper::_('bootstrap.framework');
 $tabs = $this->getTabs();
 ?>
 
-<h1 class="float-left">
+<h1 class="float-start">
 	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?>
 	<?php echo $this->escape($this->profile->getName()); ?>
 </h1>
 
-<h2 class="float-right">
+<h2 class="float-end">
 	<?php if ($this->profile->isAuthorised('edit'))
 		:
 		?>

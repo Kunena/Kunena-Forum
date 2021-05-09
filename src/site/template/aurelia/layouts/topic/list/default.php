@@ -45,7 +45,7 @@ if (KunenaConfig::getInstance()->ratingEnabled)
 		<?php if ($social == 2 && $me->socialshare != 0) : ?>
             <div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
 		<?php endif; ?>
-        <div class="float-left">
+        <div class="float-start">
             <h1>
 				<?php echo $this->escape($this->headerText); ?>
 
@@ -59,8 +59,8 @@ if (KunenaConfig::getInstance()->ratingEnabled)
         </div>
 
 		<?php if ($view != 'user') : ?>
-            <div class="float-right" id="filter-time">
-                <h2 class="filter-sel float-right">
+            <div class="float-end" id="filter-time">
+                <h2 class="filter-sel float-end">
                     <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
                           id="timeselect" name="timeselect"
                           method="post" target="_self" class="form-inline hidden-xs-down">
@@ -79,13 +79,13 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics)
 	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 } ?>
 
-<div class="float-right">
+<div class="float-end">
 	<?php echo $this->subLayout('Widget/Search')
 		->set('catid', 'all')
 		->setLayout('topic'); ?>
 </div>
 
-<div class="float-left">
+<div class="float-start">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>
@@ -136,7 +136,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics)
                                     <label>
 										<?php if (!empty($this->topics) && !empty($this->moreUri))
 										{
-											echo HTMLHelper::_('link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-left', 'follow');
+											echo HTMLHelper::_('link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-start', 'follow');
 										} ?>
 										<?php if (!empty($this->actions)) : ?>
 											<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
@@ -187,7 +187,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics)
     </form>
 </div>
 
-<div class="float-left">
+<div class="float-start">
 	<?php echo $this->subLayout('Widget/Pagination/List')
 		->set('pagination', $this->pagination->setDisplayedPages(4))
 		->set('display', true); ?>

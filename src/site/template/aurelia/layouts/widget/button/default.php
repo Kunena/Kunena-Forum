@@ -27,34 +27,34 @@ if ($title == "COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG")
 	$title = '';
 }
 
-$modal   = isset($this->modal) ? 'data-toggle="modal" data-backdrop="false"' : '';
-$right   = isset($this->pullright) ? ' float-right' : '';
-$id      = isset($this->id) ? 'id="' . $this->id . '"' : '';
-$success = !empty($this->success) ? ' btn-outline-success' : '';
-$primary = !empty($this->primary) ? ' btn-outline-primary' : '';
-$normal  = !empty($this->normal) ? 'btn-small dropdown-item' : 'btn btn-outline-primary border';
-$icon    = $this->icon;
+$modal         = isset($this->modal) ? 'data-bs-toggle="modal" data-backdrop="false"' : '';
+$right         = isset($this->pullright) ? ' float-end' : '';
+$id            = isset($this->id) ? 'id="' . $this->id . '"' : '';
+$success       = !empty($this->success) ? ' btn-outline-success' : '';
+$primary       = !empty($this->primary) ? ' btn-outline-primary' : '';
+$normal        = !empty($this->normal) ? 'btn-small dropdown-item' : 'btn btn-outline-primary border';
+$icon          = $this->icon;
 $ktemplate     = KunenaFactory::getTemplate();
 $topicicontype = $ktemplate->params->get('topicicontype');
 ?>
 
 <a <?php echo $id; ?> class="<?php echo $normal . $primary . $success . $right . ' kbutton-' . $this->name; ?>"
-					  href="<?php echo $this->url; ?>" rel="nofollow"
-					  title="<?php echo $title; ?>" name="<?php echo $this->name; ?>" <?php echo $modal; ?>>
+                      href="<?php echo $this->url; ?>" rel="nofollow"
+                      title="<?php echo $title; ?>" name="<?php echo $this->name; ?>" <?php echo $modal; ?>>
 	<?php
 	if (!empty($icon))
-	:
+		:
 		?>
 		<?php if ($topicicontype != 'B4')
 		:
-			?>
-			<i class="<?php echo $icon; ?>"></i>
-		<?php else
+		?>
+        <i class="<?php echo $icon; ?>"></i>
+	<?php else
 
 		:
-			?>
-			<img loading=lazy src="<?php echo Uri::root(); ?>/media/kunena/core/svg/<?php echo $icon;?>.svg" />
-		<?php endif; ?>
+		?>
+        <img loading=lazy src="<?php echo Uri::root(); ?>/media/kunena/core/svg/<?php echo $icon; ?>.svg"/>
+	<?php endif; ?>
 	<?php endif; ?>
 	<?php echo $label; ?>
 </a>

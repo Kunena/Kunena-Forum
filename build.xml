@@ -20,10 +20,10 @@
 	-Dtmp_dir=tmp					(= workspace/kunena/build/tmp)
 	-Dbuild_dir=package				(= workspace/kunena/build/package)
 -->
-<project name="kunena" basedir="." description="Phing Build Script for Kunena" default="dist">
+<project name="kunena" basedir="" description="Phing Build Script for Kunena" default="dist">
 
 	<!-- Setup of any global settings that will apply to the entire build script -->
-	<property file="build/phing/build.properties" />
+	<property file="build.properties" />
 
 	<condition property="project_dir" value="src/">
 		<not><isset property="project_dir" /></not>
@@ -85,11 +85,11 @@
 		</replacetokens>
 	</filterchain>
 
-	<property name="kunena.admin" value="src/administrator/components/com_kunena/" />
+	<property name="kunena.admin" value="src/admin" />
 	<property name="kunena.libraries" value="src/libraries/kunena" />
 	<property name="kunena.media" value="src/media/kunena" />
 	<property name="kunena.plugins" value="src/plugins" />
-	<property name="kunena.site" value="src/components/com_kunena/" />
+	<property name="kunena.site" value="src/site" />
 
 	<target name="dist" depends="init,mkdir,old,info,build,build-components,build-libraries,build-media,build-plugins,build-language,package,cleanup,postflight" />
 
@@ -145,9 +145,6 @@
 		<echo message="Building Installer.." />
 		<!-- Move files needed by the installer -->
 		<copy file="src/pkg_kunena.xml" todir="${build_dir}/distribution" overwrite="true">
-			<filterchain refid="filter"/>
-		</copy>
-		<copy file="${project_dir}/install.php" todir="${build_dir}/distribution" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
 		<copy file="COPYRIGHT.php" todir="${build_dir}/distribution" overwrite="true">
@@ -521,11 +518,8 @@
 
 	<target name="cleanup">
 		<delete dir="${cache_dir}" />
-		<delete dir="dist/package/archive" />
-		<delete dir="dist/package/documentation" />
-		<delete dir="dist/package/packages" />
+		<delete dir="dist/package" />
 		<delete dir="dist/tmp" />
-		<delete file="dist/package/README.txt" />
 	</target>
 
 	<target name="postflight">

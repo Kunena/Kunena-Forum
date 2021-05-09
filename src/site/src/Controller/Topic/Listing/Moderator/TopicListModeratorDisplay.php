@@ -49,10 +49,10 @@ class TopicListModeratorDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$me       = KunenaUserHelper::getMyself();
-		$access   = KunenaAccess::getInstance();
-		$moreUri  = null;
-		$embedded = $this->getOptions()->get('embedded', true);
+		$this->me       = KunenaUserHelper::getMyself();
+		$access         = KunenaAccess::getInstance();
+		$moreUri        = null;
+		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		$params = ComponentHelper::getParams('com_kunena');
 		$start  = $this->input->getInt('limitstart', 0);
@@ -129,9 +129,9 @@ class TopicListModeratorDisplay extends KunenaControllerDisplay
 			$this->prepareTopics();
 		}
 
-		$actions  = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$actions1 = $this->getTopicActions($topics, $actions);
+		$actions        = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
+		$this->actions1 = $this->getTopicActions($topics, $actions);
 
-		$headerText = Text::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
+		$this->headerText = Text::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
 	}
 }

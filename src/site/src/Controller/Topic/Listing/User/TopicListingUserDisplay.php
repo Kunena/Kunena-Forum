@@ -275,7 +275,7 @@ class TopicListingUserDisplay extends ListDisplay
 			}
 		}
 
-		$page = $this->pagination->pagesCurrent;
+		$this->page = $this->pagination->pagesCurrent;
 
 		$pagdata = $this->pagination->getData();
 
@@ -377,7 +377,7 @@ class TopicListingUserDisplay extends ListDisplay
 			}
 			else
 			{
-				$title1 = $this->headerText;
+				$title = $this->headerText;
 				$this->setTitle($headerText);
 			}
 

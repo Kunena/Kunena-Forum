@@ -57,10 +57,10 @@ class TopicListingUnreadDisplay extends ListDisplay
 		$this->state    = $this->model->getState();
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->moreUri  = null;
-		$access         = KunenaAccess::getInstance();
+		$this->access   = KunenaAccess::getInstance();
 		$start          = $this->state->get('list.start');
 		$limit          = $this->state->get('list.limit');
-		$params         = ComponentHelper::getParams('com_kunena');
+		$this->params   = ComponentHelper::getParams('com_kunena');
 		$Itemid         = $this->input->getInt('Itemid');
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
@@ -114,9 +114,9 @@ class TopicListingUnreadDisplay extends ListDisplay
 			->filterByUserUnread($this->me)
 			->find();
 
-		$mesIds = [];
+		$this->mesIds = [];
 
-		$mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
+		$this->mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
 
 		$list = [];
 

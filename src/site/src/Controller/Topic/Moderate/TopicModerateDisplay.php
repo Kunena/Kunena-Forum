@@ -93,9 +93,9 @@ class TopicModerateDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$catid = $this->input->getInt('catid');
-		$id    = $this->input->getInt('id');
-		$mesid = $this->input->getInt('mesid');
+		$this->catid = $this->input->getInt('catid');
+		$id          = $this->input->getInt('id');
+		$mesid       = $this->input->getInt('mesid');
 
 		if (!$mesid)
 		{
@@ -145,8 +145,8 @@ class TopicModerateDisplay extends KunenaControllerDisplay
 
 		if ($this->message)
 		{
-			$banHistory = KunenaBan::getUserHistory($this->message->userid);
-			$me         = Factory::getApplication()->getIdentity();
+			$this->banHistory = KunenaBan::getUserHistory($this->message->userid);
+			$this->me         = Factory::getApplication()->getIdentity();
 
 			// Get thread and reply count from current message:
 			$db    = Factory::getDbo();
@@ -161,7 +161,7 @@ class TopicModerateDisplay extends KunenaControllerDisplay
 
 			try
 			{
-				$replies = $db->loadResult();
+				$this->replies = $db->loadResult();
 			}
 			catch (ExecutionFailureException $e)
 			{
@@ -171,7 +171,7 @@ class TopicModerateDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$banInfo = KunenaBan::getInstanceByUserid($this->app->getIdentity()->id, true);
+		$this->banInfo = KunenaBan::getInstanceByUserid($this->app->getIdentity()->id, true);
 	}
 
 	/**

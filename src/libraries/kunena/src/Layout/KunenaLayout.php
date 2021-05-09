@@ -39,13 +39,67 @@ use function defined;
 class KunenaLayout extends KunenaBase
 {
 	/**
+	 * @var mixed|string|void
+	 * @since version
+	 */
+	public $userkarma_plus;
+	/**
+	 * @var false|mixed|string|void
+	 * @since version
+	 */
+	public $personalText;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	public $usermedals;
+	/**
+	 * @var mixed|void|null
+	 * @since version
+	 */
+	public $userpoints;
+	/**
+	 * @var integer|mixed|void|null
+	 * @since version
+	 */
+	public $userthankyou;
+	/**
+	 * @var integer|mixed|void|null
+	 * @since version
+	 */
+	public $userposts;
+	/**
+	 * @var false|mixed|stdClass|string|void|null
+	 * @since version
+	 */
+	public $userranktitle;
+	/**
+	 * @var false|mixed|stdClass|string|void|null
+	 * @since version
+	 */
+	public $userrankimage;
+	/**
+	 * @var mixed|string|void
+	 * @since version
+	 */
+	public $userkarma;
+	/**
+	 * @var mixed|string|void
+	 * @since version
+	 */
+	public $userkarma_minus;
+	/**
+	 * @var mixed|string|void
+	 * @since version
+	 */
+	public $userkarma_title;
+	/**
 	 * Content to be appended after the main output.
 	 *
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $after = [];
-
 	/**
 	 * Object KunenaView
 	 *
@@ -53,72 +107,6 @@ class KunenaLayout extends KunenaBase
 	 * @since   Kunena 6.0
 	 */
 	protected $legacy;
-
-	/**
-	 * @var false|mixed|string|void
-	 * @since version
-	 */
-	private $personalText;
-
-	/**
-	 * @var mixed|void|null
-	 * @since version
-	 */
-	private $usermedals;
-
-	/**
-	 * @var mixed|void|null
-	 * @since version
-	 */
-	private $userpoints;
-
-	/**
-	 * @var integer|mixed|void|null
-	 * @since version
-	 */
-	private $userthankyou;
-
-	/**
-	 * @var integer|mixed|void|null
-	 * @since version
-	 */
-	private $userposts;
-
-	/**
-	 * @var false|mixed|stdClass|string|void|null
-	 * @since version
-	 */
-	private $userranktitle;
-
-	/**
-	 * @var false|mixed|stdClass|string|void|null
-	 * @since version
-	 */
-	private $userrankimage;
-
-	/**
-	 * @var mixed|string|void
-	 * @since version
-	 */
-	private $userkarma;
-
-	/**
-	 * @var mixed|string|void
-	 * @since version
-	 */
-	private $userkarma_plus;
-
-	/**
-	 * @var mixed|string|void
-	 * @since version
-	 */
-	private $userkarma_minus;
-
-	/**
-	 * @var mixed|string|void
-	 * @since version
-	 */
-	private $userkarma_title;
 
 	/**
 	 * Append HTML after the layout content.

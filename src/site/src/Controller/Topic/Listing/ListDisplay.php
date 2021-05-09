@@ -197,7 +197,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$title1 = $this->headerText;
+				$title = $this->headerText;
 				$this->setTitle($headerText);
 			}
 

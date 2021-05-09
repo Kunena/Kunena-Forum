@@ -99,7 +99,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 		$button = $fullactions ? true : false;
 
-		$quickReply = null;
+		$this->quickReply = null;
 
 		if ($this->config->readOnly)
 		{
@@ -109,7 +109,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		// Reply / Quote
 		if ($this->message->isAuthorised('reply'))
 		{
-			$quickReply = $this->config->quickReply;
+			$this->quickReply = $this->config->quickReply;
 
 			if ($topicicontype == 'B2' && !$fullactions)
 			{
@@ -697,7 +697,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(['url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-							 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,]
+			                 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

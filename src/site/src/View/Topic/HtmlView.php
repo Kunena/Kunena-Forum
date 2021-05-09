@@ -245,8 +245,8 @@ class HtmlView extends KunenaView
 
 		$this->category = $this->get('Category');
 		$this->topic    = $this->get('Topic');
-
-		$channels = $this->category->getChannels();
+		$this->message  = $this->get('Messages');
+		$channels       = $this->category->getChannels();
 
 		if ($this->category->id && !$this->category->isAuthorised('read'))
 		{
@@ -1412,11 +1412,11 @@ class HtmlView extends KunenaView
 		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
 
 		$catParams = ['ordering'    => 'ordering',
-					  'toplevel'    => 0,
-					  'sections'    => 0,
-					  'direction'   => 1,
-					  'hide_lonely' => 1,
-					  'action'      => 'topic.create',];
+		              'toplevel'    => 0,
+		              'sections'    => 0,
+		              'direction'   => 1,
+		              'hide_lonely' => 1,
+		              'action'      => 'topic.create',];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaCategoryHelper::get($this->catid);

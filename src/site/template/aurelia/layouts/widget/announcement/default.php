@@ -13,15 +13,16 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement'); ?>
 <div class="shadow-lg rounded" id="announcement<?php echo $this->announcement->id; ?>">
     <div class="alert alert-info">
-        <div class="close" data-bs-toggle="collapse"
+        <div class="close float-end" data-bs-toggle="collapse"
              data-bs-target="#announcement<?php echo $this->announcement->id; ?>">
-            &times;
+			<?php echo KunenaIcons::cancel(); ?>
         </div>
         <h5>
             <a class="btn-link"

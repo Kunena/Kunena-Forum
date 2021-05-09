@@ -100,39 +100,39 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 
 		$mesid = $this->input->getInt('mesid', 0);
 
-		$this->me      = KunenaUserHelper::getMyself();
-		$location      = $this->input->getInt('location', 0);
-		$detail        = $this->input->get('detail', false);
-		$this->message = KunenaMessageHelper::get($mesid);
+		$this->me       = KunenaUserHelper::getMyself();
+		$this->location = $this->input->getInt('location', 0);
+		$this->detail   = $this->input->get('detail', false);
+		$this->message  = KunenaMessageHelper::get($mesid);
 		$this->message->tryAuthorise();
 
-		$this->topic    = $this->message->getTopic();
-		$this->category = $this->topic->getCategory();
-		$this->profile  = $this->message->getAuthor();
-		$ktemplate      = KunenaFactory::getTemplate();
+		$this->topic     = $this->message->getTopic();
+		$this->category  = $this->topic->getCategory();
+		$this->profile   = $this->message->getAuthor();
+		$this->ktemplate = KunenaFactory::getTemplate();
 
 		if ($this->topic->unread)
 		{
 			$this->setMetaData('robots', 'noindex, follow');
 		}
 
-		$captchaEnabled = false;
+		$this->captchaEnabled = false;
 
 		if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha() && $this->config->quickReply)
 		{
-			$captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
-			$captchaEnabled = true;
+			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$this->captchaEnabled = true;
 		}
 		else
 		{
-			$captchaEnabled = false;
+			$this->captchaEnabled = false;
 		}
 
 		// Thank you info and buttons.
-		$thankyou        = [];
-		$total_thankyou  = 0;
-		$more_thankyou   = 0;
-		$thankyou_delete = [];
+		$thankyou             = [];
+		$this->total_thankyou = 0;
+		$this->more_thankyou  = 0;
+		$thankyou_delete      = [];
 
 		if (isset($this->message->thankyou))
 		{
@@ -144,11 +144,11 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 
 				if (count($this->message->thankyou) > $this->config->thankYouMax)
 				{
-					$more_thankyou = count($this->message->thankyou) - $this->config->thankYouMax;
+					$this->more_thankyou = count($this->message->thankyou) - $this->config->thankYouMax;
 				}
 
-				$total_thankyou = count($this->message->thankyou);
-				$thankyous      = array_slice($this->message->thankyou, 0, $this->config->thankYouMax, true);
+				$this->total_thankyou = count($this->message->thankyou);
+				$thankyous            = array_slice($this->message->thankyou, 0, $this->config->thankYouMax, true);
 
 				$userids_thankyous = [];
 

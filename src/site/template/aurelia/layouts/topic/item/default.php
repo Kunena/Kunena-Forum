@@ -16,9 +16,6 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
-$topic          = $this->topic;
-$this->messages = $this->get('Messages');
-
 Text::script('COM_KUNENA_RATE_LOGIN');
 Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
 Text::script('COM_KUNENA_RATE_ALLREADY');
@@ -47,12 +44,12 @@ $social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');
 $txt             = '';
 
-if ($topic->ordering)
+if ($this->topic->ordering)
 {
 	$txt .= ' topic-sticky';
 }
 
-if ($topic->locked)
+if ($this->topic->locked)
 {
 	$txt .= ' topic-locked';
 }
@@ -66,18 +63,18 @@ if ($topic->locked)
 	<?php endif; ?>
 
     <h1>
-		<?php echo $topic->getIcon($topic->getCategory()->iconset); ?>
+		<?php echo $this->topic->getIcon($this->topic->getCategory()->iconset); ?>
 		<?php
 		if ($this->ktemplate->params->get('labels') != 0)
 		{
 			echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
 		}
 		?>
-		<?php echo $topic->displayField('subject'); ?>
-		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topic', $topic)->set('config', $this->config); ?>
+		<?php echo $this->topic->displayField('subject'); ?>
+		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topic', $this->topic)->set('config', $this->config); ?>
     </h1>
 
-    <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
+    <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id); ?></div>
 
     <div class="float-start">
 		<?php echo $this->subLayout('Widget/Pagination/List')
@@ -86,7 +83,7 @@ if ($topic->locked)
     </div>
     <h2 class="float-end">
 		<?php echo $this->subLayout('Widget/Search')
-			->set('id', $topic->id)
+			->set('id', $this->topic->id)
 			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
 			->setLayout('topic'); ?>
     </h2>
@@ -107,7 +104,7 @@ if ($topic->locked)
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');
 	}
 
-	echo $this->subRequest('Topic/Poll')->set('id', $topic->id);
+	echo $this->subRequest('Topic/Poll')->set('id', $this->topic->id);
 
 	if ($this->ktemplate->params->get('displayModule'))
 	{
@@ -116,7 +113,8 @@ if ($topic->locked)
 
 	echo '<div class="topic-item-messages">';
 
-	$count = 1;
+	$count          = 1;
+	$this->messages = \Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper::getMessagesByTopic($this->topic);
 	foreach ($this->messages as $id => $message)
 	{
 		echo $this->subRequest('Topic/Item/Message')
@@ -147,15 +145,15 @@ if ($topic->locked)
     </div>
     <div class="float-end">
 		<?php echo $this->subLayout('Widget/Search')
-			->set('id', $topic->id)
+			->set('id', $this->topic->id)
 			->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
 			->setLayout('topic'); ?>
     </div>
 
-    <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $topic->id); ?></div>
+    <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id); ?></div>
 
 	<?php if ($this->ktemplate->params->get('writeaccess')) : ?>
-        <div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $topic->id); ?></div>
+        <div><?php echo $this->subLayout('Widget/Writeaccess')->set('id', $this->topic->id); ?></div>
 	<?php endif; ?>
 
 	<?php

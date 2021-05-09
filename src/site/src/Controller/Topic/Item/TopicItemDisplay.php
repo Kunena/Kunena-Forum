@@ -115,9 +115,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$catid  = $this->input->getInt('catid', 0);
-		$id     = $this->input->getInt('id', 0);
-		$mesid  = $this->input->getInt('mesid', 0);
+		$catid  = $this->input->getInt('catid');
+		$id     = $this->input->getInt('id');
+		$mesid  = $this->input->getInt('mesid');
 		$start  = $this->input->getInt('limitstart', 0);
 		$limit  = $this->input->getInt('limit', 0);
 		$Itemid = $this->input->getInt('Itemid');

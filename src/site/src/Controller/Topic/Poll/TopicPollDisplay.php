@@ -86,9 +86,9 @@ class TopicPollDisplay extends KunenaControllerDisplay
 		// Need to check if poll is allowed in this category.
 		$this->topic->tryAuthorise('poll.read');
 
-		$this->poll = $this->topic->getPoll();
-		$usercount  = $this->poll->getUserCount();
-		$usersvoted = $this->poll->getUsers();
+		$this->poll      = $this->topic->getPoll();
+		$this->usercount = $this->poll->getUserCount();
+		$usersvoted      = $this->poll->getUsers();
 
 		if (is_object($this->poll->getMyVotes()))
 		{
@@ -114,7 +114,7 @@ class TopicPollDisplay extends KunenaControllerDisplay
 		{
 			$this->name = 'Topic/Poll/Results';
 
-			$show_title = true;
+			$this->show_title = true;
 
 			$users_voted_list     = [];
 			$users_voted_morelist = [];

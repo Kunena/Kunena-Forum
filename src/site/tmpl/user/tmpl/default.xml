@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+    <layout title="COM_KUNENA_MENU_USER_DEFAULT">
+        <message>COM_KUNENA_MENU_USER_DEFAULT_DESC</message>
+    </layout>
+
+    <!-- Add fields to the parameters object for the layout. -->
+    <fields name="params">
+        <!-- Basic options. -->
+        <fieldset name="basic"
+                  label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
+            <field name="integration"
+                   type="radio"
+                   label="COM_KUNENA_MENU_INTEGRATION"
+                   description="COM_KUNENA_MENU_INTEGRATION_DESC"
+                   default="1">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

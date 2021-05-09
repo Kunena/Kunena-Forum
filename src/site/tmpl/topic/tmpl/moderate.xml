@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+    <layout hidden="true"
+            title="COM_KUNENA_MENU_TOPIC_MODERATE">
+        <message>COM_KUNENA_MENU_TOPIC_MODERATE_DESC</message>
+    </layout>
+</metadata>

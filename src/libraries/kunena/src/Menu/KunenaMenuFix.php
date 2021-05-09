@@ -142,9 +142,9 @@ abstract class KunenaMenuFix
 			// Get parent information.
 			$parent_tree = [];
 
-			if (isset(self::$items[$item->parentid]))
+			if (isset(self::$items[$item->parent_id]))
 			{
-				$parent_tree = self::$items[$item->parentid]->tree;
+				$parent_tree = self::$items[$item->parent_id]->tree;
 			}
 
 			// Create tree
@@ -244,7 +244,7 @@ abstract class KunenaMenuFix
 			}
 			else
 			{
-				$parent            = isset(self::$items[$item->parentid]) ? self::$items[$item->parentid] : null;
+				$parent            = isset(self::$items[$item->parent_id]) ? self::$items[$item->parent_id] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}
 		}

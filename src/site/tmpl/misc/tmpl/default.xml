@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+    <layout title="COM_KUNENA_MENU_MISC_DEFAULT">
+        <message>COM_KUNENA_MENU_MISC_DEFAULT_DESC</message>
+    </layout>
+
+    <!-- Add fields to the request variables for the layout. -->
+    <fields name="params">
+        <fieldset name="basic"
+                  label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
+            <field name="body"
+                   type="textarea"
+                   rows="10"
+                   cols="40"
+                   filter="JComponentHelper::filterText"
+                   label="COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY"
+                   description="COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_DESC"/>
+            <field name="body_format"
+                   type="radio"
+                   default="bbcode"
+                   label="COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_FORMAT"
+                   description="COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_FORMAT_DESC">
+                <option value="text">COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_FORMAT_TEXT</option>
+                <option value="bbcode">COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_FORMAT_BBCODE</option>
+                <option value="html">COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_FORMAT_HTML</option>
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

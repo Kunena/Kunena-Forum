@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Html\Html\KunenaForum;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -164,7 +165,8 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 		$options            = [];
 		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		$catParams          = ['sections' => 1, 'catid' => 0];
-		$this->categorylist = HTMLHelper::_('select.genericlist', $catParams, 'catid', 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $options);
+		$this->categorylist = KunenaForum::categorylist('catid', $catid, $options, $catParams, 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"');
+
 
 		if ($catid)
 		{

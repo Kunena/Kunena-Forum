@@ -15,7 +15,7 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Forum\Category\CategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use function defined;
 
 $content = $this->request('Topic/Poll')
@@ -23,7 +23,7 @@ $content = $this->request('Topic/Poll')
 	->execute();
 
 // Display breadcrumb path to the current category / topic / message / report.
-$parents   = CategoryHelper::getParents($content->category->id);
+$parents   = KunenaCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
 foreach ($parents as $parent)

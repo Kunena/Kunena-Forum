@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -26,7 +26,7 @@ $this->addScript('poll.js');
 		&times;
 	</div>
 	<h2>
-		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . Parser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title); ?>
 	</h2>
 
 	<div class="" id="poll-vote">
@@ -52,7 +52,7 @@ $this->addScript('poll.js');
 									{
 										echo 'checked="checked"';
 									} ?> />
-								<?php echo Parser::parseText($poll_option->text); ?>
+								<?php echo KunenaParser::parseText($poll_option->text); ?>
 							</label>
 						</li>
 					<?php endforeach; ?>

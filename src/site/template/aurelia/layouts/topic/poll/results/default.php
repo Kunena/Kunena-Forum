@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Html\Parser;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -33,7 +33,7 @@ $this->addScript('poll.js');
 		&times;
 	</button>
 	<h2>
-		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . Parser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title); ?>
 	</h2>
 <?php endif; ?>
 
@@ -47,7 +47,7 @@ $this->addScript('poll.js');
 			?>
 			<tr>
 				<td>
-					<?php echo Parser::parseText($option->text); ?>
+					<?php echo KunenaParser::parseText($option->text); ?>
 				</td>
 				<td class="col-md-8">
 					<div class="progress progress-striped">

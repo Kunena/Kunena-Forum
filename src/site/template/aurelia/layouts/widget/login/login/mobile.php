@@ -40,7 +40,7 @@ use function defined;
                     <div class="input-group">
                         <div class="input-group-prepend">
 							<span class="input-group-text">
-								<?php echo Icons::user(); ?>
+								<?php echo KunenaIcons::user(); ?>
 								<label for="kmobile-username" class="element-invisible">
 									<?php echo Text::_('JGLOBAL_USERNAME'); ?>
 								</label>

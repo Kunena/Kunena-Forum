@@ -515,7 +515,7 @@ class TopicsController extends KunenaController
 				foreach ($topics as $topic)
 				{
 					KunenaLog::log(
-						$this->me->userid == $topic->getAuthor()->userid ? Log::TYPE_ACTION : Log::TYPE_MODERATION,
+					    $this->me->userid == $topic->getAuthor()->userid ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
 						KunenaLog::LOG_TOPIC_UNFAVORITE,
 						['topic_ids' => $ids],
 						$topic->getCategory(),

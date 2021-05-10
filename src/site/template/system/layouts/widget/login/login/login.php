@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
@@ -59,7 +60,7 @@ use function defined;
 			</div>
 		</div>
 
-		<?php $login = Login::getInstance(); ?>
+		<?php $login = KunenaLogin::getInstance(); ?>
 		<?php
 		if ($login->getTwoFactorMethods() > 1)
 			:

@@ -45,7 +45,7 @@ $me       = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 				<?php
 				$subject = $message->displayField('subject');
 				$msg     = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo Text::sprintf($msg, $name, $subject);
+				echo Text::sprintf($msg, $message->getAuthor()->getLink(), $this->getTopicLink($topic, $message, null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false));
 				?>
 			</div>
 			<h3>

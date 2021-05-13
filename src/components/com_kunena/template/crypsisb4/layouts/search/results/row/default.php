@@ -46,7 +46,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 				<?php
 				$title   = KunenaForumMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
 				$langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, 'first', null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
+				echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($topic, $message, null, null, KunenaTemplate::getInstance()->tooltips() . ' topictitle', $category, true, false)); ?>
 			</div>
 			<div class="kmessage">
 				<?php if (!$isReply)

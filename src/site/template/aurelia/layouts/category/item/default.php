@@ -17,7 +17,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
-use Kunena\Forum\Libraries\Html\Html\KunenaForum;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -123,7 +122,7 @@ $this->addStyleSheet('rating.css');
                                 <div class="input-group-btn">
 									<?php if (!empty($this->moreUri))
 									{
-										echo KunenaForum::link($this->moreUri,
+									    echo HTMLHelper::_('kunenaforum.link', $this->moreUri,
 											Text::_('COM_KUNENA_MORE'), null, null, 'follow');
 									} ?>
 
@@ -135,7 +134,7 @@ $this->addStyleSheet('rating.css');
 										<?php if ($this->actionMove) : ?>
 											<?php
 											$options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
-											echo KunenaForum::categorylist('target', 0, $options, [],
+											echo HTMLHelper::_('categorylist', 'target', 0, $options, [],
 												'class="form-control fbs" disabled="disabled"', 'value', 'text', 0,
 												'kchecktarget'
 											);

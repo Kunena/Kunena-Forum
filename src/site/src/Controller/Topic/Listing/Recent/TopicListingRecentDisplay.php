@@ -216,13 +216,13 @@ class TopicListingRecentDisplay extends ListDisplay
 			$this->pagination->setUri($moreUri);
 		}
 
-		$topics = $finder
+		$this->topics = $finder
 			->order($order, -1)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();
 
-		if ($topics)
+		if ($this->topics)
 		{
 			$this->prepareTopics();
 		}
@@ -340,7 +340,7 @@ class TopicListingRecentDisplay extends ListDisplay
 			}
 		}
 
-		$this->actions = $this->getTopicActions($topics, $actions);
+		$this->actions = $this->getTopicActions($this->topics, $actions);
 	}
 
 	/**

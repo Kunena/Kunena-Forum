@@ -15,7 +15,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
-use function defined;
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $fullactions     = $this->ktemplate->params->get('fullactions');

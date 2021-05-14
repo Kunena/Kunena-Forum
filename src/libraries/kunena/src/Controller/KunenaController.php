@@ -90,6 +90,7 @@ class KunenaController extends BaseController
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->app      = Factory::getApplication();
+		$this->config   = KunenaFactory::getConfig();
 
 		// Save user profile if it didn't exist.
 		if ($this->me->userid && !$this->me->exists())

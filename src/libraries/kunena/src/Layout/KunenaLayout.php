@@ -427,7 +427,7 @@ class KunenaLayout extends KunenaBase
 		}
 
 		$uri = $lastTopic->getUrl($category, true, 'last');
-echo $uri;
+
 		if (!$content)
 		{
 			if (KunenaConfig::getInstance()->disableRe)

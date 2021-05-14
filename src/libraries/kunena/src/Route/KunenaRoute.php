@@ -28,7 +28,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic as KunenaTopicAlias;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -1197,7 +1197,7 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaTopicAlias     $topic     topic
+	 * @param   KunenaTopic     $topic     topic
 	 * @param   bool                 $xhtml     xhtml
 	 * @param   null                 $action    actions
 	 * @param   KunenaCategory|null  $category  category
@@ -1208,7 +1208,7 @@ abstract class KunenaRoute
 	 *
 	 * @throws Exception
 	 */
-	public static function getTopicUrl(KunenaTopicAlias $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null)
+	public static function getTopicUrl(KunenaTopic $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null)
 	{
 		if (!$category)
 		{
@@ -1221,7 +1221,7 @@ abstract class KunenaRoute
 	/**
 	 * @param   KunenaMessage          $message   message
 	 * @param   bool                   $xhtml     xhtml
-	 * @param   KunenaTopicAlias|null  $topic     topic
+	 * @param   KunenaTopic|null  $topic     topic
 	 * @param   KunenaCategory|null    $category  category
 	 *
 	 * @return  boolean
@@ -1230,7 +1230,7 @@ abstract class KunenaRoute
 	 *
 	 * @throws Exception
 	 */
-	public static function getMessageUrl(KunenaMessage $message, $xhtml = true, KunenaTopicAlias $topic = null, KunenaCategory $category = null)
+	public static function getMessageUrl(KunenaMessage $message, $xhtml = true, KunenaTopic $topic = null, KunenaCategory $category = null)
 	{
 		// FIXME: not yet fully implemented...
 		if (!$category)

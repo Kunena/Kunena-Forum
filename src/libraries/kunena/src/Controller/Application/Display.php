@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\BaseLayout;
@@ -26,7 +27,6 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Html\Html\KunenaForum;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -438,7 +438,7 @@ class Display extends KunenaControllerDisplay
 		$templateName = (string) $this->template->params->get('templatebyName');
 		$templateLink = (string) $this->template->params->get('templatebyLink');
 		$credits      = '<div style="text-align:center;">';
-		$credits      .= KunenaForum::link('index.php?option=com_kunena&view=credits',
+		$credits      .= HTMLHelper::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits',
 			Text::_('COM_KUNENA_POWEREDBY'), '', '', '',
 			['style' => 'display: inline !important; visibility: visible !important; text-decoration: none !important;']
 		);

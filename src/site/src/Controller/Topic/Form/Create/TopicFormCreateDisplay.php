@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Html\Html\KunenaForum;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -192,7 +191,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 			'action'      => 'topic.create',
 		];
 
-		$this->selectcatlist = KunenaForum::categorylist('catid', $catid, $options, $catParams,
+		$this->selectcatlist = HTMLHelper::_('kunenaforum.categorylist','catid', $catid, $options, $catParams,
 			'class="form-control inputbox required"', 'value', 'text', $this->selected, 'postcatid');
 
 		$this->action = 'post';

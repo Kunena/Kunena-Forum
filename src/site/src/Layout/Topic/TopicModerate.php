@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Html\Html\KunenaForum;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use function defined;
 
@@ -104,7 +103,7 @@ class TopicModerate extends KunenaLayout
 		$options = [];
 		$params  = ['sections' => 0, 'catid' => 0];
 
-		return KunenaForum::categorylist('targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox form-control"',
+		return HTMLHelper::_('categorylist', 'targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox form-control"',
 			'value', 'text', $this->category->id, 'kmod_categories'
 		);
 	}

@@ -10,7 +10,7 @@
  * @link          https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Libraries\Html\Html;
+namespace Kunena\Forum\Site\Service\Html;
 
 defined('_JEXEC') or die();
 
@@ -28,7 +28,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaForum
+class Kunenaforum
 {
 	/**
 	 * @param   string  $name       name

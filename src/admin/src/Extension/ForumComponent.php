@@ -22,6 +22,7 @@ use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
 use Kunena\Forum\Site\Service\Html\Kunenagrid;
+use Kunena\Forum\Site\Service\Html\Kunenaforum;
 
 /**
  * Component class for com_kunena
@@ -49,5 +50,6 @@ class ForumComponent extends MVCComponent implements BootableExtensionInterface,
 	public function boot(ContainerInterface $container)
 	{
 		$this->getRegistry()->register('kunenagrid', new Kunenagrid($container->get(SiteApplication::class)));
+		$this->getRegistry()->register('kunenaforum', new Kunenaforum($container->get(SiteApplication::class)));
 	}
 }

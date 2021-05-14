@@ -475,6 +475,6 @@ class KunenaLayout extends KunenaBase
 			$class .= ' locked';
 		}
 
-		return HTMLHelper::_('link', $uri, $content, $title, $class, $con);
+		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, $con);
 	}
 }

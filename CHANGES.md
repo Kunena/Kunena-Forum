@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.5-dev]
 ### Fixed
+* [#8074](https://github.com/Kunena/Kunena-Forum/issues/8074): Editing removes the subscription (Part 4)
 * Exact forum post link is missing in search results
 * [#8050](https://github.com/Kunena/Kunena-Forum/issues/8050): Kunena Discuss Error: Rendering Error in layout Topic/Item when topic layout is Threaded or Indented
 * [#8033](https://github.com/Kunena/Kunena-Forum/issues/8033): Poll: Notice: Undefined variable: polllifespan - (if the Lifetime field is not filled)

@@ -434,7 +434,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 					<div class="controls">
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input" name="subscribeMe" id="subscribeMe"
-							       value="1" <?php if ($this->config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $this->config->subscriptionschecked == 0 && $me->canSubscribe == 1)
+							       value="1" <?php if ($this->subscriptionschecked)
 							{
 								echo 'checked="checked"';
 							} ?>/>

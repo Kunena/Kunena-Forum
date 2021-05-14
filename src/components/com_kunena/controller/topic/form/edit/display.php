@@ -126,17 +126,14 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		if ($this->topic->isAuthorised('subscribe') && $this->topic->exists())
 		{
-			if ($usertopic->subscribed == 1)
+			if ($usertopic->subscribed == 1 || $this->config->subscriptionschecked == 1 || $this->category->getSubscribed($this->me->userid))
 			{
 				$this->subscriptionschecked = true;
 			}
 		}
 		else
 		{
-			if ($this->config->subscriptionschecked)
-			{
-				$this->subscriptionschecked = true;
-			}
+			$this->canSubscribe = false;
 		}
 
 		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';

@@ -21,7 +21,7 @@ use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Http\Http;
 use Joomla\CMS\Http\Transport\StreamTransport;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Mail\Mail;
+use Joomla\CMS\Mail\MailTemplate;
 use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Response\JsonResponse;
@@ -2585,29 +2585,6 @@ class TopicController extends KunenaController
 
 				$msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);
 
-				$mail = Mail::getInstance();
-				$mail->setSender([$this->config->getEmail(), $mailsender]);
-				$mail->setSubject($mailsubject);
-				$mail->addReplyTo($this->me->email, $this->me->username);
-
-				// Render the email.
-				$layout = KunenaLayout::factory('Email/Report')->debug(false)
-					->set('mail', $mail)
-					->set('message', $message)
-					->set('me', $this->me)
-					->set('title', $reason)
-					->set('content', $text)
-					->set('messageLink', $msglink);
-
-				try
-				{
-					$body = trim($layout->render());
-					$mail->setBody($body);
-				}
-				catch (Exception $e)
-				{
-				}
-
 				$receivers = [];
 
 				foreach ($emailToList as $emailTo)
@@ -2622,7 +2599,25 @@ class TopicController extends KunenaController
 					}
 				}
 
-				KunenaEmail::send($mail, $receivers);
+				$user = $this->app->getIdentity();
+				$mail = Factory::getMailer();
+				$mail->setSubject($mailsubject);
+				$mail->setSender([$this->config->getEmail(), $mailsender]);
+				$mail->addReplyTo($this->me->email, $this->me->username);
+
+				$mailer = new MailTemplate('com_kunena.report', $user->getParam('language', $this->app->get('language')), $mail);
+				$mailer->addTemplateData(
+					[
+					'mail'        => $mail,
+					'me'          => $this->me,
+					'subject'     => $reason,
+					'message'     => $message,
+					'messageLink' => $msglink,
+					'content'     => $text
+					]
+				);
+
+				KunenaEmail::send($mailer, $receivers);
 
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_SUCCESS'));
 			}

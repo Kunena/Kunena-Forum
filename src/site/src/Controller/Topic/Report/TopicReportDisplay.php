@@ -98,9 +98,9 @@ class TopicReportDisplay extends KunenaControllerDisplay
 			$this->topic = $this->message->getTopic();
 		}
 
-		$category = $this->topic->getCategory();
+		$this->category = $this->topic->getCategory();
 
-		$this->uri = "index.php?option=com_kunena&view=topic&layout=report&catid={$category->id}" .
+		$this->uri = "index.php?option=com_kunena&view=topic&layout=report&catid={$this->category->id}" .
 			"&id={$this->topic->id}" . ($this->message ? "&mesid={$this->message->id}" : '');
 	}
 

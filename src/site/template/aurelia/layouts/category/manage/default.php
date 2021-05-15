@@ -21,7 +21,6 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
-HTMLHelper::_('bootstrap.framework');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 

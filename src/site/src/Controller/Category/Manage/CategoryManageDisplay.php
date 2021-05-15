@@ -91,9 +91,9 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  false|KunenaExceptionAuthorise
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -184,7 +184,7 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 		$lists ['accesslists']    = KunenaAccess::getInstance()->getAccessOptions($category);
 		$lists ['categories']     = HTMLHelper::_('select.genericlist', $catParams, 'parentid', 'class="inputbox form-control"', 'value', 'text', $category->parentid);
 		$lists ['channels']       = HTMLHelper::_('select.genericlist', $channelsOptions, 'channels', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
-		$lists ['aliases']        = $aliases ? HTMLHelper::_('select.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
+		$lists ['aliases']        = $aliases ? HTMLHelper::_('select.genericlist', $aliases, 'aliases', 'class="inputbox form-control"', 'value', 'text', $category->alias) : null;
 		$lists ['published']      = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-control"', 'value', 'text', $category->published);
 		$lists ['forumLocked']    = HTMLHelper::_('select.genericlist', $yesno, 'locked', 'class="inputbox form-control" size="1"', 'value', 'text', $category->locked);
 		$lists ['forumReview']    = HTMLHelper::_('select.genericlist', $yesno, 'review', 'class="inputbox form-control" size="1"', 'value', 'text', $category->review);
@@ -224,7 +224,7 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 
 		$lists ['categoryIconset'] = HTMLHelper::_('select.genericlist', $topicIcons, 'iconset', 'class="inputbox form-control" size="1"', 'value', 'text', $value);
 
-		$lists1 = $lists;
+		$this->lists = $lists;
 	}
 
 	/**
@@ -232,9 +232,9 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void|boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

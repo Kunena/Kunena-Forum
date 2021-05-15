@@ -43,10 +43,10 @@ class TopicListingUnreadDisplay extends ListDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{

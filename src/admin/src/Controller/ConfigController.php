@@ -103,14 +103,14 @@ class ConfigController extends FormController
 		{
 			if (StringHelper::strpos($postsetting, 'cfg_') === 0)
 			{
-				// Remove cfg_ and force lower case
+				// Remove cfg_ from config variable
 
 				if (is_array($postvalue))
 				{
 					$postvalue = implode(',', $postvalue);
 				}
 
-				$postname = StringHelper::strtolower(StringHelper::substr($postsetting, 4));
+				$postname = StringHelper::substr($postsetting, 4);
 
 				if ($postname == 'imageWidth' || $postname == 'imageHeight')
 				{

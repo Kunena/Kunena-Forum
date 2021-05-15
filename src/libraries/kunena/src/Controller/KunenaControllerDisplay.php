@@ -431,7 +431,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setMetaData(string $name, string $content, $attribute = 'name'): void
+	protected function setMetaData(string $name, $content, $attribute = 'name'): void
 	{
 		$this->document->setMetaData($name, $content, $attribute);
 	}

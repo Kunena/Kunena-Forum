@@ -103,9 +103,9 @@ class KunenaUpload
 	 *
 	 * @return  array Updated options.
 	 *
+	 * @throws  null
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	public function ajaxUpload(array $options): array
 	{
@@ -323,8 +323,8 @@ class KunenaUpload
 	 *
 	 * @return  string  Absolute path.
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function getFolder(): string
 	{
@@ -338,9 +338,9 @@ class KunenaUpload
 	 *
 	 * @return  string  Path pointing to the protected file.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getProtectedFile($filename = null): string
 	{
@@ -354,9 +354,9 @@ class KunenaUpload
 	 *
 	 * @return  string  Protected filename.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getProtectedFilename($filename = null): string
 	{
@@ -377,9 +377,9 @@ class KunenaUpload
 	 *
 	 * @return  array  File parts: list($name, $extension).
 	 *
+	 * @throws  RuntimeException
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  RuntimeException
 	 */
 	public function splitFilename($filename = null): array
 	{
@@ -480,9 +480,9 @@ class KunenaUpload
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function checkFileSizeImage(int $fileSize, string $image_type)
 	{
@@ -536,9 +536,9 @@ class KunenaUpload
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function checkFileSizeFileAttachment(int $fileSize)
 	{
@@ -585,9 +585,9 @@ class KunenaUpload
 	 *
 	 * @return  object
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function upload(array $fileInput, string $destination, $type = 'attachment')
 	{
@@ -709,6 +709,35 @@ class KunenaUpload
 		$file->success = true;
 
 		return $file;
+	}
+
+	/**
+	 * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
+	 * configuration and PHP configuration
+	 *
+	 * @param   int  $filesize  The size of file in bytes
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 * @since Kunena
+	 */
+	protected function checkFileSizeImageAttachment($filesize)
+	{
+		$image = $filesize > intval(KunenaConfig::getInstance()->imagesize * 1024);
+
+		if ($image)
+		{
+			return false;
+		}
+
+		return (int) max(
+			0,
+			min(
+				$this->toBytes(ini_get('upload_max_filesize')),
+				$this->toBytes(ini_get('post_max_size')),
+				$this->toBytes(ini_get('memory_limit'))
+			)
+		);
 	}
 
 	/**

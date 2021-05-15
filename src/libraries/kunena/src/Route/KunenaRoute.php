@@ -972,10 +972,24 @@ abstract class KunenaRoute
 	public static function resolveAlias(string $alias): array
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+		$app = Factory::getApplication();
 		$db    = Factory::getDbo();
-		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->quote($alias . '%')}";
+		$query = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__kunena_aliases'))
+			->where($db->quoteName('alias') . ' LIKE ' . $db->quote($alias . '%'));
+
 		$db->setQuery($query);
-		$aliases = $db->loadObjectList();
+
+		try
+		{
+			$aliases = $db->loadObjectList();
+		}
+		catch (\RuntimeException $e)
+		{
+			$app->enqueueMessage($e->getMessage());
+		}
 
 		$vars = [];
 

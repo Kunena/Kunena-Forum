@@ -54,25 +54,26 @@ class TopicListingUserDisplay extends ListDisplay
 
 		$model = new TopicsModel(array(), null, null, $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$state    = $model->getState();
+		$this->state    = $model->getState();
 		$this->me = KunenaUserHelper::getMyself();
-		$moreUri  = null;
+		$this->moreUri  = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
 		if ($this->embedded)
 		{
-			$moreUri = new Uri('index.php?option=com_kunena&view=topics&layout=user&mode=' .
-				$state->get('list.mode') . '&userid=' . $state->get('user') . '&limit=' . $state->get('list.limit')
+			$this->moreUri = new Uri('index.php?option=com_kunena&view=topics&layout=user&mode=' .
+				$this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
 			);
-			$moreUri->setVar('Itemid', KunenaRoute::getItemID($moreUri));
+
+			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 
-		$start = $state->get('list.start');
-		$limit = $state->get('list.limit');
+		$start = $this->state->get('list.start');
+		$limit = $this->state->get('list.limit');
 
 		// Handle &sel=x parameter.
-		$time = $state->get('list.time');
+		$time = $this->state->get('list.time');
 
 		if ($time < 0)
 		{
@@ -98,11 +99,11 @@ class TopicListingUserDisplay extends ListDisplay
 			$hold = '0';
 		}
 
-		$this->user = KunenaUserHelper::get($state->get('user'));
+		$this->user = KunenaUserHelper::get($this->state->get('user'));
 
 		// Get categories for the filter.
-		$categoryIds = $state->get('list.categories');
-		$reverse     = !$state->get('list.categories.in');
+		$categoryIds = $this->state->get('list.categories');
+		$reverse     = !$this->state->get('list.categories.in');
 		$authorise   = 'read';
 		$order       = 'last_post_time';
 
@@ -112,7 +113,7 @@ class TopicListingUserDisplay extends ListDisplay
 			->filterByHold([$hold])
 			->filterByTime($time);
 
-		switch ($state->get('list.mode'))
+		switch ($this->state->get('list.mode'))
 		{
 			case 'posted' :
 				$finder
@@ -133,7 +134,7 @@ class TopicListingUserDisplay extends ListDisplay
 				break;
 
 			case 'plugin':
-				$pluginmode = $state->get('list.modetype');
+				$pluginmode = $this->state->get('list.modetype');
 
 				Factory::getApplication()->triggerEvent('onKunenaGetUserTopics', [$pluginmode, &$finder, &$order, &$categoryIds, $this]);
 				break;
@@ -168,11 +169,11 @@ class TopicListingUserDisplay extends ListDisplay
 				}
 				elseif ($view == 'topics' && $layout == 'user')
 				{
-					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=user&mode={$state->get('list.mode')}"));
+					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=user&mode={$this->$state->get('list.mode')}"));
 				}
 				else
 				{
-					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user&mode={$state->get('list.mode')}"));
+					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}"));
 				}
 
 				$itemidfix = $getid->id;
@@ -189,11 +190,11 @@ class TopicListingUserDisplay extends ListDisplay
 			}
 			elseif ($view == 'topics' && $layout == 'user')
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=user&mode={$state->get('list.mode')}&Itemid={$itemidfix}", false));
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}&Itemid={$itemidfix}", false));
 			}
 			else
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&mode={$state->get('list.mode')}&Itemid={$itemidfix}", false));
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}&Itemid={$itemidfix}", false));
 			}
 
 			$controller->redirect();
@@ -207,25 +208,25 @@ class TopicListingUserDisplay extends ListDisplay
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		if ($moreUri)
+		if ($this->moreUri)
 		{
-			$this->pagination->setUri($moreUri);
+			$this->pagination->setUri($this->moreUri);
 		}
 
-		$topics = $finder
+		$this->topics = $finder
 			->order($order, -1)
 			->start($this->pagination->limitstart)
 			->limit($this->pagination->limit)
 			->find();
 
-		if ($topics)
+		if ($this->topics)
 		{
 			$this->prepareTopics();
 		}
 
 		$actions = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
 
-		switch ($state->get('list.mode'))
+		switch ($this->state->get('list.mode'))
 		{
 			case 'posted' :
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
@@ -246,7 +247,7 @@ class TopicListingUserDisplay extends ListDisplay
 				$actions          = ['unsubscribe'];
 				break;
 			case 'plugin' :
-				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($state->get('list.modetype')));
+				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get('list.modetype')));
 				$canonicalUrl     = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=plugin');
 				break;
 			default :
@@ -307,7 +308,7 @@ class TopicListingUserDisplay extends ListDisplay
 			}
 		}
 
-		$this->actions = $this->getTopicActions($topics, $actions);
+		$this->actions = $this->getTopicActions($this->topics, $actions);
 	}
 
 	/**

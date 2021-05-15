@@ -111,7 +111,6 @@ class TopicListingUnreadDisplay extends ListDisplay
 			->filterByTime($time)
 			->order('id', 0)
 			->filterByUserAccess($this->me)
-			->filterByUserUnread($this->me)
 			->find();
 
 		$this->mesIds = [];

@@ -49,16 +49,6 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 	 */
 	protected $name = 'Topic/Edit';
 
-	private $topic;
-
-	private $me;
-
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $message;
-
 	/**
 	 * Prepare topic reply form.
 	 *
@@ -120,7 +110,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 		$uri = trim(strtok($this->topic->getUrl(), '?'));
 		$doc->addHeadLink($uri, 'canonical');
 
-		$category = $this->topic->getCategory();
+		$this->category = $this->topic->getCategory();
 
 		if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha())
 		{
@@ -161,9 +151,9 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 		$privateMessage       = new KunenaPrivateMessage;
 		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($category);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
-		$this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($category->postAnonymous);
+		$this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
 		$this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
 		$this->app->setUserState('com_kunena.postfields', null);
 

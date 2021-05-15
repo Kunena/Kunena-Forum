@@ -420,7 +420,7 @@ class Router extends RouterView
 				continue;
 			}
 
-			if ($sefcats && class_exists('KunenaRoute') && method_exists('KunenaRoute', 'resolveAlias'))
+			if ($sefcats && class_exists('Kunena\Forum\Libraries\Route\KunenaRoute') && method_exists('Kunena\Forum\Libraries\Route\KunenaRoute', 'resolveAlias'))
 			{
 				// Find out if we have SEF alias (category, view or layout)
 				$alias     = strtr($segment, ':', '-');

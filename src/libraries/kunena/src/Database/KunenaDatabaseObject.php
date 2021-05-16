@@ -220,7 +220,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 		{
 			return $this->_saving = false;
 		}
-		
+
 		// Initialize table object.
 		$table = $this->getTable();
 		$table->bind($this->getProperties());

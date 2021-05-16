@@ -205,13 +205,13 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * Before saving the object, this method checks if object can be safely saved.
 	 * It will also trigger onKunenaBeforeSave and onKunenaAfterSave events.
 	 *
-	 * @return  boolean  True on success.
+	 * @return  boolean  True on success, Exception when fail.
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
 	 */
-	public function save(): bool
+	public function save()
 	{
 		$this->_saving = true;
 
@@ -220,7 +220,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 		{
 			return $this->_saving = false;
 		}
-
+		
 		// Initialize table object.
 		$table = $this->getTable();
 		$table->bind($this->getProperties());
@@ -248,21 +248,17 @@ abstract class KunenaDatabaseObject extends CMSObject
 
 		if (in_array(false, $result, true))
 		{
-			$this->setError($table->getError());
+			throw new KunenaException($table->getError());
 
 			return $this->_saving = false;
 		}
 
-		// Store the data.
-		try
-		{
-			$table->store();
-		}
-		catch (KunenaException $e)
-		{
-			return $this->_saving = false;
+		// Store the data, the store() method from Joomla\CMS\Table\Table return only boolean and not exception.
+		$result = $table->store(); 
 
-			throw new KunenaException($e->getMessage());
+		if (!$result)
+		{
+			throw new KunenaException($table->getError());
 		}
 
 		// If item was created, load the object.

@@ -123,18 +123,11 @@ $this->addScriptOptions('com_kunena.icons.secure', KunenaIcons::secure());
 
 $suffix = CMSApplication::getInstance('site')->get('sef_suffix');
 $this->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
-$app   = Factory::getApplication();
-$input = $app->input;
 
-$mesid           = $input->getInt('mesid');
-$this->message   = KunenaMessageHelper::get($mesid);
-$this->ktemplate = KunenaFactory::getTemplate();
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $editor          = $this->ktemplate->params->get('editor');
 
 $me          = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
-$this->me    = $me;
-$this->topic = $this->message->getTopic();
 
 // If polls are enabled, load also poll JavaScript.
 if ($this->config->pollEnabled)
@@ -152,7 +145,7 @@ $this->addScript('assets/js/edit.js');
 
 echo $this->subLayout('Widget/Lightbox');
 
-if (KunenaFactory::getTemplate()->params->get('formRecover'))
+if ($this->ktemplate->params->get('formRecover'))
 {
 	$this->addScript('sisyphus.js');
 }

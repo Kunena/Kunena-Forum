@@ -493,7 +493,7 @@ class TopicController extends KunenaController
 			'params'            => '',
 			'quote'             => 0,
 		];
-
+		var_dump($fields); die();
 		$this->app->setUserState('com_kunena.postfields', $fields);
 
 		if (!Session::checkToken('post'))

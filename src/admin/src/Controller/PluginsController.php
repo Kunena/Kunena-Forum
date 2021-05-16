@@ -63,7 +63,6 @@ class PluginsController extends AdminController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -99,7 +98,6 @@ class PluginsController extends AdminController
 	 *
 	 * @throws  Exception
 	 * @since   12.2
-	 *
 	 */
 	public function publish()
 	{
@@ -184,7 +182,6 @@ class PluginsController extends AdminController
 	 *
 	 * @throws  Exception
 	 * @since   12.2
-	 *
 	 */
 	public function reOrder(): bool
 	{
@@ -203,7 +200,9 @@ class PluginsController extends AdminController
 		{
 			// Reorder failed.
 			$message = Text::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
-			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false), $message,
+			$this->setRedirect(
+				Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
+				$message,
 				'error'
 			);
 
@@ -246,8 +245,10 @@ class PluginsController extends AdminController
 		{
 			// Reorder failed
 			$message = Text::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
-			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
-				$message, 'error'
+			$this->setRedirect(
+				Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
+				$message,
+				'error'
 			);
 
 			return false;
@@ -267,7 +268,6 @@ class PluginsController extends AdminController
 	 *
 	 * @throws  Exception
 	 * @since   12.2
-	 *
 	 */
 	public function checkIn(): bool
 	{
@@ -284,8 +284,10 @@ class PluginsController extends AdminController
 		{
 			// Checkin failed.
 			$message = Text::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
-			$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
-				$message, 'error'
+			$this->setRedirect(
+				Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
+				$message,
+				'error'
 			);
 
 			return false;
@@ -308,7 +310,6 @@ class PluginsController extends AdminController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.0.2
-	 *
 	 */
 	public function resync(): void
 	{

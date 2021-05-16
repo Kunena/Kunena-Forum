@@ -241,7 +241,6 @@ class Kunenagrid
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function published(int $i, $value, $prefix = '', $bootstrap = false)
 	{
@@ -278,7 +277,6 @@ class Kunenagrid
 	 * @return   string The Html code
 	 *
 	 * @since    Kunena 3.0
-	 *
 	 */
 	public static function action(int $i, string $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img = '', $checkbox = 'cb')
 	{
@@ -410,7 +408,7 @@ class Kunenagrid
 	{
 		return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img loading=lazy src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" title="' . $alt . '" />');
 	}
-	
+
 	/**
 	 * @param   mixed   $rows   rows
 	 * @param   string  $image  image
@@ -424,7 +422,7 @@ class Kunenagrid
 	{
 		return '<a href="javascript:saveOrder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveOrder" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
 	}
-	
+
 	/**
 	 * @param   mixed   $i        i
 	 * @param   mixed   $task     task
@@ -446,7 +444,7 @@ class Kunenagrid
 
 		return '<span class="move_up"></span>';
 	}
-	
+
 	/**
 	 * @param   mixed   $i        i
 	 * @param   mixed   $task     task

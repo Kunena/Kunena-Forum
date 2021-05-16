@@ -482,7 +482,8 @@ abstract class KunenaTopicUserHelper
 			->group('m.userid, m.thread');
 
 		// Create the base insert statement.
-		$query->insert($db->quoteName('#__kunena_user_topics') . ' (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`) ' . $subQuery . '
+		$query->insert(
+			$db->quoteName('#__kunena_user_topics') . ' (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`) ' . $subQuery . '
 			ON DUPLICATE KEY UPDATE `category_id` = VALUES(`category_id`), `posts` = VALUES(`posts`), `last_post_id` = VALUES(`last_post_id`)'
 		);
 		$db->setQuery($query);
@@ -525,7 +526,8 @@ abstract class KunenaTopicUserHelper
 		// Delete entries that have default values
 		$query = $db->getQuery(true)
 			->delete("#__kunena_user_topics")
-			->where(["posts = 0",
+			->where(
+				["posts = 0",
 					"owner = 0",
 					"favorite = 0",
 					"subscribed = 0",

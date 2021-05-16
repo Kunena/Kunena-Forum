@@ -965,7 +965,8 @@ abstract class KunenaCategoryHelper
 		$query
 			->update($db->quoteName('#__kunena_categories', 'c'))
 			->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON c.id = tt.category_id AND tt.hold = 0')
-			->set("c.numTopics = 0,
+			->set(
+				"c.numTopics = 0,
 				c.numPosts = 0,
 				c.last_topic_id = 0,
 				c.last_post_id = 0,

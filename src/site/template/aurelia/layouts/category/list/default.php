@@ -36,8 +36,16 @@ use function defined;
                     <div class="form-group">
                         <div class="input-append float-end">
                             <div class="input-group-btn">
-								<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'size="1"', 'value', 'text', 0,
-									'kchecktask'); ?>
+								<?php echo HTMLHelper::_(
+	'select.genericlist',
+	$this->actions,
+	'task',
+	'size="1"',
+	'value',
+	'text',
+	0,
+	'kchecktask'
+); ?>
                                 <input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
                                        value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
                             </div>

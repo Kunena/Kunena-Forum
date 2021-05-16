@@ -198,7 +198,8 @@ abstract class KunenaFinder
 				{
 					$db = $this->db;
 					array_walk(
-						$value, function (&$item) use ($db) {
+						$value,
+						function (&$item) use ($db) {
 							$item = $db->quote($item);
 						}
 					);

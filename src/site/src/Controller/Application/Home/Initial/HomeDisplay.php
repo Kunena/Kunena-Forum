@@ -120,7 +120,8 @@ class HomeDisplay extends KunenaControllerDisplay
 			$this->input->getCmd('view'),
 			$this->input->getCmd('layout', 'default'),
 			$this->input->getCmd('task', 'display'),
-			$this->input, $this->app
+			$this->input,
+			$this->app
 		);
 
 		if (!$controller)

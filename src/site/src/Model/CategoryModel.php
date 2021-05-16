@@ -302,7 +302,7 @@ class CategoryModel extends CategoriesModel
 			$moved  = $format == 'feed' ? 0 : 1;
 			$params = [
 				'hold'  => $hold,
-				'moved' => $moved,];
+				'moved' => $moved, ];
 
 			switch ($topicOrdering)
 			{

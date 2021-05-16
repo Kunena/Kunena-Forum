@@ -23,6 +23,8 @@ use function defined;
 // Display email address (cloak it).
 echo HTMLHelper::_(
 	'email.cloak',
-	$this->escape($this->email), $this->mailto,
-	$this->escape($this->text), $this->textCloak
+	$this->escape($this->email),
+	$this->mailto,
+	$this->escape($this->text),
+	$this->textCloak
 );

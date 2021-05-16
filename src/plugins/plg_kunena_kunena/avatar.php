@@ -128,8 +128,15 @@ class KunenaAvatarKunena extends KunenaAvatar
 
 		if (!is_file("{$path}/{$resized}/{$file}"))
 		{
-			KunenaImageHelper::version($origPath, "{$path}/{$resized}", $file, $sizex,
-				$sizey, intval($config->avatarQuality), KunenaImage::SCALE_INSIDE, intval($config->avatarCrop)
+			KunenaImageHelper::version(
+				$origPath,
+				"{$path}/{$resized}",
+				$file,
+				$sizex,
+				$sizey,
+				intval($config->avatarQuality),
+				KunenaImage::SCALE_INSIDE,
+				intval($config->avatarCrop)
 			);
 
 			if ($user->timestamp)

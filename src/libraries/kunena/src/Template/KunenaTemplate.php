@@ -491,7 +491,8 @@ class KunenaTemplate
 			// Update old template files to new format.
 			$xml = preg_replace(
 				['|<params|', '|</params>|', '|<param\s+|', '|</param>|'],
-				['<config', '</config>', '<field ', '</field>'], $xml
+				['<config', '</config>', '<field ', '</field>'],
+				$xml
 			);
 		}
 
@@ -596,7 +597,7 @@ class KunenaTemplate
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
 		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',];
+		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -1863,7 +1864,9 @@ HTML;
 
 		$less  = new lessc;
 		$class = $this;
-		$less->registerFunction('url', function ($arg) use ($class) {
+		$less->registerFunction(
+			'url',
+			function ($arg) use ($class) {
 			list($type, $q, $values) = $arg;
 			$value = reset($values);
 
@@ -1925,7 +1928,9 @@ HTML;
 
 		$scss  = new Compiler();
 		$class = $this;
-		$scss->registerFunction('url', function ($arg) use ($class) {
+		$scss->registerFunction(
+			'url',
+			function ($arg) use ($class) {
 			list($type, $q, $values) = $arg;
 			$value = reset($values);
 

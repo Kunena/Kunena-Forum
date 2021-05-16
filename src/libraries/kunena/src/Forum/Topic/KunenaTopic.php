@@ -1323,7 +1323,9 @@ class KunenaTopic extends KunenaDatabaseObject
 	public function getUrl($category = null, $xhtml = true, $action = null)
 	{
 		return KunenaRoute::getTopicUrl(
-			$this, $xhtml, $action,
+			$this,
+			$xhtml,
+			$action,
 			$category ? KunenaCategoryHelper::get($category) : $this->getCategory()
 		);
 	}
@@ -1956,12 +1958,18 @@ class KunenaTopic extends KunenaDatabaseObject
 
 			// Update first and last post information into the target topic
 			$target->updatePostInfo(
-				$this->first_post_id, $this->first_post_time, $this->first_post_userid,
-				$this->first_post_message, $this->first_post_guest_name
+				$this->first_post_id,
+				$this->first_post_time,
+				$this->first_post_userid,
+				$this->first_post_message,
+				$this->first_post_guest_name
 			);
 			$target->updatePostInfo(
-				$this->last_post_id, $this->last_post_time, $this->last_post_userid,
-				$this->last_post_message, $this->last_post_guest_name
+				$this->last_post_id,
+				$this->last_post_time,
+				$this->last_post_userid,
+				$this->last_post_message,
+				$this->last_post_guest_name
 			);
 
 			// Save target topic

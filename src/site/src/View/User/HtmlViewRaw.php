@@ -14,7 +14,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
@@ -56,7 +55,8 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		Factory::getApplication()->setHeader('Content-Disposition',
+		Factory::getApplication()->setHeader(
+			'Content-Disposition',
 			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
 		);
 		Factory::getApplication()->sendHeaders();
@@ -97,7 +97,8 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		Factory::getApplication()->setHeader('Content-Disposition',
+		Factory::getApplication()->setHeader(
+			'Content-Disposition',
 			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
 		);
 		Factory::getApplication()->sendHeaders();
@@ -130,7 +131,8 @@ class KunenaViewUser extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		Factory::getApplication()->setHeader('Content-Disposition',
+		Factory::getApplication()->setHeader(
+			'Content-Disposition',
 			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
 		);
 		Factory::getApplication()->sendHeaders();

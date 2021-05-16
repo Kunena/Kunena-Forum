@@ -164,8 +164,10 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
 		if (!$this->topic->category_id)
 		{
-			throw new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
-				$this->topic->getError()), $this->me->exists() ? 403 : 401);
+			throw new KunenaExceptionAuthorise(Text::sprintf(
+				'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
+				$this->topic->getError()
+			), $this->me->exists() ? 403 : 401);
 		}
 
 		$options        = [];
@@ -191,8 +193,18 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 			'action'      => 'topic.create',
 		];
 
-		$this->selectcatlist = HTMLHelper::_('kunenaforum.categorylist','catid', $catid, $options, $catParams,
-			'class="form-control inputbox required"', 'value', 'text', $this->selected, 'postcatid');
+		$this->selectcatlist = HTMLHelper::_(
+			'kunenaforum.categorylist',
+			'catid',
+			$catid,
+			$options,
+			$catParams,
+			'class="form-control inputbox required"',
+			'value',
+			'text',
+			$this->selected,
+			'postcatid'
+		);
 
 		$this->action = 'post';
 

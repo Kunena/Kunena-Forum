@@ -16,7 +16,6 @@ use Exception;
 use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -82,8 +81,13 @@ class TopicModel extends ListModel
 		{
 			$layout         = $this->getState('layout');
 			$threaded       = ($layout == 'indented' || $layout == 'threaded');
-			$this->messages = KunenaMessageHelper::getMessagesByTopic($this->getState('item.id'),
-				$this->getState('list.start'), $this->getState('list.limit'), $this->getState('list.direction'), $this->getState('hold'), $threaded
+			$this->messages = KunenaMessageHelper::getMessagesByTopic(
+				$this->getState('item.id'),
+				$this->getState('list.start'),
+				$this->getState('list.limit'),
+				$this->getState('list.direction'),
+				$this->getState('hold'),
+				$threaded
 			);
 
 			// Get thankyous for all messages in the page

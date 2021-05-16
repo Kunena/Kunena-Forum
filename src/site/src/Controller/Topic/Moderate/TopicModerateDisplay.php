@@ -135,9 +135,11 @@ class TopicModerateDisplay extends KunenaControllerDisplay
 			if ($user->exists())
 			{
 				$username       = $user->getName();
-				$this->userLink = $this->message->userid ? HTMLHelper::_('link',
+				$this->userLink = $this->message->userid ? HTMLHelper::_(
+					'link',
 					'index.php?option=com_kunena&view=user&layout=moderate&userid=' . $this->message->userid,
-					$username . ' (' . $this->message->userid . ')', $username . ' (' . $this->message->userid . ')'
+					$username . ' (' . $this->message->userid . ')',
+					$username . ' (' . $this->message->userid . ')'
 				)
 					: null;
 			}

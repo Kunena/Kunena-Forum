@@ -136,9 +136,10 @@ jQuery(function($) {
                                                 </div>
                                                 <div>
 													<?php echo Text::sprintf(
-														'COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxSig),
-														'<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxSig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'
-													); ?>
+	'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
+	intval($this->config->maxSig),
+	'<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxSig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'
+); ?>
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -203,8 +204,15 @@ jQuery(function($) {
 															$gender[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 															// Build the html select list
 															echo HTMLHelper::_(
-																'select.genericlist', $gender, 'gender', 'class="inputbox form-control" size="1"', 'value', 'text',
-																$this->escape($this->user->gender), 'gender');
+																'select.genericlist',
+																$gender,
+																'gender',
+																'class="inputbox form-control" size="1"',
+																'value',
+																'text',
+																$this->escape($this->user->gender),
+																'gender'
+															);
 															?>
                                                         </td>
                                                     </tr>

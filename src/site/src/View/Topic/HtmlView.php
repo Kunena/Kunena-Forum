@@ -1075,7 +1075,8 @@ class HtmlView extends KunenaView
 
 		// TODO: add context (options, template) to caching
 		$this->cache      = Factory::getCache(
-			'com_kunena', 'output'
+			'com_kunena',
+			'output'
 		);
 		$this->cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$this->cachegroup = 'com_kunena.messages';
@@ -1416,7 +1417,7 @@ class HtmlView extends KunenaView
 		              'sections'    => 0,
 		              'direction'   => 1,
 		              'hide_lonely' => 1,
-		              'action'      => 'topic.create',];
+		              'action'      => 'topic.create', ];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaCategoryHelper::get($this->catid);

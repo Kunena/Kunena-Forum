@@ -34,9 +34,12 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?><?php echo $this->escape($this->profile->getName()); ?>
 
 	<?php echo $this->profile->getLink(
-		KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
-		Text::_('COM_KUNENA_BACK'), 'nofollow', '', 'btn btn-outline-primary border float-end'
-	); ?>
+	KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
+	Text::_('COM_KUNENA_BACK'),
+	'nofollow',
+	'',
+	'btn btn-outline-primary border float-end'
+); ?>
 </h2>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post"

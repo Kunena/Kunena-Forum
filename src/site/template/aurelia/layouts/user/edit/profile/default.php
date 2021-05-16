@@ -89,8 +89,14 @@ $this->addScript('assets/js/profile.js');
 
 			// Build the html select list
 			echo HTMLHelper::_(
-				'select.genericlist', $gender, 'gender', 'class="inputbox form-control hasTooltip" title="' . Text::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"', 'value', 'text',
-				$this->escape($this->profile->gender), 'gender'
+				'select.genericlist',
+				$gender,
+				'gender',
+				'class="inputbox form-control hasTooltip" title="' . Text::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"',
+				'value',
+				'text',
+				$this->escape($this->profile->gender),
+				'gender'
 			);
 			?>
 		</td>

@@ -21,7 +21,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect');
-$wa->addInlineScript('Joomla.orderTable = function () {
+$wa->addInlineScript(
+	'Joomla.orderTable = function () {
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;

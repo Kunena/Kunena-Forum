@@ -82,7 +82,8 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 		// Is user allowed to post new topic?
 		if ($this->category->isAuthorised('topic.create'))
 		{
-			$this->categoryButtons->set('create',
+			$this->categoryButtons->set(
+				'create',
 				$this->getButton(sprintf($layout, 'create'), 'create', 'topic', 'communication', true)
 			);
 		}
@@ -90,7 +91,8 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 		// Is user allowed to mark forums as read?
 		if ($me->exists())
 		{
-			$this->categoryButtons->set('markread',
+			$this->categoryButtons->set(
+				'markread',
 				$this->getButton(sprintf($task, 'markread'), 'markread', 'category', 'user', true)
 			);
 		}
@@ -102,13 +104,15 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 
 			if (!$subscribed)
 			{
-				$this->categoryButtons->set('subscribe',
+				$this->categoryButtons->set(
+					'subscribe',
 					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'category', 'user', true)
 				);
 			}
 			else
 			{
-				$this->categoryButtons->set('unsubscribe',
+				$this->categoryButtons->set(
+					'unsubscribe',
 					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'category', 'user', true)
 				);
 			}

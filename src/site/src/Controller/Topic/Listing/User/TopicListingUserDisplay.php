@@ -62,7 +62,8 @@ class TopicListingUserDisplay extends ListDisplay
 
 		if ($this->embedded)
 		{
-			$this->moreUri = new Uri('index.php?option=com_kunena&view=topics&layout=user&mode=' .
+			$this->moreUri = new Uri(
+				'index.php?option=com_kunena&view=topics&layout=user&mode=' .
 				$this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
 			);
 

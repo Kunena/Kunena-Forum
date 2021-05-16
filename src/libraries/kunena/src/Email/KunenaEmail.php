@@ -152,7 +152,11 @@ abstract class KunenaEmail
 		if (strpos($errstr, "mail(): Failed to connect to mail server") !== false)
 		{
 			static::$mailer_error_status = new MailerBrokenException(
-				$errstr, $errno, Log::ERROR, $errfile, $errline
+				$errstr,
+				$errno,
+				Log::ERROR,
+				$errfile,
+				$errline
 			);
 
 			Log::add(static::$mailer_error_status->errorMessage(), Log::ERROR, 'kunena');
@@ -163,7 +167,6 @@ abstract class KunenaEmail
 }
 
 /**
- *
  * @since   Kunena 5.1.15
  */
 class MailerBrokenException extends ErrorException

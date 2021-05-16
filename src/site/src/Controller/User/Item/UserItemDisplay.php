@@ -261,8 +261,12 @@ class UserItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$description = Text::sprintf('COM_KUNENA_META_PROFILE', $this->profile->getName(),
-					$this->config->boardTitle, $this->profile->getName(), $this->config->boardTitle
+				$description = Text::sprintf(
+					'COM_KUNENA_META_PROFILE',
+					$this->profile->getName(),
+					$this->config->boardTitle,
+					$this->profile->getName(),
+					$this->config->boardTitle
 				);
 				$this->setDescription($description);
 			}

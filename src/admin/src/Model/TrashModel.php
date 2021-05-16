@@ -51,8 +51,6 @@ class TrashModel extends KunenaModel
 	protected $internalObject = false;
 
 	/**
-	 *
-	 *
 	 * @param   array    $data      data
 	 * @param   boolean  $loadData  load data
 	 *
@@ -350,8 +348,14 @@ class TrashModel extends KunenaModel
 		$viewOptions[] = HTMLHelper::_('select.option', 'topics', Text::_('COM_KUNENA_TRASH_TOPICS'));
 		$viewOptions[] = HTMLHelper::_('select.option', 'messages', Text::_('COM_KUNENA_TRASH_MESSAGES'));
 
-		return HTMLHelper::_('select.genericlist', $viewOptions, 'layout',
-			'class="inputbox form-control" size="1" onchange="this.form.submit()"', 'value', 'text', $this->getState('layout')
+		return HTMLHelper::_(
+			'select.genericlist',
+			$viewOptions,
+			'layout',
+			'class="inputbox form-control" size="1" onchange="this.form.submit()"',
+			'value',
+			'text',
+			$this->getState('layout')
 		);
 	}
 
@@ -405,8 +409,10 @@ class TrashModel extends KunenaModel
 	 */
 	public function getNavigation(): Pagination
 	{
-		return new Pagination($this->getState('list.total'),
-			$this->getState('list.start'), $this->getState('list.limit')
+		return new Pagination(
+			$this->getState('list.total'),
+			$this->getState('list.start'),
+			$this->getState('list.limit')
 		);
 	}
 

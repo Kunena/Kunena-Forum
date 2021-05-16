@@ -381,7 +381,8 @@ class KunenaStatistics
 			$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
 
 			$query = $this->_db->getQuery(true);
-			$query->select('SUM(' . $this->_db->quoteName('time') . ' >= ' .
+			$query->select(
+				'SUM(' . $this->_db->quoteName('time') . ' >= ' .
 				$this->_db->quote($todaystart) . ' AND ' . $this->_db->quoteName('parent') . ' = 0) AS ' .
 				$this->_db->quote('todayTopicCount') . ',
 				SUM(' . $this->_db->quoteName('time') . ' >= ' . $this->_db->quote($todaystart) . ' AND ' .
@@ -394,7 +395,8 @@ class KunenaStatistics
 				$this->_db->quoteName('parent') . ' > 0) AS ' . $this->_db->quote('yesterdayReplyCount')
 			)
 				->from($this->_db->quoteName('#__kunena_messages'))
-				->where($this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . ' AND ' .
+				->where(
+					$this->_db->quoteName('time') . ' >= ' . $this->_db->quote($yesterdaystart) . ' AND ' .
 					$this->_db->quoteName('hold') . ' = 0'
 				);
 			$this->_db->setQuery($query);
@@ -522,7 +524,8 @@ class KunenaStatistics
 					$this->_db->quoteName('opt.votes') . ') AS ' . $this->_db->quoteName('count')
 				)
 				->from($db->quoteName('#__kunena_polls_options', 'opt'))
-				->innerJoin($db->quoteName('#__kunena_polls', 'poll') . ' ON ' .
+				->innerJoin(
+					$db->quoteName('#__kunena_polls', 'poll') . ' ON ' .
 					$this->_db->quoteName('poll.id') . ' = ' . $this->_db->quoteName('opt.pollid')
 				)
 				->group($this->_db->quoteName('pollid'))
@@ -709,7 +712,8 @@ class KunenaStatistics
 				)
 				->select('COUNT(' . $this->_db->quoteName('t.targetuserid') . ') AS ' . $this->_db->quoteName('count'))
 				->from($this->_db->quoteName('#__kunena_thankyou', 't'))
-				->innerJoin($this->_db->quoteName('#__users', 'u') . ' ON ' .
+				->innerJoin(
+					$this->_db->quoteName('#__users', 'u') . ' ON ' .
 					$this->_db->quoteName('u.id') . ' = ' . $this->_db->quoteName('t.targetuserid')
 				)
 				->group($this->_db->quoteName('t.targetuserid'));

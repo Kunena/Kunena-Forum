@@ -36,7 +36,6 @@ use function defined;
  */
 class UserModel extends KunenaModel
 {
-
 	/**
 	 * @param   array    $data      data
 	 * @param   boolean  $loadData  load data
@@ -202,7 +201,7 @@ class UserModel extends KunenaModel
 		// Todo: fix params
 		$params = [
 			'sections' => false,
-			'action'   => 'read',];
+			'action'   => 'read', ];
 
 		return HTMLHelper::_('select.genericlist', $categoryList, 'catid', 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text');
 	}

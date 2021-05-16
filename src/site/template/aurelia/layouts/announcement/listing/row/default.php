@@ -30,8 +30,13 @@ $announcement = $this->announcement;
 
     <td class="nowrap">
         <div class="overflow">
-			<?php echo HTMLHelper::_('kunenaforum.link',$announcement->getUri(), $announcement->displayField('title'),
-				null, 'follow'); ?>
+			<?php echo HTMLHelper::_(
+	'kunenaforum.link',
+	$announcement->getUri(),
+	$announcement->displayField('title'),
+	null,
+	'follow'
+); ?>
         </div>
     </td>
 
@@ -48,8 +53,13 @@ $announcement = $this->announcement;
 			<?php if ($this->canEdit())
 			{
 				echo HTMLHelper::_(
-					'kunenagrid.task', $row, 'tick.png', Text::_('COM_KUNENA_ANN_EDIT'),
-					'edit', '', true
+					'kunenagrid.task',
+					$row,
+					'tick.png',
+					Text::_('COM_KUNENA_ANN_EDIT'),
+					'edit',
+					'',
+					true
 				);
 			} ?>
         </td>
@@ -57,8 +67,13 @@ $announcement = $this->announcement;
 			<?php if ($this->canDelete())
 			{
 				echo HTMLHelper::_(
-					'kunenagrid.task', $row, 'publish_x.png',
-					Text::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true
+					'kunenagrid.task',
+					$row,
+					'publish_x.png',
+					Text::_('COM_KUNENA_ANN_DELETE'),
+					'delete',
+					'',
+					true
 				);
 			} ?>
         </td>

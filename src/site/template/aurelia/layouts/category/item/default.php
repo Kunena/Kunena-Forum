@@ -122,20 +122,41 @@ $this->addStyleSheet('rating.css');
                                 <div class="input-group-btn">
 									<?php if (!empty($this->moreUri))
 									{
-									    echo HTMLHelper::_('kunenaforum.link', $this->moreUri,
-											Text::_('COM_KUNENA_MORE'), null, null, 'follow');
+									    echo HTMLHelper::_(
+									    	'kunenaforum.link',
+									    	$this->moreUri,
+									    	Text::_('COM_KUNENA_MORE'),
+									    	null,
+									    	null,
+									    	'follow'
+									    );
 									} ?>
 
 									<?php if (!empty($this->topicActions)) : ?>
 										<?php echo HTMLHelper::_(
-											'select.genericlist', $this->topicActions, 'task',
-											'class="form-control kchecktask"', 'value', 'text', 0, 'kchecktask'); ?>
+										'select.genericlist',
+										$this->topicActions,
+										'task',
+										'class="form-control kchecktask"',
+										'value',
+										'text',
+										0,
+										'kchecktask'
+									); ?>
 
 										<?php if ($this->actionMove) : ?>
 											<?php
 											$options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
-											echo HTMLHelper::_('categorylist', 'target', 0, $options, [],
-												'class="form-control fbs" disabled="disabled"', 'value', 'text', 0,
+											echo HTMLHelper::_(
+												'categorylist',
+												'target',
+												0,
+												$options,
+												[],
+												'class="form-control fbs" disabled="disabled"',
+												'value',
+												'text',
+												0,
 												'kchecktarget'
 											);
 											?>

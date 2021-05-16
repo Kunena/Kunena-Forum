@@ -514,7 +514,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @return integer  New topics count.
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getNewCount($count = null)
 	{

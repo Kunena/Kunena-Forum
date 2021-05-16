@@ -48,7 +48,6 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -2613,7 +2612,7 @@ class TopicController extends KunenaController
 					'subject'     => $reason,
 					'message'     => $message,
 					'messageLink' => $msglink,
-					'content'     => $text
+					'content'     => $text,
 					]
 				);
 

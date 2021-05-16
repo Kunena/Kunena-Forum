@@ -80,7 +80,7 @@ class TopicModerate extends KunenaLayout
 		$db     = Factory::getDbo();
 		$params = [
 			'orderby' => 'tt.last_post_time DESC',
-			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ",];
+			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ", ];
 		list($total, $topics) = KunenaTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)
@@ -103,8 +103,17 @@ class TopicModerate extends KunenaLayout
 		$options = [];
 		$params  = ['sections' => 0, 'catid' => 0];
 
-		return HTMLHelper::_('categorylist', 'targetcategory', 0, $options, $params, 'class="inputbox kmove_selectbox form-control"',
-			'value', 'text', $this->category->id, 'kmod_categories'
+		return HTMLHelper::_(
+			'categorylist',
+			'targetcategory',
+			0,
+			$options,
+			$params,
+			'class="inputbox kmove_selectbox form-control"',
+			'value',
+			'text',
+			$this->category->id,
+			'kmod_categories'
 		);
 	}
 }

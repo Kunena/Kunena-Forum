@@ -167,8 +167,10 @@ abstract class KunenaError
 		}
 		elseif (!JDEBUG && !KunenaFactory::getConfig()->debug && !self::$admin)
 		{
-			$app->enqueueMessage('Kunena ' . Text::sprintf('COM_KUNENA_INTERNAL_ERROR_ADMIN',
-					'<a href="https://www.kunena.org/">www.kunena.org</a>'), 'error');
+			$app->enqueueMessage('Kunena ' . Text::sprintf(
+				'COM_KUNENA_INTERNAL_ERROR_ADMIN',
+				'<a href="https://www.kunena.org/">www.kunena.org</a>'
+			), 'error');
 		}
 		elseif (KunenaFactory::getUser()->isAdmin() && Factory::getApplication()->isClient('site'))
 		{
@@ -276,7 +278,9 @@ abstract class KunenaError
 				$file     = preg_replace('%^.*?/((administrator/)?(components|modules|plugins|templates)/)%', '\\1', $file);
 				$errorMsg = sprintf(
 					"<p><b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b></p>",
-					$error['message'], $file, $error['line']
+					$error['message'],
+					$file,
+					$error['line']
 				);
 				$parts    = explode('/', $file);
 				$dir      = (string) array_shift($parts);

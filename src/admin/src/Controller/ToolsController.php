@@ -224,13 +224,15 @@ class ToolsController extends FormController
 
 		if ($trashDelete)
 		{
-			Factory::getApplication()->enqueueMessage("" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
+			Factory::getApplication()->enqueueMessage(
+				"" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
 				. Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS')
 			);
 		}
 		else
 		{
-			Factory::getApplication()->enqueueMessage("" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
+			Factory::getApplication()->enqueueMessage(
+				"" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
 				. Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS')
 			);
 		}
@@ -662,7 +664,8 @@ class ToolsController extends FormController
 				'header'  => Text::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
 				'message' => $msg,
 				'href'    => $redirect,
-			], $ajax
+			],
+			$ajax
 		);
 	}
 

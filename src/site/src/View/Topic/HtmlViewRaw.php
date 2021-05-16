@@ -52,7 +52,8 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		Factory::getApplication()->setHeader('Content-Disposition',
+		Factory::getApplication()->setHeader(
+			'Content-Disposition',
 			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
 		);
 		Factory::getApplication()->sendHeaders();
@@ -105,7 +106,8 @@ class KunenaViewTopic extends KunenaView
 
 		// Set the MIME type and header for JSON output.
 		$this->document->setMimeEncoding('application/json');
-		Factory::getApplication()->setHeader('Content-Disposition',
+		Factory::getApplication()->setHeader(
+			'Content-Disposition',
 			'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
 		);
 		Factory::getApplication()->sendHeaders();

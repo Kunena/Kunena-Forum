@@ -1609,10 +1609,10 @@ abstract class KunenaDiagnostics
 	//      $db    = Factory::getDbo();
 	//      $query = $db->getQuery(true);
 	//      $query->from("#__kunena_users");
-	// 
+	//
 	//      return $query;
 	//  }
-	// 
+	//
 	//  /**
 	//   * @param   QueryInterface  $query  query
 	//   *
@@ -1625,10 +1625,10 @@ abstract class KunenaDiagnostics
 	//      {
 	//          $query->select('*');
 	//      }
-	// 
+	//
 	//      return array('channels' => 'invalid');
 	//  }
-	// 
+	//
 	//  /**
 	//   * @return QueryInterface
 	//   * @since   Kunena
@@ -1636,7 +1636,7 @@ abstract class KunenaDiagnostics
 	//  protected static function fix_topicsOwnersOrphaned()
 	//  {
 	//      $query = self::query_topicsOwnersOrphaned()->insert('#__kunena_user_topics');
-	// 
+	//
 	//      return $query;
 	//  }
 }

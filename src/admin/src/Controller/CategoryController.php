@@ -53,7 +53,6 @@ class CategoryController extends FormController
 	 * @since   Kunena 2.0
 	 *
 	 * @see     BaseController
-	 *
 	 */
 	public function __construct($config = array())
 	{
@@ -73,7 +72,6 @@ class CategoryController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function save($key = null, $urlVar = null)
 	{
@@ -105,7 +103,6 @@ class CategoryController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	protected function internalSave(): KunenaCategory
 	{
@@ -237,7 +234,9 @@ class CategoryController extends FormController
 				if ($category->tryAuthorise('admin', null, false) && $category->removeModerator($user))
 				{
 					$this->app->enqueueMessage(
-						Text::sprintf('COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED', $this->escape($user->getName()),
+						Text::sprintf(
+							'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED',
+							$this->escape($user->getName()),
 							$this->escape($category->name)
 						)
 					);
@@ -269,7 +268,6 @@ class CategoryController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function apply(): void
 	{
@@ -295,7 +293,6 @@ class CategoryController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function cancel($key = null, $urlVar = null)
 	{
@@ -314,7 +311,6 @@ class CategoryController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function save2copy(): void
 	{
@@ -343,7 +339,6 @@ class CategoryController extends FormController
 	 *
 	 * @throws Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	protected function internalGenerateNewTitle(int $categoryId, string $alias, string $name): array
 	{
@@ -364,7 +359,6 @@ class CategoryController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function save2new(): void
 	{

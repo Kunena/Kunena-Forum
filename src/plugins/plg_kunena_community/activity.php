@@ -187,7 +187,12 @@ class KunenaActivityCommunity extends KunenaActivity
 		// Get users who have subscribed to the topic, excluding current user.
 		$acl         = KunenaAccess::getInstance();
 		$subscribers = $acl->getSubscribers(
-			$message->catid, $message->thread, KunenaAccess::TOPIC_SUBSCRIPTION, false, false, [$message->userid]
+			$message->catid,
+			$message->thread,
+			KunenaAccess::TOPIC_SUBSCRIPTION,
+			false,
+			false,
+			[$message->userid]
 		);
 
 		foreach ($subscribers as $userid)

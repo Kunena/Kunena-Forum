@@ -24,7 +24,8 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 /** @var WebAssetManager $wa */
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect');
-$wa->addInlineScript('Joomla.orderTable = function () {
+$wa->addInlineScript(
+	'Joomla.orderTable = function () {
 		var table = document.getElementById("sortTable");
 		var direction = document.getElementById("directionTable");
 		var order = table.options[table.selectedIndex].value;
@@ -339,7 +340,7 @@ $this->me = KunenaUserHelper::getMyself();
                                     <td class="center hidden-phone">
                                         <a class="btn btn-micro <?php echo $item->locked ? 'active' : ''; ?>"
                                            href="javascript: void(0);"
-                                           onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->locked ? 'un' : '') . 'lock'; ?>')">
+                                           onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->locked ? 'un' : '') . 'lock'; ?>')">
 											<?php echo $item->locked == 1 ? $img_yes : $img_no; ?>
                                         </a>
                                     </td>
@@ -356,21 +357,21 @@ $this->me = KunenaUserHelper::getMyself();
                                         <td class="center hidden-phone">
                                             <a class="btn btn-micro <?php echo $item->review ? 'active' : ''; ?>"
                                                href="javascript: void(0);"
-                                               onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un' : '') . 'review'; ?>')">
+                                               onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->review ? 'un' : '') . 'review'; ?>')">
 												<?php echo $item->review == 1 ? $img_yes : $img_no; ?>
                                             </a>
                                         </td>
                                         <td class="center hidden-phone">
                                             <a class="btn btn-micro <?php echo $item->allowPolls ? 'active' : ''; ?>"
                                                href="javascript: void(0);"
-                                               onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allowPolls ? 'deny' : 'allow') . '_polls'; ?>')">
+                                               onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->allowPolls ? 'deny' : 'allow') . '_polls'; ?>')">
 												<?php echo $item->allowPolls == 1 ? $img_yes : $img_no; ?>
                                             </a>
                                         </td>
                                         <td class="center hidden-phone">
                                             <a class="btn btn-micro <?php echo $item->allowAnonymous ? 'active' : ''; ?>"
                                                href="javascript: void(0);"
-                                               onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allowAnonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
+                                               onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->allowAnonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
 												<?php echo $item->allowAnonymous == 1 ? $img_yes : $img_no; ?>
                                             </a>
                                         </td>

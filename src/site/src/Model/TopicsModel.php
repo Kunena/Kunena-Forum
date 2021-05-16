@@ -64,7 +64,6 @@ class TopicsModel extends KunenaModel
 	 */
 	protected $actionMove = false;
 
-
 	/**
 	 * @return  boolean
 	 *
@@ -307,7 +306,7 @@ class TopicsModel extends KunenaModel
 			'started'    => $started,
 			'posted'     => $posts,
 			'favorited'  => $favorites,
-			'subscribed' => $subscriptions,];
+			'subscribed' => $subscriptions, ];
 
 		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestCategory, $limitstart, $limit, $params);
 
@@ -402,7 +401,7 @@ class TopicsModel extends KunenaModel
 			'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
 			'starttime' => $time,
 			'hold'      => $hold,
-			'where'     => $where,];
+			'where'     => $where, ];
 
 		list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestCategory, $limitstart, $limit, $params);
 

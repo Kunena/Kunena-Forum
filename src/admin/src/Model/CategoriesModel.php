@@ -368,7 +368,9 @@ class CategoriesModel extends KunenaModel
 
 		foreach ($categories as $category)
 		{
-			$batchCategories [] = HTMLHelper::_('select.option', $category->id,
+			$batchCategories [] = HTMLHelper::_(
+				'select.option',
+				$category->id,
 				str_repeat('...', count($category->indent) - 1) . ' ' . $category->name
 			);
 		}

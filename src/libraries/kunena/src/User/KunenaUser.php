@@ -1470,7 +1470,8 @@ class KunenaUser extends CMSObject
 			elseif ($this->isMyself())
 			{
 				$count     = $private->getUnreadCount($this->userid);
-				$this->_pm = $private->getInboxLink($count
+				$this->_pm = $private->getInboxLink(
+					$count
 					? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
 					: Text::_('COM_KUNENA_PMS_INBOX')
 				);

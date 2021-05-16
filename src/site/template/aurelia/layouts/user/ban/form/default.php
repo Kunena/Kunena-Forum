@@ -60,8 +60,14 @@ use function defined;
 
 				// Build the html select list
 				echo HTMLHelper::_(
-					'select.genericlist', $block, 'block', '', 'value', 'text',
-					$this->escape($this->banInfo->blocked), 'ban-level'
+					'select.genericlist',
+					$block,
+					'block',
+					'',
+					'value',
+					'text',
+					$this->escape($this->banInfo->blocked),
+					'ban-level'
 				);
 				?>
 			</td>
@@ -73,8 +79,11 @@ use function defined;
 			</td>
 			<td>
 				<?php echo HTMLHelper::_(
-					'calendar', $this->escape($this->banInfo->expiration), 'expiration',
-					'ban-expiration', '%Y-%m-%d %H:%M:%S'
+					'calendar',
+					$this->escape($this->banInfo->expiration),
+					'expiration',
+					'ban-expiration',
+					'%Y-%m-%d %H:%M:%S'
 				); ?>
 			</td>
 		</tr>

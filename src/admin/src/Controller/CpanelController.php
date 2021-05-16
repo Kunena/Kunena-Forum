@@ -114,7 +114,8 @@ class CpanelController extends FormController
 		{
 			// Has updates
 			Factory::getApplication()->enqueueMessage(
-				Text::_('Kunena Update Found.
+				Text::_(
+					'Kunena Update Found.
 					<a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">
 					 Update Now</a><br/> Please backup before updating.'
 				),
@@ -128,7 +129,8 @@ class CpanelController extends FormController
 		{
 			// Has updated add-ons
 			Factory::getApplication()->enqueueMessage(
-				Text::_('Kunena Update Found.
+				Text::_(
+					'Kunena Update Found.
 					<a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">
 					 Update Now</a><br/> Please backup before updating.'
 				),

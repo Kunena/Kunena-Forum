@@ -638,7 +638,8 @@ class KunenaMessage extends KunenaDatabaseObject
 		$recv_amount = count($receivers[1]) + count($receivers[0]);
 
 		Log::add("$recv_amount subscriptions for msg $mid sent for {$time_secs} [ms]", Log::DEBUG, 'kunena');
-		KunenaLog::log(($ok) ? KunenaLog::TYPE_REPORT : KunenaLog::TYPE_ERROR,
+		KunenaLog::log(
+			($ok) ? KunenaLog::TYPE_REPORT : KunenaLog::TYPE_ERROR,
 			KunenaLog::LOG_TOPIC_NOTIFY,
 			"$recv_amount subscriptions sent for $time_secs sec",
 			$this->getCategory(),
@@ -1720,12 +1721,14 @@ class KunenaMessage extends KunenaDatabaseObject
 		else
 		{
 			$title2 = substr($string, $start, $length);
-			$title  = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
+			$title  = preg_replace(
+				'/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
 				'|[\x00-\x7F][\x80-\xBF]+' .
 				'|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
 				'|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
 				'|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
-				'', $title2
+				'',
+				$title2
 			);
 		}
 

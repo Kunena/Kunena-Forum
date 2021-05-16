@@ -592,7 +592,8 @@ abstract class KunenaMessageHelper
 		$idlist = implode(',', $ids);
 		$db     = Factory::getDBO();
 		$query  = $db->getQuery(true);
-		$query->select('m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
+		$query->select(
+			'm.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
 				SUM(mm.time<m.time) AS before_count,
 				SUM(mm.time>m.time) AS after_count'
 		)

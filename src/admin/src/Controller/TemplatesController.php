@@ -60,7 +60,6 @@ class TemplatesController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -76,7 +75,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function publish(): void
 	{
@@ -112,7 +110,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function add()
 	{
@@ -137,7 +134,6 @@ class TemplatesController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
@@ -174,7 +170,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function install(): bool
 	{
@@ -299,7 +294,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function uninstall(): void
 	{
@@ -367,7 +361,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function chooseLess(): void
 	{
@@ -395,7 +388,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function editless(): void
 	{
@@ -424,7 +416,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function chooseCss(): void
 	{
@@ -444,7 +435,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function applyLess(): void
 	{
@@ -479,8 +469,10 @@ class TemplatesController extends FormController
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error'
+			$this->app->enqueueMessage(
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file),
+				'error'
 			);
 		}
 	}
@@ -493,7 +485,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function saveLess(): void
 	{
@@ -513,7 +504,8 @@ class TemplatesController extends FormController
 
 		if (!$templatename)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+			$this->app->enqueueMessage(
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
 				. Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.')
 			);
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -531,7 +523,8 @@ class TemplatesController extends FormController
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+			$this->app->enqueueMessage(
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
 				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file)
 			);
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseLess&id=' . $templatename, false));
@@ -546,7 +539,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function editCss(): void
 	{
@@ -575,7 +567,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function applyCss(): void
 	{
@@ -621,7 +612,6 @@ class TemplatesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function saveCss(): void
 	{
@@ -670,7 +660,6 @@ class TemplatesController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 3.0.5
-	 *
 	 */
 	public function cancel($key = null)
 	{

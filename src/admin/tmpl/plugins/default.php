@@ -192,9 +192,9 @@ if ($saveOrder)
 												<?php echo $item->name; ?>
                                             </a>
 											<?php echo HTMLHelper::_(
-												'bootstrap.renderModal',
-												'plugin' . $item->extension_id . 'Modal',
-												[
+									'bootstrap.renderModal',
+									'plugin' . $item->extension_id . 'Modal',
+									[
 													'url'         => Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
 													'title'       => $item->name,
 													'height'      => '400',
@@ -214,7 +214,7 @@ if ($saveOrder)
 														. 'Modal iframe\').contents().find(\'#applyBtn\').click(); return false;">'
 														. Text::_("JAPPLY") . '</button>',
 												]
-											); ?>
+								); ?>
 										<?php else : ?>
 											<?php echo $item->name; ?>
 										<?php endif; ?>

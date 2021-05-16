@@ -70,7 +70,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
 		$this->me = KunenaUserHelper::getMyself();
-		$template = KunenaFactory::getTemplate();
+		$this->ktemplate = KunenaFactory::getTemplate();
 
 		if (!$mesid)
 		{
@@ -142,7 +142,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 		// Can user edit topic icons?
 		if ($this->config->topicIcons && $this->topic->isAuthorised('edit'))
 		{
-			$this->topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
+			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
 		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote]);

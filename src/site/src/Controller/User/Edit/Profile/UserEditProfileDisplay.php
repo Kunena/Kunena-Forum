@@ -66,12 +66,12 @@ class UserEditProfileDisplay extends UserEditDisplay
 
 		if ($config->social)
 		{
-			$social = $this->profile->socialButtons();
-			$social = ArrayHelper::toObject($social);
+			$this->social = $this->profile->socialButtons();
+			$this->social = ArrayHelper::toObject($this->social);
 		}
 		else
 		{
-			$social = null;
+		    $this->social = null;
 		}
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE');

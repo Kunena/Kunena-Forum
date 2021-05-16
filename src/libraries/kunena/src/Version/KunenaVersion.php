@@ -163,7 +163,12 @@ class KunenaVersion
 
 		if ($db->loadResult())
 		{
-			$db->setQuery("SELECT * FROM " . $db->quoteName($db->getPrefix() . $prefix . 'version') . " ORDER BY `id` DESC", 0, 1);
+			$query = $db->getQuery(true);
+			$query
+				->select('*')
+				->from($db->quoteName($db->getPrefix() . $prefix . 'version'))
+				->order('id DESC');
+			$db->setQuery($query, 0, 1);
 			$version = $db->loadObject();
 		}
 

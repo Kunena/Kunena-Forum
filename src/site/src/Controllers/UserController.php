@@ -958,7 +958,15 @@ class UserController extends KunenaController
 
 		// TODO: remove this query by getting the ip of user by an another way
 		$db = Factory::getDBO();
-		$db->setQuery("SELECT ip FROM #__kunena_messages WHERE userid=" . $userid . " GROUP BY ip ORDER BY `time` DESC", 0, 1);
+		$query = $db->getQuery(true);
+		$query
+			->select($db->quoteName(array('ip')))
+			->from($db->quoteName('#__kunena_messages'))
+			->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
+			->group($db->quoteName('ip'))
+			->order('time DESC');
+
+		$db->setQuery($query, 0, 1);
 		$ip = $db->loadResult();
 
 		if (!empty($ip))

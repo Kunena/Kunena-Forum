@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\KunenaPrivate\Message;
 defined('_JEXEC') or die();
 
 use Exception;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
@@ -55,13 +56,13 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	}
 
 	/**
-	 * @param   KunenaPrivateMessage  $message  message object
+	 * @param   KunenaMessage  $message  message object
 	 *
 	 * @return  $this
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function filterByMessage(KunenaPrivateMessage $message): KunenaFinder
+	public function filterByMessage(KunenaMessage $message): KunenaFinder
 	{
 		if (!$message->id)
 		{

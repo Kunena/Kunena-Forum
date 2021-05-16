@@ -43,10 +43,6 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 	 */
 	protected $name = 'Topic/Edit';
 
-	private $me;
-
-	private $message;
-
 	/**
 	 * Prepare topic edit form.
 	 *
@@ -65,19 +61,19 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 		$mesid       = $this->input->getInt('mesid');
 		$saved       = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me      = KunenaUserHelper::getMyself();
-		$template      = KunenaFactory::getTemplate();
-		$this->message = KunenaMessageHelper::get($mesid);
+		$this->me        = KunenaUserHelper::getMyself();
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->message   = KunenaMessageHelper::get($mesid);
 		$this->message->tryAuthorise('edit');
 
-		$topic     = $this->message->getTopic();
-		$category1 = $topic->getCategory();
+		$this->topic     = $this->message->getTopic();
+		$this->category = $this->topic->getCategory();
 
-		$template->setCategoryIconset($topic->getCategory()->iconset);
+		$this->ktemplate->setCategoryIconset($this->topic->getCategory()->iconset);
 
-		if ($this->config->topicIcons && $topic->isAuthorised('edit'))
+		if ($this->config->topicIcons && $this->topic->isAuthorised('edit'))
 		{
-			$this->topicIcons = $template->getTopicIcons(false, $saved ? $saved['icon_id'] : $topic->icon_id);
+			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
 		if ($this->config->readOnly)
@@ -105,8 +101,8 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		$this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		$this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		$doc = Factory::getApplication()->getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
@@ -119,7 +115,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 				{
 					if ($value['relation'] == 'canonical')
 					{
-						$canonicalUrl               = $topic->getUrl();
+						$canonicalUrl               = $this->topic->getUrl();
 						$doc->_links[$canonicalUrl] = $value;
 						unset($doc->_links[$key]);
 						break;
@@ -136,7 +132,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
 		PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$topic, &$params, 0]);
+		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 
 		$this->action = 'edit';
 
@@ -145,13 +141,13 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
 		// Get poll.
 		if ($this->message->parent == 0
-			&& $topic->isAuthorised(!$topic->poll_id ? 'poll.create' : 'poll.edit')
+			&& $this->topic->isAuthorised(!$this->topic->poll_id ? 'poll.create' : 'poll.edit')
 		)
 		{
-			$this->poll = $topic->getPoll();
+			$this->poll = $this->topic->getPoll();
 		}
 
-		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($category1);
+		$this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
 		if ($saved)
 		{
@@ -162,24 +158,24 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 		$finder = new KunenaFinder;
 		$finder
 			->filterByMessage($this->message)
-			->where('parentid', '=', 0)
+			->where('parent_id', '=', 0)
 			->where('author_id', '=', $this->message->userid)
 			->order('id')
 			->limit(1);
 		$privateMessage       = $finder->firstOrNew();
 		$privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
 
-		$this->postAnonymous        = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($category1->postAnonymous);
+		$this->postAnonymous        = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->postAnonymous);
 		$this->subscriptionsChecked = false;
 		$this->canSubscribe         = false;
-		$usertopic                  = $topic->getUserTopic();
+		$usertopic                  = $this->topic->getUserTopic();
 
 		if ($this->config->allowSubscriptions)
 		{
 			$this->canSubscribe = true;
 		}
 
-		if ($topic->isAuthorised('subscribe') && $topic->exists())
+		if ($this->topic->isAuthorised('subscribe') && $this->topic->exists())
 		{
 			if ($usertopic->subscribed == 1)
 			{
@@ -197,7 +193,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 
-		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $topic->subject;
+		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 	}
 
 	/**

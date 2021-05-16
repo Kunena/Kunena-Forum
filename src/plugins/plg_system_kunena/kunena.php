@@ -35,9 +35,8 @@ class plgSystemKunena extends CMSPlugin
 	 * @param   object  $subject  Subject
 	 * @param   array   $config   Config
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function __construct(object $subject, array $config)
 	{
@@ -86,8 +85,10 @@ EOF;
 
 			if (!method_exists(KunenaControllerDisplay::class, 'poweredBy'))
 			{
-				Factory::getApplication()->enqueueMessage('Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
-					'notice');
+				Factory::getApplication()->enqueueMessage(
+					'Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
+					'notice'
+				);
 			}
 		}
 
@@ -96,12 +97,12 @@ EOF;
 	}
 
 	/**
-	 * @internal
-	 *
 	 * @param   string  $context  Context
 	 * @param   array   $params   Params
 	 *
 	 * @return  void
+	 *
+	 * @internal
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -121,9 +122,8 @@ EOF;
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function onUserAfterSave($user, bool $isnew, bool $success, string $msg): void
 	{
@@ -149,9 +149,8 @@ EOF;
 	 * @param   int     $eid       id
 	 *
 	 * @return  boolean|void
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function onExtensionBeforeInstall(string $method, string $type, string $manifest, int $eid): bool
 	{
@@ -167,16 +166,15 @@ EOF;
 	/**
 	 * Prevent downgrades to Kunena 1.7 and older releases
 	 *
-	 * @param   boolean  $type      type
-	 * @param   string   $manifest  manifest
+	 * @param   object  $type      type
+	 * @param   string  $manifest  manifest
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
-	public function onExtensionBeforeUpdate(bool $type, string $manifest): bool
+	public function onExtensionBeforeUpdate($type, string $manifest): bool
 	{
 		if ($type != 'component')
 		{
@@ -206,8 +204,11 @@ EOF;
 
 		// Old version detected: emulate failed installation
 		$app = Factory::getApplication();
-		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.',
-			KunenaForum::version(), $manifest->version), 'warning');
+		$app->enqueueMessage(sprintf(
+			'Sorry, it is not possible to downgrade Kunena %s to version %s.',
+			KunenaForum::version(),
+			$manifest->version
+		), 'warning');
 		$app->enqueueMessage(Text::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
 		$app->enqueueMessage(Text::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', Text::_('COM_INSTALLER_TYPE_TYPE_' . strtoupper($type))));
 		$app->redirect('index.php?option=com_installer');
@@ -243,7 +244,6 @@ EOF;
 	 * Runs all Joomla content plugins on a single \Kunena\Forum\Libraries\Forum\Message\Message
 	 *
 	 * @access  protected
-	 * @see     self::onKunenaPrepare()
 	 *
 	 * @param   string  $text    String to run events on
 	 * @param   object  $params  Joomla\Registry\Registry object holding eventual parameters
@@ -251,9 +251,10 @@ EOF;
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @see     self::onKunenaPrepare()
 	 */
 	protected function runJoomlaContentEvent(string &$text, object $params, $page = 0)
 	{

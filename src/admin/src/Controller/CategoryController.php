@@ -179,7 +179,7 @@ class CategoryController extends FormController
 			}
 
 			$category->bind($post, $ignore);
-			var_dump($category);
+
 			if (!$category->exists())
 			{
 				$category->ordering = 99999;

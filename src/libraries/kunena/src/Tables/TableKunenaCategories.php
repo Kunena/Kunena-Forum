@@ -406,7 +406,7 @@ class TableKunenaCategories extends KunenaTable
 	 *
 	 * @throws Exception
 	 */
-	public function isChild(int $id)
+	public function isChild($id)
 	{
 		// FIXME: when we have category cache, replace this code
 		if ($id > 0)

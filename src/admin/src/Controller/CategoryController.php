@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -52,7 +53,7 @@ class CategoryController extends FormController
 	 * @throws Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @see     BaseController
+	 * @see     FormController
 	 */
 	public function __construct($config = array())
 	{
@@ -178,20 +179,31 @@ class CategoryController extends FormController
 			}
 
 			$category->bind($post, $ignore);
-
+			var_dump($category);
 			if (!$category->exists())
 			{
 				$category->ordering = 99999;
 			}
 
-			$success    = $category->save();
+			try
+			{
+				$success    = $category->save();
+			}
+			catch (KunenaException $e)
+			{
+				$this->app->enqueueMessage(
+					Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id). ' '. $e->getMessage(),
+					'error'
+				);
+			}
+
 			$aliasesAll = explode(',', $input->getString('aliasesAll'));
 
 			$aliases = $input->post->getArray(['aliases' => '']);
 
-			if ($aliasesAll)
+			if ($aliasesAll && $aliases)
 			{
-				$aliases = array_diff($aliasesAll, $aliases['aliases']);
+				$aliases = array_diff($aliasesAll, $aliases);
 
 				foreach ($aliasesAll as $alias)
 				{
@@ -203,14 +215,6 @@ class CategoryController extends FormController
 			$read                = $this->app->getUserState("com_kunena.user{$me->userid}_read");
 			$read[$category->id] = $category->id;
 			$this->app->setUserState("com_kunena.user{$me->userid}_read", null);
-
-			if (!$success)
-			{
-				$this->app->enqueueMessage(
-					Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
-					'notice'
-				);
-			}
 
 			$category->checkIn();
 		}

@@ -88,9 +88,9 @@ class UserEditAvatarDisplay extends UserEditDisplay
 	{
 		parent::before();
 
-		$avatar = KunenaFactory::getAvatarIntegration();
+		$this->avatar = KunenaFactory::getAvatarIntegration();
 
-		if (!($avatar instanceof KunenaAvatar))
+		if (!($this->avatar instanceof KunenaAvatar))
 		{
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_AUTH_ERROR_USER_EDIT_AVATARS'), 404);
 		}
@@ -102,7 +102,7 @@ class UserEditAvatarDisplay extends UserEditDisplay
 		$this->galleryImages  = isset($this->galleries[$this->gallery])
 			? $this->galleries[$this->gallery]
 			: reset($this->galleries);
-		$galleryUri           = Uri::root(true) . '/media/kunena/avatars/gallery';
+		$this->galleryUri           = Uri::root(true) . '/media/kunena/avatars/gallery';
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
 	}

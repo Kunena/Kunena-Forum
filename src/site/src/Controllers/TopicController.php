@@ -1528,7 +1528,7 @@ class TopicController extends KunenaController
 		$finder    = new KunenaFinder;
 		$finder
 			->filterByMessage($message)
-			->where('parentid', '=', 0)
+			->where('parent_id', '=', 0)
 			->where('author_id', '=', $message->userid)
 			->order('id')
 			->limit(1);

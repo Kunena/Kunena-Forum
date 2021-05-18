@@ -44,7 +44,7 @@ class SearchController extends KunenaController
 	 */
 	public function results()
 	{
-		$model = $this->getModel('Search');
+		$model = $this->getModel('Search', 'Kunena\Forum\Site\\');
 		$this->setRedirect(
 			$model->getSearchURL(
 				'search',
@@ -55,5 +55,21 @@ class SearchController extends KunenaController
 				false
 			)
 		);
+	}
+
+	/**
+	 * Custom getModel() else it want to load from LegacyModelLoaderTrait
+	 * 
+	 * @see \Joomla\CMS\MVC\Controller\BaseController::getModel()
+	 * 
+	 * @since   Kunena 6.0
+	 */
+	public function getModel($name = '', $prefix = '', $config = array())
+	{
+		$className = $prefix . 'Model\\' . ucfirst($name) . 'Model';
+
+		$model = new $className($config);
+
+		return $model;
 	}
 }

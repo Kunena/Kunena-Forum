@@ -18,7 +18,7 @@ use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Controller\Application\Display;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\KunenaInstaller;
@@ -83,7 +83,7 @@ EOF;
 				}
 			}
 
-			if (!method_exists(KunenaControllerDisplay::class, 'poweredBy'))
+			if (!method_exists(Display::class, 'poweredBy'))
 			{
 				Factory::getApplication()->enqueueMessage(
 					'Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',

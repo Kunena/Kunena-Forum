@@ -253,7 +253,7 @@ class KunenaUpload
 
 					if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
 					{
-						if (!$this->checkFileSizeImage($size, $options['image_type']))
+						if (!$this->checkFileSizeImageAttachment($size, $options['image_type']))
 						{
 							throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 						}
@@ -521,7 +521,7 @@ class KunenaUpload
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function toBytes(string $value): int
+	public static function toBytes(string $value)
 	{
 		$base = log((int) $value, 1024);
 

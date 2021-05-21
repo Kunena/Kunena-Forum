@@ -97,6 +97,7 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
 $this->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
 $this->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
 
+$this->addScript('jquery.ui.widget.js');
 $this->addScript('load-image.min.js');
 $this->addScript('canvas-to-blob.min.js');
 $this->addScript('jquery.fileupload.js');

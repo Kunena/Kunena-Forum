@@ -43,7 +43,7 @@ jQuery(document).ready(function ($) {
 	const qreply = $('.qreply');
 	const editor = $('#editor');
 
-	$('#tabs_kunena_editor a:first').tab('show');
+	//$('#tabs_kunena_editor a:first').tab('show');
 
 	$('#tabs_kunena_editor a[href="#preview"]').click(function (e) {
 		$('a[href="#write"]').parents('li,ul').removeClass('active');

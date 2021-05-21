@@ -49,13 +49,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	protected $name = 'Topic/Edit';
-	private $topic;
-	private $me;
-	/**
-	 * @var mixed
-	 * @since version
-	 */
-	private $message;
+
 
 	/**
 	 * Prepare topic creation form.
@@ -110,7 +104,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		}
 
 		$this->me       = KunenaUserHelper::getMyself();
-		$this->template = KunenaFactory::getTemplate();
+		$this->ktemplate = KunenaFactory::getTemplate();
 
 		$categories        = KunenaCategoryHelper::getCategories();
 		$arrayanynomousbox = [];
@@ -138,23 +132,23 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		}
 
 		// FIXME: We need to proxy this...
-		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
-		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		$this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		$this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		$this->category = KunenaCategoryHelper::get($catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
-		$this->template->setCategoryIconset($this->topic->getCategory()->iconset);
+		$this->ktemplate->setCategoryIconset($this->topic->getCategory()->iconset);
 
 		// Get topic icons if they are enabled.
 		if ($this->config->topicIcons)
 		{
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
+			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
 		if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha())
 		{
-			$this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+			$this->captchaDisplay = $this->ktemplate->recaptcha();
 			$this->captchaEnabled = true;
 		}
 		else

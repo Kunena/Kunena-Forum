@@ -12,9 +12,10 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -22,16 +23,82 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Input\Input;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
+
+/** @var HtmlDocument $doc */
+$doc = Factory::getApplication()->getDocument();
+$wa  = $doc->getWebAssetManager();
+
+// Add assets
+$wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.css')
+	->registerAndUseScript('jquery.ui.widget', 'media/kunena/core/js/jquery.ui.widget.js')
+	->registerAndUseScript('load-image', 'media/kunena/core/js/load-image.min.js')
+	->registerAndUseScript('canvas-to-blob', 'media/kunena/core/js/canvas-to-blob.min.js')
+	->registerAndUseScript('jquery.fileupload', 'media/kunena/core/js/jquery.fileupload.js')
+	->registerAndUseScript('jquery.fileupload-process', 'media/kunena/core/js/jquery.fileupload-process.js')
+	->registerAndUseScript('jquery.iframe-transport', 'media/kunena/core/js/jquery.iframe-transport.js')
+	->registerAndUseScript('jquery.fileupload-image', 'media/kunena/core/js/jquery.fileupload-image.js')
+	->registerAndUseScript('jquery.fileupload-audio', 'media/kunena/core/js/jquery.fileupload-audio.js')
+	->registerAndUseScript('jquery.fileupload-video', 'media/kunena/core/js/jquery.fileupload-video.js')
+	->registerAndUseScript('jquery.fileupload-validate', 'media/kunena/core/js/jquery.fileupload-validate.js')
+	->registerAndUseScript('upload.main', 'media/kunena/core/js/upload.main.js')
+	->registerAndUseScript('edit', 'components/com_kunena/template/aurelia/assets/js/edit.js');
+
+// If polls are enabled, load also poll JavaScript.
+if ($this->config->pollEnabled)
+{
+	Text::script('COM_KUNENA_POLL_OPTION_NAME');
+	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
+	$wa->registerAndUseScript('poll', 'media/kunena/core/js/poll.js');
+}
+
+$this->k       = 0;
+$topicicontype = $this->ktemplate->params->get('topicicontype');
+$editor        = $this->ktemplate->params->get('editor');
+$suffix        = CMSApplication::getInstance('site')->get('sef_suffix');
+
+$me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
+
+echo $this->subLayout('Widget/Lightbox');
+
+if ($this->ktemplate->params->get('formRecover'))
+{
+	$wa->registerAndUseScript('sisyphus', 'media/kunena/core/js/sisyphus.js');
+}
+
+$doc->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
+$doc->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
+$doc->addScriptOptions('com_kunena.allowEditPoll', $this->config->allowEditPoll);
+$doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
+$doc->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
+$doc->addScriptOptions(
+	'com_kunena.kunena_upload_files_rem',
+	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' .
+		Session::getFormToken() . '=1', false)
+);
+$doc->addScriptOptions(
+	'com_kunena.kunena_upload_files_rem_inline',
+	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' .
+		Session::getFormToken() . '=1', false)
+);
+$doc->addScriptOptions(
+	'com_kunena.kunena_upload_files_preload',
+	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' .
+		Session::getFormToken() . '=1', false)
+);
+$doc->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
+$doc->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
+$doc->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
+$doc->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
+$doc->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
+$doc->addScriptOptions('com_kunena.icons.secure', KunenaIcons::secure());
+$doc->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
 
 // Load scripts to handle fileupload process
 Text::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
@@ -93,63 +160,6 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SMALL');
 Text::script('COM_KUNENA_EDITOR_SIZE_NORMAL');
 Text::script('COM_KUNENA_EDITOR_SIZE_BIG');
 Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
-
-$this->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
-$this->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
-
-$this->addScript('jquery.ui.widget.js');
-$this->addScript('load-image.min.js');
-$this->addScript('canvas-to-blob.min.js');
-$this->addScript('jquery.fileupload.js');
-$this->addScript('jquery.fileupload-process.js');
-$this->addScript('jquery.iframe-transport.js');
-$this->addScript('jquery.fileupload-image.js');
-$this->addScript('jquery.fileupload-audio.js');
-$this->addScript('jquery.fileupload-video.js');
-$this->addScript('jquery.fileupload-validate.js');
-$this->addScript('upload.main.js');
-$this->addStyleSheet('fileupload.css');
-
-$this->k = 0;
-
-$this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
-$this->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
-$this->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
-$this->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
-$this->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
-$this->addScriptOptions('com_kunena.icons.secure', KunenaIcons::secure());
-
-$suffix = CMSApplication::getInstance('site')->get('sef_suffix');
-$this->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
-
-$topicicontype   = $this->ktemplate->params->get('topicicontype');
-$editor          = $this->ktemplate->params->get('editor');
-
-$me          = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
-
-// If polls are enabled, load also poll JavaScript.
-if ($this->config->pollEnabled)
-{
-	Text::script('COM_KUNENA_POLL_OPTION_NAME');
-	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-	$this->addScript('poll.js');
-}
-
-$this->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
-$this->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
-$this->addScriptOptions('com_kunena.allowEditPoll', $this->config->allowEditPoll);
-
-$this->addScript('assets/js/edit.js');
-
-echo $this->subLayout('Widget/Lightbox');
-
-if ($this->ktemplate->params->get('formRecover'))
-{
-	$this->addScript('sisyphus.js');
-}
 ?>
     <div id="modal_confirm_template_category" class="modal fade" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-hidden="true">
@@ -199,35 +209,35 @@ if ($this->ktemplate->params->get('formRecover'))
 			:
 			?>
             <input type="hidden" name="task" value="edit"/>
-            <input id="kmessageid" type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>"/>
+            <input id="kmessageid" type="hidden" name="mesid" value="<?php echo \intval($this->message->id) ?>"/>
 		<?php else
 
 			:
 			?>
             <input type="hidden" name="task" value="post"/>
-            <input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>"/>
+            <input type="hidden" name="parentid" value="<?php echo \intval($this->message->parent) ?>"/>
 		<?php endif; ?>
 		<?php
 		if (!isset($this->selectcatlist))
 			:
 			?>
-            <input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>"/>
+            <input type="hidden" name="catid" value="<?php echo \intval($this->message->catid) ?>"/>
 		<?php endif; ?>
 		<?php
 		if ($this->category->id && $this->category->id != $this->message->catid)
 			:
 			?>
-            <input type="hidden" name="return" value="<?php echo intval($this->category->id) ?>"/>
+            <input type="hidden" name="return" value="<?php echo \intval($this->category->id) ?>"/>
 		<?php endif; ?>
 		<?php
 		if ($this->message->getTopic()->first_post_id == $this->message->id && $this->message->getTopic()->getPoll()->id)
 			:
 			?>
             <input type="hidden" id="poll_exist_edit" name="poll_exist_edit"
-                   value="<?php echo intval($this->message->getTopic()->getPoll()->id) ?>"/>
+                   value="<?php echo \intval($this->message->getTopic()->getPoll()->id) ?>"/>
 		<?php endif; ?>
         <input type="hidden" id="kunena_upload" name="kunena_upload"
-               value="<?php echo intval($this->message->catid) ?>"/>
+               value="<?php echo \intval($this->message->catid) ?>"/>
         <input type="hidden" id="kunena_upload_files_url"
                value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&format=json&' . Session::getFormToken() . '=1', false) ?>"/>
 		<?php if ($this->me->exists())

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Item;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -44,7 +44,6 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
-use function defined;
 
 /**
  * Class ComponentTopicControllerItemDisplay
@@ -252,9 +251,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
 		{
 			foreach ($doc->_links as $key => $value)
 			{
-				if (is_array($value))
+				if (\is_array($value))
 				{
-					if (array_key_exists('relation', $value))
+					if (\array_key_exists('relation', $value))
 					{
 						if ($value['relation'] == 'canonical')
 						{
@@ -425,7 +424,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	{
 		$list = [];
 
-		if (count($indent) == 1 && $this->topic->getTotal() > $this->pagination->limitstart + $this->pagination->limit)
+		if (\count($indent) == 1 && $this->topic->getTotal() > $this->pagination->limitstart + $this->pagination->limit)
 		{
 			$last = -1;
 		}
@@ -691,9 +690,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
 		{
 			foreach ($doc->_links as $key => $value)
 			{
-				if (is_array($value))
+				if (\is_array($value))
 				{
-					if (array_key_exists('relation', $value))
+					if (\array_key_exists('relation', $value))
 					{
 						if ($value['relation'] == 'canonical')
 						{

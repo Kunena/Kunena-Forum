@@ -12,12 +12,12 @@
 
 namespace Kunena\Forum\Libraries\Controller\Application;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Document\HtmlDocument;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\BaseLayout;
 use Joomla\CMS\Pathway\Pathway;
@@ -36,7 +36,6 @@ use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaControllerApplicationDisplay
@@ -55,56 +54,55 @@ class Display extends KunenaControllerDisplay
 	 * @var     KunenaLayout
 	 * @since   Kunena 6.0
 	 */
-	protected $page;
+	public $page;
 
 	/**
 	 * @var     KunenaLayout
 	 * @since   Kunena 6.0
 	 */
-	protected $content;
+	public $content;
 
 	/**
 	 * @var     Pathway
 	 * @since   Kunena 6.0
 	 */
-	protected $breadcrumb;
+	public $breadcrumb;
 
 	/**
 	 * @var     KunenaUser
 	 * @since   Kunena 6.0
 	 */
-	protected $me;
+	public $me;
 
 	/**
 	 * @var     KunenaTemplate
 	 * @since   Kunena 6.0
 	 */
-	protected $template;
+	public $template;
 
 	/**
 	 * @var     HtmlDocument
 	 * @since   Kunena 6.0
 	 */
-	protected $document;
+	public $document;
 
 	/**
 	 * @return  BaseLayout
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
 	 */
 	public function execute(): BaseLayout
 	{
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		// Run before executing action.
 		$result = $this->before();
 
 		if ($result === false)
 		{
-			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
 
@@ -168,9 +166,9 @@ class Display extends KunenaControllerDisplay
 						->set(
 							'body',
 							Text::sprintf(
-							'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
-							KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
-						)
+								'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
+								KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
+							)
 						);
 					$this->document->setMetaData('robots', 'noindex, follow');
 				}
@@ -236,7 +234,7 @@ class Display extends KunenaControllerDisplay
 		// Run after executing action.
 		$this->after();
 
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		return $this->output;
 	}
@@ -244,18 +242,17 @@ class Display extends KunenaControllerDisplay
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	protected function before()
 	{
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		if (!$this->exists())
 		{
-			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 			throw new RuntimeException("Layout '{$this->input->getWord('view')}/{$this->input->getWord('layout', 'default')}' does not exist!", 404);
 		}
 
@@ -325,15 +322,14 @@ class Display extends KunenaControllerDisplay
 		// Initialize breadcrumb.
 		$this->breadcrumb = $this->app->getPathway();
 
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	public function exists(): bool
 	{
@@ -353,9 +349,8 @@ class Display extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	public function setResponseStatus($code = 404): void
 	{
@@ -406,13 +401,12 @@ class Display extends KunenaControllerDisplay
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	protected function after()
 	{
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		// Use our own browser side cache settings.
 		Factory::getApplication()->allowCache(false);
@@ -426,15 +420,14 @@ class Display extends KunenaControllerDisplay
 			$this->output->appendAfter($this->poweredBy());
 		}
 
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 	}
 
 	/**
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	final public function poweredBy(): string
 	{

@@ -68,9 +68,9 @@ class CategoriesModel extends KunenaModel
 	/**
 	 * @return  array|boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAdminOptions()
 	{
@@ -134,8 +134,8 @@ class CategoriesModel extends KunenaModel
 		$lists                    = [];
 		$lists ['accesstypes']    = KunenaAccess::getInstance()->getAccessTypesList($category);
 		$lists ['accesslists']    = KunenaAccess::getInstance()->getAccessOptions($category);
-		$lists ['categories']     = HTMLHelper::_('kunenaforum.categorylist', 'parentid', 0, null, $catParams, 'class="inputbox"', 'value', 'text', $category->parentid);
-		$lists ['channels']       = HTMLHelper::_('kunenaforum.categorylist', 'channels[]', 0, $channelsOptions, $channelsParams, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
+		$lists ['categories']     = HTMLHelper::_('kunenaforum.categorylist', 'parentid', 0, null, $catParams, 'class="inputbox form-control"', 'value', 'text', $category->parentid);
+		$lists ['channels']       = HTMLHelper::_('kunenaforum.categorylist', 'channels[]', 0, $channelsOptions, $channelsParams, 'class="inputbox form-control" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
 		$lists ['aliases']        = $aliases ? HTMLHelper::_('kunenaforum.checklist', 'aliases', $aliases, true, 'category_aliases') : null;
 		$lists ['published']      = HTMLHelper::_('select.genericlist', $published, 'published', 'class="inputbox form-control"', 'value', 'text', $category->published);
 		$lists ['forumLocked']    = HTMLHelper::_('select.genericlist', $yesno, 'locked', 'class="inputbox form-control" size="1"', 'value', 'text', $category->locked);
@@ -182,9 +182,9 @@ class CategoriesModel extends KunenaModel
 	/**
 	 * @return  boolean|KunenaCategory|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAdminCategory()
 	{
@@ -249,9 +249,9 @@ class CategoriesModel extends KunenaModel
 	/**
 	 * @return  array|boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAdminModerators()
 	{
@@ -271,9 +271,9 @@ class CategoriesModel extends KunenaModel
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function saveOrder($pks = null, $order = null): bool
 	{
@@ -355,10 +355,10 @@ class CategoriesModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @since   Kunena 5.1
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 5.1
+	 *
 	 */
 	public function getBatchCategories(): array
 	{
@@ -381,10 +381,10 @@ class CategoriesModel extends KunenaModel
 	/**
 	 * @return  array|KunenaCategory[]
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getAdminCategories()
 	{

@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Display poll end time if exist next to the poll title on results and vote layout
 
 ### Changed
+* Update CKeditor to 4.16.1
 * Set a bit smaller the poll life time
 * Set the following date format for all datepicker : yyyy-mm-dd
 

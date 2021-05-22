@@ -40,172 +40,172 @@ if ($show)
 	$personalText = $user->getPersonalText();
 }
 ?>
-	<ul class="unstyled center profilebox">
-		<li>
-			<strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
-		</li>
+    <ul class="unstyled center profilebox">
+        <li>
+            <strong><?php echo $user->getLink(null, null, '', '', null, $this->category_id); ?></strong>
+        </li>
 		<?php if ($optional_username)
-		:
+			:
 			?>
-			<li>
-				[<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
-			</li>
+            <li>
+                [<?php echo $user->getLinkNoStyle('', '', 'kpost-username-optional') ?>]
+            </li>
 		<?php endif; ?>
 		<?php
 		if ($avatar)
-		:
+			:
 			?>
-			<li>
+            <li>
 				<?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avatarEdit); ?>
 				<?php
 				if (isset($this->topic_starter) && $this->topic_starter)
-				:
+					:
 					?>
-					<span class="hidden-sm hidden-md topic-starter"><?php echo Text::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+                    <span class="hidden-sm hidden-md topic-starter"><?php echo Text::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif;
 				?>
 				<?php /*if (!$this->topic_starter && $user->isModerator()) : */ ?><!--
 			<span class="topic-moderator"><?php /*echo Text::_('COM_KUNENA_MODERATOR') */ ?></span>
 		--><?php /*endif;*/ ?>
-			</li>
+            </li>
 		<?php endif; ?>
 
 		<?php if ($user->exists() && $config->userStatus)
-		:
+			:
 			?>
-			<li>
+            <li>
 				<?php echo $this->subLayout('User/Item/Status')->set('user', $user); ?>
-			</li>
+            </li>
 		<?php endif; ?>
 
 		<?php if (!empty($rankTitle))
-		:
+			:
 			?>
-			<li>
+            <li>
 				<?php echo $this->escape($rankTitle); ?>
-			</li>
+            </li>
 		<?php endif; ?>
 
 		<?php if (!empty($rankImage))
-		:
+			:
 			?>
-			<li>
+            <li>
 				<?php echo $rankImage; ?>
-			</li>
+            </li>
 		<?php endif; ?>
 
 		<?php if (!empty($personalText))
-		:
+			:
 			?>
-			<li>
+            <li>
 				<?php echo $personalText; ?>
-			</li>
+            </li>
 		<?php endif; ?>
-	</ul>
+    </ul>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_default'); ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_default_' . $user->userid); ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_default_' . $user->rank); ?>
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofile'); ?>
 <?php
 if ($user->userid > 1)
-:
+	:
 	?>
-	<div class="profile-expand center">
+    <div class="profile-expand center">
 		<span class="heading btn btn-outline-primary border btn-xs heading-less"
-			  style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
-		<span class="heading btn btn-outline-primary border btn-xs"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
-		<div class="content" style="display:none;">
-			<ul>
+              style="display:none;"><?php echo KunenaIcons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_LESS') ?></span>
+        <span class="heading btn btn-outline-primary border btn-xs"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+        <div class="content" style="display:none;">
+            <ul>
 				<?php if ($user->posts >= 1)
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo Text::_('COM_KUNENA_POSTS') . ' ' . (int) $user->posts; ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if ($canseekarma && $config->showKarma)
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo Text::_('COM_KUNENA_KARMA') . ': ' . $this->subLayout('Widget/Karma')->setLayout('minus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid) . $this->subLayout('Widget/Karma')->setLayout('plus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid); ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if ($show && isset($user->thankyou) && $config->showThankYou)
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo Text::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if ($show && !empty($points))
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo Text::_('COM_KUNENA_AUP_POINTS') . ' ' . $points; ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if ($show && !empty($medals))
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo implode(' ', $medals); ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if ($user->gender)
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo $user->profileIcon('gender'); ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if ($user->birthdate)
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo $user->profileIcon('birthdate'); ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if ($user->location)
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo $user->profileIcon('location'); ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if ($user->websiteurl)
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo $user->profileIcon('website'); ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if (KunenaFactory::getPrivateMessaging())
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo $user->profileIcon('private'); ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php if ($user->email && !$user->hideEmail && $config->showEmail)
-				:
+					:
 					?>
-					<li>
+                    <li>
 						<?php echo $user->profileIcon('email'); ?>
-					</li>
+                    </li>
 				<?php endif; ?>
 
 				<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_topicprofilemore'); ?>
-			</ul>
-		</div>
-	</div>
+            </ul>
+        </div>
+    </div>
 <?php endif;

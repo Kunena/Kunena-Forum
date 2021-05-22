@@ -111,24 +111,36 @@ if ($this->topic->locked)
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_poll');
 	}
 
-	echo '<div class="topic-item-messages">';
+	$count = 1;
 
-	$count          = 1;
-	$this->messages = \Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper::getMessagesByTopic($this->topic);
-	foreach ($this->messages as $id => $message)
+	try
 	{
-		echo $this->subRequest('Topic/Item/Message')
-			->set('mesid', $message->id)
-			->set('location', $id);
-
-		if ($this->ktemplate->params->get('displayModule'))
-		{
-			echo $this->subLayout('Widget/Module')
-				->set('position', 'kunena_msg_row_' . $count++);
-		}
+		$this->messages = \Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper::getMessagesByTopic($this->topic);
+	}
+	catch (Exception $e)
+	{
+		echo '<div class="topic-item-messages-error">' . $e->getMessage() . '</div>';
 	}
 
-	echo '</div>';
+	if ($this->messages)
+	{
+		echo '<div class="topic-item-messages">';
+
+		foreach ($this->messages as $id => $message)
+		{
+			echo $this->subRequest('Topic/Item/Message')
+				->set('mesid', $message->id)
+				->set('location', $id);
+
+			if ($this->ktemplate->params->get('displayModule'))
+			{
+				echo $this->subLayout('Widget/Module')
+					->set('position', 'kunena_msg_row_' . $count++);
+			}
+		}
+
+		echo '</div>';
+	}
 
 	if ($quick == 2 && KunenaConfig::getInstance()->quickReply)
 	{

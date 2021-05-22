@@ -581,13 +581,13 @@ class KunenaUser extends CMSObject
 	private $_app;
 
 	/**
-	 * @internal
-	 *
 	 * @param   int  $identifier  identifier
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @internal
+	 *
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -616,9 +616,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean True on success
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function load($id): bool
 	{
@@ -682,9 +682,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false): KunenaUser
 	{
@@ -699,9 +699,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws Exception
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null): bool
 	{
@@ -717,9 +717,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  KunenaExceptionAuthorise|boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws Exception
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -825,8 +825,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function isAdmin(KunenaCategory $category = null): bool
 	{
@@ -842,8 +842,8 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function isModerator(KunenaCategory $category = null): bool
 	{
@@ -925,9 +925,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function delete(): bool
 	{
@@ -951,9 +951,9 @@ class KunenaUser extends CMSObject
 	/**
 	 * @return  integer
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getStatus(): int
 	{
@@ -963,9 +963,9 @@ class KunenaUser extends CMSObject
 	/**
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getStatusText(): string
 	{
@@ -975,9 +975,9 @@ class KunenaUser extends CMSObject
 	/**
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAllowedCategories(): ?array
 	{
@@ -992,9 +992,9 @@ class KunenaUser extends CMSObject
 	/**
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getMessageOrdering(): string
 	{
@@ -1021,9 +1021,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90, $online = ''): string
 	{
@@ -1102,9 +1102,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAvatarURL($sizex = 'thumb', $sizey = 90): string
 	{
@@ -1116,10 +1116,6 @@ class KunenaUser extends CMSObject
 	/**
 	 * Get users type as a string inside the specified category.
 	 *
-	 * @internal param bool $code True if we want to return the code, otherwise return translation key.
-	 *
-	 * @internal param int $catid Category id or 0 for global.
-	 *
 	 * @param   string  $class  class
 	 *
 	 * @param   string  $name   name
@@ -1127,9 +1123,13 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
+	 * @internal param int $catid Category id or 0 for global.
+	 *
 	 * @since    Kunena 5.1.0
 	 *
-	 * @throws  Exception
+	 * @internal param bool $code True if we want to return the code, otherwise return translation key.
+	 *
 	 */
 	public function getLinkNoStyle($name = null, $title = null, $class = null)
 	{
@@ -1182,9 +1182,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getURL($xhtml = true, $task = '')
 	{
@@ -1210,9 +1210,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  KunenaDate  User time instance.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTime(): KunenaDate
 	{
@@ -1280,9 +1280,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function setTopicLayout($layout = 'default'): void
 	{
@@ -1344,9 +1344,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($updateOnly = false): bool
 	{
@@ -1409,9 +1409,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getPrivateMsgURL(): string
 	{
@@ -1425,9 +1425,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getPrivateMsgLabel(): string
 	{
@@ -1453,9 +1453,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string  URL.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getPrivateMsgLink(): string
 	{
@@ -1472,8 +1472,8 @@ class KunenaUser extends CMSObject
 				$count     = $private->getUnreadCount($this->userid);
 				$this->_pm = $private->getInboxLink(
 					$count
-					? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
-					: Text::_('COM_KUNENA_PMS_INBOX')
+						? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
+						: Text::_('COM_KUNENA_PMS_INBOX')
 				);
 			}
 			else
@@ -1492,9 +1492,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean Cloaked email address or empty string.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
 	 */
 	public function getEmail($profile): bool
 	{
@@ -1527,9 +1527,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string  Cloaked email address or empty string.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getEmailLink(): string
 	{
@@ -1646,9 +1646,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getSignature()
 	{
@@ -1672,9 +1672,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function canSeeKarma(): bool
 	{
@@ -1699,9 +1699,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws Exception
 	 */
 	public function getSideProfile(KunenaLayout $layout)
 	{
@@ -1788,9 +1788,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  stdClass|string|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getRank($catid = 0, $type = null, $special = null)
 	{
@@ -2009,9 +2009,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getType($catid = 0, $code = false): string
 	{
@@ -2157,9 +2157,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function rankCss(object $rank, int $catid): string
 	{
@@ -2253,9 +2253,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getPersonalText()
 	{
@@ -2292,9 +2292,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function profileIcon(string $name): string
 	{
@@ -2318,17 +2318,13 @@ class KunenaUser extends CMSObject
 				return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" data-bs-toggle="tooltip" data-placement="right" title="' . $title . '"></span>';
 				break;
 			case 'birthdate' :
-				if ($this->birthdate)
+				if (!$this->birthdate)
 				{
-					$date = new KunenaDate($this->birthdate);
-
-					if ($date->format('%Y') < 1902)
-					{
-						break;
-					}
-
-					return '<span class="kicon-profile kicon-profile-birthdate" data-bs-toggle="tooltip" data-placement="right" title="' . Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_BIRTHDATE', $this->birthdate->toKunena('date', 'GMT')) . '"></span>';
+					return false;
 				}
+
+				return '<span class="kicon-profile kicon-profile-birthdate" data-bs-toggle="tooltip" data-placement="right" title="' . Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_BIRTHDATE', $this->birthdate) . '"></span>';
+
 				break;
 			case 'location' :
 				if ($this->location)
@@ -2388,9 +2384,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0, $avatarLink = 0): string
 	{
@@ -2489,9 +2485,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws Exception
 	 */
 	public function socialButtonsTemplate(string $name, $gray = false)
 	{
@@ -2719,9 +2715,9 @@ class KunenaUser extends CMSObject
 	 *
 	 * @return  boolean|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function canDoCaptcha()
 	{

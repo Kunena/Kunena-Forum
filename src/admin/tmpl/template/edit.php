@@ -59,9 +59,9 @@ $wa->useScript('multiselect');
 												?>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link"
-                                                            id="tab_<?php echo strtolower(Text::_($fieldset->name)); ?>-tab"
+                                                            id="tab_<?php echo strtolower($fieldset->name); ?>-tab"
                                                             data-bs-toggle="tab"
-                                                            data-bs-target="#tab_<?php echo strtolower(Text::_($fieldset->name)); ?>"
+                                                            data-bs-target="#tab_<?php echo strtolower($fieldset->name); ?>"
                                                             type="button" role="tab"
                                                             aria-controls="tab_<?php echo strtolower(Text::_($fieldset->name)); ?>"
                                                             aria-selected="true"><?php echo strtolower(Text::_($fieldset->name)); ?></button>
@@ -121,7 +121,7 @@ $wa->useScript('multiselect');
 												:
 												?>
                                                 <div class="tab-pane fade show"
-                                                     id="tab_<?php echo strtolower(Text::_($fieldset->name)); ?>"
+                                                     id="tab_<?php echo strtolower($fieldset->name); ?>"
                                                      role="tabpanel"
                                                      aria-labelledby="tab_<?php echo strtolower(Text::_($fieldset->name)); ?>-tab">
                                                     <table class="table table-bordered table-striped">

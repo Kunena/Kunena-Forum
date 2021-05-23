@@ -1573,6 +1573,18 @@ class KunenaConfig extends CMSObject
 	public $disableRe = 0;
 
 	/**
+	 * @var string
+	 * @since  K5.1.18
+	 */
+	public $email_sender_name = '';
+
+	/**
+	 * @var integer
+	 * @since  K5.1.19
+	 */
+	public $display_filename_attachment = 0;
+
+	/**
 	 * @var    boolean  utm source
 	 * @since  Kunena 1.0.5
 	 */

@@ -2592,7 +2592,7 @@ class TopicController extends KunenaController
 
 			if (!empty($emailToList))
 			{
-				$mailsender  = MailHelper::cleanAddress($this->config->boardTitle . ': ' . $this->me->getName());
+				$mailnamesender = !empty($this->config->email_sender_name) ? \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->email_sender_name) : \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->board_title . ': ' . $this->me->getName());
 				$mailsubject = "[" . $this->config->boardTitle . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
 
 				if ($reason)
@@ -2623,7 +2623,7 @@ class TopicController extends KunenaController
 				$user = $this->app->getIdentity();
 				$mail = Factory::getMailer();
 				$mail->setSubject($mailsubject);
-				$mail->setSender([$this->config->getEmail(), $mailsender]);
+				$mail->setSender([$this->config->getEmail(), $mailnamesender]);
 				$mail->addReplyTo($this->me->email, $this->me->username);
 
 				$mailer = new MailTemplate('com_kunena.report', $user->getParam('language', $this->app->get('language')), $mail);

@@ -26,7 +26,7 @@ use function defined;
 	<thead>
 	<tr>
 		<th class="col-md-1 center">
-			#
+			<?php echo Text::_('COM_KUNENA_BAN_BANNEDUSERID'); ?>
 		</th>
 		<th class="col-md-4">
 			<?php echo Text::_('COM_KUNENA_BAN_BANNEDUSER'); ?>
@@ -56,7 +56,7 @@ use function defined;
 			?>
 			<tr>
 				<td class="center">
-					<?php echo ++$i; ?>
+					<?php echo $banInfo->userid; ?>
 				</td>
 				<td>
 					<?php echo $banInfo->getUser()->getLink(); ?>
@@ -90,3 +90,8 @@ use function defined;
 
 	</tbody>
 </table>
+<div class="pull-left">
+	<?php echo $this->subLayout('Widget/Pagination/List')
+		->set('pagination', $this->pagination->setDisplayedPages(4))
+		->set('display', true); ?>
+</div>

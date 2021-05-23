@@ -1873,6 +1873,9 @@ class ConfigModel extends AdminModel
 		$lists ['useSystemEmails']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_useSystemEmails', 'class="inputbox form-control"size="1"', 'value', 'text', $config->useSystemEmails);
 		$lists ['autoEmbedInstagram'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedInstagram', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoEmbedInstagram);
 
+		// K 5.1.19
+		$lists ['display_filename_attachment'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_display_filename_attachment', 'class="inputbox" size="1"', 'value', 'text', $this->config->display_filename_attachment);
+
 		// K6.0
 		$lists ['utmSource'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_utmSource', 'class="inputbox form-control" size="1"', 'value', 'text', $config->utmSource);
 

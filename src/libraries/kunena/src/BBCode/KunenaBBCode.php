@@ -2934,7 +2934,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			}
 		}
 
-		preg_match('/[img(\s*(?!alt)([\w\-]+\s*\/?]/', $params['_tag'], $matches);
+		preg_match('/[img(\s*(?!alt)([\w\-\.]+\s*\/?]/', $params['_tag'], $matches);
 		$matches = rtrim($matches[0], "]");
 
 		$config = KunenaFactory::getConfig();

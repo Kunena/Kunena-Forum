@@ -574,7 +574,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			$sentusers[]                         = $emailTo->id;
 		}
 
-		$mailsender  = MailHelper::cleanAddress($config->boardTitle);
+		$mailnamesender = !empty($config->email_sender_name) ? \Joomla\CMS\Mail\MailHelper::cleanAddress($config->email_sender_name) : \Joomla\CMS\Mail\MailHelper::cleanAddress($config->board_title);
 		$mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
 		$subject     = $this->subject ? $this->subject : $topic->subject;
 
@@ -582,7 +582,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		$user = Factory::getUser();
 		$mail = Factory::getMailer();
 		$mail->setSubject($mailsubject);
-		$mail->setSender([$config->getEmail(), $mailsender]);
+		$mail->setSender([$config->getEmail(), $mailnamesender]);
 		$app = Factory::getApplication();
 
 		// Here is after respond sends. so close connection to leave browser, and

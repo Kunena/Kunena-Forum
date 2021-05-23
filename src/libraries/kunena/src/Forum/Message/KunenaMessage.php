@@ -150,6 +150,13 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 */
 	protected $_authcache = [];
+
+	/**
+	 * @var boolean
+	 * @since Kunena 5.2
+	 */
+	protected $_approved = false;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -434,6 +441,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * Send email notifications from the message.
 	 *
 	 * @param   null|string  $url  url
+	 * @param boolean $approved false
 	 *
 	 * @return  boolean|void
 	 *
@@ -442,7 +450,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 */
-	public function sendNotification($url = null)
+	public function sendNotification($url = null, $approved = false)
 	{
 		if ($this->hold > 1)
 		{

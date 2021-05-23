@@ -1382,6 +1382,27 @@ HTML;
 	}
 
 	/**
+	 * Retrieve icons attributes
+	 *
+	 * @return stdClass
+	 * @since Kunena 5.2
+	 */
+	private function getIconsAttributes($icon)
+	{
+		$attributes = $icon[0]->attributes();
+		$icon       = new stdClass;
+		$icon->id   = (int) $attributes->id;
+		$icon->name = (string) $attributes->name;
+		$icon->b2   = (string) $attributes->b2;
+		$icon->b3   = (string) $attributes->b3;
+		$icon->fa   = (string) $attributes->fa;
+		$icon->src  = (string) $attributes->src;
+		$icon->new  = (string) $attributes->new;
+
+		return $icon;
+	}
+
+	/**
 	 * @internal param string $categoryIconset
 	 *
 	 * @param   KunenaTopic  $topic  topic
@@ -1585,16 +1606,7 @@ HTML;
 	{
 		if (isset($src->icons))
 		{
-			$attributes = $src->icons->icon[0]->attributes();
-			$icon       = new stdClass;
-			$icon->id   = (int) $attributes->id;
-			$icon->name = (string) $attributes->name;
-			$icon->b2   = (string) $attributes->b2;
-			$icon->b3   = (string) $attributes->b3;
-			$icon->b4   = (string) $attributes->b4;
-			$icon->fa   = (string) $attributes->fa;
-			$icon->src  = (string) $attributes->src;
-			$icon->new  = (string) $attributes->new;
+			$icon = $this->getIconsAttributes($icon);
 
 			return $icon;
 		}
@@ -1626,16 +1638,7 @@ HTML;
 				}
 			}
 
-			$attributes = $icon[0]->attributes();
-			$icon       = new stdClass;
-			$icon->id   = (int) $attributes->id;
-			$icon->name = (string) $attributes->name;
-			$icon->b2   = (string) $attributes->b2;
-			$icon->b3   = (string) $attributes->b3;
-			$icon->b4   = (string) $attributes->b4;
-			$icon->fa   = (string) $attributes->fa;
-			$icon->src  = (string) $attributes->src;
-			$icon->new  = (string) $attributes->new;
+			$icon = $this->getIconsAttributes($icon);
 
 			return $icon;
 		}

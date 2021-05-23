@@ -2339,7 +2339,7 @@ class TopicController extends KunenaController
 
 			if (!$modifiedByAuthor)
 			{
-				$target->sendNotification();
+			    $target->sendNotification(null, true);
 			}
 		}
 		else

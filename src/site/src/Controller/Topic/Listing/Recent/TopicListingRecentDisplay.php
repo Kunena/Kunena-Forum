@@ -369,6 +369,7 @@ class TopicListingRecentDisplay extends ListDisplay
 		{
 			$image = Uri::base() . $this->config->emailHeader;
 			$this->setMetaData('og:image', $image, 'property');
+			$this->setMetaData('twitter:image', $image, 'property');
 		}
 
 		if ($robots == 'noindex, follow')

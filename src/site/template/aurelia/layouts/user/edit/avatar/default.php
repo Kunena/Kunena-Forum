@@ -14,10 +14,10 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Uri\Uri;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
@@ -39,6 +39,7 @@ $this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.c
 $this->doc->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
+$this->doc->addScriptOptions('com_kunena.avatar_upload_url', Uri::root(true) . '/index.php?option=com_kunena&view=user&task=upload&format=json');
 ?>
 <h3>
 	<?php echo $this->headerText; ?>

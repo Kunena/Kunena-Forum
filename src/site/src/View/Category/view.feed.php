@@ -74,7 +74,15 @@ class feed extends KunenaView
 
 		foreach ($topics as $topic)
 		{
-			$description = $topic->last_post_message;
+			if ($this->config->rss_type=='topic')
+			{
+				$description = Text::sprintf('COM_KUNENA_RSS_TOPICS_CONTAINS_MESSAGES', $topic->posts) . ' - ' . Text::sprintf('COM_KUNENA_RSS_LAST_AUTHOR', KunenaFactory::getUser($topic->last_post_userid)->getName($topic->last_post_guest_name));
+			}
+			else
+			{
+				$description = $topic->last_post_message;
+			}
+
 			$date        = new Date($topic->last_post_time);
 			$userid      = $topic->last_post_userid;
 			$username    = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
@@ -107,7 +115,7 @@ class feed extends KunenaView
 		if ($this->config->rssAuthorInTitle)
 		{
 			// We want author in item titles
-			$title .= ' - ' . Text::_('COM_KUNENA_BY') . ': ' . $username;
+			$title .= ' - ' . Text::_('COM_KUNENA_RSS_BY') . ': ' . $username;
 		}
 
 		if ((int) $this->config->rssWordCount === -1)

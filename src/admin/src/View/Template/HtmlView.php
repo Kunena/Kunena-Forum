@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -48,11 +49,11 @@ class HtmlView extends BaseHtmlView
 		$template      = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
 
-		$templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
+		$this->templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
-		if (!file_exists($templateFile))
+		if (!file_exists($this->templateFile) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/config/'))
 		{
-			$ourFileHandle = @fopen($templateFile, 'w');
+			$ourFileHandle = fopen($this->templateFile, 'w');
 
 			if ($ourFileHandle)
 			{

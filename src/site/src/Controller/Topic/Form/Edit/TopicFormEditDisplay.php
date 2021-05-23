@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
@@ -194,6 +195,10 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
+
+		/** @var HtmlDocument $doc */
+		$this->doc = Factory::getApplication()->getDocument();
+		$this->wa  = $this->doc->getWebAssetManager();
 	}
 
 	/**

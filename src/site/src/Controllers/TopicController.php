@@ -145,15 +145,66 @@ class TopicController extends KunenaController
 	}
 
 	/**
-	 * Set inline to 0 on the attachment object or list of attachments when inserted in message.
+	 * Set inline to 1 on the attachment object.
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 5.1
-	 *
-	 * @throws  Exception
+	 * @return void
+	 * @throws Exception
+	 * @since Kunena 5.1
 	 */
-	public function setinlinestatus()
+	public function setinline()
+	{
+		$attachs_id = $this->input->getString('files_id', '');
+		$attachs_id = json_decode($attachs_id);
+
+		if ($attachs_id===null)
+		{
+			throw new RuntimeException(Text::_('Bad Request'), 400);
+		}
+
+		$attach_ids_final = array();
+		foreach($attachs_id as $attach)
+		{
+			if (is_array($attach))
+			{
+				$attach_ids_final[] = $attach['0'];
+			}
+			else
+			{
+				$attach_ids_final[] = $attach;
+			}
+		}
+
+		$instances  = KunenaAttachmentHelper::getById($attach_ids_final, 'none');
+
+		$this->changeinline($instances,  '1');
+	}
+
+	/**
+	 * Set inline to 0 on one attachment object.
+	 *
+	 * @return void
+	 * @since Kunena 5.1
+	 * @throws Exception
+	 */
+	public function removeinlineonattachment()
+	{
+		$attach_id = $this->input->getInt('file_id', 0);
+
+		$instance  = KunenaAttachmentHelper::get($attach_id);
+
+		$this->checkpermissions($instance->userid);
+
+		$this->changeinline($instance, '0');
+	}
+
+	/**
+	 * Set inline to 0 or 1 on the attachment object.
+	 *
+	 * @return void
+	 * @since Kunena 5.1
+	 * @throws Exception
+	 */
+	protected function changeinline($attachments, $inline)
 	{
 		// Only support JSON requests.
 		if ($this->input->getWord('format', 'html') != 'json')
@@ -166,71 +217,26 @@ class TopicController extends KunenaController
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
-		$attach_id  = $this->input->getInt('file_id', 0);
-		$attachs_id = $this->input->get('files_id', null, 'array');
+		$response  = array();
 
-		if ($attach_id > 0)
+		if (is_object($attachments))
 		{
-			$instance        = KunenaAttachmentHelper::get($attach_id);
-			$instance_userid = $instance->userid;
+			$editor_text = $this->input->get->get('editor_text', '', 'raw');
+			$find             = array('/\[attachment='.$attachments->id.'\](.*?)\[\/attachment\]/su');
+			$replace          = '';
+			$text             = preg_replace($find, $replace, $editor_text);
+			$response['text_prepared'] = $text;
 		}
 		else
 		{
-			$attachs_id      = explode(',', $attachs_id);
-			$instances       = KunenaAttachmentHelper::getById($attachs_id);
-			$attachment      = $instances[] = array_pop($instances);
-			$instance_userid = $attachment->userid;
-		}
-
-		$response = [];
-
-		if (KunenaUserHelper::getMyself()->userid == $instance_userid || KunenaUserHelper::getMyself()->isAdmin()
-			|| KunenaUserHelper::getMyself()->isModerator())
-		{
-			if ($attach_id > 0)
+			foreach($attachments as $instance)
 			{
-				$editor_text               = $this->app->input->get->get('editor_text', '', 'raw');
-				$find                      = ['/\[attachment=' . $attach_id . '\](.*?)\[\/attachment\]/su'];
-				$replace                   = '';
-				$text                      = preg_replace($find, $replace, $editor_text);
-				$response['text_prepared'] = $text;
-
-				if ($instance->inline)
-				{
-					$response['result'] = $instance->setInline(0);
-					$response['value']  = 0;
-				}
-				else
-				{
-					$response['result'] = $instance->setInline(1);
-					$response['value']  = 1;
-				}
-
-				unset($instance);
-			}
-			else
-			{
-				foreach ($instances as $instance)
-				{
-					if ($instance->inline)
-					{
-						$response['result'] = $instance->setInline(0);
-						$response['value']  = 0;
-					}
-					else
-					{
-						$response['result'] = $instance->setInline(1);
-						$response['value']  = 1;
-					}
-				}
-
-				unset($instances);
+				$response['result'] = $instance->setInline($inline);
+				$response['value']  = $inline;
 			}
 		}
-		else
-		{
-			throw new RuntimeException(Text::_('Forbidden'), 403);
-		}
+
+		unset($attachments);
 
 		header('Content-type: application/json');
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -239,13 +245,29 @@ class TopicController extends KunenaController
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 
-		while (@ob_end_clean())
+		if (ob_get_length())
 		{
+			ob_end_clean();
 		}
 
 		echo json_encode($response);
 
 		jexit();
+	}
+
+	/**
+	 * Check permissions.
+	 *
+	 * @return void
+	 * @since Kunena 5.1
+	 * @throws Exception
+	 */
+	protected function checkpermissions($attachment_userid)
+	{
+		if (KunenaUserHelper::getMyself()->userid != $attachment_userid || !KunenaUserHelper::getMyself()->isAdmin() || !KunenaUserHelper::getMyself()->isModerator())
+		{
+			throw new RuntimeException(Text::_('Forbidden'), 403);
+		}
 	}
 
 	/**

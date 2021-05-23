@@ -196,7 +196,7 @@ if ($user->userid > 1)
                     </li>
 				<?php endif; ?>
 
-				<?php if ($user->email && !$user->hideEmail && $config->showEmail)
+				<?php if ($this->candisplaymail)
 					:
 					?>
                     <li>

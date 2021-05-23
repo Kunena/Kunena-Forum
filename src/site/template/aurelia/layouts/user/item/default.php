@@ -47,6 +47,7 @@ $tabs = $this->getTabs();
 echo $this->subLayout('User/Item/Summary')
 	->set('profile', $this->profile)
 	->set('config', $this->config)
+	->set('candisplaymail', $this->candisplaymail)
 	->set('me', $this->me)
 	->set('private', $this->private)
 	->set('points', $this->points)

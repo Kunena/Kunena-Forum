@@ -110,6 +110,7 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 		$this->category  = $this->topic->getCategory();
 		$this->profile   = $this->message->getAuthor();
 		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->candisplaymail = $this->me->canDisplayEmail($this->profile);
 
 		if ($this->topic->unread)
 		{

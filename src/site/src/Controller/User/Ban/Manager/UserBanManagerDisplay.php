@@ -20,6 +20,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use function defined;
 
 /**
@@ -75,8 +76,11 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
 		$this->me = KunenaUserHelper::getMyself();
 
 		// TODO: add authorisation
-		// TODO: add pagination
-		$this->userBans = KunenaBan::getBannedUsers(0, 50);
+		$userBanspre = KunenaBan::getBannedUsers(0, 100);
+		$count = count($userBanspre);
+
+		$this->pagination = new KunenaPagination($count, $start, $limit);
+		$this->userBans = KunenaBan::getBannedUsers($this->pagination->limitstart, $this->pagination->limit);
 
 		if (!empty($this->userBans))
 		{

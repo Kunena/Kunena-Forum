@@ -640,14 +640,16 @@ class TopicItemDisplay extends KunenaControllerDisplay
 			$first = $this->topic->subject;
 		}
 
-		$this->setMetaData('og:description', $first, 'property');
+		$multispaces_replaced = preg_replace('/\s+/', ' ', $first);
+
+		$this->setMetaData('og:description', $multispaces_replaced, 'property');
 		$this->setMetaData('og:image', $image, 'property');
 		$this->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toISO8601(), 'property');
 		$this->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
 		$this->setMetaData('twitter:card', 'summary', 'name');
 		$this->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
 		$this->setMetaData('twitter:image', $image, 'property');
-		$this->setMetaData('twitter:description', $first);
+		$this->setMetaData('twitter:description', $multispaces_replaced);
 
 		$config = Factory::getApplication();
 		$robots = $config->get('robots');
@@ -715,9 +717,11 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
 			$this->setTitle($subject);
 
+			$multispaces_replaced_desc = preg_replace('/\s+/', ' ', $this->topic->first_post_message);
+
 			if ($total > 1 && $page > 1)
 			{
-				$small = KunenaParser::stripBBCode($this->topic->first_post_message, 130);
+			    $small = KunenaParser::stripBBCode($multispaces_replaced_desc, 130);
 
 				if (empty($small))
 				{
@@ -728,7 +732,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-				$small = KunenaParser::stripBBCode($this->topic->first_post_message, 160);
+			    $small = KunenaParser::stripBBCode($multispaces_replaced_desc, 160);
 
 				if (empty($small))
 				{

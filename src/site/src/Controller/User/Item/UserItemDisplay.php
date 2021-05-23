@@ -107,6 +107,7 @@ class UserItemDisplay extends KunenaControllerDisplay
 		$this->user    = Factory::getUser($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
+		$this->candisplaymail = $this->me->canDisplayEmail($this->profile);
 
 		$activityIntegration = KunenaFactory::getActivityIntegration();
 		$this->points        = $activityIntegration->getUserPoints($this->profile->userid);

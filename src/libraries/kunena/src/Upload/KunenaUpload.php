@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Upload;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use finfo;
@@ -105,7 +105,6 @@ class KunenaUpload
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function ajaxUpload(array $options): array
 	{
@@ -253,7 +252,7 @@ class KunenaUpload
 
 					if (stripos($type, 'image/') !== false && stripos($type, 'image/') >= 0)
 					{
-						if (!$this->checkFileSizeImageAttachment($size, $options['image_type']))
+						if (!$this->checkFileSizeImageAttachment($size))
 						{
 							throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_IMAGE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 						}
@@ -294,7 +293,7 @@ class KunenaUpload
 		}
 
 		// Generate response.
-		if ((is_null($options['size']) && $size) || $size === $options['size'])
+		if ((\is_null($options['size']) && $size) || $size === $options['size'])
 		{
 			$options['size']      = (int) $size;
 			$options['completed'] = true;
@@ -340,7 +339,6 @@ class KunenaUpload
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getProtectedFile($filename = null): string
 	{
@@ -356,7 +354,6 @@ class KunenaUpload
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getProtectedFilename($filename = null): string
 	{
@@ -379,7 +376,6 @@ class KunenaUpload
 	 *
 	 * @throws  RuntimeException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function splitFilename($filename = null): array
 	{
@@ -472,32 +468,18 @@ class KunenaUpload
 	}
 
 	/**
-	 * Check if fileSize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
-	 * configuration and PHP configuration
+	 * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration
+	 * and Php configuration
 	 *
-	 * @param   int     $fileSize    The size of file in bytes
-	 * @param   string  $image_type  The type of image : avatar or attachment image
+	 * @param   int  $fileSize  filesize
 	 *
-	 * @return  boolean
-	 *
+	 * @return boolean
 	 * @throws Exception
-	 * @since   Kunena 6.0
-	 *
+	 * @since Kunena
 	 */
-	protected function checkFileSizeImage(int $fileSize, string $image_type)
+	protected function checkFileSizeAvatar(int $fileSize)
 	{
-		if ($image_type == 'avatar')
-		{
-			$config_size = KunenaConfig::getInstance()->avatarSize;
-		}
-		else
-		{
-			$config_size = KunenaConfig::getInstance()->imageSize;
-		}
-
-		$image = $fileSize > intval($config_size * 1024);
-
-		if ($image)
+		if ($fileSize > \intval(KunenaConfig::getInstance()->avatarSize * 1024))
 		{
 			return false;
 		}
@@ -505,7 +487,7 @@ class KunenaUpload
 		return (int) max(
 			0,
 			min(
-				$this->toBytes(ini_get('upload_max_fileSize')),
+				$this->toBytes(ini_get('upload_max_filesize')),
 				$this->toBytes(ini_get('post_max_size')),
 				$this->toBytes(ini_get('memory_limit'))
 			)
@@ -538,7 +520,6 @@ class KunenaUpload
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function checkFileSizeFileAttachment(int $fileSize)
 	{
@@ -560,18 +541,20 @@ class KunenaUpload
 	}
 
 	/**
-	 * Check if filesize on avatar which on going to be uploaded doesn't exceed the limits set by Kunena configuration
-	 * and Php configuration
+	 * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
+	 * configuration and PHP configuration
 	 *
-	 * @param   int $filesize The size of avatar in bytes
+	 * @param   int  $filesize  The size of file in bytes
 	 *
 	 * @return boolean
 	 * @throws Exception
 	 * @since Kunena
 	 */
-	protected function checkFileSizeAvatar(int $fileSize)
+	protected function checkFileSizeImageAttachment($filesize)
 	{
-		if ($fileSize > intval(KunenaConfig::getInstance()->avatarsize * 1024))
+		$image = $filesize > \intval(KunenaConfig::getInstance()->imageSize * 1024);
+
+		if ($image)
 		{
 			return false;
 		}
@@ -614,7 +597,6 @@ class KunenaUpload
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function upload(array $fileInput, string $destination, $type = 'attachment')
 	{
@@ -655,7 +637,7 @@ class KunenaUpload
 			$avatarTypes = strtolower(KunenaConfig::getInstance()->avatarTypes);
 			$a           = explode(', ', $avatarTypes);
 
-			if (!in_array($file->ext, $a, true))
+			if (!\in_array($file->ext, $a, true))
 			{
 				throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $a)), 500);
 			}
@@ -695,7 +677,7 @@ class KunenaUpload
 				}
 			}
 
-			if (extension_loaded('fileinfo'))
+			if (\extension_loaded('fileinfo'))
 			{
 				$finfo = new finfo(FILEINFO_MIME);
 				$type  = $finfo->file($file->tmp_name);
@@ -739,18 +721,29 @@ class KunenaUpload
 	}
 
 	/**
-	 * Check if filesize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
+	 * Check if fileSize on image file which on going to be uploaded doesn't exceed the limits set by Kunena
 	 * configuration and PHP configuration
 	 *
-	 * @param   int  $filesize  The size of file in bytes
+	 * @param   int     $fileSize    The size of file in bytes
+	 * @param   string  $image_type  The type of image : avatar or attachment image
 	 *
-	 * @return boolean
+	 * @return  boolean
+	 *
 	 * @throws Exception
-	 * @since Kunena
+	 * @since   Kunena 6.0
 	 */
-	protected function checkFileSizeImageAttachment($filesize)
+	protected function checkFileSizeImage(int $fileSize, string $image_type)
 	{
-		$image = $filesize > intval(KunenaConfig::getInstance()->imagesize * 1024);
+		if ($image_type == 'avatar')
+		{
+			$config_size = KunenaConfig::getInstance()->avatarSize;
+		}
+		else
+		{
+			$config_size = KunenaConfig::getInstance()->imageSize;
+		}
+
+		$image = $fileSize > \intval($config_size * 1024);
 
 		if ($image)
 		{
@@ -760,7 +753,7 @@ class KunenaUpload
 		return (int) max(
 			0,
 			min(
-				$this->toBytes(ini_get('upload_max_filesize')),
+				$this->toBytes(ini_get('upload_max_fileSize')),
 				$this->toBytes(ini_get('post_max_size')),
 				$this->toBytes(ini_get('memory_limit'))
 			)

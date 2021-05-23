@@ -38,7 +38,7 @@ $wa  = $doc->getWebAssetManager();
 // Add assets
 $wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.css')
 	->registerAndUseScript('jquery.ui.widget', 'media/kunena/core/js/jquery.ui.widget.js')
-	->registerAndUseScript('load-image', 'media/kunena/core/js/load-image.min.js')
+	->registerAndUseScript('load-image', 'media/kunena/core/js/load-image.all.min.js')
 	->registerAndUseScript('canvas-to-blob', 'media/kunena/core/js/canvas-to-blob.min.js')
 	->registerAndUseScript('jquery.fileupload', 'media/kunena/core/js/jquery.fileupload.js')
 	->registerAndUseScript('jquery.fileupload-process', 'media/kunena/core/js/jquery.fileupload-process.js')

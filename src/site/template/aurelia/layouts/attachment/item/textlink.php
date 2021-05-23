@@ -38,6 +38,6 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox=
    data-content="Filesize: <?php echo number_format($attachment->size / 1024, 0, '', ',') . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
 " data-original-title="<?php echo $attachment->getShortName(); ?>"
    href="<?php echo $attachment->getUrl(false, false, true); ?>"
-   title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), $config->attachStart, $config->attach_end); ?>" <?php echo $attributesLink; ?>>
+   title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), (int) $config->attachStart, (int) $config->attachEnd); ?>" <?php echo $attributesLink; ?>>
 	<?php echo KunenaIcons::info(); ?>
 </a>

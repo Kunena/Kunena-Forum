@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Attachment;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use finfo;
@@ -39,7 +39,6 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaAttachment
@@ -265,9 +264,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaAttachment
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 4.0
 	 */
 	public static function getInstance($identifier = null, $reload = false): KunenaAttachment
 	{
@@ -288,15 +286,15 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @internal
-	 *
 	 * @return  void
+	 *
+	 * @internal
 	 *
 	 * @since   Kunena 4.0
 	 */
 	protected function deleteFile(): void
 	{
-		if (self::$_directory != substr($this->folder, 0, strlen(self::$_directory)))
+		if (self::$_directory != substr($this->folder, 0, \strlen(self::$_directory)))
 		{
 			return;
 		}
@@ -378,9 +376,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @internal
-	 *
 	 * @return  void
+	 *
+	 * @internal
 	 *
 	 * @since   Kunena 4.0
 	 */
@@ -483,9 +481,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function setInline(int $inline): bool
 	{
@@ -525,11 +522,11 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 4.0
 	 */
-	public function getShortName($front = 10, $back = 8, $filler = '...', $escape = true): string
+	public function getShortName($front = 10, $back = 8, $filler = '...', $escape = true)
 	{
 		if ($this->shortname === null)
 		{
-			$this->shortname = KunenaAttachmentHelper::shortenFileName($this->getFilename(false), $front, $back, $filler);
+			$this->shortname = KunenaAttachmentHelper::shortenFileName($this->getFilename(false), (int) $front, (int) $back, $filler);
 		}
 
 		return $escape ? htmlspecialchars($this->shortname, ENT_COMPAT, 'UTF-8') : $this->shortname;
@@ -560,10 +557,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 4.0
 	 */
 	public function getUrl($thumb = false, $inline = true, $escape = true): string
 	{
@@ -626,9 +622,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaLayout
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	public function getLayout(): KunenaLayout
 	{
@@ -638,9 +633,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @return  string
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 4.0
 	 */
 	public function getTextLink(): string
 	{
@@ -650,9 +644,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @return  string
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 4.0
 	 */
 	public function getImageLink(): ?string
 	{
@@ -663,9 +656,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @return  string
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 4.0
 	 */
 	public function getThumbnailLink(): string
 	{
@@ -677,9 +669,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaUser
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 4.0
 	 */
 	public function getAuthor(): KunenaUser
 	{
@@ -694,11 +685,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 4.0
 	 */
-	public function isAuthorised($action = 'read', KunenaUser $user = null): bool
+	public function isAuthorised($action = 'read', KunenaUser $user = null)
 	{
 		return !$this->tryAuthorise($action, $user, false);
 	}
@@ -712,11 +702,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  mixed|void
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 4.0
 	 */
-	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true): ?KunenaExceptionAuthorise
+	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
 		// Special case to ignore authorisation.
 		if ($action == 'none')
@@ -775,11 +764,14 @@ class KunenaAttachment extends KunenaDatabaseObject
 			foreach (self::$actions[$action] as $function)
 			{
 				$authFunction = 'authorise' . $function;
-				$exception    = $this->$authFunction($user);
 
-				if ($exception)
+				try
 				{
-					break;
+					$this->$authFunction($user);
+				}
+				catch (Exception $e)
+				{
+					new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401, $e->getMessage());
 				}
 			}
 		}
@@ -800,9 +792,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaMessage
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 4.0
 	 */
 	public function getMessage(): KunenaMessage
 	{
@@ -817,9 +808,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|NULL
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	protected function authorisePrivate(string $action, KunenaUser $user): ?KunenaExceptionAuthorise
 	{
@@ -844,7 +834,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
-		if (in_array($user->userid, $private->users()->getMapped()))
+		if (\in_array($user->userid, $private->users()->getMapped()))
 		{
 			// Yes, I have access..
 			return true;
@@ -872,9 +862,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  boolean|void
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 4.0
 	 */
 	public function upload($key = 'kattachment', $catid = null): bool
 	{
@@ -919,7 +908,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 		if ($file->success)
 		{
-			if (extension_loaded('fileinfo'))
+			if (\extension_loaded('fileinfo'))
 			{
 				$finfo = new finfo(FILEINFO_MIME);
 
@@ -946,7 +935,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 					if ($imageInfo->type == IMAGETYPE_PNG)
 					{
-						$quality = intval(($quality - 1) / 10);
+						$quality = \intval(($quality - 1) / 10);
 					}
 
 					$options = ['quality' => $quality];
@@ -995,9 +984,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 4.0
 	 */
 	public function saveFile(string $source, $basename = null, $extension = null, $unlink = false, $overwrite = false): bool
 	{
@@ -1007,8 +995,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 		}
 
 		// Hash, size and MIME are set during saving, so let's deal with all other variables.
-		$this->userid = is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
-		$this->folder = is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
+		$this->userid = \is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
+		$this->folder = \is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
 
 		if (!$this->filename_real)
 		{
@@ -1105,7 +1093,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 4.0
 	 */
-	protected function authoriseExists(KunenaUser $user): KunenaExceptionAuthorise
+	protected function authoriseExists(KunenaUser $user)
 	{
 		// Checks if KunenaAttachment exists
 		if (!$this->exists())
@@ -1121,11 +1109,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  mixed|void
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 4.0
 	 */
-	protected function authoriseRead(KunenaUser $user): KunenaExceptionAuthorise
+	protected function authoriseRead(KunenaUser $user)
 	{
 		// Checks if KunenaAttachment exists
 		if (!$this->exists())
@@ -1156,11 +1143,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @return  mixed|void
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 4.0
 	 */
-	protected function authoriseOwn(KunenaUser $user): KunenaExceptionAuthorise
+	protected function authoriseOwn(KunenaUser $user)
 	{
 		// Checks if KunenaAttachment is users own or user is moderator in the category (or global)
 		if ($this->userid != $user->userid && !$user->isModerator($this->getMessage()->getCategory()) || !$user->exists() || $user->isBanned())

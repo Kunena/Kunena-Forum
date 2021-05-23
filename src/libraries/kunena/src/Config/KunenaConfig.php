@@ -1600,8 +1600,6 @@ class KunenaConfig extends CMSObject
 
 	public $profiler = 0;
 
-	public $attach_end;
-
 	/**
 	 * @since   Kunena 6.0
 	 */
@@ -1613,9 +1611,9 @@ class KunenaConfig extends CMSObject
 	/**
 	 * @return  KunenaConfig|mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance(): ?KunenaConfig
 	{
@@ -1643,9 +1641,9 @@ class KunenaConfig extends CMSObject
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function load(): void
 	{
@@ -1724,9 +1722,9 @@ class KunenaConfig extends CMSObject
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save(): void
 	{
@@ -1766,11 +1764,11 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
-	 * @internal
-	 *
 	 * @param   string  $name  Name of the plugin
 	 *
 	 * @return  Registry
+	 *
+	 * @internal
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -1784,9 +1782,9 @@ class KunenaConfig extends CMSObject
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getEmail(): string
 	{

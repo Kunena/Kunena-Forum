@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site\Controller\User\Edit\Avatar;
 defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -105,6 +106,9 @@ class UserEditAvatarDisplay extends UserEditDisplay
 		$this->galleryUri           = Uri::root(true) . '/media/kunena/avatars/gallery';
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
+
+		$this->doc = Factory::getApplication()->getDocument();
+		$this->wa  = $this->doc->getWebAssetManager();
 	}
 
 	/**

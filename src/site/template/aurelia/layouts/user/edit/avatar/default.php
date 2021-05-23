@@ -14,6 +14,7 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
@@ -24,19 +25,20 @@ use function defined;
 Text::script('COM_KUNENA_GEN_REMOVE_AVATAR');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_AVATAR');
 
-$this->addScript('jquery.ui.widget.js');
-$this->addScript('load-image.min.js');
-$this->addScript('canvas-to-blob.min.js');
-$this->addScript('jquery.iframe-transport.js');
-$this->addScript('jquery.fileupload.js');
-$this->addScript('jquery.fileupload-process.js');
-$this->addScript('jquery.fileupload-image.js');
-$this->addScript('upload.avatar.js');
-$this->addStyleSheet('fileupload.css');
+// Add assets
+$this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.css')
+	->registerAndUseScript('jquery.ui.widget', 'media/kunena/core/js/jquery.ui.widget.js')
+	->registerAndUseScript('load-image', 'media/kunena/core/js/load-image.all.min.js')
+	->registerAndUseScript('canvas-to-blob', 'media/kunena/core/js/canvas-to-blob.min.js')
+	->registerAndUseScript('jquery.fileupload', 'media/kunena/core/js/jquery.fileupload.js')
+	->registerAndUseScript('jquery.fileupload-process', 'media/kunena/core/js/jquery.fileupload-process.js')
+	->registerAndUseScript('jquery.iframe-transport', 'media/kunena/core/js/jquery.iframe-transport.js')
+	->registerAndUseScript('jquery.fileupload-image', 'media/kunena/core/js/jquery.fileupload-image.js')
+	->registerAndUseScript('upload.main', 'media/kunena/core/js/upload.avatar.js');
 
-$this->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
+$this->doc->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
+$this->doc->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
+$this->doc->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
 ?>
 <h3>
 	<?php echo $this->headerText; ?>

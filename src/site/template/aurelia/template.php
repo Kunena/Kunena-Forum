@@ -143,11 +143,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		$fontawesome = $ktemplate->params->get('fontawesome');
 		$doc         = Factory::getApplication()->getDocument();
 
-		if ($fontawesome)
-		{
-			$this->addScript('https://use.fontawesome.com/releases/v5.13.0/js/all.js', [], ['defer' => true]);
-			$this->addScript('https://use.fontawesome.com/releases/v5.13.0/js/v4-shims.js', [], ['defer' => true]);
-		}
+		$this->loadFontawesome();
 
 		$icons = $ktemplate->params->get('icons');
 

@@ -44,6 +44,7 @@ $this->addScript('jquery.caret.js');
 $this->addScript('jquery.atwho.js');
 
 $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
+$this->addScriptOptions('com_kunena.kunena_quickreplymesid', $message->displayField('id'));
 
 $this->addScript('assets/js/edit.js');
 
@@ -137,7 +138,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 				}
 				else
 				{
-					echo '<textarea class="col-md-12 qreply" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+					echo '<textarea class="col-md-12 qreply qrlocalstorage' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 				} ?>
             </div>
 

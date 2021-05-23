@@ -2166,86 +2166,46 @@ class KunenaUser extends CMSObject
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
-		if ($topicicontype == 'fa')
+		$stylesecond = '';
+		$stylethird = '';
+		$stylefourth = '';
+		$stylelast = '';
+
+		if ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK1')
 		{
-			$rank_string = '';
-
-			if ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK1')
-			{
-				$rank_string = '<i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK2')
-			{
-				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK3')
-			{
-				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK4')
-			{
-				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle" style="color:#e8f7ff;"></i>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK5')
-			{
-				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK6')
-			{
-				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>';
-			}
-			else
-			{
-				$rank_string = '<i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i>';
-			}
-
-			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rankTitle) . '">
-				<i class="fas fa-circle"></i>' . $rank_string . '</li>';
+			$stylesecond = 'style="color:#e8f7ff;"';
+			$stylethird = 'style="color:#e8f7ff;"';
+			$stylefourth = 'style="color:#e8f7ff;"';
+			$stylelast = 'style="color:#e8f7ff;"';
 		}
-		elseif ($topicicontype == 'B2' || $topicicontype == 'B3')
+		elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK2')
 		{
-			if ($topicicontype == 'B2')
-			{
-				$class = 'icon icon-one-fine-dot';
-			}
-			else
-			{
-				$class = 'glyphicon glyphicon-one-fine-dot';
-			}
-
-			$rank_string = '';
-
-			if ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK1')
-			{
-				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK2')
-			{
-				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK3')
-			{
-				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '" style="color:#e8f7ff;"></span><span class="' . $class . '" style="color:#e8f7ff;"></span>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK4')
-			{
-				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '" style="color:#e8f7ff;"></span>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK5')
-			{
-				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span>';
-			}
-			elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK6')
-			{
-				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span>';
-			}
-			else
-			{
-				$rank_string = '<span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span><span class="' . $class . '"></span';
-			}
-
-			return '<li class="kwho-' . $this->getType($catid, true) . '" alt="' . Text::_($rank->rankTitle) . '">' . $rank_string . '</li>';
+			$stylethird = 'style="color:#e8f7ff;"';
+			$stylefourth = 'style="color:#e8f7ff;"';
+			$stylelast = 'style="color:#e8f7ff;"';
 		}
+		elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK3')
+		{
+			$stylefourth = 'style="color:#e8f7ff;"';
+			$stylelast = 'style="color:#e8f7ff;"';
+		}
+		elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK4')
+		{
+			$stylelast = 'style="color:#e8f7ff;"';
+		}
+		else
+		{
+			// Nothing to do here
+		}
+
+		return KunenaLayout::factory('Widget/Ranks')
+		->set('type', $this->getType($catid, true))
+		->set('topicicontype', $topicicontype)
+		->set('rank', $rank)
+		->set('stylesecond', $stylesecond)
+		->set('stylethird', $stylethird)
+		->set('stylefourth', $stylefourth)
+		->set('stylelast', $stylelast);		
 	}
 
 	/**

@@ -256,6 +256,7 @@ class MessageListingRecentDisplay extends ListDisplay
 				break;
 			case 'deleted':
 				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
 				$actions          = ['undelete', 'delete', 'move', 'permdelete'];
 				break;
 			case 'mythanks':

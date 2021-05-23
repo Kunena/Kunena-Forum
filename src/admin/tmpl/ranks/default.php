@@ -213,7 +213,7 @@ $wa->useScript('multiselect');
                                                     <td class="nowrap">
                                                         <a href="#edit"
                                                            onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
-															<?php echo $this->escape($row->rankTitle); ?>
+															<?php echo Text::_($row->rankTitle); ?>
                                                         </a>
                                                     </td>
                                                     <td class="nowrap center">

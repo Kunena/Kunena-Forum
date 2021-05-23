@@ -1318,12 +1318,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		if (!empty($content))
 		{
-			// Display tag in activity streams etc..
-			if (!empty($bbcode->parent->forceMinimal))
-			{
-				return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
-			}
-
 			$before  = $content;
 			$content = strip_tags($content);
 
@@ -1349,6 +1343,16 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				}
 
 				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+			}
+			else
+			{
+				return false;
+			}
+
+			// Display tag in activity streams etc..
+			if (!empty($bbcode->parent->forceMinimal))
+			{
+				return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
 			}
 
 			if (!empty($content))

@@ -906,10 +906,10 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 */
-	public function sendNotification($url = null): void
+	public function sendNotification($url = null, $approved = false): void
 	{
 		// Reload message just in case if it was published by bulk update.
-		KunenaMessageHelper::get($this->first_post_id, true)->sendNotification($url);
+	    KunenaMessageHelper::get($this->first_post_id, true)->sendNotification($url, $approved);
 	}
 
 	/**

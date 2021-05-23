@@ -19,18 +19,10 @@ use function defined;
 // [url="www.kunena.org" target="_blank"]Kunena.org[/url]
 
 // Display URL.
-if ($this->target)
-{
-	$target = ' target="' . $this->escape($this->target) . '"';
-}
-else
-{
-	$target = ' target="_blank"';
-}
-
 if (!$this->internal)
 {
 	$rel = 'rel="nofollow noopener noreferrer"';
+	$target = ' target="' . $this->escape($this->target) . '"';
 }
 else
 {

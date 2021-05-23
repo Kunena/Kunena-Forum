@@ -6,18 +6,22 @@ Set OPT_DELETE=0
 Set OPT_DELETE_ALL=0
 
 echo:
+echo ===================================================================
+echo ============================ KUNENA ===============================
+echo ===================================================================
+echo:
 echo Link Kunena development tree into your web site.
 echo You need to define two variables before to launch the script
 echo This script needs administrator rights to run correctly
 echo:
 
-SET /p GitSource=GIT repository in ........:
+SET /p GitSource=Kunena GIT repository in ........:
 SET /p GitTarget=Joomla installation in ...:
 
 pause
 
 echo:
-echo You have set the GIT repository in ........:  %GitSource%
+echo You have set the Kunena GIT repository in ........:  %GitSource%
 echo You have set the Joomla installation in ...:  %GitTarget%
 echo:
 

@@ -14,7 +14,6 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -54,7 +53,6 @@ if ($this->config->pollEnabled)
 
 $this->k       = 0;
 $topicicontype = $this->ktemplate->params->get('topicicontype');
-$suffix        = CMSApplication::getInstance('site')->get('sef_suffix');
 
 echo $this->subLayout('Widget/Lightbox');
 
@@ -89,7 +87,6 @@ $this->doc->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
 $this->doc->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
 $this->doc->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
 $this->doc->addScriptOptions('com_kunena.icons.secure', KunenaIcons::secure());
-$this->doc->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
 
 // Load scripts to handle fileupload process
 Text::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');

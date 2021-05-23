@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -219,6 +220,10 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		$this->canSubscribe = $this->canSubscribe();
 
 		$this->headerText = Text::_('COM_KUNENA_NEW_TOPIC');
+
+		/** @var HtmlDocument $doc */
+		$this->doc = Factory::getApplication()->getDocument();
+		$this->wa  = $this->doc->getWebAssetManager();
 
 		return true;
 	}

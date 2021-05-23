@@ -15,8 +15,6 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Document\HtmlDocument;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -31,12 +29,8 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
-/** @var HtmlDocument $doc */
-$doc = Factory::getApplication()->getDocument();
-$wa  = $doc->getWebAssetManager();
-
 // Add assets
-$wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.css')
+$this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.css')
 	->registerAndUseScript('jquery.ui.widget', 'media/kunena/core/js/jquery.ui.widget.js')
 	->registerAndUseScript('load-image', 'media/kunena/core/js/load-image.all.min.js')
 	->registerAndUseScript('canvas-to-blob', 'media/kunena/core/js/canvas-to-blob.min.js')
@@ -55,7 +49,7 @@ if ($this->config->pollEnabled)
 {
 	Text::script('COM_KUNENA_POLL_OPTION_NAME');
 	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-	$wa->registerAndUseScript('poll', 'media/kunena/core/js/poll.js');
+	$this->wa->registerAndUseScript('poll', 'media/kunena/core/js/poll.js');
 }
 
 $this->k       = 0;
@@ -63,42 +57,40 @@ $topicicontype = $this->ktemplate->params->get('topicicontype');
 $editor        = $this->ktemplate->params->get('editor');
 $suffix        = CMSApplication::getInstance('site')->get('sef_suffix');
 
-$me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
-
 echo $this->subLayout('Widget/Lightbox');
 
 if ($this->ktemplate->params->get('formRecover'))
 {
-	$wa->registerAndUseScript('sisyphus', 'media/kunena/core/js/sisyphus.js');
+	$this->wa->registerAndUseScript('sisyphus', 'media/kunena/core/js/sisyphus.js');
 }
 
-$doc->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
-$doc->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
-$doc->addScriptOptions('com_kunena.allowEditPoll', $this->config->allowEditPoll);
-$doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
-$doc->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
-$doc->addScriptOptions(
+$this->doc->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
+$this->doc->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
+$this->doc->addScriptOptions('com_kunena.allowEditPoll', $this->config->allowEditPoll);
+$this->doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
+$this->doc->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
+$this->doc->addScriptOptions(
 	'com_kunena.kunena_upload_files_rem',
 	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' .
 		Session::getFormToken() . '=1', false)
 );
-$doc->addScriptOptions(
+$this->doc->addScriptOptions(
 	'com_kunena.kunena_upload_files_rem_inline',
 	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' .
 		Session::getFormToken() . '=1', false)
 );
-$doc->addScriptOptions(
+$this->doc->addScriptOptions(
 	'com_kunena.kunena_upload_files_preload',
 	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' .
 		Session::getFormToken() . '=1', false)
 );
-$doc->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
-$doc->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
-$doc->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
-$doc->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
-$doc->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
-$doc->addScriptOptions('com_kunena.icons.secure', KunenaIcons::secure());
-$doc->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
+$this->doc->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
+$this->doc->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
+$this->doc->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
+$this->doc->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
+$this->doc->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
+$this->doc->addScriptOptions('com_kunena.icons.secure', KunenaIcons::secure());
+$this->doc->addScriptOptions('com_kunena.suffixpreview', $suffix ? true : false);
 
 // Load scripts to handle fileupload process
 Text::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
@@ -455,7 +447,7 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
                     <div class="controls">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="subscribeMe" id="subscribeMe"
-                                   value="1" <?php if ($this->config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $this->config->subscriptionsChecked == 0 && $me->canSubscribe == 1 || $this->category->getSubscribed($me->userid))
+                                   value="1" <?php if ($this->config->subscriptionsChecked == 1 && $this->me->canSubscribe != 0 || $this->config->subscriptionsChecked == 0 && $this->me->canSubscribe == 1 || $this->category->getSubscribed($this->me->userid))
 							{
 								echo 'checked="checked"';
 							} ?>/>

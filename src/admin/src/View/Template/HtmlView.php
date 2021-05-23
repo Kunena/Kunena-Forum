@@ -44,11 +44,11 @@ class HtmlView extends BaseHtmlView
 		$this->form    = $this->get('Form');
 		$this->params  = $this->get('editparams');
 		$this->details = $this->get('templatedetails');
-		$templatename  = Factory::getApplication()->getUserState('kunena.edit.templatename');
-		$template      = KunenaTemplate::getInstance($templatename);
+		$this->templatename  = Factory::getApplication()->getUserState('kunena.edit.templatename');
+		$template      = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
 
-		$templateFile = KPATH_SITE . '/template/' . $templatename . '/config/params.ini';
+		$templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
 		if (!file_exists($templateFile))
 		{

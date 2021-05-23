@@ -54,7 +54,6 @@ if ($this->config->pollEnabled)
 
 $this->k       = 0;
 $topicicontype = $this->ktemplate->params->get('topicicontype');
-$editor        = $this->ktemplate->params->get('editor');
 $suffix        = CMSApplication::getInstance('site')->get('sef_suffix');
 
 echo $this->subLayout('Widget/Lightbox');
@@ -348,14 +347,14 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
                 </div>
 			<?php endif; ?>
 
-			<?php if ($editor == 1)
-			{
-				echo $this->subLayout('Widget/Editor')->setLayout('wysibb')->set('message', $this->message)->set('config', $this->config);
-			}
-			else
-			{
-				echo $this->subLayout('Widget/Editor')->setLayout('bbcode')->set('privateMessage', $this->privateMessage)->set('message', $this->message)->set('config', $this->config)->set('config', $this->config)->set('poll', $this->message->getTopic()->getPoll())->set('allowPolls', $this->topic->getCategory()->allowPolls);
-			} ?>
+			<?php echo $this->subLayout('Widget/Editor')
+							->setLayout('ckeditor')->set('message', $this->message)
+							->set('config', $this->config)
+							->set('doc', $this->doc)
+							->set('allow_polls', $this->topic->getCategory()->allowPolls)
+							->set('template', $this->ktemplate)
+							->set('me', $this->me);
+			?>
         </div>
 
 		<?php if ($this->message->exists() && $this->config->editMarkup) : ?>
@@ -495,16 +494,10 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
 
         <div class="form-group row">
             <div class="col-md-10 center">
-				<?php if ($editor == 1) : ?>
-                    <input type="submit" class="btn btn-outline-success btn-md form-validate" name="submit"
-                           value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
-                           title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'); ?>"/>
-				<?php else : ?>
-                    <button id="form_submit_button" name="submit" type="submit"
+				<button id="form_submit_button" name="submit" type="submit"
                             class="btn btn-outline-success btn-md form-validate" tabindex="8">
 						<?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_SUBMIT'); ?>
                     </button>
-				<?php endif; ?>
 
                 <button type="reset" class="btn btn-outline-primary btn-md" onclick="window.history.back();"
                         tabindex="10">

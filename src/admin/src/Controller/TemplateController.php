@@ -15,8 +15,8 @@ namespace Kunena\Forum\Administrator\Controller;
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
@@ -118,142 +118,192 @@ class TemplateController extends FormController
 	 */
 	protected function internalSaveParamFile(string $template): void
 	{
-		$params = $this->app->input->get('jform', [], 'array');
+		$params = $this->app->input->get('jform', array(), 'post', 'array');
 
-		$params['wysibb'] = '';
+		$editorButtons = array();
 
-		if ($params['bold'])
+		if (!$params['Bold'])
 		{
-			$params['wysibb'] .= 'bold,';
+			$editorButtons[] = 'Bold';
 		}
 
-		if ($params['italic'])
+		if (!$params['Italic'])
 		{
-			$params['wysibb'] .= 'italic,';
+			$editorButtons[] = 'Italic';
 		}
 
-		if ($params['underline'])
+		if (!$params['Underline'])
 		{
-			$params['wysibb'] .= 'underline,';
+			$editorButtons[] = 'Underline';
 		}
 
-		if ($params['wysibb'])
+		if (!$params['Strike'])
 		{
-			$params['wysibb'] .= 'strike,';
+			$editorButtons[] = 'Strike';
 		}
 
-		if ($params['supscript'])
+		if (!$params['Superscript'])
 		{
-			$params['wysibb'] .= 'sup,';
+			$editorButtons[] = 'Superscript';
 		}
 
-		if ($params['subscript'])
+		if (!$params['Subscript'])
 		{
-			$params['wysibb'] .= 'sub,';
+			$editorButtons[] = 'Subscript';
 		}
 
-		if ($params['alignleft'])
+		if (!$params['JustifyRight'])
 		{
-			$params['wysibb'] .= 'justifyleft,';
+			$editorButtons[] = 'JustifyRight';
 		}
 
-		if ($params['center'])
+		if (!$params['JustifyLeft'])
 		{
-			$params['wysibb'] .= 'justifycenter,';
+			$editorButtons[] = 'JustifyLeft';
 		}
 
-		if ($params['alignright'])
+		if (!$params['JustifyBlock'])
 		{
-			$params['wysibb'] .= 'justifyright,';
+			$editorButtons[] = 'JustifyBlock';
 		}
 
-		if ($params['divider'])
+		if (!$params['JustifyCenter'])
 		{
-			$params['wysibb'] .= '|,';
+			$editorButtons[] = 'JustifyCenter';
 		}
 
-		if ($params['picture'])
+		if (!$params['RemoveFormat'])
 		{
-			$params['wysibb'] .= 'img,';
+			$editorButtons[] = 'RemoveFormat';
 		}
 
-		if ($params['video'])
+		if (!$params['Confidential'])
 		{
-			$params['wysibb'] .= 'video,';
+			$editorButtons[] = 'Confidential';
 		}
 
-		if ($params['link'])
+		if (!$params['Hidetext'])
 		{
-			$params['wysibb'] .= 'link,';
+			$editorButtons[] = 'Hidetext';
 		}
 
-		if ($params['divider'])
+		if (!$params['Spoiler'])
 		{
-			$params['wysibb'] .= '|,';
+			$editorButtons[] = 'Spoiler';
 		}
 
-		if ($params['bulletedlist'])
+		if (!$params['Smiley'])
 		{
-			$params['wysibb'] .= 'bullist,';
+			$editorButtons[] = 'Smiley';
 		}
 
-		if ($params['numericlist'])
+		if (!$params['Ebay'])
 		{
-			$params['wysibb'] .= 'numlist,';
+			$editorButtons[] = 'Ebay';
 		}
 
-		if ($params['divider'])
+		if (!$params['Twitter'])
 		{
-			$params['wysibb'] .= '|,';
+			$editorButtons[] = 'Twitter';
 		}
 
-		if ($params['colors'])
+		if (!$params['Instagram'])
 		{
-			$params['wysibb'] .= 'fontcolor,';
+			$editorButtons[] = 'Instagram';
 		}
 
-		if ($params['wysibb'])
+		if (!$params['Soundcloud'])
 		{
-			$params['wysibb'] .= 'fontsize,';
+			$editorButtons[] = 'Soundcloud';
 		}
 
-		if ($params['wysibb'])
+		if (!$params['Map'])
 		{
-			$params['wysibb'] .= 'fontfamily,';
+			$editorButtons[] = 'Map';
 		}
 
-		if ($params['divider'])
+		if (!$params['FontSize'])
 		{
-			$params['wysibb'] .= '|,';
+			$editorButtons[] = 'FontSize';
 		}
 
-		if ($params['quote'])
+		if (!$params['TextColor'])
 		{
-			$params['wysibb'] .= 'quote,';
+			$editorButtons[] = 'TextColor';
 		}
 
-		if ($params['code'])
+		if (!$params['Maximize'])
 		{
-			$params['wysibb'] .= 'code,';
+			$editorButtons[] = 'Maximize';
 		}
 
-		if ($params['table'])
+		if (!$params['Image'])
 		{
-			$params['wysibb'] .= 'table,';
+			$editorButtons[] = 'Image';
 		}
 
-		if ($params['wysibb'])
+		if (!$params['Video'])
 		{
-			$params['wysibb'] .= 'removeFormat';
+			$editorButtons[] = 'Video';
 		}
 
-		// Set FTP credentials, if given
-		ClientHelper::setCredentialsFromRequest('ftp');
-		$ftp  = ClientHelper::getCredentials('ftp');
+		if (!$params['Link_Unlink'])
+		{
+			$editorButtons[] = 'Link,Unlink';
+		}
+
+		if (!$params['BulletedList'])
+		{
+			$editorButtons[] = 'BulletedList';
+		}
+
+		if (!$params['NumberedList'])
+		{
+			$editorButtons[] = 'NumberedList';
+		}
+
+		if (!$params['Blockquote'])
+		{
+			$editorButtons[] = 'Blockquote';
+		}
+
+		if (!$params['Code'])
+		{
+			$editorButtons[] = 'Code';
+		}
+
+		if (!empty($params['nameskinckeditor']))
+		{
+			if (!Folder::exists(KPATH_MEDIA . '/core/js/skins/' . $params['nameskinckeditor']))
+			{
+				$params['nameskinckeditor'] = '';
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_SKIN'),'error');
+			}
+		}
+
+		if (!empty($params['ckeditorcustomprefixconfigfile']))
+		{
+			if (!File::exists(KPATH_MEDIA . '/core/js/' . $params['ckeditorcustomprefixconfigfile'] . 'ckeditor_config.js'))
+			{
+				$params['ckeditorcustomprefixconfigfile'] = '';
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_CUSTOM_CONFIG_FILE'),'error');
+			}
+		}
+
 		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
-		if (count($params))
+		if (count($params) > 0)
 		{
+			if (count($editorButtons) > 0)
+			{
+				$editorButtons = implode(',', $editorButtons);
+				$params['editorButtons'] = $editorButtons;
+			}
+			else
+			{
+				$params['editorButtons'] = '';
+			}
+
 			$registry = new Registry;
 			$registry->loadArray($params);
 			$txt    = $registry->toString('INI');
@@ -261,11 +311,7 @@ class TemplateController extends FormController
 
 			if (!$return)
 			{
-				$this->app->enqueueMessage(
-					Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' .
-					Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file)
-				);
-
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
 				$this->app->redirect(KunenaRoute::_($this->baseurl, false));
 			}
 		}

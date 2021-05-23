@@ -7,41 +7,25 @@
  * @link https://www.kunena.org
  **/
 
-/**
- *  Helper function for to perform JSON request for preview
- */
-const previewActive = false;
-
-function kPreviewHelper(previewActive) {
-	const editor = jQuery('#editor');
-	if (Joomla.getOptions('com_kunena.suffixpreview'))
-	{
-		var url = 'index.php?option=com_kunena&view=topic&layout=edit&format=raw';
-	}
-	else
-	{
-		var url = jQuery('#kpreview_url').val();
-	}
-	if (editor.val() !== null) {
-		jQuery.ajax({
-			type: 'POST',
-			url: url,
-			async: true,
-			dataType: 'json',
-			data: {body: editor.val()}
-		})
-			.done(function (data) {
-				jQuery('#kbbcode-preview').html(data.preview);
-			})
-			.fail(function () {
-				//TODO: handle the error of ajax request
-			});
-	}
-}
-
 jQuery(document).ready(function ($) {
 	const qreply = $('.qreply');
 	const editor = $('#editor');
+	const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+	const arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
+	const pollexist = $('#poll_exist_edit');
+	const pollcatid = jQuery('#poll_catid').val();
+	const polliconstatus = false;
+
+	// Check is anynomous options can be displayed on newtopic page
+	const catiddefault = $('#postcatid').val();
+
+	if (arrayanynomousbox !== null)
+	{
+		if(arrayanynomousbox[catiddefault]==1)
+		{
+			$('#kanonymous').prop('checked', true);
+		}
+	}
 
 	//$('#tabs_kunena_editor a:first').tab('show');
 
@@ -60,8 +44,6 @@ jQuery(document).ready(function ($) {
 		message.hide();
 		message_private.hide();
 
-		kPreviewHelper();
-
 		preview.attr('class', 'kbbcode-preview-bottom controls');
 		const height = message.css('height');
 		preview.css('height', height);
@@ -79,8 +61,6 @@ jQuery(document).ready(function ($) {
 		message.hide();
 		message_private.show();
 		$('#kbbcode-preview').hide();
-
-		console.log('click on last');
 	});
 
 	$('#tabs_kunena_editor a[href="#write"]').click(function (e) {
@@ -350,4 +330,79 @@ jQuery(document).ready(function ($) {
 	$('#gotoeditor'+test).click(function () {
 		localStorage.setItem("copyKunenaeditor", $(".test" + test).val());
 	});
+
+	if (Joomla.getOptions('com_kunena.ckeditor_config')!== undefined)
+	{
+		CKEDITOR.replace( 'message', {
+			customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),
+			on: {
+				instanceReady: function(event) {
+					event.editor.on("beforeCommandExec", function(event) {
+						// Show the paste dialog for the paste buttons and right-click paste
+						if (event.data.name == "paste") {
+							event.editor._.forcePasteDialog = true;
+						}
+	
+						// Don't show the paste dialog for Ctrl+Shift+V
+						if (event.data.name == "pastetext" && event.data.commandData.from == "keystrokeHandler") {
+							event.cancel();
+						}
+					})
+				},
+				mode: function( evt ) {
+					var cat = localStorage.getItem('copyKunenaeditor');
+
+					if (cat) {
+						evt.editor.setData(cat);
+						localStorage.removeItem('copyKunenaeditor');
+					}
+
+					if(polliconstatus === false)
+					{
+						if(pollcatid !== undefined)
+						{
+							if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
+								var catid = $('#kcategory_poll').val();
+
+								if (pollcategoriesid[catid] !== undefined) {
+									evt.editor.getCommand( 'polls' ).enable();
+								}
+								else {
+									evt.editor.getCommand( 'polls' ).disable();
+								}
+							}
+							else if (pollexist.length > 0) {
+								evt.editor.getCommand( 'polls' ).enable();
+							}
+							else {
+								evt.editor.getCommand( 'polls' ).disable();
+							}
+						}
+						else
+						{
+							evt.editor.getCommand( 'polls' ).disable();
+						}
+					}
+				}
+			}
+		});
+
+		CKEDITOR.on( 'dialogDefinition', function( ev )
+		{
+			var dialogName = ev.data.name;
+			var dialogDefinition = ev.data.definition;
+
+			if(dialogName=='link')
+			{
+				var linkType = dialogDefinition.getContents('info').get('linkType');
+				// Remove the 'anchor' link option.	 
+				linkType.items.splice(1,1);
+				// Remove the 'phone' link option.	 
+				linkType.items.splice(2,2);
+
+				var protocol = dialogDefinition.getContents('info').get('protocol');
+				protocol.items.splice(2,4);
+			}
+		});
+	}
 });

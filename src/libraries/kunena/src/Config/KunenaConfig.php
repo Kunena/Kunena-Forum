@@ -1600,6 +1600,8 @@ class KunenaConfig extends CMSObject
 
 	public $profiler = 0;
 
+	public $pickup_category;
+
 	/**
 	 * @since   Kunena 6.0
 	 */

@@ -160,6 +160,11 @@ abstract class KunenaTemplateHelper
 
 		$data               = new stdClass;
 		$data->name         = (string) $xml->name;
+		if ($xml->targetversion->attributes() !== null)
+		{
+			$data->targetversion = (string) $xml->targetversion->attributes()->version;
+		}
+
 		$data->type         = (string) $xml->attributes()->type;
 		$data->creationdate = (string) $xml->creationDate;
 		$data->author       = (string) $xml->author;
@@ -197,5 +202,44 @@ abstract class KunenaTemplateHelper
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Check with the field targetversion in xml file of template zip if it's compatible with kunena
+	 *
+	 * @param string $targetversion The versions of Kunena compatible with the template
+	 *
+	 * @return boolean
+	 * @since Kunena 5.2
+	 */
+	public static function templateIsKunenaCompatible($targetversion = null)
+	{
+		if ($targetversion === null)
+		{
+			return true;
+		}
+
+		// Get the Kunena version family (e.g. 6.0)
+		$kVersion = KunenaForum::version();
+		$kVersionParts = explode('.', $kVersion);
+		$kVersionShort = $kVersionParts[0] . '.' . $kVersionParts[1];
+
+		$targetKunenaVersion = $targetversion;
+		$targetVersionParts = explode('.', $targetKunenaVersion);
+		$targetVersionShort = $targetVersionParts[0] . '.' . $targetVersionParts[1];
+
+		// The target version MUST be in the same Kunena branch
+		if ($kVersionShort == $targetVersionShort)
+		{
+			return false;
+		}
+
+		// If the target version is major.minor.revision we must make sure our current Kunena version is AT LEAST equal to that.
+		if (version_compare($targetKunenaVersion, KunenaForum::version(), 'gt'))
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

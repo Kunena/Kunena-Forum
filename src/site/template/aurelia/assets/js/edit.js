@@ -42,7 +42,7 @@ jQuery(document).ready(function ($) {
 		}
 
 		if (item != undefined) {
-			$(item).atwho({
+			/*$(item).atwho({
 				at: ":",
 				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
 				insertTpl: '${name}',
@@ -64,18 +64,18 @@ jQuery(document).ready(function ($) {
 						}
 					}
 				}
-			});
+			});*/
 		}
 	}
 
-	if (item !== undefined) {
+	/*if (item !== undefined) {
 		const users_url = $('#kurl_users').val();
 		$(item).atwho({
 			at: "@",
 			data: users_url,
 			limit: 5
 		});
-	}
+	}*/
 
 
 	/* Store form data into localstorage every 1 second */
@@ -116,7 +116,7 @@ jQuery(document).ready(function ($) {
 		$(name).hide();
 	});
 
-	const category_template_text;
+	const category_template_text = null;
 	$('#postcatid').change(function () {
 		const catid = $('select#postcatid option').filter(':selected').val();
 		const kurl_topicons_request = $('#kurl_topicons_request').val();

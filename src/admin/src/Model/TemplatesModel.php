@@ -321,7 +321,16 @@ class TemplatesModel extends AdminModel
 		// Create a 'stream' transport.
 		$http = new Http($options, $transport);
 
-		$response = $http->get($url);
+		try
+		{
+			$response = $http->get($url);
+		}
+		catch (Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+
+			return false;
+		}
 
 		if ($response->code == '200')
 		{

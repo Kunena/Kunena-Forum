@@ -61,7 +61,6 @@ if ($this->ktemplate->params->get('formRecover'))
 	$this->wa->registerAndUseScript('sisyphus', 'media/kunena/core/js/sisyphus.js');
 }
 
-$this->doc->addScriptOptions('com_kunena.editor', $this->ktemplate->params->get('editor'));
 $this->doc->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 $this->doc->addScriptOptions('com_kunena.allowEditPoll', $this->config->allowEditPoll);
 $this->doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);

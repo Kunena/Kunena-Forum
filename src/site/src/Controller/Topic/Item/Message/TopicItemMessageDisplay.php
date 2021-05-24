@@ -194,7 +194,7 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 		{
 			if (!empty($this->message->ip))
 			{
-				$this->ipLink = '<a href="https://www.geoiptool.de/en/?ip=' . $this->message->ip
+				$this->ipLink = '<a href="https://dnslytics.com/ip/' . $this->message->ip
 					. '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
 			}
 			else

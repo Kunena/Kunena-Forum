@@ -17,7 +17,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>
-<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement'); ?>
+
 <div class="shadow-lg rounded" id="announcement<?php echo $this->announcement->id; ?>">
     <div class="alert alert-info">
         <div class="close float-end" data-bs-toggle="collapse"

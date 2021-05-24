@@ -163,7 +163,7 @@ class TemplatesController extends FormController
 	}
 
 	/**
-	 * Install
+	 * Install the new template
 	 *
 	 * @return  boolean|void
 	 *
@@ -228,14 +228,24 @@ class TemplatesController extends FormController
 
 						if (is_dir($dest . $template->directory))
 						{
-							if (is_file($dest . $template->directory . '/params.ini'))
+							if (is_file($dest . $template->directory . '/config/params.ini'))
 							{
-								if (is_file($tmpKunena . $template->sourcedir . '/params.ini'))
+								if (is_file($tmpKunena . $template->sourcedir . '/config/params.ini'))
 								{
-									File::delete($tmpKunena . $template->sourcedir . '/params.ini');
+									File::delete($tmpKunena . $template->sourcedir . '/config/params.ini');
 								}
 
-								File::move($dest . $template->directory . '/config/params.ini', $tmpKunena . $template->sourcedir . '/params.ini');
+								File::move($dest . $template->directory . '/config/params.ini', $tmpKunena . $template->sourcedir . 'config/params.ini');
+							}
+
+							if (is_dir($dest . $template->directory . '/assets/images'))
+							{
+								if (is_dir($tmpKunena . $template->sourcedir . '/assets/images'))
+								{
+									Folder::delete($tmpkunena . $template->sourcedir . '/assets/images');
+								}
+
+								Folder::move($dest . $template->directory . '/assets/images', $tmp_kunena . $template->sourcedir . '/assets/images');
 							}
 
 							if (is_file($dest . $template->directory . '/assets/less/custom.less'))

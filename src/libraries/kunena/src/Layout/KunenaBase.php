@@ -376,7 +376,7 @@ class KunenaBase extends KunenaLayoutBase
 			$error .= " called from {$caller['file']} on line {$caller['line']}";
 		}
 
-		Log::add($error, Log::CRITICAL, 'kunena');
+		Log::add($error, Log::CRITICAL, 'com_kunena');
 
 		$error = "<b>Rendering Error</b> in layout <b>{$this->_name}</b>: {$e->getMessage()}";
 

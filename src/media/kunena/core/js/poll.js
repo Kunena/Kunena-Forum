@@ -1,6 +1,6 @@
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
+ * @package Kunena.Media
  *
  * @copyright     Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -8,106 +8,30 @@
  **/
 
 jQuery(document).ready(function ($) {
-	/**
-	 * Get the number of field options inserted in form
-	 */
-	function getOptionsNumber() {
-		const myoptions = $('#kbbcode-poll-options').children('div.polloption');
-
-		return myoptions.length;
-	}
-
-	/**
-	 * This function will insert directly in DOM the new field for poll with attibutes
-	 */
-	function createNewOptionField() {
-		let options = getOptionsNumber();
-		options++;
-
-		const polldiv = $('<div></div>').attr('class', 'polloption').appendTo('#kbbcode-poll-options');
-
-		const label = $('<label>').text(Joomla.Text._('COM_KUNENA_POLL_OPTION_NAME') + ' ' + options + ' ');
-		polldiv.append(label);
-
-		newInput = document.createElement('input');
-		newInput.setAttribute('name', 'polloptionsID[new' + options + ']');
-		newInput.setAttribute('id', 'field_option' + options);
-		newInput.setAttribute('class', 'inputbox inputpollclear');
-		newInput.setAttribute('maxlength', '100');
-		newInput.setAttribute('type', 'text');
-		polldiv.append(newInput);
-	}
-
-	if ($('#kbutton-poll-add') !== undefined) {
-		$('#kbutton-poll-add').click(function () {
-			const nboptionsmax = $('#nb_options_allowed').val();
-			const koptions = getOptionsNumber();
-
-			if (!nboptionsmax || (koptions < nboptionsmax && koptions >= 2)) {
-				createNewOptionField();
-			}
-			else if (!nboptionsmax || koptions < 2) {
-				createNewOptionField();
-				createNewOptionField();
-			}
-			else {
-				// Set error message with alert bootstrap way
-				$('#kpoll-alert-error').show();
-				$('#kbutton-poll-add').hide();
-			}
-		});
-	}
-
-	if ($('#kbutton-poll-rem') !== undefined) {
-		$('#kbutton-poll-rem').click(function () {
-			const koption = $('div.polloption:last');
-			if (koption) {
-				const isvisible = $('#kpoll-alert-error').is(":visible");
-
-				if (isvisible) {
-					$('#kpoll-alert-error').hide();
-					$('#kbutton-poll-add').show();
-				}
-
-				koption.remove();
-			}
-		});
-	}
-
-	if ($('#postcatid') !== undefined) {
-		$('#postcatid').change(function () {
-			const catid = $('select#postcatid option').filter(':selected').val();
-			const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
-			if (pollcategoriesid[catid] !== undefined) {
-				$('.pollbutton').show();
-			}
-			else {
-				$('.pollbutton').hide();
-			}
-		});
-	}
+	const results = $('#poll-results');
+	const hide = $('#kpoll_hide_results');
 
 	$('#kpoll_go_results').click(function () {
-		if ($('#poll-results').is(':visible') === true) {
-			$('#poll-results').hide();
-			$('#kpoll_hide_results').hide();
+		if (results.is(':visible') === true) {
+			results.hide();
+			hide.hide();
 		}
 		else {
-			$('#poll-results').show();
-			$('#kpoll_hide_results').show();
+			results.show();
+			hide.show();
 			$('#kpoll_go_results').hide();
 		}
 	});
 
-	$('#kpoll_hide_results').click(function () {
-		if ($('#poll-results').is(':visible') === true) {
-			$('#poll-results').hide();
-			$('#kpoll_go_results').show();
+	hide.click(function () {
+		if (results.is(':visible') === true) {
+			results.hide();
+			hide.show();
 			$('#kpoll_hide_results').hide();
 		}
 		else {
-			$('#poll-results').show();
-			$('#kpoll_hide_results').show();
+			results.show();
+			hide.show();
 			$('#kpoll_go_results').hide();
 		}
 	});

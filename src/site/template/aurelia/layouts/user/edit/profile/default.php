@@ -143,7 +143,7 @@ $this->addScript('assets/js/profile.js');
 					</label>
 				</td>
 				<td>
-					<?php if ($social != 'qq')
+					<?php if ($social != 'qqsocial')
 					:
 						?>
 					<span class="hasTooltip" title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")

@@ -548,7 +548,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function Internal_AutoDetectURLs(string $string): array
+	protected function autoDetectURLs($string): array
 	{
 		$search = preg_split('/(?xi)
 		\b
@@ -3050,7 +3050,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		$config = KunenaFactory::getTemplate()->params;
 
-		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('twitter'))
+		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('Twitter'))
 		{
 			return false;
 		}

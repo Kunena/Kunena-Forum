@@ -1,6 +1,11 @@
 <?php
 /**
- * @package        EasySocial
+  * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Easysocial
+ *
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
@@ -26,13 +31,13 @@ use function defined;
 /**
  * @package  Easysocial
  *
- * @since    Kunena 6.0
+ * @since    Kunena 5.0
  */
 class KunenaActivityEasySocial extends KunenaActivity
 {
 	/**
 	 * @var     null
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	protected $params = null;
 
@@ -41,7 +46,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @param   object  $params  params
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 * @throws Exception
 	 */
 	public function __construct(object $params)
@@ -56,7 +61,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function onAfterPost(string $message): void
 	{
@@ -88,7 +93,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function assignPoints(string $command, $target = null)
 	{
@@ -106,7 +111,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function assignBadge(string $command, string $message, $target = null)
 	{
@@ -273,7 +278,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function onAfterThankyou(int $actor, int $target, int $message): void
 	{
@@ -300,7 +305,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function onBeforeDeleteTopic(object $target): void
 	{
@@ -312,7 +317,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @return  void
 	 *
-	 * @since  Kunena 6.0
+	 * @since  Kunena 5.0
 	 */
 	public function onAfterDeleteTopic(object $topic): void
 	{

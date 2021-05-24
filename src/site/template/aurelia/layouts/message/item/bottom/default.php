@@ -24,13 +24,10 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use function defined;
 
 $message              = $this->message;
-$topic                = $message->getTopic();
-$category             = $message->getCategory();
 $isReply              = $this->message->id != $this->topic->first_post_id;
 $signature            = $this->profile->getSignature();
 $attachments          = $message->getAttachments();
 $attachs              = $message->getNbAttachments();
-$avatarname           = $this->profile->getname();
 $topicStarter         = $this->topic->first_post_userid == $this->message->userid;
 $config               = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);

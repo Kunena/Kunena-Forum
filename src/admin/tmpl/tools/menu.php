@@ -93,6 +93,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<?php endif; ?>
 						</table>
 					</fieldset>
+					<?php echo $this->loadTemplateFile('trashmenuconfirmation'); ?>
 				</form>
 			</div>
 		</div>

@@ -851,59 +851,38 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   string  $visitorname  visitor name
-	 * @param   bool    $escape       escape
+	 * Retrieve the username from integration if it's enabled, it's the integration plugin which give the username
+	 * 
+	 * @param   string $visitorname visitor name
+	 * @param   bool   $escape      escape
 	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
+	 * @return string
+	 * @since Kunena 1.6
 	 */
-	public function getName($visitorname = '', $escape = true): string
+	public function getName($visitorname = '', $escape = true)
 	{
-		if (!$this->userid && !$this->name)
-		{
-			$name = $visitorname;
-		}
-		else
-		{
-			$usersConfig = PluginHelper::isEnabled('kunena', 'comprofiler');
+		$profile = KunenaFactory::getProfile();
 
-			if ($usersConfig)
+		if ($profile->enabled== false)
+		{
+			if (!$this->userid && !$this->name)
 			{
-				global $ueConfig;
-
-				if ($ueConfig['name_format'] == 1)
-				{
-					return $this->name;
-				}
-
-				if ($ueConfig['name_format'] == 2)
-				{
-					return $this->name . ' (' . $this->username . ')';
-				}
-
-				if ($ueConfig['name_format'] == 3)
-				{
-					return $this->username;
-				}
-
-				if ($ueConfig['name_format'] == 4)
-				{
-					return $this->username . ' (' . $this->name . ')';
-				}
+				$name = $visitorname;
 			}
 			else
 			{
 				$name = $this->_config->username ? $this->username : $this->name;
 			}
+
+			if ($escape)
+			{
+				$name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
+			}
+
+			return $name;
 		}
 
-		if ($escape)
-		{
-			$name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
-		}
-
-		return $name;
+		return $profile->getProfileName($this);
 	}
 
 	/**

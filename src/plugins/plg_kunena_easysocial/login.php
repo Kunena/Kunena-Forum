@@ -1,6 +1,11 @@
 <?php
 /**
- * @package        EasySocial
+  * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Easysocial
+ *
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
@@ -20,7 +25,7 @@ use function defined;
 /**
  * @package     Kunena
  *
- * @since       Kunena 6.0
+ * @since       Kunena 5.0
  */
 class KunenaLoginEasySocial
 {
@@ -35,7 +40,7 @@ class KunenaLoginEasySocial
 	 *
 	 * @param   object  $params  params
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function __construct(object $params)
 	{
@@ -45,7 +50,7 @@ class KunenaLoginEasySocial
 	/**
 	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function getLoginURL()
 	{
@@ -55,7 +60,7 @@ class KunenaLoginEasySocial
 	/**
 	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function getLogoutURL()
 	{
@@ -65,7 +70,7 @@ class KunenaLoginEasySocial
 	/**
 	 * @return  null
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function getRegistrationURL()
 	{

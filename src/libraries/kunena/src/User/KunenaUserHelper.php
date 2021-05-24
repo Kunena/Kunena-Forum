@@ -822,7 +822,16 @@ abstract class KunenaUserHelper
 	{
 		$options = [];
 
-		$transport = new StreamTransport($options);
+		try
+		{
+			$transport = new StreamTransport($options);
+		}
+		catch (Exception $e)
+		{
+			throw new Exception($e->getMessage());
+
+			return false;
+		}
 
 		// Create a 'stream' transport.
 		$http = new Http($options, $transport);

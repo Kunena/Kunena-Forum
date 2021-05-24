@@ -172,9 +172,9 @@ class HtmlView extends BaseHtmlView
 
 		$templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
-		if (!File::exists($templateFile))
+		if (!File::exists($templateFile) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/config/'))
 		{
-			$ourFileHandle = @fopen($templateFile, 'w');
+			$ourFileHandle = fopen($templateFile, 'w');
 
 			if ($ourFileHandle)
 			{
@@ -220,7 +220,7 @@ class HtmlView extends BaseHtmlView
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/custom.less';
 
-		if (!file_exists($file))
+		if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/less/'))
 		{
 			$fp = fopen($file, "w");
 			fwrite($fp, "");
@@ -300,7 +300,7 @@ class HtmlView extends BaseHtmlView
 
 		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/custom.css';
 
-		if (!file_exists($file))
+		if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
 		{
 			if (!Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
 			{

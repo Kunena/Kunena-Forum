@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 use Exception;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
-use Kunena\Forum\Libraries\Folder\KunenaFolder;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 
 /**
@@ -43,37 +43,46 @@ class KunenaImageHelper
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function version($file, $folder, $filename, $maxWidth = 800, $maxHeight = 800, $quality = 70, $scale = KunenaImage::SCALE_INSIDE, $crop = 0): bool
+	public static function version($file, $folder, $filename, $maxWidth = 800, $maxHeight = 800, $quality = 70, $scale = KunenaImage::SCALE_INSIDE, $crop = 0)
 	{
+		// Create target directory if it does not exist.
+		if (!Folder::exists($folder) && !Folder::create($folder))
+		{
+			return false;
+		}
+
+		// Make sure that index.html exists in the folder.
+		Folder::createIndex($folder);
+
 		try
 		{
-			// Create target directory if it does not exist.
-			if (!Folder::exists($folder) && !Folder::create($folder))
+			$info = KunenaImage::getImageFileProperties($file);
+		}
+		catch (Exception $e)
+		{
+			KunenaError::error($e->getMessage());
+
+			return false;
+		}
+
+		if ($info->width > $maxWidth || $info->height > $maxHeight)
+		{
+			// Make sure that quality is in allowed range.
+			if ($quality < 1 || $quality > 100)
 			{
-				return false;
+				$quality = 70;
 			}
 
-			// Make sure that index.html exists in the folder.
-			KunenaFolder::createIndex($folder);
-
-			$info = KunenaImage::getImageFileProperties($file);
-
-			if ($info->width > $maxWidth || $info->height > $maxHeight)
+			// Calculate quality for PNG.
+			if ($info->type == IMAGETYPE_PNG)
 			{
-				// Make sure that quality is in allowed range.
-				if ($quality < 1 || $quality > 100)
-				{
-					$quality = 70;
-				}
+				$quality = intval(($quality - 1) / 10);
+			}
 
-				// Calculate quality for PNG.
-				if ($info->type == IMAGETYPE_PNG)
-				{
-					$quality = intval(($quality - 1) / 10);
-				}
+			$options = array('quality' => $quality);
 
-				$options = ['quality' => $quality];
-
+			try
+			{
 				// Resize image and copy it to temporary file.
 				$image = new KunenaImage($file);
 
@@ -95,27 +104,28 @@ class KunenaImageHelper
 				$temp = KunenaPath::tmpdir() . '/kunena_' . md5(rand());
 				$image->toFile($temp, $info->type, $options);
 				unset($image);
-
-				// Move new file to its proper location.
-				if (!File::move($temp, "{$folder}/{$filename}"))
-				{
-					unlink($temp);
-
-					return false;
-				}
 			}
-			else
+			catch (Exception $e)
 			{
-				// Copy original file to the new location.
-				if (!File::copy($file, "{$folder}/{$filename}"))
-				{
-					return false;
-				}
+				KunenaError::error($e->getMessage());
+				return false;
+			}
+
+			// Move new file to its proper location.
+			if (!File::move($temp, "{$folder}/{$filename}"))
+			{
+				unlink($temp);
+
+				return false;
 			}
 		}
-		catch (Exception $e)
+		else
 		{
-			return false;
+			// Copy original file to the new location.
+			if (!File::copy($file, "{$folder}/{$filename}"))
+			{
+				return false;
+			}
 		}
 
 		return true;

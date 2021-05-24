@@ -228,6 +228,12 @@ class TemplatesController extends FormController
 
 						if (is_dir($dest . $template->directory))
 						{
+							// Check that the template is comptatible with the actual Kunena version
+							if (!KunenaTemplateHelper::templateIsKunenaCompatible($template->targetversion))
+							{
+								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_COMPATIBLE_WITH_KUNENA_INSTALLED_VERSION', $template->name, $template->version), 'error');
+							}
+
 							if (is_file($dest . $template->directory . '/config/params.ini'))
 							{
 								if (is_file($tmpKunena . $template->sourcedir . '/config/params.ini'))

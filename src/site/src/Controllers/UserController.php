@@ -990,7 +990,16 @@ class UserController extends KunenaController
 			$data['stopForumSpamKey'] = $this->config->stopForumSpamKey;
 			$data['evidence']         = $evidence;
 
-			$result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
+			try
+			{
+				$result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
+			}
+			catch (Exception $e)
+			{
+				$this->app->enqueueMessage();
+
+				return false;
+			}
 
 			if ($result != false)
 			{

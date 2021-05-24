@@ -128,7 +128,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 	public function __construct($relative = true)
 	{
 		parent::__construct();
-		$this->defaults  = new KunenaBbcodeLibrary;
+		$this->defaults  = new KunenaBBCodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 
 		$this->smileys = $this->defaults->default_smileys;
@@ -156,7 +156,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 		$this->SetURLTarget('_blank');
 
 		PluginHelper::importPlugin('kunena');
-		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', array($this));
+		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
 	}
 
 	/**
@@ -283,7 +283,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 			if (preg_match('#^mailto:#ui', $url))
 			{
 				// Cloak email addresses
-				$email = substr($text, 7);
+				$email = $text;
 
 				$layout = KunenaLayout::factory('BBCode/Email');
 
@@ -1613,7 +1613,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		if (!$default)
 		{
-			$default = $bbcode->tag_rules [$name] ['default'] ['_default'];
+			$tag_rule = $bbcode->getRule($name);
+			$default = $tag_rule ['default'] ['_default'];
 		}
 
 		if ($action == BBCode::BBCODE_CHECK)
@@ -1722,7 +1723,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			$title   = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $title);
 			$content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $content);
-			$params  = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $params);
 
 			return (string) $layout
 				->set('title', $title)
@@ -2376,7 +2376,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		$config = KunenaFactory::getTemplate()->params;
 
-		if (!$content || KunenaFactory::getTemplate()->isHmvc() && !$config->get('video'))
+		if (!$content || KunenaFactory::getTemplate()->isHmvc() && !$config->get('Video'))
 		{
 			return '';
 		}

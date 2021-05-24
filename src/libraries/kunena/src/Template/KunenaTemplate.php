@@ -1395,6 +1395,7 @@ HTML;
 		$icon->name = (string) $attributes->name;
 		$icon->b2   = (string) $attributes->b2;
 		$icon->b3   = (string) $attributes->b3;
+		$icon->b4   = (string) $attributes->b4;
 		$icon->fa   = (string) $attributes->fa;
 		$icon->src  = (string) $attributes->src;
 		$icon->new  = (string) $attributes->new;
@@ -1606,7 +1607,7 @@ HTML;
 	{
 		if (isset($src->icons))
 		{
-			$icon = $this->getIconsAttributes($icon);
+			$icon = $this->getIconsAttributes($src->icons);
 
 			return $icon;
 		}

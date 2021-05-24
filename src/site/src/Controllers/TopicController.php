@@ -731,6 +731,19 @@ class TopicController extends KunenaController
 				return;
 			}
 		}
+		
+		if ($this->me->checkUserAllowedLinksImages())
+		{
+			$message->message = $this->removeLinksInMessage($message->message);
+
+			if (!$message->message)
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGE_EMPTY_LINKS_IMAGES_REMOVED_NOT_ALLOWED'), 'error');
+				$this->setRedirectBack();
+
+				return;
+			}
+		}
 
 		// Make sure that message has visible content (text, images or objects) to be shown.
 		$text = KunenaParser::parseBBCode($message->message);
@@ -1009,6 +1022,26 @@ class TopicController extends KunenaController
 			return false;
 		}
 
+	}
+
+	/**
+	 * Remove links in message content
+	 *
+	 * @param $text
+	 *
+	 * @since Kunena 5.2.0
+	 */
+	protected function removeLinksInMessage($text)
+	{
+		$text = preg_replace('/\[url=(.*?)\](.*?)\[\/url\]/su', '', $text);
+		$text = preg_replace('/\[img=(.*?)\](.*?)\[\/img\]/su', '', $text);
+
+		// When the bbcode urls and images are removed just remove the others links
+		$text = preg_replace('/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)(#?[\w \.-]*)(\??[\w \.-]*)(\=?[\w \.-]*)/i', '', $text);
+
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SAVED_WITHOUT_LINKS_AND_IMAGES'));
+
+		return $text;
 	}
 
 	/**
@@ -1308,6 +1341,19 @@ class TopicController extends KunenaController
 		if ($topic->first_post_id == $message->id || KunenaConfig::getInstance()->allowChangeSubject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator())
 		{
 			$topic->subject = $fields['subject'];
+		}
+
+		if ($this->me->checkUserAllowedLinksImages())
+		{
+			$message->message = $this->removeLinksInMessage($message->message);
+
+			if (!$message->message)
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGE_EMPTY_LINKS_IMAGES_REMOVED_NOT_ALLOWED'), 'error');
+				$this->setRedirectBack();
+
+				return;
+			}
 		}
 
 		// If user removed all the text and message doesn't contain images or objects, delete the message instead.

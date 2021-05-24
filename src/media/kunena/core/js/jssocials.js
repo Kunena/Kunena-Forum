@@ -450,7 +450,7 @@
 			label: "Like",
 			logo: "fa fa-facebook",
 			shareUrl: "https://facebook.com/sharer/sharer.php?u={url}&quote={text}",
-			countUrl: "https://graph.facebook.com/?id={url}",
+			countUrl: "",
 			getCount: function (data) {
 				return data.share && data.share.share_count || 0;
 			}
@@ -490,16 +490,6 @@
 			countUrl: "https://api.pinterest.com/v1/urls/count.json?&url={url}&callback=?",
 			getCount: function (data) {
 				return data.count;
-			}
-		},
-
-		stumbleupon: {
-			label: "Share",
-			logo: "fa fa-stumbleupon",
-			shareUrl: "http://www.stumbleupon.com/submit?url={url}&title={title}",
-			countUrl: "https://cors-anywhere.herokuapp.com/https://www.stumbleupon.com/services/1.01/badge.getinfo?url={url}",
-			getCount: function (data) {
-				return data.result && data.result.views;
 			}
 		},
 

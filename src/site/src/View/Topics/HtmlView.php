@@ -314,7 +314,7 @@ class HtmlView extends KunenaView
 
 				if ($usertype == 'guest')
 				{
-					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
+					$contents = preg_replace_callback('|\[K=(\w\+)(?:\:([\w\_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
 				}
 
 				// FIXME: enable caching after fixing the issues
@@ -323,7 +323,7 @@ class HtmlView extends KunenaView
 
 			if ($usertype != 'guest')
 			{
-				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
+				$contents = preg_replace_callback('|\[K=(\w\+)(?:\:([\w\_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
 			}
 
 			echo $contents;
@@ -399,7 +399,7 @@ class HtmlView extends KunenaView
 
 				if ($usertype == 'guest')
 				{
-					$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
+					$contents = preg_replace_callback('|\[K=(\w\+)(?:\:([\w\_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
 				}
 
 				// FIXME: enable caching after fixing the issues
@@ -408,7 +408,7 @@ class HtmlView extends KunenaView
 
 			if ($usertype != 'guest')
 			{
-				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
+				$contents = preg_replace_callback('|\[K=(\w\+)(?:\:([\w\_-]+))?\]|', [$this, 'fillTopicInfo'], $contents);
 			}
 
 			echo $contents;

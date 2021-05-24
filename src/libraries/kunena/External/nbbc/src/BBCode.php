@@ -252,6 +252,8 @@ class BBCode
 		$this->debug             = false;
 		$this->ignore_newlines   = false;
 		$this->output_limit      = 0;
+		// $this->text_length = 0; - Added by KUNENA TEAM
+		$this->text_length = 0;
 		$this->plain_mode        = false;
 		$this->was_limited       = false;
 		$this->limit_tail        = "...";
@@ -267,6 +269,27 @@ class BBCode
 		$this->email_template    = '<a href="mailto:{$email/h}" class="bbcode_email">{$content/v}</a>';
 		$this->max_smileys       = -1;
 		$this->escape_content    = true;
+	}
+
+	/**
+	 * Get the length of text - Added by KUNENA TEAM
+	 *
+	 */
+	public function getTextLength()
+	{
+		return $this->text_length;
+	}
+
+	/**
+	 * Set the length of text - Added by KUNENA TEAM
+	 *
+	 * @param int $textlength
+	 */
+	public function setTextLength($textlength)
+	{
+		$this->text_length = $textlength;
+
+		return $this;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -343,6 +366,15 @@ class BBCode
 		return $this->debug;
 	}
 
+	/**
+	 * Define the path of log file - Added by KUNENA TEAM
+	 *
+	 * @param string $logfilepath
+	 */
+	public function setLogFile($logfile = '')
+	{
+		Debugger::$log_file = $logfile;
+	}
 
 	public function setAllowAmpersand($enable = true)
 	{
@@ -1428,6 +1460,10 @@ REGEX;
 	// these flags are mutually-exclusive.
 	public function fillTemplate($template, $insert_array, $default_array = [])
 	{
+		/*HACK BY KUNENA >*/
+		if (is_array($template)) return call_user_func($template, $insert_array);
+		/*< HACK BY KUNENA*/
+
 		$pieces = preg_split('/(\{\$[a-zA-Z0-9_.:\/-]+\})/', $template, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 		// Special (common) high-speed case:  No inserts found in the template.

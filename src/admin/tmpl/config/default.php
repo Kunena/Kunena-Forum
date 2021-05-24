@@ -1150,6 +1150,19 @@ $wa->useScript('multiselect');
 														<td><?php echo $this->lists['moderatorPermDelete'] ?> </td>
 														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_MOD_PERDELETE_DESC') ?></td>
 													</tr>
+													<tr <?php if ($this->config->new_users_prevent_post_url_images != 0) : echo 'class="changed"'; endif; ?>>
+														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_PREVENT_NEW_USERS_POST_URL_IMAGE') ?></td>
+														<td><?php echo $this->lists['new_users_prevent_post_url_images'] ?> </td>
+														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_PREVENT_NEW_USERS_POST_URL_IMAGE_DESC') ?></td>
+													</tr>
+													<tr <?php if ($this->config->minimal_user_posts_add_url_image != 10) : echo 'class="changed"'; endif; ?>>
+														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_MINIMAL_NUMBER_OF_USER_POSTS_TO_ADD_URL_IMAGE') ?></td>
+														<td>
+														<input type="text" name="cfg_minimal_user_posts_add_url_image"
+														       value="<?php echo $this->escape($this->config->minimal_user_posts_add_url_image) ?>"/>
+														</td>
+														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_MINIMAL_NUMBER_OF_USER_POSTS_TO_ADD_URL_IMAGE_DESC') ?></td>
+													</tr>
 													</tbody>
 												</table>
 											</fieldset>

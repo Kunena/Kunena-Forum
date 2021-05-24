@@ -1,6 +1,6 @@
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
+ * @package Kunena.Template.Aurelia
  *
  * @copyright     Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -9,7 +9,7 @@
 
 jQuery(document).ready(function ($) {
 	const qreply = $('.qreply');
-	const editor = $('#message');
+	const editor = $('#editor');
 	const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
 	const arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 	const pollexist = $('#poll_exist_edit');
@@ -27,61 +27,21 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
-	if (Joomla.getOptions('com_kunena.ckeditor_config')!== undefined)
-	{
-		CKEDITOR.on('instanceReady', function(evt){
-			// Do your bindings and other actions here for example
-			// You can access each editor that this event has fired on from the event
-			const editor = evt.editor;
-
-			const cat = localStorage.getItem('copyKunenaeditor');
-
-			if (cat) {
-				editor.setData(cat);
-				localStorage.removeItem('copyKunenaeditor');
-			}
-
-			if(pollcatid !== undefined)
-			{
-				if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
-					var catid = $('#kcategory_poll').val();
-
-					if (pollcategoriesid[catid] !== undefined) {
-						CKEDITOR.instances.message.getCommand( 'polls' ).enable();
-					}
-					else {
-						CKEDITOR.instances.message.getCommand( 'polls' ).disable();
-					}
-				}
-				else if (pollexist.length > 0) {
-					CKEDITOR.instances.message.getCommand( 'polls' ).enable();
-				}
-				else {
-					CKEDITOR.instances.message.getCommand( 'polls' ).disable();
-				}
-			}
-			else
-			{
-				CKEDITOR.instances.message.getCommand( 'polls' ).disable();
-			}
-		});
-	}
-
 	$('#reset').onclick = function() {
 		localStorage.removeItem('copyKunenaeditor');
 	};
 
 	/* To enabled emojis in kunena textera feature like on github */
-	if ($('#kemojis_allowed').val() === 1) {
-		var item = '';
-		if (editor.length > 0 && qreply.length === 0) {
-			item = '#message';
+	if ($('#kemojis_allowed').val() == 1) {
+		const item = '';
+		if (editor.length > 0 && qreply.length == 0) {
+			item = '#editor';
 		}
 		else if (qreply.length > 0) {
 			item = '.qreply';
 		}
 
-		if (true) {
+		if (item != undefined) {
 			$(item).atwho({
 				at: ":",
 				displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
@@ -135,35 +95,62 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	$('#form_submit_button').click(function () {
+		$("#subject").attr('required', 'required');
+		$("#editor").attr('required', 'required');
+		localStorage.removeItem('copyKunenaeditor');
+	});
+
+	// Needed to open and close quickreply from on blue Eagle5
 	$('.Kreplyclick').click(function () {
 		const name = '#' + $(this).attr('data-related');
 		if ($(name).is(":visible")) {
 			$(name).hide();
-		}
-		else {
+		} else {
 			$(name).show();
 		}
-
-		document.getElementsByTagName('body')[0].style = 'overflow: auto';
 	});
 
 	$('.kreply-cancel').click(function () {
-		$('.qreplyform').hide();
+		const name = '#' + $(this).attr('data-related');
+		$(name).hide();
 	});
 
-	$('#form_submit_button').click(function () {
-		$("#subject").attr('required', 'required');
-
-		localStorage.removeItem('copyKunenaeditor');
-	});
-
-	let category_template_text;
+	const category_template_text;
 	$('#postcatid').change(function () {
 		const catid = $('select#postcatid option').filter(':selected').val();
 		const kurl_topicons_request = $('#kurl_topicons_request').val();
+		const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+		const pollexist = jQuery('#poll_exist_edit');
+		const pollcatid = jQuery('#poll_catid').val();
+		polliconstatus = true;
+
+		if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) 
+		{
+			if(pollcatid !== undefined)
+			{
+				const catid = jQuery('#kcategory_poll').val();
+			}
+
+			if (pollcategoriesid[catid] !== undefined) {
+				CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+				
+			}
+			else {
+				CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+				
+			}
+		}
+		else if (pollexist.length > 0) {
+			CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+			
+		}
+		else {
+			CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+			
+		}
 
 		if ($('#kanynomous-check').length > 0) {
-			const arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 			if (arrayanynomousbox[catid] !== undefined) {
 				$('#kanynomous-check').show();
 				$('#kanonymous').prop('checked', true);
@@ -183,16 +170,16 @@ jQuery(document).ready(function ($) {
 			data: {catid: catid}
 		})
 			.done(function (data) {
-				$('#iconset_topicList').remove();
+				$('#iconset_topic_list').remove();
 
-				const divinternalObject = $('<div>', {'id': 'iconset_topicList'});
+				const div_object = $('<div>', {'id': 'iconset_topic_list'});
 
-				$('#iconset_inject').append(divinternalObject);
+				$('#iconset_inject').append(div_object);
 
 				$.each(data, function (index, value) {
 					if (value.type !== 'system') {
 						if (value.id === 0) {
-							var input = $('<input>', {
+							const input = $('<input>', {
 								type: 'radio',
 								id: 'radio' + value.id,
 								name: 'topic_emoticon',
@@ -200,7 +187,7 @@ jQuery(document).ready(function ($) {
 							}).prop('checked', true);
 						}
 						else {
-							var input = $('<input>', {
+							const input = $('<input>', {
 								type: 'radio',
 								id: 'radio' + value.id,
 								name: 'topic_emoticon',
@@ -208,20 +195,20 @@ jQuery(document).ready(function ($) {
 							});
 						}
 
-						const spaninternalObject = $('<span>', {'class': 'kiconsel'}).append(input);
+						const span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B3') {
-							var label = $('<label>', {
+						if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B2') {
+							const label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
 							}).append($('<span>', {
-								'class': 'glyphicon glyphicon-topic glyphicon-' + value.b3,
+								'class': 'icon icon-topic icon-' + value.b2,
 								'border': '0',
 								'al': ''
 							}));
 						}
 						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'fa') {
-							var label = $('<label>', {
+							const label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
 							}).append($('<i>', {
@@ -231,15 +218,15 @@ jQuery(document).ready(function ($) {
 							}));
 						}
 						else {
-							var label = $('<label>', {
+							const label = $('<label>', {
 								'class': 'radio inline',
 								'for': 'radio' + value.id
 							}).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
 						}
 
-						spaninternalObject.append(label);
+						span_object.append(label);
 
-						$('#iconset_topicList').append(spaninternalObject);
+						$('#iconset_topic_list').append(span_object);
 					}
 				});
 			})
@@ -257,12 +244,14 @@ jQuery(document).ready(function ($) {
 				data: {catid: catid}
 			})
 				.done(function (data) {
-					if ($('#editor').val().length > 1) {
-						if ($('#editor').val().length > 1) {
+					const editor_text = CKEDITOR.instances.message.getData();
+
+					if (editor_text.length > 1) {
+						if (editor_text.length > 1) {
 							$('#modal_confirm_template_category').modal('show');
 						}
 						else {
-							$('#editor').val(category_template_text);
+							CKEDITOR.instances.message.setData(category_template_text);
 						}
 					}
 					else {
@@ -270,7 +259,7 @@ jQuery(document).ready(function ($) {
 							$('#modal_confirm_template_category').modal('show');
 						}
 						else {
-							$('#editor').val(data);
+							CKEDITOR.instances.message.setData(data);
 						}
 					}
 
@@ -283,27 +272,27 @@ jQuery(document).ready(function ($) {
 
 	$('#modal_confirm_erase').click(function () {
 		$('#modal_confirm_template_category').modal('hide');
-		const textarea = $("#message").next();
+		const textarea = $("#editor").next();
 		textarea.empty();
-		$('#message').val(category_template_text.responseJSON);
+		CKEDITOR.instances.message.setData(category_template_text.responseJSON);
 	});
 
 	$('#modal_confirm_erase_keep_old').click(function () {
 		$('#modal_confirm_template_category').modal('hide');
-		const existing_content = editor.val();
+		const existing_content = CKEDITOR.instances.message.getData();
 		const textarea = $("#editor").next();
 		textarea.empty();
-		$('#editor').val(category_template_text.responseJSON + ' ' + existing_content);
+		CKEDITOR.instances.message.setData(category_template_text.responseJSON + ' ' + existing_content);
 	});
 
 	if ($.fn.datepicker !== undefined) {
 		// Load datepicker for poll
-		$('#datepoll-container .input-group.date').datepicker({
-			orientation: "bottom auto"
+		$('#datepoll-container .input-append.date').datepicker({
+			orientation: "top auto"
 		});
 	}
 
-	const quickreplyid = Joomla.getOptions('com_kunena.kunena_quickReplymesid');
+	const quickreplyid  = Joomla.getOptions('com_kunena.kunena_quickreplymesid');
 	$('#gotoeditor'+quickreplyid).click(function () {
 		localStorage.setItem("copyKunenaeditor", $(".qrlocalstorage" + quickreplyid).val());
 	});
@@ -327,7 +316,7 @@ jQuery(document).ready(function ($) {
 					})
 				},
 				mode: function( evt ) {
-					var cat = localStorage.getItem('copyKunenaeditor');
+					const cat = localStorage.getItem('copyKunenaeditor');
 
 					if (cat) {
 						evt.editor.setData(cat);
@@ -339,7 +328,7 @@ jQuery(document).ready(function ($) {
 						if(pollcatid !== undefined)
 						{
 							if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
-								var catid = $('#kcategory_poll').val();
+								const catid = $('#kcategory_poll').val();
 
 								if (pollcategoriesid[catid] !== undefined) {
 									evt.editor.getCommand( 'polls' ).enable();
@@ -366,20 +355,22 @@ jQuery(document).ready(function ($) {
 
 		CKEDITOR.on( 'dialogDefinition', function( ev )
 		{
-			var dialogName = ev.data.name;
-			var dialogDefinition = ev.data.definition;
+			const dialogName = ev.data.name;
+			const dialogDefinition = ev.data.definition;
 
 			if(dialogName=='link')
 			{
-				var linkType = dialogDefinition.getContents('info').get('linkType');
+				const linkType = dialogDefinition.getContents('info').get('linkType');
 				// Remove the 'anchor' link option.	 
 				linkType.items.splice(1,1);
 				// Remove the 'phone' link option.	 
 				linkType.items.splice(2,2);
 
-				var protocol = dialogDefinition.getContents('info').get('protocol');
+				const protocol = dialogDefinition.getContents('info').get('protocol');
 				protocol.items.splice(2,4);
 			}
 		});
+		
+		
 	}
 });

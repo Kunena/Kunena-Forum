@@ -233,12 +233,15 @@ class UserController extends KunenaController
 
 		$now = Factory::getDate()->toUnix();
 
-		if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay)
+		if ($this->me->karma_time !== 0)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'notice');
-			$this->setRedirectBack();
+			if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay)
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'notice');
+				$this->setRedirectBack();
 
-			return;
+				return;
+			}
 		}
 
 		if ($karmaDelta > 0)
@@ -267,13 +270,9 @@ class UserController extends KunenaController
 
 		$this->me->karma_time = $now;
 
-		try
+		if ($this->me->userid != $target->userid && !$this->me->save())
 		{
-			$this->me->userid == $target->userid && $this->me->save();
-		}
-		catch (Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'notice');
+			$this->app->enqueueMessage($this->me->getError(), 'notice');
 			$this->setRedirectBack();
 
 			return;
@@ -639,7 +638,20 @@ class UserController extends KunenaController
 
 		if ($this->config->signature)
 		{
-			$user->signature = $input->$method->get('signature', '', 'raw');
+			$signature = $input->$method->get('signature', '', 'raw');
+
+			if ($this->me->checkUserAllowedLinksImages() && $signature != $user->signature)
+			{
+				$signature = preg_replace('/\[url=(.*?)\](.*?)\[\/url\]/su', '', $signature);
+				$signature = preg_replace('/\[img=(.*?)\](.*?)\[\/img\]/su', '', $signature);
+
+				// When the bbcode urls and images are removed just remove the others links
+				$signature = preg_replace('/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)(#?[\w \.-]*)(\??[\w \.-]*)(\=?[\w \.-]*)/i', '', $signature);
+
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED_WITHOUT_LINKS_IMAGES'));
+			}
+
+			$user->signature = $signature;
 		}
 
 		$user->personalText = $input->$method->get('personalText', '', 'string');

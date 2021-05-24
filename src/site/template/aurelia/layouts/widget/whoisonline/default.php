@@ -54,10 +54,10 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
                     </div>
 
                     <div class="col-md-11">
-                        <ul class="list-unstyled">
-							<span>
+						<ul class="list-unstyled">
+							<li>
 								<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline); ?>
-							</span>
+							</li>
 							<?php
 							$template  = KunenaTemplate::getInstance();
 							$direction = $template->params->get('whoisonlineName');
@@ -65,17 +65,17 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 							if ($direction == 'both')
 								:
 								?>
-                                <div><?php echo $this->setLayout('both'); ?></div>
+								<li><?php echo $this->setLayout('both'); ?></li>
 							<?php
-                            elseif ($direction == 'avatar')
+							elseif ($direction == 'avatar')
 								:
 								?>
-                                <div><?php echo $this->setLayout('avatar'); ?></div>
+								<li><?php echo $this->setLayout('avatar'); ?></li>
 							<?php else
 
 								:
 								?>
-                                <div><?php echo $this->setLayout('name'); ?></div>
+								<li><?php echo $this->setLayout('name'); ?></li>
 							<?php
 							endif;
 							?>
@@ -83,30 +83,17 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 							<?php if (!empty($this->onlineList))
 								:
 								?>
-                                <div>
-                                    <span><?php echo Text::_('COM_KUNENA_LEGEND'); ?>:</span>
-                                    <span class="kwho-admin">
+								<li>
+									<span><?php echo Text::_('COM_KUNENA_LEGEND'); ?>:</span>
+									<span class="kwho-admin">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
-									</span>
-                                    <span class="kwho-globalmoderator">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
-									</span>
-                                    <span class="kwho-moderator">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_MODERATOR'); ?>
-									</span>
-                                    <span class="kwho-banned">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?>
-									</span>
-                                    <span class="kwho-user">
-										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?>
-									</span>
-                                    <span class="kwho-guest">
+									<span class="kwho-guest">
 										<?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>
 									</span>
-                                </div>
+								</li>
 							<?php endif; ?>
-                        </ul>
-                    </div>
+						</ul>
+					</div>
                 </div>
             </div>
         </div>

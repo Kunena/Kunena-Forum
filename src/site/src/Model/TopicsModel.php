@@ -338,7 +338,7 @@ class TopicsModel extends KunenaModel
 		}
 		else
 		{
-			$time = Factory::getDate()->toUnix() - ($time * 3600);
+			$time = Factory::getDate()->toUnix() - ((int) $time * 3600);
 		}
 
 		$latestCategory   = $this->getState('list.categories');

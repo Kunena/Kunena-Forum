@@ -302,9 +302,21 @@ class TemplatesModel extends AdminModel
 
 		$url       = 'https://update.kunena.org/templates.xml';
 
-		$options = new Registry;
+		try
+		{
+			$transport = new StreamTransport($options = []);
+		}
+		catch (Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 
-		$transport = new StreamTransport($options);
+			return false;
+		}
+
+		if (!$transport->isSupported())
+		{
+			return false;
+		}
 
 		// Create a 'stream' transport.
 		$http = new Http($options, $transport);

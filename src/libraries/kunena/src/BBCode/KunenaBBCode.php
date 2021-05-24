@@ -35,6 +35,7 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -127,24 +128,35 @@ class KunenaBBCode extends \Nbbc\BBCode
 	public function __construct($relative = true)
 	{
 		parent::__construct();
-		$this->defaults = new KunenaBBCodeLibrary;
-
+		$this->defaults  = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
-		$this->smileys   = $this->defaults->default_smileys;
+
+		$this->smileys = $this->defaults->default_smileys;
 
 		if (empty($this->smileys))
 		{
 			$this->SetEnableSmileys(false);
 		}
 
+		if (JDEBUG && KunenaFactory::getConfig()->debug && KunenaForum::isDev())
+		{
+			/*
+			 * Uncomment the two lines only whne need to have the log of debug else it's too way slow
+			 *
+			 * $this->setDebug(true);
+			 * $this->setLogFile(Factory::getApplication()->get('log_path'). '/kunena.NBBC_BBCODE.php');
+			 */
+		}
+
 		$this->SetSmileyDir(JPATH_ROOT);
 		$this->SetSmileyURL($relative ? Uri::root(true) : rtrim(Uri::root(), '/'));
 		$this->SetDetectURLs(true);
-		$this->SetURLPattern($this->url_pattern);
+		// The following call works with a hack in Nbbc\BBCode class in he method fillTemplate
+		$this->SetURLPattern(array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
 
 		PluginHelper::importPlugin('kunena');
-		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
+		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', array($this));
 	}
 
 	/**
@@ -586,7 +598,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 					$invalid |= !$this->IsValidURL($url, true);
 
 					// We have a full, complete, and properly-formatted URL, with protocol.
-					// Now we need to apply the $this->url_pattern template to turn it into HTML.
+					// Now we need to apply the $this->getURLPattern() template to turn it into HTML.
 					$params = UriHelper::parse_url($url);
 
 					if (!$invalid && substr($url, 0, 7) == 'mailto:')
@@ -612,7 +624,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 						$params['url']  = $url;
 						$params['link'] = $url;
 						$params['text'] = $token;
-						$output[$index] = $this->FillTemplate($this->url_pattern, $params);
+						$output[$index] = $this->FillTemplate($this->getURLPattern(), $params);
 					}
 				}
 				else
@@ -1344,10 +1356,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
 			}
-			else
-			{
-				return false;
-			}
 
 			// Display tag in activity streams etc..
 			if (!empty($bbcode->parent->forceMinimal))
@@ -1900,7 +1908,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		$document = Factory::getApplication()->getDocument();
 
 		// Display only link in activity streams etc..
-		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('maps'))
+		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$config->get('Maps'))
 		{
 			$url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 

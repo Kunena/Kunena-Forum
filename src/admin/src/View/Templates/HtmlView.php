@@ -117,9 +117,9 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->templates    = $this->get('templates');
+		$this->templates    = $this->get('Templates');
 		$this->pagination   = $this->get('Pagination');
-		$this->templatesxml = $this->get('templatesxml');
+		$this->templatesxml = $this->get('Templatesxml');
 
 		$this->addToolbar();
 

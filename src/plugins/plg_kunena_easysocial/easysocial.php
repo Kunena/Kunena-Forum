@@ -1,6 +1,11 @@
 <?php
 /**
- * @package        EasySocial
+ * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Easysocial
+ *
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2010 - 2016 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
@@ -29,7 +34,7 @@ require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 /**
  * @package     Kunena
  *
- * @since       Kunena 6.0
+ * @since       Kunena 5.0
  */
 class plgKunenaEasySocial extends EasySocialPlugins
 {
@@ -41,7 +46,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @param   object  $subject  subject
 	 * @param   object  $config   config
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function __construct(object $subject, object $config)
 	{
@@ -53,7 +58,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 
 		parent::__construct($subject, $config);
 
-		$this->loadLanguage('plg_kunena_community.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_community.sys', KPATH_ADMIN);
+		$this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easysocial.sys', KPATH_ADMIN);
 	}
 
 	/**
@@ -61,7 +66,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @return  KunenaLoginEasySocial
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function onKunenaGetLogin(): KunenaLoginEasySocial
 	{
@@ -77,7 +82,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * Get Kunena avatar integration object.
 	 *
 	 * @return  AvatarEasySocial
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function onKunenaGetAvatar(): AvatarEasySocial
 	{
@@ -94,7 +99,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @return  KunenaProfileEasySocial
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function onKunenaGetProfile(): KunenaProfileEasySocial
 	{

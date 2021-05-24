@@ -187,4 +187,36 @@ class KunenaProfileKunena extends KunenaProfile
 
 		return KunenaRoute::getUserUrl($user, $xhtml);
 	}
+
+	/**
+	 * Get the name of the user from this profile
+	 *
+	 * @param   KunenaUser  $user
+	 * @param   string      $visitorname
+	 * @param   bool        $escape
+	 *
+	 * @return string
+	 * @see KunenaProfile::getProfileName()
+	 * @since Kunena 5.2
+	 */
+	public function getProfileName($user, $visitorname = '', $escape = true)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if (!$user->userid && !$user->name)
+		{
+			$name = $visitorname;
+		}
+		else
+		{
+			$name = $config->username ? $user->username : $user->name;
+		}
+
+		if ($escape)
+		{
+			$name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
+		}
+
+		return $name;
+	}
 }

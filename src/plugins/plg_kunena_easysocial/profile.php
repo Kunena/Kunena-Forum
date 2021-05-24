@@ -1,6 +1,11 @@
 <?php
 /**
- * @package        EasySocial
+ * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Easysocial
+ *
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
@@ -24,13 +29,13 @@ use function defined;
 /**
  * @package     Kunena
  *
- * @since       Kunena 6.0
+ * @since       Kunena 5.0
  */
 class KunenaProfileEasySocial extends KunenaProfile
 {
 	/**
 	 * @var     null
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	protected $params = null;
 
@@ -39,7 +44,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @param   object  $params  params
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function __construct(object $params)
 	{
@@ -52,7 +57,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @return string
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 *
 	 * @throws Exception
 	 */
@@ -76,7 +81,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @return boolean
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
 	{
@@ -118,7 +123,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @return  array|void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function _getTopHits($limit = 0): array
 	{
@@ -130,7 +135,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function showProfile(int $view, object $params)
 	{
@@ -178,7 +183,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function getLegacyDate(int $birthday)
 	{
@@ -194,7 +199,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function getEditProfileURL(int $userid, $xhtml = true): bool
 	{

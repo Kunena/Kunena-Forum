@@ -278,9 +278,11 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @return array
+	 * Method to call loadTemplatesXml() to return the details of premium templates
+	 * 
+	 * @return stdClass
 	 *
-	 * @since Kunena
+	 * @since Kunena 5.1
 	 * @throws Exception
 	 */
 	public function getTemplatesXml()
@@ -290,13 +292,13 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * parseKunenaInstallFile
+	 * Method to retrieve the list of premium templates from kunena.org by loading the xml file and create from xml file a stdClass
 	 *
 	 * @return array|false
 	 *
-	 * @since Kunena 6.0
+	 * @since Kunena 5.1
 	 */
-	public function loadTemplatesXml()
+	protected function loadTemplatesXml()
 	{
 		$this->template = array();
 

@@ -16,8 +16,10 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -258,12 +260,22 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
 		ToolbarHelper::spacer();
 
+		// Get the toolbar object instance
+		$bar = Toolbar::getInstance('toolbar');
+
 		if (!empty($this->legacy))
 		{
 			ToolbarHelper::custom('tools.fixLegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
 		}
 
-		ToolbarHelper::custom('tools.trashMenu', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_TRASH_MENU', false);
+		HTMLHelper::_('bootstrap.renderModal', 'trashmenuconfirmationModal');
+
+		$title = Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH');
+		$dhtml = "<button data-toggle=\"modal\" data-target=\"#trashmenuconfirmationModal\" class=\"btn btn-small\">
+					<i class=\"icon-apply\" title=\"$title\"> </i>
+						$title</button>";
+						$bar->appendButton('Custom', $dhtml, 'batch');
+
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();

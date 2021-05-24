@@ -216,6 +216,10 @@ Text::script('COM_KUNENA_POLL_TIME_TO_LIVE');
 			:
 			?>
             <input type="hidden" name="catid" value="<?php echo \intval($this->message->catid) ?>"/>
+        <?php endif; ?>
+		<?php
+		if ($this->category->id > 0):?>
+            <input type="hidden" id="poll_catid" value="<?php echo \intval($this->message->catid) ?>"/>
 		<?php endif; ?>
 		<?php
 		if ($this->category->id && $this->category->id != $this->message->catid)

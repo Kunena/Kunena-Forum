@@ -17,10 +17,12 @@ defined('_JEXEC') or die();
 use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**
@@ -73,7 +75,19 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
+		$userid = $this->input->getInt('userid');
 		$this->me = KunenaUserHelper::getMyself();
+		$start = $this->input->getInt('limitstart', 0);
+		$limit  = $this->input->getInt('limit', 30);
+		$this->moreUri  = null;
+
+		$this->embedded = $this->getOptions()->get('embedded', false);
+
+		if ($this->embedded)
+		{
+			$this->moreUri = new Uri('index.php?option=com_kunena&view=user&layout=banmanager&userid=' . $userid . '&limit=' . $limit);
+			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
+		}
 
 		// TODO: add authorisation
 		$userBanspre = KunenaBan::getBannedUsers(0, 100);
@@ -82,12 +96,17 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
 		$this->pagination = new KunenaPagination($count, $start, $limit);
 		$this->userBans = KunenaBan::getBannedUsers($this->pagination->limitstart, $this->pagination->limit);
 
+		if ($this->moreUri)
+		{
+			$this->pagination->setUri($this->moreUri);
+		}
+
 		if (!empty($this->userBans))
 		{
 			KunenaUserHelper::loadUsers(array_keys($this->userBans));
 		}
 
-		$this->headerText = Text::_('COM_KUNENA_BAN_BANMANAGER');
+		$this->headerText = Text::_('COM_KUNENA_BAN_LIST_OF_BANNED_USERS');
 	}
 
 	/**

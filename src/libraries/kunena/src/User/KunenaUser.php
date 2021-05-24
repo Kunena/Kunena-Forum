@@ -2681,22 +2681,20 @@ class KunenaUser extends CMSObject
 	 */
 	public function canDoCaptcha()
 	{
-		$config = KunenaFactory::getConfig();
-
-		if (!$this->exists() && $config->captcha == 1)
+		if (!$this->exists() && $this->_config->captcha == 1)
 		{
 			return true;
 		}
 
-		if ($this->exists() && !$this->isModerator() && $config->captcha >= 0)
+		if ($this->exists() && !$this->isModerator() && $this->_config->captcha >= 0)
 		{
-			if ($config->captchaPostLimit > 0 && $this->posts < $config->captchaPostLimit)
+			if ($this->_config->captchaPostLimit > 0 && $this->posts < $this->_config->captchaPostLimit)
 			{
 				return true;
 			}
 		}
 
-		if ($config->captcha == '-1')
+		if ($this->_config->captcha == '-1')
 		{
 			return false;
 		}
@@ -2706,18 +2704,17 @@ class KunenaUser extends CMSObject
 	 * Method to check if the email symbol can be displayed depending on configuration and on user type
 	 *
 	 * @return boolean
+	 * @since Kunena 5.1.18
 	 */
 	public function canDisplayEmail($profile)
 	{
-		$config = KunenaConfig::getInstance();
-
 		if ($this->isModerator() || $profile->id == $this->userid)
 		{
 			return true;
 		}
 		else
 		{
-			if ($config->showemail && $profile->email)
+			if ($this->_config->showemail && $profile->email)
 			{
 				if ($profile->hideEmail == 0 || $profile->hideEmail == 2 && KunenaUserHelper::getMyself()->exists())
 				{
@@ -2727,5 +2724,24 @@ class KunenaUser extends CMSObject
 		}
 
 		return false;
+	}
+
+	/**
+	 * Check if the urls and images should be removed in message or signature
+	 *
+	 * @return boolean
+	 * @since Kunena 5.2.0
+	 */
+	public function checkUserAllowedLinksImages()
+	{
+		if ($this->isModerator() || $this->isAdmin())
+		{
+			return false;
+		}
+
+		if ($this->_config->new_users_prevent_post_url_images && $this->posts <= $this->_config->minimal_user_posts_add_url_image)
+		{
+			return true;
+		}
 	}
 }

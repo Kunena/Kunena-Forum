@@ -147,6 +147,13 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SMALL');
 Text::script('COM_KUNENA_EDITOR_SIZE_NORMAL');
 Text::script('COM_KUNENA_EDITOR_SIZE_BIG');
 Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
+Text::script('COM_KUNENA_EDITOR_DIALOG_POLLS_PROPERTIES');
+Text::script('COM_KUNENA_EDITOR_DIALOG_VIDEO_PROPERTIES');
+Text::script('COM_KUNENA_EDITOR_DIALOG_MAPS_PROPERTIES');
+Text::script('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS');
+Text::script('COM_KUNENA_POLL_ADD_POLL_OPTION');
+Text::script('COM_KUNENA_POLL_REMOVE_POLL_OPTION');
+Text::script('COM_KUNENA_POLL_TIME_TO_LIVE');
 ?>
     <div id="modal_confirm_template_category" class="modal fade" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-hidden="true">
@@ -222,6 +229,14 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
 			?>
             <input type="hidden" id="poll_exist_edit" name="poll_exist_edit"
                    value="<?php echo \intval($this->message->getTopic()->getPoll()->id) ?>"/>
+            <input type="hidden" id="ckeditor_dialog_polltitle" name="ckeditor_dialog_polltitle"
+			       value="<?php echo $this->message->getTopic()->getPoll()->title ?>"/>
+			<input type="hidden" id="ckeditor_dialog_polltimetolive" name="ckeditor_dialog_polltimetolive"
+			       value="<?php echo $this->message->getTopic()->getPoll()->polltimetolive ?>"/>
+			<?php foreach($this->message->getTopic()->getPoll()->getOptions() as $index => $option): ?>
+				<input type="hidden" class="ckeditor_dialog_polloption" id="ckeditor_dialog_polloption<?php echo $index; ?>" name="ckeditor_dialog_polloption<?php echo $index; ?>"
+				   value="<?php echo $option->text; ?>"/>
+			<?php endforeach; ?>
 		<?php endif; ?>
         <input type="hidden" id="kunena_upload" name="kunena_upload"
                value="<?php echo \intval($this->message->catid) ?>"/>
@@ -524,6 +539,9 @@ Text::script('COM_KUNENA_EDITOR_SIZE_SUPER_BIGGER');
 		}
 		?>
         <div id="kattach-list"></div>
+		<div id="poll_options">
+			<!-- Placeholder for polls options if inserted in message -->
+		</div>
     </form>
 	<?php
 if ($this->config->showHistory && $this->topic->exists())

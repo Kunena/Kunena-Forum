@@ -1,6 +1,6 @@
 /**
  * Kunena Component
- * @package Kunena.Template.Crypsis
+ * @package Kunena.Template.Aurelia
  *
  * @copyright     Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -101,10 +101,6 @@ jQuery(document).ready(function ($) {
 				}, {
 					share: "pinterest",
 					label: Joomla.Text._('COM_KUNENA_SOCIAL_PINTEREST_LABEL')
-				},
-				{
-					share: "stumbleupon",
-					label: Joomla.Text._('COM_KUNENA_SOCIAL_STUMBLEUPON_LABEL')
 				},
 				{
 					share: "whatsapp",

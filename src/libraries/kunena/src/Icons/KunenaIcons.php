@@ -1361,18 +1361,16 @@ class KunenaIcons
 			}
 			elseif ($topicicontype == 'image')
 			{
-				if (!empty($caticon))
+				if (empty($categoryicon))
 				{
-					$bigicon = ' kicon-foldernew ';
-				}
-				else
-				{
-					$bigicon = ' kicon-folder ';
-				}
-
-				if ($categoryicon)
-				{
-					$bigicon = ' icon-big ';
+					if (!empty($caticon))
+					{
+						$bigicon = ' kicon-foldernew ';
+					}
+					else
+					{
+						$bigicon = ' kicon-folder ';
+					}
 				}
 			}
 			else
@@ -1467,7 +1465,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'image')
 		{
-			return '<span class="' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
+			return '<div class="' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </div>';
 		}
 
 		return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';

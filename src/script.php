@@ -130,6 +130,111 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function install($parent)
 	{
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true);
+
+		$values = [
+			$db->quote('com_kunena.reply'),
+			$db->quote(''),
+			$db->quote('COM_CONFIG_SENDMAIL_SUBJECT'),
+			$db->quote('COM_CONFIG_SENDMAIL_BODY'),
+			$db->quote(''),
+			$db->quote(''),
+			$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}')
+		];
+
+		$query->insert($db->quoteName('#__mail_templates'))
+			->columns(
+				[
+					$db->quoteName('template_id'),
+					$db->quoteName('language'),
+					$db->quoteName('subject'),
+					$db->quoteName('body'),
+					$db->quoteName('htmlbody'),
+					$db->quoteName('attachments'),
+					$db->quoteName('params')
+				]
+			)
+			->values(implode(', ', $values));
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (ExecutionFailureException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		$values = [
+			$db->quote('com_kunena.replymoderator'),
+			$db->quote(''),
+			$db->quote('COM_CONFIG_SENDMAIL_SUBJECT'),
+			$db->quote('COM_CONFIG_SENDMAIL_BODY'),
+			$db->quote(''),
+			$db->quote(''),
+			$db->quote('tags":["mail", "subject", "message", "messageUrl", "once"]}')
+		];
+
+		$query->insert($db->quoteName('#__mail_templates'))
+			->columns(
+				[
+					$db->quoteName('template_id'),
+					$db->quoteName('language'),
+					$db->quoteName('subject'),
+					$db->quoteName('body'),
+					$db->quoteName('htmlbody'),
+					$db->quoteName('attachments'),
+					$db->quoteName('params')
+				]
+			)
+			->values(implode(', ', $values));
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (ExecutionFailureException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		$values = [
+			$db->quote('com_kunena.report'),
+			$db->quote(''),
+			$db->quote('COM_CONFIG_SENDMAIL_SUBJECT'),
+			$db->quote('COM_CONFIG_SENDMAIL_BODY'),
+			$db->quote(''),
+			$db->quote(''),
+			$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}')
+		];
+
+		$query->insert($db->quoteName('#__mail_templates'))
+			->columns(
+				[
+					$db->quoteName('template_id'),
+					$db->quoteName('language'),
+					$db->quoteName('subject'),
+					$db->quoteName('body'),
+					$db->quoteName('htmlbody'),
+					$db->quoteName('attachments'),
+					$db->quoteName('params')
+				]
+			)
+			->values(implode(', ', $values));
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (ExecutionFailureException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
 		// Notice $parent->getParent() returns JInstaller object
 		$parent->getParent()->setRedirectUrl('index.php?option=com_kunena');
 	}

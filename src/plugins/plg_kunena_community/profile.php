@@ -143,4 +143,28 @@ class KunenaProfileCommunity extends KunenaProfile
 
 		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $user, $xhtml);
 	}
+
+	/**
+	 * Return username of user
+	 *
+	 * @param   integer $userid userid
+	 * @param   bool    $xhtml  xhtml
+	 *
+	 * @since Kunena 5.2
+	 * @return string
+	 */
+	public function getProfileName($user, $visitorname = '', $escape = true)
+	{
+		$cconfig = CFactory::getConfig();
+		$displayusername = $cconfig->get('displayname');
+
+		if ($displayusername == 'name')
+		{
+			return CFactory::getUser($user->id)->name;
+		}
+		else
+		{
+			return CFactory::getUser($user->id)->username;
+		}
+	}
 }

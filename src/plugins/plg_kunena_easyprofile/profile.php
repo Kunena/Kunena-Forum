@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
@@ -120,5 +121,37 @@ class KunenaProfileEasyprofile extends KunenaProfile
 		$user = JsnHelper::getUser($user);
 
 		return $user->getLink();
+	}
+
+	/**
+	 * Return username of user
+	 *
+	 * @param   integer $userid userid
+	 * @param   bool    $xhtml  xhtml
+	 *
+	 * @since Kunena 5.2
+	 * @return string
+	 */
+	public function getProfileName($user, $visitorname = '', $escape = true)
+	{
+		$config = ComponentHelper::getParams('com_jsn');
+		$formatName = $config->get('formatname', 'NAME');
+
+		if($formatName == 'NAME')
+		{
+			return JsnHelper::getUser($user->id)->name;
+		}
+		else if ($formatName == 'USERNAME')
+		{
+			return JsnHelper::getUser($user->id)->username;
+		}
+		else if ($formatName == 'NAMEUSERNAME')
+		{
+			return JsnHelper::getUser($user->id)->name . ' (' . JsnHelper::getUser($user->id)->username . ')';
+		}
+		else
+		{
+			return JsnHelper::getUser($user->id)->username . ' (' . JsnHelper::getUser($user->id)->name . ')';
+		}
 	}
 }

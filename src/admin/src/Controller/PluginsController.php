@@ -122,9 +122,82 @@ class PluginsController extends AdminController
 
 			// Make sure the item ids are integers
 			$cid = ArrayHelper::toInteger($cid);
+			$cids = implode(',', $cid);
+
+			// Retrieve the name of plugin extension from extensions table to check before if the third party extension exist
+			$db = Factory::getDBO();
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName(array('element', 'extension_id')));
+			$query->from($db->quoteName('#__extensions'));
+			$query->where($db->quoteName('extension_id') . ' IN (' . $cids . ')');
+			$db->setQuery($query);
+			$plg_kunena_exts = $db->loadObjectList();
+
+			$cids_exist = array();
+
+			foreach ($plg_kunena_exts as $plg)
+			{
+				if($plg->element == 'altauserpoints')
+				{
+					if (file_exists(JPATH_SITE . '/components/com_altauserpoints/helper.php'))
+					{
+						$cids_exist[] = $plg->extension_id;
+					}
+				}
+				else if ($plg->element == 'community')
+				{
+					if (file_exists(JPATH_ROOT . '/components/com_community/libraries/core.php'))
+					{
+						$cids_exist[] = $plg->extension_id;
+					}
+				}
+				else if ($plg->element == 'comprofiler')
+				{
+					if ((file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))
+					{
+						$cids_exist[] = $plg->extension_id;
+					}
+				}
+				else if ($plg->element == 'easyblog')
+				{
+					if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easyblog/includes/easyblog.php'))
+					{
+						$cids_exist[] = $plg->extension_id;
+					}
+				}
+				else if ($plg->element == 'easyprofile')
+				{
+					if (file_exists(JPATH_SITE . '/components/com_jsn/helpers/helper.php'))
+					{
+						$cids_exist[] = $plg->extension_id;
+					}
+				}
+				else if ($plg->element == 'easysocial')
+				{
+					if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php'))
+					{
+						$cids_exist[] = $plg->extension_id;
+					}
+				}
+				else
+				{
+					$cids_exist[] = $plg->extension_id;
+				}
+			}
+
+			$extension    = $this->input->get('extension');
+			$extensionURL = ($extension) ? '&extension=' . $extension : '';
+
+			if (empty($cids_exist))
+			{
+				$this->setMessage(Text::_('COM_KUNENA_PLUGINS_NO_THIRD_PARTIES_EXTENSIONS_FOUND') , 'error');
+				$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
+
+				return false;
+			}
 
 			// Publish the items.
-			if (!$model->publish($cid, $value))
+			if (!$model->publish($cids_exist, $value))
 			{
 				Log::add($model->getError(), Log::WARNING, 'jerror');
 			}
@@ -154,8 +227,6 @@ class PluginsController extends AdminController
 		$editor = KunenaBBCodeEditor::getInstance();
 		$editor->initializeHMVC();
 
-		$extension    = $this->input->get('extension');
-		$extensionURL = ($extension) ? '&extension=' . $extension : '';
 		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList . $extensionURL, false));
 	}
 

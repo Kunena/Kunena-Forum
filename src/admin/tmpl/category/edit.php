@@ -112,6 +112,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                                                    type="text"
                                                                    name="alias" size="80"
                                                                    value="<?php echo $this->escape($this->category->alias); ?>"/>
+															<span id="aliasinfo"></span>
 															<?php
 															if ($this->options ['aliases'])
 																:

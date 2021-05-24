@@ -859,7 +859,7 @@ class KunenaUser extends CMSObject
 	 * @return string
 	 * @since Kunena 1.6
 	 */
-	public function getName($visitorname = '', $escape = true)
+	public function getName($visitorname = '', $escape = true): string
 	{
 		$profile = KunenaFactory::getProfile();
 
@@ -1173,10 +1173,9 @@ class KunenaUser extends CMSObject
 			return false;
 		}
 
-		$config = KunenaFactory::getConfig();
 		$me     = KunenaUserHelper::getMyself();
 
-		if (!$config->pubProfile && !$me->exists())
+		if (!$this->_config->pubProfile && !$me->exists())
 		{
 			return false;
 		}
@@ -1478,14 +1477,13 @@ class KunenaUser extends CMSObject
 	public function getEmail($profile): bool
 	{
 		$me     = KunenaUserHelper::getMyself();
-		$config = KunenaFactory::getConfig();
 
 		if ($me->isModerator() || $me->isAdmin())
 		{
 			return true;
 		}
 
-		if ($config->showEmail && $profile->email)
+		if ($this->_config->showEmail && $profile->email)
 		{
 			if ($profile->hideEmail == 0)
 			{
@@ -1514,12 +1512,11 @@ class KunenaUser extends CMSObject
 	{
 		if (!isset($this->_email))
 		{
-			$config = KunenaFactory::getConfig();
 			$me     = KunenaUserHelper::getMyself();
 
 			$this->_email = '';
 
-			if ($this->email && (($config->showEmail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
+			if ($this->email && (($this->_config->showEmail && (!$this->hideEmail || $me->isModerator())) || $me->isAdmin()))
 			{
 				$this->_email = HTMLHelper::_('email.cloak', $this->email);
 			}
@@ -1631,16 +1628,14 @@ class KunenaUser extends CMSObject
 	 */
 	public function getSignature()
 	{
-		$config = KunenaFactory::getConfig();
-
-		if (!$config->signature)
+		if (!$this->_config->signature)
 		{
 			return false;
 		}
 
 		if (!isset($this->_signature))
 		{
-			$this->_signature = KunenaParser::parseBBCode((string) $this->signature, $this, KunenaFactory::getConfig()->maxSig);
+			$this->_signature = KunenaParser::parseBBCode((string) $this->signature, $this, $this->_config->maxSig);
 		}
 
 		return $this->_signature;
@@ -1659,10 +1654,9 @@ class KunenaUser extends CMSObject
 	{
 		if ($this->userid)
 		{
-			$config = KunenaFactory::getConfig();
 			$me     = KunenaUserHelper::getMyself();
 
-			if ($config->showKarma && $me->userid && $me->userid != $this->userid)
+			if ($this->_config->showKarma && $me->userid && $me->userid != $this->userid)
 			{
 				return true;
 			}
@@ -1684,10 +1678,8 @@ class KunenaUser extends CMSObject
 	 */
 	public function getSideProfile(KunenaLayout $layout)
 	{
-		$config = KunenaFactory::getConfig();
-
 		$view                  = clone $layout;
-		$view->config          = $config;
+		$view->config          = $this->_config;
 		$view->userkarma_title = $view->userkarma_minus = $view->userkarma_plus = '';
 
 		if ($view->config->showKarma && $this->userid)
@@ -1773,9 +1765,7 @@ class KunenaUser extends CMSObject
 	 */
 	public function getRank($catid = 0, $type = null, $special = null)
 	{
-		$config = KunenaFactory::getConfig();
-
-		if (!$config->showRanking)
+		if (!$this->_config->showRanking)
 		{
 			return;
 		}
@@ -1924,7 +1914,7 @@ class KunenaUser extends CMSObject
 			return Text::_($rank->rankTitle);
 		}
 
-		if (!$config->rankImages)
+		if (!$this->_config->rankImages)
 		{
 			$rank->rankImage = null;
 		}
@@ -1942,12 +1932,12 @@ class KunenaUser extends CMSObject
 			 *             2 = Usergroup
 			 *             3 = Both Rank image and Usergroup
 			 */
-			if ($config->rankImages == 0)
+			if ($this->_config->rankImages == 0)
 			{
 				return false;
 			}
 
-			if ($config->rankImages == 1)
+			if ($this->_config->rankImages == 1)
 			{
 				$url             = KunenaTemplate::getInstance()->getRankPath($rank->rankImage, true);
 				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage;
@@ -1956,12 +1946,12 @@ class KunenaUser extends CMSObject
 				return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rankTitle) . '" />';
 			}
 
-			if ($config->rankImages == 2)
+			if ($this->_config->rankImages == 2)
 			{
 				return '<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 			}
 
-			if ($config->rankImages == 3)
+			if ($this->_config->rankImages == 3)
 			{
 				$url             = KunenaTemplate::getInstance()->getRankPath($rank->rankImage, true);
 				$location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage;
@@ -1971,7 +1961,7 @@ class KunenaUser extends CMSObject
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
 			}
 
-			if ($config->rankImages == 4)
+			if ($this->_config->rankImages == 4)
 			{
 				return self::rankCss($rank, $catid);
 			}
@@ -2198,9 +2188,7 @@ class KunenaUser extends CMSObject
 	 */
 	public function getPersonalText()
 	{
-		$config = KunenaFactory::getConfig();
-
-		if (!$config->personal)
+		if (!$this->_config->personal)
 		{
 			return false;
 		}

@@ -120,6 +120,11 @@ class TopicListingRecentDisplay extends ListDisplay
 		$authorise   = 'read';
 		$order       = 'last_post_time';
 
+		if (!isset($categoryIds))
+		{
+			$categoryIds = false;
+		}
+
 		$finder = new KunenaTopicFinder;
 		$finder->filterByMoved(false);
 

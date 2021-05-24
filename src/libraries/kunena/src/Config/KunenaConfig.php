@@ -625,10 +625,10 @@ class KunenaConfig extends CMSObject
 	public $userlistUserHits = 1;
 
 	/**
-	 * @var    string  Latest category
+	 * @var    int  Latest category; select, integer multiple
 	 * @since  Kunena 1.0.0
 	 */
-	public $latestCategory = '';
+	public $latestCategory = 0;
 
 	/**
 	 * @var    boolean  Show stats

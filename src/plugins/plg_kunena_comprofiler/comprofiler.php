@@ -61,19 +61,6 @@ class plgKunenaComprofiler extends CMSPlugin
 		// Do not load if CommunityBuilder is not installed
 		if ((!file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (!file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))
 		{
-			if (PluginHelper::isEnabled('kunena', 'comprofiler'))
-			{
-				$db    = Factory::getDBO();
-				$query = $db->getQuery(true);
-				$query->update($db->quoteName('#__extensions'));
-				$query->where($db->quoteName('element') . ' = ' . $db->quote('comprofiler'));
-				$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
-				$query->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
-				$query->set($db->quoteName('enabled') . ' = 0');
-				$db->setQuery($query);
-				$db->execute();
-			}
-
 			return;
 		}
 

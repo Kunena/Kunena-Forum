@@ -159,4 +159,21 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 
 		return Route::_('index.php?option=com_altauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml);
 	}
+
+	/**
+	 * Return username of user
+	 *
+	 * @param   integer $userid userid
+	 * @param   bool    $xhtml  xhtml
+	 *
+	 * @since Kunena 5.2
+	 * @return string
+	 */
+	public function getProfileName($user, $visitorname = '', $escape = true)
+	{
+		$referrid = AltaUserPointsHelper::getAnyUserReferreID($user->userid);
+		$userinfo = AltaUserPointsHelper::getUserInfo($referrid);
+
+		return $userinfo->username;
+	}
 }

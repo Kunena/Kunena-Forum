@@ -73,6 +73,7 @@ class KunenaProfile
 			if (!self::$instance)
 			{
 				self::$instance = new self;
+				self::$instance->enabled = false;
 			}
 		}
 

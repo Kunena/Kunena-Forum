@@ -207,4 +207,28 @@ class KunenaProfileEasySocial extends KunenaProfile
 
 		return FRoute::profile($options, $xhtml);
 	}
+
+	/**
+	 * Return username of user
+	 *
+	 * @param   integer $userid userid
+	 * @param   bool    $xhtml  xhtml
+	 *
+	 * @since Kunena 5.2
+	 * @return string
+	 */
+	public function getProfileName($user, $visitorname = '', $escape = true)
+	{
+		$config  = ES::config();
+		$displayusername =  $config->get('users.displayName');
+
+		if ( $displayusername == 'username')
+		{
+			return FD::user($user->id)->username;
+		}
+		else
+		{
+			return FD::user($user->id)->name;
+		}
+	}
 }

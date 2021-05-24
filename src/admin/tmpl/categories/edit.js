@@ -1,6 +1,16 @@
+/**
+ * Kunena       Component
+ * @package     Kunena.BackendTemplate
+ *
+ * @copyright     Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link        https://www.kunena.org
+ **/
+
 jQuery(document).ready(function ($) {
 	const input_alias = $("#jform_aliases");
 	const box = $("#aliascheck");
+	const info = $("#aliasinfo");
 	const apply = $(".button-apply");
 	const save = $(".button-save");
 	const savenew = $(".button-save-new");
@@ -37,8 +47,8 @@ jQuery(document).ready(function ($) {
 				}
 
 				if (box.length) {
-					box.addClass("valid icon icon-ok");
-					box.html("");
+					info.addClass("valid icon icon-ok");
+					info.html("");
 				}
 			}
 		});

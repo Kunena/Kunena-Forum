@@ -19,7 +19,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
 $user        = isset($this->user) ? $this->user : KunenaUserHelper::getMyself();
-$status      = $user->status;
+$status      = $user->getStatus();
 $status_text = $user->getStatusText();
 $link        = $user->getURL();
 

@@ -37,6 +37,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Nbbc\BBCode;
@@ -1330,13 +1331,28 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		if (!empty($content))
 		{
-			$before  = $content;
-			$content = strip_tags($content);
+			return self::renderInstagram($bbcode, $content);
+		}
+	}
 
-			$content = trim($content);
+	/**
+	 * Method to render the instagram content
+	 *
+	 * @param string $content
+	 * @return string
+	 * @since Kunena 5.2
+	 */
+	public static function renderInstagram($bbcode, $content)
+	{
+		$before  = $content;
+		$content = strip_tags($content);
 
-			$url_parsed = parse_url($content);
+		$content = trim($content);
 
+		$url_parsed = parse_url($content);
+
+		if (isset($url_parsed['scheme']))
+		{
 			if ($url_parsed['scheme'] == 'https' || $url_parsed['scheme'] == 'http')
 			{
 				$content = $url_parsed['host'] . $url_parsed['path'];
@@ -1345,32 +1361,32 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			{
 				$content = $url_parsed['path'];
 			}
+		}
 
-			if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
+		if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
+		{
+			if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
 			{
-				if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
-				{
-					// Add scheme to raw domain URLs.
-					$url = "https://{$content}";
-				}
-
-				return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+				// Add scheme to raw domain URLs.
+				$url = "https://{$content}";
 			}
 
-			// Display tag in activity streams etc..
-			if (!empty($bbcode->parent->forceMinimal))
-			{
-				return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
-			}
+			return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+		}
 
-			if (!empty($content))
-			{
-				return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
-			}
-			else
-			{
-				return $before;
-			}
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal))
+		{
+			return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+		}
+
+		if (!empty($content))
+		{
+			return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+		}
+		else
+		{
+			return $before;
 		}
 	}
 
@@ -2206,15 +2222,26 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			return true;
 		}
 
-		$user  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
-		$wrote = '';
+		$default  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 
-		if ($user)
+		$quote_params = explode(' ' ,$default);
+		$username = $quote_params['0'];
+		$messageid = explode('=', $quote_params['1']);
+
+		$message = KunenaMessageHelper::get($messageid['1']);
+		$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
+
+		$layout = KunenaLayout::factory('BBCode/Quote');
+
+		if ($layout->getPath())
 		{
-			$wrote = $user . " " . Text::_('COM_KUNENA_POST_WROTE') . ': ';
+			return (string) $layout
+			->set('username', $username)
+			->set('msglink', $msglink)
+			->set('content', $content);
 		}
 
-		return '<blockquote class="Quote UserQuote"><div class="QuoteText">' . $wrote . $content . '</div></blockquote>';
+		return '';
 	}
 
 	/**

@@ -146,7 +146,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
-		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote]);
+		list($this->topic, $this->message) = $parent->newReply($saved ? $saved : ['quote' => $quote], $parent->userid);
 		$this->action = 'post';
 
 		$privateMessage       = new KunenaPrivateMessage;

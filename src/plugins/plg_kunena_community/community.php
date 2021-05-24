@@ -46,19 +46,6 @@ class plgKunenaCommunity extends CMSPlugin
 
 		if (!is_file($path))
 		{
-			if (PluginHelper::isEnabled('kunena', 'community'))
-			{
-				$db    = Factory::getDBO();
-				$query = $db->getQuery(true);
-				$query->update($db->quoteName('#__extensions'));
-				$query->where($db->quoteName('element') . ' = ' . $db->quote('community'));
-				$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
-				$query->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
-				$query->set($db->quoteName('enabled') . ' = 0');
-				$db->setQuery($query);
-				$db->execute();
-			}
-
 			return;
 		}
 

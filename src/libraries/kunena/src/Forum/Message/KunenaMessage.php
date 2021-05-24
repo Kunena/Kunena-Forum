@@ -369,9 +369,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 */
-	public function newReply($fields = [], $user = null, $safefields = null): array
+	public function newReply($fields = [], $useridfromparent = 0, $safefields = null): array
 	{
-		$user     = KunenaUserHelper::get($user);
+		$user     = KunenaUserHelper::get();
 		$topic    = $this->getTopic();
 		$category = $this->getCategory();
 
@@ -415,11 +415,17 @@ class KunenaMessage extends KunenaDatabaseObject
 
 		if ($fields['quote'] === true)
 		{
-			$user             = KunenaFactory::getUser($this->userid);
-			$find             = ['/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su', '/\[PRIVATE=(.*?)\]/su'];
-			$replace          = '';
-			$text             = preg_replace($find, $replace, $this->message);
-			$message->message = "[quote=\"{$user->getName($this->name)}\" post={$this->id}]" . $text . "[/quote]";
+			$userfromparent = KunenaUserHelper::get($useridfromparent);
+			$userfromparentname =$userfromparent->getName();
+			if (empty($userfromparent->getName()))
+			{
+				$userfromparentname = 'anonymous';
+			}
+
+			$find                 = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
+			$replace              = '';
+			$text                 = preg_replace($find, $replace, $this->message);
+			$message->message     = "[quote=\"{$userfromparentname} post={$this->id} userid={$useridfromparent}\"]" . $text . "[/quote]";
 		}
 		else
 		{

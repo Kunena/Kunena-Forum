@@ -82,6 +82,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 		$this->message = KunenaMessage::getInstance($mesid);
 		$this->topic   = $this->message->getTopic();
+		$this->category = $this->topic->getCategory();
 
 		$id    = $this->message->thread;
 		$catid = $this->message->catid;
@@ -739,6 +740,21 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'delete',
 					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button)
 				);
+			}
+		}
+
+		// Show admins the IP address of the user.
+		if ($this->category->isAuthorised('admin')
+			|| ($this->category->isAuthorised('moderate') && !$this->config->hide_ip))
+		{
+			if (!empty($this->message->ip))
+			{
+				$this->ipLink = '<a href="https://dnslytics.com/ip/' . $this->message->ip
+				. '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
+			}
+			else
+			{
+				$this->ipLink = '&nbsp;';
 			}
 		}
 

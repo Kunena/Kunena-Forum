@@ -1627,38 +1627,6 @@ $wa->useScript('multiselect');
 													</tr>
 													</thead>
 													<tbody>
-													<tr <?php if ($this->config->disableEmoticons != 0)
-:
-														echo 'class="changed"';
-														endif; ?>>
-														<td><?php echo Text::_('COM_KUNENA_A_DISEMOTICONS') ?></td>
-														<td><?php echo $this->lists ['disableEmoticons'] ?></td>
-														<td><?php echo Text::_('COM_KUNENA_A_DISEMOTICONS_DESC') ?></td>
-													</tr>
-													<tr <?php if ($this->config->showSpoilerTag != 1)
-:
-														echo 'class="changed"';
-														endif; ?>>
-														<td><?php echo Text::_('COM_KUNENA_A_SHOWSPOILERTAG') ?></td>
-														<td><?php echo $this->lists ['showSpoilerTag'] ?></td>
-														<td><?php echo Text::_('COM_KUNENA_A_SHOWSPOILERTAG_DESC') ?></td>
-													</tr>
-													<tr <?php if ($this->config->showVideoTag != 1)
-:
-														echo 'class="changed"';
-														endif; ?>>
-														<td><?php echo Text::_('COM_KUNENA_A_SHOWVIDEOTAG') ?></td>
-														<td><?php echo $this->lists ['showVideoTag'] ?></td>
-														<td><?php echo Text::_('COM_KUNENA_A_SHOWVIDEOTAG_DESC') ?></td>
-													</tr>
-													<tr <?php if ($this->config->showEbayTag != 1)
-:
-														echo 'class="changed"';
-														endif; ?>>
-														<td><?php echo Text::_('COM_KUNENA_A_SHOWEBAYTAG') ?></td>
-														<td><?php echo $this->lists ['showEbayTag'] ?></td>
-														<td><?php echo Text::_('COM_KUNENA_A_SHOWEBAYTAG_DESC') ?></td>
-													</tr>
 													<tr <?php if ($this->config->trimLongUrls != 1)
 :
 														echo 'class="changed"';

@@ -9,7 +9,7 @@
 
 jQuery(document).ready(function ($) {
 	const qreply = $('.qreply');
-	const editor = $('#editor');
+	const editor = $('#message');
 	const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
 	const arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 	const pollexist = $('#poll_exist_edit');
@@ -27,63 +27,44 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
-	//$('#tabs_kunena_editor a:first').tab('show');
+	if (Joomla.getOptions('com_kunena.ckeditor_config')!== undefined)
+	{
+		CKEDITOR.on('instanceReady', function(evt){
+			// Do your bindings and other actions here for example
+			// You can access each editor that this event has fired on from the event
+			const editor = evt.editor;
 
-	$('#tabs_kunena_editor a[href="#preview"]').click(function (e) {
-		$('a[href="#write"]').parents('li,ul').removeClass('active');
-		$('a[href="#secure_reply"]').parents('li,ul').removeClass('active');
-		$('a[href="#preview"]').parents('li,ul').addClass('active');
-		e.preventDefault();
+			const cat = localStorage.getItem('copyKunenaeditor');
 
-		const preview = $("#kbbcode-preview");
-		const message = $("#editor");
-		const message_private = $("#editor-private");
+			if (cat) {
+				editor.setData(cat);
+				localStorage.removeItem('copyKunenaeditor');
+			}
 
-		preview.css('display', 'block');
+			if(pollcatid !== undefined)
+			{
+				if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
+					var catid = $('#kcategory_poll').val();
 
-		message.hide();
-		message_private.hide();
-
-		preview.attr('class', 'kbbcode-preview-bottom controls');
-		const height = message.css('height');
-		preview.css('height', height);
-	});
-
-	$('#tabs_kunena_editor a:last').click(function (e) {
-		$('a[href="#write"]').parents('li,ul').removeClass('active');
-		$('a[href="#preview"]').parents('li,ul').removeClass('active');
-		$('a[href="#secure_reply"]').parents('li,ul').addClass('active');
-		e.preventDefault();
-
-		const message = $("#editor");
-		const message_private = $("#editor-private");
-
-		message.hide();
-		message_private.show();
-		$('#kbbcode-preview').hide();
-	});
-
-	$('#tabs_kunena_editor a[href="#write"]').click(function (e) {
-		$('a[href="#preview"]').parents('li,ul').removeClass('active');
-		$('a[href="#secure_reply"]').parents('li,ul').removeClass('active');
-		$('a[href="#write"]').parents('li,ul').addClass('active');
-		$('#kbbcode-preview').hide();
-		$("#editor-private").hide();
-		editor.css('display', 'inline-block');
-		$('#markItUpeditor').css('display', 'inline-block');
-	});
-
-	$('#tabs_kunena_editor a[href="#preview"]').click(function (e) {
-		editor.hide();
-		$('#markItUpeditor').hide();
-	});
-
-	const cat = localStorage.getItem('copyKunenaeditor');
-	if (cat) {
-		var textarea = $("#editor").next();
-		textarea.empty();
-		$('#editor').val(cat);
-		localStorage.removeItem('copyKunenaeditor');
+					if (pollcategoriesid[catid] !== undefined) {
+						CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+					}
+					else {
+						CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+					}
+				}
+				else if (pollexist.length > 0) {
+					CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+				}
+				else {
+					CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+				}
+			}
+			else
+			{
+				CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+			}
+		});
 	}
 
 	$('#reset').onclick = function() {
@@ -94,14 +75,10 @@ jQuery(document).ready(function ($) {
 	if ($('#kemojis_allowed').val() === 1) {
 		var item = '';
 		if (editor.length > 0 && qreply.length === 0) {
-			item = '#editor';
+			item = '#message';
 		}
 		else if (qreply.length > 0) {
 			item = '.qreply';
-		}
-
-		if ($('#wysibb-body').length > 0) {
-			item = '#wysibb-body';
 		}
 
 		if (true) {
@@ -306,9 +283,9 @@ jQuery(document).ready(function ($) {
 
 	$('#modal_confirm_erase').click(function () {
 		$('#modal_confirm_template_category').modal('hide');
-		const textarea = $("#editor").next();
+		const textarea = $("#message").next();
 		textarea.empty();
-		$('#editor').val(category_template_text.responseJSON);
+		$('#message').val(category_template_text.responseJSON);
 	});
 
 	$('#modal_confirm_erase_keep_old').click(function () {

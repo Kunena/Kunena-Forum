@@ -79,7 +79,7 @@ $list = [];
 		<?php echo KunenaLayout::factory('Widget/Button')
 			->setProperties(['url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
 			                 'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
-			                 'modal' => 'modal', 'pullright' => 'pullright', ]); ?>
+			                 'modal' => 'modal', 'pullright' => 'pullright',]); ?>
     </div>
 	<?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->userReport || !$this->config->userReport && $this->me->userid != $this->message->userid) : ?>
         <div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"

@@ -285,7 +285,7 @@ class KunenaTemplate
 
 		$this->name = $name;
 
-		$this->params = new Registry();
+		$this->params = new Registry;
 		$this->params->loadString($content, $format);
 
 		// Load default values from configuration definition file.
@@ -323,7 +323,8 @@ class KunenaTemplate
 			{
 				$id = htmlspecialchars(KunenaFactory::getConfig()->activeMenuItem, ENT_COMPAT, 'UTF-8');
 				$this->addScriptDeclaration("
-		jQuery(function($){ $(\"$id\").addClass('active')});");
+		jQuery(function($){ $(\"$id\").addClass('active')});"
+				);
 			}
 			else
 			{
@@ -334,7 +335,8 @@ class KunenaTemplate
 				{
 					$id = htmlspecialchars('.item-' . $items[0]->id, ENT_COMPAT, 'UTF-8');
 					$this->addScriptDeclaration("
-		jQuery(function($){ $(\"$id\").addClass('active')});");
+		jQuery(function($){ $(\"$id\").addClass('active')});"
+					);
 				}
 			}
 		}
@@ -535,7 +537,8 @@ class KunenaTemplate
 				$(".current").addClass("active alias-parent-active");
 				$(".alias-parent-active").addClass("active alias-parent-active");
 			});
-			');
+			'
+			);
 		}
 	}
 
@@ -597,7 +600,7 @@ class KunenaTemplate
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
 		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
+				  'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -1594,7 +1597,7 @@ HTML;
 
 	/**
 	 * Return the icon attributes from the XML file given
-	 * 
+	 *
 	 * @param   mixed   $src    src
 	 * @param   int     $id     id
 	 * @param   string  $style  style
@@ -1871,11 +1874,11 @@ HTML;
 		$less->registerFunction(
 			'url',
 			function ($arg) use ($class) {
-			list($type, $q, $values) = $arg;
-			$value = reset($values);
+				list($type, $q, $values) = $arg;
+				$value = reset($values);
 
-			return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
-		}
+				return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
+			}
 		);
 		$less->setVariables($this->style_variables);
 		$newCache = $less->cachedCompile($cache);
@@ -1930,16 +1933,16 @@ HTML;
 
 		$outputFile = "{$outputDir}/{$outputFile}";
 
-		$scss  = new Compiler();
+		$scss  = new Compiler;
 		$class = $this;
 		$scss->registerFunction(
 			'url',
 			function ($arg) use ($class) {
-			list($type, $q, $values) = $arg;
-			$value = reset($values);
+				list($type, $q, $values) = $arg;
+				$value = reset($values);
 
-			return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
-		}
+				return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
+			}
 		);
 
 		$scss->setVariables($this->style_variables);

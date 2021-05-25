@@ -54,8 +54,8 @@ $this->addScript('assets/js/profile.js');
 		<td>
 			<div id="birthdate">
 				<div class="input-group date">
-					<input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="mm/dd/yyyy"
-						   value="<?php echo $this->profile->birthdate == '1000-01-01' ? '' : KunenaDate::getInstance($this->profile->birthdate)->format('m/d/Y'); ?>"
+					<input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="yyyy-mm-dd"
+						   value="<?php echo $this->profile->birthdate == '1000-01-01' ? '' : $this->profile->birthdate; ?>"
 						   title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>

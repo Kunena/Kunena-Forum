@@ -781,7 +781,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		],
 		'font'         => [
 			'mode'     => BBCode::BBCODE_MODE_LIBRARY,
-			'allow'    => ['_default' => '/^[a-zA-Z0-9._ -]+$/'],
+			'allow'    => ['_default' => '/^[a-zA-Z0-9._, -]+$/'],
 			'method'   => 'doFont',
 			'class'    => 'inline',
 			'allow_in' => ['listitem', 'block', 'columns', 'inline', 'link'],
@@ -2225,10 +2225,27 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		$default  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 
 		$quote_params = explode(' ' ,$default);
-		$username = $quote_params['0'];
-		$messageid = explode('=', $quote_params['1']);
+		if (count($quote_params) == 3)
+		{
+			$messageid = explode('=', $quote_params['1']);
+			$message = KunenaMessageHelper::get($messageid['1']);
 
-		$message = KunenaMessageHelper::get($messageid['1']);
+			if ($message->userid > 0)
+			{
+				$username = KunenaUserHelper::get($message->userid)->getName();
+			}
+			else
+			{
+				$username = Text::_('COM_KUNENA_LIB_BBCODE_QUOTE_NON_EXISTANT_USER');
+			}
+		}
+		else
+		{
+			// To support old bbcode tags used before Kunena 5.2.x
+			$message = KunenaMessageHelper::get($params['post']);
+			$username = $quote_params['0'];
+		}
+
 		$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
 
 		$layout = KunenaLayout::factory('BBCode/Quote');

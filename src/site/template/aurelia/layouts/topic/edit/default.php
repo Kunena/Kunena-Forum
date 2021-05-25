@@ -154,6 +154,11 @@ Text::script('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS');
 Text::script('COM_KUNENA_POLL_ADD_POLL_OPTION');
 Text::script('COM_KUNENA_POLL_REMOVE_POLL_OPTION');
 Text::script('COM_KUNENA_POLL_TIME_TO_LIVE');
+Text::script('COM_KUNENA_EDITOR_DIALOG_POLLS_PROPERTIES');
+Text::script('COM_KUNENA_EDITOR_DIALOG_VIDEO_PROPERTIES');
+Text::script('COM_KUNENA_EDITOR_DIALOG_MAPS_PROPERTIES');
+Text::script('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS');
+Text::script('COM_KUNENA_POLL_TITLE');
 ?>
     <div id="modal_confirm_template_category" class="modal fade" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-hidden="true">
@@ -461,7 +466,7 @@ Text::script('COM_KUNENA_POLL_TIME_TO_LIVE');
                     <div class="controls">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="subscribeMe" id="subscribeMe"
-                                   value="1" <?php if ($this->config->subscriptionsChecked == 1 && $this->me->canSubscribe != 0 || $this->config->subscriptionsChecked == 0 && $this->me->canSubscribe == 1 || $this->category->getSubscribed($this->me->userid))
+                                   value="1" <?php if ($this->subscriptionschecked)
 							{
 								echo 'checked="checked"';
 							} ?>/>

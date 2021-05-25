@@ -21,6 +21,19 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 $this->addScript('poll.js');
+
+$polllifespan = '';
+if ($this->show_title && !empty($this->poll->polltimetolive))
+{
+	if (!$this->polllifespan)
+	{
+		$polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_RUNS_UNTILL', $this->poll->polltimetolive) . ')</span>';
+	}
+	else
+	{
+		$polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_WAS_ENDED', $this->poll->polltimetolive) . ')</span>';
+	}
+}
 ?>
 
 <?php if ($this->show_title)
@@ -33,7 +46,7 @@ $this->addScript('poll.js');
 		&times;
 	</button>
 	<h2>
-		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title) . $polllifespan; ?>
 	</h2>
 <?php endif; ?>
 

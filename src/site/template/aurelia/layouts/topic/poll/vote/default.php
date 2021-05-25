@@ -21,12 +21,25 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 $this->addScript('poll.js');
+
+$polllifespan = '';
+if (!empty($this->poll->polltimetolive))
+{
+	if (!$this->polllifespan)
+	{
+		$polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_RUNS_UNTILL', $this->poll->polltimetolive) . ')</span>';
+	}
+	else
+	{
+		$polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_WAS_ENDED', $this->poll->polltimetolive) . ')</span>';
+	}
+}
 ?>
 	<div class="float-end btn btn-outline-primary border btn-small" data-bs-toggle="collapse" data-bs-target="#poll-vote">
 		&times;
 	</div>
 	<h2>
-		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title); ?>
+		<?php echo Text::_('COM_KUNENA_POLL_NAME') . ' ' . KunenaParser::parseText($this->poll->title) . $polllifespan; ?>
 	</h2>
 
 	<div class="" id="poll-vote">

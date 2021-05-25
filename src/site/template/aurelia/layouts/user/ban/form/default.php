@@ -62,7 +62,7 @@ use function defined;
 				echo HTMLHelper::_(
 					'select.genericlist',
 					$block,
-					'block',
+					'banlevel',
 					'',
 					'value',
 					'text',

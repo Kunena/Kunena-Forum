@@ -198,7 +198,7 @@ class KunenaAvatar
 
 	/**
 	 * @param   KunenaUser  $user   user
-	 * @param   int         $sizex  sizex
+	 * @param   int|string  $sizex  sizex
 	 * @param   int         $sizey  sizey
 	 *
 	 * @return  string|void
@@ -207,7 +207,7 @@ class KunenaAvatar
 	 *
 	 * @throws Exception
 	 */
-	public function getURL(KunenaUser $user, int $sizex = 90, int $sizey = 90): string
+	public function getURL(KunenaUser $user, $sizex = 90, int $sizey = 90): string
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 		$size = $this->getSize($sizex, $sizey);

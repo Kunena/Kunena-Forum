@@ -2102,18 +2102,15 @@ class KunenaUser extends CMSObject
 
 		$groupid_list = implode(',', $groups);
 
-		foreach ($groups as $groupId => $value)
-		{
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select($db->quoteName('title'))
-				->from($db->quoteName('#__usergroups'))
-				->where($db->quoteName('id') . ' = ' . $db->quote((int) $groupid_list));
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->select($db->quoteName('title'))
+			->from($db->quoteName('#__usergroups'))
+			->where($db->quoteName('id') . ' = ' . $db->quote((int) $groupid_list));
 
-			$db->setQuery($query);
-			$groupNames = $db->loadResult();
-			$groupNames .= '<br/>';
-		}
+		$db->setQuery($query);
+		$groupNames = $db->loadResult();
+		$groupNames .= '<br/>';
 
 		return $groupNames;
 	}

@@ -106,7 +106,16 @@ class KunenaImage extends Image
 		if (function_exists('exif_read_data'))
 		{
 			$angle  = 0;
-			$exif   = @exif_read_data($filename);
+
+			try
+			{
+				$exif = @exif_read_data($filename);
+			}
+			catch (Exception $e)
+			{
+				$exif = false;
+			}
+
 			$flip   = 0;
 			$img    = 0;
 

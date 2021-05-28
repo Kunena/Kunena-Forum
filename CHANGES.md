@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.5-dev]
 ### Fixed
+* [#7997](https://github.com/Kunena/Kunena-Forum/issues/7997): Can't add an attachment to the message when Add Suffix to URL and rewrite url is enabled #7997
 * Workaround on CKeditor to avoid to it fails completly when the start or end tag aren't terminated like : [b]Hello world![/b
 * [#8074](https://github.com/Kunena/Kunena-Forum/issues/8074): Editing removes the subscription (Part 4)
 * Exact forum post link is missing in search results

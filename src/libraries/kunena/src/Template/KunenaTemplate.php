@@ -1244,6 +1244,7 @@ HTML;
 							$icon->b2                    = (string) $attributes->b2;
 							$icon->b3                    = (string) $attributes->b3;
 							$icon->b4                    = (string) $attributes->b4;
+							$icon->b5                    = (string) $attributes->b5;
 							$icon->fa                    = (string) $attributes->fa;
 							$icon->filename              = (string) $attributes->src;
 							$icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
@@ -1349,11 +1350,11 @@ HTML;
 
 		if ($config->topicIcons)
 		{
-			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/topicIcons.xml';
+			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/topicicons.xml';
 
 			if (!file_exists($xmlfile))
 			{
-				$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicIcons.xml';
+				$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
 			}
 
 			$xml  = simplexml_load_file($xmlfile);
@@ -1403,9 +1404,13 @@ HTML;
 			{
 				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
-			elseif ($topicicontype == 'B4' || $topicicontype == 'B5')
+			elseif ($topicicontype == 'B4')
 			{
 				return KunenaSvgIcons::loadsvg($icon->b4, 'usertopicIcons', $categoryIconset);
+			}
+			elseif ($topicicontype == 'B5')
+			{
+				return KunenaSvgIcons::loadsvg($icon->b5, 'usertopicIcons', $categoryIconset);
 			}
 			elseif ($topicicontype == 'fa')
 			{
@@ -1484,9 +1489,13 @@ HTML;
 			{
 				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
-			elseif ($topicicontype == 'B4' || $topicicontype == 'B5')
+			elseif ($topicicontype == 'B4')
 			{
 				return KunenaSvgIcons::loadsvg($icon->b4, 'systemtopicIcons', $categoryIconset);
+			}
+			elseif ($topicicontype == 'B5')
+			{
+				return KunenaSvgIcons::loadsvg($icon->b5, 'systemtopicIcons', $categoryIconset);
 			}
 			elseif ($topicicontype == 'fa')
 			{
@@ -1529,13 +1538,11 @@ HTML;
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function get_xml_icon($src, $id = 0, $style = 'src'): StdClass
+	public function get_xml_icon($src)
 	{
 		if (isset($src->icons))
 		{
-			$icon = $this->getIconsAttributes($src->icons);
-
-			return $icon;
+			return $this->getIconsAttributes($src->icons);
 		}
 	}
 
@@ -1547,13 +1554,14 @@ HTML;
 	 */
 	private function getIconsAttributes($icon)
 	{
-		$attributes = $icon[0]->attributes();
+		$attributes = $icon->icon[0]->attributes();
 		$icon       = new stdClass;
 		$icon->id   = (int) $attributes->id;
 		$icon->name = (string) $attributes->name;
 		$icon->b2   = (string) $attributes->b2;
 		$icon->b3   = (string) $attributes->b3;
 		$icon->b4   = (string) $attributes->b4;
+		$icon->b5   = (string) $attributes->b5;
 		$icon->fa   = (string) $attributes->fa;
 		$icon->src  = (string) $attributes->src;
 		$icon->new  = (string) $attributes->new;
@@ -1981,6 +1989,7 @@ HTML;
 			$label->b2        = (string) $attributes->b2;
 			$label->b3        = (string) $attributes->b3;
 			$label->b4        = (string) $attributes->b4;
+			$label->b5        = (string) $attributes->b5;
 			$label->fa        = (string) $attributes->fa;
 			$label->src       = (string) $attributes->src;
 			$label->name      = (string) $attributes->name;

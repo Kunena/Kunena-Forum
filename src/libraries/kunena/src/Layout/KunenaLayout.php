@@ -141,9 +141,9 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @return  string  The rendered view.
 	 *
+	 * @throws  Exception|RunTimeException
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception|RunTimeException
 	 */
 	public function render($layout = null): string
 	{
@@ -178,10 +178,10 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws null
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getButton(string $link, string $name, string $scope, string $type, $id = null): string
 	{
@@ -194,9 +194,9 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getIcon(string $name, $title = ''): string
 	{
@@ -252,10 +252,10 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
 	 * @throws null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getCategoryLink(KunenaCategory $category, $content = null, $title = null, $class = null, bool $follow = true, $canonical = null)
 	{
@@ -319,15 +319,15 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @return  mixed
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaCategory $category = null, bool $follow = true, bool $canonical = false)
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$url = $topic->getUrl($category ? $category : (isset($this->category) ? $this->category : $topic->getCategory()), true, $action);
+		$url = $topic->getUrl($category ?: (isset($this->category) ? $this->category : $topic->getCategory()), true, $action);
 
 		if (!$content)
 		{
@@ -411,10 +411,10 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
 	 * @throws null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getLastPostLink(KunenaCategory $category, $content, $title, $class, $length = 30, $follow = true, $canonical = false)
 	{

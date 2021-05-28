@@ -45,7 +45,7 @@ $topicicontype = $ktemplate->params->get('topicicontype');
 	if (!empty($icon))
 		:
 		?>
-		<?php if ($topicicontype != 'B4')
+		<?php if ($topicicontype != 'B4' || $topicicontype != 'B5')
 		:
 		?>
         <i class="<?php echo $icon; ?>"></i>

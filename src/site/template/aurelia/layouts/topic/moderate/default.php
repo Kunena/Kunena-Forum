@@ -110,7 +110,7 @@ $labels          = $this->ktemplate->params->get('labels');
                                 <label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
                                             class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
                                             aria-hidden="true"></span>
-									<?php elseif ($this->config->topicIcons && $topicicontype == 'B4')
+									<?php elseif ($this->config->topicIcons && $topicicontype == 'B4' || $this->config->topicIcons && $topicicontype == 'B5')
 									:
 									?>
                                     <label class="radio inline" for="radio<?php echo $icon->id; ?>">
@@ -226,15 +226,15 @@ $labels          = $this->ktemplate->params->get('labels');
                                    for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
 
                             <div class="controls" id="modtopicslist"> <?php echo HTMLHelper::_(
-								'select.genericlist',
-								$this->getTopicOptions(),
-								'targettopic',
-								'class="form-control"',
-								'value',
-								'text',
-								0,
-								'kmod_topics'
-							); ?> </div>
+									'select.genericlist',
+									$this->getTopicOptions(),
+									'targettopic',
+									'class="form-control"',
+									'value',
+									'text',
+									0,
+									'kmod_topics'
+								); ?> </div>
                         </div>
                         <div class="control-group" id="kmod_targetid" style="display: none;">
                             <label class="control-label"

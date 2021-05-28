@@ -34,9 +34,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function arrowdown(): string
 	{
@@ -66,9 +66,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function arrowup(): string
 	{
@@ -98,9 +98,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function arrowdownanchor(): string
 	{
@@ -135,9 +135,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function arrowupanchor(): string
 	{
@@ -172,9 +172,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function chevronright(): string
 	{
@@ -204,9 +204,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function members(): string
 	{
@@ -236,9 +236,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function user(): string
 	{
@@ -268,9 +268,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function lock(): string
 	{
@@ -300,9 +300,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function star(): string
 	{
@@ -337,9 +337,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function shield(): string
 	{
@@ -369,9 +369,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function flag(): string
 	{
@@ -406,9 +406,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function poll(): string
 	{
@@ -438,9 +438,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function stats(): string
 	{
@@ -470,9 +470,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function search(): string
 	{
@@ -502,9 +502,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function collapse(): string
 	{
@@ -534,9 +534,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function clock(): string
 	{
@@ -566,9 +566,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function thumbsup(): string
 	{
@@ -598,9 +598,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function secure(): string
 	{
@@ -630,9 +630,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function cancel(): string
 	{
@@ -662,9 +662,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function ip()
 	{
@@ -699,9 +699,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function email(): string
 	{
@@ -736,9 +736,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function bookmark(): string
 	{
@@ -768,9 +768,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function back(): string
 	{
@@ -800,9 +800,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function save(): string
 	{
@@ -832,9 +832,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function edit(): string
 	{
@@ -864,9 +864,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function pencil(): string
 	{
@@ -896,9 +896,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function attach(): string
 	{
@@ -933,9 +933,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function plus(): string
 	{
@@ -967,9 +967,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function rss($text = null): string
 	{
@@ -1000,9 +1000,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function upload(): string
 	{
@@ -1034,9 +1034,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function picture($big = false): string
 	{
@@ -1073,9 +1073,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function file($big = false): string
 	{
@@ -1110,9 +1110,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function delete(): string
 	{
@@ -1142,9 +1142,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function poll_add(): string
 	{
@@ -1177,9 +1177,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function poll_rem(): string
 	{
@@ -1212,9 +1212,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function undo(): string
 	{
@@ -1249,9 +1249,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function shuffle(): string
 	{
@@ -1285,16 +1285,16 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws Exception
 	 */
 	public static function caticon(string $categoryicon, $new = null, $big = true): string
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 		$caticon       = $ktemplate->params->get('DefaultCategoryicon');
-		$bigicon = ' ';
+		$bigicon       = ' ';
 
 		if ($categoryicon == ' ')
 		{
@@ -1434,7 +1434,7 @@ class KunenaIcons
 			return '<span class="glyphicon ' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
 		}
 
-		if ($topicicontype == 'B4')
+		if ($topicicontype == 'B4' || $topicicontype == 'B5')
 		{
 			if (!$categoryicon)
 			{
@@ -1475,9 +1475,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function home(): string
 	{
@@ -1507,9 +1507,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function calendar(): string
 	{
@@ -1539,9 +1539,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function hamburger(): string
 	{
@@ -1571,9 +1571,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function info(): string
 	{
@@ -1603,9 +1603,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function online(): string
 	{
@@ -1635,9 +1635,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function away(): string
 	{
@@ -1667,9 +1667,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function busy(): string
 	{
@@ -1699,9 +1699,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function invisible(): string
 	{
@@ -1731,9 +1731,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function cog(): string
 	{
@@ -1763,9 +1763,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function drawer(): string
 	{
@@ -1795,9 +1795,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function out(): string
 	{
@@ -1827,9 +1827,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function grid(): string
 	{
@@ -1859,9 +1859,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function globe(): string
 	{
@@ -1896,9 +1896,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function location(): string
 	{
@@ -1933,9 +1933,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function pm(): string
 	{
@@ -1970,9 +1970,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function report(): string
 	{
@@ -2007,9 +2007,9 @@ class KunenaIcons
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function reportname(): string
 	{
@@ -2026,7 +2026,7 @@ class KunenaIcons
 			return 'glyphicon glyphicon-exclamation-sign';
 		}
 
-		if ($topicicontype == 'B4')
+		if ($topicicontype == 'B4' || $topicicontype == 'B5')
 		{
 			return 'alert-circle';
 		}

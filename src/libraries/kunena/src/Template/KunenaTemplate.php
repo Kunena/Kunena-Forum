@@ -233,9 +233,9 @@ class KunenaTemplate
 	 *
 	 * @param   null  $name  name
 	 *
+	 * @throws  Exception
 	 * @since     Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($name = null)
 	{
@@ -345,9 +345,9 @@ class KunenaTemplate
 	/**
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function isHmvc()
 	{
@@ -376,9 +376,9 @@ class KunenaTemplate
 	 *
 	 * @return  Document|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function addScriptDeclaration(string $content, $type = 'text/javascript'): Document
 	{
@@ -402,9 +402,9 @@ class KunenaTemplate
 	 *
 	 * @return  KunenaTemplate    The template object.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($name = null)
 	{
@@ -504,9 +504,9 @@ class KunenaTemplate
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function initialize(): void
 	{
@@ -545,9 +545,9 @@ class KunenaTemplate
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function loadLanguage(): void
 	{
@@ -566,9 +566,9 @@ class KunenaTemplate
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function initializeBackend(): void
 	{
@@ -600,7 +600,7 @@ class KunenaTemplate
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
 		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-				  'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
+		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -849,9 +849,9 @@ HTML;
 	 *
 	 * @return  mixed|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function addStyleSheet(string $filename, $group = 'forum')
 	{
@@ -908,9 +908,9 @@ HTML;
 	 *
 	 * @return  mixed|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.1.3
 	 *
-	 * @throws Exception
 	 */
 	public function addLessSheet(string $filename)
 	{
@@ -934,9 +934,9 @@ HTML;
 	 *
 	 * @return  mixed|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.1.3
 	 *
-	 * @throws Exception
 	 */
 	public function addScssSheet(string $filename)
 	{
@@ -958,9 +958,9 @@ HTML;
 	 *
 	 * @return  string|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function addStyleDeclaration(string $style)
 	{
@@ -981,9 +981,9 @@ HTML;
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function addIEStyleSheet(string $filename, $condition = 'IE'): void
 	{
@@ -1015,9 +1015,9 @@ HTML;
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getCachePath($filename = ''): string
 	{
@@ -1058,61 +1058,6 @@ HTML;
 	}
 
 	/**
-	 * Wrapper to addScript
-	 *
-	 * @param   string  $filename  filename
-	 * @param   array   $options   options
-	 * @param   array   $attribs   attribs
-	 *
-	 * @return  Document|void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
-	 */
-	public function addScript(string $filename, $options = [], $attribs = [])
-	{
-		$app    = Factory::getApplication();
-		$format = $app->input->getCmd('format');
-
-		if (!empty($format) && $format != 'html')
-		{
-			return false;
-		}
-
-		if (!preg_match('|https?://|', $filename))
-		{
-			if (preg_match('/assets/', $filename))
-			{
-				$filename = preg_replace('|^css/|u', '', $filename);
-				$filename = preg_replace('/^assets\//', '', $filename);
-				$filename = $this->getFile($filename, false, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name . '/assets');
-			}
-			else
-			{
-				$filename = $this->getFile($filename, false, $this->pathTypes['js'], $this->pathTypes['js']);
-			}
-
-			$filemin      = $filename;
-			$filemin_path = preg_replace('/\.js$/u', '-min.js', $filename);
-
-			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
-			{
-				$filemin = preg_replace('/\.js$/u', '-min.js', $filename);
-			}
-
-			if (file_exists(JPATH_ROOT . "/$filemin"))
-			{
-				$filename = $filemin;
-			}
-
-			$filename = Uri::root(false) . $filename;
-		}
-
-		return HTMLHelper::_('script', $filename, $options, $attribs);
-	}
-
-	/**
 	 * Add option for script
 	 *
 	 * @param   string  $key      Name in Storage
@@ -1121,9 +1066,9 @@ HTML;
 	 *
 	 * @return  Document|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 3.5
 	 *
-	 * @throws Exception
 	 */
 	public function addScriptOptions(string $key, $options, $merge = true): Document
 	{
@@ -1156,9 +1101,9 @@ HTML;
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false): array
 	{
@@ -1230,9 +1175,9 @@ HTML;
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopicIconIndexPath($index, $url = false): string
 	{
@@ -1257,9 +1202,9 @@ HTML;
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopicIcons($all = false, $checked = 0)
 	{
@@ -1354,9 +1299,9 @@ HTML;
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopicIconPath($filename = '', $url = true): string
 	{
@@ -1385,37 +1330,15 @@ HTML;
 	}
 
 	/**
-	 * Retrieve icons attributes
-	 *
-	 * @return stdClass
-	 * @since Kunena 5.2
-	 */
-	private function getIconsAttributes($icon)
-	{
-		$attributes = $icon[0]->attributes();
-		$icon       = new stdClass;
-		$icon->id   = (int) $attributes->id;
-		$icon->name = (string) $attributes->name;
-		$icon->b2   = (string) $attributes->b2;
-		$icon->b3   = (string) $attributes->b3;
-		$icon->b4   = (string) $attributes->b4;
-		$icon->fa   = (string) $attributes->fa;
-		$icon->src  = (string) $attributes->src;
-		$icon->new  = (string) $attributes->new;
-
-		return $icon;
-	}
-
-	/**
-	 * @internal param string $categoryIconset
-	 *
 	 * @param   KunenaTopic  $topic  topic
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since    Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @internal param string $categoryIconset
+	 *
 	 */
 	public function getTopicIcon(KunenaTopic $topic): string
 	{
@@ -1480,7 +1403,7 @@ HTML;
 			{
 				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
-			elseif ($topicicontype == 'B4')
+			elseif ($topicicontype == 'B4' || $topicicontype == 'B5')
 			{
 				return KunenaSvgIcons::loadsvg($icon->b4, 'usertopicIcons', $categoryIconset);
 			}
@@ -1561,7 +1484,7 @@ HTML;
 			{
 				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
 			}
-			elseif ($topicicontype == 'B4')
+			elseif ($topicicontype == 'B4' || $topicicontype == 'B5')
 			{
 				return KunenaSvgIcons::loadsvg($icon->b4, 'systemtopicIcons', $categoryIconset);
 			}
@@ -1617,13 +1540,35 @@ HTML;
 	}
 
 	/**
+	 * Retrieve icons attributes
+	 *
+	 * @return stdClass
+	 * @since Kunena 5.2
+	 */
+	private function getIconsAttributes($icon)
+	{
+		$attributes = $icon[0]->attributes();
+		$icon       = new stdClass;
+		$icon->id   = (int) $attributes->id;
+		$icon->name = (string) $attributes->name;
+		$icon->b2   = (string) $attributes->b2;
+		$icon->b3   = (string) $attributes->b3;
+		$icon->b4   = (string) $attributes->b4;
+		$icon->fa   = (string) $attributes->fa;
+		$icon->src  = (string) $attributes->src;
+		$icon->new  = (string) $attributes->new;
+
+		return $icon;
+	}
+
+	/**
 	 * @param   mixed   $src    src
 	 * @param   int     $id     id
 	 * @param   string  $style  style
 	 *
 	 * @return  stdClass|void
 	 *
-	 * @since   Kunena 5.0.0-Beta4
+	 * @since      Kunena 5.0.0-Beta4
 	 * @deprecated Kunena 6.0
 	 */
 	public function get_xml_systemicon($src, $id = 0, $style = 'src'): StdClass
@@ -1653,9 +1598,9 @@ HTML;
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getCategoryIcon(KunenaCategory $category): string
 	{
@@ -1681,9 +1626,9 @@ HTML;
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getCategoryIconIndexPath($index, $url = false): string
 	{
@@ -1708,9 +1653,9 @@ HTML;
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getCategoryIcons($all = false, $checked = 0)
 	{
@@ -1799,9 +1744,9 @@ HTML;
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getCategoryIconPath($filename = '', $url = true, $categoryIconset = 'default'): string
 	{
@@ -1830,9 +1775,9 @@ HTML;
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function compileLess(string $inputFile, string $outputFile): void
 	{
@@ -1897,9 +1842,9 @@ HTML;
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function compileScss(string $inputFile, string $outputFile): void
 	{
@@ -1975,9 +1920,9 @@ HTML;
 	 *
 	 * @return  stdClass|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopicLabel($topic): StdClass
 	{
@@ -2049,9 +1994,9 @@ HTML;
 	/**
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function borderless(): string
 	{
@@ -2071,9 +2016,9 @@ HTML;
 	 *
 	 * @return  string|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function tooltips($class = false): string
 	{
@@ -2129,8 +2074,8 @@ HTML;
 	 */
 	public function loadFontawesome()
 	{
-		$ktemplate = KunenaFactory::getTemplate();
-		$fontawesome = $ktemplate->params->get('fontawesome');
+		$ktemplate            = KunenaFactory::getTemplate();
+		$fontawesome          = $ktemplate->params->get('fontawesome');
 		$fontawesome_layer_v4 = $ktemplate->params->get('fontawesome_layer_v4');
 
 		if ($fontawesome)
@@ -2142,5 +2087,60 @@ HTML;
 		{
 			$this->addScript('https://use.fontawesome.com/releases/v5.15.3/js/v4-shims.js', [], ['defer' => true]);
 		}
+	}
+
+	/**
+	 * Wrapper to addScript
+	 *
+	 * @param   string  $filename  filename
+	 * @param   array   $options   options
+	 * @param   array   $attribs   attribs
+	 *
+	 * @return  Document|void
+	 *
+	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public function addScript(string $filename, $options = [], $attribs = [])
+	{
+		$app    = Factory::getApplication();
+		$format = $app->input->getCmd('format');
+
+		if (!empty($format) && $format != 'html')
+		{
+			return false;
+		}
+
+		if (!preg_match('|https?://|', $filename))
+		{
+			if (preg_match('/assets/', $filename))
+			{
+				$filename = preg_replace('|^css/|u', '', $filename);
+				$filename = preg_replace('/^assets\//', '', $filename);
+				$filename = $this->getFile($filename, false, $this->pathTypes['js'], 'components/com_kunena/template/' . $this->name . '/assets');
+			}
+			else
+			{
+				$filename = $this->getFile($filename, false, $this->pathTypes['js'], $this->pathTypes['js']);
+			}
+
+			$filemin      = $filename;
+			$filemin_path = preg_replace('/\.js$/u', '-min.js', $filename);
+
+			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
+			{
+				$filemin = preg_replace('/\.js$/u', '-min.js', $filename);
+			}
+
+			if (file_exists(JPATH_ROOT . "/$filemin"))
+			{
+				$filename = $filemin;
+			}
+
+			$filename = Uri::root(false) . $filename;
+		}
+
+		return HTMLHelper::_('script', $filename, $options, $attribs);
 	}
 }

@@ -64,9 +64,9 @@ class UserItem extends KunenaLayout
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTabs()
 	{
@@ -75,14 +75,14 @@ class UserItem extends KunenaLayout
 		$moderator = $this->me->isModerator();
 
 		// Decide which tabs to display.
-		$showPosts             = true;
-		$showSubscriptions     = $this->config->allowsubscriptions && ($myProfile || $moderator);
-		$showFavorites         = $this->config->allowfavorites && $myProfile;
-		$showThankYou          = $this->config->showthankyou && $this->me->exists();
-		$showUnapproved        = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
-		$showAttachments       = $this->config->show_imgfiles_manage_profile && ($moderator || $myProfile);
-		$showListofBanGiven    = $moderator && $myProfile;
-		$showBanUser           = $moderator && !$myProfile;
+		$showPosts          = true;
+		$showSubscriptions  = $this->config->allowSubscriptions && ($myProfile || $moderator);
+		$showFavorites      = $this->config->allowFavorites && $myProfile;
+		$showThankYou       = $this->config->showThankYou && $this->me->exists();
+		$showUnapproved     = $myProfile && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$showAttachments    = $this->config->showImgFilesManageProfile && ($moderator || $myProfile);
+		$showListofBanGiven = $moderator && $myProfile;
+		$showBanUser        = $moderator && !$myProfile;
 
 		try
 		{
@@ -302,9 +302,9 @@ class UserItem extends KunenaLayout
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayUnapprovedPosts()
 	{
@@ -328,9 +328,9 @@ class UserItem extends KunenaLayout
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayUserPosts()
 	{
@@ -354,9 +354,9 @@ class UserItem extends KunenaLayout
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayGotThankyou()
 	{
@@ -380,9 +380,9 @@ class UserItem extends KunenaLayout
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displaySaidThankyou()
 	{
@@ -406,9 +406,9 @@ class UserItem extends KunenaLayout
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayFavorites()
 	{
@@ -432,9 +432,9 @@ class UserItem extends KunenaLayout
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displaySubscriptions()
 	{
@@ -463,9 +463,9 @@ class UserItem extends KunenaLayout
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayCategoriesSubscriptions()
 	{

@@ -852,9 +852,9 @@ class KunenaUser extends CMSObject
 
 	/**
 	 * Retrieve the username from integration if it's enabled, it's the integration plugin which give the username
-	 * 
-	 * @param   string $visitorname visitor name
-	 * @param   bool   $escape      escape
+	 *
+	 * @param   string  $visitorname  visitor name
+	 * @param   bool    $escape       escape
 	 *
 	 * @return string
 	 * @since Kunena 1.6
@@ -863,7 +863,7 @@ class KunenaUser extends CMSObject
 	{
 		$profile = KunenaFactory::getProfile();
 
-		if ($profile->enabled== false)
+		if ($profile->enabled == false)
 		{
 			if (!$this->userid && !$this->name)
 			{
@@ -1065,7 +1065,7 @@ class KunenaUser extends CMSObject
 					return '<span class="glyphicon glyphicon-user user-circle user-default" aria-hidden="true"></span>';
 				}
 
-				if ($topicicontype == 'B4' && $this->avatar == null)
+				if ($topicicontype == 'B4' && $this->avatar == null || $topicicontype == 'B5' && $this->avatar == null)
 				{
 					return KunenaSvgIcons::loadsvg('person');
 				}
@@ -1173,7 +1173,7 @@ class KunenaUser extends CMSObject
 			return false;
 		}
 
-		$me     = KunenaUserHelper::getMyself();
+		$me = KunenaUserHelper::getMyself();
 
 		if (!$this->_config->pubProfile && !$me->exists())
 		{
@@ -1476,7 +1476,7 @@ class KunenaUser extends CMSObject
 	 */
 	public function getEmail($profile): bool
 	{
-		$me     = KunenaUserHelper::getMyself();
+		$me = KunenaUserHelper::getMyself();
 
 		if ($me->isModerator() || $me->isAdmin())
 		{
@@ -1512,7 +1512,7 @@ class KunenaUser extends CMSObject
 	{
 		if (!isset($this->_email))
 		{
-			$me     = KunenaUserHelper::getMyself();
+			$me = KunenaUserHelper::getMyself();
 
 			$this->_email = '';
 
@@ -1654,7 +1654,7 @@ class KunenaUser extends CMSObject
 	{
 		if ($this->userid)
 		{
-			$me     = KunenaUserHelper::getMyself();
+			$me = KunenaUserHelper::getMyself();
 
 			if ($this->_config->showKarma && $me->userid && $me->userid != $this->userid)
 			{
@@ -2133,27 +2133,27 @@ class KunenaUser extends CMSObject
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		$stylesecond = '';
-		$stylethird = '';
+		$stylethird  = '';
 		$stylefourth = '';
-		$stylelast = '';
+		$stylelast   = '';
 
 		if ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK1')
 		{
 			$stylesecond = 'style="color:#e8f7ff;"';
-			$stylethird = 'style="color:#e8f7ff;"';
+			$stylethird  = 'style="color:#e8f7ff;"';
 			$stylefourth = 'style="color:#e8f7ff;"';
-			$stylelast = 'style="color:#e8f7ff;"';
+			$stylelast   = 'style="color:#e8f7ff;"';
 		}
 		elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK2')
 		{
-			$stylethird = 'style="color:#e8f7ff;"';
+			$stylethird  = 'style="color:#e8f7ff;"';
 			$stylefourth = 'style="color:#e8f7ff;"';
-			$stylelast = 'style="color:#e8f7ff;"';
+			$stylelast   = 'style="color:#e8f7ff;"';
 		}
 		elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK3')
 		{
 			$stylefourth = 'style="color:#e8f7ff;"';
-			$stylelast = 'style="color:#e8f7ff;"';
+			$stylelast   = 'style="color:#e8f7ff;"';
 		}
 		elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK4')
 		{
@@ -2165,13 +2165,13 @@ class KunenaUser extends CMSObject
 		}
 
 		return KunenaLayout::factory('Widget/Ranks')
-		->set('type', $this->getType($catid, true))
-		->set('topicicontype', $topicicontype)
-		->set('rank', $rank)
-		->set('stylesecond', $stylesecond)
-		->set('stylethird', $stylethird)
-		->set('stylefourth', $stylefourth)
-		->set('stylelast', $stylelast);		
+			->set('type', $this->getType($catid, true))
+			->set('topicicontype', $topicicontype)
+			->set('rank', $rank)
+			->set('stylesecond', $stylesecond)
+			->set('stylethird', $stylethird)
+			->set('stylefourth', $stylefourth)
+			->set('stylelast', $stylelast);
 	}
 
 	/**

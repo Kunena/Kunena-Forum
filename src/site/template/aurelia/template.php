@@ -79,9 +79,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function loadLanguage(): void
 	{
@@ -100,9 +100,9 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function initialize(): void
 	{
@@ -110,6 +110,11 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		HTMLHelper::_('bootstrap.tooltip');
 		HTMLHelper::_('bootstrap.renderModal');
 		HTMLHelper::_('bootstrap.collapse');
+
+		$doc = Factory::getApplication()->getDocument();
+
+		/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+		$wa = $doc->getWebAssetManager();
 
 		$this->addScript('assets/js/main.js');
 
@@ -140,16 +145,18 @@ class KunenaTemplateAurelia extends KunenaTemplate
 			$this->addStyleSheet('assets/css/custom.css');
 		}
 
-		$fontawesome = $ktemplate->params->get('fontawesome');
-		$doc         = Factory::getApplication()->getDocument();
-
 		$this->loadFontawesome();
 
 		$icons = $ktemplate->params->get('icons');
 
 		if ($icons)
 		{
-			$doc->addStyleSheet("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+			$wa->registerAndUseStyle('kunena.load.fontawesome', "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+		}
+
+		if ($ktemplate->params->get('bootstrap5icons'))
+		{
+			$wa->registerAndUseStyle('kunena.load.b5', "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
 		}
 
 		// Load template colors settings
@@ -182,8 +189,7 @@ EOF;
 EOF;
 		}
 
-		$document = Factory::getApplication()->getDocument();
-		$document->addStyleDeclaration($styles);
+		$doc->addStyleDeclaration($styles);
 
 		parent::initialize();
 	}

@@ -221,7 +221,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
 			:
 			?>
             <input type="hidden" name="catid" value="<?php echo \intval($this->message->catid) ?>"/>
-        <?php endif; ?>
+		<?php endif; ?>
 		<?php
 		if ($this->category->id > 0):?>
             <input type="hidden" id="poll_catid" value="<?php echo \intval($this->message->catid) ?>"/>
@@ -239,13 +239,14 @@ Text::script('COM_KUNENA_POLL_TITLE');
             <input type="hidden" id="poll_exist_edit" name="poll_exist_edit"
                    value="<?php echo \intval($this->message->getTopic()->getPoll()->id) ?>"/>
             <input type="hidden" id="ckeditor_dialog_polltitle" name="ckeditor_dialog_polltitle"
-			       value="<?php echo $this->message->getTopic()->getPoll()->title ?>"/>
-			<input type="hidden" id="ckeditor_dialog_polltimetolive" name="ckeditor_dialog_polltimetolive"
-			       value="<?php echo $this->message->getTopic()->getPoll()->polltimetolive ?>"/>
-			<?php foreach($this->message->getTopic()->getPoll()->getOptions() as $index => $option): ?>
-				<input type="hidden" class="ckeditor_dialog_polloption" id="ckeditor_dialog_polloption<?php echo $index; ?>" name="ckeditor_dialog_polloption<?php echo $index; ?>"
-				   value="<?php echo $option->text; ?>"/>
-			<?php endforeach; ?>
+                   value="<?php echo $this->message->getTopic()->getPoll()->title ?>"/>
+            <input type="hidden" id="ckeditor_dialog_polltimetolive" name="ckeditor_dialog_polltimetolive"
+                   value="<?php echo $this->message->getTopic()->getPoll()->polltimetolive ?>"/>
+			<?php foreach ($this->message->getTopic()->getPoll()->getOptions() as $index => $option): ?>
+            <input type="hidden" class="ckeditor_dialog_polloption" id="ckeditor_dialog_polloption<?php echo $index; ?>"
+                   name="ckeditor_dialog_polloption<?php echo $index; ?>"
+                   value="<?php echo $option->text; ?>"/>
+		<?php endforeach; ?>
 		<?php endif; ?>
         <input type="hidden" id="kunena_upload" name="kunena_upload"
                value="<?php echo \intval($this->message->catid) ?>"/>
@@ -345,7 +346,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                                 <label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
                                             class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
                                             aria-hidden="true"></span>
-									<?php elseif ($this->config->topicIcons && $topicicontype == 'B4') : ?>
+									<?php elseif ($this->config->topicIcons && $topicicontype == 'B4' || $this->config->topicIcons && $topicicontype == 'B5') : ?>
                                     <label class="radio inline" for="radio<?php echo $icon->id; ?>">
 										<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
 										<?php echo KunenaSvgIcons::loadsvg($icon->b4, 'usertopicIcons', $this->category->iconset); ?>
@@ -368,12 +369,12 @@ Text::script('COM_KUNENA_POLL_TITLE');
 			<?php endif; ?>
 
 			<?php echo $this->subLayout('Widget/Editor')
-							->setLayout('ckeditor')->set('message', $this->message)
-							->set('config', $this->config)
-							->set('doc', $this->doc)
-							->set('allow_polls', $this->topic->getCategory()->allowPolls)
-							->set('template', $this->ktemplate)
-							->set('me', $this->me);
+				->setLayout('ckeditor')->set('message', $this->message)
+				->set('config', $this->config)
+				->set('doc', $this->doc)
+				->set('allow_polls', $this->topic->getCategory()->allowPolls)
+				->set('template', $this->ktemplate)
+				->set('me', $this->me);
 			?>
         </div>
 
@@ -514,10 +515,10 @@ Text::script('COM_KUNENA_POLL_TITLE');
 
         <div class="form-group row">
             <div class="col-md-10 center">
-				<button id="form_submit_button" name="submit" type="submit"
-                            class="btn btn-outline-success btn-md form-validate" tabindex="8">
-						<?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_SUBMIT'); ?>
-                    </button>
+                <button id="form_submit_button" name="submit" type="submit"
+                        class="btn btn-outline-success btn-md form-validate" tabindex="8">
+					<?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_SUBMIT'); ?>
+                </button>
 
                 <button type="reset" class="btn btn-outline-primary btn-md" onclick="window.history.back();"
                         tabindex="10">
@@ -548,9 +549,9 @@ Text::script('COM_KUNENA_POLL_TITLE');
 		}
 		?>
         <div id="kattach-list"></div>
-		<div id="poll_options">
-			<!-- Placeholder for polls options if inserted in message -->
-		</div>
+        <div id="poll_options">
+            <!-- Placeholder for polls options if inserted in message -->
+        </div>
     </form>
 	<?php
 if ($this->config->showHistory && $this->topic->exists())

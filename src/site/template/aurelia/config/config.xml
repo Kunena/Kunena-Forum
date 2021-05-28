@@ -116,6 +116,11 @@
             <option value="fa">COM_KUNENA_TEMPLATE_FONTAWESOME</option>
             <option value="image">COM_KUNENA_TEMPLATE_IMAGE_LEGACY</option>
         </field>
+        <field name="bootstrap5icons" type="list" default="0" label="COM_KUNENA_TEMPLATE_LOAD_EXTERNAL_BOOTSTRAP5"
+               description="COM_KUNENA_TEMPLATE_LOAD_EXTERNAL_BOOTSTRAP5_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
         <field name="fontawesome" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME"
                description="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_DESC">
             <option value="0">COM_KUNENA_NO</option>
@@ -167,7 +172,7 @@
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_BBCODE">
-         <field name="Bold" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BOLD"
+        <field name="Bold" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BOLD"
                description="COM_KUNENA_TEMPLATE_DISPLAY_BOLD_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
@@ -182,7 +187,7 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-         <field name="Strike" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_STRIKETHROUGH"
+        <field name="Strike" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_STRIKETHROUGH"
                description="COM_KUNENA_TEMPLATE_DISPLAY_STRIKETHROUGH_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
@@ -237,7 +242,7 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-       <field name="Link_Unlink" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_LINK"
+        <field name="Link_Unlink" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_LINK"
                description="COM_KUNENA_TEMPLATE_DISPLAY_LINK_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
@@ -306,7 +311,8 @@
                description="COM_KUNENA_TEMPLATE_DISPLAY_MAXIMIZE_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
-        </field>Maximize
+        </field>
+        Maximize
         <field name="Map" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MAPS"
                description="COM_KUNENA_TEMPLATE_DISPLAY_MAPS_DESC">
             <option value="0">COM_KUNENA_NO</option>
@@ -320,7 +326,8 @@
         <field name="editorButtons" type="hidden" default=""/>
         <field name="nameskinckeditor" type="text" default="" label="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR"
                description="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR_DESC"/>
-        <field name="ckeditorcustomprefixconfigfile" type="text" default="" label="COM_KUNENA_TEMPLATE_NAME_OF_PREFIX_FOR_CUSTOM_CKEDITOR_CONFIG_FILE"
+        <field name="ckeditorcustomprefixconfigfile" type="text" default=""
+               label="COM_KUNENA_TEMPLATE_NAME_OF_PREFIX_FOR_CUSTOM_CKEDITOR_CONFIG_FILE"
                description="COM_KUNENA_TEMPLATE_NAME_OF_PREFIX_FOR_CUSTOM_CKEDITOR_CONFIG_FILE_DESC"/>
     </fieldset>
 

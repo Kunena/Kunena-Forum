@@ -68,10 +68,10 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  boolean|false
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -80,8 +80,8 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		$mesid = $this->input->getInt('mesid');
 		$me    = KunenaUserHelper::getMyself();
 
-		$this->message = KunenaMessage::getInstance($mesid);
-		$this->topic   = $this->message->getTopic();
+		$this->message  = KunenaMessage::getInstance($mesid);
+		$this->topic    = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 
 		$id    = $this->message->thread;
@@ -126,7 +126,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button, 'glyphicon glyphicon-share-alt')
 				);
 			}
-			elseif ($topicicontype == 'B4' && !$fullactions)
+			elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'reply',
@@ -171,7 +171,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						$this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}", 'reply', 'glyphicon glyphicon-share-alt')
 					);
 				}
-				elseif ($topicicontype == 'B4')
+				elseif ($topicicontype == 'B4' || $topicicontype == 'B5')
 				{
 					$this->messageButtons->set(
 						'quickReply',
@@ -215,7 +215,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					$this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication', 'quote', $button, 'glyphicon glyphicon-comment')
 				);
 			}
-			elseif ($topicicontype == 'B4' && !$fullactions)
+			elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'quote',
@@ -293,7 +293,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', 'thankyou', false, 'glyphicon glyphicon-thumbs-up')
 					);
 				}
-				elseif ($topicicontype == 'B4')
+				elseif ($topicicontype == 'B4' || $topicicontype == 'B5')
 				{
 					$this->messageButtons->set(
 						'thankyou',
@@ -344,7 +344,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou', 'message', 'user', 'unthankyou', false, 'glyphicon glyphicon-thumbs-down')
 					);
 				}
-				elseif ($topicicontype == 'B4')
+				elseif ($topicicontype == 'B4' || $topicicontype == 'B5')
 				{
 					$this->messageButtons->set(
 						'unthankyou',
@@ -389,7 +389,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 				{
 					$icon = 'glyphicon glyphicon-exclamation-sign';
 				}
-				elseif ($topicicontype == 'B4')
+				elseif ($topicicontype == 'B4' || $topicicontype == 'B5')
 				{
 					$icon = 'alert-octagon';
 				}
@@ -436,7 +436,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					$this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation', 'edit', $button, 'glyphicon glyphicon-edit')
 				);
 			}
-			elseif ($topicicontype == 'B4' && !$fullactions)
+			elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'edit',
@@ -530,7 +530,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						$this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation', 'approve', $button, 'glyphicon glyphicon-ok-circle')
 					);
 				}
-				elseif ($topicicontype == 'B4' && !$fullactions)
+				elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
 				{
 					$this->messageButtons->set(
 						'publish',
@@ -574,7 +574,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'glyphicon glyphicon-trash')
 				);
 			}
-			elseif ($topicicontype == 'B4' && !$fullactions)
+			elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'delete',
@@ -621,7 +621,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'glyphicon glyphicon-ok-circle')
 					);
 				}
-				elseif ($topicicontype == 'B4' && !$fullactions)
+				elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
 				{
 					$this->messageButtons->set(
 						'undelete',
@@ -667,7 +667,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button, 'glyphicon glyphicon-exclamation-sign')
 					);
 				}
-				elseif ($topicicontype == 'B4' && !$fullactions)
+				elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
 				{
 					$this->messageButtons->set(
 						'permdelete',
@@ -713,7 +713,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'glyphicon glyphicon-trash')
 				);
 			}
-			elseif ($topicicontype == 'B4' && !$fullactions)
+			elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'delete',
@@ -750,7 +750,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 			if (!empty($this->message->ip))
 			{
 				$this->ipLink = '<a href="https://dnslytics.com/ip/' . $this->message->ip
-				. '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
+					. '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
 			}
 			else
 			{
@@ -777,17 +777,17 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  KunenaLayout
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(
 				['url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-			                 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon, ]
+				 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

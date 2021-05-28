@@ -62,9 +62,9 @@ class KunenaAvatar
 	 *
 	 * @return  boolean|KunenaAvatar
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -108,8 +108,8 @@ class KunenaAvatar
 	/**
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function getEditURL(): string
 	{
@@ -124,9 +124,9 @@ class KunenaAvatar
 	 *
 	 * @return  false|string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getLink(KunenaUser $user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
@@ -150,7 +150,7 @@ class KunenaAvatar
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
-		if ($topicicontype == 'B4')
+		if ($topicicontype == 'B4' || $topicicontype == 'B5')
 		{
 			if ($avatar == Uri::root() . 'media/kunena/core/svg/person.svg')
 			{
@@ -175,9 +175,9 @@ class KunenaAvatar
 	 *
 	 * @return  StdClass
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getSize($sizex = 90, $sizey = 90): StdClass
 	{
@@ -203,9 +203,9 @@ class KunenaAvatar
 	 *
 	 * @return  string|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getURL(KunenaUser $user, $sizex = 90, int $sizey = 90): string
 	{

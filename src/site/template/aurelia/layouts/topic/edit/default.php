@@ -466,7 +466,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                     <div class="controls">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="subscribeMe" id="subscribeMe"
-                                   value="1" <?php if ($this->subscriptionschecked)
+                                   value="1" <?php if ($this->subscriptionsChecked)
 							{
 								echo 'checked="checked"';
 							} ?>/>

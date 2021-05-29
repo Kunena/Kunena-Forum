@@ -125,8 +125,10 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
 		$parent->tryAuthorise('reply');
 
+		$arrayanynomousbox = [];
 		$arraypollcatid = [];
-		KunenaTemplate::getInstance()->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
+		$this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
+		$this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
 		// Run event.
 		$params = new Registry;

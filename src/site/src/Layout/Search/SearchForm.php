@@ -164,9 +164,9 @@ class SearchForm extends KunenaLayout
 				'select.option',
 				$this->config->messagesPerPageSearch,
 				Text::sprintf(
-				'COM_KUNENA_SEARCH_LIMIT',
-				$this->config->messagesPerPageSearch
-			)
+					'COM_KUNENA_SEARCH_LIMIT',
+					$this->config->messagesPerPageSearch
+				)
 			);
 		}
 
@@ -191,12 +191,14 @@ class SearchForm extends KunenaLayout
 	public function displayCategoryList($id, $attributes = 'class="form-control"')
 	{
 		// Category select list
-		$options   = [];
+		$options   = array();
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS'));
 
-		$catParams = ['sections' => true];
+		$cat_params = array('sections' => true);
 
-		echo HTMLHelper::_('select.genericlist', $options, 'limit', $attributes, 'value', 'text', $this->state->get('query.catids'), $id);
+		echo HTMLHelper::_(
+			'kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, $attributes, 'value', 'text', $this->state->get('query.catids'), $id
+		);
 	}
 
 	/**

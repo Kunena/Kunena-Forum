@@ -35,14 +35,14 @@ class SearchForm extends KunenaLayout
 	/**
 	 * Method to display the list to choose between posts or titles
 	 *
-	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayModeList($id, $attributes = 'class="form-control"')
+	public function displayModeList(string $id, string $attributes = 'class="form-control"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_SEARCH_SEARCH_POSTS'));
@@ -54,14 +54,14 @@ class SearchForm extends KunenaLayout
 	/**
 	 * Method to get the date list
 	 *
-	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayDateList($id, $attributes = 'class="form-control"')
+	public function displayDateList(string $id, string $attributes = 'class="form-control"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'lastvisit', Text::_('COM_KUNENA_SEARCH_DATE_LASTVISIT'));
@@ -80,14 +80,14 @@ class SearchForm extends KunenaLayout
 	/**
 	 * Method to display list to choose into the new dates or the older dates
 	 *
-	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayBeforeAfterList($id, $attributes = 'class="form-control"')
+	public function displayBeforeAfterList(string $id, string $attributes = 'class="form-control"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'after', Text::_('COM_KUNENA_SEARCH_DATE_NEWER'));
@@ -99,14 +99,14 @@ class SearchForm extends KunenaLayout
 	/**
 	 * Method to display list to choose how to sort the results
 	 *
-	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displaySortByList($id, $attributes = 'class="form-control"')
+	public function displaySortByList(string $id, string $attributes = 'class="form-control"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'title', Text::_('COM_KUNENA_SEARCH_SORTBY_TITLE'));
@@ -126,14 +126,14 @@ class SearchForm extends KunenaLayout
 	/**
 	 * Method to display list to choose the order
 	 *
-	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayOrderList($id, $attributes = 'class="form-control"')
+	public function displayOrderList(string $id, string $attributes = 'class="form-control"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'inc', Text::_('COM_KUNENA_SEARCH_SORTBY_INC'));
@@ -145,14 +145,14 @@ class SearchForm extends KunenaLayout
 	/**
 	 * Method to choose the limit of the list
 	 *
-	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayLimitList($id, $attributes = 'class="form-control"')
+	public function displayLimitList(string $id, string $attributes = 'class="form-control"')
 	{
 		// Limit value list
 		$options = [];
@@ -181,23 +181,23 @@ class SearchForm extends KunenaLayout
 	/**
 	 * Method to display list of categories
 	 *
-	 * @param   int     $id          Id of the HTML select list
+	 * @param   string  $id          Id of the HTML select list
 	 * @param   string  $attributes  Extras attributes to apply to the list
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayCategoryList($id, $attributes = 'class="form-control"')
+	public function displayCategoryList(string $id, string $attributes = 'class="form-control"')
 	{
 		// Category select list
-		$options   = array();
+		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS'));
 
-		$cat_params = array('sections' => true);
+		$catParams = ['sections' => true];
 
 		echo HTMLHelper::_(
-			'kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, $attributes, 'value', 'text', $this->state->get('query.catids'), $id
+			'kunenaforum.categorylist', 'catids[]', 0, $options, $catParams, $attributes, 'value', 'text', $this->state->get('query.catids'), $id
 		);
 	}
 
@@ -206,13 +206,12 @@ class SearchForm extends KunenaLayout
 	 *
 	 * @param   string  $name        Name of input to create
 	 * @param   string  $attributes  Attibutes to be added to input
-	 * @param   int     $id          Id to be added to the input
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayInput($name, $attributes = '', $id = null)
+	public function displayInput(string $name, string $attributes = '')
 	{
 		switch ($name)
 		{

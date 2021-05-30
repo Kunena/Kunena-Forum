@@ -49,7 +49,7 @@ $this->addScript('jquery.atwho.js');
 $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
 $this->addScriptOptions('com_kunena.kunena_quickReplymesid', $message->displayField('id'));
 
-$this->addScript('assets/js/edit.js');
+$this->addScript('assets/js/quickreply.js');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {

@@ -1424,17 +1424,7 @@ class KunenaIcons
 			return '<i class="fa ' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
 		}
 
-		if ($topicicontype == 'B2')
-		{
-			return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
-		}
-
-		if ($topicicontype == 'B3')
-		{
-			return '<span class="glyphicon ' . $categoryicon . $bigicon . $newchar . '" alt="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </span>';
-		}
-
-		if ($topicicontype == 'B4' || $topicicontype == 'B5')
+		if ($topicicontype == 'B5')
 		{
 			if (!$categoryicon)
 			{
@@ -2016,17 +2006,7 @@ class KunenaIcons
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
-		if ($topicicontype == 'B2')
-		{
-			return 'icon icon-flag';
-		}
-
-		if ($topicicontype == 'B3')
-		{
-			return 'glyphicon glyphicon-exclamation-sign';
-		}
-
-		if ($topicicontype == 'B4' || $topicicontype == 'B5')
+		if ($topicicontype == 'B5')
 		{
 			return 'alert-circle';
 		}

@@ -1055,17 +1055,7 @@ class KunenaUser extends CMSObject
 					return '<i class="fas fa-user-circle fa-3x"></i>';
 				}
 
-				if ($topicicontype == 'B2')
-				{
-					return '<span class="icon icon-user user-circle user-default" aria-hidden="true"></span>';
-				}
-
-				if ($topicicontype == 'B3')
-				{
-					return '<span class="glyphicon glyphicon-user user-circle user-default" aria-hidden="true"></span>';
-				}
-
-				if ($topicicontype == 'B4' && $this->avatar == null || $topicicontype == 'B5' && $this->avatar == null)
+				if ($topicicontype == 'B5' && $this->avatar == null)
 				{
 					return KunenaSvgIcons::loadsvg('person');
 				}

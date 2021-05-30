@@ -276,11 +276,6 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    const quickreplyid = Joomla.getOptions('com_kunena.kunena_quickreplymesid');
-    $('#gotoeditor' + quickreplyid).click(function () {
-        localStorage.setItem("copyKunenaeditor", $(".qrlocalstorage" + quickreplyid).val());
-    });
-
     if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
         CKEDITOR.replace('message', {
             customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),

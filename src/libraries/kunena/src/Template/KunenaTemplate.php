@@ -1241,9 +1241,6 @@ HTML;
 
 							$icon->published             = (int) $attributes->published;
 							$icon->title                 = (string) $attributes->title;
-							$icon->b2                    = (string) $attributes->b2;
-							$icon->b3                    = (string) $attributes->b3;
-							$icon->b4                    = (string) $attributes->b4;
 							$icon->b5                    = (string) $attributes->b5;
 							$icon->fa                    = (string) $attributes->fa;
 							$icon->filename              = (string) $attributes->src;
@@ -1396,19 +1393,7 @@ HTML;
 				$icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 			}
 
-			if ($topicicontype == 'B2')
-			{
-				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';
-			}
-			elseif ($topicicontype == 'B3')
-			{
-				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
-			}
-			elseif ($topicicontype == 'B4')
-			{
-				return KunenaSvgIcons::loadsvg($icon->b4, 'usertopicIcons', $categoryIconset);
-			}
-			elseif ($topicicontype == 'B5')
+			if ($topicicontype == 'B5')
 			{
 				return KunenaSvgIcons::loadsvg($icon->b5, 'usertopicIcons', $categoryIconset);
 			}
@@ -1481,19 +1466,7 @@ HTML;
 			$xml  = simplexml_load_file($xmlfile);
 			$icon = $this->get_xml_icon($xml, $iconid, $topicicontype);
 
-			if ($topicicontype == 'B2')
-			{
-				return '<span class="icon-topic icon icon-' . $icon->b2 . '"></span>';
-			}
-			elseif ($topicicontype == 'B3')
-			{
-				return '<span class="glyphicon-topic glyphicon glyphicon-' . $icon->b3 . '"></span>';
-			}
-			elseif ($topicicontype == 'B4')
-			{
-				return KunenaSvgIcons::loadsvg($icon->b4, 'systemtopicIcons', $categoryIconset);
-			}
-			elseif ($topicicontype == 'B5')
+			if ($topicicontype == 'B5')
 			{
 				return KunenaSvgIcons::loadsvg($icon->b5, 'systemtopicIcons', $categoryIconset);
 			}
@@ -1558,9 +1531,6 @@ HTML;
 		$icon       = new stdClass;
 		$icon->id   = (int) $attributes->id;
 		$icon->name = (string) $attributes->name;
-		$icon->b2   = (string) $attributes->b2;
-		$icon->b3   = (string) $attributes->b3;
-		$icon->b4   = (string) $attributes->b4;
 		$icon->b5   = (string) $attributes->b5;
 		$icon->fa   = (string) $attributes->fa;
 		$icon->src  = (string) $attributes->src;
@@ -1986,9 +1956,6 @@ HTML;
 			$attributes       = $label[0]->attributes();
 			$label            = new stdClass;
 			$label->id        = (int) $attributes->id;
-			$label->b2        = (string) $attributes->b2;
-			$label->b3        = (string) $attributes->b3;
-			$label->b4        = (string) $attributes->b4;
 			$label->b5        = (string) $attributes->b5;
 			$label->fa        = (string) $attributes->fa;
 			$label->src       = (string) $attributes->src;

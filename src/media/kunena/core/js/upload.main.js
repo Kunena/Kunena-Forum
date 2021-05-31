@@ -60,9 +60,9 @@ jQuery(function ($) {
 		}
 	});
 
-	const fileCount = null;
-	const filesedit = null;
-	const fileeditinline = 0;
+	var fileCount = null;
+	var filesedit = null;
+	var fileeditinline = 0;
 
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
@@ -334,7 +334,7 @@ jQuery(function ($) {
 		previewMaxHeight: 100,
 		previewCrop: true
 	}).bind('fileuploadsubmit', function (e, data) {
-		const params = {};
+		var params = {};
 		$.each(data.files, function (index, file) {
 			params = {
 				'catid': $('#kunena_upload').val(),

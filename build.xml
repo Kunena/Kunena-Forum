@@ -110,6 +110,7 @@
 		<mkdir dir="${package_dir}/archive" />
 		<mkdir dir="${package_dir}/documentation" />
 		<mkdir dir="${package_dir}/packages" />
+		<mkdir dir="build" />
 
 		<echo message="Making directory structure...DONE!" />
 	</target>
@@ -503,7 +504,7 @@
 
 		<!-- Zip the created Zips for packages -->
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/pkg_kunena_v6.0" />
+			<property name="destination.file" value="build/${cfg.prefix}${cfg.name}${str.fileversion}" />
 			<property name="base.directory" value="${build_dir}/distribution/" />
 		</phingcall>
 	</target>
@@ -517,9 +518,7 @@
 	</target>
 
 	<target name="cleanup">
-		<delete dir="${cache_dir}" />
-		<delete dir="dist/package" />
-		<delete dir="dist/tmp" />
+		<delete dir="${base.directory}" />
 	</target>
 
 	<target name="postflight">

@@ -15,7 +15,7 @@ src/site/template/aurelia/config/kunena_tmpl_aurelia.xml
 src/site/template/aurelia/config/template.xml
 
 # Builds
-build/tmp
+build
 releases
 dist/*
 

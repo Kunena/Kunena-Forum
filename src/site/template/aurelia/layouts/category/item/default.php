@@ -148,7 +148,7 @@ $this->addStyleSheet('rating.css');
 											<?php
 											$options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
 											echo HTMLHelper::_(
-												'categorylist',
+												'kunenaforum.categorylist',
 												'target',
 												0,
 												$options,

@@ -342,14 +342,10 @@ Text::script('COM_KUNENA_POLL_TITLE');
 								<?php foreach ($this->topicIcons as $id => $icon) : ?>
                                 <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
                                        value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-								<?php if ($this->config->topicIcons && $topicicontype == 'B3') : ?>
-                                <label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
-                                            class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
-                                            aria-hidden="true"></span>
-									<?php elseif ($this->config->topicIcons && $topicicontype == 'B4' || $this->config->topicIcons && $topicicontype == 'B5') : ?>
+								<?php if ($this->config->topicIcons && $topicicontype == 'B5') : ?>
                                     <label class="radio inline" for="radio<?php echo $icon->id; ?>">
 										<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
-										<?php echo KunenaSvgIcons::loadsvg($icon->b4, 'usertopicIcons', $this->category->iconset); ?>
+										<?php echo KunenaSvgIcons::loadsvg($icon->b5, 'usertopicIcons', $this->category->iconset); ?>
 										<?php elseif ($this->config->topicIcons && $topicicontype == 'fa') : ?>
                                         <label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
                                                     class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>

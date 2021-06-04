@@ -104,7 +104,7 @@ class TopicModerate extends KunenaLayout
 		$params  = ['sections' => 0, 'catid' => 0];
 
 		return HTMLHelper::_(
-			'categorylist',
+			'kunenaforum.categorylist',
 			'targetcategory',
 			0,
 			$options,

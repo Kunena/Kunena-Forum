@@ -114,10 +114,10 @@ class TopicModerateDisplay extends KunenaControllerDisplay
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$category = $this->topic->getCategory();
+		$this->category = $this->topic->getCategory();
 
 		$this->uri   = "index.php?option=com_kunena&view=topic&layout=moderate"
-			. "&catid={$category->id}&id={$this->topic->id}"
+			. "&catid={$this->category->id}&id={$this->topic->id}"
 			. ($this->message ? "&mesid={$this->message->id}" : '');
 		$this->title = !$this->message ?
 			Text::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :

@@ -104,13 +104,7 @@ $labels          = $this->ktemplate->params->get('labels');
 								?>
                                 <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
                                        value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-								<?php if ($this->config->topicIcons && $topicicontype == 'B3')
-								:
-								?>
-                                <label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
-                                            class="glyphicon glyphicon-<?php echo $icon->b3; ?> glyphicon-topic"
-                                            aria-hidden="true"></span>
-									<?php elseif ($this->config->topicIcons && $topicicontype == 'B4' || $this->config->topicIcons && $topicicontype == 'B5')
+								<?php if ($this->config->topicIcons && $topicicontype == 'B5')
 									:
 									?>
                                     <label class="radio inline" for="radio<?php echo $icon->id; ?>">
@@ -120,7 +114,7 @@ $labels          = $this->ktemplate->params->get('labels');
 											$this->category->iconset = 'default';
 										endif; ?>
                                         <img loading=lazy
-                                             src="<?php echo Uri::root() . 'media/kunena/topic_icons/' . $this->category->iconset . '/user/svg/' . $icon->b4; ?>"
+                                             src="<?php echo Uri::root() . 'media/kunena/topic_icons/' . $this->category->iconset . '/user/svg/' . $icon->b5; ?>"
                                              alt="<?php echo $icon->name; ?>" width="32" height="32"/>
 										<?php elseif ($this->config->topicIcons && $topicicontype == 'fa')
 										:

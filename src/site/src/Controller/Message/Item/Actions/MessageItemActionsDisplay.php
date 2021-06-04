@@ -376,21 +376,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 		if ($this->message->isAuthorised('move'))
 		{
-			if ($topicicontype == 'B2' && !$fullactions)
-			{
-				$this->messageButtons->set(
-					'moderate',
-					$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation', 'edit', $button, 'icon icon-wrench')
-				);
-			}
-			elseif ($topicicontype == 'B3' && !$fullactions)
-			{
-				$this->messageButtons->set(
-					'moderate',
-					$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation', 'edit', $button, 'glyphicon glyphicon-random')
-				);
-			}
-			elseif ($topicicontype == 'B3' && !$fullactions)
+			if ($topicicontype == 'B5' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'moderate',
@@ -424,21 +410,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		{
 			if ($this->message->isAuthorised('approve'))
 			{
-				if ($topicicontype == 'B2' && !$fullactions)
-				{
-					$this->messageButtons->set(
-						'publish',
-						$this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation', 'approve', $button, 'icon icon-checkmark-circle')
-					);
-				}
-				elseif ($topicicontype == 'B3' && !$fullactions)
-				{
-					$this->messageButtons->set(
-						'publish',
-						$this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation', 'approve', $button, 'glyphicon glyphicon-ok-circle')
-					);
-				}
-				elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
+				if ($topicicontype == 'B5' && !$fullactions)
 				{
 					$this->messageButtons->set(
 						'publish',
@@ -468,21 +440,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 				}
 			}
 
-			if ($topicicontype == 'B2' && !$fullactions)
-			{
-				$this->messageButtons->set(
-					'delete',
-					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'icon icon-trash')
-				);
-			}
-			elseif ($topicicontype == 'B3' && !$fullactions)
-			{
-				$this->messageButtons->set(
-					'delete',
-					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'glyphicon glyphicon-trash')
-				);
-			}
-			elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'B5' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'delete',
@@ -515,21 +473,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		{
 			if ($this->message->isAuthorised('undelete'))
 			{
-				if ($topicicontype == 'B2' && !$fullactions)
-				{
-					$this->messageButtons->set(
-						'undelete',
-						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'icon icon-checkmark-circle')
-					);
-				}
-				elseif ($topicicontype == 'B3' && !$fullactions)
-				{
-					$this->messageButtons->set(
-						'undelete',
-						$this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation', 'undelete', $button, 'glyphicon glyphicon-ok-circle')
-					);
-				}
-				elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
+				if ($topicicontype == 'B5' && !$fullactions)
 				{
 					$this->messageButtons->set(
 						'undelete',
@@ -561,21 +505,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 			if ($this->message->getTopic()->isAuthorised('permdelete'))
 			{
-				if ($topicicontype == 'B2' && !$fullactions)
-				{
-					$this->messageButtons->set(
-						'permdelete',
-						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button, 'icon icon-notification-circle')
-					);
-				}
-				elseif ($topicicontype == 'B3' && !$fullactions)
-				{
-					$this->messageButtons->set(
-						'permdelete',
-						$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation', 'permdelete', $button, 'glyphicon glyphicon-exclamation-sign')
-					);
-				}
-				elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
+				if ($topicicontype == 'B5' && !$fullactions)
 				{
 					$this->messageButtons->set(
 						'permdelete',
@@ -607,21 +537,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		}
 		elseif ($this->message->isAuthorised('delete'))
 		{
-			if ($topicicontype == 'B2' && !$fullactions)
-			{
-				$this->messageButtons->set(
-					'delete',
-					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'icon icon-trash')
-				);
-			}
-			elseif ($topicicontype == 'B3' && !$fullactions)
-			{
-				$this->messageButtons->set(
-					'delete',
-					$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', $button, 'glyphicon glyphicon-trash')
-				);
-			}
-			elseif ($topicicontype == 'B4' && !$fullactions || $topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'B5' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'delete',

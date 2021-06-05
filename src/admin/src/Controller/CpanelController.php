@@ -42,9 +42,9 @@ class CpanelController extends FormController
 	 *
 	 * @param   array  $config  construct
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -59,9 +59,9 @@ class CpanelController extends FormController
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 *
-	 * @throws  Exception
 	 */
 	public static function onGetIcons()
 	{
@@ -158,10 +158,10 @@ class CpanelController extends FormController
 	 *
 	 * @return  BaseController|void
 	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 */
 	public function display($cachable = false, $urlparams = false): void
 	{

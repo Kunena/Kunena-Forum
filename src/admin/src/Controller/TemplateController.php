@@ -23,6 +23,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
@@ -41,17 +42,17 @@ class TemplateController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @see     BaseController
-	 *
 	 * @param   MVCFactoryInterface|null  $factory  The factory.
 	 * @param   null                      $app      The CMSApplication for the dispatcher
 	 * @param   null                      $input    Input
 	 *
 	 * @param   array                     $config   An optional associative array of configuration settings.
 	 *
+	 * @throws Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @see     BaseController
+	 *
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -68,15 +69,16 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null)
 	{
 		$template = $this->app->input->get('templatename', '');
 		$menus    = $this->app->input->get('selections', [], 'array');
 		$menus    = ArrayHelper::toInteger($menus);
+		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 
 		if (!Session::checkToken())
 		{
@@ -111,10 +113,10 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 3.0
-	 *
 	 * @throws Exception
 	 * @throws null
+	 * @since   Kunena 3.0
+	 *
 	 */
 	protected function internalSaveParamFile(string $template): void
 	{
@@ -277,7 +279,7 @@ class TemplateController extends FormController
 			if (!Folder::exists(KPATH_MEDIA . '/core/js/skins/' . $params['nameskinckeditor']))
 			{
 				$params['nameskinckeditor'] = '';
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_SKIN'),'error');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_SKIN'), 'error');
 			}
 		}
 
@@ -286,7 +288,7 @@ class TemplateController extends FormController
 			if (!File::exists(KPATH_MEDIA . '/core/js/' . $params['ckeditorcustomprefixconfigfile'] . 'ckeditor_config.js'))
 			{
 				$params['ckeditorcustomprefixconfigfile'] = '';
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_CUSTOM_CONFIG_FILE'),'error');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_CUSTOM_CONFIG_FILE'), 'error');
 			}
 		}
 
@@ -296,7 +298,7 @@ class TemplateController extends FormController
 		{
 			if (count($editorButtons) > 0)
 			{
-				$editorButtons = implode(',', $editorButtons);
+				$editorButtons           = implode(',', $editorButtons);
 				$params['editorButtons'] = $editorButtons;
 			}
 			else
@@ -322,10 +324,10 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 2.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 2.0
+	 *
 	 */
 	public function apply(): void
 	{
@@ -364,9 +366,9 @@ class TemplateController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
 	 */
 	public function restore(): void
 	{

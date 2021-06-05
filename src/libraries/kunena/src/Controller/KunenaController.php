@@ -25,8 +25,8 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Exception\KunenaException;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -81,9 +81,9 @@ class KunenaController extends BaseController
 	 * @param   null                                              $app
 	 * @param   null                                              $input
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws \Exception
 	 */
 	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -113,9 +113,9 @@ class KunenaController extends BaseController
 	 * @param   mixed   $config  config
 	 *
 	 * @return  mixed
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = [])
 	{
@@ -155,17 +155,10 @@ class KunenaController extends BaseController
 		if ($app->isClient('administrator'))
 		{
 			$class = 'Kunena\Forum\Administrator\Controller\\' . ucfirst($view) . 'Controller';
-			KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
-			KunenaFactory::loadLanguage('com_kunena.models', 'admin');
-			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
-			KunenaFactory::loadLanguage('com_kunena', 'site');
 		}
 		else
 		{
 			$class = 'Kunena\Forum\Site\Controllers\\' . ucfirst($view) . 'Controller';
-			KunenaFactory::loadLanguage('com_kunena.controllers');
-			KunenaFactory::loadLanguage('com_kunena.models');
-			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 		}
 
 		if (class_exists($class))
@@ -206,10 +199,10 @@ class KunenaController extends BaseController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function execute($task)
 	{
@@ -324,9 +317,9 @@ class KunenaController extends BaseController
 	 *
 	 * @return  mixed
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function executeTask(string $task)
 	{
@@ -363,10 +356,10 @@ class KunenaController extends BaseController
 	 *
 	 * @return  BaseController  A Joomla\CMS\MVC\Controller\BaseController object to
 	 *                                                     support chaining.
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -536,10 +529,10 @@ class KunenaController extends BaseController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function setRedirectBack($default = null, $anchor = null): void
 	{

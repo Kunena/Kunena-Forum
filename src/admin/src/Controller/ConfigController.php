@@ -20,6 +20,7 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
@@ -133,6 +134,8 @@ class ConfigController extends FormController
 		}
 
 		KunenaConfig::getInstance()->save();
+
+		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_CONFIGSAVED'));
 

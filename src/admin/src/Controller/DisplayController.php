@@ -45,16 +45,12 @@ class DisplayController extends BaseController
 	 *
 	 * @return  BaseController
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function display($cachable = false, $urlparams = array()): BaseController
 	{
-		$view   = $this->input->get('view', 'cpanel');
-		$layout = $this->input->get('layout', 'default');
-		$id     = $this->input->getInt('id');
-
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 		KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 		KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');

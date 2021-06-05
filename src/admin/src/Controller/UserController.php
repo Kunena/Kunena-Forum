@@ -45,17 +45,17 @@ class UserController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @see     BaseController
-	 *
 	 * @param   MVCFactoryInterface|null  $factory  The factory.
 	 * @param   null                      $app      The CMSApplication for the dispatcher
 	 * @param   null                      $input    Input
 	 *
 	 * @param   array                     $config   An optional associative array of configuration settings.
 	 *
+	 * @throws Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @see     BaseController
+	 *
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -72,9 +72,9 @@ class UserController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($key = null, $urlVar = null): void
 	{
@@ -98,9 +98,9 @@ class UserController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function saveInternal(string $type)
 	{
@@ -114,6 +114,7 @@ class UserController extends FormController
 		$newOrder     = $this->app->input->getInt('newOrder');
 		$modCatids    = $moderator ? $this->app->input->get('catid', [], 'array') : [];
 		$modCatids    = ArrayHelper::toInteger($modCatids);
+		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 
 		if ($uid)
 		{
@@ -219,9 +220,9 @@ class UserController extends FormController
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws Exception
 	 */
 	protected function setModerate(KunenaUser $user, array $modCatids): bool
 	{
@@ -247,9 +248,9 @@ class UserController extends FormController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @throws  Exception
 	 */
 	public function apply(): void
 	{

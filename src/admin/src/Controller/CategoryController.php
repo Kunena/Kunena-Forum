@@ -108,6 +108,7 @@ class CategoryController extends FormController
 	protected function internalSave(): KunenaCategory
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
+		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 		$me = KunenaUserHelper::getMyself();
 
 		if ($this->app->isClient('site'))
@@ -187,12 +188,12 @@ class CategoryController extends FormController
 
 			try
 			{
-				$success    = $category->save();
+				$success = $category->save();
 			}
 			catch (KunenaException $e)
 			{
 				$this->app->enqueueMessage(
-					Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id). ' '. $e->getMessage(),
+					Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id) . ' ' . $e->getMessage(),
 					'error'
 				);
 			}

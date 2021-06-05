@@ -115,6 +115,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 		$wa = $doc->getWebAssetManager();
+		$wa->useScript('jquery');
 
 		$this->addScript('assets/js/main.js');
 

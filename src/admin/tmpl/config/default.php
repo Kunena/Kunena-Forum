@@ -600,15 +600,15 @@ $wa->useScript('multiselect');
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START_DESC') ?></td>
 													</tr>
-													<tr <?php if ($this->config->attach_end != 14)
+													<tr <?php if ($this->config->attachEnd != 14)
 :
 														echo 'class="changed"';
 														endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END') ?></td>
 														<td>
 															<input type="text" class="form-control"
-																   name="cfg_attach_end" class="ksm-field"
-																   value="<?php echo $this->escape($this->config->attach_end) ?>"/>
+																   name="cfg_attachEnd" class="ksm-field"
+																   value="<?php echo $this->escape($this->config->attachEnd) ?>"/>
 														</td>
 														<td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END_DESC') ?></td>
 													</tr>

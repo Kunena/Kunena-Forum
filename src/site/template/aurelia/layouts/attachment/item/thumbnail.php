@@ -43,8 +43,9 @@ if ($attachment->isImage())
 	if ($attachment->getPath()) :
 		?>
         <a href="<?php echo $name; ?>"
-           title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-            <?php echo $config->display_filename_attachment ? $attachment->getShortName($config->attach_start, $config->attach_end) : ''; ?> <img loading=lazy src="<?php echo $name; ?>"<?php echo $attributesImg; ?>
+           title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>"<?php echo $attributesLink; ?>>
+			<?php echo $config->display_filename_attachment ? $attachment->getShortName($config->attachStart, $config->attachEnd) : ''; ?>
+            <img loading=lazy src="<?php echo $name; ?>"<?php echo $attributesImg; ?>
                  width="<?php echo $config->thumbWidth; ?>"
                  height="<?php echo $config->thumbHeight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
         </a>
@@ -57,8 +58,8 @@ else
 {
 	?>
     <a href="<?php echo $attachment->getUrl(false, false, true); ?>"
-       title="<?php echo $attachment->getShortName($config->attachStart, $config->attach_end); ?>"<?php echo $attributesLink; ?>>
-		<?php echo $config->display_filename_attachment ? $attachment->getShortName($config->attach_start, $config->attach_end) : ''; ?> <?php echo KunenaIcons::file(); ?>
+       title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>"<?php echo $attributesLink; ?>>
+		<?php echo $config->display_filename_attachment ? $attachment->getShortName($config->attachStart, $config->attachEnd) : ''; ?><?php echo KunenaIcons::file(); ?>
     </a>
 	<?php
 }

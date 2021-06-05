@@ -50,10 +50,10 @@ class KunenaProfileKunena extends KunenaProfile
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getUserListURL($action = '', $xhtml = true)
 	{
@@ -73,9 +73,9 @@ class KunenaProfileKunena extends KunenaProfile
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function _getTopHits($limit = 0): array
 	{
@@ -126,10 +126,10 @@ class KunenaProfileKunena extends KunenaProfile
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws null
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getEditProfileURL(int $userid, $xhtml = true)
 	{
@@ -146,10 +146,10 @@ class KunenaProfileKunena extends KunenaProfile
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws null
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
 	{
@@ -196,7 +196,8 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @param   bool        $escape
 	 *
 	 * @return string
-	 * @see KunenaProfile::getProfileName()
+	 * @throws Exception
+	 * @see   KunenaProfile::getProfileName()
 	 * @since Kunena 5.2
 	 */
 	public function getProfileName($user, $visitorname = '', $escape = true)

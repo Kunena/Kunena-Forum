@@ -20,15 +20,14 @@ use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Pagination\Pagination;
+use Joomla\Http\Http;
+use Joomla\Http\Transport\Stream as StreamTransport;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Joomla\CMS\HTML\Registry;
-use Joomla\Http\Transport\Stream as StreamTransport;
-use Joomla\Http\Http;
 use stdClass;
 
 /**
@@ -71,9 +70,9 @@ class TemplatesModel extends AdminModel
 	/**
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -84,17 +83,17 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
-	 *
 	 * @param   bool   $loadData  loadData
 	 *
 	 * @param   array  $data      data
 	 *
 	 * @return  boolean|mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 *
 	 */
 	public function getForm($data = [], $loadData = true): bool
 	{
@@ -116,9 +115,9 @@ class TemplatesModel extends AdminModel
 	/**
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTemplates(): array
 	{
@@ -279,11 +278,11 @@ class TemplatesModel extends AdminModel
 
 	/**
 	 * Method to call loadTemplatesXml() to return the details of premium templates
-	 * 
-	 * @return stdClass
 	 *
-	 * @since Kunena 5.1
+	 * @return array|false
+	 *
 	 * @throws Exception
+	 * @since Kunena 5.1
 	 */
 	public function getTemplatesXml()
 	{
@@ -302,7 +301,7 @@ class TemplatesModel extends AdminModel
 	{
 		$this->template = array();
 
-		$url       = 'https://update.kunena.org/templates.xml';
+		$url = 'https://update.kunena.org/templates.xml';
 
 		try
 		{
@@ -382,9 +381,9 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{
@@ -429,9 +428,9 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @return  mixed|null
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{
@@ -460,13 +459,13 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::loadFormData()
-	 *
 	 * @return  array|mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 *
 	 */
 	protected function loadFormData(): array
 	{

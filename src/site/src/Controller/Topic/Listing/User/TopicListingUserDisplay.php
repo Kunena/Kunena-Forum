@@ -43,10 +43,10 @@ class TopicListingUserDisplay extends ListDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -54,9 +54,9 @@ class TopicListingUserDisplay extends ListDisplay
 
 		$model = new TopicsModel(array(), null, null, $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state    = $model->getState();
-		$this->me = KunenaUserHelper::getMyself();
-		$this->moreUri  = null;
+		$this->state   = $model->getState();
+		$this->me      = KunenaUserHelper::getMyself();
+		$this->moreUri = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
@@ -170,7 +170,7 @@ class TopicListingUserDisplay extends ListDisplay
 				}
 				elseif ($view == 'topics' && $layout == 'user')
 				{
-					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=user&mode={$this->$state->get('list.mode')}"));
+					$getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}"));
 				}
 				else
 				{
@@ -313,11 +313,11 @@ class TopicListingUserDisplay extends ListDisplay
 	}
 
 	/**
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

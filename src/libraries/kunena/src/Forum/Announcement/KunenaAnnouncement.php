@@ -93,8 +93,8 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   mixed  $properties  properties
 	 *
-	 * @since   Kunena 6.0
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	public function __construct($properties = null)
 	{
@@ -121,9 +121,9 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaAnnouncement
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false): KunenaAnnouncement
 	{
@@ -138,10 +138,10 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getUrl($layout = 'default', $xhtml = true)
 	{
@@ -184,10 +184,10 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getTaskUrl($task = null, $xhtml = true): bool
 	{
@@ -233,9 +233,9 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return  integer|string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function displayField(string $field, $mode = null)
 	{
@@ -268,9 +268,9 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAuthor(): ?KunenaUser
 	{
@@ -420,11 +420,11 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  KunenaExceptionAuthorise|null
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function authoriseRead(KunenaUser $user)
 	{
@@ -444,11 +444,11 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  KunenaExceptionAuthorise|null
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function authoriseNotBanned(KunenaUser $user)
 	{
@@ -476,9 +476,9 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function authoriseWrite(KunenaUser $user): ?KunenaExceptionAuthorise
 	{

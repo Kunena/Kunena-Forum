@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * 
+ *
  * @package         Kunena.Site
  * @subpackage      Service
  *
@@ -36,7 +36,7 @@ class Kunenagrid
 	 * @param   null     $taskOff  Task to turn the boolean setting off.
 	 *
 	 * @return  string   The boolean setting widget.
-	 * 
+	 *
 	 * @since   Kunena 6.0
 	 */
 	public static function boolean(int $i, int $value, $taskOn = null, $taskOff = null): string
@@ -64,6 +64,7 @@ class Kunenagrid
 	/**
 	 * @return  void
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public static function behavior(): void
@@ -105,11 +106,11 @@ class Kunenagrid
 			});
 		});';
 
-		// Add the behavior to the document head.
-		$document = Factory::getApplication()->getDocument();
-		$document->addScriptDeclaration($js);
+			// Add the behavior to the document head.
+			$document = Factory::getApplication()->getDocument();
+			$document->addScriptDeclaration($js);
 
-		$loaded = true;
+			$loaded = true;
 		}
 	}
 
@@ -159,6 +160,7 @@ class Kunenagrid
 	 *
 	 * @return  string
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public static function checkedOut($row, int $i, $identifier = 'id'): string
@@ -188,13 +190,13 @@ class Kunenagrid
 	}
 
 	/**
-     * @param   mixed  $row      row
-     * @param   int    $overlib  overlib
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     */
+	 * @param   mixed  $row      row
+	 * @param   int    $overlib  overlib
+	 *
+	 * @return  string
+	 *
+	 * @since   Kunena 6.0
+	 */
 	protected static function _checkedOut($row, $overlib = 1): string
 	{
 		$hover = '';
@@ -262,8 +264,6 @@ class Kunenagrid
 	/**
 	 * Returns an action on a grid
 	 *
-	 * @internal param string $text An optional text to display
-	 *
 	 * @param   integer       $i          The row index
 	 * @param   string        $task       The task to fire
 	 * @param   string|array  $prefix     An optional task prefix or an array of options
@@ -275,6 +275,9 @@ class Kunenagrid
 	 * @param   string        $checkbox   An optional prefix for checkboxes.
 	 *
 	 * @return   string The Html code
+	 *
+	 * @throws \Exception
+	 * @internal param string $text An optional text to display
 	 *
 	 * @since    Kunena 3.0
 	 */
@@ -402,6 +405,7 @@ class Kunenagrid
 	 *
 	 * @return  string
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public static function task(int $i, string $img, string $alt, string $task, $prefix = '', $bootstrap = false)

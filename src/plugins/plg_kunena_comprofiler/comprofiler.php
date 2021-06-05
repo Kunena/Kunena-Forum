@@ -15,13 +15,8 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Integration\KunenaActivity;
-use Kunena\Forum\Libraries\Integration\KunenaAvatar;
-use Kunena\Forum\Libraries\Integration\KunenaPrivate;
-use Kunena\Forum\Libraries\Integration\KunenaProfile;
 
 /**
  * Class plgKunenaComprofiler
@@ -42,9 +37,9 @@ class plgKunenaComprofiler extends CMSPlugin
 	 * @param   object  $subject  subject
 	 * @param   object  $config   config
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function __construct(object &$subject, object $config)
 	{
@@ -86,9 +81,9 @@ class plgKunenaComprofiler extends CMSPlugin
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onKunenaDisplay(string $type, $view = null, $params = null): void
 	{
@@ -117,9 +112,9 @@ class plgKunenaComprofiler extends CMSPlugin
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onKunenaPrepare(string $context, int &$item, object $params, $page = 0): void
 	{
@@ -172,7 +167,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  KunenaAvatar|void
+	 * @return  AvatarComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -189,7 +184,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena profile integration object.
 	 *
-	 * @return  KunenaProfile|void
+	 * @return  KunenaProfileComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -206,7 +201,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena private message integration object.
 	 *
-	 * @return  KunenaPrivate|void
+	 * @return  KunenaPrivateComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -223,10 +218,10 @@ class plgKunenaComprofiler extends CMSPlugin
 	/**
 	 * Get Kunena activity stream integration object.
 	 *
-	 * @return  KunenaActivity|void
+	 * @return  KunenaActivityComprofiler|void
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()
 	{

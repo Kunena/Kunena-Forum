@@ -94,7 +94,7 @@ class PluginsController extends AdminController
 	/**
 	 * Method to publish a list of items
 	 *
-	 * @return  void
+	 * @return  false
 	 *
 	 * @throws  Exception
 	 * @since   12.2
@@ -121,11 +121,11 @@ class PluginsController extends AdminController
 			$model = $this->getModel();
 
 			// Make sure the item ids are integers
-			$cid = ArrayHelper::toInteger($cid);
+			$cid  = ArrayHelper::toInteger($cid);
 			$cids = implode(',', $cid);
 
 			// Retrieve the name of plugin extension from extensions table to check before if the third party extension exist
-			$db = Factory::getDBO();
+			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName(array('element', 'extension_id')));
 			$query->from($db->quoteName('#__extensions'));
@@ -137,7 +137,7 @@ class PluginsController extends AdminController
 
 			foreach ($plg_kunena_exts as $plg)
 			{
-				if($plg->element == 'altauserpoints')
+				if ($plg->element == 'altauserpoints')
 				{
 					if (file_exists(JPATH_SITE . '/components/com_altauserpoints/helper.php'))
 					{
@@ -190,7 +190,7 @@ class PluginsController extends AdminController
 
 			if (empty($cids_exist))
 			{
-				$this->setMessage(Text::_('COM_KUNENA_PLUGINS_NO_THIRD_PARTIES_EXTENSIONS_FOUND') , 'error');
+				$this->setMessage(Text::_('COM_KUNENA_PLUGINS_NO_THIRD_PARTIES_EXTENSIONS_FOUND'), 'error');
 				$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
 
 				return false;

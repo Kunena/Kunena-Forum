@@ -42,7 +42,7 @@ class plgKunenaJoomla extends CMSPlugin
 	}
 
 	/**
-	 * @return  AccessJoomla|void
+	 * @return  false|KunenaAccessJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -59,7 +59,7 @@ class plgKunenaJoomla extends CMSPlugin
 	}
 
 	/**
-	 * @return  Login|null
+	 * @return  KunenaLoginJoomla
 	 *
 	 * @since   Kunena 6.0
 	 */

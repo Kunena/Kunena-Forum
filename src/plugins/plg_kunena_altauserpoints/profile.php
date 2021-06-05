@@ -19,6 +19,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
 
@@ -53,9 +55,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true): string
 	{
@@ -102,14 +104,14 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 
 	/**
 	 *
-	 * @param   int     $view
-	 * @param   object  $params
+	 * @param   KunenaLayout  $view
+	 * @param   object        $params
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(int $view, object $params)
+	public function showProfile(KunenaLayout $view, object $params)
 	{
 	}
 
@@ -119,9 +121,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getEditProfileURL(int $userid, $xhtml = true): bool
 	{
@@ -129,17 +131,17 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param   mixed   $user   user
-	 * @param   string  $task   task
-	 * @param   bool    $xhtml  xhtml
+	 * @param   KunenaUser  $user   user
+	 * @param   string      $task   task
+	 * @param   bool        $xhtml  xhtml
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getProfileURL($user, $task = '', $xhtml = true): bool
+	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true): bool
 	{
 		if ($user == 0)
 		{
@@ -163,11 +165,12 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	/**
 	 * Return username of user
 	 *
-	 * @param   integer $userid userid
-	 * @param   bool    $xhtml  xhtml
+	 * @param           $user
+	 * @param   string  $visitorname
+	 * @param   bool    $escape
 	 *
-	 * @since Kunena 5.2
 	 * @return string
+	 * @since Kunena 5.2
 	 */
 	public function getProfileName($user, $visitorname = '', $escape = true)
 	{

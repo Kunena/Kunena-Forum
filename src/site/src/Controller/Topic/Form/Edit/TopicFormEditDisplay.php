@@ -15,8 +15,8 @@ namespace Kunena\Forum\Site\Controller\Topic\Form\Edit;
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
@@ -27,7 +27,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -49,10 +48,10 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -67,7 +66,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 		$this->message   = KunenaMessageHelper::get($mesid);
 		$this->message->tryAuthorise('edit');
 
-		$this->topic     = $this->message->getTopic();
+		$this->topic    = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 
 		$this->ktemplate->setCategoryIconset($this->topic->getCategory()->iconset);
@@ -201,11 +200,11 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

@@ -21,8 +21,8 @@ use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Http\Http;
 use Joomla\CMS\Http\Transport\StreamTransport;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Mail\MailTemplate;
 use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Mail\MailTemplate;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
@@ -72,9 +72,9 @@ class TopicController extends KunenaController
 	/**
 	 * @param   array  $config  config
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($config = [])
 	{
@@ -90,10 +90,10 @@ class TopicController extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function loadattachments()
 	{
@@ -156,13 +156,13 @@ class TopicController extends KunenaController
 		$attachs_id = $this->input->getString('files_id', '');
 		$attachs_id = json_decode($attachs_id);
 
-		if ($attachs_id===null)
+		if ($attachs_id === null)
 		{
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
 		$attach_ids_final = array();
-		foreach($attachs_id as $attach)
+		foreach ($attachs_id as $attach)
 		{
 			if (is_array($attach))
 			{
@@ -174,35 +174,17 @@ class TopicController extends KunenaController
 			}
 		}
 
-		$instances  = KunenaAttachmentHelper::getById($attach_ids_final, 'none');
+		$instances = KunenaAttachmentHelper::getById($attach_ids_final, 'none');
 
-		$this->changeinline($instances,  '1');
-	}
-
-	/**
-	 * Set inline to 0 on one attachment object.
-	 *
-	 * @return void
-	 * @since Kunena 5.1
-	 * @throws Exception
-	 */
-	public function removeinlineonattachment()
-	{
-		$attach_id = $this->input->getInt('file_id', 0);
-
-		$instance  = KunenaAttachmentHelper::get($attach_id);
-
-		$this->checkpermissions($instance->userid);
-
-		$this->changeinline($instance, '0');
+		$this->changeinline($instances, '1');
 	}
 
 	/**
 	 * Set inline to 0 or 1 on the attachment object.
 	 *
 	 * @return void
-	 * @since Kunena 5.1
 	 * @throws Exception
+	 * @since Kunena 5.1
 	 */
 	protected function changeinline($attachments, $inline)
 	{
@@ -217,19 +199,19 @@ class TopicController extends KunenaController
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
-		$response  = array();
+		$response = array();
 
 		if (is_object($attachments))
 		{
-			$editor_text = $this->input->get->get('editor_text', '', 'raw');
-			$find             = array('/\[attachment='.$attachments->id.'\](.*?)\[\/attachment\]/su');
-			$replace          = '';
-			$text             = preg_replace($find, $replace, $editor_text);
+			$editor_text               = $this->input->get->get('editor_text', '', 'raw');
+			$find                      = array('/\[attachment=' . $attachments->id . '\](.*?)\[\/attachment\]/su');
+			$replace                   = '';
+			$text                      = preg_replace($find, $replace, $editor_text);
 			$response['text_prepared'] = $text;
 		}
 		else
 		{
-			foreach($attachments as $instance)
+			foreach ($attachments as $instance)
 			{
 				$response['result'] = $instance->setInline($inline);
 				$response['value']  = $inline;
@@ -256,11 +238,29 @@ class TopicController extends KunenaController
 	}
 
 	/**
+	 * Set inline to 0 on one attachment object.
+	 *
+	 * @return void
+	 * @throws Exception
+	 * @since Kunena 5.1
+	 */
+	public function removeinlineonattachment()
+	{
+		$attach_id = $this->input->getInt('file_id', 0);
+
+		$instance = KunenaAttachmentHelper::get($attach_id);
+
+		$this->checkpermissions($instance->userid);
+
+		$this->changeinline($instance, '0');
+	}
+
+	/**
 	 * Check permissions.
 	 *
 	 * @return void
-	 * @since Kunena 5.1
 	 * @throws Exception
+	 * @since Kunena 5.1
 	 */
 	protected function checkpermissions($attachment_userid)
 	{
@@ -275,9 +275,9 @@ class TopicController extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function removeattachments()
 	{
@@ -332,9 +332,9 @@ class TopicController extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws  null
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	public function upload()
 	{
@@ -490,10 +490,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function post()
 	{
@@ -731,7 +731,7 @@ class TopicController extends KunenaController
 				return;
 			}
 		}
-		
+
 		if ($this->me->checkUserAllowedLinksImages())
 		{
 			$message->message = $this->removeLinksInMessage($message->message);
@@ -1025,33 +1025,13 @@ class TopicController extends KunenaController
 	}
 
 	/**
-	 * Remove links in message content
-	 *
-	 * @param $text
-	 *
-	 * @since Kunena 5.2.0
-	 */
-	protected function removeLinksInMessage($text)
-	{
-		$text = preg_replace('/\[url=(.*?)\](.*?)\[\/url\]/su', '', $text);
-		$text = preg_replace('/\[img=(.*?)\](.*?)\[\/img\]/su', '', $text);
-
-		// When the bbcode urls and images are removed just remove the others links
-		$text = preg_replace('/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)(#?[\w \.-]*)(\??[\w \.-]*)(\=?[\w \.-]*)/i', '', $text);
-
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SAVED_WITHOUT_LINKS_AND_IMAGES'));
-
-		return $text;
-	}
-
-	/**
 	 * Check if title of topic or message contains URL to limit part of spam
-	 *
-	 * @internal param string $usbject
 	 *
 	 * @param   string  $subject  subject
 	 *
 	 * @return  boolean
+	 *
+	 * @internal param string $usbject
 	 *
 	 * @since    Kunena 6.0
 	 */
@@ -1078,6 +1058,27 @@ class TopicController extends KunenaController
 	}
 
 	/**
+	 * Remove links in message content
+	 *
+	 * @param $text
+	 *
+	 * @return array|string|string[]|null
+	 * @since Kunena 5.2.0
+	 */
+	protected function removeLinksInMessage($text)
+	{
+		$text = preg_replace('/\[url=(.*?)\](.*?)\[\/url\]/su', '', $text);
+		$text = preg_replace('/\[img=(.*?)\](.*?)\[\/img\]/su', '', $text);
+
+		// When the bbcode urls and images are removed just remove the others links
+		$text = preg_replace('/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)(#?[\w \.-]*)(\??[\w \.-]*)(\=?[\w \.-]*)/i', '', $text);
+
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SAVED_WITHOUT_LINKS_AND_IMAGES'));
+
+		return $text;
+	}
+
+	/**
 	 * Check in the text the max links
 	 *
 	 * @param   string  $text   text
@@ -1085,9 +1086,9 @@ class TopicController extends KunenaController
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{
@@ -1160,9 +1161,9 @@ class TopicController extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function postPrivate(KunenaMessage $message)
 	{
@@ -1230,10 +1231,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function edit()
 	{
@@ -1580,9 +1581,9 @@ class TopicController extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function editPrivate(KunenaMessage $message)
 	{
@@ -1642,10 +1643,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function thankyou()
 	{
@@ -1658,10 +1659,10 @@ class TopicController extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function setThankyou($type)
 	{
@@ -1756,10 +1757,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function unthankyou()
 	{
@@ -1770,10 +1771,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function subscribe()
 	{
@@ -1806,10 +1807,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function unsubscribe()
 	{
@@ -1842,10 +1843,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function favorite()
 	{
@@ -1878,10 +1879,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function unfavorite()
 	{
@@ -1914,10 +1915,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function sticky()
 	{
@@ -1965,10 +1966,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function unsticky()
 	{
@@ -2016,10 +2017,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function lock()
 	{
@@ -2067,10 +2068,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function unlock()
 	{
@@ -2118,10 +2119,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function delete()
 	{
@@ -2192,10 +2193,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function undelete()
 	{
@@ -2251,10 +2252,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function permdelete()
 	{
@@ -2326,10 +2327,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function approve()
 	{
@@ -2385,7 +2386,7 @@ class TopicController extends KunenaController
 
 			if (!$modifiedByAuthor)
 			{
-			    $target->sendNotification(null, true);
+				$target->sendNotification(null, true);
 			}
 		}
 		else
@@ -2399,10 +2400,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function move()
 	{
@@ -2529,10 +2530,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function report()
 	{
@@ -2639,7 +2640,7 @@ class TopicController extends KunenaController
 			if (!empty($emailToList))
 			{
 				$mailnamesender = !empty($this->config->email_sender_name) ? \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->email_sender_name) : \Joomla\CMS\Mail\MailHelper::cleanAddress($this->config->board_title . ': ' . $this->me->getName());
-				$mailsubject = "[" . $this->config->boardTitle . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
+				$mailsubject    = "[" . $this->config->boardTitle . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
 
 				if ($reason)
 				{
@@ -2675,12 +2676,12 @@ class TopicController extends KunenaController
 				$mailer = new MailTemplate('com_kunena.report', $user->getParam('language', $this->app->get('language')), $mail);
 				$mailer->addTemplateData(
 					[
-					'mail'        => $mail,
-					'me'          => $this->me,
-					'subject'     => $reason,
-					'message'     => $message,
-					'messageLink' => $msglink,
-					'content'     => $text,
+						'mail'        => $mail,
+						'me'          => $this->me,
+						'subject'     => $reason,
+						'message'     => $message,
+						'messageLink' => $msglink,
+						'content'     => $text,
 					]
 				);
 
@@ -2700,10 +2701,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function vote()
 	{
@@ -2761,10 +2762,10 @@ class TopicController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function resetvotes()
 	{

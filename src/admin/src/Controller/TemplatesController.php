@@ -248,10 +248,10 @@ class TemplatesController extends FormController
 							{
 								if (is_dir($tmpKunena . $template->sourcedir . '/assets/images'))
 								{
-									Folder::delete($tmpkunena . $template->sourcedir . '/assets/images');
+									Folder::delete($tmpKunena . $template->sourcedir . '/assets/images');
 								}
 
-								Folder::move($dest . $template->directory . '/assets/images', $tmp_kunena . $template->sourcedir . '/assets/images');
+								Folder::move($dest . $template->directory . '/assets/images', $tmpKunena . $template->sourcedir . '/assets/images');
 							}
 
 							if (is_file($dest . $template->directory . '/assets/less/custom.less'))

@@ -84,10 +84,10 @@ class TopicModerateDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -179,11 +179,11 @@ class TopicModerateDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

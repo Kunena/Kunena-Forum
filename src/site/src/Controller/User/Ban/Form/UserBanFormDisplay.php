@@ -58,9 +58,9 @@ class UserBanFormDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
+	 * @throws  null
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -79,11 +79,11 @@ class UserBanFormDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

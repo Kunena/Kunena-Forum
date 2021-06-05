@@ -43,9 +43,9 @@ abstract class KunenaAnnouncementHelper
 	 *
 	 * @return  KunenaAnnouncement
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -77,15 +77,14 @@ abstract class KunenaAnnouncementHelper
 	/**
 	 * Get url
 	 *
-	 * @param   string  $layout  layout
-	 * @param   bool    $xhtml   xhtml
+	 * @param   null  $layout  layout
+	 * @param   bool  $xhtml   xhtml
 	 *
-	 * @return  boolean
+	 * @return string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 */
 	public static function getUrl($layout = null, $xhtml = true): string
 	{
@@ -124,9 +123,9 @@ abstract class KunenaAnnouncementHelper
 	 *
 	 * @return  KunenaAnnouncement[]
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getAnnouncements($start = 0, $limit = 1, $filter = true): array
 	{
@@ -191,9 +190,9 @@ abstract class KunenaAnnouncementHelper
 	 *
 	 * @return  integer
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getCount($filter = true): int
 	{

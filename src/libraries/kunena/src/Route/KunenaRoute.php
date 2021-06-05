@@ -181,10 +181,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  boolean|Uri|null|string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public static function current($object = false)
 	{
@@ -212,10 +212,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  boolean|Uri|null
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected static function prepare($uri = null)
 	{
@@ -341,10 +341,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  integer
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected static function setItemID(Uri $uri): int
 	{
@@ -436,9 +436,9 @@ abstract class KunenaRoute
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected static function build(): void
 	{
@@ -599,9 +599,9 @@ abstract class KunenaRoute
 	 *
 	 * @return  integer
 	 *
+	 * @throws  null
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	protected static function checkItem($item, Uri $uri)
 	{
@@ -641,9 +641,9 @@ abstract class KunenaRoute
 	 *
 	 * @return  integer
 	 *
+	 * @throws  null
 	 * @since   Kunena
 	 *
-	 * @throws  null
 	 */
 	protected static function checkCategory($item, Uri $uri)
 	{
@@ -706,10 +706,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public static function getReferrer($default = null, $anchor = null): string
 	{
@@ -762,10 +762,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public static function _($uri = null, $xhtml = true, $ssl = 0)
 	{
@@ -831,10 +831,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  Uri|string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public static function normalize($uri = null, $object = false)
 	{
@@ -877,9 +877,9 @@ abstract class KunenaRoute
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function cacheLoad(): void
 	{
@@ -906,9 +906,9 @@ abstract class KunenaRoute
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function cacheStore(): void
 	{
@@ -967,13 +967,14 @@ abstract class KunenaRoute
 	 *
 	 * @return  array
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public static function resolveAlias(string $alias): array
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$app = Factory::getApplication();
+		$app   = Factory::getApplication();
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
@@ -1017,9 +1018,9 @@ abstract class KunenaRoute
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function initialize(): void
 	{
@@ -1126,10 +1127,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
 	 * @throws null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public static function getCategoryUrl(KunenaCategory $category, bool $xhtml = true)
 	{
@@ -1141,10 +1142,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  integer
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public static function getCategoryItemid(KunenaCategory $category)
 	{
@@ -1156,10 +1157,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  integer
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public static function getItemID($uri = null)
 	{
@@ -1192,10 +1193,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  integer
 	 *
-	 * @since   Kunena 5.1
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 5.1
+	 *
 	 */
 	public static function fixMissingItemID(): int
 	{
@@ -1211,16 +1212,16 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaTopic     $topic     topic
+	 * @param   KunenaTopic          $topic     topic
 	 * @param   bool                 $xhtml     xhtml
 	 * @param   null                 $action    actions
 	 * @param   KunenaCategory|null  $category  category
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public static function getTopicUrl(KunenaTopic $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null)
 	{
@@ -1233,16 +1234,16 @@ abstract class KunenaRoute
 	}
 
 	/**
-	 * @param   KunenaMessage          $message   message
-	 * @param   bool                   $xhtml     xhtml
-	 * @param   KunenaTopic|null  $topic     topic
-	 * @param   KunenaCategory|null    $category  category
+	 * @param   KunenaMessage        $message   message
+	 * @param   bool                 $xhtml     xhtml
+	 * @param   KunenaTopic|null     $topic     topic
+	 * @param   KunenaCategory|null  $category  category
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public static function getMessageUrl(KunenaMessage $message, $xhtml = true, KunenaTopic $topic = null, KunenaCategory $category = null)
 	{
@@ -1266,10 +1267,10 @@ abstract class KunenaRoute
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
 	{

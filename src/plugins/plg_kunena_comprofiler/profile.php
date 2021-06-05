@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use RuntimeException;
 use function defined;
 
@@ -55,9 +56,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public static function trigger(string $event, object $params): void
 	{
@@ -67,9 +68,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function open(): void
 	{
@@ -79,9 +80,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function close(): void
 	{
@@ -94,9 +95,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @return  boolean|string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true): string
 	{
@@ -120,9 +121,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @return  boolean|string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
 	{
@@ -147,14 +148,14 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $view    view
-	 * @param   object  $params  params
+	 * @param   KunenaLayout  $view    view
+	 * @param   object        $params  params
 	 *
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(int $view, object $params)
+	public function showProfile(KunenaLayout $view, object $params)
 	{
 		global $_PLUGINS;
 
@@ -165,7 +166,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 			$_PLUGINS->trigger(
 				'forumSideProfile',
 				['kunena', $view, $view->profile->userid,
-				['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params], ]
+					['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params],]
 			)
 		);
 	}
@@ -175,9 +176,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function _getTopHits($limit = 0): array
 	{
@@ -221,11 +222,12 @@ class KunenaProfileComprofiler extends KunenaProfile
 	/**
 	 * Return name or username of user with community builder settings
 	 *
-	 * @param   integer $userid userid
-	 * @param   bool    $xhtml  xhtml
+	 * @param           $user
+	 * @param   string  $visitorname
+	 * @param   bool    $escape
 	 *
-	 * @since Kunena 5.2
 	 * @return string
+	 * @since Kunena 5.2
 	 */
 	public function getProfileName($user, $visitorname = '', $escape = true)
 	{

@@ -49,13 +49,13 @@ abstract class KunenaParser
 	/**
 	 * @param   bool  $grayscale    grayscale
 	 * @param   bool  $emoticonbar  emoticonbar
-	 * @param bool $addPath addPath
+	 * @param   bool  $addPath      addPath
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false, $addPath = true): array
 	{
@@ -113,7 +113,7 @@ abstract class KunenaParser
 			}
 			else
 			{
-				$smileyArray [$smiley->code] =  $smiley->file;
+				$smileyArray [$smiley->code] = $smiley->file;
 			}
 		}
 
@@ -134,9 +134,9 @@ abstract class KunenaParser
 	 *
 	 * @return  string|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public static function parseText($txt, $len = 0, $target = 'title')
 	{
@@ -173,11 +173,11 @@ abstract class KunenaParser
 	 * @param   string  $content  content
 	 * @param   string  $target   target
 	 *
-	 * @return  mixed
-	 *
-	 * @since   Kunena 6.0
+	 * @return  string
 	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public static function &prepareContent(&$content, $target = 'body')
 	{
@@ -219,9 +219,9 @@ abstract class KunenaParser
 	 *
 	 * @return  mixed|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '', $target = 'message')
 	{
@@ -252,9 +252,9 @@ abstract class KunenaParser
 	 *
 	 * @return  mixed|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public static function plainBBCode(string $txt, $len = 0, $target = 'message')
 	{
@@ -280,9 +280,9 @@ abstract class KunenaParser
 	 *
 	 * @return  false|string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public static function stripBBCode(string $txt, $len = 0, $html = true, $target = 'message')
 	{

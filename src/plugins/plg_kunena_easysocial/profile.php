@@ -5,9 +5,9 @@
  * @package         Kunena.Plugins
  * @subpackage      Easysocial
  *
- * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
- * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
- * @license        GNU/GPL, see LICENSE.php
+ * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
+ * @license         GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
@@ -24,6 +24,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -57,9 +59,9 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true): string
 	{
@@ -75,15 +77,15 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $user   userid
-	 * @param   string  $task   task
-	 * @param   bool    $xhtml  xhtml
+	 * @param   KunenaUser  $user   userid
+	 * @param   string      $task   task
+	 * @param   bool        $xhtml  xhtml
 	 *
 	 * @return boolean
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
+	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true): bool
 	{
 		if ($user)
 		{
@@ -130,14 +132,14 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $view    view
-	 * @param   object  $params  params
+	 * @param   KunenaLayout  $view    view
+	 * @param   object        $params  params
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function showProfile(int $view, object $params)
+	public function showProfile(KunenaLayout $view, object $params)
 	{
 		$userid = $view->profile->userid;
 
@@ -211,18 +213,19 @@ class KunenaProfileEasySocial extends KunenaProfile
 	/**
 	 * Return username of user
 	 *
-	 * @param   integer $userid userid
-	 * @param   bool    $xhtml  xhtml
+	 * @param           $user
+	 * @param   string  $visitorname
+	 * @param   bool    $escape
 	 *
-	 * @since Kunena 5.2
 	 * @return string
+	 * @since Kunena 5.2
 	 */
 	public function getProfileName($user, $visitorname = '', $escape = true)
 	{
-		$config  = ES::config();
-		$displayusername =  $config->get('users.displayName');
+		$config          = ES::config();
+		$displayusername = $config->get('users.displayName');
 
-		if ( $displayusername == 'username')
+		if ($displayusername == 'username')
 		{
 			return FD::user($user->id)->username;
 		}

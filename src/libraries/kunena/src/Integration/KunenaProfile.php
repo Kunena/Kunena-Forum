@@ -47,9 +47,9 @@ class KunenaProfile
 	 *
 	 * @return  boolean|KunenaProfile
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -72,7 +72,7 @@ class KunenaProfile
 
 			if (!self::$instance)
 			{
-				self::$instance = new self;
+				self::$instance          = new self;
 				self::$instance->enabled = false;
 			}
 		}
@@ -85,9 +85,9 @@ class KunenaProfile
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopHits($limit = 0): array
 	{
@@ -117,10 +117,10 @@ class KunenaProfile
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getStatisticsURL($action = '', $xhtml = true)
 	{
@@ -156,7 +156,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
+	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true, $avatarTab = '')
 	{
 	}
 
@@ -168,7 +168,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile($view, object $params)
+	public function showProfile(KunenaLayout $view, object $params)
 	{
 	}
 

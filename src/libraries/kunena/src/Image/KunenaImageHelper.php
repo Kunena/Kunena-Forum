@@ -41,6 +41,7 @@ class KunenaImageHelper
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public static function version($file, $folder, $filename, $maxWidth = 800, $maxHeight = 800, $quality = 70, $scale = KunenaImage::SCALE_INSIDE, $crop = 0)
@@ -108,6 +109,7 @@ class KunenaImageHelper
 			catch (Exception $e)
 			{
 				KunenaError::error($e->getMessage());
+
 				return false;
 			}
 

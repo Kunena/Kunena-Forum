@@ -20,6 +20,8 @@ use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
 
@@ -53,9 +55,9 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return  boolean|string
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true): string
 	{
@@ -75,9 +77,9 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function _getTopHits($limit = 0): array
 	{
@@ -104,12 +106,14 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $view    view
-	 * @param   object  $params  params
+	 * @param   KunenaLayout  $view    view
+	 * @param   object        $params  params
+	 *
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(int $view, object $params)
+	public function showProfile(KunenaLayout $view, object $params)
 	{
 	}
 
@@ -126,14 +130,14 @@ class KunenaProfileCommunity extends KunenaProfile
 	}
 
 	/**
-	 * @param   integer  $user
-	 * @param   string   $task   task
-	 * @param   bool     $xhtml  xhtml
+	 * @param   KunenaUser  $user
+	 * @param   string      $task   task
+	 * @param   bool        $xhtml  xhtml
 	 *
 	 * @return  boolean|string
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
+	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true): bool
 	{
 		// Make sure that user profile exist.
 		if (!$user || CFactory::getUser($user) === null)
@@ -147,15 +151,16 @@ class KunenaProfileCommunity extends KunenaProfile
 	/**
 	 * Return username of user
 	 *
-	 * @param   integer $userid userid
-	 * @param   bool    $xhtml  xhtml
+	 * @param           $user
+	 * @param   string  $visitorname
+	 * @param   bool    $escape
 	 *
-	 * @since Kunena 5.2
 	 * @return string
+	 * @since Kunena 5.2
 	 */
 	public function getProfileName($user, $visitorname = '', $escape = true)
 	{
-		$cconfig = CFactory::getConfig();
+		$cconfig         = CFactory::getConfig();
 		$displayusername = $cconfig->get('displayname');
 
 		if ($displayusername == 'name')

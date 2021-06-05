@@ -16,13 +16,13 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Pagination\KunenaPagination;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\Pagination\KunenaPagination;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
 /**
@@ -67,19 +67,19 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function before()
 	{
 		parent::before();
 
-		$userid = $this->input->getInt('userid');
-		$this->me = KunenaUserHelper::getMyself();
-		$start = $this->input->getInt('limitstart', 0);
-		$limit  = $this->input->getInt('limit', 30);
-		$this->moreUri  = null;
+		$userid        = $this->input->getInt('userid');
+		$this->me      = KunenaUserHelper::getMyself();
+		$start         = $this->input->getInt('limitstart', 0);
+		$limit         = $this->input->getInt('limit', 30);
+		$this->moreUri = null;
 
 		$this->embedded = $this->getOptions()->get('embedded', false);
 
@@ -91,10 +91,10 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
 
 		// TODO: add authorisation
 		$userBanspre = KunenaBan::getBannedUsers(0, 100);
-		$count = count($userBanspre);
+		$count       = count($userBanspre);
 
 		$this->pagination = new KunenaPagination($count, $start, $limit);
-		$this->userBans = KunenaBan::getBannedUsers($this->pagination->limitstart, $this->pagination->limit);
+		$this->userBans   = KunenaBan::getBannedUsers($this->pagination->limitstart, $this->pagination->limit);
 
 		if ($this->moreUri)
 		{
@@ -112,11 +112,11 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

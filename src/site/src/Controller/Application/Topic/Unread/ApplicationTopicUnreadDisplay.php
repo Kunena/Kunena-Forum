@@ -34,9 +34,9 @@ class ApplicationTopicUnreadDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function exists()
 	{
@@ -48,9 +48,9 @@ class ApplicationTopicUnreadDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
+	 * @throws  null
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -77,7 +77,7 @@ class ApplicationTopicUnreadDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return boolean
+	 * @return void
 	 *
 	 * @since   Kunena 6.0
 	 *

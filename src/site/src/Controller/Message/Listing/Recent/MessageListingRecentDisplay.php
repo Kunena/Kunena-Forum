@@ -56,10 +56,10 @@ class MessageListingRecentDisplay extends ListDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -250,28 +250,28 @@ class MessageListingRecentDisplay extends ListDisplay
 		switch ($this->state->get('list.mode'))
 		{
 			case 'unapproved':
-				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
 				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
-				$actions          = ['approve', 'delete', 'move', 'permdelete'];
+				$actions           = ['approve', 'delete', 'move', 'permdelete'];
 				break;
 			case 'deleted':
-				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
 				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
-				$actions          = ['undelete', 'delete', 'move', 'permdelete'];
+				$actions           = ['undelete', 'delete', 'move', 'permdelete'];
 				break;
 			case 'mythanks':
-				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
 				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
-				$actions          = ['approve', 'delete', 'permdelete'];
+				$actions           = ['approve', 'delete', 'permdelete'];
 				break;
 			case 'thankyou':
-				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
 				$this->messagemore = 'COM_KUNENA_PROFILE_THANKYOU_GIVEN_TIMES';
-				$actions          = ['approve', 'delete', 'permdelete'];
+				$actions           = ['approve', 'delete', 'permdelete'];
 				break;
 			case 'recent':
 			default:
-				$this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
 
 				$view = $this->input->get('view');
@@ -302,11 +302,11 @@ class MessageListingRecentDisplay extends ListDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

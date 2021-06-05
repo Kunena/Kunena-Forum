@@ -47,9 +47,9 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function before()
 	{
@@ -58,10 +58,10 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 		$id = $this->input->getInt('id');
 		$me = KunenaUserHelper::getMyself();
 
-		$this->topic    = KunenaTopicHelper::get($id);
-		$category = $this->topic->getCategory();
-		$this->history  = KunenaMessageHelper::getMessagesByTopic(
-		    $this->topic,
+		$this->topic   = KunenaTopicHelper::get($id);
+		$category      = $this->topic->getCategory();
+		$this->history = KunenaMessageHelper::getMessagesByTopic(
+			$this->topic,
 			0,
 			(int) $this->config->historyLimit,
 			'DESC'
@@ -131,7 +131,7 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
+	 * @return  void
 	 *
 	 * @since   Kunena 6.0
 	 */

@@ -42,7 +42,7 @@ class PlgKunenaKunena extends CMSPlugin
 	}
 
 	/**
-	 * @return  KunenaAvatar|void
+	 * @return  false|KunenaAvatarKunena
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -59,7 +59,7 @@ class PlgKunenaKunena extends CMSPlugin
 	}
 
 	/**
-	 * @return  KunenaProfile|void
+	 * @return  false|KunenaProfileKunena
 	 *
 	 * @since   Kunena 6.0
 	 */

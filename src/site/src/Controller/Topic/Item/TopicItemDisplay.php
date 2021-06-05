@@ -93,10 +93,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -328,9 +328,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function prepareMessages($mesid)
 	{
@@ -404,9 +404,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function getThreadedOrdering($parent = 0, $indent = [])
 	{
@@ -498,10 +498,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function docImage()
 	{
@@ -533,10 +533,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function after()
 	{
@@ -557,12 +557,12 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{
@@ -700,7 +700,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
 		if ($menu_item)
 		{
-			$params = $menu_item->getParams();
+			$params  = $menu_item->getParams();
 			$subject = KunenaParser::parseText($this->topic->displayField('subject'));
 
 			$this->setTitle($subject);
@@ -709,7 +709,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
 			if ($total > 1 && $page > 1)
 			{
-			    $small = KunenaParser::stripBBCode($multispaces_replaced_desc, 130);
+				$small = KunenaParser::stripBBCode($multispaces_replaced_desc, 130);
 
 				if (empty($small))
 				{
@@ -720,7 +720,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 			}
 			else
 			{
-			    $small = KunenaParser::stripBBCode($multispaces_replaced_desc, 160);
+				$small = KunenaParser::stripBBCode($multispaces_replaced_desc, 160);
 
 				if (empty($small))
 				{

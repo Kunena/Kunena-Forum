@@ -15,8 +15,8 @@ namespace Kunena\Forum\Site\Controller\Topic\Form\Create;
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -27,7 +27,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use function defined;
 
@@ -57,10 +56,10 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -104,7 +103,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$this->me       = KunenaUserHelper::getMyself();
+		$this->me        = KunenaUserHelper::getMyself();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		$categories        = KunenaCategoryHelper::getCategories();
@@ -250,11 +249,11 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

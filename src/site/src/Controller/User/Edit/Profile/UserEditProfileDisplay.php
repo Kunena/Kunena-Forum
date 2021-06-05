@@ -40,10 +40,10 @@ class UserEditProfileDisplay extends UserEditDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -71,7 +71,7 @@ class UserEditProfileDisplay extends UserEditDisplay
 		}
 		else
 		{
-		    $this->social = null;
+			$this->social = null;
 		}
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE');
@@ -80,11 +80,11 @@ class UserEditProfileDisplay extends UserEditDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

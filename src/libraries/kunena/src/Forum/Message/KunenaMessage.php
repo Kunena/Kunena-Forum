@@ -174,13 +174,13 @@ class KunenaMessage extends KunenaDatabaseObject
 	protected $urlNotification;
 
 	/**
-	 * @internal
-	 *
 	 * @param   mixed  $properties  properties
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @internal
+	 *
 	 */
 	public function __construct($properties = null)
 	{
@@ -196,9 +196,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaMessage
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false): KunenaMessage
 	{
@@ -221,9 +221,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function isNew($user = null): bool
 	{
@@ -261,9 +261,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  KunenaCategory
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getCategory(): KunenaCategory
 	{
@@ -273,9 +273,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  KunenaTopic
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopic(): ?KunenaTopic
 	{
@@ -331,12 +331,11 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
 	 * @param   bool                 $xhtml     xhtml
 	 *
-	 * @return  boolean
+	 * @return string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 */
 	public function getUrl($category = null, $xhtml = true): string
 	{
@@ -348,10 +347,10 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  Uri
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getUri($category = null)
 	{
@@ -360,14 +359,14 @@ class KunenaMessage extends KunenaDatabaseObject
 
 	/**
 	 * @param   array       $fields      fields
-	 * @param   mixed       $user        user
+	 * @param   int         $useridfromparent
 	 * @param   null|array  $safefields  safefields
 	 *
 	 * @return  array
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	public function newReply($fields = [], $useridfromparent = 0, $safefields = null): array
 	{
@@ -415,17 +414,17 @@ class KunenaMessage extends KunenaDatabaseObject
 
 		if ($fields['quote'] === true)
 		{
-			$userfromparent = KunenaUserHelper::get($useridfromparent);
-			$userfromparentname =$userfromparent->getName();
+			$userfromparent     = KunenaUserHelper::get($useridfromparent);
+			$userfromparentname = $userfromparent->getName();
 			if (empty($userfromparent->getName()))
 			{
 				$userfromparentname = 'anonymous';
 			}
 
-			$find                 = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
-			$replace              = '';
-			$text                 = preg_replace($find, $replace, $this->message);
-			$message->message     = "[quote=\"{$userfromparentname} post={$this->id} userid={$useridfromparent}\"]" . $text . "[/quote]";
+			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
+			$replace          = '';
+			$text             = preg_replace($find, $replace, $this->message);
+			$message->message = "[quote=\"{$userfromparentname} post={$this->id} userid={$useridfromparent}\"]" . $text . "[/quote]";
 		}
 		else
 		{
@@ -446,15 +445,15 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * Send email notifications from the message.
 	 *
-	 * @param   null|string  $url  url
-	 * @param boolean $approved false
+	 * @param   null|string  $url       url
+	 * @param   boolean      $approved  false
 	 *
-	 * @return  boolean|void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  boolean|false
 	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function sendNotification($url = null, $approved = false)
 	{
@@ -479,9 +478,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function notificationPost(): bool
 	{
@@ -589,8 +588,8 @@ class KunenaMessage extends KunenaDatabaseObject
 		}
 
 		$mailnamesender = !empty($config->email_sender_name) ? \Joomla\CMS\Mail\MailHelper::cleanAddress($config->email_sender_name) : \Joomla\CMS\Mail\MailHelper::cleanAddress($config->board_title);
-		$mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
-		$subject     = $this->subject ? $this->subject : $topic->subject;
+		$mailsubject    = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+		$subject        = $this->subject ? $this->subject : $topic->subject;
 
 		// Create email.
 		$user = Factory::getUser();
@@ -698,10 +697,10 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getPermaUrl($category = null, $xhtml = true): bool
 	{
@@ -715,9 +714,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  Uri|boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getPermaUri($category = null)
 	{
@@ -734,9 +733,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function notificationCloseConnection(): void
 	{
@@ -749,10 +748,10 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
-	 * @since   Kunena
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena
+	 *
 	 */
 	public function publish($value = KunenaForum::PUBLISHED)
 	{
@@ -771,10 +770,10 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  boolean|KunenaExceptionAuthorise
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function save(): bool
 	{
@@ -869,9 +868,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  boolean
 	 *
+	 * @throws  null
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	protected function updateAttachments(): bool
 	{
@@ -974,10 +973,10 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  boolean  True on success
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function delete(): bool
 	{
@@ -1043,10 +1042,10 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaAttachment[]
 	 *
-	 * @since   Kunena
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena
+	 *
 	 */
 	public function getAttachments($ids = false, $action = 'read'): array
 	{
@@ -1075,9 +1074,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function update($newTopic = false): void
 	{
@@ -1163,11 +1162,11 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @param   mixed  $user  user
 	 *
-	 * @return  KunenaUser
-	 *
-	 * @since   Kunena 6.0
+	 * @return  \Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUser
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getUserTopic($user = null)
 	{
@@ -1177,9 +1176,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  KunenaMessageThankyouHelper
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getThankyou(): KunenaMessageThankyouHelper
 	{
@@ -1189,9 +1188,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  KunenaMessage
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getParent(): KunenaMessage
 	{
@@ -1201,9 +1200,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAuthor(): KunenaUser
 	{
@@ -1223,9 +1222,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getModifier(): KunenaUser
 	{
@@ -1251,9 +1250,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  integer|string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function displayField(string $field, $html = true, $context = '')
 	{
@@ -1278,9 +1277,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws Exception
 	 */
 	public function isAuthorised(string $action = 'read', KunenaUser $user = null)
 	{
@@ -1305,9 +1304,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  mixed
 	 *
+	 * @throws Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws Exception
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -1377,9 +1376,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  void
 	 *
+	 * @throws  null
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	public function edit($fields = [], $user = null): void
 	{
@@ -1399,9 +1398,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function makeAnonymous($user = null): void
 	{
@@ -1435,9 +1434,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function uploadAttachment(int $tmpid, string $postvar, $catid = null): bool
 	{
@@ -1459,10 +1458,10 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 4.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 4.0
+	 *
 	 */
 	public function addAttachments(array $ids): void
 	{
@@ -1476,9 +1475,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  Exception
 	 */
 	public function removeAttachments(array $ids): void
 	{
@@ -1490,9 +1489,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  StdClass
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getNbAttachments()
 	{
@@ -1542,9 +1541,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function load($id = null): bool
 	{
@@ -1558,10 +1557,10 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function check(): bool
 	{
@@ -1758,9 +1757,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once): void
 	{
@@ -1786,9 +1785,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function authoriseRead(KunenaUser $user)
 	{
@@ -1835,9 +1834,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function authoriseOwn(KunenaUser $user)
 	{
@@ -1862,9 +1861,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function authoriseThankyou(KunenaUser $user)
 	{
@@ -1896,9 +1895,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|boolean|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function authoriseEditTime(KunenaUser $user)
 	{
@@ -1959,11 +1958,11 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|void
-	 *
-	 * @since   Kunena 6.0
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function authoriseDelete(KunenaUser $user)
 	{
@@ -2004,9 +2003,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|NULL
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function authorisePermdelete(KunenaUser $user)
 	{
@@ -2032,9 +2031,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function authoriseAttachmentsImage(KunenaUser $user)
 	{
@@ -2079,9 +2078,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function authoriseAttachmentsFile(KunenaUser $user)
 	{
@@ -2124,9 +2123,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @return  KunenaExceptionAuthorise|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function authoriseGuestWrite(KunenaUser $user)
 	{

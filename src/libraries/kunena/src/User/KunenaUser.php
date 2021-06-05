@@ -857,6 +857,7 @@ class KunenaUser extends CMSObject
 	 * @param   bool    $escape       escape
 	 *
 	 * @return string
+	 * @throws Exception
 	 * @since Kunena 1.6
 	 */
 	public function getName($visitorname = '', $escape = true): string
@@ -2054,7 +2055,7 @@ class KunenaUser extends CMSObject
 	 * Return if the user is banned, there are two cases banned for life (9999-12-31 23:59:59) and banned for a short
 	 * time with a date in near future
 	 *
-	 * @return  boolean|void
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -2627,7 +2628,7 @@ class KunenaUser extends CMSObject
 	/**
 	 * Check if captcha is allowed for guests users or registered users
 	 *
-	 * @return  boolean|void
+	 * @return  boolean
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
@@ -2657,7 +2658,10 @@ class KunenaUser extends CMSObject
 	/**
 	 * Method to check if the email symbol can be displayed depending on configuration and on user type
 	 *
+	 * @param $profile
+	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena 5.1.18
 	 */
 	public function canDisplayEmail($profile)
@@ -2684,6 +2688,7 @@ class KunenaUser extends CMSObject
 	 * Check if the urls and images should be removed in message or signature
 	 *
 	 * @return boolean
+	 * @throws Exception
 	 * @since Kunena 5.2.0
 	 */
 	public function checkUserAllowedLinksImages()

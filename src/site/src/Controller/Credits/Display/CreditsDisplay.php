@@ -35,41 +35,37 @@ class CreditsDisplay extends KunenaControllerDisplay
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected $name = 'Credits';
-
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
 	public $logo;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $intro;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $memberList;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $thanks;
+	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	protected $name = 'Credits';
 
 	/**
 	 * Prepare credits display.
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -99,23 +95,23 @@ class CreditsDisplay extends KunenaControllerDisplay
 			[
 				'name'  => 'Florian Dal Fitto',
 				'url'   => 'https://www.kunena.org/forum/user/1288-xillibit',
-				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'), ],
+				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'),],
 			[
 				'name'  => 'Jelle Kok',
 				'url'   => 'https://www.kunena.org/forum/user/634-810',
-				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'), Text::_('COM_KUNENA_CREDITS_DESIGN')), ],
+				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'), Text::_('COM_KUNENA_CREDITS_DESIGN')),],
 			[
 				'name'  => 'Richard Binder',
 				'url'   => 'https://www.kunena.org/forum/user/2198-rich',
-				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_MODERATION'), Text::_('COM_KUNENA_CREDITS_TESTING')), ],
+				'title' => Text::sprintf('COM_KUNENA_CREDITS_X_AND_Y', Text::_('COM_KUNENA_CREDITS_MODERATION'), Text::_('COM_KUNENA_CREDITS_TESTING')),],
 			[
 				'name'  => 'Matias Griese',
 				'url'   => 'https://www.kunena.org/forum/user/63-matias',
-				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'), ],
+				'title' => Text::_('COM_KUNENA_CREDITS_DEVELOPMENT'),],
 			[
 				'name'  => 'Oliver Ratzesberger',
 				'url'   => 'https://www.kunena.org/forum/user/64-fxstein',
-				'title' => Text::_('COM_KUNENA_CREDITS_FOUNDER'), ],
+				'title' => Text::_('COM_KUNENA_CREDITS_FOUNDER'),],
 		];
 		$this->thanks     = Text::sprintf(
 			'COM_KUNENA_CREDITS_THANKS_TO',
@@ -129,11 +125,11 @@ class CreditsDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

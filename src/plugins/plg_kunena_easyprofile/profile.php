@@ -15,12 +15,13 @@ namespace Kunena\Forum\Plugin\Kunena\Easyprofile;
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -54,9 +55,9 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 *
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getUserListURL($action = '', $xhtml = true): string
 	{
@@ -102,15 +103,15 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $user   userid
-	 * @param   string  $task   task
-	 * @param   bool    $xhtml  xhtml
+	 * @param   KunenaUser  $user   userid
+	 * @param   string      $task   task
+	 * @param   bool        $xhtml  xhtml
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
+	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true): bool
 	{
 		// Make sure that user profile exist.
 		if (!$user || JsnHelper::getUser($user) === null)
@@ -126,18 +127,19 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	/**
 	 * Return username of user
 	 *
-	 * @param   integer $userid userid
-	 * @param   bool    $xhtml  xhtml
+	 * @param           $user
+	 * @param   string  $visitorname
+	 * @param   bool    $escape
 	 *
-	 * @since Kunena 5.2
 	 * @return string
+	 * @since Kunena 5.2
 	 */
 	public function getProfileName($user, $visitorname = '', $escape = true)
 	{
-		$config = ComponentHelper::getParams('com_jsn');
+		$config     = ComponentHelper::getParams('com_jsn');
 		$formatName = $config->get('formatname', 'NAME');
 
-		if($formatName == 'NAME')
+		if ($formatName == 'NAME')
 		{
 			return JsnHelper::getUser($user->id)->name;
 		}

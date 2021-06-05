@@ -242,7 +242,7 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
+	 * @return  void
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.1

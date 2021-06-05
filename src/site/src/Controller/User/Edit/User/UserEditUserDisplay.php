@@ -54,9 +54,9 @@ class UserEditUserDisplay extends UserEditDisplay
 	 * Load user form.
 	 *
 	 * @return  void
+	 * @throws  null
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -93,11 +93,11 @@ class UserEditUserDisplay extends UserEditDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

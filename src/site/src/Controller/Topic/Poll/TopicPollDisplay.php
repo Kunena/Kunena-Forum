@@ -69,10 +69,10 @@ class TopicPollDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -99,7 +99,7 @@ class TopicPollDisplay extends KunenaControllerDisplay
 			$userhasvoted = 0;
 		}
 
-		$datenow = new \Joomla\CMS\Date\Date('now');
+		$datenow            = new \Joomla\CMS\Date\Date('now');
 		$datepolltimetolive = new \Joomla\CMS\Date\Date($this->poll->polltimetolive);
 
 		if (!empty($this->poll->polltimetolive))
@@ -169,11 +169,11 @@ class TopicPollDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

@@ -81,9 +81,9 @@ class UserEditAvatarDisplay extends UserEditDisplay
 	 *
 	 * @return  void
 	 *
+	 * @throws  null
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	protected function before()
 	{
@@ -103,7 +103,7 @@ class UserEditAvatarDisplay extends UserEditDisplay
 		$this->galleryImages  = isset($this->galleries[$this->gallery])
 			? $this->galleries[$this->gallery]
 			: reset($this->galleries);
-		$this->galleryUri           = Uri::root(true) . '/media/kunena/avatars/gallery';
+		$this->galleryUri     = Uri::root(true) . '/media/kunena/avatars/gallery';
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
 
@@ -186,11 +186,11 @@ class UserEditAvatarDisplay extends UserEditDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

@@ -15,8 +15,8 @@ namespace Kunena\Forum\Site\Controller\Topic\Form\Reply;
 defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
@@ -55,10 +55,10 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -70,7 +70,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$this->me = KunenaUserHelper::getMyself();
+		$this->me        = KunenaUserHelper::getMyself();
 		$this->ktemplate = KunenaFactory::getTemplate();
 
 		if (!$mesid)
@@ -126,7 +126,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 		$parent->tryAuthorise('reply');
 
 		$arrayanynomousbox = [];
-		$arraypollcatid = [];
+		$arraypollcatid    = [];
 		$this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
 		$this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
@@ -189,11 +189,11 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 	/**
 	 * Prepare document.
 	 *
-	 * @return  void|boolean
-	 *
-	 * @since   Kunena 6.0
+	 * @return  void
 	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function prepareDocument()
 	{

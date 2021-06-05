@@ -62,14 +62,14 @@ abstract class KunenaDatabaseObject extends CMSObject
 	/**
 	 * Class constructor, overridden in descendant classes.
 	 *
-	 * @internal
-	 *
 	 * @param   mixed  $properties  Associative array to set the initial properties of the object.
 	 *                              If not provided, default values will be used.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @internal
+	 *
 	 */
 	public function __construct($properties = null)
 	{
@@ -134,9 +134,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function load($id = null): bool
 	{
@@ -190,9 +190,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -207,9 +207,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * @return  boolean  True on success, Exception when fail.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save()
 	{
@@ -254,7 +254,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 		}
 
 		// Store the data, the store() method from Joomla\CMS\Table\Table return only boolean and not exception.
-		$result = $table->store(); 
+		$result = $table->store();
 
 		if (!$result)
 		{
@@ -312,9 +312,9 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * @return    boolean    True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function delete(): bool
 	{

@@ -52,9 +52,9 @@ class KunenaMessageFinder extends KunenaFinder
 	/**
 	 * Constructor.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct()
 	{
@@ -73,9 +73,9 @@ class KunenaMessageFinder extends KunenaFinder
 	 *
 	 * @return  $this
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function filterByUserAccess(KunenaUser $user): KunenaMessageFinder
 	{
@@ -96,7 +96,7 @@ class KunenaMessageFinder extends KunenaFinder
 	 *
 	 * @param   array  $categories  categories
 	 *
-	 * @return  $this|void
+	 * @return  $this
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -226,10 +226,10 @@ class KunenaMessageFinder extends KunenaFinder
 	 *
 	 * @return  array|KunenaMessage[]
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function find($access = 'read'): array
 	{

@@ -499,7 +499,7 @@ class KunenaUpload
 	 *
 	 * @param   string  $value  Value, for example: 1G, 10M, 120k...
 	 *
-	 * @return  integer  Value in bytes.
+	 * @return  float  Value in bytes.
 	 *
 	 * @since   Kunena 6.0
 	 */

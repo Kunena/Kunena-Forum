@@ -20,6 +20,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
 
@@ -28,13 +29,13 @@ require_once __DIR__ . '/integration.php';
 /**
  * Class KunenaProfileComprofiler
  *
- * @since   Kunena 6.0
+ * @since   Kunena 5.0
  */
 class KunenaProfileComprofiler extends KunenaProfile
 {
 	/**
 	 * @var     null
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	protected $params = null;
 
@@ -43,7 +44,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @param   object  $params  params
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function __construct(object $params)
 	{
@@ -56,9 +57,9 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
-	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 *
+	 * @since   Kunena 5.0
 	 */
 	public static function trigger(string $event, object $params): void
 	{
@@ -69,8 +70,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @return  void
 	 *
 	 * @throws  Exception
-	 * @since   Kunena 6.0
 	 *
+	 * @since   Kunena 5.0
 	 */
 	public function open(): void
 	{
@@ -81,8 +82,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @return  void
 	 *
 	 * @throws  Exception
-	 * @since   Kunena 6.0
 	 *
+	 * @since   Kunena 5.0
 	 */
 	public function close(): void
 	{
@@ -96,10 +97,10 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @return  boolean|string
 	 *
 	 * @throws  Exception
-	 * @since   Kunena 6.0
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getUserListURL($action = '', $xhtml = true): string
+	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
 		global $_CB_framework;
 
@@ -115,21 +116,22 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $user   user
-	 * @param   string  $task   task
-	 * @param   bool    $xhtml  xhtml
+	 * @param   int     $userid     userid
+	 * @param   string  $task       task
+	 * @param   bool    $xhtml      xhtml
+	 * @param   string  $avatarTab  avatarTab
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws Exception
-	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getProfileURL(int $user, $task = '', $xhtml = true): bool
+	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
 	{
 		global $_CB_framework;
 
-		$user = KunenaFactory::getUser($user);
+		$user = KunenaFactory::getUser($userid);
 
 		if ($user->userid == 0)
 		{
@@ -153,7 +155,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function showProfile(KunenaLayout $view, object $params)
 	{
@@ -177,10 +179,10 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @return  array
 	 *
 	 * @throws  Exception
-	 * @since   Kunena 6.0
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function _getTopHits($limit = 0): array
+	public function getTopHits($limit = 0): array
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
@@ -208,11 +210,11 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   int   $userid  userid
 	 * @param   bool  $xhtml   xhtml
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true): bool
+	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
 	{
 		global $_CB_framework;
 
@@ -222,14 +224,15 @@ class KunenaProfileComprofiler extends KunenaProfile
 	/**
 	 * Return name or username of user with community builder settings
 	 *
-	 * @param           $user
-	 * @param   string  $visitorname
-	 * @param   bool    $escape
+	 * @param   KunenaUser  $user         user
+	 * @param   string      $visitorname  name
+	 * @param   bool        $escape       escape
 	 *
 	 * @return string
+	 *
 	 * @since Kunena 5.2
 	 */
-	public function getProfileName($user, $visitorname = '', $escape = true)
+	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true)
 	{
 		global $ueConfig;
 

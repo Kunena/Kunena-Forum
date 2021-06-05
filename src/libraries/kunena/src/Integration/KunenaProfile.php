@@ -20,7 +20,6 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
 
 /**
@@ -89,7 +88,7 @@ class KunenaProfile
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function getTopHits($limit = 0): array
+	public function getTopHits(int $limit = 0): array
 	{
 		if (!$limit)
 		{
@@ -106,7 +105,7 @@ class KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getTopHitsArray($limit = 0): array
+	protected function getTopHitsArray(int $limit = 0): array
 	{
 		return [];
 	}
@@ -115,14 +114,13 @@ class KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  boolean
+	 * @return  string|boolean
 	 *
 	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 6.0
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getStatisticsURL($action = '', $xhtml = true)
+	public function getStatisticsURL(string $action = '', bool $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
@@ -141,22 +139,25 @@ class KunenaProfile
 	 *
 	 * @return  string|void
 	 *
-	 * @since   Kunena 6.0
+	 * @throws  Exception
+	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getUserListURL($action = '', $xhtml = true)
+	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
 	}
 
 	/**
-	 * @param   KunenaUser  $user   user
-	 * @param   string      $task   task
-	 * @param   bool        $xhtml  xhtml
+	 * @param   int     $userid     userid
+	 * @param   string  $task       task
+	 * @param   bool    $xhtml      xhtml
+	 * @param   string  $avatarTab  avatartab
 	 *
-	 * @return boolean|void
+	 * @return  boolean|void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
-	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true, $avatarTab = '')
+	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
 	{
 	}
 
@@ -166,21 +167,21 @@ class KunenaProfile
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function showProfile(KunenaLayout $view, object $params)
 	{
 	}
 
 	/**
-	 * @param   integer  $userid  userid
-	 * @param   bool     $xhtml   xhtml
+	 * @param   int   $userid  userid
+	 * @param   bool  $xhtml   xhtml
 	 *
-	 * @return boolean|void
+	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
 	{
 	}
 }

@@ -57,18 +57,18 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return string
+	 * @return string|void
 	 *
 	 * @throws Exception
-	 * @since   Kunena 5.0
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getUserListURL($action = '', $xhtml = true): string
+	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
 
-		if ($config->userlist_allowed == 0 && $my->guest)
+		if ($config->userlistAllowed == 0 && $my->guest)
 		{
 			return false;
 		}
@@ -77,19 +77,20 @@ class KunenaProfileEasySocial extends KunenaProfile
 	}
 
 	/**
-	 * @param   KunenaUser  $user   userid
-	 * @param   string      $task   task
-	 * @param   bool        $xhtml  xhtml
+	 * @param   int     $userid     userid
+	 * @param   string  $task       task
+	 * @param   bool    $xhtml      xhtml
+	 * @param   string  $avatarTab  avatartab
 	 *
-	 * @return boolean
+	 * @return boolean|void
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true): bool
+	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
 	{
-		if ($user)
+		if ($userid)
 		{
-			$user = ES::user($user);
+			$user = ES::user($userid);
 
 			// When simple urls are enabled, we just hardcode the url
 			$config  = ES::config();
@@ -105,7 +106,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 		}
 		else
 		{
-			$alias = $user;
+			$alias = $userid;
 		}
 
 		$options = ['id' => $alias];
@@ -127,7 +128,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function _getTopHits($limit = 0): array
+	public function getTopHits(int $limit = 0): array
 	{
 	}
 
@@ -203,7 +204,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true): bool
+	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
 	{
 		$options = ['layout' => 'edit'];
 
@@ -213,14 +214,14 @@ class KunenaProfileEasySocial extends KunenaProfile
 	/**
 	 * Return username of user
 	 *
-	 * @param           $user
-	 * @param   string  $visitorname
-	 * @param   bool    $escape
+	 * @param   KunenaUser  $user         user
+	 * @param   string      $visitorname  name
+	 * @param   bool        $escape       escape
 	 *
 	 * @return string
 	 * @since Kunena 5.2
 	 */
-	public function getProfileName($user, $visitorname = '', $escape = true)
+	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true)
 	{
 		$config          = ES::config();
 		$displayusername = $config->get('users.displayName');

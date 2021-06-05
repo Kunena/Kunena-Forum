@@ -132,7 +132,7 @@ abstract class KunenaParser
 	 * @param   int     $len     len
 	 * @param   string  $target  target
 	 *
-	 * @return  string|void
+	 * @return  false|string
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
@@ -217,7 +217,7 @@ abstract class KunenaParser
 	 * @param   string  $context  context
 	 * @param   string  $target   target
 	 *
-	 * @return  mixed|void
+	 * @return  false|string
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
@@ -250,7 +250,7 @@ abstract class KunenaParser
 	 * @param   int     $len     len
 	 * @param   string  $target  target
 	 *
-	 * @return  mixed|void
+	 * @return  false|string
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0

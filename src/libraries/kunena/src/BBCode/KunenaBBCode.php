@@ -680,7 +680,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 	 * @param          $insert_array
 	 * @param   array  $default_array
 	 *
-	 * @return  string|void
+	 * @return  void
 	 * @see     BBCode::FillTemplate()
 	 *
 	 * @since   Kunena 6.0

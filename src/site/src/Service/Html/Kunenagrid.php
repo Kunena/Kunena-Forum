@@ -37,6 +37,8 @@ class Kunenagrid
 	 *
 	 * @return  string   The boolean setting widget.
 	 *
+	 * @throws \Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public static function boolean(int $i, int $value, $taskOn = null, $taskOff = null): string
@@ -242,6 +244,8 @@ class Kunenagrid
 	 *
 	 * @return  string
 	 *
+	 * @throws \Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public static function published(int $i, $value, $prefix = '', $bootstrap = false)

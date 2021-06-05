@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use function defined;
@@ -59,12 +60,12 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function getUserListURL($action = '', $xhtml = true): string
+	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
 
-		if ($config->userlist_allowed == 0 && $my->id == 0)
+		if ($config->userlistAllowed == 0 && $my->id == 0)
 		{
 			return false;
 		}
@@ -78,14 +79,14 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $view    view
-	 * @param   object  $params  params
+	 * @param   KunenaLayout  $view    view
+	 * @param   object        $params  params
 	 *
 	 * @return   void
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function showProfile(int $view, object $params)
+	public function showProfile(KunenaLayout $view, object $params)
 	{
 	}
 
@@ -97,29 +98,30 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true): bool
+	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}
 
 	/**
-	 * @param   KunenaUser  $user   userid
-	 * @param   string      $task   task
-	 * @param   bool        $xhtml  xhtml
+	 * @param   int     $userid     userid
+	 * @param   string  $task       task
+	 * @param   bool    $xhtml      xhtml
+	 * @param   string  $avatarTab  avatartab
 	 *
-	 * @return  boolean
+	 * @return  boolean|string
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
-	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true): bool
+	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
 	{
 		// Make sure that user profile exist.
-		if (!$user || JsnHelper::getUser($user) === null)
+		if (!$userid || JsnHelper::getUser($userid) === null)
 		{
 			return false;
 		}
 
-		$user = JsnHelper::getUser($user);
+		$user = JsnHelper::getUser($userid);
 
 		return $user->getLink();
 	}
@@ -127,14 +129,14 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	/**
 	 * Return username of user
 	 *
-	 * @param           $user
-	 * @param   string  $visitorname
-	 * @param   bool    $escape
+	 * @param   KunenaUser  $user         user
+	 * @param   string      $visitorname  name
+	 * @param   bool        $escape       escape
 	 *
 	 * @return string
 	 * @since Kunena 5.2
 	 */
-	public function getProfileName($user, $visitorname = '', $escape = true)
+	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
 	{
 		$config     = ComponentHelper::getParams('com_jsn');
 		$formatName = $config->get('formatname', 'NAME');

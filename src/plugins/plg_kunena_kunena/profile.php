@@ -24,20 +24,20 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 /**
  * Class KunenaProfile
  *
- * @since   Kunena 6.0
+ * @since   Kunena 5.0
  */
 class KunenaProfileKunena extends KunenaProfile
 {
 	/**
 	 * @var     null
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	protected $params = null;
 
 	/**
 	 * @param   object  $params  params
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function __construct(object $params)
 	{
@@ -52,10 +52,10 @@ class KunenaProfileKunena extends KunenaProfile
 	 *
 	 * @throws  Exception
 	 * @throws  null
-	 * @since   Kunena 6.0
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getUserListURL($action = '', $xhtml = true)
+	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
@@ -74,10 +74,10 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @return  array
 	 *
 	 * @throws  Exception
-	 * @since   Kunena 6.0
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function _getTopHits($limit = 0): array
+	public function getTopHits(int $limit = 0): array
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
@@ -114,7 +114,7 @@ class KunenaProfileKunena extends KunenaProfile
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function showProfile($view, object $params)
 	{
@@ -126,41 +126,41 @@ class KunenaProfileKunena extends KunenaProfile
 	 *
 	 * @return  boolean
 	 *
-	 * @throws null
-	 * @throws Exception
-	 * @since   Kunena 6.0
+	 * @throws  null
+	 * @throws  Exception
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true)
+	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
 	{
 		$avatartab = '&avatartab=1';
 
-		return $this->getProfileURL($userid, 'edit', $xhtml = true, $avatartab);
+		return $this->getProfileURL($userid, 'edit', $xhtml, $avatartab);
 	}
 
 	/**
-	 * @param   KunenaUser   $user       user
-	 * @param   string       $task       task
-	 * @param   bool         $xhtml      xhtml
-	 * @param   bool|string  $avatarTab  avatarTab
+	 * @param   int     $userid     userid
+	 * @param   string  $task       task
+	 * @param   bool    $xhtml      xhtml
+	 * @param   string  $avatarTab  avatarTab
 	 *
 	 * @return  boolean
 	 *
-	 * @throws null
-	 * @throws Exception
-	 * @since   Kunena 6.0
+	 * @throws  null
+	 * @throws  Exception
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getProfileURL($user, $task = '', $xhtml = true, $avatarTab = '')
+	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
 	{
-		if ($user == 0)
+		if ($userid == 0)
 		{
 			return false;
 		}
 
-		if (!($user instanceof KunenaUser))
+		if (!($userid instanceof KunenaUser))
 		{
-			$user = KunenaUserHelper::get($user);
+			$user = KunenaUserHelper::get($userid);
 		}
 
 		if ($user === false)
@@ -191,16 +191,18 @@ class KunenaProfileKunena extends KunenaProfile
 	/**
 	 * Get the name of the user from this profile
 	 *
-	 * @param   KunenaUser  $user
-	 * @param   string      $visitorname
-	 * @param   bool        $escape
+	 * @param   KunenaUser  $user         user
+	 * @param   string      $visitorname  name
+	 * @param   bool        $escape       escape
 	 *
-	 * @return string
-	 * @throws Exception
-	 * @see   KunenaProfile::getProfileName()
-	 * @since Kunena 5.2
+	 * @return  string
+	 *
+	 * @throws  Exception
+	 *
+	 * @see     KunenaProfile::getProfileName()
+	 * @since   Kunena 5.2
 	 */
-	public function getProfileName($user, $visitorname = '', $escape = true)
+	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
 	{
 		$config = KunenaFactory::getConfig();
 

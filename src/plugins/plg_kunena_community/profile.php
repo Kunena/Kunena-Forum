@@ -21,7 +21,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
 
@@ -43,7 +42,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @param   object  $params  params
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function __construct(object $params)
 	{
@@ -56,10 +55,10 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @return  boolean|string
 	 * @throws  Exception
-	 * @since   Kunena 6.0
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getUserListURL($action = '', $xhtml = true): string
+	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
@@ -78,10 +77,10 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @return  array
 	 *
 	 * @throws  Exception
-	 * @since   Kunena 6.0
 	 *
+	 * @since   Kunena 5.0
 	 */
-	public function _getTopHits($limit = 0): array
+	public function getTopHits(int $limit = 0): array
 	{
 		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
@@ -111,65 +110,69 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function showProfile(KunenaLayout $view, object $params)
 	{
 	}
 
 	/**
-	 * @param   int   $userid
-	 * @param   bool  $xhtml  xhtml
+	 * @param   int   $userid  userid
+	 * @param   bool  $xhtml   xhtml
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena 6.0
+	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getEditProfileURL(int $userid, $xhtml = true): bool
+	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}
 
 	/**
-	 * @param   KunenaUser  $user
-	 * @param   string      $task   task
-	 * @param   bool        $xhtml  xhtml
+	 * @param   int     $userid     userid
+	 * @param   string  $task       task
+	 * @param   bool    $xhtml      xhtml
+	 * @param   string  $avatarTab  avatarTab
 	 *
 	 * @return  boolean|string
-	 * @since   Kunena 6.0
+	 *
+	 * @since   Kunena 5.0
 	 */
-	public function getProfileURL(KunenaUser $user, $task = '', $xhtml = true): bool
+	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
 	{
 		// Make sure that user profile exist.
-		if (!$user || CFactory::getUser($user) === null)
+		if (!$userid || CFactory::getUser($userid) === null)
 		{
 			return false;
 		}
 
-		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $user, $xhtml);
+		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
 	}
 
 	/**
 	 * Return username of user
 	 *
-	 * @param           $user
-	 * @param   string  $visitorname
-	 * @param   bool    $escape
+	 * @param   int     $userid       userid
+	 * @param   string  $visitorname  name
+	 * @param   bool    $escape       escape
 	 *
 	 * @return string
+	 *
 	 * @since Kunena 5.2
 	 */
-	public function getProfileName($user, $visitorname = '', $escape = true)
+	public function getProfileName(int $userid, $visitorname = '', $escape = true)
 	{
 		$cconfig         = CFactory::getConfig();
 		$displayusername = $cconfig->get('displayname');
 
 		if ($displayusername == 'name')
 		{
-			return CFactory::getUser($user->id)->name;
+			return CFactory::getUser($userid)->name;
 		}
 		else
 		{
-			return CFactory::getUser($user->id)->username;
+			return CFactory::getUser($userid)->username;
 		}
 	}
 }

@@ -1505,7 +1505,7 @@ HTML;
 	 *
 	 * @param   mixed  $src  src
 	 *
-	 * @return  stdClass|void
+	 * @return  stdClass
 	 *
 	 * @since   Kunena 6.0
 	 */

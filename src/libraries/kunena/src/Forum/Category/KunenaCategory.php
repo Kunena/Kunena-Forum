@@ -1484,6 +1484,8 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @return  boolean|string
 	 *
+	 * @throws Exception
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function checkAlias(string $alias)

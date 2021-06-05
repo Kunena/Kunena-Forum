@@ -333,8 +333,8 @@ $wa->useScript('multiselect');
 						<?php endif; ?>
                         </tbody>
                     </table>
-					<?php //echo $this->loadTemplateFile('subscribecatsusers'); ?>
-					<?php //echo $this->loadTemplateFile('moderators'); ?>
+					<?php echo $this->loadTemplate('subscribecatsusers'); ?>
+					<?php echo $this->loadTemplate('moderators'); ?>
                 </form>
                 <div class="clearfix"></div>
             </div>

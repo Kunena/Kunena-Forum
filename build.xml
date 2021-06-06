@@ -148,6 +148,9 @@
 		<copy file="src/pkg_kunena.xml" todir="${build_dir}/distribution" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
+		<copy file="src/script.php" todir="${build_dir}/distribution" overwrite="true">
+			<filterchain refid="filter"/>
+		</copy>
 		<copy file="COPYRIGHT.php" todir="${build_dir}/distribution" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>

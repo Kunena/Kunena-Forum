@@ -23,25 +23,6 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 class plgKunenaJoomla extends CMSPlugin
 {
 	/**
-	 * @param   object  $subject  subject
-	 * @param   array   $config   config
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(object $subject, array $config)
-	{
-		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0')))
-		{
-			return;
-		}
-
-		parent::__construct($subject, $config);
-
-		$this->loadLanguage('plg_kunena_joomla.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_joomla.sys', KPATH_ADMIN);
-	}
-
-	/**
 	 * @return  false|KunenaAccessJoomla
 	 *
 	 * @since   Kunena 6.0

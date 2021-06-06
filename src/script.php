@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaInstallerException;
 use Kunena\Forum\Libraries\KunenaInstaller;
-use Kunena\Forum\Libraries\Path\KunenaPath;
 
 /**
  * Kunena package installer script.
@@ -135,95 +134,53 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 		$values = [
 			$db->quote('com_kunena.reply'),
+			$db->quote('com_kunena'),
 			$db->quote(''),
-			$db->quote('COM_CONFIG_SENDMAIL_SUBJECT'),
-			$db->quote('COM_CONFIG_SENDMAIL_BODY'),
+			$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLY_SUBJECT')),
+			$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
 			$db->quote(''),
 			$db->quote(''),
-			$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}')
+			$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
 		];
 
-		$query->insert($db->quoteName('#__mail_templates'))
-			->columns(
-				[
-					$db->quoteName('template_id'),
-					$db->quoteName('language'),
-					$db->quoteName('subject'),
-					$db->quoteName('body'),
-					$db->quoteName('htmlbody'),
-					$db->quoteName('attachments'),
-					$db->quoteName('params')
-				]
-			)
-			->values(implode(', ', $values));
-		$db->setQuery($query);
-
-		try
-		{
-			$db->execute();
-		}
-		catch (ExecutionFailureException $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		$values = [
+		$values2 = [
 			$db->quote('com_kunena.replymoderator'),
+			$db->quote('com_kunena'),
 			$db->quote(''),
-			$db->quote('COM_CONFIG_SENDMAIL_SUBJECT'),
-			$db->quote('COM_CONFIG_SENDMAIL_BODY'),
+			$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT')),
+			$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
 			$db->quote(''),
 			$db->quote(''),
-			$db->quote('tags":["mail", "subject", "message", "messageUrl", "once"]}')
+			$db->quote('{tags":["mail", "subject", "message", "messageUrl", "once"]}'),
 		];
 
-		$query->insert($db->quoteName('#__mail_templates'))
-			->columns(
-				[
-					$db->quoteName('template_id'),
-					$db->quoteName('language'),
-					$db->quoteName('subject'),
-					$db->quoteName('body'),
-					$db->quoteName('htmlbody'),
-					$db->quoteName('attachments'),
-					$db->quoteName('params')
-				]
-			)
-			->values(implode(', ', $values));
-		$db->setQuery($query);
-
-		try
-		{
-			$db->execute();
-		}
-		catch (ExecutionFailureException $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
-
-		$values = [
+		$values3 = [
 			$db->quote('com_kunena.report'),
+			$db->quote('com_kunena'),
 			$db->quote(''),
-			$db->quote('COM_CONFIG_SENDMAIL_SUBJECT'),
-			$db->quote('COM_CONFIG_SENDMAIL_BODY'),
+			$db->quote(text::_('COM_KUNENA_SENDMAIL_REPORT_SUBJECT')),
+			$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
 			$db->quote(''),
 			$db->quote(''),
-			$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}')
+			$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
 		];
 
 		$query->insert($db->quoteName('#__mail_templates'))
 			->columns(
 				[
 					$db->quoteName('template_id'),
+					$db->quoteName('extension'),
 					$db->quoteName('language'),
 					$db->quoteName('subject'),
 					$db->quoteName('body'),
 					$db->quoteName('htmlbody'),
 					$db->quoteName('attachments'),
-					$db->quoteName('params')
+					$db->quoteName('params'),
 				]
 			)
-			->values(implode(', ', $values));
+			->values(implode(', ', $values))
+			->values(implode(', ', $values2))
+			->values(implode(', ', $values3));
 		$db->setQuery($query);
 
 		try
@@ -330,7 +287,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				$db->quote($date),
 				$db->quote($versionname),
 				$db->quote($installdate),
-				$db->quote('')
+				$db->quote(''),
 			];
 
 			$query->insert($db->quoteName('#__kunena_version'))
@@ -341,7 +298,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 						$db->quoteName('versiondate'),
 						$db->quoteName('versionname'),
 						$db->quoteName('installdate'),
-						$db->quoteName('state')
+						$db->quoteName('state'),
 					]
 				)
 				->values(implode(', ', $values));
@@ -358,9 +315,10 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		}
 
 		$this->addDashboardMenu('kunena', 'kunena');
+		$app = Factory::getApplication();
 
 		// Delete the tmp install directory
-		foreach (glob(KunenaPath::tmpdir() . '/install_*') as $dir)
+		foreach (glob($app->get('tmp_path') . '/install_*') as $dir)
 		{
 			if (is_dir($dir))
 			{
@@ -390,11 +348,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$date    = (string) $version->versiondate;
 		}
 
-		$tmpfile = KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
+		$tmpfile = $app->get('tmp_path') . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
 
 		if (is_file($tmpfile))
 		{
-			File::delete(KunenaPath::tmpdir() . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
+			File::delete($app->get('tmp_path') . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
 		}
 
 		return true;
@@ -518,9 +476,17 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		}
 
 		$recommended = end($this->versions[$name]);
-		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.",
-			$name, $version, $name, $minor, $name, $recommended
-		), 'notice'
+		$app->enqueueMessage(
+			sprintf(
+				"%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.",
+				$name,
+				$version,
+				$name,
+				$minor,
+				$name,
+				$recommended
+			),
+			'notice'
 		);
 
 		return false;
@@ -647,7 +613,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			}
 		}
 
-		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version),
+		$app->enqueueMessage(
+			sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version),
 			'notice'
 		);
 
@@ -655,8 +622,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	}
 
 	/**
-	 *
-	 *
 	 * @return void
 	 * @throws Exception
 	 * @since version

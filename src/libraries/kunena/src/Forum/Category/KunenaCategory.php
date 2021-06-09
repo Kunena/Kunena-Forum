@@ -431,7 +431,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($identifier = null, $reload = false): KunenaCategory
 	{
@@ -447,7 +446,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getChildren($levels = 0): array
 	{
@@ -463,7 +461,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUserInfo($user = null): KunenaCategoryUser
 	{
@@ -480,7 +477,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function subscribe($value = true, $user = null): bool
 	{
@@ -530,7 +526,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getIcon(): string
 	{
@@ -545,7 +540,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUrl($category = null, $xhtml = true)
 	{
@@ -562,7 +556,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena
-	 *
 	 */
 	public function getNewTopicUrl($xhtml = true)
 	{
@@ -583,7 +576,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getNewTopicCategory($user = null): KunenaCategory
 	{
@@ -619,7 +611,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getChannels($action = 'read')
 	{
@@ -687,7 +678,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null): bool
 	{
@@ -714,7 +704,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -808,7 +797,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseRead(KunenaUser $user)
 	{
@@ -845,7 +833,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getMarkReadUrl($children = false, $xhtml = true): ?bool
 	{
@@ -871,7 +858,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getRSSUrl($xhtml = true)
 	{
@@ -900,7 +886,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUri($category = null, $action = null): Uri
 	{
@@ -992,7 +977,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function deleteAlias(string $alias): bool
 	{
@@ -1051,7 +1035,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopics(): bool
 	{
@@ -1065,7 +1048,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function buildInfo(): void
 	{
@@ -1102,7 +1084,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getLastCategory()
 	{
@@ -1116,7 +1097,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPosts(): bool
 	{
@@ -1130,7 +1110,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getReplies(): int
 	{
@@ -1144,7 +1123,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getLastTopic(): KunenaTopic
 	{
@@ -1160,7 +1138,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function newTopic(array $fields = null, $user = null, array $safefields = null): array
 	{
@@ -1225,7 +1202,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAdmins($includeGlobal = true): array
 	{
@@ -1255,7 +1231,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getModerators($includeGlobal = true, $objects = true): array
 	{
@@ -1293,7 +1268,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 * @example if ($category->isAuthorised('admin')) $category->addModerator($user);
-	 *
 	 */
 	public function addModerator($user = null): bool
 	{
@@ -1313,7 +1287,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
-	 *
 	 */
 	public function setModerator($user = null, $value = false): bool
 	{
@@ -1331,7 +1304,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 * @example if ($category->isAuthorised('admin')) $category->addModerators(array($user1, $user2, $user3));
-	 *
 	 */
 	public function addModerators($users = []): void
 	{
@@ -1358,7 +1330,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 * @example if ($category->isAuthorised('admin')) $category->removeModerator($user);
-	 *
 	 */
 	public function removeModerator($user = null): bool
 	{
@@ -1413,7 +1384,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 * @see     KunenaDatabaseObject::load()
-	 *
 	 */
 	public function load($id = null): bool
 	{
@@ -1449,7 +1419,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 * @see     KunenaDatabaseObject::check()
-	 *
 	 */
 	public function check(): bool
 	{
@@ -1530,7 +1499,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function purge(int $time, $params = [], $limit = 1000): int
 	{
@@ -1585,7 +1553,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function trash(int $time, $params = [], $limit = 1000): int
 	{
@@ -1635,7 +1602,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete(): bool
 	{
@@ -1800,7 +1766,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function update(KunenaTopic $topic, $topicdelta = 0, $postdelta = 0): bool
 	{
@@ -1890,7 +1855,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function getSubscribed($userid = null): bool
 	{
@@ -1979,7 +1943,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 * @see     KunenaDatabaseObject::saveInternal()
-	 *
 	 */
 	protected function saveInternal()
 	{
@@ -2020,9 +1983,8 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
-	public function addAlias(string $alias): bool
+	public function addAlias(string $alias)
 	{
 		if (!$this->exists())
 		{
@@ -2073,7 +2035,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseNotBanned(KunenaUser $user)
 	{
@@ -2101,7 +2062,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseGuestWrite(KunenaUser $user)
 	{
@@ -2121,7 +2081,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseSubscribe(KunenaUser $user)
 	{
@@ -2148,7 +2107,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseCatSubscribe(KunenaUser $user)
 	{
@@ -2175,7 +2133,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseFavorite(KunenaUser $user)
 	{
@@ -2200,7 +2157,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseNotSection(KunenaUser $user)
 	{
@@ -2235,7 +2191,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseChannel(KunenaUser $user)
 	{
@@ -2257,7 +2212,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseUnlocked(KunenaUser $user)
 	{
@@ -2277,7 +2231,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseModerate(KunenaUser $user)
 	{
@@ -2302,7 +2255,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseGlobalModerate(KunenaUser $user)
 	{
@@ -2327,7 +2279,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseAdmin(KunenaUser $user)
 	{
@@ -2352,7 +2303,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authorisePoll(KunenaUser $user)
 	{
@@ -2396,7 +2346,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseUpload(KunenaUser $user)
 	{

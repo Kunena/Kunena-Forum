@@ -9,13 +9,13 @@
 
 CKEDITOR.dialog.add( 'mapDialog', function( editor ) {
 	return {
-		title: Joomla.JText._('COM_KUNENA_EDITOR_DIALOG_MAPS_PROPERTIES'),
+		title: Joomla.Text._('COM_KUNENA_EDITOR_DIALOG_MAPS_PROPERTIES'),
 		minWidth: 400,
 		minHeight: 200,
 		contents: [
             {
                 id: 'tab-basic',
-                label: Joomla.JText._('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS'),
+                label: Joomla.Text._('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS'),
                 elements: [
                     {
     type: 'select',

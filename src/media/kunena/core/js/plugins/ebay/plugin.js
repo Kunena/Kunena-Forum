@@ -17,7 +17,7 @@ CKEDITOR.plugins.add( 'ebay', {
 			}
 		});
 		editor.ui.addButton( 'Ebay', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_EBAY'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_EBAY'),
 			command: 'insertEbay',
 			toolbar: 'social'
 		});

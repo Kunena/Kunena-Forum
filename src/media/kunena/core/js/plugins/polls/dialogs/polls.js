@@ -16,7 +16,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 		var paragraph = new CKEDITOR.dom.element( 'p' );
 		paragraph.setStyle( 'margin-top', '5px' );
 		var label = new CKEDITOR.dom.element( 'label' );
-		label.appendText(Joomla.JText._('COM_KUNENA_POLL_OPTION_NAME')+ ' ' + options + ' ');
+		label.appendText(Joomla.Text._('COM_KUNENA_POLL_OPTION_NAME')+ ' ' + options + ' ');
 		label.setAttribute('id', 'labeloption' + options);
 		paragraph.append( label );
 		var br = new CKEDITOR.dom.element( 'br' );
@@ -38,27 +38,27 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 	}
 
 	return {
-		title: Joomla.JText._('COM_KUNENA_EDITOR_DIALOG_POLLS_PROPERTIES'),
+		title: Joomla.Text._('COM_KUNENA_EDITOR_DIALOG_POLLS_PROPERTIES'),
 		minWidth: 400,
 		minHeight: 200,
 		contents: 
 		[
 			{
 				id: 'tab-basic',
-				label: Joomla.JText._('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS'),
+				label: Joomla.Text._('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS'),
 				elements: 
 				[
 					{
 						type: 'text',
 						id: 'polltitle',
-						label: Joomla.JText._('COM_KUNENA_POLL_TITLE'),
+						label: Joomla.Text._('COM_KUNENA_POLL_TITLE'),
 						default: ''
 					},
 					{
 						type: 'button',
 						id: 'polladdoption',
-						label: Joomla.JText._('COM_KUNENA_POLL_ADD_POLL_OPTION'),
-						title: Joomla.JText._('COM_KUNENA_POLL_ADD_POLL_OPTION'),
+						label: Joomla.Text._('COM_KUNENA_POLL_ADD_POLL_OPTION'),
+						title: Joomla.Text._('COM_KUNENA_POLL_ADD_POLL_OPTION'),
 						onClick: function() {
 							// this = CKEDITOR.ui.dialog.button
 							if (!nboptionsmax || (options < nboptionsmax && options >= 2)) {
@@ -78,8 +78,8 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 					{
 						type: 'button',
 						id: 'pollremoveoption',
-						label: Joomla.JText._('COM_KUNENA_POLL_REMOVE_POLL_OPTION'),
-						title: Joomla.JText._('COM_KUNENA_POLL_REMOVE_POLL_OPTION'),
+						label: Joomla.Text._('COM_KUNENA_POLL_REMOVE_POLL_OPTION'),
+						title: Joomla.Text._('COM_KUNENA_POLL_REMOVE_POLL_OPTION'),
 						onClick: function() {
 							// this = CKEDITOR.ui.dialog.button
 							jQuery('#field_option' + options).remove();
@@ -92,7 +92,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 					{
 						type: 'text',
 						id: 'polllifespan',
-						label: Joomla.JText._('COM_KUNENA_POLL_TIME_TO_LIVE'),
+						label: Joomla.Text._('COM_KUNENA_POLL_TIME_TO_LIVE'),
 						default: '',
 						onShow: function (data) {
 							// Set the width of the outer div (otherwise it's affected by the CK CSS classes and is too wide)

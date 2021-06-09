@@ -17,7 +17,7 @@ CKEDITOR.plugins.add( 'twitter', {
 			}
 		});
 		editor.ui.addButton( 'Twitter', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_TWEET'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_TWEET'),
 			command: 'insertTwitter',
 			toolbar: 'social'
 		});

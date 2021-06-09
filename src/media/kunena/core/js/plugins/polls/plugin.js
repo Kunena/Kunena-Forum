@@ -12,7 +12,7 @@
 	init: function( editor ) {
 		editor.addCommand( 'polls', new CKEDITOR.dialogCommand( 'pollsDialog' ) );
 		editor.ui.addButton( 'Polls', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_POLLS'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_POLLS'),
 			command: 'polls',
 			toolbar: 'others'
 		});

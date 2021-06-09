@@ -17,7 +17,7 @@
 			}
 		});
 		editor.ui.addButton( 'Hidetext', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_HIDE'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_HIDE'),
 			command: 'insertHidetext',
 			toolbar: 'insert'
 		});

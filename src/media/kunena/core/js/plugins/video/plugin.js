@@ -12,7 +12,7 @@
 	init: function( editor ) {
 		editor.addCommand( 'video', new CKEDITOR.dialogCommand( 'videoDialog' ) );
 		editor.ui.addButton( 'Video', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_VIDEO'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_VIDEO'),
 			command: 'video',
 			toolbar: 'others'
 		});

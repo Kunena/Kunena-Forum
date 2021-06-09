@@ -17,7 +17,7 @@
 			}
 		});
 		editor.ui.addButton( 'Spoiler', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_SPOILER'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_SPOILER'),
 			command: 'insertSpoiler',
 			toolbar: 'insert'
 		});

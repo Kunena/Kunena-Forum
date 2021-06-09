@@ -17,7 +17,7 @@ CKEDITOR.plugins.add( 'instagram', {
 			}
 		});
 		editor.ui.addButton( 'Instagram', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_INSTAGRAM'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_INSTAGRAM'),
 			command: 'insertInstagram',
 			toolbar: 'social'
 		});

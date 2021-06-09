@@ -17,7 +17,7 @@ CKEDITOR.plugins.add( 'code', {
 			}
 		});
 		editor.ui.addButton( 'Code', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_CODE'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_CODE'),
 			command: 'insertCode',
 			toolbar: 'insert'
 		});

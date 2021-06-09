@@ -17,7 +17,7 @@ CKEDITOR.plugins.add( 'confidential', {
 			}
 		});
 		editor.ui.addButton( 'Confidential', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_CONFIDENTIAL'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_CONFIDENTIAL'),
 			command: 'insertConfidential',
 			toolbar: 'insert'
 		});

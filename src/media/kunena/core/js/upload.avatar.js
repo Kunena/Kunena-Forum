@@ -17,7 +17,7 @@ jQuery(function ($) {
     const removeButton = $('<button/>')
         .addClass('btn btn-danger')
         .attr('type', 'button')
-        .html(Joomla.getOptions('com_kunena.avatar_delete') + ' ' + Joomla.JText._('COM_KUNENA_GEN_REMOVE_AVATAR'))
+        .html(Joomla.getOptions('com_kunena.avatar_delete') + ' ' + Joomla.Text._('COM_KUNENA_GEN_REMOVE_AVATAR'))
         .on('click', function () {
             const $this = $(this),
                 data = $this.data();

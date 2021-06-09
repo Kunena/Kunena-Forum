@@ -12,7 +12,7 @@ CKEDITOR.plugins.add( 'map', {
 	init: function( editor ) {
 		editor.addCommand( 'map', new CKEDITOR.dialogCommand( 'mapDialog' ) );
 		editor.ui.addButton( 'Map', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_MAP'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_MAP'),
 			command: 'map',
 			toolbar: 'others'
 		});

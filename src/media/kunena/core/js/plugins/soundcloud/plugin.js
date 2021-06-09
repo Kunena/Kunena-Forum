@@ -18,7 +18,7 @@ CKEDITOR.plugins.add( 'soundcloud', {
 			}
 		});
 		editor.ui.addButton( 'Soundcloud', {
-			label: Joomla.JText._('COM_KUNENA_EDITOR_SOUNDCLOUD'),
+			label: Joomla.Text._('COM_KUNENA_EDITOR_SOUNDCLOUD'),
 			command: 'insertSoundcloud',
 			toolbar: 'social'
 		});

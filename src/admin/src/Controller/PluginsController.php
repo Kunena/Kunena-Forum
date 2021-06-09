@@ -88,7 +88,7 @@ class PluginsController extends AdminController
 		$this->registerTask('orderup', 'reOrder');
 		$this->registerTask('orderdown', 'reOrder');
 
-		Factory::getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
+		Factory::getApplication()->getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 	}
 
 	/**

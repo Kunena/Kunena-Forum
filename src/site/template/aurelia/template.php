@@ -85,7 +85,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 */
 	public function loadLanguage(): void
 	{
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		KunenaFactory::loadLanguage('kunena_tmpl_aurelia');
 
 		foreach (array_reverse($this->default) as $template)

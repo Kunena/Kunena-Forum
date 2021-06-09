@@ -20,7 +20,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 $document = Factory::getApplication()->getDocument();
 $document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.css');
 
-if (Factory::getLanguage()->isRTL())
+if (Factory::getApplication()->getLanguage()->isRTL())
 {
 	$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
 }

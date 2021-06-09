@@ -32,15 +32,15 @@ class PluginsModel extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @see     JController
-	 *
 	 * @param   MVCFactoryInterface|null  $factory  mvc
 	 *
 	 * @param   array                     $config   An optional associative array of configuration settings.
 	 *
+	 * @throws Exception
 	 * @since   Kunena 1.6
 	 *
-	 * @throws Exception
+	 * @see     JController
+	 *
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null)
 	{
@@ -152,7 +152,7 @@ class PluginsModel extends ListModel
 				}
 			}
 
-			$lang      = Factory::getLanguage();
+			$lang      = Factory::getApplication()->getLanguage();
 			$direction = ($this->getState('list.direction') == 'desc') ? -1 : 1;
 			ArrayHelper::sortObjects($result, $ordering, $direction, true, $lang->getLocale());
 
@@ -206,7 +206,7 @@ class PluginsModel extends ListModel
 	 */
 	protected function translate(array &$items): void
 	{
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 
 		foreach ($items as $item)
 		{

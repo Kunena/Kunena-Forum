@@ -70,7 +70,7 @@ class UserEditUserDisplay extends UserEditDisplay
 		// Check to see if Frontend User Params have been enabled.
 		if ($userParams->get('frontend_userparams', 0))
 		{
-			Factory::getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
+			Factory::getApplication()->getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
 
 			Form::addFormPath(JPATH_ROOT . '/components/com_users/forms');
 			Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');

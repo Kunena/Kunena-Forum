@@ -66,9 +66,9 @@ abstract class KunenaFactory
 	 *
 	 * @return  KunenaTemplate
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getTemplate($name = null): KunenaTemplate
 	{
@@ -87,9 +87,9 @@ abstract class KunenaFactory
 	 *
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getUser($id = null, $reload = false): KunenaUser
 	{
@@ -105,9 +105,9 @@ abstract class KunenaFactory
 	 *
 	 * @return  KunenaSession
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getSession($update = false): ?KunenaSession
 	{
@@ -139,9 +139,9 @@ abstract class KunenaFactory
 	 *
 	 * @return  KunenaAvatar
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getAvatarIntegration(): KunenaAvatar
 	{
@@ -155,9 +155,9 @@ abstract class KunenaFactory
 	 *
 	 * @return   KunenaPrivate
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getPrivateMessaging(): KunenaPrivate
 	{
@@ -171,9 +171,9 @@ abstract class KunenaFactory
 	 *
 	 * @return  KunenaActivity
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getActivityIntegration(): KunenaActivity
 	{
@@ -187,9 +187,9 @@ abstract class KunenaFactory
 	 *
 	 * @return  KunenaProfile
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getProfile(): KunenaProfile
 	{
@@ -206,9 +206,9 @@ abstract class KunenaFactory
 	 *
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site'): bool
 	{
@@ -229,7 +229,7 @@ abstract class KunenaFactory
 
 		if (empty($loaded["{$client}/{$file}"]))
 		{
-			$lang = Factory::getLanguage();
+			$lang = Factory::getApplication()->getLanguage();
 
 			$english = false;
 
@@ -257,9 +257,9 @@ abstract class KunenaFactory
 	 *
 	 * @return  KunenaConfig
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getConfig(): KunenaConfig
 	{

@@ -36,9 +36,9 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -49,7 +49,7 @@ class HtmlView extends BaseHtmlView
 			Factory::getApplication()->getDocument()->getWebAssetManager()
 				->registerAndUseScript('mod_sampleData', 'mod_sampleData/sampleData-process.js', [], ['defer' => true], ['core']);
 
-			$lang = Factory::getLanguage();
+			$lang = Factory::getApplication()->getLanguage();
 			$lang->load('mod_sampleData', JPATH_ADMINISTRATOR);
 
 			Text::script('MOD_SAMPLEDATA_CONFIRM_START');

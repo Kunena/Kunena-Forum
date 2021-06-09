@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Session\Session;
+use Joomla\Component\Menus\Administrator\Model\ItemModel;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaSampleData;
@@ -60,7 +61,7 @@ class PlgSampledataKunena extends CMSPlugin
 	protected $path = null;
 
 	/**
-	 * @var    Admin Id, author of all generated content.
+	 * @var   integer Admin Id, author of all generated content.
 	 *
 	 * @since   4.0.0
 	 */
@@ -69,7 +70,7 @@ class PlgSampledataKunena extends CMSPlugin
 	/**
 	 * Holds the menuitem model
 	 *
-	 * @var     MenusModelItem
+	 * @var     ItemModel
 	 *
 	 * @since   4.0.0
 	 */
@@ -109,9 +110,9 @@ class PlgSampledataKunena extends CMSPlugin
 	 *
 	 * @return  array|void  Will be converted into the JSON response to the module.
 	 *
+	 * @throws Exception
+	 * @throws Exception
 	 * @since   4.0.0
-	 * @throws Exception
-	 * @throws Exception
 	 */
 	public function onAjaxSampledataApplyStep1()
 	{
@@ -122,7 +123,7 @@ class PlgSampledataKunena extends CMSPlugin
 
 		if (!$this->enablePlugin('plg_system_kunena'))
 		{
-			$response            = array();
+			$response            = [];
 			$response['success'] = false;
 
 			$response['message'] = Text::_('PLG_SYSTEM_KUNENA_NOT_ENABLED');
@@ -132,7 +133,7 @@ class PlgSampledataKunena extends CMSPlugin
 
 		KunenaSampleData::installSampleData();
 
-		$response          = new stdClass;
+		$response          = [];
 		$response->success = true;
 		$response->message = Text::_('PLG_SAMPLEDATA_KUNENA_STEP1_SUCCESS');
 

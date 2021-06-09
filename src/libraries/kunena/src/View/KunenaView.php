@@ -612,7 +612,7 @@ class KunenaView extends HtmlView
 		$tpl  = isset($tpl) ? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
 
 		// Load the language file for the template
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$lang->load('tpl_' . $template->template, JPATH_BASE)
 		|| $lang->load('tpl_' . $template->parent, JPATH_THEMES . '/' . $template->parent)
 		|| $lang->load('tpl_' . $template->template, JPATH_THEMES . '/' . $template->template);

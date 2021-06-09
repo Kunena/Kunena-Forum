@@ -552,7 +552,7 @@ class KunenaTemplate
 	public function loadLanguage(): void
 	{
 		// Loading language strings for the template
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
 
 		foreach (array_reverse($this->default) as $template)

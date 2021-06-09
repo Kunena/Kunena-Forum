@@ -183,9 +183,9 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayUnread($tpl = null)
 	{
@@ -208,10 +208,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function displayFlat($tpl = null)
 	{
@@ -225,10 +225,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -346,7 +346,7 @@ class HtmlView extends KunenaView
 
 		$this->_prepareDocument('default');
 
-		$this->render('Topic/Item', $tpl, array('topic' => $this->topic, 'category' => $this->category, 'config' => $this->config, 'pagination' => $this->pagination, 'me' => $this->me, 'messages' => $this->messages,'categorylist' => $this->categorylist));
+		$this->render('Topic/Item', $tpl, array('topic' => $this->topic, 'category' => $this->category, 'config' => $this->config, 'pagination' => $this->pagination, 'me' => $this->me, 'messages' => $this->messages, 'categorylist' => $this->categorylist));
 		$this->topic->markRead();
 	}
 
@@ -355,10 +355,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getPagination($maxpages)
 	{
@@ -370,10 +370,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  KunenaPagination
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getPaginationObject($maxpages)
 	{
@@ -396,9 +396,9 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function _prepareDocument($type)
 	{
@@ -528,9 +528,9 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function setTitle(string $title): void
 	{
@@ -578,7 +578,7 @@ class HtmlView extends KunenaView
 		if (!$this->state->get('embedded'))
 		{
 			// TODO: allow translations/overrides
-			$lang   = Factory::getLanguage();
+			$lang   = Factory::getApplication()->getLanguage();
 			$length = StringHelper::strlen($lang->getName());
 			$length = 137 - $length;
 
@@ -596,10 +596,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function displayThreaded($tpl = null)
 	{
@@ -613,10 +613,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function displayIndented($tpl = null)
 	{
@@ -628,9 +628,9 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayMessageProfile()
 	{
@@ -640,9 +640,9 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getMessageProfileBox()
 	{
@@ -744,9 +744,9 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayMessageContents()
 	{
@@ -756,9 +756,9 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayTopicActions()
 	{
@@ -768,9 +768,9 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopicActions()
 	{
@@ -863,9 +863,9 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayMessageActions()
 	{
@@ -875,9 +875,9 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getMessageActions()
 	{
@@ -954,9 +954,9 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  mixed|string|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function fillMessageInfo($matches)
 	{
@@ -984,10 +984,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function displayMessages($template = null)
 	{
@@ -1004,10 +1004,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function displayMessage($id, $message, $template = null)
 	{
@@ -1205,9 +1205,9 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayThreadHistory()
 	{
@@ -1284,8 +1284,8 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  integer|string
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function displayMessageField($name)
 	{
@@ -1309,8 +1309,8 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  integer|string
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function displayCategoryField($name)
 	{
@@ -1363,8 +1363,8 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  KunenaControllerDisplay
 	 *
-	 * @since   Kunena 4.0
 	 * @throws Exception
+	 * @since   Kunena 4.0
 	 */
 	public function subRequest($path, Input $input = null, $options = null)
 	{
@@ -1377,10 +1377,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  boolean|false
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function DisplayCreate($tpl = null)
 	{
@@ -1422,7 +1422,7 @@ class HtmlView extends KunenaView
 		              'sections'    => 0,
 		              'direction'   => 1,
 		              'hide_lonely' => 1,
-		              'action'      => 'topic.create', ];
+		              'action'      => 'topic.create',];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaCategoryHelper::get($this->catid);
@@ -1475,10 +1475,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  boolean|false
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function DisplayReply($tpl = null)
 	{
@@ -1547,10 +1547,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  boolean|false
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function displayEdit($tpl = null)
 	{
@@ -1628,10 +1628,10 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function redirectBack($anchor = '')
 	{

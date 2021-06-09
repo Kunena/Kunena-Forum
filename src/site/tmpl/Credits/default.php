@@ -32,7 +32,7 @@ use function defined;
 // Display offline message if Kunena hasn't been fully installed.
 if (!KunenaForum::isCompatible('4.0') || !KunenaForum::installed())
 {
-	$lang = Factory::getLanguage();
+	$lang = Factory::getApplication()->getLanguage();
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
 	Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);

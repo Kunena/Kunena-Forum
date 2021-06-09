@@ -491,7 +491,7 @@ class UserController extends KunenaController
 			$valueLength = strlen($value);
 
 			// Load language file of com_users component
-			Factory::getLanguage()->load('com_users');
+			Factory::getApplication()->getLanguage()->load('com_users');
 
 			// We set a maximum length to prevent abuse since it is unfiltered.
 			if ($valueLength > 4096)

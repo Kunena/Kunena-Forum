@@ -44,15 +44,15 @@ abstract class KunenaMenuHelper
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
 	 * This only method need to be used only in frontend part
 	 *
-	 * @see      modules/mod_menu/helper.php
-	 *
 	 * @param   Registry  $params  The module options.
 	 *
 	 * @return   array
 	 *
+	 * @throws Exception
 	 * @since    Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @see      modules/mod_menu/helper.php
+	 *
 	 */
 	public static function getList(Registry $params): array
 	{
@@ -192,9 +192,9 @@ abstract class KunenaMenuHelper
 	 *
 	 * @return  object
 	 *
+	 * @throws Exception
 	 * @since    3.0.2
 	 *
-	 * @throws Exception
 	 */
 	public static function getBase(Registry $params)
 	{
@@ -224,9 +224,9 @@ abstract class KunenaMenuHelper
 	 *
 	 * @return  object
 	 *
+	 * @throws Exception
 	 * @since    3.0.2
 	 *
-	 * @throws Exception
 	 */
 	public static function getActive(Registry $params): object
 	{
@@ -240,14 +240,14 @@ abstract class KunenaMenuHelper
 	 *
 	 * @return  object
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getDefault(): object
 	{
 		$menu = Factory::getApplication()->getMenu();
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 
 		// Look for the home menu
 		if (Multilanguage::isEnabled())

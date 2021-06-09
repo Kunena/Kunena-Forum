@@ -31,13 +31,13 @@ class KunenaSampleData
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function installSampleData(): void
 	{
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
 

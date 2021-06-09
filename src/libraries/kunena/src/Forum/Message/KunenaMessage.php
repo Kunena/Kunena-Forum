@@ -592,7 +592,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		$subject        = $this->subject ? $this->subject : $topic->subject;
 
 		// Create email.
-		$user = Factory::getUser();
+		$user = Factory::getApplication()->getIdentity();
 		$mail = Factory::getMailer();
 		$mail->setSubject($mailsubject);
 		$mail->setSender([$config->getEmail(), $mailnamesender]);

@@ -47,13 +47,17 @@ class CategoryIndex extends KunenaLayout
 	 */
 	public $ktemplate;
 
+	/**
+	 * @var     KunenaTemplate|void
+	 * @since   Kunena 6.0
+	 */
 	public $categorylist;
 
 	/**
 	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
-	private $total;
+	public $total;
 
 	/**
 	 * Method to return a KunenaPagination object
@@ -78,9 +82,9 @@ class CategoryIndex extends KunenaLayout
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getCategoryIcon($category)
 	{
@@ -91,18 +95,23 @@ class CategoryIndex extends KunenaLayout
 		{
 			if (!empty($category->icon))
 			{
-				return KunenaIcons::caticon($category->icon, true, true);
+				return KunenaIcons::caticon((string) $category->icon, true, true);
 			}
 
-			return KunenaIcons::caticon($caticonpath, true, true);
+			return KunenaIcons::caticon((string) $caticonpath, true, true);
+		}
+
+		if ($category->icon == ' ' || $category->icon == null)
+		{
+			$category->icon = $caticonpath;
 		}
 
 		if (!empty($category->icon))
 		{
-			return KunenaIcons::caticon($category->icon, false, true);
+			return KunenaIcons::caticon((string) $category->icon, false, true);
 		}
 
-		return KunenaIcons::caticon($caticonpath, false, true);
+		return KunenaIcons::caticon((string) $caticonpath, false, true);
 	}
 
 	/**
@@ -112,9 +121,9 @@ class CategoryIndex extends KunenaLayout
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getSmallCategoryIcon($subcategory)
 	{
@@ -147,10 +156,10 @@ class CategoryIndex extends KunenaLayout
 	 *
 	 * @return  string|void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getMarkReadButtonURL($categoryId, $numTopics)
 	{
@@ -173,10 +182,10 @@ class CategoryIndex extends KunenaLayout
 	 *
 	 * @return  boolean|string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{

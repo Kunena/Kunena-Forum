@@ -1296,7 +1296,7 @@ class KunenaIcons
 		$caticon       = $ktemplate->params->get('DefaultCategoryicon');
 		$bigicon       = ' ';
 
-		if ($categoryicon == ' ')
+		if ($categoryicon == ' ' || $categoryicon == null)
 		{
 			$categoryicon = $caticon;
 		}

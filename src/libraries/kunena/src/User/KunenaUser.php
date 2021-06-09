@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\User;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use DateTimeZone;
 use Exception;
@@ -45,75 +45,75 @@ use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use stdClass;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUser
  *
- * @property    int    $id
- * @property    int    $userid
- * @property    int    $status
- * @property    string $status_text
- * @property    string $name
- * @property    string $username
- * @property    string $email
- * @property    int    $blocked
- * @property    string $registerDate
- * @property    string $lastvisitDate
- * @property    string $signature
- * @property    int    $moderator
- * @property    int    $banned
- * @property    int    $ordering
- * @property    int    $posts
- * @property    string $avatar
- * @property    int    $karma
- * @property    int    $karma_time
- * @property    int    $uhits
- * @property    string $personalText
- * @property    int    $gender
- * @property    object $birthdate
- * @property    string $location
- * @property    string $websitename
- * @property    string $websiteurl
- * @property    int    $rank
- * @property    int    $view
- * @property    int    $hideEmail
- * @property    int    $showOnline
- * @property    int    $canSubscribe
- * @property    int    $userListtime
- * @property    string $icq
- * @property    string $yim
- * @property    string $microsoft
- * @property    string $skype
- * @property    string $twitter
- * @property    string $facebook
- * @property    string $google
- * @property    string $github
- * @property    string $myspace
- * @property    string $linkedin
- * @property    string $linkedin_company
- * @property    string $friendfeed
- * @property    string $digg
- * @property    string $blogspot
- * @property    string $flickr
- * @property    string $bebo
- * @property    int    $thankyou
- * @property    string $instagram
- * @property    string $qqsocial
- * @property    string $qzone
- * @property    string $weibo
- * @property    string $wechat
- * @property    string $apple
- * @property    string $vk
- * @property    string $telegram
- * @property    string $vimeo
- * @property    string $whatsapp
- * @property    string $youtube
- * @property    string $ok
- * @property    int    $socialshare
- * @property    string $pinterest
- * @property    string $reddit
- * @property    int    $timestamp
+ * @property    int     $id
+ * @property    int     $userid
+ * @property    int     $status
+ * @property    string  $status_text
+ * @property    string  $name
+ * @property    string  $username
+ * @property    string  $email
+ * @property    int     $blocked
+ * @property    string  $registerDate
+ * @property    string  $lastvisitDate
+ * @property    string  $signature
+ * @property    int     $moderator
+ * @property    int     $banned
+ * @property    int     $ordering
+ * @property    int     $posts
+ * @property    string  $avatar
+ * @property    int     $karma
+ * @property    int     $karma_time
+ * @property    int     $uhits
+ * @property    string  $personalText
+ * @property    int     $gender
+ * @property    object  $birthdate
+ * @property    string  $location
+ * @property    string  $websitename
+ * @property    string  $websiteurl
+ * @property    int     $rank
+ * @property    int     $view
+ * @property    int     $hideEmail
+ * @property    int     $showOnline
+ * @property    int     $canSubscribe
+ * @property    int     $userListtime
+ * @property    string  $icq
+ * @property    string  $yim
+ * @property    string  $microsoft
+ * @property    string  $skype
+ * @property    string  $twitter
+ * @property    string  $facebook
+ * @property    string  $google
+ * @property    string  $github
+ * @property    string  $myspace
+ * @property    string  $linkedin
+ * @property    string  $linkedin_company
+ * @property    string  $friendfeed
+ * @property    string  $digg
+ * @property    string  $blogspot
+ * @property    string  $flickr
+ * @property    string  $bebo
+ * @property    int     $thankyou
+ * @property    string  $instagram
+ * @property    string  $qqsocial
+ * @property    string  $qzone
+ * @property    string  $weibo
+ * @property    string  $wechat
+ * @property    string  $apple
+ * @property    string  $vk
+ * @property    string  $telegram
+ * @property    string  $vimeo
+ * @property    string  $whatsapp
+ * @property    string  $youtube
+ * @property    string  $ok
+ * @property    int     $socialshare
+ * @property    string  $pinterest
+ * @property    string  $reddit
+ * @property    int     $timestamp
+ * @property    boolean $showEmail
  * @since   Kunena 6.0
  */
 class KunenaUser extends CMSObject
@@ -513,61 +513,51 @@ class KunenaUser extends CMSObject
 	 * @since   Kunena 6.0
 	 */
 	protected $_allowed = null;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $_link = [];
-
 	/**
 	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	protected $_time;
-
 	/**
 	 * @var     mixed
 	 * @since   Kunena 6.0
 	 */
 	protected $_pm;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_email;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_website;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_personalText;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $_signature;
-
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $_exists = false;
-
 	/**
 	 * @var     DatabaseDriver|null
 	 * @since   Kunena 6.0
 	 */
 	protected $_db = null;
-
 	/**
 	 * @var KunenaConfig
 	 * @since version
@@ -587,7 +577,6 @@ class KunenaUser extends CMSObject
 	 * @since   Kunena 6.0
 	 *
 	 * @internal
-	 *
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -618,7 +607,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load($id): bool
 	{
@@ -684,7 +672,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($identifier = null, $reload = false): KunenaUser
 	{
@@ -701,7 +688,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null): bool
 	{
@@ -719,7 +705,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -907,7 +892,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete(): bool
 	{
@@ -933,7 +917,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getStatus(): int
 	{
@@ -945,7 +928,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getStatusText(): string
 	{
@@ -957,7 +939,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAllowedCategories(): ?array
 	{
@@ -974,13 +955,12 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getMessageOrdering(): string
 	{
 		static $default;
 
-		if (is_null($default))
+		if (\is_null($default))
 		{
 			$default = KunenaFactory::getConfig()->get('defaultSort') == 'desc' ? 'desc' : 'asc';
 		}
@@ -1003,7 +983,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90, $online = ''): string
 	{
@@ -1074,7 +1053,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAvatarURL($sizex = 'thumb', $sizey = 90): string
 	{
@@ -1099,7 +1077,6 @@ class KunenaUser extends CMSObject
 	 * @since    Kunena 5.1.0
 	 *
 	 * @internal param bool $code True if we want to return the code, otherwise return translation key.
-	 *
 	 */
 	public function getLinkNoStyle($name = null, $title = null, $class = null)
 	{
@@ -1154,7 +1131,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getURL($xhtml = true, $task = '')
 	{
@@ -1181,7 +1157,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTime(): KunenaDate
 	{
@@ -1251,7 +1226,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function setTopicLayout($layout = 'default'): void
 	{
@@ -1315,7 +1289,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save($updateOnly = false): bool
 	{
@@ -1380,7 +1353,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPrivateMsgURL(): string
 	{
@@ -1396,7 +1368,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPrivateMsgLabel(): string
 	{
@@ -1424,7 +1395,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function getPrivateMsgLink(): string
 	{
@@ -1463,7 +1433,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function getEmail($profile): bool
 	{
@@ -1497,7 +1466,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function getEmailLink(): string
 	{
@@ -1615,7 +1583,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function getSignature()
 	{
@@ -1639,7 +1606,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function canSeeKarma(): bool
 	{
@@ -1665,7 +1631,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public function getSideProfile(KunenaLayout $layout)
 	{
@@ -1752,7 +1717,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getRank($catid = 0, $type = null, $special = null)
 	{
@@ -1787,7 +1751,7 @@ class KunenaUser extends CMSObject
 
 		$userType = $special !== false ? $this->getType($catid, true) : 'count';
 
-		if (isset(self::$_ranks[$this->rank]) && !in_array($userType, ['guest', 'blocked', 'banned', 'count']))
+		if (isset(self::$_ranks[$this->rank]) && !\in_array($userType, ['guest', 'blocked', 'banned', 'count']))
 		{
 			// Use rank specified to the user.
 			$rank = self::$_ranks[$this->rank];
@@ -1971,7 +1935,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getType($catid = 0, $code = false): string
 	{
@@ -2116,7 +2079,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function rankCss(object $rank, int $catid): string
 	{
@@ -2172,7 +2134,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function getPersonalText()
 	{
@@ -2209,7 +2170,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function profileIcon(string $name): string
 	{
@@ -2301,7 +2261,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '', $class = null, $catid = 0, $avatarLink = 0): string
 	{
@@ -2402,7 +2361,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public function socialButtonsTemplate(string $name, $gray = false)
 	{
@@ -2632,7 +2590,6 @@ class KunenaUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function canDoCaptcha()
 	{
@@ -2672,7 +2629,7 @@ class KunenaUser extends CMSObject
 		}
 		else
 		{
-			if ($this->_config->showemail && $profile->email)
+			if ($this->_config->showEmail && $profile->email)
 			{
 				if ($profile->hideEmail == 0 || $profile->hideEmail == 2 && KunenaUserHelper::getMyself()->exists())
 				{

@@ -566,8 +566,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$image = '';
-		$doc   = Factory::getApplication()->getDocument();
+		$this->image = '';
+		$doc         = Factory::getApplication()->getDocument();
 		$this->setMetaData('og:url', Uri::current(), 'property');
 		$this->setMetaData('og:type', 'article', 'property');
 		$this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
@@ -700,8 +700,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
 		if ($menu_item)
 		{
-			$params  = $menu_item->getParams();
-			$subject = KunenaParser::parseText($this->topic->displayField('subject'));
+			$this->params = $menu_item->getParams();
+			$subject      = KunenaParser::parseText($this->topic->displayField('subject'));
 
 			$this->setTitle($subject);
 

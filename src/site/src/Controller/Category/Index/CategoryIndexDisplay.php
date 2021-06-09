@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Category\Index;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -34,7 +34,6 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -84,10 +83,10 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -151,7 +150,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
+		$this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 
 		/*
 		$cache   = Factory::getCache('com_kunena', 'output');
@@ -165,7 +164,6 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		$catParams          = ['sections' => 1, 'catid' => 0];
 		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', $catid, $options, $catParams, 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"');
-
 
 		if ($catid)
 		{
@@ -407,9 +405,9 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 
 		foreach ($doc->_links as $key => $value)
 		{
-			if (is_array($value))
+			if (\is_array($value))
 			{
-				if (array_key_exists('relation', $value))
+				if (\array_key_exists('relation', $value))
 				{
 					if ($value['relation'] == 'canonical')
 					{
@@ -431,9 +429,9 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function prepareDocument()
 	{

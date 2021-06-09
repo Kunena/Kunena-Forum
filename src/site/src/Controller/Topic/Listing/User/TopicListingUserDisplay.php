@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Listing\User;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -29,7 +29,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
-use function defined;
 
 /**
  * Class ComponentTopicControllerListUserDisplay
@@ -46,13 +45,12 @@ class TopicListingUserDisplay extends ListDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
 		parent::before();
 
-		$model = new TopicsModel(array(), null, null, $this->input);
+		$model = new TopicsModel([], null, null, $this->input);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state   = $model->getState();
 		$this->me      = KunenaUserHelper::getMyself();
@@ -262,9 +260,9 @@ class TopicListingUserDisplay extends ListDisplay
 		{
 			foreach ($doc->_links as $key => $value)
 			{
-				if (is_array($value))
+				if (\is_array($value))
 				{
-					if (array_key_exists('relation', $value))
+					if (\array_key_exists('relation', $value))
 					{
 						if ($value['relation'] == 'canonical')
 						{
@@ -294,9 +292,9 @@ class TopicListingUserDisplay extends ListDisplay
 
 		foreach ($doc->_links as $key => $value)
 		{
-			if (is_array($value))
+			if (\is_array($value))
 			{
-				if (array_key_exists('relation', $value))
+				if (\array_key_exists('relation', $value))
 				{
 					if ($value['relation'] == 'canonical')
 					{
@@ -317,7 +315,6 @@ class TopicListingUserDisplay extends ListDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

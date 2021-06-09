@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\KunenaList\Moderator;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentTopicControllerListDisplay
@@ -34,7 +33,6 @@ use function defined;
  */
 class TopicListModeratorDisplay extends KunenaControllerDisplay
 {
-
 	/**
 	 * Prepare topic list for moderators.
 	 *
@@ -92,12 +90,12 @@ class TopicListModeratorDisplay extends KunenaControllerDisplay
 		$reverse     = !$params->get('topics_catselection', 1);
 
 		// Make sure that category list is an array.
-		if (!is_array($categoryIds))
+		if (!\is_array($categoryIds))
 		{
 			$categoryIds = explode(',', $categoryIds);
 		}
 
-		if ((!$reverse && empty($categoryIds)) || in_array(0, $categoryIds))
+		if ((!$reverse && empty($categoryIds)) || \in_array(0, $categoryIds))
 		{
 			$categoryIds = false;
 		}

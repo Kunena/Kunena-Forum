@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Listing\Recent;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -29,7 +29,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
-use function defined;
 
 /**
  * Class ComponentTopicControllerListRecentDisplay
@@ -200,9 +199,9 @@ class TopicListingRecentDisplay extends ListDisplay
 		{
 			foreach ($doc->_links as $key => $value)
 			{
-				if (is_array($value))
+				if (\is_array($value))
 				{
-					if (array_key_exists('relation', $value))
+					if (\array_key_exists('relation', $value))
 					{
 						if ($value['relation'] == 'canonical')
 						{
@@ -331,9 +330,9 @@ class TopicListingRecentDisplay extends ListDisplay
 
 		foreach ($doc->_links as $key => $value)
 		{
-			if (is_array($value))
+			if (\is_array($value))
 			{
-				if (array_key_exists('relation', $value))
+				if (\array_key_exists('relation', $value))
 				{
 					if ($value['relation'] == 'canonical')
 					{

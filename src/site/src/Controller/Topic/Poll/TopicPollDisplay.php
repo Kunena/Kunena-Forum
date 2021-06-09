@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Poll;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentTopicControllerPollDisplay
@@ -72,7 +71,6 @@ class TopicPollDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -90,7 +88,7 @@ class TopicPollDisplay extends KunenaControllerDisplay
 		$this->usercount = $this->poll->getUserCount();
 		$usersvoted      = $this->poll->getUsers();
 
-		if (is_object($this->poll->getMyVotes()))
+		if (\is_object($this->poll->getMyVotes()))
 		{
 			$userhasvoted = $this->poll->getMyVotes();
 		}
@@ -173,7 +171,6 @@ class TopicPollDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

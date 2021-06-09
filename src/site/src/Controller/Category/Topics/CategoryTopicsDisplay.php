@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Category\Topics;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -32,7 +32,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -90,7 +89,6 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -173,9 +171,9 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 
 			foreach ($this->topics as $topic)
 			{
-				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
-				$userlist[intval($topic->last_post_userid)]  = intval($topic->last_post_userid);
-				$lastpostlist[intval($topic->last_post_id)]  = intval($topic->last_post_id);
+				$userlist[\intval($topic->first_post_userid)] = \intval($topic->first_post_userid);
+				$userlist[\intval($topic->last_post_userid)]  = \intval($topic->last_post_userid);
+				$lastpostlist[\intval($topic->last_post_id)]  = \intval($topic->last_post_id);
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations.
@@ -196,10 +194,10 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 
 		if (!$this->config->readOnly)
 		{
-			$topicActions = $model->getTopicActions();
+			$this->topicActions = $model->getTopicActions();
 		}
 
-		$actionMove = $model->getActionMove();
+		$this->actionMove = $model->getActionMove();
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
@@ -210,9 +208,9 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 		{
 			foreach ($doc->_links as $key => $value)
 			{
-				if (is_array($value))
+				if (\is_array($value))
 				{
-					if (array_key_exists('relation', $value))
+					if (\array_key_exists('relation', $value))
 					{
 						if ($value['relation'] == 'canonical')
 						{
@@ -235,7 +233,6 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{
@@ -303,9 +300,9 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 		{
 			foreach ($doc->_links as $key => $value)
 			{
-				if (is_array($value))
+				if (\is_array($value))
 				{
-					if (array_key_exists('relation', $value))
+					if (\array_key_exists('relation', $value))
 					{
 						if ($value['relation'] == 'canonical')
 						{

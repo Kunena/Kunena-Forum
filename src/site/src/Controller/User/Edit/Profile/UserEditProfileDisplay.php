@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\User\Edit\Profile;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -20,7 +20,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
-use function defined;
 
 /**
  * Class ComponentUserControllerEditProfileDisplay
@@ -43,7 +42,6 @@ class UserEditProfileDisplay extends UserEditDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -51,7 +49,7 @@ class UserEditProfileDisplay extends UserEditDisplay
 
 		$bd = $this->profile->birthdate ? explode("-", $this->profile->birthdate) : [];
 
-		if (count($bd) == 3)
+		if (\count($bd) == 3)
 		{
 			$this->birthdate["year"]  = $bd[0];
 			$this->birthdate["month"] = $bd[1];
@@ -84,7 +82,6 @@ class UserEditProfileDisplay extends UserEditDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

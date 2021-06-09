@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Message\Item\Actions;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -30,7 +30,6 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -71,7 +70,6 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -235,7 +233,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		// Thank you.
 		if (isset($this->message->thankyou))
 		{
-			if ($this->message->isAuthorised('thankyou') && !array_key_exists($me->userid, $this->message->thankyou))
+			if ($this->message->isAuthorised('thankyou') && !\array_key_exists($me->userid, $this->message->thankyou))
 			{
 				if ($topicicontype == 'B5')
 				{
@@ -272,7 +270,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 		if ($this->config->showThankYou)
 		{
-			if ($this->message->isAuthorised('unthankyou') && array_key_exists($me->userid, $this->message->thankyou))
+			if ($this->message->isAuthorised('unthankyou') && \array_key_exists($me->userid, $this->message->thankyou))
 			{
 				if ($topicicontype == 'B5')
 				{
@@ -341,7 +339,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 			if ($me->userid == $this->message->userid && $this->config->userEdit)
 			{
 				// Allow edit message when enabled.
-				$message_closed = null;
+				$this->message_closed = null;
 			}
 
 			if ($topicicontype == 'B5' && !$fullactions)
@@ -604,7 +602,6 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')
 	{

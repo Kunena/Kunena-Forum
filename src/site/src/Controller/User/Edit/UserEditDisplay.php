@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\User\Edit;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentUserControllerEditDisplay
@@ -59,7 +58,6 @@ class UserEditDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -68,7 +66,7 @@ class UserEditDisplay extends KunenaControllerDisplay
 		// If profile integration is disabled, this view doesn't exist.
 		$integration = KunenaFactory::getProfile();
 
-		if (get_class($integration) == 'KunenaProfileNone')
+		if (\get_class($integration) == 'KunenaProfileNone')
 		{
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
 		}
@@ -89,7 +87,6 @@ class UserEditDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

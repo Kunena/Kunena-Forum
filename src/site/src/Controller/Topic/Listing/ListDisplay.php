@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Listing;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -29,7 +29,6 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentTopicControllerListDisplay
@@ -250,7 +249,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 		$options['undelete']    = HTMLHelper::_('select.option', 'restore', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		// Only display actions that are available to user.
-		$actions = array_combine($actions, array_fill(0, count($actions), false));
+		$actions = array_combine($actions, array_fill(0, \count($actions), false));
 		array_unshift($actions, $options['none']);
 
 		foreach ($topics as $topic)
@@ -278,7 +277,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 			return !empty($item);
 		});
 
-		if (count($actions) == 1)
+		if (\count($actions) == 1)
 		{
 			return;
 		}
@@ -314,7 +313,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 		$options['undelete']   = HTMLHelper::_('select.option', 'restore_posts', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		// Only display actions that are available to user.
-		$actions = array_combine($actions, array_fill(0, count($actions), false));
+		$actions = array_combine($actions, array_fill(0, \count($actions), false));
 		array_unshift($actions, $options['none']);
 
 		foreach ($messages as $message)
@@ -334,7 +333,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 			return !empty($item);
 		});
 
-		if (count($actions) == 1)
+		if (\count($actions) == 1)
 		{
 			return;
 		}

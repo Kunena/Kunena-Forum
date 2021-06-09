@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Item\Message;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -27,7 +27,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentTopicControllerItemMessageDisplay
@@ -143,13 +142,13 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 					. "&id={$this->topic->id}&mesid={$this->message->id}&"
 					. Session::getFormToken() . '=1';
 
-				if (count($this->message->thankyou) > $this->config->thankYouMax)
+				if (\count($this->message->thankyou) > $this->config->thankYouMax)
 				{
-					$this->more_thankyou = count($this->message->thankyou) - $this->config->thankYouMax;
+					$this->more_thankyou = \count($this->message->thankyou) - $this->config->thankYouMax;
 				}
 
-				$this->total_thankyou = count($this->message->thankyou);
-				$thankyous            = array_slice($this->message->thankyou, 0, $this->config->thankYouMax, true);
+				$this->total_thankyou = \count($this->message->thankyou);
+				$thankyous            = \array_slice($this->message->thankyou, 0, $this->config->thankYouMax, true);
 
 				$userids_thankyous = [];
 
@@ -179,8 +178,8 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 				$this->reportMessageLink = HTMLHelper::_(
 					'link',
 					'index.php?option=com_kunena&view=topic&layout=report&catid='
-					. intval($this->category->id) . '&id=' . intval($this->message->thread)
-					. '&mesid=' . intval($this->message->id),
+					. \intval($this->category->id) . '&id=' . \intval($this->message->thread)
+					. '&mesid=' . \intval($this->message->id),
 					Text::_('COM_KUNENA_REPORT'),
 					Text::_('COM_KUNENA_REPORT')
 				);

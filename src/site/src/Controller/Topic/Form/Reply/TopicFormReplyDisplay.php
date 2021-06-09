@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Form\Reply;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Document\HtmlDocument;
@@ -29,7 +29,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentTopicControllerFormReplyDisplay
@@ -58,7 +57,6 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -93,9 +91,9 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
 		foreach ($doc->_links as $key => $value)
 		{
-			if (is_array($value))
+			if (\is_array($value))
 			{
-				if (array_key_exists('relation', $value))
+				if (\array_key_exists('relation', $value))
 				{
 					if ($value['relation'] == 'canonical')
 					{
@@ -193,7 +191,6 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

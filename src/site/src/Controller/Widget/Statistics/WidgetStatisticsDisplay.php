@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Widget\Statistics;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -21,7 +21,6 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerWidgetStatisticsDisplay
@@ -79,7 +78,7 @@ class WidgetStatisticsDisplay extends KunenaControllerDisplay
 		$statistics->loadGeneral();
 		$this->setProperties($statistics);
 
-		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink(null, null, '');
+		$this->latestMemberLink = KunenaFactory::getUser(\intval($this->lastUserId))->getLink(null, null, '');
 		$this->statisticsUrl    = KunenaFactory::getProfile()->getStatisticsURL();
 
 		return true;

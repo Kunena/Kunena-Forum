@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Message\Listing\Recent;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -30,7 +30,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerMessageListRecentDisplay
@@ -59,7 +58,6 @@ class MessageListingRecentDisplay extends ListDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -82,9 +80,9 @@ class MessageListingRecentDisplay extends ListDisplay
 			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
 		}
 
-		$start = $this->state->get('list.start');
-		$limit = $this->state->get('list.limit');
-		$view  = $this->state->get('view');
+		$start      = $this->state->get('list.start');
+		$limit      = $this->state->get('list.limit');
+		$this->view = $this->state->get('view');
 
 		// Handle &sel=x parameter.
 		$time = $this->state->get('list.time');
@@ -162,9 +160,9 @@ class MessageListingRecentDisplay extends ListDisplay
 		{
 			foreach ($doc->_links as $key => $value)
 			{
-				if (is_array($value))
+				if (\is_array($value))
 				{
-					if (array_key_exists('relation', $value))
+					if (\array_key_exists('relation', $value))
 					{
 						if ($value['relation'] == 'canonical')
 						{
@@ -197,9 +195,9 @@ class MessageListingRecentDisplay extends ListDisplay
 		{
 			foreach ($doc->_links as $key => $value)
 			{
-				if (is_array($value))
+				if (\is_array($value))
 				{
-					if (array_key_exists('relation', $value))
+					if (\array_key_exists('relation', $value))
 					{
 						if ($value['relation'] == 'canonical')
 						{
@@ -281,7 +279,7 @@ class MessageListingRecentDisplay extends ListDisplay
 					$userName              = $user->getName();
 					$charMapApostropheOnly = ['s', 'S', 'z', 'Z'];
 
-					if (in_array(substr($userName, -1), $charMapApostropheOnly))
+					if (\in_array(substr($userName, -1), $charMapApostropheOnly))
 					{
 						$userName2 = "";
 					}
@@ -306,7 +304,6 @@ class MessageListingRecentDisplay extends ListDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

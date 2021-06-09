@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\View\Statistics;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\View\KunenaView;
-
 
 /**
  * Topics View
@@ -123,16 +122,15 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
 	 */
 	public function displayDefault($tpl = null)
 	{
 		$this->layout           = 'default';
 		$this->params           = $this->state->get('params');
-		$Itemid                 = $this->get('Itemid');
+		$this->Itemid           = $this->get('Itemid');
 		$this->topics           = $this->get('Topics');
 		$this->total            = $this->get('Total');
 		$this->topicActions     = $this->get('TopicActions');
@@ -171,10 +169,9 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
 	 */
 	public function displayUser($tpl = null)
 	{
@@ -209,10 +206,9 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
 	 */
 	public function displayPosts($tpl = null)
 	{
@@ -221,7 +217,7 @@ class HtmlView extends KunenaView
 		$this->messages         = $this->get('Messages');
 		$this->topics           = $this->get('Topics');
 		$this->total            = $this->get('Total');
-		$postActions            = $this->get('PostActions');
+		$this->postActions      = $this->get('PostActions');
 		$this->actionMove       = false;
 		$this->message_ordering = $this->me->getMessageOrdering();
 
@@ -246,9 +242,8 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	public function displayRows()
 	{
@@ -265,14 +260,13 @@ class HtmlView extends KunenaView
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	public function displayPostRows()
 	{
-		$lasttopic      = null;
-		$this->position = 0;
+		$this->lasttopic = null;
+		$this->position  = 0;
 
 		// Run events
 		$params = new Registry;
@@ -292,10 +286,10 @@ class HtmlView extends KunenaView
 			$usertype       = $this->me->getType($this->category->id, true);
 
 			// TODO: add context (options, template) to caching
-			$this->cache = true;
-			$cache       = Factory::getCache('com_kunena', 'output');
-			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$message->id}";
-			$cachegroup  = 'com_kunena.posts';
+			$this->cache      = true;
+			$this->cache      = Factory::getCache('com_kunena', 'output');
+			$this->cachekey   = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$message->id}";
+			$this->cachegroup = 'com_kunena.posts';
 
 			// FIXME: enable caching after fixing the issues
 			$contents = false; // $cache->get($cachekey, $cachegroup);
@@ -303,7 +297,7 @@ class HtmlView extends KunenaView
 			if (!$contents)
 			{
 				$this->categoryLink     = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
-				$postAuthor             = KunenaFactory::getUser($message->userid);
+				$this->postAuthor       = KunenaFactory::getUser($message->userid);
 				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
 				$this->firstPostTime    = $this->topic->first_post_time;
 				$this->firstUserName    = $this->topic->first_post_guest_name;
@@ -333,21 +327,20 @@ class HtmlView extends KunenaView
 			}
 
 			echo $contents;
-			$lasttopic = $this->topic;
+			$this->lasttopic = $this->topic;
 		}
 	}
 
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	public function displayTopicRows()
 	{
-		$lasttopic      = null;
-		$this->position = 0;
+		$this->lasttopic = null;
+		$this->position  = 0;
 
 		// Run events
 		$params = new Registry;
@@ -366,10 +359,10 @@ class HtmlView extends KunenaView
 			$usertype       = $this->me->getType($this->category->id, true);
 
 			// TODO: add context (options, template) to caching
-			$this->cache = true;
-			$cache       = Factory::getCache('com_kunena', 'output');
-			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
-			$cachegroup  = 'com_kunena.topics';
+			$this->cache      = true;
+			$this->cache      = Factory::getCache('com_kunena', 'output');
+			$this->cachekey   = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
+			$this->cachegroup = 'com_kunena.topics';
 
 			// FIXME: enable caching after fixing the issues
 			$contents = false; // $cache->get($cachekey, $cachegroup);
@@ -380,9 +373,9 @@ class HtmlView extends KunenaView
 				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
 				$this->firstPostTime    = $this->topic->first_post_time;
 				$this->firstUserName    = $this->topic->first_post_guest_name;
-				$lastPostAuthor         = $this->topic->getLastPostAuthor();
-				$lastPostTime           = $this->topic->last_post_time;
-				$lastUserName           = $this->topic->last_post_guest_name;
+				$this->lastPostAuthor   = $this->topic->getLastPostAuthor();
+				$this->lastPostTime     = $this->topic->last_post_time;
+				$this->lastUserName     = $this->topic->last_post_guest_name;
 				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
 				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 				$this->pages            = ceil($this->topic->getTotal() / $this->config->messagesPerPage);
@@ -392,13 +385,13 @@ class HtmlView extends KunenaView
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 				}
 
-				if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
+				if (\is_object($this->lasttopic) && $this->lasttopic->ordering != $this->topic->ordering)
 				{
-					$spacing = 1;
+					$this->spacing = 1;
 				}
 				else
 				{
-					$spacing = 0;
+					$this->spacing = 0;
 				}
 
 				$contents = $this->loadTemplateFile('row');
@@ -418,7 +411,7 @@ class HtmlView extends KunenaView
 			}
 
 			echo $contents;
-			$lasttopic = $this->topic;
+			$this->lasttopic = $this->topic;
 		}
 	}
 
@@ -427,10 +420,9 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  mixed|string|void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
 	 */
 	public function fillTopicInfo($matches)
 	{

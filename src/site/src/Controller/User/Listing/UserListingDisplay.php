@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\User\Listing;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Access\Access;
@@ -26,7 +26,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
-use function defined;
 
 /**
  * Class ComponentUserControllerListDisplay
@@ -131,7 +130,7 @@ class UserListingDisplay extends KunenaControllerDisplay
 		$alias     = 'ku';
 		$aliasList = ['id', 'name', 'username', 'email', 'block', 'registerDate', 'lastvisitDate'];
 
-		if (in_array($this->state->get('list.ordering'), $aliasList))
+		if (\in_array($this->state->get('list.ordering'), $aliasList))
 		{
 			$alias = 'a';
 		}

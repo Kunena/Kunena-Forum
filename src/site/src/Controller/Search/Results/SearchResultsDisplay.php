@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Search\Results;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\SearchModel;
-use function defined;
 
 /**
  * Class ComponentSearchControllerResultsDisplay
@@ -64,7 +63,6 @@ class SearchResultsDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -74,24 +72,24 @@ class SearchResultsDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$state = $this->model->getState();
 
-		$me               = KunenaUserHelper::getMyself();
-		$message_ordering = $me->getMessageOrdering();
+		$me                     = KunenaUserHelper::getMyself();
+		$this->message_ordering = $me->getMessageOrdering();
 
-		$searchwords = $this->model->getSearchWords();
-		$isModerator = ($me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
+		$this->searchwords = $this->model->getSearchWords();
+		$this->isModerator = ($me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
-		$results     = [];
-		$this->total = $this->model->getTotal();
-		$results     = $this->model->getResults();
+		$this->results = [];
+		$this->total   = $this->model->getTotal();
+		$this->results = $this->model->getResults();
 
 		$doc = Factory::getApplication()->getDocument();
 		$doc->setMetaData('robots', 'follow, noindex');
 
 		foreach ($doc->_links as $key => $value)
 		{
-			if (is_array($value))
+			if (\is_array($value))
 			{
-				if (array_key_exists('relation', $value))
+				if (\array_key_exists('relation', $value))
 				{
 					if ($value['relation'] == 'canonical')
 					{
@@ -104,13 +102,13 @@ class SearchResultsDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$pagination = new KunenaPagination(
+		$this->pagination = new KunenaPagination(
 			$this->total,
 			$state->get('list.start'),
 			$state->get('list.limit')
 		);
 
-		$error = $this->model->getError();
+		$this->error = $this->model->getError();
 	}
 
 	/**
@@ -120,7 +118,6 @@ class SearchResultsDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

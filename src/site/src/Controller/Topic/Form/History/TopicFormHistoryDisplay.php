@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Form\History;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentTopicControllerFormHistoryDisplay
@@ -49,7 +48,6 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -67,8 +65,8 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 			'DESC'
 		);
 
-		$replycount   = $this->topic->getReplies();
-		$historycount = count($this->history);
+		$this->replycount   = $this->topic->getReplies();
+		$this->historycount = \count($this->history);
 		KunenaAttachmentHelper::getByMessage($this->history);
 		$userlist = [];
 
@@ -122,10 +120,10 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
 
 		// FIXME: need to improve BBCode class on this...
-		$attachments        = KunenaAttachmentHelper::getByMessage($this->history);
-		$inline_attachments = [];
+		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
+		$this->inline_attachments = [];
 
-		$headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
+		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 	}
 
 	/**

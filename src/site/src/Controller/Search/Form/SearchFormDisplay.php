@@ -49,10 +49,10 @@ class SearchFormDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -90,7 +90,7 @@ class SearchFormDisplay extends KunenaControllerDisplay
 		$this->me = KunenaUserHelper::getMyself();
 
 		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
-		$error             = $this->model->getError();
+		$this->error       = $this->model->getError();
 	}
 
 	/**
@@ -98,9 +98,9 @@ class SearchFormDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function prepareDocument()
 	{

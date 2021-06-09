@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Form\Edit;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Document\HtmlDocument;
@@ -28,7 +28,6 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentTopicControllerFormEditDisplay
@@ -51,7 +50,6 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -109,9 +107,9 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
 		foreach ($doc->_links as $key => $value)
 		{
-			if (is_array($value))
+			if (\is_array($value))
 			{
-				if (array_key_exists('relation', $value))
+				if (\array_key_exists('relation', $value))
 				{
 					if ($value['relation'] == 'canonical')
 					{
@@ -204,7 +202,6 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

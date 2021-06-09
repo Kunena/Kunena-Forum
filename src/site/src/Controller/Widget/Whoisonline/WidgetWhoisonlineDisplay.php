@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Widget\Whoisonline;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -21,7 +21,6 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentStatisticsControllerWhoisonlineDisplay
@@ -49,7 +48,6 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -63,7 +61,7 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 		}
 
 		$me        = KunenaUserHelper::getMyself();
-		$moderator = intval($me->isModerator()) + intval($me->isAdmin());
+		$moderator = \intval($me->isModerator()) + \intval($me->isAdmin());
 
 		$users = KunenaUserHelper::getOnlineUsers();
 		KunenaUserHelper::loadUsers(array_keys($users));
@@ -129,7 +127,6 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

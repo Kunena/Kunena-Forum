@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\User\Ban\Manager;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentUserControllerBanManagerDisplay
@@ -69,7 +68,6 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -91,7 +89,7 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
 
 		// TODO: add authorisation
 		$userBanspre = KunenaBan::getBannedUsers(0, 100);
-		$count       = count($userBanspre);
+		$count       = \count($userBanspre);
 
 		$this->pagination = new KunenaPagination($count, $start, $limit);
 		$this->userBans   = KunenaBan::getBannedUsers($this->pagination->limitstart, $this->pagination->limit);
@@ -116,7 +114,6 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

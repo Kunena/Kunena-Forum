@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\User\Edit\Avatar;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
-use function defined;
 
 /**
  * Class ComponentUserControllerEditAvatarDisplay
@@ -83,7 +82,6 @@ class UserEditAvatarDisplay extends UserEditDisplay
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -180,7 +178,7 @@ class UserEditAvatarDisplay extends UserEditDisplay
 			$options[] = HTMLHelper::_('select.option', $gallery, $text);
 		}
 
-		return count($options) > 1 ? $options : [];
+		return \count($options) > 1 ? $options : [];
 	}
 
 	/**
@@ -190,7 +188,6 @@ class UserEditAvatarDisplay extends UserEditDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

@@ -57,10 +57,10 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function before()
 	{
@@ -76,7 +76,7 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 		$task   = "index.php?option=com_kunena&view=category&task=%s&catid={$catid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}";
 
-		$template              = KunenaFactory::getTemplate();
+		$this->template        = KunenaFactory::getTemplate();
 		$this->categoryButtons = new CMSObject;
 
 		// Is user allowed to post new topic?
@@ -134,10 +134,10 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  KunenaLayout
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null)
 	{

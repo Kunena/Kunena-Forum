@@ -863,6 +863,12 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY banned datetime NULL DEFAULT '1000-01-01 00:00:00';</query>
         </version>
+        <version version="5.2.6-DEV"
+                 versiondate="2021-06-12"
+                 versionname="Internal">
+            <query mode="silenterror">UPDATE `#__kunena_users_banned` SET `expiration` = '9999-12-31 23:59:59' WHERE expiration = '0000-00-00 00:00:00';</query>
+            <query mode="silenterror">UPDATE `#__kunena_users` SET `banned` = '9999-12-31 23:59:59' WHERE banned = '0000-00-00 00:00:00';</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

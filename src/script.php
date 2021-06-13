@@ -46,23 +46,23 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * @var array
 	 * @since Kunena 2.0
 	 */
-	protected $versions = array(
-		'PHP'     => array(
+	protected $versions = [
+		'PHP'     => [
 			'8.0' => '8.0.0',
 			'7.4' => '7.4.0',
 			'7.3' => '7.3.5',
 			'0'   => '7.3.5', // Preferred version
-		),
-		'MySQL'   => array(
+		],
+		'MySQL'   => [
 			'5.7' => '5.7.8',
 			'5.6' => '5.6.5',
 			'0'   => '5.6.5', // Preferred version
-		),
-		'Joomla!' => array(
+		],
+		'Joomla!' => [
 			'4.0' => '4.0.0-rc2-dev',
 			'0'    => '4.0.0-rc2-dev', // Preferred version
-		),
-	);
+		],
+	];
 
 	/**
 	 * List of required PHP extensions.

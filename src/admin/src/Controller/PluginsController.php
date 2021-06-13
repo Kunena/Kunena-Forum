@@ -127,13 +127,13 @@ class PluginsController extends AdminController
 			// Retrieve the name of plugin extension from extensions table to check before if the third party extension exist
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
-			$query->select($db->quoteName(array('element', 'extension_id')));
+			$query->select($db->quoteName(['element', 'extension_id']));
 			$query->from($db->quoteName('#__extensions'));
 			$query->where($db->quoteName('extension_id') . ' IN (' . $cids . ')');
 			$db->setQuery($query);
 			$plg_kunena_exts = $db->loadObjectList();
 
-			$cids_exist = array();
+			$cids_exist = [];
 
 			foreach ($plg_kunena_exts as $plg)
 			{
@@ -241,7 +241,7 @@ class PluginsController extends AdminController
 	 *
 	 * @since   Kunena 2.0
 	 */
-	public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = array('ignore_request' => true)): object
+	public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = ['ignore_request' => true]): object
 	{
 		return parent::getModel($name, $prefix, $config);
 	}

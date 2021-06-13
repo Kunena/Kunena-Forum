@@ -18,8 +18,8 @@ $checklist = checkdir('administrator');
 $checklist += checkdir('components');
 $checklist += checkdir('modules');
 
-$keys = array('COM_KUNENA' => 'administrator/components/com_kunena/kunena.j25.xml');
-$files = array();
+$keys = ['COM_KUNENA' => 'administrator/components/com_kunena/kunena.j25.xml'];
+$files = [];
 
 foreach ($checklist as $file => $dummy)
 {

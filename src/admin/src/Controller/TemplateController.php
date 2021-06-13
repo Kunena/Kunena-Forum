@@ -54,7 +54,7 @@ class TemplateController extends FormController
 	 * @see     BaseController
 	 *
 	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		parent::__construct($config, $factory, $app, $input);
 
@@ -120,9 +120,9 @@ class TemplateController extends FormController
 	 */
 	protected function internalSaveParamFile(string $template): void
 	{
-		$params = $this->app->input->get('jform', array(), 'post', 'array');
+		$params = $this->app->input->get('jform', [], 'post', 'array');
 
-		$editorButtons = array();
+		$editorButtons = [];
 
 		if (!$params['Bold'])
 		{

@@ -35,7 +35,7 @@ if ($saveOrder)
         <div id="j-main-container" class="col-md-12" role="main">
             <div class="card card-block bg-faded p-2">
                 <form action="index.php?option=com_kunena&view=plugins" method="post" name="adminForm" id="adminForm">
-					<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
+					<?php echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]); ?>
                     <input type="hidden" name="task" value=""/>
                     <input type="hidden" name="boxchecked" value="0"/>
                     <input type="hidden" name="filter_order" value="<?php echo $this->list->Ordering; ?>"/>
@@ -192,9 +192,9 @@ if ($saveOrder)
 												<?php echo $item->name; ?>
                                             </a>
 											<?php echo HTMLHelper::_(
-									'bootstrap.renderModal',
-									'plugin' . $item->extension_id . 'Modal',
-									[
+												'bootstrap.renderModal',
+												'plugin' . $item->extension_id . 'Modal',
+												[
 													'url'         => Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
 													'title'       => $item->name,
 													'height'      => '400',
@@ -214,7 +214,7 @@ if ($saveOrder)
 														. 'Modal iframe\').contents().find(\'#applyBtn\').click(); return false;">'
 														. Text::_("JAPPLY") . '</button>',
 												]
-								); ?>
+											); ?>
 										<?php else : ?>
 											<?php echo $item->name; ?>
 										<?php endif; ?>

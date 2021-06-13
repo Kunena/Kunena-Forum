@@ -49,7 +49,7 @@ class DisplayController extends BaseController
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function display($cachable = false, $urlparams = array()): BaseController
+	public function display($cachable = false, $urlparams = []): BaseController
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 		KunenaFactory::loadLanguage('com_kunena.views', 'admin');

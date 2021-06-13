@@ -66,25 +66,25 @@ class AttachmentsModel extends ListModel
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function getForm($data = array(), $loadData = true): void
+	public function getForm($data = [], $loadData = true): void
 	{
 		// TODO: Implement getForm() method.
 	}
 
-	 /*
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @param   string  $ordering   ordering
-	 * @param   string  $direction  direction
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 1.6
-	 *
-	 */
+	/*
+	* Method to auto-populate the model state.
+	*
+	* Note. Calling getState in this method will result in recursion.
+	*
+	* @param   string  $ordering   ordering
+	* @param   string  $direction  direction
+	*
+	* @return  void
+	*
+	* @throws  Exception
+	* @since   Kunena 1.6
+	*
+	*/
 	protected function populateState($ordering = null, $direction = null)
 	{
 		$this->context = 'com_kunena.admin.attachments';

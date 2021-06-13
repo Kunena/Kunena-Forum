@@ -86,11 +86,11 @@ class KunenaModel extends BaseDatabaseModel
 	 * @param   array                                             $config   config
 	 * @param   \Joomla\CMS\MVC\Factory\MVCFactoryInterface|null  $factory  factory
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws \Exception
 	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null)
+	public function __construct($config = [], MVCFactoryInterface $factory = null)
 	{
 		$this->option = 'com_kunena';
 		parent::__construct($config, $factory);

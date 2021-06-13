@@ -421,7 +421,7 @@ class KunenaMessage extends KunenaDatabaseObject
 				$userfromparentname = 'anonymous';
 			}
 
-			$find             = array('/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su');
+			$find             = ['/\[hide\](.*?)\[\/hide\]/su', '/\[confidential\](.*?)\[\/confidential\]/su'];
 			$replace          = '';
 			$text             = preg_replace($find, $replace, $this->message);
 			$message->message = "[quote=\"{$userfromparentname} post={$this->id} userid={$useridfromparent}\"]" . $text . "[/quote]";

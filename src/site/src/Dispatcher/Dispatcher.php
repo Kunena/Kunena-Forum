@@ -137,10 +137,10 @@ class Dispatcher extends ComponentDispatcher
 		$topics       = new \stdClass;
 		$topics->text = '';
 		PluginHelper::importPlugin('content');
-		Factory::getApplication()->triggerEvent('onContentPrepare', array("com_kunena.{$view}", &$topics, &$params, 0));
-		Factory::getApplication()->triggerEvent('onKunenaBeforeRender', array("com_kunena.{$view}", &$contents));
+		Factory::getApplication()->triggerEvent('onContentPrepare', ["com_kunena.{$view}", &$topics, &$params, 0]);
+		Factory::getApplication()->triggerEvent('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]);
 		$contents = (string) $contents;
-		Factory::getApplication()->triggerEvent('onKunenaAfterRender', array("com_kunena.{$view}", &$contents));
+		Factory::getApplication()->triggerEvent('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]);
 		echo $contents;
 
 		// Remove custom error handlers.

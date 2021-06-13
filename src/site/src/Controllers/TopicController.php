@@ -161,7 +161,7 @@ class TopicController extends KunenaController
 			throw new RuntimeException(Text::_('Bad Request'), 400);
 		}
 
-		$attach_ids_final = array();
+		$attach_ids_final = [];
 		foreach ($attachs_id as $attach)
 		{
 			if (is_array($attach))
@@ -199,12 +199,12 @@ class TopicController extends KunenaController
 			throw new RuntimeException(Text::_('Forbidden'), 403);
 		}
 
-		$response = array();
+		$response = [];
 
 		if (is_object($attachments))
 		{
 			$editor_text               = $this->input->get->get('editor_text', '', 'raw');
-			$find                      = array('/\[attachment=' . $attachments->id . '\](.*?)\[\/attachment\]/su');
+			$find                      = ['/\[attachment=' . $attachments->id . '\](.*?)\[\/attachment\]/su'];
 			$replace                   = '';
 			$text                      = preg_replace($find, $replace, $editor_text);
 			$response['text_prepared'] = $text;

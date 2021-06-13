@@ -8,7 +8,7 @@
  */
 function getTranslations($path)
 {
-	$languages = array();
+	$languages = [];
 	$dirs = scandir($path);
 
 	foreach ($dirs as $dir)

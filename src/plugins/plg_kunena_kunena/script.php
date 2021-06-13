@@ -52,7 +52,7 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
 	 * @var array
 	 * @since Kunena
 	 */
-	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML');
+	protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
 
 	/**
 	 * @var  Joomla\CMS\Application\CMSApplication  Holds the application object
@@ -85,8 +85,8 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
 	 *
 	 * @return void
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function postflight($type, $parent)
 	{

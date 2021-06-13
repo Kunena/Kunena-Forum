@@ -13,10 +13,8 @@
 namespace Kunena\Forum\Libraries\Tables;
 
 use Exception;
-use InvalidArgumentException;
 use Joomla\CMS\Event\AbstractEvent;
 use Joomla\CMS\Table\Table;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use RuntimeException;
 use UnexpectedValueException;
@@ -43,9 +41,9 @@ abstract class KunenaTable extends Table
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function load($keys = null, $reset = true)
 	{
@@ -53,9 +51,9 @@ abstract class KunenaTable extends Table
 		$event = AbstractEvent::create(
 			'onTableBeforeLoad',
 			[
-				'subject'	=> $this,
-				'keys'		=> $keys,
-				'reset'		=> $reset,
+				'subject' => $this,
+				'keys'    => $keys,
+				'reset'   => $reset,
 			]
 		);
 		$this->getDispatcher()->dispatch('onTableBeforeLoad', $event);
@@ -63,7 +61,7 @@ abstract class KunenaTable extends Table
 		if (empty($keys))
 		{
 			$empty = true;
-			$keys  = array();
+			$keys  = [];
 
 			// If empty, use the value of the current key
 			foreach ($this->_tbl_keys as $key)
@@ -90,7 +88,7 @@ abstract class KunenaTable extends Table
 					throw new \InvalidArgumentException('Table has multiple primary keys specified, only one primary key value provided.');
 				}
 
-				$keys = array($this->getKeyName() => $keys);
+				$keys = [$this->getKeyName() => $keys];
 			}
 			else
 			{
@@ -104,7 +102,7 @@ abstract class KunenaTable extends Table
 		}
 
 		// Initialise the query.
-		$query = $this->_db->getQuery(true)
+		$query  = $this->_db->getQuery(true)
 			->select('*')
 			->from($this->_tbl);
 		$fields = array_keys($this->getProperties());
@@ -140,9 +138,9 @@ abstract class KunenaTable extends Table
 		$event = AbstractEvent::create(
 			'onTableAfterLoad',
 			[
-				'subject'		=> $this,
-				'result'		=> &$result,
-				'row'			=> $row,
+				'subject' => $this,
+				'result'  => &$result,
+				'row'     => $row,
 			]
 		);
 		$this->getDispatcher()->dispatch('onTableAfterLoad', $event);
@@ -155,9 +153,9 @@ abstract class KunenaTable extends Table
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function store($updateNulls = false): bool
 	{
@@ -238,10 +236,10 @@ abstract class KunenaTable extends Table
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  RuntimeException
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function updateObject($nulls = false): bool
 	{
@@ -330,10 +328,10 @@ abstract class KunenaTable extends Table
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  RuntimeException
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function insertObject(): bool
 	{
@@ -411,9 +409,9 @@ abstract class KunenaTable extends Table
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function delete($pk = null): bool
 	{

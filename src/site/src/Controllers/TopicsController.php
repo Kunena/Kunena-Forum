@@ -41,10 +41,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function none()
 	{
@@ -55,11 +55,11 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  boolean|void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  void
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function permdel()
 	{
@@ -115,9 +115,9 @@ class TopicsController extends KunenaController
 					unset($instance);
 				}
 
-				$db    = Factory::getDBO();
+				$db = Factory::getDBO();
 
-				$query = $db->getQuery(true)->select(array('a.id'))
+				$query = $db->getQuery(true)->select(['a.id'])
 					->from($db->quoteName('#__kunena_attachments', 'a'))
 					->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('a.mesid') . '=' . $db->quoteName('m.id'))
 					->where($db->quoteName('m.id') . ' IS NULL');
@@ -178,10 +178,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function delete()
 	{
@@ -245,10 +245,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function restore()
 	{
@@ -312,10 +312,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function approve()
 	{
@@ -380,10 +380,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function move()
 	{
@@ -488,10 +488,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function unfavorite()
 	{
@@ -538,10 +538,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function unsubscribe()
 	{
@@ -575,10 +575,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function approve_posts()
 	{
@@ -627,10 +627,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function delete_posts()
 	{
@@ -678,10 +678,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function restore_posts()
 	{
@@ -729,10 +729,10 @@ class TopicsController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function permdel_posts()
 	{

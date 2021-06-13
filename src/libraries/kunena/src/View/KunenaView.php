@@ -628,7 +628,7 @@ class KunenaView extends HtmlView
 		}
 
 		// Load the template script
-		$filetofind      = $this->_createFileName('template', array('name' => $file));
+		$filetofind      = $this->_createFileName('template', ['name' => $file]);
 		$this->_template = Path::find($this->_path['template'], $filetofind);
 
 		// If alternate layout can't be found, fall back to default layout

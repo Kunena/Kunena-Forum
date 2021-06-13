@@ -39,10 +39,10 @@ class DisplayController extends KunenaController
 	 * @param   null                      $app      The JApplication for the dispatcher
 	 * @param   null                      $input    Input
 	 *
-	 * @since   3.0.1
 	 * @throws \Exception
+	 * @since   3.0.1
 	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		$this->input = Factory::getApplication()->input;
 
@@ -57,8 +57,8 @@ class DisplayController extends KunenaController
 	 *
 	 * @return  KunenaController  This object to support chaining.
 	 *
-	 * @since   1.5
 	 * @throws \Exception
+	 * @since   1.5
 	 */
 	public function display($cachable = false, $urlparams = false): KunenaController
 	{

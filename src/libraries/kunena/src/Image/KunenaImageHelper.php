@@ -80,7 +80,7 @@ class KunenaImageHelper
 				$quality = intval(($quality - 1) / 10);
 			}
 
-			$options = array('quality' => $quality);
+			$options = ['quality' => $quality];
 
 			try
 			{

@@ -21,7 +21,7 @@ else
 	}
 }
 
-$files = array(
+$files = [
 	'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.controllers.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.ini',
 	'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.libraries.ini',
@@ -45,7 +45,7 @@ $files = array(
 	'components/com_kunena/site/language/en-GB/en-GB.com_kunena.tpl_blue_eagle.ini',
 	'components/com_kunena/site/language/en-GB/en-GB.kunena_tmpl_crypsis.ini',
 	'components/com_kunena/site/language/en-GB/en-GB.com_kunena.views.ini'
-);
+];
 
 echo "\nInitializing language files...\n\n";
 

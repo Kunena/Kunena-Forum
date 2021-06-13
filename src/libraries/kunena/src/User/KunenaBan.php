@@ -120,9 +120,9 @@ class KunenaBan extends parentAlias
 	 *
 	 * @param   null  $identifier  identifier
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($identifier = null)
 	{
@@ -392,9 +392,9 @@ class KunenaBan extends parentAlias
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getBannedUsers($start = 0, $limit = 50): array
 	{
@@ -404,10 +404,10 @@ class KunenaBan extends parentAlias
 		$nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
 
 		$query = $db->getQuery(true);
-		$query->select(array('b.*'))
+		$query->select(['b.*'])
 			->from($db->quoteName('#__kunena_users_banned', 'b'))
 			->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('b.userid'))
-			->where($db->quoteName('b.expiration'). ' = ' . $db->quote('9999-12-31 23:59:59'))
+			->where($db->quoteName('b.expiration') . ' = ' . $db->quote('9999-12-31 23:59:59'))
 			->orWhere($db->quoteName('b.expiration') . ' > ' . $db->quote($now->toSql()))
 			->order($db->quoteName('b.created_time') . ' DESC');
 		$query->setLimit($limit, $start);
@@ -441,9 +441,9 @@ class KunenaBan extends parentAlias
 	 *
 	 * @return  array
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public static function getUserHistory(int $userid): array
 	{
@@ -488,9 +488,9 @@ class KunenaBan extends parentAlias
 	/**
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getUser(): KunenaUser
 	{
@@ -500,9 +500,9 @@ class KunenaBan extends parentAlias
 	/**
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getCreator(): KunenaUser
 	{
@@ -512,9 +512,9 @@ class KunenaBan extends parentAlias
 	/**
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getModifier(): KunenaUser
 	{
@@ -650,17 +650,17 @@ class KunenaBan extends parentAlias
 
 	/**
 	 * Do the ban for the specified user from site or forum
-	 * 
-	 * @param   null   $userid         userid
-	 * @param   null   $ip             The address IP of the user
-	 * @param   bool   $banlevel       Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
-	 * @param   null   $expiration     The expiration date of the ban, if no date is specified the ban is set for lifetime
-	 * @param   string $reason_private The private reason
-	 * @param   string $reason_public  The public reason
-	 * @param   string $comment        Set a comment for others moderators
 	 *
-	 * @since Kunena 1.6
+	 * @param   null    $userid          userid
+	 * @param   null    $ip              The address IP of the user
+	 * @param   bool    $banlevel        Set if the user from forum or from site, from forum is set to 0 and from site is set to 1
+	 * @param   null    $expiration      The expiration date of the ban, if no date is specified the ban is set for lifetime
+	 * @param   string  $reason_private  The private reason
+	 * @param   string  $reason_public   The public reason
+	 * @param   string  $comment         Set a comment for others moderators
+	 *
 	 * @return void
+	 * @since Kunena 1.6
 	 */
 	public function ban($userid = null, $ip = null, $banlevel = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = ''): void
 	{
@@ -757,9 +757,9 @@ class KunenaBan extends parentAlias
 	 *
 	 * @return  boolean True on success
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
-	 * @throws  Exception
 	 */
 	public function save($updateOnly = false): bool
 	{
@@ -827,7 +827,7 @@ class KunenaBan extends parentAlias
 			{
 				$banlevel = $this->blocked;
 
-				$app  = Factory::getApplication();
+				$app = Factory::getApplication();
 				$app->logout((int) $this->userid);
 			}
 
@@ -864,9 +864,9 @@ class KunenaBan extends parentAlias
 	/**
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function canBan(): bool
 	{

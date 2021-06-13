@@ -44,7 +44,7 @@ class UserModel extends KunenaModel
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function getForm($data = array(), $loadData = true)
+	public function getForm($data = [], $loadData = true)
 	{
 		// TODO: Implement getForm() method.
 	}
@@ -52,10 +52,10 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  array|KunenaTopic[]|boolean
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function getSubscriptions(): array
 	{
@@ -97,9 +97,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  KunenaCategory[]
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getCatSubscriptions(): array
 	{
@@ -111,9 +111,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  array|boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getIPlist(): array
 	{
@@ -176,9 +176,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getListModCats()
 	{
@@ -201,7 +201,7 @@ class UserModel extends KunenaModel
 		// Todo: fix params
 		$params = [
 			'sections' => false,
-			'action'   => 'read', ];
+			'action'   => 'read',];
 
 		return HTMLHelper::_('select.genericlist', $categoryList, 'catid', 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text');
 	}
@@ -209,9 +209,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  KunenaUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getUser(): KunenaUser
 	{
@@ -223,9 +223,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  array|mixed|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getListUserRanks(): string
 	{
@@ -274,9 +274,9 @@ class UserModel extends KunenaModel
 	/**
 	 * @return  array|void|null
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getMoveUser()
 	{
@@ -320,9 +320,9 @@ class UserModel extends KunenaModel
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{

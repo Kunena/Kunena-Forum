@@ -225,7 +225,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function getForm($data = array(), $loadData = true)
+	public function getForm($data = [], $loadData = true)
 	{
 		// TODO: Implement getForm() method.
 	}
@@ -301,9 +301,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getSystemReportAnonymous(): string
 	{
@@ -384,9 +384,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function getReportData(): void
 	{
@@ -584,9 +584,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  boolean|stdClass|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
-	 * @throws  Exception
 	 */
 	protected function internalGetJoomlaTemplate()
 	{
@@ -691,9 +691,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  string|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
-	 * @throws  Exception
 	 */
 	protected function internalGetTablesCollation(): string
 	{
@@ -763,9 +763,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
-	 * @throws  Exception
 	 */
 	protected function internalGetKunenaConfiguration(): string
 	{
@@ -947,9 +947,9 @@ class ToolsModel extends AdminModel
 	 *
 	 * @return  string
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 1.6
 	 *
-	 * @throws  Exception
 	 */
 	public function getSystemReport(): string
 	{

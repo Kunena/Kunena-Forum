@@ -31,8 +31,8 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Kunena Users Controller
@@ -74,7 +74,7 @@ class UsersController extends AdminController
 	 * @see     BaseController
 	 *
 	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		parent::__construct($config, $factory, $app, $input);
 
@@ -92,7 +92,7 @@ class UsersController extends AdminController
 	 *
 	 * @since   1.6
 	 */
-	public function getModel($name = 'User', $prefix = 'Administrator', $config = array('ignore_request' => true)): object
+	public function getModel($name = 'User', $prefix = 'Administrator', $config = ['ignore_request' => true]): object
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
@@ -579,6 +579,37 @@ class UsersController extends AdminController
 	}
 
 	/**
+	 * Set moderator rights on the user given
+	 *
+	 * @param   KunenaUser  $user       user
+	 * @param   array       $modCatids  modCatids
+	 *
+	 * @return  boolean
+	 *
+	 * @throws Exception
+	 * @since   Kunena 5.1
+	 *
+	 */
+	protected function setModerate(KunenaUser $user, array $modCatids): bool
+	{
+		// Update moderator rights
+		$categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
+
+		foreach ($categories as $category)
+		{
+			$category->setModerator($user, in_array($category->id, $modCatids, true));
+		}
+
+		// Global moderator is a special case
+		if (KunenaUserHelper::getMyself()->isAdmin())
+		{
+			KunenaAccess::getInstance()->setModerator((object) [], $user, in_array(0, $modCatids, true));
+		}
+
+		return true;
+	}
+
+	/**
 	 * Unmoderate
 	 *
 	 * @return  void
@@ -1016,36 +1047,5 @@ class UsersController extends AdminController
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_ADD_CATEGORIES_SUBSCRIPTIONS_DONE'));
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Set moderator rights on the user given
-	 *
-	 * @param   KunenaUser  $user       user
-	 * @param   array       $modCatids  modCatids
-	 *
-	 * @return  boolean
-	 *
-	 * @throws Exception
-	 * @since   Kunena 5.1
-	 *
-	 */
-	protected function setModerate(KunenaUser $user, array $modCatids): bool
-	{
-		// Update moderator rights
-		$categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
-
-		foreach ($categories as $category)
-		{
-			$category->setModerator($user, in_array($category->id, $modCatids, true));
-		}
-
-		// Global moderator is a special case
-		if (KunenaUserHelper::getMyself()->isAdmin())
-		{
-			KunenaAccess::getInstance()->setModerator((object) [], $user, in_array(0, $modCatids, true));
-		}
-
-		return true;
 	}
 }

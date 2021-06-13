@@ -67,10 +67,10 @@ class UserController extends KunenaController
 	 *
 	 * @return  BaseController|void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function display($cachable = false, $urlparams = false): BaseController
 	{
@@ -132,10 +132,10 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function search()
 	{
@@ -163,10 +163,10 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function change()
 	{
@@ -186,10 +186,10 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function karmaup()
 	{
@@ -201,10 +201,10 @@ class UserController extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	protected function karma($karmaDelta)
 	{
@@ -301,10 +301,10 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function karmadown()
 	{
@@ -314,9 +314,9 @@ class UserController extends KunenaController
 	/**
 	 * @return  array|void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save()
 	{
@@ -424,9 +424,9 @@ class UserController extends KunenaController
 	/**
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function saveUser()
 	{
@@ -626,9 +626,9 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function saveProfile()
 	{
@@ -699,9 +699,9 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function saveSettings()
 	{
@@ -723,10 +723,10 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function ban()
 	{
@@ -955,9 +955,9 @@ class UserController extends KunenaController
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function report(int $userid = 0, string $evidence = null)
 	{
@@ -969,10 +969,10 @@ class UserController extends KunenaController
 		$spammer = Factory::getUser($userid);
 
 		// TODO: remove this query by getting the ip of user by an another way
-		$db = Factory::getDBO();
+		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query
-			->select($db->quoteName(array('ip')))
+			->select($db->quoteName(['ip']))
 			->from($db->quoteName('#__kunena_messages'))
 			->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
 			->group($db->quoteName('ip'))
@@ -1029,9 +1029,9 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function cancel()
 	{
@@ -1042,10 +1042,10 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function login()
 	{
@@ -1085,10 +1085,10 @@ class UserController extends KunenaController
 	/**
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function logout()
 	{
@@ -1126,10 +1126,10 @@ class UserController extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function status()
 	{
@@ -1167,10 +1167,10 @@ class UserController extends KunenaController
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
+	 *
 	 */
 	public function statusText()
 	{
@@ -1208,9 +1208,9 @@ class UserController extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws  null
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  null
 	 */
 	public function upload()
 	{
@@ -1289,9 +1289,9 @@ class UserController extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function deleteOldAvatars()
 	{
@@ -1325,9 +1325,9 @@ class UserController extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
 	 */
 	public function removeAvatar()
 	{
@@ -1381,9 +1381,9 @@ class UserController extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
 	 */
 	public function loadAvatar()
 	{
@@ -1434,9 +1434,9 @@ class UserController extends KunenaController
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function delfile()
 	{

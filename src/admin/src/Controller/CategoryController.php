@@ -55,7 +55,7 @@ class CategoryController extends FormController
 	 *
 	 * @see     FormController
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		parent::__construct($config);
 

@@ -153,7 +153,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 		$this->SetSmileyURL($relative ? Uri::root(true) : rtrim(Uri::root(), '/'));
 		$this->SetDetectURLs(true);
 		// The following call works with a hack in Nbbc\BBCode class in he method fillTemplate
-		$this->SetURLPattern(array($this, 'parseUrl'));
+		$this->SetURLPattern([$this, 'parseUrl']);
 		$this->SetURLTarget('_blank');
 
 		PluginHelper::importPlugin('kunena');
@@ -2245,7 +2245,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			$username = $quote_params['0'];
 		}
 
-		$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
+		$msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getUrl(null, false);
 
 		$layout = KunenaLayout::factory('BBCode/Quote');
 

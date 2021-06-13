@@ -299,7 +299,7 @@ class TemplatesModel extends AdminModel
 	 */
 	protected function loadTemplatesXml()
 	{
-		$this->template = array();
+		$this->template = [];
 
 		$url = 'https://update.kunena.org/templates.xml';
 

@@ -38,7 +38,6 @@ foreach ($languages as $language)
 		continue;
 	}
 
-
 	if (!is_dir("components/com_kunena/language/{$language}"))
 	{
 		die("Error: Unknown language '{$language}'\n\n");
@@ -47,7 +46,7 @@ foreach ($languages as $language)
 	echo "\nLoading {$language} language strings...\n\n";
 
 	// Load all translations
-	$translations = array();
+	$translations = [];
 
 	foreach ($files as $file => $dummy)
 	{
@@ -75,7 +74,7 @@ foreach ($languages as $language)
  */
 function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/')
 {
-	$checklist = array();
+	$checklist = [];
 	$files = scandir($dir);
 
 	foreach ($files as $file)
@@ -111,7 +110,7 @@ function loadTranslations($file)
 {
 	if (!is_file($file))
 	{
-		return array();
+		return [];
 	}
 
 	echo "Load $file\n";
@@ -166,7 +165,7 @@ function translate($matches)
 	$string = isset($translations[$matches[2]]) ? $translations[$matches[2]] : '';
 
 	// If ($matches[3] == $string) $string = '';
-	$commentout = ( !empty($matches[1]) ? $matches[1] : ( $string ? '' : '; ' ) );
+	$commentout = (!empty($matches[1]) ? $matches[1] : ($string ? '' : '; '));
 
 	return $commentout . $matches[2] . '="' . $string . '"';
 }

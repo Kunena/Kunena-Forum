@@ -58,7 +58,7 @@ class TrashModel extends KunenaModel
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function getForm($data = array(), $loadData = true)
+	public function getForm($data = [], $loadData = true)
 	{
 		// TODO: Implement getForm() method.
 	}
@@ -68,10 +68,10 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @since   Kunena 1.6
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 1.6
+	 *
 	 */
 	public function getTrashItems()
 	{
@@ -90,10 +90,10 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @since   Kunena 1.6
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 1.6
+	 *
 	 */
 	protected function internalGetTopics(): array
 	{
@@ -185,10 +185,10 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @since   Kunena 1.6
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 1.6
+	 *
 	 */
 	protected function internalGetMessages(): array
 	{
@@ -364,10 +364,10 @@ class TrashModel extends KunenaModel
 	 *
 	 * @return  array
 	 *
-	 * @since   Kunena 1.6
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 1.6
+	 *
 	 */
 	public function getPurgeItems(): array
 	{

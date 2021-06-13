@@ -49,7 +49,7 @@ class UsersModel extends ListModel
 	 * @see     JController
 	 *
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		if (empty($config['filter_fields']))
 		{
@@ -82,7 +82,7 @@ class UsersModel extends ListModel
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function getForm($data = array(), $loadData = true): void
+	public function getForm($data = [], $loadData = true): void
 	{
 		// TODO: Implement getForm() method.
 	}

@@ -42,7 +42,7 @@ class PluginsModel extends ListModel
 	 * @see     JController
 	 *
 	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null)
+	public function __construct($config = [], MVCFactoryInterface $factory = null)
 	{
 		$this->option = 'com_kunena';
 
@@ -70,7 +70,7 @@ class PluginsModel extends ListModel
 	 *
 	 * @since   6.0
 	 */
-	public function getFilterForm($data = array(), $loadData = true)
+	public function getFilterForm($data = [], $loadData = true)
 	{
 		return parent::getFilterForm($data, $loadData);
 	}

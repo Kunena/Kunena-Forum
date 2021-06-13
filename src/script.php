@@ -33,34 +33,42 @@ use Kunena\Forum\Libraries\KunenaInstaller;
 class Pkg_KunenaInstallerScript extends InstallerScript
 {
 	/**
-	 * The extension name. This should be set in the installer script.
-	 *
-	 * @var    string
-	 * @since  5.4.0
-	 */
-	protected $extension = 'com_kunena';
-
-	/**
-	 * Minimum PHP version required to install the extension
-	 *
-	 * @var    string
-	 * @since  5.4.0
-	 */
-	protected $minimumPhp = '7.2.5';
-
-	/**
 	 * Minimum Joomla! version required to install the extension
 	 *
 	 * @var    string
 	 * @since  6.0.0
 	 */
-	protected $minimumJoomla = '4.0.0-dev';
+	protected $minimumJoomla = '4.0.0-rc2-dev';
+
+	/**
+	 * List of supported versions. Newest version first!
+	 *
+	 * @var array
+	 * @since Kunena 2.0
+	 */
+	protected $versions = array(
+		'PHP'     => array(
+			'8.0' => '8.0.0',
+			'7.4' => '7.4.0',
+			'7.3' => '7.3.5',
+			'0'   => '7.3.5', // Preferred version
+		),
+		'MySQL'   => array(
+			'5.7' => '5.7.8',
+			'5.6' => '5.6.5',
+			'0'   => '5.6.5', // Preferred version
+		),
+		'Joomla!' => array(
+			'4.0' => '4.0.0-rc2-dev',
+			'0'    => '4.0.0-rc2-dev', // Preferred version
+		),
+	);
 
 	/**
 	 * List of required PHP extensions.
 	 *
 	 * @var array
-	 * @since Kunena
+	 * @since Kunena 2.0
 	 */
 	protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML', 'fileinfo', 'mbstring'];
 
@@ -100,19 +108,12 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
-		// Storing old release number for process in postflight
-		if (strtolower($type) == 'update')
+		$manifest = $parent->getParent()->getManifest();
+
+		// Prevent installation if requirements are not met.
+		if (!$this->checkRequirements($manifest->version))
 		{
-			$manifest         = $this->getItemArray('manifest_cache', '#__extensions', 'element', $this->extension);
-			$this->oldRelease = $manifest['version'];
-
-			// Check if update is allowed (only update from 5.1.0 and higher)
-			if (version_compare($this->oldRelease, '5.1.0', '<'))
-			{
-				$this->app->enqueueMessage(Text::sprintf('COM_kunena_UPDATE_UNSUPPORTED', $this->oldRelease, '5.1.0'), 'error');
-
-				return false;
-			}
+			return false;
 		}
 
 		return parent::preflight($type, $parent);
@@ -499,7 +500,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * @return boolean
 	 *
 	 * @throws Exception
-	 * @since version
+	 * @since version 2.0
 	 */
 	protected function checkDbo($name, $types)
 	{
@@ -521,7 +522,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * @return integer
 	 *
 	 * @throws Exception
-	 * @since version
+	 * @since version 2.0
 	 */
 	protected function checkPhpExtensions($extensions)
 	{
@@ -547,23 +548,15 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * @return boolean
 	 *
 	 * @throws Exception
-	 * @since version
+	 * @since version 2.0
 	 */
 	protected function checkKunena($version)
 	{
 		$app = Factory::getApplication();
 		$db  = Factory::getDbo();
 
-		// Always load Kunena API if it exists.
-		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
-
-		if (is_file($api))
-		{
-			require_once $api;
-		}
-
 		// Do not install over Git repository (K1.6+).
-		if (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev())
+		if (class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev())
 		{
 			$app->enqueueMessage('Oops! You should not install Kunena over your Git repository!', 'notice');
 
@@ -588,35 +581,13 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			return true;
 		}
 
-		// Always allow upgrade to the newer version.
-		if (version_compare($version, $installed, '>='))
+		// Don't allow to upgrade before he version 5.1.0
+		if (version_compare($installed, '5.1.0', '<'))
 		{
-			return true;
-		}
+			$app->enqueueMessage('You should not updgrade Kunena from the version '.$installed.', you can do the upgrade only since 5.1.0', 'notice');
 
-		// Check if we can downgrade to the current version.
-		if (class_exists('KunenaInstaller'))
-		{
-			if (KunenaInstaller::canDowngrade($version))
-			{
-				return true;
-			}
+			return false;
 		}
-		else
-		{
-			// Workaround when Kunena files were removed to allow downgrade between bugfix versions.
-			$major = preg_replace('/(\d+.\d+)\..*$/', '\\1', $version);
-
-			if (version_compare($installed, $major, '>'))
-			{
-				return true;
-			}
-		}
-
-		$app->enqueueMessage(
-			sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version),
-			'notice'
-		);
 
 		return false;
 	}

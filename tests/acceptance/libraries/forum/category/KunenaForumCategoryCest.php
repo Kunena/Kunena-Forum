@@ -77,12 +77,12 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	 */
 	public function providerLoad()
 	{
-		return array(
-			array(null, false),
-			array(9999, false),
-			array(0, false),
-			array(1, true),
-			array(2, true));
+		return [
+			[null, false],
+			[9999, false],
+			[0, false],
+			[1, true],
+			[2, true]];
 	}
 
 	/**
@@ -167,12 +167,12 @@ class KunenaForumCategoryCest extends PHPUnit_Framework_TestCase
 	 */
 	public function providerGetChildren()
 	{
-		return array(
-			array(null, 0, array()),
-			array(9999, 0, array()),
-			array(0, 0, array(1)),
-			array(0, 1, array(1, 2, 3, 4)),
-			array(1, 0, array(2, 3, 4)));
+		return [
+			[null, 0, []],
+			[9999, 0, []],
+			[0, 0, [1]],
+			[0, 1, [1, 2, 3, 4]],
+			[1, 0, [2, 3, 4]]];
 	}
 
 	/**

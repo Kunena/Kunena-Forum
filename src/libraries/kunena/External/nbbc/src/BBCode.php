@@ -1453,12 +1453,12 @@ REGEX;
                 array_pop($this->start_tags[$name]); // Remove the locator for this tag.
                 if ($end_tag == self::BBCODE_PROHIBIT) {
                     // Broken tag, so just push it to the output as HTML.
-                    $output[] = Array(
+                    $output[] = [
                         self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                         self::BBCODE_STACK_TAG => false,
                         self::BBCODE_STACK_TEXT => $token[self::BBCODE_STACK_TEXT],
                         self::BBCODE_STACK_CLASS => $this->current_class,
-                    );
+                    ];
                     Debugger::debug("<b>Internal_GenerateOutput:</b> push broken tag: <tt>"
                         .htmlspecialchars($token['text'])."</tt><br>\n");
                 } else {
@@ -1516,12 +1516,12 @@ REGEX;
                             .htmlspecialchars($tag_output)."</tt><br>\n");
                     }
 
-                    $output = Array(Array(
+                    $output = [[
                         self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                         self::BBCODE_STACK_TAG => false,
                         self::BBCODE_STACK_TEXT => $tag_output,
                         self::BBCODE_STACK_CLASS => $this->current_class
-                    ));
+                    ]];
                 }
             }
         }
@@ -1873,12 +1873,12 @@ REGEX;
         $this->cleanupWSByPoppingStack("a", $this->stack);
 
         if (strlen($this->limit_tail) > 0) {
-            $this->stack[] = Array(
+            $this->stack[] = [
                 self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                 self::BBCODE_STACK_TEXT => $this->limit_tail,
                 self::BBCODE_STACK_TAG => false,
                 self::BBCODE_STACK_CLASS => $this->current_class,
-            );
+            ];
         }
 
         $this->was_limited = true;
@@ -2006,7 +2006,7 @@ REGEX;
                     // the 'plain_start' and 'plain_end' before the content specified in
                     // the 'plain_content' member.
                     if (!isset($tag_rule['plain_content']))
-                        $plain_content = Array('_content');
+                        $plain_content = ['_content'];
                     else
                         $plain_content = $tag_rule['plain_content'];
 
@@ -2075,11 +2075,11 @@ REGEX;
                         break;
 
                     case self::BBCODE_MODE_INTERNAL:
-                        $result = @call_user_func(Array($this, @$tag_rule['method']), self::BBCODE_OUTPUT, $tag_name, $default_value, $params, $contents);
+                        $result = @call_user_func([$this, @$tag_rule['method']], self::BBCODE_OUTPUT, $tag_name, $default_value, $params, $contents);
                         break;
 
                     case self::BBCODE_MODE_LIBRARY:
-                        $result = @call_user_func(Array($this->defaults, @$tag_rule['method']), $this, self::BBCODE_OUTPUT, $tag_name, $default_value, $params, $contents);
+                        $result = @call_user_func([$this->defaults, @$tag_rule['method']], $this, self::BBCODE_OUTPUT, $tag_name, $default_value, $params, $contents);
                         break;
 
                     case self::BBCODE_MODE_CALLBACK:
@@ -2177,12 +2177,12 @@ REGEX;
                 Debugger::debug("<b>ProcessIsolatedTag:</b> isolated tag <tt>[".htmlspecialchars($tag_name)
                     ."]</tt> rejected its parameters; outputting as text after fixup.<br>\n");
             }
-            $this->stack[] = Array(
+            $this->stack[] = [
                 self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                 self::BBCODE_STACK_TEXT => $this->fixupOutput($this->lexer->text),
                 self::BBCODE_STACK_TAG => false,
                 self::BBCODE_STACK_CLASS => $this->current_class,
-            );
+            ];
             return;
         }
 
@@ -2195,12 +2195,12 @@ REGEX;
                 ."]</tt> is done; pushing its output: <tt>".htmlspecialchars($output)."</tt><br>\n");
         }
 
-        $this->stack[] = Array(
+        $this->stack[] = [
             self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
             self::BBCODE_STACK_TEXT => $output,
             self::BBCODE_STACK_TAG => false,
             self::BBCODE_STACK_CLASS => $this->current_class,
-        );
+        ];
     }
 
     /**
@@ -2245,24 +2245,24 @@ REGEX;
                 $text = $this->limitText($this->lexer->text, $this->output_limit - $this->text_length);
                 if (strlen($text) > 0) {
                     $this->text_length += strlen($text);
-                    $this->stack[] = Array(
+                    $this->stack[] = [
                         self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                         self::BBCODE_STACK_TEXT => $this->fixupOutput($text),
                         self::BBCODE_STACK_TAG => false,
                         self::BBCODE_STACK_CLASS => $this->current_class,
-                    );
+                    ];
                 }
                 $this->doLimit();
                 break;
             }
             $this->text_length += strlen($this->lexer->text);
 
-            $this->stack[] = Array(
+            $this->stack[] = [
                 self::BBCODE_STACK_TOKEN => $token_type,
                 self::BBCODE_STACK_TEXT => htmlspecialchars($this->lexer->text),
                 self::BBCODE_STACK_TAG => $this->lexer->tag,
                 self::BBCODE_STACK_CLASS => $this->current_class,
-            );
+            ];
         }
         $this->lexer->verbatim = false;
 
@@ -2281,12 +2281,12 @@ REGEX;
             // since the code tag on, and it should be taken off.
             $this->stack = array_slice($this->stack, 0, $start);
 
-            $this->stack[] = Array(
+            $this->stack[] = [
                 self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                 self::BBCODE_STACK_TEXT => $this->fixupOutput($this->lexer->text),
                 self::BBCODE_STACK_TAG => false,
                 self::BBCODE_STACK_CLASS => $this->current_class,
-            );
+            ];
             return;
         }
 
@@ -2346,12 +2346,12 @@ REGEX;
                 ."</tt><br>\n");
         }
 
-        $this->stack[] = Array(
+        $this->stack[] = [
             self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
             self::BBCODE_STACK_TEXT => $output,
             self::BBCODE_STACK_TAG => false,
             self::BBCODE_STACK_CLASS => $this->current_class,
-        );
+        ];
     }
 
     /**
@@ -2377,12 +2377,12 @@ REGEX;
             }
             // If there is no such tag with this name, then just push the text as
             // though it was plain text.
-            $this->stack[] = Array(
+            $this->stack[] = [
                 self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                 self::BBCODE_STACK_TEXT => $this->fixupOutput($this->lexer->text),
                 self::BBCODE_STACK_TAG => false,
                 self::BBCODE_STACK_CLASS => $this->current_class,
-            );
+            ];
             return;
         }
 
@@ -2392,12 +2392,12 @@ REGEX;
                 if (sizeof($tag_params['_params']) > 1) {
                     // If there is no such tag with this name, then just push the text as
                     // though it was plain text.
-                    $this->stack[] = Array(
+                    $this->stack[] = [
                         self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                         self::BBCODE_STACK_TEXT => $this->fixupOutput($this->lexer->text),
                         self::BBCODE_STACK_TAG => false,
                         self::BBCODE_STACK_CLASS => $this->current_class,
-                    );
+                    ];
                     return;
                 }
             }
@@ -2408,7 +2408,7 @@ REGEX;
         // We've got a known tag.  See if it's valid inside this class; for example,
         // it's legal to put an inline tag inside a block tag, but not legal to put a
         // block tag inside an inline tag.
-        $allow_in = is_array($tag_rule['allow_in']) ? $tag_rule['allow_in'] : Array($this->root_class);
+        $allow_in = is_array($tag_rule['allow_in']) ? $tag_rule['allow_in'] : [$this->root_class];
         if (!in_array($this->current_class, $allow_in)) {
             // Not allowed.  Rewind the stack backward until it is allowed.
             if ($this->debug) {
@@ -2421,12 +2421,12 @@ REGEX;
                     Debugger::debug("<b>Internal_ParseStartTagToken:</b> no safe class exists; rejecting"
                         ." this tag as text after fixup.<br>\n");
                 }
-                $this->stack[] = Array(
+                $this->stack[] = [
                     self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                     self::BBCODE_STACK_TEXT => $this->fixupOutput($this->lexer->text),
                     self::BBCODE_STACK_TAG => false,
                     self::BBCODE_STACK_CLASS => $this->current_class,
-                );
+                ];
                 return;
             }
         }
@@ -2459,12 +2459,12 @@ REGEX;
                 Debugger::debug("<b>Internal_ParseStartTagToken:</b> tag <tt>[".htmlspecialchars($tag_name)
                     ."]</tt> rejected its parameters; outputting as text after fixup.<br>\n");
             }
-            $this->stack[] = Array(
+            $this->stack[] = [
                 self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                 self::BBCODE_STACK_TEXT => $this->fixupOutput($this->lexer->text),
                 self::BBCODE_STACK_TAG => false,
                 self::BBCODE_STACK_CLASS => $this->current_class,
-            );
+            ];
             return;
         }
 
@@ -2490,15 +2490,15 @@ REGEX;
                 ."</tt>.<br>\n");
         }
 
-        $this->stack[] = Array(
+        $this->stack[] = [
             self::BBCODE_STACK_TOKEN => $this->lexer->token,
             self::BBCODE_STACK_TEXT => $this->fixupOutput($this->lexer->text),
             self::BBCODE_STACK_TAG => $this->lexer->tag,
             self::BBCODE_STACK_CLASS => ($this->current_class = $newclass),
-        );
+        ];
 
         if (!isset($this->start_tags[$tag_name]))
-            $this->start_tags[$tag_name] = Array(count($this->stack) - 1);
+            $this->start_tags[$tag_name] = [count($this->stack) - 1];
         else
             $this->start_tags[$tag_name][] = count($this->stack) - 1;
     }
@@ -2531,12 +2531,12 @@ REGEX;
             if (isset($this->lost_start_tags[$tag_name]) && $this->lost_start_tags[$tag_name] > 0) {
                 $this->lost_start_tags[$tag_name]--;
             } else {
-                $this->stack[] = Array(
+                $this->stack[] = [
                     self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                     self::BBCODE_STACK_TEXT => $this->fixupOutput($this->lexer->text),
                     self::BBCODE_STACK_TAG => false,
                     self::BBCODE_STACK_CLASS => $this->current_class,
-                );
+                ];
             }
             return;
         }
@@ -2577,12 +2577,12 @@ REGEX;
                 .htmlspecialchars($output)."</tt><br>\n");
         }
 
-        $this->stack[] = Array(
+        $this->stack[] = [
             self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
             self::BBCODE_STACK_TEXT => $output,
             self::BBCODE_STACK_TAG => false,
             self::BBCODE_STACK_CLASS => $this->current_class,
-        );
+        ];
     }
 
     /**
@@ -2689,12 +2689,12 @@ REGEX;
                         $text = $this->limitText($this->lexer->text, $this->output_limit - $this->text_length);
                         if (strlen($text) > 0) {
                             $this->text_length += strlen($text);
-                            $this->stack[] = Array(
+                            $this->stack[] = [
                                 self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                                 self::BBCODE_STACK_TEXT => $this->fixupOutput($text),
                                 self::BBCODE_STACK_TAG => false,
                                 self::BBCODE_STACK_CLASS => $this->current_class,
-                            );
+                            ];
                         }
                         $this->doLimit();
                         break 2;
@@ -2702,12 +2702,12 @@ REGEX;
                     $this->text_length += strlen($this->lexer->text);
 
                     // Push this text token onto the stack.
-                    $this->stack[] = Array(
+                    $this->stack[] = [
                         self::BBCODE_STACK_TOKEN => self::BBCODE_TEXT,
                         self::BBCODE_STACK_TEXT => $this->fixupOutput($this->lexer->text),
                         self::BBCODE_STACK_TAG => false,
                         self::BBCODE_STACK_CLASS => $this->current_class,
-                    );
+                    ];
                     break;
 
                 case self::BBCODE_WS:
@@ -2724,12 +2724,12 @@ REGEX;
                     $this->text_length += strlen($this->lexer->text);
 
                     // Push this whitespace onto the stack.
-                    $this->stack[] = Array(
+                    $this->stack[] = [
                         self::BBCODE_STACK_TOKEN => self::BBCODE_WS,
                         self::BBCODE_STACK_TEXT => $this->lexer->text,
                         self::BBCODE_STACK_TAG => false,
                         self::BBCODE_STACK_CLASS => $this->current_class,
-                    );
+                    ];
                     break;
 
                 case self::BBCODE_NL:
@@ -2755,12 +2755,12 @@ REGEX;
                         // input:  For example, a "\r\n" input will produce a "\n" output; but
                         // this should still be acceptable, since we're working with text, not
                         // binary data.
-                        $this->stack[] = Array(
+                        $this->stack[] = [
                             self::BBCODE_STACK_TOKEN => self::BBCODE_WS,
                             self::BBCODE_STACK_TEXT => "\n",
                             self::BBCODE_STACK_TAG => false,
                             self::BBCODE_STACK_CLASS => $this->current_class,
-                        );
+                        ];
                     } else {
                         // Any whitespace before a newline isn't worth outputting, so if there's
                         // whitespace sitting on top of the stack, remove it so that it doesn't
@@ -2778,12 +2778,12 @@ REGEX;
                         $this->text_length += 1;
 
                         // Add the newline to the stack.
-                        $this->stack[] = Array(
+                        $this->stack[] = [
                             self::BBCODE_STACK_TOKEN => self::BBCODE_NL,
                             self::BBCODE_STACK_TEXT => $newline,
                             self::BBCODE_STACK_TAG => false,
                             self::BBCODE_STACK_CLASS => $this->current_class,
-                        );
+                        ];
 
                         // Any whitespace after a newline is meaningless, so if there's whitespace
                         // lingering on the input after this, remove it now.

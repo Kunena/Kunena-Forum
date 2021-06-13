@@ -451,7 +451,7 @@ class plgFinderKunena extends Adapter
 
 		// Convert the items to result objects.
 		$messages = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($ids, 'none');
-		$items    = array();
+		$items    = [];
 
 		foreach ($messages as &$message)
 		{
@@ -567,7 +567,7 @@ class plgFinderKunena extends Adapter
 	 */
 	protected function getMessagesByCategory($cat_id)
 	{
-		static $messages = array();
+		static $messages = [];
 
 		if (!$messages[$cat_id])
 		{
@@ -594,7 +594,7 @@ class plgFinderKunena extends Adapter
 	 */
 	protected function getMessagesByTopic($topic_id)
 	{
-		static $messages = array();
+		static $messages = [];
 
 		if (!$messages[$topic_id])
 		{
@@ -606,7 +606,7 @@ class plgFinderKunena extends Adapter
 			$query->where('m.thread = ' . $db->quote($topic_id));
 			$db->setQuery($query);
 			$results = $db->loadAssocList();
-			$list    = array();
+			$list    = [];
 
 			foreach ($results as $result)
 			{
@@ -641,7 +641,7 @@ class plgFinderKunena extends Adapter
 		$groups_r     = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
 		$groups       = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
 
-		$catlist = array();
+		$catlist = [];
 
 		// Check against Joomla access level
 		if ($category->accesstype == 'joomla.level')

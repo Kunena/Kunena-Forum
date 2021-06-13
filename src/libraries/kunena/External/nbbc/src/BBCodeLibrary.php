@@ -463,7 +463,7 @@ class BBCodeLibrary {
             // enclosed in an <a href> tag. Remove that if that is the case.
             $content = preg_replace('/^\\<a [^\\>]*\\>(.*?)<\\/a>$/', "\\1", $content);
 
-            return $bbcode->fillTemplate($bbcode->getURLTemplate(), array("url" => $url, "target" => $target, "content" => $content));
+            return $bbcode->fillTemplate($bbcode->getURLTemplate(), ["url" => $url, "target" => $target, "content" => $content]);
         } else {
             return htmlspecialchars($params['_tag']).$content.htmlspecialchars($params['_endtag']);
         }
@@ -496,7 +496,7 @@ class BBCodeLibrary {
             : $bbcode->unHTMLEncode(strip_tags($content));
 
         if ($bbcode->isValidEmail($email)) {
-            return $bbcode->fillTemplate($bbcode->getEmailTemplate(), array("email" => $email, "content" => $content));
+            return $bbcode->fillTemplate($bbcode->getEmailTemplate(), ["email" => $email, "content" => $content]);
         } else {
             return htmlspecialchars($params['_tag']).$content.htmlspecialchars($params['_endtag']);
         }
@@ -623,7 +623,7 @@ class BBCodeLibrary {
         }
 
         $wikiURL = $bbcode->getWikiURL();
-        return $bbcode->fillTemplate($bbcode->getWikiURLTemplate(), array("wikiURL" => $wikiURL, "name" => $name, "title" => $title));
+        return $bbcode->fillTemplate($bbcode->getWikiURLTemplate(), ["wikiURL" => $wikiURL, "name" => $name, "title" => $title]);
     }
 
 
@@ -747,7 +747,7 @@ class BBCodeLibrary {
             $title = htmlspecialchars(trim($default))." wrote:";
         }
 
-        return $bbcode->fillTemplate($bbcode->getQuoteTemplate(), array("title" => $title, "content" => $content));
+        return $bbcode->fillTemplate($bbcode->getQuoteTemplate(), ["title" => $title, "content" => $content]);
     }
 
     /**

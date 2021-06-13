@@ -62,7 +62,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * @var array
 	 * @since Kunena
 	 */
-	protected $extensions = array('dom', 'gd', 'json', 'pcre', 'SimpleXML', 'fileinfo', 'mbstring');
+	protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML', 'fileinfo', 'mbstring'];
 
 	/**
 	 * @var  CMSApplication  Holds the application object
@@ -394,7 +394,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	{
 		$plugin = Table::getInstance('extension');
 
-		if (!$plugin->load(array('type' => 'plugin', 'folder' => $group, 'element' => $element)))
+		if (!$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element]))
 		{
 			return false;
 		}
@@ -417,7 +417,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
 		$pass &= $this->checkVersion('Joomla!', JVERSION);
 		$pass &= $this->checkVersion('MySQL', $db->getVersion());
-		$pass &= $this->checkDbo($db->name, array('mysql', 'mysqli', 'pdomysql'));
+		$pass &= $this->checkDbo($db->name, ['mysql', 'mysqli', 'pdomysql']);
 		$pass &= $this->checkPhpExtensions($this->extensions);
 		$pass &= $this->checkKunena($version);
 

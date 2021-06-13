@@ -149,7 +149,7 @@ foreach ($files as $filename => $fkeys)
  */
 function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/')
 {
-	$checklist = array();
+	$checklist = [];
 	$files = scandir($dir);
 
 	foreach ($files as $file)
@@ -222,7 +222,7 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
 
 	foreach ($fkeys as $location => $list)
 	{
-		$autogen = array();
+		$autogen = [];
 		$out .= "\n; JROOT/{$location}\n\n";
 		ksort($list);
 
@@ -290,7 +290,7 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
 	}
 
 	// Saving temporary language file
-	$outfile = preg_replace(array('|^site/|', '|^admin/|'), array('components/com_kunena/language/en-GB/','administrator/components/com_kunena/language/en-GB/'), $outfile);
+	$outfile = preg_replace(['|^site/|', '|^admin/|'], ['components/com_kunena/language/en-GB/','administrator/components/com_kunena/language/en-GB/'], $outfile);
 	$fp = fopen($outfile, 'w');
 	fwrite($fp, $out);
 	fclose($fp);
@@ -305,8 +305,8 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
  */
 function loadTranslations($files)
 {
-	$translations = array();
-	$filestrings = array();
+	$translations = [];
+	$filestrings = [];
 
 	foreach ($files as $file)
 	{
@@ -327,7 +327,7 @@ function loadTranslations($files)
 			echo "ERROR LOADING $file!\n";
 		}
 
-		$file = preg_replace(array('|^components/.*/|', '|^administrator/.*/|'), array('site/','admin/'), $file);
+		$file = preg_replace(['|^components/.*/|', '|^administrator/.*/|'], ['site/','admin/'], $file);
 
 		foreach ($strings as $key => $str)
 		{
@@ -346,5 +346,5 @@ function loadTranslations($files)
 
 	ksort($translations);
 
-	return array($translations, $filestrings);
+	return [$translations, $filestrings];
 }

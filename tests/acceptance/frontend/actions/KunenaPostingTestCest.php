@@ -19,17 +19,17 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 	 * @var array
 	 * @since version
 	 */
-	static public $category = array();
+	static public $category = [];
 	/**
 	 * @var array
 	 * @since version
 	 */
-	static public $topic = array();
+	static public $topic = [];
 	/**
 	 * @var array
 	 * @since version
 	 */
-	static public $message = array();
+	static public $message = [];
 
 	/**
 	 * Sets up the fixture.
@@ -67,7 +67,7 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 	 */
 	public static function tearDownAfterClass()
 	{
-		self::$category = array();
+		self::$category = [];
 	}
 
 	/**
@@ -101,7 +101,7 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 		for ($i = 1; $i <= 10; $i++)
 		{
 			$category = self::$category[$i];
-			$fields   = array('subject' => "Topic $i", 'message' => "Message $i");
+			$fields   = ['subject' => "Topic $i", 'message' => "Message $i"];
 			list(self::$topic[$i], self::$message[$i][0]) = $category->newTopic($fields, 42);
 			$this->assertTrue(self::$message[$i][0]->save(), self::$message[$i][0]->getError());
 			$this->checkCategory($category);
@@ -109,7 +109,7 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 			$this->checkUser(42);
 			for ($j = 1; $j < $i; $j++)
 			{
-				$fields                = array('message' => "Message $i:$j");
+				$fields                = ['message' => "Message $i:$j"];
 				self::$message[$i][$j] = self::$topic[$i]->newReply($fields, 42);
 				$this->assertTrue(self::$message[$i][$j]->save(), self::$message[$i][$j]->getError());
 				$this->checkCategory($category);
@@ -152,11 +152,11 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 	 */
 	public function providerMovingTopicsToCategory()
 	{
-		return array(
-			array(1, 2),
-			array(9, 2),
-			array(4, 2),
-		);
+		return [
+			[1, 2],
+			[9, 2],
+			[4, 2],
+		];
 	}
 
 	/**
@@ -194,11 +194,11 @@ class KunenaPostingTestCest extends PHPUnit_Framework_TestCase
 	 */
 	public function providerMovingTopicsToTopic()
 	{
-		return array(
-			array(2, 8),
-			array(7, 3),
-			array(4, 6),
-		);
+		return [
+			[2, 8],
+			[7, 3],
+			[4, 6],
+		];
 	}
 
 	/**

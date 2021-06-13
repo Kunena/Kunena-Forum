@@ -75,3 +75,5 @@ selenium-server-standalone.jar
 codecept.phar
 selenium.log
 tests/cache
+
+.php-cs-fixer.cache

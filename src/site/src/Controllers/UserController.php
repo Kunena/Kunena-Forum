@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controllers;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -48,7 +48,6 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use KunenaProfileKunena;
 use RuntimeException;
 use stdClass;
-use function defined;
 
 require_once JPATH_PLUGINS . '/kunena/kunena/profile.php';
 
@@ -70,7 +69,6 @@ class UserController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function display($cachable = false, $urlparams = false): BaseController
 	{
@@ -135,7 +133,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function search()
 	{
@@ -166,7 +163,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function change()
 	{
@@ -189,7 +185,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function karmaup()
 	{
@@ -204,7 +199,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function karma($karmaDelta)
 	{
@@ -304,7 +298,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function karmadown()
 	{
@@ -316,7 +309,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save()
 	{
@@ -371,7 +363,7 @@ class UserController extends KunenaController
 
 		try
 		{
-			$success;
+
 		}
 		catch (Exception $e)
 		{
@@ -426,7 +418,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function saveUser()
 	{
@@ -461,7 +452,7 @@ class UserController extends KunenaController
 				return false;
 			}
 
-			if (strlen($post_password) < $params->get('minimum_length'))
+			if (\strlen($post_password) < $params->get('minimum_length'))
 			{
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM'), 'notice');
 
@@ -488,7 +479,7 @@ class UserController extends KunenaController
 			}
 
 			// If the field is empty and not required, the field is valid.
-			$valueLength = strlen($value);
+			$valueLength = \strlen($value);
 
 			// Load language file of com_users component
 			Factory::getApplication()->getLanguage()->load('com_users');
@@ -505,7 +496,7 @@ class UserController extends KunenaController
 			// Set a variable to check if any errors are made in password
 			$validPassword = true;
 
-			if (strlen($valueTrim) != $valueLength)
+			if (\strlen($valueTrim) != $valueLength)
 			{
 				$this->app->enqueueMessage(
 					Text::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
@@ -566,7 +557,7 @@ class UserController extends KunenaController
 			// Minimum length option
 			if (!empty($minimumLength))
 			{
-				if (strlen((string) $value) < $minimumLength)
+				if (\strlen((string) $value) < $minimumLength)
 				{
 					$this->app->enqueueMessage(
 						Text::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
@@ -628,7 +619,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function saveProfile()
 	{
@@ -701,7 +691,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function saveSettings()
 	{
@@ -726,7 +715,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function ban()
 	{
@@ -821,7 +809,7 @@ class UserController extends KunenaController
 
 		try
 		{
-			$success;
+
 		}
 		catch (Exception $e)
 		{
@@ -957,7 +945,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function report(int $userid = 0, string $evidence = null)
 	{
@@ -1031,7 +1018,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function cancel()
 	{
@@ -1045,7 +1031,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function login()
 	{
@@ -1088,7 +1073,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function logout()
 	{
@@ -1129,7 +1113,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function status()
 	{
@@ -1170,7 +1153,6 @@ class UserController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function statusText()
 	{
@@ -1210,7 +1192,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  null
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function upload()
 	{
@@ -1291,7 +1272,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function deleteOldAvatars()
 	{
@@ -1327,7 +1307,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function removeAvatar()
 	{
@@ -1383,7 +1362,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function loadAvatar()
 	{
@@ -1436,7 +1414,6 @@ class UserController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delfile()
 	{

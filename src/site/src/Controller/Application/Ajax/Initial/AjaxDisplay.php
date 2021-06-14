@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Application\Ajax\Initial;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -25,8 +25,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Request\KunenaRequest;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
-
 
 /**
  * Class ComponentKunenaControllerApplicationAjaxDefaultDisplay

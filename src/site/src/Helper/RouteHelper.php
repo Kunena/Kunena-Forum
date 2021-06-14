@@ -9,8 +9,7 @@
 
 namespace Kunena\Forum\Site\Helper;
 
-defined('_JEXEC') or die;
-
+\defined('_JEXEC') or die;
 
 /**
  * Kunena Component Route Helper.

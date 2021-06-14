@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\User\Ban\Form;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -20,7 +20,6 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentUserControllerBanFormDisplay
@@ -60,7 +59,6 @@ class UserBanFormDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -83,7 +81,6 @@ class UserBanFormDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

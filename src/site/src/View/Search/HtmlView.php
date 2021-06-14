@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\View\Search;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\View\KunenaView;
-
 
 /**
  * Topics View
@@ -396,7 +395,7 @@ class HtmlView extends KunenaView
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 				}
 
-				if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
+				if (\is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
 				{
 					$spacing = 1;
 				}

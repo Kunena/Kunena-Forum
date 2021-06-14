@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\View\Misc;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -390,7 +390,7 @@ class HtmlView extends KunenaView
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 				}
 
-				if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
+				if (\is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
 				{
 					$spacing = 1;
 				}

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controllers;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -29,7 +29,6 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
-use function defined;
 
 /**
  * Kunena Topics Controller
@@ -44,7 +43,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function none()
 	{
@@ -59,7 +57,6 @@ class TopicsController extends KunenaController
 	 * @throws  void
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function permdel()
 	{
@@ -181,7 +178,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete()
 	{
@@ -248,7 +244,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function restore()
 	{
@@ -315,7 +310,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function approve()
 	{
@@ -383,7 +377,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function move()
 	{
@@ -491,7 +484,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function unfavorite()
 	{
@@ -541,7 +533,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function unsubscribe()
 	{
@@ -578,7 +569,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function approve_posts()
 	{
@@ -630,7 +620,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete_posts()
 	{
@@ -681,7 +670,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function restore_posts()
 	{
@@ -732,7 +720,6 @@ class TopicsController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function permdel_posts()
 	{

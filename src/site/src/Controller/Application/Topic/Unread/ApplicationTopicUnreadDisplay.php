@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Application\Topic\Unread;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -20,7 +20,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationTopicUnreadDisplay
@@ -36,7 +35,6 @@ class ApplicationTopicUnreadDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function exists()
 	{
@@ -50,7 +48,6 @@ class ApplicationTopicUnreadDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -80,7 +77,6 @@ class ApplicationTopicUnreadDisplay extends KunenaControllerDisplay
 	 * @return void
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

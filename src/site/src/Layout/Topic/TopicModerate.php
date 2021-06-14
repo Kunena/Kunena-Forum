@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Layout\Topic;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use function defined;
 
 /**
  * KunenaLayoutTopicModerate

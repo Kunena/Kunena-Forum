@@ -12,12 +12,11 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Item\Rating;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
-use function defined;
 
 /**
  * Class ComponentTopicControllerItemRatingDisplay

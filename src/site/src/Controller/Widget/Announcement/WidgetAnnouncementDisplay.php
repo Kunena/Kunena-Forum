@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Site\Controller\Widget\Announcement;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerWidgetAnnouncementDisplay

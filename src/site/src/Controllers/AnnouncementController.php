@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controllers;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -23,7 +23,6 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
-use function defined;
 
 /**
  * Kunena Announcements Controller

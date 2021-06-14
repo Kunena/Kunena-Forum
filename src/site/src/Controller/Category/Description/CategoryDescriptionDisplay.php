@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Site\Controller\Category\Description;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\View\Topic;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -27,7 +27,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\View\KunenaView;
 use stdClass;
-use function defined;
 
 /**
  * Topic View

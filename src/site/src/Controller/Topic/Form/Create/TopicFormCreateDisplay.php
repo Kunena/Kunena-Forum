@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Form\Create;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Document\HtmlDocument;
@@ -28,7 +28,6 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentTopicControllerFormCreateDisplay
@@ -50,7 +49,6 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 	 */
 	protected $name = 'Topic/Edit';
 
-
 	/**
 	 * Prepare topic creation form.
 	 *
@@ -59,7 +57,6 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -253,7 +250,6 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

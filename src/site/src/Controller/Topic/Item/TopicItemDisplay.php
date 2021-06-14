@@ -96,7 +96,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -330,7 +329,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareMessages($mesid)
 	{
@@ -406,7 +404,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function getThreadedOrdering($parent = 0, $indent = [])
 	{
@@ -501,7 +498,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function docImage()
 	{
@@ -536,7 +532,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function after()
 	{
@@ -562,7 +557,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

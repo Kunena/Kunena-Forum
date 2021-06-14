@@ -12,14 +12,12 @@
 
 namespace Kunena\Forum\Site\Layout\Announcement;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use function defined;
 
 /**
  * KunenaLayoutAnnouncementEdit
@@ -50,7 +48,7 @@ class AnnouncementEdit extends KunenaLayout
 		switch ($name)
 		{
 			case 'id':
-				return '<input type="hidden" name="id" value="' . intval($this->announcement->id) . '" />';
+				return '<input type="hidden" name="id" value="' . \intval($this->announcement->id) . '" />';
 			case 'title':
 				return '<input type="text" name="title" ' . $attributes . ' value="' . $this->escape($this->announcement->title) . '"/>';
 			case 'sdescription':

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Item\Actions;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * Class ComponentTopicControllerItemActionsDisplay

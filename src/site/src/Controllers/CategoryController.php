@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controllers;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Kunena Category Controller
@@ -133,7 +132,7 @@ class CategoryController extends CategoriesController
 				// Mark all unread topics in selected categories as read.
 				KunenaCategoryUserHelper::markRead(array_keys($categories));
 
-				if (count($categories) > 1)
+				if (\count($categories) > 1)
 				{
 					$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'));
 				}

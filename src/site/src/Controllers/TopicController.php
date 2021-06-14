@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controllers;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -55,7 +55,6 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use stdClass;
-use function defined;
 
 /**
  * Kunena Topic Controller
@@ -74,7 +73,6 @@ class TopicController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -93,7 +91,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function loadattachments()
 	{
@@ -164,7 +161,7 @@ class TopicController extends KunenaController
 		$attach_ids_final = [];
 		foreach ($attachs_id as $attach)
 		{
-			if (is_array($attach))
+			if (\is_array($attach))
 			{
 				$attach_ids_final[] = $attach['0'];
 			}
@@ -201,7 +198,7 @@ class TopicController extends KunenaController
 
 		$response = [];
 
-		if (is_object($attachments))
+		if (\is_object($attachments))
 		{
 			$editor_text               = $this->input->get->get('editor_text', '', 'raw');
 			$find                      = ['/\[attachment=' . $attachments->id . '\](.*?)\[\/attachment\]/su'];
@@ -277,7 +274,6 @@ class TopicController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function removeattachments()
 	{
@@ -334,7 +330,6 @@ class TopicController extends KunenaController
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function upload()
 	{
@@ -436,7 +431,7 @@ class TopicController extends KunenaController
 
 						if ($imageInfo->type == IMAGETYPE_PNG)
 						{
-							$quality = intval(($quality - 1) / 10);
+							$quality = \intval(($quality - 1) / 10);
 						}
 
 						$image = new KunenaImage($uploadFile);
@@ -493,7 +488,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function post()
 	{
@@ -1088,7 +1082,6 @@ class TopicController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function checkMaxLinks($text, $topic)
 	{
@@ -1130,7 +1123,7 @@ class TopicController extends KunenaController
 				preg_match_all("/<a\s[^>]*href=\"([^\"]*)\"[^>]*>(.*)<\/a>/siU", $text, $matches);
 			}
 
-			$countlink = count($matches[0]);
+			$countlink = \count($matches[0]);
 
 			// Ignore internal links
 			foreach ($matches[1] as $link)
@@ -1163,7 +1156,6 @@ class TopicController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function postPrivate(KunenaMessage $message)
 	{
@@ -1234,7 +1226,6 @@ class TopicController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function edit()
 	{
@@ -1583,7 +1574,6 @@ class TopicController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function editPrivate(KunenaMessage $message)
 	{
@@ -1646,7 +1636,6 @@ class TopicController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function thankyou()
 	{
@@ -1662,7 +1651,6 @@ class TopicController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function setThankyou($type)
 	{
@@ -1760,7 +1748,6 @@ class TopicController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function unthankyou()
 	{
@@ -1774,7 +1761,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function subscribe()
 	{
@@ -1810,7 +1796,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function unsubscribe()
 	{
@@ -1846,7 +1831,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function favorite()
 	{
@@ -1882,7 +1866,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function unfavorite()
 	{
@@ -1918,7 +1901,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function sticky()
 	{
@@ -1969,7 +1951,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function unsticky()
 	{
@@ -2020,7 +2001,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function lock()
 	{
@@ -2071,7 +2051,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function unlock()
 	{
@@ -2122,7 +2101,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete()
 	{
@@ -2196,7 +2174,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function undelete()
 	{
@@ -2255,7 +2232,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function permdelete()
 	{
@@ -2330,7 +2306,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function approve()
 	{
@@ -2403,7 +2378,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function move()
 	{
@@ -2533,7 +2507,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function report()
 	{
@@ -2704,7 +2677,6 @@ class TopicController extends KunenaController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function vote()
 	{
@@ -2765,7 +2737,6 @@ class TopicController extends KunenaController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function resetvotes()
 	{

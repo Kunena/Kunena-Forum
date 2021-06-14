@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Site\Layout\Category;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
-use function defined;
 
 /**
  * KunenaLayoutCategoryManage

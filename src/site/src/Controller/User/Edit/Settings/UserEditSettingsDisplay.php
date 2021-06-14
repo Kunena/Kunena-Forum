@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\User\Edit\Settings;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -20,7 +20,6 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 use StdClass;
-use function defined;
 
 /**
  * Class ComponentUserControllerEditSettingsDisplay
@@ -48,7 +47,6 @@ class UserEditSettingsDisplay extends UserEditDisplay
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -204,7 +202,6 @@ class UserEditSettingsDisplay extends UserEditDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

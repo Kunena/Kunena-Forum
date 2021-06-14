@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\View\Category;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -23,7 +23,6 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\View\KunenaView;
-use function defined;
 
 /**
  * Category View

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Layout\Widget;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use DateInterval;
 use DateTime;
@@ -64,7 +64,7 @@ class SearchModel extends KunenaModel
 	public function getTotal()
 	{
 		$text = $this->getState('searchwords');
-		$q    = strlen($text);
+		$q    = \strlen($text);
 
 		if ($q < 3 && !$this->getState('query.searchuser') && $this->app->input->getString('childforums'))
 		{
@@ -103,7 +103,7 @@ class SearchModel extends KunenaModel
 		}
 
 		$text = $this->getState('searchwords');
-		$q    = strlen($text);
+		$q    = \strlen($text);
 
 		if (!$this->getState('query.searchuser'))
 		{
@@ -143,7 +143,7 @@ class SearchModel extends KunenaModel
 
 		if ($this->total < $limitstart)
 		{
-			$this->setState('list.start', intval($this->total / $limit) * $limit);
+			$this->setState('list.start', \intval($this->total / $limit) * $limit);
 		}
 
 		$topicids = [];
@@ -200,7 +200,7 @@ class SearchModel extends KunenaModel
 			$not      = '';
 			$operator = ' OR ';
 
-			if (substr($searchword, 0, 1) == '-' && strlen($searchword) > 1)
+			if (substr($searchword, 0, 1) == '-' && \strlen($searchword) > 1)
 			{
 				$not        = 'NOT';
 				$operator   = 'AND';
@@ -254,7 +254,7 @@ class SearchModel extends KunenaModel
 				case '90' :
 				case '180' :
 				case '365' :
-					$time = time() - 86400 * intval($this->getState('query.searchdate'));
+					$time = time() - 86400 * \intval($this->getState('query.searchdate'));
 					break;
 				default :
 					$time = time() - 86400 * 365;

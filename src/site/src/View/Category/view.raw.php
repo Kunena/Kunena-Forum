@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Site\View\Category;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\View\KunenaView;
 use StdClass;
-use function defined;
 
 /**
  * Category View

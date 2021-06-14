@@ -14,7 +14,7 @@ namespace Kunena\Forum\Site\Model;
 
 use Joomla\CMS\MVC\Model\ListModel;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 /**
  * Common Model for Kunena

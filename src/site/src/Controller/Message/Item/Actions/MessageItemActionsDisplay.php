@@ -608,7 +608,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(
 				['url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-				 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,]
+				 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon, ]
 			);
 	}
 }

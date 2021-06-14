@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Statistics\General;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * Class ComponentStatisticsControllerGeneralDisplay
@@ -49,7 +48,6 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -90,7 +88,6 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

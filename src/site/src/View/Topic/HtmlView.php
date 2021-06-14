@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\View\Topic;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -185,7 +185,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayUnread($tpl = null)
 	{
@@ -211,7 +210,6 @@ class HtmlView extends KunenaView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayFlat($tpl = null)
 	{
@@ -228,7 +226,6 @@ class HtmlView extends KunenaView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayDefault($tpl = null)
 	{
@@ -358,7 +355,6 @@ class HtmlView extends KunenaView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPagination($maxpages)
 	{
@@ -373,7 +369,6 @@ class HtmlView extends KunenaView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPaginationObject($maxpages)
 	{
@@ -398,7 +393,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function _prepareDocument($type)
 	{
@@ -416,8 +410,8 @@ class HtmlView extends KunenaView
 				$this->headerText = Text::_('COM_KUNENA_MENU_LATEST_DESC');
 				$this->title1     = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
 
-				$page  = intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
-				$pages = intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
+				$page  = \intval($this->state->get('list.start') / $this->state->get('list.limit')) + 1;
+				$pages = \intval(($this->total - 1) / $this->state->get('list.limit')) + 1;
 
 				if (!empty($params_title))
 				{
@@ -530,7 +524,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function setTitle(string $title): void
 	{
@@ -599,7 +592,6 @@ class HtmlView extends KunenaView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayThreaded($tpl = null)
 	{
@@ -616,7 +608,6 @@ class HtmlView extends KunenaView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayIndented($tpl = null)
 	{
@@ -630,7 +621,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayMessageProfile()
 	{
@@ -642,7 +632,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getMessageProfileBox()
 	{
@@ -746,7 +735,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayMessageContents()
 	{
@@ -758,7 +746,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayTopicActions()
 	{
@@ -770,7 +757,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopicActions()
 	{
@@ -865,7 +851,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayMessageActions()
 	{
@@ -877,7 +862,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getMessageActions()
 	{
@@ -906,13 +890,13 @@ class HtmlView extends KunenaView
 		}
 
 		// Thank you
-		if ($this->message->isAuthorised('thankyou') && !array_key_exists($this->me->userid, $this->message->thankyou))
+		if ($this->message->isAuthorised('thankyou') && !\array_key_exists($this->me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('thankyou', $this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user'));
 		}
 
 		// Unthank you
-		if ($this->message->isAuthorised('unthankyou') && array_key_exists($this->me->userid, $this->message->thankyou))
+		if ($this->message->isAuthorised('unthankyou') && \array_key_exists($this->me->userid, $this->message->thankyou))
 		{
 			$this->messageButtons->set('unthankyou', $this->getButton(sprintf($task, 'unthankyou'), 'unthankyou', 'message', 'moderation'));
 		}
@@ -956,7 +940,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function fillMessageInfo($matches)
 	{
@@ -987,7 +970,6 @@ class HtmlView extends KunenaView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayMessages($template = null)
 	{
@@ -1007,7 +989,6 @@ class HtmlView extends KunenaView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayMessage($id, $message, $template = null)
 	{
@@ -1041,13 +1022,13 @@ class HtmlView extends KunenaView
 			{
 				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . Session::getFormToken() . '=1';
 
-				if (count($message->thankyou) > $this->config->thankYouMax)
+				if (\count($message->thankyou) > $this->config->thankYouMax)
 				{
-					$this->more_thankyou = count($message->thankyou) - $this->config->thankYouMax;
+					$this->more_thankyou = \count($message->thankyou) - $this->config->thankYouMax;
 				}
 
-				$this->total_thankyou = count($message->thankyou);
-				$thankyous            = array_slice($message->thankyou, 0, $this->config->thankYouMax, true);
+				$this->total_thankyou = \count($message->thankyou);
+				$thankyous            = \array_slice($message->thankyou, 0, $this->config->thankYouMax, true);
 
 				if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 				{
@@ -1094,7 +1075,7 @@ class HtmlView extends KunenaView
 			}
 			else
 			{
-				$this->reportMessageLink = HTMLHelper::_('link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . intval($this->category->id) . '&id=' . intval($this->message->thread) . '&mesid=' . intval($this->message->id), Text::_('COM_KUNENA_REPORT'), Text::_('COM_KUNENA_REPORT'));
+				$this->reportMessageLink = HTMLHelper::_('link', 'index.php?option=com_kunena&view=topic&layout=report&catid=' . \intval($this->category->id) . '&id=' . \intval($this->message->thread) . '&mesid=' . \intval($this->message->id), Text::_('COM_KUNENA_REPORT'), Text::_('COM_KUNENA_REPORT'));
 			}
 		}
 
@@ -1207,7 +1188,6 @@ class HtmlView extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayThreadHistory()
 	{
@@ -1217,7 +1197,7 @@ class HtmlView extends KunenaView
 		}
 
 		$history            = KunenaMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historyLimit, $ordering = 'DESC');
-		$this->historycount = count($history);
+		$this->historycount = \count($history);
 		$this->replycount   = $this->topic->getReplies();
 		KunenaAttachmentHelper::getByMessage($history);
 		$userlist = [];
@@ -1380,7 +1360,6 @@ class HtmlView extends KunenaView
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function DisplayCreate($tpl = null)
 	{
@@ -1422,7 +1401,7 @@ class HtmlView extends KunenaView
 		              'sections'    => 0,
 		              'direction'   => 1,
 		              'hide_lonely' => 1,
-		              'action'      => 'topic.create',];
+		              'action'      => 'topic.create', ];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaCategoryHelper::get($this->catid);
@@ -1478,7 +1457,6 @@ class HtmlView extends KunenaView
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function DisplayReply($tpl = null)
 	{
@@ -1550,7 +1528,6 @@ class HtmlView extends KunenaView
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function displayEdit($tpl = null)
 	{
@@ -1631,7 +1608,6 @@ class HtmlView extends KunenaView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function redirectBack($anchor = '')
 	{

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\View\User;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\View\KunenaView;
 use stdClass;
-use function defined;
 
 /**
  * Users View

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Widget\Login;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerWidgetLoginDisplay

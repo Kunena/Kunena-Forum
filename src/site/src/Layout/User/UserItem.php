@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Layout\User;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -26,7 +26,6 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use stdClass;
-use function defined;
 
 /**
  * KunenaLayoutUserItem
@@ -66,7 +65,6 @@ class UserItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTabs()
 	{
@@ -304,7 +302,6 @@ class UserItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayUnapprovedPosts()
 	{
@@ -330,7 +327,6 @@ class UserItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayUserPosts()
 	{
@@ -356,7 +352,6 @@ class UserItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayGotThankyou()
 	{
@@ -382,7 +377,6 @@ class UserItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displaySaidThankyou()
 	{
@@ -408,7 +402,6 @@ class UserItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayFavorites()
 	{
@@ -434,7 +427,6 @@ class UserItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displaySubscriptions()
 	{
@@ -465,7 +457,6 @@ class UserItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayCategoriesSubscriptions()
 	{

@@ -12,14 +12,13 @@
 
 namespace Kunena\Forum\Site\Layout\Topic\Edit;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
-use function defined;
 
 /**
  * KunenaLayoutTopicEditEditor

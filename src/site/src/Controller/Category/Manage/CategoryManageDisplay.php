@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Category\Manage;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Filesystem\Folder;
@@ -29,7 +29,6 @@ use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -93,7 +92,6 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	protected function before()
 	{
@@ -161,7 +159,6 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 		{
 			$category->channels = 'THIS';
 		}
-
 
 		$topicOrderingOptions   = [];
 		$topicOrderingOptions[] = HTMLHelper::_('select.option', 'lastpost', Text::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST'));
@@ -246,7 +243,6 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	protected function prepareDocument()
 	{

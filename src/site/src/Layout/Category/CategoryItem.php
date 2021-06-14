@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Layout\Category;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -26,7 +26,6 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
 
 /**
  * KunenaLayoutCategoryItem
@@ -84,7 +83,6 @@ class CategoryItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayCategories()
 	{
@@ -102,7 +100,6 @@ class CategoryItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayCategoryActions()
 	{
@@ -119,7 +116,6 @@ class CategoryItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategoryActions()
 	{
@@ -145,7 +141,7 @@ class CategoryItem extends KunenaLayout
 				$actions['create'] = $this->subLayout('Widget/Button')
 					->setProperties(
 						['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-						 'icon' => 'pencil',]
+						 'icon' => 'pencil', ]
 					);
 			}
 			elseif ($url && $topicicontype == 'fa')
@@ -153,7 +149,7 @@ class CategoryItem extends KunenaLayout
 				$actions['create'] = $this->subLayout('Widget/Button')
 					->setProperties(
 						['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-						 'icon' => 'fa fa-pencil-alt',]
+						 'icon' => 'fa fa-pencil-alt', ]
 					);
 			}
 			else
@@ -161,7 +157,7 @@ class CategoryItem extends KunenaLayout
 				$actions['create'] = $this->subLayout('Widget/Button')
 					->setProperties(
 						['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-						 'icon' => 'icon-edit icon-white',]
+						 'icon' => 'icon-edit icon-white', ]
 					);
 			}
 		}
@@ -204,7 +200,7 @@ class CategoryItem extends KunenaLayout
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(
 							['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'envelope',]
+							 'icon' => 'envelope', ]
 						);
 				}
 				else
@@ -213,7 +209,7 @@ class CategoryItem extends KunenaLayout
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(
 							['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'envelope-open',]
+							 'icon' => 'envelope-open', ]
 						);
 				}
 			}
@@ -225,7 +221,7 @@ class CategoryItem extends KunenaLayout
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(
 							['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'fa fa-envelope',]
+							 'icon' => 'fa fa-envelope', ]
 						);
 				}
 				else
@@ -234,7 +230,7 @@ class CategoryItem extends KunenaLayout
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(
 							['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'fas fa-envelope-open',]
+							 'icon' => 'fas fa-envelope-open', ]
 						);
 				}
 			}
@@ -246,7 +242,7 @@ class CategoryItem extends KunenaLayout
 					$actions['subscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(
 							['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'icon-envelope',]
+							 'icon' => 'icon-envelope', ]
 						);
 				}
 				else
@@ -255,7 +251,7 @@ class CategoryItem extends KunenaLayout
 					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 						->setProperties(
 							['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'icon-envelope-opened',]
+							 'icon' => 'icon-envelope-opened', ]
 						);
 				}
 			}
@@ -282,7 +278,6 @@ class CategoryItem extends KunenaLayout
 	 * @see     KunenaLayout::getLastPostLink()
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getLastPostLink(KunenaCategory $category, $content, $title, $class, $length = 30, $follow = true, $canonical = false)
 	{
@@ -326,7 +321,6 @@ class CategoryItem extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPagination($maxpages)
 	{

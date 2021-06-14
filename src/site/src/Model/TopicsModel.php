@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -132,8 +132,8 @@ class TopicsModel extends KunenaModel
 
 		foreach ($this->messages as $message)
 		{
-			$userlist[intval($message->userid)] = intval($message->userid);
-			$postlist[intval($message->id)]     = intval($message->id);
+			$userlist[\intval($message->userid)] = \intval($message->userid);
+			$postlist[\intval($message->id)]     = \intval($message->id);
 		}
 
 		$this->_common($userlist, $postlist);
@@ -158,9 +158,9 @@ class TopicsModel extends KunenaModel
 
 			foreach ($this->topics as $topic)
 			{
-				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
-				$userlist[intval($topic->last_post_userid)]  = intval($topic->last_post_userid);
-				$lastpostlist[intval($topic->last_post_id)]  = intval($topic->last_post_id);
+				$userlist[\intval($topic->first_post_userid)] = \intval($topic->first_post_userid);
+				$userlist[\intval($topic->last_post_userid)]  = \intval($topic->last_post_userid);
+				$lastpostlist[\intval($topic->last_post_id)]  = \intval($topic->last_post_id);
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
@@ -490,7 +490,7 @@ class TopicsModel extends KunenaModel
 			$actionDropdown[] = HTMLHelper::_('select.option', 'restore', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
-		if (count($actionDropdown) == 1)
+		if (\count($actionDropdown) == 1)
 		{
 			return;
 		}
@@ -560,7 +560,7 @@ class TopicsModel extends KunenaModel
 			$actionDropdown[] = HTMLHelper::_('select.option', 'restore_posts', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
-		if (count($actionDropdown) == 1)
+		if (\count($actionDropdown) == 1)
 		{
 			return;
 		}
@@ -644,7 +644,7 @@ class TopicsModel extends KunenaModel
 			{
 				$cat_excluded = explode(',', $this->config->rssExcludedCategories);
 
-				if (in_array($catid, $cat_excluded))
+				if (\in_array($catid, $cat_excluded))
 				{
 					$latestCategory   = $this->config->rssExcludedCategories;
 					$latestCategoryIn = 0;
@@ -661,13 +661,13 @@ class TopicsModel extends KunenaModel
 				$latestCategoryIn = $params->get('topics_catselection', '');
 
 				// Make sure that category list is an array.
-				if (!is_array($latestCategory))
+				if (!\is_array($latestCategory))
 				{
 					$latestCategory = explode(',', $latestCategory);
 				}
 
 				// Default to global configuration.
-				if (in_array('', $latestCategory, true))
+				if (\in_array('', $latestCategory, true))
 				{
 					$latestCategory = $this->config->latestCategory;
 				}
@@ -692,12 +692,12 @@ class TopicsModel extends KunenaModel
 				}
 			}
 
-			if (!is_array($latestCategory))
+			if (!\is_array($latestCategory))
 			{
 				$latestCategory = explode(',', $latestCategory);
 			}
 
-			if (empty($latestCategory) || in_array(0, $latestCategory))
+			if (empty($latestCategory) || \in_array(0, $latestCategory))
 			{
 				$latestCategory = false;
 			}

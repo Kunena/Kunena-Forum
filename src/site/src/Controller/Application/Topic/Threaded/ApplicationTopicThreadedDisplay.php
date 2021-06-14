@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Site\Controller\Application\Topic\Threaded;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationTopicThreadedDisplay
@@ -27,7 +26,6 @@ use function defined;
  */
 class ApplicationTopicThreadedDisplay extends KunenaControllerDisplay
 {
-
 	/**
 	 * Return true if layout exists.
 	 *

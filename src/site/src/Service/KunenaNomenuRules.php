@@ -8,7 +8,7 @@
 
 namespace Kunena\Forum\Site\Service;
 
-defined('JPATH_PLATFORM') or die;
+\defined('JPATH_PLATFORM') or die;
 
 use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\Rules\RulesInterface;
@@ -99,4 +99,3 @@ class KunenaNomenuRules implements RulesInterface
 		unset($query['slug']);
 	}
 }
-

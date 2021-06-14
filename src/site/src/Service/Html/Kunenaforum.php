@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Service\Html;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -21,7 +21,6 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class JHtmlKunenaForum
@@ -82,7 +81,7 @@ class Kunenaforum
 
 		if (!isset($categories))
 		{
-			if (!is_array($parent))
+			if (!\is_array($parent))
 			{
 				$parent = [$parent];
 			}
@@ -122,13 +121,13 @@ class Kunenaforum
 				}
 			}
 
-			if ($hide_lonely && count($categories) + count($channels) <= 1)
+			if ($hide_lonely && \count($categories) + \count($channels) <= 1)
 			{
 				return false;
 			}
 		}
 
-		if (!is_array($options))
+		if (!\is_array($options))
 		{
 			$options = [];
 		}
@@ -137,7 +136,7 @@ class Kunenaforum
 		{
 			$selected = [];
 		}
-		elseif (!is_array($selected))
+		elseif (!\is_array($selected))
 		{
 			$selected = [(string) $selected];
 		}
@@ -186,7 +185,7 @@ class Kunenaforum
 
 		reset($options);
 
-		if (is_array($attribs))
+		if (\is_array($attribs))
 		{
 			$attribs = ArrayHelper::toString($attribs);
 		}
@@ -235,7 +234,7 @@ class Kunenaforum
 	{
 		if (!empty($uri))
 		{
-			if (is_string($uri) && $uri[0] == '/')
+			if (\is_string($uri) && $uri[0] == '/')
 			{
 				$list['href'] = $uri;
 			}
@@ -264,7 +263,7 @@ class Kunenaforum
 			$list['rel'] = htmlspecialchars($rel);
 		}
 
-		if (is_array($attributes))
+		if (\is_array($attributes))
 		{
 			$list += $attributes;
 		}
@@ -277,7 +276,7 @@ class Kunenaforum
 			$attr[] = "{$key}=\"{$value}\"";
 		}
 
-		if (!empty($attributes) && !is_array($attributes))
+		if (!empty($attributes) && !\is_array($attributes))
 		{
 			$attr[] = (string) $attributes;
 		}
@@ -299,7 +298,7 @@ class Kunenaforum
 	 */
 	public static function checklist(string $name, $options, $selected = [], $class_input = null): string
 	{
-		if ($selected !== true && !is_array($selected))
+		if ($selected !== true && !\is_array($selected))
 		{
 			$selected = (array) $selected;
 		}
@@ -311,7 +310,7 @@ class Kunenaforum
 		{
 			// Setup  the variable attributes.
 			$eid     = "checklist_{$name}_{$item}";
-			$checked = $selected === true || in_array($item, $selected) ? ' checked="checked"' : '';
+			$checked = $selected === true || \in_array($item, $selected) ? ' checked="checked"' : '';
 
 			// Build the HTML for the item.
 			$html[] = '	<li>';

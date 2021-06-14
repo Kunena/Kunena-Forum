@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Topic\Listing\Unread;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -29,7 +29,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
-use function defined;
 
 /**
  * Class ComponentTopicControllerListDisplay
@@ -46,7 +45,6 @@ class TopicListingUnreadDisplay extends ListDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{

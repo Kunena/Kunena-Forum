@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Category\Index\Actions;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Object\CMSObject;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentCategoryControllerIndexActionsDisplay
@@ -60,7 +59,6 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -137,7 +135,6 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getButton($url, $name, $scope, $type, $id = null)
 	{

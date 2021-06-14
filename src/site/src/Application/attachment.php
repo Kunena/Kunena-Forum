@@ -26,7 +26,7 @@ if (version_compare(PHP_VERSION, '7.2', '<'))
 /**
  *
  */
-define('_JEXEC', 1);
+\define('_JEXEC', 1);
 
 use Exception;
 use Joomla\Application\Web\WebClient;
@@ -41,7 +41,7 @@ use Kunena\Forum\Site\Controller\Application\Attachment\Initial\AttachmentDispla
 /**
  *
  */
-define('JPATH_BASE', dirname(dirname(dirname(isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : __DIR__))));
+\define('JPATH_BASE', \dirname(\dirname(\dirname(isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : __DIR__))));
 
 // Define Joomla constants.
 require_once JPATH_BASE . '/includes/defines.php';
@@ -117,13 +117,13 @@ class KunenaApplication extends WebApplication
 		Factory::$application = $this;
 
 		// Enable sessions by default.
-		if (is_null($this->config->get('session')))
+		if (\is_null($this->config->get('session')))
 		{
 			$this->config->set('session', true);
 		}
 
 		// Set the session default name.
-		if (is_null($this->config->get('session_name')))
+		if (\is_null($this->config->get('session_name')))
 		{
 			$this->config->set('session_name', 'site');
 		}
@@ -155,7 +155,7 @@ class KunenaApplication extends WebApplication
 		}
 
 		// Generate a session name.
-		$name = md5($this->get('secret') . $this->get('session_name', get_class($this)));
+		$name = md5($this->get('secret') . $this->get('session_name', \get_class($this)));
 
 		// Calculate the session lifetime.
 		$lifetime = (($this->get('lifetime')) ? $this->get('lifetime') * 60 : 900);
@@ -250,7 +250,6 @@ class KunenaApplication extends WebApplication
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function doExecute()
 	{

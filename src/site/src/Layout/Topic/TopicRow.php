@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Site\Layout\Topic;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use function defined;
 
 /**
  * KunenaLayoutTopicList
@@ -24,5 +23,4 @@ use function defined;
  */
 class TopicRow extends KunenaLayout
 {
-
 }

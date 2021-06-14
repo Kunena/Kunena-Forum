@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Site\Controllers;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use function defined;
 
 /**
  * Kunena Statistics Controller

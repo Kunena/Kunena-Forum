@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Site\View\Topics;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -20,7 +20,6 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
 use stdClass;
-use function defined;
 
 /**
  * @package     ${NAMESPACE}

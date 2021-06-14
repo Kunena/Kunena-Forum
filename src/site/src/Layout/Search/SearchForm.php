@@ -12,12 +12,11 @@
 
 namespace Kunena\Forum\Site\Layout\Search;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use function defined;
 
 /**
  * KunenaLayoutSearchForm
@@ -197,7 +196,16 @@ class SearchForm extends KunenaLayout
 		$catParams = ['sections' => true];
 
 		echo HTMLHelper::_(
-			'kunenaforum.categorylist', 'catids[]', 0, $options, $catParams, $attributes, 'value', 'text', $this->state->get('query.catids'), $id
+			'kunenaforum.categorylist',
+			'catids[]',
+			0,
+			$options,
+			$catParams,
+			$attributes,
+			'value',
+			'text',
+			$this->state->get('query.catids'),
+			$id
 		);
 	}
 

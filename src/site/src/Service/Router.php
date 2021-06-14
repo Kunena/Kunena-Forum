@@ -9,7 +9,7 @@
 
 namespace Kunena\Forum\Site\Service;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Application\SiteApplication;
@@ -31,7 +31,6 @@ use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Service\KunenaNomenuRules as NomenuRules;
-use function defined;
 
 /**
  * Routing class of com_kunena
@@ -48,7 +47,6 @@ class Router extends RouterView
 	 * @var CategoryFactoryInterface
 	 *
 	 * @since   6.0
-	 *
 	 */
 	private $categoryFactory;
 
@@ -58,7 +56,6 @@ class Router extends RouterView
 	 * @var DatabaseInterface
 	 *
 	 * @since   6.0
-	 *
 	 */
 	private $db;
 
@@ -388,7 +385,7 @@ class Router extends RouterView
 			return [];
 		}
 
-		$total = count($segments);
+		$total = \count($segments);
 
 		for ($i = 0; $i < $total; $i++)
 		{

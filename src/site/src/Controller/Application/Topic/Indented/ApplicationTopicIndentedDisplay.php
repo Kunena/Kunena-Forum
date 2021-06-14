@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Site\Controller\Application\Topic\Indented;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationTopicIndentedDisplay
@@ -27,7 +26,6 @@ use function defined;
  */
 class ApplicationTopicIndentedDisplay extends KunenaControllerDisplay
 {
-
 	/**
 	 * Return true if layout exists.
 	 *

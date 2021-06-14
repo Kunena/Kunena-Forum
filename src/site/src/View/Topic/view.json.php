@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Site\View\Topic;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,10 +23,8 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
 use stdClass;
-use function defined;
 
 /**
- *
  * @since   Kunena 6.0
  */
 class json extends KunenaView

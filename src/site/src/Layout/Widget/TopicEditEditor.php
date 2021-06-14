@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Site\Layout\Widget;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
-use function defined;
 
 /**
  * KunenaLayoutTopicEditEditor

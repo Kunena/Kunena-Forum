@@ -20,7 +20,6 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
- *
  * @since   Kunena 6.0
  */
 class KunenaViewTopic extends KunenaView
@@ -32,7 +31,6 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function display($tpl = null)
 	{

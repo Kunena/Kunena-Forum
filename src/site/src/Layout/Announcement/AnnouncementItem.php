@@ -12,14 +12,13 @@
 
 namespace Kunena\Forum\Site\Layout\Announcement;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * KunenaLayoutAnnouncementItem

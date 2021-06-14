@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -91,14 +91,14 @@ class AnnouncementModel extends ListModel
 		// If out of range, use last page
 		if ($limit && $this->total < $start)
 		{
-			$start = intval($this->total / $limit) * $limit;
+			$start = \intval($this->total / $limit) * $limit;
 		}
 
 		$announces = KunenaAnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
 
 		if ($this->total < $start)
 		{
-			$this->setState('list.start', intval($this->total / $limit) * $limit);
+			$this->setState('list.start', \intval($this->total / $limit) * $limit);
 		}
 
 		return $announces;

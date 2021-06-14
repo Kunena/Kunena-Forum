@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Site\Layout\Topic\Edit;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use function defined;
 
 /**
  * KunenaLayoutTopicEditHistory

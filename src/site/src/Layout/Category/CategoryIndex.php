@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Layout\Category;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * KunenaLayoutCategoryIndex
@@ -43,7 +42,6 @@ class CategoryIndex extends KunenaLayout
 	/**
 	 * @var     KunenaTemplate|void
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public $ktemplate;
 
@@ -84,7 +82,6 @@ class CategoryIndex extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategoryIcon($category)
 	{
@@ -123,7 +120,6 @@ class CategoryIndex extends KunenaLayout
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getSmallCategoryIcon($subcategory)
 	{
@@ -159,7 +155,6 @@ class CategoryIndex extends KunenaLayout
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getMarkReadButtonURL($categoryId, $numTopics)
 	{
@@ -185,7 +180,6 @@ class CategoryIndex extends KunenaLayout
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategoryRSSURL($catid, $xhtml = true)
 	{

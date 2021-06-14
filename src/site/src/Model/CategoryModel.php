@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -199,7 +199,7 @@ class CategoryModel extends CategoriesModel
 
 			$this->pending = [];
 
-			if ($this->me->userid && count($modcats))
+			if ($this->me->userid && \count($modcats))
 			{
 				$catlist = implode(',', $modcats);
 				$db      = Factory::getDBO();
@@ -338,9 +338,9 @@ class CategoryModel extends CategoriesModel
 
 				foreach ($this->topics as $topic)
 				{
-					$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
-					$userlist[intval($topic->last_post_userid)]  = intval($topic->last_post_userid);
-					$lastpostlist[intval($topic->last_post_id)]  = intval($topic->last_post_id);
+					$userlist[\intval($topic->first_post_userid)] = \intval($topic->first_post_userid);
+					$userlist[\intval($topic->last_post_userid)]  = \intval($topic->last_post_userid);
+					$lastpostlist[\intval($topic->last_post_id)]  = \intval($topic->last_post_id);
 				}
 
 				// Prefetch all users/avatars to avoid user by user queries during template iterations
@@ -447,7 +447,7 @@ class CategoryModel extends CategoriesModel
 			$actionDropdown[] = HTMLHelper::_('select.option', 'restore', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
-		if (count($actionDropdown) == 1)
+		if (\count($actionDropdown) == 1)
 		{
 			return;
 		}
@@ -487,7 +487,7 @@ class CategoryModel extends CategoriesModel
 		$actionDropdown[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		$actionDropdown[] = HTMLHelper::_('select.option', 'unsubscribe', Text::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
-		if (count($actionDropdown) == 1)
+		if (\count($actionDropdown) == 1)
 		{
 			return;
 		}

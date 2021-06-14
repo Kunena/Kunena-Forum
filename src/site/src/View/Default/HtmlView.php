@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\View;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\View\KunenaView;
 

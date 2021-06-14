@@ -86,7 +86,6 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -431,7 +430,6 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

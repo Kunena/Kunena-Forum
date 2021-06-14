@@ -12,12 +12,11 @@
 
 namespace Kunena\Forum\Site\Layout\Announcement\Listing;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncement;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use function defined;
 
 /**
  * KunenaLayoutAnnouncementListRow

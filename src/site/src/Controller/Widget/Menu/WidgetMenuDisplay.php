@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Widget\Menu;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\Registry\Registry;
@@ -20,7 +20,6 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerWidgetMenuDisplay

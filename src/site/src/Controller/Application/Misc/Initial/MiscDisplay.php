@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Application\Misc\Initial;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Controller\Application\Display;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay

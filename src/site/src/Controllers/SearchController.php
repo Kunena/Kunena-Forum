@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Site\Controllers;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Controller\KunenaController;
-use function defined;
 
 /**
  * Kunena Search Controller
@@ -30,7 +29,6 @@ class SearchController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($config = [])
 	{

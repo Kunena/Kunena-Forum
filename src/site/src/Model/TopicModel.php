@@ -27,7 +27,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 /**
  * Topic Model for Kunena
@@ -115,8 +115,8 @@ class TopicModel extends ListModel
 					}
 				}
 
-				$userlist[intval($message->userid)]      = intval($message->userid);
-				$userlist[intval($message->modified_by)] = intval($message->modified_by);
+				$userlist[\intval($message->userid)]      = \intval($message->userid);
+				$userlist[\intval($message->modified_by)] = \intval($message->modified_by);
 
 				$thankyou_list     = $thankyous[$message->id]->getList();
 				$message->thankyou = [];
@@ -168,7 +168,7 @@ class TopicModel extends ListModel
 	{
 		$list = [];
 
-		if (count($indent) == 1 && $this->getTopic()->getTotal() > $this->getState('list.start') + $this->getState('list.limit'))
+		if (\count($indent) == 1 && $this->getTopic()->getTotal() > $this->getState('list.start') + $this->getState('list.limit'))
 		{
 			$last = -1;
 		}
@@ -264,7 +264,7 @@ class TopicModel extends ListModel
 				// Find actual topic by fetching current message
 				$message = KunenaMessageHelper::get($mesid);
 				$topic   = KunenaTopicHelper::get($message->thread);
-				$this->setState('list.start', intval($topic->getPostLocation($mesid) / $this->getState('list.limit')) * $this->getState('list.limit'));
+				$this->setState('list.start', \intval($topic->getPostLocation($mesid) / $this->getState('list.limit')) * $this->getState('list.limit'));
 			}
 			else
 			{

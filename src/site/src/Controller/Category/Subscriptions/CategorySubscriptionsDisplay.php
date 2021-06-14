@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Category\Subscriptions;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -26,7 +26,6 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
-use function defined;
 
 /**
  * Class ComponentCategoryControllerSubscriptionsDisplay
@@ -67,7 +66,6 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function before()
 	{
@@ -165,7 +163,6 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function prepareDocument()
 	{

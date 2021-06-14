@@ -250,7 +250,7 @@ class Kunenagrid
 	 */
 	public static function published(int $i, $value, $prefix = '', $bootstrap = false)
 	{
-		if (is_object($value))
+		if (\is_object($value))
 		{
 			$value = $value->published;
 		}
@@ -287,18 +287,18 @@ class Kunenagrid
 	 */
 	public static function action(int $i, string $task, $prefix = '', $alt = '', $title = '', $class = '', $bootstrap = false, $img = '', $checkbox = 'cb')
 	{
-		if (is_array($prefix))
+		if (\is_array($prefix))
 		{
 			$options        = $prefix;
-			$text           = array_key_exists('text', $options) ? $options['text'] : '';
-			$active_title   = array_key_exists('active_title', $options) ? $options['active_title'] : '';
-			$inactive_title = array_key_exists('inactive_title', $options) ? $options['inactive_title'] : '';
-			$active_class   = array_key_exists('active_class', $options) ? $options['active_class'] : '';
-			$inactive_class = array_key_exists('inactive_class', $options) ? $options['inactive_class'] : '';
-			$enabled        = array_key_exists('enabled', $options) ? $options['enabled'] : '';
-			$translate      = array_key_exists('translate', $options) ? $options['translate'] : '';
-			$checkbox       = array_key_exists('checkbox', $options) ? $options['checkbox'] : $checkbox;
-			$prefix         = array_key_exists('prefix', $options) ? $options['prefix'] : '';
+			$text           = \array_key_exists('text', $options) ? $options['text'] : '';
+			$active_title   = \array_key_exists('active_title', $options) ? $options['active_title'] : '';
+			$inactive_title = \array_key_exists('inactive_title', $options) ? $options['inactive_title'] : '';
+			$active_class   = \array_key_exists('active_class', $options) ? $options['active_class'] : '';
+			$inactive_class = \array_key_exists('inactive_class', $options) ? $options['inactive_class'] : '';
+			$enabled        = \array_key_exists('enabled', $options) ? $options['enabled'] : '';
+			$translate      = \array_key_exists('translate', $options) ? $options['translate'] : '';
+			$checkbox       = \array_key_exists('checkbox', $options) ? $options['checkbox'] : $checkbox;
+			$prefix         = \array_key_exists('prefix', $options) ? $options['prefix'] : '';
 		}
 
 		$active        = $task == 'publish' ? 'active' : '';
@@ -428,7 +428,7 @@ class Kunenagrid
 	 */
 	public static function order($rows, $image = 'filesave.png', $task = 'saveOrder'): string
 	{
-		return '<a href="javascript:saveOrder(' . (count($rows) - 1) . ', \'' . $task . '\')" class="saveOrder" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
+		return '<a href="javascript:saveOrder(' . (\count($rows) - 1) . ', \'' . $task . '\')" class="saveOrder" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
 	}
 
 	/**

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\View\Common;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -76,7 +76,6 @@ class HtmlView extends KunenaView
 	public $pathway;
 
 	public $header;
-
 
 	/**
 	 * @param   null  $layout  layout
@@ -360,7 +359,7 @@ class HtmlView extends KunenaView
 			return;
 		}
 
-		$moderator = intval($this->me->isModerator()) + intval($this->me->isAdmin());
+		$moderator = \intval($this->me->isModerator()) + \intval($this->me->isAdmin());
 		$cache     = Factory::getCache('com_kunena', 'output');
 
 		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template"))
@@ -475,7 +474,7 @@ class HtmlView extends KunenaView
 		$kunenaStats = KunenaStatistics::getInstance();
 		$kunenaStats->loadGeneral();
 
-		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
+		$this->latestMemberLink = KunenaFactory::getUser(\intval($this->lastUserId))->getLink();
 		$this->statisticsUrl    = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 		$this->statisticsLink   = $this->getStatsLink($this->config->boardTitle . ' ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), '');
 		$this->usercountLink    = $this->getUserlistLink('', $this->memberCount);
@@ -714,7 +713,7 @@ class HtmlView extends KunenaView
 		$showAll   = $parameters->get('showAllChildren');
 		$class_sfx = htmlspecialchars($parameters->get('pageclass_sfx'), ENT_COMPAT, 'UTF-8');
 
-		return count($list) ? $this->loadTemplateFile('menu') : '';
+		return \count($list) ? $this->loadTemplateFile('menu') : '';
 	}
 
 	/**

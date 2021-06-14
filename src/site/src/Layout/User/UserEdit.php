@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Layout\User;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
-use function defined;
 
 /**
  * KunenaLayoutUserItem

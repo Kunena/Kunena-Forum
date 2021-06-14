@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Controller\Application\Attachment\Initial;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Class ComponentKunenaControllerApplicationAttachmentDefaultDisplay

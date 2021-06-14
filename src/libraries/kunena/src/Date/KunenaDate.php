@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Libraries\Date;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use DateTimeZone;
 use Exception;
@@ -20,7 +20,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use function defined;
 
 /**
  * Class KunenaDate

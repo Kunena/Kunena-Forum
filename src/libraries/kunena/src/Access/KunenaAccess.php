@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Libraries\Access;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -34,7 +34,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class KunenaAccess
@@ -113,7 +112,7 @@ class KunenaAccess
 
 		foreach ($classes as $class)
 		{
-			if (!is_object($class))
+			if (!\is_object($class))
 			{
 				continue;
 			}
@@ -234,8 +233,8 @@ class KunenaAccess
 
 		foreach ($list as $item)
 		{
-			$userid = intval($item->user_id);
-			$catid  = intval($item->category_id);
+			$userid = \intval($item->user_id);
+			$catid  = \intval($item->category_id);
 
 			if (!$userid)
 			{
@@ -384,7 +383,7 @@ jQuery(document).ready(function ($) {
 			$accesstypes[$string] = HTMLHelper::_('select.option', $category->accesstype, $string);
 		}
 
-		return HTMLHelper::_('select.genericlist', $accesstypes, 'accesstype', 'class="inputbox form-control" size="' . count($accesstypes) . '" onchange="kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype);
+		return HTMLHelper::_('select.genericlist', $accesstypes, 'accesstype', 'class="inputbox form-control" size="' . \count($accesstypes) . '" onchange="kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype);
 	}
 
 	/**
@@ -506,7 +505,7 @@ jQuery(document).ready(function ($) {
 		}
 
 		$categoryId = $category ? $category->id : 0;
-		$status     = intval($status);
+		$status     = \intval($status);
 
 		// Check if user exists
 		if (!($user instanceof KunenaUser))
@@ -541,7 +540,7 @@ jQuery(document).ready(function ($) {
 
 			if ($user->moderator != !empty($moderator))
 			{
-				$user->moderator = intval(!empty($moderator));
+				$user->moderator = \intval(!empty($moderator));
 				$success         = $user->save();
 			}
 		}
@@ -970,7 +969,7 @@ jQuery(document).ready(function ($) {
 			// False, null, '', 0 and array(): get all subscribers
 			$excludeList = [];
 		}
-		elseif (is_array($excludeList))
+		elseif (\is_array($excludeList))
 		{
 			// Array() needs to be flipped to get userids into keys
 			$excludeList = array_flip($excludeList);

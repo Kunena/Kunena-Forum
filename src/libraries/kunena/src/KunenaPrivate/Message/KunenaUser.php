@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Libraries\KunenaPrivate\Message;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
-use function defined;
 
 /**
  * Private message mapping for user.
@@ -26,7 +25,6 @@ use function defined;
  * @property string $deleted_at
  * @property int    $private_id
  * @since   Kunena 6.0
- *
  */
 class KunenaUser extends KunenaDatabaseObject
 {

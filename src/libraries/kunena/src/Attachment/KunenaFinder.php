@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Libraries\Attachment;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Collection\KunenaCollection;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaAttachmentFinder

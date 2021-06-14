@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Libraries\Error;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use StdClass;
-use function defined;
 
 /**
  * Class KunenaError
@@ -266,7 +265,7 @@ abstract class KunenaError
 
 		$error = error_get_last();
 
-		if ($error && in_array($error['type'], $types))
+		if ($error && \in_array($error['type'], $types))
 		{
 			KunenaLog::log(KunenaLog::TYPE_ERROR, KunenaLog::LOG_ERROR_FATAL, $error);
 

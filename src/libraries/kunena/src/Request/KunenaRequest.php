@@ -12,12 +12,11 @@
 
 namespace Kunena\Forum\Libraries\Request;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use InvalidArgumentException;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Controller\KunenaControllerBase;
-use function defined;
 
 /**
  * implements \Kunena Request class.
@@ -67,7 +66,7 @@ class KunenaRequest
 		$ex      = explode(' ', $words);
 		$subpart = '';
 
-		if (count($ex) == 4)
+		if (\count($ex) == 4)
 		{
 			$subpart = '' . $ex[2] . '\\';
 		}

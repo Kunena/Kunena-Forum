@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Libraries\Folder;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Filesystem\File;
-use function defined;
 
 /**
  * Class KunenaFolder

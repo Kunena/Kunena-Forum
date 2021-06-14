@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Database;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Exception\KunenaException;
-use function defined;
 
 /**
  * Class KunenaDatabaseObject
@@ -69,13 +68,12 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 * @since   Kunena 6.0
 	 *
 	 * @internal
-	 *
 	 */
 	public function __construct($properties = null)
 	{
 		if (!$this->_name)
 		{
-			$this->_name = get_class($this);
+			$this->_name = \get_class($this);
 		}
 
 		// Load properties from database.
@@ -136,13 +134,12 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load($id = null): bool
 	{
 		if ($id !== null)
 		{
-			$this->id = intval($id);
+			$this->id = \intval($id);
 		}
 
 		// Create the table object
@@ -192,7 +189,6 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -209,7 +205,6 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save()
 	{
@@ -246,7 +241,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 		// Trigger the onKunenaBeforeSave event.
 		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeSave', ["com_kunena.{$this->_name}", &$table, $isNew]);
 
-		if (in_array(false, $result, true))
+		if (\in_array(false, $result, true))
 		{
 			throw new KunenaException($table->getError());
 
@@ -314,7 +309,6 @@ abstract class KunenaDatabaseObject extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete(): bool
 	{
@@ -335,7 +329,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 		// Trigger the onKunenaBeforeDelete event.
 		$result = Factory::getApplication()->triggerEvent('onKunenaBeforeDelete', ["com_kunena.{$this->_name}", $table]);
 
-		if (in_array(false, $result, true))
+		if (\in_array(false, $result, true))
 		{
 			$this->setError($table->getError());
 

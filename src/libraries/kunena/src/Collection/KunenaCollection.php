@@ -17,9 +17,8 @@ use ArrayIterator;
 use Closure;
 use Countable;
 use IteratorAggregate;
-use function defined;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 /**
  * Kunena Item Collection.
@@ -149,7 +148,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 */
 	public function count(): int
 	{
-		return count($this->items);
+		return \count($this->items);
 	}
 
 	/**
@@ -163,7 +162,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 */
 	public function offsetExists($key): bool
 	{
-		return array_key_exists($key, $this->items);
+		return \array_key_exists($key, $this->items);
 	}
 
 	/**
@@ -192,7 +191,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 */
 	public function offsetSet($key, $value)
 	{
-		if (is_null($key))
+		if (\is_null($key))
 		{
 			$this->items[] = $value;
 		}

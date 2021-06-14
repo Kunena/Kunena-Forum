@@ -12,9 +12,8 @@
 namespace Kunena\Forum\Libraries\Tree;
 
 use Iterator;
-use function defined;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 /**
  * Kunena Tree Class
@@ -303,7 +302,7 @@ class KunenaTree implements Iterator
 				$indent[]   = 'empty';
 				$itemIndent = $indent;
 
-				if (count($parent_tree) > 1)
+				if (\count($parent_tree) > 1)
 				{
 					$list[$id]->indent[] = $id != $last_id ? 'zzznode' : 'zzzleaf';
 					$indent[]            = $id != $last_id ? 'edge' : 'empty';

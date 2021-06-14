@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\BBCode;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -21,7 +21,6 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use SimpleXMLElement;
-use function defined;
 
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
@@ -56,7 +55,6 @@ class KunenaBBCodeEditor
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -71,7 +69,6 @@ class KunenaBBCodeEditor
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($config = [])
 	{
@@ -122,7 +119,7 @@ class KunenaBBCodeEditor
 	{
 		$new_elements_keys = [];
 
-		if (!is_array($elements))
+		if (!\is_array($elements))
 		{
 			return false;
 		}
@@ -156,7 +153,7 @@ class KunenaBBCodeEditor
 				}
 				break;
 			default:
-				$pos = count($editor_keys);
+				$pos = \count($editor_keys);
 		}
 
 		array_splice($editor_keys, $pos, 0, $new_elements_keys);
@@ -173,7 +170,6 @@ class KunenaBBCodeEditor
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function initialize(): void
 	{
@@ -188,11 +184,10 @@ class KunenaBBCodeEditor
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function initializeHMVC(): void
 	{
-		$xml_file = simplexml_load_file(dirname(__FILE__) . '/aurelia_editor.xml');
+		$xml_file = simplexml_load_file(\dirname(__FILE__) . '/aurelia_editor.xml');
 
 		$this->editor_elements = self::parseXML($xml_file, 'parseHMVCXML');
 
@@ -232,7 +227,6 @@ class KunenaBBCodeEditor
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function parseXML(SimpleXMLElement $xml, $parseMethod): array
 	{
@@ -243,7 +237,7 @@ class KunenaBBCodeEditor
 			if ($xml_item['config'])
 			{
 				$cfgVariable = (string) $xml_item['config'];
-				$cfgValue    = intval($cfgVariable[0] != '!');
+				$cfgValue    = \intval($cfgVariable[0] != '!');
 
 				if (!$cfgValue)
 				{
@@ -258,7 +252,7 @@ class KunenaBBCodeEditor
 
 			$class = "KunenaBBCodeEditor" . strtoupper($xml_item->getName());
 
-			$item = call_user_func([$class, $parseMethod], $xml_item);
+			$item = \call_user_func([$class, $parseMethod], $xml_item);
 
 			$elements[$item->name] = $item;
 		}
@@ -380,7 +374,6 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function parseHMVCXML(SimpleXMLElement $xml): KunenaBBCodeEditorButton
 	{
@@ -400,7 +393,7 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
 			if ($xml_item['config'])
 			{
 				$cfgVariable = (string) $xml_item['config'];
-				$cfgValue    = intval($cfgVariable[0] != '!');
+				$cfgValue    = \intval($cfgVariable[0] != '!');
 
 				if (!$cfgValue)
 				{

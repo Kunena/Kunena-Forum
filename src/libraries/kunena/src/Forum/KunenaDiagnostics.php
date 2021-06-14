@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use stdClass;
-use function defined;
 
 /**
  * Class KunenaForumDiagnostics

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Category\User;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Category\CategoryUserHelper
@@ -57,7 +56,7 @@ abstract class KunenaCategoryUserHelper
 			$category = $category->id;
 		}
 
-		$category = intval($category);
+		$category = \intval($category);
 		$user     = KunenaUserHelper::get($user);
 
 		if ($category === null)
@@ -95,7 +94,7 @@ abstract class KunenaCategoryUserHelper
 			// Get categories which are seen by current user
 			$ids = KunenaCategoryHelper::getCategories();
 		}
-		elseif (!is_array($ids))
+		elseif (!\is_array($ids))
 		{
 			$ids = [$ids];
 		}
@@ -141,7 +140,7 @@ abstract class KunenaCategoryUserHelper
 	{
 		foreach ($ids as $i => $id)
 		{
-			$iid = intval($id);
+			$iid = \intval($id);
 
 			if ($iid != $id || isset(self::$_instances [$user->userid][$id]))
 			{

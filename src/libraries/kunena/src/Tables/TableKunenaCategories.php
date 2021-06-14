@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Libraries\Tables;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -23,7 +23,6 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use RuntimeException;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Kunena Categories
@@ -281,7 +280,7 @@ class TableKunenaCategories extends KunenaTable
 		}
 
 		// Check for a valid id to load.
-		if ($this->$k === null || intval($this->$k) < 1)
+		if ($this->$k === null || \intval($this->$k) < 1)
 		{
 			$this->$k = 0;
 
@@ -331,18 +330,18 @@ class TableKunenaCategories extends KunenaTable
 	 */
 	public function bind($array, $ignore = ''): bool
 	{
-		if (is_object($array))
+		if (\is_object($array))
 		{
 			$array = get_object_vars($array);
 		}
 
-		if (isset($array['params']) && !is_string($array['params']))
+		if (isset($array['params']) && !\is_string($array['params']))
 		{
 			if ($array['params'] instanceof Registry)
 			{
 				$registry = $array['params'];
 			}
-			elseif (is_array($array['params']))
+			elseif (\is_array($array['params']))
 			{
 				$registry = new Registry;
 				$registry->loadArray($array['params']);
@@ -431,9 +430,9 @@ class TableKunenaCategories extends KunenaTable
 
 			while ($id)
 			{
-				if (in_array($id, $recurse))
+				if (\in_array($id, $recurse))
 				{
-					$this->setError(get_class($this) . Text::_('COM_KUNENA_RECURSION'));
+					$this->setError(\get_class($this) . Text::_('COM_KUNENA_RECURSION'));
 
 					return 0;
 				}
@@ -442,7 +441,7 @@ class TableKunenaCategories extends KunenaTable
 
 				if (!isset($list[$id]))
 				{
-					$this->setError(get_class($this) . Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
+					$this->setError(\get_class($this) . Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
 
 					return 0;
 				}

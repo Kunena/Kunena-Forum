@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Libraries\Upload;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\Path;
-use function defined;
 
 /**
  * Kunena Upload Backend Helper Class
@@ -34,7 +33,6 @@ class KunenaUploadHelper
 	protected static $_instances = [];
 
 	/**
-	 *
 	 * @since   Kunena 6.0
 	 */
 	private function __construct()

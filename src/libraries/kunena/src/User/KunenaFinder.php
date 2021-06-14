@@ -12,12 +12,11 @@
 
 namespace Kunena\Forum\Libraries\User;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUserFinder

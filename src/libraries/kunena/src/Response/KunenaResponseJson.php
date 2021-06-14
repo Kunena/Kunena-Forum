@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Response;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Response\JsonResponse;
@@ -68,7 +68,7 @@ class KunenaResponseJson extends JsonResponse
 				if (JDEBUG)
 				{
 					$exception += [
-						'type' => get_class($e),
+						'type' => \get_class($e),
 						'file' => $e->getFile(),
 						'line' => $e->getLine(),
 					];
@@ -87,7 +87,7 @@ class KunenaResponseJson extends JsonResponse
 		while (($output = ob_get_clean()) !== false)
 		{
 			// In debug mode send also output buffers (debug dumps, PHP notices and warnings).
-			if ($output && defined(JDEBUG))
+			if ($output && \defined(JDEBUG))
 			{
 				$response->messages['php'][] = $output;
 			}

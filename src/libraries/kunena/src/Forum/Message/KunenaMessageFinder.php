@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Message;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\MessageFinder
@@ -54,7 +53,6 @@ class KunenaMessageFinder extends KunenaFinder
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct()
 	{
@@ -75,7 +73,6 @@ class KunenaMessageFinder extends KunenaFinder
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function filterByUserAccess(KunenaUser $user): KunenaMessageFinder
 	{
@@ -167,7 +164,7 @@ class KunenaMessageFinder extends KunenaFinder
 	 */
 	public function filterByUser(KunenaUser $user = null, $action = 'posted'): KunenaMessageFinder
 	{
-		if (is_null($user) || is_null($user->userid))
+		if (\is_null($user) || \is_null($user->userid))
 		{
 			return $this;
 		}
@@ -229,7 +226,6 @@ class KunenaMessageFinder extends KunenaFinder
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function find($access = 'read'): array
 	{

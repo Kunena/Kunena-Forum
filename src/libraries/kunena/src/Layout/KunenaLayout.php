@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Layout;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -143,7 +143,6 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @throws  Exception|RunTimeException
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function render($layout = null): string
 	{
@@ -181,7 +180,6 @@ class KunenaLayout extends KunenaBase
 	 * @throws null
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getButton(string $link, string $name, string $scope, string $type, $id = null): string
 	{
@@ -196,7 +194,6 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getIcon(string $name, $title = ''): string
 	{
@@ -255,7 +252,6 @@ class KunenaLayout extends KunenaBase
 	 * @throws Exception
 	 * @throws null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategoryLink(KunenaCategory $category, $content = null, $title = null, $class = null, bool $follow = true, $canonical = null)
 	{
@@ -321,7 +317,6 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaCategory $category = null, bool $follow = true, bool $canonical = false)
 	{
@@ -414,7 +409,6 @@ class KunenaLayout extends KunenaBase
 	 * @throws Exception
 	 * @throws null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getLastPostLink(KunenaCategory $category, $content, $title, $class, $length = 30, $follow = true, $canonical = false)
 	{

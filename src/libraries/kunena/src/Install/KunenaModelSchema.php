@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Libraries\Install;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use DOMAttr;
 use DOMDocument;
@@ -25,19 +25,19 @@ use Joomla\Database\DatabaseDriver;
 /**
  *
  */
-DEFINE('KUNENA_SCHEMA_FILE', KPATH_ADMIN . '/sql/install/schema/install.xml');
+\DEFINE('KUNENA_SCHEMA_FILE', KPATH_ADMIN . '/sql/install/schema/install.xml');
 /**
  *
  */
-DEFINE('KUNENA_UPGRADE_SCHEMA_FILE', KPATH_ADMIN . '/install/upgrade/upgrade.xml');
+\DEFINE('KUNENA_UPGRADE_SCHEMA_FILE', KPATH_ADMIN . '/install/upgrade/upgrade.xml');
 /**
  *
  */
-DEFINE('KUNENA_INSTALL_SCHEMA_EMPTY', '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html><schema></schema>');
+\DEFINE('KUNENA_INSTALL_SCHEMA_EMPTY', '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html><schema></schema>');
 /**
  *
  */
-DEFINE('KUNENA_INPUT_DATABASE', '_DB_');
+\DEFINE('KUNENA_INPUT_DATABASE', '_DB_');
 
 /**
  * Install Model for Kunena
@@ -120,7 +120,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 
 		$value = parent::getState($property);
 
-		return is_null($value) ? $default : $value;
+		return \is_null($value) ? $default : $value;
 	}
 
 	/**
@@ -490,13 +490,13 @@ class KunenaModelSchema extends BaseDatabaseModel
 			}
 			else
 			{
-				if (is_string($input) && file_exists($input))
+				if (\is_string($input) && file_exists($input))
 				{
 					$schema = $this->getSchemaFromFile($input);
 				}
 				else
 				{
-					if (is_string($input))
+					if (\is_string($input))
 					{
 						$schema = new DOMDocument('1.0', 'utf-8');
 						$schema->loadXML($input);
@@ -859,7 +859,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 				}
 			}
 
-			if (!$action && count($childNodes))
+			if (!$action && \count($childNodes))
 			{
 				$action = 'alter';
 			}

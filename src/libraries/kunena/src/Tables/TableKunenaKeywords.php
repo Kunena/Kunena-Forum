@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Libraries\Tables;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\Database\DatabaseDriver;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Kunena Keywords Table

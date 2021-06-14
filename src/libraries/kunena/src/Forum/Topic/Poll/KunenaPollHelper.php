@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Libraries\Forum\Topic\Poll;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPollHelper
@@ -50,7 +49,7 @@ abstract class KunenaPollHelper
 			return $identifier;
 		}
 
-		$id = intval($identifier);
+		$id = \intval($identifier);
 
 		if ($id < 1)
 		{

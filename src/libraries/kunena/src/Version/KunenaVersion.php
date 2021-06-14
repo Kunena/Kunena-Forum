@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Libraries\Version;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -172,7 +172,7 @@ class KunenaVersion
 			$version = $db->loadObject();
 		}
 
-		if (!isset($version) || !is_object($version) || !isset($version->state))
+		if (!isset($version) || !\is_object($version) || !isset($version->state))
 		{
 			$version        = new stdClass;
 			$version->state = '';

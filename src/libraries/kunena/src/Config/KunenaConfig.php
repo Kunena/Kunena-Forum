@@ -15,7 +15,7 @@
 
 namespace Kunena\Forum\Libraries\Config;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -25,7 +25,6 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use function defined;
 
 /**
  * Class KunenaConfig
@@ -1639,7 +1638,6 @@ class KunenaConfig extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance(): ?KunenaConfig
 	{
@@ -1669,7 +1667,6 @@ class KunenaConfig extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load(): void
 	{
@@ -1750,7 +1747,6 @@ class KunenaConfig extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save(): void
 	{
@@ -1810,7 +1806,6 @@ class KunenaConfig extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getEmail(): string
 	{

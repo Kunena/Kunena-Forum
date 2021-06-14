@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Table;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Closure;
 use InvalidArgumentException;
@@ -23,7 +23,6 @@ use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use RuntimeException;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Abstract Table Object class
@@ -118,7 +117,7 @@ abstract class KunenaTableObject
 	public function __construct($keys = null)
 	{
 		// First run: Initialise the table properties.
-		if (is_null(static::$tbl_fields))
+		if (\is_null(static::$tbl_fields))
 		{
 			static::getFields();
 		}
@@ -141,10 +140,10 @@ abstract class KunenaTableObject
 
 			if ($exists)
 			{
-				if (is_array(static::$instances))
+				if (\is_array(static::$instances))
 				{
 					// Yes, we are in the special case.
-					$this->_key = count($tbl_keys) > 1 ? json_encode($tbl_keys) : reset($tbl_keys);
+					$this->_key = \count($tbl_keys) > 1 ? json_encode($tbl_keys) : reset($tbl_keys);
 
 					if (isset(static::$instances[$this->_key]))
 					{
@@ -174,9 +173,9 @@ abstract class KunenaTableObject
 			}
 		}
 
-		if ($exists && is_array(static::$instances))
+		if ($exists && \is_array(static::$instances))
 		{
-			$this->_key = count($tbl_keys) > 1 ? json_encode($tbl_keys) : reset($tbl_keys);
+			$this->_key = \count($tbl_keys) > 1 ? json_encode($tbl_keys) : reset($tbl_keys);
 
 			if (!isset(static::$instances[$this->_key]))
 			{
@@ -315,7 +314,7 @@ abstract class KunenaTableObject
 
 		$keys = [];
 
-		if (is_null($fields))
+		if (\is_null($fields))
 		{
 			// No fields were given as parameter: use table instance.
 			foreach ($tableKeys as $i => $keyName)
@@ -324,21 +323,21 @@ abstract class KunenaTableObject
 				$keys[$keyName] = $keyValue;
 
 				// If null primary keys aren't allowed
-				if ($throw && is_null($keyValue))
+				if ($throw && \is_null($keyValue))
 				{
-					throw new UnexpectedValueException(sprintf('%s: Null primary key not allowed &#160; %s..', get_class($this), $keyName), 0);
+					throw new UnexpectedValueException(sprintf('%s: Null primary key not allowed &#160; %s..', \get_class($this), $keyName), 0);
 				}
 			}
 		}
 		else
 		{
-			if (is_null($fieldNames))
+			if (\is_null($fieldNames))
 			{
 				// Lazy initialize fields list.
 				$fieldNames = static::getFields();
 			}
 
-			if (!is_array($fields))
+			if (!\is_array($fields))
 			{
 				$fields = (array) $fields;
 			}
@@ -350,7 +349,7 @@ abstract class KunenaTableObject
 				{
 					if (!isset($tableKeys[$keyName]))
 					{
-						throw new UnexpectedValueException(sprintf('%s: Missing key in index %s.', get_class($this), $keyName), 1);
+						throw new UnexpectedValueException(sprintf('%s: Missing key in index %s.', \get_class($this), $keyName), 1);
 					}
 
 					// Find out key name in given numeric location and use it.
@@ -360,9 +359,9 @@ abstract class KunenaTableObject
 				$keys[$keyName] = $keyValue;
 
 				// Verify that the used key exists in the table.
-				if (!in_array($keyName, $fieldNames))
+				if (!\in_array($keyName, $fieldNames))
 				{
-					throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', get_class($this), $keyName), 2);
+					throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', \get_class($this), $keyName), 2);
 				}
 			}
 		}
@@ -370,7 +369,7 @@ abstract class KunenaTableObject
 		// Make sure user didn't pass empty array.
 		if (empty($keys))
 		{
-			throw new UnexpectedValueException(sprintf('%s: No fields given.', get_class($this)), 3);
+			throw new UnexpectedValueException(sprintf('%s: No fields given.', \get_class($this)), 3);
 		}
 
 		return $keys;
@@ -392,7 +391,7 @@ abstract class KunenaTableObject
 		foreach (static::$tbl_fields as $k => $v)
 		{
 			// If the property is not the primary key.
-			if (!in_array($k, static::$tbl_keys))
+			if (!\in_array($k, static::$tbl_keys))
 			{
 				$this->$k = $v->Default;
 			}
@@ -418,19 +417,19 @@ abstract class KunenaTableObject
 	public function bind($src, $ignore = []): KunenaTableObject
 	{
 		// If the source value is not an array or object return false.
-		if (!is_object($src) && !is_array($src))
+		if (!\is_object($src) && !\is_array($src))
 		{
-			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', get_class($this), gettype($src)));
+			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', \get_class($this), \gettype($src)));
 		}
 
 		// If the source value is an object, get its accessible properties.
-		if (is_object($src))
+		if (\is_object($src))
 		{
 			$src = get_object_vars($src);
 		}
 
 		// If the ignore value is a string, explode it over spaces.
-		if (!is_array($ignore))
+		if (!\is_array($ignore))
 		{
 			$ignore = explode(' ', $ignore);
 		}
@@ -439,7 +438,7 @@ abstract class KunenaTableObject
 		foreach ($this->getProperties() as $k => $v)
 		{
 			// Only process fields not in the ignore array.
-			if (!in_array($k, $ignore))
+			if (!\in_array($k, $ignore))
 			{
 				if (isset($src[$k]))
 				{
@@ -525,7 +524,7 @@ abstract class KunenaTableObject
 		// we need to create a new object.
 		if (!isset(static::$instances[$k]))
 		{
-			$c        = get_called_class();
+			$c        = \get_called_class();
 			$instance = new $c($keys);
 
 			// @var KunenaTableObject $instance
@@ -545,7 +544,7 @@ abstract class KunenaTableObject
 		// But before that, check that we have valid item.
 		if ($k != $instance->_key)
 		{
-			throw new RuntimeException(get_called_class() . ": Identifier doesn't match ({$k} != {$instance->_key})");
+			throw new RuntimeException(\get_called_class() . ": Identifier doesn't match ({$k} != {$instance->_key})");
 		}
 
 		return $instance;
@@ -565,14 +564,14 @@ abstract class KunenaTableObject
 	protected static function resolveKeys($fields): array
 	{
 		// First run: Initialise the table properties.
-		if (is_null(static::$tbl_fields))
+		if (\is_null(static::$tbl_fields))
 		{
 			static::getFields();
 		}
 
 		$keys = [];
 
-		if (!is_array($fields))
+		if (!\is_array($fields))
 		{
 			$fields = (array) $fields;
 		}
@@ -584,7 +583,7 @@ abstract class KunenaTableObject
 			{
 				if (!isset(static::$tbl_keys[$keyName]))
 				{
-					throw new UnexpectedValueException(sprintf('%s: Missing key in index: %s.', get_called_class(), $keyName), 1);
+					throw new UnexpectedValueException(sprintf('%s: Missing key in index: %s.', \get_called_class(), $keyName), 1);
 				}
 
 				// Find out key name in given numeric location and use it.
@@ -596,14 +595,14 @@ abstract class KunenaTableObject
 			// Verify that the used key exists in the table.
 			if (!isset(static::$tbl_fields[$keyName]))
 			{
-				throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', get_called_class(), $keyName), 2);
+				throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', \get_called_class(), $keyName), 2);
 			}
 		}
 
 		// Make sure user didn't pass empty array.
 		if (empty($keys))
 		{
-			throw new UnexpectedValueException(sprintf('%s: No fields given.', get_called_class()), 3);
+			throw new UnexpectedValueException(sprintf('%s: No fields given.', \get_called_class()), 3);
 		}
 
 		return $keys;
@@ -679,9 +678,9 @@ abstract class KunenaTableObject
 	{
 		$db = Factory::getDbo();
 		$db->setQuery($query);
-		$items = (array) $db->loadObjectList('id', get_called_class());
+		$items = (array) $db->loadObjectList('id', \get_called_class());
 
-		if (is_array(static::$instances))
+		if (\is_array(static::$instances))
 		{
 			static::$instances += $items;
 		}
@@ -817,7 +816,7 @@ abstract class KunenaTableObject
 
 		if (!$ret)
 		{
-			$this->setError(get_class($this) . '::store failed - ' . static::$db->getErrorMsg());
+			$this->setError(\get_class($this) . '::store failed - ' . static::$db->getErrorMsg());
 
 			return false;
 		}
@@ -932,7 +931,7 @@ abstract class KunenaTableObject
 		}
 
 		$k  = static::$tbl_key;
-		$pk = (is_null($pk)) ? $this->$k : $pk;
+		$pk = (\is_null($pk)) ? $this->$k : $pk;
 
 		// If no primary key is given, return false.
 		if ($pk === null)
@@ -978,7 +977,7 @@ abstract class KunenaTableObject
 		}
 
 		$k  = static::$tbl_keys;
-		$pk = (is_null($pk)) ? $this->$k : $pk;
+		$pk = (\is_null($pk)) ? $this->$k : $pk;
 
 		// If no primary key is given, return false.
 		if ($pk === null)
@@ -1026,7 +1025,7 @@ abstract class KunenaTableObject
 		}
 
 		$k  = static::$tbl_keys;
-		$pk = (is_null($pk)) ? $this->$k : $pk;
+		$pk = (\is_null($pk)) ? $this->$k : $pk;
 
 		// If no primary key is given, return false.
 		if ($pk === null)
@@ -1065,7 +1064,7 @@ abstract class KunenaTableObject
 	public function isCheckedOut($with = 0, $against = null): bool
 	{
 		// Handle the non-static case.
-		if (isset($this) && ($this instanceof Table) && is_null($against))
+		if (isset($this) && ($this instanceof Table) && \is_null($against))
 		{
 			$against = $this->get('checked_out');
 		}

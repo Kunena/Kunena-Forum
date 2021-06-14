@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Libraries\Menu;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Route\KunenaLegacy;
 use StdClass;
-use function defined;
 
 KunenaMenuFix::initialize();
 
@@ -172,7 +171,7 @@ abstract class KunenaMenuFix
 
 			foreach (self::$items as $item)
 			{
-				if (!is_object($item))
+				if (!\is_object($item))
 				{
 					continue;
 				}
@@ -184,7 +183,7 @@ abstract class KunenaMenuFix
 				{
 					$realitem = empty(self::$items[$item->query['Itemid']]) ? null : self::$items[$item->query['Itemid']];
 
-					if (is_object($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena')
+					if (\is_object($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena')
 					{
 						$itemid                   = $item->query['Itemid'];
 						self::$aliases[$item->id] = $itemid;

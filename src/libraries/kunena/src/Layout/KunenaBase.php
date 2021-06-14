@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Layout;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use InvalidArgumentException;
@@ -28,7 +28,6 @@ use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Request\KunenaRequest;
 use RuntimeException;
 use Throwable;
-use function defined;
 
 /**
  * implements \Kunena layouts for the views.
@@ -540,7 +539,7 @@ class KunenaBase extends KunenaLayoutBase
 	 */
 	public function __get($property)
 	{
-		if (!array_key_exists($property, $this->closures))
+		if (!\array_key_exists($property, $this->closures))
 		{
 			if ($this->debug)
 			{
@@ -580,7 +579,7 @@ class KunenaBase extends KunenaLayoutBase
 	 */
 	public function set($key, $value)
 	{
-		$isFactory = is_object($value) && method_exists($value, '__invoke');
+		$isFactory = \is_object($value) && method_exists($value, '__invoke');
 
 		if ($isFactory)
 		{
@@ -620,7 +619,7 @@ class KunenaBase extends KunenaLayoutBase
 	 */
 	public function __isset($property): bool
 	{
-		return array_key_exists($property, $this->closures);
+		return \array_key_exists($property, $this->closures);
 	}
 
 	/**
@@ -638,7 +637,7 @@ class KunenaBase extends KunenaLayoutBase
 	 */
 	public function setProperties($properties)
 	{
-		if (!is_array($properties) && !is_object($properties))
+		if (!\is_array($properties) && !\is_object($properties))
 		{
 			throw new InvalidArgumentException('Parameter should be either array or an object.');
 		}
@@ -765,7 +764,7 @@ class KunenaBase extends KunenaLayoutBase
 			$ex    = explode('/', $path);
 			$subpart = '';
 
-			if (count($ex) == 3)
+			if (\count($ex) == 3)
 			{
 				$subpart = $ex[1] . '\\';
 			}

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Tables;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use RuntimeException;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Kunena Topics
@@ -208,7 +207,7 @@ class TableKunenaTopics extends KunenaTable
 		}
 
 		// Check for a valid id to load.
-		if ($this->$k === null || intval($this->$k) < 1)
+		if ($this->$k === null || \intval($this->$k) < 1)
 		{
 			$this->$k = 0;
 

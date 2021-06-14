@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Route;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use function defined;
 
 /**
  * Class KunenaRouteLegacy

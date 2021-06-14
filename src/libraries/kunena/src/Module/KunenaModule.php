@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Module;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Document\Document;
@@ -21,7 +21,6 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use stdClass;
-use function defined;
 
 /**
  * Class KunenaModule

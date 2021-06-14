@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Libraries\Exception;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaExceptionLayout

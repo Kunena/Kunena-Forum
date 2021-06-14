@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Message;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use InvalidArgumentException;
@@ -52,7 +52,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\Message
@@ -180,7 +179,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 * @internal
-	 *
 	 */
 	public function __construct($properties = null)
 	{
@@ -198,7 +196,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($identifier = null, $reload = false): KunenaMessage
 	{
@@ -223,7 +220,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function isNew($user = null): bool
 	{
@@ -263,7 +259,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategory(): KunenaCategory
 	{
@@ -275,7 +270,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopic(): ?KunenaTopic
 	{
@@ -335,7 +329,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUrl($category = null, $xhtml = true): string
 	{
@@ -350,7 +343,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUri($category = null)
 	{
@@ -366,7 +358,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function newReply($fields = [], $useridfromparent = 0, $safefields = null): array
 	{
@@ -428,12 +419,12 @@ class KunenaMessage extends KunenaDatabaseObject
 		}
 		else
 		{
-			if (is_array($safefields))
+			if (\is_array($safefields))
 			{
 				$message->bind($safefields);
 			}
 
-			if (is_array($fields))
+			if (\is_array($fields))
 			{
 				$message->bind($fields, ['name', 'email', 'subject', 'message'], true);
 			}
@@ -453,7 +444,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function sendNotification($url = null, $approved = false)
 	{
@@ -480,7 +470,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function notificationPost(): bool
 	{
@@ -648,7 +637,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
 		$time_secs   = ($end_time - $start_time);
 		$mid         = $this->thread;
-		$recv_amount = count($receivers[1]) + count($receivers[0]);
+		$recv_amount = \count($receivers[1]) + \count($receivers[0]);
 
 		Log::add("$recv_amount subscriptions for msg $mid sent for {$time_secs} [ms]", Log::DEBUG, 'kunena');
 		KunenaLog::log(
@@ -700,7 +689,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPermaUrl($category = null, $xhtml = true): bool
 	{
@@ -716,7 +704,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPermaUri($category = null)
 	{
@@ -735,7 +722,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function notificationCloseConnection(): void
 	{
@@ -751,7 +737,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena
-	 *
 	 */
 	public function publish($value = KunenaForum::PUBLISHED)
 	{
@@ -773,7 +758,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save(): bool
 	{
@@ -870,7 +854,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function updateAttachments(): bool
 	{
@@ -976,7 +959,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete(): bool
 	{
@@ -1045,7 +1027,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena
-	 *
 	 */
 	public function getAttachments($ids = false, $action = 'read'): array
 	{
@@ -1076,7 +1057,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function update($newTopic = false): void
 	{
@@ -1166,7 +1146,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUserTopic($user = null)
 	{
@@ -1178,7 +1157,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getThankyou(): KunenaMessageThankyouHelper
 	{
@@ -1190,7 +1168,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getParent(): KunenaMessage
 	{
@@ -1202,7 +1179,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAuthor(): KunenaUser
 	{
@@ -1224,7 +1200,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getModifier(): KunenaUser
 	{
@@ -1252,14 +1227,13 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayField(string $field, $html = true, $context = '')
 	{
 		switch ($field)
 		{
 			case 'id':
-				return intval($this->id);
+				return \intval($this->id);
 			case 'subject':
 				return KunenaParser::parseText($this->subject);
 			case 'message':
@@ -1279,7 +1253,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function isAuthorised(string $action = 'read', KunenaUser $user = null)
 	{
@@ -1306,7 +1279,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -1378,7 +1350,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function edit($fields = [], $user = null): void
 	{
@@ -1400,7 +1371,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function makeAnonymous($user = null): void
 	{
@@ -1436,7 +1406,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function uploadAttachment(int $tmpid, string $postvar, $catid = null): bool
 	{
@@ -1461,7 +1430,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function addAttachments(array $ids): void
 	{
@@ -1477,7 +1445,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function removeAttachments(array $ids): void
 	{
@@ -1491,7 +1458,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getNbAttachments()
 	{
@@ -1543,7 +1509,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load($id = null): bool
 	{
@@ -1560,7 +1525,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function check(): bool
 	{
@@ -1725,7 +1689,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 */
 	public function getsubstr(string $string, int $start, int $length): string
 	{
-		$mbString = extension_loaded('mbstring');
+		$mbString = \extension_loaded('mbstring');
 
 		if ($mbString)
 		{
@@ -1759,7 +1723,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once): void
 	{
@@ -1787,7 +1750,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseRead(KunenaUser $user)
 	{
@@ -1802,7 +1764,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			$access = KunenaAccess::getInstance();
 			$hold   = $access->getAllowedHold($user->userid, $this->catid, false);
 
-			if (!in_array($this->hold, $hold))
+			if (!\in_array($this->hold, $hold))
 			{
 				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 			}
@@ -1836,7 +1798,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseOwn(KunenaUser $user)
 	{
@@ -1863,7 +1824,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseThankyou(KunenaUser $user)
 	{
@@ -1897,7 +1857,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseEditTime(KunenaUser $user)
 	{
@@ -1910,43 +1869,43 @@ class KunenaMessage extends KunenaDatabaseObject
 		// User is only allowed to edit post within time specified in the configuration
 		$config = KunenaFactory::getConfig();
 
-		if (intval($config->userEdit) != 1)
+		if (\intval($config->userEdit) != 1)
 		{
 			// Edit never allowed
-			if (intval($config->userEdit) == 0)
+			if (\intval($config->userEdit) == 0)
 			{
 				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}
 
 			// Edit allowed if replies
-			if (intval($config->userEdit) == 2 && $this->getTopic()->getReplies())
+			if (\intval($config->userEdit) == 2 && $this->getTopic()->getReplies())
 			{
 				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_IF_REPLIES'), 403);
 			}
 
 			// Edit allowed for the first message of the topic
-			if (intval($config->userEdit) == 4 && $this->id != $this->getTopic()->first_post_id)
+			if (\intval($config->userEdit) == 4 && $this->id != $this->getTopic()->first_post_id)
 			{
 				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_FIRST_MESSAGE_OF_TOPIC'), 403);
 			}
 
 			// Edit allowed for the last message of the topic
-			if (intval($config->userEdit) == 3 && $this->id != $this->getTopic()->last_post_id)
+			if (\intval($config->userEdit) == 3 && $this->id != $this->getTopic()->last_post_id)
 			{
 				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_ALLOWED_ONLY_LAST_MESSAGE_OF_TOPIC'), 403);
 			}
 		}
 
-		if (intval($config->userEditTime) != 0)
+		if (\intval($config->userEditTime) != 0)
 		{
 			// Check whether edit is in time
 			$modtime = $this->modified_time ? $this->modified_time : $this->time;
 
-			if ($modtime + intval($config->userEditTime) < Factory::getDate()->toUnix() && intval($config->userEditTimeGrace) == 0)
+			if ($modtime + \intval($config->userEditTime) < Factory::getDate()->toUnix() && \intval($config->userEditTimeGrace) == 0)
 			{
 				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}
-			elseif (intval($config->userEditTimeGrace) != 0 && $modtime + intval($config->userEditTime) + intval($config->userEditTimeGrace) < Factory::getDate()->toUnix())
+			elseif (\intval($config->userEditTimeGrace) != 0 && $modtime + \intval($config->userEditTime) + \intval($config->userEditTimeGrace) < Factory::getDate()->toUnix())
 			{
 				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_EDIT_NOT_ALLOWED'), 403);
 			}
@@ -1962,7 +1921,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseDelete(KunenaUser $user)
 	{
@@ -2005,7 +1963,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authorisePermdelete(KunenaUser $user)
 	{
@@ -2021,7 +1978,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -2033,7 +1990,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseAttachmentsImage(KunenaUser $user)
 	{
@@ -2080,7 +2036,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseAttachmentsFile(KunenaUser $user)
 	{
@@ -2125,7 +2080,6 @@ class KunenaMessage extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseGuestWrite(KunenaUser $user)
 	{

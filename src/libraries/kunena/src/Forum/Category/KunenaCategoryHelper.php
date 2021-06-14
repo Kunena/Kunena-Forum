@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Category;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -79,7 +79,7 @@ abstract class KunenaCategoryHelper
 			self::$_instances = self::loadCategories();
 		}
 
-		if (is_null(self::$_tree))
+		if (\is_null(self::$_tree))
 		{
 			self::buildTree(self::$_instances);
 		}
@@ -182,7 +182,7 @@ abstract class KunenaCategoryHelper
 			return $category;
 		}
 
-		$id = intval($identifier);
+		$id = \intval($identifier);
 
 		if (empty(self::$_instances [$id]))
 		{
@@ -313,13 +313,13 @@ abstract class KunenaCategoryHelper
 
 			$ids = self::$_instances;
 		}
-		elseif (is_array($ids))
+		elseif (\is_array($ids))
 		{
 			$ids = array_flip($ids);
 		}
 		else
 		{
-			$ids = [intval($ids) => 1];
+			$ids = [\intval($ids) => 1];
 		}
 
 		if (!$reverse)
@@ -423,7 +423,7 @@ abstract class KunenaCategoryHelper
 			$limit = $config->threadsPerPage;
 		}
 
-		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
+		$userids = \is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
 		$where   = isset($params['where']) ? (string) $params['where'] : '';
 		$allowed = implode(',', array_keys(KunenaAccess::getInstance()->getAllowedCategories()));
@@ -464,7 +464,7 @@ abstract class KunenaCategoryHelper
 		// If out of range, use last page
 		if ($total < $limitstart)
 		{
-			$limitstart = intval($total / $limit) * $limit;
+			$limitstart = \intval($total / $limit) * $limit;
 		}
 
 		$query = $db->getQuery(true);
@@ -590,20 +590,20 @@ abstract class KunenaCategoryHelper
 	 */
 	public static function getCategoriesByAccess($accesstype = 'joomla.level', $groupids = false): array
 	{
-		if (is_array($groupids))
+		if (\is_array($groupids))
 		{
 			$groupids = array_unique($groupids);
 		}
 		else
 		{
-			$groupids = [intval($groupids)];
+			$groupids = [\intval($groupids)];
 		}
 
 		$list = [];
 
 		foreach (self::$_instances as $instance)
 		{
-			if ($instance->accesstype == $accesstype && ($groupids === false || in_array($instance->access, $groupids)))
+			if ($instance->accesstype == $accesstype && ($groupids === false || \in_array($instance->access, $groupids)))
 			{
 				$list [$instance->id] = $instance;
 			}
@@ -731,7 +731,7 @@ abstract class KunenaCategoryHelper
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		if (!is_array($parents) && !isset(self::$_tree[$parents]))
+		if (!\is_array($parents) && !isset(self::$_tree[$parents]))
 		{
 			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -871,7 +871,7 @@ abstract class KunenaCategoryHelper
 					continue;
 				}
 
-				if (!empty($clist) || !$params['search'] || intval($params['search']) == $id || StringHelper::stristr(Transliterate::utf8_latin_to_ascii($instance->name), (string) Transliterate::utf8_latin_to_ascii($params['search'])) || StringHelper::stristr($instance->name, (string) $params['search']))
+				if (!empty($clist) || !$params['search'] || \intval($params['search']) == $id || StringHelper::stristr(Transliterate::utf8_latin_to_ascii($instance->name), (string) Transliterate::utf8_latin_to_ascii($params['search'])) || StringHelper::stristr($instance->name, (string) $params['search']))
 				{
 					if (!$filtered && (empty($clist) || $params['parents']))
 					{
@@ -913,7 +913,7 @@ abstract class KunenaCategoryHelper
 	{
 		$db = Factory::getDBO();
 
-		if (is_array($categories))
+		if (\is_array($categories))
 		{
 			$categories = implode(',', $categories);
 		}
@@ -1075,7 +1075,7 @@ abstract class KunenaCategoryHelper
 			return false;
 		}
 
-		if (is_array($categoryinternalItems))
+		if (\is_array($categoryinternalItems))
 		{
 			return true;
 		}

@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Libraries\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Model for Kunena
@@ -88,7 +87,6 @@ class KunenaModel extends BaseDatabaseModel
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($config = [], MVCFactoryInterface $factory = null)
 	{

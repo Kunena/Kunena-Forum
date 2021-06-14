@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Application\CMSApplicationInterface;
@@ -36,7 +36,6 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\View\KunenaView;
-use function defined;
 
 /**
  * Class KunenaController
@@ -83,7 +82,6 @@ class KunenaController extends BaseController
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -115,7 +113,6 @@ class KunenaController extends BaseController
 	 * @return  mixed
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($prefix = 'Kunena', $config = [])
 	{
@@ -202,7 +199,6 @@ class KunenaController extends BaseController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function execute($task)
 	{
@@ -319,7 +315,6 @@ class KunenaController extends BaseController
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function executeTask(string $task)
 	{
@@ -359,7 +354,6 @@ class KunenaController extends BaseController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
@@ -532,7 +526,6 @@ class KunenaController extends BaseController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function setRedirectBack($default = null, $anchor = null): void
 	{

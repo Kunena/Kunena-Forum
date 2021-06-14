@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Image;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Filesystem\File;
@@ -77,7 +77,7 @@ class KunenaImageHelper
 			// Calculate quality for PNG.
 			if ($info->type == IMAGETYPE_PNG)
 			{
-				$quality = intval(($quality - 1) / 10);
+				$quality = \intval(($quality - 1) / 10);
 			}
 
 			$options = ['quality' => $quality];

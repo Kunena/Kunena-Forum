@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Libraries\View;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
@@ -35,7 +35,6 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Search\Form\SearchFormDisplay;
 use LogicException;
-use function defined;
 
 /**
  * Kunena View Class
@@ -151,7 +150,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -200,7 +198,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayAll()
 	{
@@ -220,7 +217,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayLayout($layout = null, $tpl = null)
 	{
@@ -326,7 +322,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayError($messages = [], $code = 404): void
 	{
@@ -377,7 +372,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function setTitle(string $title): void
 	{
@@ -422,7 +416,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayNoAccess($errors = []): void
 	{
@@ -442,7 +435,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayModulePosition($position): void
 	{
@@ -456,7 +448,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getModulePosition($position): string
 	{
@@ -482,7 +473,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function isModulePosition($position): int
 	{
@@ -500,7 +490,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function parse(string $text, int $len, $parent)
 	{
@@ -528,7 +517,6 @@ class KunenaView extends HtmlView
 	 * @throws LogicException
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function render(string $layout, string $tpl, array $hmvcParams = []): void
 	{
@@ -682,7 +670,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function loadTemplateFile($tpl = null, $hmvcParams = null): string
 	{
@@ -769,7 +756,6 @@ class KunenaView extends HtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategoryLink(KunenaCategory $category, $content = null, $title = null, $class = null)
 	{
@@ -799,7 +785,6 @@ class KunenaView extends HtmlView
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaCategory $category = null)
 	{

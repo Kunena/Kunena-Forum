@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Libraries\KunenaPrivate\Message;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
 
 /**
  * Private message finder.

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\File;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Class KunenaFile
@@ -30,13 +30,13 @@ class KunenaFile
 	 */
 	public static function getMime(string $file)
 	{
-		if (function_exists('finfo_open'))
+		if (\function_exists('finfo_open'))
 		{
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$type  = finfo_file($finfo, $file);
 			finfo_close($finfo);
 		}
-		elseif (function_exists('mime_content_type'))
+		elseif (\function_exists('mime_content_type'))
 		{
 			// We have mime magic.
 			$type = mime_content_type($file);

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Access\Access;
@@ -30,7 +30,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaForumStatistics
@@ -497,7 +496,7 @@ class KunenaStatistics
 			}
 		}
 
-		return array_slice($this->topTopics, 0, $limit);
+		return \array_slice($this->topTopics, 0, $limit);
 	}
 
 	/**
@@ -567,7 +566,7 @@ class KunenaStatistics
 			}
 		}
 
-		return array_slice($this->topPolls, 0, $limit);
+		return \array_slice($this->topPolls, 0, $limit);
 	}
 
 	/**
@@ -645,7 +644,7 @@ class KunenaStatistics
 			}
 		}
 
-		return array_slice($this->topPosters, 0, $limit);
+		return \array_slice($this->topPosters, 0, $limit);
 	}
 
 	/**
@@ -684,7 +683,7 @@ class KunenaStatistics
 			}
 		}
 
-		return array_slice($this->topProfiles, 0, $limit);
+		return \array_slice($this->topProfiles, 0, $limit);
 	}
 
 	/**
@@ -756,6 +755,6 @@ class KunenaStatistics
 			}
 		}
 
-		return array_slice($this->topThanks, 0, $limit);
+		return \array_slice($this->topThanks, 0, $limit);
 	}
 }

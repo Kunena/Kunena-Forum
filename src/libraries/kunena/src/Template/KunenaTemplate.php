@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Template;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Document\Document;
@@ -36,7 +36,6 @@ use Leafo\ScssPhp\Compiler;
 use lessc;
 use SimpleXMLElement;
 use StdClass;
-use function defined;
 
 /**
  * Kunena Template Class
@@ -235,7 +234,6 @@ class KunenaTemplate
 	 *
 	 * @throws  Exception
 	 * @since     Kunena 6.0
-	 *
 	 */
 	public function __construct($name = null)
 	{
@@ -247,7 +245,7 @@ class KunenaTemplate
 		$name = KunenaPath::clean($name);
 
 		// Create template inheritance
-		if (!is_array($this->default))
+		if (!\is_array($this->default))
 		{
 			$this->default = (array) $this->default;
 		}
@@ -322,7 +320,8 @@ class KunenaTemplate
 			if (KunenaFactory::getConfig()->activeMenuItem)
 			{
 				$id = htmlspecialchars(KunenaFactory::getConfig()->activeMenuItem, ENT_COMPAT, 'UTF-8');
-				$this->addScriptDeclaration("
+				$this->addScriptDeclaration(
+					"
 		jQuery(function($){ $(\"$id\").addClass('active')});"
 				);
 			}
@@ -334,7 +333,8 @@ class KunenaTemplate
 				if ($items)
 				{
 					$id = htmlspecialchars('.item-' . $items[0]->id, ENT_COMPAT, 'UTF-8');
-					$this->addScriptDeclaration("
+					$this->addScriptDeclaration(
+						"
 		jQuery(function($){ $(\"$id\").addClass('active')});"
 					);
 				}
@@ -347,13 +347,12 @@ class KunenaTemplate
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function isHmvc()
 	{
 		$app = Factory::getApplication();
 
-		if (is_null($this->hmvc))
+		if (\is_null($this->hmvc))
 		{
 			if (is_dir(JPATH_THEMES . "/{$app->getTemplate()}/com_kunena/pages"))
 			{
@@ -378,7 +377,6 @@ class KunenaTemplate
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function addScriptDeclaration(string $content, $type = 'text/javascript'): Document
 	{
@@ -404,7 +402,6 @@ class KunenaTemplate
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 1.6
-	 *
 	 */
 	public static function getInstance($name = null)
 	{
@@ -506,7 +503,6 @@ class KunenaTemplate
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function initialize(): void
 	{
@@ -533,7 +529,8 @@ class KunenaTemplate
 
 		if ($isForumActive)
 		{
-			$this->addScriptDeclaration('jQuery(document).ready(function ($) {
+			$this->addScriptDeclaration(
+				'jQuery(document).ready(function ($) {
 				$(".current").addClass("active alias-parent-active");
 				$(".alias-parent-active").addClass("active alias-parent-active");
 			});
@@ -547,7 +544,6 @@ class KunenaTemplate
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function loadLanguage(): void
 	{
@@ -568,7 +564,6 @@ class KunenaTemplate
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function initializeBackend(): void
 	{
@@ -600,7 +595,7 @@ class KunenaTemplate
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
 		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',];
+		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -851,7 +846,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function addStyleSheet(string $filename, $group = 'forum')
 	{
@@ -910,7 +904,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 5.1.3
-	 *
 	 */
 	public function addLessSheet(string $filename)
 	{
@@ -936,7 +929,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 5.1.3
-	 *
 	 */
 	public function addScssSheet(string $filename)
 	{
@@ -960,7 +952,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function addStyleDeclaration(string $style)
 	{
@@ -983,7 +974,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function addIEStyleSheet(string $filename, $condition = 'IE'): void
 	{
@@ -1017,7 +1007,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCachePath($filename = ''): string
 	{
@@ -1068,7 +1057,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 3.5
-	 *
 	 */
 	public function addScriptOptions(string $key, $options, $merge = true): Document
 	{
@@ -1103,7 +1091,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTemplatePaths($path = '', $fullpath = false): array
 	{
@@ -1177,7 +1164,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopicIconIndexPath($index, $url = false): string
 	{
@@ -1204,7 +1190,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopicIcons($all = false, $checked = 0)
 	{
@@ -1299,7 +1284,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopicIconPath($filename = '', $url = true): string
 	{
@@ -1336,7 +1320,6 @@ HTML;
 	 * @since    Kunena 6.0
 	 *
 	 * @internal param string $categoryIconset
-	 *
 	 */
 	public function getTopicIcon(KunenaTopic $topic): string
 	{
@@ -1576,7 +1559,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategoryIcon(KunenaCategory $category): string
 	{
@@ -1604,7 +1586,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategoryIconIndexPath($index, $url = false): string
 	{
@@ -1631,7 +1612,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategoryIcons($all = false, $checked = 0)
 	{
@@ -1722,7 +1702,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategoryIconPath($filename = '', $url = true, $categoryIconset = 'default'): string
 	{
@@ -1753,7 +1732,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function compileLess(string $inputFile, string $outputFile): void
 	{
@@ -1804,7 +1782,7 @@ HTML;
 		$less->setVariables($this->style_variables);
 		$newCache = $less->cachedCompile($cache);
 
-		if (!is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
+		if (!\is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
 		{
 			$cache = serialize($newCache);
 			File::write($cacheFile, $cache);
@@ -1820,7 +1798,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function compileScss(string $inputFile, string $outputFile): void
 	{
@@ -1869,7 +1846,7 @@ HTML;
 		$scss->setVariables($this->style_variables);
 		$newCache = $scss->compile($cache);
 
-		if (!is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
+		if (!\is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
 		{
 			$cache = serialize($newCache);
 			File::write($cacheFile, $cache);
@@ -1898,7 +1875,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopicLabel($topic): StdClass
 	{
@@ -1970,7 +1946,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function borderless(): string
 	{
@@ -1992,7 +1967,6 @@ HTML;
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function tooltips($class = false): string
 	{
@@ -2074,7 +2048,6 @@ HTML;
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function addScript(string $filename, $options = [], $attribs = [])
 	{

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Html;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -55,7 +55,6 @@ abstract class KunenaParser
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false, $addPath = true): array
 	{
@@ -136,7 +135,6 @@ abstract class KunenaParser
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function parseText($txt, $len = 0, $target = 'title')
 	{
@@ -177,7 +175,6 @@ abstract class KunenaParser
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function &prepareContent(&$content, $target = 'body')
 	{
@@ -190,10 +187,10 @@ abstract class KunenaParser
 
 		foreach ($plugin as $key => $value)
 		{
-			$name = is_array($value->name);
+			$name = \is_array($value->name);
 		}
 
-		if ($events && in_array($target, $event_target))
+		if ($events && \in_array($target, $event_target))
 		{
 			$row       = new stdClass;
 			$row->text =& $content;
@@ -221,7 +218,6 @@ abstract class KunenaParser
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function parseBBCode($txt, $parent = null, $len = 0, $context = '', $target = 'message')
 	{
@@ -254,7 +250,6 @@ abstract class KunenaParser
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function plainBBCode(string $txt, $len = 0, $target = 'message')
 	{
@@ -282,7 +277,6 @@ abstract class KunenaParser
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function stripBBCode(string $txt, $len = 0, $html = true, $target = 'message')
 	{

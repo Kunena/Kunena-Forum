@@ -12,12 +12,11 @@
 
 namespace Kunena\Forum\Libraries\Integration;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
-use function defined;
 
 /**
  * Class KunenaIntegrationActivity
@@ -51,7 +50,7 @@ class KunenaActivity
 
 		foreach ($classes as $class)
 		{
-			if (!is_object($class))
+			if (!\is_object($class))
 			{
 				continue;
 			}
@@ -95,7 +94,7 @@ class KunenaActivity
 		{
 			if (method_exists($instance, $method))
 			{
-				$r = call_user_func_array([$instance, $method], $arguments);
+				$r = \call_user_func_array([$instance, $method], $arguments);
 
 				if ($r !== null && $ret === null)
 				{

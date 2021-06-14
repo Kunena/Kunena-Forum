@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Message;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
-use function defined;
 
 /**
  * Kunena Forum Message Helper Class
@@ -63,7 +62,7 @@ abstract class KunenaMessageHelper
 			return self::$_instances;
 		}
 
-		if (is_array($ids))
+		if (\is_array($ids))
 		{
 			$ids = array_unique($ids);
 		}
@@ -101,7 +100,7 @@ abstract class KunenaMessageHelper
 	{
 		foreach ($ids as $i => $id)
 		{
-			$id = intval($id);
+			$id = \intval($id);
 
 			if (!$id || isset(self::$_instances [$id]))
 			{
@@ -187,7 +186,7 @@ abstract class KunenaMessageHelper
 		// If out of range, use last page
 		if ($total < $start)
 		{
-			$start = intval($total / $limit) * $limit;
+			$start = \intval($total / $limit) * $limit;
 		}
 
 		$ordering = strtoupper($ordering);
@@ -330,7 +329,7 @@ abstract class KunenaMessageHelper
 			default:
 		}
 
-		if (is_array($categories) && in_array(0, $categories))
+		if (\is_array($categories) && \in_array(0, $categories))
 		{
 			$categories = false;
 		}
@@ -419,7 +418,7 @@ abstract class KunenaMessageHelper
 		// If out of range, use last page
 		if ($limit && $total < $limitstart)
 		{
-			$limitstart = intval($total / $limit) * $limit;
+			$limitstart = \intval($total / $limit) * $limit;
 		}
 
 		$query->setLimit($limit, $limitstart);
@@ -467,7 +466,7 @@ abstract class KunenaMessageHelper
 	 */
 	public static function getLocation(int $mesid, $direction = null, $hold = null): int
 	{
-		if (is_null($direction))
+		if (\is_null($direction))
 		{
 			$direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		}
@@ -534,7 +533,7 @@ abstract class KunenaMessageHelper
 			$instance = new KunenaMessage;
 
 			// Only load messages which haven't been preloaded before (including missing ones).
-			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
+			$instance->load(!\array_key_exists($id, self::$_instances) ? $id : null);
 			$instance->id          = $id;
 			self::$_instances[$id] = $instance;
 		}
@@ -558,7 +557,7 @@ abstract class KunenaMessageHelper
 	public static function loadLocation($mesids): void
 	{
 		// NOTE: if you already know the location using this code just takes resources
-		if (!is_array($mesids))
+		if (!\is_array($mesids))
 		{
 			$mesids = explode(',', $mesids);
 		}
@@ -657,7 +656,7 @@ abstract class KunenaMessageHelper
 	{
 		$db = Factory::getDBO();
 
-		if (is_array($topicids))
+		if (\is_array($topicids))
 		{
 			$where = 'WHERE m.thread IN (' . implode(',', $topicids) . ')';
 		}

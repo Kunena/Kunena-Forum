@@ -12,9 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Activity;
 
-defined('_JEXEC') or die();
-
-use function defined;
+\defined('_JEXEC') or die();
 
 /**
  * Class KunenaActivity

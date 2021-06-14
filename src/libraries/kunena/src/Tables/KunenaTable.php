@@ -18,9 +18,8 @@ use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use RuntimeException;
 use UnexpectedValueException;
-use function defined;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 /**
  * Class KunenaTable
@@ -43,7 +42,6 @@ abstract class KunenaTable extends Table
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load($keys = null, $reset = true)
 	{
@@ -155,7 +153,6 @@ abstract class KunenaTable extends Table
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function store($updateNulls = false): bool
 	{
@@ -239,7 +236,6 @@ abstract class KunenaTable extends Table
 	 * @throws  RuntimeException
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function updateObject($nulls = false): bool
 	{
@@ -257,13 +253,13 @@ abstract class KunenaTable extends Table
 		foreach (get_object_vars($this) as $k => $v)
 		{
 			// Only process scalars that are not internal fields.
-			if (is_array($v) || is_object($v) || $k[0] == '_')
+			if (\is_array($v) || \is_object($v) || $k[0] == '_')
 			{
 				continue;
 			}
 
 			// Set the primary key to the WHERE clause instead of a field to update.
-			if (in_array($k, $tbl_keys))
+			if (\in_array($k, $tbl_keys))
 			{
 				$where[] = $this->_db->quoteName($k) . '=' . $this->_db->quote($v);
 				continue;
@@ -331,7 +327,6 @@ abstract class KunenaTable extends Table
 	 * @throws  RuntimeException
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function insertObject(): bool
 	{
@@ -346,7 +341,7 @@ abstract class KunenaTable extends Table
 		foreach (get_object_vars($this) as $k => $v)
 		{
 			// Only process non-null scalars.
-			if (is_array($v) || is_object($v) || $v === null)
+			if (\is_array($v) || \is_object($v) || $v === null)
 			{
 				continue;
 			}
@@ -395,7 +390,7 @@ abstract class KunenaTable extends Table
 			return false;
 		}
 
-		if (count($tbl_keys) == 1 && $id)
+		if (\count($tbl_keys) == 1 && $id)
 		{
 			$key        = reset($tbl_keys);
 			$this->$key = $id;
@@ -411,7 +406,6 @@ abstract class KunenaTable extends Table
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete($pk = null): bool
 	{
@@ -419,7 +413,7 @@ abstract class KunenaTable extends Table
 		// TODO: remove check when we're only supporting J!3.5+.
 		$tbl_keys = isset($this->_tbl_keys) ? $this->_tbl_keys : (array) $this->_tbl_key;
 
-		if (is_null($pk))
+		if (\is_null($pk))
 		{
 			$pk = [];
 
@@ -428,7 +422,7 @@ abstract class KunenaTable extends Table
 				$pk[$key] = $this->$key;
 			}
 		}
-		elseif (!is_array($pk))
+		elseif (!\is_array($pk))
 		{
 			$key = reset($tbl_keys);
 			$pk  = [$key => $pk];
@@ -436,7 +430,7 @@ abstract class KunenaTable extends Table
 
 		foreach ($tbl_keys as $key)
 		{
-			$pk[$key] = is_null($pk[$key]) ? $this->$key : $pk[$key];
+			$pk[$key] = \is_null($pk[$key]) ? $this->$key : $pk[$key];
 
 			if ($pk[$key] === null)
 			{

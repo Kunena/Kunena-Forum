@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Integration;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
-use function defined;
 
 /**
  * Class KunenaPrivate
@@ -54,7 +53,7 @@ class KunenaPrivate
 
 			foreach ($classes as $class)
 			{
-				if (!is_object($class))
+				if (!\is_object($class))
 				{
 					continue;
 				}

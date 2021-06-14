@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Tables;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -20,7 +20,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Registry\Registry;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Kunena Private Messages

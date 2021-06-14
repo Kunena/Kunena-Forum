@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Category\User;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -35,7 +35,6 @@ use function defined;
  * @property int    $user_id
  * @property int    $category_id
  * @since   Kunena 6.0
- *
  */
 class KunenaCategoryUser extends CMSObject
 {

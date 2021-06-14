@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Libraries\Factory;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -26,7 +26,6 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use KunenaAdminTemplate;
-use function defined;
 
 /**
  * Class KunenaFactory
@@ -68,7 +67,6 @@ abstract class KunenaFactory
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getTemplate($name = null): KunenaTemplate
 	{
@@ -89,7 +87,6 @@ abstract class KunenaFactory
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getUser($id = null, $reload = false): KunenaUser
 	{
@@ -107,11 +104,10 @@ abstract class KunenaFactory
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getSession($update = false): ?KunenaSession
 	{
-		if (!is_object(self::$session))
+		if (!\is_object(self::$session))
 		{
 			self::$session = KunenaSession::getInstance($update);
 		}
@@ -141,7 +137,6 @@ abstract class KunenaFactory
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getAvatarIntegration(): KunenaAvatar
 	{
@@ -157,7 +152,6 @@ abstract class KunenaFactory
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getPrivateMessaging(): KunenaPrivate
 	{
@@ -173,7 +167,6 @@ abstract class KunenaFactory
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getActivityIntegration(): KunenaActivity
 	{
@@ -189,7 +182,6 @@ abstract class KunenaFactory
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getProfile(): KunenaProfile
 	{
@@ -208,7 +200,6 @@ abstract class KunenaFactory
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function loadLanguage($file = 'com_kunena', $client = 'site'): bool
 	{
@@ -259,7 +250,6 @@ abstract class KunenaFactory
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getConfig(): KunenaConfig
 	{
@@ -288,7 +278,7 @@ abstract class KunenaFactory
 		$contents = str_replace('_QQ_', '"\""', $contents);
 		$strings  = @parse_ini_string($contents);
 
-		if (!is_array($strings))
+		if (!\is_array($strings))
 		{
 			$strings = [];
 		}

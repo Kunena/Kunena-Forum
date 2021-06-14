@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Topic;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicFinder

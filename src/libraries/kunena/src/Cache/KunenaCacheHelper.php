@@ -12,14 +12,13 @@
 
 namespace Kunena\Forum\Libraries\Cache;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
-use function defined;
 
 /**
  * Class Helper has helper functions to clear all caches that affects Kunena.
@@ -164,13 +163,13 @@ abstract class KunenaCacheHelper
 	public static function clearCompiledPHP(): void
 	{
 		// Remove all compiled files from APC cache.
-		if (function_exists('apc_clear_cache'))
+		if (\function_exists('apc_clear_cache'))
 		{
 			@apc_clear_cache();
 		}
 
 		// Remove all compiled files from XCache.
-		if (function_exists('xcache_clear_cache'))
+		if (\function_exists('xcache_clear_cache'))
 		{
 			@xcache_clear_cache(XC_TYPE_PHP);
 		}

@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Libraries\Path;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Path;
-use function defined;
 
 /**
  * Class KunenaPath
@@ -72,7 +71,7 @@ class KunenaPath extends Path
 			if ($temp !== false)
 			{
 				self::$apache = fileowner($temp);
-				self::$tmpdir = dirname($temp);
+				self::$tmpdir = \dirname($temp);
 				unlink($temp);
 			}
 		}

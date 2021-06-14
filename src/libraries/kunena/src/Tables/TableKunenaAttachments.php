@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Tables;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Kunena Attachments Table

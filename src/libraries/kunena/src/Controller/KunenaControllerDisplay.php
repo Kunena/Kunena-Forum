@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Libraries\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use InvalidArgumentException;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Layout\KunenaBase;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use function defined;
 
 /**
  * Class KunenaControllerDisplay
@@ -151,7 +150,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function execute()
 	{
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		try
 		{
@@ -160,7 +159,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 
 			if ($result === false)
 			{
-				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 				return KunenaLayout::factory('Empty')->setOptions($this->getOptions());
 			}
@@ -175,7 +174,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 		{
 			if ($this->primary)
 			{
-				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 				throw $e;
 			}
 			else
@@ -184,7 +183,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 			}
 		}
 
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . get_class($this) . '::' . __FUNCTION__ . '()') : null;
+		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
 
 		return $this->output;
 	}
@@ -336,7 +335,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	 */
 	public function setProperties($properties): KunenaControllerDisplay
 	{
-		if (!is_array($properties) && !is_object($properties))
+		if (!\is_array($properties) && !\is_object($properties))
 		{
 			throw new InvalidArgumentException('Parameter should be either array or an object.');
 		}

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Announcement;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use InvalidArgumentException;
@@ -28,7 +28,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class KunenaForumAnnouncement
@@ -123,7 +122,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($identifier = null, $reload = false): KunenaAnnouncement
 	{
@@ -141,7 +139,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUrl($layout = 'default', $xhtml = true)
 	{
@@ -187,7 +184,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTaskUrl($task = null, $xhtml = true): bool
 	{
@@ -235,14 +231,13 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayField(string $field, $mode = null)
 	{
 		switch ($field)
 		{
 			case 'id':
-				return intval($this->id);
+				return \intval($this->id);
 			case 'title':
 				return KunenaParser::parseText($this->title, '', 'announcement_title');
 			case 'sdescription':
@@ -270,7 +265,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAuthor(): ?KunenaUser
 	{
@@ -424,7 +418,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseRead(KunenaUser $user)
 	{
@@ -438,7 +431,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -448,7 +441,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseNotBanned(KunenaUser $user)
 	{
@@ -468,7 +460,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			}
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -478,7 +470,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseWrite(KunenaUser $user): ?KunenaExceptionAuthorise
 	{

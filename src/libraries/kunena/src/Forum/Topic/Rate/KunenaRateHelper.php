@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Libraries\Forum\Topic\Rate;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
-use function defined;
 
 /**
  * Kunena Forum Topic Rate Helper Class
@@ -55,7 +54,7 @@ abstract class KunenaRateHelper
 			return $identifier;
 		}
 
-		$id = intval($identifier);
+		$id = \intval($identifier);
 
 		if ($id < 1)
 		{

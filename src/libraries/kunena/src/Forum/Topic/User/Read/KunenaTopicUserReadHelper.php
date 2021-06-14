@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Topic\User\Read;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -21,7 +21,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\User\Read\ReadHelper
@@ -62,7 +61,7 @@ abstract class KunenaTopicUserReadHelper
 			$topic = $topic->id;
 		}
 
-		$topic = intval($topic);
+		$topic = \intval($topic);
 		$user  = KunenaUserHelper::get($user);
 
 		if ($topic < 1)
@@ -103,7 +102,7 @@ abstract class KunenaTopicUserReadHelper
 			return isset(self::$_instances[$user->userid]) ? self::$_instances[$user->userid] : [];
 		}
 
-		if (!is_array($ids))
+		if (!\is_array($ids))
 		{
 			$ids = [$ids];
 		}
@@ -147,7 +146,7 @@ abstract class KunenaTopicUserReadHelper
 	{
 		foreach ($ids as $i => $id)
 		{
-			$id = intval($id);
+			$id = \intval($id);
 
 			if (!$id || isset(self::$_instances [$user->userid][$id]))
 			{

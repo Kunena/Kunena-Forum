@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Integration;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * Class KunenaProfile
@@ -48,7 +47,6 @@ class KunenaProfile
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -60,7 +58,7 @@ class KunenaProfile
 
 			foreach ($classes as $class)
 			{
-				if (!is_object($class))
+				if (!\is_object($class))
 				{
 					continue;
 				}
@@ -86,7 +84,6 @@ class KunenaProfile
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopHits(int $limit = 0): array
 	{

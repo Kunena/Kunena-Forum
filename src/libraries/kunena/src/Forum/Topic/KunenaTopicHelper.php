@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Topic;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicHelper
@@ -69,7 +68,7 @@ abstract class KunenaTopicHelper
 			$instance = new KunenaTopic;
 
 			// Only load topics which haven't been preloaded before (including missing ones).
-			$instance->load(!array_key_exists($id, self::$_instances) ? $id : null);
+			$instance->load(!\array_key_exists($id, self::$_instances) ? $id : null);
 			$instance->id          = $id;
 			self::$_instances[$id] = $instance;
 		}
@@ -168,7 +167,7 @@ abstract class KunenaTopicHelper
 			return self::$_instances;
 		}
 
-		if (is_array($ids))
+		if (\is_array($ids))
 		{
 			$ids = array_unique($ids);
 		}
@@ -207,7 +206,7 @@ abstract class KunenaTopicHelper
 	{
 		foreach ($ids as $i => $id)
 		{
-			$id = intval($id);
+			$id = \intval($id);
 
 			if (!$id || isset(self::$_instances [$id]))
 			{
@@ -422,7 +421,7 @@ abstract class KunenaTopicHelper
 		// If out of range, use last page
 		if ($limit && $total < $limitstart)
 		{
-			$limitstart = intval($total / $limit) * $limit;
+			$limitstart = \intval($total / $limit) * $limit;
 		}
 
 		// Get items
@@ -495,7 +494,7 @@ abstract class KunenaTopicHelper
 			return 0;
 		}
 
-		if (is_array($ids))
+		if (\is_array($ids))
 		{
 			$idlist = implode(',', $ids);
 		}
@@ -568,7 +567,7 @@ abstract class KunenaTopicHelper
 			return 0;
 		}
 
-		if (is_array($ids))
+		if (\is_array($ids))
 		{
 			$idlist = implode(',', $ids);
 		}
@@ -627,7 +626,7 @@ abstract class KunenaTopicHelper
 	{
 		$db = Factory::getDBO();
 
-		if (is_array($ids))
+		if (\is_array($ids))
 		{
 			$threads = 'AND ' . $db->quoteName('m.thread') . ' IN (' . implode(',', $ids) . ')';
 		}

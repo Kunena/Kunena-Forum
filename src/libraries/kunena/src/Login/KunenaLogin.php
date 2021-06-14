@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Login;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\CMS\Helper\AuthenticationHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Component\Users\Administrator\Helper\UsersHelper;
 use Joomla\Component\Users\Administrator\Model\UserModel;
-use function defined;
 
 /**
  * Class KunenaLogin
@@ -42,7 +41,6 @@ class KunenaLogin
 	protected $instances = [];
 
 	/**
-	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  Exception
@@ -55,7 +53,7 @@ class KunenaLogin
 
 		foreach ($classes as $class)
 		{
-			if (!is_object($class))
+			if (!\is_object($class))
 			{
 				continue;
 			}
@@ -94,7 +92,7 @@ class KunenaLogin
 	 */
 	public static function getTwoFactorMethods(): int
 	{
-		return count(AuthenticationHelper::getTwoFactorMethods());
+		return \count(AuthenticationHelper::getTwoFactorMethods());
 	}
 
 	/**
@@ -278,7 +276,7 @@ class KunenaLogin
 		// Is TFA globally turned off?
 		$twoFactorMethods = UsersHelper::getTwoFactorMethods();
 
-		if (count($twoFactorMethods) <= 1)
+		if (\count($twoFactorMethods) <= 1)
 		{
 			return false;
 		}

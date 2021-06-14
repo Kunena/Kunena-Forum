@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Topic\Poll;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -37,7 +37,6 @@ use function defined;
  * @property int    $id
  * @property string $title
  * @since   Kunena 6.0
- *
  */
 class KunenaPoll extends CMSObject
 {
@@ -200,7 +199,7 @@ class KunenaPoll extends CMSObject
 	 */
 	public function getTotal(): ?int
 	{
-		if (is_null($this->_total))
+		if (\is_null($this->_total))
 		{
 			$this->_total = 0;
 			$options      = $this->getOptions();
@@ -256,7 +255,7 @@ class KunenaPoll extends CMSObject
 	 */
 	public function setOptions(array $options): void
 	{
-		if (!is_array($options))
+		if (!\is_array($options))
 		{
 			return;
 		}
@@ -634,7 +633,7 @@ class KunenaPoll extends CMSObject
 		$this->options[$option]->votes += $delta;
 
 		// Change votes in the option
-		$delta = intval($delta);
+		$delta = \intval($delta);
 		$query = $this->_db->getQuery(true);
 		$query->update($this->_db->quoteName('#__kunena_polls_options'))
 			->set($this->_db->quoteName('votes') . ' = votes+' . $this->_db->quote($delta))

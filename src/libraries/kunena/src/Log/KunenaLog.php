@@ -12,14 +12,13 @@
 
 namespace Kunena\Forum\Libraries\Log;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
 
 /**
  * implements \Kunena Log.

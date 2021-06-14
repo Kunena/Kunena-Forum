@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Announcement;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * Class AnnouncementHelper
@@ -45,7 +44,6 @@ abstract class KunenaAnnouncementHelper
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function get($identifier = null, $reload = false)
 	{
@@ -59,7 +57,7 @@ abstract class KunenaAnnouncementHelper
 			return new KunenaAnnouncement;
 		}
 
-		$id = intval($identifier);
+		$id = \intval($identifier);
 
 		if (empty(self::$_instances [$id]))
 		{
@@ -84,7 +82,6 @@ abstract class KunenaAnnouncementHelper
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getUrl($layout = null, $xhtml = true): string
 	{
@@ -125,7 +122,6 @@ abstract class KunenaAnnouncementHelper
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getAnnouncements($start = 0, $limit = 1, $filter = true): array
 	{
@@ -192,7 +188,6 @@ abstract class KunenaAnnouncementHelper
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getCount($filter = true): int
 	{

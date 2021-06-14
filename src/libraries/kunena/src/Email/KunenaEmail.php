@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Email;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use ErrorException;
 use Exception;
@@ -20,7 +20,6 @@ use Joomla\CMS\Log\Log;
 use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailTemplate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use function defined;
 
 /**
  * Class KunenaEmail

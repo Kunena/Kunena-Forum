@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Libraries\Icons;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use DOMDocument;
 use Joomla\CMS\Uri\Uri;
-use function defined;
 
 /**
  * Class KunenaSvgIcons

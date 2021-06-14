@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\User;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 KunenaUserHelper::initialize();
 
@@ -32,7 +32,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUserHelper
@@ -446,18 +445,17 @@ abstract class KunenaUserHelper
 	 * @return  array
 	 *
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public static function getGroupsForUsers(array $groupIds = null, array $userIds = null, $recursive = false): array
 	{
 		// Check for bad calls.
-		if (is_null($userIds) && is_null($groupIds))
+		if (\is_null($userIds) && \is_null($groupIds))
 		{
 			throw new BadMethodCallException(__CLASS__ . '::' . __FUNCTION__ . '(): Cannot load all groups for all users.');
 		}
 
 		// Check if there's anything to load.
-		if ((is_array($groupIds) && empty($groupIds)) || (is_array($userIds) && empty($userIds)))
+		if ((\is_array($groupIds) && empty($groupIds)) || (\is_array($userIds) && empty($userIds)))
 		{
 			return [];
 		}
@@ -557,7 +555,7 @@ abstract class KunenaUserHelper
 			}
 
 			$counts          = [];
-			$counts['user']  = count(self::getOnlineUsers());
+			$counts['user']  = \count(self::getOnlineUsers());
 			$counts['guest'] = $count;
 		}
 
@@ -640,7 +638,7 @@ abstract class KunenaUserHelper
 		$user   = self::get($user);
 		$online = false;
 
-		if (intval($user->userid) > 0)
+		if (\intval($user->userid) > 0)
 		{
 			// First check if the user is actually has an active session regardless of the status the user set
 			if (self::$_online === null)

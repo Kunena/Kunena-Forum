@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Message\Thankyou;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
-use function defined;
 
 /**
  * Kunena Forum Message Thank You Helper Class
@@ -64,7 +63,7 @@ abstract class KunenaMessageThankyouHelper
 			return $identifier;
 		}
 
-		$id = intval($identifier);
+		$id = \intval($identifier);
 
 		// TODO: why this returns null? Does it have side effect?
 		if ($id < 1)
@@ -96,7 +95,7 @@ abstract class KunenaMessageThankyouHelper
 	{
 		foreach ($ids as $i => $id)
 		{
-			$id = intval($id);
+			$id = \intval($id);
 
 			if (!$id || isset(self::$_instances [$id]))
 			{
@@ -162,12 +161,12 @@ abstract class KunenaMessageThankyouHelper
 
 		if (!empty($starttime))
 		{
-			$where [] = "time >= UNIX_TIMESTAMP({$db->quote(intval($starttime))})";
+			$where [] = "time >= UNIX_TIMESTAMP({$db->quote(\intval($starttime))})";
 		}
 
 		if (!empty($endtime))
 		{
-			$where [] = "time <= UNIX_TIMESTAMP({$db->quote(intval($endtime))})";
+			$where [] = "time <= UNIX_TIMESTAMP({$db->quote(\intval($endtime))})";
 		}
 
 		$query = $db->getQuery(true);
@@ -314,7 +313,7 @@ abstract class KunenaMessageThankyouHelper
 			->where('m.catid IN (' . $catlist . ')')
 			->where('m.hold = 0')
 			->where('tt.hold = 0')
-			->where('t.' . $field . ' = ' . $db->quote(intval($userid)));
+			->where('t.' . $field . ' = ' . $db->quote(\intval($userid)));
 		$query->setLimit($limit, $limitstart);
 		$db->setQuery($query);
 
@@ -421,7 +420,7 @@ abstract class KunenaMessageThankyouHelper
 			return self::$_instances;
 		}
 
-		if (is_array($ids))
+		if (\is_array($ids))
 		{
 			$ids2 = [];
 

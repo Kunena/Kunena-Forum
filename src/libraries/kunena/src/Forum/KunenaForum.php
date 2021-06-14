@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\View\Common\HtmlView;
 use stdClass;
-use function defined;
 
 /**
  * class KunenaForum

@@ -19,7 +19,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 /**
  * Install Sample Data for Kunena
@@ -33,7 +33,6 @@ class KunenaSampleData
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function installSampleData(): void
 	{

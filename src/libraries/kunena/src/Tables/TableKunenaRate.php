@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Libraries\Tables;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\Database\DatabaseDriver;
-use function defined;
 
 /**
  * Kunena Rate
@@ -50,7 +49,6 @@ class TableKunenaRate extends KunenaTable
 	public $time = null;
 
 	/**
-	 *
 	 * @param   DatabaseDriver  $db  database driver
 	 *
 	 * @since   Kunena 6.0

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Table;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Utilities\ArrayHelper;
 use RuntimeException;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Class KunenaTableMap
@@ -147,7 +146,7 @@ class KunenaTableMap
 
 		if (!isset($instance[$key]))
 		{
-			$c              = get_called_class();
+			$c              = \get_called_class();
 			$instance[$key] = new $c($this->_tbl, $this->_tbl_mapped, $this->_tbl_key);
 		}
 
@@ -259,7 +258,7 @@ class KunenaTableMap
 	 */
 	public function add(int $id): KunenaTableMap
 	{
-		if (!in_array($id, $this->{$this->_tbl_mapped}))
+		if (!\in_array($id, $this->{$this->_tbl_mapped}))
 		{
 			array_push($this->{$this->_tbl_mapped}, (int) $id);
 		}
@@ -304,19 +303,19 @@ class KunenaTableMap
 	public function bind($src, $ignore = []): bool
 	{
 		// If the source value is not an array or object return false.
-		if (!is_object($src) && !is_array($src))
+		if (!\is_object($src) && !\is_array($src))
 		{
-			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', get_class($this), gettype($src)));
+			throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', \get_class($this), \gettype($src)));
 		}
 
 		// If the source value is an object, get its accessible properties.
-		if (is_object($src))
+		if (\is_object($src))
 		{
 			$src = get_object_vars($src);
 		}
 
 		// If the ignore value is a string, explode it over spaces.
-		if (!is_array($ignore))
+		if (!\is_array($ignore))
 		{
 			$ignore = explode(' ', $ignore);
 		}
@@ -325,7 +324,7 @@ class KunenaTableMap
 		foreach ($this->getProperties() as $k => $v)
 		{
 			// Only process fields not in the ignore array.
-			if (!in_array($k, $ignore))
+			if (!\in_array($k, $ignore))
 			{
 				if (isset($src[$k]))
 				{
@@ -370,7 +369,6 @@ class KunenaTableMap
 	 * @return  boolean  True on success.
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save(array $map = null, array $filter = null): bool
 	{
@@ -435,7 +433,6 @@ class KunenaTableMap
 	 * @return  boolean  True on success.
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function store(array $filter = null): bool
 	{
@@ -444,7 +441,7 @@ class KunenaTableMap
 
 		if (0 == $this->{$k})
 		{
-			throw new UnexpectedValueException(sprintf('No key specified: %s.', get_class($this)));
+			throw new UnexpectedValueException(sprintf('No key specified: %s.', \get_class($this)));
 		}
 
 		$id    = $this->{$k};
@@ -537,7 +534,7 @@ class KunenaTableMap
 
 			$keys = [$keyName => $keyValue];
 		}
-		elseif (!is_array($keys))
+		elseif (!\is_array($keys))
 		{
 			// Load by primary key.
 			$keys = [$this->_tbl_key => $keys];
@@ -558,9 +555,9 @@ class KunenaTableMap
 		foreach ($keys as $field => $value)
 		{
 			// Check that $field is in the table.
-			if (!in_array($field, $fields))
+			if (!\in_array($field, $fields))
 			{
-				throw new UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', get_class($this), $field));
+				throw new UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', \get_class($this), $field));
 			}
 
 			// Add the search tuple to the query.
@@ -617,7 +614,7 @@ class KunenaTableMap
 	public function delete($pk = null): bool
 	{
 		$k  = $this->_tbl_key;
-		$pk = (is_null($pk)) ? $this->{$k} : $pk;
+		$pk = (\is_null($pk)) ? $this->{$k} : $pk;
 
 		// If no primary key is given, return false.
 		if ($pk === null)
@@ -626,7 +623,7 @@ class KunenaTableMap
 		}
 
 		// Turn pk into array.
-		if (!is_array($pk))
+		if (!\is_array($pk))
 		{
 			$pk = [$k => (int) $pk];
 		}

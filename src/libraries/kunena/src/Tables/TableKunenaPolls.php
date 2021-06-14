@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Libraries\Tables;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\Database\DatabaseDriver;
-use function defined;
 
 /**
  * Kunena Polls

@@ -9,7 +9,7 @@
 
 namespace Kunena\Forum\Libraries\Compat\Joomla\Layout;
 
-defined('JPATH_BASE') or die;
+\defined('JPATH_BASE') or die;
 
 use Joomla\CMS\Layout\BaseLayout;
 

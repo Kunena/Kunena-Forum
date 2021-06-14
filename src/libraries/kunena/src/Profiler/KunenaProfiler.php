@@ -11,10 +11,9 @@
 
 namespace Kunena\Forum\Libraries\Profiler;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Profiler\Profiler;
-use function defined;
 
 /**
  * Class KunenaProfiler

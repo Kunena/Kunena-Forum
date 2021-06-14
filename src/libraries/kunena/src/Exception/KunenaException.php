@@ -11,11 +11,9 @@
 
 namespace Kunena\Forum\Libraries\Exception;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
-use function defined;
-
 
 /**
  * Exception class definition for the Kunena Framework.

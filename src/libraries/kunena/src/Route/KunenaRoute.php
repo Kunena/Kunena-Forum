@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Route;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Application\ApplicationHelper;
@@ -32,7 +32,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 KunenaRoute::initialize();
 
@@ -184,7 +183,6 @@ abstract class KunenaRoute
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function current($object = false)
 	{
@@ -215,14 +213,13 @@ abstract class KunenaRoute
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected static function prepare($uri = null)
 	{
 		static $current = [];
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		if (!$uri || (is_string($uri) && $uri[0] == '&'))
+		if (!$uri || (\is_string($uri) && $uri[0] == '&'))
 		{
 			if (!isset($current[$uri]))
 			{
@@ -239,14 +236,14 @@ abstract class KunenaRoute
 		}
 		elseif (is_numeric($uri))
 		{
-			if (!isset(self::$menu[intval($uri)]))
+			if (!isset(self::$menu[\intval($uri)]))
 			{
 				KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 				return false;
 			}
 
-			$item = self::$menu[intval($uri)];
+			$item = self::$menu[\intval($uri)];
 			$uri  = Uri::getInstance("{$item->link}&Itemid={$item->id}");
 		}
 		elseif ($uri instanceof Uri)
@@ -344,7 +341,6 @@ abstract class KunenaRoute
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected static function setItemID(Uri $uri): int
 	{
@@ -438,7 +434,6 @@ abstract class KunenaRoute
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected static function build(): void
 	{
@@ -576,7 +571,7 @@ abstract class KunenaRoute
 			$params = $item->getParams();
 			$catids = $params->get('catids', []);
 
-			if (!is_array($catids))
+			if (!\is_array($catids))
 			{
 				$catids = explode(',', $catids);
 			}
@@ -590,7 +585,7 @@ abstract class KunenaRoute
 			$cache[$item->id] = (array) $catids;
 		}
 
-		return intval(empty($cache[$item->id]) || isset($cache[$item->id][$catid]));
+		return \intval(empty($cache[$item->id]) || isset($cache[$item->id][$catid]));
 	}
 
 	/**
@@ -601,7 +596,6 @@ abstract class KunenaRoute
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected static function checkItem($item, Uri $uri)
 	{
@@ -643,7 +637,6 @@ abstract class KunenaRoute
 	 *
 	 * @throws  null
 	 * @since   Kunena
-	 *
 	 */
 	protected static function checkCategory($item, Uri $uri)
 	{
@@ -667,7 +660,7 @@ abstract class KunenaRoute
 			}
 		}
 
-		return intval(isset($cache[$item->id][$catid])) * 8;
+		return \intval(isset($cache[$item->id][$catid])) * 8;
 	}
 
 	/**
@@ -709,7 +702,6 @@ abstract class KunenaRoute
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getReferrer($default = null, $anchor = null): string
 	{
@@ -765,7 +757,6 @@ abstract class KunenaRoute
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function _($uri = null, $xhtml = true, $ssl = 0)
 	{
@@ -789,7 +780,7 @@ abstract class KunenaRoute
 
 		$key = (self::$home ? self::$home->id : 0) . '-' . (int) $xhtml . (int) $ssl . ($uri instanceof Uri ? $uri->toString() : (string) $uri);
 
-		if (!$uri || (is_string($uri) && $uri[0] == '&'))
+		if (!$uri || (\is_string($uri) && $uri[0] == '&'))
 		{
 			$key = 'a' . (self::$active ? self::$active->id : '') . '-' . $key;
 		}
@@ -834,7 +825,6 @@ abstract class KunenaRoute
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function normalize($uri = null, $object = false)
 	{
@@ -879,7 +869,6 @@ abstract class KunenaRoute
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function cacheLoad(): void
 	{
@@ -908,7 +897,6 @@ abstract class KunenaRoute
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function cacheStore(): void
 	{
@@ -1020,7 +1008,6 @@ abstract class KunenaRoute
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function initialize(): void
 	{
@@ -1066,7 +1053,7 @@ abstract class KunenaRoute
 
 		foreach ($post as $key => $value)
 		{
-			if (in_array($key, ['view', 'layout', 'task']) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
+			if (\in_array($key, ['view', 'layout', 'task']) && !preg_match('/[^a-zA-Z0-9_.]/i', $value))
 			{
 				self::$current->setVar($key, $value);
 			}
@@ -1082,12 +1069,12 @@ abstract class KunenaRoute
 				continue;
 			}
 
-			if (in_array($key, ['query', 'searchuser']))
+			if (\in_array($key, ['query', 'searchuser']))
 			{
 				// Allow all values
 			}
 			// TODO: we need to find a way to here deal with arrays: &foo[]=bar
-			elseif (gettype($value) == 'string')
+			elseif (\gettype($value) == 'string')
 			{
 				if (preg_match('/[^a-zA-Z0-9_ ]/i', $value))
 				{
@@ -1130,7 +1117,6 @@ abstract class KunenaRoute
 	 * @throws Exception
 	 * @throws null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getCategoryUrl(KunenaCategory $category, bool $xhtml = true)
 	{
@@ -1145,7 +1131,6 @@ abstract class KunenaRoute
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getCategoryItemid(KunenaCategory $category)
 	{
@@ -1160,7 +1145,6 @@ abstract class KunenaRoute
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getItemID($uri = null)
 	{
@@ -1196,7 +1180,6 @@ abstract class KunenaRoute
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public static function fixMissingItemID(): int
 	{
@@ -1221,7 +1204,6 @@ abstract class KunenaRoute
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getTopicUrl(KunenaTopic $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null)
 	{
@@ -1243,7 +1225,6 @@ abstract class KunenaRoute
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getMessageUrl(KunenaMessage $message, $xhtml = true, KunenaTopic $topic = null, KunenaCategory $category = null)
 	{
@@ -1270,7 +1251,6 @@ abstract class KunenaRoute
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getUserUrl(KunenaUser $user, $xhtml = true)
 	{

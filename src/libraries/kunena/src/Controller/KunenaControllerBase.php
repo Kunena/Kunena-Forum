@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Application\BaseApplication;
@@ -24,7 +24,6 @@ use LogicException;
 use RuntimeException;
 use Serializable;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * @see     JController in Joomla! 3.0
@@ -141,7 +140,7 @@ abstract class KunenaControllerBase implements Serializable
 			$this->options = $options;
 		}
 		// Received array
-		elseif (is_array($options))
+		elseif (\is_array($options))
 		{
 			$this->options = new Registry($options);
 		}
@@ -234,7 +233,7 @@ abstract class KunenaControllerBase implements Serializable
 
 		if (!($this->input instanceof Input))
 		{
-			throw new UnexpectedValueException(sprintf('%s::unserialize would not accept a `%s`.', get_class($this), gettype($this->input)));
+			throw new UnexpectedValueException(sprintf('%s::unserialize would not accept a `%s`.', \get_class($this), \gettype($this->input)));
 		}
 
 		return $this;

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Topic\Rate;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Message\Thankyou;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\MessageThankyou

@@ -12,10 +12,10 @@
 
 namespace Kunena\Forum\Libraries\Image;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-define('MIME_GIF', 'image/gif');
-define('MIME_PNG', 'image/png');
+\define('MIME_GIF', 'image/gif');
+\define('MIME_PNG', 'image/png');
 
 use Exception;
 use Joomla\CMS\Image\Image;
@@ -50,7 +50,7 @@ class KunenaImage extends Image
 			throw new RuntimeException($e->getMessage(), 500);
 		}
 
-		if (function_exists('exif_read_data'))
+		if (\function_exists('exif_read_data'))
 		{
 			$angle = 0;
 

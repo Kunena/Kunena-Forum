@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Libraries\Pagination;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -25,7 +25,6 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use stdClass;
-use function defined;
 
 /**
  * Pagination Class. Provides a common interface for content pagination for the Joomla! CMS.
@@ -484,7 +483,7 @@ class KunenaPagination
 
 		$this->setChrome();
 
-		return call_user_func($this->footerChrome, $list);
+		return \call_user_func($this->footerChrome, $list);
 	}
 
 	/**
@@ -595,34 +594,34 @@ class KunenaPagination
 		if ($data->all->base !== null)
 		{
 			$list['all']['active'] = true;
-			$list['all']['data']   = call_user_func($this->itemActiveChrome, $data->all);
+			$list['all']['data']   = \call_user_func($this->itemActiveChrome, $data->all);
 		}
 		else
 		{
 			$list['all']['active'] = false;
-			$list['all']['data']   = call_user_func($this->itemInactiveChrome, $data->all);
+			$list['all']['data']   = \call_user_func($this->itemInactiveChrome, $data->all);
 		}
 
 		if ($data->start->base !== null)
 		{
 			$list['start']['active'] = true;
-			$list['start']['data']   = call_user_func($this->itemActiveChrome, $data->start);
+			$list['start']['data']   = \call_user_func($this->itemActiveChrome, $data->start);
 		}
 		else
 		{
 			$list['start']['active'] = false;
-			$list['start']['data']   = call_user_func($this->itemInactiveChrome, $data->start);
+			$list['start']['data']   = \call_user_func($this->itemInactiveChrome, $data->start);
 		}
 
 		if ($data->previous->base !== null)
 		{
 			$list['previous']['active'] = true;
-			$list['previous']['data']   = call_user_func($this->itemActiveChrome, $data->previous);
+			$list['previous']['data']   = \call_user_func($this->itemActiveChrome, $data->previous);
 		}
 		else
 		{
 			$list['previous']['active'] = false;
-			$list['previous']['data']   = call_user_func($this->itemInactiveChrome, $data->previous);
+			$list['previous']['data']   = \call_user_func($this->itemInactiveChrome, $data->previous);
 		}
 
 		// Make sure it exists
@@ -633,38 +632,38 @@ class KunenaPagination
 			if ($page->base !== null)
 			{
 				$list['pages'][$i]['active'] = true;
-				$list['pages'][$i]['data']   = call_user_func($this->itemActiveChrome, $page);
+				$list['pages'][$i]['data']   = \call_user_func($this->itemActiveChrome, $page);
 			}
 			else
 			{
 				$list['pages'][$i]['active'] = false;
-				$list['pages'][$i]['data']   = call_user_func($this->itemInactiveChrome, $page);
+				$list['pages'][$i]['data']   = \call_user_func($this->itemInactiveChrome, $page);
 			}
 		}
 
 		if ($data->next->base !== null)
 		{
 			$list['next']['active'] = true;
-			$list['next']['data']   = call_user_func($this->itemActiveChrome, $data->next);
+			$list['next']['data']   = \call_user_func($this->itemActiveChrome, $data->next);
 		}
 		else
 		{
 			$list['next']['active'] = false;
-			$list['next']['data']   = call_user_func($this->itemInactiveChrome, $data->next);
+			$list['next']['data']   = \call_user_func($this->itemInactiveChrome, $data->next);
 		}
 
 		if ($data->end->base !== null)
 		{
 			$list['end']['active'] = true;
-			$list['end']['data']   = call_user_func($this->itemActiveChrome, $data->end);
+			$list['end']['data']   = \call_user_func($this->itemActiveChrome, $data->end);
 		}
 		else
 		{
 			$list['end']['active'] = false;
-			$list['end']['data']   = call_user_func($this->itemInactiveChrome, $data->end);
+			$list['end']['data']   = \call_user_func($this->itemInactiveChrome, $data->end);
 		}
 
-		return call_user_func($this->listChrome, $list);
+		return \call_user_func($this->listChrome, $list);
 	}
 
 	/**

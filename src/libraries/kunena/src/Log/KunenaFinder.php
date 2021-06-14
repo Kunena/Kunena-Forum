@@ -12,14 +12,13 @@
 
 namespace Kunena\Forum\Libraries\Log;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use function defined;
 
 /**
  * Class KunenaLogFinder

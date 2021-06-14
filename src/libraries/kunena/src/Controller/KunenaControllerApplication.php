@@ -12,9 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Controller;
 
-defined('_JEXEC') or die();
-
-use function defined;
+\defined('_JEXEC') or die();
 
 /**
  * Class KunenaControllerApplication
@@ -64,6 +62,5 @@ class KunenaControllerApplication extends KunenaControllerDisplay
 
 		return;
 	}
-
 
 }

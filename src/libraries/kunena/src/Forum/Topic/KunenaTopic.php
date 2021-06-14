@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Forum\Topic;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use DateTime;
 use DateTimeZone;
@@ -50,7 +50,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\Topic
@@ -217,7 +216,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @since   Kunena 6.0
 	 *
 	 * @internal
-	 *
 	 */
 	public function __construct($properties = null)
 	{
@@ -245,7 +243,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($identifier = null, $reset = false): KunenaTopic
 	{
@@ -262,7 +259,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function subscribe($value = true, $user = null): bool
 	{
@@ -286,7 +282,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUserTopic($user = null): KunenaTopicUser
 	{
@@ -303,7 +298,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function favorite($value = true, $user = null): bool
 	{
@@ -327,7 +321,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function sticky($value = 1): bool
 	{
@@ -345,7 +338,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save($cascade = true): bool
 	{
@@ -422,7 +414,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCategory(): KunenaCategory
 	{
@@ -434,7 +425,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getActions(): string
 	{
@@ -477,7 +467,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function lock($value = 1): bool
 	{
@@ -505,7 +494,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function publish($value = KunenaForum::PUBLISHED): bool
 	{
@@ -541,7 +529,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function recount(): bool
 	{
@@ -614,7 +601,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function update($message = null, $postdelta = 0): bool
 	{
@@ -818,7 +804,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete($recount = true): bool
 	{
@@ -904,7 +889,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function sendNotification($url = null, $approved = false): void
 	{
@@ -917,7 +901,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAuthor(): KunenaUser
 	{
@@ -941,7 +924,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function hit(): void
 	{
@@ -975,7 +957,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPagination($limitstart = 0, $limit = 6, $display = 4, $prefix = ''): ?KunenaPagination
 	{
@@ -1004,7 +985,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUri($category = null, $action = null): Uri
 	{
@@ -1023,7 +1003,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		{
 			$uri->delVar('action');
 			$mesid = 0;
-			$limit = max(1, intval(KunenaFactory::getConfig()->messagesPerPage));
+			$limit = max(1, \intval(KunenaFactory::getConfig()->messagesPerPage));
 
 			if (isset($message))
 			{
@@ -1058,7 +1038,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			if ($mesid)
 			{
 				$uri->setFragment($mesid);
-				$limitstart = intval($this->getPostLocation($mesid) / $limit) * $limit;
+				$limitstart = \intval($this->getPostLocation($mesid) / $limit) * $limit;
 
 				if ($limitstart)
 				{
@@ -1079,11 +1059,10 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPostLocation(int $mesid, $direction = null, $hold = null): int
 	{
-		if (is_null($direction))
+		if (\is_null($direction))
 		{
 			$direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		}
@@ -1137,7 +1116,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUserInfo($user = null): KunenaTopicUser
 	{
@@ -1149,7 +1127,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getFirstPostAuthor(): KunenaUser
 	{
@@ -1161,7 +1138,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getLastPostAuthor(): KunenaUser
 	{
@@ -1195,7 +1171,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function getTopic(): KunenaTopic
 	{
@@ -1224,14 +1199,13 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayField(string $field)
 	{
 		switch ($field)
 		{
 			case 'id':
-				return intval($this->id);
+				return \intval($this->id);
 			case 'subject':
 				return KunenaParser::parseText($this->subject);
 		}
@@ -1246,7 +1220,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getIcon($category_icon = ''): string
 	{
@@ -1260,7 +1233,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getReplies($hold = null): int
 	{
@@ -1274,7 +1246,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTotal($hold = null): int
 	{
@@ -1301,7 +1272,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPermaUrl($category = null, $xhtml = true, $action = null)
 	{
@@ -1318,7 +1288,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUrl($category = null, $xhtml = true, $action = null)
 	{
@@ -1362,7 +1331,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function newReply($fields = [], $user = null, $safefields = null): KunenaMessage
 	{
@@ -1419,7 +1387,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function hasNew($user = null): bool
 	{
@@ -1461,7 +1428,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function markRead($user = null): bool
 	{
@@ -1490,7 +1456,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function isAuthorised($action = 'read', KunenaUser $user = null): bool
 	{
@@ -1517,7 +1482,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function tryAuthorise($action = 'read', KunenaUser $user = null, $throw = true)
 	{
@@ -1590,7 +1554,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load($id = null): bool
 	{
@@ -1617,7 +1580,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *                                    \Kunena\Forum\Libraries\Forum\Topic\Topic or false on failure
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function move(object $target, $ids = false, $shadow = false, $subject = '', $subjectall = false, $topic_iconid = null, $keep_poll = 0)
 	{
@@ -1629,7 +1591,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		// Cleanup input
 		if (!($ids instanceof Date))
 		{
-			if (!is_array($ids))
+			if (!\is_array($ids))
 			{
 				$ids = explode(',', (string) $ids);
 			}
@@ -2009,7 +1971,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function trash(): bool
 	{
@@ -2049,7 +2010,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function resetvotes(): bool
 	{
@@ -2131,7 +2091,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseRead(KunenaUser $user)
 	{
@@ -2152,7 +2111,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			$access = KunenaAccess::getInstance();
 			$hold   = $access->getAllowedHold($user->userid, $this->category_id, false);
 
-			if (!in_array($this->hold, $hold))
+			if (!\in_array($this->hold, $hold))
 			{
 				return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 			}
@@ -2204,7 +2163,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseUnlocked(KunenaUser $user)
 	{
@@ -2224,7 +2182,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseOwn(KunenaUser $user)
 	{
@@ -2252,7 +2209,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authorisePoll(KunenaUser $user)
 	{
@@ -2272,7 +2228,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getPoll()
 	{
@@ -2289,7 +2244,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseVote(KunenaUser $user)
 	{
@@ -2350,7 +2304,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseNoVotes(KunenaUser $user)
 	{
@@ -2374,7 +2327,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authorisePermdelete(KunenaUser $user)
 	{
@@ -2400,7 +2352,6 @@ class KunenaTopic extends KunenaDatabaseObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function authoriseGuestWrite(KunenaUser $user)
 	{

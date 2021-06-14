@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\KunenaPrivate;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\Registry\Registry;
@@ -21,7 +21,6 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Table\KunenaTableMap;
-use function defined;
 
 /**
  * Private message.
@@ -99,7 +98,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 		switch ($field)
 		{
 			case 'id':
-				return intval($this->id);
+				return \intval($this->id);
 			case 'subject':
 				return KunenaParser::parseText($this->subject);
 			case 'body':
@@ -118,19 +117,19 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	{
 		$this->params = new Registry($this->params);
 
-		if (!is_null($this->_attachments))
+		if (!\is_null($this->_attachments))
 		{
 			$attachments       = array_values($this->_attachments->getMapped());
-			$this->attachments = count($attachments);
+			$this->attachments = \count($attachments);
 			$this->params->set('attachments', $attachments);
 		}
 
-		if (!is_null($this->_posts))
+		if (!\is_null($this->_posts))
 		{
 			$this->params->set('receivers.posts', array_values($this->_posts->getMapped()));
 		}
 
-		if (!is_null($this->_users))
+		if (!\is_null($this->_users))
 		{
 			$this->params->set('receivers.users', array_values($this->_users->getMapped()));
 		}
@@ -165,7 +164,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 */
 	public function attachments(): ?KunenaTableMap
 	{
-		if (is_null($this->_attachments))
+		if (\is_null($this->_attachments))
 		{
 			$this->_attachments = new KunenaTableMap('#__kunena_private_attachment_map', 'private_id', 'attachment_id');
 			$this->_attachments->load($this->id);
@@ -181,7 +180,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 */
 	public function posts(): ?KunenaTableMap
 	{
-		if (is_null($this->_posts))
+		if (\is_null($this->_posts))
 		{
 			$this->_posts = new KunenaTableMap('#__kunena_private_post_map', 'private_id', 'message_id');
 			$this->_posts->load($this->id);
@@ -197,7 +196,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 */
 	public function users(): ?KunenaTableMap
 	{
-		if (is_null($this->_users))
+		if (\is_null($this->_users))
 		{
 			$this->_users = new KunenaTableMap('#__kunena_private_user_map', 'private_id', 'user_id');
 			$this->_users->load($this->id);
@@ -217,7 +216,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 */
 	protected function saveInternal()
 	{
-		if (!is_null($this->_attachments))
+		if (!\is_null($this->_attachments))
 		{
 			$this->_attachments->setKey($this->id)->save();
 			$ids         = $this->_attachments->getMapped();
@@ -230,12 +229,12 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 			}
 		}
 
-		if (!is_null($this->_posts))
+		if (!\is_null($this->_posts))
 		{
 			$this->_posts->setKey($this->id)->save();
 		}
 
-		if (!is_null($this->_users))
+		if (!\is_null($this->_users))
 		{
 			$this->_users->setKey($this->id)->save();
 		}

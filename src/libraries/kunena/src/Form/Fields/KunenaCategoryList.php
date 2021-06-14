@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Form\Fields;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Form\FormField;
@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use function defined;
 
 /**
  * Class Joomla\CMS\Form\FormField|KunenaCategoryList

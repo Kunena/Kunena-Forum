@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Tables;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -21,7 +21,6 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use UnexpectedValueException;
-use function defined;
 
 /**
  * Kunena Users Table
@@ -557,7 +556,7 @@ class KunenaUsers extends KunenaTable
 		}
 
 		// Check for a valid id to load.
-		if ($this->$k === null || intval($this->$k) < 1)
+		if ($this->$k === null || \intval($this->$k) < 1)
 		{
 			$this->$k = 0;
 
@@ -634,7 +633,7 @@ class KunenaUsers extends KunenaTable
 
 		foreach ($fields as $field)
 		{
-			if (isset($data[$field]) && !in_array($field, $ignore))
+			if (isset($data[$field]) && !\in_array($field, $ignore))
 			{
 				$this->$field = $data[$field];
 			}
@@ -659,7 +658,7 @@ class KunenaUsers extends KunenaTable
 			throw new UnexpectedValueException(Text::_('COM_KUNENA_UNKNOWN_STATUS'));
 		}
 
-		if (strlen($this->status) < 0 || strlen($this->status) > 255)
+		if (\strlen($this->status) < 0 || \strlen($this->status) > 255)
 		{
 			throw new UnexpectedValueException(Text::_('COM_KUNENA_STATUS_TOOLONG'));
 		}

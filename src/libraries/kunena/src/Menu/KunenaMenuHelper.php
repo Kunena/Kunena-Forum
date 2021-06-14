@@ -13,14 +13,13 @@
 
 namespace Kunena\Forum\Libraries\Menu;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Router\Route;
 use Joomla\Registry\Registry;
-use function defined;
 
 /**
  * Class KunenaMenuHelper
@@ -52,7 +51,6 @@ abstract class KunenaMenuHelper
 	 * @since    Kunena 6.0
 	 *
 	 * @see      modules/mod_menu/helper.php
-	 *
 	 */
 	public static function getList(Registry $params): array
 	{
@@ -94,15 +92,15 @@ abstract class KunenaMenuHelper
 
 					if (($start && $start > $item->level)
 						|| ($end && $item->level > $end)
-						|| (!$showAll && $item->level > 1 && !in_array($item->parent_id, $path))
-						|| ($start > 1 && !in_array($item->tree[$start - 2], $path)))
+						|| (!$showAll && $item->level > 1 && !\in_array($item->parent_id, $path))
+						|| ($start > 1 && !\in_array($item->tree[$start - 2], $path)))
 					{
 						unset($items[$i]);
 						continue;
 					}
 
 					// Exclude item with menu item option set to exclude from menu modules
-					if (($item->getParams()->get('menu_show', 1) == 0) || in_array($item->parent_id, $hidden_parents))
+					if (($item->getParams()->get('menu_show', 1) == 0) || \in_array($item->parent_id, $hidden_parents))
 					{
 						$hidden_parents[] = $item->id;
 						unset($items[$i]);
@@ -194,7 +192,6 @@ abstract class KunenaMenuHelper
 	 *
 	 * @throws Exception
 	 * @since    3.0.2
-	 *
 	 */
 	public static function getBase(Registry $params)
 	{
@@ -226,7 +223,6 @@ abstract class KunenaMenuHelper
 	 *
 	 * @throws Exception
 	 * @since    3.0.2
-	 *
 	 */
 	public static function getActive(Registry $params): object
 	{
@@ -242,7 +238,6 @@ abstract class KunenaMenuHelper
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getDefault(): object
 	{

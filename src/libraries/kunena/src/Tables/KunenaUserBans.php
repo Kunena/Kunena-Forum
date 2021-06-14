@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Tables;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -22,7 +22,6 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Kunena User Bans
@@ -148,7 +147,7 @@ class KunenaUserBans extends KunenaTable
 		$this->reset();
 
 		// Check for a valid id to load.
-		if ($userid === null || intval($userid) < 1)
+		if ($userid === null || \intval($userid) < 1)
 		{
 			return false;
 		}
@@ -210,12 +209,12 @@ class KunenaUserBans extends KunenaTable
 	{
 		if (isset($data['comments']))
 		{
-			$data['comments'] = !is_string($data['comments']) ? json_encode($data['comments']) : $data['comments'];
+			$data['comments'] = !\is_string($data['comments']) ? json_encode($data['comments']) : $data['comments'];
 		}
 
 		if (isset($data['params']))
 		{
-			$data['params'] = !is_string($data['params']) ? json_encode($data['params']) : $data['params'];
+			$data['params'] = !\is_string($data['params']) ? json_encode($data['params']) : $data['params'];
 		}
 
 		parent::bind($data, $ignore);
@@ -239,7 +238,7 @@ class KunenaUserBans extends KunenaTable
 		$this->reset();
 
 		// Check for a valid id to load.
-		if ($ip === null || !is_string($ip))
+		if ($ip === null || !\is_string($ip))
 		{
 			return false;
 		}

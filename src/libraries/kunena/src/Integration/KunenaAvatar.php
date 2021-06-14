@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Integration;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use StdClass;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\Avatar
@@ -64,7 +63,6 @@ class KunenaAvatar
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -76,7 +74,7 @@ class KunenaAvatar
 
 			foreach ($classes as $class)
 			{
-				if (!is_object($class))
+				if (!\is_object($class))
 				{
 					continue;
 				}
@@ -126,7 +124,6 @@ class KunenaAvatar
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getLink(KunenaUser $user, $class = 'kavatar', $sizex = 90, $sizey = 90)
 	{
@@ -177,20 +174,19 @@ class KunenaAvatar
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getSize($sizex = 90, $sizey = 90): StdClass
 	{
 		$size    = new StdClass;
-		$size->x = intval($sizex);
-		$size->y = intval($sizey);
+		$size->x = \intval($sizex);
+		$size->y = \intval($sizey);
 
-		if (!intval($sizex))
+		if (!\intval($sizex))
 		{
 			$template = KunenaFactory::getTemplate();
 			$name     = ucfirst(strtolower($sizex));
-			$size->x  = intval($template->params->get('avatarSizeX' . $name, 90));
-			$size->y  = intval($template->params->get('avatarSizeY' . $name, 90));
+			$size->x  = \intval($template->params->get('avatarSizeX' . $name, 90));
+			$size->y  = \intval($template->params->get('avatarSizeY' . $name, 90));
 		}
 
 		return $size;
@@ -205,7 +201,6 @@ class KunenaAvatar
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getURL(KunenaUser $user, $sizex = 90, int $sizey = 90): string
 	{

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\Database\Object;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use DomainException;
 use Exception;
@@ -83,7 +83,7 @@ abstract class KunenaFinder
 	{
 		if (!$this->table)
 		{
-			throw new DomainException('Table name missing from ' . get_class($this));
+			throw new DomainException('Table name missing from ' . \get_class($this));
 		}
 
 		$this->db    = Factory::getDbo();

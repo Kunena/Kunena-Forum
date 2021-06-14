@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Libraries\User;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -122,7 +122,6 @@ class KunenaBan extends parentAlias
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($identifier = null)
 	{
@@ -228,7 +227,7 @@ class KunenaBan extends parentAlias
 	{
 		$c = __CLASS__;
 
-		if (intval($identifier) < 1)
+		if (\intval($identifier) < 1)
 		{
 			return new $c;
 		}
@@ -340,7 +339,7 @@ class KunenaBan extends parentAlias
 	{
 		$c = __CLASS__;
 
-		if (intval($identifier) < 1)
+		if (\intval($identifier) < 1)
 		{
 			return new $c;
 		}
@@ -394,7 +393,6 @@ class KunenaBan extends parentAlias
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getBannedUsers($start = 0, $limit = 50): array
 	{
@@ -443,7 +441,6 @@ class KunenaBan extends parentAlias
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getUserHistory(int $userid): array
 	{
@@ -490,7 +487,6 @@ class KunenaBan extends parentAlias
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUser(): KunenaUser
 	{
@@ -502,7 +498,6 @@ class KunenaBan extends parentAlias
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCreator(): KunenaUser
 	{
@@ -514,7 +509,6 @@ class KunenaBan extends parentAlias
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getModifier(): KunenaUser
 	{
@@ -664,7 +658,7 @@ class KunenaBan extends parentAlias
 	 */
 	public function ban($userid = null, $ip = null, $banlevel = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = ''): void
 	{
-		$this->userid  = intval($userid) > 0 ? (int) $userid : null;
+		$this->userid  = \intval($userid) > 0 ? (int) $userid : null;
 		$this->ip      = $ip ? (string) $ip : null;
 		$this->blocked = (int) $banlevel;
 		$this->setExpiration($expiration);
@@ -717,7 +711,7 @@ class KunenaBan extends parentAlias
 	 */
 	public function addComment(string $comment): void
 	{
-		if (is_string($comment) && !empty($comment))
+		if (\is_string($comment) && !empty($comment))
 		{
 			$c                = new stdClass;
 			$c->userid        = self::$_my->id;
@@ -759,7 +753,6 @@ class KunenaBan extends parentAlias
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 1.6
-	 *
 	 */
 	public function save($updateOnly = false): bool
 	{
@@ -866,7 +859,6 @@ class KunenaBan extends parentAlias
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function canBan(): bool
 	{

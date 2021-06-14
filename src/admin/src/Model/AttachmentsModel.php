@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Attachments Model for Kunena
@@ -36,7 +35,6 @@ class AttachmentsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -57,8 +55,6 @@ class AttachmentsModel extends ListModel
 	}
 
 	/**
-	 *
-	 *
 	 * @param   array    $data      data
 	 * @param   boolean  $loadData  load data
 	 *
@@ -159,7 +155,6 @@ class AttachmentsModel extends ListModel
 	 * @throws null
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function internalGetList(string $query, $limitstart = 0, $limit = 0): array
 	{

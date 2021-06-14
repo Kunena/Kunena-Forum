@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Filesystem\File;
@@ -52,7 +52,6 @@ class TemplateController extends FormController
 	 * @since   Kunena 2.0
 	 *
 	 * @see     BaseController
-	 *
 	 */
 	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -71,7 +70,6 @@ class TemplateController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function save($key = null, $urlVar = null)
 	{
@@ -116,7 +114,6 @@ class TemplateController extends FormController
 	 * @throws Exception
 	 * @throws null
 	 * @since   Kunena 3.0
-	 *
 	 */
 	protected function internalSaveParamFile(string $template): void
 	{
@@ -294,9 +291,9 @@ class TemplateController extends FormController
 
 		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
-		if (count($params) > 0)
+		if (\count($params) > 0)
 		{
-			if (count($editorButtons) > 0)
+			if (\count($editorButtons) > 0)
 			{
 				$editorButtons           = implode(',', $editorButtons);
 				$params['editorButtons'] = $editorButtons;
@@ -327,7 +324,6 @@ class TemplateController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function apply(): void
 	{
@@ -368,7 +364,6 @@ class TemplateController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function restore(): void
 	{

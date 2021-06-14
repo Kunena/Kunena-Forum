@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\MVC\Model\AdminModel;
-use function defined;
 
 /**
  * Cpanel Model for Kunena

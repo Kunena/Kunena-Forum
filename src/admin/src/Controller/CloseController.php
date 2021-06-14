@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\MVC\Controller\FormController;
-use function defined;
 
 /**
  * Kunena Cpanel Controller
@@ -38,7 +37,6 @@ class CloseController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function __construct($config = [])
 	{

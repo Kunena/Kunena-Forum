@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -51,7 +51,6 @@ class ConfigController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -68,7 +67,6 @@ class ConfigController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function apply(): void
 	{
@@ -85,7 +83,6 @@ class ConfigController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function save($key = null, $urlVar = null)
 	{
@@ -106,7 +103,7 @@ class ConfigController extends FormController
 			{
 				// Remove cfg_ from config variable
 
-				if (is_array($postvalue))
+				if (\is_array($postvalue))
 				{
 					$postvalue = implode(',', $postvalue);
 				}
@@ -126,7 +123,7 @@ class ConfigController extends FormController
 
 				// No matter what got posted, we only store config parameters defined
 				// in the config class. Anything else posted gets ignored.
-				if (array_key_exists($postname, $properties))
+				if (\array_key_exists($postname, $properties))
 				{
 					KunenaConfig::getInstance()->set($postname, $postvalue);
 				}
@@ -157,7 +154,6 @@ class ConfigController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function setDefault(): void
 	{

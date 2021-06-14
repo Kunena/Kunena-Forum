@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -27,7 +27,6 @@ use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * User Model for Kunena
@@ -55,7 +54,6 @@ class UserModel extends KunenaModel
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getSubscriptions(): array
 	{
@@ -99,7 +97,6 @@ class UserModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getCatSubscriptions(): array
 	{
@@ -113,7 +110,6 @@ class UserModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getIPlist(): array
 	{
@@ -178,7 +174,6 @@ class UserModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getListModCats()
 	{
@@ -201,7 +196,7 @@ class UserModel extends KunenaModel
 		// Todo: fix params
 		$params = [
 			'sections' => false,
-			'action'   => 'read',];
+			'action'   => 'read', ];
 
 		return HTMLHelper::_('select.genericlist', $categoryList, 'catid', 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text');
 	}
@@ -211,7 +206,6 @@ class UserModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUser(): KunenaUser
 	{
@@ -225,7 +219,6 @@ class UserModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getListUserRanks(): string
 	{
@@ -276,7 +269,6 @@ class UserModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getMoveUser()
 	{
@@ -322,7 +314,6 @@ class UserModel extends KunenaModel
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{

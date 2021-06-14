@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Category;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -83,7 +83,6 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 * @since Kunena
-	 *
 	 */
 	protected function setToolBarEdit()
 	{

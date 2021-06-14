@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Application\CMSApplicationInterface;
@@ -32,7 +32,6 @@ use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use RuntimeException;
 use stdClass;
-use function defined;
 
 /**
  * Tools Model for Kunena
@@ -303,7 +302,6 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public function getSystemReportAnonymous(): string
 	{
@@ -332,7 +330,7 @@ class ToolsModel extends AdminModel
 	 */
 	protected function getPhpExtensions()
 	{
-		if (extension_loaded('mbstring'))
+		if (\extension_loaded('mbstring'))
 		{
 			$this->mbstring = '[u]mbstring:[/u] Enabled';
 		}
@@ -341,7 +339,7 @@ class ToolsModel extends AdminModel
 			$this->mbstring = '[u]mbstring:[/u] [color=#FF0000]Not installed[/color]';
 		}
 
-		if (extension_loaded('gd'))
+		if (\extension_loaded('gd'))
 		{
 			$gd_info         = gd_info();
 			$this->gdSupport = '[u]GD:[/u] ' . $gd_info['GD Version'];
@@ -351,7 +349,7 @@ class ToolsModel extends AdminModel
 			$this->gdSupport = '[u]GD:[/u] [color=#FF0000]Not installed[/color]';
 		}
 
-		if (extension_loaded('openssl'))
+		if (\extension_loaded('openssl'))
 		{
 			$this->openssl = '[u]openssl:[/u] Enabled';
 		}
@@ -360,7 +358,7 @@ class ToolsModel extends AdminModel
 			$this->openssl = '[u]openssl:[/u] [color=#FF0000]Not installed[/color]';
 		}
 
-		if (extension_loaded('fileinfo'))
+		if (\extension_loaded('fileinfo'))
 		{
 			$this->fileinfo = '[u]fileinfo:[/u] Enabled';
 		}
@@ -369,7 +367,7 @@ class ToolsModel extends AdminModel
 			$this->fileinfo = '[u]fileinfo:[/u] [color=#FF0000]Not installed[/color]';
 		}
 
-		if (extension_loaded('json'))
+		if (\extension_loaded('json'))
 		{
 			$this->json = '[u]json:[/u] Enabled';
 		}
@@ -386,7 +384,6 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function getReportData(): void
 	{
@@ -586,7 +583,6 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 1.6
-	 *
 	 */
 	protected function internalGetJoomlaTemplate()
 	{
@@ -693,7 +689,6 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 1.6
-	 *
 	 */
 	protected function internalGetTablesCollation(): string
 	{
@@ -728,7 +723,7 @@ class ToolsModel extends AdminModel
 
 					if ($tmp)
 					{
-						if (in_array(substr($row->Type, 0, $tmp), $fieldTypes))
+						if (\in_array(substr($row->Type, 0, $tmp), $fieldTypes))
 						{
 							if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation))
 							{
@@ -738,7 +733,7 @@ class ToolsModel extends AdminModel
 					}
 					else
 					{
-						if (in_array($row->Type, $fieldTypes))
+						if (\in_array($row->Type, $fieldTypes))
 						{
 							if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation))
 							{
@@ -765,7 +760,6 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 1.6
-	 *
 	 */
 	protected function internalGetKunenaConfiguration(): string
 	{
@@ -780,7 +774,7 @@ class ToolsModel extends AdminModel
 
 			foreach ($params as $key => $value)
 			{
-				if (!is_array($value) && $key != 'id' && $key != 'boardTitle' && $key != 'email' && $key != 'offlineMessage'
+				if (!\is_array($value) && $key != 'id' && $key != 'boardTitle' && $key != 'email' && $key != 'offlineMessage'
 					&& $key != 'emailVisibleAddress' && $key != 'stopForumSpamKey' && $key != 'ebayAffiliateId'
 					&& $key != 'ebayApiKey' && $key != 'twitterConsumerKey' && $key != 'twitterConsumerSecret'
 					&& $key != 'googleMapApiKey')
@@ -949,7 +943,6 @@ class ToolsModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 1.6
-	 *
 	 */
 	public function getSystemReport(): string
 	{

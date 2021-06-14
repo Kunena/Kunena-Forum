@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\MVC\Controller\FormController;
-use function defined;
 
 /**
  * Kunena Rank Controller

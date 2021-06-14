@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -22,7 +22,6 @@ use Joomla\CMS\User\User;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Log\KunenaFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Logs Model for Kunena
@@ -46,7 +45,6 @@ class LogsModel extends ListModel
 	 * @since   Kunena 6.0
 	 *
 	 * @see     JController
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -74,8 +72,6 @@ class LogsModel extends ListModel
 	}
 
 	/**
-	 *
-	 *
 	 * @param   array    $data      data
 	 * @param   boolean  $loadData  load data
 	 *
@@ -95,7 +91,6 @@ class LogsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public function getTotal(): int
 	{
@@ -158,7 +153,6 @@ class LogsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function getFinder(): KunenaFinder
 	{
@@ -344,7 +338,6 @@ class LogsModel extends ListModel
 	 *
 	 * @throws  null
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public function getItems(): array
 	{
@@ -383,7 +376,6 @@ class LogsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

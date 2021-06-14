@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -71,7 +71,6 @@ class TrashModel extends KunenaModel
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 1.6
-	 *
 	 */
 	public function getTrashItems()
 	{
@@ -93,7 +92,6 @@ class TrashModel extends KunenaModel
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 1.6
-	 *
 	 */
 	protected function internalGetTopics(): array
 	{
@@ -171,7 +169,7 @@ class TrashModel extends KunenaModel
 
 		if ($this->getState('list.limit') && $total < $this->getState('list.start'))
 		{
-			$this->setState('list.start', intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
+			$this->setState('list.start', \intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
 		}
 
 		return $finder
@@ -188,7 +186,6 @@ class TrashModel extends KunenaModel
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 1.6
-	 *
 	 */
 	protected function internalGetMessages(): array
 	{
@@ -324,7 +321,7 @@ class TrashModel extends KunenaModel
 		// If out of range, use last page
 		if ($this->getState('list.limit') && $total < $this->getState('list.start'))
 		{
-			$this->setState('list.start', intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
+			$this->setState('list.start', \intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
 		}
 
 		$query->setLimit($this->getState('list.limit'), $this->getState('list.start'));
@@ -367,7 +364,6 @@ class TrashModel extends KunenaModel
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 1.6
-	 *
 	 */
 	public function getPurgeItems(): array
 	{

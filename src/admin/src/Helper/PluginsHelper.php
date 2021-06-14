@@ -9,7 +9,7 @@
 
 namespace Kunena\Forum\Administrator\Helper;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Forum component helper.

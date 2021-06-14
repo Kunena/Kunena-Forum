@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUploadHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Kunena Smileys Controller
@@ -47,7 +46,6 @@ class SmiliesController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -63,7 +61,6 @@ class SmiliesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function add(): void
 	{
@@ -88,7 +85,6 @@ class SmiliesController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function edit($key = null, $urlVar = null): void
 	{
@@ -126,7 +122,6 @@ class SmiliesController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function save($key = null, $urlVar = null): void
 	{
@@ -203,7 +198,6 @@ class SmiliesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function smileyUpload(): void
 	{
@@ -240,7 +234,6 @@ class SmiliesController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function remove(): void
 	{
@@ -292,7 +285,6 @@ class SmiliesController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function cancel($key = null): void
 	{

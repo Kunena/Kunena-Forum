@@ -9,7 +9,7 @@
 
 namespace Kunena\Forum\Administrator\View\Plugins;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -182,7 +182,7 @@ class HtmlView extends BaseHtmlView
 		$this->list->Direction = $this->escape($this->state->get('list.direction'));
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors')))
+		if (\count($errors = $this->get('Errors')))
 		{
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}

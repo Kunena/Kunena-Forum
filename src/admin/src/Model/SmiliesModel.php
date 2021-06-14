@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -31,7 +31,6 @@ class SmiliesModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -50,8 +49,6 @@ class SmiliesModel extends ListModel
 	}
 
 	/**
-	 *
-	 *
 	 * @param   array    $data      data
 	 * @param   boolean  $loadData  load data
 	 *
@@ -76,7 +73,6 @@ class SmiliesModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

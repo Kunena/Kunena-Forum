@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Categories;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -108,7 +108,6 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return void
 	 * @since Kunena
-	 *
 	 */
 	protected function setToolBarEdit()
 	{
@@ -162,7 +161,7 @@ class HtmlView extends BaseHtmlView
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors')))
+		if (\count($errors = $this->get('Errors')))
 		{
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}

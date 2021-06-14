@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Blockips;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use function defined;
 
 /**
  * Block Ip view for Kunena backend
@@ -29,7 +28,6 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-
 	/**
 	 * @param   null  $tpl  tpl
 	 *

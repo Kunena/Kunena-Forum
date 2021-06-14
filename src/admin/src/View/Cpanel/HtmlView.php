@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Cpanel;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -21,7 +21,6 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use function defined;
 
 /**
  * About view for Kunena cpanel
@@ -30,7 +29,6 @@ use function defined;
  */
 class HtmlView extends BaseHtmlView
 {
-
 	/**
 	 * @param   null  $tpl  tmpl
 	 *
@@ -38,7 +36,6 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function display($tpl = null)
 	{

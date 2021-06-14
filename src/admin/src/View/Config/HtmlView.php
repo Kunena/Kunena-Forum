@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Config;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -21,7 +21,6 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use function defined;
 
 /**
  * About view for Kunena config backend

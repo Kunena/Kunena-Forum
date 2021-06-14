@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -23,7 +23,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Bbcode\KunenaBBCodeEditor;
-use function defined;
 
 /**
  * Kunena Plugins Controller
@@ -144,35 +143,35 @@ class PluginsController extends AdminController
 						$cids_exist[] = $plg->extension_id;
 					}
 				}
-				else if ($plg->element == 'community')
+				elseif ($plg->element == 'community')
 				{
 					if (file_exists(JPATH_ROOT . '/components/com_community/libraries/core.php'))
 					{
 						$cids_exist[] = $plg->extension_id;
 					}
 				}
-				else if ($plg->element == 'comprofiler')
+				elseif ($plg->element == 'comprofiler')
 				{
 					if ((file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) || (file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')))
 					{
 						$cids_exist[] = $plg->extension_id;
 					}
 				}
-				else if ($plg->element == 'easyblog')
+				elseif ($plg->element == 'easyblog')
 				{
 					if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easyblog/includes/easyblog.php'))
 					{
 						$cids_exist[] = $plg->extension_id;
 					}
 				}
-				else if ($plg->element == 'easyprofile')
+				elseif ($plg->element == 'easyprofile')
 				{
 					if (file_exists(JPATH_SITE . '/components/com_jsn/helpers/helper.php'))
 					{
 						$cids_exist[] = $plg->extension_id;
 					}
 				}
-				else if ($plg->element == 'easysocial')
+				elseif ($plg->element == 'easysocial')
 				{
 					if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php'))
 					{
@@ -220,7 +219,7 @@ class PluginsController extends AdminController
 					$ntext = $this->textPrefix . '_N_ITEMS_TRASHED';
 				}
 
-				$this->setMessage(Text::plural($ntext, count($cid)));
+				$this->setMessage(Text::plural($ntext, \count($cid)));
 			}
 		}
 
@@ -368,7 +367,7 @@ class PluginsController extends AdminController
 		$editor->initializeHMVC();
 
 		// Checkin succeeded.
-		$message = Text::plural($this->textPrefix . '_N_ITEMS_CHECKED_IN', count($ids));
+		$message = Text::plural($this->textPrefix . '_N_ITEMS_CHECKED_IN', \count($ids));
 		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false), $message);
 
 		return true;

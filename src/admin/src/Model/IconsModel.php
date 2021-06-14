@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\MVC\Model\AdminModel;
-use function defined;
 
 /**
  * Icons Model for Kunena
@@ -34,7 +33,6 @@ class IconsModel extends AdminModel
 	 * @since   Kunena 6.0
 	 *
 	 * @see     JController
-	 *
 	 */
 	public function __construct($config = [])
 	{

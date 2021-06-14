@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Templates;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Filesystem\File;
@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
-use function defined;
 
 /**
  * Templates view for Kunena backend

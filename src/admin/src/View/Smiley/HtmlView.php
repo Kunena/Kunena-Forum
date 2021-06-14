@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Administrator\View\Smiley;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use function defined;
 
 /**
  * About view for Kunena smiley backend

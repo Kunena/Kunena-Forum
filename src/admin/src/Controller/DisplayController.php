@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -47,7 +47,6 @@ class DisplayController extends BaseController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function display($cachable = false, $urlparams = []): BaseController
 	{

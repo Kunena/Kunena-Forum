@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Language\Text;
@@ -140,8 +140,8 @@ class CategoryController extends FormController
 		$post['params'] += $input->get("params", [], 'array');
 		$success        = false;
 
-		$category = KunenaCategoryHelper::get(intval($post ['catid']));
-		$parent   = KunenaCategoryHelper::get(intval($post ['parentid']));
+		$category = KunenaCategoryHelper::get(\intval($post ['catid']));
+		$parent   = KunenaCategoryHelper::get(\intval($post ['parentid']));
 
 		if ($category->exists() && !$category->isAuthorised('admin'))
 		{

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Application\CMSApplication;
@@ -55,7 +55,6 @@ class UserController extends FormController
 	 * @since   Kunena 2.0
 	 *
 	 * @see     BaseController
-	 *
 	 */
 	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -74,7 +73,6 @@ class UserController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function save($key = null, $urlVar = null): void
 	{
@@ -100,7 +98,6 @@ class UserController extends FormController
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function saveInternal(string $type)
 	{
@@ -180,13 +177,13 @@ class UserController extends FormController
 
 				foreach ($categories as $category)
 				{
-					$category->setModerator($user, in_array($category->id, $modCatids, true));
+					$category->setModerator($user, \in_array($category->id, $modCatids, true));
 				}
 
 				// Global moderator is a special case
 				if (KunenaUserHelper::getMyself()->isAdmin())
 				{
-					KunenaAccess::getInstance()->setModerator((object) [], $user, in_array(0, $modCatids, true));
+					KunenaAccess::getInstance()->setModerator((object) [], $user, \in_array(0, $modCatids, true));
 				}
 
 				$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
@@ -222,7 +219,6 @@ class UserController extends FormController
 	 *
 	 * @throws Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	protected function setModerate(KunenaUser $user, array $modCatids): bool
 	{
@@ -250,7 +246,6 @@ class UserController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function apply(): void
 	{

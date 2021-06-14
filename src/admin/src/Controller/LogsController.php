@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -22,7 +22,6 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * Kunena Backend Logs Controller
@@ -44,7 +43,6 @@ class LogsController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -72,7 +70,6 @@ class LogsController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public function clean(): bool
 	{
@@ -130,7 +127,6 @@ class LogsController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public function cancel($key = null, $urlVar = null)
 	{

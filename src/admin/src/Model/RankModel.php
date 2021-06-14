@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -21,7 +21,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use RuntimeException;
-use function defined;
 
 /**
  * Rank Model for Kunena
@@ -30,7 +29,6 @@ use function defined;
  */
 class RankModel extends AdminModel
 {
-
 	/**
 	 * @inheritDoc
 	 *
@@ -51,7 +49,6 @@ class RankModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getRanksPaths()
 	{
@@ -95,7 +92,6 @@ class RankModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getRank()
 	{
@@ -140,7 +136,6 @@ class RankModel extends AdminModel
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Statistics;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use ReflectionClass;
-use function defined;
 
 /**
  * Statistics view for Kunena backend
@@ -169,7 +168,6 @@ class HtmlView extends BaseHtmlView
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function getFilterOperationFields(): array
 	{

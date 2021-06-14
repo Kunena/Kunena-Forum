@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Trash;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;

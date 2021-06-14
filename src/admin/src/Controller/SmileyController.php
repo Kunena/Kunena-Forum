@@ -12,9 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
-
-use function defined;
+\defined('_JEXEC') or die();
 
 /**
  * Kunena Smiley Controller

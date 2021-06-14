@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -72,7 +72,6 @@ class UsersController extends AdminController
 	 * @since   Kunena 2.0
 	 *
 	 * @see     BaseController
-	 *
 	 */
 	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -105,7 +104,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function edit(): bool
 	{
@@ -142,7 +140,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function trashUserMessages(): void
 	{
@@ -189,7 +186,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function move(): void
 	{
@@ -225,7 +221,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function moveMessages(): void
 	{
@@ -296,7 +291,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function logout(): void
 	{
@@ -335,7 +329,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function remove(): void
 	{
@@ -415,7 +408,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function ban(): void
 	{
@@ -475,7 +467,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function unban(): void
 	{
@@ -534,7 +525,6 @@ class UsersController extends AdminController
 	 *
 	 * @throws  null
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function moderate(): void
 	{
@@ -588,7 +578,6 @@ class UsersController extends AdminController
 	 *
 	 * @throws Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	protected function setModerate(KunenaUser $user, array $modCatids): bool
 	{
@@ -597,13 +586,13 @@ class UsersController extends AdminController
 
 		foreach ($categories as $category)
 		{
-			$category->setModerator($user, in_array($category->id, $modCatids, true));
+			$category->setModerator($user, \in_array($category->id, $modCatids, true));
 		}
 
 		// Global moderator is a special case
 		if (KunenaUserHelper::getMyself()->isAdmin())
 		{
-			KunenaAccess::getInstance()->setModerator((object) [], $user, in_array(0, $modCatids, true));
+			KunenaAccess::getInstance()->setModerator((object) [], $user, \in_array(0, $modCatids, true));
 		}
 
 		return true;
@@ -617,7 +606,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function unmoderate(): void
 	{
@@ -649,7 +637,7 @@ class UsersController extends AdminController
 			$category = $category->id;
 		}
 
-		$category = intval($category);
+		$category = \intval($category);
 
 		$userCategory = KunenaUserHelper::get($category, $user);
 
@@ -672,7 +660,7 @@ class UsersController extends AdminController
 
 			if ($user->moderator != !empty($moderator))
 			{
-				$user->moderator = intval(!empty($moderator));
+				$user->moderator = \intval(!empty($moderator));
 				$success         = $user->save();
 			}
 		}
@@ -699,7 +687,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function block()
 	{
@@ -759,7 +746,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function unblock(): void
 	{
@@ -819,7 +805,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 2.0
-	 *
 	 */
 	public function batchModerators(): void
 	{
@@ -860,14 +845,14 @@ class UsersController extends AdminController
 		{
 			foreach ($categories as $category)
 			{
-				if (in_array($category->id, $catids))
+				if (\in_array($category->id, $catids))
 				{
 					$category->setModerator($user, true);
 				}
 			}
 
 			// Global moderator is a special case
-			if ($this->me->isAdmin() && in_array(0, $catids))
+			if ($this->me->isAdmin() && \in_array(0, $catids))
 			{
 				KunenaAccess::getInstance()->setModerator((object) [], $user, true);
 			}
@@ -885,7 +870,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function cancel(): void
 	{
@@ -900,7 +884,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function removeCatSubscriptions(): void
 	{
@@ -951,7 +934,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function removeTopicSubscriptions(): void
 	{
@@ -1002,7 +984,6 @@ class UsersController extends AdminController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function subscribeUsersToCategories(): void
 	{

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -70,7 +70,6 @@ class CategoriesModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAdminOptions()
 	{
@@ -184,7 +183,6 @@ class CategoriesModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAdminCategory()
 	{
@@ -251,7 +249,6 @@ class CategoriesModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAdminModerators()
 	{
@@ -273,7 +270,6 @@ class CategoriesModel extends KunenaModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function saveOrder($pks = null, $order = null): bool
 	{
@@ -358,7 +354,6 @@ class CategoriesModel extends KunenaModel
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function getBatchCategories(): array
 	{
@@ -371,7 +366,7 @@ class CategoriesModel extends KunenaModel
 			$batchCategories [] = HTMLHelper::_(
 				'select.option',
 				$category->id,
-				str_repeat('...', count($category->indent) - 1) . ' ' . $category->name
+				str_repeat('...', \count($category->indent) - 1) . ' ' . $category->name
 			);
 		}
 
@@ -384,7 +379,6 @@ class CategoriesModel extends KunenaModel
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAdminCategories()
 	{
@@ -424,11 +418,11 @@ class CategoriesModel extends KunenaModel
 			$categories = array_merge($orphans, $categories);
 
 			$categories = KunenaCategoryHelper::getIndentation($categories);
-			$this->setState('list.total', count($categories));
+			$this->setState('list.total', \count($categories));
 
 			if ($this->getState('list.limit'))
 			{
-				$this->internalAdminCategories = array_slice($categories, $this->getState('list.start'), $this->getState('list.limit'));
+				$this->internalAdminCategories = \array_slice($categories, $this->getState('list.start'), $this->getState('list.limit'));
 			}
 			else
 			{

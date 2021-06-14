@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
@@ -24,7 +24,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
-use function defined;
 
 /**
  * Kunena Backend Logs Controller
@@ -46,7 +45,6 @@ class InstallController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -62,7 +60,6 @@ class InstallController extends FormController
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function uninstall(): bool
 	{
@@ -112,4 +109,3 @@ class InstallController extends FormController
 		}
 	}
 }
-

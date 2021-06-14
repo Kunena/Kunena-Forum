@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Date\Date;
@@ -47,7 +47,6 @@ class StatisticsModel extends ListModel
 	 * @since   Kunena 6.0
 	 *
 	 * @see     JController
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -66,8 +65,6 @@ class StatisticsModel extends ListModel
 	}
 
 	/**
-	 *
-	 *
 	 * @param   array    $data      data
 	 * @param   boolean  $loadData  load data
 	 *
@@ -87,7 +84,6 @@ class StatisticsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   3.1
-	 *
 	 */
 	public function getTotal(): int
 	{
@@ -143,7 +139,6 @@ class StatisticsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function getFinder($field = 'user_id'): KunenaFinder
 	{
@@ -206,7 +201,6 @@ class StatisticsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 3.1
-	 *
 	 */
 	public function getItems()
 	{
@@ -330,7 +324,6 @@ class StatisticsModel extends ListModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

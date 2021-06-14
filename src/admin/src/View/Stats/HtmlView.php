@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Stats;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -20,7 +20,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
-use function defined;
 
 /**
  * About view for Kunena stats backend

@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\MVC\Controller\FormController;
-use function defined;
 
 /**
  * Kunena Backend Icons Controller
@@ -39,7 +38,6 @@ class IconsController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function __construct($config = [])
 	{

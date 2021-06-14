@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\Attachments;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -28,7 +28,6 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class HtmlView extends BaseHtmlView
 {
-
 	/**
 	 * @param   null  $tpl  tpl
 	 *
@@ -48,7 +47,7 @@ class HtmlView extends BaseHtmlView
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors')))
+		if (\count($errors = $this->get('Errors')))
 		{
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}

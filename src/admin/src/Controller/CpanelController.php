@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -22,7 +22,6 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use stdClass;
-use function defined;
 
 /**
  * Kunena Cpanel Controller
@@ -44,7 +43,6 @@ class CpanelController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -61,7 +59,6 @@ class CpanelController extends FormController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public static function onGetIcons()
 	{
@@ -161,7 +158,6 @@ class CpanelController extends FormController
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
-	 *
 	 */
 	public function display($cachable = false, $urlparams = false): void
 	{

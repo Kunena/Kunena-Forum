@@ -12,12 +12,11 @@
 
 namespace Kunena\Forum\Administrator\View\CategoriesRaw;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Database\Exception\ExecutionFailureException;
-use function defined;
 
 /**
  * Category View

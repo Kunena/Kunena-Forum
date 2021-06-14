@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\Archive\Archive;
@@ -26,7 +26,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
-use function defined;
 
 /**
  * Kunena Backend Templates Controller
@@ -221,7 +220,7 @@ class TemplatesController extends FormController
 					foreach ($templates as $template)
 					{
 						// Never overwrite locked templates
-						if (in_array($template->directory, $this->locked))
+						if (\in_array($template->directory, $this->locked))
 						{
 							continue;
 						}
@@ -336,7 +335,7 @@ class TemplatesController extends FormController
 			return;
 		}
 
-		if (in_array($id, $this->locked))
+		if (\in_array($id, $this->locked))
 		{
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_SYSTEM_TEMPLATE', $otemplate->name), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));

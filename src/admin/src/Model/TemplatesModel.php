@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Application\CMSApplicationInterface;
@@ -72,7 +72,6 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($config = [])
 	{
@@ -93,7 +92,6 @@ class TemplatesModel extends AdminModel
 	 * @since   Kunena 6.0
 	 *
 	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
-	 *
 	 */
 	public function getForm($data = [], $loadData = true): bool
 	{
@@ -117,7 +115,6 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTemplates(): array
 	{
@@ -130,11 +127,11 @@ class TemplatesModel extends AdminModel
 			$row->published = KunenaTemplateHelper::isDefault($row->directory);
 		}
 
-		$this->setState('list.total', count($rows));
+		$this->setState('list.total', \count($rows));
 
 		if ($this->getState('list.limit'))
 		{
-			$rows = array_slice($rows, $this->getState('list.start'), $this->getState('list.limit'));
+			$rows = \array_slice($rows, $this->getState('list.start'), $this->getState('list.limit'));
 		}
 
 		return $rows;
@@ -383,7 +380,6 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function populateState($ordering = null, $direction = null): void
 	{
@@ -430,7 +426,6 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{
@@ -465,7 +460,6 @@ class TemplatesModel extends AdminModel
 	 * @since   Kunena 6.0
 	 *
 	 * @see     \Joomla\CMS\MVC\Model\FormModel::loadFormData()
-	 *
 	 */
 	protected function loadFormData(): array
 	{

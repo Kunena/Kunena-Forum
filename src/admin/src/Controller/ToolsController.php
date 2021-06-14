@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -36,7 +36,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use StdClass;
-use function defined;
 
 /**
  * Kunena Cpanel Controller
@@ -753,7 +752,7 @@ class ToolsController extends FormController
 		}
 		else
 		{
-			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', count($legacy)));
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', \count($legacy)));
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));

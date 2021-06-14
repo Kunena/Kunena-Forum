@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Administrator\View\User;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -24,7 +24,6 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use StdClass;
-use function defined;
 
 /**
  * User view for Kunena backend

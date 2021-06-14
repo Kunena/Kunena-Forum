@@ -9,7 +9,7 @@
 
 namespace Kunena\Forum\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use JDatabaseQuery;
@@ -40,7 +40,6 @@ class PluginsModel extends ListModel
 	 * @since   Kunena 1.6
 	 *
 	 * @see     JController
-	 *
 	 */
 	public function __construct($config = [], MVCFactoryInterface $factory = null)
 	{
@@ -156,7 +155,7 @@ class PluginsModel extends ListModel
 			$direction = ($this->getState('list.direction') == 'desc') ? -1 : 1;
 			ArrayHelper::sortObjects($result, $ordering, $direction, true, $lang->getLocale());
 
-			$total                                      = count($result);
+			$total                                      = \count($result);
 			$this->cache[$this->getStoreId('getTotal')] = $total;
 
 			if ($total < $limitstart)
@@ -165,7 +164,7 @@ class PluginsModel extends ListModel
 				$this->setState('list.start', 0);
 			}
 
-			return array_slice($result, $limitstart, $limit ? $limit : null);
+			return \array_slice($result, $limitstart, $limit ? $limit : null);
 		}
 
 		// Add the list ordering clause.

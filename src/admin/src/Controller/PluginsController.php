@@ -22,7 +22,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Bbcode\KunenaBBCodeEditor;
+use Kunena\Forum\Libraries\BBCode\KunenaBBCodeEditor;
 
 /**
  * Kunena Plugins Controller

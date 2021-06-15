@@ -20,7 +20,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
-use Kunena\Forum\Libraries\Bbcode\KunenaBBCode;
+use Kunena\Forum\Libraries\BBCode\KunenaBBCode;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Image\KunenaImage;

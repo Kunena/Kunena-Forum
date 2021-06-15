@@ -54,7 +54,7 @@ require_once KPATH_FRAMEWORK . '/External/Nbbc/src/Debugger.php';
 
 /**
  * @see     \Nbbc\BBCode;
- * Class KunenaBbcode
+ * Class KunenaBBCode
  *
  * @since   6.0
  */

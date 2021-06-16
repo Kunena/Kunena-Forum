@@ -116,24 +116,18 @@ if ($user->userid > 1)
               data-original-title="<?php echo Text::_('COM_KUNENA_USER_PROFILE_TOOLTIP_LABEL_MORE') ?>"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
         <div class="content" style="display:none;">
             <ul>
-				<?php if ($user->posts >= 1) : ?>
-                    <li>
+				<?php if ($canseekarma && $config->showkarma)
+				:
+					?>
+					<li>
 						<?php if ($user->karma > 0) :
 							$karmanumber = $user->karma;
 						else :
 							$karmanumber = '';
-						endif;
-
+						endif; 
+						
 						echo Text::_('COM_KUNENA_KARMA') . ': ' . $karmanumber . $this->subLayout('Widget/Karma')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown') . $this->subLayout('Widget/Karma')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmaup'); ?>
-                    </li>
-				<?php endif; ?>
-
-				<?php if ($canseekarma && $config->showKarma)
-					:
-					?>
-                    <li>
-						<?php echo Text::_('COM_KUNENA_KARMA') . ': ' . $this->subLayout('Widget/Karma')->setLayout('minus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid) . $this->subLayout('Widget/Karma')->setLayout('plus')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid); ?>
-                    </li>
+					</li>
 				<?php endif; ?>
 
 				<?php if ($show && isset($user->thankyou) && $config->showThankYou)

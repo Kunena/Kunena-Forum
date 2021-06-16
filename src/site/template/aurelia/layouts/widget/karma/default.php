@@ -30,17 +30,13 @@ else
 	$karmatext = Text::_('COM_KUNENA_KARMA_APPLAUD');
 }
 
-if ($this->topicicontype == 'B3')
+if ($this->topicicontype == 'B5')
 {
     $karmaIcon = '<span class="glyphicon-karma glyphicon glyphicon-' . $karmatype . '-sign text-danger" title="' . $karmatext . '"></span>';
 }
 elseif ($this->topicicontype == 'fa')
 {
     $karmaIcon = '<i class="fa fa-' . $karmatype . '-circle" title="' . $karmatext . '"></i>';
-}
-elseif ($this->topicicontype == 'B2')
-{
-    $karmaIcon = '<span class="icon-karma icon icon-' . $karmatype .  ' text-error" title="' . $karmatext . '"></span>';
 }
 else
 {

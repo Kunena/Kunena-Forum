@@ -116,7 +116,7 @@ if ($user->userid > 1)
               data-original-title="<?php echo Text::_('COM_KUNENA_USER_PROFILE_TOOLTIP_LABEL_MORE') ?>"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
         <div class="content" style="display:none;">
             <ul>
-				<?php if ($canseekarma && $config->showkarma)
+				<?php if ($canseekarma && $config->showKarma)
 				:
 					?>
 					<li>

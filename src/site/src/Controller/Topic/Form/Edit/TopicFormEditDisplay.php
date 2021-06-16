@@ -175,7 +175,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
 		if ($this->topic->isAuthorised('subscribe') && $this->topic->exists())
 		{
-			if ($usertopic->subscribed == 1 || $this->config->subscriptionschecked == 1 || $this->category->getSubscribed($this->me->userid))
+			if ($usertopic->subscribed == 1 || $this->config->subscriptionsChecked == 1 || $this->category->getSubscribed($this->me->userid))
 			{
 				$this->subscriptionsChecked = true;
 			}

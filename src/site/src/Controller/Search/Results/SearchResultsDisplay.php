@@ -70,7 +70,7 @@ class SearchResultsDisplay extends KunenaControllerDisplay
 
 		$this->model = new SearchModel([], null, null, $this->input);
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$state = $this->model->getState();
+		$this->state = $this->model->getState();
 
 		$me                     = KunenaUserHelper::getMyself();
 		$this->message_ordering = $me->getMessageOrdering();
@@ -104,8 +104,8 @@ class SearchResultsDisplay extends KunenaControllerDisplay
 
 		$this->pagination = new KunenaPagination(
 			$this->total,
-			$state->get('list.start'),
-			$state->get('list.limit')
+			$this->state->get('list.start'),
+			$this->state->get('list.limit')
 		);
 
 		$this->error = $this->model->getError();

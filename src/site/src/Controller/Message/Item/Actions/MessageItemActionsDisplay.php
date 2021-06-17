@@ -90,7 +90,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
 		$this->messageButtons = new CMSObject;
-		$message_closed       = null;
+		$this->message_closed       = null;
 
 		$ktemplate     = KunenaFactory::getTemplate();
 		$fullactions   = $ktemplate->params->get('fullactions');
@@ -203,13 +203,13 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		elseif (!$me->isModerator($this->topic->getCategory()))
 		{
 			// User is not allowed to write a post.
-			$message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') :
+			$this->message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') :
 				($me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : ' ');
 		}
 
 		$login = KunenaLogin::getInstance();
 
-		if (!$this->message->isAuthorised('reply') && !$message_closed && $login->enabled() && !$this->message->hold
+		if (!$this->message->isAuthorised('reply') && !$this->message_closed && $login->enabled() && !$this->message->hold
 			&& !$this->config->readOnly || !$this->message->isAuthorised('reply') && !$this->topic->locked && $login->enabled()
 			&& !$me->userid && !$this->message->hold && !$this->config->readOnly
 		)

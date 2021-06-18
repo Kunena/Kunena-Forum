@@ -2623,13 +2623,19 @@ class KunenaUser extends CMSObject
 	 */
 	public function canDisplayEmail($profile)
 	{
-		if ($this->isModerator() || $profile->id == $this->userid)
+		if (KunenaUserHelper::getMyself()->isModerator())
 		{
 			return true;
 		}
-		else
+
+		if ($this->_config->showEmail)
 		{
-			if ($this->_config->showEmail && $profile->email)
+			if ($profile->userid == $this->userid)
+			{
+				return true;
+			}
+
+			if ($profile->email)
 			{
 				if ($profile->hideEmail == 0 || $profile->hideEmail == 2 && KunenaUserHelper::getMyself()->exists())
 				{

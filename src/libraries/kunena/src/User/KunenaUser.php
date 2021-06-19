@@ -594,8 +594,6 @@ class KunenaUser extends CMSObject
 		$this->_db     = Factory::getDBO();
 		$this->_app    = Factory::getApplication();
 		$this->_config = KunenaFactory::getConfig();
-
-		parent::__construct($identifier);
 	}
 
 	/**

@@ -16,6 +16,7 @@ defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use function defined;
 
@@ -39,8 +40,8 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @param   object  $params  params
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function __construct(object $params)
 	{
@@ -54,9 +55,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  null
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getUserPoints(int $userid)
 	{
@@ -72,9 +73,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onBeforePost(string $message): void
 	{
@@ -87,9 +88,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onBeforeReply(string $message): void
 	{
@@ -102,9 +103,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onBeforeEdit(string $message): void
 	{
@@ -117,9 +118,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onAfterPost(string $message): void
 	{
@@ -132,9 +133,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onAfterReply(string $message): void
 	{
@@ -147,9 +148,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onAfterEdit(string $message): void
 	{
@@ -162,9 +163,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onAfterDelete(string $message): void
 	{
@@ -178,9 +179,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onAfterUndelete(string $message): void
 	{
@@ -196,9 +197,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onAfterThankyou(int $actor, int $target, int $message): void
 	{
@@ -207,16 +208,16 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int  $topic   topic
-	 * @param   int  $action  action
+	 * @param   KunenaTopic  $topic   topic
+	 * @param   string       $action  action
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
-	public function onAfterSubscribe(int $topic, int $action): void
+	public function onAfterSubscribe(KunenaTopic $topic, string $action): void
 	{
 		$my     = Factory::getApplication()->getIdentity();
 		$params = ['actor' => $my->id, 'topic' => $topic, 'action' => $action];
@@ -224,16 +225,16 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int  $topic   topic
-	 * @param   int  $action  action
+	 * @param   KunenaTopic  $topic   topic
+	 * @param   int          $action  action
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
-	public function onAfterFavorite(int $topic, int $action): void
+	public function onAfterFavorite(KunenaTopic $topic, int $action): void
 	{
 		$my     = Factory::getApplication()->getIdentity();
 		$params = ['actor' => $my->id, 'topic' => $topic, 'action' => $action];
@@ -241,16 +242,16 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int  $topic   topic
-	 * @param   int  $action  action
+	 * @param   KunenaTopic  $topic   topic
+	 * @param   int          $action  action
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
-	public function onAfterSticky(int $topic, int $action): void
+	public function onAfterSticky(KunenaTopic $topic, int $action): void
 	{
 		$my     = Factory::getApplication()->getIdentity();
 		$params = ['actor' => $my->id, 'topic' => $topic, 'action' => $action];
@@ -258,16 +259,16 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   int  $topic   topic
-	 * @param   int  $action  action
+	 * @param   KunenaTopic  $topic   topic
+	 * @param   int          $action  action
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
-	public function onAfterLock(int $topic, int $action): void
+	public function onAfterLock(KunenaTopic $topic, int $action): void
 	{
 		$my     = Factory::getApplication()->getIdentity();
 		$params = ['actor' => $my->id, 'topic' => $topic, 'action' => $action];
@@ -281,9 +282,9 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function onAfterKarma(int $target, int $actor, int $delta): void
 	{

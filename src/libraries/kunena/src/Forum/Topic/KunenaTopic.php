@@ -252,7 +252,7 @@ class KunenaTopic extends KunenaDatabaseObject
 	/**
 	 * Subscribe / Unsubscribe user to this topic.
 	 *
-	 * @param   bool   $value  True for subscribe, false for unsubscribe.
+	 * @param   int    $value  True for subscribe, false for unsubscribe.
 	 * @param   mixed  $user   user
 	 *
 	 * @return  boolean
@@ -260,10 +260,10 @@ class KunenaTopic extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	public function subscribe($value = true, $user = null): bool
+	public function subscribe(int $value, $user = null): bool
 	{
 		$usertopic             = $this->getUserTopic($user);
-		$usertopic->subscribed = (boolean) $value;
+		$usertopic->subscribed = (int) $value;
 
 		if (!$usertopic->save())
 		{

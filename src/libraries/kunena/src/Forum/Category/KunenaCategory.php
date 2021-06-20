@@ -1734,13 +1734,13 @@ class KunenaCategory extends KunenaDatabaseObject
 	/**
 	 * Method to check if an item is checked out.
 	 *
-	 * @param   string  $with  with
+	 * @param   int  $userid  userid
 	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 1.6
 	 */
-	public function isCheckedOut(string $with): bool
+	public function isCheckedOut(int $userid): bool
 	{
 		if (!$this->_exists)
 		{
@@ -1752,7 +1752,7 @@ class KunenaCategory extends KunenaDatabaseObject
 		$table->bind($this->getProperties());
 		$table->exists($this->_exists);
 
-		return $table->isCheckedOut($with);
+		return $table->isCheckedOut($userid);
 	}
 
 	/**

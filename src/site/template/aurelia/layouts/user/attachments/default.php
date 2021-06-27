@@ -116,7 +116,16 @@ $attachments = $this->attachments;
 							<?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
                         </td>
                         <td>
-							<?php echo $this->getTopicLink($message->getTopic(), $message, null, null, '', null, false, true); ?>
+							<?php
+							if ($message->exists())
+							{
+								echo $this->getTopicLink($message->getTopic(), $message, null, null, '', null, false, true);
+							}
+							else 
+							{
+								echo Text::_('COM_KUNENA_USER_ATTACHMENT_MESSAGE_NOT_EXIST');
+							}
+							?>
                         </td>
                         <td class="center">
 							<?php echo $attachment->getLayout()->render('thumbnail'); ?>

@@ -111,16 +111,6 @@ if ($this->topic->locked)
 	}
 
 	$count = 1;
-
-	try
-	{
-		$this->messages = \Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper::getMessagesByTopic($this->topic);
-	}
-	catch (Exception $e)
-	{
-		echo '<div class="topic-item-messages-error">' . $e->getMessage() . '</div>';
-	}
-
 	if ($this->messages)
 	{
 		echo '<div class="topic-item-messages">';

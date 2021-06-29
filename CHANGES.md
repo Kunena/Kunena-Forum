@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.6-dev]
 ### Fixed
+* [#8166](https://github.com/Kunena/Kunena-Forum/issues/8166): [CKEditor] CKEditor bug using lists
 * [#8170](https://github.com/Kunena/Kunena-Forum/issues/8170): Error when trying to view profile of banned user
 
 ## [5.2.5]

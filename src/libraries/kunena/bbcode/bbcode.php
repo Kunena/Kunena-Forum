@@ -2046,11 +2046,22 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		else
 		{
 			// To support old bbcode tags used before Kunena 5.2.x
-			$message = KunenaForumMessageHelper::get($params['post']);
+			if (isset($params['post']))
+			{
+				$message = KunenaForumMessageHelper::get($params['post']);
+			}
+
 			$username = $quote_params['0'];
 		}
 
-		$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
+		if (isset($message))
+		{
+			$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
+		}
+		else
+		{
+			$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port'));
+		}
 
 		$layout = KunenaLayout::factory('BBCode/Quote');
 

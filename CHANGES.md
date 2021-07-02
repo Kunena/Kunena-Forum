@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * [#8166](https://github.com/Kunena/Kunena-Forum/issues/8166): [CKEditor] CKEditor bug using lists
 * [#8170](https://github.com/Kunena/Kunena-Forum/issues/8170): Error when trying to view profile of banned user
 
+### Added
+* Reintroduce the editors available in Kunena 5.1.x to let users replace CKeditor
+
 ## [5.2.5]
 ### Fixed
 * [#7997](https://github.com/Kunena/Kunena-Forum/issues/7997): Can't add an attachment to the message when Add Suffix to URL and rewrite url is enabled #7997

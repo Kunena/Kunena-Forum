@@ -81,7 +81,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 		$templatesettings = $this->ktemplate->params;
 		$config           = KunenaConfig::getInstance();
 
-		if ($config->showvideotag && $templatesettings->get('video'))
+		if ($config->showvideotag && $templatesettings->get('Video'))
 		{
 			$this->addScriptDeclaration("kunena_showvideotag=1;");
 		}
@@ -90,7 +90,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showvideotag=0;");
 		}
 
-		if (!$config->disemoticons && $templatesettings->get('emoticons'))
+		if (!$config->disemoticons && $templatesettings->get('Smiley'))
 		{
 			$this->addScriptDeclaration("kunena_disemoticons=1;");
 		}
@@ -99,7 +99,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_disemoticons=0;");
 		}
 
-		if ($config->showebaytag && $templatesettings->get('ebay'))
+		if ($config->showebaytag && $templatesettings->get('Ebay'))
 		{
 			$this->addScriptDeclaration("kunena_showebaytag=1;");
 		}
@@ -108,7 +108,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showebaytag=0;");
 		}
 
-		if ($templatesettings->get('spoiler'))
+		if ($templatesettings->get('Spoiler'))
 		{
 			$this->addScriptDeclaration("kunena_showspoilertag=1;");
 		}
@@ -117,7 +117,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showspoilertag=0;");
 		}
 
-		if ($templatesettings->get('maps'))
+		if ($templatesettings->get('Map'))
 		{
 			$this->addScriptDeclaration("kunena_showmapstag=1;");
 		}
@@ -126,7 +126,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showmapstag=0;");
 		}
 
-		if ($templatesettings->get('twitter'))
+		if ($templatesettings->get('Twitter'))
 		{
 			$this->addScriptDeclaration("kunena_showtwittertag=1;");
 		}
@@ -135,7 +135,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showtwittertag=0;");
 		}
 
-		if ($templatesettings->get('link'))
+		if ($templatesettings->get('Link_Unlink'))
 		{
 			$this->addScriptDeclaration("kunena_showlinktag=1;");
 		}
@@ -144,7 +144,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showlinktag=0;");
 		}
 
-		if ($templatesettings->get('picture'))
+		if ($templatesettings->get('Image'))
 		{
 			$this->addScriptDeclaration("kunena_showpicturetag=1;");
 		}
@@ -153,7 +153,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showpicturetag=0;");
 		}
 
-		if ($templatesettings->get('hide'))
+		if ($templatesettings->get('Hidetext'))
 		{
 			$this->addScriptDeclaration("kunena_showhidetag=1;");
 		}
@@ -171,7 +171,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showtabletag=0;");
 		}
 
-		if ($templatesettings->get('code'))
+		if ($templatesettings->get('Code'))
 		{
 			$this->addScriptDeclaration("kunena_showcodetag=1;");
 		}
@@ -180,7 +180,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showcodetag=0;");
 		}
 
-		if ($templatesettings->get('quote'))
+		if ($templatesettings->get('Blockquote'))
 		{
 			$this->addScriptDeclaration("kunena_showquotetag=1;");
 		}
@@ -198,7 +198,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showdividertag=0;");
 		}
 
-		if ($templatesettings->get('instagram'))
+		if ($templatesettings->get('Instagram'))
 		{
 			$this->addScriptDeclaration("kunena_showinstagramtag=1;");
 		}
@@ -207,7 +207,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showinstagramtag=0;");
 		}
 
-		if ($templatesettings->get('soundcloud'))
+		if ($templatesettings->get('Soundcloud'))
 		{
 			$this->addScriptDeclaration("kunena_showsoundcloudtag=1;");
 		}
@@ -216,7 +216,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showsoundcloudtag=0;");
 		}
 
-		if ($templatesettings->get('confidential'))
+		if ($templatesettings->get('Confidential'))
 		{
 			$this->addScriptDeclaration("kunena_showconfidentialtag=1;");
 		}
@@ -243,7 +243,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showlistitemtag=0;");
 		}
 
-		if ($templatesettings->get('supscript'))
+		if ($templatesettings->get('Superscript'))
 		{
 			$this->addScriptDeclaration("kunena_showsupscripttag=1;");
 		}
@@ -252,7 +252,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showsupscripttag=0;");
 		}
 
-		if ($templatesettings->get('subscript'))
+		if ($templatesettings->get('Subscript'))
 		{
 			$this->addScriptDeclaration("kunena_showsubscripttag=1;");
 		}
@@ -261,7 +261,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showsubscripttag=0;");
 		}
 
-		if ($templatesettings->get('numericlist'))
+		if ($templatesettings->get('NumberedList'))
 		{
 			$this->addScriptDeclaration("kunena_shownumericlisttag=1;");
 		}
@@ -270,7 +270,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_shownumericlisttag=0;");
 		}
 
-		if ($templatesettings->get('bulletedlist'))
+		if ($templatesettings->get('BulletedList'))
 		{
 			$this->addScriptDeclaration("kunena_showbulletedlisttag=1;");
 		}
@@ -279,7 +279,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showbulletedlisttag=0;");
 		}
 
-		if ($templatesettings->get('alignright'))
+		if ($templatesettings->get('JustifyRight'))
 		{
 			$this->addScriptDeclaration("kunena_showalignrighttag=1;");
 		}
@@ -288,7 +288,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showalignrighttag=0;");
 		}
 
-		if ($templatesettings->get('alignleft'))
+		if ($templatesettings->get('JustifyLeft'))
 		{
 			$this->addScriptDeclaration("kunena_showalignlefttag=1;");
 		}
@@ -297,7 +297,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showalignlefttag=0;");
 		}
 
-		if ($templatesettings->get('center'))
+		if ($templatesettings->get('JustifyCenter'))
 		{
 			$this->addScriptDeclaration("kunena_showcentertag=1;");
 		}
@@ -306,7 +306,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showcentertag=0;");
 		}
 
-		if ($templatesettings->get('underline'))
+		if ($templatesettings->get('Underline'))
 		{
 			$this->addScriptDeclaration("kunena_showunderlinetag=1;");
 		}
@@ -315,7 +315,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showunderlinetag=0;");
 		}
 
-		if ($templatesettings->get('italic'))
+		if ($templatesettings->get('Italic'))
 		{
 			$this->addScriptDeclaration("kunena_showitalictag=1;");
 		}
@@ -324,7 +324,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showitalictag=0;");
 		}
 
-		if ($templatesettings->get('bold'))
+		if ($templatesettings->get('Bold'))
 		{
 			$this->addScriptDeclaration("kunena_showboldtag=1;");
 		}
@@ -333,7 +333,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showboldtag=0;");
 		}
 
-		if ($templatesettings->get('strikethrough'))
+		if ($templatesettings->get('Strike'))
 		{
 			$this->addScriptDeclaration("kunena_showstrikethroughtag=1;");
 		}
@@ -342,7 +342,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showstrikethroughtag=0;");
 		}
 
-		if ($templatesettings->get('colors'))
+		if ($templatesettings->get('TextColor'))
 		{
 			$this->addScriptDeclaration("kunena_showcolorstag=1;");
 		}
@@ -351,7 +351,7 @@ class KunenaLayoutWidgetEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showcolorstag=0;");
 		}
 
-		if ($templatesettings->get('size'))
+		if ($templatesettings->get('FontSize'))
 		{
 			$this->addScriptDeclaration("kunena_showsizetag=1;");
 		}

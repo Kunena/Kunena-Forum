@@ -78,7 +78,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 	{
 		$templatesettings = KunenaFactory::getTemplate()->params;
 
-		if ($this->config->showvideotag && $templatesettings->get('video'))
+		if ($this->config->showvideotag && $templatesettings->get('Video'))
 		{
 			$this->addScriptDeclaration("kunena_showvideotag=1;");
 		}
@@ -312,7 +312,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showunderlinetag=0;");
 		}
 
-		if ($templatesettings->get('italic'))
+		if ($templatesettings->get('Italic'))
 		{
 			$this->addScriptDeclaration("kunena_showitalictag=1;");
 		}
@@ -321,7 +321,7 @@ class KunenaLayoutTopicEditEditor extends KunenaLayout
 			$this->addScriptDeclaration("kunena_showitalictag=0;");
 		}
 
-		if ($templatesettings->get('bold'))
+		if ($templatesettings->get('Bold'))
 		{
 			$this->addScriptDeclaration("kunena_showboldtag=1;");
 		}

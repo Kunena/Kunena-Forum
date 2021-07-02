@@ -688,170 +688,164 @@ class KunenaAdminControllerTemplates extends KunenaController
 	}
 
 	/**
-	 * Method to save param.ini file on filesystem.
-	 *
-	 * @param   string $template The name of the template.
-	 *
-	 * @return void
-	 *
-	 * @throws Exception
-	 * @since  3.0.0
-	 * @throws null
+	 * Generate the params for CKeditor
+	 * 
+	 * @param array $params
+	 * @since  5.2.6
+	 * @return string
 	 */
-	protected function _saveParamFile($template)
+	protected function generateCkeditorParamFile($params)
 	{
-		$params = $this->app->input->get('jform', array(), 'post', 'array');
-
-		$editorButtons = array();
+		$ckeditorSettings = array();
 
 		if (!$params['Bold'])
 		{
-			$editorButtons[] = 'Bold';
+			$ckeditorSettings[] = 'Bold';
 		}
 
 		if (!$params['Italic'])
 		{
-			$editorButtons[] = 'Italic';
+			$ckeditorSettings[] = 'Italic';
 		}
 
 		if (!$params['Underline'])
 		{
-			$editorButtons[] = 'Underline';
+			$ckeditorSettings[] = 'Underline';
 		}
 
 		if (!$params['Strike'])
 		{
-			$editorButtons[] = 'Strike';
+			$ckeditorSettings[] = 'Strike';
 		}
 
 		if (!$params['Superscript'])
 		{
-			$editorButtons[] = 'Superscript';
+			$ckeditorSettings[] = 'Superscript';
 		}
 
 		if (!$params['Subscript'])
 		{
-			$editorButtons[] = 'Subscript';
+			$ckeditorSettings[] = 'Subscript';
 		}
 
 		if (!$params['JustifyRight'])
 		{
-			$editorButtons[] = 'JustifyRight';
+			$ckeditorSettings[] = 'JustifyRight';
 		}
 
 		if (!$params['JustifyLeft'])
 		{
-			$editorButtons[] = 'JustifyLeft';
+			$ckeditorSettings[] = 'JustifyLeft';
 		}
 
 		if (!$params['JustifyBlock'])
 		{
-			$editorButtons[] = 'JustifyBlock';
+			$ckeditorSettings[] = 'JustifyBlock';
 		}
 
 		if (!$params['JustifyCenter'])
 		{
-			$editorButtons[] = 'JustifyCenter';
+			$ckeditorSettings[] = 'JustifyCenter';
 		}
 
 		if (!$params['RemoveFormat'])
 		{
-			$editorButtons[] = 'RemoveFormat';
+			$ckeditorSettings[] = 'RemoveFormat';
 		}
 
 		if (!$params['Confidential'])
 		{
-			$editorButtons[] = 'Confidential';
+			$ckeditorSettings[] = 'Confidential';
 		}
 
 		if (!$params['Hidetext'])
 		{
-			$editorButtons[] = 'Hidetext';
+			$ckeditorSettings[] = 'Hidetext';
 		}
 
 		if (!$params['Spoiler'])
 		{
-			$editorButtons[] = 'Spoiler';
+			$ckeditorSettings[] = 'Spoiler';
 		}
 
 		if (!$params['Smiley'])
 		{
-			$editorButtons[] = 'Smiley';
+			$ckeditorSettings[] = 'Smiley';
 		}
 
 		if (!$params['Ebay'])
 		{
-			$editorButtons[] = 'Ebay';
+			$ckeditorSettings[] = 'Ebay';
 		}
 
 		if (!$params['Twitter'])
 		{
-			$editorButtons[] = 'Twitter';
+			$ckeditorSettings[] = 'Twitter';
 		}
 
 		if (!$params['Instagram'])
 		{
-			$editorButtons[] = 'Instagram';
+			$ckeditorSettings[] = 'Instagram';
 		}
 
 		if (!$params['Soundcloud'])
 		{
-			$editorButtons[] = 'Soundcloud';
+			$ckeditorSettings[] = 'Soundcloud';
 		}
 
 		if (!$params['Map'])
 		{
-			$editorButtons[] = 'Map';
+			$ckeditorSettings[] = 'Map';
 		}
 
 		if (!$params['FontSize'])
 		{
-			$editorButtons[] = 'FontSize';
+			$ckeditorSettings[] = 'FontSize';
 		}
 
 		if (!$params['TextColor'])
 		{
-			$editorButtons[] = 'TextColor';
+			$ckeditorSettings[] = 'TextColor';
 		}
 
 		if (!$params['Maximize'])
 		{
-			$editorButtons[] = 'Maximize';
+			$ckeditorSettings[] = 'Maximize';
 		}
 
 		if (!$params['Image'])
 		{
-			$editorButtons[] = 'Image';
+			$ckeditorSettings[] = 'Image';
 		}
 
 		if (!$params['Video'])
 		{
-			$editorButtons[] = 'Video';
+			$ckeditorSettings[] = 'Video';
 		}
 
 		if (!$params['Link_Unlink'])
 		{
-			$editorButtons[] = 'Link,Unlink';
+			$ckeditorSettings[] = 'Link,Unlink';
 		}
 
 		if (!$params['BulletedList'])
 		{
-			$editorButtons[] = 'BulletedList';
+			$ckeditorSettings[] = 'BulletedList';
 		}
 
 		if (!$params['NumberedList'])
 		{
-			$editorButtons[] = 'NumberedList';
+			$ckeditorSettings[] = 'NumberedList';
 		}
 
 		if (!$params['Blockquote'])
 		{
-			$editorButtons[] = 'Blockquote';
+			$ckeditorSettings[] = 'Blockquote';
 		}
 
 		if (!$params['Code'])
 		{
-			$editorButtons[] = 'Code';
+			$ckeditorSettings[] = 'Code';
 		}
 
 		if (!empty($params['nameskinckeditor']))
@@ -872,20 +866,190 @@ class KunenaAdminControllerTemplates extends KunenaController
 			}
 		}
 
+		if (count($params) > 0)
+		{
+			if (count($ckeditorSettings) > 0)
+			{
+				$ckeditorSettings = implode(',', $ckeditorSettings);
+			}
+			else
+			{
+				$ckeditorSettings = '';
+			}
+
+			return $params['ckeditorParams'];
+		}
+
+		return $params['ckeditorParams'] = '';
+	}
+
+	/**
+	 * Generate the params fr othe legacy editor
+	 * 
+	 * @param array $params
+	 * @since  5.2.6
+	 * @return string
+	 */
+	protected function generateLegacyParamFile($params)
+	{
+		$wysibbParams = '';
+
+		if ($params['Bold'])
+		{
+	        $wysibbParams .= 'bold,';
+		}
+
+		if ($params['Italic'])
+		{
+	        $wysibbParams .= 'italic,';
+		}
+
+		if ($params['Underline'])
+		{
+	        $wysibbParams .= 'underline,';
+		}
+
+		if ($params['Strike'])
+		{
+	        $wysibbParams .= 'strike,';
+		}
+
+		if ($params['Superscript'])
+		{
+	        $wysibbParams .= 'sup,';
+		}
+
+		if ($params['Subscript'])
+		{
+	        $wysibbParams .= 'sub';
+		}
+
+		if ($params['JustifyLeft'])
+		{
+	        $wysibbParams .= 'justifyleft,';
+		}
+
+		if ($params['JustifyCenter'])
+		{
+	        $wysibbParams .= 'justifycenter,';
+		}
+
+		if ($params['JustifyRight'])
+		{
+	        $wysibbParams .= 'justifyright,';
+	    }
+	    
+	    /*if ($params['divider'])
+	    {
+	        $wysibbParams .= '|,';
+	    }*/
+
+		if ($params['Image'])
+		{
+	        $wysibbParams .= 'img,';
+		}
+
+		if ($params['Video'])
+		{
+	        $wysibbParams .= 'video,';
+	    }
+
+		if ($params['Link_Unlink'])
+	    {
+	        $wysibbParams .= 'link,';
+	    }
+	    
+	    /*if ($params['divider'])
+	    {
+	        $wysibbParams .= '|,';
+	    }*/
+	    
+		if ($params['BulletedList'])
+		{
+	        $wysibbParams .= 'bullist,';
+		}
+
+		if ($params['NumberedList'])
+		{
+	        $wysibbParams .= 'numlist,';
+		}
+	    
+	    /*if ($params['divider'])
+	    {
+	        $wysibbParams .= '|,';
+	    }*/
+	    
+	    if ($params['TextColor'])
+	    {
+	        $params['wysibb'] .= 'fontcolor,';
+	    }
+	    
+	    /*if ($params['wysibb'])
+	    {
+	        $wysibbParams .= 'fontsize,';
+	    }
+	    
+	    if ($params['wysibb'])
+	    {
+	        $wysibbParams .= 'fontfamily,';
+	    }
+	    
+	    if ($params['divider'])
+	    {
+	        $wysibbParams .= '|,';
+	    }*/
+	    
+	    if ($params['Blockquote'])
+	    {
+	        $wysibbParams .= 'quote,';
+	    }
+
+	    if ($params['Code'])
+	    {
+	        $wysibbParams .= 'code,';
+	    }
+	    
+	    /*if ($params['table'])
+	    {
+	        $wysibbParams .= 'table,';
+	    }*/
+
+		if ($params['RemoveFormat'])
+		{
+			$wysibbParams .= 'removeFormat';
+		}
+
+		return $wysibbParams;
+	}
+
+	/**
+	 * Method to save param.ini file on filesystem.
+	 *
+	 * @param   string $template The name of the template.
+	 *
+	 * @return void
+	 *
+	 * @throws Exception
+	 * @since  3.0.0
+	 * @throws null
+	 */
+	protected function _saveParamFile($template)
+	{
+		$params = $this->app->input->get('jform', array(), 'post', 'array');
+
+		if ($params['editor'] == 'ckeditor')
+		{
+			$params['ckeditorParams'] = $this->generateCkeditorParamFile($params);
+		}
+		else
+		{
+			$params['wysibbParams'] = $this->generateLegacyParamFile($params);
+		}
+
 		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
 		if (count($params) > 0)
 		{
-			if (count($editorButtons) > 0)
-			{
-				$editorButtons = implode(',', $editorButtons);
-				$params['editorButtons'] = $editorButtons;
-			}
-			else
-			{
-				$params['editorButtons'] = '';
-			}
-
 			$registry = new \Joomla\Registry\Registry;
 			$registry->loadArray($params);
 			$txt    = $registry->toString('INI');

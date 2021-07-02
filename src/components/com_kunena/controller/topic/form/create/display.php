@@ -203,6 +203,14 @@ class ComponentKunenaControllerTopicFormCreateDisplay extends KunenaControllerDi
 
 		$this->headerText = Text::_('COM_KUNENA_NEW_TOPIC');
 
+		$this->editor_type = $this->template->params->get('editor');
+
+		// Just set default value in case of the template aren't saved
+		if ($this->editor_type === 1 || $this->editor_type === 0)
+		{
+			$this->editor_type = 'ckeditor';
+		}
+
 		return true;
 	}
 

@@ -7,6 +7,30 @@
  * @link https://www.kunena.org
  **/
 
+/**
+ *  Helper function for to perform JSON request for preview
+ */
+var previewActive = false;
+
+function kPreviewHelper(previewActive) {
+	var editor = jQuery('#editor');
+	if (editor.val() !== null) {
+		jQuery.ajax({
+			type: 'POST',
+			url: jQuery('#kpreview_url').val(),
+			async: true,
+			dataType: 'json',
+			data: {body: editor.val()}
+		})
+			.done(function (data) {
+				jQuery('#kbbcode-preview').html(data.preview);
+			})
+			.fail(function () {
+				//TODO: handle the error of ajax request
+			});
+	}
+}
+
 jQuery(document).ready(function ($) {
 	var qreply = $('.qreply');
 	var editor = $('#editor');

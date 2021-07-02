@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.6-dev]
 ### Fixed
+* [#8205](https://github.com/Kunena/Kunena-Forum/issues/8205): Only with PHP 8 : Warning: getimagesize - when protect attachment is on
 * [#8204](https://github.com/Kunena/Kunena-Forum/issues/8204): Only with PHP 8 : Warning: Undefined array key at quoted text
 * [#8166](https://github.com/Kunena/Kunena-Forum/issues/8166): [CKEditor] CKEditor bug using lists
 * [#8170](https://github.com/Kunena/Kunena-Forum/issues/8170): Error when trying to view profile of banned user

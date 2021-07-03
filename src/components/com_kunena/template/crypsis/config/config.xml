@@ -175,6 +175,12 @@
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_BBCODE">
+         <field name="editor" type="list" default="0" label="COM_KUNENA_TEMPLATE_EDITOR_TO_USE"
+               description="COM_KUNENA_TEMPLATE_EDITOR_TO_USE_DESC">
+            <option value="ckeditor">COM_KUNENA_TEMPLATE_EDITOR_TO_USE_CKEDITOR</option>
+            <option value="bbcode">COM_KUNENA_TEMPLATE_EDITOR_TO_USE_BBCODE</option>
+            <option value="wysibb">COM_KUNENA_TEMPLATE_EDITOR_TO_USE_WYSIBB</option>
+        </field>
          <field name="Bold" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_BOLD"
                description="COM_KUNENA_TEMPLATE_DISPLAY_BOLD_DESC">
             <option value="0">COM_KUNENA_NO</option>
@@ -314,7 +320,7 @@
                description="COM_KUNENA_TEMPLATE_DISPLAY_MAXIMIZE_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
-        </field>Maximize
+        </field>
         <field name="Map" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MAPS"
                description="COM_KUNENA_TEMPLATE_DISPLAY_MAPS_DESC">
             <option value="0">COM_KUNENA_NO</option>
@@ -325,7 +331,8 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="editorButtons" type="hidden" default=""/>
+        <field name="ckeditorParams" type="hidden" default=""/>
+        <field name="wysibbParams" type="hidden" default=""/>
         <field name="nameskinckeditor" type="text" default="" label="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR"
                description="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR_DESC"/>
         <field name="ckeditorcustomprefixconfigfile" type="text" default="" label="COM_KUNENA_TEMPLATE_NAME_OF_PREFIX_FOR_CUSTOM_CKEDITOR_CONFIG_FILE"

@@ -39,6 +39,36 @@ jQuery(document).ready(function ($) {
 	var pollexist = $('#poll_exist_edit');
 	var pollcatid = jQuery('#poll_catid').val();
 	var polliconstatus = false;
+	
+	$('#tabs_kunena_editor a:first').tab('show');
+
+	$('#tabs_kunena_editor a:last').click(function (e) {
+		e.preventDefault();
+
+		var preview = $("#kbbcode-preview");
+		var message = $("#editor");
+
+		preview.css('display', 'block');
+
+		message.hide();
+
+		kPreviewHelper();
+
+		preview.attr('class', 'kbbcode-preview-bottom controls');
+		var height = message.css('height');
+		preview.css('height', height);
+	});
+
+	$('#tabs_kunena_editor a:not(:last)').click(function (e) {
+		$('#kbbcode-preview').hide();
+		editor.css('display', 'inline-block');
+		$('#markItUpeditor').css('display', 'inline-block');
+	});
+
+	$('#tabs_kunena_editor a:last').click(function (e) {
+		editor.hide();
+		$('#markItUpeditor').hide();
+	});
 
 	// Check is anynomous options can be displayed on newtopic page
 	var catiddefault = $('#postcatid').val();

@@ -13,8 +13,7 @@ defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 
-$location = $attachment->getUrl();
-$data     = getimagesize($location);
+$data     = getimagesize($attachment->getPath());
 $width    = $data[0];
 $height   = $data[1];
 $name     = preg_replace('/.html/', '', $attachment->getUrl());

@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.6-dev]
 ### Fixed
+* [#8211](https://github.com/Kunena/Kunena-Forum/issues/8211): Temporary rendering error at editor
+* [#8208](https://github.com/Kunena/Kunena-Forum/issues/8208): Only with PHP 8 : Warning at bullet list
 * [#8205](https://github.com/Kunena/Kunena-Forum/issues/8205): Only with PHP 8 : Warning: getimagesize - when protect attachment is on (apply the fix too in crypsisb3)
 * [#8205](https://github.com/Kunena/Kunena-Forum/issues/8205): Only with PHP 8 : Warning: getimagesize - when protect attachment is on
 * [#8204](https://github.com/Kunena/Kunena-Forum/issues/8204): Only with PHP 8 : Warning: Undefined array key at quoted text

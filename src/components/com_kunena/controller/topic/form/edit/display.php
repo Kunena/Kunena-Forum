@@ -144,7 +144,7 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 		$this->editor_type = $this->template->params->get('editor');
 
 		// Just set default value in case of the template aren't saved
-		if ($this->editor_type === 1 || $this->editor_type === 0)
+		if ($this->editor_type === 1 || $this->editor_type === 0 || strlen($this->editor_type) <= 1)
 		{
 			$this->editor_type = 'ckeditor';
 		}

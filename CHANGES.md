@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.6-dev]
 ### Fixed
+* [#8216](https://github.com/Kunena/Kunena-Forum/issues/8216): Crypsisb3 & Crypsisb4 : The BBcode editor loads no toolbar (missing images in crypsisb4)
 * [#8216](https://github.com/Kunena/Kunena-Forum/issues/8216): Crypsisb3 & Crypsisb4 : The BBcode editor loads no toolbar
 * [#8214](https://github.com/Kunena/Kunena-Forum/issues/8214): Only with Crypsisb3 & Crypsisb4: It does not switch to another editor
 * [#8211](https://github.com/Kunena/Kunena-Forum/issues/8211): Temporary rendering error at editor

@@ -16,6 +16,10 @@ $this->addScript('edit.js');
 
 echo $this->subLayout('Widget/Datepicker');
 
+$this->addScript('markitup.js');
+$this->addScript('markitup.editor.js');
+$this->addScript('markitup.set.js');
+
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
 $this->addScript('jquery.caret.js');
 $this->addScript('jquery.atwho.js');

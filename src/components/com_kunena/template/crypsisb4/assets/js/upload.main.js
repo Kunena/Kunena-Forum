@@ -21,7 +21,14 @@ jQuery(function ($) {
 
 	// Insert bbcode in message
 	function insertInMessage(attachid, filename, button) {
-		CKEDITOR.instances.message.insertText(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+		if ($('#message').length > 0)
+		{
+			CKEDITOR.instances.message.insertText(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+		}
+		else
+		{
+			$('#editor').insertAtCaret(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+		}
 
 		if (button !== undefined) {
 			button.removeClass('btn-primary');
@@ -76,7 +83,14 @@ jQuery(function ($) {
 		$('#remove-all').hide();
 		$('#insert-all').hide();
 
-		var editor_text = CKEDITOR.instances.message.getData();
+		if ($('#message').length > 0)
+		{
+			var editor_text = CKEDITOR.instances.message.getData();
+		}
+		else
+		{
+			var editor_text = $('#editor').val();
+		}
 
 		// Removing items in edit if they are present
 		if ($.isEmptyObject(filesedit) === false) {
@@ -103,7 +117,14 @@ jQuery(function ($) {
 
 					if (data.text_prepared!==false)
 					{
-						CKEDITOR.instances.message.setData(data.text_prepared);
+						if ($('#message').length > 0)
+						{
+							CKEDITOR.instances.message.setData(data.text_prepared);
+						}
+						else
+						{
+							$('#editor').val(data.text_prepared);
+						}
 					}
 				})
 				.fail(function () {
@@ -145,7 +166,14 @@ jQuery(function ($) {
 
 				if (data.text_prepared!==false)
 				{
-					CKEDITOR.instances.message.setData(data.text_prepared);
+					if ($('#message').length > 0)
+					{
+						CKEDITOR.instances.message.setData(data.text_prepared);
+					}
+					else
+					{
+						$('#editor').val(data.text_prepared);
+					}
 				}
 			})
 			.fail(function () {
@@ -195,8 +223,15 @@ jQuery(function ($) {
 			});
 		}
 
-		var ckeditor_existing_content = CKEDITOR.instances.message.getData();
-		CKEDITOR.instances.message.setData(ckeditor_existing_content+' '+content_to_inject);
+		if ($('#message').length > 0)
+		{
+			var ckeditor_existing_content = CKEDITOR.instances.message.getData();
+			CKEDITOR.instances.message.setData(ckeditor_existing_content+' '+content_to_inject);
+		}
+		else
+		{
+			$('#editor').val(content_to_inject);
+		}
 
 		$('#files .btn.btn-primary').each(function () {
 			$('#files .btn.btn-primary').addClass('btn-success');
@@ -313,7 +348,14 @@ jQuery(function ($) {
 
 					if (data.text_prepared!==false)
 					{
-						CKEDITOR.instances.message.setData(data.text_prepared);
+						if ($('#message').length > 0)
+						{
+							CKEDITOR.instances.message.setData(data.text_prepared);
+						}
+						else
+						{
+							$('#editor').val(data.text_prepared);
+						}
 					}
 				})
 				.fail(function () {

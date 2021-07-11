@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.6-dev]
 ### Fixed
+* [#8224](https://github.com/Kunena/Kunena-Forum/issues/8224): BBcode and Wysiwyg etitor: Remove single images from messages do not work correctly
 * [#8225](https://github.com/Kunena/Kunena-Forum/issues/8225): Typo in administrator en-GB.com_kunena.views.ini line 922
 * [#8221](https://github.com/Kunena/Kunena-Forum/issues/8221): Insert images in messages works only with the CKEditor
 * [#8216](https://github.com/Kunena/Kunena-Forum/issues/8216): Crypsisb3 & Crypsisb4 : The BBcode editor loads no toolbar (missing images in crypsisb4)

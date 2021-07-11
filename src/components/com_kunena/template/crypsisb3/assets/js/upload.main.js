@@ -324,7 +324,15 @@ jQuery(function ($) {
 			}
 
 			$('#alert_max_file').remove();
-			var editor_text = CKEDITOR.instances.message.getData();
+
+			if ($('#message').length > 0)
+			{
+				var editor_text = CKEDITOR.instances.message.getData();
+			}
+			else
+			{
+				var editor_text = $('#editor').val();
+			}
 
 			var file_query_id = [];
 			file_query_id.push(file_id);

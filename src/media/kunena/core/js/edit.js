@@ -81,6 +81,17 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
+	if ($("#editor").length > 0)
+	{
+	var datalocalstorage = localStorage.getItem('copyKunenaeditor');
+	if (datalocalstorage) {
+		var textarea = $("#editor").next();
+		textarea.empty();
+		$('#editor').val(datalocalstorage);
+		localStorage.removeItem('copyKunenaeditor');
+	}
+	}
+
 	$('#reset').onclick = function() {
 		localStorage.removeItem('copyKunenaeditor');
 	};

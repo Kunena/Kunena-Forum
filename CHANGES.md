@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.6-dev]
 ### Fixed
+* [#8228](https://github.com/Kunena/Kunena-Forum/issues/8228): Wysiwyg: Remove attachment from message, duplicates the code tags (fix install all)
 * [#8229](https://github.com/Kunena/Kunena-Forum/issues/8229): Quick Reply and go to editor - only the CKEditor receives the content
 * [#8224](https://github.com/Kunena/Kunena-Forum/issues/8224): BBcode and Wysiwyg etitor: Remove single images from messages do not work correctly
 * [#8225](https://github.com/Kunena/Kunena-Forum/issues/8225): Typo in administrator en-GB.com_kunena.views.ini line 922

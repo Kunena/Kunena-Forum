@@ -191,7 +191,14 @@ jQuery(function ($) {
 				var attachid = elem.attr('id').match("[0-9]{1,8}");
 				var filename = elem.attr('placeholder');
 
-				content_to_inject += '[attachment=' + attachid + ']' + filename + '[/attachment]';
+				if ($('#editor').length > 0)
+				{
+					$('#editor').insertAtCaret('[attachment=' + attachid + ']' + filename + '[/attachment]');
+				}
+				else
+				{
+					content_to_inject += '[attachment=' + attachid + ']' + filename + '[/attachment]';
+				}
 
 				$('#insert-all').removeClass('btn-primary');
 				$('#insert-all').addClass('btn-success');
@@ -208,7 +215,15 @@ jQuery(function ($) {
 			$(filesedit).each(function (index, file) {
 				if (file.inline!==true)
 				{
-					content_to_inject += '[attachment=' + file.id + ']' + file.name + '[/attachment]';
+					if ($('#editor').length > 0)
+					{
+						$('#editor').insertAtCaret('[attachment=' + file.id + ']' + file.name + '[/attachment]');
+					}
+					else
+					{
+						content_to_inject += '[attachment=' + file.id + ']' + file.name + '[/attachment]';
+					}
+
 					files_id.push(file.id);
 				}
 			});
@@ -218,10 +233,6 @@ jQuery(function ($) {
 		{
 			var ckeditor_existing_content = CKEDITOR.instances.message.getData();
 			CKEDITOR.instances.message.setData(ckeditor_existing_content+' '+content_to_inject);
-		}
-		else
-		{
-			$('#editor').val(content_to_inject);
 		}
 
 		$('#files .btn.btn-primary').each(function () {

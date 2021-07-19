@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.6-dev]
 ### Fixed
+* [#8216](https://github.com/Kunena/Kunena-Forum/issues/8216): Crypsisb3 & Crypsisb4 : The BBcode editor loads no toolbar (crypsisb4 missing style to diplay bbcode correctly) #8216
 * [#8223](https://github.com/Kunena/Kunena-Forum/issues/8223): Wysiwyg : You can't Submit the message
 * [#8228](https://github.com/Kunena/Kunena-Forum/issues/8228): Wysiwyg: Remove attachment from message, duplicates the code tags (fix install all)
 * [#8229](https://github.com/Kunena/Kunena-Forum/issues/8229): Quick Reply and go to editor - only the CKEditor receives the content

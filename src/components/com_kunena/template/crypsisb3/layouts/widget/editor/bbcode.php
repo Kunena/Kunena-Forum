@@ -62,7 +62,7 @@ $this->getBBcodesEnabled();
 <div id="modal-map" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true" style="display: none;">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 		<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_MAP_SETTINGS') ?></h3>
 	</div>
 	<div class="modal-body">
@@ -104,7 +104,7 @@ if (!empty($codeTypes))
 	<div id="modal-code" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	     aria-hidden="true" style="display: none;">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 			<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_CODE_SETTINGS') ?></h3>
 		</div>
 		<div class="modal-body">
@@ -123,7 +123,7 @@ if (!empty($codeTypes))
 <div id="modal-picture" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true" style="display: none;">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 		<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_PICTURE_SETTINGS') ?></h3>
 	</div>
 	<div class="modal-body">
@@ -161,7 +161,7 @@ if (!empty($codeTypes))
 <div id="modal-link" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true" style="display: none;">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 		<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_LINK_SETTINGS') ?></h3>
 	</div>
 	<div class="modal-body">
@@ -187,7 +187,7 @@ if (!empty($codeTypes))
 <div id="modal-video-settings" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true" style="display: none;">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 		<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_VIDEO_SETTINGS') ?></h3>
 	</div>
 	<div class="modal-body">
@@ -234,7 +234,7 @@ if (!empty($codeTypes))
 <div id="modal-video-urlprovider" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true" style="display: none;">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 		<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_VIDEO') ?></h3>
 	</div>
 	<div class="modal-body">
@@ -256,7 +256,7 @@ if (!empty($codeTypes))
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 					<h3 id="poll-not-allowed-to-edit"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_NOT_ALLOWED_TO_EDIT') ?></h3>
 				</div>
 				<div class="modal-body">
@@ -269,7 +269,7 @@ if (!empty($codeTypes))
 	<div id="modal-poll-settings" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	     aria-hidden="true" data-backdrop="false" style="display: none;">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 			<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_TITLE_POLL_SETTINGS') ?></h3>
 		</div>
 		<div class="modal-body">
@@ -330,7 +330,7 @@ if (!empty($codeTypes))
 <div id="modal-emoticons" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true" style="display: none;">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ï¿½</button>
 		<h3 id="myModalLabel">Emoticons</h3>
 	</div>
 	<div class="modal-body">

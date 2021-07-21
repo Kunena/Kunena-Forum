@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 * Reintroduce the editors available in Kunena 5.1.x to let users replace CKeditor
 
+### Changed
+* Disable the WYSIBB option in template settings untill that last bug with it are fixed
+
 ## [5.2.5]
 ### Fixed
 * [#7997](https://github.com/Kunena/Kunena-Forum/issues/7997): Can't add an attachment to the message when Add Suffix to URL and rewrite url is enabled #7997

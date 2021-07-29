@@ -134,8 +134,8 @@ class PlgSampledataKunena extends CMSPlugin
 		KunenaSampleData::installSampleData();
 
 		$response          = [];
-		$response->success = true;
-		$response->message = Text::_('PLG_SAMPLEDATA_KUNENA_STEP1_SUCCESS');
+		$response['success'] = true;
+		$response['message'] = Text::_('PLG_SAMPLEDATA_KUNENA_STEP1_SUCCESS');
 
 		return $response;
 	}

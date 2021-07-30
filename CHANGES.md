@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 
+### Changed
+* Update minimum version for Joomla! 3.10 to RC1
+
 ## [5.2.6]
 ### Fixed
 * [#8216](https://github.com/Kunena/Kunena-Forum/issues/8216): Crypsisb3 & Crypsisb4 : The BBcode editor loads no toolbar (crypsisb4 missing style to diplay bbcode correctly) #8216

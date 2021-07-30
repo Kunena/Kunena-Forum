@@ -43,12 +43,21 @@ class TemplateModel extends AdminModel
 	 */
 	public function getForm($data = [], $loadData = true): object
 	{
+		$app = Factory::getApplication();
+
 		// Load the configuration definition file.
 		$template = $this->getState('template');
 		$xml      = KunenaTemplate::getInstance($template)->getConfigXml();
 
 		// Get the form.
-		$form = $this->loadForm('com_kunena_template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
+		try
+		{
+			$form = $this->loadForm('com_kunena_template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
+		}
+		catch (Exception $e)
+		{
+			$app->enqueueMessage($e->getMessage(), 'error');
+		}
 
 		if (empty($form))
 		{

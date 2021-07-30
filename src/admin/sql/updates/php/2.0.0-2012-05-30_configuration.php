@@ -20,7 +20,6 @@ use Joomla\CMS\Language\Text;
  *
  * @throws  Exception
  * @since   Kunena 6.0
- *
  */
 function kunena_200_2012_05_30_configuration($parent)
 {

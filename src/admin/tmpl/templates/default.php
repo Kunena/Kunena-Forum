@@ -131,7 +131,7 @@ $wa->useScript('multiselect');
 							<th width="25%"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR_URL'); ?></th>
 							<th width="30%"></th>
 						</tr>
-						<?php if ($this->templatesxml !== FALSE) : ?>
+						<?php if ($this->templatesxml !== false) : ?>
 							<?php foreach ($this->templatesxml as $row) : ?>
 								<tr>
 									<td style="width: 5%;"><?php echo $row->price; ?>

@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
  *
  * @throws  Exception
  * @since   Kunena 6.0
- *
  */
 function kunena_600_2019_07_21_datetimeupdatevalue($parent)
 {

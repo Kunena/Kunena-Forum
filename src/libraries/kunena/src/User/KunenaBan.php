@@ -159,10 +159,10 @@ class KunenaBan extends parentAlias
 		$table = $this->getTable();
 
 		// Load the KunenaTableUser object based on the user id
-		try 
+		try
 		{
 			$exists = $table->load($id);
-		} 
+		}
 		catch (Exception $e)
 		{
 			KunenaError::displayDatabaseError($e);

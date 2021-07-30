@@ -21,7 +21,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  *
  * @throws  Exception
  * @since   Kunena 6.0
- *
  */
 function kunena_600_2019_05_18_configuration($parent)
 {

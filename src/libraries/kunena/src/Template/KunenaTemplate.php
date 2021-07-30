@@ -478,7 +478,7 @@ class KunenaTemplate
 
 		if (!is_file($xml_path))
 		{
-			$xml_path1 = KPATH_SITE . "/template/{$this->name}/config/template.xml";
+			$xml_path = KPATH_SITE . "/template/{$this->name}/config/template.xml";
 
 			return false;
 		}

@@ -52,7 +52,7 @@ class TemplateModel extends AdminModel
 		// Get the form.
 		try
 		{
-			$form = $this->loadForm('com_kunena_template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
+			$form = $this->loadForm('com_kunena.template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
 		}
 		catch (Exception $e)
 		{
@@ -166,5 +166,26 @@ class TemplateModel extends AdminModel
 		}
 
 		return $newState;
+	}
+
+	/**
+	 * Load the data associated with the form
+	 * 
+	 * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 * @return array|mixed
+	 * @since Kunena 3.0
+	 */
+	protected function loadFormData()
+	{
+		// Check the session for previously entered form data.
+		$data = Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
+
+		if (empty($data))
+		{
+			$template = $this->getState('template');
+			$data     = KunenaTemplate::getInstance($template)->params->toArray();
+		}
+
+		return $data;
 	}
 }

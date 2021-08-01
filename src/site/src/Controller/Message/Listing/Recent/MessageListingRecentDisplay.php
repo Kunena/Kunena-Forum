@@ -48,7 +48,7 @@ class MessageListingRecentDisplay extends ListDisplay
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	protected $name = 'Message/List';
+	protected $name = 'Message/Listing';
 
 	/**
 	 * Prepare category list display.

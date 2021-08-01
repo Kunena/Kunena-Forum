@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
 
 use function defined;
 
-$content = $this->execute('Message/List/Recent')
+$content = $this->execute('Message/Listing/Recent')
 	->setLayout('recent');
 
 $this->addBreadcrumb(

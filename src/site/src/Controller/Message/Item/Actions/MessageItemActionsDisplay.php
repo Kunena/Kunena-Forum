@@ -567,7 +567,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 		// Show admins the IP address of the user.
 		if ($this->category->isAuthorised('admin')
-			|| ($this->category->isAuthorised('moderate') && !$this->config->hide_ip))
+		    || ($this->category->isAuthorised('moderate') && !$this->config->hideIp))
 		{
 			if (!empty($this->message->ip))
 			{

@@ -1250,7 +1250,7 @@ class KunenaIcons
 	 * @throws Exception
 	 * @since   Kunena 5.0
 	 */
-	public static function caticon(string $categoryicon, $new = null, $big = true): string
+	public static function caticon($categoryicon, $new = null, $big = true): string
 	{
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');

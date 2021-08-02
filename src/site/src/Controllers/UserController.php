@@ -359,11 +359,10 @@ class UserController extends KunenaController
 		// Save Kunena user.
 		$this->saveProfile();
 		$this->saveSettings();
-		$success = $this->user->save();
 
 		try
 		{
-
+			$success = $this->user->save();
 		}
 		catch (Exception $e)
 		{

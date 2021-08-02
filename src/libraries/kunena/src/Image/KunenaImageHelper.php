@@ -62,7 +62,7 @@ class KunenaImageHelper
 		}
 		catch (Exception $e)
 		{
-			KunenaError::error($e->getMessage());
+			throw new \Exception($e->getMessage());
 
 			return false;
 		}
@@ -109,7 +109,7 @@ class KunenaImageHelper
 			}
 			catch (Exception $e)
 			{
-				KunenaError::error($e->getMessage());
+				throw new \Exception($e->getMessage());
 
 				return false;
 			}

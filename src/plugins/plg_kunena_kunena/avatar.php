@@ -13,6 +13,7 @@
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Image\KunenaImageHelper;
@@ -128,16 +129,23 @@ class KunenaAvatarKunena extends KunenaAvatar
 
 		if (!is_file("{$path}/{$resized}/{$file}"))
 		{
-			KunenaImageHelper::version(
-				$origPath,
-				"{$path}/{$resized}",
-				$file,
-				$sizex,
-				$sizey,
-				intval($config->avatarQuality),
-				KunenaImage::SCALE_INSIDE,
-				intval($config->avatarCrop)
-			);
+			try
+			{
+				KunenaImageHelper::version(
+					$origPath,
+					"{$path}/{$resized}",
+					$file,
+					$sizex,
+					$sizey,
+					intval($config->avatarQuality),
+					KunenaImage::SCALE_INSIDE,
+					intval($config->avatarCrop)
+				);
+			}
+			catch (Exception $e)
+			{
+				KunenaError::error($e->getMessage());
+			}
 
 			if ($user->timestamp)
 			{

@@ -198,7 +198,7 @@ class UserModel extends KunenaModel
 			'sections' => false,
 			'action'   => 'read', ];
 
-		return HTMLHelper::_('select.genericlist', $categoryList, 'catid', 'class="inputbox form-control" multiple="multiple" size="15"', 'value', 'text');
+		return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
 	}
 
 	/**

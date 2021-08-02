@@ -172,10 +172,7 @@ class KunenaProfileKunena extends KunenaProfile
 
 		if ($task && $task != 'edit')
 		{
-			// TODO: remove in the future.
-			$do = $task ? '&do=' . $task : '';
-
-			return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
+			throw new \Exception('Sorry, Kunena 6.0 no support url with func in method getProfileURL class KunenaProfileKunena');
 		}
 
 		$layout = $task ? '&layout=' . $task : '';

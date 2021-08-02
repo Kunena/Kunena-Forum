@@ -23,11 +23,11 @@ jQuery(function ($) {
                 data = $this.data();
 
             if (data['files'] !== undefined) {
-                const userid = data['files'].userid;
-                const avatar = data['files'].filename;
+                var userid = data['files'].userid;
+                var avatar = data['files'].filename;
             } else {
-                const userid = data.userid;
-                const avatar = data.filename;
+                var userid = data.userid;
+                var avatar = data.filename;
             }
 
             fileCount = fileCount - 1;

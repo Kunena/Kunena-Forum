@@ -92,14 +92,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		if ($this->topic->isAuthorised('reply'))
 		{
 			// Add Reply topic button.
-			if ($topicicontype == 'B2' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'icon icon-undo')
-				);
-			}
-			elseif ($topicicontype == 'B3' && !$fullactions)
+			if ($topicicontype == 'B5' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'reply',
@@ -132,14 +125,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		if ($userTopic->subscribed)
 		{
 			// User can always remove existing subscription.
-			if ($topicicontype == 'B2' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'icon icon-envelope-opened')
-				);
-			}
-			elseif ($topicicontype == 'B3' && !$fullactions)
+			if ($topicicontype == 'B5' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'subscribe',
@@ -171,14 +157,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		elseif ($this->topic->isAuthorised('subscribe'))
 		{
 			// Add subscribe topic button.
-			if ($topicicontype == 'B2' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'icon icon-envelope')
-				);
-			}
-			elseif ($topicicontype == 'B3' && !$fullactions)
+			if ($topicicontype == 'B5' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'subscribe',
@@ -211,14 +190,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		if ($userTopic->favorite)
 		{
 			// User can always remove existing favorite.
-			if ($topicicontype == 'B2' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'icon icon-star')
-				);
-			}
-			elseif ($topicicontype == 'B3' && !$fullactions)
+			if ($topicicontype == 'B5' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'favorite',
@@ -250,14 +222,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		elseif ($this->topic->isAuthorised('favorite'))
 		{
 			// Add favorite topic button.
-			if ($topicicontype == 'B2' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'icon icon-star-empty')
-				);
-			}
-			elseif ($topicicontype == 'B3' && !$fullactions)
+			if ($topicicontype == 'B5' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'favorite',

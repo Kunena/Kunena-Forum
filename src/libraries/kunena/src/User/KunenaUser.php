@@ -1000,12 +1000,7 @@ class KunenaUser extends CMSObject
 						return '<i class="fas fa-user-circle status-' . $online . '" aria-hidden="true"></i>';
 					}
 
-					if ($topicicontype == 'B2')
-					{
-						return '<span class="icon icon-user user-circle user-default status-' . $online . '" aria-hidden="true"></span>';
-					}
-
-					if ($topicicontype == 'B3')
+					if ($topicicontype == 'B5')
 					{
 						return '<span class="glyphicon glyphicon-user user-circle user-default status-' . $online . '" aria-hidden="true"></span>';
 					}
@@ -1017,12 +1012,7 @@ class KunenaUser extends CMSObject
 						return '<i class="fas fa-user-circle fa-7x"></i>';
 					}
 
-					if ($topicicontype == 'B2')
-					{
-						return '<span class="icon icon-user user-circle user-xl b2-7x" aria-hidden="true"></span>';
-					}
-
-					if ($topicicontype == 'B3')
+					if ($topicicontype == 'B5')
 					{
 						return '<span class="glyphicon glyphicon-user user-circle user-xl b2-7x" aria-hidden="true"></span>';
 					}
@@ -1644,7 +1634,7 @@ class KunenaUser extends CMSObject
 			{
 				$topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
 
-				if ($topicicontype == 'B3')
+				if ($topicicontype == 'B5')
 				{
 					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
 					$karmaPlusIcon  = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
@@ -1653,11 +1643,6 @@ class KunenaUser extends CMSObject
 				{
 					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
 					$karmaPlusIcon  = '<i class="fa fa-plus-circle" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
-				}
-				elseif ($topicicontype == 'B2')
-				{
-					$karmaMinusIcon = '<span class="icon-karma icon icon-minus text-error" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="icon-karma icon icon-plus text-success" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 				else
 				{

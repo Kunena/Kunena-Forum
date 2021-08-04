@@ -305,16 +305,7 @@ class Kunenagrid
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
-		if ($bootstrap && $topicicontype == 'B2')
-		{
-			$html[] = '<a class="btn btn-micro ' . $active . '" ';
-			$html[] = ' href="javascript:void(0);" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
-			$html[] = ' title="' . $title . '">';
-			$html[] = '<i class="icon-' . $class . '">';
-			$html[] = '</i>';
-			$html[] = '</a>';
-		}
-		elseif ($bootstrap && $topicicontype == 'B3')
+		if ($bootstrap && $topicicontype == 'B5')
 		{
 			if ($class == 'publish')
 			{

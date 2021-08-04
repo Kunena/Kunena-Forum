@@ -97,11 +97,7 @@ class KunenaPrivate
 		{
 			$class = 'btn btn-small';
 		}
-		elseif ($topicicontype == 'B2')
-		{
-			$class = 'btn btn-small';
-		}
-		elseif ($topicicontype == 'B3')
+		elseif ($topicicontype == 'B5')
 		{
 			$class = 'btn btn-outline-primary btn-sm';
 		}
@@ -182,11 +178,7 @@ class KunenaPrivate
 			{
 				$class = 'btn btn-small';
 			}
-			elseif ($topicicontype == 'B2')
-			{
-				$class = 'btn btn-small';
-			}
-			elseif ($topicicontype == 'B3')
+			elseif ($topicicontype == 'B5')
 			{
 				$class = 'btn btn-outline-primary btn-sm';
 			}

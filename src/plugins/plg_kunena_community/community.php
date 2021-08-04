@@ -28,15 +28,17 @@ class plgKunenaCommunity extends CMSPlugin
 	/**
 	 * plgKunenaCommunity constructor.
 	 *
-	 * @param $subject
-	 * @param $config
+	 * @param   DispatcherInterface  &$subject  The object to observe
+	 * @param   array                $config    An optional associative array of configuration settings.
+	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
+	 *                                         (this list is not meant to be comprehensive).
 	 *
 	 * @since   Kunena 6.0
 	 */
 	public function __construct(&$subject, $config)
 	{
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::installed()))
+		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::enabled()))
 		{
 			return;
 		}
@@ -80,7 +82,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @return  KunenaLoginCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetLogin(): ?KunenaLoginCommunity
+	public function onKunenaGetLogin()
 	{
 		if (!$this->params->get('login', 1))
 		{
@@ -96,7 +98,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @return  AvatarCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetAvatar(): ?AvatarCommunity
+	public function onKunenaGetAvatar()
 	{
 		if (!$this->params->get('avatar', 1))
 		{
@@ -112,7 +114,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @return  KunenaProfileCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetProfile(): ?KunenaProfileCommunity
+	public function onKunenaGetProfile()
 	{
 		if (!$this->params->get('profile', 1))
 		{
@@ -128,7 +130,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @return  KunenaPrivateCommunity|null|void
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetPrivate(): ?KunenaPrivateCommunity
+	public function onKunenaGetPrivate()
 	{
 		if (!$this->params->get('private', 1))
 		{
@@ -145,7 +147,7 @@ class plgKunenaCommunity extends CMSPlugin
 	 * @since   Kunena 6.0
 	 * @throws Exception
 	 */
-	public function onKunenaGetActivity(): ?KunenaActivityCommunity
+	public function onKunenaGetActivity()
 	{
 		if (!$this->params->get('activity', 1))
 		{

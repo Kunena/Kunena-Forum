@@ -16,7 +16,7 @@
  * @since     Kunena
  */
 
-namespace Kunena\Forum\Plugin\Kunena\Gravatar;
+namespace Kunena\Forum\Libraries\Gravatar;
 
 defined('_JEXEC') or die();
 

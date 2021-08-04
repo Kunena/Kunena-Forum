@@ -98,7 +98,7 @@ class TrashController extends FormController
 					$this->app->enqueueMessage($topic->getError());
 				}
 			}
-
+			
 			if ($success)
 			{
 				KunenaTopicHelper::recount($cid);

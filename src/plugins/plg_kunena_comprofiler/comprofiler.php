@@ -26,18 +26,19 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 class plgKunenaComprofiler extends CMSPlugin
 {
 	/**
-	 * @var     string
+	 * @var     string  Looks like it's CB version 2.6.0 which works on Joomla! 4.0
 	 * @since   Kunena 6.0
 	 */
-	public $minCBVersion = '2.0.0';
+	public $minCBVersion = '2.6.0';
 
 	/**
 	 * plgKunenaComprofiler constructor.
 	 *
-	 * @param   object  $subject  subject
-	 * @param   object  $config   config
+	 * @param   DispatcherInterface  &$subject  The object to observe
+	 * @param   array                $config    An optional associative array of configuration settings.
+	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
+	 *                                         (this list is not meant to be comprehensive).
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
 	 */
@@ -46,7 +47,7 @@ class plgKunenaComprofiler extends CMSPlugin
 		global $ueConfig;
 
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::installed()))
+		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::enabled()))
 		{
 			return;
 		}

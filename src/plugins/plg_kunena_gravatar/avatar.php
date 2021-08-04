@@ -10,16 +10,13 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Gravatar;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
+use Kunena\Forum\Libraries\Gravatar\KunenaGravatar;
 
 /**
  * Class KunenaAvatarGravatar

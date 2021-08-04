@@ -752,7 +752,7 @@ abstract class KunenaRoute
 	 * @param   bool  $xhtml  xhtml
 	 * @param   int   $ssl    ssl
 	 *
-	 * @return  boolean
+	 * @return  boolean|string
 	 *
 	 * @throws  null
 	 * @throws  Exception

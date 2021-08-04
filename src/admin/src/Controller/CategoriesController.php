@@ -17,9 +17,9 @@ namespace Kunena\Forum\Administrator\Controller;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -32,7 +32,7 @@ use RuntimeException;
  * @property  $me  KunenaUser
  * @since   Kunena 2.0
  */
-class CategoriesController extends FormController
+class CategoriesController extends KunenaController
 {
 	/**
 	 * @var     string
@@ -162,20 +162,6 @@ class CategoriesController extends FormController
 		{
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count));
 		}
-	}
-
-	/**
-	 * Escapes a value for output in a view script.
-	 *
-	 * @param   string  $var  The output to escape.
-	 *
-	 * @return  string The escaped value.
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function escape(string $var): string
-	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	/**

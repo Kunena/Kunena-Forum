@@ -828,13 +828,13 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @param   bool  $children  children
 	 * @param   bool  $xhtml     xhtml
 	 *
-	 * @return  boolean|null
+	 * @return  boolean|string
 	 *
 	 * @throws  Exception
 	 * @throws  null
 	 * @since   Kunena 6.0
 	 */
-	public function getMarkReadUrl($children = false, $xhtml = true): ?bool
+	public function getMarkReadUrl($children = false, $xhtml = true): string
 	{
 		if (!KunenaUserHelper::getMyself()->exists())
 		{

@@ -179,8 +179,8 @@ $wa->useScript('multiselect');
 									:
 									?>
 									<tr>
-										<td><?php echo HTMLHelper::_('grid.id', $i++, intval($row->id)) ?></td>
-										<td><?php echo intval($row->id); ?></td>
+										<td><?php echo HTMLHelper::_('grid.id', $i++, intval($row->getTopic()->id)) ?></td>
+										<td><?php echo intval($row->getTopic()->id); ?></td>
 										<td>
 											<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&Itemid=' . $itemid); ?>"
 											   target="_blank"><?php echo $this->escape($row->subject); ?></a></td>

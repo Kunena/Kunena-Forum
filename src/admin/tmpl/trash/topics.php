@@ -23,21 +23,6 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('multiselect');
 ?>
 
-<script type="text/javascript">
-	orderTable = function () {
-		const table = document.getElementById("sortTable");
-		const direction = document.getElementById("directionTable");
-		const order = table.options[table.selectedIndex].value;
-
-		if (order !== '<?php echo $this->listOrdering; ?>') {
-			dirn = 'asc';
-		} else {
-			dirn = direction.options[direction.selectedIndex].value;
-		}
-		Joomla.tableOrdering(order, dirn, '');
-	}
-</script>
-
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">

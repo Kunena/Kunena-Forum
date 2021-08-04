@@ -76,94 +76,8 @@ class TrashController extends FormController
 		$cid = ArrayHelper::toInteger($cid, []);
 
 		$type = $this->input->getCmd('type', 'topics');
-		$md5  = $this->input->getString('md5');
 
-		if (!empty($cid))
-		{
-			$this->app->setUserState('com_kunena.purge', $cid);
-			$this->app->setUserState('com_kunena.type', $type);
-		}
-		elseif ($md5)
-		{
-			$ids  = (array) $this->app->getUserState('com_kunena.purge');
-			$type = (string) $this->app->getUserState('com_kunena.type');
-
-			if ($md5 == md5(serialize($ids)))
-			{
-				if ($type == 'topics')
-				{
-					$topics = KunenaTopicHelper::getTopics($ids, 'none');
-
-					foreach ($topics as $topic)
-					{
-						$success = $topic->delete();
-
-						if (!$success)
-						{
-							$this->app->enqueueMessage($topic->getError());
-						}
-					}
-
-					if ($success)
-					{
-						KunenaTopicHelper::recount($ids);
-						KunenaCategoryHelper::recount($topic->getCategory()->id);
-						$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
-					}
-				}
-				elseif ($type == 'messages')
-				{
-					$messages = KunenaMessageHelper::getMessages($ids, 'none');
-
-					foreach ($messages as $message)
-					{
-						$success = $message->delete();
-						$target  = KunenaMessageHelper::get($message->id);
-						$topic   = KunenaTopicHelper::get($target->getTopic());
-
-						if ($topic->attachments > 0)
-						{
-							$topic->attachments = $topic->attachments - 1;
-							$topic->save(false);
-						}
-
-						if (!$success)
-						{
-							$this->app->enqueueMessage($message->getError());
-						}
-					}
-
-					if ($success)
-					{
-						KunenaTopicHelper::recount($ids);
-						KunenaCategoryHelper::recount($topic->getCategory()->id);
-						$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
-					}
-				}
-			}
-			else
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
-				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-				return;
-			}
-
-			$this->app->setUserState('com_kunena.purge', null);
-			$this->app->setUserState('com_kunena.type', null);
-
-			if ($type == 'messages')
-			{
-				$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
-			}
-			else
-			{
-				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-			}
-
-			return;
-		}
-		else
+		if (empty($cid))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -171,7 +85,67 @@ class TrashController extends FormController
 			return;
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=purge", false));
+		if ($type == 'topics')
+		{
+			$topics = KunenaTopicHelper::getTopics($cid, 'none');
+
+			foreach ($topics as $topic)
+			{
+				$success = $topic->delete();
+
+				if (!$success)
+				{
+					$this->app->enqueueMessage($topic->getError());
+				}
+			}
+
+			if ($success)
+			{
+				KunenaTopicHelper::recount($cid);
+				KunenaCategoryHelper::recount($topic->getCategory()->id);
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+			}
+		}
+		elseif ($type == 'messages')
+		{
+			$messages = KunenaMessageHelper::getMessages($cid, 'none');
+
+			foreach ($messages as $message)
+			{
+				$success = $message->delete();
+				$target  = KunenaMessageHelper::get($message->id);
+				$topic   = KunenaTopicHelper::get($target->getTopic());
+
+				if ($topic->attachments > 0)
+				{
+					$topic->attachments = $topic->attachments - 1;
+					$topic->save(false);
+				}
+
+				if (!$success)
+				{
+					$this->app->enqueueMessage($message->getError());
+				}
+			}
+
+			if ($success)
+			{
+				KunenaTopicHelper::recount($cid);
+				KunenaCategoryHelper::recount($topic->getCategory()->id);
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+			}
+		}
+
+		if ($type == 'messages')
+		{
+			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
+		}
+		else
+		{
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+
+		return;
 	}
 
 	/**

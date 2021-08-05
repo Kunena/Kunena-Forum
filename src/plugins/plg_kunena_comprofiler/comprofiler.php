@@ -42,7 +42,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function __construct(object &$subject, object $config)
+	public function __construct(object &$subject, $config = [])
 	{
 		global $ueConfig;
 

@@ -238,12 +238,12 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
 		ToolbarHelper::spacer();
-		ToolbarHelper::publish('publish', 'JTOOLBAR_ENABLE', true);
-		ToolbarHelper::unpublish('unpublish', 'JTOOLBAR_DISABLE', true);
+		ToolbarHelper::publish('plugins.publish', 'JTOOLBAR_ENABLE', true);
+		ToolbarHelper::unpublish('plugins.unpublish', 'JTOOLBAR_DISABLE', true);
 		ToolbarHelper::divider();
-		ToolbarHelper::checkIn('checkIn');
+		ToolbarHelper::checkIn('plugins.checkIn');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
+		ToolbarHelper::custom('plugins.resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
 		ToolbarHelper::spacer();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/plugins';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

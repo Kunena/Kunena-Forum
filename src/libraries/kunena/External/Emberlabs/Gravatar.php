@@ -1,6 +1,6 @@
 <?php
 /**
- * Class KunenaGravatar
+ * Class Gravatar
  *
  * From Gravatar Help:
  * "A gravatar is a dynamic image resource that is requested from our server. The request
@@ -16,20 +16,17 @@
  * @since     Kunena
  */
 
-namespace Kunena\Forum\Libraries\Gravatar;
 
 defined('_JEXEC') or die();
 
-use InvalidArgumentException;
 use Joomla\CMS\Uri\Uri;
-use function defined;
 
 /**
- * @package Gravatar
+ * @package emberlabs\GravatarLib
  *
  * @since   Kunena 6.0
  */
-class KunenaGravatar
+class Gravatar
 {
 	/**
 	 * @var     string - URL constants for the avatar images
@@ -130,13 +127,13 @@ class KunenaGravatar
 	 *
 	 * @param   integer  $size  - The avatar size to use, must be less than 512 and greater than 0.
 	 *
-	 * @return  KunenaGravatar
+	 * @return  Gravatar
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function setAvatarSize(int $size): KunenaGravatar
+	public function setAvatarSize(int $size)
 	{
 		// Wipe out the param cache.
 		$this->param_cache = null;
@@ -299,13 +296,13 @@ class KunenaGravatar
 	 *
 	 * @param   string  $rating  - The maximum rating to use for avatars ('g', 'pg', 'r', 'x').
 	 *
-	 * @return  KunenaGravatar
+	 * @return  Gravatar
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function setMaxRating(string $rating): KunenaGravatar
+	public function setMaxRating(string $rating)
 	{
 		// Wipe out the param cache.
 		$this->param_cache = null;
@@ -341,12 +338,12 @@ class KunenaGravatar
 	 * @param   mixed  $image  - The default image to use. Use boolean false for the gravatar default, a string
 	 *                         containing a valid image URL, or a string specifying a recognized gravatar "default".
 	 *
-	 * @return  KunenaGravatar
+	 * @return  Gravatar
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  InvalidArgumentException
 	 */
-	public function setDefaultImage($image): KunenaGravatar
+	public function setDefaultImage($image)
 	{
 		// Quick check against boolean false.
 		if ($image === false)

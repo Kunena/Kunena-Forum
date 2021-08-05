@@ -16,7 +16,6 @@
         <filename plugin="easyblog">easyblog.php</filename>
         <filename>avatar.php</filename>
         <filename>profile.php</filename>
-        <filename>index.html</filename>
         <folder>language</folder>
     </files>
     <config>

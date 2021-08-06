@@ -19,10 +19,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\BBCode\KunenaBBCodeEditor;
+use Kunena\Forum\Administrator\Model\PluginsModel;
 
 /**
  * Kunena Plugins Controller
@@ -112,12 +114,15 @@ class PluginsController extends AdminController
 
 		if (empty($cid))
 		{
-			Log::add(Text::_($this->textPrefix . '_NO_ITEM_SELECTED'), Log::WARNING, 'jerror');
+			$this->app->enqueueMessage(Text::_($this->textPrefix . '_NO_ITEM_SELECTED'), 'error');
+
+			return;
 		}
 		else
 		{
-			// Get the model.
-			$model = $this->getModel();
+			// Get the model from com_plugins.
+			$app = Factory::getApplication();
+			$model = $app->bootComponent('com_plugins')->getMVCFactory()->createModel('Plugin', 'Administrator', ['ignore_request' => true]);
 
 			// Make sure the item ids are integers
 			$cid  = ArrayHelper::toInteger($cid);
@@ -223,9 +228,6 @@ class PluginsController extends AdminController
 			}
 		}
 
-		$editor = KunenaBBCodeEditor::getInstance();
-		$editor->initializeHMVC();
-
 		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList . $extensionURL, false));
 	}
 
@@ -236,11 +238,11 @@ class PluginsController extends AdminController
 	 * @param   string  $prefix  The class prefix. Optional.
 	 * @param   array   $config  Configuration array for model. Optional.
 	 *
-	 * @return  object  The model.
+	 * @return  BaseDatabaseModel|boolean  Model object on success; otherwise false on failure.
 	 *
 	 * @since   Kunena 2.0
 	 */
-	public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = ['ignore_request' => true]): object
+	public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = ['ignore_request' => true])
 	{
 		return parent::getModel($name, $prefix, $config);
 	}

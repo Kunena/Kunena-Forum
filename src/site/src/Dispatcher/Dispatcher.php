@@ -103,7 +103,7 @@ class Dispatcher extends ComponentDispatcher
 			$contents = $controller->execute();
 			KunenaRoute::cacheStore();
 		}
-        elseif (class_exists('Kunena\Forum\Site\Controllers\\' . ucfirst($view) . 'Controller'))
+		elseif (class_exists('Kunena\Forum\Site\Controllers\\' . ucfirst($view) . 'Controller'))
 		{
 			// Execute old MVC.
 			// Legacy support: If the content layout doesn't exist on HMVC, load and execute the old controller.

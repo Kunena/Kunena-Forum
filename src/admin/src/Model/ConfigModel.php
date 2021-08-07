@@ -1033,10 +1033,11 @@ class ConfigModel extends AdminModel
 	public $superAdminUserlist = 0;
 
 	/**
-	 * @var     boolean  Legacy URLs
+	 * @var     boolean  Legacy URLs, this setting is deprecated and it will be removed in a future version of Kunena
+	 * @deprecated  Kunena 6.0 No longer used
 	 * @since   Kunena 4.0.0
 	 */
-	public $legacyUrls = 1;
+	public $legacyUrls = 0;
 
 	/**
 	 * @var     boolean  Attachment protection

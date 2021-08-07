@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
  *
  * @since   Kunena 4.0
  */
-class ApplicationTopicUnreadDisplay extends KunenaControllerDisplay
+class TopicDisplay extends KunenaControllerDisplay
 {
 	/**
 	 * Return true if layout exists.

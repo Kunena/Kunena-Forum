@@ -34,7 +34,7 @@ class KunenaControllerApplication extends KunenaControllerDisplay
 	 */
 	public static function getInstance($view, $subview, $task, $input, $app)
 	{
-		// The word Default is a reserved word in namespace since Php 7.0+, it's replaced by Initial
+		// The word Default is a reserved word in namespace since Php 7.0+, in Kunena we replaced it by Initial
 		if ($subview == 'default')
 		{
 			$subviewfixed = 'Initial';

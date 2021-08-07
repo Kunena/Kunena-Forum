@@ -90,11 +90,11 @@ class TopicPollDisplay extends KunenaControllerDisplay
 
 		if (\is_object($this->poll->getMyVotes()))
 		{
-			$userhasvoted = $this->poll->getMyVotes();
+			$this->userhasvoted = $this->poll->getMyVotes();
 		}
 		else
 		{
-			$userhasvoted = 0;
+			$this->userhasvoted = 0;
 		}
 
 		$datenow            = new \Joomla\CMS\Date\Date('now');
@@ -119,7 +119,7 @@ class TopicPollDisplay extends KunenaControllerDisplay
 			$this->topic->tryAuthorise('reply');
 			$this->name = 'Topic/Poll/Vote';
 		}
-		elseif (!$userhasvoted && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply'))
+		elseif (!$this->userhasvoted && $this->topic->isAuthorised('poll.vote') && $this->topic->isAuthorised('reply'))
 		{
 			$this->name = 'Topic/Poll/Vote';
 		}

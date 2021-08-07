@@ -554,7 +554,7 @@ class KunenaPoll extends CMSObject
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function getLastVoteId($user = null): int
+	public function getLastVoteId($user = null)
 	{
 		$user  = KunenaFactory::getUser($user);
 		$query = $this->_db->getQuery(true);

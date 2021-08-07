@@ -27,7 +27,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use StdClass;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPoll
@@ -105,9 +104,9 @@ class KunenaPoll extends CMSObject
 	/**
 	 * @param   int  $identifier  identifier
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -125,9 +124,9 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function load($id)
 	{
@@ -158,7 +157,7 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaPolls')
+	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'TableKunenaPolls')
 	{
 		static $tabletype = null;
 
@@ -181,9 +180,9 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  KunenaPoll
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reset = false): KunenaPoll
 	{
@@ -193,9 +192,9 @@ class KunenaPoll extends CMSObject
 	/**
 	 * @return  integer
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTotal(): ?int
 	{
@@ -216,9 +215,9 @@ class KunenaPoll extends CMSObject
 	/**
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getOptions()
 	{
@@ -279,9 +278,9 @@ class KunenaPoll extends CMSObject
 	/**
 	 * @return  integer
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getUserCount()
 	{
@@ -312,9 +311,9 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
@@ -346,11 +345,11 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  integer
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getMyTime($user = null): int
+	public function getMyTime($user = null)
 	{
 		$user = KunenaFactory::getUser($user);
 
@@ -383,9 +382,9 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function vote(int $option, $change = false, $user = null): bool
 	{
@@ -551,9 +550,9 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  integer
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getLastVoteId($user = null): int
 	{
@@ -582,11 +581,11 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  integer
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function getMyVotes($user = null): int
+	public function getMyVotes($user = null)
 	{
 		$user = KunenaFactory::getUser($user);
 
@@ -618,9 +617,9 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	protected function changeOptionVotes(int $option, int $delta): bool
 	{
@@ -679,9 +678,9 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function delete(): bool
 	{
@@ -769,9 +768,9 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($updateOnly = false): bool
 	{

@@ -36,13 +36,13 @@ $topictemplate = !$this->config->pickup_category;
 $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));
 ?>
 <script>
-	function localstorage() {
-		localStorage.getItem("copyKunenaeditor");
-	}
+    function localstorage() {
+        localStorage.getItem("copyKunenaeditor");
+    }
 
-	function localstorageremove() {
-		localStorage.removeItem("copyKunenaeditor");
-	}
+    function localstorageremove() {
+        localStorage.removeItem("copyKunenaeditor");
+    }
 </script>
 
 <textarea class="span12" name="message" id="message" rows="12" tabindex="7"
@@ -57,17 +57,17 @@ $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(Kunena
 </textarea>
 
 <input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
-				       value="<?php echo $this->config->pollnboptions; ?>"/>
+       value="<?php echo $this->config->pollNbOptions; ?>"/>
 
 <!-- Hidden preview placeholder -->
 <div class="controls" id="kbbcode-preview" style="display: none;"></div>
 
 <!-- end of Bootstrap modal to be used with bbcode editor -->
 <div class="control-group">
-	<div class="controls">
-		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
-		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
-		       value="<?php echo $this->config->disemoticons ? 0 : 1 ?>"/>
-	</div>
+    <div class="controls">
+        <input type="hidden" id="kurl_emojis" name="kurl_emojis"
+               value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
+        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
+               value="<?php echo $this->config->disableEmoticons ? 0 : 1 ?>"/>
+    </div>
 </div>

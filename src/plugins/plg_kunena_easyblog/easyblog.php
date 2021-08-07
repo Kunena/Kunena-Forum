@@ -63,6 +63,11 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 	 */
 	public function onKunenaGetAvatar()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('avatar', 1))
 		{
 			return;
@@ -81,6 +86,11 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 	 */
 	public function onKunenaGetProfile()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('profile', 1))
 		{
 			return;

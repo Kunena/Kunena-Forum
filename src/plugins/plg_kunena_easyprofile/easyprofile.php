@@ -64,8 +64,13 @@ class plgKunenaEasyprofile extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetAvatar(): AvatarEasyprofile
+	public function onKunenaGetAvatar()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('avatar', 1))
 		{
 			return;
@@ -81,8 +86,13 @@ class plgKunenaEasyprofile extends CMSPlugin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetProfile(): KunenaProfileEasyprofile
+	public function onKunenaGetProfile()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('profile', 1))
 		{
 			return;

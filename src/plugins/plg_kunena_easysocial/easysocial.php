@@ -70,8 +70,13 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function onKunenaGetLogin(): KunenaLoginEasySocial
+	public function onKunenaGetLogin()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('login', 1))
 		{
 			return;
@@ -86,8 +91,13 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @return  AvatarEasySocial
 	 * @since   Kunena 5.0
 	 */
-	public function onKunenaGetAvatar(): AvatarEasySocial
+	public function onKunenaGetAvatar()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('avatar', 1))
 		{
 			return;
@@ -103,8 +113,13 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function onKunenaGetProfile(): KunenaProfileEasySocial
+	public function onKunenaGetProfile()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('profile', 1))
 		{
 			return;
@@ -120,8 +135,13 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onKunenaGetPrivate(): KunenaPrivateEasySocial
+	public function onKunenaGetPrivate()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('private', 1))
 		{
 			return;
@@ -138,8 +158,13 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 * @since   Kunena 6.0
 	 * @throws Exception
 	 */
-	public function onKunenaGetActivity(): KunenaActivityEasySocial
+	public function onKunenaGetActivity()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('activity', 1))
 		{
 			return;

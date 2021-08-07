@@ -17,8 +17,8 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
@@ -35,9 +35,9 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayEdit($tpl = null)
 	{
@@ -68,9 +68,9 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayListEmoji($tpl = null)
 	{
@@ -120,17 +120,17 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayTopicIcons()
 	{
 		$catid = $this->app->input->getInt('catid', 0);
 
-		$category         = KunenaCategoryHelper::get($catid);
+		$category        = KunenaCategoryHelper::get($catid);
 		$categoryIconset = $category->iconset;
-		$app              = Factory::getApplication();
+		$app             = Factory::getApplication();
 
 		if (empty($categoryIconset))
 		{
@@ -202,9 +202,9 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayGetrate()
 	{
@@ -238,9 +238,9 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayRate($tpl = null)
 	{
@@ -280,9 +280,9 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 5.1
 	 *
-	 * @throws  Exception
 	 */
 	public function displayCategorytemplatetext($tpl = null)
 	{

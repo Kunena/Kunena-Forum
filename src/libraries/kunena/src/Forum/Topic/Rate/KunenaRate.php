@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Kunena Forum Topic Rate Class
@@ -85,9 +84,9 @@ class KunenaRate extends CMSObject
 	/**
 	 * @param   int  $identifier  identifier
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -105,9 +104,9 @@ class KunenaRate extends CMSObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function load(int $id): bool
 	{
@@ -133,7 +132,7 @@ class KunenaRate extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'KunenaRate')
+	public function getTable($type = 'Kunena\\Forum\\Libraries\\Tables\\', $prefix = 'TableKunenaRate')
 	{
 		static $tabletype = null;
 
@@ -158,9 +157,9 @@ class KunenaRate extends CMSObject
 	 *
 	 * @return  KunenaRate
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -170,15 +169,15 @@ class KunenaRate extends CMSObject
 	/**
 	 * Perform insert the rate into table
 	 *
-	 * @internal param int $userid
-	 *
 	 * @param   string  $user  user
 	 *
 	 * @return  JsonResponse
 	 *
+	 * @throws Exception
 	 * @since    Kunena 2.0
 	 *
-	 * @throws Exception
+	 * @internal param int $userid
+	 *
 	 */
 	public function save(string $user)
 	{
@@ -250,9 +249,9 @@ class KunenaRate extends CMSObject
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getUsers($start = 0, $limit = 0): void
 	{
@@ -292,11 +291,11 @@ class KunenaRate extends CMSObject
 	}
 
 	/**
-	 * @internal param int $pid
-	 *
 	 * @param   int  $userid  userid
 	 *
 	 * @return  boolean userid if hes in table else empty
+	 *
+	 * @internal param int $pid
 	 *
 	 * @since    Kunena 2.0
 	 */
@@ -310,9 +309,9 @@ class KunenaRate extends CMSObject
 	 *
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopicUserRate(): int
 	{

@@ -70,7 +70,12 @@ if ($this->topic->locked)
 		}
 		?>
 		<?php echo $this->topic->displayField('subject'); ?>
-		<?php echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)->set('topic', $this->topic)->set('config', $this->config); ?>
+
+		<?php if (KunenaConfig::getInstance()->ratingEnabled)
+		{
+			echo $this->subLayout('Topic/Item/Rating')->set('category', $this->category)
+				->set('topic', $this->topic);
+		} ?>
     </h1>
 
     <div><?php echo $this->subRequest('Topic/Item/Actions')->set('id', $this->topic->id); ?></div>

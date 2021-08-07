@@ -63,7 +63,7 @@ class KunenaImage extends Image
 				$exif = false;
 			}
 
-			$flip  = '';
+			$flip = '';
 
 			if ($exif && isset($exif['Orientation']))
 			{
@@ -128,7 +128,7 @@ class KunenaImage extends Image
 				}
 			}
 
-			if ($flip != 0)
+			if ($flip > 0)
 			{
 				if ($flip == 1)
 				{

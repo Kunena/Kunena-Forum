@@ -66,6 +66,11 @@ class plgKunenaCommunity extends CMSPlugin
 	 */
 	public function onKunenaGetAccessControl()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('access', 1))
 		{
 			return;
@@ -82,7 +87,12 @@ class plgKunenaCommunity extends CMSPlugin
 	 */
 	public function onKunenaGetLogin()
 	{
-		if (!$this->params->get('login', 1))
+	    if (!isset($this->params))
+	    {
+	        return;
+	    }
+	    
+	    if (!$this->params->get('login', 1))
 		{
 			return;
 		}
@@ -98,6 +108,11 @@ class plgKunenaCommunity extends CMSPlugin
 	 */
 	public function onKunenaGetAvatar()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('avatar', 1))
 		{
 			return;
@@ -114,6 +129,11 @@ class plgKunenaCommunity extends CMSPlugin
 	 */
 	public function onKunenaGetProfile()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('profile', 1))
 		{
 			return;
@@ -130,6 +150,11 @@ class plgKunenaCommunity extends CMSPlugin
 	 */
 	public function onKunenaGetPrivate()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('private', 1))
 		{
 			return;
@@ -147,6 +172,11 @@ class plgKunenaCommunity extends CMSPlugin
 	 */
 	public function onKunenaGetActivity()
 	{
+		if (!isset($this->params))
+		{
+			return;
+		}
+
 		if (!$this->params->get('activity', 1))
 		{
 			return;

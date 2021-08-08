@@ -448,26 +448,22 @@ abstract class KunenaTopicUserHelper
 		{
 			$where  = 'AND m.thread IN (' . implode(',', $topicids) . ')';
 			$where2 = 'AND ut.topic_id IN (' . implode(',', $topicids) . ')';
-			$where3 = 'topic_id IN (' . implode(',', $topicids) . ')';
 		}
 		elseif ((int) $topicids)
 		{
 			$where  = 'AND m.thread=' . (int) $topicids;
 			$where2 = 'AND ut.topic_id=' . (int) $topicids;
-			$where3 = 'topic_id=' . (int) $topicids;
 		}
 		else
 		{
 			$where  = '';
 			$where2 = '';
-			$where3 = '';
 		}
 
 		if ($end)
 		{
 			$where  .= " AND (m.thread BETWEEN {$start} AND {$end})";
 			$where2 .= " AND (ut.topic_id BETWEEN {$start} AND {$end})";
-			$where3 = "(topic_id BETWEEN {$start} AND {$end})";
 		}
 
 		// Create missing user topics and update post count and last post if there are posts by that user
@@ -523,16 +519,7 @@ abstract class KunenaTopicUserHelper
 		$rows += $db->getAffectedRows();
 
 		// Delete entries that have default values
-		$query = $db->getQuery(true)
-			->delete("#__kunena_user_topics")
-			->where(
-				["posts = 0",
-					"owner = 0",
-					"favorite = 0",
-					"subscribed = 0",
-					"params = ''",
-					"{$where3}", ]
-			);
+		$query = "DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params='' {$where2}";
 
 		$db->setQuery($query);
 

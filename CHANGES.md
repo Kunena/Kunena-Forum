@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 * Update minimum version for Joomla! 3.10 to RC1
+* Update fontawesome to 5.15.4
 
 ## [5.2.6]
 ### Fixed

@@ -230,14 +230,14 @@ $config         = KunenaFactory::getTemplate()->params;
 </form>
 <script>
     const status = document.querySelector('input[name=status]')
-    if (status !== null)
+    if (status !== null) {
         status.addEventListener('change', () => {
             document.getElementById('status-form').submit();
         });
     }
 
     const btnStatusText = document.getElementById('btn_statustext')
-    if (btnStatusText)
+    if (btnStatusText) {
         btnStatusText.addEventListener('click', () => {
             document.getElementById('status-text-form').submit();
         });

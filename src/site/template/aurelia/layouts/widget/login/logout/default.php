@@ -228,14 +228,18 @@ $config         = KunenaFactory::getTemplate()->params;
     <input type="hidden" name="task" value="statustext"/>
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
-<script type='text/javascript'>
-    jQuery(document).ready(function ($) {
-        $("input[name=status]").change(function () {
-            $("#status-form").submit();
+<script>
+    const status = document.querySelector('input[name=status]')
+    if (status !== null)
+        status.addEventListener('change', () => {
+            document.getElementById('status-form').submit();
         });
+    }
 
-        $("btn_statustext").click(function () {
-            $("#status-text-form").submit();
+    const btnStatusText = document.getElementById('btn_statustext')
+    if (btnStatusText)
+        btnStatusText.addEventListener('click', () => {
+            document.getElementById('status-text-form').submit();
         });
-    });
+    }
 </script>

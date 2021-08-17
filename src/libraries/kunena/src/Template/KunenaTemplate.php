@@ -320,10 +320,11 @@ class KunenaTemplate
 			if (KunenaFactory::getConfig()->activeMenuItem)
 			{
 				$id = htmlspecialchars(KunenaFactory::getConfig()->activeMenuItem, ENT_COMPAT, 'UTF-8');
-				$this->addScriptDeclaration(
-					"
-		jQuery(function($){ $(\"$id\").addClass('active')});"
-				);
+				$this->addScriptDeclaration("
+					document.addEventListener('DOMContentLoaded', () => {
+						document.querySelector('" . $id . "').classList.add('active');
+					});
+				");
 			}
 			else
 			{
@@ -333,10 +334,11 @@ class KunenaTemplate
 				if ($items)
 				{
 					$id = htmlspecialchars('.item-' . $items[0]->id, ENT_COMPAT, 'UTF-8');
-					$this->addScriptDeclaration(
-						"
-		jQuery(function($){ $(\"$id\").addClass('active')});"
-					);
+					$this->addScriptDeclaration("
+						document.addEventListener('DOMContentLoaded', () => {
+							document.querySelector('" . $id . "').classList.add('active');
+						});
+					");
 				}
 			}
 		}
@@ -529,13 +531,14 @@ class KunenaTemplate
 
 		if ($isForumActive)
 		{
-			$this->addScriptDeclaration(
-				'jQuery(document).ready(function ($) {
-				$(".current").addClass("active alias-parent-active");
-				$(".alias-parent-active").addClass("active alias-parent-active");
-			});
-			'
-			);
+			$this->addScriptDeclaration('
+				document.addEventListener("DOMContentLoaded", () => {
+					document.querySelector(".current").classList.add("active");
+					document.querySelector(".current").classList.add("alias-parent-active");
+					document.querySelector(".alias-parent-active").classList.add("active");
+					document.querySelector(".alias-parent-active").classList.add("alias-parent-active");
+				});
+			');
 		}
 	}
 

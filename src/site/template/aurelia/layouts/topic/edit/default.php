@@ -527,7 +527,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
 		<?php
 		if (!$this->message->name)
 		{
-			echo '<script type="text/javascript">document.postform.authorname.focus();</script>';
+			echo '<script>document.postform.authorname.focus();</script>';
 		}
 		else
 		{
@@ -535,12 +535,12 @@ Text::script('COM_KUNENA_POLL_TITLE');
 			{
 				if ($this->config->allowChangeSubject)
 				{
-					echo '<script type="text/javascript">document.postform.subject.focus();</script>';
+					echo '<script >document.postform.subject.focus();</script>';
 				}
 			}
 			else
 			{
-				echo '<script type="text/javascript">document.postform.message.focus();</script>';
+				echo '<script>document.postform.message.focus();</script>';
 			}
 		}
 		?>

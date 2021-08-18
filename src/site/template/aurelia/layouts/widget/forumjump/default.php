@@ -21,8 +21,11 @@ use function defined;
 $catid = Factory::getApplication()->input->getInt('catid', 0);
 ?>
 <script>
-	jQuery(function ($) {
-		$("#jumpto option[value=<?php echo $catid;?>]").prop("selected", "selected");
+	document.addEventListener('DOMContentLoaded', () => {
+		const jumpTo = document.querySelector('#jumpto option[value=<?php echo $catid;?>]');
+		if (jumpTo !== null) {
+			jumpTo.selected = true;
+		}
 	})
 </script>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" id="jumpto" name="jumpto" method="post"

@@ -38,7 +38,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 * @var    string
 	 * @since  6.0.0
 	 */
-	protected $minimumJoomla = '4.0.0-rc5-dev';
+	protected $minimumJoomla = '4.0.0';
 
 	/**
 	 * List of supported versions. Newest version first!
@@ -59,8 +59,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			'0'   => '5.6.5', // Preferred version
 		],
 		'Joomla!' => [
-			'4.0' => '4.0.0-rc5-dev',
-			'0'    => '4.0.0-rc5-dev', // Preferred version
+			'4.0' => '4.0.0',
+			'0'    => '4.0.0', // Preferred version
 		],
 	];
 
@@ -240,6 +240,27 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.4.sql';
 			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.4.0.sql';
 			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.5.0.sql';
+		}
+
+		$db    = Factory::getDbo();
+
+		// Get installed Kunena version.
+		$db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
+		$installed = $db->loadResult();
+
+		if (version_compare($installed, '5.2.0', '=<'))
+		{
+			$query = "ALTER TABLE `#__kunena_version` ADD `sampleData` TINYINT(4) NOT NULL AFTER `versionname`;";
+			$db->setQuery($query);
+
+			try
+			{
+				$db->execute();
+			}
+			catch (ExecutionFailureException $e)
+			{
+				KunenaError::displayDatabaseError($e);
+			}
 		}
 	}
 

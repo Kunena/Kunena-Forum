@@ -117,8 +117,9 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   int     $id    id
-	 * @param   string  $name  name
+	 * @param   mixed   $id    The user to load - Can be an integer or string - If string, it is converted to ID
+	 *                              automatically.
+	 * @param   string  $name  Optionnal name of user if it doesn't exist
 	 *
 	 * @return  KunenaUser
 	 *
@@ -126,7 +127,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @throws Exception
 	 */
-	public static function getAuthor(int $id, string $name): ?KunenaUser
+	public static function getAuthor($id, $name): ?KunenaUser
 	{
 		$id = (int) $id;
 

@@ -62,10 +62,10 @@ class AttachmentsModel extends ListModel
 	 *
 	 * @since  Kunena 6.0
 	 */
-	public function getForm($data = [], $loadData = true): void
+	/*public function getForm($data = [], $loadData = true): void
 	{
 		// TODO: Implement getForm() method.
-	}
+	}*/
 
 	/*
 	* Method to auto-populate the model state.
@@ -146,9 +146,11 @@ class AttachmentsModel extends ListModel
 	}
 
 	/**
-	 * @param   string  $query       query
-	 * @param   int     $limitstart  limit start
-	 * @param   int     $limit       limit
+	 * Retrieve the KunenaAttachment objects associated with user informations and message informations
+	 *
+	 * @param   string   $query       The query.
+	 * @param   integer  $limitstart  Offset.
+	 * @param   integer  $limit       The number of records.
 	 *
 	 * @return  KunenaAttachment[]
 	 *
@@ -156,7 +158,7 @@ class AttachmentsModel extends ListModel
 	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
-	protected function internalGetList(string $query, $limitstart = 0, $limit = 0): array
+	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
 		$this->_db->setQuery($query, $limitstart, $limit);
 		$ids     = $this->_db->loadColumn();
@@ -177,6 +179,7 @@ class AttachmentsModel extends ListModel
 	}
 
 	/**
+	 * 
 	 * @return  QueryInterface
 	 *
 	 * @since   Kunena 6.0

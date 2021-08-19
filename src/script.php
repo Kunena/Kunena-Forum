@@ -563,23 +563,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			return false;
 		}
 
-		// Check if Kunena can be found from the database.
-		$table = $db->getPrefix() . 'kunena_version';
-		$db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
-
-		if ($db->loadResult() != $table)
-		{
-			return true;
-		}
-
 		// Get installed Kunena version.
+		$table = $db->getPrefix() . 'kunena_version';
+
 		$db->setQuery("SELECT version FROM {$table} ORDER BY `id` DESC", 0, 1);
 		$installed = $db->loadResult();
-
-		if (!$installed)
-		{
-			return true;
-		}
 
 		// Don't allow to upgrade before he version 5.1.0
 		if (version_compare($installed, '5.1.0', '<'))
@@ -589,7 +577,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	/**

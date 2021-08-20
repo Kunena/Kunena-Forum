@@ -219,27 +219,32 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="JustifyLeft" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT"
+        <field name="Left" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT"
                description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNLEFT_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="JustifyCenter" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_CENTER"
+        <field name="Center" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_CENTER"
                description="COM_KUNENA_TEMPLATE_DISPLAY_CENTER_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="JustifyRight" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT"
+        <field name="Right" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT"
                description="COM_KUNENA_TEMPLATE_DISPLAY_ALIGNRIGHT_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="JustifyBlock" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_JUSTIFIYTEXT"
+        <field name="Justify" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_JUSTIFIYTEXT"
                description="COM_KUNENA_TEMPLATE_DISPLAY_JUSTIFIYTEXT_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="Link_Unlink" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_LINK"
+        <field name="Link" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_LINK"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_LINK_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="Unlink" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_UNLINK"
                description="COM_KUNENA_TEMPLATE_DISPLAY_LINK_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
@@ -294,7 +299,12 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="FontSize" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTSIZE"
+        <field name="Font" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTSIZE"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_FONTSIZE_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="Size" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTSIZE"
                description="COM_KUNENA_TEMPLATE_DISPLAY_FONTSIZE_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
@@ -309,7 +319,6 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        Maximize
         <field name="Map" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_MAPS"
                description="COM_KUNENA_TEMPLATE_DISPLAY_MAPS_DESC">
             <option value="0">COM_KUNENA_NO</option>
@@ -321,11 +330,6 @@
             <option value="1">COM_KUNENA_YES</option>
         </field>
         <field name="editorButtons" type="hidden" default=""/>
-        <field name="nameskinckeditor" type="text" default="" label="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR"
-               description="COM_KUNENA_TEMPLATE_NAME_OF_SKIN_CKEDITOR_DESC"/>
-        <field name="ckeditorcustomprefixconfigfile" type="text" default=""
-               label="COM_KUNENA_TEMPLATE_NAME_OF_PREFIX_FOR_CUSTOM_CKEDITOR_CONFIG_FILE"
-               description="COM_KUNENA_TEMPLATE_NAME_OF_PREFIX_FOR_CUSTOM_CKEDITOR_CONFIG_FILE_DESC"/>
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_AVATAR">

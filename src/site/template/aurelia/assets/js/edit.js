@@ -276,70 +276,45 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-        CKEDITOR.replace('message', {
-            customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),
-            on: {
-                instanceReady: function (event) {
-                    event.editor.on("beforeCommandExec", function (event) {
-                        // Show the paste dialog for the paste buttons and right-click paste
-                        if (event.data.name == "paste") {
-                            event.editor._.forcePasteDialog = true;
-                        }
+	var toolbar_buttons = '';
+	if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
+	{
+		// TODO: need to change the values(bold, italic) from template parameters to be handled here
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon|source';
+	}
+	else
+	{
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon|source';
+	}
+	
+	var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
+	var obj = jQuery.parseJSON( emoticons );
+	var list_emoticons = [];
 
-                        // Don't show the paste dialog for Ctrl+Shift+V
-                        if (event.data.name == "pastetext" && event.data.commandData.from == "keystrokeHandler") {
-                            event.cancel();
-                        }
-                    })
-                },
-                mode: function (evt) {
-                    const cat = localStorage.getItem('copyKunenaeditor');
+	jQuery.each(obj, function( index, value ) {
+		list_emoticons.push(value);
+	});
 
-                    if (cat) {
-                        evt.editor.setData(cat);
-                        localStorage.removeItem('copyKunenaeditor');
-                    }
-
-                    if (polliconstatus === false) {
-                        if (pollcatid !== undefined) {
-                            if (typeof pollcategoriesid !== 'undefined' && pollcategoriesid !== null && pollexist.length === 0) {
-                                const catid = $('#kcategory_poll').val();
-
-                                if (pollcategoriesid[catid] !== undefined) {
-                                    evt.editor.getCommand('polls').enable();
-                                } else {
-                                    evt.editor.getCommand('polls').disable();
-                                }
-                            } else if (pollexist.length > 0) {
-                                evt.editor.getCommand('polls').enable();
-                            } else {
-                                evt.editor.getCommand('polls').disable();
-                            }
-                        } else {
-                            evt.editor.getCommand('polls').disable();
-                        }
-                    }
-                }
-            }
-        });
-
-        CKEDITOR.on('dialogDefinition', function (ev) {
-            const dialogName = ev.data.name;
-            const dialogDefinition = ev.data.definition;
-
-            if (dialogName == 'link') {
-                const linkType = dialogDefinition.getContents('info').get('linkType');
-                // Remove the 'anchor' link option.
-                linkType.items.splice(1, 1);
-                // Remove the 'phone' link option.
-                linkType.items.splice(2, 2);
-
-                const protocol = dialogDefinition.getContents('info').get('protocol');
-                protocol.items.splice(2, 4);
-            }
-        });
-
-
-    }
+	var textarea = document.getElementById('message');
+	sceditor.create(textarea, {
+		format: 'bbcode',
+		toolbar: toolbar_buttons,
+		style: Joomla.getOptions('com_kunena.sceditor_style_path'),
+		emoticonsRoot: Joomla.getOptions('com_kunena.root_path')+'/media/kunena/emoticons/',
+		emoticons: {
+			// Emoticons to be included in the dropdown
+			dropdown: list_emoticons,
+			// Emoticons to be included in the more section
+			more: {
+				':alien:': 'emoticons/alien.png',
+				':blink:': 'emoticons/blink.png'
+			},
+			// Emoticons that are not shown in the dropdown but will still
+			// be converted. Can be used for things like aliases
+			hidden: {
+				':aliasforalien:': 'emoticons/alien.png',
+				':aliasforblink:': 'emoticons/blink.png'
+		}
+}
+	});
 });

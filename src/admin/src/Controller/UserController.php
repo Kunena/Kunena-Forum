@@ -227,13 +227,13 @@ class UserController extends FormController
 
 		foreach ($categories as $category)
 		{
-			$category->setModerator($user, \in_array($category->id, $modCatids, true));
+			$category->setModerator($user, \in_array($category->id, $modCatids));
 		}
 
 		// Global moderator is a special case
 		if (KunenaUserHelper::getMyself()->isAdmin())
 		{
-			KunenaAccess::getInstance()->setModerator($category, $user, \in_array(0, $modCatids, true));
+			KunenaAccess::getInstance()->setModerator(0, $user, \in_array(0, $modCatids));
 		}
 
 		return true;

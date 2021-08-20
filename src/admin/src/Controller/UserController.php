@@ -212,7 +212,7 @@ class UserController extends FormController
 	/**
 	 * Set moderator rights on the user given
 	 *
-	 * @param   KunenaUser  $user       user
+	 * @param   KunenaUser  $user       KunenaUser object
 	 * @param   array       $modCatids  modCatids
 	 *
 	 * @return  boolean
@@ -228,12 +228,12 @@ class UserController extends FormController
 		foreach ($categories as $category)
 		{
 			$category->setModerator($user, \in_array($category->id, $modCatids, true));
+		}
 
-			// Global moderator is a special case
-			if (KunenaUserHelper::getMyself()->isAdmin())
-			{
-				KunenaAccess::getInstance()->setModerator($category, $user, \in_array(0, $modCatids, true));
-			}
+		// Global moderator is a special case
+		if (KunenaUserHelper::getMyself()->isAdmin())
+		{
+			KunenaAccess::getInstance()->setModerator($category, $user, \in_array(0, $modCatids, true));
 		}
 
 		return true;

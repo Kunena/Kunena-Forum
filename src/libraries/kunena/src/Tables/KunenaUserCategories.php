@@ -39,7 +39,7 @@ class KunenaUserCategories extends KunenaTable
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
-	public $categoryId = null;
+	public $category_id = null;
 
 	/**
 	 * @var     null

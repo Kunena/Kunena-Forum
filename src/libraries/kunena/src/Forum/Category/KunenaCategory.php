@@ -1275,9 +1275,9 @@ class KunenaCategory extends KunenaDatabaseObject
 	/**
 	 * Add or remove moderator from this category.
 	 *
-	 * @param   bool   $value  value
+	 * @param   mixed  $user   KunenaUser object
 	 *
-	 * @param   mixed  $user   user
+	 * @param   bool   $value  value
 	 *
 	 * @return  boolean
 	 *

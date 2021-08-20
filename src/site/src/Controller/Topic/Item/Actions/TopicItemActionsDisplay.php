@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site\Controller\Topic\Item\Actions;
 
 use Exception;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -25,6 +24,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Joomla\Registry\Registry;
 
 /**
  * Class ComponentTopicControllerItemActionsDisplay
@@ -77,7 +77,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 
 		$userTopic          = $this->topic->getUserTopic();
 		$template           = KunenaFactory::getTemplate();
-		$this->topicButtons = new CMSObject;
+		$this->topicButtons = new Registry;
 
 		$fullactions   = $template->params->get('fullactions');
 		$topicicontype = $template->params->get('topicicontype');

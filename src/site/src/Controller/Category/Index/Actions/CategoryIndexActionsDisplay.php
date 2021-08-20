@@ -15,7 +15,7 @@ namespace Kunena\Forum\Site\Controller\Category\Index\Actions;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Object\CMSObject;
+use Joomla\Registry\Registry;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -75,7 +75,7 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}";
 
 		$this->template        = KunenaFactory::getTemplate();
-		$this->categoryButtons = new CMSObject;
+		$this->categoryButtons = new Registry;
 
 		// Is user allowed to post new topic?
 		if ($this->category->isAuthorised('topic.create'))

@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
@@ -766,7 +765,7 @@ class HtmlView extends KunenaView
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . Session::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
 
-		$this->topicButtons = new CMSObject;
+		$this->topicButtons = new Registry;
 
 		// Reply topic
 		if ($this->topic->isAuthorised('reply'))
@@ -873,7 +872,7 @@ class HtmlView extends KunenaView
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&userid={$targetuserid}&" . Session::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
-		$this->messageButtons = new CMSObject;
+		$this->messageButtons = new Registry;
 		$this->message_closed = null;
 
 		// Reply / Quote

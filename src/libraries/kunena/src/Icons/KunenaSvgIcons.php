@@ -63,6 +63,11 @@ class KunenaSvgIcons
 			$file = Uri::root() . $group . $svgname;
 		}
 
+		if (!file_exists($file . '.svg'))
+		{
+			return false;
+		}
+
 		$iconfile = new DOMDocument;
 		$opts     = [
 			'http' => [

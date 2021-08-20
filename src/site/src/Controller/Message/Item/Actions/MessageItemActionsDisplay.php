@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\Controller\Message\Item\Actions;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
@@ -30,6 +29,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Joomla\Registry\Registry;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -89,7 +89,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
-		$this->messageButtons = new CMSObject;
+		$this->messageButtons = new Registry;
 		$this->message_closed       = null;
 
 		$ktemplate     = KunenaFactory::getTemplate();

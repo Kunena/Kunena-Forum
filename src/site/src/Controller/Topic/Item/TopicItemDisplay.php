@@ -20,7 +20,6 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -271,7 +270,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
 		$this->headerText = KunenaParser::parseText($this->topic->displayField('subject'));
 
-		$data                           = new CMSObject;
+		$data                           = new Registry;
 		$data->{'@context'}             = "https://schema.org";
 		$data->{'@type'}                = "DiscussionForumPosting";
 		$data->{'id'}                   = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
@@ -281,27 +280,27 @@ class TopicItemDisplay extends KunenaControllerDisplay
 		$data->{'datePublished'}        = $this->topic->getFirstPostTime()->toISO8601();
 		$data->{'dateModified'}         = Factory::getDate($this->message->modified_time)->toISO8601();
 		$data->{'author'}               = [];
-		$tmp                            = new CMSObject;
+		$tmp                            = new Registry;
 		$tmp->{'@type'}                 = "Person";
 		$tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
 		$data->{'author'}               = $tmp;
 		$data->interactionStatistic     = [];
-		$tmp2                           = new CMSObject;
+		$tmp2                           = new Registry;
 		$tmp2->{'@type'}                = "InteractionCounter";
 		$tmp2->{'interactionType'}      = "InteractionCounter";
 		$tmp2->{'userInteractionCount'} = $this->topic->getReplies();
 		$data->interactionStatistic     = $tmp2;
-		$tmp3                           = new CMSObject;
+		$tmp3                           = new Registry;
 		$tmp3->{'@type'}                = "ImageObject";
 		$tmp3->{'url'}                  = $this->docImage();
 		$data->publisher                = [];
-		$tmp4                           = new CMSObject;
+		$tmp4                           = new Registry;
 		$tmp4->{'@type'}                = "Organization";
 		$tmp4->{'name'}                 = $this->config->boardTitle;
 		$tmp4->{'logo'}                 = $tmp3;
 		$data->publisher                = $tmp4;
 		$data->mainEntityOfPage         = [];
-		$tmp5                           = new CMSObject;
+		$tmp5                           = new Registry;
 		$tmp5->{'@type'}                = "WebPage";
 		$tmp5->{'name'}                 = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
 		$data->mainEntityOfPage         = $tmp5;
@@ -309,7 +308,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 		if ($this->category->allowRatings && $this->config->ratingEnabled && KunenaRateHelper::getCount($this->topic->id) > 0)
 		{
 			$data->aggregateRating  = [];
-			$tmp3                   = new CMSObject;
+			$tmp3                   = new Registry;
 			$tmp3->{'@type'}        = "AggregateRating";
 			$tmp3->{'itemReviewed'} = $this->headerText;
 			$tmp3->{'ratingValue'}  = KunenaRateHelper::getSelected($this->topic->id) > 0 ? KunenaRateHelper::getSelected($this->topic->id) : 5;

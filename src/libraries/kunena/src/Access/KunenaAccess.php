@@ -485,10 +485,10 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
 	 *
-	 * @param   object  $category  KunenaCategory object
+	 * @param   KunenaCategory|int  $category  KunenaCategory object
 	 *
-	 * @param   mixed   $user      KunenaUser object
-	 * @param   bool    $status    status
+	 * @param   mixed               $user      KunenaUser object
+	 * @param   bool                $status    status
 	 *
 	 * @return  boolean
 	 *
@@ -496,7 +496,7 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @throws Exception
 	 */
-	public function setModerator(object $category, $user = null, $status = true): bool
+	public function setModerator($category, $user = null, $status = true): bool
 	{
 		// Check if category exists
 		if ($category && !$category->exists())
@@ -523,7 +523,7 @@ jQuery(document).ready(function ($) {
 
 		if (($userCategory->role == 0 && $status) || ($userCategory->role == 1 && !$status))
 		{
-			$userCategory->role = $status; 
+			$userCategory->role = $status;
 
 			$success = $userCategory->save();
 

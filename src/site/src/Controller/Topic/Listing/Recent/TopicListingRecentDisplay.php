@@ -53,14 +53,14 @@ class TopicListingRecentDisplay extends ListDisplay
 
 		$model = new TopicsModel([]);
 		$model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$state          = $model->getState();
+		$this->state    = $model->getState();
 		$this->me       = KunenaUserHelper::getMyself();
 		$moreUri        = null;
 		$holding        = $this->getOptions()->get('topics_deletedtopics');
 		$this->embedded = $this->getOptions()->get('embedded', true);
 
-		$start = $state->get('list.start');
-		$limit = $state->get('list.limit');
+		$start = $this->state->get('list.start');
+		$limit = $this->state->get('list.limit');
 
 		$Itemid = $this->input->getInt('Itemid');
 		$format = $this->input->getCmd('format');
@@ -74,7 +74,7 @@ class TopicListingRecentDisplay extends ListDisplay
 			else
 			{
 				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&mode={$state->get('list.mode')}"));
+				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}"));
 				$itemidfix = $getid->id;
 			}
 
@@ -84,12 +84,12 @@ class TopicListingRecentDisplay extends ListDisplay
 			}
 
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&mode={$state->get('list.mode')}&Itemid={$itemidfix}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&mode={$this->state->get('list.mode')}&Itemid={$itemidfix}", false));
 			$controller->redirect();
 		}
 
 		// Handle &sel=x parameter.
-		$time = $state->get('list.time');
+		$time = $this->state->get('list.time');
 
 		if ($time < 0)
 		{
@@ -114,8 +114,8 @@ class TopicListingRecentDisplay extends ListDisplay
 		}
 
 		// Get categories for the filter.
-		$categoryIds = $state->get('list.categories');
-		$reverse     = !$state->get('list.categories.in');
+		$categoryIds = $this->state->get('list.categories');
+		$reverse     = !$this->state->get('list.categories.in');
 		$authorise   = 'read';
 		$order       = 'last_post_time';
 
@@ -127,7 +127,7 @@ class TopicListingRecentDisplay extends ListDisplay
 		$finder = new KunenaTopicFinder;
 		$finder->filterByMoved(false);
 
-		switch ($state->get('list.mode'))
+		switch ($this->state->get('list.mode'))
 		{
 			case 'topics' :
 				$order = 'first_post_time';
@@ -237,7 +237,7 @@ class TopicListingRecentDisplay extends ListDisplay
 		$title       = $params->get('page_title');
 		$pageheading = $params->get('show_page_heading');
 
-		switch ($state->get('list.mode'))
+		switch ($this->state->get('list.mode'))
 		{
 			case 'topics' :
 				if (!empty($title) && $pageheading)

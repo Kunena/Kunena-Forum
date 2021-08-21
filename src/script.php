@@ -19,11 +19,8 @@ use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Table;
-use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaInstallerException;
-use Kunena\Forum\Libraries\KunenaInstaller;
 
 /**
  * Kunena package installer script.
@@ -131,66 +128,73 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	public function install($parent)
 	{
 		$db    = Factory::getDbo();
+
 		$query = $db->getQuery(true);
 
-		$values = [
-			$db->quote('com_kunena.reply'),
-			$db->quote('com_kunena'),
-			$db->quote(''),
-			$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLY_SUBJECT')),
-			$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
-			$db->quote(''),
-			$db->quote(''),
-			$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
-		];
-
-		$values2 = [
-			$db->quote('com_kunena.replymoderator'),
-			$db->quote('com_kunena'),
-			$db->quote(''),
-			$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT')),
-			$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
-			$db->quote(''),
-			$db->quote(''),
-			$db->quote('{tags":["mail", "subject", "message", "messageUrl", "once"]}'),
-		];
-
-		$values3 = [
-			$db->quote('com_kunena.report'),
-			$db->quote('com_kunena'),
-			$db->quote(''),
-			$db->quote(text::_('COM_KUNENA_SENDMAIL_REPORT_SUBJECT')),
-			$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
-			$db->quote(''),
-			$db->quote(''),
-			$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
-		];
-
-		$query->insert($db->quoteName('#__mail_templates'))
-			->columns(
-				[
-					$db->quoteName('template_id'),
-					$db->quoteName('extension'),
-					$db->quoteName('language'),
-					$db->quoteName('subject'),
-					$db->quoteName('body'),
-					$db->quoteName('htmlbody'),
-					$db->quoteName('attachments'),
-					$db->quoteName('params'),
-				]
-			)
-			->values(implode(', ', $values))
-			->values(implode(', ', $values2))
-			->values(implode(', ', $values3));
+		// Check first if one of the template items is already in he database
+		$query->select($db->quoteName(array('template_id')))
+				->from($db->quoteName('#__mail_templates'))
+				->where($db->quoteName('template_id') . " = " . $db->quote('com_kunena.reply'));
 		$db->setQuery($query);
 
-		try
+		$templateExist = $db->loadResult();
+
+		if (!$templateExist)
 		{
+			$query = $db->getQuery(true);
+
+			$values = [
+				$db->quote('com_kunena.reply'),
+				$db->quote('com_kunena'),
+				$db->quote(''),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLY_SUBJECT')),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(''),
+				$db->quote(''),
+				$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
+			];
+
+			$values2 = [
+				$db->quote('com_kunena.replymoderator'),
+				$db->quote('com_kunena'),
+				$db->quote(''),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT')),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(''),
+				$db->quote(''),
+				$db->quote('{tags":["mail", "subject", "message", "messageUrl", "once"]}'),
+			];
+
+			$values3 = [
+				$db->quote('com_kunena.report'),
+				$db->quote('com_kunena'),
+				$db->quote(''),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_REPORT_SUBJECT')),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(''),
+				$db->quote(''),
+				$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
+			];
+
+			$query->insert($db->quoteName('#__mail_templates'))
+				->columns(
+					[
+						$db->quoteName('template_id'),
+						$db->quoteName('extension'),
+						$db->quoteName('language'),
+						$db->quoteName('subject'),
+						$db->quoteName('body'),
+						$db->quoteName('htmlbody'),
+						$db->quoteName('attachments'),
+						$db->quoteName('params'),
+					]
+				)
+				->values(implode(', ', $values))
+				->values(implode(', ', $values2))
+				->values(implode(', ', $values3));
+			$db->setQuery($query);
+
 			$db->execute();
-		}
-		catch (ExecutionFailureException $e)
-		{
-			KunenaError::displayDatabaseError($e);
 		}
 
 		// Notice $parent->getParent() returns JInstaller object
@@ -241,27 +245,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.4.0.sql';
 			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.5.0.sql';
 		}
-
-		$db    = Factory::getDbo();
-
-		// Get installed Kunena version.
-		$db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
-		$installed = $db->loadResult();
-
-		if (version_compare($installed, '5.2.0', '=<'))
-		{
-			$query = "ALTER TABLE `#__kunena_version` ADD `sampleData` TINYINT(4) NOT NULL AFTER `versionname`;";
-			$db->setQuery($query);
-
-			try
-			{
-				$db->execute();
-			}
-			catch (ExecutionFailureException $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
-		}
 	}
 
 	/**
@@ -289,6 +272,20 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			@apc_clear_cache();
 		}
 
+		$db    = Factory::getDbo();
+
+		// Get installed Kunena version.
+		$db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
+		$installed = $db->loadResult();
+
+		if (version_compare($installed, '5.2.99', '<'))
+		{
+			$query = "ALTER TABLE `#__kunena_version` ADD `sampleData` TINYINT(4) NOT NULL default '0' AFTER `versionname`;";
+			$db->setQuery($query);
+
+			$db->execute();
+		}
+
 		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
 		{
 			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
@@ -300,7 +297,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$versionname = (string) $manifest->versionname;
 			$installdate = Factory::getDate('now');
 
-			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
 
 			$values = [
@@ -326,14 +322,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				->values(implode(', ', $values));
 			$db->setQuery($query);
 
-			try
-			{
-				$db->execute();
-			}
-			catch (ExecutionFailureException $e)
-			{
-				KunenaError::displayDatabaseError($e);
-			}
+			$db->execute();
 		}
 
 		$this->addDashboardMenu('kunena', 'kunena');

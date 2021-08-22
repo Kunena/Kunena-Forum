@@ -3009,8 +3009,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 		$languages = LanguageHelper::getLanguages('default');
 		$langCode = $languages[0]->lang_code;
-		/*var_dump($langCode);
-		die();*/
+
 		// First fix all broken menu items
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)

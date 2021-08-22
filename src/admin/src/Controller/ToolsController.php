@@ -719,8 +719,8 @@ class ToolsController extends FormController
 		$installer->deleteMenu();
 		$installer->createMenu();
 
-		Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_MENU_CREATED'));
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		/*Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_MENU_CREATED'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));*/
 	}
 
 	/**

@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\WebAsset\WebAssetManager;
@@ -22,11 +21,10 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 HTMLHelper::_('bootstrap.framework');
 
 /** @var WebAssetManager $wa */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = $this->document->getWebAssetManager();
 $wa->useScript('multiselect');
 
-$document = Factory::getApplication()->getDocument();
-$document->addScriptDeclaration(
+$this->document->addScriptDeclaration(
 	' var max_count = ' . (int) $this->config->maxSig . '
 jQuery(function($) {
 	jQuery(\'#user-signature\').keypress(function (e) {

@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -246,9 +245,8 @@ $filterItem = $this->escape($this->state->get('item.id'));
 								$topic    = KunenaTopicHelper::get($item->topic_id);
 								$target   = KunenaUserHelper::get($item->target_user);
 
-								$document = Factory::getApplication()->getDocument();
 								// TODO : move this part of javascript outside of foreach
-								$document->addScriptDeclaration("jQuery( document ).ready(function() {
+								$this->document->addScriptDeclaration("jQuery( document ).ready(function() {
 										jQuery('#link_sel_all" . $item->id . "').click(function() {
 											jQuery('#report_final" . $item->id . "').select();
 											try {

@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 /** @var WebAssetManager $wa */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = $this->document->getWebAssetManager();
 $wa->useScript('multiselect');
 $wa->addInlineScript(
 	'Joomla.orderTable = function () {

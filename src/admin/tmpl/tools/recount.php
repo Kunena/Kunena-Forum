@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -31,7 +30,7 @@ Text::script('COM_KUNENA_AJAXMODAL_ERROR_ABORT_HEADER');
 Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_HEADER');
 Text::script('COM_KUNENA_AJAXMODAL_ERROR_UNKNOWN_BODY');
 
-Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\tools\recount.js');
+$this->document->addScript(Uri::root() . 'administrator\components\com_kunena\template\tools\recount.js');
 ?>
 
 <div id="kunena" class="container-fluid">

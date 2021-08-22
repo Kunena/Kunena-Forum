@@ -11,14 +11,12 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 /** @var WebAssetManager $wa */
@@ -38,19 +36,16 @@ Joomla.tableOrdering(order, dirn, "");
 }'
 );
 
-$this->user = Factory::getApplication()->getIdentity();
-$userId     = $this->user->get('id');
 $listOrder  = $this->escape($this->state->get('list.ordering'));
 $listDirn   = $this->escape($this->state->get('list.direction'));
 $saveOrder  = $listOrder == 'a.ordering';
 
-if ($saveOrder && !empty($this->items))
+if ($this->list->saveOrder && !empty($this->items))
 {
 	$saveOrderingUrl = $this->list->saveOrderingUrl;
 	HTMLHelper::_('draggablelist.draggable');
 }
 
-$this->me = KunenaUserHelper::getMyself();
 ?>
 
 <div id="kunena" class="container-fluid">

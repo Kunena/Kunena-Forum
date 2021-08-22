@@ -72,67 +72,6 @@ class HtmlView extends BaseHtmlView
 	protected $filterActive;
 
 	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 * @throws Exception
-	 */
-	public function displayCreate(): void
-	{
-		$this->displayEdit();
-	}
-
-	/**
-	 * @return void
-	 * @since Kunena
-	 *
-	 * @throws Exception
-	 */
-	public function displayEdit()
-	{
-		$this->category = $this->get('AdminCategory');
-
-		// FIXME: better access control and gracefully handle no rights
-		// Prevent fatal error if no rights:
-		if (!$this->category)
-		{
-			return;
-		}
-
-		$this->options    = $this->get('AdminOptions');
-		$this->moderators = $this->get('AdminModerators');
-		$this->setToolBarEdit();
-		$this->display();
-	}
-
-	/**
-	 * @return void
-	 * @since Kunena
-	 */
-	protected function setToolBarEdit()
-	{
-		// Get the toolbar object instance
-		$this->bar = Toolbar::getInstance();
-
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
-		ToolbarHelper::spacer();
-		ToolbarHelper::apply('apply');
-		ToolbarHelper::save('save');
-		ToolbarHelper::save2new('save2new');
-
-		// If an existing item, can save to a copy.
-		if ($this->category->exists())
-		{
-			ToolbarHelper::save2copy('save2copy');
-		}
-
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/categories/new-section-category';
-		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-	}
-
-	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void

@@ -12,45 +12,43 @@
     <description>Default topic icons for Kunena</description>
 
     <icons type="user" width="48" height="48">
-        <icon id="0" name="default" published="1" b2="file" b3="file" b4="file" b5="file" fa="file"
+        <icon id="0" name="default" published="1" b5="file" fa="file"
               title="COM_KUNENA_ICON_DEFAULT" src="user/default.png"/>
-        <icon id="1" name="exclamation" published="1" b2="notification-circle" b3="exclamation-sign" b4="exclamation"
-              b5="exclamation" fa="exclamation-circle"
+        <icon id="1" name="exclamation" published="1" b5="exclamation" fa="exclamation-circle"
               title="COM_KUNENA_ICON_EXCLAMATION" src="user/exclamation.png"/>
-        <icon id="2" name="question" published="1" b2="question-sign" b3="question-sign" b4="question-sign"
-              b5="question-sign"
+        <icon id="2" name="question" published="1" b5="question-sign"
               fa="question-circle" title="COM_KUNENA_ICON_QUESTION"
               src="user/question.png"/>
-        <icon id="3" name="idea" published="1" b2="lamp" b3="lamp" b4="idea" b5="idea" fa="lightbulb"
+        <icon id="3" name="idea" published="1" b5="idea" fa="lightbulb"
               title="COM_KUNENA_ICON_IDEA"
               src="user/idea.png"/>
-        <icon id="4" name="love" published="1" b2="heart" b3="heart" b4="heart" b5="heart" fa="heart"
+        <icon id="4" name="love" published="1" b5="heart" fa="heart"
               title="COM_KUNENA_ICON_LOVE"
               src="user/love.png"/>
         <!-- icon id="5" name="grin" published="1" title="COM_KUNENA_ICON_GRIN" src="user/grin.png" / -->
         <!-- icon id="6" name="shock" published="1" title="COM_KUNENA_ICON_SHOCK" src="user/shock.png" / -->
         <!-- icon id="7" name="smile" published="1" title="COM_KUNENA_ICON_SMILE" src="user/smile.png" / -->
-        <icon id="9" name="merged" published="1" b2="contract" b3="resize-small" b4="merged" b5="merged" fa="compress"
+        <icon id="9" name="merged" published="1" b5="merged" fa="compress"
               title="COM_KUNENA_ICON_MERGED" src="user/merged.png"/>
-        <icon id="10" name="cross" published="1" b2="remove" b3="remove" b4="remove" b5="remove" fa="times"
+        <icon id="10" name="cross" published="1" b5="remove" fa="times"
               title="COM_KUNENA_ICON_CROSS" src="user/cross.png"/>
-        <icon id="8" name="solved" published="1" b2="ok" b3="ok" b4="check" b5="check" fa="check"
+        <icon id="8" name="solved" published="1" b5="check" fa="check"
               title="COM_KUNENA_ICON_SOLVED"
               src="user/solved.png"/>
     </icons>
 
     <icons type="system" width="48" height="48">
-        <icon id="500" name="moved" published="1" b2="contract" b3="contract" b4="contract" b5="contract" fa="compress"
+        <icon id="500" name="moved" published="1" b5="contract" fa="compress"
               src="system/moved.png"/>
-        <icon id="501" name="deleted" published="1" b2="trash" b3="trash" b4="trash" b5="trash" fa="trash"
+        <icon id="501" name="deleted" published="1" b5="trash" fa="trash"
               src="system/deleted.png"/>
-        <icon id="502" name="unapproved" published="1" b2="comments" b3="comment" b4="comment" b5="comment" fa="comment"
+        <icon id="502" name="unapproved" published="1" b5="comment" fa="comment"
               src="system/unapproved.png"/>
-        <icon id="503" name="sticky_locked" published="1" b2="lock" b3="file" b4="file" b5="file" fa="lock"
+        <icon id="503" name="sticky_locked" published="1" b5="file" fa="lock"
               src="system/sticky_locked.png"/>
-        <icon id="504" name="sticky" published="1" b2="pin" b3="pushpin" b4="pushpin" b5="pushpin" fa="map-pin"
+        <icon id="504" name="sticky" published="1" b5="pushpin" fa="map-pin"
               src="system/sticky.png"/>
-        <icon id="505" name="locked" published="1" b2="lock" b3="file" b4="file" b5="file" fa="lock"
+        <icon id="505" name="locked" published="1" b5="file" fa="lock"
               src="system/locked.png"/>
     </icons>
 

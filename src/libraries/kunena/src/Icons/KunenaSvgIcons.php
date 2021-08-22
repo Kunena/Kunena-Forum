@@ -27,7 +27,7 @@ class KunenaSvgIcons
 	/**
 	 * Class load svg icon.
 	 *
-	 * @param   string  $svgname  load svg name
+	 * @param   string  $svgname  Name of SVG file to load
 	 * @param   string  $group    Load the svg location
 	 * @param   string  $iconset  Load iconset when topicIcons
 	 *
@@ -52,20 +52,15 @@ class KunenaSvgIcons
 		}
 		elseif ($group == 'systemtopicIcons')
 		{
-			$file = Uri::root() . 'media/kunena/topic_icons/' . $iconset . '/system/svg/' . $svgname;
+			$file = Uri::root() . 'media/kunena/core/svg/' . $iconset . '/system/' . $svgname;
 		}
 		elseif ($group == 'usertopicIcons')
 		{
-			$file = Uri::root() . 'media/kunena/topic_icons/' . $iconset . '/user/svg/' . $svgname;
+			$file = Uri::root() . 'media/kunena/core/svg/' . $iconset . '/user/' . $svgname;
 		}
 		else
 		{
 			$file = Uri::root() . $group . $svgname;
-		}
-
-		if (!file_exists($file . '.svg'))
-		{
-			return false;
 		}
 
 		$iconfile = new DOMDocument;

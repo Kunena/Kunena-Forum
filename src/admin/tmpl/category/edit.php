@@ -21,13 +21,15 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 HTMLHelper::_('bootstrap.framework');
 
-/** @var WebAssetManager $wa */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('multiselect');
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('core')
+		->useScript('jquery')
+		->useScript('multiselect');
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
-Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\categories\edit.js');
+Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\tmpl\categories\edit.js');
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -190,7 +192,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 													<?php foreach ($this->options ['accesslists'] as $accesstype => $accesslist)
 													{
 														foreach ($accesslist as $accessinput)
-															:
+														    : 
 															?>
                                                             <tr class="kaccess kaccess-<?php echo $accesstype ?>"
                                                                 style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">

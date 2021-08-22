@@ -307,9 +307,9 @@ class KunenaTemplate
 		if ($view == 'com_kunena' && Factory::getApplication()->isClient('site'))
 		{
 			// Set active class on menu item alias.
-			if (KunenaFactory::getConfig()->activeMenuItem)
+			if ($this->config->activeMenuItem)
 			{
-				$id = htmlspecialchars(KunenaFactory::getConfig()->activeMenuItem, ENT_COMPAT, 'UTF-8');
+				$id = htmlspecialchars($this->config->activeMenuItem, ENT_COMPAT, 'UTF-8');
 				$this->addScriptDeclaration("
 					document.addEventListener('DOMContentLoaded', () => {
 						document.querySelector('" . $id . "').classList.add('active');

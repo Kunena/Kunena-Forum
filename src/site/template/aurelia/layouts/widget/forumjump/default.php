@@ -14,23 +14,14 @@ namespace Kunena\Forum\Site;
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use function defined;
 
-$catid = Factory::getApplication()->input->getInt('catid', 0);
 ?>
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const jumpTo = document.querySelector('#jumpto option[value=<?php echo $catid;?>]');
-		if (jumpTo !== null) {
-			jumpTo.selected = true;
-		}
-	})
-</script>
+
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" id="jumpto" name="jumpto" method="post"
-	  target="_self">
-	<input type="hidden" name="view" value="category"/>
-	<input type="hidden" name="task" value="jump"/>
-	<span><?php echo $this->categorylist; ?></span>
+      target="_self">
+    <input type="hidden" name="view" value="category"/>
+    <input type="hidden" name="task" value="jump"/>
+    <div class="selector col-3"><?php echo $this->categorylist; ?></div>
 </form>

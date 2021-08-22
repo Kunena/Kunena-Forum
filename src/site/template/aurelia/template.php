@@ -123,8 +123,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		$this->compileLess('assets/less/aurelia.less', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
-		$ktemplate = KunenaFactory::getTemplate();
-		$storage   = $ktemplate->params->get('storage');
+		$storage   = $this->params->get('storage');
 
 		if ($storage)
 		{
@@ -148,14 +147,14 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		$this->loadFontawesome();
 
-		$icons = $ktemplate->params->get('icons');
+		$icons = $this->params->get('icons');
 
 		if ($icons)
 		{
 			$wa->registerAndUseStyle('kunena.load.fontawesome', "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 		}
 
-		if ($ktemplate->params->get('bootstrap5icons'))
+		if ($this->params->get('bootstrap5icons'))
 		{
 			$wa->registerAndUseStyle('kunena.load.b5', "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
 		}
@@ -164,7 +163,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		$styles    = <<<EOF
 		/* Kunena Custom CSS */
 EOF;
-		$iconcolor = $ktemplate->params->get('IconColor');
+		$iconcolor = $this->params->get('IconColor');
 
 		if ($iconcolor)
 		{
@@ -176,7 +175,7 @@ EOF;
 EOF;
 		}
 
-		$iconcolornew = $ktemplate->params->get('IconColorNew');
+		$iconcolornew = $this->params->get('IconColorNew');
 
 		if ($iconcolornew)
 		{

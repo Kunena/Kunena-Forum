@@ -24,6 +24,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -226,6 +227,12 @@ class KunenaTemplate
 	protected $categoryIconset = '';
 
 	/**
+	 * @var     KunenaConfig
+	 * @since   Kunena 6.0
+	 */
+	public $config = null;
+
+	/**
 	 * Constructor
 	 *
 	 * @access    protected
@@ -237,9 +244,11 @@ class KunenaTemplate
 	 */
 	public function __construct($name = null)
 	{
+		$this->config = KunenaFactory::getConfig();
+
 		if (!$name)
 		{
-			$name = KunenaFactory::getConfig()->template;
+			$name = $this->config->template;
 		}
 
 		$name = KunenaPath::clean($name);
@@ -317,9 +326,9 @@ class KunenaTemplate
 		if ($view == 'com_kunena')
 		{
 			// Set active class on menu item alias.
-			if (KunenaFactory::getConfig()->activeMenuItem)
+			if ($this->config->activeMenuItem)
 			{
-				$id = htmlspecialchars(KunenaFactory::getConfig()->activeMenuItem, ENT_COMPAT, 'UTF-8');
+				$id = htmlspecialchars($this->config->activeMenuItem, ENT_COMPAT, 'UTF-8');
 				$this->addScriptDeclaration("
 					document.addEventListener('DOMContentLoaded', () => {
 						document.querySelector('" . $id . "').classList.add('active');
@@ -509,9 +518,8 @@ class KunenaTemplate
 	public function initialize(): void
 	{
 		$this->loadLanguage();
-		$config = KunenaFactory::getConfig();
 
-		if ($config->sef)
+		if ($this->config->sef)
 		{
 			$sef = '/forum';
 		}
@@ -882,7 +890,7 @@ HTML;
 			$filemin      = $filename;
 			$filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
 
-			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
+			if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
 			{
 				$filemin = preg_replace('/\.css$/u', '-min.css', $filename);
 			}
@@ -1018,7 +1026,7 @@ HTML;
 			$filename = '/' . $filename;
 		}
 
-		if (JDEBUG || KunenaFactory::getConfig()->debug)
+		if (JDEBUG || $this->config->debug)
 		{
 			$filename = "media/kunena/cache/{$this->name}/debug{$filename}";
 		}
@@ -1290,9 +1298,7 @@ HTML;
 	 */
 	public function getTopicIconPath($filename = '', $url = true): string
 	{
-		$config = KunenaFactory::getConfig();
-
-		if ($config->topicIcons)
+		if ($this->config->topicIcons)
 		{
 			$categoryIconset = 'images/topic_icons';
 
@@ -1326,12 +1332,10 @@ HTML;
 	 */
 	public function getTopicIcon(KunenaTopic $topic): string
 	{
-		$config          = KunenaFactory::getConfig();
-		$ktemplate       = KunenaFactory::getTemplate();
-		$topicicontype   = $ktemplate->params->get('topicicontype');
+		$topicicontype   = $this->params->get('topicicontype');
 		$categoryIconset = $topic->getCategory()->iconset;
 
-		if ($config->topicIcons)
+		if ($this->config->topicIcons)
 		{
 			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/topicicons.xml';
 
@@ -1565,9 +1569,7 @@ HTML;
 	 */
 	public function getCategoryIcon(KunenaCategory $category): string
 	{
-		$config = KunenaFactory::getConfig();
-
-		if ($config->categoryIcons)
+		if ($this->config->categoryIcons)
 		{
 			$icon    = $category->icon_id;
 			$iconurl = $this->getCategoryIconIndexPath($icon, true);
@@ -1881,10 +1883,8 @@ HTML;
 	 */
 	public function getTopicLabel($topic): StdClass
 	{
-		$ktemplate = KunenaFactory::getTemplate();
-
-		$topicicontype = $ktemplate->params->get('topicicontype');
-		$topiclabels   = $ktemplate->params->get('labels');
+		$topicicontype = $this->params->get('topicicontype');
+		$topiclabels   = $this->params->get('labels');
 
 		if ($topiclabels != 0)
 		{
@@ -1952,8 +1952,7 @@ HTML;
 	 */
 	public function borderless(): string
 	{
-		$ktemplate  = KunenaFactory::getTemplate();
-		$borderless = $ktemplate->params->get('borderless');
+		$borderless = $this->params->get('borderless');
 
 		if ($borderless)
 		{
@@ -1973,8 +1972,7 @@ HTML;
 	 */
 	public function tooltips($class = false): string
 	{
-		$ktemplate = KunenaFactory::getTemplate();
-		$tooltips  = $ktemplate->params->get('tooltips');
+		$tooltips  = $this->params->get('tooltips');
 
 		if ($tooltips)
 		{
@@ -2025,9 +2023,8 @@ HTML;
 	 */
 	public function loadFontawesome()
 	{
-		$ktemplate            = KunenaFactory::getTemplate();
-		$fontawesome          = $ktemplate->params->get('fontawesome');
-		$fontawesome_layer_v4 = $ktemplate->params->get('fontawesome_layer_v4');
+		$fontawesome          = $this->params->get('fontawesome');
+		$fontawesome_layer_v4 = $this->params->get('fontawesome_layer_v4');
 
 		if ($fontawesome)
 		{
@@ -2078,7 +2075,7 @@ HTML;
 			$filemin      = $filename;
 			$filemin_path = preg_replace('/\.js$/u', '-min.js', $filename);
 
-			if (!JDEBUG && !KunenaFactory::getConfig()->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
+			if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path"))
 			{
 				$filemin = preg_replace('/\.js$/u', '-min.js', $filename);
 			}

@@ -3007,8 +3007,10 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$component_id = (int) ComponentHelper::getComponent('com_kunena')->id;
 
 		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
-		$languages = LanguageHelper::getInstalledLanguages(1, true);
-
+		$languages = LanguageHelper::getLanguages('default');
+		$langCode = $languages[0]->lang_code;
+		/*var_dump($langCode);
+		die();*/
 		// First fix all broken menu items
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)
@@ -3094,8 +3096,8 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$parent      = $table;
 		$defaultmenu = 0;
 
-		foreach ($languages as $langCode => $language)
-		{
+		/*foreach ($languages as $langCode => $language)
+		{*/
 			$lang = Factory::getApplication()->getLanguage();
 			$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', $langCode);
 
@@ -3153,7 +3155,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 					$defaultmenu = $table->id;
 				}
 			}
-		}
+		//}
 
 		// Update forum menuitem to point into default page
 		$parent->link .= "&defaultmenu={$defaultmenu}";
@@ -3172,25 +3174,32 @@ class KunenaModelInstall extends BaseDatabaseModel
 		}
 
 		$table = Table::getInstance('menu');
-		$table->load(['menutype' => $defaultmenu->menutype, 'type' => 'alias', 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'language' => $language->lang_code]);
+		$table->load(['menutype' => $defaultmenu->menutype, 'type' => 'alias', 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'language' => $langCode]);
 
 		if (!$table->id)
 		{
 			$data = [
-				'menutype'     => $defaultmenu->menutype,
-				'title'        => Text::_('COM_KUNENA_MENU_ITEM_FORUM'),
-				'alias'        => 'kunena-' . Factory::getDate()->format('Y-m-d'),
-				'link'         => 'index.php?Itemid=' . $parent->id,
-				'type'         => 'alias',
-				'published'    => 0,
-				'parentid'     => 1,
+				'menutype' => $defaultmenu->menutype,
+				'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'),
+				'alias' => 'kunena-' . Factory::getDate()->format('Y-m-d'),
+				'note' => '',
+				'link' => 'index.php?Itemid=' . $parent->id,
+				'type' => 'alias',
+				'published' => 0,
+				'parent_id' => 1,
 				'component_id' => 0,
-				'access'       => 1,
-				'params'       => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
-				'home'         => 0,
-				'language'     => $language->lang_code,
-				'client_id'    => 0,
+				'checked_out' => null,
+				'checked_out_time' => null,
+				'browserNav' => 0,
+				'access' => 1,
+				'img' => '',
+				'template_style_id' => 0,
+				'params' => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
+				'home' => 0,
+				'language' => '*',
+				'client_id' => 0
 			];
+
 			$table->setLocation(1, 'last-child');
 		}
 		else

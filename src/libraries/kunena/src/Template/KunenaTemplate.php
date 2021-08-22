@@ -81,7 +81,11 @@ class KunenaTemplate
 	 * @since   Kunena 6.0
 	 */
 	public $categoryIcons = [];
-
+	/**
+	 * @var     KunenaConfig
+	 * @since   Kunena 6.0
+	 */
+	public $config = null;
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -95,7 +99,6 @@ class KunenaTemplate
 		'js'            => 'media/js',
 		'css'           => 'media/css',
 	];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -111,7 +114,6 @@ class KunenaTemplate
 		'js'            => 'media/js',
 		'css'           => 'media/css',
 	];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -126,43 +128,36 @@ class KunenaTemplate
 		'js'         => 'js',
 		'css'        => 'css',
 	];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $default = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $paths = [];
-
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $css_compile = true;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $filecache = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $smileyPath = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $rankPath = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -177,60 +172,46 @@ class KunenaTemplate
 		'banned'    => 'kwho-banned',
 		'blocked'   => 'kwho-blocked',
 	];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $stylesheets = [];
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $style_variables = [];
-
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $compiled_style_variables = null;
-
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $scripts = [];
-
 	/**
 	 * @var     null|SimpleXMLElement
 	 * @since   Kunena 6.0
 	 */
 	protected $xml = null;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $map;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $hmvc;
-
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $categoryIconset = '';
-
-	/**
-	 * @var     KunenaConfig
-	 * @since   Kunena 6.0
-	 */
-	public $config = null;
 
 	/**
 	 * Constructor
@@ -323,12 +304,12 @@ class KunenaTemplate
 
 		$view = Factory::getApplication()->input->get('option');
 
-		if ($view == 'com_kunena')
+		if ($view == 'com_kunena' && Factory::getApplication()->isClient('site'))
 		{
 			// Set active class on menu item alias.
-			if ($this->config->activeMenuItem)
+			if (KunenaFactory::getConfig()->activeMenuItem)
 			{
-				$id = htmlspecialchars($this->config->activeMenuItem, ENT_COMPAT, 'UTF-8');
+				$id = htmlspecialchars(KunenaFactory::getConfig()->activeMenuItem, ENT_COMPAT, 'UTF-8');
 				$this->addScriptDeclaration("
 					document.addEventListener('DOMContentLoaded', () => {
 						document.querySelector('" . $id . "').classList.add('active');
@@ -606,7 +587,7 @@ class KunenaTemplate
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
 		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
+		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -1972,7 +1953,7 @@ HTML;
 	 */
 	public function tooltips($class = false): string
 	{
-		$tooltips  = $this->params->get('tooltips');
+		$tooltips = $this->params->get('tooltips');
 
 		if ($tooltips)
 		{

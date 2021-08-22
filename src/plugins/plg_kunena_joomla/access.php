@@ -155,14 +155,14 @@ class KunenaAccessJoomla
 	/**
 	 * Get HTML list of the available groups
 	 *
-	 * @param   string  $accesstype  Access type.
-	 * @param   object  $category    Group id.
+	 * @param   string|null      $accesstype  Access type.
+	 * @param   KunenaCategory   $category    Group id.
 	 *
 	 * @return  array
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getAccessOptions(string $accesstype, object $category): array
+	public function getAccessOptions($accesstype, KunenaCategory $category): array
 	{
 		$html = [];
 

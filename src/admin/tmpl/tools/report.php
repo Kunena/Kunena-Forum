@@ -11,14 +11,12 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-$document = Factory::getApplication()->getDocument();
-$document->addScriptDeclaration(
+$this->document->addScriptDeclaration(
 	"
 jQuery(document).ready(function ($) {
 	$('#link_sel_all').click(function(e) {
@@ -51,7 +49,7 @@ jQuery(document).ready(function ($) {
 );
 
 /** @var WebAssetManager $wa */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = $this->document->getWebAssetManager();
 $wa->useScript('multiselect');
 ?>
 

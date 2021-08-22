@@ -17,12 +17,11 @@ use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
-$document = Factory::getApplication()->getDocument();
-$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.css');
+$this->document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.css');
 
 if (Factory::getApplication()->getLanguage()->isRTL())
 {
-	$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
+ 	$this->document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/admin.rtl.css');
 }
 ?>
 <div id="j-main-container" class="col-md-12">

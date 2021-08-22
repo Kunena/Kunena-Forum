@@ -11,7 +11,6 @@
  **/
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -21,7 +20,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 HTMLHelper::_('bootstrap.framework');
 
-/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+/** @var WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('core')
 		->useScript('jquery')
@@ -29,7 +28,7 @@ $wa->useScript('core')
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
-Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\tmpl\categories\edit.js');
+$this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tmpl\categories\edit.js');
 ?>
 
 <div id="kunena" class="container-fluid">

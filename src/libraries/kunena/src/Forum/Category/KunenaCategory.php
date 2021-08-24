@@ -1035,7 +1035,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	public function getTopics(): bool
+	public function getTopics(): int
 	{
 		$this->buildInfo();
 

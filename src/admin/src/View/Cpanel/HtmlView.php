@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 
 /**
  * About view for Kunena cpanel
@@ -60,6 +61,8 @@ class HtmlView extends BaseHtmlView
 				]
 			);
 		}
+
+		$this->KunenaMenusExists = KunenaMenuHelper::KunenaMenusExists();
 
 		return parent::display($tpl);
 	}

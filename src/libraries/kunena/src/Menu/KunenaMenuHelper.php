@@ -18,7 +18,9 @@ namespace Kunena\Forum\Libraries\Menu;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Multilanguage;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
 
 /**
@@ -37,6 +39,31 @@ abstract class KunenaMenuHelper
 	{
 		$cache = Factory::getCache();
 		$cache->clean('mod_menu');
+	}
+
+	/**
+	 * Check if Kunena menus exist
+	 * 
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public static function KunenaMenusExists()
+	{
+		$table = Table::getInstance('MenuType');
+		$data  = [
+			'menutype'    => 'kunenamenu',
+			'title'       => Text::_('COM_KUNENA_MENU_TITLE'),
+			'description' => Text::_('COM_KUNENA_MENU_TITLE_DESC'),
+		];
+
+		if (!$table->bind($data) || !$table->check())
+		{
+			// Menu already exists, do nothing
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

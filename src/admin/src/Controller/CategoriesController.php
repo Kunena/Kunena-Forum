@@ -73,14 +73,14 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'locked', 1);
+		$this->setVariable($cid, 'locked', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**
 	 * Set variable
 	 *
-	 * @param   int     $cid       id
+	 * @param   array   $cid       id
 	 * @param   string  $variable  variable
 	 * @param   string  $value     value
 	 *
@@ -90,7 +90,7 @@ class CategoriesController extends KunenaController
 	 * @throws Exception
 	 * @since   Kunena 3.0
 	 */
-	protected function setVariable(int $cid, string $variable, string $value): void
+	protected function setVariable(array $cid, string $variable, string $value): void
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
@@ -178,7 +178,7 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'locked', 0);
+		$this->setVariable($cid, 'locked', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -196,7 +196,7 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'review', 1);
+		$this->setVariable($cid, 'review', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -214,7 +214,7 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'review', 0);
+		$this->setVariable($cid, 'review', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -232,7 +232,7 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'allowAnonymous', 1);
+		$this->setVariable($cid, 'allowAnonymous', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -250,7 +250,7 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'allowAnonymous', 0);
+		$this->setVariable($cid, 'allowAnonymous', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -268,7 +268,7 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'allowPolls', 1);
+		$this->setVariable($cid, 'allowPolls', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -286,7 +286,7 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'allowPolls', 0);
+		$this->setVariable($cid, 'allowPolls', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -304,7 +304,7 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'published', 1);
+		$this->setVariable($cid, 'published', 1);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -322,7 +322,7 @@ class CategoriesController extends KunenaController
 		$cid = $this->app->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
-		$this->setVariable((int) $cid, 'published', 0);
+		$this->setVariable($cid, 'published', 0);
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 

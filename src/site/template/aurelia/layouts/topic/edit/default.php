@@ -217,7 +217,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
             <input type="hidden" name="parentid" value="<?php echo \intval($this->message->parent) ?>"/>
 		<?php endif; ?>
 		<?php
-		if (!isset($this->selectcatlist))
+		if ($this->selectcatlist===false)
 			:
 			?>
             <input type="hidden" name="catid" value="<?php echo \intval($this->message->catid) ?>"/>

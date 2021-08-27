@@ -262,7 +262,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
 
         <div class="shadow-lg p-3 mb-5 rounded">
 
-			<?php if (isset($this->selectcatlist)) : ?>
+			<?php if ($this->selectcatlist!==false) : ?>
                 <div class="form-group row">
                     <!-- Material input -->
                     <label for="inputCatlist"

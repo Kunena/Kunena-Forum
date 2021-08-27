@@ -190,6 +190,8 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
 		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 
+		$this->selectcatlist = false;
+
 		/** @var HtmlDocument $doc */
 		$this->doc = Factory::getApplication()->getDocument();
 		$this->wa  = $this->doc->getWebAssetManager();

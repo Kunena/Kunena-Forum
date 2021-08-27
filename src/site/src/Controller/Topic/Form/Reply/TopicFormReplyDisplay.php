@@ -160,6 +160,8 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
 		$this->canSubscribe = $this->canSubscribe();
 
+		$this->selectcatlist = false;
+
 		/** @var HtmlDocument $doc */
 		$this->doc = Factory::getApplication()->getDocument();
 		$this->wa  = $this->doc->getWebAssetManager();

@@ -1030,7 +1030,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  boolean
+	 * @return  int
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0

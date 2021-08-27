@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 use function defined;
 
 ?>
-<h1><?php echo $this->header; ?></h1>
+<h1><?php echo $this->header.' : '.$this->message;  ?></h1>
 <p><strong><?php echo Text::_('JERROR_LAYOUT_NOT_ABLE_TO_VISIT'); ?></strong></p>
 <ol>
 	<li><?php echo Text::_('JERROR_LAYOUT_AN_OUT_OF_DATE_BOOKMARK_FAVOURITE'); ?></li>

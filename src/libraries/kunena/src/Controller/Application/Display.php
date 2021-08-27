@@ -199,7 +199,7 @@ class Display extends KunenaControllerDisplay
 					$this->output->setLayout('unauthorized');
 					$this->document->setTitle($e->getResponseStatus());
 
-					$this->content = KunenaLayout::factory('Widget/Error')->set('header', $e->getResponseStatus());
+					$this->content = KunenaLayout::factory('Widget/Error')->set('header', $e->getResponseStatus())->set('message', $e->getMessage());
 				}
 			}
 			catch (Exception $e)

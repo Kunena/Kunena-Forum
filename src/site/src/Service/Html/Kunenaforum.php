@@ -41,13 +41,13 @@ class Kunenaforum
 	 * @param   bool    $idtag      idtag
 	 * @param   bool    $translate  translate
 	 *
-	 * @return  string|void
+	 * @return  string|boolean
 	 *
 	 * @since   Kunena 6.0
 	 *
 	 * @throws  null
 	 */
-	public static function categorylist($name, $parent, $options = [], $params = [], $attribs = null, $key = 'value', $text = 'text', $selected = [], $idtag = false, $translate = false): string
+	public static function categorylist($name, $parent, $options = [], $params = [], $attribs = null, $key = 'value', $text = 'text', $selected = [], $idtag = false, $translate = false)
 	{
 		$preselect   = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;

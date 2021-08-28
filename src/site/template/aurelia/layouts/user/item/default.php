@@ -25,8 +25,7 @@ $tabs = $this->getTabs();
 ?>
 
 <h1 class="float-start">
-	<?php echo Text::_('COM_KUNENA_USER_PROFILE'); ?>
-	<?php echo $this->escape($this->profile->getName()); ?>
+	<?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName())); ?>
 </h1>
 
 <h2 class="float-end">

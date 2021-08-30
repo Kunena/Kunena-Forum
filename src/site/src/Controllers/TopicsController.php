@@ -104,7 +104,7 @@ class TopicsController extends KunenaController
 			$finder->where('mesid', 'IN', array_keys($messages));
 			$attachments = $finder->find();
 
-			if (!empty($attachments))
+			if ($finder->count() > 0)
 			{
 				foreach ($attachments as $instance)
 				{

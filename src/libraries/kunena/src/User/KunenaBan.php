@@ -811,7 +811,8 @@ class KunenaBan extends parentAlias
 
 		if ($this->userid)
 		{
-			$user = Factory::getApplication()->getIdentity($this->userid);
+			// The non-deprecated methods provided by Joomla! to load an user doesn't allow to load an user by id :(
+			$user = Factory::getUser($this->userid);
 
 			// Change user block also in Joomla
 			if (!$user)

@@ -3227,16 +3227,16 @@
         },
         {
             "name": "phing/phing",
-            "version": "2.16.4",
+            "version": "2.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "30831b22fc6bab57003f1893842668c44b7f65ae"
+                "reference": "c0a3bce822c088d60b30a577c25debb42325d0f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/30831b22fc6bab57003f1893842668c44b7f65ae",
-                "reference": "30831b22fc6bab57003f1893842668c44b7f65ae",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/c0a3bce822c088d60b30a577c25debb42325d0f8",
+                "reference": "c0a3bce822c088d60b30a577c25debb42325d0f8",
                 "shasum": ""
             },
             "require": {
@@ -3319,7 +3319,7 @@
             "support": {
                 "irc": "irc://irc.freenode.net/phing",
                 "issues": "https://www.phing.info/trac/report",
-                "source": "https://github.com/phingofficial/phing/tree/2.16.4"
+                "source": "https://github.com/phingofficial/phing/tree/2.17.0"
             },
             "funding": [
                 {
@@ -3335,7 +3335,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-01-29T14:00:54+00:00"
+            "time": "2021-08-31T13:33:01+00:00"
         },
         {
             "name": "php-cs-fixer/diff",

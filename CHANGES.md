@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* Search user avatar, the query to the user list return some null result for "photo" item
 * [#8292](https://github.com/Kunena/Kunena-Forum/issues/8292): When bbcode tags aren't terminated you have some warning
 
 ### Changed

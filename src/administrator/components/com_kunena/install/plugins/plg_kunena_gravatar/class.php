@@ -12,10 +12,12 @@
  * @package   gravatarlib
  * @author    emberlabs.org
  * @license   MIT License
+ * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link      https://github.com/emberlabs/gravatarlib
  * @copyright gravatar
  * @since     Kunena
  */
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
 

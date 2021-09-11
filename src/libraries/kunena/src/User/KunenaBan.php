@@ -406,7 +406,6 @@ class KunenaBan extends parentAlias
 		$c        = __CLASS__;
 		$db       = Factory::getDBO();
 		$now      = new Date;
-		$nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
 
 		$query = $db->getQuery(true);
 		$query->select(['b.*'])
@@ -775,7 +774,7 @@ class KunenaBan extends parentAlias
 		if (!$this->id)
 		{
 			// If we have new ban, add creation date and user if they do not exist
-			if ($this->created_time == '1000-01-01 00:00:00')
+			if (!$this->created_time)
 			{
 				$now                = new Date;
 				$this->created_time = $now->toSql();

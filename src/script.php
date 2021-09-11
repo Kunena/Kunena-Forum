@@ -278,7 +278,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$table = $db->getPrefix() . 'kunena_version';
 
 		$db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
-		if ($db->loadResult() != $table)
+		if ($db->loadResult() == $table)
 		{
 			$db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
 			$installed = $db->loadResult();

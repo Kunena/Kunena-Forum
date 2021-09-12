@@ -45,6 +45,7 @@
         <files>
             <folder>api</folder>
             <folder>forms</folder>
+            <folder>install</folder>
             <folder>language</folder>
             <folder>media</folder>
             <folder>services</folder>

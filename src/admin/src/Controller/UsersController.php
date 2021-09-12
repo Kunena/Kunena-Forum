@@ -97,7 +97,7 @@ class UsersController extends AdminController
 	}
 
 	/**
-	 * Edit
+	 * Edit the user
 	 *
 	 * @return  boolean|void
 	 *
@@ -105,7 +105,7 @@ class UsersController extends AdminController
 	 * @throws  null
 	 * @since   Kunena 2.0
 	 */
-	public function edit(): bool
+	public function edit()
 	{
 		if (!Session::checkToken())
 		{
@@ -284,7 +284,7 @@ class UsersController extends AdminController
 	}
 
 	/**
-	 * Logout
+	 * Logout the user
 	 *
 	 * @return  void
 	 *
@@ -322,7 +322,7 @@ class UsersController extends AdminController
 	}
 
 	/**
-	 * Remove
+	 * Remove the user
 	 *
 	 * @return  void
 	 *

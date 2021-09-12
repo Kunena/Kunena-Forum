@@ -278,6 +278,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$table = $db->getPrefix() . 'kunena_version';
 
 		$db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
+		$upgrade = 0;
+
 		if ($db->loadResult() == $table)
 		{
 			$db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
@@ -290,10 +292,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 				$db->execute();
 
-				$query = "UPDATE `#__kunena_version` SET state='joomla';";
-				$db->setQuery($query);
-
-				$db->execute();
+				$upgrade = 1;
 			}
 		}
 
@@ -307,6 +306,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$date        = (string) $manifest->creationDate;
 			$versionname = (string) $manifest->versionname;
 			$installdate = Factory::getDate('now');
+			$state = '';
+			if ($upgrade == 1)
+			{
+				$state = 'joomla';
+			}
 
 			$query = $db->getQuery(true);
 
@@ -316,7 +320,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				$db->quote($date),
 				$db->quote($versionname),
 				$db->quote($installdate),
-				$db->quote(''),
+				$db->quote($state),
 			];
 
 			$query->insert($db->quoteName('#__kunena_version'))

@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_users`
     `pollid`   int(11)   NULL,
     `userid`   int(11)   NULL,
     `votes`    int(11)   NULL,
-    `lasttime` timestamp NOT NULL default '0000-00-00 00:00:00',
+    `lasttime` datetime  NOT NULL default '1000-01-01 00:00:00',
     `lastvote` int(11)   NULL,
     UNIQUE KEY `pollid` (pollid, userid)
 )

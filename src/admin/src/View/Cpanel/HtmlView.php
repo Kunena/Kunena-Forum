@@ -91,7 +91,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * Method to upgrade the database at the end of installation.
 	 *
-	 * @return  void
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -121,6 +121,10 @@ class HtmlView extends BaseHtmlView
 			{
 				return false;
 			}
+		}
+		else 
+		{
+			return false;
 		}
 
 		$curversion = KunenaForum::version();

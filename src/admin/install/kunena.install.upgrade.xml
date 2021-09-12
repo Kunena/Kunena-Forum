@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<!DOCTYPE comupgrade>
+<comupgrade version="1.0">
+    <upgrade>
+        <version version="5.2.0-ALPHA1"
+                 versiondate="2020-08-20"
+                 versionname="Internal">
+            <phpfile name="5.2.0-2020-08-20_updaterankstitle"/>
+        </version>
+        <version version="5.2.4-DEV"
+                 versiondate="2020-03-24"
+                 versionname="Internal">
+            <phpfile name="5.2.0-2021-03-24_configuration"/>
+        </version>
+        <version version="5.2.5-DEV"
+                 versiondate="2020-04-18"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY banned datetime NULL DEFAULT '1000-01-01 00:00:00';</query>
+        </version>
+        <version version="5.2.6-DEV"
+                 versiondate="2021-06-12"
+                 versionname="Internal">
+            <query mode="silenterror">UPDATE `#__kunena_users_banned` SET `expiration` = '9999-12-31 23:59:59' WHERE expiration = '0000-00-00 00:00:00';</query>
+            <query mode="silenterror">UPDATE `#__kunena_users` SET `banned` = '9999-12-31 23:59:59' WHERE banned = '0000-00-00 00:00:00';</query>
+        </version>
+        <version version="6.0.0-RC99"
+                 versiondate="2021-09-12"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD parentid int(11) NULL default '0';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN parent_id;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD pubAccess int(11)      NOT NULL default '1';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN pub_access;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD pubRecurse tinyint(4)   NULL     default '1';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN pub_recurse;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD adminAccess int(11)      NOT NULL default '0';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN admin_access;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD adminRecurse tinyint(4)   NULL     default '1';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN admin_recurse;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD allowAnonymous tinyint(4)   NOT NULL default '0';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN allow_anonymous;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD postAnonymous tinyint(4)   NOT NULL default '0';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN post_anonymous;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD allowPolls tinyint(4)   NOT NULL default '0';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN allow_polls;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD topicOrdering varchar(16)  NOT NULL default 'lastpost';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN topic_ordering;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD allowRatings tinyint(4)   NOT NULL default '0';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP COLUMN allow_ratings;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` ADD rankId mediumint(8) unsigned NOT NULL auto_increment;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` DROP COLUMN rank_id;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` ADD rankTitle varchar(255)          NOT NULL default '';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` DROP COLUMN rank_title;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` ADD rankMin mediumint(8) unsigned NOT NULL default '0';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` DROP COLUMN rank_min;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` ADD rankSpecial tinyint(1) unsigned   NOT NULL default '0';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` DROP COLUMN rank_special;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` ADD rankImage varchar(255);</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` DROP COLUMN rank_image;</query>
+        </version>
+        <version version="@kunenaversion@"
+                 versiondate="@kunenaversiondate@"
+                 versionname="@kunenaversionname@">
+        </version>
+    </upgrade>
+</comupgrade>

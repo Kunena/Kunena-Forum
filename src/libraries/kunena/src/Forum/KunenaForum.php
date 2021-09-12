@@ -322,7 +322,7 @@ abstract class KunenaForum
 	/**
 	 * Returns the exact version from Kunena Forum.
 	 *
-	 * @return  boolean Version number.
+	 * @return string Version number.
 	 *
 	 * @since   Kunena 6.0
 	 */

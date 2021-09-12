@@ -289,6 +289,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				$db->setQuery($query);
 
 				$db->execute();
+
+				$query = "UPDATE `#__kunena_version` SET state='joomla';";
+				$db->setQuery($query);
+
+				$db->execute();
 			}
 		}
 

@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -133,7 +134,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
 													<span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
 													Kunena Menus					</div>
 												<button type="button" class="btn btn-secondary btn-sm apply-sample-data" data-type="kunena" data-steps="1">
-													<span class="icon-upload" aria-hidden="true"></span> <a href="/administrator/index.php?option=com_kunena&view=tools&layout=menu">Install</a>						<span class="visually-hidden">Kunena Menus</span>
+													<span class="icon-upload" aria-hidden="true"></span> <a href="<?php echo Uri::base() ?>index.php?option=com_kunena&view=tools&layout=menu">Install</a>						<span class="visually-hidden">Kunena Menus</span>
 												</button>
 											</div>
 											<p class="sample-data__desc small mt-1">Install Menus</p>

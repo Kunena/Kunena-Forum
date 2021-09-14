@@ -18,13 +18,13 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Joomla\Registry\Registry;
 
 /**
  * Class ComponentTopicControllerItemActionsDisplay
@@ -56,10 +56,9 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  null
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	protected function before()
 	{
@@ -69,11 +68,12 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 
 		$this->topic = KunenaTopic::getInstance($id);
 
-		$catid = $this->topic->category_id;
-		$token = Session::getFormToken();
+		$catid  = $this->topic->category_id;
+		$token  = Session::getFormToken();
+		$Itemid = KunenaRoute::fixMissingItemID();
 
-		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&{$token}=1";
-		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
+		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&Itemid={$Itemid}&{$token}=1";
+		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&Itemid={$Itemid}";
 
 		$userTopic          = $this->topic->getUserTopic();
 		$template           = KunenaFactory::getTemplate();
@@ -356,17 +356,16 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  KunenaLayout
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws  Exception
 	 * @throws  null
+	 * @since   Kunena 6.0
 	 */
 	public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(
-				['url'   => KunenaRoute::_($url), 'name' => $name,
-							 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon, ]
+				['url'   => $url, 'name' => $name,
+				 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

@@ -21,6 +21,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
@@ -29,7 +30,6 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Joomla\Registry\Registry;
 
 /**
  * Class ComponentKunenaControllerMessageItemActionsDisplay
@@ -82,15 +82,16 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		$this->topic    = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 
-		$id    = $this->message->thread;
-		$catid = $this->message->catid;
-		$token = Session::getFormToken();
+		$id     = $this->message->thread;
+		$catid  = $this->message->catid;
+		$token  = Session::getFormToken();
+		$Itemid = KunenaRoute::fixMissingItemID();
 
-		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&{$token}=1";
-		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
+		$task   = "index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}&{$token}=1";
+		$layout = "index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}";
 
 		$this->messageButtons = new Registry;
-		$this->message_closed       = null;
+		$this->message_closed = null;
 
 		$ktemplate     = KunenaFactory::getTemplate();
 		$fullactions   = $ktemplate->params->get('fullactions');
@@ -135,7 +136,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 			{
 				$this->messageButtons->set(
 					'reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button)
+					$this->getButton($layout, 'reply', 'message', 'communication', 'reply', $button)
 				);
 			}
 
@@ -567,7 +568,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 		// Show admins the IP address of the user.
 		if ($this->category->isAuthorised('admin')
-		    || ($this->category->isAuthorised('moderate') && !$this->config->hideIp))
+			|| ($this->category->isAuthorised('moderate') && !$this->config->hideIp))
 		{
 			if (!empty($this->message->ip))
 			{
@@ -607,8 +608,8 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 	{
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(
-				['url'  => KunenaRoute::_($url), 'name' => $name, 'scope' => $scope,
-				 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon, ]
+				['url'  => $url, 'name' => $name, 'scope' => $scope,
+				 'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

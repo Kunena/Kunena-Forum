@@ -307,9 +307,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$versionname = (string) $manifest->versionname;
 			$installdate = Factory::getDate('now');
 			$state = '';
+			$sampleData = 0;
 			if ($upgrade == 1)
 			{
 				$state = 'joomla';
+				$sampleData = 1;
 			}
 
 			$query = $db->getQuery(true);
@@ -319,6 +321,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				$db->quote($build),
 				$db->quote($date),
 				$db->quote($versionname),
+				$db->quote($sampleData),
 				$db->quote($installdate),
 				$db->quote($state),
 			];
@@ -330,6 +333,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 						$db->quoteName('build'),
 						$db->quoteName('versiondate'),
 						$db->quoteName('versionname'),
+						$db->quoteName('sampleData'),
 						$db->quoteName('installdate'),
 						$db->quoteName('state'),
 					]

@@ -324,7 +324,7 @@ class ToolsController extends FormController
 			$query = $db->getQuery(true);
 
 			// TODO: need to find a way to make this query working with JdatabaseQuery
-			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='1000-01-01 00:00:00'");
+			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned!='1000-01-01 00:00:00'");
 
 			try
 			{

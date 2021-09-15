@@ -18,13 +18,13 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -39,7 +39,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  *
  * @since   Kunena 2.0
  */
-class UsersController extends AdminController
+class UsersController extends KunenaController
 {
 	/**
 	 * @var    string  The prefix to use with controller messages.
@@ -52,12 +52,6 @@ class UsersController extends AdminController
 	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
-
-	/**
-	 * @var     object
-	 * @since   Kunena 6.0
-	 */
-	private $me;
 
 	/**
 	 * Constructor.
@@ -73,11 +67,11 @@ class UsersController extends AdminController
 	 *
 	 * @see     BaseController
 	 */
-	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
+	
+	public function __construct($config = array())
 	{
-		parent::__construct($config, $factory, $app, $input);
-
-		$this->baseurl = 'administrator/index.php?option=com_kunena&view=users';
+	    parent::__construct($config);
+	    $this->baseurl = 'administrator/index.php?option=com_kunena&view=users';
 	}
 
 	/**

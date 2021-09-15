@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use StdClass;
+use Joomla\CMS\Factory;
 
 /**
  * User view for Kunena backend
@@ -111,37 +112,6 @@ class HtmlView extends BaseHtmlView
 	protected $modCats;
 
 	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayMove(): void
-	{
-		$this->setToolBarMove();
-		$this->catsList = $this->get('moveCatsList');
-		$this->users    = $this->get('moveUser');
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarMove(): void
-	{
-		// Set the title bar text
-		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('moveMessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-	}
-
-	/**
 	 * @param   null  $tpl  tpl
 	 *
 	 * @return  void
@@ -152,6 +122,17 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+		$userids = (array) Factory::getApplication()->getUserState('kunena.usermove.userids');
+
+		if ($userids)
+		{
+			$this->setToolBarMove();
+			$this->catsList = $this->get('moveCatsList');
+			$this->users    = $this->get('moveUser');
+
+			return parent::display($tpl);
+		}
+
 		$this->user         = $this->get('user');
 		$this->sub          = $this->get('subscriptions');
 		$this->subsCatsList = $this->get('catSubscriptions');
@@ -313,5 +294,21 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/users/edit-user';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+	}
+	
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarMove(): void
+	{
+	    // Set the title bar text
+	    ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
+	    ToolbarHelper::spacer();
+	    ToolbarHelper::custom('moveMessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+	    ToolbarHelper::spacer();
+	    ToolbarHelper::cancel();
+	    ToolbarHelper::spacer();
 	}
 }

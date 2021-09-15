@@ -261,7 +261,7 @@ class UserModel extends KunenaModel
 	 */
 	public function getMoveCatsList()
 	{
-		return HTMLHelper::_('select.genericlist', '', 'catid', 'class="inputbox form-control"', 'value', 'text');
+		return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox form-control"', 'value', 'text');
 	}
 
 	/**

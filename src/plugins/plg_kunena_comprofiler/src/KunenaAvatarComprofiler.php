@@ -25,7 +25,7 @@ use function defined;
  *
  * @since   Kunena 6.0
  */
-class AvatarComprofiler extends KunenaAvatar
+class KunenaAvatarComprofiler extends KunenaAvatar
 {
 	/**
 	 * @var     null

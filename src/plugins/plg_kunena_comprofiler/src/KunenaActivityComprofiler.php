@@ -20,8 +20,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use function defined;
 
-require_once __DIR__ . '/integration.php';
-
 /**
  * Class KunenaActivityComprofiler
  *

@@ -10,17 +10,11 @@
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_COMPROFILER_DESCRIPTION</description>
-    <namespace>Kunena\Forum\Plugin\Kunena\Comprofiler</namespace>
+    <namespace path="src">Kunena\Forum\Plugin\Kunena\Comprofiler</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="comprofiler">comprofiler.php</filename>
-        <filename>access.php</filename>
-        <filename>activity.php</filename>
-        <filename>avatar.php</filename>
-        <filename>integration.php</filename>
-        <filename>login.php</filename>
-        <filename>private.php</filename>
-        <filename>profile.php</filename>
+        <folder>src</folder>
         <folder>language</folder>
     </files>
     <config>

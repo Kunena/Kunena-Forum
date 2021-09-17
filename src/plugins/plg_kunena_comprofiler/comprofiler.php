@@ -17,6 +17,12 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaAccessComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaActivityComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaAvatarComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaLoginComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaPrivateComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaProfileComprofiler;
 
 /**
  * Class plgKunenaComprofiler
@@ -150,6 +156,8 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
+		require_once __DIR__ . "/access.php";
+
 		return new KunenaAccessComprofiler($this->params);
 	}
 
@@ -172,13 +180,15 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
+		require_once __DIR__ . "/login.php";
+
 		return new KunenaLoginComprofiler($this->params);
 	}
 
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  AvatarComprofiler|void
+	 * @return  KunenaAvatarComprofiler|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -194,7 +204,7 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		return new AvatarComprofiler($this->params);
+		return new KunenaAvatarComprofiler($this->params);
 	}
 
 	/**
@@ -215,6 +225,8 @@ class plgKunenaComprofiler extends CMSPlugin
 		{
 			return;
 		}
+
+		require_once __DIR__ . "/profile.php";
 
 		return new KunenaProfileComprofiler($this->params);
 	}
@@ -238,6 +250,8 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
+		require_once __DIR__ . "/private.php";
+
 		return new KunenaPrivateComprofiler($this->params);
 	}
 
@@ -260,6 +274,8 @@ class plgKunenaComprofiler extends CMSPlugin
 		{
 			return;
 		}
+
+		require_once __DIR__ . "/activity.php";
 
 		return new KunenaActivityComprofiler($this->params);
 	}

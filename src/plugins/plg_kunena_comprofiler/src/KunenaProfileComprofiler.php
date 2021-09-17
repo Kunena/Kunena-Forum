@@ -24,8 +24,6 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 use function defined;
 
-require_once __DIR__ . '/integration.php';
-
 /**
  * Class KunenaProfileComprofiler
  *

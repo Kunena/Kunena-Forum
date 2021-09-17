@@ -14,15 +14,12 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
 
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
 use function defined;
-
-require_once __DIR__ . '/integration.php';
 
 /**
  * Kunena Access Control for CommunityBuilder

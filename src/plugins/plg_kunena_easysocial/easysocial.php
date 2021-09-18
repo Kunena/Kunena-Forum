@@ -82,6 +82,8 @@ class plgKunenaEasySocial extends EasySocialPlugins
 			return;
 		}
 
+		require_once __DIR__ . "/KunenaLoginEasySocial.php";
+
 		return new KunenaLoginEasySocial($this->params);
 	}
 
@@ -103,7 +105,9 @@ class plgKunenaEasySocial extends EasySocialPlugins
 			return;
 		}
 
-		return new AvatarEasySocial($this->params);
+		require_once __DIR__ . "/KunenaAvatarEasySocial.php";
+
+		return new KunenaAvatarEasySocial($this->params);
 	}
 
 	/**
@@ -124,6 +128,8 @@ class plgKunenaEasySocial extends EasySocialPlugins
 		{
 			return;
 		}
+
+		require_once(__DIR__ . "/KunenaProfileEasySocial.php");
 
 		return new KunenaProfileEasySocial($this->params);
 	}
@@ -147,6 +153,8 @@ class plgKunenaEasySocial extends EasySocialPlugins
 			return;
 		}
 
+		require_once __DIR__ . "/KunenaPrivateEasySocial.php";
+
 		return new KunenaPrivateEasySocial($this->params);
 	}
 
@@ -169,6 +177,8 @@ class plgKunenaEasySocial extends EasySocialPlugins
 		{
 			return;
 		}
+
+		require_once __DIR__ . "/KunenaActivityEasySocial.php";
 
 		return new KunenaActivityEasySocial($this->params);
 	}

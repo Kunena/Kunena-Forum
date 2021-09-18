@@ -10,19 +10,14 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Altauserpoints;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use RuntimeException;
-use function defined;
 
 /**
  * KunenaActivityAltaUserPoints class to handle profile integration with AltaUserPoints

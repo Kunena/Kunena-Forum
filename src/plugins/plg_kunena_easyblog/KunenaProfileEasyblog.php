@@ -14,6 +14,9 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /**
  * @package     Kunena

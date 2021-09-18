@@ -15,18 +15,14 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
-namespace Kunena\Forum\Plugin\Kunena\Easysocial;
-
 defined('_JEXEC') or die('Unauthorized Access');
 
-use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
-use function defined;
 
 /**
  * @package  Easysocial

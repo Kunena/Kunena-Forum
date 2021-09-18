@@ -12,7 +12,6 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
@@ -73,7 +72,7 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/avatar.php";
+		require_once __DIR__ . "/KunenaAvatarEasyblog.php";
 
 		return new KunenaAvatarEasyblog($this->params);
 	}
@@ -96,7 +95,7 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/profile.php";
+		require_once __DIR__ . "/KunenaProfileEasyblog.php";
 
 		return new KunenaProfileEasyblog($this->params);
 	}

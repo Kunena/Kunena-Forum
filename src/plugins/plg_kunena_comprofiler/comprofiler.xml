@@ -14,7 +14,13 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="comprofiler">comprofiler.php</filename>
-        <folder>src</folder>
+        <filename>access.php</filename>
+        <filename>activity.php</filename>
+        <filename>avatar.php</filename>
+        <filename>integration.php</filename>
+        <filename>login.php</filename>
+        <filename>private.php</filename>
+        <filename>profile.php</filename>
         <folder>language</folder>
     </files>
     <config>

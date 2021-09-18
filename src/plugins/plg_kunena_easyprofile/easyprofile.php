@@ -60,7 +60,7 @@ class plgKunenaEasyprofile extends CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  AvatarEasyprofile|void
+	 * @return  KunenaAvatarEasyprofile|void
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -76,7 +76,9 @@ class plgKunenaEasyprofile extends CMSPlugin
 			return;
 		}
 
-		return new AvatarEasyprofile($this->params);
+		require_once __DIR__ . "/avatar.php";
+
+		return new KunenaAvatarEasyprofile($this->params);
 	}
 
 	/**
@@ -97,6 +99,8 @@ class plgKunenaEasyprofile extends CMSPlugin
 		{
 			return;
 		}
+
+		require_once __DIR__ . "/profile.php";
 
 		return new KunenaProfileEasyprofile($this->params);
 	}

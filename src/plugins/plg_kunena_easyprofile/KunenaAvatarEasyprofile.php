@@ -10,11 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Easyprofile;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -22,14 +19,13 @@ use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\AvatarEasyprofile
  *
  * @since   Kunena 6.0
  */
-class AvatarEasyprofile extends KunenaAvatar
+class KunenaAvatarEasyprofile extends KunenaAvatar
 {
 	/**
 	 * @var     null

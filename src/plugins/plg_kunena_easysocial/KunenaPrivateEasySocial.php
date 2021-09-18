@@ -15,13 +15,10 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
-namespace Kunena\Forum\Plugin\Kunena\Easysocial;
-
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
-use function defined;
 
 /**
  * @package     Kunena

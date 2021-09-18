@@ -10,11 +10,8 @@
  * @link           https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Altauserpoints;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -23,15 +20,13 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use RuntimeException;
-use function defined;
 
 /**
  * KunenaActivityAltaUserPoints class to handle activity integration with AltaUserPoints
  *
  * @since  5.0
  */
-class ActivityAltaUserPoints extends KunenaActivity
+class KunenaActivityAltaUserPoints extends KunenaActivity
 {
 	/**
 	 * @var     null

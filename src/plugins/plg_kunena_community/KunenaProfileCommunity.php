@@ -11,18 +11,13 @@
  * @link             https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Community;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaProfileCommunity

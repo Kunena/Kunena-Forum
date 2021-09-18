@@ -3,44 +3,44 @@
  * Kunena Plugin
  *
  * @package         Kunena.Plugins
- * @subpackage      Community
+ * @subpackage      Easysocial
  *
- * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
- * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            https://www.kunena.org
- **/
+ * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
+ * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
+ * @license        GNU/GPL, see LICENSE.php
+ * EasySocial is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
 
-namespace Kunena\Forum\Plugin\Kunena\Community;
+defined('_JEXEC') or die('Unauthorized Access');
 
-defined('_JEXEC') or die();
-
-use Exception;
-use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
 
 /**
- * Class \Kunena\Forum\Libraries\Integration\AvatarCommunity
+ * Class \Kunena\Forum\Libraries\Integration\AvatarEasySocial
  *
- * @since   Kunena 6.0
+ * @since   Kunena 5.0
  */
-class AvatarCommunity extends KunenaAvatar
+class KunenaAvatarEasySocial extends KunenaAvatar
 {
 	/**
 	 * @var     null
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	protected $params = null;
 
 	/**
-	 * \Kunena\Forum\Libraries\Integration\AvatarCommunity constructor.
+	 * \Kunena\Forum\Libraries\Integration\AvatarEasySocial constructor.
 	 *
 	 * @param   object  $params  params
 	 *
-	 * @since   Kunena 6.0
+	 * @since  Kunena 6.0
 	 */
 	public function __construct(object $params)
 	{
@@ -48,10 +48,11 @@ class AvatarCommunity extends KunenaAvatar
 	}
 
 	/**
-	 * @param   array  $userlist
+	 * @param   array  $userlist  userlist
 	 *
 	 * @return  void
-	 * @since   Kunena 6.0
+	 *
+	 * @since   Kunena 5.0
 	 */
 	public function load(array $userlist): void
 	{
@@ -68,11 +69,11 @@ class AvatarCommunity extends KunenaAvatar
 	/**
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 */
 	public function getEditURL(): string
 	{
-		return CRoute::_('index.php?option=com_community&view=profile&task=uploadAvatar');
+		return FRoute::profile(['layout' => 'edit']);
 	}
 
 	/**
@@ -80,32 +81,18 @@ class AvatarCommunity extends KunenaAvatar
 	 * @param   int         $sizex  sizex
 	 * @param   int         $sizey  sizey
 	 *
-	 * @return  string
+	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 5.0
 	 *
-	 * @throws  Exception
+	 * @throws Exception
 	 */
 	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
-		$kuser = KunenaFactory::getUser($user);
+		$user = KunenaFactory::getUser($user);
 
-		// Get CUser object
-		$user = CFactory::getUser($kuser->userid);
+		$user = FD::user($user->userid);
 
-		if ($kuser->userid == 0)
-		{
-			$avatar = str_replace(Uri::root(true), '', COMMUNITY_PATH_ASSETS) . "user-Male.png";
-		}
-		elseif ($sizex <= 90)
-		{
-			$avatar = $user->getThumbAvatar();
-		}
-		else
-		{
-			$avatar = $user->getAvatar();
-		}
-
-		return $avatar;
+		return $user->getAvatar(SOCIAL_AVATAR_LARGE);
 	}
 }

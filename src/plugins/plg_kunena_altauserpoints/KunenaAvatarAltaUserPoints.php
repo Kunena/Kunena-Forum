@@ -10,24 +10,20 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Altauserpoints;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\AvatarAltaUserPoints
  *
  * @since   Kunena 6.0
  */
-class AvatarAltaUserPoints extends KunenaAvatar
+class KunenaAvatarAltaUserPoints extends KunenaAvatar
 {
 	/**
 	 * @var     null

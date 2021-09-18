@@ -76,6 +76,8 @@ class plgKunenaCommunity extends CMSPlugin
 			return;
 		}
 
+		require_once __DIR__ . "/KunenaAccessCommunity.php";
+
 		return new KunenaAccessCommunity($this->params);
 	}
 
@@ -87,15 +89,17 @@ class plgKunenaCommunity extends CMSPlugin
 	 */
 	public function onKunenaGetLogin()
 	{
-	    if (!isset($this->params))
-	    {
-	        return;
-	    }
-	    
-	    if (!$this->params->get('login', 1))
+		if (!isset($this->params))
 		{
 			return;
 		}
+
+		if (!$this->params->get('login', 1))
+		{
+			return;
+		}
+
+		require_once __DIR__ . "/KunenaLoginCommunity.php";
 
 		return new KunenaLoginCommunity($this->params);
 	}
@@ -118,7 +122,9 @@ class plgKunenaCommunity extends CMSPlugin
 			return;
 		}
 
-		return new AvatarCommunity($this->params);
+		require_once __DIR__ . "/KunenaAvatarCommunity.php";
+
+		return new KunenaAvatarCommunity($this->params);
 	}
 
 	/**
@@ -138,6 +144,8 @@ class plgKunenaCommunity extends CMSPlugin
 		{
 			return;
 		}
+
+		require_once __DIR__ . "/KunenaProfileCommunity.php";
 
 		return new KunenaProfileCommunity($this->params);
 	}
@@ -160,6 +168,8 @@ class plgKunenaCommunity extends CMSPlugin
 			return;
 		}
 
+		require_once __DIR__ . "/KunenaPrivateCommunity.php";
+
 		return new KunenaPrivateCommunity($this->params);
 	}
 
@@ -181,6 +191,8 @@ class plgKunenaCommunity extends CMSPlugin
 		{
 			return;
 		}
+
+		require_once __DIR__ . "/KunenaActivityCommunity.php";
 
 		return new KunenaActivityCommunity($this->params);
 	}

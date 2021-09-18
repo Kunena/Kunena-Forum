@@ -10,13 +10,11 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 
 defined('_JEXEC') or die();
 
-use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use function defined;
 
 /**
  * Class KunenaIntegrationComprofiler
@@ -64,7 +62,7 @@ class KunenaIntegrationComprofiler
 	 *
 	 * @throws Exception
 	 */
-	public static function trigger(string $event, object $params): void
+	public static function trigger(string $event, array $params): void
 	{
 		global $_PLUGINS;
 		$config            = KunenaFactory::getConfig();

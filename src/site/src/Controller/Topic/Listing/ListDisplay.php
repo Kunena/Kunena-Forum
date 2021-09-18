@@ -60,7 +60,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $headerText;
-	public $topic;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

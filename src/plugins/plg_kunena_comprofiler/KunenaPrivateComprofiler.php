@@ -10,15 +10,12 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
-
 defined('_JEXEC') or die();
 
 use CBLib\Application\Application;
 use CBLib\Language\CBTxt;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
-use function defined;
 
 /**
  * Class KunenaPrivateComprofiler
@@ -128,7 +125,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxURL(): string
+	public function getInboxURL()
 	{
 		global $_CB_framework;
 
@@ -147,7 +144,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function getCBUserid(): int
+	protected function getCBUserid()
 	{
 		global $_CB_framework;
 
@@ -181,7 +178,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxLink(string $text): string
+	public function getInboxLink(string $text)
 	{
 		global $_CB_framework;
 

@@ -219,7 +219,7 @@ class KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxURL(): string
+	public function getInboxURL()
 	{
 		return '';
 	}
@@ -231,7 +231,7 @@ class KunenaPrivate
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getInboxLink(string $text): string
+	public function getInboxLink(string $text)
 	{
 		return '';
 	}

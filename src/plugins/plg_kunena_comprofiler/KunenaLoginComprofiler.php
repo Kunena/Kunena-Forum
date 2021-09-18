@@ -10,16 +10,12 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
-
 defined('_JEXEC') or die();
 
 use CBLib\Registry\Registry;
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 /**
  * Class KunenaLoginComprofiler
@@ -144,7 +140,7 @@ class KunenaLoginComprofiler
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getRegistrationURL(): string
+	public function getRegistrationURL()
 	{
 		global $_CB_framework, $ueConfig;
 

@@ -10,15 +10,11 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\AvatarComprofiler
@@ -92,21 +88,21 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 			$cbUser = CBuser::getInstance($user->userid);
 		}
 
-		if ($cbUser === null)
-		{
+		/*if ($cbUser === null)
+		{*/
 			if ($sizex <= 144)
 			{
 				return selectTemplate() . 'images/avatar/tnnophoto_n.png';
 			}
 
 			return selectTemplate() . 'images/avatar/nophoto_n.png';
-		}
+		//}
 
-		if ($sizex <= 144)
+		/*if ($sizex <= 144)
 		{
 			return $cbUser->getField('avatar', null, 'csv');
 		}
 
-		return $cbUser->getField('avatar', null, 'csv', 'none', 'list');
+		return $cbUser->getField('avatar', null, 'csv', 'none', 'list');*/
 	}
 }

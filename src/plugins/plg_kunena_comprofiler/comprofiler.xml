@@ -10,7 +10,7 @@
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_COMPROFILER_DESCRIPTION</description>
-    <namespace path="src">Kunena\Forum\Plugin\Kunena\Comprofiler</namespace>
+    <namespace>Kunena\Forum\Plugin\Kunena\Comprofiler</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="comprofiler">comprofiler.php</filename>

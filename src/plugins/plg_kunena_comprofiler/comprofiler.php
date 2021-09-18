@@ -17,12 +17,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaAccessComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaActivityComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaAvatarComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaLoginComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaPrivateComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaProfileComprofiler;
 
 /**
  * Class plgKunenaComprofiler
@@ -123,7 +117,7 @@ class plgKunenaComprofiler extends CMSPlugin
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onKunenaPrepare(string $context, int &$item, object $params, $page = 0): void
+	public function onKunenaPrepare(string $context, &$item, object $params, $page = 0): void
 	{
 		if ($context == 'kunena.user')
 		{
@@ -156,7 +150,7 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/access.php";
+		require_once __DIR__ . "/KunenaAccessComprofiler.php";
 
 		return new KunenaAccessComprofiler($this->params);
 	}
@@ -180,7 +174,7 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/login.php";
+		require_once __DIR__ . "/KunenaLoginComprofiler.php";
 
 		return new KunenaLoginComprofiler($this->params);
 	}
@@ -204,6 +198,8 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
+		require_once __DIR__ . "/KunenaAvatarComprofiler.php";
+
 		return new KunenaAvatarComprofiler($this->params);
 	}
 
@@ -226,7 +222,7 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/profile.php";
+		require_once __DIR__ . "/KunenaProfileComprofiler.php";
 
 		return new KunenaProfileComprofiler($this->params);
 	}
@@ -250,7 +246,7 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/private.php";
+		require_once __DIR__ . "/KunenaPrivateComprofiler.php";
 
 		return new KunenaPrivateComprofiler($this->params);
 	}
@@ -275,7 +271,7 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/activity.php";
+		require_once __DIR__ . "/KunenaActivityComprofiler.php";
 
 		return new KunenaActivityComprofiler($this->params);
 	}

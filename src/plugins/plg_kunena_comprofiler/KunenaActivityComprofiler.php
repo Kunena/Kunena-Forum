@@ -10,15 +10,11 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
-
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
-use function defined;
 
 /**
  * Class KunenaActivityComprofiler
@@ -45,7 +41,6 @@ class KunenaActivityComprofiler extends KunenaActivity
 	{
 		$this->params = $params;
 
-		parent::__construct();
 	}
 
 	/**

@@ -417,8 +417,6 @@ class KunenaCategory extends KunenaDatabaseObject
 		{
 			$this->sectionheaderdesc = '';
 		}
-
-		parent::__construct($properties);
 	}
 
 	/**

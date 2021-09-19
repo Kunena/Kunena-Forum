@@ -74,8 +74,6 @@ class KunenaCategoryUser extends CMSObject
 		$this->_exists     = false;
 		$this->category_id = $category;
 		$this->user_id     = KunenaUserHelper::get($user)->userid;
-
-		parent::__construct($category);
 	}
 
 	/**

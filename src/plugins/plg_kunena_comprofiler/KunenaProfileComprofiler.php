@@ -84,6 +84,8 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
+	 * Get the URL for userlist from CB
+	 * 
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
@@ -109,10 +111,12 @@ class KunenaProfileComprofiler extends KunenaProfile
 	}
 
 	/**
-	 * @param   int     $userid     userid
-	 * @param   string  $task       task
-	 * @param   bool    $xhtml      xhtml
-	 * @param   string  $avatarTab  avatarTab
+	 * Get the profile URL from CB
+	 * 
+	 * @param   int          $userid     userid
+	 * @param   string|null  $task       task
+	 * @param   bool         $xhtml      xhtml
+	 * @param   string       $avatarTab  avatarTab
 	 *
 	 * @return  boolean|string
 	 *
@@ -120,7 +124,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
+	public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = '')
 	{
 		global $_CB_framework;
 

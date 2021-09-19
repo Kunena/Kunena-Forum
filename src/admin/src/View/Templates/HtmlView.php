@@ -212,49 +212,6 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws  Exception
 	 */
-	public function displayChooseLess(): void
-	{
-		$this->setToolBarChooseLess();
-		$this->templatename = $this->app->getUserState('kunena.templatename');
-
-		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/custom.less';
-
-		if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/less/'))
-		{
-			$fp = fopen($file, "w");
-			fwrite($fp, "");
-			fclose($fp);
-		}
-
-		$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/less';
-		$this->files = Folder::files($this->dir, '\.less$', false, false);
-
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarChooseLess(): void
-	{
-		ToolbarHelper::spacer();
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		ToolbarHelper::custom('editless', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
-		ToolbarHelper::spacer();
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
 	public function displayEditLess(): void
 	{
 		$this->setToolBarEditLess();
@@ -279,53 +236,6 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::apply('applyLess');
 		ToolbarHelper::spacer();
 		ToolbarHelper::save('saveLess');
-		ToolbarHelper::spacer();
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayChooseCss(): void
-	{
-		$this->setToolBarChooseCss();
-		$this->templatename = $this->app->getUserState('kunena.templatename');
-
-		$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/custom.css';
-
-		if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
-		{
-			if (!Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
-			{
-				Folder::create(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/');
-			}
-
-			$fp = fopen($file, "w");
-			fwrite($fp, "");
-			fclose($fp);
-		}
-
-		$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/css';
-		$this->files = Folder::files($this->dir, '\.css$', false, false);
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarChooseCss(): void
-	{
-		ToolbarHelper::spacer();
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		ToolbarHelper::custom('editCss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();

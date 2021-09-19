@@ -42,28 +42,76 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->form    = $this->get('Form');
-		$this->params  = $this->get('editparams');
-		$this->details = $this->get('templatedetails');
-		$this->templatename  = Factory::getApplication()->getUserState('kunena.edit.templatename');
-		$template      = KunenaTemplate::getInstance($this->templatename);
-		$template->initializeBackend();
+		$app = Factory::getApplication();
 
-		$this->templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
-
-		if (!file_exists($this->templateFile) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/config/'))
+		if ($this->getLayout() == "chooseCss")
 		{
-			$ourFileHandle = fopen($this->templateFile, 'w');
+			$this->setToolBarChooseCss();
+			$this->templatename = $app->getUserState('kunena.templatename');
 
-			if ($ourFileHandle)
+			$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/custom.css';
+
+			if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
 			{
-				fclose($ourFileHandle);
+				if (!Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
+				{
+					Folder::create(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/');
+				}
+
+				$fp = fopen($file, "w");
+				fwrite($fp, "");
+				fclose($fp);
 			}
+
+			$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/css';
+			$this->files = Folder::files($this->dir, '\.css$', false, false);
+
+			return parent::display($tpl);
 		}
+		else if($this->getLayout() == "ChooseLess")
+		{
+			$this->setToolBarChooseLess();
+			$this->templatename = $app->getUserState('kunena.templatename');
 
-		$this->addToolbar();
+			$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/custom.less';
 
-		return parent::display($tpl);
+			if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/less/'))
+			{
+				$fp = fopen($file, "w");
+				fwrite($fp, "");
+				fclose($fp);
+			}
+
+			$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/less';
+			$this->files = Folder::files($this->dir, '\.less$', false, false);
+
+			return parent::display($tpl);
+		}
+		else
+		{
+			$this->form    = $this->get('Form');
+			$this->params  = $this->get('editparams');
+			$this->details = $this->get('templatedetails');
+			$this->templatename  = Factory::getApplication()->getUserState('kunena.edit.templatename');
+			$template      = KunenaTemplate::getInstance($this->templatename);
+			$template->initializeBackend();
+
+			$this->templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
+
+			if (!file_exists($this->templateFile) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/config/'))
+			{
+				$ourFileHandle = fopen($this->templateFile, 'w');
+
+				if ($ourFileHandle)
+				{
+					fclose($ourFileHandle);
+				}
+			}
+
+			$this->addToolbar();
+
+			return parent::display($tpl);
+		}
 	}
 
 	/**
@@ -87,5 +135,37 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarChooseCss(): void
+	{
+		ToolbarHelper::spacer();
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		ToolbarHelper::custom('editCss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		ToolbarHelper::spacer();
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarChooseLess(): void
+	{
+		ToolbarHelper::spacer();
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		ToolbarHelper::custom('editless', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
+		ToolbarHelper::spacer();
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
 	}
 }

@@ -1112,8 +1112,8 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @param   bool    $xhtml  xhtml
-	 * @param   string  $task   task
+	 * @param   bool         $xhtml  xhtml
+	 * @param   string|null  $task   task
 	 *
 	 * @return  boolean|void
 	 *

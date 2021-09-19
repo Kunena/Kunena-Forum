@@ -102,28 +102,6 @@ class TemplatesController extends FormController
 	}
 
 	/**
-	 * Add
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function add()
-	{
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=add", false));
-	}
-
-	/**
 	 * Install the new template
 	 *
 	 * @return  boolean|void

@@ -136,7 +136,7 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
-		ToolbarHelper::addNew('template.add', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
+		ToolbarHelper::addNew('template.addnew', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
 		ToolbarHelper::custom('template.edit', 'edit', 'edit', 'COM_KUNENA_EDIT');
 		ToolbarHelper::divider();
 		ToolbarHelper::custom('template.publish', 'star', 'star', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');

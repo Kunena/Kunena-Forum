@@ -124,44 +124,6 @@ class TemplatesController extends FormController
 	}
 
 	/**
-	 * Edit
-	 *
-	 * @param   null  $key     key
-	 * @param   null  $urlVar  url var
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function edit($key = null, $urlVar = null)
-	{
-		$cid      = $this->app->input->get('cid', [], 'array');
-		$template = array_shift($cid);
-
-		if (!$template)
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
-
-			return;
-		}
-
-		$tBaseDir = KunenaPath::clean(KPATH_SITE . '/template');
-
-		if (!is_dir($tBaseDir . '/' . $template))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND'));
-
-			return;
-		}
-
-		$template = KunenaPath::clean($template);
-		$this->app->setUserState('kunena.edit.templatename', $template);
-
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=edit&name={$template}", false));
-	}
-
-	/**
 	 * Install the new template
 	 *
 	 * @return  boolean|void
@@ -369,33 +331,6 @@ class TemplatesController extends FormController
 	}
 
 	/**
-	 * Choose less
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function chooseLess(): void
-	{
-		$template     = $this->app->input->getArray(['cid' => '']);
-		$templatename = array_shift($template['cid']);
-		$this->app->setUserState('kunena.templatename', $templatename);
-
-		$tBaseDir = KunenaPath::clean(KPATH_SITE . '/template');
-
-		if (!is_dir($tBaseDir . '/' . $templatename . '/assets/less'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_LESS'), 'warning');
-
-			return;
-		}
-
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseLess", false));
-	}
-
-	/**
 	 * Edit Less
 	 *
 	 * @return  void
@@ -421,25 +356,6 @@ class TemplatesController extends FormController
 		$this->app->setUserState('kunena.editless.filename', $filename);
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editless", false));
-	}
-
-	/**
-	 * Choose Css
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function chooseCss(): void
-	{
-		$template     = $this->app->input->getArray(['cid' => '']);
-		$templatename = array_shift($template['cid']);
-
-		$this->app->setUserState('kunena.templatename', $templatename);
-
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseCss", false));
 	}
 
 	/**

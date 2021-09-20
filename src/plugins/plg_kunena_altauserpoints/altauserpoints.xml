@@ -14,9 +14,9 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="altauserpoints">altauserpoints.php</filename>
-        <filename>avatar.php</filename>
-        <filename>activity.php</filename>
-        <filename>profile.php</filename>
+        <filename>KunenaActivityAltaUserPoints.php</filename>
+        <filename>KunenaAvatarAltaUserPoints.php</filename>
+        <filename>KunenaProfileAltaUserPoints.php</filename>
         <folder>language</folder>
     </files>
     <config>

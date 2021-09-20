@@ -14,13 +14,13 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="comprofiler">comprofiler.php</filename>
-        <filename>access.php</filename>
-        <filename>activity.php</filename>
-        <filename>avatar.php</filename>
-        <filename>integration.php</filename>
-        <filename>login.php</filename>
-        <filename>private.php</filename>
-        <filename>profile.php</filename>
+        <filename>KunenaAccessComprofiler.php</filename>
+        <filename>KunenaActivityComprofiler.php</filename>
+        <filename>KunenaAvatarComprofiler.php</filename>
+        <filename>KunenaIntegrationComprofiler.php</filename>
+        <filename>KunenaLoginComprofiler.php</filename>
+        <filename>KunenaPrivateComprofiler.php</filename>
+        <filename>KunenaProfileComprofiler.php</filename>
         <folder>language</folder>
     </files>
     <config>

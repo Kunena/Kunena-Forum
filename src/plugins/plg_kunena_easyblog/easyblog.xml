@@ -14,8 +14,8 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="easyblog">easyblog.php</filename>
-        <filename>avatar.php</filename>
-        <filename>profile.php</filename>
+        <filename>KunenaAvatarEasyblog.php</filename>
+        <filename>KunenaProfileEasyblog.php</filename>
         <folder>language</folder>
     </files>
     <config>

@@ -14,12 +14,12 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="community">community.php</filename>
-        <filename>access.php</filename>
-        <filename>activity.php</filename>
-        <filename>avatar.php</filename>
-        <filename>login.php</filename>
-        <filename>private.php</filename>
-        <filename>profile.php</filename>
+        <filename>KunenaAccessCommunity.php</filename>
+        <filename>KunenaActivityCommunity.php</filename>
+        <filename>KunenaAvatarCommunity.php</filename>
+        <filename>KunenaLoginCommunity.php</filename>
+        <filename>KunenaPrivateCommunity.php</filename>
+        <filename>KunenaProfileCommunity.php</filename>
         <folder>language</folder>
     </files>
     <config>

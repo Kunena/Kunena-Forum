@@ -285,14 +285,17 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
 			$installed = $db->loadResult();
 
-			if (version_compare($installed, '5.2.99', '<'))
+			if (!empty($installed))
 			{
-				$query = "ALTER TABLE `#__kunena_version` ADD `sampleData` TINYINT(4) NOT NULL default '0' AFTER `versionname`;";
-				$db->setQuery($query);
+				if (version_compare($installed, '5.2.99', '<'))
+				{
+					$query = "ALTER TABLE `#__kunena_version` ADD `sampleData` TINYINT(4) NOT NULL default '0' AFTER `versionname`;";
+					$db->setQuery($query);
 
-				$db->execute();
+					$db->execute();
 
-				$upgrade = 1;
+					$upgrade = 1;
+				}
 			}
 		}
 

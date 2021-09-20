@@ -17,14 +17,14 @@
         <folder>badges</folder>
         <folder>points</folder>
         <folder>language</folder>
-        <filename>activity.php</filename>
-        <filename>avatar.php</filename>
+        <filename>KunenaActivityEasySocial.php</filename>
+        <filename>KunenaAvatarEasySocial.php</filename>
         <filename plugin="easysocial">easysocial.php</filename>
         <filename>easysocial.xml</filename>
         <filename>index.html</filename>
-        <filename>login.php</filename>
-        <filename>private.php</filename>
-        <filename>profile.php</filename>
+        <filename>KunenaLoginEasySocial.php</filename>
+        <filename>KunenaPrivateEasySocial.php</filename>
+        <filename>KunenaProfileEasySocial.php</filename>
     </files>
     <config>
         <fields name="params">

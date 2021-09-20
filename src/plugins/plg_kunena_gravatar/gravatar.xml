@@ -14,7 +14,7 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <files>
         <filename plugin="gravatar">gravatar.php</filename>
-        <filename>avatar.php</filename>
+        <filename>KunenaAvatarGravatar.php</filename>
         <folder>language</folder>
     </files>
     <config>

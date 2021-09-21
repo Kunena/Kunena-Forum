@@ -44,6 +44,7 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_image rankImage varchar(255);</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD reddit varchar(75) NULL AFTER `youtube`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD github varchar(75) NULL AFTER `google`;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD vimeo varchar(75) NULL AFTER `qzone`;</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

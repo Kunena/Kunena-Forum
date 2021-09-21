@@ -456,6 +456,8 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `weibo`            varchar(75)  NULL,
     `wechat`           varchar(75)  NULL,
     `yim`              varchar(75)  NULL,
+    `pinterest`        varchar(75)  NULL,
+    `odnoklassniki`    varchar(75)  NULL,
     `websitename`      varchar(50)  NULL,
     `websiteurl`       varchar(50)  NULL,
     `rank`             tinyint(4)   NOT NULL default '0',

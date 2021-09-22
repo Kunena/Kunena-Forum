@@ -58,7 +58,7 @@ class TemplateController extends FormController
 	{
 		parent::__construct($config, $factory, $app, $input);
 
-		$this->baseurl = 'administrator/index.php?option=com_kunena&view=template';
+		$this->baseurl = 'administrator/index.php?option=com_kunena&view=templates';
 	}
 
 	/**

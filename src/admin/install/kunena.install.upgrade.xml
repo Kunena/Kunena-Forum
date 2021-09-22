@@ -46,7 +46,6 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD github varchar(75) NULL AFTER `google`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD vimeo varchar(75) NULL AFTER `qzone`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD pinterest varchar(75) NULL AFTER `yim`;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD odnoklassniki varchar(75) NULL AFTER `yim`;</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

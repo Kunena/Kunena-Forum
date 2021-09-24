@@ -59,7 +59,7 @@ $wa->useScript('multiselect');
 						</tfoot>
 						<tbody>
 						<?php foreach ($this->templates as $id => $row)
-							: 
+							:
 							?>
 							<tr>
 								<td>
@@ -81,7 +81,7 @@ $wa->useScript('multiselect');
 									<?php if ($row->published == 1)
 										:
 										?>
-										<a class="tbody-icon jgrid" title="Default"><span
+										<a class="tbody-icon disabled jgrid hasTooltip" title="Default"><span
 													class="icon-featured"></span></a>
 										
 									<?php else

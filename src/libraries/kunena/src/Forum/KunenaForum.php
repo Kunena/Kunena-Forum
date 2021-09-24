@@ -376,7 +376,7 @@ abstract class KunenaForum
 
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('sampleData')->from('#__kunena_version')->order('id');
+		$query->select('sampleData')->from('#__kunena_version')->order('id DESC');
 		$query->setLimit(1);
 		$db->setQuery($query);
 

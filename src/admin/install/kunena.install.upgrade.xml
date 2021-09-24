@@ -46,6 +46,8 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD github varchar(75) NULL AFTER `google`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD vimeo varchar(75) NULL AFTER `qzone`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD pinterest varchar(75) NULL AFTER `yim`;</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE topic_ordering topicOrdering varchar(16)  NOT NULL default 'lastpost';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE `ordering` `ordering` INT(11) NOT NULL DEFAULT '0';</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

@@ -269,7 +269,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
 										<?php echo $date->toSql(); ?>
                                     </td>
                                     <td class="center">
-										<?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
+										<?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType((int) $item->type)) : ''; ?>
                                     </td>
                                     <td class="center">
 										<?php echo !$this->group || isset($this->group['operation']) ? Text::_("COM_KUNENA_{$item->operation}") : ''; ?>
@@ -330,7 +330,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                                 <div>
 													<textarea style="margin-top: -3000px"
                                                               id="report_final<?php echo $item->id; ?>"
-                                                              for="report_final<?php echo $item->id; ?>"><?php echo KunenaParser::plainBBCode($item->data); ?></textarea>
+                                                              for="report_final<?php echo $item->id; ?>"><?php echo KunenaParser::plainBBCode((string) $item->data); ?></textarea>
                                                     <pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
                                                 </div>
                                             </div>

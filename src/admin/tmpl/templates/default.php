@@ -82,7 +82,7 @@ $wa->useScript('multiselect');
 										:
 										?>
 										<a class="tbody-icon jgrid" title="Default"><span
-													class="icon-featured"></span></a>
+													class="icon-featured" style="color: green; border: 2px solid green;"></span></a>
 										
 									<?php else
 

@@ -87,8 +87,8 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		$token  = Session::getFormToken();
 		$Itemid = KunenaRoute::fixMissingItemID();
 
-		$task   = "index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}&{$token}=1";
-		$layout = "index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}";
+		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}&{$token}=1";
+		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}";
 
 		$this->messageButtons = new Registry;
 		$this->message_closed = null;
@@ -136,7 +136,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 			{
 				$this->messageButtons->set(
 					'reply',
-					$this->getButton($layout, 'reply', 'message', 'communication', 'reply', $button)
+					$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', $button)
 				);
 			}
 

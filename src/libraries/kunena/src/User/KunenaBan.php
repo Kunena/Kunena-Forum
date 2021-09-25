@@ -138,8 +138,6 @@ class KunenaBan extends parentAlias
 		// Always load the data -- if item does not exist: fill empty data
 		$this->load($identifier);
 		$this->_db = Factory::getDBO();
-
-		parent::__construct($identifier);
 	}
 
 	/**
@@ -806,6 +804,11 @@ class KunenaBan extends parentAlias
 		if ($isnew && $updateOnly)
 		{
 			return true;
+		}
+
+		if (!$isnew)
+		{
+			$table->exists(true);
 		}
 
 		if ($this->userid)

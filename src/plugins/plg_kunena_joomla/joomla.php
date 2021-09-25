@@ -13,7 +13,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
  * Class plgKunenaJoomla
@@ -22,6 +21,23 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
  */
 class plgKunenaJoomla extends CMSPlugin
 {
+	/**
+	 * plgKunenaCommunity constructor.
+	 *
+	 * @param   DispatcherInterface  &$subject  The object to observe
+	 * @param   array                 $config   An optional associative array of configuration settings.
+	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
+	 *                                          (this list is not meant to be comprehensive).
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function __construct(&$subject, $config)
+	{
+		parent::__construct($subject, $config);
+
+		$this->loadLanguage('plg_kunena_joomla.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_joomla.sys', KPATH_ADMIN);
+	}
+
 	/**
 	 * @return  false|KunenaAccessJoomla
 	 *

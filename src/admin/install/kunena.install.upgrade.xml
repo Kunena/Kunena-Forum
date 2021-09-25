@@ -23,7 +23,7 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_image rankImage varchar(255);</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD reddit varchar(75) NULL AFTER `youtube`;</query>
         </version>
-        <version version="6.0.0-BETA4"
+        <version version="6.0.0-BETA4-DEV"
                  versiondate="2021-09-25"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD github varchar(75) NULL AFTER `google`;</query>

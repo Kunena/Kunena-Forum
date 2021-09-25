@@ -2,8 +2,8 @@
 <!DOCTYPE comupgrade>
 <comupgrade version="1.0">
     <upgrade>
-        <version version="6.0.0-BETA3"
-                 versiondate="2021-09-12"
+        <version version="6.0.0-BETA4-DEV"
+                 versiondate="2021-09-25"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE parent_id parentid int(11) NULL default '0';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE pub_access pubAccess int(11) NOT NULL default '1';</query>
@@ -22,10 +22,6 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_special rankSpecial tinyint(1) unsigned   NOT NULL default '0';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_image rankImage varchar(255);</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD reddit varchar(75) NULL AFTER `youtube`;</query>
-        </version>
-        <version version="6.0.0-BETA4-DEV"
-                 versiondate="2021-09-25"
-                 versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD github varchar(75) NULL AFTER `google`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD vimeo varchar(75) NULL AFTER `qzone`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD pinterest varchar(75) NULL AFTER `yim`;</query>

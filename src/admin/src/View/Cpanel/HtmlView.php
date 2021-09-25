@@ -21,8 +21,8 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
+use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 
 /**
  * About view for Kunena cpanel
@@ -43,13 +43,14 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->addToolbar();
 
+		$lang = Factory::getApplication()->getLanguage();
+		$lang->load('mod_sampleData', JPATH_ADMINISTRATOR);
+
 		if (!KunenaForum::versionSampleData())
 		{
 			Factory::getApplication()->getDocument()->getWebAssetManager()
 				->registerAndUseScript('mod_sampleData', 'mod_sampleData/sampleData-process.js', [], ['defer' => true], ['core']);
 
-			$lang = Factory::getApplication()->getLanguage();
-			$lang->load('mod_sampleData', JPATH_ADMINISTRATOR);
 
 			Text::script('MOD_SAMPLEDATA_CONFIRM_START');
 			Text::script('MOD_SAMPLEDATA_ITEM_ALREADY_PROCESSED');
@@ -109,7 +110,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// The column "state" in kunena_version indicate from which version to update
-		$db    = Factory::getDbo();
+		$db = Factory::getDbo();
 		$db->setQuery("SELECT state FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
 		$stateVersion = $db->loadResult();
 
@@ -122,7 +123,7 @@ class HtmlView extends BaseHtmlView
 				return false;
 			}
 		}
-		else 
+		else
 		{
 			return false;
 		}

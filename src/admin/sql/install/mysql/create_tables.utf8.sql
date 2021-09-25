@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `#__kunena_aliases`
 (
-    `alias` varchar(255) NOT NULL,
+    `alias` varchar(191) NOT NULL,
     `type`  varchar(10)  NOT NULL,
     `item`  varchar(32)  NOT NULL,
     `state` tinyint(4)   NOT NULL default '0',
@@ -40,12 +40,12 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments`
     `protected`     tinyint(4)   NOT NULL default '0',
     `hash`          char(32)     NULL,
     `size`          int(11)      NULL,
-    `folder`        varchar(255) NOT NULL,
+    `folder`        varchar(191) NOT NULL,
     `filetype`      varchar(20)  NOT NULL,
     `filename`      varchar(190) NOT NULL,
     `filename_real` varchar(190) NOT NULL default ''
         COMMENT 'Filename for downloads',
-    `caption`       varchar(255) NOT NULL default '',
+    `caption`       varchar(191) NOT NULL default '',
     `inline`        tinyint(4)   NOT NULL default '0',
     PRIMARY KEY (id),
     KEY `mesid` (mesid),
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `id`               int(11)      NOT NULL auto_increment,
     `parentid`         int(11)      NULL     default '0',
     `name`             tinytext     NULL,
-    `alias`            varchar(255) NOT NULL,
+    `alias`            varchar(191) NOT NULL,
     `icon`             varchar(20)  NOT NULL,
     `icon_id`          tinyint(4)   NOT NULL default '0',
     `locked`           tinyint(4)   NOT NULL default '0',
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `class_sfx`        varchar(20)  NOT NULL,
     `allowPolls`       tinyint(4)   NOT NULL default '0',
     `topicOrdering`    varchar(16)  NOT NULL default 'lastpost',
-    `iconset`          varchar(255) NULL     DEFAULT NULL,
+    `iconset`          varchar(191) NULL     DEFAULT NULL,
     `numTopics`        mediumint(8) NOT NULL default '0',
     `numPosts`         mediumint(8) NOT NULL default '0',
     `last_topic_id`    int(11)      NOT NULL default '0',
@@ -289,10 +289,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private_user_map`
 CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
 (
     `rankId`      mediumint(8) unsigned NOT NULL auto_increment,
-    `rankTitle`   varchar(255)          NOT NULL default '',
+    `rankTitle`   varchar(191)          NOT NULL default '',
     `rankMin`     mediumint(8) unsigned NOT NULL default '0',
     `rankSpecial` tinyint(1) unsigned   NOT NULL default '0',
-    `rankImage`   varchar(255)          NOT NULL default '',
+    `rankImage`   varchar(191)          NOT NULL default '',
     PRIMARY KEY (rankId)
 )
     ENGINE = InnoDB
@@ -410,14 +410,14 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
 (
     `userid`           int(11)      NOT NULL default '0',
     `status`           tinyint(1)   NOT NULL DEFAULT '0',
-    `status_text`      varchar(255) NOT NULL DEFAULT '',
+    `status_text`      varchar(191) NOT NULL DEFAULT '',
     `view`             varchar(8)   NOT NULL default '',
     `signature`        text         NULL,
     `moderator`        int(11)      NULL     default '0',
     `banned`           datetime     NULL     DEFAULT '1000-01-01 00:00:00',
     `ordering`         int(11)      NULL     default '0',
     `posts`            int(11)      NULL     default '0',
-    `avatar`           varchar(255) NULL,
+    `avatar`           varchar(191) NULL,
     `timestamp`        int(11)      NULL     default '0',
     `karma`            int(11)      NULL     default '0',
     `karma_time`       int(11)      NULL     default '0',

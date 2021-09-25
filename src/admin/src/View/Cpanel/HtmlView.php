@@ -110,7 +110,7 @@ class HtmlView extends BaseHtmlView
 
 		// The column "state" in kunena_version indicate from which version to update
 		$db    = Factory::getDbo();
-		$db->setQuery("SELECT state FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
+		/*$db->setQuery("SELECT state FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
 		$stateVersion = $db->loadResult();
 
 		if (!empty($stateVersion))
@@ -125,7 +125,7 @@ class HtmlView extends BaseHtmlView
 		else 
 		{
 			return false;
-		}
+		}*/
 
 		$curversion = KunenaForum::version();
 
@@ -160,14 +160,14 @@ class HtmlView extends BaseHtmlView
 					{
 						$this->addStatus($result ['action'] . ' ' . $result ['name'], $result ['success']);
 					}*/
+
+					$app->enqueueMessage(Text::sprintf('COM_KUNENA_INSTALL_VERSION_UPGRADED', $vernum));
 				}
 
 				$query = "UPDATE `#__kunena_version` SET state='';";
 				$db->setQuery($query);
 
 				$db->execute();
-
-				$app->enqueueMessage(Text::sprintf('COM_KUNENA_INSTALL_VERSION_UPGRADED', $vernum));
 
 				// Database install continues
 				//return false;

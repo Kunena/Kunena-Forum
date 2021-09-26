@@ -313,7 +313,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$sampleData = 0;
 			if ($upgrade == 1)
 			{
-				$state = 'joomla';
+				$state = $installed;
 				$sampleData = 1;
 			}
 

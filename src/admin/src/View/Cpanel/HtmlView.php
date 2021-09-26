@@ -116,19 +116,12 @@ class HtmlView extends BaseHtmlView
 
 		if (!empty($stateVersion))
 		{
-			$status[$stateVersion] = 1;
-
-			if ($stateVersion != 'joomla')
-			{
-				return false;
-			}
+			$curversion = $stateVersion;
 		}
 		else
 		{
 			return false;
 		}
-
-		$curversion = KunenaForum::version();
 
 		$modelInstall = new KunenaModelInstall();
 

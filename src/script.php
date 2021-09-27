@@ -51,6 +51,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			'0'   => '7.3.5', // Preferred version
 		],
 		'MySQL'   => [
+			'8.0' => '8.0.0',
 			'5.7' => '5.7.8',
 			'5.6' => '5.6.5',
 			'0'   => '5.6.5', // Preferred version

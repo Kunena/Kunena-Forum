@@ -89,6 +89,7 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD pinterest varchar(75) NULL AFTER `yim`;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE topic_ordering topicOrdering varchar(16)  NOT NULL default 'lastpost';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE `ordering` `ordering` INT(11) NOT NULL DEFAULT '0';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_kunena_user_topics` CHANGE `params` `params` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

@@ -189,6 +189,8 @@ class KunenaCategoryUser extends CMSObject
 		catch (Exception $e)
 		{
 			KunenaError::displayDatabaseError($e);
+
+			return false;
 		}
 
 		// Fill up \Kunena\Forum\Libraries\Forum\Category\CategoryUser object in case we created a new category.

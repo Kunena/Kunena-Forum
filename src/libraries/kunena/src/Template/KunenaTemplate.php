@@ -609,7 +609,7 @@ class KunenaTemplate
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
 		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-				  'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
+		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -1457,7 +1457,7 @@ HTML;
 			}
 
 			$xml  = simplexml_load_file($xmlfile);
-			$icon = $this->get_xml_icon($xml, $iconid, $topicicontype);
+			$icon = $this->get_xml_systemicon($xml, $iconid, $topicicontype);
 
 			if ($topicicontype == 'B5')
 			{
@@ -1502,11 +1502,20 @@ HTML;
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function get_xml_icon($src)
+	public function get_xml_icon($src, $id = 0, $style = 'src')
 	{
 		if (isset($src->icons))
 		{
-			return $this->getIconsAttributes($src->icons);
+			$icon = $src->xpath('/kunena-topicicons/icons/icon[@id=' . $id . ']');
+
+			if (!$icon)
+			{
+				$icon = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
+			}
+
+			$icon = $this->getIconsAttributes($icon);
+
+			return $icon;
 		}
 	}
 
@@ -1518,7 +1527,27 @@ HTML;
 	 */
 	private function getIconsAttributes($icon)
 	{
-		$attributes = $icon->icon[0]->attributes();
+		$attributes = $icon->attributes();
+		$icon       = new stdClass;
+		$icon->id   = (int) $attributes->id;
+		$icon->name = (string) $attributes->name;
+		$icon->b5   = (string) $attributes->b5;
+		$icon->fa   = (string) $attributes->fa;
+		$icon->src  = (string) $attributes->src;
+		$icon->new  = (string) $attributes->new;
+
+		return $icon;
+	}
+
+	/**
+	 * Retrieve icons attributes
+	 *
+	 * @return stdClass
+	 * @since Kunena 6.0
+	 */
+	private function getIconsAttributesSystem($icon)
+	{
+		$attributes = $icon[0]->attributes();
 		$icon       = new stdClass;
 		$icon->id   = (int) $attributes->id;
 		$icon->name = (string) $attributes->name;
@@ -1538,7 +1567,6 @@ HTML;
 	 * @return  stdClass|void
 	 *
 	 * @since      Kunena 5.0.0-Beta4
-	 * @deprecated Kunena 6.0
 	 */
 	public function get_xml_systemicon($src, $id = 0, $style = 'src'): StdClass
 	{
@@ -1548,15 +1576,10 @@ HTML;
 
 			if (!$icon)
 			{
-				$icon = $src->xpath('/kunena-topicIcons/icons/icon[@id=' . $id . ']');
-
-				if (!$icon)
-				{
-					$icon = $src->xpath('/kunena-topicIcons/icons/icon[@id=0]');
-				}
+				$icon = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
 			}
 
-			$icon = $this->getIconsAttributes($icon);
+			$icon = $this->getIconsAttributesSystem($icon);
 
 			return $icon;
 		}

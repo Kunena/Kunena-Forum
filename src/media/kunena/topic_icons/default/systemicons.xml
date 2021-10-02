@@ -12,7 +12,7 @@
     <description>System topic icons for Kunena</description>
 
     <icons type="system" width="48" height="48">
-        <icon id="0" name="normal" b2="comments-2" b3="comment" b4="comment" b5="comment" fa="comments"
+        <icon id="0" name="normal" b2="comments-2" b3="comment" b4="comment" b5="comments" fa="comments"
               src="normal.png"
               new="normal_new.png"/>
         <icon id="1" name="unapproved" b2="eye" b3="eye" b4="eye" b5="eye" fa="eye" src="unapproved.png"

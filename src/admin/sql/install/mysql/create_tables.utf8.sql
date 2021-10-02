@@ -360,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_categories`
     `role`        tinyint(4) NOT NULL default '0',
     `allreadtime` int(11)    NOT NULL default '0',
     `subscribed`  tinyint(4) NOT NULL default '0',
-    `params`      text       NOT NULL,
+    `params`      text       NULL,
     PRIMARY KEY (user_id, category_id),
     KEY `category_subscribed` (category_id, subscribed),
     KEY `role` (role)

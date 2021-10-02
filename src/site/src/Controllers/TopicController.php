@@ -159,6 +159,7 @@ class TopicController extends KunenaController
 		}
 
 		$attach_ids_final = [];
+
 		foreach ($attachs_id as $attach)
 		{
 			if (\is_array($attach))

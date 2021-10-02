@@ -12,9 +12,7 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
-
-use function defined;
+\defined('_JEXEC') or die();
 
 $attachment = $this->attachment;
 $location   = $attachment->getUrl();

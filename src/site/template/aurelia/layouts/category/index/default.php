@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
-use function defined;
 
 // Display time it took to create the entire page in the footer.
 $kunena_profiler = KunenaProfiler::instance();
@@ -68,7 +67,7 @@ foreach ($this->sections as $section) :
 	} ?>
     <div class="kfrontend shadow-lg rounded border section">
         <h2 class="btn-toolbar float-end">
-			<?php if (count($this->sections) > 0) : ?>
+			<?php if (\count($this->sections) > 0) : ?>
 				<?php if ($this->me->isAdmin()) : ?>
                     <a class="btn btn-outline-primary btn-sm"
                        href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
@@ -222,9 +221,9 @@ foreach ($this->sections as $section) :
 								<?php if (!empty($this->pending[$category->id])) : ?>
                                     <div class="alert alert-warning" role="alert" style="margin-top:10px;">
                                         <a class="alert-link"
-                                           href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . intval($category->id)); ?>"
+                                           href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . \intval($category->id)); ?>"
                                            title="<?php echo Text::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
-                                           rel="nofollow"><?php echo intval($this->pending[$category->id]) . ' ' . Text::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
+                                           rel="nofollow"><?php echo \intval($this->pending[$category->id]) . ' ' . Text::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
                                     </div>
 								<?php endif; ?>
                             </td>

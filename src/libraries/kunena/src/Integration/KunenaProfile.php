@@ -174,7 +174,7 @@ class KunenaProfile
 	 * @param   int   $userid  userid
 	 * @param   bool  $xhtml   xhtml
 	 *
-	 * @return  mixed
+	 * @return  void
 	 *
 	 * @since   Kunena 5.0
 	 */

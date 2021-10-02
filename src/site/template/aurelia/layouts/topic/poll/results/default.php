@@ -12,17 +12,17 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 $this->addScript('poll.js');
 
 $polllifespan = '';
+
 if ($this->show_title && !empty($this->poll->polltimetolive))
 {
 	if (!$this->polllifespan)

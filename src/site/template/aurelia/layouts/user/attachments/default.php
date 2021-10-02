@@ -12,14 +12,13 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 HTMLHelper::_('behavior.core');
 
@@ -103,7 +102,7 @@ $attachments = $this->attachments;
 							:
 							?>
                             <td class="center">
-								<?php echo HTMLHelper::_('grid.id', $i, intval($attachment->id)); ?>
+								<?php echo HTMLHelper::_('grid.id', $i, \intval($attachment->id)); ?>
                             </td>
 						<?php endif; ?>
                         <td class="center">
@@ -113,7 +112,7 @@ $attachments = $this->attachments;
 							<?php echo $attachment->getShortName(10, 5); ?>
                         </td>
                         <td>
-							<?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
+							<?php echo number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
                         </td>
                         <td>
 							<?php
@@ -121,7 +120,7 @@ $attachments = $this->attachments;
 							{
 								echo $this->getTopicLink($message->getTopic(), $message, null, null, '', null, false, true);
 							}
-							else 
+							else
 							{
 								echo Text::_('COM_KUNENA_USER_ATTACHMENT_MESSAGE_NOT_EXIST');
 							}
@@ -149,7 +148,7 @@ $attachments = $this->attachments;
                                                     id="myModalLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
                                             </div>
                                             <div class="modal-body">
-                                                <p><?php echo Text::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT')); ?></p>
+                                                <p><?php echo Text::sprintf('COM_KUNENA_FILES_DELETE_MODAL_DESCRIPTION', $attachment->getFilename(), number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT')); ?></p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-outline-primary border"

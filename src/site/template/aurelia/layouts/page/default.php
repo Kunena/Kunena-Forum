@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use function defined;
 
 $config = KunenaFactory::getTemplate()->params;
 ?>

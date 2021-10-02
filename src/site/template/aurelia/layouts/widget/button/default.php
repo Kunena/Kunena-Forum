@@ -12,12 +12,11 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use function defined;
 
 $label = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
 $title = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}_LONG");

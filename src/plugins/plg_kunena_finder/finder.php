@@ -6,14 +6,13 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Finder;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use function defined;
 
 /**
  * Finder Kunena Plugin

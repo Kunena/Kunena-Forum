@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use function defined;
 
 // [tweet]112233445566[/tweet]
 

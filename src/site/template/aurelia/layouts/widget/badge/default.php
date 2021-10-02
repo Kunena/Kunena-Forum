@@ -12,9 +12,7 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
-
-use function defined;
+\defined('_JEXEC') or die();
 
 $label       = $this->label;
 $tooltip     = 'data-bs-toggle="tooltip"';

@@ -12,12 +12,10 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
-use Kunena\Forum\Libraries\Error\KunenaError;
-use function defined;
 
 $title    = $this->title;
 $url      = $this->url;

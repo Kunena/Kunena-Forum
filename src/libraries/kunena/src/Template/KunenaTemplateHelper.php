@@ -159,6 +159,7 @@ abstract class KunenaTemplateHelper
 
 		$data               = new stdClass;
 		$data->name         = (string) $xml->name;
+
 		if ($xml->targetversion->attributes() !== null)
 		{
 			$data->targetversion = (string) $xml->targetversion->attributes()->version;
@@ -206,7 +207,7 @@ abstract class KunenaTemplateHelper
 	/**
 	 * Check with the field targetversion in xml file of template zip if it's compatible with kunena
 	 *
-	 * @param string $targetversion The versions of Kunena compatible with the template
+	 * @param   string $targetversion The versions of Kunena compatible with the template
 	 *
 	 * @return boolean
 	 * @since Kunena 5.2

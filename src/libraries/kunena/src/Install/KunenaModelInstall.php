@@ -3196,7 +3196,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 				'params' => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
 				'home' => 0,
 				'language' => '*',
-				'client_id' => 0
+				'client_id' => 0,
 			];
 
 			$table->setLocation(1, 'last-child');

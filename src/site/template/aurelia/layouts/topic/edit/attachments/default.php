@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use function defined;
 
 ?>
 <ul class="thumbnails">
@@ -31,7 +30,7 @@ use function defined;
 				<?php echo $attachment->getLayout()->render('thumbnail'); ?>
 				<span>
 				<?php echo $attachment->getFilename(); ?>
-				<?php echo '(' . number_format(intval($attachment->size) / 1024, 0, '', ',') . 'KB)'; ?>
+				<?php echo '(' . number_format(\intval($attachment->size) / 1024, 0, '', ',') . 'KB)'; ?>
 			</span>
 				<a href="#" class="btn border float-end">
 					<?php echo Text::_('COM_KUNENA_EDITOR_INSERT'); ?>

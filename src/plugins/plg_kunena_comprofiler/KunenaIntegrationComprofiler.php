@@ -11,7 +11,6 @@
  **/
 
 
-
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -32,9 +31,9 @@ class KunenaIntegrationComprofiler
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function open()
 	{
@@ -54,13 +53,13 @@ class KunenaIntegrationComprofiler
 	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
 	 *
 	 * @param   string  $event   event
-	 * @param   object  $params  params
+	 * @param   array   $params  params
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public static function trigger(string $event, array $params): void
 	{
@@ -74,9 +73,9 @@ class KunenaIntegrationComprofiler
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function close(): void
 	{

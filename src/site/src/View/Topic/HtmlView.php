@@ -558,6 +558,7 @@ class HtmlView extends KunenaView
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function setDescription($description)
@@ -1400,7 +1401,7 @@ class HtmlView extends KunenaView
 		              'sections'    => 0,
 		              'direction'   => 1,
 		              'hide_lonely' => 1,
-		              'action'      => 'topic.create', ];
+		              'action'      => 'topic.create',];
 
 		$this->catid    = $this->state->get('item.catid');
 		$this->category = KunenaCategoryHelper::get($this->catid);

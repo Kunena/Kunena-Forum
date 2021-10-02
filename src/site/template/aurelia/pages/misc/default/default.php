@@ -12,9 +12,7 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
-
-use function defined;
+\defined('_JEXEC') or die();
 
 // No breadcrumb - this page can only be accessed by creating a menu item for it.
 

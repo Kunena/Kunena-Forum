@@ -91,8 +91,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	private $tables;
 
 	/**
-	 * @since   Kunena 6.0
 	 * @throws  Exception
+	 * @since   Kunena 6.0
 	 */
 	public function __construct()
 	{
@@ -138,8 +138,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @return  array|null
 	 *
-	 * @since   Kunena
 	 * @throws  KunenaSchemaException
+	 * @since   Kunena
 	 */
 	public function getCreateSQL(): ?array
 	{
@@ -175,8 +175,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  DOMDocument|null
 	 *
-	 * @since   Kunena 6.0
 	 * @throws KunenaSchemaException
+	 * @since   Kunena 6.0
 	 */
 	public function getDiffSchema($from = null, $to = null, $using = null): ?DOMDocument
 	{
@@ -215,8 +215,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @return  DOMDocument|null
 	 *
-	 * @since   Kunena 6.0
 	 * @throws  KunenaSchemaException
+	 * @since   Kunena 6.0
 	 */
 	public function getSchema()
 	{
@@ -233,8 +233,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  boolean|DOMDocument
 	 *
+	 * @throws  KunenaSchemaException*@throws \DOMException
 	 * @since   Kunena 6.0
-	 * @throws  KunenaSchemaException
 	 */
 	public function getSchemaFromDatabase($reload = false)
 	{
@@ -350,8 +350,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  mixed
 	 *
-	 * @since   Kunena 6.0
 	 * @throws KunenaSchemaException
+	 * @since   Kunena 6.0
 	 */
 	protected function listTables(string $prefix, $reload = false): array
 	{
@@ -449,8 +449,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
 	 * @throws KunenaSchemaException
+	 * @since   Kunena 6.0
 	 */
 	public function upgradeSchema(object $dbschema, object $upgrade): void
 	{
@@ -473,8 +473,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  DOMDocument|DOMNode|mixed|null
 	 *
-	 * @since   Kunena 6.0
 	 * @throws KunenaSchemaException
+	 * @since   Kunena 6.0
 	 */
 	protected function getDOMDocument(object $input)
 	{
@@ -709,8 +709,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  DOMDocument|null
 	 *
-	 * @since   Kunena 6.0
 	 * @throws KunenaSchemaException
+	 * @since   Kunena 6.0
 	 */
 	public function getSchemaDiff(DOMDocument $old, DOMDocument $new): ?DOMDocument
 	{
@@ -1178,8 +1178,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return mixed
 	 *
-	 * @since   Kunena 6.0
 	 * @throws KunenaSchemaException
+	 * @since   Kunena 6.0
 	 */
 	public function updateSchemaTable(string $table)
 	{
@@ -1210,8 +1210,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @return  array|null
 	 *
-	 * @since   Kunena 6.0
 	 * @throws  KunenaSchemaException
+	 * @since   Kunena 6.0
 	 */
 	protected function getSQL(): ?array
 	{
@@ -1227,8 +1227,8 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @return  array
 	 *
-	 * @since   Kunena
 	 * @throws  KunenaSchemaException
+	 * @since   Kunena
 	 */
 	public function updateSchema(): array
 	{

@@ -55,14 +55,16 @@ class AttachmentsModel extends ListModel
 	}
 
 	/**
-	 * @param   array    $data      data
-	 * @param   boolean  $loadData  load data
+	 * @param   null  $ordering
+	 * @param   null  $direction
 	 *
 	 * @return void
 	 *
+	 * @throws Exception
 	 * @since  Kunena 6.0
 	 */
-	/*public function getForm($data = [], $loadData = true): void
+	/*
+	public function getForm($data = [], $loadData = true): void
 	{
 		// TODO: Implement getForm() method.
 	}*/
@@ -179,7 +181,7 @@ class AttachmentsModel extends ListModel
 	}
 
 	/**
-	 * 
+	 *
 	 * @return  QueryInterface
 	 *
 	 * @since   Kunena 6.0

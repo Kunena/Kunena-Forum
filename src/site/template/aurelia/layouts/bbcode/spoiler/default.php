@@ -14,7 +14,7 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Language\Text;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 // [spoiler="Do not look here!"]I said so![/spoiler]
 

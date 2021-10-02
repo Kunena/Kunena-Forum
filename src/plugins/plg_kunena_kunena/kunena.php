@@ -13,7 +13,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
  * Class PlgKunenaKunena

@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Category\CategoryUser
@@ -51,15 +50,15 @@ class KunenaCategoryUser extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @internal
-	 *
 	 * @param   mixed  $user      user
 	 *
 	 * @param   int    $category  category
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @internal
+	 *
 	 */
 	public function __construct($category = 0, $user = null)
 	{
@@ -112,9 +111,9 @@ class KunenaCategoryUser extends CMSObject
 	 *
 	 * @return  KunenaCategoryUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false): KunenaCategoryUser
 	{
@@ -124,9 +123,9 @@ class KunenaCategoryUser extends CMSObject
 	/**
 	 * @return  KunenaCategory
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getCategory(): KunenaCategory
 	{
@@ -154,9 +153,9 @@ class KunenaCategoryUser extends CMSObject
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($updateOnly = false): bool
 	{
@@ -209,9 +208,9 @@ class KunenaCategoryUser extends CMSObject
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function load($categoryId = null, $user = null): bool
 	{
@@ -244,9 +243,9 @@ class KunenaCategoryUser extends CMSObject
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function delete(): bool
 	{

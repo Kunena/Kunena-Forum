@@ -28,7 +28,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use stdClass;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\User\Ban
@@ -143,13 +142,14 @@ class KunenaBan extends parentAlias
 	/**
 	 * Method to load a \Kunena\Forum\Libraries\User\Ban object by ban id
 	 *
-	 * @access    public
+	 * @access          public
 	 *
 	 * @param   int  $id  The ban id of the item to load
 	 *
 	 * @return    boolean True on success
 	 *
-	 * @since     Kunena 1.6
+	 * @throws Exception
+	 * @since           Kunena 1.6
 	 */
 	public function load($id): bool
 	{
@@ -401,9 +401,9 @@ class KunenaBan extends parentAlias
 	 */
 	public static function getBannedUsers($start = 0, $limit = 50): array
 	{
-		$c        = __CLASS__;
-		$db       = Factory::getDBO();
-		$now      = new Date;
+		$c   = __CLASS__;
+		$db  = Factory::getDBO();
+		$now = new Date;
 
 		$query = $db->getQuery(true);
 		$query->select(['b.*'])

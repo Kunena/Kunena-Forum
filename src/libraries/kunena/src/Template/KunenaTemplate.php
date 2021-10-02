@@ -81,11 +81,13 @@ class KunenaTemplate
 	 * @since   Kunena 6.0
 	 */
 	public $categoryIcons = [];
+
 	/**
 	 * @var     KunenaConfig
 	 * @since   Kunena 6.0
 	 */
 	public $config = null;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -99,6 +101,7 @@ class KunenaTemplate
 		'js'            => 'media/js',
 		'css'           => 'media/css',
 	];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -114,6 +117,7 @@ class KunenaTemplate
 		'js'            => 'media/js',
 		'css'           => 'media/css',
 	];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -128,36 +132,43 @@ class KunenaTemplate
 		'js'         => 'js',
 		'css'        => 'css',
 	];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $default = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $paths = [];
+
 	/**
 	 * @var     boolean
 	 * @since   Kunena 6.0
 	 */
 	protected $css_compile = true;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $filecache = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $smileyPath = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $rankPath = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
@@ -172,41 +183,49 @@ class KunenaTemplate
 		'banned'    => 'kwho-banned',
 		'blocked'   => 'kwho-blocked',
 	];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $stylesheets = [];
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $style_variables = [];
+
 	/**
 	 * @var     null
 	 * @since   Kunena 6.0
 	 */
 	protected $compiled_style_variables = null;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	protected $scripts = [];
+
 	/**
 	 * @var     null|SimpleXMLElement
 	 * @since   Kunena 6.0
 	 */
 	protected $xml = null;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $map;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	protected $hmvc;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
@@ -314,7 +333,8 @@ class KunenaTemplate
 					document.addEventListener('DOMContentLoaded', () => {
 						document.querySelector('" . $id . "').classList.add('active');
 					});
-				");
+				"
+				);
 			}
 			else
 			{
@@ -328,7 +348,8 @@ class KunenaTemplate
 						document.addEventListener('DOMContentLoaded', () => {
 							document.querySelector('" . $id . "').classList.add('active');
 						});
-					");
+					"
+					);
 				}
 			}
 		}
@@ -527,7 +548,8 @@ class KunenaTemplate
 					document.querySelector(".alias-parent-active").classList.add("active");
 					document.querySelector(".alias-parent-active").classList.add("alias-parent-active");
 				});
-			');
+			'
+			);
 		}
 	}
 
@@ -587,7 +609,7 @@ class KunenaTemplate
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
 		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',];
+				  'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");

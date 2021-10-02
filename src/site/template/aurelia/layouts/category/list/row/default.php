@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use function defined;
 
 /*
  * @var \Kunena\Forum\Libraries\Forum\Topic\Topic $topic

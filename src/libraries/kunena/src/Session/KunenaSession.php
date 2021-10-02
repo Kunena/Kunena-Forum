@@ -20,7 +20,6 @@ use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use RuntimeException;
-use function defined;
 
 /**
  * Class KunenaSession
@@ -76,9 +75,9 @@ class KunenaSession extends CMSObject
 	/**
 	 * @param   mixed|null  $identifier  identifier
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct($identifier)
 	{
@@ -168,9 +167,9 @@ class KunenaSession extends CMSObject
 	 * @param   null  $userid  userid
 	 *
 	 * @return  KunenaSession
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($update = false, $userid = null): KunenaSession
 	{
@@ -191,9 +190,9 @@ class KunenaSession extends CMSObject
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function updateSessionInfo(): void
 	{
@@ -211,9 +210,9 @@ class KunenaSession extends CMSObject
 	/**
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function isNewSession(): bool
 	{
@@ -236,9 +235,9 @@ class KunenaSession extends CMSObject
 	 *
 	 * @return  boolean True on success
 	 *
+	 * @throws  Exception
 	 * @since   1.5
 	 *
-	 * @throws  Exception
 	 */
 	public function save($updateOnly = false): bool
 	{

@@ -12,14 +12,13 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use function defined;
 
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
@@ -40,7 +39,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
               method="post" id="adminForm"
               name="adminForm">
             <input type="hidden" name="task" value="save"/>
-            <input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>"/>
+            <input type="hidden" name="catid" value="<?php echo \intval($this->category->id); ?>"/>
 			<?php echo HTMLHelper::_('form.token'); ?>
 
             <article class="data-block">

@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use function defined;
 
 Text::script('COM_KUNENA_CLEARED');
 ?>

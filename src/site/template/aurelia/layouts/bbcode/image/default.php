@@ -12,11 +12,9 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use function defined;
-
 
 $title    = $this->title;
 $url      = $this->url;

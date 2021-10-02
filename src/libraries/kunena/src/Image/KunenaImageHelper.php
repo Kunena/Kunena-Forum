@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Image;
 use Exception;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
-use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Folder\KunenaFolder;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 

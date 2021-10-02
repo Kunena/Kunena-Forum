@@ -24,7 +24,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\BBCode\KunenaBBCodeEditor;
-use Kunena\Forum\Administrator\Model\PluginsModel;
 
 /**
  * Kunena Plugins Controller
@@ -121,7 +120,7 @@ class PluginsController extends AdminController
 		else
 		{
 			// Get the model from com_plugins.
-			$app = Factory::getApplication();
+			$app   = Factory::getApplication();
 			$model = $app->bootComponent('com_plugins')->getMVCFactory()->createModel('Plugin', 'Administrator', ['ignore_request' => true]);
 
 			// Make sure the item ids are integers
@@ -232,22 +231,6 @@ class PluginsController extends AdminController
 	}
 
 	/**
-	 * Method to get a model object, loading it if required.
-	 *
-	 * @param   string  $name    The model name. Optional.
-	 * @param   string  $prefix  The class prefix. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
-	 *
-	 * @return  BaseDatabaseModel|boolean  Model object on success; otherwise false on failure.
-	 *
-	 * @since   Kunena 2.0
-	 */
-	public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = ['ignore_request' => true])
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
-
-	/**
 	 * Changes the order of one or more records.
 	 *
 	 * @return  boolean  True on success
@@ -286,6 +269,22 @@ class PluginsController extends AdminController
 		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false), $message);
 
 		return true;
+	}
+
+	/**
+	 * Method to get a model object, loading it if required.
+	 *
+	 * @param   string  $name    The model name. Optional.
+	 * @param   string  $prefix  The class prefix. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
+	 *
+	 * @return  BaseDatabaseModel|boolean  Model object on success; otherwise false on failure.
+	 *
+	 * @since   Kunena 2.0
+	 */
+	public function getModel($name = 'Plugin', $prefix = 'Administrator', $config = ['ignore_request' => true])
+	{
+		return parent::getModel($name, $prefix, $config);
 	}
 
 	/**

@@ -486,7 +486,7 @@ class KunenaView extends HtmlView
 	 * @param   int     $len     len
 	 * @param   mixed   $parent  parent
 	 *
-	 * @return  mixed
+	 * @return  false|string
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0

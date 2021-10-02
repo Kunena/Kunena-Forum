@@ -99,9 +99,9 @@ class KunenaAccess
 	protected $moderatorsByUserid = null;
 
 	/**
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function __construct()
 	{
@@ -155,9 +155,9 @@ class KunenaAccess
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function clearCache()
 	{
@@ -257,9 +257,9 @@ class KunenaAccess
 	/**
 	 * @return  KunenaAccess|null
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance(): ?KunenaAccess
 	{
@@ -316,9 +316,8 @@ class KunenaAccess
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
-	 *
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function getAccessTypesList(KunenaCategory $category): string
 	{
@@ -466,9 +465,9 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAdminStatus($user = null): array
 	{
@@ -483,8 +482,6 @@ jQuery(document).ready(function ($) {
 	/**
 	 * Assign user as moderator or resign him.
 	 *
-	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
-	 *
 	 * @param   KunenaCategory|int  $category  KunenaCategory object
 	 *
 	 * @param   mixed               $user      KunenaUser object
@@ -492,9 +489,11 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
+	 *
 	 */
 	public function setModerator($category, $user = null, $status = true): bool
 	{
@@ -548,9 +547,9 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getModeratorStatus($user = null): array
 	{
@@ -567,9 +566,9 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getAllowedCategories($user = null)
 	{
@@ -645,9 +644,9 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function isModerator($user = null, $catid = 0): bool
 	{
@@ -692,9 +691,9 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  boolean
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function isAdmin($user = null, $catid = 0): bool
 	{
@@ -776,9 +775,9 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  string|array
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getAllowedHold($user, int $catid, $string = true)
 	{
@@ -828,9 +827,9 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  array
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getSubscribers(int $catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null): array
 	{
@@ -1011,9 +1010,9 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @return  array
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function loadSubscribers(KunenaTopic $topic, $type)
 	{

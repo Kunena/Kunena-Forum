@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 $message = $this->message;
 
@@ -133,7 +132,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 						<?php endif; ?>
 
                         <div class="form-group">
-                            <label for="kanonymous<?php echo intval($message->id); ?>"
+                            <label for="kanonymous<?php echo \intval($message->id); ?>"
                                    class="col-md-12 control-label" style="padding:0;">
 								<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
                             </label>
@@ -192,7 +191,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 									{
 										echo 'checked="checked"';
 									} ?> />
-                                    <label for="kanonymous<?php echo intval($message->id); ?>">
+                                    <label for="kanonymous<?php echo \intval($message->id); ?>">
 										<?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
                                     </label>
                                 </div>
@@ -299,7 +298,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 						<?php endif; ?>
 
                         <div class="form-group">
-                            <label for="kanonymous<?php echo intval($message->id); ?>"
+                            <label for="kanonymous<?php echo \intval($message->id); ?>"
                                    class="col-md-12 control-label" style="padding:0;">
 								<?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
                             </label>
@@ -357,7 +356,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 									{
 										echo 'checked="checked"';
 									} ?> />
-                                    <label for="kanonymous<?php echo intval($message->id); ?>">
+                                    <label for="kanonymous<?php echo \intval($message->id); ?>">
 										<?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
                                     </label>
                                 </div>

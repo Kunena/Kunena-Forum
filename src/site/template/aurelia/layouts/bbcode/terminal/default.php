@@ -12,9 +12,7 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
-
-use function defined;
+\defined('_JEXEC') or die();
 
 // [terminal colortext="#ffffff"]root@domain.com:~/www/components/com_kunena$[/terminal]
 

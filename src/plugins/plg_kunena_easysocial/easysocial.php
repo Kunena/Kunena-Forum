@@ -5,9 +5,9 @@
  * @package         Kunena.Plugins
  * @subpackage      Easysocial
  *
- * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
- * @copyright      Copyright (C) 2010 - 2016 Stack Ideas Sdn Bhd. All rights reserved.
- * @license        GNU/GPL, see LICENSE.php
+ * @copyright       Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2010 - 2016 Stack Ideas Sdn Bhd. All rights reserved.
+ * @license         GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
@@ -43,11 +43,12 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * plgKunenaEasySocial constructor.
 	 *
-	 * @param   DispatcherInterface  &$subject  The object to observe
-	 * @param   array                $config    An optional associative array of configuration settings.
+	 * @param   object  $subject                The object to observe
+	 * @param   array   $config                 An optional associative array of configuration settings.
 	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
-	 *                                         (this list is not meant to be comprehensive).
+	 *                                          (this list is not meant to be comprehensive).
 	 *
+	 * @throws Exception
 	 * @since   Kunena 5.0
 	 */
 	public function __construct(object $subject, $config = [])
@@ -90,7 +91,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  AvatarEasySocial
+	 * @return  KunenaAvatarEasySocial|void
 	 * @since   Kunena 5.0
 	 */
 	public function onKunenaGetAvatar()
@@ -129,7 +130,7 @@ class plgKunenaEasySocial extends EasySocialPlugins
 			return;
 		}
 
-		require_once(__DIR__ . "/KunenaProfileEasySocial.php");
+		require_once __DIR__ . "/KunenaProfileEasySocial.php";
 
 		return new KunenaProfileEasySocial($this->params);
 	}
@@ -163,8 +164,8 @@ class plgKunenaEasySocial extends EasySocialPlugins
 	 *
 	 * @return  KunenaActivityEasySocial
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()
 	{

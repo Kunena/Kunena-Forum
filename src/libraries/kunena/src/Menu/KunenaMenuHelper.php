@@ -43,7 +43,7 @@ abstract class KunenaMenuHelper
 
 	/**
 	 * Check if Kunena menus exist
-	 * 
+	 *
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0

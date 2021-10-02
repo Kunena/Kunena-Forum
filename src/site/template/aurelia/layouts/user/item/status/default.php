@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 $user        = isset($this->user) ? $this->user : KunenaUserHelper::getMyself();
 $status      = $user->getStatus();

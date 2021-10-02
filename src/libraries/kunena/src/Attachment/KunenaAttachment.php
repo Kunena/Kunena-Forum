@@ -1089,7 +1089,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  bool|KunenaExceptionAuthorise
+	 * @return  boolean|KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 4.0
 	 */
@@ -1107,7 +1107,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  bool|KunenaExceptionAuthorise
+	 * @return  boolean|KunenaExceptionAuthorise
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0
@@ -1141,7 +1141,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  bool|KunenaExceptionAuthorise
+	 * @return  boolean|KunenaExceptionAuthorise
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0

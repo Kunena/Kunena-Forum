@@ -295,7 +295,7 @@ class HtmlView extends BaseHtmlView
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/users/edit-user';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
-	
+
 	/**
 	 * @return  void
 	 *
@@ -303,12 +303,12 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function setToolBarMove(): void
 	{
-	    // Set the title bar text
-	    ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
-	    ToolbarHelper::spacer();
-	    ToolbarHelper::custom('moveMessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
-	    ToolbarHelper::spacer();
-	    ToolbarHelper::cancel();
-	    ToolbarHelper::spacer();
+		// Set the title bar text
+		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('moveMessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
 	}
 }

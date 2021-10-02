@@ -85,7 +85,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 * Get the URL for userlist from CB
-	 * 
+	 *
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
@@ -112,7 +112,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 
 	/**
 	 * Get the profile URL from CB
-	 * 
+	 *
 	 * @param   int          $userid     userid
 	 * @param   string|null  $task       task
 	 * @param   bool         $xhtml      xhtml
@@ -165,7 +165,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 			$_PLUGINS->trigger(
 				'forumSideProfile',
 				['kunena', $view, $view->profile->userid,
-					['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params],]
+					['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params], ]
 			)
 		);
 	}

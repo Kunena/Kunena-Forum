@@ -127,6 +127,7 @@ class PluginsModel extends ListModel
 	 *
 	 * @return  array
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	protected function internalGetList(JDatabaseQuery $query, $limitstart = 0, $limit = 0): array
@@ -201,6 +202,7 @@ class PluginsModel extends ListModel
 	 *
 	 * @return  void The array of translated objects
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	protected function translate(array &$items): void

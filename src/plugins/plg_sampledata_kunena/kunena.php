@@ -111,7 +111,6 @@ class PlgSampledataKunena extends CMSPlugin
 	 * @return  array|void  Will be converted into the JSON response to the module.
 	 *
 	 * @throws Exception
-	 * @throws Exception
 	 * @since   4.0.0
 	 */
 	public function onAjaxSampledataApplyStep1()
@@ -133,7 +132,7 @@ class PlgSampledataKunena extends CMSPlugin
 
 		KunenaSampleData::installSampleData();
 
-		$response          = [];
+		$response            = [];
 		$response['success'] = true;
 		$response['message'] = Text::_('PLG_SAMPLEDATA_KUNENA_STEP1_SUCCESS');
 

@@ -29,17 +29,17 @@ use stdClass;
 class TemplateModel extends AdminModel
 {
 	/**
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
-	 *
 	 * @param   bool   $loadData  loadData
 	 *
 	 * @param   array  $data      data
 	 *
 	 * @return  object|mixed
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 *
 	 */
 	public function getForm($data = [], $loadData = true): object
 	{
@@ -70,9 +70,9 @@ class TemplateModel extends AdminModel
 	/**
 	 * @return  boolean|stdClass
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTemplateDetails()
 	{
@@ -100,9 +100,9 @@ class TemplateModel extends AdminModel
 	 *
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -138,9 +138,9 @@ class TemplateModel extends AdminModel
 	 *
 	 * @return  mixed|null
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{
@@ -170,10 +170,11 @@ class TemplateModel extends AdminModel
 
 	/**
 	 * Load the data associated with the form
-	 * 
-	 * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 *
 	 * @return array|mixed
+	 * @throws Exception
 	 * @since Kunena 3.0
+	 * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
 	 */
 	protected function loadFormData()
 	{

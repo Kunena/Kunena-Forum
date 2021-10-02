@@ -12,9 +12,8 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
-use function defined;
 use Joomla\CMS\Language\Text;
 
 // Load language strings for bootstrap datepicker

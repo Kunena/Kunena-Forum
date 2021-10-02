@@ -191,7 +191,7 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
 													<?php foreach ($this->options ['accesslists'] as $accesstype => $accesslist)
 													{
 														foreach ($accesslist as $accessinput)
-														    : 
+														    :
 															?>
                                                             <tr class="kaccess kaccess-<?php echo $accesstype ?>"
                                                                 style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">

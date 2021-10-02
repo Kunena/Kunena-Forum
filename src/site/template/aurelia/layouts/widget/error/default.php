@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use function defined;
 
 ?>
-<h1><?php echo $this->header.' : '.$this->message;  ?></h1>
+<h1><?php echo $this->header . ' : ' . $this->message;  ?></h1>
 <p><strong><?php echo Text::_('JERROR_LAYOUT_NOT_ABLE_TO_VISIT'); ?></strong></p>
 <ol>
 	<li><?php echo Text::_('JERROR_LAYOUT_AN_OUT_OF_DATE_BOOKMARK_FAVOURITE'); ?></li>

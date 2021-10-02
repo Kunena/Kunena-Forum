@@ -21,7 +21,6 @@ use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read
@@ -48,15 +47,15 @@ class KunenaRead extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @internal
-	 *
 	 * @param   mixed  $user   user
 	 *
 	 * @param   mixed  $topic  topic
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @internal
+	 *
 	 */
 	public function __construct($topic = null, $user = null)
 	{
@@ -108,9 +107,9 @@ class KunenaRead extends CMSObject
 	 *
 	 * @return  KunenaRead
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false): KunenaRead
 	{
@@ -120,9 +119,9 @@ class KunenaRead extends CMSObject
 	/**
 	 * @return  KunenaRead
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopic(): KunenaRead
 	{
@@ -146,9 +145,9 @@ class KunenaRead extends CMSObject
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function reset(): void
 	{
@@ -164,9 +163,9 @@ class KunenaRead extends CMSObject
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function load($topic_id = null, $user = null): bool
 	{
@@ -208,9 +207,9 @@ class KunenaRead extends CMSObject
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($updateOnly = false): bool
 	{
@@ -256,9 +255,9 @@ class KunenaRead extends CMSObject
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function delete(): bool
 	{

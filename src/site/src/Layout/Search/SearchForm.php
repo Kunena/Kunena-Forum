@@ -156,8 +156,8 @@ class SearchForm extends KunenaLayout
 		// Limit value list
 		$options = [];
 
-		if ($this->config->messagesPerPageSearch != 5 && $this->config->messagesPerPageSearch != 10 &&
-			$this->config->messagesPerPageSearch != 15 && $this->config->messagesPerPageSearch != 20)
+		if ($this->config->messagesPerPageSearch != 5 && $this->config->messagesPerPageSearch != 10
+			&& $this->config->messagesPerPageSearch != 15 && $this->config->messagesPerPageSearch != 20)
 		{
 			$options[] = HTMLHelper::_(
 				'select.option',

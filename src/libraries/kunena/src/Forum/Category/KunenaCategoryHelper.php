@@ -275,7 +275,7 @@ abstract class KunenaCategoryHelper
 
 		try
 		{
-		    $subscribed = (array) $db->loadColumn();
+			$subscribed = (array) $db->loadColumn();
 		}
 		catch (ExecutionFailureException $e)
 		{

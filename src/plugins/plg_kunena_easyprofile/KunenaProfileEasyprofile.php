@@ -54,7 +54,6 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
@@ -141,11 +140,11 @@ class KunenaProfileEasyprofile extends KunenaProfile
 		{
 			return JsnHelper::getUser($user->id)->name;
 		}
-		else if ($formatName == 'USERNAME')
+		elseif ($formatName == 'USERNAME')
 		{
 			return JsnHelper::getUser($user->id)->username;
 		}
-		else if ($formatName == 'NAMEUSERNAME')
+		elseif ($formatName == 'NAMEUSERNAME')
 		{
 			return JsnHelper::getUser($user->id)->name . ' (' . JsnHelper::getUser($user->id)->username . ')';
 		}

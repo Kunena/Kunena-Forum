@@ -28,7 +28,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RunTimeException;
 use stdClass;
-use function defined;
 
 /**
  * implements \Kunena specific functions for all layouts.
@@ -43,56 +42,67 @@ class KunenaLayout extends KunenaBase
 	 * @since version
 	 */
 	public $userkarma_plus;
+
 	/**
 	 * @var false|mixed|string|void
 	 * @since version
 	 */
 	public $personalText;
+
 	/**
 	 * @var mixed|void|null
 	 * @since version
 	 */
 	public $usermedals;
+
 	/**
 	 * @var mixed|void|null
 	 * @since version
 	 */
 	public $userpoints;
+
 	/**
 	 * @var integer|mixed|void|null
 	 * @since version
 	 */
 	public $userthankyou;
+
 	/**
 	 * @var integer|mixed|void|null
 	 * @since version
 	 */
 	public $userposts;
+
 	/**
 	 * @var false|mixed|stdClass|string|void|null
 	 * @since version
 	 */
 	public $userranktitle;
+
 	/**
 	 * @var false|mixed|stdClass|string|void|null
 	 * @since version
 	 */
 	public $userrankimage;
+
 	/**
 	 * @var mixed|string|void
 	 * @since version
 	 */
 	public $userkarma;
+
 	/**
 	 * @var mixed|string|void
 	 * @since version
 	 */
 	public $userkarma_minus;
+
 	/**
 	 * @var mixed|string|void
 	 * @since version
 	 */
 	public $userkarma_title;
+
 	/**
 	 * Content to be appended after the main output.
 	 *
@@ -100,6 +110,7 @@ class KunenaLayout extends KunenaBase
 	 * @since   Kunena 6.0
 	 */
 	protected $after = [];
+
 	/**
 	 * Object KunenaView
 	 *

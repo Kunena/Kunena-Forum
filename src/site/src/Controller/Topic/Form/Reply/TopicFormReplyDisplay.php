@@ -172,6 +172,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	protected function canSubscribe()

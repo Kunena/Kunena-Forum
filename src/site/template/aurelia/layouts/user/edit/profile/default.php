@@ -12,12 +12,10 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Date\KunenaDate;
-use function defined;
 
 echo $this->subLayout('Widget/Datepicker');
 $this->addScript('assets/js/profile.js');

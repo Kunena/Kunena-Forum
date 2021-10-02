@@ -11,7 +11,7 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -27,7 +27,6 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use stdClass;
-use function defined;
 
 // Display offline message if Kunena hasn't been fully installed.
 if (!KunenaForum::isCompatible('4.0') || !KunenaForum::installed())

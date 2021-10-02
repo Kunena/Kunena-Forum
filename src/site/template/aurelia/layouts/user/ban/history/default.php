@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
-use function defined;
 
 ?>
 <h3>
@@ -53,7 +52,7 @@ use function defined;
 	<?php
 	if (!empty($this->banHistory))
 		:
-		$i = count($this->banHistory);
+		$i = \count($this->banHistory);
 
 		foreach ($this->banHistory as $banInfo)
 			:

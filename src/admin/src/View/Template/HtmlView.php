@@ -68,7 +68,7 @@ class HtmlView extends BaseHtmlView
 
 			return parent::display($tpl);
 		}
-		else if($this->getLayout() == "ChooseLess")
+		elseif ($this->getLayout() == "ChooseLess")
 		{
 			$this->setToolBarChooseLess();
 			$this->templatename = $app->getUserState('kunena.templatename');

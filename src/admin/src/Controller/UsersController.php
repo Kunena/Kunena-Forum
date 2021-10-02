@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
@@ -56,22 +55,18 @@ class UsersController extends KunenaController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                     $config   An optional associative array of configuration settings.
-	 *
-	 * @param   MVCFactoryInterface|null  $factory  The factory.
-	 * @param   null                      $app      The CMSApplication for the dispatcher
-	 * @param   null                      $input    Input
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
 	 * @since   Kunena 2.0
 	 *
 	 * @see     BaseController
 	 */
-	
+
 	public function __construct($config = array())
 	{
-	    parent::__construct($config);
-	    $this->baseurl = 'administrator/index.php?option=com_kunena&view=users';
+		parent::__construct($config);
+		$this->baseurl = 'administrator/index.php?option=com_kunena&view=users';
 	}
 
 	/**

@@ -12,9 +12,7 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 
@@ -29,10 +27,11 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 	 * Constructor of plgKunenaAltaUserPoints class
 	 *
 	 * @param   DispatcherInterface  &$subject  The object to observe
-	 * @param   array                $config    An optional associative array of configuration settings.
+	 * @param   array                 $config   An optional associative array of configuration settings.
 	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
-	 *                                         (this list is not meant to be comprehensive).
+	 *                                          (this list is not meant to be comprehensive).
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function __construct(&$subject, $config)
@@ -107,8 +106,8 @@ class plgKunenaAltaUserPoints extends CMSPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return  KunenaActivityAltaUserPoints|void
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()
 	{

@@ -12,9 +12,7 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
@@ -27,11 +25,12 @@ class plgKunenaEasyprofile extends CMSPlugin
 	/**
 	 * plgKunenaEasyprofile constructor.
 	 *
-	 * @param   DispatcherInterface  &$subject  The object to observe
-	 * @param   array                $config    An optional associative array of configuration settings.
+	 * @param   object  $subject                The object to observe
+	 * @param   array   $config                 An optional associative array of configuration settings.
 	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
-	 *                                         (this list is not meant to be comprehensive).
+	 *                                          (this list is not meant to be comprehensive).
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function __construct(object &$subject, $config = [])

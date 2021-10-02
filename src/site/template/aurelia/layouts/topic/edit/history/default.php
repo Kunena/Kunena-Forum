@@ -12,13 +12,12 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
-use function defined;
 
 $k = 0;
 ?>
@@ -46,7 +45,7 @@ $k = 0;
                     </li>
                     <li>
 						<?php
-						$profile    = KunenaFactory::getUser(intval($this->message->userid));
+						$profile    = KunenaFactory::getUser(\intval($this->message->userid));
 						$useravatar = $profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
 
 						if ($useravatar)

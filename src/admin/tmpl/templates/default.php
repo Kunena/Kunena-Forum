@@ -59,7 +59,7 @@ $wa->useScript('multiselect');
 						</tfoot>
 						<tbody>
 						<?php foreach ($this->templates as $id => $row)
-							: 
+							:
 							?>
 							<tr>
 								<td>

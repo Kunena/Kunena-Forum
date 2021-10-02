@@ -112,13 +112,12 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param   int   $user   user
+	 * @param   int   $userid
 	 * @param   bool  $xhtml  xhtml
 	 *
 	 * @return  boolean
 	 *
-	 * @throws  Exception
-	 *
+	 * @throws Exception
 	 * @since   Kunena 5.0
 	 */
 	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
@@ -138,14 +137,14 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function getProfileURL(KunenaUser $user, string $task = '', bool $xhtml = true, string $avatarTab = '')
+	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
 	{
-		if ($user == 0)
+		if ($userid == 0)
 		{
 			return false;
 		}
 
-		$user = KunenaFactory::getUser($user);
+		$user = KunenaFactory::getUser($userid);
 		$my   = Factory::getApplication()->getIdentity();
 
 		if ($user === false)

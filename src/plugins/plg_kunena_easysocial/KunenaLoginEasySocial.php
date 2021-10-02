@@ -1,6 +1,6 @@
 <?php
 /**
-  * Kunena Plugin
+ * Kunena Plugin
  *
  * @package         Kunena.Plugins
  * @subpackage      Easysocial

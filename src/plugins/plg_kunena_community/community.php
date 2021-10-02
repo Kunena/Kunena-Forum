@@ -27,10 +27,11 @@ class plgKunenaCommunity extends CMSPlugin
 	 * plgKunenaCommunity constructor.
 	 *
 	 * @param   DispatcherInterface  &$subject  The object to observe
-	 * @param   array                $config    An optional associative array of configuration settings.
+	 * @param   array                 $config   An optional associative array of configuration settings.
 	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
-	 *                                         (this list is not meant to be comprehensive).
+	 *                                          (this list is not meant to be comprehensive).
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	public function __construct(&$subject, $config)
@@ -59,9 +60,9 @@ class plgKunenaCommunity extends CMSPlugin
 	/**
 	 * Get Kunena access control object.
 	 *
-	 * @todo    Should we remove category ACL integration?
 	 * @return  KunenaAccessCommunity|void
 	 *
+	 * @todo    Should we remove category ACL integration?
 	 * @since   Kunena
 	 */
 	public function onKunenaGetAccessControl()
@@ -107,7 +108,7 @@ class plgKunenaCommunity extends CMSPlugin
 	/**
 	 * Get Kunena avatar integration object.
 	 *
-	 * @return  AvatarCommunity|null|void
+	 * @return  KunenaAvatarCommunity|void
 	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetAvatar()
@@ -177,8 +178,8 @@ class plgKunenaCommunity extends CMSPlugin
 	 * Get Kunena activity stream integration object.
 	 *
 	 * @return  KunenaActivityCommunity|null|void
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public function onKunenaGetActivity()
 	{

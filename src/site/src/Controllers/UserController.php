@@ -808,7 +808,6 @@ class UserController extends KunenaController
 
 		try
 		{
-
 		}
 		catch (Exception $e)
 		{

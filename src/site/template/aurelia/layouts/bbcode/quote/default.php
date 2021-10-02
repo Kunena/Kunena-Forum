@@ -11,18 +11,19 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+
 // [quote ="username post=messageid"]text content of the quote[/quote]
 
 // Display message quoted by user.
 ?>
 <blockquote style="margin: .75em 0;background: #f9fafa;border: 1px solid #e0e0e0;border-left: 2px solid #1f85bd;"><p class="kmsgtext-quote">
 <?php if ($this->username)
-{ ?>
-
+{
+	?>
 	<div style="padding: 12px 1px;font-size: 1.3rem;background: #fff;">
-		<a href="<?php echo $this->msglink ?>"> <?php echo $this->username   . " " . Text::_('COM_KUNENA_POST_WROTE'); ?>: <i class="fas fa-arrow-circle-up"></i></a>
+		<a href="<?php echo $this->msglink ?>"> <?php echo $this->username . " " . Text::_('COM_KUNENA_POST_WROTE'); ?>: <i class="fas fa-arrow-circle-up"></i></a>
 		</div>
-<?php } 
+<?php }
 
 echo $this->content ?></blockquote>
 

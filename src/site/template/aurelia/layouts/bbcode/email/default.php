@@ -12,10 +12,9 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
-use function defined;
 
 // [email]john.doe@domain.com[/email]
 // [email=john.doe@domain.com]John Doe[/email]

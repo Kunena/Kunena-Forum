@@ -51,7 +51,6 @@ class HtmlView extends BaseHtmlView
 			Factory::getApplication()->getDocument()->getWebAssetManager()
 				->registerAndUseScript('mod_sampleData', 'mod_sampleData/sampleData-process.js', [], ['defer' => true], ['core']);
 
-
 			Text::script('MOD_SAMPLEDATA_CONFIRM_START');
 			Text::script('MOD_SAMPLEDATA_ITEM_ALREADY_PROCESSED');
 			Text::script('MOD_SAMPLEDATA_INVALID_RESPONSE');
@@ -94,6 +93,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  boolean
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
 	protected function upgradeDatabase()
@@ -123,7 +123,7 @@ class HtmlView extends BaseHtmlView
 			return false;
 		}
 
-		$modelInstall = new KunenaModelInstall();
+		$modelInstall = new KunenaModelInstall;
 
 		foreach ($xml->upgrade[0] as $version)
 		{
@@ -150,7 +150,8 @@ class HtmlView extends BaseHtmlView
 				{
 					$result = $modelInstall->processUpgradeXMLNode($action);
 
-					/*if ($result)
+					/*
+					if ($result)
 					{
 						$this->addStatus($result ['action'] . ' ' . $result ['name'], $result ['success']);
 					}*/
@@ -164,7 +165,7 @@ class HtmlView extends BaseHtmlView
 				$db->execute();
 
 				// Database install continues
-				//return false;
+				// return false;
 			}
 		}
 	}

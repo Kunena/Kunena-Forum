@@ -138,17 +138,17 @@ abstract class KunenaForum
 	 * }
 	 * </code>
 	 *
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
-	 *
 	 * @param   boolean  $checkAdmin  True if administrator is considered as a special case.
 	 *
 	 * @return  boolean True if online.
 	 *
+	 * @throws  Exception
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
+	 *
 	 */
 	public static function enabled($checkAdmin = true): bool
 	{
@@ -182,12 +182,12 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
+	 * @return  boolean True if Kunena has been fully installed.
+	 *
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
 	 *
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::enabled()
-	 * @return  boolean True if Kunena has been fully installed.
-	 *
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible()
 	 * @since   Kunena 6.0
 	 */
 	public static function installed(): bool
@@ -237,15 +237,15 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 2.0.0-BETA2
+	 *
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
 	 *
 	 * Alternatively you could use method_exists() to check that the new API is in there.
 	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 2.0.0-BETA2
-	 *
-	 * @throws  Exception
 	 */
 	public static function setup(): void
 	{
@@ -288,11 +288,11 @@ abstract class KunenaForum
 	 *    }
 	 * </code>
 	 *
-	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
-	 *
 	 * @param   string  $version  Minimum required version.
 	 *
 	 * @return  boolean Yes, if it is safe to use Kunena Framework.
+	 *
+	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -322,7 +322,7 @@ abstract class KunenaForum
 	/**
 	 * Returns the exact version from Kunena Forum.
 	 *
-	 * @return string Version number.
+	 * @return boolean Version number.
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -484,8 +484,8 @@ abstract class KunenaForum
 	 *
 	 * @return  void
 	 *
-	 * @since   Kunena 6.0
 	 * @throws Exception
+	 * @since   Kunena 6.0
 	 */
 	public static function display(string $viewName, $layout = 'default', $template = null, $params = []): void
 	{

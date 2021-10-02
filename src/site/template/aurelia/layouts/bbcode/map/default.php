@@ -12,11 +12,10 @@
 
 namespace Kunena\Forum\Site;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use function defined;
 
 // [map type=roadmap zoom=10 control=0]London, UK[/map]
 
@@ -56,7 +55,7 @@ if (!empty($this->config->googleMapApiKey))
 	$map_type   = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
 	$map_typeId = ['HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN'];
 
-	if (!in_array($map_type, $map_typeId))
+	if (!\in_array($map_type, $map_typeId))
 	{
 		$map_type = 'ROADMAP';
 	}

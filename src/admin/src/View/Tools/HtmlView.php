@@ -16,7 +16,6 @@ namespace Kunena\Forum\Administrator\View\Tools;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
@@ -268,7 +267,8 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// TODO: check why the modal doesn't open
-		/*HTMLHelper::_('bootstrap.renderModal', 'trashmenuconfirmationModal');
+		/*
+		HTMLHelper::_('bootstrap.renderModal', 'trashmenuconfirmationModal');
 
 		$title = Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH');
 		$dhtml = "<button data-toggle=\"modal\" data-target=\"#trashmenuconfirmationModal\" class=\"btn btn-small\">

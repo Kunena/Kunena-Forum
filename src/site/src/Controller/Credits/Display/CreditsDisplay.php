@@ -35,21 +35,25 @@ class CreditsDisplay extends KunenaControllerDisplay
 	 * @since   Kunena 6.0
 	 */
 	public $logo;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $intro;
+
 	/**
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
 	public $memberList;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
 	public $thanks;
+
 	/**
 	 * @var     string
 	 * @since   Kunena 6.0

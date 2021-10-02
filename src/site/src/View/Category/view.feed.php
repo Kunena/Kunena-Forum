@@ -73,7 +73,7 @@ class feed extends KunenaView
 
 		foreach ($topics as $topic)
 		{
-			if ($this->config->rss_type=='topic')
+			if ($this->config->rss_type == 'topic')
 			{
 				$description = Text::sprintf('COM_KUNENA_RSS_TOPICS_CONTAINS_MESSAGES', $topic->posts) . ' - ' . Text::sprintf('COM_KUNENA_RSS_LAST_AUTHOR', KunenaFactory::getUser($topic->last_post_userid)->getName($topic->last_post_guest_name));
 			}

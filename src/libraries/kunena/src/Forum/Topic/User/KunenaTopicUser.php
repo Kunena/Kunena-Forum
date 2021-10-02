@@ -25,7 +25,6 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicUser
@@ -57,15 +56,15 @@ class KunenaTopicUser extends CMSObject
 	protected $_db = null;
 
 	/**
-	 * @internal
-	 *
 	 * @param   mixed  $user   user
 	 *
 	 * @param   mixed  $topic  topic
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @internal
+	 *
 	 */
 	public function __construct($topic = null, $user = null)
 	{
@@ -117,9 +116,9 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @return  KunenaTopicUser
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false): KunenaTopicUser
 	{
@@ -129,9 +128,9 @@ class KunenaTopicUser extends CMSObject
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function reset(): void
 	{
@@ -147,9 +146,9 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @return  boolean  True on success
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function load($topic_id = null, $user = null): bool
 	{
@@ -189,9 +188,9 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function delete(): bool
 	{
@@ -240,9 +239,9 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @return  boolean|void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function update(KunenaMessage $message = null, $postDelta = 0): bool
 	{
@@ -297,9 +296,9 @@ class KunenaTopicUser extends CMSObject
 	/**
 	 * @return  KunenaTopic
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function getTopic(): KunenaTopic
 	{
@@ -327,9 +326,9 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @return  boolean  True on success.
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function save($updateOnly = false): bool
 	{

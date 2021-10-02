@@ -45,7 +45,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use function defined;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Category\Category
@@ -1028,7 +1027,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  int
+	 * @return  integer
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
@@ -1449,7 +1448,6 @@ class KunenaCategory extends KunenaDatabaseObject
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws Exception
 	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */

@@ -103,33 +103,33 @@ $labels          = $this->ktemplate->params->get('labels');
 								?>
                                 <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
                                        value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-								<?php if ($this->config->topicIcons && $topicicontype == 'B5')
+								<?php if ($this->config->topicIcons && $topicicontype == 'svg')
+								:
+								?>
+                                <label class="radio inline" for="radio<?php echo $icon->id; ?>">
+									<?php
+									if (!$this->category->iconset)
+										:
+										$this->category->iconset = 'default';
+									endif; ?>
+                                    <img loading=lazy
+                                         src="<?php echo Uri::root() . 'media/kunena/topic_icons/' . $this->category->iconset . '/user/svg/' . $icon->svg; ?>"
+                                         alt="<?php echo $icon->name; ?>" width="32" height="32"/>
+									<?php elseif ($this->config->topicIcons && $topicicontype == 'fa')
 									:
 									?>
-                                    <label class="radio inline" for="radio<?php echo $icon->id; ?>">
-										<?php
-										if (!$this->category->iconset)
-											:
-											$this->category->iconset = 'default';
-										endif; ?>
-                                        <img loading=lazy
-                                             src="<?php echo Uri::root() . 'media/kunena/topic_icons/' . $this->category->iconset . '/user/svg/' . $icon->b5; ?>"
-                                             alt="<?php echo $icon->name; ?>" width="32" height="32"/>
-										<?php elseif ($this->config->topicIcons && $topicicontype == 'fa')
-										:
+                                    <label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
+                                                class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
+										<?php else:
 										?>
-                                        <label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
-                                                    class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
-											<?php else:
-											?>
-                                            <label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
-                                                        loading=lazy
-                                                        src="<?php echo $icon->relpath; ?>"
-                                                        alt="<?php echo $icon->name; ?>"
-                                                        border="0"/>
-												<?php endif; ?>
-                                            </label>
-											<?php endforeach; ?>
+                                        <label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
+                                                    loading=lazy
+                                                    src="<?php echo $icon->relpath; ?>"
+                                                    alt="<?php echo $icon->name; ?>"
+                                                    border="0"/>
+											<?php endif; ?>
+                                        </label>
+										<?php endforeach; ?>
                             </div>
 						<?php elseif ($labels && !$this->config->topicIcons)
 							:
@@ -142,7 +142,7 @@ $labels          = $this->ktemplate->params->get('labels');
 								?>
                                 <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
                                        value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-								<?php if ($topicicontype == 'B5')
+								<?php if ($topicicontype == 'svg')
 								:
 								?>
                                 <label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
@@ -151,22 +151,22 @@ $labels          = $this->ktemplate->params->get('labels');
                                                 aria-hidden="true"></span><span
                                                 class="sr-only"></span><?php echo $icon->name; ?></span>
 									<?php elseif ($topicicontype == 'fa')
+									:
+									?>
+                                    <label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
+                                                class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
+										<?php else
+
 										:
 										?>
-                                        <label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
-                                                    class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
-											<?php else
-
-											:
-											?>
-                                            <label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
-                                                        loading=lazy
-                                                        src="<?php echo $icon->relpath; ?>"
-                                                        alt="<?php echo $icon->name; ?>"
-                                                        border="0"/>
-												<?php endif; ?>
-                                            </label>
-											<?php endforeach; ?>
+                                        <label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
+                                                    loading=lazy
+                                                    src="<?php echo $icon->relpath; ?>"
+                                                    alt="<?php echo $icon->name; ?>"
+                                                    border="0"/>
+											<?php endif; ?>
+                                        </label>
+										<?php endforeach; ?>
                             </div>
                             <br/>
 						<?php endif; ?>

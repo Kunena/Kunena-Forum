@@ -217,7 +217,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
             <input type="hidden" name="parentid" value="<?php echo \intval($this->message->parent) ?>"/>
 		<?php endif; ?>
 		<?php
-		if ($this->selectcatlist===false)
+		if ($this->selectcatlist === false)
 			:
 			?>
             <input type="hidden" name="catid" value="<?php echo \intval($this->message->catid) ?>"/>
@@ -262,7 +262,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
 
         <div class="shadow-lg p-3 mb-5 rounded">
 
-			<?php if ($this->selectcatlist!==false) : ?>
+			<?php if ($this->selectcatlist !== false) : ?>
                 <div class="form-group row">
                     <!-- Material input -->
                     <label for="inputCatlist"
@@ -342,22 +342,22 @@ Text::script('COM_KUNENA_POLL_TITLE');
 								<?php foreach ($this->topicIcons as $id => $icon) : ?>
                                 <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
                                        value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
-								<?php if ($this->config->topicIcons && $topicicontype == 'B5') : ?>
-                                    <label class="radio inline" for="radio<?php echo $icon->id; ?>">
-										<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
-										<?php echo KunenaSvgIcons::loadsvg($icon->b5, 'usertopicIcons', $this->category->iconset); ?>
-										<?php elseif ($this->config->topicIcons && $topicicontype == 'fa') : ?>
-                                        <label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
-                                                    class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
-											<?php else : ?>
-                                            <label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
-                                                        loading=lazy
-                                                        src="<?php echo $icon->relpath; ?>"
-                                                        alt="<?php echo $icon->name; ?>"
-                                                        border="0"/>
-												<?php endif; ?>
-                                            </label>
-											<?php endforeach; ?>
+								<?php if ($this->config->topicIcons && $topicicontype == 'svg') : ?>
+                                <label class="radio inline" for="radio<?php echo $icon->id; ?>">
+									<?php if (!$this->category->iconset) : $this->category->iconset = 'default'; endif; ?>
+									<?php echo KunenaSvgIcons::loadsvg($icon->svg, 'usertopicIcons', $this->category->iconset); ?>
+									<?php elseif ($this->config->topicIcons && $topicicontype == 'fa') : ?>
+                                    <label class="radio inline" for="radio<?php echo $icon->id; ?>"><i
+                                                class="fa fa-<?php echo $icon->fa; ?> glyphicon-topic fa-2x"></i>
+										<?php else : ?>
+                                        <label class="radio inline" for="radio<?php echo $icon->id; ?>"><img
+                                                    loading=lazy
+                                                    src="<?php echo $icon->relpath; ?>"
+                                                    alt="<?php echo $icon->name; ?>"
+                                                    border="0"/>
+											<?php endif; ?>
+                                        </label>
+										<?php endforeach; ?>
                             </div>
                         </div>
                     </div>

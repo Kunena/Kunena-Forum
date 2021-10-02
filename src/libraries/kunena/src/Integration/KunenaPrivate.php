@@ -39,9 +39,9 @@ class KunenaPrivate
 	 *
 	 * @return  boolean|KunenaPrivate
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -76,9 +76,9 @@ class KunenaPrivate
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function showIcon(int $userid): string
 	{
@@ -97,7 +97,7 @@ class KunenaPrivate
 		{
 			$class = 'btn btn-small';
 		}
-		elseif ($topicicontype == 'B5')
+		elseif ($topicicontype == 'svg')
 		{
 			$class = 'btn btn-outline-primary btn-sm';
 		}
@@ -145,17 +145,17 @@ class KunenaPrivate
 	}
 
 	/**
-	 * @internal param $text
-	 *
 	 * @param   integer  $userid  userid
 	 * @param   string   $class   class
 	 * @param   string   $icon    icon
 	 *
 	 * @return  string
 	 *
+	 * @throws Exception
 	 * @since    Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @internal param $text
+	 *
 	 */
 	public function showNewIcon(int $userid, $class = '', $icon = ''): string
 	{
@@ -178,7 +178,7 @@ class KunenaPrivate
 			{
 				$class = 'btn btn-small';
 			}
-			elseif ($topicicontype == 'B5')
+			elseif ($topicicontype == 'svg')
 			{
 				$class = 'btn btn-outline-primary btn-sm';
 			}

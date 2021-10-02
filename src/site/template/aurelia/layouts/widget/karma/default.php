@@ -19,18 +19,18 @@ $karma = '';
 
 if ($this->karmatype == 'karmadown')
 {
-	$url = 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . Session::getFormToken() . '=1';
+	$url       = 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . Session::getFormToken() . '=1';
 	$karmatype = 'minus';
 	$karmatext = Text::_('COM_KUNENA_KARMA_SMITE');
 }
 else
 {
-	$url = 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . Session::getFormToken() . '=1';
+	$url       = 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->userid . '&' . Session::getFormToken() . '=1';
 	$karmatype = 'plus';
 	$karmatext = Text::_('COM_KUNENA_KARMA_APPLAUD');
 }
 
-if ($this->topicicontype == 'B5')
+if ($this->topicicontype == 'svg')
 {
 	$karmaIcon = '<span class="glyphicon-karma glyphicon glyphicon-' . $karmatype . '-sign text-danger" title="' . $karmatext . '"></span>';
 }

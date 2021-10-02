@@ -147,7 +147,7 @@ class KunenaAvatar
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
-		if ($topicicontype == 'B5')
+		if ($topicicontype == 'svg')
 		{
 			if ($avatar == Uri::root() . 'media/kunena/core/svg/person.svg')
 			{

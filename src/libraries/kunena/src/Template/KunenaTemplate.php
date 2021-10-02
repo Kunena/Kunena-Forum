@@ -1240,7 +1240,7 @@ HTML;
 
 							$icon->published             = (int) $attributes->published;
 							$icon->title                 = (string) $attributes->title;
-							$icon->b5                    = (string) $attributes->b5;
+							$icon->svg                   = (string) $attributes->svg;
 							$icon->fa                    = (string) $attributes->fa;
 							$icon->filename              = (string) $attributes->src;
 							$icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
@@ -1386,9 +1386,9 @@ HTML;
 				$icon           = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 			}
 
-			if ($topicicontype == 'B5')
+			if ($topicicontype == 'svg')
 			{
-				return KunenaSvgIcons::loadsvg($icon->b5, 'usertopicIcons', $categoryIconset);
+				return KunenaSvgIcons::loadsvg($icon->svg, 'usertopicIcons', $categoryIconset);
 			}
 			elseif ($topicicontype == 'fa')
 			{
@@ -1459,9 +1459,9 @@ HTML;
 			$xml  = simplexml_load_file($xmlfile);
 			$icon = $this->get_xml_systemicon($xml, $iconid, $topicicontype);
 
-			if ($topicicontype == 'B5')
+			if ($topicicontype == 'svg')
 			{
-				return KunenaSvgIcons::loadsvg($icon->b5, 'systemtopicIcons', $categoryIconset);
+				return KunenaSvgIcons::loadsvg($icon->svg, 'systemtopicIcons', $categoryIconset);
 			}
 			elseif ($topicicontype == 'fa')
 			{
@@ -1527,31 +1527,11 @@ HTML;
 	 */
 	private function getIconsAttributes($icon)
 	{
-		$attributes = $icon->attributes();
-		$icon       = new stdClass;
-		$icon->id   = (int) $attributes->id;
-		$icon->name = (string) $attributes->name;
-		$icon->b5   = (string) $attributes->b5;
-		$icon->fa   = (string) $attributes->fa;
-		$icon->src  = (string) $attributes->src;
-		$icon->new  = (string) $attributes->new;
-
-		return $icon;
-	}
-
-	/**
-	 * Retrieve icons attributes
-	 *
-	 * @return stdClass
-	 * @since Kunena 6.0
-	 */
-	private function getIconsAttributesSystem($icon)
-	{
 		$attributes = $icon[0]->attributes();
 		$icon       = new stdClass;
 		$icon->id   = (int) $attributes->id;
 		$icon->name = (string) $attributes->name;
-		$icon->b5   = (string) $attributes->b5;
+		$icon->svg  = (string) $attributes->svg;
 		$icon->fa   = (string) $attributes->fa;
 		$icon->src  = (string) $attributes->src;
 		$icon->new  = (string) $attributes->new;
@@ -1583,6 +1563,26 @@ HTML;
 
 			return $icon;
 		}
+	}
+
+	/**
+	 * Retrieve icons attributes
+	 *
+	 * @return stdClass
+	 * @since Kunena 6.0
+	 */
+	private function getIconsAttributesSystem($icon)
+	{
+		$attributes = $icon[0]->attributes();
+		$icon       = new stdClass;
+		$icon->id   = (int) $attributes->id;
+		$icon->name = (string) $attributes->name;
+		$icon->svg  = (string) $attributes->svg;
+		$icon->fa   = (string) $attributes->fa;
+		$icon->src  = (string) $attributes->src;
+		$icon->new  = (string) $attributes->new;
+
+		return $icon;
 	}
 
 	/**
@@ -1959,7 +1959,7 @@ HTML;
 			$attributes       = $label[0]->attributes();
 			$label            = new stdClass;
 			$label->id        = (int) $attributes->id;
-			$label->b5        = (string) $attributes->b5;
+			$label->svg       = (string) $attributes->svg;
 			$label->fa        = (string) $attributes->fa;
 			$label->src       = (string) $attributes->src;
 			$label->name      = (string) $attributes->name;

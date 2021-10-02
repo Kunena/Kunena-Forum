@@ -33,7 +33,7 @@ $config         = KunenaFactory::getTemplate()->params;
 	<?php if ($config->get('displayDropdownMenu'))
 		:
 		?>
-        <ul class="nav nav-tabs float-end">
+        <ul class="nav float-end">
             <li class="dropdown mobile-user">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">

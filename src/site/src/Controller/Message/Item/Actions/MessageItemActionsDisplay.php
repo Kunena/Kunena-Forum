@@ -87,7 +87,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		$token  = Session::getFormToken();
 		$Itemid = KunenaRoute::fixMissingItemID();
 
-		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}&{$token}=1";
+		$task   = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}&{$token}=1";
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}&Itemid={$Itemid}";
 
 		$this->messageButtons = new Registry;
@@ -111,7 +111,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		{
 			$this->quickReply = $this->config->quickReply;
 
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'reply',
@@ -142,7 +142,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 			if ($me->exists() && $this->config->quickReply)
 			{
-				if ($topicicontype == 'B5')
+				if ($topicicontype == 'svg')
 				{
 					$this->messageButtons->set(
 						'quickReply',
@@ -172,7 +172,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 				}
 			}
 
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'quote',
@@ -236,7 +236,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		{
 			if ($this->message->isAuthorised('thankyou') && !\array_key_exists($me->userid, $this->message->thankyou))
 			{
-				if ($topicicontype == 'B5')
+				if ($topicicontype == 'svg')
 				{
 					$this->messageButtons->set(
 						'thankyou',
@@ -273,7 +273,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		{
 			if ($this->message->isAuthorised('unthankyou') && \array_key_exists($me->userid, $this->message->thankyou))
 			{
-				if ($topicicontype == 'B5')
+				if ($topicicontype == 'svg')
 				{
 					$this->messageButtons->set(
 						'unthankyou',
@@ -310,7 +310,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 			if ($me->isModerator($this->topic->getCategory()) || $this->config->userReport
 				|| !$this->config->userReport && $me->userid != $this->message->userid)
 			{
-				if ($topicicontype == 'B5')
+				if ($topicicontype == 'svg')
 				{
 					$icon = 'alert-octagon';
 				}
@@ -343,7 +343,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 				$this->message_closed = null;
 			}
 
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'edit',
@@ -375,7 +375,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 		if ($this->message->isAuthorised('move'))
 		{
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'moderate',
@@ -409,7 +409,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		{
 			if ($this->message->isAuthorised('approve'))
 			{
-				if ($topicicontype == 'B5' && !$fullactions)
+				if ($topicicontype == 'svg' && !$fullactions)
 				{
 					$this->messageButtons->set(
 						'publish',
@@ -439,7 +439,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 				}
 			}
 
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'delete',
@@ -472,7 +472,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		{
 			if ($this->message->isAuthorised('undelete'))
 			{
-				if ($topicicontype == 'B5' && !$fullactions)
+				if ($topicicontype == 'svg' && !$fullactions)
 				{
 					$this->messageButtons->set(
 						'undelete',
@@ -504,7 +504,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 			if ($this->message->getTopic()->isAuthorised('permdelete'))
 			{
-				if ($topicicontype == 'B5' && !$fullactions)
+				if ($topicicontype == 'svg' && !$fullactions)
 				{
 					$this->messageButtons->set(
 						'permdelete',
@@ -536,7 +536,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		}
 		elseif ($this->message->isAuthorised('delete'))
 		{
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->messageButtons->set(
 					'delete',

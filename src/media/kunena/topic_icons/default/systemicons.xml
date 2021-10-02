@@ -12,22 +12,22 @@
     <description>System topic icons for Kunena</description>
 
     <icons type="system" width="48" height="48">
-        <icon id="0" name="normal" b2="comments-2" b3="comment" b4="comment" b5="comments" fa="comments"
+        <icon id="0" name="normal" b2="comments-2" b3="comment" b4="comment" svg="comments" fa="comments"
               src="normal.png"
               new="normal_new.png"/>
-        <icon id="1" name="unapproved" b2="eye" b3="eye" b4="eye" b5="eye" fa="eye" src="unapproved.png"
+        <icon id="1" name="unapproved" b2="eye" b3="eye" b4="eye" svg="eye" fa="eye" src="unapproved.png"
               new="unapproved_new.png"/>
-        <icon id="2" name="deleted" b2="trash" b3="trash" b4="trash" b5="trash" fa="trash" src="deleted.png"
+        <icon id="2" name="deleted" b2="trash" b3="trash" b4="trash" svg="trash" fa="trash" src="deleted.png"
               new="deleted_new.png"/>
-        <icon id="3" name="sticky" b2="pin" b3="pushpin" b4="pushpin" b5="pushpin" fa="map-pin" src="sticky.png"
+        <icon id="3" name="sticky" b2="pin" b3="pushpin" b4="pushpin" svg="pushpin" fa="map-pin" src="sticky.png"
               new="sticky_new.png"/>
-        <icon id="4" name="locked" b2="lock" b3="file" b4="file" b5="lock" fa="lock" src="locked.png"
+        <icon id="4" name="locked" b2="lock" b3="file" b4="file" svg="lock" fa="lock" src="locked.png"
               new="locked_new.png"/>
-        <icon id="5" name="moved" b2="contract" b3="contract" b4="contract" b5="moved" fa="compress" src="moved.png"
+        <icon id="5" name="moved" b2="contract" b3="contract" b4="contract" svg="moved" fa="compress" src="moved.png"
               new="moved.png"/>
-        <icon id="6" name="unanswered" b2="comments" b3="comment" b4="comment" b5="comment" fa="comment"
+        <icon id="6" name="unanswered" b2="comments" b3="comment" b4="comment" svg="comment" fa="comment"
               src="unanswered.png" new="unanswered_new.png"/>
-        <icon id="7" name="stickyandlocked" b2="lock" b3="lock" b4="lock" b5="sticky-notes" fa="lock"
+        <icon id="7" name="stickyandlocked" b2="lock" b3="lock" b4="lock" svg="sticky-notes" fa="lock"
               src="sticky_locked.png"
               new="sticky_and_locked_new.png"/>
     </icons>

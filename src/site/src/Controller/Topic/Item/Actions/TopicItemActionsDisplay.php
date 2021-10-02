@@ -92,7 +92,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		if ($this->topic->isAuthorised('reply'))
 		{
 			// Add Reply topic button.
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'reply',
@@ -125,7 +125,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		if ($userTopic->subscribed)
 		{
 			// User can always remove existing subscription.
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'subscribe',
@@ -157,7 +157,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		elseif ($this->topic->isAuthorised('subscribe'))
 		{
 			// Add subscribe topic button.
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'subscribe',
@@ -190,7 +190,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		if ($userTopic->favorite)
 		{
 			// User can always remove existing favorite.
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'favorite',
@@ -222,7 +222,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		elseif ($this->topic->isAuthorised('favorite'))
 		{
 			// Add favorite topic button.
-			if ($topicicontype == 'B5' && !$fullactions)
+			if ($topicicontype == 'svg' && !$fullactions)
 			{
 				$this->topicButtons->set(
 					'favorite',
@@ -365,7 +365,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(
 				['url'   => $url, 'name' => $name,
-				 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon, ]
+				 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
 			);
 	}
 }

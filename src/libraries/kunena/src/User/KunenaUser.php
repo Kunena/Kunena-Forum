@@ -1010,9 +1010,9 @@ class KunenaUser extends CMSObject
 						return '<i class="fas fa-user-circle status-' . $online . '" aria-hidden="true"></i>';
 					}
 
-					if ($topicicontype == 'B5')
+					if ($topicicontype == 'svg')
 					{
-						return '<span class="glyphicon glyphicon-user user-circle user-default status-' . $online . '" aria-hidden="true"></span>';
+						return '<span class="rounded-circle status-' . $online . '" aria-hidden="true">' . KunenaSvgIcons::loadsvg('person') . '</span>';
 					}
 				}
 				elseif ($sizex == 'logout' || $sizex == 'profile')
@@ -1022,7 +1022,7 @@ class KunenaUser extends CMSObject
 						return '<i class="fas fa-user-circle fa-7x"></i>';
 					}
 
-					if ($topicicontype == 'B5')
+					if ($topicicontype == 'svg')
 					{
 						return '<span class="glyphicon glyphicon-user user-circle user-xl b2-7x" aria-hidden="true"></span>';
 					}
@@ -1033,7 +1033,7 @@ class KunenaUser extends CMSObject
 					return '<i class="fas fa-user-circle fa-3x"></i>';
 				}
 
-				if ($topicicontype == 'B5' && $this->avatar == null)
+				if ($topicicontype == 'svg' && $this->avatar == null)
 				{
 					return KunenaSvgIcons::loadsvg('person');
 				}
@@ -1644,7 +1644,7 @@ class KunenaUser extends CMSObject
 			{
 				$topicicontype = KunenaFactory::getTemplate()->params->get('topicicontype');
 
-				if ($topicicontype == 'B5')
+				if ($topicicontype == 'svg')
 				{
 					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
 					$karmaPlusIcon  = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
@@ -2403,35 +2403,35 @@ class KunenaUser extends CMSObject
 	public function socialButtons()
 	{
 		return ['twitter'          => ['url' => 'https://twitter.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0'],
-				'facebook'         => ['url' => 'https://www.facebook.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'],
-				'myspace'          => ['url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'],
-				'linkedin'         => ['url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'],
-				'linkedin_company' => ['url' => 'https://www.linkedin.com/company/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY'), 'nourl' => '0'],
-				'friendfeed'       => ['url' => 'http://friendfeed.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0'],
-				'digg'             => ['url' => 'http://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'],
-				'skype'            => ['url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'],
-				'yim'              => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'],
-				'google'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1'],
-				'github'           => ['url' => 'https://www.github.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'],
-				'microsoft'        => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'],
-				'icq'              => ['url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => Text::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'],
-				'blogspot'         => ['url' => 'https://##VALUE##.blogspot.com/', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'],
-				'flickr'           => ['url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0'],
-				'bebo'             => ['url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0'],
-				'instagram'        => ['url' => 'https://www.instagram.com/##VALUE##/', 'title' => Text::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0'],
-				'qqsocial'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QQSOCIAL'), 'nourl' => '1'],
-				'qzone'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1'],
-				'weibo'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1'],
-				'wechat'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1'],
-				'vk'               => ['url' => 'https://vk.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '0'],
-				'telegram'         => ['url' => 'https://t.me/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'],
-				'apple'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'],
-				'vimeo'            => ['url' => 'https://vimeo.com/user##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VIMEO'), 'nourl' => '1'],
-				'whatsapp'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'],
-				'youtube'          => ['url' => 'https://www.youtube-nocookie.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'],
-				'ok'               => ['url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'],
-				'pinterest'        => ['url' => 'https://pinterest.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_PINTEREST'), 'nourl' => '0'],
-				'reddit'           => ['url' => 'https://www.reddit.com/user/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_REDDIT'), 'nourl' => '0'],
+		        'facebook'         => ['url' => 'https://www.facebook.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'],
+		        'myspace'          => ['url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'],
+		        'linkedin'         => ['url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'],
+		        'linkedin_company' => ['url' => 'https://www.linkedin.com/company/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY'), 'nourl' => '0'],
+		        'friendfeed'       => ['url' => 'http://friendfeed.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0'],
+		        'digg'             => ['url' => 'http://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'],
+		        'skype'            => ['url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'],
+		        'yim'              => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'],
+		        'google'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1'],
+		        'github'           => ['url' => 'https://www.github.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'],
+		        'microsoft'        => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'],
+		        'icq'              => ['url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => Text::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'],
+		        'blogspot'         => ['url' => 'https://##VALUE##.blogspot.com/', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'],
+		        'flickr'           => ['url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0'],
+		        'bebo'             => ['url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0'],
+		        'instagram'        => ['url' => 'https://www.instagram.com/##VALUE##/', 'title' => Text::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0'],
+		        'qqsocial'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QQSOCIAL'), 'nourl' => '1'],
+		        'qzone'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1'],
+		        'weibo'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1'],
+		        'wechat'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1'],
+		        'vk'               => ['url' => 'https://vk.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '0'],
+		        'telegram'         => ['url' => 'https://t.me/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'],
+		        'apple'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'],
+		        'vimeo'            => ['url' => 'https://vimeo.com/user##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VIMEO'), 'nourl' => '1'],
+		        'whatsapp'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'],
+		        'youtube'          => ['url' => 'https://www.youtube-nocookie.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'],
+		        'ok'               => ['url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'],
+		        'pinterest'        => ['url' => 'https://pinterest.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_PINTEREST'), 'nourl' => '0'],
+		        'reddit'           => ['url' => 'https://www.reddit.com/user/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_REDDIT'), 'nourl' => '0'],
 		];
 	}
 

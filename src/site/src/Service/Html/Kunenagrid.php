@@ -305,7 +305,7 @@ class Kunenagrid
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
-		if ($bootstrap && $topicicontype == 'B5')
+		if ($bootstrap && $topicicontype == 'svg')
 		{
 			if ($class == 'publish')
 			{

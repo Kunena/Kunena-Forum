@@ -63,7 +63,7 @@ $wa->useScript('multiselect');
                                                             data-bs-target="#tab_<?php echo strtolower($fieldset->name); ?>"
                                                             type="button" role="tab"
                                                             aria-controls="tab_<?php echo strtolower(Text::_($fieldset->name)); ?>"
-                                                            aria-selected="true"><?php echo strtolower(Text::_($fieldset->name)); ?></button>
+                                                            aria-selected="true"><?php echo Text::_($fieldset->name); ?></button>
                                                 </li>
 											<?php endif; ?>
 											<?php endforeach; ?>

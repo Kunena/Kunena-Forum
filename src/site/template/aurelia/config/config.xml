@@ -114,11 +114,6 @@
             <option value="fa">COM_KUNENA_TEMPLATE_FONTAWESOME</option>
             <option value="image">COM_KUNENA_TEMPLATE_IMAGE_LEGACY</option>
         </field>
-        <field name="bootstrap5icons" type="list" default="0" label="COM_KUNENA_TEMPLATE_LOAD_EXTERNAL_BOOTSTRAP5"
-               description="COM_KUNENA_TEMPLATE_LOAD_EXTERNAL_BOOTSTRAP5_DESC">
-            <option value="0">COM_KUNENA_NO</option>
-            <option value="1">COM_KUNENA_YES</option>
-        </field>
         <field name="fontawesome" type="list" default="0" label="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME"
                description="COM_KUNENA_TEMPLATE_DISPLAY_FONTAWESOME_DESC">
             <option value="0">COM_KUNENA_NO</option>

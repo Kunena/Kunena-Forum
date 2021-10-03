@@ -154,11 +154,6 @@ class KunenaTemplateAurelia extends KunenaTemplate
 			$wa->registerAndUseStyle('kunena.load.fontawesome', "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 		}
 
-		if ($this->params->get('bootstrap5icons'))
-		{
-			$wa->registerAndUseStyle('kunena.load.b5', "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
-		}
-
 		// Load template colors settings
 		$styles    = <<<EOF
 		/* Kunena Custom CSS */

@@ -22,7 +22,7 @@ use Joomla\CMS\Plugin\CMSPlugin;
 class plgKunenaJoomla extends CMSPlugin
 {
 	/**
-	 * plgKunenaCommunity constructor.
+	 * plgKunenaJoomla constructor.
 	 *
 	 * @param   DispatcherInterface  &$subject  The object to observe
 	 * @param   array                 $config   An optional associative array of configuration settings.

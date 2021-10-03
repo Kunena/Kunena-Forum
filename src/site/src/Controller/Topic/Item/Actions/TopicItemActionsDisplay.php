@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -91,165 +92,44 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 
 		if ($this->topic->isAuthorised('reply'))
 		{
-			// Add Reply topic button.
-			if ($topicicontype == 'svg' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'glyphicon glyphicon-share-alt')
-				);
-			}
-			elseif ($topicicontype == 'fa' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'fa fa-reply')
-				);
-			}
-			elseif ($topicicontype == 'image' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, 'kicon-reply')
-				);
-			}
-			else
-			{
-				$this->topicButtons->set(
-					'reply',
-					$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button)
-				);
-			}
+			$this->topicButtons->set(
+				'reply',
+				$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, KunenaIcons::undo())
+			);
 		}
 
 		if ($userTopic->subscribed)
 		{
 			// User can always remove existing subscription.
-			if ($topicicontype == 'svg' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'glyphicon glyphicon-envelope')
-				);
-			}
-			elseif ($topicicontype == 'fa' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'fas fa-envelope-open')
-				);
-			}
-			elseif ($topicicontype == 'image' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, 'kicon-unsubscribe')
-				);
-			}
-			else
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button)
-				);
-			}
+			$this->topicButtons->set(
+				'subscribe',
+				$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, KunenaIcons::emailOpen())
+			);
 		}
 		elseif ($this->topic->isAuthorised('subscribe'))
 		{
 			// Add subscribe topic button.
-			if ($topicicontype == 'svg' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'glyphicon glyphicon-envelope')
-				);
-			}
-			elseif ($topicicontype == 'fa' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'fas fa-envelope')
-				);
-			}
-			elseif ($topicicontype == 'image' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, 'kicon-subscribe')
-				);
-			}
-			else
-			{
-				$this->topicButtons->set(
-					'subscribe',
-					$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button)
-				);
-			}
+			$this->topicButtons->set(
+				'subscribe',
+				$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, KunenaIcons::email())
+			);
 		}
 
 		if ($userTopic->favorite)
 		{
 			// User can always remove existing favorite.
-			if ($topicicontype == 'svg' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'glyphicon glyphicon-star')
-				);
-			}
-			elseif ($topicicontype == 'fa' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'fa fa-star')
-				);
-			}
-			elseif ($topicicontype == 'image' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, 'kicon-unfavorite')
-				);
-			}
-			else
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button)
-				);
-			}
+			$this->topicButtons->set(
+				'favorite',
+				$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, KunenaIcons::star())
+			);
 		}
 		elseif ($this->topic->isAuthorised('favorite'))
 		{
 			// Add favorite topic button.
-			if ($topicicontype == 'svg' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'glyphicon glyphicon-star-empty')
-				);
-			}
-			elseif ($topicicontype == 'fa' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'far fa-star')
-				);
-			}
-			elseif ($topicicontype == 'image' && !$fullactions)
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, 'kicon-favorite')
-				);
-			}
-			else
-			{
-				$this->topicButtons->set(
-					'favorite',
-					$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button)
-				);
-			}
+			$this->topicButtons->set(
+				'favorite',
+				$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, KunenaIcons::starOpen())
+			);
 		}
 
 		if ($this->topic->getCategory()->isAuthorised('moderate'))

@@ -261,6 +261,37 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
+			return '<i class="fa fa-star-fill" aria-hidden="true"></i>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<span class="glyphicon glyphicon-star-fill" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'image')
+		{
+			return '<span class="kicon kfavoritestar ksmall" aria-hidden="true"></span>';
+		}
+
+		return KunenaSvgIcons::loadsvg('star-fill');
+	}
+
+	/**
+	 * Return the star icon (secret key)
+	 *
+	 * @return  string
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 */
+	public static function starOpen(): string
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
 			return '<i class="fa fa-star" aria-hidden="true"></i>';
 		}
 
@@ -602,6 +633,37 @@ class KunenaIcons
 		}
 
 		return KunenaSvgIcons::loadsvg('envelope');
+	}
+
+	/**
+	 * Return the email icon
+	 *
+	 * @return  string
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 5.0
+	 */
+	public static function emailOpen(): string
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-envelope-open" aria-hidden="true"></i>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<span class="glyphicon glyphicon-envelope-open" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'image')
+		{
+			return '<span class="kicon-profile kicon-profile-email" aria-hidden="true"></span>';
+		}
+
+		return KunenaSvgIcons::loadsvg('envelope-open');
 	}
 
 	/**

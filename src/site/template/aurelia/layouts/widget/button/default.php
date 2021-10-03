@@ -15,7 +15,6 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 $label = Text::_("COM_KUNENA_BUTTON_{$this->scope}_{$this->name}");
@@ -41,19 +40,13 @@ $topicicontype = $ktemplate->params->get('topicicontype');
                       href="<?php echo $this->url; ?>" rel="nofollow"
                       title="<?php echo $title; ?>" name="<?php echo $this->name; ?>" <?php echo $modal; ?>>
 	<?php
-	if (!empty($icon))
-		:
-		?>
-		<?php if ($topicicontype != 'svg')
-		:
-		?>
-        <i class="<?php echo $icon; ?>"></i>
-	<?php else
-
-		:
-		?>
-        <img loading=lazy src="<?php echo Uri::root(); ?>/media/kunena/core/svg/<?php echo $icon; ?>.svg"/>
-	<?php endif; ?>
+	if (!empty($icon)) : ?>
+		<?php if ($topicicontype != 'svg') : ?>
+            <i class="<?php echo $icon; ?>"></i>
+		<?php else :
+			?>
+			<?php echo $icon; ?>
+		<?php endif; ?>
 	<?php endif; ?>
 	<?php echo $label; ?>
 </a>

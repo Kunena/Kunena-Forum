@@ -280,11 +280,11 @@ jQuery(document).ready(function ($) {
 	if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 	{
 		// TODO: need to change the values(bold, italic) from template parameters to be handled here
-		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon|source';
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,img,link,unlink,emoticon,video|source';
 	}
 	else
 	{
-		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon|source';
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,img,link,unlink,emoticon,video|source';
 	}
 	
 	var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
@@ -296,12 +296,230 @@ jQuery(document).ready(function ($) {
 	});
 
 	var textarea = document.getElementById('message');
+	var kunenaCmd = {
+		align: ['left', 'center', 'right', 'justify'],
+		fsStr: ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'],
+		fSize: [9, 12, 15, 17, 23, 31],
+		video: {
+			'Dailymotion': {
+				'match': /(dailymotion\.com\/video\/|dai\.ly\/)([^\/]+)/,
+				'url': '//www.dailymotion.com/embed/video/',
+				'html': '<iframe frameborder="0" width="480" height="270" src="{url}" data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
+			},
+			'Facebook': {
+				'match': /facebook\.com\/(?:photo.php\?v=|video\/video.php\?v=|video\/embed\?video_id=|v\/?)(\d+)/,
+				'url': 'https://www.facebook.com/video/embed?video_id=',
+				'html': '<iframe src="{url}" width="625" height="350" frameborder="0" data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
+			},
+			'Liveleak': {
+				'match': /liveleak\.com\/(?:view\?[a-z]=)([^\/]+)/,
+				'url': 'http://www.liveleak.com/ll_embed?i=',
+				'html': '<iframe width="500" height="300" src="{url}" frameborder="0" data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
+			},
+			'MetaCafe': {
+				'match': /metacafe\.com\/watch\/([^\/]+)/,
+				'url': 'http://www.metacafe.com/embed/',
+				'html': '<iframe src="{url}" width="440" height="248" frameborder=0 data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
+			},
+			'Mixer': {
+				'match': /mixer\.com\/([^\/]+)/,
+				'url': '//mixer.com/embed/player/',
+				'html': '<iframe allowfullscreen="true" src="{url}" width="620" height="349" frameborder="0" data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
+			},
+			'Vimeo': {
+				'match': /vimeo.com\/(\d+)($|\/)/,
+				'url': '//player.vimeo.com/video/',
+				'html': '<iframe src="{url}" width="500" height="281" frameborder="0" data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
+			},
+			'Youtube': {
+				'match': /(?:v=|v\/|embed\/|youtu\.be\/)(.{11})/,
+				'url': '//www.youtube-nocookie.com/embed/',
+				'html': '<iframe width="560" height="315" src="{url}" frameborder="0" data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
+			},
+			'Twitch': {
+				'match': /twitch\.tv\/(?:[\w+_-]+)\/v\/(\d+)/,
+				'url': '//player.twitch.tv/?video=v',
+				'html': '<iframe src="{url}" frameborder="0" scrolling="no" height="378" width="620" data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
+			}
+		}
+	};
+	
+	// Image bbcode improved
+	sceditor.formats.bbcode.set('img', {
+		format: function (element, content) {
+			if (jQuery(element).data('sceditor-emoticon'))
+				return content;
+
+			var url = jQuery(element).attr('src'),
+				width = jQuery(element).attr('width'),
+				height = jQuery(element).attr('height'),
+				align = jQuery(element).data('scealign');
+
+			var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
+				? '=' + width + 'x' + height
+				: ''
+			;
+
+			if (align === 'left' || align === 'right')
+				attrs += ' align='+align
+
+			return '[img' + attrs + ']' + url + '[/img]';
+		},
+		html: function (token, attrs, content) {
+			var	width, height, match,
+				align = attrs.align,
+				attribs = '';
+
+			// handle [img=340x240]url[/img]
+			if (attrs.defaultattr) {
+				match = attrs.defaultattr.split(/x/i);
+
+				width  = match[0];
+				height = (match.length === 2 ? match[1] : match[0]);
+
+				if (width !== undefined && height !== undefined && width > 0 && height > 0) {
+					attribs +=
+						' width="' + sceditor.escapeEntities(width, true) + '"' +
+						' height="' + sceditor.escapeEntities(height, true) + '"';
+				}
+			}
+
+			if (align === 'left' || align === 'right')
+				attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
+
+			return '<img' + attribs +
+				' src="' + sceditor.escapeUriScheme(content) + '" />';
+		}
+	})
+
+	sceditor.command.set('img', {
+		_dropDown: function (editor, caller) {
+			var $content;
+
+			$content = jQuery(
+				'<div>' +
+				'<div>' +
+				'<label for="image">' + editor._('URL') + ':</label> ' +
+				'<input type="text" id="image" placeholder="https://" />' +
+				'</div>' +
+				'<div>' +
+				'<label for="width">' + editor._('Width (optional)') + ':</label> ' +
+				'<input type="text" id="width" size="2" />' +
+				'</div>' +
+				'<div>' +
+				'<label for="height">' + editor._('Height (optional)') + ':</label> ' +
+				'<input type="text" id="height" size="2" />' +
+				'</div>' +
+				'<div>' +
+				'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+				'</div>' +
+				'</div>'
+			);
+
+			$content.find('.button').on('click', function (e) {
+				var url = $content.find('#image').val(),
+					width = $content.find('#width').val(),
+					height = $content.find('#height').val()
+				;
+
+				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
+					? '=' + width + 'x' + height
+					: ''
+				;
+
+				if (url)
+					editor.insert('[img' + attrs + ']' + url + '[/img]');
+
+				editor.closeDropDown(true);
+				e.preventDefault();
+			});
+
+			editor.createDropDown(caller, 'insertimage', $content.get(0));
+		},
+		exec: function (caller) {
+			sceditor.command.get('img')._dropDown(this, caller);
+		},
+		txtExec: function (caller) {
+			sceditor.command.get('img')._dropDown(this, caller);
+		},
+	});
+
+	// Add video command
+	sceditor.formats.bbcode.set('video', {
+		allowsEmpty: true,
+		allowedChildren: ['#', '#newline'],
+		tags: {
+			iframe: {
+				'data-kunena-vt': null
+			}
+		},
+		format: function ($element, content) {
+			return '[video=' + $($element).data('kunena-vt') + ']' + $($element).data('kunena-vsrc') + '[/video]';
+		},
+		html: function (token, attrs, content) {
+			var params = kunenaCmd.video[Object.keys(kunenaCmd.video).find(key => key.toLowerCase() === attrs.defaultattr)];
+			var matches, url;
+			var n = (attrs.defaultattr == 'dailymotion') ? 2 : 1;
+			if (typeof params !== "undefined") {
+				matches = content.match(params['match']);
+				url = matches ? params['url'] + matches[n] : false;
+			}
+			if (url) {
+				return params['html'].replace('{url}', url).replace('{src}', content).replace('{type}', attrs.defaultattr);
+			}
+			return sceditor.escapeEntities(token.val + content + (token.closing ? token.closing.val : ''));
+		}
+	});
+
+	sceditor.command.set('video', {
+		_dropDown: function (editor, caller) {
+			var $content, videourl, videotype, videoOpts;
+
+			jQuery.each(kunenaCmd.video, function (provider, data) {
+				videoOpts += '<option value="' + provider.toLowerCase() + '">' + editor._(provider) + '</option>';
+			});
+			$content = $(
+				'<div>' +
+				'<div>' +
+				'<label for="videotype">' + editor._('Video Type:') + '</label> ' +
+				'<select id="videotype">' + videoOpts + '</select>' +
+				'</div>' +
+				'<div>' +
+				'<label for="link">' + editor._('Video URL:') + '</label> ' +
+				'<input type="text" id="videourl" placeholder="https://" />' +
+				'</div>' +
+				'<div><input type="button" class="button" value="' + editor._('Insert') + '" /></div>' +
+				'</div>'
+			);
+
+			$content.find('.button').on('click', function (e) {
+				videourl = $content.find('#videourl').val();
+				videotype = $content.find('#videotype').val();
+
+				if (videourl !== '' && videourl !== 'http://')
+					editor.insert('[video=' + videotype + ']' + videourl + '[/video]');
+
+				editor.closeDropDown(true);
+				e.preventDefault();
+			});
+
+			editor.createDropDown(caller, 'insertvideo', $content.get(0));
+		},
+		exec: function (caller) {
+			sceditor.command.get('video')._dropDown(this, caller);
+		},
+		txtExec: function (caller) {
+			sceditor.command.get('video')._dropDown(this, caller);
+		},
+		tooltip: 'Insert a video'
+	});
+
 	sceditor.create(textarea, {
 		format: 'bbcode',
 		toolbar: toolbar_buttons,
 		style: Joomla.getOptions('com_kunena.sceditor_style_path'),
 		emoticonsRoot: Joomla.getOptions('com_kunena.root_path')+'/media/kunena/emoticons/',
-		emoticons: {
+		/*emoticons: {
 			// Emoticons to be included in the dropdown
 			dropdown: list_emoticons,
 			// Emoticons to be included in the more section
@@ -314,7 +532,7 @@ jQuery(document).ready(function ($) {
 			hidden: {
 				':aliasforalien:': 'emoticons/alien.png',
 				':aliasforblink:': 'emoticons/blink.png'
-		}
-}
+			}
+		}*/
 	});
 });

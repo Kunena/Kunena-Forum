@@ -19,7 +19,7 @@
               new="unapproved_new.png"/>
         <icon id="2" name="deleted" b2="trash" b3="trash" b4="trash" svg="trash" fa="trash" src="deleted.png"
               new="deleted_new.png"/>
-        <icon id="3" name="sticky" b2="pin" b3="pushpin" b4="pushpin" svg="pushpin" fa="map-pin" src="sticky.png"
+        <icon id="3" name="sticky" b2="pin" b3="pushpin" b4="pushpin" svg="award" fa="map-pin" src="sticky.png"
               new="sticky_new.png"/>
         <icon id="4" name="locked" b2="lock" b3="file" b4="file" svg="lock" fa="lock" src="locked.png"
               new="locked_new.png"/>

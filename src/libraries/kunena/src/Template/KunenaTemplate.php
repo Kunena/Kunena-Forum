@@ -1388,7 +1388,12 @@ HTML;
 
 			if ($topicicontype == 'svg')
 			{
-				return KunenaSvgIcons::loadsvg($icon->svg, 'usertopicIcons', $categoryIconset);
+				if ($categoryIconset != 'default')
+				{
+					return KunenaSvgIcons::loadsvg($icon->svg, 'usertopicIcons', $categoryIconset . '/' . $icon->src);
+				}
+
+				return KunenaSvgIcons::loadsvg($icon->svg);
 			}
 			elseif ($topicicontype == 'fa')
 			{

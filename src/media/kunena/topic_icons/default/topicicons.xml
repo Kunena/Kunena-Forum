@@ -44,11 +44,11 @@
               src="system/deleted.png"/>
         <icon id="502" name="unapproved" published="1" svg="comment" fa="comment"
               src="system/unapproved.png"/>
-        <icon id="503" name="sticky_locked" published="1" svg="file" fa="lock"
+        <icon id="503" name="sticky_locked" published="1" svg="lock" fa="lock"
               src="system/sticky_locked.png"/>
-        <icon id="504" name="sticky" published="1" svg="pushpin" fa="map-pin"
+        <icon id="504" name="sticky" published="1" svg="award" fa="map-pin"
               src="system/sticky.png"/>
-        <icon id="505" name="locked" published="1" svg="file" fa="lock"
+        <icon id="505" name="locked" published="1" svg="lock" fa="lock"
               src="system/locked.png"/>
     </icons>
 

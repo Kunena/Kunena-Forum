@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 Text::script('COM_KUNENA_RATE_LOGIN');
 Text::script('COM_KUNENA_RATE_NOT_YOURSELF');
@@ -62,7 +63,7 @@ if ($this->topic->locked)
 	<?php endif; ?>
 
     <h1>
-		<?php echo $this->topic->getIcon($this->topic->getCategory()->iconset); ?>
+		<?php echo KunenaTemplate::getInstance()->getTopicIcon($this->topic); ?>
 		<?php
 		if ($this->ktemplate->params->get('labels') != 0)
 		{

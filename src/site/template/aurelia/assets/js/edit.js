@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
         localStorage.removeItem('copyKunenaeditor');
     });
 
-    // Needed to open and close quickreply from on blue Eagle5
+    // Needed to open and close quickreply from template
     $('.Kreplyclick').click(function () {
         const name = '#' + $(this).attr('data-related');
         if ($(name).is(":visible")) {

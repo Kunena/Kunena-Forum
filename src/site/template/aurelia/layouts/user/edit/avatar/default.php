@@ -36,8 +36,8 @@ $this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.c
 
 $this->doc->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
-$this->doc->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_upload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=upload&format=json'));
+$this->doc->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 ?>
 <h3>
 	<?php echo $this->headerText; ?>
@@ -68,8 +68,9 @@ $this->doc->addScriptOptions('com_kunena.avatar_upload_url', KunenaRoute::_('ind
                 <div id="dropzone">
                     <div class="dropzone">
                         <div class="default message">
-							<span
-                                    id="klabel_info_drop_browse"><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?></span>
+                            <span id="klabel_info_drop_browse">
+                                <?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_DRAG_AND_DROP_OR_BROWSE') ?>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -95,15 +96,15 @@ $this->doc->addScriptOptions('com_kunena.avatar_upload_url', KunenaRoute::_('ind
 					?>
                     <div>
 						<?php echo HTMLHelper::_(
-						'select.genericlist',
-						$this->galleryOptions,
-						'gallery',
-						'',
-						'value',
-						'text',
-						$this->gallery,
-						'avatar_gallery_select'
-					); ?>
+							'select.genericlist',
+							$this->galleryOptions,
+							'gallery',
+							'',
+							'value',
+							'text',
+							$this->gallery,
+							'avatar_gallery_select'
+						); ?>
                     </div>
 				<?php endif; ?>
 

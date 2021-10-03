@@ -280,11 +280,11 @@ jQuery(document).ready(function ($) {
 	if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 	{
 		// TODO: need to change the values(bold, italic) from template parameters to be handled here
-		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,img,link,unlink,emoticon,video|source';
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,img,link,unlink,emoticon,video,map|source';
 	}
 	else
 	{
-		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,img,link,unlink,emoticon,video|source';
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,img,link,unlink,emoticon,video,map|source';
 	}
 	
 	var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
@@ -343,7 +343,122 @@ jQuery(document).ready(function ($) {
 			}
 		}
 	};
-	
+
+	// Add bbcode maps
+	sceditor.formats.bbcode.set('map', {
+		format: function (element, content) {
+			if (jQuery(element).data('sceditor-emoticon'))
+				return content;
+
+			var url = jQuery(element).attr('src'),
+				width = jQuery(element).attr('width'),
+				height = jQuery(element).attr('height'),
+				align = jQuery(element).data('scealign');
+
+			var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
+				? '=' + width + 'x' + height
+				: ''
+			;
+
+			if (align === 'left' || align === 'right')
+				attrs += ' align='+align
+
+			return '[map' + attrs + ']' + url + '[/map]';
+		},
+		html: function (token, attrs, content) {
+			var	width, height, match,
+				align = attrs.align,
+				attribs = '';
+
+			// handle [img=340x240]url[/img]
+			if (attrs.defaultattr) {
+				match = attrs.defaultattr.split(/x/i);
+
+				width  = match[0];
+				height = (match.length === 2 ? match[1] : match[0]);
+
+				if (width !== undefined && height !== undefined && width > 0 && height > 0) {
+					attribs +=
+						' width="' + sceditor.escapeEntities(width, true) + '"' +
+						' height="' + sceditor.escapeEntities(height, true) + '"';
+				}
+			}
+
+			if (align === 'left' || align === 'right')
+				attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
+
+			return '<img' + attribs +
+				' src="' + sceditor.escapeUriScheme(content) + '" />';
+		}
+	})
+
+	sceditor.command.set('map', {
+		_dropDown: function (editor, caller) {
+			var $content;
+
+			$content = jQuery(
+				'<div>' +
+				'<div>' +
+				'<label for="map">Type :</label> ' +
+				'<select name="type" id="type-select">' +
+				'<option value="hybrid">Hybrid</option>' +
+				'<option value="roadmap">Roadmap</option>' +
+				'<option value="terrain">Terrain</option>' +
+				'<option value="satelite">Satelite</option>' +
+				'</select>' +
+				'</div>' +
+				'<div>' +
+				'<label for="width">Zoom level:</label> ' +
+				'<select name="zoom" id="zoom-select">' +
+				'<option value="2">2</option>' +
+				'<option value="4">4</option>' +
+				'<option value="8">8</option>' +
+				'<option value="10">10</option>' +
+				'<option value="12">12</option>' +
+				'<option value="14">14</option>' +
+				'<option value="16">16</option>' +
+				'<option value="18">18</option>' +
+				'</select>' +
+				'</div>' +
+				'<div>' +
+				'<label for="height">City:</label> ' +
+				'<input type="text" id="city" size="10" />' +
+				'</div>' +
+				'<div>' +
+				'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+				'</div>' +
+				'</div>'
+			);
+
+			$content.find('.button').on('click', function (e) {
+				var city = $content.find('#city').val(),
+					width = $content.find('#width').val(),
+					height = $content.find('#height').val()
+				;
+
+				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
+					? '=' + width + 'x' + height
+					: ''
+				;
+
+				if (city)
+					editor.insert('[map' + attrs + ']' + city + '[/map]');
+
+				editor.closeDropDown(true);
+				e.preventDefault();
+			});
+
+			editor.createDropDown(caller, 'insertmap', $content.get(0));
+		},
+		exec: function (caller) {
+			sceditor.command.get('map')._dropDown(this, caller);
+		},
+		txtExec: function (caller) {
+			sceditor.command.get('map')._dropDown(this, caller);
+		},
+		tooltip: 'Insert a map',
+	});
+
 	// Image bbcode improved
 	sceditor.formats.bbcode.set('img', {
 		format: function (element, content) {
@@ -442,6 +557,7 @@ jQuery(document).ready(function ($) {
 		txtExec: function (caller) {
 			sceditor.command.get('img')._dropDown(this, caller);
 		},
+		tooltip: 'Insert an image',
 	});
 
 	// Add video command

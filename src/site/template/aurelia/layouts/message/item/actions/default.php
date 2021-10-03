@@ -33,11 +33,9 @@ $quick           = $this->ktemplate->params->get('quick');
 	?>
     <div class="kmessagepadding">
 		<?php if ($this->quickReply && $quick == 0) : ?>
-            <a id="btn_qreply" href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-               class="btn btn-outline-primary border Kreplyclick"
-               data-target="#kreply<?php echo $this->message->displayField('id'); ?>_form"
-               rel="nofollow">
-				<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+            <a data-related="kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
+               class="btn btn-outline-primary border kicon-button btn-small Kreplyclick" id="btn_quickreply"
+               rel="nofollow"><?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
             </a>
 		<?php endif; ?>
 

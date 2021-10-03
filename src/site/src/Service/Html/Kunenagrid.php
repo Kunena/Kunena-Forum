@@ -19,6 +19,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
 /**
  * Utility class for creating HTML Grids
@@ -305,28 +306,38 @@ class Kunenagrid
 		$ktemplate     = KunenaFactory::getTemplate();
 		$topicicontype = $ktemplate->params->get('topicicontype');
 
-		if ($bootstrap && $topicicontype == 'svg')
+		if ($bootstrap || $topicicontype == 'svg')
 		{
+			$icon = KunenaIcons::check();
+
 			if ($class == 'publish')
 			{
 				$class = 'ok';
+				$icon  = KunenaIcons::check();
 			}
 
 			if ($class == 'unpublish')
 			{
 				$class = 'remove';
+				$icon  = KunenaIcons::cancel();
+			}
+
+			if ($class == 'edit')
+			{
+				$class = 'edit';
+				$icon  = KunenaIcons::pencil();
 			}
 
 			if ($class == 'delete')
 			{
 				$class = 'trash';
+				$icon  = KunenaIcons::delete();
 			}
 
 			$html[] = '<a class="btn btn-outline-primary btn-xs ' . $active . '" ';
 			$html[] = ' href="javascript:void(0);" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
 			$html[] = ' title="' . $title . '">';
-			$html[] = '<i class="glyphicon glyphicon-' . $class . '">';
-			$html[] = '</i>';
+			$html[] = $icon;
 			$html[] = '</a>';
 		}
 		elseif ($bootstrap && $topicicontype == 'fa')

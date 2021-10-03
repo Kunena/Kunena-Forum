@@ -140,24 +140,24 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 
 			$this->topicButtons->set(
 				'sticky',
-				$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation', false, $button)
+				$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation', false, $button, KunenaIcons::sticky())
 			);
 
 			$this->topicButtons->set(
 				'lock',
-				$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, $button)
+				$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, $button, KunenaIcons::lock())
 			);
 
 			$this->topicButtons->set(
 				'moderate',
-				$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation', false, $button)
+				$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation', false, $button, KunenaIcons::shield())
 			);
 
 			if ($this->topic->hold == 1)
 			{
 				$this->topicButtons->set(
 					'approve',
-					$this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation', false, $button)
+					$this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation', false, $button, KunenaIcons::poll_add())
 				);
 			}
 
@@ -165,7 +165,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 			{
 				$this->topicButtons->set(
 					'delete',
-					$this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, $button)
+					$this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, $button, KunenaIcons::delete())
 				);
 			}
 			elseif ($this->topic->hold == 2 || $this->topic->hold == 3)

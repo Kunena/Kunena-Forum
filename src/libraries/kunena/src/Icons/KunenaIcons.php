@@ -331,7 +331,7 @@ class KunenaIcons
 			return '<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>';
 		}
 
-		return KunenaSvgIcons::loadsvg('eye-slash');
+		return KunenaSvgIcons::loadsvg('shield');
 	}
 
 	/**
@@ -998,6 +998,58 @@ class KunenaIcons
 		}
 
 		return KunenaSvgIcons::loadsvg('trash');
+	}
+
+	/**
+	 * Return the check icon
+	 *
+	 * @return  string
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 5.0
+	 */
+	public static function check(): string
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fas fa-check" aria-hidden="true"></i>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<span class="large-kicon glyphicon glyphicon-check" aria-hidden="true"></span>';
+		}
+
+		return KunenaSvgIcons::loadsvg('check');
+	}
+
+	/**
+	 * Return the quote icon
+	 *
+	 * @return  string
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 5.0
+	 */
+	public static function quote(): string
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fas fa-quote-left" aria-hidden="true"></i>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<span class="large-kicon glyphicon glyphicon-quote" aria-hidden="true"></span>';
+		}
+
+		return KunenaSvgIcons::loadsvg('document-text');
 	}
 
 	/**
@@ -1710,6 +1762,37 @@ class KunenaIcons
 	}
 
 	/**
+	 * Return the stick icon
+	 *
+	 * @return  string
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 */
+	public static function sticky(): string
+	{
+		$ktemplate     = KunenaFactory::getTemplate();
+		$topicicontype = $ktemplate->params->get('topicicontype');
+
+		if ($topicicontype == 'fa')
+		{
+			return '<i class="fa fa-exclamation" aria-hidden="true"></i>';
+		}
+
+		if ($topicicontype == 'B4')
+		{
+			return '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>';
+		}
+
+		if ($topicicontype == 'image')
+		{
+			return '<span class="kicon-sticky" aria-hidden="true"></span>';
+		}
+
+		return KunenaSvgIcons::loadsvg('award');
+	}
+
+	/**
 	 * Return the report icon
 	 *
 	 * @return  string
@@ -1737,6 +1820,6 @@ class KunenaIcons
 			return 'kicon-report';
 		}
 
-		return '';
+		return KunenaSvgIcons::loadsvg('alert-octagon');
 	}
 }

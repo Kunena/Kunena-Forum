@@ -1010,9 +1010,13 @@ class KunenaUser extends CMSObject
 						return '<i class="fas fa-user-circle status-' . $online . '" aria-hidden="true"></i>';
 					}
 
-					if ($topicicontype == 'svg')
+					if ($topicicontype == 'svg' && $this->avatar === null)
 					{
 						return '<span class="rounded-circle status-' . $online . '" aria-hidden="true">' . KunenaSvgIcons::loadsvg('person') . '</span>';
+					}
+					else
+					{
+						return '<span class="rounded-circle status-' . $online . '" aria-hidden="true">' . $this->getAvatarImage('post') . '</span>';
 					}
 				}
 				elseif ($sizex == 'logout' || $sizex == 'profile')

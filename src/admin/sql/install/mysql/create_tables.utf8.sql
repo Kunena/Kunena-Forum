@@ -256,7 +256,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private`
     KEY `parent_id` (`parent_id`),
     KEY `author_id` (`author_id`),
     KEY `created_at` (`created_at`)
-) DEFAULT CHARACTER SET utf8mb4;
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_private_attachment_map`
 (
@@ -264,7 +267,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private_attachment_map`
     `attachment_id` int(11) NOT NULL,
     PRIMARY KEY (`private_id`, `attachment_id`),
     KEY `attachment_id` (`attachment_id`)
-) DEFAULT CHARACTER SET utf8mb4;
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_private_post_map`
 (
@@ -272,7 +278,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private_post_map`
     `message_id` int(11) NOT NULL,
     PRIMARY KEY (`private_id`, `message_id`),
     KEY `message_id` (`message_id`)
-) DEFAULT CHARACTER SET utf8mb4;
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_private_user_map`
 (
@@ -283,8 +292,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private_user_map`
     `deleted_at` datetime NOT NULL,
     PRIMARY KEY (`private_id`, `user_id`),
     KEY `user_id` (`user_id`)
-) DEFAULT CHARACTER SET utf8mb4;
-
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
 (

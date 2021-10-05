@@ -19,9 +19,11 @@ jQuery(function ($) {
         }
     });
 
+	var textarea = document.getElementById('message');
+
     // Insert bbcode in message
     function insertInMessage(attachid, filename, button) {
-        CKEDITOR.instances.message.insertText(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+		sceditor.instance(textarea).insert(' [attachment=' + attachid + ']' + filename + '[/attachment]');
 
         if (button !== undefined) {
             button.removeClass('btn-primary');
@@ -75,7 +77,7 @@ jQuery(function ($) {
         $('#remove-all').hide();
         $('#insert-all').hide();
 
-        const editor_text = CKEDITOR.instances.message.getData();
+        const editor_text = sceditor.instance(textarea).val();
 
         // Removing items in edit if they are present
         if ($.isEmptyObject(filesedit) === false) {
@@ -101,7 +103,7 @@ jQuery(function ($) {
                     $('#files').empty();
 
                     if (data.text_prepared !== false) {
-                        CKEDITOR.instances.message.setData(data.text_prepared);
+                        sceditor.instance(textarea).insert(data.text_prepared);
                     }
                 })
                 .fail(function () {
@@ -141,7 +143,7 @@ jQuery(function ($) {
                     $('#files').empty();
 
                     if (data.text_prepared !== false) {
-                        CKEDITOR.instances.message.setData(data.text_prepared);
+                        sceditor.instance(textarea).insert(data.text_prepared);
                     }
                 })
                 .fail(function () {
@@ -190,8 +192,7 @@ jQuery(function ($) {
             });
         }
 
-        const ckeditor_existing_content = CKEDITOR.instances.message.getData();
-        CKEDITOR.instances.message.setData(ckeditor_existing_content + ' ' + content_to_inject);
+		sceditor.instance(textarea).insert(content_to_inject);
 
         $('#files .btn.btn-primary').each(function () {
             $('#files .btn.btn-primary').addClass('btn-success');
@@ -290,7 +291,7 @@ jQuery(function ($) {
             }
 
             $('#alert_max_file').remove();
-            const editor_text = CKEDITOR.instances.message.getData();
+            const editor_text = sceditor.instance(textarea).val();
 
             const file_query_id = [];
             file_query_id.push(file_id);
@@ -304,7 +305,7 @@ jQuery(function ($) {
                     $this.parent().remove();
 
                     if (data.text_prepared !== false) {
-                        CKEDITOR.instances.message.setData(data.text_prepared);
+                        sceditor.instance(textarea).insert(data.text_prepared);
                     }
                 })
                 .fail(function () {

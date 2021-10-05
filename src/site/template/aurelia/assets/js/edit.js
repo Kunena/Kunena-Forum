@@ -280,11 +280,11 @@ jQuery(document).ready(function ($) {
 	if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 	{
 		// TODO: need to change the values(bold, italic) from template parameters to be handled here
-		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,img,link,unlink,emoticon,video,map|source';
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map|source';
 	}
 	else
 	{
-		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,img,link,unlink,emoticon,video,map|source';
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map|source';
 	}
 	
 	var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
@@ -459,107 +459,6 @@ jQuery(document).ready(function ($) {
 		tooltip: 'Insert a map',
 	});
 
-	// Image bbcode improved
-	sceditor.formats.bbcode.set('img', {
-		format: function (element, content) {
-			if (jQuery(element).data('sceditor-emoticon'))
-				return content;
-
-			var url = jQuery(element).attr('src'),
-				width = jQuery(element).attr('width'),
-				height = jQuery(element).attr('height'),
-				align = jQuery(element).data('scealign');
-
-			var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
-				? '=' + width + 'x' + height
-				: ''
-			;
-
-			if (align === 'left' || align === 'right')
-				attrs += ' align='+align
-
-			return '[img' + attrs + ']' + url + '[/img]';
-		},
-		html: function (token, attrs, content) {
-			var	width, height, match,
-				align = attrs.align,
-				attribs = '';
-
-			// handle [img=340x240]url[/img]
-			if (attrs.defaultattr) {
-				match = attrs.defaultattr.split(/x/i);
-
-				width  = match[0];
-				height = (match.length === 2 ? match[1] : match[0]);
-
-				if (width !== undefined && height !== undefined && width > 0 && height > 0) {
-					attribs +=
-						' width="' + sceditor.escapeEntities(width, true) + '"' +
-						' height="' + sceditor.escapeEntities(height, true) + '"';
-				}
-			}
-
-			if (align === 'left' || align === 'right')
-				attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
-
-			return '<img' + attribs +
-				' src="' + sceditor.escapeUriScheme(content) + '" />';
-		}
-	})
-
-	sceditor.command.set('img', {
-		_dropDown: function (editor, caller) {
-			var $content;
-
-			$content = jQuery(
-				'<div>' +
-				'<div>' +
-				'<label for="image">' + editor._('URL') + ':</label> ' +
-				'<input type="text" id="image" placeholder="https://" />' +
-				'</div>' +
-				'<div>' +
-				'<label for="width">' + editor._('Width (optional)') + ':</label> ' +
-				'<input type="text" id="width" size="2" />' +
-				'</div>' +
-				'<div>' +
-				'<label for="height">' + editor._('Height (optional)') + ':</label> ' +
-				'<input type="text" id="height" size="2" />' +
-				'</div>' +
-				'<div>' +
-				'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
-				'</div>' +
-				'</div>'
-			);
-
-			$content.find('.button').on('click', function (e) {
-				var url = $content.find('#image').val(),
-					width = $content.find('#width').val(),
-					height = $content.find('#height').val()
-				;
-
-				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
-					? '=' + width + 'x' + height
-					: ''
-				;
-
-				if (url)
-					editor.insert('[img' + attrs + ']' + url + '[/img]');
-
-				editor.closeDropDown(true);
-				e.preventDefault();
-			});
-
-			editor.createDropDown(caller, 'insertimage', $content.get(0));
-		},
-		exec: function (caller) {
-			sceditor.command.get('img')._dropDown(this, caller);
-		},
-		txtExec: function (caller) {
-			sceditor.command.get('img')._dropDown(this, caller);
-		},
-		tooltip: 'Insert an image',
-	});
-
 	// Add video command
 	sceditor.formats.bbcode.set('video', {
 		allowsEmpty: true,
@@ -574,12 +473,8 @@ jQuery(document).ready(function ($) {
 		},
 		html: function (token, attrs, content) {
 			var params = kunenaCmd.video[Object.keys(kunenaCmd.video).find(key => key.toLowerCase() === attrs.defaultattr)];
-			var matches, url;
-			var n = (attrs.defaultattr == 'dailymotion') ? 2 : 1;
-			if (typeof params !== "undefined") {
-				matches = content.match(params['match']);
-				url = matches ? params['url'] + matches[n] : false;
-			}
+			var url;
+
 			if (url) {
 				return params['html'].replace('{url}', url).replace('{src}', content).replace('{type}', attrs.defaultattr);
 			}

@@ -84,76 +84,69 @@ $quick           = $this->ktemplate->params->get('quick');
 <?php endif;
 endif; ?>
 
-	<?php if ($fullactions)
-	:
-	?>
-	<?php if (empty($this->message_closed))
-	:
-	?>
-    <div class="btn-toolbar btn-marging kmessagepadding">
-		<?php if ($this->quickReply && $quick == 0) : ?>
-            <a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-               class="btn btn-outline-primary border Kreplyclick" rel="nofollow">
-				<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
-            </a>
-		<?php endif; ?>
-		<?php if ($this->quickReply && $quick == 1) : ?>
-            <a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-               class="btn btn-outline-primary border"
-               data-bs-toggle="modal" rel="nofollow">
-				<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
-            </a>
-		<?php endif; ?>
-        <div class="btn-group">
-            <button class="btn btn-outline-primary border" data-bs-toggle="dropdown">
-				<?php echo KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
-            </button>
-            <button class="btn btn-outline-primary border dropdown-toggle" data-bs-toggle="dropdown">
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><?php echo $this->messageButtons->get('reply'); ?></li>
-                <li><?php echo $this->messageButtons->get('quote'); ?></li>
-                <li><?php echo $this->messageButtons->get('edit'); ?></li>
-				<?php
-				if ($config->userDeleteMessage > 0)
-					:
-					?>
-                    <li><?php echo $this->messageButtons->get('delete'); ?></li>
-				<?php endif; ?>
-            </ul>
-        </div>
+	<?php if ($fullactions) : ?>
+	<?php if (empty($this->message_closed)) : ?>
+        <div class="btn-toolbar btn-marging kmessagepadding">
 
-		<?php if ($this->messageButtons->get('moderate'))
-			:
-			?>
+			<?php if ($this->quickReply && $quick == 0) : ?>
+                <a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
+                   class="btn btn-outline-primary border Kreplyclick" rel="nofollow">
+					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+                </a>
+			<?php endif; ?>
+
+			<?php if ($this->quickReply && $quick == 1) : ?>
+                <a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
+                   class="btn btn-outline-primary border"
+                   data-bs-toggle="modal" rel="nofollow">
+					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+                </a>
+			<?php endif; ?>
+
             <div class="btn-group">
                 <button class="btn btn-outline-primary border" data-bs-toggle="dropdown">
-					<?php echo KunenaIcons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
+					<?php echo KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_ACTION'); ?>
                 </button>
                 <button class="btn btn-outline-primary border dropdown-toggle" data-bs-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><?php echo $this->messageButtons->get('moderate'); ?></li>
-                    <li><?php echo $this->messageButtons->get('delete'); ?></li>
-                    <li><?php echo $this->messageButtons->get('undelete'); ?></li>
-                    <li><?php echo $this->messageButtons->get('permdelete'); ?></li>
-                    <li><?php echo $this->messageButtons->get('publish'); ?></li>
-                    <li><?php echo $this->messageButtons->get('spam'); ?></li>
+                    <li><?php echo $this->messageButtons->get('reply'); ?></li>
+                    <li><?php echo $this->messageButtons->get('quote'); ?></li>
+                    <li><?php echo $this->messageButtons->get('edit'); ?></li>
+					<?php
+					if ($config->userDeleteMessage > 0) : ?>
+                        <li><?php echo $this->messageButtons->get('delete'); ?></li>
+					<?php endif; ?>
                 </ul>
             </div>
-		<?php endif; ?>
 
-		<?php echo $this->messageButtons->get('thankyou'); ?>
-		<?php echo $this->messageButtons->get('unthankyou'); ?>
-    </div>
+			<?php if ($this->messageButtons->get('moderate')) : ?>
+                <div class="btn-group">
+                    <button class="btn btn-outline-primary border" data-bs-toggle="dropdown">
+						<?php echo KunenaIcons::shuffle() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'); ?>
+                    </button>
+                    <button class="btn btn-outline-primary border dropdown-toggle" data-bs-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><?php echo $this->messageButtons->get('moderate'); ?></li>
+                        <li><?php echo $this->messageButtons->get('delete'); ?></li>
+                        <li><?php echo $this->messageButtons->get('undelete'); ?></li>
+                        <li><?php echo $this->messageButtons->get('permdelete'); ?></li>
+                        <li><?php echo $this->messageButtons->get('publish'); ?></li>
+                        <li><?php echo $this->messageButtons->get('spam'); ?></li>
+                    </ul>
+                </div>
+			<?php endif; ?>
 
-<?php else
+			<?php echo $this->messageButtons->get('thankyou'); ?>
+			<?php echo $this->messageButtons->get('unthankyou'); ?>
+        </div>
 
-	: ?>
-    <div class="kreplymessage">
-		<?php echo $this->message_closed; ?>
-    </div>
-<?php endif;
+	<?php else : ?>
+        <div class="kreplymessage">
+			<?php echo $this->message_closed; ?>
+        </div>
+	<?php endif;
 endif;

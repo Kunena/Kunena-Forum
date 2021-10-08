@@ -114,20 +114,23 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 			$this->messageButtons->set(
 				'reply',
-				$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply', '', KunenaIcons::pencil())
+				$this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication', 'reply',
+					$button, KunenaIcons::pencil())
 			);
 
 			if ($me->exists() && $this->config->quickReply)
 			{
 				$this->messageButtons->set(
 					'quickReply',
-					$this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}", 'reply', 'reply')
+					$this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication',
+						"kreply{$mesid}", $button, KunenaIcons::pencil())
 				);
 			}
 
 			$this->messageButtons->set(
 				'quote',
-				$this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication', 'quote', '', KunenaIcons::quote())
+				$this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication',
+					'quote', $button, KunenaIcons::quote())
 			);
 		}
 		elseif (!$me->isModerator($this->topic->getCategory()))
@@ -167,7 +170,8 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 			{
 				$this->messageButtons->set(
 					'thankyou',
-					$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user', 'thankyou', false, KunenaIcons::poll_add())
+					$this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user',
+						'thankyou', $button, KunenaIcons::poll_add())
 				);
 			}
 		}
@@ -181,7 +185,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 				$this->messageButtons->set(
 					'unthankyou',
 					$this->getButton(sprintf($task, 'unthankyou&userid=' . $me->userid), 'unthankyou',
-						'message', 'user', 'unthankyou', false, KunenaIcons::poll_rem()
+						'message', 'user', 'unthankyou', $button, KunenaIcons::poll_rem()
 					)
 				);
 			}
@@ -196,7 +200,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 				$this->messageButtons->set(
 					'report',
 					$this->getButton(sprintf($layout, '#report' . $mesid . ''),
-						'report', 'message', 'user', 'btn_report', '', KunenaIcons::report()
+						'report', 'message', 'user', 'btn_report', $button, KunenaIcons::report()
 					)
 				);
 			}
@@ -213,7 +217,8 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 			$this->messageButtons->set(
 				'edit',
-				$this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation', 'edit', '', KunenaIcons::edit())
+				$this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation',
+					'edit', $button, KunenaIcons::edit())
 			);
 		}
 
@@ -241,7 +246,8 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 			$this->messageButtons->set(
 				'delete',
-				$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation', 'delete', '', KunenaIcons::delete())
+				$this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation',
+					'delete', '', KunenaIcons::delete())
 			);
 		}
 		elseif ($this->message->hold == 2 || $this->message->hold == 3)

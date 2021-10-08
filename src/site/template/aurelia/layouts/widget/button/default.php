@@ -41,12 +41,7 @@ $topicicontype = $ktemplate->params->get('topicicontype');
                       title="<?php echo $title; ?>" name="<?php echo $this->name; ?>" <?php echo $modal; ?>>
 	<?php
 	if (!empty($icon)) : ?>
-		<?php if ($topicicontype != 'svg') : ?>
-            <i class="<?php echo $icon; ?>"></i>
-		<?php else :
-			?>
-			<?php echo $icon; ?>
-		<?php endif; ?>
+		<?php echo $icon; ?>
 	<?php endif; ?>
 	<?php echo $label; ?>
 </a>

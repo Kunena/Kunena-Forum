@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -136,30 +137,11 @@ class CategoryItem extends KunenaLayout
 
 		if ($category->isAuthorised('topic.create'))
 		{
-			if ($url && $topicicontype == 'svg')
-			{
-				$actions['create'] = $this->subLayout('Widget/Button')
-					->setProperties(
-						['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-						 'icon' => 'pencil',]
-					);
-			}
-			elseif ($url && $topicicontype == 'fa')
-			{
-				$actions['create'] = $this->subLayout('Widget/Button')
-					->setProperties(
-						['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-						 'icon' => 'fa fa-pencil-alt',]
-					);
-			}
-			else
-			{
-				$actions['create'] = $this->subLayout('Widget/Button')
-					->setProperties(
-						['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-						 'icon' => 'icon-edit icon-white',]
-					);
-			}
+			$actions['create'] = $this->subLayout('Widget/Button')
+				->setProperties(
+					['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
+					 'icon' => KunenaIcons::pencil(),]
+				);
 		}
 
 		if ($category->getTopics() > 0)
@@ -169,21 +151,10 @@ class CategoryItem extends KunenaLayout
 
 			if ($this->me->exists())
 			{
-				if ($url && $topicicontype == 'svg')
-				{
-					$actions['markread'] = $this->subLayout('Widget/Button')
-						->setProperties(['url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'bookmark-fill']);
-				}
-				elseif ($url && $topicicontype == 'fa')
-				{
-					$actions['markread'] = $this->subLayout('Widget/Button')
-						->setProperties(['url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'fa fa-book']);
-				}
-				else
-				{
-					$actions['markread'] = $this->subLayout('Widget/Button')
-						->setProperties(['url' => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user', 'icon' => 'icon-drawer']);
-				}
+				$actions['markread'] = $this->subLayout('Widget/Button')
+					->setProperties(['url'  => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
+					                 'icon' => KunenaIcons::bookmark()]
+					);
 			}
 		}
 
@@ -192,68 +163,23 @@ class CategoryItem extends KunenaLayout
 		{
 			$subscribed = $category->getSubscribed($this->me->userid);
 
-			if ($url && $topicicontype == 'svg')
+			if (!$subscribed)
 			{
-				if (!$subscribed)
-				{
-					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-					$actions['subscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(
-							['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'envelope',]
-						);
-				}
-				else
-				{
-					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(
-							['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'envelope-open',]
-						);
-				}
-			}
-			elseif ($url && $topicicontype == 'fa')
-			{
-				if (!$subscribed)
-				{
-					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-					$actions['subscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(
-							['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'fa fa-envelope',]
-						);
-				}
-				else
-				{
-					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(
-							['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'fas fa-envelope-open',]
-						);
-				}
+				$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+				$actions['subscribe'] = $this->subLayout('Widget/Button')
+					->setProperties(
+						['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+						 'icon' => KunenaIcons::email(),]
+					);
 			}
 			else
 			{
-				if (!$subscribed)
-				{
-					$url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
-					$actions['subscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(
-							['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'icon-envelope',]
-						);
-				}
-				else
-				{
-					$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
-					$actions['unsubscribe'] = $this->subLayout('Widget/Button')
-						->setProperties(
-							['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-							 'icon' => 'icon-envelope-opened',]
-						);
-				}
+				$url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+				$actions['unsubscribe'] = $this->subLayout('Widget/Button')
+					->setProperties(
+						['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+						 'icon' => KunenaIcons::emailOpen(),]
+					);
 			}
 		}
 

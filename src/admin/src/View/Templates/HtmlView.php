@@ -80,9 +80,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayAdd(): void
 	{
@@ -110,9 +110,9 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -145,7 +145,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		ToolbarHelper::custom('template.chooseCss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('template.chooseLess', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
+		ToolbarHelper::custom('template.chooseScss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 		ToolbarHelper::divider();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
@@ -154,9 +154,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayEdit(): void
 	{
@@ -208,18 +208,18 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
-	public function displayEditLess(): void
+	public function displayEditScss(): void
 	{
-		$this->setToolBarEditLess();
+		$this->setToolBarEditScss();
 		$this->templatename = $this->app->getUserState('kunena.templatename');
-		$this->filename     = $this->app->getUserState('kunena.editless.filename');
-		$this->content      = $this->get('FileLessParsed');
+		$this->filename     = $this->app->getUserState('kunena.editscss.filename');
+		$this->content      = $this->get('FileScssParsed');
 
-		$this->less_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/' . $this->filename;
+		$this->scss_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/' . $this->filename;
 		$this->ftp       = $this->get('FTPcredentials');
 		$this->display();
 	}
@@ -229,13 +229,13 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarEditLess(): void
+	protected function setToolBarEditScss(): void
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
-		ToolbarHelper::apply('applyLess');
+		ToolbarHelper::apply('applyScss');
 		ToolbarHelper::spacer();
-		ToolbarHelper::save('saveLess');
+		ToolbarHelper::save('saveScss');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
@@ -245,9 +245,9 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @return  void
 	 *
+	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function displayEditCss(): void
 	{

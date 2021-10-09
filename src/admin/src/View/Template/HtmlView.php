@@ -36,9 +36,9 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
+	 * @throws Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
 	 */
 	public function display($tpl = null)
 	{
@@ -68,32 +68,32 @@ class HtmlView extends BaseHtmlView
 
 			return parent::display($tpl);
 		}
-		elseif ($this->getLayout() == "ChooseLess")
+		elseif ($this->getLayout() == "ChooseScss")
 		{
-			$this->setToolBarChooseLess();
+			$this->setToolBarChooseScss();
 			$this->templatename = $app->getUserState('kunena.templatename');
 
-			$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/less/custom.less';
+			$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/custom.scss';
 
-			if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/less/'))
+			if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/'))
 			{
 				$fp = fopen($file, "w");
 				fwrite($fp, "");
 				fclose($fp);
 			}
 
-			$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/less';
-			$this->files = Folder::files($this->dir, '\.less$', false, false);
+			$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss';
+			$this->files = Folder::files($this->dir, '\.scss$', false, false);
 
 			return parent::display($tpl);
 		}
 		else
 		{
-			$this->form    = $this->get('Form');
-			$this->params  = $this->get('editparams');
-			$this->details = $this->get('templatedetails');
-			$this->templatename  = Factory::getApplication()->getUserState('kunena.edit.templatename');
-			$template      = KunenaTemplate::getInstance($this->templatename);
+			$this->form         = $this->get('Form');
+			$this->params       = $this->get('editparams');
+			$this->details      = $this->get('templatedetails');
+			$this->templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
+			$template           = KunenaTemplate::getInstance($this->templatename);
 			$template->initializeBackend();
 
 			$this->templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
@@ -112,29 +112,6 @@ class HtmlView extends BaseHtmlView
 
 			return parent::display($tpl);
 		}
-	}
-
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function addToolbar(): void
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		ToolbarHelper::spacer();
-		ToolbarHelper::apply('template.apply');
-		ToolbarHelper::spacer();
-		ToolbarHelper::save('template.save');
-		ToolbarHelper::spacer();
-		ToolbarHelper::custom('template.restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE_TEMPLATE_SETTINGS', false);
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
-		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 
 	/**
@@ -158,14 +135,37 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   Kunena 6.0
 	 */
-	protected function setToolBarChooseLess(): void
+	protected function setToolBarChooseScss(): void
 	{
 		ToolbarHelper::spacer();
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		ToolbarHelper::custom('editless', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
+		ToolbarHelper::custom('editscss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
+	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function addToolbar(): void
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		ToolbarHelper::spacer();
+		ToolbarHelper::apply('template.apply');
+		ToolbarHelper::spacer();
+		ToolbarHelper::save('template.save');
+		ToolbarHelper::spacer();
+		ToolbarHelper::custom('template.restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE_TEMPLATE_SETTINGS', false);
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+		$helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
+		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
 	}
 }

@@ -56,7 +56,7 @@ class KunenaNomenuRules implements RulesInterface
 	}
 
 	/**
-	 * Parse a menu-less URL
+	 * Parse a menu-scss URL
 	 *
 	 * @param   array  &$segments  The URL segments to parse
 	 * @param   array  &$vars      The vars that result from the segments
@@ -76,7 +76,7 @@ class KunenaNomenuRules implements RulesInterface
 	}
 
 	/**
-	 * Build a menu-less URL
+	 * Build a menu-scss URL
 	 *
 	 * @param   array  &$query     The vars that should be converted
 	 * @param   array  &$segments  The URL segments to create

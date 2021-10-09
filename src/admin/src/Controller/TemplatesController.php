@@ -193,9 +193,9 @@ class TemplatesController extends FormController
 								Folder::move($dest . $template->directory . '/assets/images', $tmpKunena . $template->sourcedir . '/assets/images');
 							}
 
-							if (is_file($dest . $template->directory . '/assets/less/custom.less'))
+							if (is_file($dest . $template->directory . '/assets/scss/custom.scss'))
 							{
-								File::move($dest . $template->directory . '/assets/less/custom.less', $tmpKunena . $template->sourcedir . '/assets/less/custom.less');
+								File::move($dest . $template->directory . '/assets/scss/custom.scss', $tmpKunena . $template->sourcedir . '/assets/scss/custom.scss');
 							}
 
 							if (is_file($dest . $template->directory . '/assets/css/custom.css'))
@@ -309,7 +309,7 @@ class TemplatesController extends FormController
 	}
 
 	/**
-	 * Edit Less
+	 * Edit Scss
 	 *
 	 * @return  void
 	 *
@@ -317,27 +317,27 @@ class TemplatesController extends FormController
 	 * @throws  null
 	 * @since   Kunena 2.0
 	 */
-	public function editless(): void
+	public function editscss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
 		$filename = $this->app->input->get('filename');
 
-		if (File::getExt($filename) !== 'less')
+		if (File::getExt($filename) !== 'scss')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_LESS'), 'warning');
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseLess&id=' . $template, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $template, false));
 		}
 
 		$this->app->setUserState('kunena.templatename', $templatename);
-		$this->app->setUserState('kunena.editless.filename', $filename);
+		$this->app->setUserState('kunena.editscss.filename', $filename);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editless", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editscss", false));
 	}
 
 	/**
-	 * Apply less
+	 * Apply scss
 	 *
 	 * @return  void
 	 *
@@ -345,7 +345,7 @@ class TemplatesController extends FormController
 	 * @throws  null
 	 * @since   Kunena 2.0
 	 */
-	public function applyLess(): void
+	public function applyScss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -369,7 +369,7 @@ class TemplatesController extends FormController
 			return;
 		}
 
-		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
+		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/scss/' . $filename;
 		$return = File::write($file, $filecontent);
 
 		if ($return)
@@ -387,7 +387,7 @@ class TemplatesController extends FormController
 	}
 
 	/**
-	 * Save Less
+	 * Save Scss
 	 *
 	 * @return  void
 	 *
@@ -395,7 +395,7 @@ class TemplatesController extends FormController
 	 * @throws  null
 	 * @since   Kunena 2.0
 	 */
-	public function saveLess(): void
+	public function saveScss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -422,13 +422,13 @@ class TemplatesController extends FormController
 			return;
 		}
 
-		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/less/' . $filename;
+		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/scss/' . $filename;
 		$return = File::write($file, $filecontent);
 
 		if ($return)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseLess&id=' . $templatename, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $templatename, false));
 		}
 		else
 		{
@@ -436,7 +436,7 @@ class TemplatesController extends FormController
 				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
 				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file)
 			);
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseLess&id=' . $templatename, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $templatename, false));
 		}
 	}
 

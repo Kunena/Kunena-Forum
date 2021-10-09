@@ -161,12 +161,12 @@ class TemplatesModel extends AdminModel
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getFileLessParsed()
+	public function getFileScssParsed()
 	{
 		$template = $this->app->getUserState('kunena.templatename');
-		$filename = $this->app->getUserState('kunena.editless.filename');
+		$filename = $this->app->getUserState('kunena.editscss.filename');
 
-		$content = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/less/' . $filename);
+		$content = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/scss/' . $filename);
 		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
 
 		if ($content === false)

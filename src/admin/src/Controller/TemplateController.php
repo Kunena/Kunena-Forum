@@ -424,7 +424,7 @@ class TemplateController extends FormController
 	}
 
 	/**
-	 * Choose less
+	 * Choose scss
 	 *
 	 * @return  void
 	 *
@@ -432,7 +432,7 @@ class TemplateController extends FormController
 	 * @throws  null
 	 * @since   Kunena 2.0
 	 */
-	public function chooseLess(): void
+	public function chooseScss(): void
 	{
 		$template     = $this->app->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
@@ -440,14 +440,14 @@ class TemplateController extends FormController
 
 		$tBaseDir = KunenaPath::clean(KPATH_SITE . '/template');
 
-		if (!is_dir($tBaseDir . '/' . $templatename . '/assets/less'))
+		if (!is_dir($tBaseDir . '/' . $templatename . '/assets/scss'))
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_LESS'), 'warning');
 
 			return;
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseLess", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseScss", false));
 	}
 
 	/**

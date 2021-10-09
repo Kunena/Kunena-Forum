@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Template;
 use Exception;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -307,7 +306,7 @@ class KunenaTemplate
 				}
 			}
 
-			// Generate CSS variables for less compiler.
+			// Generate CSS variables for scss compiler.
 			foreach ($this->params->toArray() as $key => $value)
 			{
 				if (substr($key, 0, 5) == 'style' && $value)
@@ -904,31 +903,6 @@ HTML;
 
 			$filename = Uri::root(false) . $filename;
 		}
-
-		return HTMLHelper::_('stylesheet', $filename);
-	}
-
-	/**
-	 * Set the LESS file into the document head
-	 *
-	 * @param   string  $filename  filename
-	 *
-	 * @return  mixed|void
-	 *
-	 * @throws Exception
-	 * @since   Kunena 5.1.3
-	 */
-	public function addLessSheet(string $filename)
-	{
-		$app    = Factory::getApplication();
-		$format = $app->input->getCmd('format');
-
-		if (!empty($format) && $format != 'html')
-		{
-			return;
-		}
-
-		$filename = $this->getFile($filename, false, '', "media/kunena/cache/{$this->name}/css");
 
 		return HTMLHelper::_('stylesheet', $filename);
 	}
@@ -1816,14 +1790,17 @@ HTML;
 
 		$scss->setImportPaths($cache);
 
-		try {
+		try
+		{
 			$string_sass = file_get_contents($inputFile);
-			$string_css = $scss->compile($string_sass);
-			if ($string_css > '') {
+			$string_css  = $scss->compile($string_sass);
+			if ($string_css > '')
+			{
 				file_put_contents($cache, $string_css);
 			}
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 		}
 	}
 

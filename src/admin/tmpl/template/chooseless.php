@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 					<input type="hidden" name="boxchecked" value="0"/>
 
 					<fieldset>
-						<legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_LESS_TEMPLATE'); ?></legend>
+						<legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_SCSS_TEMPLATE'); ?></legend>
 
 						<table class="table table-striped">
 							<thead>
@@ -39,7 +39,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 									<?php echo $this->escape($this->dir); ?>
 								</th>
 								<th>
-									<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_LESS_FILE_PERMISSION'); ?>
+									<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_SCSS_FILE_PERMISSION'); ?>
 								</th>
 							</tr>
 							</thead>

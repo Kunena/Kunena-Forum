@@ -442,7 +442,7 @@ class TemplateController extends FormController
 
 		if (!is_dir($tBaseDir . '/' . $templatename . '/assets/scss'))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_LESS'), 'warning');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_SCSS'), 'warning');
 
 			return;
 		}

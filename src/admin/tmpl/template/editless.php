@@ -32,7 +32,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 					<?php // TODO: redo FTP protection fields ?>
                     <fieldset>
-                        <legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_LESS_TEMPLATE'); ?></legend>
+                        <legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_SCSS_TEMPLATE'); ?></legend>
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <th>

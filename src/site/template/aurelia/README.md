@@ -14,7 +14,7 @@ JavaScript files (Deprecated. TBD -> media).
 
 ## ./less
 
-Less files that will be compiled into CSS.
+Scss files that will be compiled into CSS.
 
 ## ./language
 
@@ -30,8 +30,8 @@ Template files for layouts. Layouts are similar to those in Joomla 3.0+.
 
 ## ./modules
 
-Template files for modules. Modules are layouts which have controller and can be called from outside without knowing
-the implementation details.
+Template files for modules. Modules are layouts which have controller and can be called from outside without knowing the
+implementation details.
 
 ## ./pages
 
@@ -45,7 +45,7 @@ Main template class, which defines template overrides and custom method calls.
 
 Template configuration options. Can be used both inside the template and less files.
 
-##./kunena_tpml_aurelia.xml
+## ./kunena_tpml_aurelia.xml
 
 Needed by Joomla installer. Yes, the new templates will be installed by Joomla Extension Manager.
 

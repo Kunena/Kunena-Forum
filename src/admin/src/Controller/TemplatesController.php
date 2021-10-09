@@ -326,7 +326,7 @@ class TemplatesController extends FormController
 
 		if (File::getExt($filename) !== 'scss')
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_LESS'), 'warning');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'warning');
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $template, false));
 		}
 

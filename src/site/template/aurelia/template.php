@@ -119,7 +119,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		$this->addScript('assets/js/main.js');
 
-		// Compile CSS from LESS files.
+		// Compile CSS from SCSS files.
 		$this->compileScss(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/aurelia.scss', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 

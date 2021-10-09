@@ -145,7 +145,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		ToolbarHelper::custom('template.chooseCss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('template.chooseScss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITLESS');
+		ToolbarHelper::custom('template.chooseScss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITSCSS');
 		ToolbarHelper::divider();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

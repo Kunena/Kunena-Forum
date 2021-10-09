@@ -120,10 +120,10 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		$this->addScript('assets/js/main.js');
 
 		// Compile CSS from LESS files.
-		$this->compileLess('assets/less/aurelia.less', 'kunena.css');
+		$this->compileScss(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/aurelia.scss', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
-		$storage   = $this->params->get('storage');
+		$storage = $this->params->get('storage');
 
 		if ($storage)
 		{
@@ -134,7 +134,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		if (file_exists($filenameless) && 0 != fileSize($filenameless))
 		{
-			$this->compileLess('assets/less/custom.less', 'kunena-custom.css');
+			$this->compileScss(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss', 'kunena-custom.css');
 			$this->addStyleSheet('kunena-custom.css');
 		}
 

@@ -1,23 +1,24 @@
 <?php
+
 /**
  * SCSSPHP
  *
- * @copyright 2012-2018 Leaf Corcoran
+ * @copyright 2012-2020 Leaf Corcoran
  *
- * @license   http://opensource.org/licenses/MIT MIT
+ * @license http://opensource.org/licenses/MIT MIT
  *
- * @link      http://leafo.github.io/scssphp
+ * @link http://scssphp.github.io/scssphp
  */
 
-namespace Leafo\ScssPhp\Exception;
-
-use Exception;
+namespace ScssPhp\ScssPhp\Exception;
 
 /**
  * Range exception
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @internal
  */
-class RangeException extends Exception
+class RangeException extends \Exception implements SassException
 {
 }

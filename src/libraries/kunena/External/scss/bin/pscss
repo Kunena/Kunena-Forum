@@ -1,212 +1,244 @@
-#!/usr/bin/env php	
-<?php	
-/**	
- * SCSSPHP	
- *	
- * @copyright 2012-2015 Leaf Corcoran	
- *	
- * @license http://opensource.org/licenses/MIT MIT	
- *	
- * @link http://leafo.github.io/scssphp	
- */	
+#!/usr/bin/env php
+<?php
 
-error_reporting(E_ALL);	
+/**
+ * SCSSPHP
+ *
+ * @copyright 2012-2020 Leaf Corcoran
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ * @link http://scssphp.github.io/scssphp
+ */
 
-if (version_compare(PHP_VERSION, '5.4') < 0) {	
-    die('Requires PHP 5.4 or above');	
-}	
+error_reporting(E_ALL);
 
-include __DIR__ . '/../scss.inc.php';	
+if (version_compare(PHP_VERSION, '5.6') < 0) {
+    die('Requires PHP 5.6 or above');
+}
 
-use Leafo\ScssPhp\Compiler;	
-use Leafo\ScssPhp\Parser;	
-use Leafo\ScssPhp\Version;	
+include __DIR__ . '/../scss.inc.php';
 
-$style = null;	
-$loadPaths = null;	
-$precision = null;	
-$dumpTree = false;	
-$inputFile = null;	
-$changeDir = false;	
-$debugInfo = false;	
-$lineNumbers = false;	
-$ignoreErrors = false;	
-$encoding = false;	
-$sourceMap = false;	
+use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Exception\SassException;
+use ScssPhp\ScssPhp\OutputStyle;
+use ScssPhp\ScssPhp\Parser;
+use ScssPhp\ScssPhp\Version;
 
-/**	
- * Parse argument	
- *	
- * @param integer $i	
- * @param array $options	
- *	
- * @return string|null	
- */	
-function parseArgument(&$i, $options) {	
-    global $argc;	
-    global $argv;	
+$style = null;
+$loadPaths = [];
+$dumpTree = false;
+$inputFile = null;
+$changeDir = false;
+$encoding = false;
+$sourceMap = false;
+$embedSources = false;
+$embedSourceMap = false;
 
-    if (! preg_match('/^(?:' . implode('|', (array) $options) . ')=?(.*)/', $argv[$i], $matches)) {	
-        return;	
-    }	
+/**
+ * Parse argument
+ *
+ * @param integer $i
+ * @param array $options
+ *
+ * @return string|null
+ */
+function parseArgument(&$i, $options) {
+    global $argc;
+    global $argv;
 
-    if (strlen($matches[1])) {	
-        return $matches[1];	
-    }	
+    if (! preg_match('/^(?:' . implode('|', (array) $options) . ')=?(.*)/', $argv[$i], $matches)) {
+        return;
+    }
 
-    if ($i + 1 < $argc) {	
-        $i++;	
+    if (strlen($matches[1])) {
+        return $matches[1];
+    }
 
-        return $argv[$i];	
-    }	
-}	
+    if ($i + 1 < $argc) {
+        $i++;
 
-for ($i = 1; $i < $argc; $i++) {	
-    if ($argv[$i] === '-h' || $argv[$i] === '--help') {	
-        $exe = $argv[0];	
+        return $argv[$i];
+    }
+}
 
-        $HELP = <<<EOT	
-Usage: $exe [options] [input-file]	
-Options include:	
-    -h, --help          Show this message	
-    --continue-on-error Continue compilation (as best as possible) when error encountered	
-    --debug-info        Annotate selectors with CSS referring to the source file and line number	
-    -f=format           Set the output format (compact, compressed, crunched, expanded, or nested)	
-    -i=path             Set import path	
-    --iso8859-1         Use iso8859-1 encoding instead of utf-8 (default utf-8)	
-    --line-numbers      Annotate selectors with comments referring to the source file and line number	
-    -p=precision        Set decimal number precision (default 10)	
-    --sourcemap         Create source map file	
-    -T                  Dump formatted parse tree	
-    -v, --version       Print the version	
-EOT;	
-        exit($HELP);	
-    }	
+$arguments = [];
 
-    if ($argv[$i] === '-v' || $argv[$i] === '--version') {	
-        exit(Version::VERSION . "\n");	
-    }	
+for ($i = 1; $i < $argc; $i++) {
+    if ($argv[$i] === '-?' || $argv[$i] === '-h' || $argv[$i] === '--help') {
+        $exe = $argv[0];
 
-    if ($argv[$i] === '--continue-on-error') {	
-        $ignoreErrors = true;	
-        continue;	
-    }	
+        $HELP = <<<EOT
+Usage: $exe [options] [input-file] [output-file]
 
-    if ($argv[$i] === '--debug-info') {	
-        $debugInfo = true;	
-        continue;	
-    }	
+Options include:
 
-    if ($argv[$i] === '--iso8859-1') {	
-        $encoding = 'iso8859-1';	
-        continue;	
-    }	
+    --help              Show this message [-h, -?]
+    --continue-on-error [deprecated] Ignored
+    --debug-info        [deprecated] Ignored [-g]
+    --dump-tree         [deprecated] Dump formatted parse tree [-T]
+    --iso8859-1         Use iso8859-1 encoding instead of default utf-8
+    --line-numbers      [deprecated] Ignored [--line-comments]
+    --load-path=PATH    Set import path [-I]
+    --precision=N       [deprecated] Ignored. (default 10) [-p]
+    --sourcemap         Create source map file
+    --embed-sources     Embed source file contents in source maps
+    --embed-source-map  Embed the source map contents in CSS (default if writing to stdout)
+    --style=FORMAT      Set the output style (compressed or expanded) [-s, -t]
+    --version           Print the version [-v]
 
-    if ($argv[$i] === '--line-numbers' || $argv[$i] === '--line-comments') {	
-        $lineNumbers = true;	
-        continue;	
-    }	
+EOT;
+        exit($HELP);
+    }
 
-    if ($argv[$i] === '--sourcemap') {	
-        $sourceMap = true;	
-        continue;	
-    }	
+    if ($argv[$i] === '-v' || $argv[$i] === '--version') {
+        exit(Version::VERSION . "\n");
+    }
 
-    if ($argv[$i] === '-T') {	
-        $dumpTree = true;	
-        continue;	
-    }	
+    // Keep parsing --continue-on-error to avoid BC breaks for scripts using it
+    if ($argv[$i] === '--continue-on-error') {
+        // TODO report it as a warning ?
+        continue;
+    }
 
-    $value = parseArgument($i, ['-f', '--style']);	
+    // Keep parsing it to avoid BC breaks for scripts using it
+    if ($argv[$i] === '-g' || $argv[$i] === '--debug-info') {
+        // TODO report it as a warning ?
+        continue;
+    }
 
-    if (isset($value)) {	
-        $style = $value;	
-        continue;	
-    }	
+    if ($argv[$i] === '--iso8859-1') {
+        $encoding = 'iso8859-1';
+        continue;
+    }
 
-    $value = parseArgument($i, ['-i', '--load_paths']);	
+    // Keep parsing it to avoid BC breaks for scripts using it
+    if ($argv[$i] === '--line-numbers' || $argv[$i] === '--line-comments') {
+        // TODO report it as a warning ?
+        continue;
+    }
 
-    if (isset($value)) {	
-        $loadPaths = $value;	
-        continue;	
-    }	
+    if ($argv[$i] === '--sourcemap') {
+        $sourceMap = true;
+        continue;
+    }
 
-    $value = parseArgument($i, ['-p', '--precision']);	
+    if ($argv[$i] === '--embed-sources') {
+        $embedSources = true;
+        continue;
+    }
 
-    if (isset($value)) {	
-        $precision = $value;	
-        continue;	
-    }	
+    if ($argv[$i] === '--embed-source-map') {
+        $embedSourceMap = true;
+        continue;
+    }
 
-    if (file_exists($argv[$i])) {	
-        $inputFile = $argv[$i];	
-        continue;	
-    }	
-}	
+    if ($argv[$i] === '-T' || $argv[$i] === '--dump-tree') {
+        $dumpTree = true;
+        continue;
+    }
+
+    $value = parseArgument($i, array('-t', '-s', '--style'));
+
+    if (isset($value)) {
+        $style = $value;
+        continue;
+    }
+
+    $value = parseArgument($i, array('-I', '--load-path'));
+
+    if (isset($value)) {
+        $loadPaths[] = $value;
+        continue;
+    }
+
+    // Keep parsing --precision to avoid BC breaks for scripts using it
+    $value = parseArgument($i, array('-p', '--precision'));
+
+    if (isset($value)) {
+        // TODO report it as a warning ?
+        continue;
+    }
+
+    $arguments[] = $argv[$i];
+}
 
 
-if ($inputFile) {	
-    $data = file_get_contents($inputFile);	
+if (isset($arguments[0]) && file_exists($arguments[0])) {
+    $inputFile = $arguments[0];
+    $data = file_get_contents($inputFile);
+} else {
+    $data = '';
 
-    $newWorkingDir = dirname(realpath($inputFile));	
-    $oldWorkingDir = getcwd();	
+    while (! feof(STDIN)) {
+        $data .= fread(STDIN, 8192);
+    }
+}
 
-    if ($oldWorkingDir !== $newWorkingDir) {	
-        $changeDir = chdir($newWorkingDir);	
-        $inputFile = basename($inputFile);	
-    }	
-} else {	
-    $data = '';	
+if ($dumpTree) {
+    $parser = new Parser($inputFile);
 
-    while (! feof(STDIN)) {	
-        $data .= fread(STDIN, 8192);	
-    }	
-}	
+    print_r(json_decode(json_encode($parser->parse($data)), true));
 
-if ($dumpTree) {	
-    $parser = new Parser($inputFile);	
+    fwrite(STDERR, 'Warning: the --dump-tree option is deprecated. Use proper debugging tools instead.');
 
-    print_r(json_decode(json_encode($parser->parse($data)), true));	
+    exit();
+}
 
-    exit();	
-}	
+$scss = new Compiler();
 
-$scss = new Compiler();	
+if ($loadPaths) {
+    $scss->setImportPaths($loadPaths);
+}
 
-if ($debugInfo) {	
-    $scss->setLineNumberStyle(Compiler::DEBUG_INFO);	
-}	
+if ($style) {
+    if ($style === OutputStyle::COMPRESSED || $style === OutputStyle::EXPANDED) {
+        $scss->setOutputStyle($style);
+    } else {
+        fwrite(STDERR, "WARNING: the $style style is deprecated.\n");
+        $scss->setFormatter('ScssPhp\\ScssPhp\\Formatter\\' . ucfirst($style));
+    }
+}
 
-if ($lineNumbers) {	
-    $scss->setLineNumberStyle(Compiler::LINE_COMMENTS);	
-}	
+$outputFile = isset($arguments[1]) ? $arguments[1] : null;
+$sourceMapFile = null;
 
-if ($ignoreErrors) {	
-    $scss->setIgnoreErrors($ignoreErrors);	
-}	
+if ($sourceMap) {
+    $sourceMapOptions = array(
+        'outputSourceFiles' => $embedSources,
+    );
+    if ($embedSourceMap || $outputFile === null) {
+        $scss->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+    } else {
+        $sourceMapFile = $outputFile . '.map';
+        $sourceMapOptions['sourceMapWriteTo'] = $sourceMapFile;
+        $sourceMapOptions['sourceMapURL'] = basename($sourceMapFile);
+        $sourceMapOptions['sourceMapBasepath'] = getcwd();
+        $sourceMapOptions['sourceMapFilename'] = basename($outputFile);
 
-if ($loadPaths) {	
-    $scss->setImportPaths(explode(PATH_SEPARATOR, $loadPaths));	
-}	
+        $scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
+    }
 
-if ($precision) {	
-    $scss->setNumberPrecision($precision);	
-}	
+    $scss->setSourceMapOptions($sourceMapOptions);
+}
 
-if ($style) {	
-    $scss->setFormatter('Leafo\\ScssPhp\\Formatter\\' . ucfirst($style));	
-}	
+if ($encoding) {
+    $scss->setEncoding($encoding);
+}
 
-if ($sourceMap) {	
-    $scss->setSourceMap(Compiler::SOURCE_MAP_FILE);	
-}	
+try {
+    $result = $scss->compileString($data, $inputFile);
+} catch (SassException $e) {
+    fwrite(STDERR, 'Error: '.$e->getMessage()."\n");
+    exit(1);
+}
 
-if ($encoding) {	
-    $scss->setEncoding($encoding);	
-}	
+if ($outputFile) {
+    file_put_contents($outputFile, $result->getCss());
 
-echo $scss->compile($data, $inputFile);	
-
-if ($changeDir) {	
-    chdir($oldWorkingDir);	
+    if ($sourceMapFile !== null && $result->getSourceMap() !== null) {
+        file_put_contents($sourceMapFile, $result->getSourceMap());
+    }
+} else {
+    echo $result->getCss();
 }

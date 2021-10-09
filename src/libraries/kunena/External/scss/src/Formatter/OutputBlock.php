@@ -1,65 +1,68 @@
 <?php
+
 /**
  * SCSSPHP
  *
- * @copyright 2012-2018 Leaf Corcoran
+ * @copyright 2012-2020 Leaf Corcoran
  *
- * @license   http://opensource.org/licenses/MIT MIT
+ * @license http://opensource.org/licenses/MIT MIT
  *
- * @link      http://leafo.github.io/scssphp
+ * @link http://scssphp.github.io/scssphp
  */
 
-namespace Leafo\ScssPhp\Formatter;
+namespace ScssPhp\ScssPhp\Formatter;
 
 /**
  * Output block
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @internal
  */
 class OutputBlock
 {
-	/**
-	 * @var string
-	 */
-	public $type;
+    /**
+     * @var string
+     */
+    public $type;
 
-	/**
-	 * @var integer
-	 */
-	public $depth;
+    /**
+     * @var integer
+     */
+    public $depth;
 
-	/**
-	 * @var array
-	 */
-	public $selectors;
+    /**
+     * @var array|null
+     */
+    public $selectors;
 
-	/**
-	 * @var array
-	 */
-	public $lines;
+    /**
+     * @var string[]
+     */
+    public $lines;
 
-	/**
-	 * @var array
-	 */
-	public $children;
+    /**
+     * @var OutputBlock[]
+     */
+    public $children;
 
-	/**
-	 * @var OutputBlock
-	 */
-	public $parent;
+    /**
+     * @var OutputBlock|null
+     */
+    public $parent;
 
-	/**
-	 * @var string
-	 */
-	public $sourceName;
+    /**
+     * @var string|null
+     */
+    public $sourceName;
 
-	/**
-	 * @var integer
-	 */
-	public $sourceLine;
+    /**
+     * @var integer|null
+     */
+    public $sourceLine;
 
-	/**
-	 * @var integer
-	 */
-	public $sourceColumn;
+    /**
+     * @var integer|null
+     */
+    public $sourceColumn;
 }

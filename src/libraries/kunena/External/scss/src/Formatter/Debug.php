@@ -1,128 +1,127 @@
 <?php
+
 /**
  * SCSSPHP
  *
- * @copyright 2012-2018 Leaf Corcoran
+ * @copyright 2012-2020 Leaf Corcoran
  *
- * @license   http://opensource.org/licenses/MIT MIT
+ * @license http://opensource.org/licenses/MIT MIT
  *
- * @link      http://leafo.github.io/scssphp
+ * @link http://scssphp.github.io/scssphp
  */
 
-namespace Leafo\ScssPhp\Formatter;
+namespace ScssPhp\ScssPhp\Formatter;
 
-use Leafo\ScssPhp\Formatter;
-use Leafo\ScssPhp\Formatter\OutputBlock;
+use ScssPhp\ScssPhp\Formatter;
 
 /**
  * Debug formatter
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @deprecated since 1.4.0.
+ *
+ * @internal
  */
 class Debug extends Formatter
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct()
-	{
-		$this->indentLevel     = 0;
-		$this->indentChar      = '';
-		$this->break           = "\n";
-		$this->open            = ' {';
-		$this->close           = ' }';
-		$this->tagSeparator    = ', ';
-		$this->assignSeparator = ': ';
-		$this->keepSemicolons  = true;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct()
+    {
+        @trigger_error('The Debug formatter is deprecated since 1.4.0.', E_USER_DEPRECATED);
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function indentStr()
-	{
-		return str_repeat('  ', $this->indentLevel);
-	}
+        $this->indentLevel = 0;
+        $this->indentChar = '';
+        $this->break = "\n";
+        $this->open = ' {';
+        $this->close = ' }';
+        $this->tagSeparator = ', ';
+        $this->assignSeparator = ': ';
+        $this->keepSemicolons = true;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function blockLines(OutputBlock $block)
-	{
-		$indent = $this->indentStr();
+    /**
+     * {@inheritdoc}
+     */
+    protected function indentStr()
+    {
+        return str_repeat('  ', $this->indentLevel);
+    }
 
-		if (empty($block->lines))
-		{
-			$this->write("{$indent}block->lines: []\n");
+    /**
+     * {@inheritdoc}
+     */
+    protected function blockLines(OutputBlock $block)
+    {
+        $indent = $this->indentStr();
 
-			return;
-		}
+        if (empty($block->lines)) {
+            $this->write("{$indent}block->lines: []\n");
 
-		foreach ($block->lines as $index => $line)
-		{
-			$this->write("{$indent}block->lines[{$index}]: $line\n");
-		}
-	}
+            return;
+        }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function blockSelectors(OutputBlock $block)
-	{
-		$indent = $this->indentStr();
+        foreach ($block->lines as $index => $line) {
+            $this->write("{$indent}block->lines[{$index}]: $line\n");
+        }
+    }
 
-		if (empty($block->selectors))
-		{
-			$this->write("{$indent}block->selectors: []\n");
+    /**
+     * {@inheritdoc}
+     */
+    protected function blockSelectors(OutputBlock $block)
+    {
+        $indent = $this->indentStr();
 
-			return;
-		}
+        if (empty($block->selectors)) {
+            $this->write("{$indent}block->selectors: []\n");
 
-		foreach ($block->selectors as $index => $selector)
-		{
-			$this->write("{$indent}block->selectors[{$index}]: $selector\n");
-		}
-	}
+            return;
+        }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function blockChildren(OutputBlock $block)
-	{
-		$indent = $this->indentStr();
+        foreach ($block->selectors as $index => $selector) {
+            $this->write("{$indent}block->selectors[{$index}]: $selector\n");
+        }
+    }
 
-		if (empty($block->children))
-		{
-			$this->write("{$indent}block->children: []\n");
+    /**
+     * {@inheritdoc}
+     */
+    protected function blockChildren(OutputBlock $block)
+    {
+        $indent = $this->indentStr();
 
-			return;
-		}
+        if (empty($block->children)) {
+            $this->write("{$indent}block->children: []\n");
 
-		$this->indentLevel++;
+            return;
+        }
 
-		foreach ($block->children as $i => $child)
-		{
-			$this->block($child);
-		}
+        $this->indentLevel++;
 
-		$this->indentLevel--;
-	}
+        foreach ($block->children as $i => $child) {
+            $this->block($child);
+        }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function block(OutputBlock $block)
-	{
-		$indent = $this->indentStr();
+        $this->indentLevel--;
+    }
 
-		$this->write("{$indent}block->type: {$block->type}\n" .
-			"{$indent}block->depth: {$block->depth}\n"
-		);
+    /**
+     * {@inheritdoc}
+     */
+    protected function block(OutputBlock $block)
+    {
+        $indent = $this->indentStr();
 
-		$this->currentBlock = $block;
+        $this->write("{$indent}block->type: {$block->type}\n" .
+             "{$indent}block->depth: {$block->depth}\n");
 
-		$this->blockSelectors($block);
-		$this->blockLines($block);
-		$this->blockChildren($block);
-	}
+        $this->currentBlock = $block;
+
+        $this->blockSelectors($block);
+        $this->blockLines($block);
+        $this->blockChildren($block);
+    }
 }

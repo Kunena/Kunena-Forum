@@ -33,8 +33,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Leafo\ScssPhp\Compiler;
-use lessc;
+use ScssPhp\ScssPhp\Compiler;
 use SimpleXMLElement;
 use StdClass;
 
@@ -1769,78 +1768,12 @@ HTML;
 	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
-	public function compileLess(string $inputFile, string $outputFile): void
-	{
-		if (!class_exists('lessc'))
-		{
-			require_once KPATH_FRAMEWORK . '/External/lessc/lessc.php';
-		}
-
-		// Load the cache.
-		$cacheDir = JPATH_CACHE . '/kunena';
-
-		if (!is_dir($cacheDir))
-		{
-			Folder::create($cacheDir);
-		}
-
-		$cacheFile = "{$cacheDir}/kunena.{$this->name}.{$inputFile}.cache";
-
-		if (is_file($cacheFile))
-		{
-			$cache = unserialize(file_get_contents($cacheFile));
-		}
-		else
-		{
-			$cache = JPATH_SITE . '/' . $this->getFile($inputFile, false, 'less');
-		}
-
-		$outputDir = KPATH_MEDIA . "/cache/{$this->name}/css";
-
-		if (!is_dir($outputDir))
-		{
-			Folder::create($outputDir);
-		}
-
-		$outputFile = "{$outputDir}/{$outputFile}";
-
-		$less  = new lessc;
-		$class = $this;
-		$less->registerFunction(
-			'url',
-			function ($arg) use ($class) {
-				list($type, $q, $values) = $arg;
-				$value = reset($values);
-
-				return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
-			}
-		);
-		$less->setVariables($this->style_variables);
-		$newCache = $less->cachedCompile($cache);
-
-		if (!\is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
-		{
-			$cache = serialize($newCache);
-			File::write($cacheFile, $cache);
-			File::write($outputFile, $newCache['compiled']);
-		}
-	}
-
-	/**
-	 * @param   string  $inputFile   input
-	 * @param   string  $outputFile  output
-	 *
-	 * @return  void
-	 *
-	 * @throws Exception
-	 * @since   Kunena 6.0
-	 */
 	public function compileScss(string $inputFile, string $outputFile): void
 	{
 		require_once KPATH_FRAMEWORK . '/External/scss/scss.inc.php';
 
 		// Load the cache.
-		$cacheDir = JPATH_CACHE . '/kunena';
+		$cacheDir = JPATH_SITE . '/cache/kunena';
 
 		if (!is_dir($cacheDir))
 		{
@@ -1855,7 +1788,7 @@ HTML;
 		}
 		else
 		{
-			$cache = JPATH_SITE . '/' . $this->getFile($inputFile, false, 'scss');
+			$cache = JPATH_SITE . '/' . $this->getFile($inputFile, false, 'css');
 		}
 
 		$outputDir = KPATH_MEDIA . "/cache/{$this->name}/css";
@@ -1880,13 +1813,17 @@ HTML;
 		);
 
 		$scss->setVariables($this->style_variables);
-		$newCache = $scss->compile($cache);
 
-		if (!\is_array($cache) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile))
-		{
-			$cache = serialize($newCache);
-			File::write($cacheFile, $cache);
-			File::write($outputFile, $newCache['compiled']);
+		$scss->setImportPaths($cache);
+
+		try {
+			$string_sass = file_get_contents($inputFile);
+			$string_css = $scss->compile($string_sass);
+			if ($string_css > '') {
+				file_put_contents($cache, $string_css);
+			}
+		}
+		catch (Exception $e) {
 		}
 	}
 

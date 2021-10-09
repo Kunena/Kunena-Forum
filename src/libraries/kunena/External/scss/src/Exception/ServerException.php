@@ -1,23 +1,26 @@
 <?php
+
 /**
  * SCSSPHP
  *
- * @copyright 2012-2018 Leaf Corcoran
+ * @copyright 2012-2020 Leaf Corcoran
  *
- * @license   http://opensource.org/licenses/MIT MIT
+ * @license http://opensource.org/licenses/MIT MIT
  *
- * @link      http://leafo.github.io/scssphp
+ * @link http://scssphp.github.io/scssphp
  */
 
-namespace Leafo\ScssPhp\Exception;
+namespace ScssPhp\ScssPhp\Exception;
 
-use Exception;
+@trigger_error(sprintf('The "%s" class is deprecated.', ServerException::class), E_USER_DEPRECATED);
 
 /**
  * Server Exception
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @deprecated The Scssphp server should define its own exception instead.
  */
-class ServerException extends Exception
+class ServerException extends \Exception implements SassException
 {
 }

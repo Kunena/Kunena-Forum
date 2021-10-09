@@ -146,7 +146,8 @@ sup.knewchar {
 
 img {
   max-width: 100%;
-  width: auto \9;
+  width: auto \9
+;
   height: auto;
   display: inline-block;
 }
@@ -1376,4 +1377,8 @@ a .rounded,
 
 .user-circle {
   display: flex;
+}
+
+.btn-group {
+  margin-bottom: 0;
 }

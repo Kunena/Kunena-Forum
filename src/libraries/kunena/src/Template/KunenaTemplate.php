@@ -1744,8 +1744,6 @@ HTML;
 	 */
 	public function compileScss(string $inputFile, string $outputFile): void
 	{
-		require_once KPATH_FRAMEWORK . '/External/scss/scss.inc.php';
-
 		// Load the cache.
 		$cacheDir = JPATH_SITE . '/cache/kunena';
 

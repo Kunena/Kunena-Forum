@@ -68,6 +68,8 @@ class plgSystemKunena extends CMSPlugin
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
 
+		require_once JPATH_LIBRARIES . '/kunena/External/autoload.php';
+
 		if (!empty($format) && $format != 'html')
 		{
 			if ($app->scope == 'com_kunena')

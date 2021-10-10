@@ -1,6 +1,7 @@
 {
   "name": "kunena/kunena-forum",
   "description": "Kunena forum for joomla",
+  "homepage": "https://github.com/Kunena/Kunena-Forum",
   "license": "GPL-3.0-or-later",
   "require-dev": {
     "phpunit/phpunit": "~9.5.5",

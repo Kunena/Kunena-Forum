@@ -33,6 +33,7 @@ use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\OutputStyle;
 use SimpleXMLElement;
 use StdClass;
 
@@ -1752,15 +1753,9 @@ HTML;
 			Folder::create($cacheDir);
 		}
 
-		$cacheFile = "{$cacheDir}/kunena.{$this->name}.{$inputFile}.cache";
-
-		if (is_file($cacheFile))
+		if (!is_file($inputFile))
 		{
-			$cache = unserialize(file_get_contents($cacheFile));
-		}
-		else
-		{
-			$cache = JPATH_SITE . '/' . $this->getFile($inputFile, false, 'css');
+			$inputFile = KPATH_SITE . '/template/' . $this->name . '/' .  $inputFile;
 		}
 
 		$outputDir = KPATH_MEDIA . "/cache/{$this->name}/css";
@@ -1770,36 +1765,13 @@ HTML;
 			Folder::create($outputDir);
 		}
 
-		$outputFile = "{$outputDir}/{$outputFile}";
+		$scss = new Compiler();
+		$scss->addImportPath(dirname($inputFile));
+		$scss->setOutputStyle(OutputStyle::COMPRESSED);
+		$scssContent = file_get_contents($inputFile);
+		$style = $scss->compileString($scssContent, $inputFile);
 
-		$scss  = new Compiler;
-		$class = $this;
-		$scss->registerFunction(
-			'url',
-			function ($arg) use ($class) {
-				list($type, $q, $values) = $arg;
-				$value = reset($values);
-
-				return "url({$q}{$class->getFile($value, true, 'media', '')}{$q})";
-			}
-		);
-
-		$scss->setVariables($this->style_variables);
-
-		$scss->setImportPaths($cache);
-
-		try
-		{
-			$string_sass = file_get_contents($inputFile);
-			$string_css  = $scss->compile($string_sass);
-			if ($string_css > '')
-			{
-				file_put_contents($cache, $string_css);
-			}
-		}
-		catch (Exception $e)
-		{
-		}
+		file_put_contents($outputDir . "/kunena.css", $style->getCss());
 	}
 
 	/**

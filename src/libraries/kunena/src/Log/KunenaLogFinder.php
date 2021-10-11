@@ -19,13 +19,14 @@ use Joomla\CMS\Date\Date;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
 
 /**
  * Class KunenaLogFinder
  *
  * @since 5.0
  */
-class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
+class KunenaLogFinder extends KunenaFinder
 {
 	/**
 	 * @var     string

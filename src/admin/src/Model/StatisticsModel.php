@@ -19,8 +19,8 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
-use Kunena\Forum\Libraries\Log\KunenaFinder;
 use Kunena\Forum\Libraries\Log\KunenaLog;
+use Kunena\Forum\Libraries\Log\KunenaLogFinder;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
@@ -135,12 +135,12 @@ class StatisticsModel extends ListModel
 	 *
 	 * @param   string  $field  field
 	 *
-	 * @return  KunenaFinder
+	 * @return  KunenaLogFinder
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	protected function getFinder($field = 'user_id'): KunenaFinder
+	protected function getFinder($field = 'user_id'): KunenaLogFinder
 	{
 		// Get a storage key.
 		$store = $this->getStoreId('getFinder_' . $field);
@@ -153,7 +153,7 @@ class StatisticsModel extends ListModel
 
 		// Create a new query object.
 		$db     = $this->getDbo();
-		$finder = new KunenaFinder;
+		$finder = new KunenaLogFinder;
 
 		// Filter by username or name.
 		$filter = $this->getState('filter.user');

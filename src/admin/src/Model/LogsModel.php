@@ -20,7 +20,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\User\User;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
-use Kunena\Forum\Libraries\Log\KunenaFinder;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Log\KunenaLogFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -149,12 +150,12 @@ class LogsModel extends ListModel
 	/**
 	 * Build a finder query to load the list data.
 	 *
-	 * @return  KunenaFinder
+	 * @return  KunenaLogFinder
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	protected function getFinder(): KunenaFinder
+	protected function getFinder(): KunenaLogFinder
 	{
 		// Get a storage key.
 		$store = $this->getStoreId('getFinder');
@@ -167,7 +168,7 @@ class LogsModel extends ListModel
 
 		// Create a new query object.
 		$db     = $this->getDbo();
-		$finder = new KunenaFinder;
+		$finder = new KunenaLogFinder;
 
 		// Filter by type.
 		$filter = $this->getState('filter.type');
@@ -356,7 +357,21 @@ class LogsModel extends ListModel
 			->limit((int) $this->getState('list.limit'))
 			->find();
 
-		KunenaUserHelper::loadUsers($items);
+		$userIds1 = $items->map(function ($item, $key) {
+			return $item->user_id;
+		});
+
+		$userIds2 = $items->map(function ($item, $key) {
+			return $item->target_user;
+		});
+
+		$userIds  = array_unique(array_merge($userIds1->all(), $userIds2->all()));
+
+		KunenaUserHelper::loadUsers($userIds);
+
+		KunenaTopicHelper::getTopics($items->map(function ($item, $key) {
+			return $item->topic_id;
+		})->all());
 
 		// Add the items to the internal cache.
 		$this->cache[$store] = $items;

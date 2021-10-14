@@ -122,59 +122,59 @@ class TemplateController extends FormController
 
 		$editorButtons = [];
 
-		if (!$params['Bold'])
+		if ($params['Bold'])
 		{
-			$editorButtons[] = 'Bold';
+			$editorButtons[] = 'bold';
 		}
 
-		if (!$params['Italic'])
+		if ($params['Italic'])
 		{
-			$editorButtons[] = 'Italic';
+			$editorButtons[] = 'italic';
 		}
 
-		if (!$params['Underline'])
+		if ($params['Underline'])
 		{
-			$editorButtons[] = 'Underline';
+			$editorButtons[] = 'underline';
 		}
 
-		if (!$params['Strike'])
+		if ($params['Strike'])
 		{
-			$editorButtons[] = 'Strike';
+			$editorButtons[] = 'strike';
 		}
 
-		if (!$params['Superscript'])
+		if ($params['Superscript'])
 		{
-			$editorButtons[] = 'Superscript';
+			$editorButtons[] = 'superscript';
 		}
 
-		if (!$params['Subscript'])
+		if ($params['Subscript'])
 		{
-			$editorButtons[] = 'Subscript';
+			$editorButtons[] = 'subscript';
 		}
 
-		if (!$params['JustifyRight'])
+		if ($params['Right'])
 		{
-			$editorButtons[] = 'JustifyRight';
+			$editorButtons[] = 'right';
 		}
 
-		if (!$params['JustifyLeft'])
+		if ($params['Left'])
 		{
-			$editorButtons[] = 'JustifyLeft';
+			$editorButtons[] = 'left';
 		}
 
-		if (!$params['JustifyBlock'])
+		if (!$params['Justify'])
 		{
-			$editorButtons[] = 'JustifyBlock';
+			$editorButtons[] = 'justify';
 		}
 
-		if (!$params['JustifyCenter'])
+		if (!$params['Center'])
 		{
-			$editorButtons[] = 'JustifyCenter';
+			$editorButtons[] = 'center';
 		}
 
-		if (!$params['RemoveFormat'])
+		if ($params['RemoveFormat'])
 		{
-			$editorButtons[] = 'RemoveFormat';
+			$editorButtons[] = 'removeFormat';
 		}
 
 		if (!$params['Confidential'])
@@ -222,14 +222,19 @@ class TemplateController extends FormController
 			$editorButtons[] = 'Map';
 		}
 
-		if (!$params['FontSize'])
+		if ($params['Font'])
 		{
-			$editorButtons[] = 'FontSize';
+			$editorButtons[] = 'font';
 		}
 
-		if (!$params['TextColor'])
+		if ($params['Size'])
 		{
-			$editorButtons[] = 'TextColor';
+			$editorButtons[] = 'Size';
+		}
+
+		if ($params['TextColor'])
+		{
+			$editorButtons[] = 'color';
 		}
 
 		if (!$params['Maximize'])
@@ -247,19 +252,24 @@ class TemplateController extends FormController
 			$editorButtons[] = 'Video';
 		}
 
-		if (!$params['Link_Unlink'])
+		if ($params['Link'])
 		{
-			$editorButtons[] = 'Link,Unlink';
+			$editorButtons[] = 'link';
+		}
+
+		if ($params['Unlink'])
+		{
+			$editorButtons[] = 'unlink';
 		}
 
 		if (!$params['BulletedList'])
 		{
-			$editorButtons[] = 'BulletedList';
+			$editorButtons[] = 'bulletedList';
 		}
 
 		if (!$params['NumberedList'])
 		{
-			$editorButtons[] = 'NumberedList';
+			$editorButtons[] = 'orderedlist';
 		}
 
 		if (!$params['Blockquote'])
@@ -271,25 +281,7 @@ class TemplateController extends FormController
 		{
 			$editorButtons[] = 'Code';
 		}
-
-		if (!empty($params['nameskinckeditor']))
-		{
-			if (!Folder::exists(KPATH_MEDIA . '/core/js/skins/' . $params['nameskinckeditor']))
-			{
-				$params['nameskinckeditor'] = '';
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_SKIN'), 'error');
-			}
-		}
-
-		if (!empty($params['ckeditorcustomprefixconfigfile']))
-		{
-			if (!File::exists(KPATH_MEDIA . '/core/js/' . $params['ckeditorcustomprefixconfigfile'] . 'ckeditor_config.js'))
-			{
-				$params['ckeditorcustomprefixconfigfile'] = '';
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_CUSTOM_CONFIG_FILE'), 'error');
-			}
-		}
-
+var_dump($params);
 		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
 		if (\count($params) > 0)

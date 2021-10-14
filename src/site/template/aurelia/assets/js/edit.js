@@ -280,11 +280,11 @@ jQuery(document).ready(function ($) {
 	if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 	{
 		// TODO: need to change the values(bold, italic) from template parameters to be handled here
-		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map|source';
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,twitter,instagram,ebay,soundcloud|source';
 	}
 	else
 	{
-		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map|source';
+		toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,twitter,instagram,ebay,soundcloud|source';
 	}
 	
 	var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
@@ -343,6 +343,347 @@ jQuery(document).ready(function ($) {
 			}
 		}
 	};
+
+	// Add bbcode soundcloud
+	sceditor.formats.bbcode.set('soundcloud', {
+		format: function (element, content) {
+			if (jQuery(element).data('sceditor-emoticon'))
+				return content;
+
+			var url = jQuery(element).attr('src'),
+				width = jQuery(element).attr('width'),
+				height = jQuery(element).attr('height'),
+				align = jQuery(element).data('scealign');
+
+			var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
+				? '=' + width + 'x' + height
+				: ''
+			;
+
+			if (align === 'left' || align === 'right')
+				attrs += ' align='+align
+
+			return '[soundcloud' + attrs + ']' + url + '[/soundcloud]';
+		},
+		html: function (token, attrs, content) {
+			var	width, height, match,
+				align = attrs.align,
+				attribs = '';
+
+			// handle [img=340x240]url[/img]
+			if (attrs.defaultattr) {
+				match = attrs.defaultattr.split(/x/i);
+
+				width  = match[0];
+				height = (match.length === 2 ? match[1] : match[0]);
+
+				if (width !== undefined && height !== undefined && width > 0 && height > 0) {
+					attribs +=
+						' width="' + sceditor.escapeEntities(width, true) + '"' +
+						' height="' + sceditor.escapeEntities(height, true) + '"';
+				}
+			}
+
+			if (align === 'left' || align === 'right')
+				attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
+
+			return '<img' + attribs +
+				' src="' + sceditor.escapeUriScheme(content) + '" />';
+		}
+	})
+
+	sceditor.command.set('soundcloud', {
+		_dropDown: function (editor, caller) {
+			var $content;
+
+			$content = jQuery(
+				'<div>' +
+				'<div>' +
+				'<label for="height">Instragram id:</label> ' +
+				'<input type="text" id="instagram_id" size="10" />' +
+				'</div>' +
+				'<div>' +
+				'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+				'</div>' +
+				'</div>'
+			);
+
+			$content.find('.button').on('click', function (e) {
+				var instagram_id = $content.find('#instagram_id').val();
+
+				if (instagram_id)
+					editor.insert('[soundcloud]' + instagram_id + '[/soundcloud]');
+
+				editor.closeDropDown(true);
+				e.preventDefault();
+			});
+
+			editor.createDropDown(caller, 'insertmap', $content.get(0));
+		},
+		exec: function (caller) {
+			sceditor.command.get('soundcloud')._dropDown(this, caller);
+		},
+		txtExec: function (caller) {
+			sceditor.command.get('soundcloud')._dropDown(this, caller);
+		},
+		tooltip: 'Insert instagram item',
+	});
+
+
+	// Add bbcode ebay
+	sceditor.formats.bbcode.set('ebay', {
+		format: function (element, content) {
+			if (jQuery(element).data('sceditor-emoticon'))
+				return content;
+
+			var url = jQuery(element).attr('src'),
+				width = jQuery(element).attr('width'),
+				height = jQuery(element).attr('height'),
+				align = jQuery(element).data('scealign');
+
+			var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
+				? '=' + width + 'x' + height
+				: ''
+			;
+
+			if (align === 'left' || align === 'right')
+				attrs += ' align='+align
+
+			return '[ebay' + attrs + ']' + url + '[/ebay]';
+		},
+		html: function (token, attrs, content) {
+			var	width, height, match,
+				align = attrs.align,
+				attribs = '';
+
+			// handle [img=340x240]url[/img]
+			if (attrs.defaultattr) {
+				match = attrs.defaultattr.split(/x/i);
+
+				width  = match[0];
+				height = (match.length === 2 ? match[1] : match[0]);
+
+				if (width !== undefined && height !== undefined && width > 0 && height > 0) {
+					attribs +=
+						' width="' + sceditor.escapeEntities(width, true) + '"' +
+						' height="' + sceditor.escapeEntities(height, true) + '"';
+				}
+			}
+
+			if (align === 'left' || align === 'right')
+				attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
+
+			return '<img' + attribs +
+				' src="' + sceditor.escapeUriScheme(content) + '" />';
+		}
+	})
+
+	sceditor.command.set('ebay', {
+		_dropDown: function (editor, caller) {
+			var $content;
+
+			$content = jQuery(
+				'<div>' +
+				'<div>' +
+				'<label for="height">Instragram id:</label> ' +
+				'<input type="text" id="instagram_id" size="10" />' +
+				'</div>' +
+				'<div>' +
+				'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+				'</div>' +
+				'</div>'
+			);
+
+			$content.find('.button').on('click', function (e) {
+				var instagram_id = $content.find('#instagram_id').val();
+
+				if (instagram_id)
+					editor.insert('[ebay]' + instagram_id + '[/ebay]');
+
+				editor.closeDropDown(true);
+				e.preventDefault();
+			});
+
+			editor.createDropDown(caller, 'insertmap', $content.get(0));
+		},
+		exec: function (caller) {
+			sceditor.command.get('ebay')._dropDown(this, caller);
+		},
+		txtExec: function (caller) {
+			sceditor.command.get('ebay')._dropDown(this, caller);
+		},
+		tooltip: 'Insert instagram item',
+	});
+
+	// Add bbcode instagram
+	sceditor.formats.bbcode.set('instagram', {
+		format: function (element, content) {
+			if (jQuery(element).data('sceditor-emoticon'))
+				return content;
+
+			var url = jQuery(element).attr('src'),
+				width = jQuery(element).attr('width'),
+				height = jQuery(element).attr('height'),
+				align = jQuery(element).data('scealign');
+
+			var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
+				? '=' + width + 'x' + height
+				: ''
+			;
+
+			if (align === 'left' || align === 'right')
+				attrs += ' align='+align
+
+			return '[instagram' + attrs + ']' + url + '[/instagram]';
+		},
+		html: function (token, attrs, content) {
+			var	width, height, match,
+				align = attrs.align,
+				attribs = '';
+
+			// handle [img=340x240]url[/img]
+			if (attrs.defaultattr) {
+				match = attrs.defaultattr.split(/x/i);
+
+				width  = match[0];
+				height = (match.length === 2 ? match[1] : match[0]);
+
+				if (width !== undefined && height !== undefined && width > 0 && height > 0) {
+					attribs +=
+						' width="' + sceditor.escapeEntities(width, true) + '"' +
+						' height="' + sceditor.escapeEntities(height, true) + '"';
+				}
+			}
+
+			if (align === 'left' || align === 'right')
+				attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
+
+			return '<img' + attribs +
+				' src="' + sceditor.escapeUriScheme(content) + '" />';
+		}
+	})
+
+	sceditor.command.set('instagram', {
+		_dropDown: function (editor, caller) {
+			var $content;
+
+			$content = jQuery(
+				'<div>' +
+				'<div>' +
+				'<label for="height">Instragram id:</label> ' +
+				'<input type="text" id="instagram_id" size="10" />' +
+				'</div>' +
+				'<div>' +
+				'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+				'</div>' +
+				'</div>'
+			);
+
+			$content.find('.button').on('click', function (e) {
+				var instagram_id = $content.find('#instagram_id').val();
+
+				if (instagram_id)
+					editor.insert('[instagram]' + instagram_id + '[/instagram]');
+
+				editor.closeDropDown(true);
+				e.preventDefault();
+			});
+
+			editor.createDropDown(caller, 'insertmap', $content.get(0));
+		},
+		exec: function (caller) {
+			sceditor.command.get('instagram')._dropDown(this, caller);
+		},
+		txtExec: function (caller) {
+			sceditor.command.get('instagram')._dropDown(this, caller);
+		},
+		tooltip: 'Insert instagram item',
+	});
+
+	// Add bbcode twitter
+	sceditor.formats.bbcode.set('twitter', {
+		format: function (element, content) {
+			if (jQuery(element).data('sceditor-emoticon'))
+				return content;
+
+			var url = jQuery(element).attr('src'),
+				width = jQuery(element).attr('width'),
+				height = jQuery(element).attr('height'),
+				align = jQuery(element).data('scealign');
+
+			var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
+				? '=' + width + 'x' + height
+				: ''
+			;
+
+			if (align === 'left' || align === 'right')
+				attrs += ' align='+align
+
+			return '[tweet' + attrs + ']' + url + '[/tweet]';
+		},
+		html: function (token, attrs, content) {
+			var	width, height, match,
+				align = attrs.align,
+				attribs = '';
+
+			// handle [img=340x240]url[/img]
+			if (attrs.defaultattr) {
+				match = attrs.defaultattr.split(/x/i);
+
+				width  = match[0];
+				height = (match.length === 2 ? match[1] : match[0]);
+
+				if (width !== undefined && height !== undefined && width > 0 && height > 0) {
+					attribs +=
+						' width="' + sceditor.escapeEntities(width, true) + '"' +
+						' height="' + sceditor.escapeEntities(height, true) + '"';
+				}
+			}
+
+			if (align === 'left' || align === 'right')
+				attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
+
+			return '<img' + attribs +
+				' src="' + sceditor.escapeUriScheme(content) + '" />';
+		}
+	})
+
+	sceditor.command.set('twitter', {
+		_dropDown: function (editor, caller) {
+			var $content;
+
+			$content = jQuery(
+				'<div>' +
+				'<div>' +
+				'<label for="height">Tweet id:</label> ' +
+				'<input type="text" id="tweet_id" size="10" />' +
+				'</div>' +
+				'<div>' +
+				'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+				'</div>' +
+				'</div>'
+			);
+
+			$content.find('.button').on('click', function (e) {
+				var tweet_id = $content.find('#tweet_id').val();
+
+				if (tweet_id)
+					editor.insert('[tweet]' + tweet_id + '[/tweet]');
+
+				editor.closeDropDown(true);
+				e.preventDefault();
+			});
+
+			editor.createDropDown(caller, 'insertmap', $content.get(0));
+		},
+		exec: function (caller) {
+			sceditor.command.get('twitter')._dropDown(this, caller);
+		},
+		txtExec: function (caller) {
+			sceditor.command.get('twitter')._dropDown(this, caller);
+		},
+		tooltip: 'Insert a tweet',
+	});
 
 	// Add bbcode maps
 	sceditor.formats.bbcode.set('map', {

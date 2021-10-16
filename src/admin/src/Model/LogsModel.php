@@ -365,7 +365,7 @@ class LogsModel extends ListModel
 			return $item->target_user;
 		});
 
-		$userIds  = array_unique(array_merge($userIds1->all(), $userIds2->all()));
+		$userIds = array_unique(array_merge($userIds1->all(), $userIds2->all()));
 
 		KunenaUserHelper::loadUsers($userIds);
 

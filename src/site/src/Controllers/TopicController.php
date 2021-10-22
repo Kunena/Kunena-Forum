@@ -1246,6 +1246,7 @@ class TopicController extends KunenaController
 			'poll_options'      => $this->app->input->get('polloptionsID', [], 'post', 'array'),
 			'poll_time_to_live' => $this->app->input->getString('poll_time_to_live', 0),
 			'subscribe'         => $this->app->input->getInt('subscribeMe', 0),
+			'private'           => (string) $this->input->getRaw('private'),
 			'params'            => '',
 		];
 

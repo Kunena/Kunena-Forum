@@ -188,24 +188,35 @@
 				<include name="language/en-GB/*.ini"/>
 			</fileset>
 		</copy>
+
 		<copy todir="${tmp_dir}/packages/com_kunena/site">
 			<fileset dir="${kunena.site}">
 				<include name="language/en-GB/*.ini"/>
 				<exclude name="template/**/params.ini"/>
 			</fileset>
 		</copy>
+
 		<!-- Add version information to all xml files and forum.php -->
 		<copy todir="${tmp_dir}/packages/com_kunena" overwrite="true">
 			<filterchain refid="filter"/>
 			<fileset dir="${kunena.admin}">
 				<include name="**/*.xml"/>
+				<include name="api/**"/>
+				<include name="media/**"/>
+				<include name="services/**"/>
+				<include name="src/**"/>
+				<include name="sql/**"/>
+				<include name="tmpl/**"/>
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
+
 		<copy todir="${tmp_dir}/packages/com_kunena/site" overwrite="true">
 			<filterchain refid="filter"/>
 			<fileset dir="${kunena.site}">
 				<include name="**/*.xml"/>
+				<include name="src/**"/>
+				<include name="template/**"/>
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
@@ -513,7 +524,9 @@
 	</target>
 
 	<target name="cleanup">
+<!--
 		<delete dir="${base.directory}" />
+-->
 	</target>
 
 	<target name="postflight">

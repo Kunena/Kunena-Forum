@@ -1622,6 +1622,10 @@ class KunenaConfig extends CMSObject
 
 	public $moderator_id;
 
+	/**
+	 * @var    boolean  enabling profiler into Kunena
+	 * @since  Kunena 6.0.0
+	 */
 	public $profiler = 0;
 
 	public $pickup_category;

@@ -286,8 +286,6 @@
 		<copy todir="${tmp_dir}/packages/plg_sampledata_kunena" overwrite="true">
 			<fileset dir="${kunena.plugins}/plg_sampledata_kunena"/>
 		</copy>
-
-
 		<copy todir="${tmp_dir}/packages/plg_finder_kunena" overwrite="true">
 			<filterchain refid="filter"/>
 			<fileset dir="${project_dir}/plugins/plg_finder_kunena">
@@ -379,10 +377,9 @@
 	<target name="build-language" depends="build">
 		<echo message="Building Language..." />
 
-		<!--<property name="languages" value="en-GB, af-ZA, ar-AA, az-AZ, bg-BG, bs-BA, ca-ES, ckb-IQ, cs-CZ, cy-GB, da-DK, de-DE, el-GR, eo-XX, es-ES, et-EE, eu-ES, fa-IR, fi-FI, fr-FR, he-IL, hi-IN, hr-HR, hu-HU, id-ID, it-IT, ja-JP, km-KH,
-		ko-KR, kz-KZ, lt-LT, lv-LV, mk-MK, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU, sk-SK, sl-SI, sq-AL, sr-RS, sr-YU, sv-SE, th-TH, tr-TR, ug-CN, uk-UA, ur-PK, vi-VN, zh-CN, zh-TW" />-->
-
-		<foreach param="tag" target="language-process">
+		<property name="languages" value="en-GB, af-ZA, ar-AA, az-AZ, bg-BG, bs-BA, ca-ES, ckb-IQ, cs-CZ, cy-GB, da-DK, de-DE, el-GR, eo-XX, es-ES, et-EE, eu-ES, fa-IR, fi-FI, fr-FR, he-IL, hi-IN, hr-HR, hu-HU, id-ID, it-IT, ja-JP, km-KH,
+		ko-KR, kz-KZ, lt-LT, lv-LV, mk-MK, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU, sk-SK, sl-SI, sq-AL, sr-RS, sr-YU, sv-SE, th-TH, tr-TR, ug-CN, uk-UA, ur-PK, vi-VN, zh-CN, zh-TW" />
+		<foreach list="${languages}" param="lang" target="language-process">
 			<!-- mapper is needed to return one part of the string, in this case part of directory name -->
 			<mapper type="glob" from="com_kunena_*.xml" to="*"/>
 			<fileset dir="${kunena.admin}/language/all/manifests">
@@ -393,39 +390,28 @@
 	</target>
 
 	<target name="language-process">
-		<copy file="${kunena.admin}/language/all/manifests/com_kunena_${tag}.xml" todir="${tmp_dir}/languages/${tag}" overwrite="true">
+		<copy file="${kunena.admin}/language/all/manifests/com_kunena_${lang}.xml" todir="${tmp_dir}/languages/${lang}" overwrite="true">
 			<filterchain refid="filter"/>
 		</copy>
-		<copy todir="${tmp_dir}/languages/${tag}/admin" includeemptydirs="false" overwrite="true">
+		<copy todir="${tmp_dir}/languages/${lang}/admin" includeemptydirs="false" overwrite="true">
 			<mapper type="flatten" />
 			<fileset dir="${kunena.admin}">
-				<include name="**/${tag}.*.ini"/>
+				<include name="**/${lang}.*.ini"/>
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/languages/${tag}/site" includeemptydirs="false" overwrite="true">
+		<copy todir="${tmp_dir}/languages/${lang}/site" includeemptydirs="false" overwrite="true">
 			<mapper type="flatten" />
 			<fileset dir="${kunena.site}">
-				<include name="**/${tag}.*.ini"/>
+				<include name="**/${lang}.*.ini"/>
 			</fileset>
 		</copy>
-		<if>
-			<equals arg1="${tag}" arg2="en-GB" />
-			<then>
-				<copy todir="${tmp_dir}/packages/com_kunena/language/${tag}">
-					<fileset dir="${tmp_dir}/languages/${tag}/admin" />
-				</copy>
-				<copy todir="${tmp_dir}/packages/com_kunena/site/language/${tag}">
-					<fileset dir="${tmp_dir}/languages/${tag}/site" />
-				</copy>
-			</then>
-			<else>
-				<move todir="${tmp_dir}/packages/com_kunena/language/${tag}">
-					<fileset dir="${tmp_dir}/languages/${tag}/admin">
-						<include name="*.install.ini"/>
-					</fileset>
-				</move>
-			</else>
-		</if>
+
+		<mkdir dir="${tmp_dir}/languages_extra/language" />
+		<!-- Process all prepared packages -->
+		<phingcall target="archive">
+			<property name="destination.file" value="${tmp_dir}/languages_extra/language/com_kunena_${lang}_v${xml.version}" />
+			<property name="base.directory" value="${tmp_dir}/languages/${lang}" />
+		</phingcall>
 	</target>
 
 	<target name="package" depends="build">
@@ -509,6 +495,12 @@
 		<phingcall target="archive">
 			<property name="destination.file" value="build/${cfg.prefix}${cfg.name}${str.fileversion}" />
 			<property name="base.directory" value="${build_dir}/distribution/" />
+		</phingcall>
+
+		<!-- Process all packages for language pack -->
+		<phingcall target="archive">
+			<property name="destination.file" value="build/pkg_kunena_languages${str.fileversion}" />
+			<property name="base.directory" value="${tmp_dir}/languages_extra" />
 		</phingcall>
 	</target>
 

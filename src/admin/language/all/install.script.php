@@ -56,19 +56,19 @@ class pkg_kunena_languagesInstallerScript
 		$app = Factory::getApplication();
 
 		// Do not install if Kunena doesn't exist.
-		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('4.0'))
+		if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.0'))
 		{
-			$app->enqueueMessage(sprintf('Kunena %s has not been installed, aborting!', '4.0'), 'notice');
+			$app->enqueueMessage(sprintf('Kunena %s has not been installed, aborting!', '6.0'), 'notice');
 
 			return false;
 		}
 
-		if (KunenaForum::isDev())
+		/*if (KunenaForum::isDev())
 		{
 			$app->enqueueMessage(sprintf('You have installed Kunena from GitHub, aborting!'), 'notice');
 
 			return false;
-		}
+		}*/
 
 		// Get list of languages to be installed.
 		$source    = $parent->getParent()->getPath('source') . '/language';

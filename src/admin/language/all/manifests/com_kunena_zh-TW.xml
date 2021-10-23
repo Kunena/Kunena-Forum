@@ -20,18 +20,6 @@
             <filename>zh-TW.com_kunena.models.ini</filename>
             <filename>zh-TW.com_kunena.sys.ini</filename>
             <filename>zh-TW.com_kunena.views.ini</filename>
-            <filename>zh-TW.plg_kunena_alphauserpoints.sys.ini</filename>
-            <filename>zh-TW.plg_kunena_altauserpoints.sys.ini</filename>
-            <filename>zh-TW.plg_kunena_community.sys.ini</filename>
-            <filename>zh-TW.plg_kunena_comprofiler.sys.ini</filename>
-            <filename>zh-TW.plg_kunena_easyblog.sys.ini</filename>
-            <filename>zh-TW.plg_kunena_easyprofile.sys.ini</filename>
-            <filename>zh-TW.plg_kunena_easysocial.sys.ini</filename>
-            <filename>zh-TW.plg_kunena_gravatar.sys.ini</filename>
-            <filename>zh-TW.plg_kunena_joomla.sys.ini</filename>
-            <filename>zh-TW.plg_kunena_kunena.sys.ini</filename>
-            <filename>zh-TW.plg_quickicon_kunena.sys.ini</filename>
-            <filename>zh-TW.plg_system_kunena.sys.ini</filename>
         </files>
         <files folder="site" target="language/zh-TW">
             <filename>zh-TW.com_kunena.controllers.ini</filename>
@@ -39,7 +27,7 @@
             <filename>zh-TW.com_kunena.models.ini</filename>
             <filename>zh-TW.com_kunena.templates.ini</filename>
             <filename>zh-TW.com_kunena.views.ini</filename>
-            <filename>zh-TW.kunena_tmpl_crypsis.ini</filename>
+            <filename>zh-TW.kunena_tmpl_aurelia.ini</filename>
         </files>
     </fileset>
 </extension>

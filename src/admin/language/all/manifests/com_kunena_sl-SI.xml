@@ -19,18 +19,6 @@
             <filename>sl-SI.com_kunena.models.ini</filename>
             <filename>sl-SI.com_kunena.sys.ini</filename>
             <filename>sl-SI.com_kunena.views.ini</filename>
-            <filename>sl-SI.plg_kunena_alphauserpoints.sys.ini</filename>
-            <filename>sl-SI.plg_kunena_altauserpoints.sys.ini</filename>
-            <filename>sl-SI.plg_kunena_community.sys.ini</filename>
-            <filename>sl-SI.plg_kunena_comprofiler.sys.ini</filename>
-            <filename>sl-SI.plg_kunena_easyblog.sys.ini</filename>
-            <filename>sl-SI.plg_kunena_easyprofile.sys.ini</filename>
-            <filename>sl-SI.plg_kunena_easysocial.sys.ini</filename>
-            <filename>sl-SI.plg_kunena_gravatar.sys.ini</filename>
-            <filename>sl-SI.plg_kunena_joomla.sys.ini</filename>
-            <filename>sl-SI.plg_kunena_kunena.sys.ini</filename>
-            <filename>sl-SI.plg_quickicon_kunena.sys.ini</filename>
-            <filename>sl-SI.plg_system_kunena.sys.ini</filename>
         </files>
         <files folder="site" target="language/sl-SI">
             <filename>sl-SI.com_kunena.controllers.ini</filename>
@@ -38,7 +26,7 @@
             <filename>sl-SI.com_kunena.models.ini</filename>
             <filename>sl-SI.com_kunena.templates.ini</filename>
             <filename>sl-SI.com_kunena.views.ini</filename>
-            <filename>sl-SI.kunena_tmpl_crypsis.ini</filename>
+            <filename>sl-SI.kunena_tmpl_aurelia.ini</filename>
         </files>
     </fileset>
 </extension>

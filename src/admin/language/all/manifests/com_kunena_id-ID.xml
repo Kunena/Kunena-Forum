@@ -20,18 +20,6 @@
             <filename>id-ID.com_kunena.models.ini</filename>
             <filename>id-ID.com_kunena.sys.ini</filename>
             <filename>id-ID.com_kunena.views.ini</filename>
-            <filename>id-ID.plg_kunena_alphauserpoints.sys.ini</filename>
-            <filename>id-ID.plg_kunena_altauserpoints.sys.ini</filename>
-            <filename>id-ID.plg_kunena_community.sys.ini</filename>
-            <filename>id-ID.plg_kunena_comprofiler.sys.ini</filename>
-            <filename>id-ID.plg_kunena_easyblog.sys.ini</filename>
-            <filename>id-ID.plg_kunena_easyprofile.sys.ini</filename>
-            <filename>id-ID.plg_kunena_easysocial.sys.ini</filename>
-            <filename>id-ID.plg_kunena_gravatar.sys.ini</filename>
-            <filename>id-ID.plg_kunena_joomla.sys.ini</filename>
-            <filename>id-ID.plg_kunena_kunena.sys.ini</filename>
-            <filename>id-ID.plg_quickicon_kunena.sys.ini</filename>
-            <filename>id-ID.plg_system_kunena.sys.ini</filename>
         </files>
         <files folder="site" target="language/id-ID">
             <filename>id-ID.com_kunena.controllers.ini</filename>
@@ -39,7 +27,7 @@
             <filename>id-ID.com_kunena.models.ini</filename>
             <filename>id-ID.com_kunena.templates.ini</filename>
             <filename>id-ID.com_kunena.views.ini</filename>
-            <filename>id-ID.kunena_tmpl_crypsis.ini</filename>
+            <filename>id-ID.kunena_tmpl_aurelia.ini</filename>
         </files>
     </fileset>
 </extension>

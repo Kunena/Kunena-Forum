@@ -20,18 +20,6 @@
             <filename>fa-IR.com_kunena.models.ini</filename>
             <filename>fa-IR.com_kunena.sys.ini</filename>
             <filename>fa-IR.com_kunena.views.ini</filename>
-            <filename>fa-IR.plg_kunena_alphauserpoints.sys.ini</filename>
-            <filename>fa-IR.plg_kunena_altauserpoints.sys.ini</filename>
-            <filename>fa-IR.plg_kunena_community.sys.ini</filename>
-            <filename>fa-IR.plg_kunena_comprofiler.sys.ini</filename>
-            <filename>fa-IR.plg_kunena_easyblog.sys.ini</filename>
-            <filename>fa-IR.plg_kunena_easyprofile.sys.ini</filename>
-            <filename>fa-IR.plg_kunena_easysocial.sys.ini</filename>
-            <filename>fa-IR.plg_kunena_gravatar.sys.ini</filename>
-            <filename>fa-IR.plg_kunena_joomla.sys.ini</filename>
-            <filename>fa-IR.plg_kunena_kunena.sys.ini</filename>
-            <filename>fa-IR.plg_quickicon_kunena.sys.ini</filename>
-            <filename>fa-IR.plg_system_kunena.sys.ini</filename>
         </files>
         <files folder="site" target="language/fa-IR">
             <filename>fa-IR.com_kunena.controllers.ini</filename>
@@ -39,7 +27,7 @@
             <filename>fa-IR.com_kunena.models.ini</filename>
             <filename>fa-IR.com_kunena.templates.ini</filename>
             <filename>fa-IR.com_kunena.views.ini</filename>
-            <filename>fa-IR.kunena_tmpl_crypsis.ini</filename>
+            <filename>fa-IR.kunena_tmpl_aurelia.ini</filename>
         </files>
     </fileset>
 </extension>

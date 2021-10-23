@@ -524,9 +524,7 @@
 	</target>
 
 	<target name="cleanup">
-<!--
 		<delete dir="${base.directory}" />
--->
 	</target>
 
 	<target name="postflight">

@@ -229,9 +229,9 @@ $wa->useScript('multiselect');
 :
 														echo 'class="changed"';
 														endif; ?>>
-														<td><?php echo Text::_('COM_KUNENA_A_PROFILER') ?></td>
+														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_PROFILER') ?></td>
 														<td><?php echo $this->lists ['profiler'] ?></td>
-														<td><?php echo Text::_('COM_KUNENA_A_PROFILER_DESC') ?></td>
+														<td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_PROFILER_DESC') ?></td>
 													</tr>
 													<tr <?php if ($this->config->fallbackEnglish != 1)
 :

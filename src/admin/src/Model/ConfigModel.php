@@ -1755,7 +1755,6 @@ class ConfigModel extends AdminModel
 		$options                       = [];
 		$options[]                     = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));
 		$options[]                     = HTMLHelper::_('select.option', '1', 'Kunena 1.x');
-		$lists['legacyUrls_desc']      = version_compare($lists['legacyUrls_version'], '2.0', '<') ? Text::_('COM_KUNENA_CFG_LEGACY_URLS_DESC_YES') : Text::_('COM_KUNENA_CFG_LEGACY_URLS_DESC_NO');
 		$lists['legacyUrls']           = HTMLHelper::_('select.genericlist', $options, 'cfg_legacyUrls', 'class="inputbox form-control"size="1"', 'value', 'text', $config->legacyUrls);
 		$lists['attachmentProtection'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_attachmentProtection', 'class="inputbox form-control"size="1"', 'value', 'text', $config->attachmentProtection);
 

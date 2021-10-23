@@ -286,7 +286,7 @@ $wa->useScript('multiselect');
 														endif; ?>>
 														<td><?php echo Text::_('COM_KUNENA_CFG_LEGACY_URLS') ?></td>
 														<td><?php echo $this->lists ['legacyUrls'] ?></td>
-														<td><?php echo Text::sprintf('COM_KUNENA_CFG_LEGACY_URLS_DESC', $this->lists['legacyUrls_version'], $this->lists['legacyUrls_desc']) ?></td>
+														<td><?php echo Text::sprintf('COM_KUNENA_CFG_LEGACY_URLS_DESC', $this->lists['legacyUrls_version']) ?></td>
 													</tr>
 													<tr <?php if ($this->config->sefRedirect != 1)
 :

@@ -185,12 +185,12 @@
 
 		<copy todir="${tmp_dir}/packages/com_kunena">
 			<fileset dir="${kunena.admin}">
-				<exclude name="language/**"/>
+				<include name="language/en-GB/*.ini"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/packages/com_kunena/site">
 			<fileset dir="${kunena.site}">
-				<exclude name="language/**"/>
+				<include name="language/en-GB/*.ini"/>
 				<exclude name="template/**/params.ini"/>
 			</fileset>
 		</copy>

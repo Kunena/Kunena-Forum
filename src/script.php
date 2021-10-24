@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
@@ -57,7 +58,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		],
 		'Joomla!' => [
 			'4.0' => '4.0.3',
-			'0'    => '4.0.3', // Preferred version
+			'0'   => '4.0.3', // Preferred version
 		],
 	];
 
@@ -117,327 +118,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	}
 
 	/**
-	 * Method to install the component
-	 *
-	 * @param   ComponentAdapter  $parent  Installerobject
-	 *
-	 * @return void
-	 *
-	 * @since Kunena 6.0
-	 */
-	public function install($parent)
-	{
-		$db    = Factory::getDbo();
-
-		$query = $db->getQuery(true);
-
-		// Check first if one of the template items is already in he database
-		$query->select($db->quoteName(array('template_id')))
-				->from($db->quoteName('#__mail_templates'))
-				->where($db->quoteName('template_id') . " = " . $db->quote('com_kunena.reply'));
-		$db->setQuery($query);
-
-		$templateExist = $db->loadResult();
-
-		if (!$templateExist)
-		{
-			$query = $db->getQuery(true);
-
-			$values = [
-				$db->quote('com_kunena.reply'),
-				$db->quote('com_kunena'),
-				$db->quote(''),
-				$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLY_SUBJECT')),
-				$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
-				$db->quote(''),
-				$db->quote(''),
-				$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
-			];
-
-			$values2 = [
-				$db->quote('com_kunena.replymoderator'),
-				$db->quote('com_kunena'),
-				$db->quote(''),
-				$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT')),
-				$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
-				$db->quote(''),
-				$db->quote(''),
-				$db->quote('{tags":["mail", "subject", "message", "messageUrl", "once"]}'),
-			];
-
-			$values3 = [
-				$db->quote('com_kunena.report'),
-				$db->quote('com_kunena'),
-				$db->quote(''),
-				$db->quote(text::_('COM_KUNENA_SENDMAIL_REPORT_SUBJECT')),
-				$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
-				$db->quote(''),
-				$db->quote(''),
-				$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
-			];
-
-			$query->insert($db->quoteName('#__mail_templates'))
-				->columns(
-					[
-						$db->quoteName('template_id'),
-						$db->quoteName('extension'),
-						$db->quoteName('language'),
-						$db->quoteName('subject'),
-						$db->quoteName('body'),
-						$db->quoteName('htmlbody'),
-						$db->quoteName('attachments'),
-						$db->quoteName('params'),
-					]
-				)
-				->values(implode(', ', $values))
-				->values(implode(', ', $values2))
-				->values(implode(', ', $values3));
-			$db->setQuery($query);
-
-			$db->execute();
-		}
-
-		// Notice $parent->getParent() returns JInstaller object
-		$parent->getParent()->setRedirectUrl('index.php?option=com_kunena');
-	}
-
-	/**
-	 * Method to uninstall the component
-	 *
-	 * @param   ComponentAdapter  $parent  Installerobject
-	 *
-	 * @return void
-	 *
-	 * @since Kunena 6.0
-	 */
-	public function uninstall($parent)
-	{
-	}
-
-	/**
-	 * method to update the component
-	 *
-	 * @param   ComponentAdapter  $parent  Installerobject
-	 *
-	 * @return void
-	 *
-	 * @since Kunena 6.0
-	 */
-	public function update($parent)
-	{
-		if (version_compare($this->oldRelease, '6.0.0', '<'))
-		{
-			// Remove integrated player classes
-			$this->deleteFiles[]   = '/administrator/components/com_kunena/models/fields/player.php';
-			$this->deleteFolders[] = '/components/com_kunena/helpers/player';
-
-			// Remove old SQL files
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.0.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.1.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.2.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.3.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.4.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.0.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.1.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.2.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.3.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.4.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.4.0.sql';
-			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.5.0.sql';
-		}
-	}
-
-	/**
-	 * method to run after an install/update/uninstall method
-	 *
-	 * @param   string            $type    'install', 'update' or 'discover_install'
-	 * @param   ComponentAdapter  $parent  Installer object
-	 *
-	 * @return  boolean  false will terminate the installation
-	 *
-	 * @throws KunenaInstallerException
-	 * @since Kunena 6.0
-	 */
-	public function postflight($type, $parent)
-	{
-		$this->fixUpdateSite();
-
-		// Clear Joomla system cache.
-		$cache = Factory::getCache();
-		$cache->clean('_system');
-
-		// Remove all compiled files from APC cache.
-		if (function_exists('apc_clear_cache'))
-		{
-			@apc_clear_cache();
-		}
-
-		$db    = Factory::getDbo();
-
-		// Get installed Kunena version.
-		$table = $db->getPrefix() . 'kunena_version';
-
-		$db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
-		$upgrade = 0;
-
-		if ($db->loadResult() == $table)
-		{
-			$db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
-			$installed = $db->loadResult();
-
-			if (!empty($installed))
-			{
-				if (version_compare($installed, '5.2.99', '<'))
-				{
-					$query = "ALTER TABLE `#__kunena_version` ADD `sampleData` TINYINT(4) NOT NULL default '0' AFTER `versionname`;";
-					$db->setQuery($query);
-
-					$db->execute();
-
-					$upgrade = 1;
-				}
-			}
-		}
-
-		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
-		{
-			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-
-			$manifest    = simplexml_load_file($file);
-			$version     = (string) $manifest->version;
-			$build       = (string) $manifest->version;
-			$date        = (string) $manifest->creationDate;
-			$versionname = (string) $manifest->versionname;
-			$installdate = Factory::getDate('now');
-			$state = '';
-			$sampleData = 0;
-			if ($upgrade == 1)
-			{
-				$state = $installed;
-				$sampleData = 1;
-			}
-
-			$query = $db->getQuery(true);
-
-			$values = [
-				$db->quote($version),
-				$db->quote($build),
-				$db->quote($date),
-				$db->quote($versionname),
-				$db->quote($sampleData),
-				$db->quote($installdate),
-				$db->quote($state),
-			];
-
-			$query->insert($db->quoteName('#__kunena_version'))
-				->columns(
-					[
-						$db->quoteName('version'),
-						$db->quoteName('build'),
-						$db->quoteName('versiondate'),
-						$db->quoteName('versionname'),
-						$db->quoteName('sampleData'),
-						$db->quoteName('installdate'),
-						$db->quoteName('state'),
-					]
-				)
-				->values(implode(', ', $values));
-			$db->setQuery($query);
-
-			$db->execute();
-		}
-
-		$this->addDashboardMenu('kunena', 'kunena');
-		$app = Factory::getApplication();
-
-		// Delete the tmp install directory
-		foreach (glob($app->get('tmp_path') . '/install_*') as $dir)
-		{
-			if (is_dir($dir))
-			{
-				Folder::delete($dir);
-			}
-		}
-
-		$version = '';
-		$date    = '';
-		$file    = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-
-		if (file_exists($file))
-		{
-			$manifest = simplexml_load_file($file);
-			$version  = (string) $manifest->version;
-			$date     = (string) $manifest->creationDate;
-		}
-		else
-		{
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true);
-			$query->select('version')->from('#__kunena_version')->order('id');
-			$query->setLimit(1);
-			$db->setQuery($query);
-
-			$version = $db->loadResult();
-			$date    = (string) $version->versiondate;
-		}
-
-		$tmpfile = $app->get('tmp_path') . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
-
-		if (is_file($tmpfile))
-		{
-			File::delete($app->get('tmp_path') . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param   string  $parent  parent
-	 *
-	 * @return void
-	 *
-	 * @since Kunena
-	 */
-	public function discover_install($parent)
-	{
-		return self::install($parent);
-	}
-
-	/**
-	 * @param   string  $uri  uri
-	 *
-	 * @return string
-	 *
-	 * @since version
-	 */
-	public function makeRoute($uri)
-	{
-		return Route::_($uri, false);
-	}
-
-	/**
-	 * @param   string  $group    group
-	 * @param   string  $element  element
-	 *
-	 * @return boolean
-	 *
-	 * @since version
-	 */
-	public function enablePlugin($group, $element)
-	{
-		$plugin = Table::getInstance('extension');
-
-		if (!$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element]))
-		{
-			return false;
-		}
-
-		$plugin->enabled = 1;
-
-		return $plugin->store();
-	}
-
-	/**
 	 * @param   string  $version  version
 	 *
 	 * @return boolean|integer
@@ -455,22 +135,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$pass &= $this->checkKunena($version);
 
 		return $pass;
-	}
-
-	// Internal functions
-
-	/**
-	 *  On some hosting the PHP version given with the version of the packet in the distribution
-	 *
-	 * @return string
-	 *
-	 * @since Kunena
-	 */
-	protected function getCleanPhpVersion()
-	{
-		$version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION;
-
-		return $version;
 	}
 
 	/**
@@ -523,6 +187,20 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		);
 
 		return false;
+	}
+
+	/**
+	 *  On some hosting the PHP version given with the version of the packet in the distribution
+	 *
+	 * @return string
+	 *
+	 * @since Kunena
+	 */
+	protected function getCleanPhpVersion()
+	{
+		$version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION;
+
+		return $version;
 	}
 
 	/**
@@ -614,9 +292,210 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		// Don't allow to upgrade before he version 5.1.0
 		if (version_compare($installed, '5.1.0', '<'))
 		{
-			$app->enqueueMessage('You should not updgrade Kunena from the version '.$installed.', you can do the upgrade only since 5.1.0', 'notice');
+			$app->enqueueMessage('You should not updgrade Kunena from the version ' . $installed . ', you can do the upgrade only since 5.1.0', 'notice');
 
 			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Method to uninstall the component
+	 *
+	 * @param   ComponentAdapter  $parent  Installerobject
+	 *
+	 * @return void
+	 *
+	 * @since Kunena 6.0
+	 */
+	public function uninstall($parent)
+	{
+	}
+
+	/**
+	 * method to update the component
+	 *
+	 * @param   ComponentAdapter  $parent  Installerobject
+	 *
+	 * @return void
+	 *
+	 * @since Kunena 6.0
+	 */
+	public function update($parent)
+	{
+		if (version_compare($this->oldRelease, '6.0.0', '<'))
+		{
+			// Remove integrated player classes
+			$this->deleteFiles[]   = '/administrator/components/com_kunena/models/fields/player.php';
+			$this->deleteFolders[] = '/components/com_kunena/helpers/player';
+
+			// Remove old SQL files
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.0.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.1.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.2.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.3.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/4.5.4.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.0.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.1.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.2.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.3.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.4.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.4.0.sql';
+			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.5.0.sql';
+		}
+	}
+
+	// Internal functions
+
+	/**
+	 * method to run after an install/update/uninstall method
+	 *
+	 * @param   string            $type    'install', 'update' or 'discover_install'
+	 * @param   ComponentAdapter  $parent  Installer object
+	 *
+	 * @return  boolean  false will terminate the installation
+	 *
+	 * @throws KunenaInstallerException
+	 * @since Kunena 6.0
+	 */
+	public function postflight($type, $parent)
+	{
+		$this->fixUpdateSite();
+
+		// Clear Joomla system cache.
+		$cache = Factory::getCache();
+		$cache->clean('_system');
+
+		// Remove all compiled files from APC cache.
+		if (function_exists('apc_clear_cache'))
+		{
+			@apc_clear_cache();
+		}
+
+		$db = Factory::getDbo();
+
+		// Get installed Kunena version.
+		$table = $db->getPrefix() . 'kunena_version';
+
+		$db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
+		$upgrade = 0;
+
+		if ($db->loadResult() == $table)
+		{
+			$db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
+			$installed = $db->loadResult();
+
+			if (!empty($installed))
+			{
+				if (version_compare($installed, '5.2.99', '<'))
+				{
+					$query = "ALTER TABLE `#__kunena_version` ADD `sampleData` TINYINT(4) NOT NULL default '0' AFTER `versionname`;";
+					$db->setQuery($query);
+
+					$db->execute();
+
+					$upgrade = 1;
+				}
+			}
+		}
+
+		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
+		{
+			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+			$manifest    = simplexml_load_file($file);
+			$version     = (string) $manifest->version;
+			$build       = (string) $manifest->version;
+			$date        = (string) $manifest->creationDate;
+			$versionname = (string) $manifest->versionname;
+			$installdate = Factory::getDate('now');
+			$state       = '';
+			$sampleData  = 0;
+
+			if ($upgrade == 1)
+			{
+				$state      = $installed;
+				$sampleData = 1;
+			}
+
+			$query = $db->getQuery(true);
+
+			$values = [
+				$db->quote($version),
+				$db->quote($build),
+				$db->quote($date),
+				$db->quote($versionname),
+				$db->quote($sampleData),
+				$db->quote($installdate),
+				$db->quote($state),
+			];
+
+			$query->insert($db->quoteName('#__kunena_version'))
+				->columns(
+					[
+						$db->quoteName('version'),
+						$db->quoteName('build'),
+						$db->quoteName('versiondate'),
+						$db->quoteName('versionname'),
+						$db->quoteName('sampleData'),
+						$db->quoteName('installdate'),
+						$db->quoteName('state'),
+					]
+				)
+				->values(implode(', ', $values));
+			$db->setQuery($query);
+
+			$db->execute();
+		}
+
+		$this->addDashboardMenu('kunena', 'kunena');
+		$app = Factory::getApplication();
+
+		// Delete the tmp install directory
+		foreach (glob($app->get('tmp_path') . '/install_*') as $dir)
+		{
+			if (is_dir($dir))
+			{
+				Folder::delete($dir);
+			}
+		}
+
+		$version = '';
+		$date    = '';
+		$file    = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+		if (file_exists($file))
+		{
+			$manifest = simplexml_load_file($file);
+			$version  = (string) $manifest->version;
+			$date     = (string) $manifest->creationDate;
+		}
+		else
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('version')->from('#__kunena_version')->order('id');
+			$query->setLimit(1);
+			$db->setQuery($query);
+
+			$version = $db->loadResult();
+
+			if (!empty($version->versiondate))
+			{
+				$date = (string) $version->versiondate;
+			}
+			else
+			{
+				$date = new Date('now');
+			}
+		}
+
+		$tmpfile = $app->get('tmp_path') . '/pkg_kunena_v' . $version . '_' . $date . '.zip';
+
+		if (is_file($tmpfile))
+		{
+			File::delete($app->get('tmp_path') . '/pkg_kunena_v' . $version . '_' . $date . '.zip');
 		}
 
 		return true;
@@ -685,5 +564,136 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$query = $db->getQuery(true)->delete($db->quoteName('#__update_sites_extensions'))->where($db->quoteName('update_site_id') . 'IN (' . $ids . ')');
 		$db->setQuery($query);
 		$db->execute();
+	}
+
+	/**
+	 * @param   string  $parent  parent
+	 *
+	 * @return void
+	 *
+	 * @since Kunena
+	 */
+	public function discover_install($parent)
+	{
+		return self::install($parent);
+	}
+
+	/**
+	 * Method to install the component
+	 *
+	 * @param   ComponentAdapter  $parent  Installerobject
+	 *
+	 * @return void
+	 *
+	 * @since Kunena 6.0
+	 */
+	public function install($parent)
+	{
+		$db = Factory::getDbo();
+
+		$query = $db->getQuery(true);
+
+		// Check first if one of the template items is already in he database
+		$query->select($db->quoteName(array('template_id')))
+			->from($db->quoteName('#__mail_templates'))
+			->where($db->quoteName('template_id') . " = " . $db->quote('com_kunena.reply'));
+		$db->setQuery($query);
+
+		$templateExist = $db->loadResult();
+
+		if (!$templateExist)
+		{
+			$query = $db->getQuery(true);
+
+			$values = [
+				$db->quote('com_kunena.reply'),
+				$db->quote('com_kunena'),
+				$db->quote(''),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLY_SUBJECT')),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(''),
+				$db->quote(''),
+				$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
+			];
+
+			$values2 = [
+				$db->quote('com_kunena.replymoderator'),
+				$db->quote('com_kunena'),
+				$db->quote(''),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT')),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(''),
+				$db->quote(''),
+				$db->quote('{tags":["mail", "subject", "message", "messageUrl", "once"]}'),
+			];
+
+			$values3 = [
+				$db->quote('com_kunena.report'),
+				$db->quote('com_kunena'),
+				$db->quote(''),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_REPORT_SUBJECT')),
+				$db->quote(text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(''),
+				$db->quote(''),
+				$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
+			];
+
+			$query->insert($db->quoteName('#__mail_templates'))
+				->columns(
+					[
+						$db->quoteName('template_id'),
+						$db->quoteName('extension'),
+						$db->quoteName('language'),
+						$db->quoteName('subject'),
+						$db->quoteName('body'),
+						$db->quoteName('htmlbody'),
+						$db->quoteName('attachments'),
+						$db->quoteName('params'),
+					]
+				)
+				->values(implode(', ', $values))
+				->values(implode(', ', $values2))
+				->values(implode(', ', $values3));
+			$db->setQuery($query);
+
+			$db->execute();
+		}
+
+		// Notice $parent->getParent() returns JInstaller object
+		$parent->getParent()->setRedirectUrl('index.php?option=com_kunena');
+	}
+
+	/**
+	 * @param   string  $uri  uri
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
+	public function makeRoute($uri)
+	{
+		return Route::_($uri, false);
+	}
+
+	/**
+	 * @param   string  $group    group
+	 * @param   string  $element  element
+	 *
+	 * @return boolean
+	 *
+	 * @since version
+	 */
+	public function enablePlugin($group, $element)
+	{
+		$plugin = Table::getInstance('extension');
+
+		if (!$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element]))
+		{
+			return false;
+		}
+
+		$plugin->enabled = 1;
+
+		return $plugin->store();
 	}
 }

@@ -1542,7 +1542,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		if (!$default)
 		{
 			$tag_rule = $bbcode->getRule($name);
-			$default  = $tag_rule ['default'] ['_default'];
+
+			if (isset($tag_rule ['default']))
+			{
+				$default = $tag_rule ['default'] ['_default'];
+			}
+			else
+			{
+				$default = $tag_rule ['default'] = array();
+			}
 		}
 
 		if ($action == BBCode::BBCODE_CHECK)
@@ -2147,11 +2155,22 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		else
 		{
 			// To support old bbcode tags used before Kunena 5.2.x
-			$message  = KunenaMessageHelper::get($params['post']);
+			if (isset($params['post']))
+			{
+				$message = KunenaMessageHelper::get($params['post']);
+			}
+
 			$username = $quote_params['0'];
 		}
 
-		$msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getUrl(null, false);
+		if (isset($message))
+		{
+			$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
+		}
+		else
+		{
+			$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port'));
+		}
 
 		$layout = KunenaLayout::factory('BBCode/Quote');
 

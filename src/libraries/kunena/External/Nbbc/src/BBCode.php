@@ -2219,6 +2219,13 @@ REGEX;
         $state = $this->lexer->SaveState();
 
         $end_tag = $this->lexer->tagmarker."/".$tag_name.$this->lexer->end_tagmarker;
+        /**
+         * Start of hack by Kunena team, see issue #8292
+         */
+        $end_tag_params = '';
+        /**
+         * End of hack by Kunena team, see issue #8292
+         */
 
         if ($this->debug) {
             Debugger::debug("<b>Internal_ProcessVerbatimTag:</b> tag <tt>[".htmlspecialchars($tag_name)

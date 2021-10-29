@@ -12,9 +12,8 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      ... # build your asset first
-
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Phing Build
         uses: phingofficial/phing-github-action@main
         with:

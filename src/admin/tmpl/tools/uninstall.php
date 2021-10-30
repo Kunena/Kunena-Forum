@@ -71,8 +71,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 							<tr>
 								<td></td>
 								<td>
-									<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-											data-bs-target="#modalconfirmuninstall"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
+									<button type="submit" class="btn btn-outline-danger" 
+											><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 
 									<div class="modal fade" id="modalconfirmuninstall" tabindex="-1" role="dialog"
 										 aria-labelledby="modalconfirmuninstalLabel" aria-hidden="true">

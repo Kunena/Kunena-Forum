@@ -975,7 +975,7 @@ class ToolsController extends FormController
 
 		$isRoot = $user->authorise('core.admin');
 
-		if ($error!==false && $isRoot)
+		if ($error===false && $isRoot)
 		{
 			$this->app->setUserState('com_kunena.uninstall.allowed', true);
 

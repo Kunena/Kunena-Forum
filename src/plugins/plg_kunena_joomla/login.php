@@ -63,8 +63,16 @@ class KunenaLoginJoomla
 			$credentials['secretkey'] = $secretkey;
 		}
 
-		$options = ['remember' => $rememberme];
-		$error   = Factory::getApplication()->login($credentials, $options);
+		$options = ['remember' => $rememberme, 'silent'=> false];
+
+		try
+		{
+			$error   = Factory::getApplication()->login($credentials, $options);
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
 
 		return is_bool($error) ? '' : $error;
 	}

@@ -157,6 +157,42 @@ class KunenaBBCode extends \Nbbc\BBCode
 		PluginHelper::importPlugin('kunena');
 		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
 	}
+	
+	/**
+	 * @param   bool  $enable
+	 *
+	 * @return void
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function SetDetectURLs($enable = true)
+	{
+	}
+	
+	/**
+	 * @param   mixed  $url_pattern  mixed
+	 *
+	 * @return void
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function SetURLPattern($url_pattern): void
+	{
+	}
+	
+	/**
+	 * @param $enable
+	 *
+	 * @return void
+	 * @see     BBCode::SetEnableSmileys()
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function SetURLTarget($enable)
+	{
+	}
 
 	/**
 	 * Get global instance from BBCode parser.

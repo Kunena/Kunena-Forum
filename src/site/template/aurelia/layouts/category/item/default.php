@@ -29,7 +29,7 @@ $this->addStyleSheet('rating.css');
     <div class="clearfix"></div>
     <br>
     <h1 class="alert alert-info shadow-lg rounded">
-        <a class="close" data-dismiss="alert" href="#"></a>
+        <a class="close" data-bs-dismiss="alert" href="#"></a>
 		<?php echo $this->category->displayField('headerdesc'); ?>
     </h1>
 <?php endif; ?>

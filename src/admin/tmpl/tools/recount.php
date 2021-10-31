@@ -82,7 +82,7 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\te
 	 aria-hidden="true"
 	 data-backdrop="static" data-keyboard="false">
 	<div class="modal-header">
-		<button type="button" class="close recount-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<button type="button" class="close recount-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3></h3>
 	</div>
 	<div class="modal-body">
@@ -93,7 +93,7 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\te
 		<div class="modal-error"></div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn recount-close" data-dismiss="modal"
+		<button class="btn recount-close" data-bs-dismiss="modal"
 				aria-hidden="true"><?php echo Text::_('COM_KUNENA_MODAL_CLOSE'); ?></button>
 	</div>
 </div>

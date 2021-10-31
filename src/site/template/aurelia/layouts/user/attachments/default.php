@@ -141,7 +141,7 @@ $attachments = $this->attachments;
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"
+                                                <button type="button" class="close" data-bs-dismiss="modal"
                                                         aria-label="Close">
                                                     <span aria-hidden="true">&times;</span></button>
                                                 <h4 class="modal-title"
@@ -153,8 +153,8 @@ $attachments = $this->attachments;
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-outline-primary border"
                                                         onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','delfile');"
-                                                        data-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
-                                                <button type="button" data-dismiss="modal"
+                                                        data-bs-dismiss="modal"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
+                                                <button type="button" data-bs-dismiss="modal"
                                                         class="btn btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
                                             </div>
                                         </div>
@@ -183,7 +183,7 @@ $attachments = $this->attachments;
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"
                             id="myModalLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
@@ -194,7 +194,7 @@ $attachments = $this->attachments;
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-primary border"
                                 id="modaldeteleallsubmit"><?php echo Text::_('COM_KUNENA_FILES_CONFIRM_DELETE_MODAL_BUTTON') ?></button>
-                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"
                         ><?php echo Text::_('COM_KUNENA_FILES_CANCEL_DELETE_MODAL_BUTTON') ?></button>
                     </div>
                 </div>

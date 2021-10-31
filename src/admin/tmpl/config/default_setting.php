@@ -27,14 +27,14 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 				<?php echo HTMLHelper::_('form.token') ?>
 
 				<div class="modal-header">
-					<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>
+					<button type="button" role="presentation" class="close" data-bs-dismiss="modal">x</button>
 					<h3><?php echo Text::_('COM_KUNENA_CONFIG_MODAL_TITLE'); ?></h3>
 				</div>
 				<div class="modal-body span11">
 					<p><?php echo Text::_('COM_KUNENA_CONFIG_MODAL_DESCRIPTION'); ?></p>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-outline-primary" type="button" data-dismiss="modal">
+					<button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
 						<?php echo Text::_('JCANCEL'); ?>
 					</button>
 					<button class="btn btn-outline-primary" type="submit"

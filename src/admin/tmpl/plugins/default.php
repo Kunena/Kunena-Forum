@@ -200,13 +200,12 @@ if ($saveOrder)
 													'width'       => '800px',
 													'bodyHeight'  => '70',
 													'modalWidth'  => '80',
-													'closeButton' => false,
+													'closeButton' => true,
 													'backdrop'    => 'static',
 													'keyboard'    => false,
-													'footer'      => '<button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-hidden="true"'
-														. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#closeBtn\').click();">'
-														. Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
-														. '<button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-hidden="true"'
+													'footer'      => '<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">
+		                                                ' . Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
+														. '<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" aria-hidden="true"'
 														. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#saveBtn\').click();">'
 														. Text::_("JSAVE") . '</button>'
 														. '<button type="button" class="btn btn-outline-success" aria-hidden="true" onclick="jQuery(\'#plugin' . $item->extension_id

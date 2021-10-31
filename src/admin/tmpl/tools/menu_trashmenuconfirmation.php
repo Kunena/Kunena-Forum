@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" role="presentation" class="close" data-dismiss="modal">x</button>
+				<button type="button" role="presentation" class="close" data-bs-dismiss="modal">x</button>
 				<h3><?php echo Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH_MODAL_TITLE'); ?></h3>
 			</div>
 			<div class="modal-body span11">
@@ -29,7 +29,7 @@ use Joomla\CMS\Language\Text;
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn" type="button" data-dismiss="modal">
+				<button class="btn" type="button" data-bs-dismiss="modal">
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-warning" type="submit" onclick="Joomla.submitbutton('trashmenu');">

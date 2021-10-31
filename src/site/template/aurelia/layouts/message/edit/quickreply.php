@@ -78,7 +78,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                     <h3 class="modal-title">
 						<?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
                     </h3>
-                    <button type="button" class="close kreply-cancel" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close kreply-cancel" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -221,7 +221,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                             <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel"
                                    value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>"
                                    title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>"
-                                   data-dismiss="modal" aria-hidden="true"/>
+                                   data-bs-dismiss="modal" aria-hidden="true"/>
                         </div>
                         <input type="hidden" id="kurl_emojis" name="kurl_emojis"
                                value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
@@ -266,7 +266,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                         <h3 class="card-title">
 							<?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
                         </h3>
-                        <button type="button" class="close kreply-cancel" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close kreply-cancel" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -385,7 +385,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                         <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel"
                                value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>"
                                title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>"
-                               data-dismiss="modal" aria-hidden="true"/>
+                               data-bs-dismiss="modal" aria-hidden="true"/>
                     </div>
                     <input type="hidden" id="kurl_emojis" name="kurl_emojis"
                            value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>

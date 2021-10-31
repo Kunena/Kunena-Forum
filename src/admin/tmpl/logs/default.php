@@ -321,7 +321,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                                     Kunena <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
 
                                                     ID:<?php echo $item->id; ?></h5>
-                                                <button type="button" class="close" data-dismiss="modal"
+                                                <button type="button" class="close" data-bs-dismiss="modal"
                                                         aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -341,7 +341,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                                             class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
                                                 </a>
                                                 <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+                                                        data-bs-dismiss="modal"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
                                             </div>
                                         </div>
                                     </div>

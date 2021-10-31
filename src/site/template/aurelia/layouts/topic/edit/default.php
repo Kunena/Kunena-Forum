@@ -165,14 +165,14 @@ Text::script('COM_KUNENA_POLL_TITLE');
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">×</button>
                     <h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_TITLE'); ?></h3>
                 </div>
                 <div class="modal-body">
                     <p><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_DESC'); ?></p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline-primary border" data-dismiss="modal"
+                    <button class="btn btn-outline-primary border" data-bs-dismiss="modal"
                             aria-hidden="true"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_CLOSE'); ?></button>
                     <button class="btn btn-outline-primary border"
                             id="modal_confirm_erase"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_BUTTON_REPLACE'); ?></button>

@@ -135,7 +135,7 @@ if ($this->show_title && !empty($this->poll->polltimetolive))
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+								<button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;
 								</button>
 								<h3>
 									<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?>
@@ -145,7 +145,7 @@ if ($this->show_title && !empty($this->poll->polltimetolive))
 								<p><?php echo Text::_('COM_KUNENA_TOPIC_MODAL_DESC_VOTE_RESET'); ?></p>
 							</div>
 							<div class="modal-footer">
-								<a data-dismiss="modal" aria-hidden="true" class="btn btn-outline-primary border">
+								<a data-bs-dismiss="modal" aria-hidden="true" class="btn btn-outline-primary border">
 									<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_CLOSE_RESETVOTE'); ?>
 								</a>
 								<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->category->id}&id={$this->topic->id}&pollid={$this->poll->id}&task=resetvotes&" . Session::getFormToken() . '=1') ?>"

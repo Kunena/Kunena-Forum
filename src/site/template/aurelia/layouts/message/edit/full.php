@@ -196,7 +196,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 			?>
             <input type="reset" name="reset" class="btn btn-outline-primary border"
                    value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>"
-                   title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-dismiss="modal"
+                   title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal"
                    aria-hidden="true"/>
         </div>
         <input type="hidden" id="kurl_emojis" name="kurl_emojis"

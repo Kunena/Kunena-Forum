@@ -81,7 +81,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 												<div class="modal-header">
 													<h5 class="modal-title"
 														id="modalconfirmuninstalLabel"><?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_TITLE'); ?></h5>
-													<button type="button" class="close" data-dismiss="modal"
+													<button type="button" class="close" data-bs-dismiss="modal"
 															aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>
@@ -91,7 +91,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary"
-															data-dismiss="modal"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_CLOSE') ?></button>
+															data-bs-dismiss="modal"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_CLOSE') ?></button>
 													<button type="submit"
 															class="btn btn-outline-danger"><?php echo Text::_('COM_KUNENA_TOOLS_BUTTON_UNINSTALL_PROCESS') ?></button>
 												</div>

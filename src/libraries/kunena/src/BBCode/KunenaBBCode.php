@@ -452,6 +452,8 @@ class KunenaBBCode extends \Nbbc\BBCode
 	}
 
 	/**
+	 * Used for Smart Auto Linking, it loads the content of the url given to search the title from it
+	 * 
 	 * @param   string  $url  url
 	 *
 	 * @return  string|void
@@ -460,25 +462,23 @@ class KunenaBBCode extends \Nbbc\BBCode
 	 */
 	public function get_title(string $url): string
 	{
-		try
+		$str = @file_get_contents($url);
+
+		if ($str !==false)
 		{
-			$str = @file_get_contents($url);
-		}
-		catch (Exception $e)
-		{
-			return '';
+			if (\strlen($str) > 0)
+			{
+				// Supports line breaks inside <title>
+				$str = trim(preg_replace('/\s+/', ' ', $str));
+
+				// Ignore case
+				preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title);
+
+				return $title[1];
+			}
 		}
 
-		if (\strlen($str) > 0)
-		{
-			// Supports line breaks inside <title>
-			$str = trim(preg_replace('/\s+/', ' ', $str));
-
-			// Ignore case
-			preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title);
-
-			return $title[1];
-		}
+		return '';
 	}
 
 	/**
@@ -1437,13 +1437,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		$smart = KunenaConfig::getInstance()->smartLinking;
 
-		if ($smart && $bbcode->get_title($url))
+		if ($smart)
 		{
 			$content = $bbcode->get_title($url);
-		}
-		else
-		{
-			$content = $url;
+
+			if (!isset($content))
+			{
+				$content = $url;
+			}
 		}
 
 		$layout = KunenaLayout::factory('BBCode/URL');

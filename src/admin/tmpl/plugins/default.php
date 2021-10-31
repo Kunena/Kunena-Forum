@@ -188,14 +188,14 @@ if ($saveOrder)
                                             <a href="#plugin<?php echo $item->extension_id; ?>Modal"
                                                data-bs-toggle="modal"
                                                id="title-><?php echo $item->extension_id; ?>">
-												<?php echo $item->name; ?>
+												<?php echo Text::_($item->name); ?>
                                             </a>
 											<?php echo HTMLHelper::_(
 												'bootstrap.renderModal',
 												'plugin' . $item->extension_id . 'Modal',
 												[
 													'url'         => Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
-													'title'       => $item->name,
+													'title'       => Text::_($item->name),
 													'height'      => '400',
 													'width'       => '800px',
 													'bodyHeight'  => '70',

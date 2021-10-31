@@ -162,6 +162,19 @@ class HtmlView extends BaseHtmlView
 		$this->state      = $this->get('state');
 		$this->pagination = $this->get('Pagination');
 
+		$lang = Factory::getApplication()->getLanguage();
+
+		foreach ($this->items as $item)
+		{
+			$source    = JPATH_PLUGINS . '/' . $item->folder . '/' . $item->element;
+			$extension = 'plg_' . $item->folder . '_' . $item->element;
+			$lang->load($extension . '.sys', JPATH_ADMINISTRATOR, null, false, false)
+			|| $lang->load($extension . '.sys', $source, null, false, false)
+			|| $lang->load($extension . '.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
+			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false);
+			$item->name = Text::_($item->name);
+		}
+
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 

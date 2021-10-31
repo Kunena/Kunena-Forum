@@ -157,36 +157,22 @@ class KunenaBBCode extends \Nbbc\BBCode
 		PluginHelper::importPlugin('kunena');
 		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
 	}
-	
-	/**
-	 * @param   bool  $enable
-	 *
-	 * @return void
-	 * @see     BBCode::SetEnableSmileys()
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function SetDetectURLs($enable = true)
-	{
-	}
-	
+
 	/**
 	 * @param   mixed  $url_pattern  mixed
 	 *
 	 * @return void
-	 * @see     BBCode::SetEnableSmileys()
 	 *
 	 * @since   Kunena 6.0
 	 */
 	public function SetURLPattern($url_pattern): void
 	{
 	}
-	
+
 	/**
 	 * @param $enable
 	 *
 	 * @return void
-	 * @see     BBCode::SetEnableSmileys()
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -629,20 +615,6 @@ class KunenaBBCode extends \Nbbc\BBCode
 		}
 
 		return false;
-	}
-
-	/**
-	 * @param          $template
-	 * @param          $insert_array
-	 * @param   array  $default_array
-	 *
-	 * @return  void
-	 * @see     BBCode::FillTemplate()
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function FillTemplate($template, $insert_array, $default_array = [])
-	{
 	}
 }
 

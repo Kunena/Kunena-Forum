@@ -12,6 +12,10 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Route\KunenaLegacy;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
 /**
@@ -40,12 +44,12 @@ function kunena_200_2011_12_14_aliases($parent)
 	}
 
 	// Create legacy functions
-	foreach (KunenaRouteLegacy::$functions as $func => $dummy)
+	foreach (KunenaLegacy::$functions as $func => $dummy)
 	{
 		kCreateAlias('legacy', $func, $func, 1);
 	}
 
-	$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
+	$categories = KunenaCategoryHelper::getCategories(false, false, 'none');
 	$aliasLit   = $aliasUtf = [];
 
 	// Create SEF: id

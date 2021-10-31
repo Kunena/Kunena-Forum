@@ -22,8 +22,6 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
-$colspan = !empty($this->actions) ? 4 : 3;
-$cols    = empty($this->checkbox) ? 4 : 5;
 $view    = Factory::getApplication()->input->getWord('view');
 ?>
 

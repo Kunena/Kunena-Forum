@@ -81,7 +81,6 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		$this->topicButtons = new Registry;
 
 		$fullactions   = $template->params->get('fullactions');
-		$topicicontype = $template->params->get('topicicontype');
 
 		$button = $fullactions ? true : false;
 

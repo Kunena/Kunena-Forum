@@ -125,7 +125,6 @@ class HtmlView extends KunenaView
 	{
 		$this->layout           = 'default';
 		$this->params           = $this->state->get('params');
-		$Itemid                 = $this->get('Itemid');
 		$this->topics           = $this->get('Topics');
 		$this->total            = $this->get('Total');
 		$this->topicActions     = $this->get('TopicActions');
@@ -214,7 +213,6 @@ class HtmlView extends KunenaView
 		$this->messages         = $this->get('Messages');
 		$this->topics           = $this->get('Topics');
 		$this->total            = $this->get('Total');
-		$postActions            = $this->get('PostActions');
 		$this->actionMove       = false;
 		$this->message_ordering = $this->me->getMessageOrdering();
 
@@ -264,7 +262,6 @@ class HtmlView extends KunenaView
 	 */
 	public function displayPostRows()
 	{
-		$lasttopic      = null;
 		$this->position = 0;
 
 		// Run events
@@ -296,7 +293,6 @@ class HtmlView extends KunenaView
 			if (!$contents)
 			{
 				$this->categoryLink     = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
-				$postAuthor             = KunenaFactory::getUser($message->userid);
 				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
 				$this->firstPostTime    = $this->topic->first_post_time;
 				$this->firstUserName    = $this->topic->first_post_guest_name;
@@ -326,7 +322,6 @@ class HtmlView extends KunenaView
 			}
 
 			echo $contents;
-			$lasttopic = $this->topic;
 		}
 	}
 
@@ -373,9 +368,6 @@ class HtmlView extends KunenaView
 				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
 				$this->firstPostTime    = $this->topic->first_post_time;
 				$this->firstUserName    = $this->topic->first_post_guest_name;
-				$lastPostAuthor         = $this->topic->getLastPostAuthor();
-				$lastPostTime           = $this->topic->last_post_time;
-				$lastUserName           = $this->topic->last_post_guest_name;
 				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
 				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 				$this->pages            = ceil($this->topic->getTotal() / $this->config->messagesPerPage);
@@ -383,15 +375,6 @@ class HtmlView extends KunenaView
 				if ($this->config->avatarOnCategory)
 				{
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
-				}
-
-				if (\is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering)
-				{
-					$spacing = 1;
-				}
-				else
-				{
-					$spacing = 0;
 				}
 
 				$contents = $this->loadTemplateFile('row');
@@ -411,7 +394,6 @@ class HtmlView extends KunenaView
 			}
 
 			echo $contents;
-			$lasttopic = $this->topic;
 		}
 	}
 

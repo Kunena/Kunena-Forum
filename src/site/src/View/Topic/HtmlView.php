@@ -1196,7 +1196,7 @@ class HtmlView extends KunenaView
 			return;
 		}
 
-		$history            = KunenaMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historyLimit, $ordering = 'DESC');
+		$history            = KunenaMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historyLimit, 'DESC');
 		$this->historycount = \count($history);
 		$this->replycount   = $this->topic->getReplies();
 		KunenaAttachmentHelper::getByMessage($history);

@@ -56,20 +56,24 @@ class KunenaCategoryList extends FormField
 		$size  = $this->element['size'];
 		$class = $this->element['class'];
 
-		$attribs = ' ';
+		$attribs = '';
 
 		if ($size)
 		{
-			$attribs .= 'size="' . $size . '"';
+			$attribs .= ' size="' . $size . '"';
+		}
+		else
+		{
+			$attribs .= ' size="5"';
 		}
 
 		if ($class)
 		{
-			$attribs .= 'class="' . $class . '"';
+			$attribs .= ' class="' . $class . '"';
 		}
 		else
 		{
-			$attribs .= 'class="inputbox form-control"';
+			$attribs .= ' class="inputbox form-control"';
 		}
 
 		if (!empty($this->element['multiple']))
@@ -80,7 +84,7 @@ class KunenaCategoryList extends FormField
 		// Get the field options.
 		$options = $this->getOptions();
 
-		return HTMLHelper::_('select.genericlist', $options, $this->element, 'class="input-block-level" multiple="multiple" size="5"', $this->value);
+		return HTMLHelper::_('select.genericlist', $options, $this->element, $attribs, $this->value);
 	}
 
 	/**

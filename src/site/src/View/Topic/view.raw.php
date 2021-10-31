@@ -216,7 +216,6 @@ class raw extends KunenaView
 		$user = Factory::getApplication()->getIdentity();
 
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
-		$response = [];
 		$app      = Factory::getApplication();
 
 		if ($user->id == 0 || KunenaTopicHelper::get($topicid)->first_post_userid == $this->me->userid)
@@ -293,7 +292,6 @@ class raw extends KunenaView
 	{
 		$app      = Factory::getApplication();
 		$catid    = $this->app->input->getInt('catid', 0);
-		$response = '';
 
 		$category = KunenaCategoryHelper::get($catid);
 

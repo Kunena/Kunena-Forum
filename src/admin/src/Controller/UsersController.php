@@ -147,7 +147,7 @@ class UsersController extends KunenaController
 		{
 			foreach ($cid as $id)
 			{
-				list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+				list($messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
 				foreach ($messages as $mes)
 				{
@@ -230,7 +230,7 @@ class UsersController extends KunenaController
 		{
 			foreach ($uids as $id)
 			{
-				list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+				list($messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
 				foreach ($messages as $object)
 				{

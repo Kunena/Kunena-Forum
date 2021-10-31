@@ -31,8 +31,6 @@ $kunena_profiler = KunenaProfiler::instance();
 $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 
-$app = Factory::getApplication();
-
 if ($this->config->enableForumJump)
 {
 	echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
@@ -58,7 +56,6 @@ if ($config->get('displayModule'))
 }
 
 foreach ($this->sections as $section) :
-	$markReadUrl = $section->getMarkReadUrl();
 	$Itemid      = KunenaRoute::getCategoryItemid($section);
 
 	if ($config->get('displayModule'))

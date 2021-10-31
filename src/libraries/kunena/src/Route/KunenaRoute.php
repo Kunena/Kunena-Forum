@@ -1027,9 +1027,6 @@ abstract class KunenaRoute
 		self::$default = self::$menus->getDefault();
 		$active        = self::$menus->getActive();
 
-		// Get the full request URI.
-		$uri = clone Uri::getInstance();
-
 		// Get current route.
 		self::$current = new Uri('index.php');
 

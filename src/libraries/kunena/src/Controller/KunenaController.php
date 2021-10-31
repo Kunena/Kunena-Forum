@@ -376,9 +376,6 @@ class KunenaController extends BaseController
 
 			// Load last to get deprecated language files to work
 			KunenaFactory::loadLanguage('com_kunena', 'admin');
-
-			$version         = new KunenaVersion;
-			$version_warning = $version->getVersionWarning();
 		}
 		else
 		{

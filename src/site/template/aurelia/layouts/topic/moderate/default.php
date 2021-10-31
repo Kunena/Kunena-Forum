@@ -98,7 +98,7 @@ $labels          = $this->ktemplate->params->get('labels');
                             <div><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
                             <br/>
                             <div class="kmoderate-topicIcons">
-								<?php foreach ($this->topicIcons as $id => $icon)
+								<?php foreach ($this->topicIcons as $icon)
 								:
 								?>
                                 <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"
@@ -137,7 +137,7 @@ $labels          = $this->ktemplate->params->get('labels');
                             <div><strong><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_LABEL'); ?>:</strong></div>
                             <br/>
                             <div class="kmoderate-topicIcons">
-								<?php foreach ($this->topicIcons as $id => $icon)
+								<?php foreach ($this->topicIcons as $icon)
 								:
 								?>
                                 <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon"

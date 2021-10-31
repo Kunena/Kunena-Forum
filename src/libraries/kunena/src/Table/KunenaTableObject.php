@@ -317,7 +317,7 @@ abstract class KunenaTableObject
 		if (\is_null($fields))
 		{
 			// No fields were given as parameter: use table instance.
-			foreach ($tableKeys as $i => $keyName)
+			foreach ($tableKeys as $keyName)
 			{
 				$keyValue       = isset($this->$keyName) ? $this->$keyName : null;
 				$keys[$keyName] = $keyValue;

@@ -473,8 +473,6 @@ class UserController extends KunenaController
 				empty($minimumIntegersp) ?: $minimumIntegers = (int) $minimumIntegersp;
 				empty($minimumSymbolsp) ?: $minimumSymbols = (int) $minimumSymbolsp;
 				empty($minimumUppercasep) ?: $minimumUppercase = (int) $minimumUppercasep;
-				empty($meterp) ?: $meter = $meterp;
-				empty($thresholdp) ?: $threshold = $thresholdp;
 			}
 
 			// If the field is empty and not required, the field is valid.

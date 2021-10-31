@@ -16,7 +16,7 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Language\Text;
 
-if (($rss = $this->getRSS()) !== null)
+if (($this->getRSS()) !== null)
 :
 	?>
 	<div class="pull-right large-kicon"><?php echo $this->getRSS(); ?></div>

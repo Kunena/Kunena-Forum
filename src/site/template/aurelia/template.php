@@ -202,9 +202,6 @@ EOF;
 	 */
 	public function getButton($link, $name, $scope, $type, $id = null): string
 	{
-		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod', 'permanent' => 'mod'];
-		$names = ['unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic', 'quickReply' => 'reply', 'quote' => 'quote', 'edit' => 'edit', 'permdelete' => 'delete', 'flat' => 'layout-flat', 'threaded' => 'layout-threaded', 'indented' => 'layout-indented', 'list' => 'reply'];
-
 		// Need special style for buttons in drop-down list
 		$buttonsDropdown = ['reply', 'quote', 'edit', 'delete', 'subscribe', 'unsubscribe', 'unfavorite', 'favorite', 'unsticky', 'sticky', 'unlock', 'lock', 'moderate', 'undelete', 'permdelete', 'flat', 'threaded', 'indented'];
 

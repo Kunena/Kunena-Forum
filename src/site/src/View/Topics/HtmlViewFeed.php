@@ -118,7 +118,6 @@ class KunenaViewTopics extends KunenaView
 		{
 			if ($firstpost)
 			{
-				$id          = $topic->first_post_id;
 				$page        = 'first';
 				$description = $topic->first_post_message;
 				$date        = new Joomla\CMS\Date\Date($topic->first_post_time);
@@ -237,7 +236,6 @@ class KunenaViewTopics extends KunenaView
 		$this->total  = $this->get('Total');
 
 		// TODO: if start != 0, add information from it into description
-		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->document->setGenerator(KunenaConfig::getInstance()->boardTitle);
 
 		switch ($this->state->get('list.mode'))
@@ -285,7 +283,6 @@ class KunenaViewTopics extends KunenaView
 		$this->total    = $this->get('Total');
 
 		// TODO: if start != 0, add information from it into description
-		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->document->setGenerator(KunenaConfig::getInstance()->boardTitle);
 
 		switch ($this->state->get('list.mode'))

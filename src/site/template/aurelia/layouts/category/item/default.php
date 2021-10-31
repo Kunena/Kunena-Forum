@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 $categoryActions = $this->getCategoryActions();
-$cols            = empty($this->checkbox) ? 5 : 6;
 $this->addStyleSheet('rating.css');
 ?>
 

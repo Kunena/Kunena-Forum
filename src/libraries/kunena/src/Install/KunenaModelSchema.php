@@ -197,9 +197,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 				$using = $this->getUpgradeSchema();
 			}
 
-			$fromschema  = $from;
-			$toschema    = $to;
-			$usingschema = $using;
 			$this->upgradeSchema($from, $using);
 			$this->diffschema = $this->getSchemaDiff($from, $to);
 
@@ -233,8 +230,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  boolean|DOMDocument
 	 *
-	 * @throws  KunenaSchemaException*@throws \DOMException
 	 * @since   Kunena 6.0
+	 * @throws \DOMException
+	 * @throws  KunenaSchemaException*@throws \DOMException
 	 */
 	public function getSchemaFromDatabase($reload = false)
 	{
@@ -550,8 +548,6 @@ class KunenaModelSchema extends BaseDatabaseModel
 						break;
 					}
 
-					$version = $action->getAttribute('version');
-					$date    = $action->getAttribute('date');
 					$this->upgradeNewAction($dbschema, $action, $table);
 					break;
 				case 'if':

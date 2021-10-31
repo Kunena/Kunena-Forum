@@ -15,9 +15,6 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 $title    = $this->title;
-$url      = $this->url;
-$filename = $this->filename;
-$size     = $this->size;
 ?>
 <div class="kmsgattach">
 	<h4>

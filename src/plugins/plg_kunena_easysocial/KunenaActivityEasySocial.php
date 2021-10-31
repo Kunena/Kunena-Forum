@@ -218,29 +218,22 @@ class KunenaActivityEasySocial extends KunenaActivity
 			$mailadmins = $config->mailadmin >= 1;
 		}
 
-		$once = false;
-
 		if ($mailsubs)
 		{
 			if (!$message->parent)
 			{
 				// New topic: Send email only to category subscribers
 				$mailsubs = $config->category_subscriptions != 'disabled' ? Access::CATEGORY_SUBSCRIPTION : 0;
-				$once     = $config->category_subscriptions == 'topic';
 			}
 			elseif ($config->category_subscriptions != 'post')
 			{
 				// Existing topic: Send email only to topic subscribers
 				$mailsubs = $config->topic_subscriptions != 'disabled' ? Access::TOPIC_SUBSCRIPTION : 0;
-				$once     = $config->topic_subscriptions == 'first';
 			}
 			else
 			{
 				// Existing topic: Send email to both category and topic subscribers
 				$mailsubs = $config->topic_subscriptions == 'disabled' ? Access::CATEGORY_SUBSCRIPTION : Access::CATEGORY_SUBSCRIPTION | Access::TOPIC_SUBSCRIPTION;
-
-				// FIXME: category subscription can override topic
-				$once = $config->topic_subscriptions == 'first';
 			}
 		}
 

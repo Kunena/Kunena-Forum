@@ -337,7 +337,6 @@ class StatisticsModel extends ListModel
 			$this->context .= '.' . $layout;
 		}
 
-		$now   = new Date;
 		$month = new Date('-1 month');
 
 		$filterActive = '';

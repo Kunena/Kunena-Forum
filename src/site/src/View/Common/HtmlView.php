@@ -173,9 +173,6 @@ class HtmlView extends KunenaView
 
 			if ($announcement && $announcement->isAuthorised('read'))
 			{
-				$annListUrl = KunenaAnnouncementHelper::getUri('list');
-				$showdate   = $announcement->showdate;
-
 				$result = $this->loadTemplateFile($tpl);
 
 				echo $result;
@@ -218,13 +215,6 @@ class HtmlView extends KunenaView
 			return;
 		}
 
-		$options    = [];
-		$options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
-
-		// Todo: fix params
-		$catParams    = ['sections' => 1, 'catid' => 0];
-		$categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="form-control fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
-
 		$result = $this->loadTemplateFile($tpl);
 
 		echo $result;
@@ -254,7 +244,6 @@ class HtmlView extends KunenaView
 		$view   = $this->app->input->getWord('view', 'default');
 		$layout = $this->app->input->getWord('layout', 'default');
 
-		$breadcrumb = $pathway = $this->app->getPathway();
 		$active     = $this->app->getMenu()->getActive();
 
 		if (empty($this->pathway))
@@ -395,7 +384,6 @@ class HtmlView extends KunenaView
 		}
 
 		$who           .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
-		$membersOnline = $who;
 
 		$onlineList = [];
 		$hiddenList = [];
@@ -419,8 +407,6 @@ class HtmlView extends KunenaView
 
 		ksort($onlineList);
 		ksort($hiddenList);
-
-		$usersUrl = $this->getUserlistURL('');
 
 		// Fall back to old template file.
 		$result = $this->loadTemplateFile($tpl);
@@ -591,7 +577,6 @@ class HtmlView extends KunenaView
 			{
 				$document = Factory::getApplication()->getDocument();
 				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="' . Text::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
-				$rss = $this->getRSSLink($this->getIcon('krss', Text::_('COM_KUNENA_LISTCAT_RSS')), 'follow', $rss_params);
 			}
 		}
 
@@ -674,10 +659,6 @@ class HtmlView extends KunenaView
 			return;
 		}
 
-		$params            = $this->state->get('params');
-		$private           = KunenaFactory::getPrivateMessaging();
-		$pm_link           = $private->getInboxURL();
-		$announcesListLink = KunenaAnnouncementHelper::getUrl('list');
 		$result            = $this->loadTemplateFile($tpl);
 
 		echo $result;
@@ -706,12 +687,6 @@ class HtmlView extends KunenaView
 		$parameters->set('endLevel', $basemenu->level + $this->ktemplate->params->get('menu_levels', 1));
 
 		$list      = KunenaMenuHelper::getList($parameters);
-		$menu      = $this->app->getMenu();
-		$active    = $menu->getActive();
-		$active_id = isset($active) ? $active->id : $menu->getDefault()->id;
-		$path      = isset($active) ? $active->tree : [];
-		$showAll   = $parameters->get('showAllChildren');
-		$class_sfx = htmlspecialchars($parameters->get('pageclass_sfx'), ENT_COMPAT, 'UTF-8');
 
 		return \count($list) ? $this->loadTemplateFile('menu') : '';
 	}
@@ -743,8 +718,6 @@ class HtmlView extends KunenaView
 
 		if (!$contents)
 		{
-			$moduleHtml = $this->getModulePosition('kunena_profilebox');
-
 			$login = KunenaLogin::getInstance();
 
 			if ($my->get('guest'))
@@ -764,24 +737,12 @@ class HtmlView extends KunenaView
 			{
 				$this->setLayout('logout');
 
-				if ($login)
-				{
-					$logout = $login;
-				}
-
-				$lastvisitDate = KunenaDate::getInstance($this->me->lastvisitDate);
-
 				// Private messages
 				$this->getPrivateMessageLink();
 
 				// TODO: Edit profile (need to get link to edit page, even with integration)
 				// $this->editProfileLink = '<a href="' . $url.'">'. Text::_('COM_KUNENA_PROFILE_EDIT').'</a>';
 
-				// Announcements
-				if ($this->me->isModerator())
-				{
-					$announcementsLink = '<a href="' . KunenaAnnouncementHelper::getUrl('list') . '">' . Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . '</a>';
-				}
 			}
 
 			$contents = $this->loadTemplateFile($tpl);
@@ -804,14 +765,6 @@ class HtmlView extends KunenaView
 	 */
 	public function getPrivateMessageLink()
 	{
-		// Private messages
-		$private = KunenaFactory::getPrivateMessaging();
-
-		if ($private)
-		{
-			$count               = $private->getUnreadCount($this->me->userid);
-			$privateMessagesLink = $private->getInboxLink($count ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : Text::_('COM_KUNENA_PMS_INBOX'));
-		}
 	}
 
 	/**

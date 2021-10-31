@@ -22,7 +22,6 @@ $name        = ' name="' . $this->name . '"';
 $label       = $this->label;
 $description = $this->description;
 $data        = $this->data;
-$form        = $this->form;
 ?>
 <div <?php echo $class . $id ?> tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
 								style="display: none;">

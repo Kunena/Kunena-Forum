@@ -52,7 +52,6 @@ class KunenaNomenuRules implements RulesInterface
 	 */
 	public function preprocess(&$query)
 	{
-		$test = 'Test';
 	}
 
 	/**

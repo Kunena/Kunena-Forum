@@ -490,8 +490,6 @@ class KunenaTemplate
 
 		if (!is_file($xml_path))
 		{
-			$xml_path = KPATH_SITE . "/template/{$this->name}/config/template.xml";
-
 			return false;
 		}
 
@@ -1740,8 +1738,9 @@ HTML;
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws \ScssPhp\ScssPhp\Exception\SassException
+	 * @throws Exception
 	 */
 	public function compileScss(string $inputFile, string $outputFile): void
 	{

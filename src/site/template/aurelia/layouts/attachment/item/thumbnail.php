@@ -26,7 +26,6 @@ $config = KunenaConfig::getInstance();
 
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="gallery"' : '';
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbHeight . 'px;"';
-$name           = preg_replace('/.html/', '', $attachment->getUrl(false, false, true));
 
 if (CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachmentProtection)
 {

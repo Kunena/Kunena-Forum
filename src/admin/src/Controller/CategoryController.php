@@ -206,7 +206,7 @@ class CategoryController extends FormController
 			{
 				$aliases = array_diff($aliasesAll, $aliases);
 
-				foreach ($aliasesAll as $alias)
+				foreach ($aliases as $alias)
 				{
 					$category->deleteAlias($alias);
 				}

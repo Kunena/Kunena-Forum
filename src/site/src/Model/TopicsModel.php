@@ -260,7 +260,6 @@ class TopicsModel extends KunenaModel
 	 */
 	protected function getUserTopics()
 	{
-		$catid      = $this->getState('item.id');
 		$limitstart = $this->getState('list.start');
 		$limit      = $this->getState('list.limit');
 
@@ -323,7 +322,6 @@ class TopicsModel extends KunenaModel
 	 */
 	protected function getRecentTopics()
 	{
-		$catid      = $this->getState('item.id');
 		$limitstart = $this->getState('list.start');
 		$limit      = $this->getState('list.limit');
 		$time       = $this->getState('list.time');
@@ -513,7 +511,7 @@ class TopicsModel extends KunenaModel
 			$this->getPosts();
 		}
 
-		$delete = $approve = $undelete = $move = $permdelete = false;
+		$delete = $approve = $undelete = $permdelete = false;
 
 		foreach ($this->messages as $message)
 		{

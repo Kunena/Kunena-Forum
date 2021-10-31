@@ -261,7 +261,7 @@ class Kunenagrid
 		$action = $value ? Text::_('COM_KUNENA_LIB_UNPUBLISH_ITEM') : Text::_('COM_KUNENA_LIB_PUBLISH_ITEM');
 		$class  = $task == 'unpublish' ? 'publish' : 'unpublish';
 
-		$title = $inactive_title = $alt . '::' . $action;
+		$title = $alt . '::' . $action;
 
 		return self::action($i, $task, $prefix, $alt, $title, $class, $bootstrap);
 	}
@@ -291,13 +291,6 @@ class Kunenagrid
 		if (\is_array($prefix))
 		{
 			$options        = $prefix;
-			$text           = \array_key_exists('text', $options) ? $options['text'] : '';
-			$active_title   = \array_key_exists('active_title', $options) ? $options['active_title'] : '';
-			$inactive_title = \array_key_exists('inactive_title', $options) ? $options['inactive_title'] : '';
-			$active_class   = \array_key_exists('active_class', $options) ? $options['active_class'] : '';
-			$inactive_class = \array_key_exists('inactive_class', $options) ? $options['inactive_class'] : '';
-			$enabled        = \array_key_exists('enabled', $options) ? $options['enabled'] : '';
-			$translate      = \array_key_exists('translate', $options) ? $options['translate'] : '';
 			$checkbox       = \array_key_exists('checkbox', $options) ? $options['checkbox'] : $checkbox;
 			$prefix         = \array_key_exists('prefix', $options) ? $options['prefix'] : '';
 		}
@@ -312,25 +305,21 @@ class Kunenagrid
 
 			if ($class == 'publish')
 			{
-				$class = 'ok';
 				$icon  = KunenaIcons::check();
 			}
 
 			if ($class == 'unpublish')
 			{
-				$class = 'remove';
 				$icon  = KunenaIcons::cancel();
 			}
 
 			if ($class == 'edit')
 			{
-				$class = 'edit';
 				$icon  = KunenaIcons::pencil();
 			}
 
 			if ($class == 'delete')
 			{
-				$class = 'trash';
 				$icon  = KunenaIcons::delete();
 			}
 

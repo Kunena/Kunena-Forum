@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Install\KunenaInstallerException;
 
 // Kunena 1.6.0: Migrate polls data from K1.5
 /**
@@ -144,7 +145,6 @@ function kunena_160_2010_05_30_polls($parent)
 
 		if ($table == $db->getPrefix() . 'kunena_polls_options')
 		{
-			$fields = $db->getTableColumns($db->getPrefix() . 'kunena_polls_options');
 			$query  = "ALTER TABLE `{$db->quoteName($db->getPrefix() . 'kunena_polls_options')}` MODIFY text varchar(50)";
 			$db->setQuery($query);
 
@@ -185,6 +185,4 @@ function kunena_160_2010_05_30_polls($parent)
 	{
 		return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_160_POLLS'), 'success' => true];
 	}
-
-	return;
 }

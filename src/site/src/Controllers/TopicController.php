@@ -2698,7 +2698,6 @@ class TopicController extends KunenaController
 
 		$vote  = $this->app->input->getInt('kpollradio', '');
 		$id    = $this->app->input->getInt('id', 0);
-		$catid = $this->app->input->getInt('catid', 0);
 
 		$topic = KunenaTopicHelper::get($id);
 		$poll  = $topic->getPoll();

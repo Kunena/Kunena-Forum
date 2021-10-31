@@ -1278,7 +1278,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			}
 		}
 
-		if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content, $matches))
+		if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content))
 		{
 			if (!preg_match('#^(/|https?:|ftp:)#ui', $content))
 			{
@@ -2360,8 +2360,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		$vid_minwidth  = 200;
 		$vid_minheight = 44; // Min. display size
-		$vid_maxwidth  = (int) ((KunenaFactory::getConfig()->rteWidth * 9) / 10); // Max 90% of text width
-		$vid_maxheight = 720; // max. display size
 		$vid_sizemax   = 100; // max. display zoom in percent
 
 		$vid ["type"]  = (isset($params ["type"])) ? StringHelper::strtolower($params ["type"]) : '';
@@ -2792,8 +2790,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		// Display tag in activity streams etc..
 		if (!empty($bbcode->parent->forceMinimal))
 		{
-			$filename = basename(!empty($params ["name"]) ? $params ["name"] : trim(strip_tags($content)));
-
 			return '[ ' . basename(!empty($params ["name"]) ? $params ["name"] : trim(strip_tags($content))) . ' ]';
 		}
 
@@ -3154,7 +3150,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				'Authorization' => "Bearer " . $this->token,
 			];
 
-			$data     = [];
 			$response = $http->get($url, $headers, '10');
 
 			if ($response->code == 200)

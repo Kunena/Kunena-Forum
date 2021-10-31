@@ -124,7 +124,7 @@ class KunenaUpload
 		$exception = null;
 		$in        = null;
 		$out       = null;
-		$size      = $bytes = 0;
+		$size      = 0;
 		$outFile   = null;
 		$type      = $options['mime'];
 
@@ -633,7 +633,6 @@ class KunenaUpload
 				throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
 			}
 
-			$avatarTypes = [];
 			$avatarTypes = strtolower(KunenaConfig::getInstance()->avatarTypes);
 			$a           = explode(', ', $avatarTypes);
 
@@ -666,7 +665,6 @@ class KunenaUpload
 			{
 				// File must contain one letter before extension
 				$name      = StringHelper::substr($file->tmp_name, 0, -StringHelper::strlen($ext));
-				$extension = StringHelper::substr($extension, 1);
 
 				if (!$name)
 				{

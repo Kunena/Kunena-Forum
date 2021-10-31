@@ -75,8 +75,6 @@ class TemplateController extends FormController
 	public function save($key = null, $urlVar = null)
 	{
 		$template = $this->app->input->get('templatename', '');
-		$menus    = $this->app->input->get('selections', [], 'array');
-		$menus    = ArrayHelper::toInteger($menus);
 		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 
 		if (!Session::checkToken())

@@ -106,6 +106,6 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 	 */
 	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
-		trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() not implemented');
+		return KunenaAvatar::getInstance()->_getURL($user, $sizex, $sizey);
 	}
 }

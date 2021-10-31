@@ -173,8 +173,6 @@ class KunenaBBCodeEditor
 	 */
 	public function initialize(): void
 	{
-		$template = KunenaFactory::getTemplate();
-		$isHMVC   = $template->isHmvc();
 	}
 
 	/**
@@ -565,21 +563,15 @@ class KunenaBBCodeEditorButton extends KunenaBBCodeEditorElement
 						$selection[] = "name: Joomla.Text._('COM_KUNENA_EDITOR_" . strtoupper($action['name']) . "')";
 					}
 
-					$key = '';
-
 					if (!empty($action['key']))
 					{
 						$selection[] = "key: '" . $action['key'] . "'";
 					}
 
-					$start = '';
-
 					if (!empty($action['start']))
 					{
 						$selection[] = "openWith: '" . $action['start'] . "'";
 					}
-
-					$end = '';
 
 					if (!empty($action['end']))
 					{

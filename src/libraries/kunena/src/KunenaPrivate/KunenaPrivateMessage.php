@@ -150,10 +150,6 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	 */
 	public function delete(): bool
 	{
-		$attachments = $this->attachments()->delete();
-		$posts       = $this->posts()->delete();
-		$users       = $this->users()->delete();
-
 		return parent::delete();
 	}
 

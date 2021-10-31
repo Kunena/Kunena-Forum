@@ -216,7 +216,6 @@ $this->addScript('assets/js/search.js');
 
 			<?php if ($config->userlistUserHits)
 			:
-				$cols++;
 				?>
 				<th class="col-md-1 center hidden-xs-down">
 					<?php echo HTMLHelper::_(

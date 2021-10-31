@@ -185,7 +185,7 @@ abstract class KunenaParser
 		$name   = '';
 		$plugin = PluginHelper::getPlugin('content');
 
-		foreach ($plugin as $key => $value)
+		foreach ($plugin as $value)
 		{
 			$name = \is_array($value->name);
 		}

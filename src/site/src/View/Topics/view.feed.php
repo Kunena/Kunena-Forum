@@ -80,7 +80,6 @@ class feed extends KunenaView
 		}
 
 		$this->layout = 'default';
-		$params       = $this->state->get('params');
 		$this->topics = $this->get('Topics');
 		$this->total  = $this->get('Total');
 
@@ -132,7 +131,6 @@ class feed extends KunenaView
 		{
 			if ($firstpost)
 			{
-				$id          = $topic->first_post_id;
 				$page        = 'first';
 				$description = $topic->first_post_message;
 				$date        = new Date($topic->first_post_time);
@@ -251,7 +249,6 @@ class feed extends KunenaView
 		$this->total  = $this->get('Total');
 
 		// TODO: if start != 0, add information from it into description
-		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->document->setGenerator($this->config->boardTitle);
 
 		switch ($this->state->get('list.mode'))
@@ -299,7 +296,6 @@ class feed extends KunenaView
 		$this->total    = $this->get('Total');
 
 		// TODO: if start != 0, add information from it into description
-		$title = Text::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->document->setGenerator($this->config->boardTitle);
 
 		switch ($this->state->get('list.mode'))

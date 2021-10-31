@@ -1591,8 +1591,6 @@ class ConfigModel extends AdminModel
 
 		$optionsShowHide = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL'))];
 
-		// Todo: fix params
-		$params                  = ['sections' => false, 'action' => 'read'];
 		$lists['latestCategory'] = HTMLHelper::_('select.genericlist', $optionsShowHide, 'cfg_latestCategory', 'class="inputbox form-control"multiple="multiple"', 'value', 'text', explode(',', $config->latestCategory), 'latestCategory');
 
 		$lists['topicIcons'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_topicIcons', 'class="inputbox form-control"size="1"', 'value', 'text', $config->topicIcons);

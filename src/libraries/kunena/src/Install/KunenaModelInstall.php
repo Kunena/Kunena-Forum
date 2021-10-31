@@ -240,7 +240,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 			'admin' => JPATH_ADMINISTRATOR . '/components/com_kunena',
 		];
 
-		foreach ($destinations as $key => $dest)
+		foreach ($destinations as $dest)
 		{
 			if ($success != true)
 			{
@@ -330,10 +330,10 @@ class KunenaModelInstall extends BaseDatabaseModel
 		if ($this->__state_set === false)
 		{
 			$app = Factory::getApplication();
-			$this->setState('action', $step = $app->getUserState('com_kunena.install.action', null));
+			$this->setState('action', $app->getUserState('com_kunena.install.action', null));
 			$this->setState('step', $step = $app->getUserState('com_kunena.install.step', 0));
-			$this->setState('task', $task = $app->getUserState('com_kunena.install.task', 0));
-			$this->setState('version', $task = $app->getUserState('com_kunena.install.version', null));
+			$this->setState('task', $app->getUserState('com_kunena.install.task', 0));
+			$this->setState('version', $app->getUserState('com_kunena.install.version', null));
 
 			if ($step == 0)
 			{

@@ -52,7 +52,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 	$this->addScript('sisyphus.js');
 }
 
-$quick  = $template->params->get('quick');
 $editor = $template->params->get('editor');
 
 if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)

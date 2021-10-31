@@ -770,7 +770,6 @@ class KunenaBase extends KunenaLayoutBase
 			}
 
 			$class = (string) preg_replace('/[^A-Z0-9_]/i', '', $path);
-			$fpath = (string) preg_replace('|\\\|', '/', strtolower($path));
 
 			$classnamespaced = 'Kunena\Forum\Site\Layout\\' . $ex[0] . '\\' . $subpart . $class;
 

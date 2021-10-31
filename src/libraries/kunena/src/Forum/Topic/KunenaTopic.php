@@ -344,8 +344,6 @@ class KunenaTopic extends KunenaDatabaseObject
 		$topicDelta = $this->delta();
 		$postDelta  = $this->posts - $this->_posts;
 
-		$isNew = !$this->exists();
-
 		if (!parent::save())
 		{
 			return false;

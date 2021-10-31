@@ -206,7 +206,6 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 			$params             = $menu_item->getParams();
 			$params_title       = $params->get('page_title');
 			$params_description = $params->get('menu-meta_description');
-			$params_robots      = $params->get('robots');
 
 			if (!empty($params_title))
 			{

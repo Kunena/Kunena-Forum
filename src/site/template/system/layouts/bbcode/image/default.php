@@ -16,9 +16,7 @@ namespace Kunena\Forum\Site;
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 
-$title    = $this->title;
 $url      = $this->url;
-$filename = $this->filename;
 $size     = $this->size;
 $alt      = $this->alt;
 

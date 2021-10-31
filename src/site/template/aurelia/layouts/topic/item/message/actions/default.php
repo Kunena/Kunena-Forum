@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 
 $message = $this->message;
 
-$dateText = $dateHover = '';
+$dateText = '';
 
 if ($this->config->editMarkup && $this->message->modified_time)
 {

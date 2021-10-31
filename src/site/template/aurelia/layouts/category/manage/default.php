@@ -302,9 +302,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                                 </thead>
 
                                                 <tbody>
-												<?php $i = 0;
-
-												if (empty($this->moderators))
+												<?php if (empty($this->moderators))
 													:
 													?>
                                                     <tr>

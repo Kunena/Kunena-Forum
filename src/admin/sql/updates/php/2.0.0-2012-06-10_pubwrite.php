@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 // Kunena 2.0.0: Update menu items
 /**
@@ -36,6 +37,4 @@ function kunena_200_2012_06_10_pubWrite($parent)
 
 		return ['action' => '', 'name' => Text::sprintf('COM_KUNENA_INSTALL_200_PUBWRITE'), 'success' => $success];
 	}
-
-	return;
 }

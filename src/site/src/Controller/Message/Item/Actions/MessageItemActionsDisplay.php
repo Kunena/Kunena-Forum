@@ -96,7 +96,6 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 		$ktemplate     = KunenaFactory::getTemplate();
 		$fullactions   = $ktemplate->params->get('fullactions');
-		$topicicontype = $ktemplate->params->get('topicicontype');
 
 		$button = $fullactions ? true : false;
 

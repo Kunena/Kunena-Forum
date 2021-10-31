@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Install\KunenaInstallerException;
 
 // Kunena 6.0.0: Update value of type datetime in all tables to changes default value
 /**
@@ -231,8 +232,7 @@ function kunena_600_2019_07_21_datetimeupdatevalue($parent)
 	}
 
 	$query = "ALTER TABLE `#__kunena_users_banned` MODIFY COLUMN `created_time` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';";
-
-	$query = "UPDATE `#__kunena_users_banned` SET modified_time='1000-01-01 00:00:00' WHERE modified_time='null'";
+	$query .= "UPDATE `#__kunena_users_banned` SET modified_time='1000-01-01 00:00:00' WHERE modified_time='null'";
 	$db->setQuery($query);
 
 	try

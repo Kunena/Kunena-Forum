@@ -8,6 +8,9 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
+
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+
 defined('_JEXEC') or die();
 
 // Kunena 5.0.5: Update setting allow guest to see userlist
@@ -31,6 +34,4 @@ function kunena_505_2016_12_20_userlist()
 
 	// Save configuration
 	$config->save();
-
-	return;
 }

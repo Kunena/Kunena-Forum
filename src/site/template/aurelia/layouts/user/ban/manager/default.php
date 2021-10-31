@@ -45,13 +45,8 @@ use Joomla\CMS\Language\Text;
 	<?php
 	if ($this->userBans)
 		:
-		$i = 0;
-
 		foreach ($this->userBans as $banInfo)
 			:
-			$bantext = $banInfo->blocked
-				? Text::_('COM_KUNENA_BAN_UNBLOCK_USER')
-				: Text::_('COM_KUNENA_BAN_UNBAN_USER');
 			?>
 			<tr>
 				<td class="center">

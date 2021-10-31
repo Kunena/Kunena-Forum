@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Install\KunenaInstallerException;
 
 // Kunena 1.6.0: Convert attachments table to support new multi file attachments
 /**

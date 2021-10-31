@@ -123,10 +123,10 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
 		ToolbarHelper::spacer();
-		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
-		ToolbarHelper::editList();
+		ToolbarHelper::addNew('smilies.add', 'COM_KUNENA_NEW_SMILIE');
+		ToolbarHelper::editList('smilies.edit');
 		ToolbarHelper::divider();
-		ToolbarHelper::deleteList();
+		ToolbarHelper::deleteList('smilies.delete');
 		ToolbarHelper::spacer();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

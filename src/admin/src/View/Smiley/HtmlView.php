@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**
  * About view for Kunena smiley backend
@@ -26,12 +27,6 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var object
-	 * @since version
-	 */
-	private $ktemplate;
-
 	/**
 	 * @param   null  $tpl  tpl
 	 *
@@ -47,7 +42,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->state          = $this->get('state');
 		$this->smileySelected = $this->get('smiley');
-		$this->smileyPath     = $this->ktemplate->getSmileyPath();
+		$this->smileyPath     = KunenaFactory::getTemplate()->getSmileyPath();
 		$this->listSmileys    = $this->get('SmileysPaths');
 
 		$this->addToolbar();
@@ -66,7 +61,7 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
 		ToolbarHelper::spacer();
-		ToolbarHelper::save('save');
+		ToolbarHelper::save('smiley.save');
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/emoticons/edit-emoticon';

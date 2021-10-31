@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\WebAsset\WebAssetManager;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -55,7 +56,7 @@ $wa->useScript('multiselect');
 								<input class="col-md-2" type="text" name="smileyCode"
 									   value="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : '' ?>"/>
 								<img loading=lazy name="smiley_image"
-									 src="<?php echo isset($this->smileySelected) ? $this->escape($this->ktemplate->getSmileyPath($this->smileySelected->location, true)) : '' ?>"
+									 src="<?php echo isset($this->smileySelected) ? $this->escape(KunenaFactory::getTemplate()->getSmileyPath($this->smileySelected->location, true)) : '' ?>"
 									 border="0"
 									 alt="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : 'smiley' ?>"/>
 							</td>

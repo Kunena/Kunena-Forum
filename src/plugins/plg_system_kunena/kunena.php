@@ -117,17 +117,17 @@ EOF;
 	}
 
 	/**
-	 * @param   mixed    $user     User
-	 * @param   boolean  $isnew    Is new
-	 * @param   boolean  $success  Success
-	 * @param   string   $msg      Message
+	 * @param   mixed        $user     User
+	 * @param   boolean      $isnew    Is new
+	 * @param   boolean      $success  Success
+	 * @param   string|null  $msg      Message
 	 *
 	 * @return  void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
-	public function onUserAfterSave($user, bool $isnew, bool $success, string $msg): void
+	public function onUserAfterSave($user, bool $isnew, bool $success, ?string $msg): void
 	{
 		// Don't continue if the user wasn't stored successfully
 		if (!$success)

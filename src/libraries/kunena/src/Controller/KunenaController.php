@@ -69,6 +69,12 @@ class KunenaController extends BaseController
 	public $format;
 
 	/**
+	 * @var     string
+	 * @since   Kunena 6.0
+	 */
+	public $db;
+
+	/**
 	 * @var     CMSApplicationInterface
 	 * @since   Kunena 6.0
 	 */
@@ -89,6 +95,7 @@ class KunenaController extends BaseController
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->app      = Factory::getApplication();
 		$this->config   = KunenaFactory::getConfig();
+		$this->db       = Factory::getContainer()->get('DatabaseDriver');
 
 		// Save user profile if it didn't exist.
 		if ($this->me->userid && !$this->me->exists())

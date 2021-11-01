@@ -952,17 +952,16 @@ class UserController extends KunenaController
 		$spammer = Factory::getUser($userid);
 
 		// TODO: remove this query by getting the ip of user by an another way
-		$db    = Factory::getDBO();
-		$query = $db->getQuery(true);
+		$query = $this->db->getQuery(true);
 		$query
-			->select($db->quoteName(['ip']))
-			->from($db->quoteName('#__kunena_messages'))
-			->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
-			->group($db->quoteName('ip'))
+			->select($this->db->quoteName(['ip']))
+			->from($this->db->quoteName('#__kunena_messages'))
+			->where($this->db->quoteName('userid') . ' = ' . $this->db->quote($userid))
+			->group($this->db->quoteName('ip'))
 			->order('time DESC');
 
-		$db->setQuery($query, 0, 1);
-		$ip = $db->loadResult();
+		$this->db->setQuery($query, 0, 1);
+		$ip = $this->db->loadResult();
 
 		if (!empty($ip))
 		{

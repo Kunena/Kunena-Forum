@@ -15,7 +15,6 @@ namespace Kunena\Forum\Administrator\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
@@ -703,12 +702,11 @@ class CategoriesController extends KunenaController
 			return;
 		}
 
-		$db  = Factory::getDbo();
-		$row = new TableKunenaCategories($db);
+		$row = new TableKunenaCategories($this->db);
 		$row->load($id);
 
 		// Ensure that we have the right ordering
-		$where = 'parentid=' . $db->quote($row->parentid);
+		$where = 'parentid=' . $this->db->quote($row->parentid);
 		$row->reOrder();
 		$row->move($direction, $where);
 	}
@@ -803,21 +801,19 @@ class CategoriesController extends KunenaController
 
 		if ($task == 'move')
 		{
-			$db = Factory::getDBO();
-
 			foreach ($cid as $cat)
 			{
 				if ($catParent != $cat)
 				{
-					$query = $db->getQuery(true);
-					$query->update($db->quoteName('#__kunena_categories'))
-						->set($db->quoteName('parentid') . " = " . $db->quote(\intval($catParent)))
-						->where($db->quoteName('id') . " = " . $db->quote($cat));
-					$db->setQuery($query);
+					$query = $this->db->getQuery(true);
+					$query->update($this->db->quoteName('#__kunena_categories'))
+						->set($this->db->quoteName('parentid') . " = " . $this->db->quote(\intval($catParent)))
+						->where($this->db->quoteName('id') . " = " . $this->db->quote($cat));
+					$this->db->setQuery($query);
 
 					try
 					{
-						$db->execute();
+						$this->db->execute();
 					}
 					catch (RuntimeException $e)
 					{

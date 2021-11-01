@@ -609,16 +609,15 @@ class TopicController extends KunenaController
 			$timelimit = Factory::getDate()->toUnix() - $this->config->floodProtection;
 			$ip        = KunenaUserHelper::getUserIp();
 
-			$db    = Factory::getDBO();
-			$query = $db->getQuery(true);
+			$query = $this->db->getQuery(true);
 			$query->select('COUNT(*)')
-				->from($db->quoteName('#__kunena_messages'))
-				->where('ip=' . $db->quote($ip) . ' AND time > ' . $db->quote($timelimit));
-			$db->setQuery($query);
+				->from($this->db->quoteName('#__kunena_messages'))
+				->where('ip=' . $this->db->quote($ip) . ' AND time > ' . $this->db->quote($timelimit));
+			$this->db->setQuery($query);
 
 			try
 			{
-				$count = $db->loadResult();
+				$count = $this->db->loadResult();
 			}
 			catch (ExecutionFailureException $e)
 			{

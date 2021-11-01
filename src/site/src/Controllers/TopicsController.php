@@ -112,17 +112,15 @@ class TopicsController extends KunenaController
 					unset($instance);
 				}
 
-				$db = Factory::getDBO();
-
-				$query = $db->getQuery(true)->select(['a.id'])
-					->from($db->quoteName('#__kunena_attachments', 'a'))
-					->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('a.mesid') . '=' . $db->quoteName('m.id'))
-					->where($db->quoteName('m.id') . ' IS NULL');
-				$db->setQuery($query);
+				$query = $this->db->getQuery(true)->select(['a.id'])
+					->from($this->db->quoteName('#__kunena_attachments', 'a'))
+					->leftJoin($this->db->quoteName('#__kunena_messages', 'm') . ' ON ' . $this->db->quoteName('a.mesid') . '=' . $this->db->quoteName('m.id'))
+					->where($this->db->quoteName('m.id') . ' IS NULL');
+				$this->db->setQuery($query);
 
 				try
 				{
-					$list = $db->loadObjectList('id');
+					$list = $this->db->loadObjectList('id');
 				}
 				catch (ExecutionFailureException $e)
 				{
@@ -133,12 +131,12 @@ class TopicsController extends KunenaController
 
 				$ids = implode(',', array_keys($list));
 
-				$query = $db->getQuery(true)->delete($db->quoteName('#__kunena_attachments'))->where('id IN (' . $ids . ')');
-				$db->setQuery($query);
+				$query = $this->db->getQuery(true)->delete($this->db->quoteName('#__kunena_attachments'))->where('id IN (' . $ids . ')');
+				$this->db->setQuery($query);
 
 				try
 				{
-					$db->execute();
+					$this->db->execute();
 				}
 				catch (ExecutionFailureException $e)
 				{

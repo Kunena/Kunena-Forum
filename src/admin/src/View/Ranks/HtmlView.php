@@ -143,10 +143,10 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
 
 		ToolbarHelper::spacer();
-		ToolbarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
+		ToolbarHelper::addNew('rank.add', 'COM_KUNENA_NEW_RANK');
 		ToolbarHelper::editList();
 		ToolbarHelper::divider();
-		ToolbarHelper::deleteList();
+		ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'ranks.delete');
 		ToolbarHelper::spacer();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

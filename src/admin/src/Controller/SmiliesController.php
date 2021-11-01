@@ -146,7 +146,6 @@ class SmiliesController extends FormController
 				->insert("{$db->quoteName('#__kunena_smileys')}")
 				->set("code={$db->quote($smileyCode)}")
 				->set("location={$db->quote($smileyLocation)}")
-				->set("location={$db->quote($smileyLocation)}")
 				->set("emoticonbar={$db->quote($smileyEmoticonBar)}");
 
 			$db->setQuery($query);
@@ -167,7 +166,6 @@ class SmiliesController extends FormController
 			$query = $db->getQuery(true)
 				->update("{$db->quoteName('#__kunena_smileys')}")
 				->set("code={$db->quote($smileyCode)}")
-				->set("location={$db->quote($smileyLocation)}")
 				->set("location={$db->quote($smileyLocation)}")
 				->set("emoticonbar={$db->quote($smileyEmoticonBar)}")
 				->where("id={$db->quote($smileyId)}");

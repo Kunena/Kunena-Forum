@@ -126,7 +126,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::addNew('smilies.add', 'COM_KUNENA_NEW_SMILIE');
 		ToolbarHelper::editList('smilies.edit');
 		ToolbarHelper::divider();
-		ToolbarHelper::deleteList('smilies.delete');
+		ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE','smilies.delete');
 		ToolbarHelper::spacer();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
 		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

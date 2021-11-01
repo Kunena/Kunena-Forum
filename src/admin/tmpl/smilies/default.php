@@ -186,7 +186,7 @@ $wa->useScript('multiselect');
                                                     </td>
                                                     <td class="hidden-phone center">
                                                         <a href="#edit"
-                                                           onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
+                                                           onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','smiley.edit')">
                                                             <img loading=lazy
                                                                  src="<?php echo $this->escape($this->ktemplate->getSmileyPath($row->location, true)); ?>"
                                                                  alt="<?php echo $this->escape($row->location); ?>"/>
@@ -240,8 +240,7 @@ $wa->useScript('multiselect');
                                 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
                                       id="uploadForm" method="post"
                                       enctype="multipart/form-data">
-                                    <input type="hidden" name="view" value="smilies"/>
-                                    <input type="hidden" name="task" value="smileyUpload"/>
+                                    <input type="hidden" name="task" value="smilies.smileyUpload"/>
                                     <input type="hidden" name="boxchecked" value="0"/>
 									<?php echo HTMLHelper::_('form.token'); ?>
 

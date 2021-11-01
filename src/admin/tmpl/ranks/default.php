@@ -203,7 +203,7 @@ $wa->useScript('multiselect');
                                                     </td>
                                                     <td>
                                                         <a href="#edit"
-                                                           onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
+                                                           onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','rank.edit')">
                                                             <img loading=lazy
                                                                  src="<?php echo $this->escape($this->ktemplate->getRankPath($row->rankImage, true)) ?>"
                                                                  alt="<?php echo $this->escape($row->rankImage); ?>"/>
@@ -211,7 +211,7 @@ $wa->useScript('multiselect');
                                                     </td>
                                                     <td class="nowrap">
                                                         <a href="#edit"
-                                                           onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','edit')">
+                                                           onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','rank.edit')">
 															<?php echo Text::_($row->rankTitle); ?>
                                                         </a>
                                                     </td>
@@ -263,8 +263,7 @@ $wa->useScript('multiselect');
                                 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
                                       id="uploadForm" method="post"
                                       enctype="multipart/form-data">
-                                    <input type="hidden" name="view" value="ranks"/>
-                                    <input type="hidden" name="task" value="rankUpload"/>
+                                    <input type="hidden" name="task" value="ranks.rankUpload"/>
                                     <input type="hidden" name="boxchecked" value="0"/>
 									<?php echo HTMLHelper::_('form.token'); ?>
 

@@ -60,7 +60,7 @@ class UsersController extends KunenaController
 	 * @throws Exception
 	 * @since   Kunena 2.0
 	 *
-	 * @see     BaseController
+	 * @see     KunenaController
 	 */
 
 	public function __construct($config = array())
@@ -884,7 +884,6 @@ class UsersController extends KunenaController
 			return;
 		}
 
-		$db  = Factory::getDbo();
 		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid, []);
 
@@ -892,15 +891,15 @@ class UsersController extends KunenaController
 		{
 			foreach ($cid as $userid)
 			{
-				$query = $db->getQuery(true);
-				$query->update($db->quoteName('#__kunena_user_categories'))
-					->set($db->quoteName('subscribed') . ' = 0')
-					->where($db->quoteName('user_id') . ' = ' . $userid);
-				$db->setQuery($query);
+				$query = $this->db->getQuery(true);
+				$query->update($this->db->quoteName('#__kunena_user_categories'))
+					->set($this->db->quoteName('subscribed') . ' = 0')
+					->where($this->db->quoteName('user_id') . ' = ' . $userid);
+				$this->db->setQuery($query);
 
 				try
 				{
-					$db->execute();
+					$this->db->execute();
 				}
 				catch (Exception $e)
 				{
@@ -934,7 +933,6 @@ class UsersController extends KunenaController
 			return;
 		}
 
-		$db  = Factory::getDBO();
 		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid, []);
 
@@ -942,15 +940,15 @@ class UsersController extends KunenaController
 		{
 			foreach ($cid as $userid)
 			{
-				$query = $db->getQuery(true);
-				$query->update($db->quoteName('#__kunena_user_topics'))
-					->set($db->quoteName('subscribed') . ' = 0')
-					->where($db->quoteName('user_id') . ' = ' . $userid);
-				$db->setQuery($query);
+				$query = $this->db->getQuery(true);
+				$query->update($this->db->quoteName('#__kunena_user_topics'))
+					->set($this->db->quoteName('subscribed') . ' = 0')
+					->where($this->db->quoteName('user_id') . ' = ' . $userid);
+				$this->db->setQuery($query);
 
 				try
 				{
-					$db->execute();
+					$this->db->execute();
 				}
 				catch (Exception $e)
 				{

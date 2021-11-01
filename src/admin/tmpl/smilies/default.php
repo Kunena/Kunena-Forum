@@ -62,7 +62,7 @@ $wa->useScript('multiselect');
                             <div class="tab-pane fade show active" id="tab1" role="tabpanel"
                                  aria-labelledby="tab1-tab">
 
-                                <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=smilies') ?>"
+                                <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"
                                       method="post"
                                       id="adminForm" name="adminForm">
                                     <input type="hidden" name="task" value=""/>

@@ -61,7 +61,7 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
 		ToolbarHelper::spacer();
-		ToolbarHelper::save('save');
+		ToolbarHelper::save('rank.save');
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		$helpUrl = 'https://docs.kunena.org/en/manual/backend/ranks/edit-rank';

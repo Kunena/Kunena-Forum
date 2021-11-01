@@ -137,18 +137,25 @@ class RanksController extends FormController
 
 		$rankTitle   = $this->app->input->getString('rankTitle');
 		$rankImage   = basename($this->app->input->getString('rankImage'));
-		$rankSpecial = $this->app->input->getInt('rankSpecial');
+		$rankSpecial = $this->app->input->getInt('rankSpecial', 0);
 		$rankMin     = $this->app->input->getInt('rankMin');
 		$rankid      = $this->app->input->getInt('rankid', 0);
 
 		if (!$rankid)
 		{
-			$query = $db->getQuery(true)
-				->insert("{$db->quoteName('#__kunena_ranks')}")
-				->set("rankTitle={$db->quote($rankTitle)}")
-				->set("rankImage={$db->quote($rankImage)}")
-				->set("rankSpecial={$db->quote($rankSpecial)}")
-				->set("rankMin={$db->quote($rankMin)}");
+			$query = $db->getQuery(true);
+
+			// Insert columns.
+			$columns = array('rankTitle', 'rankImage', 'rankSpecial', 'rankMin');
+
+			// Insert values.
+			$values = array($db->quote($rankTitle), $db->quote($rankImage), $db->quote($rankSpecial), $db->quote($rankMin));
+
+			// Prepare the insert query.
+			$query
+				->insert($db->quoteName('#__kunena_ranks'))
+				->columns($db->quoteName($columns))
+				->values(implode(',', $values));
 
 			$db->setQuery($query);
 

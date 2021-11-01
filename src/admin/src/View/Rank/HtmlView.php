@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**
  * About view for Kunena rank backend
@@ -26,14 +27,6 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * An array of items
-	 *
-	 * @var  object
-	 * @since  4.0.0
-	 */
-	private $ktemplate;
-
 	/**
 	 * @param   null  $tpl  tpl
 	 *
@@ -49,7 +42,7 @@ class HtmlView extends BaseHtmlView
 
 		$this->state        = $this->get('state');
 		$this->rankSelected = $this->get('rank');
-		$this->rankPath     = $this->ktemplate->getRankPath();
+		$this->rankPath     = KunenaFactory::getTemplate()->getRankPath();
 		$this->listRanks    = $this->get('RanksPaths');
 
 		$this->addToolbar();

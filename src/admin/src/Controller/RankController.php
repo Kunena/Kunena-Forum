@@ -14,13 +14,11 @@ namespace Kunena\Forum\Administrator\Controller;
 
 \defined('_JEXEC') or die();
 
-use Joomla\CMS\MVC\Controller\FormController;
-
 /**
  * Kunena Rank Controller
  *
  * @since   Kunena 3.0
  */
-class RankController extends FormController
+class RankController extends RanksController
 {
 }

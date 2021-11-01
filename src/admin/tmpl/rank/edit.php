@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 $iconPath = json_encode(Uri::root(true) . '/');
@@ -54,7 +55,7 @@ $wa->useScript('multiselect');
 							</td>
 							<td width="80%">
 								<input class="post" type="text" name="rankTitle"
-									   value="<?php echo isset($this->rank_selected->rankTitle) ? $this->rank_selected->rankTitle : '' ?>"/>
+									   value="<?php echo isset($this->rankSelected->rankTitle) ? $this->rankSelected->rankTitle : '' ?>"/>
 							</td>
 						</tr>
 						<tr>
@@ -68,14 +69,14 @@ $wa->useScript('multiselect');
 									:
 									?>
 									<img loading=lazy name="rankImage" src="" border="0"
-										 alt="<?php echo isset($this->rank_selected->rankTitle) ? $this->rank_selected->rankTitle : '' ?>"/>
+										 alt="<?php echo isset($this->rankSelected->rankTitle) ? $this->rankSelected->rankTitle : '' ?>"/>
 								<?php else
 									:
 									?>
 									<img loading=lazy name="rankImage"
-										 src="<?php echo $this->escape($this->ktemplate->getRankPath($this->rank_selected->rankImage, true)); ?>"
+										 src="<?php echo $this->escape(KunenaFactory::getTemplate()->getRankPath($this->rankSelected->rankImage, true)); ?>"
 										 border="0"
-										 alt="<?php echo isset($this->rank_selected->rankTitle) ? $this->rank_selected->rankTitle : 'rank' ?>"/>
+										 alt="<?php echo isset($this->rankSelected->rankTitle) ? $this->rankSelected->rankTitle : 'rank' ?>"/>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -85,7 +86,7 @@ $wa->useScript('multiselect');
 							</td>
 							<td>
 								<input class="post" type="text" name="rankMin"
-									   value="<?php echo isset($this->rank_selected) ? $this->rank_selected->rankMin : '1' ?>"/>
+									   value="<?php echo isset($this->rankSelected) ? $this->rankSelected->rankMin : '1' ?>"/>
 							</td>
 						</tr>
 						<tr>
@@ -94,7 +95,7 @@ $wa->useScript('multiselect');
 							</td>
 							<td>
 								<input
-										type="checkbox" <?php echo isset($this->rank_selected) && $this->rank_selected->rankSpecial ? 'checked="checked"' : '' ?>
+										type="checkbox" <?php echo isset($this->rankSelected) && $this->rankSelected->rankSpecial ? 'checked="checked"' : '' ?>
 										name="rankSpecial" value="1"/>
 							</td>
 						</tr>

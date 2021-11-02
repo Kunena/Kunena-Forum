@@ -247,7 +247,7 @@ class UserModel extends KunenaModel
 
 		foreach ($specialRanks as $ranks)
 		{
-			$yesnoRank [] = HTMLHelper::_('select.option', $ranks->rankId, $ranks->rankTitle);
+			$yesnoRank [] = HTMLHelper::_('select.option', $ranks->rankId, Text::_($ranks->rankTitle));
 		}
 
 		// Build special ranks select list

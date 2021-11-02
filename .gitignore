@@ -4,8 +4,9 @@ src/site/template/**/params.ini
 src/site/template/blue_eagle5
 src/media/kunena/avatars
 src/media/kunena/cache
-src/media/kunena/attachments/
-src/media/cache/*
+src/media/kunena/attachments
+src/media/kunena/emoticons
+src/media/cache
 src/site/template/aurelia/assets/js/**-min.js
 src/admin/templates.xml
 src/admin/kunena.xml
@@ -17,10 +18,10 @@ src/site/template/aurelia/config/template.xml
 # Builds
 build
 releases
-dist/*
+dist
 
 # JS/CSS Build #
-node_modules/
+node_modules
 /build/assets_tmp
 /scss-lint-report.xml
 
@@ -66,7 +67,7 @@ RoboFile.ini
 
 # composer
 composer.phar
-vendor/*
+vendor
 
 # Test related files
 tests/kunena*

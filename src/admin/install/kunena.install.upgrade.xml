@@ -73,8 +73,7 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE allow_polls allowPolls tinyint(4)   NOT NULL default '0';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE ttopic_ordering opicOrdering varchar(16)  NOT NULL default 'lastpost';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE allow_ratings allowRatings tinyint(4)   NOT NULL default '0';</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` DROP rank_id;</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` ADD rankId MEDIUMINT(8) NOT NULL AUTO_INCREMENT  FIRST,  ADD   PRIMARY KEY  (`rankId`);</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_id rankId mediumint(8) unsigned NOT NULL auto_increment;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_title rankTitle varchar(255) NOT NULL default '';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_min rankMin mediumint(8) unsigned NOT NULL default '0';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_special rankSpecial tinyint(1) unsigned   NOT NULL default '0';</query>

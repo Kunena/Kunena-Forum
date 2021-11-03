@@ -148,6 +148,8 @@ class HtmlView extends BaseHtmlView
 			{
 				foreach ($version as $action)
 				{
+					$modelInstall->processUpgradeXMLNode($action);
+
 					$app->enqueueMessage(Text::sprintf('COM_KUNENA_INSTALL_VERSION_UPGRADED', $vernum));
 				}
 

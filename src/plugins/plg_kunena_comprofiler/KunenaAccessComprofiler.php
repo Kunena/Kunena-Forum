@@ -144,8 +144,8 @@ class KunenaAccessComprofiler
 	/**
 	 * Get HTML list of the available groups
 	 *
-	 * @param   string  $accesstype  Access type.
-	 * @param   int     $category    Group id.
+	 * @param   string|null       $accesstype  Access type.
+	 * @param   KunenaCategory    $category    Group id.
 	 *
 	 * @return  array
 	 *
@@ -153,7 +153,7 @@ class KunenaAccessComprofiler
 	 *
 	 * @throws Exception
 	 */
-	public function getAccessOptions(string $accesstype, int $category): array
+	public function getAccessOptions($accesstype, KunenaCategory $category): array
 	{
 		$html = [];
 

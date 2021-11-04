@@ -19,6 +19,7 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
 
 /**
@@ -143,8 +144,8 @@ class KunenaAccessCommunity
 	/**
 	 * Get HTML list of the available groups
 	 *
-	 * @param   string  $accesstype  Access type.
-	 * @param   int     $category    Group id.
+	 * @param   string|null       $accesstype  Access type.
+	 * @param   KunenaCategory    $category    Group id.
 	 *
 	 * @return  array
 	 *
@@ -152,7 +153,7 @@ class KunenaAccessCommunity
 	 *
 	 * @throws Exception
 	 */
-	public function getAccessOptions(string $accesstype, int $category): array
+	public function getAccessOptions($accesstype, KunenaCategory $category): array
 	{
 		$html = [];
 

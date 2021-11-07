@@ -30,12 +30,12 @@ $announcement = $this->announcement;
     <td class="nowrap">
         <div class="overflow">
 			<?php echo HTMLHelper::_(
-				'kunenaforum.link',
-				$announcement->getUri(),
-				$announcement->displayField('title'),
-				null,
-				'follow'
-			); ?>
+	'kunenaforum.link',
+	$announcement->getUri(),
+	$announcement->displayField('title'),
+	null,
+	'follow'
+); ?>
         </div>
     </td>
 

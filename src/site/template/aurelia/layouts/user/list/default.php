@@ -84,15 +84,15 @@ $this->addScript('assets/js/search.js');
 				?>
 				<th class="col-md-2">
 					<?php echo HTMLHelper::_(
-						'kunenagrid.sort',
-						'COM_KUNENA_USERNAME',
-						'username',
-						$this->state->get('list.direction'),
-						$this->state->get('list.ordering'),
-						'',
-						'',
-						'kuserlist-form'
-					);
+					'kunenagrid.sort',
+					'COM_KUNENA_USERNAME',
+					'username',
+					$this->state->get('list.direction'),
+					$this->state->get('list.ordering'),
+					'',
+					'',
+					'kuserlist-form'
+				);
 					?>
 				</th>
 			<?php else
@@ -101,15 +101,15 @@ $this->addScript('assets/js/search.js');
 				?>
 				<th class="col-md-3">-->
 					<?php echo HTMLHelper::_(
-						'kunenagrid.sort',
-						'COM_KUNENA_REALNAME',
-						'name',
-						$this->state->get('list.direction'),
-						$this->state->get('list.ordering'),
-						'',
-						'',
-						'kuserlist-form'
-					);
+					'kunenagrid.sort',
+					'COM_KUNENA_REALNAME',
+					'name',
+					$this->state->get('list.direction'),
+					$this->state->get('list.ordering'),
+					'',
+					'',
+					'kuserlist-form'
+				);
 					?>
 				</th>
 			<?php endif;
@@ -121,15 +121,15 @@ $this->addScript('assets/js/search.js');
 				?>
 				<th class="col-md-1 center hidden-xs-down">
 					<?php echo HTMLHelper::_(
-						'kunenagrid.sort',
-						'COM_KUNENA_USRL_POSTS',
-						'posts',
-						$this->state->get('list.direction'),
-						$this->state->get('list.ordering'),
-						'',
-						'',
-						'kuserlist-form'
-					);
+					'kunenagrid.sort',
+					'COM_KUNENA_USRL_POSTS',
+					'posts',
+					$this->state->get('list.direction'),
+					$this->state->get('list.ordering'),
+					'',
+					'',
+					'kuserlist-form'
+				);
 					?>
 				</th>
 			<?php endif;
@@ -141,15 +141,15 @@ $this->addScript('assets/js/search.js');
 				?>
 				<th class="col-md-1 center hidden-xs-down">
 					<?php echo HTMLHelper::_(
-						'kunenagrid.sort',
-						'COM_KUNENA_USRL_KARMA',
-						'karma',
-						$this->state->get('list.direction'),
-						$this->state->get('list.ordering'),
-						'',
-						'',
-						'kuserlist-form'
-					);
+					'kunenagrid.sort',
+					'COM_KUNENA_USRL_KARMA',
+					'karma',
+					$this->state->get('list.direction'),
+					$this->state->get('list.ordering'),
+					'',
+					'',
+					'kuserlist-form'
+				);
 					?>
 				</th>
 			<?php endif;
@@ -200,15 +200,15 @@ $this->addScript('assets/js/search.js');
 				?>
 				<th class="col-md-2 hidden-xs-down">
 					<?php echo HTMLHelper::_(
-						'kunenagrid.sort',
-						'COM_KUNENA_USRL_LAST_LOGIN',
-						'lastvisitDate',
-						$this->state->get('list.direction'),
-						$this->state->get('list.ordering'),
-						'',
-						'',
-						'kuserlist-form'
-					);
+					'kunenagrid.sort',
+					'COM_KUNENA_USRL_LAST_LOGIN',
+					'lastvisitDate',
+					$this->state->get('list.direction'),
+					$this->state->get('list.ordering'),
+					'',
+					'',
+					'kuserlist-form'
+				);
 					?>
 				</th>
 			<?php endif;
@@ -219,15 +219,15 @@ $this->addScript('assets/js/search.js');
 				?>
 				<th class="col-md-1 center hidden-xs-down">
 					<?php echo HTMLHelper::_(
-						'kunenagrid.sort',
-						'COM_KUNENA_USRL_HITS',
-						'uhits',
-						$this->state->get('list.direction'),
-						$this->state->get('list.ordering'),
-						'',
-						'',
-						'kuserlist-form'
-					);
+					'kunenagrid.sort',
+					'COM_KUNENA_USRL_HITS',
+					'uhits',
+					$this->state->get('list.direction'),
+					$this->state->get('list.ordering'),
+					'',
+					'',
+					'kuserlist-form'
+				);
 					?>
 				</th>
 			<?php endif;

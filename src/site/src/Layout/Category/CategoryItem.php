@@ -139,7 +139,7 @@ class CategoryItem extends KunenaLayout
 			$actions['create'] = $this->subLayout('Widget/Button')
 				->setProperties(
 					['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
-					 'icon' => KunenaIcons::pencil(),]
+					 'icon' => KunenaIcons::pencil(), ]
 				);
 		}
 
@@ -151,8 +151,9 @@ class CategoryItem extends KunenaLayout
 			if ($this->me->exists())
 			{
 				$actions['markread'] = $this->subLayout('Widget/Button')
-					->setProperties(['url'  => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
-					                 'icon' => KunenaIcons::bookmark()]
+					->setProperties(
+						['url'  => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
+					                 'icon' => KunenaIcons::bookmark(), ]
 					);
 			}
 		}
@@ -168,7 +169,7 @@ class CategoryItem extends KunenaLayout
 				$actions['subscribe'] = $this->subLayout('Widget/Button')
 					->setProperties(
 						['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
-						 'icon' => KunenaIcons::email(),]
+						 'icon' => KunenaIcons::email(), ]
 					);
 			}
 			else
@@ -177,7 +178,7 @@ class CategoryItem extends KunenaLayout
 				$actions['unsubscribe'] = $this->subLayout('Widget/Button')
 					->setProperties(
 						['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
-						 'icon' => KunenaIcons::emailOpen(),]
+						 'icon' => KunenaIcons::emailOpen(), ]
 					);
 			}
 		}

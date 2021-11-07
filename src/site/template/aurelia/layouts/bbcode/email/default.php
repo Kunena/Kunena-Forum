@@ -25,5 +25,6 @@ echo HTMLHelper::_(
 	$this->escape($this->email),
 	$this->mailto,
 	$this->escape($this->text),
-	$this->escape($this->email), $this->mailto
+	$this->escape($this->email),
+	$this->mailto
 );

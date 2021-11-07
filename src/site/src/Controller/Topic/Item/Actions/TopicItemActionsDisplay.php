@@ -244,7 +244,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 		return KunenaLayout::factory('Widget/Button')
 			->setProperties(
 				['url'   => $url, 'name' => $name,
-				 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon,]
+				 'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon, ]
 			);
 	}
 }

@@ -244,6 +244,7 @@ class HtmlView extends KunenaView
 		$view   = $this->app->input->getWord('view', 'default');
 		$layout = $this->app->input->getWord('layout', 'default');
 
+		$this->breadcrumb = $pathway = $this->app->getPathway();
 		$active     = $this->app->getMenu()->getActive();
 
 		if (empty($this->pathway))

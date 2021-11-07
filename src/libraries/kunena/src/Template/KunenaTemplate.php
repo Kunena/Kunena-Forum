@@ -328,7 +328,8 @@ class KunenaTemplate
 			if ($this->config->activeMenuItem)
 			{
 				$id = htmlspecialchars($this->config->activeMenuItem, ENT_COMPAT, 'UTF-8');
-				$this->addScriptDeclaration("
+				$this->addScriptDeclaration(
+					"
 					document.addEventListener('DOMContentLoaded', () => {
 						document.querySelector('" . $id . "').classList.add('active');
 					});
@@ -343,7 +344,8 @@ class KunenaTemplate
 				if ($items)
 				{
 					$id = htmlspecialchars('.item-' . $items[0]->id, ENT_COMPAT, 'UTF-8');
-					$this->addScriptDeclaration("
+					$this->addScriptDeclaration(
+						"
 						document.addEventListener('DOMContentLoaded', () => {
 							document.querySelector('" . $id . "').classList.add('active');
 						});
@@ -538,7 +540,8 @@ class KunenaTemplate
 
 		if ($isForumActive)
 		{
-			$this->addScriptDeclaration('
+			$this->addScriptDeclaration(
+				'
 				document.addEventListener("DOMContentLoaded", () => {
 					document.querySelector(".current").classList.add("active");
 					document.querySelector(".current").classList.add("alias-parent-active");
@@ -606,7 +609,7 @@ class KunenaTemplate
 	{
 		$types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
 		$names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',];
+		          'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
 
 		$text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -1754,7 +1757,7 @@ HTML;
 
 		if (!is_file($inputFile))
 		{
-			$inputFile = KPATH_SITE . '/template/' . $this->name . '/' .  $inputFile;
+			$inputFile = KPATH_SITE . '/template/' . $this->name . '/' . $inputFile;
 		}
 
 		$outputDir = KPATH_MEDIA . "/cache/{$this->name}/css";
@@ -1765,7 +1768,7 @@ HTML;
 		}
 
 		$scss = new Compiler();
-		$scss->addImportPath(dirname($inputFile));
+		$scss->addImportPath(\dirname($inputFile));
 		$scss->setOutputStyle(OutputStyle::COMPRESSED);
 		$scssContent = file_get_contents($inputFile);
 		$style = $scss->compileString($scssContent, $inputFile);

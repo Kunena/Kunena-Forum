@@ -63,7 +63,8 @@ class pkg_kunena_languagesInstallerScript
 			return false;
 		}
 
-		/*if (KunenaForum::isDev())
+		/*
+		if (KunenaForum::isDev())
 		{
 			$app->enqueueMessage(sprintf('You have installed Kunena from GitHub, aborting!'), 'notice');
 

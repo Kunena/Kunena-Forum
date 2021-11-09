@@ -63,7 +63,7 @@ class KunenaCategoryUser extends CMSObject
 	public function __construct($category = 0, $user = null)
 	{
 		// Always fill empty data
-		$this->_db = Factory::getDBO();
+		$this->_db = Factory::getContainer()->get('db');
 
 		// Create the table object
 		$table = $this->getTable();

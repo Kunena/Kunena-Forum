@@ -62,7 +62,7 @@ class KunenaRead extends CMSObject
 		$topic = KunenaTopicHelper::get($topic);
 
 		// Always fill empty data
-		$this->_db = Factory::getDBO();
+		$this->_db = Factory::getContainer()->get('db');
 
 		// Create the table object
 		$table = $this->getTable();

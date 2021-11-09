@@ -125,7 +125,7 @@ class SmiliesController extends FormController
 	 */
 	public function save($key = null, $urlVar = null): void
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('db');
 
 		if (!Session::checkToken())
 		{
@@ -235,7 +235,7 @@ class SmiliesController extends FormController
 	 */
 	public function remove(): void
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('db');
 
 		if (!Session::checkToken('post'))
 		{

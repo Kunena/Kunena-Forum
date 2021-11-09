@@ -358,7 +358,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 			{
 				// Get pending messages.
 				$catlist = implode(',', array_keys($moderate));
-				$db      = Factory::getDbo();
+				$db      = Factory::getContainer()->get('db');
 				$query   = $db->getQuery(true);
 				$query->select('catid, COUNT(*) AS count')
 					->from($db->quoteName('#__kunena_messages'))

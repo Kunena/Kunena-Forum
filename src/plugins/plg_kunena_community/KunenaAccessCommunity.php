@@ -118,7 +118,7 @@ class KunenaAccessCommunity
 	{
 		if ($this->groups === false)
 		{
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get('db');
 			$query = $db->getQuery(true);
 			$query->select('id, CONCAT(\'c\', categoryid) AS parentid, name')
 				->update($db->quoteName('#__community_groups'))
@@ -195,7 +195,7 @@ class KunenaAccessCommunity
 	{
 		if ($this->categories === false)
 		{
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get('db');
 			$query = $db->getQuery(true);
 			$query->select('SELECT CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parentid, name')
 				->update($db->quoteName('#__community_groups_category'))
@@ -237,7 +237,7 @@ class KunenaAccessCommunity
 	 */
 	public function loadCategoryRoles(array $categories = null): array
 	{
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('g.memberid AS user_id, c.id AS category_id, ' . KunenaForum::ADMINISTRATOR . ' AS role')
 			->from($db->quoteName('#__kunena_categories', 'c'))
@@ -281,7 +281,7 @@ class KunenaAccessCommunity
 
 		if (KunenaFactory::getUser($userid)->exists())
 		{
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get('db');
 			$query = $db->getQuery(true);
 			$query->select('c.id')
 				->from($db->quoteName('#__kunena_categories', 'c'))
@@ -331,7 +331,7 @@ class KunenaAccessCommunity
 		$category = $topic->getCategory();
 		$userlist = implode(',', $userids);
 
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('c.id')
 			->from($db->quoteName('#__kunena_categories', 'c'))

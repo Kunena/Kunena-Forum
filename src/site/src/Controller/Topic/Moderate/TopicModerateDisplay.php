@@ -149,7 +149,7 @@ class TopicModerateDisplay extends KunenaControllerDisplay
 			$this->me         = Factory::getApplication()->getIdentity();
 
 			// Get thread and reply count from current message:
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get('db');
 			$query = $db->getQuery(true);
 			$query->select('COUNT(mm.id) AS replies')
 				->from($db->quoteName('#__kunena_messages', 'm'))

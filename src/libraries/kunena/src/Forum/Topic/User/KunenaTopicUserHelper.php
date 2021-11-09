@@ -158,7 +158,7 @@ abstract class KunenaTopicUserHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = Factory::getDBO();
+		$db     = Factory::getContainer()->get('db');
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_topics'))
@@ -228,7 +228,7 @@ abstract class KunenaTopicUserHelper
 
 		$idlist = implode(',', $ids);
 
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('topic_id, user_id')
 			->from($db->quoteName('#__kunena_user_topics'))
@@ -273,7 +273,7 @@ abstract class KunenaTopicUserHelper
 	public static function move(KunenaTopic $old, KunenaTopic $new): bool
 	{
 		// Update database
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_user_topics'))
 			->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
@@ -322,7 +322,7 @@ abstract class KunenaTopicUserHelper
 	 */
 	public static function merge(KunenaTopic $old, KunenaTopic $new): bool
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get('db');
 
 		// Move all user topics which do not exist in new topic
 		$queries[] = "UPDATE #__kunena_user_topics AS ut
@@ -383,7 +383,7 @@ abstract class KunenaTopicUserHelper
 		}
 
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
-		$db     = Factory::getDBO();
+		$db     = Factory::getContainer()->get('db');
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_topics'))
@@ -442,7 +442,7 @@ abstract class KunenaTopicUserHelper
 	 */
 	public static function recount($topicids = false, $start = 0, $end = 0)
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get('db');
 
 		if (\is_array($topicids))
 		{

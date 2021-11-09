@@ -40,7 +40,7 @@ class KunenaSampleData
 		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
 		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
-		$db       = Factory::getDBO();
+		$db       = Factory::getContainer()->get('db');
 		$posttime = new Date;
 		$my       = Factory::getApplication()->getIdentity();
 		$queries  = [];

@@ -185,7 +185,7 @@ class SearchModel extends KunenaModel
 	 */
 	protected function buildWhere()
 	{
-		$db           = Factory::getDBO();
+		$db           = Factory::getContainer()->get('db');
 		$querystrings = [];
 
 		foreach ($this->getSearchWords() as $searchword)

@@ -181,7 +181,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 */
 	public function getTopHits($limit = 0): array
 	{
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('cu.user_id AS id, cu.hits AS count');
 		$query->from($db->quoteName('#__comprofiler', 'cu'));

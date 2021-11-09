@@ -220,7 +220,7 @@ abstract class KunenaTopicHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = Factory::getDBO();
+		$db     = Factory::getContainer()->get('db');
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_topics'))
@@ -289,7 +289,7 @@ abstract class KunenaTopicHelper
 	public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = []): array
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$db     = Factory::getDBO();
+		$db     = Factory::getContainer()->get('db');
 		$config = KunenaFactory::getConfig();
 
 		if ($limit < 1 && empty($params['nolimit']))
@@ -528,7 +528,7 @@ abstract class KunenaTopicHelper
 		// Delete topics
 		$queries[] = "DELETE FROM #__kunena_topics WHERE id IN ({$idlist})";
 
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get('db');
 
 		foreach ($queries as $query)
 		{
@@ -576,7 +576,7 @@ abstract class KunenaTopicHelper
 			$idlist = (int) $ids;
 		}
 
-		$db        = Factory::getDBO();
+		$db        = Factory::getContainer()->get('db');
 		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread IN ({$idlist})";
 		$queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id IN ({$idlist})";
 
@@ -624,7 +624,7 @@ abstract class KunenaTopicHelper
 	 */
 	public static function recount($ids = false, $start = 0, $end = 0)
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get('db');
 
 		if (\is_array($ids))
 		{
@@ -796,7 +796,7 @@ abstract class KunenaTopicHelper
 		{
 			$idstr = implode(",", $ids);
 
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get('db');
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName('m.thread') . ' AS ' . $db->quoteName('id') . ', MIN(' . $db->quoteName('m.id') . ') AS ' . $db->quoteName('lastread') . ', SUM(1) AS ' . $db->quoteName('unread'))
 				->from($db->quoteName('#__kunena_messages', 'm'))

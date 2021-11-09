@@ -230,7 +230,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			parent::__construct($properties);
 		}
 
-		$this->_db = Factory::getDBO();
+		$this->_db = Factory::getContainer()->get('db');
 	}
 
 	/**
@@ -634,7 +634,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			if (!$exists || $this->first_post_id == $message->id)
 			{
 				// If message got deleted and was cached, we need to find new first post
-				$db    = Factory::getDBO();
+				$db    = Factory::getContainer()->get('db');
 				$query = $this->_db->getQuery(true);
 				$query->select('*')
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
@@ -667,7 +667,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			if (!$exists || $this->last_post_id == $message->id)
 			{
 				// If topic got deleted and was cached, we need to find new last post
-				$db    = Factory::getDBO();
+				$db    = Factory::getContainer()->get('db');
 				$query = $this->_db->getQuery(true);
 				$query->select('*')
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
@@ -821,7 +821,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		// NOTE: shadow topic doesn't exist, DO NOT DELETE OR CHANGE ANY EXTERNAL INFORMATION
 		if ($this->moved_id == 0)
 		{
-			$db = Factory::getDBO();
+			$db = Factory::getContainer()->get('db');
 
 			// Delete user topics
 			$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id={$db->quote($this->id)}";
@@ -1980,7 +1980,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		// Clear authentication cache
 		$this->_authfcache = $this->_authccache = $this->_authcache = [];
 
-		$db        = Factory::getDBO();
+		$db        = Factory::getContainer()->get('db');
 		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread={$db->quote($this->id)}";
 		$queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id={$db->quote($this->id)}";
 

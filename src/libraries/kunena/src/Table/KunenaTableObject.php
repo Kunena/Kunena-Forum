@@ -676,7 +676,7 @@ abstract class KunenaTableObject
 	 */
 	public static function &loadInstances(QueryInterface $query): array
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('db');
 		$db->setQuery($query);
 		$items = (array) $db->loadObjectList('id', \get_called_class());
 
@@ -1075,7 +1075,7 @@ abstract class KunenaTableObject
 			return false;
 		}
 
-		static::$db = Factory::getDBO();
+		static::$db = Factory::getContainer()->get('db');
 		static::$db->setQuery('SELECT COUNT(' . static::$db->quoteName('userid') . ')' . ' FROM ' . static::$db->quoteName('#__session') . ' WHERE ' . static::$db->quoteName('userid') . ' = ' . static::$db->quote((int) $against));
 
 		// If a session exists for the user then it is checked out.

@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Install\KunenaInstallerException;
  */
 function kunena_600_2019_07_21_datetimeupdatevalue($parent)
 {
-	$db = Factory::getDbo();
+	$db = Factory::getContainer()->get('db');
 
 	$query = "UPDATE `#__kunena_announcement` SET created='1000-01-01 00:00:00' WHERE created='null'";
 	$db->setQuery($query);

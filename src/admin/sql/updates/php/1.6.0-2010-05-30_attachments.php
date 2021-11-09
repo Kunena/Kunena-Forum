@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Install\KunenaInstallerException;
  */
 function kunena_160_2010_05_30_attachments($parent)
 {
-	$db = Factory::getDbo();
+	$db = Factory::getContainer()->get('db');
 
 	// First check if attachments table has legacy field
 	$fields = $db->getTableColumns('#__kunena_attachments');

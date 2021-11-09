@@ -112,7 +112,7 @@ abstract class KunenaMenuFix
 	protected static function load(): void
 	{
 		// Initialise variables.
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('db');
 
 		$query = $db->getQuery(true);
 		$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level, m.language');

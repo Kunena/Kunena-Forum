@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Install\KunenaInstallerException;
  */
 function kunena_200_2012_06_10_newindication($parent)
 {
-	$db  = Factory::getDbo();
+	$db  = Factory::getContainer()->get('db');
 	$now = Factory::getDate()->toUnix();
 
 	// First remove old session information (not used anyway, speeds up conversion)

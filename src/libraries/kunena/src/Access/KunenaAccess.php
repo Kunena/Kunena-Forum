@@ -181,7 +181,7 @@ class KunenaAccess
 		}
 
 		// Load native category moderators and administrators
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true)
 			->select($db->quoteName(['user_id', 'category_id', 'role']))
 			->from($db->quoteName('#__kunena_user_categories'))
@@ -918,7 +918,7 @@ jQuery(document).ready(function ($) {
 			$adminlist = [];
 		}
 
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('u.id, u.name, u.username, u.email')
 			->from('#__users AS u')
@@ -988,7 +988,7 @@ jQuery(document).ready(function ($) {
 				$query->where("u.sendEmail = 1");
 			}
 
-			$db = Factory::getDBO();
+			$db = Factory::getContainer()->get('db');
 			$db->setQuery($query);
 
 			try
@@ -1017,7 +1017,7 @@ jQuery(document).ready(function ($) {
 	public function loadSubscribers(KunenaTopic $topic, $type)
 	{
 		$category = $topic->getCategory();
-		$db       = Factory::getDBO();
+		$db       = Factory::getContainer()->get('db');
 		$query    = [];
 
 		if ($type & self::TOPIC_SUBSCRIPTION)

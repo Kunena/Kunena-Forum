@@ -67,7 +67,7 @@ class CpanelController extends FormController
 		if (KunenaForum::installed() && Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_installer'))
 		{
 			$updateSite = 'https://update.kunena.org/%';
-			$db         = Factory::getDbo();
+			$db         = Factory::getContainer()->get('db');
 
 			$query = $db->getQuery(true)
 				->select('*')
@@ -161,7 +161,7 @@ class CpanelController extends FormController
 	 */
 	public function display($cachable = false, $urlparams = false): void
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('db');
 
 		// Enable Kunena updates if they were disabled (but only every 6 hours or logout/login).
 		$now       = time();

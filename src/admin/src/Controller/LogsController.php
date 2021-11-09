@@ -84,7 +84,7 @@ class LogsController extends FormController
 		$days      = $this->app->input->getInt('clean_days', 0);
 		$timestamp = new Date('now -' . $days . ' days');
 
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true)
 			->delete('#__kunena_logs')
 			->where('time < ' . $timestamp->toUnix());

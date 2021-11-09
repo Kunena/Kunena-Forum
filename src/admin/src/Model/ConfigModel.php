@@ -1743,7 +1743,7 @@ class ConfigModel extends AdminModel
 		$lists ['componentUrl']    = preg_replace('|/+|', '/', Uri::root() . ($config->get('sef_rewrite') ? '' : 'index.php') . ($config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
 
 		// Added new options into Kunena 4.0.0
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('version')->from('#__kunena_version')->order('id');
 		$query->setLimit(1);

@@ -354,7 +354,7 @@ class KunenaLog
 	{
 		if (!empty(static::$entries))
 		{
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get('db');
 			$query = $db->getQuery(true)
 				->insert($db->quoteName('#__kunena_logs'))
 				->columns('type, user_id, category_id, topic_id, target_user, ip, time, operation, data');

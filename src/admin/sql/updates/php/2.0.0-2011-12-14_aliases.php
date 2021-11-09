@@ -131,7 +131,7 @@ function kunena_200_2011_12_14_aliases($parent)
 function kCreateAlias($type, $item, $alias, $state = 0)
 {
 	$state = (int) $state;
-	$db    = Factory::getDbo();
+	$db    = Factory::getContainer()->get('db');
 	$query = "INSERT IGNORE INTO `#__kunena_aliases` (alias, type, item, state) VALUES ({$db->quote($alias)},{$db->quote($type)},{$db->quote($item)},{$db->quote($state)})";
 	$db->setQuery($query);
 	$success = $db->execute() && $db->getAffectedRows();
@@ -158,7 +158,7 @@ function kCreateAlias($type, $item, $alias, $state = 0)
 function kCreateCategoryAlias($category, $alias, $state = 0)
 {
 	$state = (int) $state;
-	$db    = Factory::getDbo();
+	$db    = Factory::getContainer()->get('db');
 	$query = "INSERT IGNORE INTO `#__kunena_aliases` (alias, type, item) VALUES ({$db->quote($alias)},'catid',{$db->quote($category->id)})";
 	$db->setQuery($query);
 	$success = $db->execute() && $db->getAffectedRows();

@@ -564,7 +564,7 @@ class KunenaUsers extends KunenaTable
 		}
 
 		// Load the user data.
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*')
 			->from($db->quoteName('#__users', 'u'))

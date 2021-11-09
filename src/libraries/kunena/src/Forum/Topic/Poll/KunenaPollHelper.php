@@ -71,7 +71,7 @@ abstract class KunenaPollHelper
 	 */
 	public static function recount(): void
 	{
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_topics', 'a'))
 			->innerJoin($db->quoteName('#__kunena_polls', 'b') . ' ON ' . $db->quoteName('a.id') . ' = ' . $db->quoteName('b.threadid'))

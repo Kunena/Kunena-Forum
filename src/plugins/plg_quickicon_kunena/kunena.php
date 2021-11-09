@@ -66,7 +66,7 @@ class plgQuickiconKunena extends CMSPlugin
 		if (KunenaForum::installed() && $this->app->getIdentity()->authorise('core.manage', 'com_installer'))
 		{
 			$updateSite = 'https://update.kunena.org/%';
-			$db         = Factory::getDbo();
+			$db         = Factory::getContainer()->get('db');
 
 			$query = $db->getQuery(true)
 				->select('*')

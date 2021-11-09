@@ -1675,7 +1675,7 @@ class KunenaConfig extends CMSObject
 	 */
 	public function load(): void
 	{
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_configuration'))
@@ -1755,7 +1755,7 @@ class KunenaConfig extends CMSObject
 	 */
 	public function save(): void
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get('db');
 
 		// Perform custom validation of config data before we write it.
 		$this->check();

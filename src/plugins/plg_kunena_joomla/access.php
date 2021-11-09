@@ -122,7 +122,7 @@ class KunenaAccessJoomla
 		if (!isset($groups[$accesstype]))
 		{
 			// Cache all group names.
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get('db');
 			$query = $db->getQuery(true);
 			$query->select('id, title');
 
@@ -375,7 +375,7 @@ class KunenaAccessJoomla
 	protected function getUsersByGroup($groupId, $recursive = false, $inUsers = []): array
 	{
 		// Get a database object.
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('db');
 
 		$rec = $recursive ? '>=' : '=';
 
@@ -557,7 +557,7 @@ class KunenaAccessJoomla
 		if (empty(self::$viewLevels))
 		{
 			// Get a database object.
-			$db = Factory::getDBO();
+			$db = Factory::getContainer()->get('db');
 
 			// Build the base query.
 			$query = $db->getQuery(true);

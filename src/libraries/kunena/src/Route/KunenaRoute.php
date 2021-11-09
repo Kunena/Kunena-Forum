@@ -963,7 +963,7 @@ abstract class KunenaRoute
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		$app   = Factory::getApplication();
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_aliases'))

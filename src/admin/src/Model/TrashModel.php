@@ -189,7 +189,7 @@ class TrashModel extends KunenaModel
 	 */
 	protected function internalGetMessages(): array
 	{
-		$db   = Factory::getDBO();
+		$db   = Factory::getContainer()->get('db');
 		$join = [];
 
 		$query = $db->getQuery(true)

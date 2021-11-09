@@ -76,7 +76,7 @@ class TopicModerate extends KunenaLayout
 		$options[] = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_MODERATION_ENTER_TOPIC'));
 
 		// Then list a few topics.
-		$db     = Factory::getDbo();
+		$db     = Factory::getContainer()->get('db');
 		$params = [
 			'orderby' => 'tt.last_post_time DESC',
 			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ", ];

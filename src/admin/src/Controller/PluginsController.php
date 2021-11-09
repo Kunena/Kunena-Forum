@@ -128,7 +128,7 @@ class PluginsController extends AdminController
 			$cids = implode(',', $cid);
 
 			// Retrieve the name of plugin extension from extensions table to check before if the third party extension exist
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get('db');
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName(['element', 'extension_id']));
 			$query->from($db->quoteName('#__extensions'));

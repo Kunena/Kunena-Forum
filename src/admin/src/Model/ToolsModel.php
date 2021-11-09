@@ -306,7 +306,7 @@ class ToolsModel extends AdminModel
 	public function getSystemReportAnonymous(): string
 	{
 		$this->app = Factory::getApplication();
-		$kunenaDB  = Factory::getDBO();
+		$kunenaDB  = Factory::getContainer()->get('db');
 
 		$this->getPhpExtensions();
 		$this->getReportData();
@@ -586,7 +586,7 @@ class ToolsModel extends AdminModel
 	 */
 	protected function internalGetJoomlaTemplate()
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get('db');
 
 		// Get Joomla! frontend assigned template
 		$query = $db->getQuery(true);
@@ -692,7 +692,7 @@ class ToolsModel extends AdminModel
 	 */
 	protected function internalGetTablesCollation(): string
 	{
-		$kunenaDB = Factory::getDBO();
+		$kunenaDB = Factory::getContainer()->get('db');
 
 		// Check each table in the database if the collation is on utf8
 		$tablesList = $kunenaDB->getTableList();
@@ -946,7 +946,7 @@ class ToolsModel extends AdminModel
 	 */
 	public function getSystemReport(): string
 	{
-		$kunenaDB  = Factory::getDBO();
+		$kunenaDB  = Factory::getContainer()->get('db');
 		$this->app = Factory::getApplication();
 
 		$this->getReportData();

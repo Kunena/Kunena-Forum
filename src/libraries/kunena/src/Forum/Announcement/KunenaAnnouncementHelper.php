@@ -125,7 +125,7 @@ abstract class KunenaAnnouncementHelper
 	 */
 	public static function getAnnouncements($start = 0, $limit = 1, $filter = true): array
 	{
-		$db      = Factory::getDBO();
+		$db      = Factory::getContainer()->get('db');
 		$nowDate = $db->quote(Factory::getDate()->toSql());
 
 		if ($filter)
@@ -191,7 +191,7 @@ abstract class KunenaAnnouncementHelper
 	 */
 	public static function getCount($filter = true): int
 	{
-		$db       = Factory::getDBO();
+		$db       = Factory::getContainer()->get('db');
 		$nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
 		$nowDate  = $db->quote(Factory::getDate()->toSql());
 

@@ -160,7 +160,7 @@ abstract class KunenaTopicUserReadHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = Factory::getDBO();
+		$db     = Factory::getContainer()->get('db');
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_read'))
@@ -208,7 +208,7 @@ abstract class KunenaTopicUserReadHelper
 	public static function move(KunenaTopic $old, KunenaTopic $new): bool
 	{
 		// Update database
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_user_read'))
 			->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
@@ -258,7 +258,7 @@ abstract class KunenaTopicUserReadHelper
 	 */
 	public static function merge(KunenaTopic $old, KunenaTopic $new): bool
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get('db');
 
 		// Move all user topics which do not exist in new topic
 		$queries[] = "UPDATE #__kunena_user_read AS ur
@@ -317,7 +317,7 @@ abstract class KunenaTopicUserReadHelper
 		}
 
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
-		$db     = Factory::getDBO();
+		$db     = Factory::getContainer()->get('db');
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_read'))
@@ -360,7 +360,7 @@ abstract class KunenaTopicUserReadHelper
 	 */
 	public static function recount(): bool
 	{
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__user_read', 'ur'))
 			->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('ur.topic_id'))
@@ -393,7 +393,7 @@ abstract class KunenaTopicUserReadHelper
 	public static function purge($days = 365): bool
 	{
 		// Purge items that are older than x days (defaulting to a year)
-		$db        = Factory::getDBO();
+		$db        = Factory::getContainer()->get('db');
 		$timestamp = Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
 		$query     = $db->getQuery(true);
 		$query->delete($db->quoteName('#__kunena_user_read'))

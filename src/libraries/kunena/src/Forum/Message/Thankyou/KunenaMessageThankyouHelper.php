@@ -110,7 +110,7 @@ abstract class KunenaMessageThankyouHelper
 
 		$idlist = implode(',', $ids);
 
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_thankyou'))
@@ -156,7 +156,7 @@ abstract class KunenaMessageThankyouHelper
 	 */
 	public static function getTotal($starttime = null, $endtime = null): int
 	{
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$where = [];
 
 		if (!empty($starttime))
@@ -214,7 +214,7 @@ abstract class KunenaMessageThankyouHelper
 			$field = 'userid';
 		}
 
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$query = $db->getQuery(true);
 		$query->select('s.userid, count(s.' . $field . ') AS countid, u.username')
 			->from($db->quoteName('#__kunena_thankyou', 's'))
@@ -251,7 +251,7 @@ abstract class KunenaMessageThankyouHelper
 	 */
 	public static function getTopMessages($limitstart = 0, $limit = 10): array
 	{
-		$db         = Factory::getDBO();
+		$db         = Factory::getContainer()->get('db');
 		$categories = KunenaCategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = $db->getQuery(true);
@@ -295,7 +295,7 @@ abstract class KunenaMessageThankyouHelper
 	 */
 	public static function getUserMessages(int $userid, $target = true, $limitstart = 0, $limit = 10): array
 	{
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get('db');
 		$field = 'targetuserid';
 
 		if (!$target)
@@ -340,7 +340,7 @@ abstract class KunenaMessageThankyouHelper
 	 */
 	public static function recountThankyou()
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get('db');
 
 		// Users who have no thank yous, set thankyou count to 0
 		$query = $db->getQuery(true);
@@ -375,7 +375,7 @@ abstract class KunenaMessageThankyouHelper
 	 */
 	public static function recount()
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get('db');
 
 		// Update user thankyou count
 		$query    = $db->getQuery(true);

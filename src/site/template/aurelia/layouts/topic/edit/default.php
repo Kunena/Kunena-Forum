@@ -365,7 +365,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
 			<?php endif; ?>
 
 			<?php echo $this->subLayout('Widget/Editor')
-				->setLayout('ckeditor')->set('message', $this->message)
+				->setLayout($this->editor_type)->set('message', $this->message)
 				->set('config', $this->config)
 				->set('doc', $this->doc)
 				->set('allow_polls', $this->topic->getCategory()->allowPolls)

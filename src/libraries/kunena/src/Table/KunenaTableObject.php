@@ -1100,4 +1100,4 @@ abstract class KunenaTableObject
 	}
 }
 
-KunenaTableObject::setDbo(Factory::getDbo());
+KunenaTableObject::setDbo(Factory::getContainer()->get('db'));

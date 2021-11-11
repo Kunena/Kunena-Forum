@@ -447,20 +447,20 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="height">Instragram id:</label> ' +
-					'<input type="text" id="instagram_id" size="10" />' +
+					'<label for="height">Soundcloud id:</label> ' +
+					'<input type="text" id="soundcloud_id" size="10" />' +
 					'</div>' +
 					'<div>' +
-					'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+					'<input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" />' +
 					'</div>' +
 					'</div>'
 				);
 	
 				$content.find('.button').on('click', function (e) {
-					var instagram_id = $content.find('#instagram_id').val();
+					var soundcloud_id = $content.find('#soundcloud_id').val();
 	
-					if (instagram_id)
-						editor.insert('[soundcloud]' + instagram_id + '[/soundcloud]');
+					if (soundcloud_id)
+						editor.insert('[soundcloud]' + soundcloud_id + '[/soundcloud]');
 	
 					editor.closeDropDown(true);
 					e.preventDefault();
@@ -474,7 +474,7 @@ jQuery(document).ready(function ($) {
 			txtExec: function (caller) {
 				sceditor.command.get('soundcloud')._dropDown(this, caller);
 			},
-			tooltip: 'Insert instagram item',
+			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD'),
 		});
 	
 	
@@ -533,20 +533,20 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="height">Instragram id:</label> ' +
-					'<input type="text" id="instagram_id" size="10" />' +
+					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY_ITEM_ID') + '</label> ' +
+					'<input type="text" id="ebay_id" size="10" />' +
 					'</div>' +
 					'<div>' +
-					'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+					'<input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" />' +
 					'</div>' +
 					'</div>'
 				);
 	
 				$content.find('.button').on('click', function (e) {
-					var instagram_id = $content.find('#instagram_id').val();
+					var ebay_id = $content.find('#ebay_id').val();
 	
-					if (instagram_id)
-						editor.insert('[ebay]' + instagram_id + '[/ebay]');
+					if (ebay_id)
+						editor.insert('[ebay]' + ebay_id + '[/ebay]');
 	
 					editor.closeDropDown(true);
 					e.preventDefault();
@@ -560,7 +560,7 @@ jQuery(document).ready(function ($) {
 			txtExec: function (caller) {
 				sceditor.command.get('ebay')._dropDown(this, caller);
 			},
-			tooltip: 'Insert instagram item',
+			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY'),
 		});
 	
 		// Add bbcode instagram
@@ -618,11 +618,11 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="height">Instragram id:</label> ' +
+					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_INSTAGRAM_ID') + '</label> ' +
 					'<input type="text" id="instagram_id" size="10" />' +
 					'</div>' +
 					'<div>' +
-					'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+					'<input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" />' +
 					'</div>' +
 					'</div>'
 				);
@@ -645,7 +645,7 @@ jQuery(document).ready(function ($) {
 			txtExec: function (caller) {
 				sceditor.command.get('instagram')._dropDown(this, caller);
 			},
-			tooltip: 'Insert instagram item',
+			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_INSTAGRAM'),
 		});
 	
 		// Add bbcode twitter
@@ -703,11 +703,11 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="height">Tweet id:</label> ' +
+					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_TWITTER_ID') + '</label> ' +
 					'<input type="text" id="tweet_id" size="10" />' +
 					'</div>' +
 					'<div>' +
-					'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+					'<input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" />' +
 					'</div>' +
 					'</div>'
 				);
@@ -730,7 +730,7 @@ jQuery(document).ready(function ($) {
 			txtExec: function (caller) {
 				sceditor.command.get('twitter')._dropDown(this, caller);
 			},
-			tooltip: 'Insert a tweet',
+			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_TWITTER'),
 		});
 	
 		// Add bbcode maps
@@ -788,16 +788,16 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="map">Type :</label> ' +
+					'<label for="map">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE') + '</label> ' +
 					'<select name="type" id="type-select">' +
-					'<option value="hybrid">Hybrid</option>' +
-					'<option value="roadmap">Roadmap</option>' +
-					'<option value="terrain">Terrain</option>' +
-					'<option value="satelite">Satelite</option>' +
+					'<option value="hybrid">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_HYBRID') + '</option>' +
+					'<option value="roadmap">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_ROADMAP') + '</option>' +
+					'<option value="terrain">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_TERRAIN') + '</option>' +
+					'<option value="satelite">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_SATELITE') + '</option>' +
 					'</select>' +
 					'</div>' +
 					'<div>' +
-					'<label for="width">Zoom level:</label> ' +
+					'<label for="width">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_ZOOM_LEVEL') + '</label> ' +
 					'<select name="zoom" id="zoom-select">' +
 					'<option value="2">2</option>' +
 					'<option value="4">4</option>' +
@@ -810,11 +810,11 @@ jQuery(document).ready(function ($) {
 					'</select>' +
 					'</div>' +
 					'<div>' +
-					'<label for="height">City:</label> ' +
+					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_CITY') + '</label> ' +
 					'<input type="text" id="city" size="10" />' +
 					'</div>' +
 					'<div>' +
-					'<input type="button" class="button" value="' + editor._('Insert') + '" />' +
+					'<input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" />' +
 					'</div>' +
 					'</div>'
 				);
@@ -845,7 +845,7 @@ jQuery(document).ready(function ($) {
 			txtExec: function (caller) {
 				sceditor.command.get('map')._dropDown(this, caller);
 			},
-			tooltip: 'Insert a map',
+			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP'),
 		});
 	
 		// Add video command
@@ -881,14 +881,26 @@ jQuery(document).ready(function ($) {
 				$content = $(
 					'<div>' +
 					'<div>' +
-					'<label for="videotype">' + editor._('Video Type:') + '</label> ' +
+					'<label for="videotype">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_TYPE') + '</label> ' +
 					'<select id="videotype">' + videoOpts + '</select>' +
 					'</div>' +
 					'<div>' +
-					'<label for="link">' + editor._('Video URL:') + '</label> ' +
+					'<label for="link">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_URL') + '</label> ' +
 					'<input type="text" id="videourl" placeholder="https://" />' +
 					'</div>' +
-					'<div><input type="button" class="button" value="' + editor._('Insert') + '" /></div>' +
+					'<div>' +
+					'<label for="link">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_SIZE') + '</label> ' +
+					'<input type="text" id="videosize" />' +
+					'</div>' +
+					'<div>' +
+					'<label for="link">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_HEIGHT') + '</label> ' +
+					'<input type="text" id="videoheight" />' +
+					'</div>' +
+					'<div>' +
+					'<label for="link">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_WIDTH') + '</label> ' +
+					'<input type="text" id="videowifth" />' +
+					'</div>' +
+					'<div><input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" /></div>' +
 					'</div>'
 				);
 	
@@ -911,7 +923,75 @@ jQuery(document).ready(function ($) {
 			txtExec: function (caller) {
 				sceditor.command.get('video')._dropDown(this, caller);
 			},
-			tooltip: 'Insert a video'
+			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO')
+		});
+
+		// Add poll command
+		sceditor.formats.bbcode.set('poll', {
+			allowsEmpty: true,
+			allowedChildren: ['#', '#newline'],
+			tags: {
+				iframe: {
+					'data-kunena-vt': null
+				}
+			},
+			format: function ($element, content) {
+				return '[video=' + $($element).data('kunena-vt') + ']' + $($element).data('kunena-vsrc') + '[/video]';
+			},
+			html: function (token, attrs, content) {
+				var params = kunenaCmd.video[Object.keys(kunenaCmd.video).find(key => key.toLowerCase() === attrs.defaultattr)];
+				var url;
+	
+				if (url) {
+					return params['html'].replace('{url}', url).replace('{src}', content).replace('{type}', attrs.defaultattr);
+				}
+				return sceditor.escapeEntities(token.val + content + (token.closing ? token.closing.val : ''));
+			}
+		});
+	
+		sceditor.command.set('poll', {
+			_dropDown: function (editor, caller) {
+				var $content;
+	
+				$content = $(
+					'<div>' +
+					'<div>' +
+					'<label for="polltitle">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_POLL_TITLE') + '</label> ' +
+					'<input type="text" id="polltitle" />' +
+					'</div>' +
+					'<div>' +
+					'<button type="button" class="btn btn-primary btn-sm" name="addpolloption">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_BUTTON_ADD_POLL_OPTION') + '</button> ' +
+					'</div>' +
+					'<div>' +
+					'<button type="button" class="btn btn-primary btn-sm" name="removepolloption">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_BUTTON_REMOVE_POLL_OPTION') + '</button> ' +
+					'</div>' +
+					'<div>' +
+					'<label for="polllifespan">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_POLL_LIFE_SPAN') + '</label> ' +
+					'<input type="text" id="polllifespan" />' +
+					'</div>' +
+					'<div><input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" /></div>' +
+					'</div>'
+				);
+	
+				$content.find('.button').on('click', function (e) {
+					var polltitle = $content.find('#polltitle').val();
+	
+					if (polltitle)
+						editor.insert('[tweet]' + tweet_id + '[/tweet]');
+	
+					editor.closeDropDown(true);
+					e.preventDefault();
+				});
+	
+				editor.createDropDown(caller, 'insertpoll', $content.get(0));
+			},
+			exec: function (caller) {
+				sceditor.command.get('poll')._dropDown(this, caller);
+			},
+			txtExec: function (caller) {
+				sceditor.command.get('poll')._dropDown(this, caller);
+			},
+			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_POLL')
 		});
 
 		var textarea = document.getElementById('message');
@@ -919,11 +999,11 @@ jQuery(document).ready(function ($) {
 		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 		{
 			// TODO: need to change the values(bold, italic) from template parameters to be handled here
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,twitter,instagram,ebay,soundcloud|source';
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,twitter,instagram,ebay,soundcloud,poll|source';
 		}
 		else
 		{
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,twitter,instagram,ebay,soundcloud|source';
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,twitter,instagram,ebay,soundcloud,poll|source';
 		}
 	
 		var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');

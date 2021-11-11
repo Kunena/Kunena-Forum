@@ -16,10 +16,10 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\Uri\Uri;
 
-$this->addScript('sceditor.js');
-$this->addScript('sceditor.format.bbcode.js');
-$this->addStyleSheet('themes/default.css');
-$this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/themes/content/default.css');
+$this->addScript('sceditor/sceditor.js');
+$this->addScript('sceditor/bbcode.js');
+$this->addStyleSheet('sceditor/themes/default.css');
+$this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
 
 // $this->getAllowedtoUseLinksImages();
 

@@ -47,9 +47,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	protected $versions = [
 		'PHP'     => [
 			'8.0' => '8.0.0',
-			'7.4' => '7.4.0',
-			'7.3' => '7.3.5',
-			'0'   => '7.3.5', // Preferred version
+			'7.4' => '7.4.1',
+			'0'   => '7.4.1', // Preferred version
 		],
 		'MySQL'   => [
 			'8.0' => '8.0.0',

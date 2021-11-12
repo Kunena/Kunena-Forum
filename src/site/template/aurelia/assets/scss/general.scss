@@ -1382,3 +1382,7 @@ a .rounded,
 .btn-group {
   margin-bottom: 0;
 }
+
+body.modal-open {
+  overflow-y: scroll !important;
+}

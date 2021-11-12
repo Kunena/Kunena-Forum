@@ -217,6 +217,8 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
 		$this->headerText = Text::_('COM_KUNENA_NEW_TOPIC');
 
+		$this->editor_type = $this->ktemplate->params->get('editor_type');
+
 		/** @var HtmlDocument $doc */
 		$this->doc = Factory::getApplication()->getDocument();
 		$this->wa  = $this->doc->getWebAssetManager();

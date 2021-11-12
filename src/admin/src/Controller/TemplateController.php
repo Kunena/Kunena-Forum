@@ -18,6 +18,7 @@ use Exception;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
@@ -118,6 +119,71 @@ class TemplateController extends FormController
 	{
 		$params = $this->app->input->get('jform', [], 'post', 'array');
 
+		if ($params['editor_type']=='ckeditor')
+		{
+			$editorButtons = $this->SaveCKeditorParamFile($params);
+		}
+		else
+		{
+			$editorButtons = $this->SaveSCeditorParamFile($params);
+		}
+
+		if (!empty($params['nameskinckeditor']))
+		{
+			if (!Folder::exists(KPATH_MEDIA . '/core/js/skins/' . $params['nameskinckeditor']))
+			{
+				$params['nameskinckeditor'] = '';
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_SKIN'), 'error');
+			}
+		}
+
+		if (!empty($params['ckeditorcustomprefixconfigfile']))
+		{
+			if (!File::exists(KPATH_MEDIA . '/core/js/' . $params['ckeditorcustomprefixconfigfile'] . 'ckeditor_config.js'))
+			{
+				$params['ckeditorcustomprefixconfigfile'] = '';
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_CUSTOM_CONFIG_FILE'), 'error');
+			}
+		}
+
+		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
+
+		if (\count($params) > 0)
+		{
+			if (\count($editorButtons) > 0)
+			{
+				$editorButtons           = implode(',', $editorButtons);
+				$params['editorButtons'] = $editorButtons;
+			}
+			else
+			{
+				$params['editorButtons'] = '';
+			}
+
+			$registry = new Registry;
+			$registry->loadArray($params);
+			$txt    = $registry->toString('INI');
+			$return = File::write($file, $txt);
+
+			if (!$return)
+			{
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
+				$this->app->redirect(KunenaRoute::_($this->baseurl, false));
+			}
+		}
+	}
+
+	/**
+	 * Save param into ini file for CKeditor
+	 *
+	 * @return  void
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 * @since   Kunena 2.0
+	 */
+	protected function SaveCKeditorParamFile(array $params)
+	{
 		$editorButtons = [];
 
 		if (!$params['Bold'])
@@ -270,49 +336,183 @@ class TemplateController extends FormController
 			$editorButtons[] = 'Code';
 		}
 
-		if (!empty($params['nameskinckeditor']))
+		return $editorButtons;
+	}
+
+	/**
+	 * Save param into ini file for SCeditor
+	 *
+	 * @return  void
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 * @since   Kunena 2.0
+	 */
+	protected function SaveSCeditorParamFile(array $params)
+	{
+		$editorButtons = [];
+
+		if ($params['Bold'])
 		{
-			if (!Folder::exists(KPATH_MEDIA . '/core/js/skins/' . $params['nameskinckeditor']))
-			{
-				$params['nameskinckeditor'] = '';
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_SKIN'), 'error');
-			}
+			$editorButtons[] = 'bold';
 		}
 
-		if (!empty($params['ckeditorcustomprefixconfigfile']))
+		if ($params['Italic'])
 		{
-			if (!File::exists(KPATH_MEDIA . '/core/js/' . $params['ckeditorcustomprefixconfigfile'] . 'ckeditor_config.js'))
-			{
-				$params['ckeditorcustomprefixconfigfile'] = '';
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CANNOT_FIND_CKEDITOR_CUSTOM_CONFIG_FILE'), 'error');
-			}
+			$editorButtons[] = 'italic';
 		}
 
-		$file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
-
-		if (\count($params) > 0)
+		if ($params['Underline'])
 		{
-			if (\count($editorButtons) > 0)
-			{
-				$editorButtons           = implode(',', $editorButtons);
-				$params['editorButtons'] = $editorButtons;
-			}
-			else
-			{
-				$params['editorButtons'] = '';
-			}
-
-			$registry = new Registry;
-			$registry->loadArray($params);
-			$txt    = $registry->toString('INI');
-			$return = File::write($file, $txt);
-
-			if (!$return)
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE', $file));
-				$this->app->redirect(KunenaRoute::_($this->baseurl, false));
-			}
+			$editorButtons[] = 'underline';
 		}
+
+		if ($params['Strike'])
+		{
+			$editorButtons[] = 'strike';
+		}
+
+		if ($params['Superscript'])
+		{
+			$editorButtons[] = 'superscript';
+		}
+
+		if ($params['Subscript'])
+		{
+			$editorButtons[] = 'subscript';
+		}
+
+		if ($params['Right'])
+		{
+			$editorButtons[] = 'right';
+		}
+
+		if ($params['Left'])
+		{
+			$editorButtons[] = 'left';
+		}
+
+		if (!$params['Justify'])
+		{
+			$editorButtons[] = 'justify';
+		}
+
+		if (!$params['Center'])
+		{
+			$editorButtons[] = 'center';
+		}
+
+		if ($params['RemoveFormat'])
+		{
+			$editorButtons[] = 'removeFormat';
+		}
+
+		if (!$params['Confidential'])
+		{
+			$editorButtons[] = 'Confidential';
+		}
+
+		if (!$params['Hidetext'])
+		{
+			$editorButtons[] = 'Hidetext';
+		}
+
+		if (!$params['Spoiler'])
+		{
+			$editorButtons[] = 'Spoiler';
+		}
+
+		if (!$params['Smiley'])
+		{
+			$editorButtons[] = 'Smiley';
+		}
+
+		if (!$params['Ebay'])
+		{
+			$editorButtons[] = 'Ebay';
+		}
+
+		if (!$params['Twitter'])
+		{
+			$editorButtons[] = 'Twitter';
+		}
+
+		if (!$params['Instagram'])
+		{
+			$editorButtons[] = 'Instagram';
+		}
+
+		if (!$params['Soundcloud'])
+		{
+			$editorButtons[] = 'Soundcloud';
+		}
+
+		if (!$params['Map'])
+		{
+			$editorButtons[] = 'Map';
+		}
+
+		if ($params['Font'])
+		{
+			$editorButtons[] = 'font';
+		}
+
+		if ($params['Size'])
+		{
+			$editorButtons[] = 'Size';
+		}
+
+		if ($params['TextColor'])
+		{
+			$editorButtons[] = 'color';
+		}
+
+		if (!$params['Maximize'])
+		{
+			$editorButtons[] = 'Maximize';
+		}
+
+		if (!$params['Image'])
+		{
+			$editorButtons[] = 'Image';
+		}
+
+		if (!$params['Video'])
+		{
+			$editorButtons[] = 'Video';
+		}
+
+		if ($params['Link'])
+		{
+			$editorButtons[] = 'link';
+		}
+
+		if ($params['Unlink'])
+		{
+			$editorButtons[] = 'unlink';
+		}
+
+		if (!$params['BulletedList'])
+		{
+			$editorButtons[] = 'bulletedList';
+		}
+
+		if (!$params['NumberedList'])
+		{
+			$editorButtons[] = 'orderedlist';
+		}
+
+		if (!$params['Blockquote'])
+		{
+			$editorButtons[] = 'Blockquote';
+		}
+
+		if (!$params['Code'])
+		{
+			$editorButtons[] = 'Code';
+		}
+
+		return $editorButtons;
 	}
 
 	/**

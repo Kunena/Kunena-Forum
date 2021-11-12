@@ -190,6 +190,8 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
 		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 
+		$this->editor_type = $this->ktemplate->params->get('editor_type');
+
 		$this->selectcatlist = false;
 
 		/** @var HtmlDocument $doc */

@@ -112,3 +112,14 @@ textarea.form-control {
 .kpoll-time-to-live-input {
   margin-left: -30px !important;
 }
+
+/**
+Part for Kunena icons for SCEditor
+*/
+.sceditor-button-soundcloud div { background: url('/media/kunena/core/images/soundcloud.png'); }
+.sceditor-button-ebay div { background: url('/media/kunena/core/images/ebay.png'); }
+.sceditor-button-instagram div { background: url('/media/kunena/core/images/instagram.png'); }
+.sceditor-button-twitter div { background: url('/media/kunena/core/images/tweet.png'); }
+.sceditor-button-map div { background: url('/media/kunena/core/images/map.png'); }
+.sceditor-button-video div { background: url('/media/kunena/core/images/film.png'); }
+.sceditor-button-poll div { background: url('/media/kunena/core/images/poll.png'); }

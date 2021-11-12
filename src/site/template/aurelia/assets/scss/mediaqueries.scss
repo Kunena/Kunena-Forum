@@ -18,7 +18,7 @@
 /* Smartphones */
 @media (max-width: 480px) {
   .knav-collapse {
-    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 
   .visible-xs .text-muted {
@@ -42,12 +42,12 @@
     width: 0;
   }
 
-  div.navbar > div > div.visible-sm.hidden-md > ul.nav.navbar-nav.float-start > a > i {
-    cursor: pointer;
+  div.visible-sm.hidden-md > ul.nav.navbar-nav.float-start > a > i {
     vertical-align: super;
+    cursor: pointer;
   }
 
-  #postform > div > div > div > fieldset > div > div {
+  #postform >  fieldset > div > div {
     margin-left: -8px;
   }
 
@@ -69,8 +69,8 @@
 
   .kattachment-remove,
   .kattachment-insert {
-    margin-left: 15px;
     margin-top: 10px;
+    margin-left: 15px;
   }
 
   .input-group input {
@@ -131,8 +131,8 @@
   // ------------------
   // Nav collapse clears brand
   .knav-collapse {
-    clear: both;
     float: none;
+    clear: both;
   }
 
   // Block-level the nav
@@ -166,7 +166,7 @@
 
   // Buttons
   .knav-collapse .btn {
-    padding: 4px 10px 4px;
+    padding: 4px 10px;
     font-weight: normal;
   }
 
@@ -176,8 +176,8 @@
 
   // Buttons in the navbar
   .knav-collapse.in .btn-group {
-    margin-top: 5px;
     padding: 0;
+    margin-top: 5px;
   }
 
   // Dropdowns in the navbar
@@ -185,11 +185,11 @@
     position: static;
     top: auto;
     left: auto;
-    float: none;
     display: none;
+    float: none;
     max-width: none;
-    margin: 0 15px;
     padding: 0;
+    margin: 0 15px;
     background-color: transparent;
     border: none;
     border-radius: 0;
@@ -232,10 +232,11 @@
   }
 }
 
-/* Tablets */
-@media (min-width: 768px) and (max-width: 959px) {
-
+/* Tablets
+@media (min-width: 768px) and (max-width: 959px)
+{
 }
+*/
 
 @media (min-width: 461px) and (max-width: 767px) {
   small.text-muted {
@@ -267,10 +268,11 @@
   }
 }
 
-/* Large Display */
-@media (min-width: 1200px) {
-
+/* Large Display
+@media (min-width: 1200px)
+{
 }
+*/
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   label img {

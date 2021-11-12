@@ -11,12 +11,12 @@
   width: 18px;
   height: 18px;
   margin-right: 0;
-  line-height: 18px;
   font-size: 18px;
+  line-height: 18px;
 }
 
 .glyphicon .glyphicon-feed::before {
-  color: orange
+  color: #ffa500;
 }
 
 .kfile-input {
@@ -25,18 +25,18 @@
 }
 
 .kspoiler-wrapper {
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-  min-height: 5px;
   width: 100%;
+  min-height: 5px;
   background-color: #ffc;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
 }
 
 .kicon {
-  border: 0;
-  margin: 0;
-  padding: 0;
   display: inline-block;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 
 .kspoiler-header {
@@ -62,10 +62,10 @@ div.krss-block {
 }
 
 .ktopicpoll {
-  margin: 2px;
+  float: right;
   width: 32px;
   height: 32px;
-  float: right;
+  margin: 2px;
 }
 
 .kforumbottom {
@@ -97,11 +97,11 @@ div.krss-block {
 }
 
 .kgooglemap {
-  width: 100%;
+  position: relative;
   display: block;
+  width: 100%;
   height: 480px;
   overflow: hidden;
-  position: relative;
 
   img {
     max-width: none !important;
@@ -109,31 +109,31 @@ div.krss-block {
 }
 
 .kicon-folder {
-  background: url(../../../../../media/kunena/core/images/icons/folder_nonew.png) no-repeat left center;
+  display: inline-block;
   width: 32px;
   height: 32px;
-  display: inline-block;
+  // background: url("../../../../../media/kunena/core/images/icons/folder_nonew.png") no-repeat left center;
 }
 
 .kicon-folder.knewchar {
-  background: url(../../../../../media/kunena/core/images/icons/folder.png) no-repeat left center;
+  display: inline-block;
   width: 32px;
   height: 32px;
-  display: inline-block;
+  // background: url("../../../../../media/kunena/core/images/icons/folder.png") no-repeat left center;
 }
 
 .kicon-folder-sm {
-  background: url(../../../../../media/kunena/core/images/icons/folder_nonew_sm.png) no-repeat left center;
+  display: inline-block;
   width: 16px;
   height: 16px;
-  display: inline-block;
+  // background: url("../../../../../media/kunena/core/images/icons/folder_nonew_sm.png") no-repeat left center;
 }
 
 .kicon-folder-sm-new {
-  background: url(../../../../../media/kunena/core/images/icons/folder_sm.png) no-repeat left center;
+  display: inline-block;
   width: 16px;
   height: 16px;
-  display: inline-block;
+  // background: url("../../../../../media/kunena/core/images/icons/folder_sm.png") no-repeat left center;
 }
 
 .b2-3x {
@@ -149,11 +149,11 @@ div.krss-block {
 .user-circle.user-default {
   width: 32px;
   height: 32px;
-  text-align: center;
   font-size: 24px;
   line-height: 1.33;
-  border-radius: 50%;
+  text-align: center;
   border: 1px solid;
+  border-radius: 50%;
 }
 
 .user-circle.user-xl {
@@ -162,8 +162,8 @@ div.krss-block {
   padding: 10px 16px;
   font-size: 52px;
   line-height: 1.33;
-  border-radius: 50%;
   border: 1px solid;
+  border-radius: 50%;
 }
 
 .icon.icon-one-fine-dot {
@@ -171,23 +171,23 @@ div.krss-block {
 }
 
 .icon.icon-one-fine-dot:before {
-  content: "\25cf";
   font-size: 2em;
+  content: "\25cf";
 }
 
 .glyphicon.glyphicon-one-fine-dot:before {
-  content: "\25cf";
   font-size: 1.5em;
+  content: "\25cf";
 }
 
 svg {
-  height: 18px;
   width: 18px;
+  height: 18px;
 }
 
 #iconset_topicList svg {
-  height: 24px;
   width: 24px;
+  height: 24px;
 }
 
 #kcat-icon svg,
@@ -197,6 +197,6 @@ footer svg,
 .col-md-1 svg,
 .category-stickymsg a svg,
 [class*="category-"] a svg {
-  height: 34px;
   width: 34px;
+  height: 34px;
 }

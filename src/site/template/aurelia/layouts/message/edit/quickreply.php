@@ -69,10 +69,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 	<?php if ($quick == 1)
 	:
 	?>
-    <div class="modal fade quickr" id="kreply<?php echo $message->displayField('id'); ?>_form" role="dialog"
-         aria-labelledby="myLargeModalLabel"
-         aria-hidden="true" style="display:none;" data-backdrop="false">
-        <div class="modal-dialog" role="document">
+	<div class="modal fade" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">
@@ -235,12 +232,15 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 <?php elseif ($quick == 0)
 	:
 	?>
-    <div class="col-md-12 qreplyform" id="kreply<?php echo $message->displayField('id'); ?>_form"
-         style="position: relative; top: 10px; right: -10px; width:100%; z-index: 1;display: none;"
-         data-backdrop="false">
-        <div class="card card-default">
-            <div class="card-body">
-                <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>"
+	<div class="modal fade" style="position: relative; top: 10px; right: -10px; width:100%; z-index: 1;display: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel"><?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>"
                       method="post"
                       enctype="multipart/form-data" name="postform" id="postform" class="form-horizontal">
                     <input type="hidden" name="task" value="post"/>
@@ -261,15 +261,6 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                                value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=listmention&format=raw') ?>"/>
 					<?php endif; ?>
 					<?php echo HTMLHelper::_('form.token'); ?>
-
-                    <div class="card-header">
-                        <h3 class="card-title">
-							<?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
-                        </h3>
-                        <button type="button" class="close kreply-cancel" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
 
                     <div class="card-body">
 						<?php if (!$me->exists())
@@ -391,8 +382,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                            value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
                     <input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
                            value="<?php echo $config->disableEmoticons ?>"/>
-                </form>
-            </div>
-        </div>
-    </div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 <?php endif;

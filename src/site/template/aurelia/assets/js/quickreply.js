@@ -12,5 +12,6 @@ jQuery(document).ready(function ($) {
     $('#gotoeditor' + quickreplyid).click(function () {
         localStorage.setItem("copyKunenaeditor", $(".qrlocalstorage" + quickreplyid).val());
     });
-	$(".model-open").css("overflow-y", "scroll");
+
+	$('body').addClass('overflow-auto');
 });

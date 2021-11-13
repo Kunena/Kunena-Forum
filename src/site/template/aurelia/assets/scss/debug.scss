@@ -8,57 +8,57 @@
 **/
 
 a:after {
-  background-color: yellow;
+  background-color: #ff0;
 }
 
 a[rel=follow]:after {
-  content: ' (follow) ';
+  content: " (follow) ";
 }
 
 a[rel=alternate]:after {
-  content: ' (alternate) ';
+  content: " (alternate) ";
 }
 
 a[rel=author]:after {
-  content: ' (author) ';
+  content: " (author) ";
 }
 
 a[rel=bookmark]:after {
-  content: ' (bookmark) ';
+  content: " (bookmark) ";
 }
 
 a[rel=help]:after {
-  content: ' (help) ';
+  content: " (help) ";
 }
 
 a[rel=license]:after {
-  content: ' (license) ';
+  content: " (license) ";
 }
 
 a[rel=next]:after {
-  content: ' (next) ';
+  content: " (next) ";
 }
 
 a[rel=nofollow]:after {
-  content: ' (nofollow) ';
+  content: " (nofollow) ";
 }
 
 a[rel=noreferrer]:after {
-  content: ' (noreferrer) ';
+  content: " (noreferrer) ";
 }
 
 a[rel=prefetch]:after {
-  content: ' (prefecth) ';
+  content: " (prefecth) ";
 }
 
 a[rel=prev]:after {
-  content: ' (prev) ';
+  content: " (prev) ";
 }
 
 a[rel=search]:after {
-  content: ' (search) ';
+  content: " (search) ";
 }
 
 a[rel=tag]:after {
-  content: ' (tag) ';
+  content: " (tag) ";
 }

@@ -12,15 +12,15 @@
  * Scss parser will automatically search for all the files from the lookup paths and use the first match.
  */
 #kunena.layout {
-  @import 'variables';
-  @import 'quirks';
-  @import 'general';
-  @import 'editor';
-  @import 'icons';
-  @import 'user';
-  @import 'profile';
-  @import 'categories';
-  @import 'mediaqueries';
-  @import 'twitter';
+  @import "variables";
+  @import "quirks";
+  @import "general";
+  @import "editor";
+  @import "icons";
+  @import "user";
+  @import "profile";
+  @import "categories";
+  @import "mediaqueries";
+  @import "twitter";
   /*	@import 'debug'; */
 }

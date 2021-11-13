@@ -89,18 +89,17 @@ endif; ?>
         <div class="btn-toolbar btn-marging kmessagepadding">
 
 			<?php if ($this->quickReply && $quick == 0) : ?>
-                <a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-                   class="btn btn-outline-primary border Kreplyclick" rel="nofollow">
-					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
-                </a>
+                
+                <button type="button" class="btn btn-outline-primary border" data-bs-toggle="modal" data-bs-target="#kreply<?php echo $this->message->displayField('id'); ?>_form">
+  <?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+</button>
 			<?php endif; ?>
 
 			<?php if ($this->quickReply && $quick == 1) : ?>
-                <a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-                   class="btn btn-outline-primary border"
-                   data-bs-toggle="modal" rel="nofollow">
-					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
-                </a>
+                
+                <button type="button" class="btn btn-outline-primary border" data-bs-toggle="modal" data-bs-target="#kreply<?php echo $this->message->displayField('id'); ?>_form">
+  <?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
+</button>
 			<?php endif; ?>
 
             <div class="btn-group">

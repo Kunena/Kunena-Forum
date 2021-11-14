@@ -80,7 +80,7 @@ class TopicModerate extends KunenaLayout
 		$params = [
 			'orderby' => 'tt.last_post_time DESC',
 			'where'   => " AND tt.id != {$db->quote($this->topic->id)} ", ];
-		list($topics) = KunenaTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
+		list($total, $topics) = KunenaTopicHelper::getLatestTopics($this->category->id, 0, 30, $params);
 
 		foreach ($topics as $topic)
 		{

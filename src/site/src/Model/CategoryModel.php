@@ -86,7 +86,7 @@ class CategoryModel extends CategoriesModel
 		{
 			$this->items = [];
 			$user        = KunenaFactory::getUser();
-			list($categories) = KunenaCategoryHelper::getLatestSubscriptions($user->userid);
+			list($total, $categories) = KunenaCategoryHelper::getLatestSubscriptions($user->userid);
 			$this->items = $categories;
 		}
 

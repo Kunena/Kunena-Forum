@@ -200,7 +200,7 @@ class HtmlView extends BaseHtmlView
 		HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
 
 		$title = Text::_('COM_KUNENA_VIEW_CATEGORIES_CONFIRM_BEFORE_DELETE');
-		$dhtml = "<button data-toggle=\"modal\" data-target=\"#catconfirmdelete\" class=\"btn btn-small button-trash\">
+		$dhtml = "<button data-bs-toggle=\"modal\" data-bs-target=\"#catconfirmdelete\" class=\"btn btn-small button-trash\">
 					<i class=\"icon-trash\" title=\"$title\"> </i>
 						$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'confirmdelete');

@@ -1463,7 +1463,7 @@ REGEX;
 	// these flags are mutually-exclusive.
 	public function fillTemplate($template, $insert_array, $default_array = [])
 	{
-		/*HACK BY KUNENA >*/
+	    /*HACK BY KUNENA >*/
 		if (is_array($template)) return call_user_func($template, $insert_array);
 		/*< HACK BY KUNENA*/
 

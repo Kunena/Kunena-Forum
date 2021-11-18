@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * [#8292](https://github.com/Kunena/Kunena-Forum/issues/8292): When bbcode tags aren't terminated you have some warning
 
 ### Changed
+* Update minimum version for Joomla! to 3.10.3 
 * Update CKeditor to 4.17.1
 * Update CKeditor to 4.16.2
 * Update minimum version for Joomla! 3.10.0 and set as preferred

@@ -147,12 +147,12 @@ class HtmlView extends BaseHtmlView
 		$bar->appendButton('Custom', $dhtml, 'batch');
 
 		ToolbarHelper::divider();
-		ToolbarHelper::custom('users.trashUserMessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
+		ToolbarHelper::custom('users.trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
 		ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'users.remove');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('users.removeCatSubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
+		ToolbarHelper::custom('users.removecatsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_CATSUBSCRIPTIONS');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('users.removeTopicSubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
+		ToolbarHelper::custom('users.removetopicsubscriptions', 'delete.png', 'delete.png', 'COM_KUNENA_REMOVE_TOPICSUBSCRIPTIONS');
 		ToolbarHelper::spacer();
 
 		HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');

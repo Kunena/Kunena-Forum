@@ -130,7 +130,7 @@ class UsersController extends KunenaController
 	 * @throws  null
 	 * @since   Kunena 2.0
 	 */
-	public function trashUserMessages(): void
+	public function trashusermessages(): void
 	{
 		if (!Session::checkToken())
 		{
@@ -874,7 +874,7 @@ class UsersController extends KunenaController
 	 * @throws  null
 	 * @since   Kunena 6.0
 	 */
-	public function removeCatSubscriptions(): void
+	public function removecatsubscriptions(): void
 	{
 		if (!Session::checkToken())
 		{
@@ -923,7 +923,7 @@ class UsersController extends KunenaController
 	 * @throws  null
 	 * @since   Kunena 6.0
 	 */
-	public function removeTopicSubscriptions(): void
+	public function removetopicsubscriptions(): void
 	{
 		if (!Session::checkToken())
 		{

@@ -158,7 +158,7 @@ class HtmlView extends BaseHtmlView
 		HTMLHelper::_('bootstrap.renderModal', 'subscribecatsusersModal');
 
 		$title = Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_SUBSCRIBE_USERS_CATEGORIES');
-		$dhtml = "<button data-toggle=\"modal\" data-target=\"#subscribecatsusersModal\" class=\"btn btn-small\">
+		$dhtml = "<button data-bs-toggle=\"modal\" data-bs-target=\"#subscribecatsusersModal\" class=\"btn btn-small\">
 					<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>
 						$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'batch');

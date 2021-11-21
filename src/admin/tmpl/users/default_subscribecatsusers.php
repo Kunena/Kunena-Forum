@@ -18,14 +18,14 @@ use Joomla\CMS\Language\Text;
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" role="presentation" class="close" data-bs-dismiss="modal">x</button>
-				<h3><?php echo Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_MODAL_TITLE'); ?></h3>
+				<h5 class="modal-title" id="exampleModalLabel"><?php echo Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_MODAL_TITLE'); ?></h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body span11">
 				<p><?php echo Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_TIP'); ?></p>
 				<div class="control-group">
 					<div class="controls">
-						<?php echo $this->modcatlist; ?>
+						<?php echo $this->modCatList; ?>
 					</div>
 				</div>
 			</div>
@@ -34,7 +34,7 @@ use Joomla\CMS\Language\Text;
 					<?php echo Text::_('JCANCEL'); ?>
 				</button>
 				<button class="btn btn-outline-primary" type="submit"
-						onclick="Joomla.submitbutton('users.subscribeUsersToCategories');">
+						onclick="Joomla.submitbutton('users.subscribeuserstocategories');">
 					<?php echo Text::_('JSUBMIT'); ?>
 				</button>
 			</div>

@@ -248,7 +248,7 @@ class KunenaBBCodeEditor
 				}
 			}
 
-			$class = "KunenaBBCodeEditor" . strtoupper($xml_item->getName());
+			$class = "Kunena\Forum\Libraries\BBCode\KunenaBBCodeEditor" . ucfirst($xml_item->getName());
 
 			$item = \call_user_func([$class, $parseMethod], $xml_item);
 

@@ -618,7 +618,7 @@ class TemplateController extends FormController
 		$template = KunenaPath::clean($template);
 		$this->app->setUserState('kunena.edit.templatename', $template);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=edit&name={$template}", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl . "&view=template&layout=edit&name={$template}", false));
 	}
 
 	/**

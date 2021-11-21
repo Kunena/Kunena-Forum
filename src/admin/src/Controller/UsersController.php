@@ -972,7 +972,7 @@ class UsersController extends KunenaController
 	 * @throws  null
 	 * @since   Kunena 6.0
 	 */
-	public function subscribeUsersToCategories(): void
+	public function subscribeuserstocategories(): void
 	{
 		if (!Session::checkToken())
 		{

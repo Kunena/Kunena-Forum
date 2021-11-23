@@ -141,7 +141,7 @@ class HtmlView extends BaseHtmlView
 		HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
 
 		$title = Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS');
-		$dhtml = "<button data-toggle=\"modal\" data-target=\"#moderateModal\" class=\"btn btn-small\">
+		$dhtml = "<button data-bs-toggle=\"modal\" data-bs-target=\"#moderateModal\" class=\"btn btn-small\">
 					<i class=\"icon-checkbox-partial\" title=\"$title\"> </i>
 						$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'batch');

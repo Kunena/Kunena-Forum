@@ -524,7 +524,7 @@ class TemplateController extends FormController
 	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 */
-	public function apply(): void
+	public function applychanges(): void
 	{
 		$template = $this->app->input->get('templatename', '');
 		$menus    = $this->app->input->get('selections', [], 'array');
@@ -553,7 +553,7 @@ class TemplateController extends FormController
 		$this->internalSaveParamFile($template);
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
-		$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=edit&cid[]=' . $template, false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl . '&view=template&layout=edit&name=' . $template, false));
 	}
 
 	/**

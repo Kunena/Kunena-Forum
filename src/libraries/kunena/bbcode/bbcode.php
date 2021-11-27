@@ -2035,23 +2035,26 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 
 		$default  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 
-		$quote_params = explode(' ' ,$default);
-		if (count($quote_params) == 3)
-		{
-			$messageid = explode('=', $quote_params['1']);
-			$message = KunenaForumMessageHelper::get($messageid['1']);
+		$matches = [];
+		preg_match('/userid=(\d{1,})/', $default, $matches);
 
-			if ($message->userid > 0)
+		$userid = 0;
+		foreach($matches as $match)
+		{
+			if (is_numeric($match))
 			{
-				$username = KunenaUserHelper::get($message->userid)->getName();
+				$userid = (int) $match;
 			}
-			else 
-			{
-				$username = Text::_('COM_KUNENA_LIB_BBCODE_QUOTE_NON_EXISTANT_USER');
-			}
+		}
+
+		if ($userid > 0)
+		{
+			$username = KunenaUserHelper::get($userid)->getName();
 		}
 		else
 		{
+			$quote_params = explode(' ' ,$default);
+
 			// To support old bbcode tags used before Kunena 5.2.x
 			if (isset($params['post']))
 			{

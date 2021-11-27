@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* [#8243] Quick Reply and go to editor - missing in crypsisb3 and crypsisb4 #8243
 * [#8243] Quick Reply and go to editor - it only keeps the content if you use the button at the last message on each side #8243
 * Forgot to change the files when set Joomla! minimum version to 3.10.3
 * Error in javascript console about CKeditor missing plugin file because it try to load it

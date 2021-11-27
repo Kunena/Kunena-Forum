@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* [#8297](https://github.com/Kunena/Kunena-Forum/issues/8389): Quotes show only first names, not full name #8297
+* [#8575](https://github.com/Kunena/Kunena-Forum/issues/8389): For each link it adds int(0) int(1) at the beginning of the message #8575
 * [#8389](https://github.com/Kunena/Kunena-Forum/issues/8389): [CKEditor] Line break shows the html code in the message #8389
 * Search user avatar, the query to the user list return some null result for "photo" item
 * [#8292](https://github.com/Kunena/Kunena-Forum/issues/8292): When bbcode tags aren't terminated you have some warning

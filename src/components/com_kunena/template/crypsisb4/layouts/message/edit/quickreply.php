@@ -354,8 +354,8 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 							</div>
 						<?php endif; ?>
 						<a href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
-						   role="button" class="btn btn-outline-primary border btn-small btn-link float-right"
-						   id="gotoeditor<?php echo $message->displayField('id'); ?>"
+						   role="button" class="btn btn-outline-primary border btn-small btn-link float-right gotoeditor"
+						   id="qrlocalstorage<?php echo $message->displayField('id'); ?>"
 						   rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
 						<br/>
 					</div>

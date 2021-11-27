@@ -357,9 +357,9 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	var quickreplyid  = Joomla.getOptions('com_kunena.kunena_quickreplymesid');
-	$('#gotoeditor'+quickreplyid).click(function () {
-		localStorage.setItem("copyKunenaeditor", $(".qrlocalstorage" + quickreplyid).val());
+	$('.gotoeditor').click(function () {
+		var texteareaId = $(this).attr('id');
+		localStorage.setItem("copyKunenaeditor", $('.' + texteareaId).val());
 	});
 
 	if (Joomla.getOptions('com_kunena.ckeditor_config')!== undefined)

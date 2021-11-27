@@ -176,11 +176,11 @@ class TemplateController extends FormController
 	/**
 	 * Save param into ini file for CKeditor
 	 *
-	 * @return  void
+	 * @return  array
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 2.0
+	 *@throws  Exception
+	 * @throws  null
 	 */
 	protected function SaveCKeditorParamFile(array $params)
 	{
@@ -342,11 +342,11 @@ class TemplateController extends FormController
 	/**
 	 * Save param into ini file for SCeditor
 	 *
-	 * @return  void
+	 * @return  array
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 2.0
+	 *@throws  Exception
+	 * @throws  null
 	 */
 	protected function SaveSCeditorParamFile(array $params)
 	{

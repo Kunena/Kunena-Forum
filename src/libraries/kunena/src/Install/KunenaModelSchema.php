@@ -212,8 +212,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @return  DOMDocument|null
 	 *
-	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+	 * @throws \DOMException
 	 */
 	public function getSchema()
 	{
@@ -471,8 +472,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  DOMDocument|DOMNode|mixed|null
 	 *
-	 * @throws KunenaSchemaException
 	 * @since   Kunena 6.0
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+	 * @throws \DOMException
 	 */
 	protected function getDOMDocument(object $input)
 	{

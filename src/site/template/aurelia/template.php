@@ -100,9 +100,8 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 *
 	 * @return  void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
+	 * @throws \ScssPhp\ScssPhp\Exception\SassException
 	 */
 	public function initialize(): void
 	{

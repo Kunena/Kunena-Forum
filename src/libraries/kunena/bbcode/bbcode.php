@@ -442,7 +442,7 @@ class KunenaBbcode extends Nbbc\BBCode
 					// Never start URL from the middle of text (except for punctuation).
 					$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index - 1]);
 					$invalid |= !$this->IsValidURL($url, true);
-					var_dump($invalid);
+
 					// We have a full, complete, and properly-formatted URL, with protocol.
 					// Now we need to apply the $this->getURLPattern() template to turn it into HTML.
 					$params = Joomla\Uri\UriHelper::parse_url($url);

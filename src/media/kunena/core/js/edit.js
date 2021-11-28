@@ -83,13 +83,13 @@ jQuery(document).ready(function ($) {
 
 	if ($("#editor").length > 0)
 	{
-	var datalocalstorage = localStorage.getItem('copyKunenaeditor');
-	if (datalocalstorage) {
-		var textarea = $("#editor").next();
-		textarea.empty();
-		$('#editor').val(datalocalstorage);
-		localStorage.removeItem('copyKunenaeditor');
-	}
+		var datalocalstorage = localStorage.getItem('copyKunenaeditor');
+		if (datalocalstorage) {
+			var textarea = $("#editor").next();
+			textarea.empty();
+			$('#editor').val(datalocalstorage);
+			localStorage.removeItem('copyKunenaeditor');
+		}
 	}
 
 	$('#reset').onclick = function() {
@@ -360,6 +360,10 @@ jQuery(document).ready(function ($) {
 	$('.gotoeditor').click(function () {
 		var texteareaId = $(this).attr('id');
 		localStorage.setItem("copyKunenaeditor", $('.' + texteareaId).val());
+	});
+
+	$('#gotoeditor').click(function () {
+		localStorage.setItem("copyKunenaeditor", $('#editor').val());
 	});
 
 	if (Joomla.getOptions('com_kunena.ckeditor_config')!== undefined)

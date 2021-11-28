@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* Display checkbox for hide sensitive information and name for anynomous even if user is logged
 * [#8582](https://github.com/Kunena/Kunena-Forum/issues/8582): QR and go to editor - Text is not transferred to the editor #8582
 * [#8243](https://github.com/Kunena/Kunena-Forum/issues/8243): Quick Reply and go to editor - missing in crypsisb3 and crypsisb4 #8243
 * [#8243](https://github.com/Kunena/Kunena-Forum/issues/8243): Quick Reply and go to editor - it only keeps the content if you use the button at the last message on each side #8243

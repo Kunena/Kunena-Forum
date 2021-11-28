@@ -163,6 +163,7 @@ class KunenaViewTopic extends KunenaView
 					$icon->title     = (string) $attributes->title;
 					$icon->b2        = (string) $attributes->b2;
 					$icon->b3        = (string) $attributes->b3;
+					$icon->b4        = (string) $attributes->b4;
 					$icon->fa        = (string) $attributes->fa;
 					$icon->filename  = (string) $attributes->src;
 					$icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;

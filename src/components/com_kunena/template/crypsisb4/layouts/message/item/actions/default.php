@@ -17,6 +17,7 @@ $config          = KunenaConfig::getInstance();
 $this->ktemplate = KunenaFactory::getTemplate();
 $fullactions     = $this->ktemplate->params->get('fullactions');
 $quick           = $this->ktemplate->params->get('quick');
+
 ?>
 
 <?php if (!$fullactions)
@@ -84,7 +85,7 @@ endif; ?>
 		:
 				?>
 				<a href="#kreply<?php echo $this->message->displayField('id'); ?>_form" role="button"
-				   class="btn btn-outline-primary border Kreplyclick"
+				   class="btn btn-outline-primary border openmodal"
 				   data-toggle="modal" rel="nofollow">
 					<?php echo KunenaIcons::undo() . ' ' . Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_QUICK_REPLY'); ?>
 				</a>

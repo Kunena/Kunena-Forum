@@ -104,8 +104,8 @@ $this->addStyleSheet('fileupload.css');
 $this->k = 0;
 
 $this->addScriptOptions('com_kunena.kunena_upload_files_set_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinline&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline_attachment', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinlineonattachment&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 $this->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);

@@ -6,8 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
-* [#8243] Quick Reply and go to editor - missing in crypsisb3 and crypsisb4 #8243
-* [#8243] Quick Reply and go to editor - it only keeps the content if you use the button at the last message on each side #8243
+* [#8582](https://github.com/Kunena/Kunena-Forum/issues/8582): QR and go to editor - Text is not transferred to the editor #8582
+* [#8243](https://github.com/Kunena/Kunena-Forum/issues/8243): Quick Reply and go to editor - missing in crypsisb3 and crypsisb4 #8243
+* [#8243](https://github.com/Kunena/Kunena-Forum/issues/8243): Quick Reply and go to editor - it only keeps the content if you use the button at the last message on each side #8243
 * Forgot to change the files when set Joomla! minimum version to 3.10.3
 * Error in javascript console about CKeditor missing plugin file because it try to load it
 * [#8297](https://github.com/Kunena/Kunena-Forum/issues/8389): Quotes show only first names, not full name #8297

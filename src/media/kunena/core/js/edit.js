@@ -198,21 +198,29 @@ jQuery(document).ready(function ($) {
 			}
 
 			if (pollcategoriesid[catid] !== undefined) {
-				CKEDITOR.instances.message.getCommand( 'polls' ).enable();
-				
+				if( typeof(CKEDITOR) !== "undefined" )
+				{
+					CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+				}
 			}
 			else {
-				CKEDITOR.instances.message.getCommand( 'polls' ).disable();
-				
+				if( typeof(CKEDITOR) !== "undefined" )
+				{
+					CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+				}
 			}
 		}
 		else if (pollexist.length > 0) {
-			CKEDITOR.instances.message.getCommand( 'polls' ).enable();
-			
+			if( typeof(CKEDITOR) !== "undefined" )
+			{
+				CKEDITOR.instances.message.getCommand( 'polls' ).enable();
+			}
 		}
 		else {
-			CKEDITOR.instances.message.getCommand( 'polls' ).disable();
-			
+			if( typeof(CKEDITOR) !== "undefined" )
+			{
+				CKEDITOR.instances.message.getCommand( 'polls' ).disable();
+			}
 		}
 
 		if ($('#kanynomous-check').length > 0) {
@@ -330,14 +338,26 @@ jQuery(document).ready(function ($) {
 				data: {catid: catid}
 			})
 				.done(function (data) {
-					var editor_text = CKEDITOR.instances.message.getData();
+					var editor_text = '';
+
+					if( typeof(CKEDITOR) !== "undefined" )
+					{
+						editor_text = CKEDITOR.instances.message.getData();
+					}
+					else
+					{
+						editor_text = $('#editor').val();
+					}
 
 					if (editor_text.length > 1) {
 						if (editor_text.length > 1) {
 							$('#modal_confirm_template_category').modal('show');
 						}
 						else {
-							CKEDITOR.instances.message.setData(category_template_text);
+							if( typeof(CKEDITOR) !== "undefined" )
+							{
+								CKEDITOR.instances.message.setData(category_template_text);
+							}
 						}
 					}
 					else {
@@ -345,7 +365,10 @@ jQuery(document).ready(function ($) {
 							$('#modal_confirm_template_category').modal('show');
 						}
 						else {
-							CKEDITOR.instances.message.setData(data);
+							if( typeof(CKEDITOR) !== "undefined" )
+							{
+								CKEDITOR.instances.message.setData(data);
+							}
 						}
 					}
 
@@ -360,7 +383,15 @@ jQuery(document).ready(function ($) {
 		$('#modal_confirm_template_category').modal('hide');
 		var textarea = $("#editor").next();
 		textarea.empty();
-		CKEDITOR.instances.message.setData(category_template_text.responseJSON);
+
+		if( typeof(CKEDITOR) !== "undefined" )
+		{
+			CKEDITOR.instances.message.setData(category_template_text.responseJSON);
+		}
+		else
+		{
+			$('#editor').val(category_template_text.responseJSON);
+		}
 	});
 
 	$('#modal_confirm_erase_keep_old').click(function () {
@@ -368,7 +399,15 @@ jQuery(document).ready(function ($) {
 		var existing_content = CKEDITOR.instances.message.getData();
 		var textarea = $("#editor").next();
 		textarea.empty();
-		CKEDITOR.instances.message.setData(category_template_text.responseJSON + ' ' + existing_content);
+
+		if( typeof(CKEDITOR) !== "undefined" )
+		{
+			CKEDITOR.instances.message.setData(category_template_text.responseJSON + ' ' + existing_content);
+		}
+		else
+		{
+			$('#editor').val(category_template_text.responseJSON + ' ' + existing_content);
+		}
 	});
 
 	if ($.fn.datepicker !== undefined) {

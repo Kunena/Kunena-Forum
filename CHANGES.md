@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* CrypsisB4 : when click on delete all attachments it displays a javascript error
 * CKEDITOR instance is not defined in edit.js file when using bbcode editor
 * [#8058](https://github.com/Kunena/Kunena-Forum/issues/8058): Crypsisb4,Crypsisb3: Change of the category switches to legacy symbols #8058
 * Display checkbox for hide sensitive information and name for anynomous even if user is logged

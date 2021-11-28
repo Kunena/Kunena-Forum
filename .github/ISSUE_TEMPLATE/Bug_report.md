@@ -28,12 +28,13 @@ If applicable, add screenshots to help explain your problem.
 Joomla version: 
 Kunena version:
 Kunena template name and version:
+Kunena editor in use:
 Php version:
 Database version:
 
 **Desktop (please complete the following information):**
  - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
+ - Browser [e.g. firefox, chrome, safari]
  - Version [e.g. 22]
 
 **Smartphone (please complete the following information):**

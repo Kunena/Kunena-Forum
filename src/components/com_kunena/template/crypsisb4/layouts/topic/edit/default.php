@@ -250,6 +250,18 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<?php endif; ?>
 
 			<?php if ($this->category->allow_anonymous && !$this->me->userid) : ?>
+				<div class="control-group" id="kanynomous-check">
+					<label class="control-label"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
+
+					<div class="controls" style="text-align: right">
+						<input type="checkbox" id="kanonymous" name="anonymous"
+									       value="1" <?php if ($this->post_anonymous)
+									{
+										echo 'checked="checked"';
+									} ?> />
+						<span><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></span>
+					</div>
+				</div>
 				<div class="alert alert-info"><?php echo Text::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
 				<div class="form-group row" id="kanynomous-check-name">
 					<label for="kauthorname"

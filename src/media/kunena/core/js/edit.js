@@ -39,7 +39,7 @@ jQuery(document).ready(function ($) {
 	var pollexist = $('#poll_exist_edit');
 	var pollcatid = jQuery('#poll_catid').val();
 	var polliconstatus = false;
-	
+
 	$('#tabs_kunena_editor a:first').tab('show');
 
 	$('#tabs_kunena_editor a:last').click(function (e) {
@@ -270,6 +270,27 @@ jQuery(document).ready(function ($) {
 								'class': 'icon icon-topic icon-' + value.b2,
 								'border': '0',
 								'al': ''
+							}));
+						}
+						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B3') {
+							var label = $('<label>', {
+								'class': 'radio inline',
+								'for': 'radio' + value.id
+							}).append($('<span>', {
+								'class': 'glyphicon glyphicon-topic glyphicon-' + value.b3,
+								'border': '0',
+								'al': ''
+							}));
+						}
+						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B4') {
+							var label = $('<label>', {
+								'class': 'radio inline',
+								'for': 'radio' + value.id
+							}).append($('<img>', {
+								'src': '/media/kunena/topic_icons/default/user/svg/'+value.b4,
+								'alt': value.name,
+								'height': '32',
+								'width': '32'
 							}));
 						}
 						else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'fa') {

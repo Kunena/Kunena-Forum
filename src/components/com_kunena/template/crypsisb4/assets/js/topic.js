@@ -28,7 +28,8 @@ jQuery(document).ready(function ($) {
 	/* To allow to close or open the quick-reply modal box */
 	$('.openmodal').click(function () {
 		var boxToOpen = $(this).attr('href');
-		$(boxToOpen).css('visibility', 'visible');
+		$('#' . boxToOpen).css('visibility', 'visible');
+		$('body').addClass('overflow-auto');
 	});
 
 	/* Button to show more info on profilebox */

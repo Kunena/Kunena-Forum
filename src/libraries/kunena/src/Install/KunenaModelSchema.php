@@ -175,8 +175,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  DOMDocument|null
 	 *
-	 * @throws KunenaSchemaException
 	 * @since   Kunena 6.0
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+	 * @throws \DOMException
 	 */
 	public function getDiffSchema($from = null, $to = null, $using = null): ?DOMDocument
 	{
@@ -448,8 +449,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  void
 	 *
-	 * @throws KunenaSchemaException
 	 * @since   Kunena 6.0
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+	 * @throws \DOMException
 	 */
 	public function upgradeSchema(object $dbschema, object $upgrade): void
 	{
@@ -707,8 +709,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return  DOMDocument|null
 	 *
-	 * @throws KunenaSchemaException
 	 * @since   Kunena 6.0
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+	 * @throws \DOMException
 	 */
 	public function getSchemaDiff(DOMDocument $old, DOMDocument $new): ?DOMDocument
 	{

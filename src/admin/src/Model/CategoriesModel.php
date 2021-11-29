@@ -82,9 +82,6 @@ class CategoriesModel extends KunenaModel
 
 		$category->params = new Registry($category->params);
 
-		$catList    = [];
-		$catList [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_TOPLEVEL'));
-
 		// Make a standard yes/no list
 		$published    = [];
 		$published [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_PUBLISHED'));

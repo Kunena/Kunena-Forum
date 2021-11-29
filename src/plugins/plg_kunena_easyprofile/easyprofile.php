@@ -75,7 +75,7 @@ class plgKunenaEasyprofile extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/avatar.php";
+		require_once __DIR__ . "/KunenaAvatarEasyprofile.php";
 
 		return new KunenaAvatarEasyprofile($this->params);
 	}
@@ -99,7 +99,7 @@ class plgKunenaEasyprofile extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/profile.php";
+		require_once __DIR__ . "/KunenaProfileEasyprofile.php";
 
 		return new KunenaProfileEasyprofile($this->params);
 	}

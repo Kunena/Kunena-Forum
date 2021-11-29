@@ -122,9 +122,6 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 
 		$category->params = new Registry($category->params);
 
-		$catList    = [];
-		$catList [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_TOPLEVEL'));
-
 		// Make a standard yes/no list
 		$published    = [];
 		$published [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_PUBLISHED'));
@@ -148,9 +145,6 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 		$catParams['catid']       = $category->id;
 		$catParams['action']      = 'admin';
 
-		$channelsParams           = [];
-		$channelsParams['catid']  = $category->id;
-		$channelsParams['action'] = 'admin';
 		$channelsOptions          = [];
 		$channelsOptions []       = HTMLHelper::_('select.option', 'THIS', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS'));
 		$channelsOptions []       = HTMLHelper::_('select.option', 'CHILDREN', Text::_('COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN'));

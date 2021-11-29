@@ -302,12 +302,11 @@ class TopicItemDisplay extends KunenaControllerDisplay
 		$tmp3                           = new Registry;
 		$tmp3->{'@type'}                = "ImageObject";
 		$tmp3->{'url'}                  = $this->docImage();
-		$data->publisher                = [];
 		$tmp4                           = new Registry;
 		$tmp4->{'@type'}                = "Organization";
 		$tmp4->{'name'}                 = $this->config->boardTitle;
 		$tmp4->{'logo'}                 = $tmp3;
-		$data->publisher                = $tmp4;
+		$data->publisher                = (array) $tmp4;
 		$data->mainEntityOfPage         = [];
 		$tmp5                           = new Registry;
 		$tmp5->{'@type'}                = "WebPage";

@@ -1689,8 +1689,6 @@ class ConfigModel extends AdminModel
 
 		$lists ['showImgFilesManageProfile'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showImgFilesManageProfile', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showImgFilesManageProfile);
 
-		$lists ['showImgFilesManageProfile'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showImgFilesManageProfile', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showImgFilesManageProfile);
-
 		$lists ['holdGuestPosts'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_holdGuestPosts', 'class="inputbox form-control"size="1"', 'value', 'text', $config->holdGuestPosts);
 
 		$lists ['pickupCategory'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pickupCategory', 'class="inputbox form-control"size="1"', 'value', 'text', $config->pickupCategory);
@@ -1709,10 +1707,6 @@ class ConfigModel extends AdminModel
 		$lists ['defaultSort'] = HTMLHelper::_('select.genericlist', $defaultSort, 'cfg_defaultSort', 'class="inputbox form-control"size="1"', 'value', 'text', $config->defaultSort);
 
 		$lists ['fallbackEnglish'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_fallbackEnglish', 'class="inputbox form-control"size="1"', 'value', 'text', $config->fallbackEnglish);
-
-		$cache   = [];
-		$cache[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CFG_OPTION_USE_GLOBAL'));
-		$cache[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CFG_OPTION_NO_CACHING'));
 
 		$cacheTime           = [];
 		$cacheTime[]         = HTMLHelper::_('select.option', '60', Text::_('COM_KUNENA_CFG_OPTION_1_MINUTE'));
@@ -1759,10 +1753,6 @@ class ConfigModel extends AdminModel
 		// Option to select if the stats link need to be showed for all users or only for registered users
 		$lists ['statsLinkAllowed']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_statsLinkAllowed', 'class="inputbox form-control"size="1"', 'value', 'text', $config->statsLinkAllowed);
 		$lists ['superAdminUserlist'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_superAdminUserlist', 'class="inputbox form-control"size="1"', 'value', 'text', $config->superAdminUserlist);
-		$resizeoptions                = [];
-		$resizeoptions[]              = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RESIZE_RESIZE'));
-		$resizeoptions[]              = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_RESIZE_INTERPOLATION'));
-		$resizeoptions[]              = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_RESIZE_BICUBIC'));
 		$lists ['avatarCrop']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_avatarCrop', 'class="inputbox form-control"size="1"', 'value', 'text', $config->avatarCrop);
 		$lists ['userReport']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userReport', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userReport);
 

@@ -62,12 +62,10 @@ jQuery(document).ready(function ($) {
 	$('#tabs_kunena_editor a:not(:last)').click(function (e) {
 		$('#kbbcode-preview').hide();
 		editor.css('display', 'inline-block');
-		$('#markItUpeditor').css('display', 'inline-block');
 	});
 
 	$('#tabs_kunena_editor a:last').click(function (e) {
 		editor.hide();
-		$('#markItUpeditor').hide();
 	});
 
 	// Check is anynomous options can be displayed on newtopic page

@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* When enable anonymous and post as guest users logued see teh anonymous box
 * CrypsisB4 : when use default setting for quick reply, nothing open when click on button quick reply
+* Typo in url to get user profile link
 * CrypsisB4 : when click on delete all attachments it displays a javascript error
 * CKEDITOR instance is not defined in edit.js file when using bbcode editor
 * [#8058](https://github.com/Kunena/Kunena-Forum/issues/8058): Crypsisb4,Crypsisb3: Change of the category switches to legacy symbols #8058

@@ -39,9 +39,13 @@ $this->getBBcodesEnabled();
 <div class="control-group">
 	<label class="control-label"><?php echo Text::_('COM_KUNENA_MESSAGE'); ?></label>
 	<div class="controls">
-		<ul id="tabs_kunena_editor" class="nav nav-tabs span12">
-			<li><a href="#write" data-toggle="tab"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a></li>
-			<li><a href="#preview" data-toggle="tab"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a></li>
+		<ul id="tabs_kunena_editor"  class="nav nav-tabs">
+			<li class="nav-item">
+				<a class="nav-link active" href="#write"><?php echo Text::_('COM_KUNENA_EDITOR_TAB_WRITE_LABEL') ?></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#preview"><?php echo Text::_('COM_KUNENA_PREVIEW') ?></a>
+			</li>
 		</ul>
 		<textarea class="span12" name="message" id="editor" rows="12" tabindex="7" required="required"
 		          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $this->config->pickup_category)

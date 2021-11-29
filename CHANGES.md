@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* CrypsisB4 : use B4 styling for tabs write and preview when use bbcode editor
 * When enable anonymous and post as guest users logued see teh anonymous box
 * CrypsisB4 : when use default setting for quick reply, nothing open when click on button quick reply
 * Typo in url to get user profile link

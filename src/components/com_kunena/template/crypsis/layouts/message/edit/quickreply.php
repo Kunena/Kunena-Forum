@@ -161,7 +161,7 @@ $editor   = $template->params->get('editor');
 							<label class="string optional"
 							       for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 						</div>
-						<?php if ($me->exists() && $category->allow_anonymous) : ?>
+						<?php if (!$me->exists() && $category->allow_anonymous) : ?>
 							<div class="controls">
 								<input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>"
 								       name="anonymous"

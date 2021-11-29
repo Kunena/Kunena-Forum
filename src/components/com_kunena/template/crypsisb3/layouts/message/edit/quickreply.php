@@ -174,7 +174,7 @@ $editor   = $template->params->get('editor');
 										</div>
 									</div>
 								<?php endif; ?>
-								<?php if ($me->exists() && $category->allow_anonymous) : ?>
+								<?php if (!$me->exists() && $category->allow_anonymous) : ?>
 									<div class="control-group">
 										<div class="controls">
 											<input type="checkbox"

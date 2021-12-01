@@ -6,8 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* Revert changes about anonymous checkbox and hide sensitive informative
 * CrypsisB4 : use B4 styling for tabs write and preview when use bbcode editor
-* When enable anonymous and post as guest users logued see teh anonymous box
+* When enable anonymous and post as guest users logued see the anonymous box
 * CrypsisB4 : when use default setting for quick reply, nothing open when click on button quick reply
 * Typo in url to get user profile link
 * CrypsisB4 : when click on delete all attachments it displays a javascript error

@@ -241,8 +241,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<div class="controls"> <?php echo $this->selectcatlist ?> </div>
 							</div>
 						<?php endif; ?>
-						<?php if (!$this->me->userid && $this->message->getCategory()->allow_anonymous) : ?>
-							<div class="control-group" id="kanynomous-check">
+						<?php if ($this->message->userid) : ?>
+							<div class="control-group" id="kanynomous-check" <?php if (!$this->message->getCategory()->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 								<label class="control-label"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 								<div class="controls" style="text-align: right">
 									<input type="checkbox" id="kanonymous" name="anonymous"
@@ -253,7 +253,8 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 									<span><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></span>
 								</div>
 							</div>
-							<div class="control-group" id="kanynomous-check-name">
+							<?php endif; ?>
+							<div class="control-group" id="kanynomous-check-name" <?php if ($this->me->userid && !$this->category->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 								<div class="alert alert-info"><?php echo Text::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
 
 								<label class="control-label"><?php echo Text::_('COM_KUNENA_GEN_NAME'); ?></label>
@@ -270,7 +271,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 									?>
 								</div>
 							</div>
-						<?php endif; ?>
 						<?php if ($this->config->askemail && !$this->me->userid)
 							:
 							?>

@@ -170,7 +170,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 							</div>
 						<?php endif; ?>
 
-						<?php if (!$me->exists() && $category->allow_anonymous)
+						<?php if ($me->exists() && $category->allow_anonymous)
 						:
 							?>
 							<div class="control-group">
@@ -329,7 +329,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 							</div>
 							<?php endif; ?>
 							<?php
-							if (!$me->exists() && $category->allow_anonymous)
+							if ($me->exists() && $category->allow_anonymous)
 							:
 							?>
 							<div class="control-group">

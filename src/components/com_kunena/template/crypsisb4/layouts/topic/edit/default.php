@@ -104,8 +104,8 @@ $this->addStyleSheet('fileupload.css');
 $this->k = 0;
 
 $this->addScriptOptions('com_kunena.kunena_upload_files_set_inline', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinline&format=json&' . Session::getFormToken() . '=1', false));
-$this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_rem_inline_attachment', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeinlineonattachment&format=json&' . Session::getFormToken() . '=1', false));
+$this->addScriptOptions('com_kunena.kunena_upload_files_rem', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_preload', KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' . Session::getFormToken() . '=1', false));
 $this->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachment_limit);
 $this->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
@@ -120,9 +120,9 @@ $me              = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 // If polls are enabled, load also poll JavaScript.
 if ($this->config->pollenabled)
 {
-	Text::script('COM_KUNENA_POLL_OPTION_NAME');
-	Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-	$this->addScript('assets/js/poll.js');
+    Text::script('COM_KUNENA_POLL_OPTION_NAME');
+    Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
+    $this->addScript('assets/js/poll.js');
 }
 
 $this->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
@@ -132,7 +132,7 @@ echo $this->subLayout('Widget/Lightbox');
 
 if (KunenaFactory::getTemplate()->params->get('formRecover'))
 {
-	$this->addScript('sisyphus.js');
+    $this->addScript('sisyphus.js');
 }
 ?>
 	<div id="modal_confirm_template_category" class="modal fade" tabindex="-1" role="dialog"
@@ -140,7 +140,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_TITLE'); ?></h3>
 				</div>
 				<div class="modal-body">
@@ -250,18 +250,6 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			<?php endif; ?>
 
 			<?php if ($this->category->allow_anonymous && !$this->me->userid) : ?>
-				<div class="control-group" id="kanynomous-check">
-					<label class="control-label"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
-
-					<div class="controls" style="text-align: right">
-						<input type="checkbox" id="kanonymous" name="anonymous"
-									       value="1" <?php if ($this->post_anonymous)
-									{
-										echo 'checked="checked"';
-									} ?> />
-						<span><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></span>
-					</div>
-				</div>
 				<div class="alert alert-info"><?php echo Text::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
 				<div class="form-group row" id="kanynomous-check-name">
 					<label for="kauthorname"

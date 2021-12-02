@@ -138,7 +138,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h3 id="myModalLabel"><?php echo Text::_('COM_KUNENA_MODAL_BOX_CATEGORY_TEMPLATE_TEXT_TITLE'); ?></h3>
 				</div>
 				<div class="modal-body">
@@ -246,8 +246,9 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 								<div class="controls"> <?php echo $this->selectcatlist ?> </div>
 							</div>
 						<?php endif; ?>
-						<?php if (!$this->me->userid && $this->message->getCategory()->allow_anonymous) : ?>
-							<div class="control-group" id="kanynomous-check">
+						<?php if ($this->message->userid) : ?>
+							<div class="control-group" id="kanynomous-check"
+							     <?php if (!$this->message->getCategory()->allow_anonymous) : ?>style="display:none;"<?php endif; ?>>
 								<label class="control-label"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></label>
 
 								<div class="controls" style="text-align: right">
@@ -259,24 +260,28 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 									<span><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></span>
 								</div>
 							</div>
-							<div class="control-group" id="kanynomous-check-name">
-								<div class="alert alert-info"><?php echo Text::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
-
-								<label class="control-label"><?php echo Text::_('COM_KUNENA_GEN_NAME'); ?></label>
-								<div class="controls">
-									<input type="text" id="kauthorname" name="authorname" size="35"
-									       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>"
-									       class="input-xxlarge" maxlength="35" tabindex="4"
-									       value="<?php echo $this->escape($this->message->name); ?>"/>
-									<!-- Encourage guest user to login or register -->
-									<?php
-									$login    = '<a class="btn-link" href="' . Route::_('index.php?option=com_users&view=login&return=' . base64_encode((string) Uri::getInstance())) . '"> ' . Text::_('JLOGIN') . '</a>';
-									$register = ' ' . Text::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . Text::_('JREGISTER') . '</a>';
-									echo Text::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register);
-									?>
-								</div>
-							</div>
 						<?php endif; ?>
+						<div class="control-group" id="kanynomous-check-name"
+						     <?php if ($this->me->userid && !$this->category->allow_anonymous)
+						     :
+						     ?>style="display:none;"<?php
+						endif; ?>>
+							<div class="alert alert-info"><?php echo Text::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
+
+							<label class="control-label"><?php echo Text::_('COM_KUNENA_GEN_NAME'); ?></label>
+							<div class="controls">
+								<input type="text" id="kauthorname" name="authorname" size="35"
+								       placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_AUTHORNAME') ?>"
+								       class="input-xxlarge" maxlength="35" tabindex="4"
+								       value="<?php echo $this->escape($this->message->name); ?>"/>
+								<!-- Encourage guest user to login or register -->
+								<?php
+								$login    = '<a class="btn-link" href="' . Route::_('index.php?option=com_users&view=login&return=' . base64_encode((string) Uri::getInstance())) . '"> ' . Text::_('JLOGIN') . '</a>';
+								$register = ' ' . Text::_('COM_KUNENA_LOGIN_OR') . ' <a class="btn-link" href="index.php?option=com_users&view=registration">' . Text::_('JREGISTER') . '</a>';
+								echo Text::sprintf('COM_KUNENA_LOGIN_PLEASE_SKIP', $login, $register);
+								?>
+							</div>
+						</div>
 						<?php if ($this->config->askemail && !$this->me->userid)
 							:
 							?>

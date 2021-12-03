@@ -155,38 +155,24 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickreply)
 						<?php if ($topic->isAuthorised('subscribe'))
 	:
 							?>
-							<div class="clearfix"></div>
-							<div class="control-group">
-								<div id="mesubscribe">
-									<input style="float: left; margin-right: 10px;" type="checkbox"
-										   name="subscribeMe" id="subscribeMe"
-										   value="1" <?php if ($config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $config->subscriptionschecked == 0 && $me->canSubscribe == 1 || $category->getSubscribed($me->userid))
-											{
-												echo 'checked="checked"';
-													 } ?> />
-									<label class="string optional col-md-12 control-label" style="padding:0;"
-										   for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
-								</div>
+							<div class="form-check">
+								<input type="checkbox" class="form-check-input" style="float: left; margin-right: 10px;" id="subscribeMe" name="subscribeMe" value="1" <?php if ($config->subscriptionschecked == 1 && $me->canSubscribe != 0 || $config->subscriptionschecked == 0 && $me->canSubscribe == 1)
+								{
+									echo 'checked="checked"';
+								} ?>>
+								<label class="form-check-label" for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
 							</div>
 						<?php endif; ?>
 
 						<?php if ($me->exists() && $category->allow_anonymous)
 						:
 							?>
-							<div class="control-group">
-								<div class="controls">
-									<input type="checkbox"
-										   id="kanonymous<?php echo $message->displayField('id'); ?>"
-										   name="anonymous"
-										   value="1"
-										   class="kinputbox postinput form-control" <?php if ($category->post_anonymous)
-											{
-												echo 'checked="checked"';
-																					} ?> />
-									<label for="kanonymous<?php echo intval($message->id); ?>">
-										<?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?>
-									</label>
-								</div>
+							<div class="form-check">
+								<input type="checkbox" class="kinputbox postinput form-check-input" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous" value="1" <?php if ($category->post_anonymous)
+									{
+										echo 'checked="checked"';
+									} ?>>
+								<label class="form-check-label" for="kanonymous<?php echo $message->displayField('id'); ?>"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
 							</div>
 						<?php endif; ?>
 						<a href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"

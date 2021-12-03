@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* Crypsisb4 : in quick reply the anonymous box and subscribed are in the same place
 * Crypsisb3 and Crypsisb4 : Revert changes about anonymous checkbox
 * Revert changes about anonymous checkbox and hide sensitive informative (Part 2)
 * Revert changes about anonymous checkbox and hide sensitive informative

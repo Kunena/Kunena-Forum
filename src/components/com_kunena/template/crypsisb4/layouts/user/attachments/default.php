@@ -161,7 +161,7 @@ $attachments = $this->attachments;
 	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && KunenaUserHelper::getMyself()->isModerator())
 	:
 		?>
-		<a href="#modaldeleteall" class="btn btn-outline-primary border float-right"
+		<a href="#modaldeleteall" class="btn btn-outline-danger float-right"
 		   data-toggle="modal"><?php echo Text::_('COM_KUNENA_FILES_DELETE'); ?></a>
 
 		<div class="modal fade" id="modaldeleteall" tabindex="-1" role="dialog" aria-labelledby="modaldeleteallLabel">

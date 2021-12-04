@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.7-dev]
 ### Fixed
+* [#8600](https://github.com/Kunena/Kunena-Forum/issues/8600): Crypsisb4 want to load bootstrap 2 instead of svg
 * Missing language string for BS4 setting in CrypsisB4 template
 * Crypsisb4 : in quick reply with modal and always visible options anonymous box and subscribed are in the same place
 * Crypsisb4 : in quick reply the anonymous box and subscribed are in the same place

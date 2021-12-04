@@ -146,13 +146,6 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		$this->loadFontawesome();
 
-		$icons = $this->params->get('icons');
-
-		if ($icons)
-		{
-			$wa->registerAndUseStyle('kunena.load.fontawesome', "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
-		}
-
 		// Load template colors settings
 		$styles    = <<<EOF
 		/* Kunena Custom CSS */

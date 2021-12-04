@@ -1228,8 +1228,8 @@ class KunenaIcons
 		}
 
 		if ($big)
-		{		    
-		    if ($topicicontype == 'fa')
+		{
+			if ($topicicontype == 'fa')
 			{
 				if (!empty($caticon))
 				{

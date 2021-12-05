@@ -192,7 +192,6 @@
 		<copy todir="${tmp_dir}/packages/com_kunena/site">
 			<fileset dir="${kunena.site}">
 				<include name="language/en-GB/*.ini"/>
-				<exclude name="template/**/params.ini"/>
 			</fileset>
 		</copy>
 
@@ -218,6 +217,7 @@
 				<include name="src/**"/>
 				<include name="template/**"/>
 				<exclude name="language/**/*.xml"/>
+				<exclude name="template/**/params.ini"/>
 			</fileset>
 		</copy>
 

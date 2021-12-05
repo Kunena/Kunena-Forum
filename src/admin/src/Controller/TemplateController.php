@@ -24,6 +24,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -40,6 +41,12 @@ class TemplateController extends FormController
 	 * @since   Kunena 6.0
 	 */
 	protected $baseurl = null;
+
+	/**
+	 * @var     KunenaConfig
+	 * @since   Kunena 6.0
+	 */
+	public $config = null;
 
 	/**
 	 * Constructor.
@@ -60,6 +67,7 @@ class TemplateController extends FormController
 		parent::__construct($config, $factory, $app, $input);
 
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=templates';
+		$this->config  = KunenaFactory::getConfig();
 	}
 
 	/**
@@ -687,5 +695,40 @@ class TemplateController extends FormController
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=addnew", false));
+	}
+
+	/**
+	 * Publish
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 * @since   Kunena 2.0
+	 */
+	public function publish(): void
+	{
+		$cid = $this->app->input->get('cid', [], 'array');
+		$id  = array_shift($cid);
+
+		if (!Session::checkToken())
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if ($id)
+		{
+			$this->config->template = $id;
+			$this->config->save();
+		}
+
+		$template = KunenaFactory::getTemplate($id);
+		$template->clearCache();
+
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT_SELECTED'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

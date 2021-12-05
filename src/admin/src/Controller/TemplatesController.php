@@ -47,12 +47,6 @@ class TemplatesController extends FormController
 	protected $locked = ['aurelia'];
 
 	/**
-	 * @var     object
-	 * @since   Kunena 2.0
-	 */
-	private $config;
-
-	/**
 	 * Construct
 	 *
 	 * @param   array  $config  config
@@ -64,41 +58,6 @@ class TemplatesController extends FormController
 	{
 		parent::__construct($config);
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=templates';
-	}
-
-	/**
-	 * Publish
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function publish(): void
-	{
-		$cid = $this->app->input->get('cid', [], 'array');
-		$id  = array_shift($cid);
-
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-			return;
-		}
-
-		if ($id)
-		{
-			$this->config->template = $id;
-			$this->config->save();
-		}
-
-		$template = KunenaFactory::getTemplate($id);
-		$template->clearCache();
-
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT_SELECTED'));
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**

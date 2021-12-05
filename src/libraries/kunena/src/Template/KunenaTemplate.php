@@ -1186,7 +1186,7 @@ HTML;
 
 		if (empty($this->topicIcons))
 		{
-			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/topicIcons.xml';
+			$xmlfile = JPATH_ROOT . '/media/kunena/topic_icons' . $categoryIconset . '/topicicons.xml';
 
 			if (is_file($xmlfile))
 			{

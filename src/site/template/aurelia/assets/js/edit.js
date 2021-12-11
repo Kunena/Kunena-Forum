@@ -276,6 +276,10 @@ jQuery(document).ready(function ($) {
         });
     }
 
+	$('#gotoeditor').click(function () {
+		localStorage.setItem("copyKunenaeditor", $('#editor').val());
+	});
+
     if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
         CKEDITOR.replace('message', {
             customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),

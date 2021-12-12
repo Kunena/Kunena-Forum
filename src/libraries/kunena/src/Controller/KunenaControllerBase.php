@@ -201,6 +201,18 @@ abstract class KunenaControllerBase implements Serializable
 	}
 
 	/**
+	 * Needed since PHP 8.1.0 else give drepreciation warning
+	 * 
+	 * @since   Kunena 6.0
+	 * 
+	 * @return string
+	 */
+	public function __serialize()
+	{
+		return serialize([$this->input, $this->options]);
+	}
+
+	/**
 	 * Serialize the controller.
 	 *
 	 * @return  string  The serialized controller.
@@ -209,7 +221,21 @@ abstract class KunenaControllerBase implements Serializable
 	 */
 	public function serialize(): string
 	{
-		return serialize([$this->input, $this->options]);
+		return $this->__serialize();
+	}
+
+	/**
+	 * Needed since PHP 8.1.0 else give drepreciation warning
+	 * 
+	 * @since  Kunena 6.0
+	 * @param  unknown $input
+	 * @return \Joomla\Input\Input
+	 */
+	public function __unserialize($input)
+	{
+		list($this->input, $this->options) = unserialize($input);
+
+		return $this->input;
 	}
 
 	/**
@@ -229,7 +255,7 @@ abstract class KunenaControllerBase implements Serializable
 		$this->app = $this->loadApplication();
 
 		// Unserialize the input and options.
-		list($this->input, $this->options) = unserialize($input);
+		$this->input = $this->__unserialize($input);
 
 		if (!($this->input instanceof Input))
 		{

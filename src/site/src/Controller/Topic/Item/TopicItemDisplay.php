@@ -287,7 +287,12 @@ class TopicItemDisplay extends KunenaControllerDisplay
 		$data->{'headline'}             = $this->headerText;
 		$data->{'image'}                = $this->docImage();
 		$data->{'datePublished'}        = $this->topic->getFirstPostTime()->toISO8601();
+
+		if ($this->message->modified_time!==null)
+		{
 		$data->{'dateModified'}         = Factory::getDate($this->message->modified_time)->toISO8601();
+		}
+
 		$data->{'author'}               = [];
 		$tmp                            = new Registry;
 		$tmp->{'@type'}                 = "Person";

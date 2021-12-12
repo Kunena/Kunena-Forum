@@ -369,10 +369,13 @@ class KunenaLayout extends KunenaBase
 				}
 			}
 
-			if (strpos($class, 'hasTooltip') !== false)
+			if ($class !== null)
 			{
-				// Tooltips will decode HTML and we don't want the HTML to be parsed
-				$title = $this->escape($title);
+				if (strpos($class, 'hasTooltip') !== false)
+				{
+					// Tooltips will decode HTML and we don't want the HTML to be parsed
+					$title = $this->escape($title);
+				}
 			}
 		}
 

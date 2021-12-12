@@ -174,6 +174,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @since   Kunena 6.0
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($key)
 	{
 		return $this->items[$key];
@@ -189,6 +190,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @since   Kunena 6.0
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet($key, $value)
 	{
 		if (\is_null($key))
@@ -210,6 +212,7 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
 	 *
 	 * @since   Kunena 6.0
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset($key)
 	{
 		unset($this->items[$key]);

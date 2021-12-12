@@ -308,6 +308,11 @@ class KunenaBan extends parentAlias
 			return true;
 		}
 
+		if ($this->expiration===null)
+		{
+			return false;
+		}
+
 		$expiration = new Date($this->expiration);
 
 		if ($expiration->toUnix() > self::$_now->toUnix())

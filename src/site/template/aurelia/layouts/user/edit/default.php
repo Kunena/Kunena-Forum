@@ -54,7 +54,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 			<?php foreach ($tabs as $name => $tab)
 				:
 				?>
-				<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatar): ?>
+				<?php if ($name == 'avatar' && !$avatar instanceof \KunenaAvatarKunena): ?>
 			<?php else : ?>
                 <li class="nav-item <?php echo $tab->active ? 'active' : ''; ?>">
                     <a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
@@ -69,7 +69,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 			<?php foreach ($tabs as $name => $tab)
 				:
 				?>
-				<?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatar): ?>
+				<?php if ($name == 'avatar' && !$avatar instanceof \KunenaAvatarKunena): ?>
 			<?php else : ?>
                 <div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>"
                      id="edit<?php echo $name; ?>">

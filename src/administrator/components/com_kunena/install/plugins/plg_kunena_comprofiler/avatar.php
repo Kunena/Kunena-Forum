@@ -78,7 +78,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 			$cbUser = CBuser::getInstance($user->userid);
 		}
 
-		if ($cbUser === null)
+		if ($cbUser !== null)
 		{
 			if ($sizex <= 144)
 			{

@@ -203,10 +203,9 @@ class KunenaImage extends Image
 	 *
 	 * @return  KunenaImage
 	 *
-	 * @deprecated 5.1
-	 *
+ 	 *
 	 * @throws Exception
-	 * @since   11.3
+	 * @since   4.0.0
 	 */
 	public function resize($width, $height, $createNew = true, $scaleMethod = self::SCALE_INSIDE)
 	{

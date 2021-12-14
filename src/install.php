@@ -42,9 +42,9 @@ class Pkg_KunenaInstallerScript
 			'0'   => '5.5.3', // Preferred version
 		),
 		'Joomla!' => array(
-			'3.10' => '3.10.3',
+			'3.10' => '3.10.4',
 			'3.9'  => '3.9.28',
-			'0'    => '3.10.3', // Preferred version
+			'0'    => '3.10.4', // Preferred version
 		),
 	);
 

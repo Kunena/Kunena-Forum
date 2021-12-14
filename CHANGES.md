@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.2.7-dev]
+## [5.2.8-dev]
+* [#8622](https://github.com/Kunena/Kunena-Forum/issues/8622): Fixes icons disappearing in Kunena 5.2.7
+* Wrong language string for desc crypsis b4 in backend
+* Update link to ebay dev page in config panel and remove useless
+
+### Changed
+* Update minimum version for Joomla! to 3.10.4
+
+## [5.2.7]
 ### Fixed
 * [#8600](https://github.com/Kunena/Kunena-Forum/issues/8600): Crypsisb4 want to load bootstrap 2 instead of svg
 * Missing language string for BS4 setting in CrypsisB4 template

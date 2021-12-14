@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Update link to ebay dev page in config panel and remove useless
 
 ### Changed
+* Remove deprecated state on resize() method in KunenaImage class
 * Update minimum version for Joomla! to 3.10.4
 
 ## [5.2.7]

@@ -209,7 +209,7 @@ class KunenaLogin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getRegistrationURL(): string
+	public function getRegistrationURL()
 	{
 		foreach ($this->instances as $login)
 		{

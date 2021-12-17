@@ -714,7 +714,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		'color'        => [
 			'mode'     => BBCode::BBCODE_MODE_ENHANCED,
 			'allow'    => ['_default' => '/^#?[a-zA-Z0-9._ -]+$/'],
-			'template' => '<span style="color:{$_default/tw}">{$_content/v}</span>',
+			'template' => '<span style="color: {$_default/tw};">{$_content/v}</span>',
 			'class'    => 'inline',
 			'allow_in' => ['listitem', 'block', 'columns', 'inline', 'link'],
 		],
@@ -950,7 +950,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			'plain_end'     => "\n",
 		],
 		'rtl'          => [
-			'simple_start' => '<div style="direction:rtl;">',
+			'simple_start' => '<div style="direction: rtl;">',
 			'simple_end'   => '</div>',
 			'class'        => 'inline',
 			'allow_in'     => ['listitem', 'block', 'columns', 'inline', 'link'],
@@ -2164,13 +2164,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		}
 		else
 		{
+			$quoteParams = explode(' ', $default);
+
 			// To support old bbcode tags used before Kunena 5.2.x
 			if (isset($params['post']))
 			{
 				$message = KunenaMessageHelper::get($params['post']);
 			}
 
-			$username = $quote_params['0'];
+			$username = $quoteParams['0'];
 		}
 
 		if (isset($message))

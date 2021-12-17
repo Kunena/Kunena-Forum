@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Pagination\PaginationObject;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -790,26 +791,10 @@ class KunenaPagination
 	 * @return  string  HTML link
 	 *
 	 * @since   1.5
-	 *
-	 * @throws  Exception
 	 */
-	protected function _item_active(PaginationObject $item): string
+	protected function _item_active(PaginationObject $item)
 	{
-		$app = Factory::getApplication();
-
-		if ($app->isClient('administrator'))
-		{
-			if ($item->base > 0)
-			{
-				return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=" . $item->base
-					. "; Joomla.submitform();return false;\">" . $item->text . "</a>";
-			}
-
-			return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix
-				. "limitstart.value=0; Joomla.submitform();return false;\">" . $item->text . "</a>";
-		}
-
-		return "<a title=\"" . $item->text . "\" href=\"" . $item->link . "\" class=\"pagenav\">" . $item->text . "</a>";
+		return LayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => true]);
 	}
 
 	/**
@@ -820,18 +805,9 @@ class KunenaPagination
 	 * @return  string
 	 *
 	 * @since   1.5
-	 *
-	 * @throws  Exception
 	 */
-	protected function _item_inactive(PaginationObject $item): string
+	protected function _item_inactive(PaginationObject $item)
 	{
-		$app = Factory::getApplication();
-
-		if ($app->isClient('administrator'))
-		{
-			return '<span>' . $item->text . '</span>';
-		}
-
-		return '<span class="pagenav">' . $item->text . '</span>';
+		return LayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => false]);
 	}
 }

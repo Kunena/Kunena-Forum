@@ -81,7 +81,7 @@ class HtmlView extends BaseHtmlView
 		HTMLHelper::_('bootstrap.renderModal', 'settingModal');
 
 		$title = Text::_('COM_KUNENA_RESET_CONFIG');
-		$dhtml = "<button data-toggle=\"modal\" data-target=\"#settingModal\" class=\"btn btn-small\">
+		$dhtml = "<button data-bs-toggle=\"modal\" data-bs-target=\"#settingModal\" class=\"btn btn-small\">
 					<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
 					$title</button>";
 		$bar->appendButton('Custom', $dhtml, 'restore');

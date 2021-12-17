@@ -2416,7 +2416,7 @@ $wa->useScript('multiselect');
                     </article>
                 </form>
 				<?php // Load the setting comfirmation box form. ?>
-				<?php // Echo $this->loadTemplateFile('setting'); ?>
+				<?php echo $this->loadTemplate('setting'); ?>
                 <div class="clearfix"></div>
             </div>
         </div>

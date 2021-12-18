@@ -20,6 +20,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
+use Kunena\Forum\Libraries\Collection\KunenaCollection;
 
 /**
  * Class KunenaLogFinder
@@ -107,13 +108,13 @@ class KunenaLogFinder extends KunenaFinder
 	/**
 	 * Get log entries.
 	 *
-	 * @return  array
+	 * @return  KunenaCollection
 	 *
 	 * @since   Kunena 5.0
 	 *
 	 * @throws  Exception
 	 */
-	public function find(): array
+	public function find(): KunenaCollection
 	{
 		if ($this->skip)
 		{
@@ -127,7 +128,7 @@ class KunenaLogFinder extends KunenaFinder
 
 		try
 		{
-			$results = (array) $this->db->loadColumn();
+			$results = new KunenaCollection((array) $this->db->loadObjectList('id'));
 		}
 		catch (ExecutionFailureException $e)
 		{

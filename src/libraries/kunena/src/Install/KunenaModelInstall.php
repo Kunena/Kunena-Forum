@@ -694,7 +694,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
-	public function extract(string $path, string $filename, $dest = null, $silent = false): ?bool
+	public function extract(string $path, string $filename, $dest = null, bool $silent = false): ?bool
 	{
 		$success = null;
 

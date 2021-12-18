@@ -138,8 +138,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @return  array|null
 	 *
-	 * @throws  KunenaSchemaException
 	 * @since   Kunena
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+	 * @throws \DOMException
 	 */
 	public function getCreateSQL(): ?array
 	{
@@ -1211,8 +1212,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @return  array|null
 	 *
-	 * @throws  KunenaSchemaException
 	 * @since   Kunena 6.0
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+	 * @throws \DOMException
 	 */
 	protected function getSQL(): ?array
 	{

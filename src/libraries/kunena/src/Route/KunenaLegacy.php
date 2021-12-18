@@ -161,7 +161,7 @@ abstract class KunenaLegacy
 	 *
 	 * @throws Exception
 	 */
-	public static function convert(string $uri, $showstart = 1): bool
+	public static function convert(string $uri, int $showstart = 1): bool
 	{
 		// Make sure that input is Joomla\CMS\Uri\Uri to legacy Kunena func=xxx
 		if (!($uri instanceof Uri))

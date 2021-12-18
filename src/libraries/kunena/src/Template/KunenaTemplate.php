@@ -1887,7 +1887,7 @@ HTML;
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	public function tooltips($class = false): string
+	public function tooltips(bool $class = false): string
 	{
 		$tooltips = $this->params->get('tooltips');
 
@@ -1911,7 +1911,7 @@ HTML;
 	 *
 	 * @throws  Exception
 	 */
-	public function recaptcha($topic_ids = false): string
+	public function recaptcha(bool $topic_ids = false): string
 	{
 		if (PluginHelper::isEnabled('captcha'))
 		{

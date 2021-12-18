@@ -49,9 +49,9 @@ class KunenaProfileCommunity extends KunenaProfile
 	 * @param   bool    $xhtml   xhtml
 	 *
 	 * @return  boolean|string
-	 * @throws  Exception
-	 *
 	 * @since   Kunena 5.0
+	 *@throws  Exception
+	 *
 	 */
 	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{

@@ -173,7 +173,7 @@ class KunenaLogin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLoginURL(): string
+	public function getLoginURL()
 	{
 		foreach ($this->instances as $login)
 		{
@@ -191,7 +191,7 @@ class KunenaLogin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getLogoutURL(): string
+	public function getLogoutURL()
 	{
 		foreach ($this->instances as $login)
 		{
@@ -227,7 +227,7 @@ class KunenaLogin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getResetURL(): string
+	public function getResetURL()
 	{
 		foreach ($this->instances as $login)
 		{
@@ -245,7 +245,7 @@ class KunenaLogin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getRemindURL(): string
+	public function getRemindURL()
 	{
 		foreach ($this->instances as $login)
 		{

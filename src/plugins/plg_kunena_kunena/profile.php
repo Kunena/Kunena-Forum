@@ -50,10 +50,10 @@ class KunenaProfileKunena extends KunenaProfile
 	 *
 	 * @return  string
 	 *
-	 * @throws  Exception
-	 * @throws  null
-	 *
 	 * @since   Kunena 5.0
+	 *@throws  null
+	 *
+	 * @throws  Exception
 	 */
 	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{

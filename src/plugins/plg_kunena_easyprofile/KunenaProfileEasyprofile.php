@@ -52,8 +52,8 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 *
 	 * @return string
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 *@throws Exception
 	 */
 	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{

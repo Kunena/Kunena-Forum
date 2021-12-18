@@ -865,7 +865,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @since   Kunena 4.0
 	 */
-	public function upload($key = 'kattachment', $catid = null): bool
+	public function upload(string $key = 'kattachment', int $catid = null): bool
 	{
 		$config    = KunenaFactory::getConfig();
 		$input     = Factory::getApplication()->input;
@@ -1068,7 +1068,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function removeBBCodeInMessage($editor_text = null): bool
+	public function removeBBCodeInMessage(string $editor_text = null): bool
 	{
 		if (!$this->inline)
 		{

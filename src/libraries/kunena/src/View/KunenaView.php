@@ -671,7 +671,7 @@ class KunenaView extends HtmlView
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	public function loadTemplateFile($tpl = null, $hmvcParams = null): string
+	public function loadTemplateFile(string $tpl = null, array $hmvcParams = null): string
 	{
 		KunenaProfiler::getInstance() ? $this->profiler->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 

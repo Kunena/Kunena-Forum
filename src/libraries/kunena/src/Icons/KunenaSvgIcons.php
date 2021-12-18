@@ -35,7 +35,7 @@ class KunenaSvgIcons
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function loadsvg(string $svgname, $group = 'default', $iconset = 'default'): string
+	public static function loadsvg(string $svgname, string $group = 'default', string $iconset = 'default'): string
 	{
 		if (empty($svgname))
 		{

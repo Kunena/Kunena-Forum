@@ -243,7 +243,7 @@ class KunenaTopicUser extends CMSObject
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function update(KunenaMessage $message = null, $postDelta = 0): bool
+	public function update(KunenaMessage $message = null, int $postDelta = 0): bool
 	{
 		$this->posts       += $postDelta;
 		$this->category_id = $this->getTopic()->category_id;

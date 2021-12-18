@@ -76,7 +76,7 @@ abstract class KunenaError
 			self::$admin  = Factory::getApplication()->isClient('administrator');
 
 			// Make sure we are able to log fatal errors.
-			register_shutdown_function(['KunenaError', 'shutdownHandler'], self::$debug || self::$admin || KUNENA_PROFILER);
+			register_shutdown_function(['Kunena\Forum\Libraries\Error\KunenaError', 'shutdownHandler'], self::$debug || self::$admin || KUNENA_PROFILER);
 
 			if (!self::$debug)
 			{

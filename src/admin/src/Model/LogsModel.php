@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\User\User;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Collection\KunenaCollection;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Log\KunenaLogFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -334,13 +335,13 @@ class LogsModel extends ListModel
 	 * Method to get User objects of data items.
 	 *
 	 *
-	 * @return array
+	 * @return  KunenaCollection
 	 * @throws  Exception
 	 *
 	 * @throws  null
 	 * @since   Kunena 5.0
 	 */
-	public function getItems(): array
+	public function getItems(): KunenaCollection
 	{
 		// Get a storage key.
 		$store = $this->getStoreId();

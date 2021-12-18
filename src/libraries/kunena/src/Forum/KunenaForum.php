@@ -209,7 +209,12 @@ abstract class KunenaForum
 	 */
 	public static function isDev(): bool
 	{
-		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
+		SELF::version();
+
+		$match = [];
+		preg_match('/(-DEV)|(-GIT)/i', SELF::$version, $match);
+
+		if (!empty($match))
 		{
 			return true;
 		}

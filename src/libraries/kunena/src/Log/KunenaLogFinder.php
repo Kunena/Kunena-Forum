@@ -123,7 +123,7 @@ class KunenaLogFinder extends KunenaFinder
 
 		$query = clone $this->query;
 		$this->build($query);
-		$query->select('a.' . $this->primaryKey);
+		$query->select('a.*');
 		$this->db->setQuery($query, $this->start, $this->limit);
 
 		try

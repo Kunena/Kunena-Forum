@@ -32,11 +32,6 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class LogsModel extends ListModel
 {
-	/**
-	 * @var User|null
-	 * @since version
-	 */
-	private $me;
 
 	/**
 	 * Constructor.

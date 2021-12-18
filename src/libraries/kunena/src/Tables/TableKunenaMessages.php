@@ -327,7 +327,7 @@ class TableKunenaMessages extends KunenaTable
 		}
 		else
 		{
-			$query->insert('#__kunena_messages_text')
+			$query->insert($this->_db->quoteName('#__kunena_messages_text'))
 				->columns(
 					[
 						$this->_db->quoteName('mesid'),

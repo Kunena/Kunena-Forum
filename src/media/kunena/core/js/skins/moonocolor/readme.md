@@ -2,10 +2,10 @@
 ====================
 
 This skin has been chosen for the **default skin** of CKEditor 4.x, elected from the CKEditor
-[skin contest](http://ckeditor.com/blog/new_ckeditor_4_skin) and further shaped by
+[skin contest](https://ckeditor.com/ckeditor-4/) and further shaped by
 the CKEditor team. "Moono" is maintained by the core developers.
 
-For more information about skins, please check the [CKEditor Skin SDK](http://docs.cksource.com/CKEditor_4.x/Skin_SDK)
+For more information about skins, please check the [CKEditor Skin SDK](https://docs.cksource.com/CKEditor_4.x/Skin_SDK)
 documentation.
 
 Features
@@ -46,6 +46,6 @@ License
 
 Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
 
-Licensed under the terms of any of the following licenses at your choice: [GPL](http://www.gnu.org/licenses/gpl.html), [LGPL](http://www.gnu.org/licenses/lgpl.html) and [MPL](http://www.mozilla.org/MPL/MPL-1.1.html).
+Licensed under the terms of any of the following licenses at your choice: [GPL](https://www.gnu.org/licenses/gpl.html), [LGPL](https://www.gnu.org/licenses/lgpl.html) and [MPL](https://www.mozilla.org/MPL/MPL-1.1.html).
 
 See LICENSE.md for more information.

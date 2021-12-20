@@ -16,9 +16,10 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\Uri\Uri;
 
-$this->addScript('sceditor/sceditor.js');
-$this->addScript('sceditor/bbcode.js');
-$this->addStyleSheet('sceditor/themes/default.css');
+$this->wa->registerAndUseScript('sceditor/sceditor', 'media/kunena/core/js/sceditor/sceditor.js')
+		->registerAndUseScript('sceditor/bbcode', 'media/kunena/core/js/sceditor/bbcode.js')
+		->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
+
 $this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
 
 Text::script('COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD');
@@ -54,7 +55,7 @@ $this->doc->addScriptOptions('com_kunena.template_editor_buttons_configuration',
 $this->doc->addScriptOptions('com_kunena.root_path', Joomla\CMS\Uri\Uri::root(true));
 $this->doc->addScriptOptions('com_kunena.editor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));
 
-// $this->addScript('edit.js');
+$this->wa->registerAndUseScript('sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js');
 
 // Echo $this->subLayout('Widget/Datepicker');
 

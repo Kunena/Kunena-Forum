@@ -297,6 +297,18 @@ jQuery(document).ready(function ($) {
                         }
                     })
                 },
+				change : function (event) {
+					if (event.editor.getData().length > 0)
+					{
+						$('#form_submit_button').removeAttr("disabled");
+					}
+
+					if (event.editor.getData().length == 0 && $('#form_submit_button').disabled === undefined)
+					{
+						$('#form_submit_button').prop("disabled", true);
+					}
+
+				},
                 mode: function (evt) {
                     const cat = localStorage.getItem('copyKunenaeditor');
 

@@ -513,7 +513,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
         <div class="form-group row">
             <div class="col-md-10 center">
                 <button id="form_submit_button" name="submit" type="submit"
-                        class="btn btn-outline-success btn-md form-validate" tabindex="8">
+                        class="btn btn-outline-success btn-md form-validate" disabled tabindex="8">
 					<?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_SUBMIT'); ?>
                 </button>
 

@@ -800,7 +800,7 @@ abstract class KunenaUserHelper
 	 *
 	 * @since   Kunena 6
 	 */
-	public static function isIPv6(int $ip): bool
+	public static function isIPv6(string $ip): bool
 	{
 		return IpHelper::isIPv6($ip);
 	}

@@ -43,8 +43,8 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         <i class="fas fa-database text-white f-30"></i>
                                     </div>
                                     <div class="col pl-0">
-                                        <h6 class="mb-0 text-white">Install</h6>
-                                        <h6 class="mb-0 text-white">Sample Data</h6>
+                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
+                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></h6>
                                     </div>
                                 </div>
                                 <div>
@@ -53,12 +53,12 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
 											<div class="d-flex justify-content-between align-items-center">
 												<div class="sample-data__title me-2">
 													<span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
-													Kunena Forum Sample Data					</div>
+													<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?>					</div>
 												<button type="button" class="btn btn-secondary btn-sm apply-sample-data" data-type="kunena" data-steps="1">
-													<span class="icon-upload" aria-hidden="true"></span> Install						<span class="visually-hidden">Kunena Forum Sample Data</span>
+													<span class="icon-upload" aria-hidden="true"></span> <?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL'); ?>						<span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?></span>
 												</button>
 											</div>
-											<p class="sample-data__desc small mt-1">Install Sample Data - Kunena Forum</p>
+											<p class="sample-data__desc small mt-1"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_SAMPLE_DATA') ?></p>
 										</li>
 										<li class="list-group-item sampledata-progress-kunena d-none">
 											<div class="progress mb-3">
@@ -122,8 +122,8 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         <i class="fas fa-database text-white f-30"></i>
                                     </div>
                                     <div class="col pl-0">
-                                        <h6 class="mb-0 text-white">Install</h6>
-                                        <h6 class="mb-0 text-white">Kunena Menus</h6>
+                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
+                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU'); ?></h6>
                                     </div>
                                 </div>
                                 <div>
@@ -132,12 +132,13 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
 											<div class="d-flex justify-content-between align-items-center">
 												<div class="sample-data__title me-2">
 													<span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
-													Kunena Menus					</div>
+													<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU') ?></div>
 												<button type="button" class="btn btn-secondary btn-sm apply-sample-data" data-type="kunena" data-steps="1">
-													<span class="icon-upload" aria-hidden="true"></span> <a href="<?php echo Uri::base() ?>index.php?option=com_kunena&view=tools&layout=menu">Install</a>						<span class="visually-hidden">Kunena Menus</span>
+													<span class="icon-upload" aria-hidden="true"></span> <a href="<?php echo Uri::base() ?>index.php?option=com_kunena&view=tools&layout=menu"><?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL') ?></a>
+													<span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU') ?></span>
 												</button>
 											</div>
-											<p class="sample-data__desc small mt-1">Install Menus</p>
+											<p class="sample-data__desc small mt-1"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_MENUS'); ?></p>
 										</li>
 										<li class="list-group-item sampledata-progress-kunena d-none">
 											<div class="progress mb-3">
@@ -184,8 +185,8 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                     <i class="fas fa-cloud-download-alt text-cyan f-30"></i>
                                 </div>
                                 <div class="col pl-0">
-                                    <h6 class="mb-0">Kunena Version Check</h6>
-                                    <h6 class="mb-0 text-cyan">Last Check: Today</h6>
+                                    <h6 class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_VERSION_CHECK'); ?></h6>
+                                    <h6 class="mb-0 text-cyan"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK'); ?> Today</h6>
                                 </div>
                             </div>
                             <div class="row align-items-center">
@@ -372,7 +373,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan"><?php echo count(KunenaTemplate::getInstance()->getTemplatePaths()); ?></h3>
-                                    <p class="mb-0">Installed</p>
+                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES_INSTALLED'); ?></p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-palette bg-cyan"></i>
@@ -435,7 +436,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan">12</h3>
-                                    <p class="mb-0">Items</p>
+                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-trash-alt bg-cyan"></i>
@@ -455,7 +456,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan">12</h3>
-                                    <p class="mb-0">Items</p>
+                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-clipboard-list bg-cyan"></i>
@@ -475,7 +476,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan">12</h3>
-                                    <p class="mb-0">Items</p>
+                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-tools bg-cyan"></i>

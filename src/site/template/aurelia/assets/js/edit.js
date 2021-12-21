@@ -282,10 +282,15 @@ jQuery(document).ready(function ($) {
 
     if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
         CKEDITOR.replace('message', {
-            customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),
-            on: {
-                instanceReady: function (event) {
-                    event.editor.on("beforeCommandExec", function (event) {
+			customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),
+			on: {
+				instanceReady: function (event) {
+					if (event.editor.getData().length > 0)
+					{
+						$('#form_submit_button').removeAttr("disabled");
+					}
+
+					event.editor.on("beforeCommandExec", function (event) {
                         // Show the paste dialog for the paste buttons and right-click paste
                         if (event.data.name == "paste") {
                             event.editor._.forcePasteDialog = true;
@@ -296,7 +301,7 @@ jQuery(document).ready(function ($) {
                             event.cancel();
                         }
                     })
-                },
+				},
 				change : function (event) {
 					if (event.editor.getData().length > 0)
 					{

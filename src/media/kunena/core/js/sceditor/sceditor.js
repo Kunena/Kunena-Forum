@@ -60,30 +60,46 @@
 		var target = isTargetBoolean ? sourceArg : targetArg;
 		var isDeep = isTargetBoolean ? targetArg : false;
 
+		function isObject(value) {
+			return value !== null && typeof value === 'object' &&
+				Object.getPrototypeOf(value) === Object.prototype;
+		}
+
 		for (; i < arguments.length; i++) {
 			var source = arguments[i];
 
 			// Copy all properties for jQuery compatibility
 			/* eslint guard-for-in: off */
 			for (var key in source) {
+				var targetValue = target[key];
 				var value = source[key];
 
-				// Skip undefined values to match jQuery and
-				// skip if target to prevent infinite loop
-				if (!isUndefined(value)) {
-					var isObject = value !== null && typeof value === 'object' &&
-						Object.getPrototypeOf(value) === Object.prototype;
-					var isArray = Array.isArray(value);
+				// Skip undefined values to match jQuery
+				if (isUndefined(value)) {
+					continue;
+				}
 
-					if (isDeep && (isObject || isArray)) {
-						target[key] = extend(
-							true,
-							target[key] || (isArray ? [] : {}),
-							value
-						);
-					} else {
-						target[key] = value;
-					}
+				// Skip special keys to prevent prototype pollution
+				if (key === '__proto__' || key === 'constructor') {
+					continue;
+				}
+
+				var isValueObject = isObject(value);
+				var isValueArray = Array.isArray(value);
+
+				if (isDeep && (isValueObject || isValueArray)) {
+					// Can only merge if target type matches otherwise create
+					// new target to merge into
+					var isSameType = isObject(targetValue) === isValueObject &&
+						Array.isArray(targetValue) === isValueArray;
+
+					target[key] = extend(
+						true,
+						isSameType ? targetValue : (isValueArray ? [] : {}),
+						value
+					);
+				} else {
+					target[key] = value;
 				}
 			}
 		}
@@ -142,6 +158,13 @@
 	 * @type {number}
 	 */
 	var TEXT_NODE = 3;
+
+	/**
+	 * Node type constant for comment nodes
+	 *
+	 * @type {number}
+	 */
+	var COMMENT_NODE = 8;
 
 	function toFloat(value) {
 		value = parseFloat(value);
@@ -773,7 +796,9 @@
 	 * @type {string}
 	 */
 	var blockLevelList = '|body|hr|p|div|h1|h2|h3|h4|h5|h6|address|pre|' +
-		'form|table|tbody|thead|tfoot|th|tr|td|li|ol|ul|blockquote|center|';
+		'form|table|tbody|thead|tfoot|th|tr|td|li|ol|ul|blockquote|center|' +
+		'details|section|article|aside|nav|main|header|hgroup|footer|fieldset|' +
+		'dl|dt|dd|figure|figcaption|';
 
 	/**
 	 * List of elements that do not allow children separated by bars (|)
@@ -829,11 +854,27 @@
 	 *
 	 * @param {HTMLElement} from
 	 * @param {HTMLElement} to
+	 * @deprecated since v3.1.0
 	 */
 	function copyCSS(from, to) {
 		if (to.style && from.style) {
 			to.style.cssText = from.style.cssText + to.style.cssText;
 		}
+	}
+
+	/**
+	 * Checks if a DOM node is empty
+	 *
+	 * @param {Node} node
+	 * @returns {boolean}
+	 */
+	function isEmpty(node) {
+		if (node.lastChild && isEmpty(node.lastChild)) {
+			remove(node.lastChild);
+		}
+
+		return node.nodeType === 3 ? !node.nodeValue :
+			(canHaveChildren(node) && !node.childNodes.length);
 	}
 
 	/**
@@ -845,30 +886,44 @@
 	 * @param {HTMLElement} node
 	 */
 	function fixNesting(node) {
-		var	getLastInlineParent = function (node) {
-			while (isInline(node.parentNode, true)) {
-				node = node.parentNode;
-			}
-
-			return node;
-		};
-
 		traverse(node, function (node) {
 			var list = 'ul,ol',
-				isBlock = !isInline(node, true);
+				isBlock = !isInline(node, true) && node.nodeType !== COMMENT_NODE,
+				parent = node.parentNode;
 
 			// Any blocklevel element inside an inline element needs fixing.
-			if (isBlock && isInline(node.parentNode, true)) {
-				var	parent = getLastInlineParent(node),
-					before = extractContents(parent, node),
-					middle = node;
+			// Also <p> tags that contain blocks should be fixed
+			if (isBlock && (isInline(parent, true) || parent.tagName === 'P')) {
+				// Find the last inline parent node
+				var	lastInlineParent = node;
+				while (isInline(lastInlineParent.parentNode, true) ||
+					lastInlineParent.parentNode.tagName === 'P') {
+					lastInlineParent = lastInlineParent.parentNode;
+				}
 
-				// copy current styling so when moved out of the parent
-				// it still has the same styling
-				copyCSS(parent, middle);
+				var before = extractContents(lastInlineParent, node);
+				var middle = node;
 
-				insertBefore(before, parent);
-				insertBefore(middle, parent);
+				// Clone inline styling and apply it to the blocks children
+				while (parent && isInline(parent, true)) {
+					if (parent.nodeType === ELEMENT_NODE) {
+						var clone = parent.cloneNode();
+						while (middle.firstChild) {
+							appendChild(clone, middle.firstChild);
+						}
+
+						appendChild(middle, clone);
+					}
+					parent = parent.parentNode;
+				}
+
+				insertBefore(middle, lastInlineParent);
+				if (!isEmpty(before)) {
+					insertBefore(before, middle);
+				}
+				if (isEmpty(lastInlineParent)) {
+					remove(lastInlineParent);
+				}
 			}
 
 			// Fix invalid nested lists which should be wrapped in an li tag
@@ -1093,6 +1148,160 @@
 
 		return !values || styleValue === values ||
 			(Array.isArray(values) && values.indexOf(styleValue) > -1);
+	}
+
+	/**
+	 * Returns true if both nodes have the same number of inline styles and all the
+	 * inline styles have matching values
+	 *
+	 * @param {HTMLElement} nodeA
+	 * @param {HTMLElement} nodeB
+	 * @returns {boolean}
+	 */
+	function stylesMatch(nodeA, nodeB) {
+		var i = nodeA.style.length;
+		if (i !== nodeB.style.length) {
+			return false;
+		}
+
+		while (i--) {
+			var prop = nodeA.style[i];
+			if (nodeA.style[prop] !== nodeB.style[prop]) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns true if both nodes have the same number of attributes and all the
+	 * attribute values match
+	 *
+	 * @param {HTMLElement} nodeA
+	 * @param {HTMLElement} nodeB
+	 * @returns {boolean}
+	 */
+	function attributesMatch(nodeA, nodeB) {
+		var i = nodeA.attributes.length;
+		if (i !== nodeB.attributes.length) {
+			return false;
+		}
+
+		while (i--) {
+			var prop = nodeA.attributes[i];
+			var notMatches = prop.name === 'style' ?
+				!stylesMatch(nodeA, nodeB) :
+				prop.value !== attr(nodeB, prop.name);
+
+			if (notMatches) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Removes an element placing its children in its place
+	 *
+	 * @param {HTMLElement} node
+	 */
+	function removeKeepChildren(node) {
+		while (node.firstChild) {
+			insertBefore(node.firstChild, node);
+		}
+
+		remove(node);
+	}
+
+	/**
+	 * Merges inline styles and tags with parents where possible
+	 *
+	 * @param {Node} node
+	 * @since 3.1.0
+	 */
+	function merge(node) {
+		if (node.nodeType !== ELEMENT_NODE) {
+			return;
+		}
+
+		var parent = node.parentNode;
+		var tagName = node.tagName;
+		var mergeTags = /B|STRONG|EM|SPAN|FONT/;
+
+		// Merge children (in reverse as children can be removed)
+		var i = node.childNodes.length;
+		while (i--) {
+			merge(node.childNodes[i]);
+		}
+
+		// Should only merge inline tags
+		if (!isInline(node)) {
+			return;
+		}
+
+		// Remove any inline styles that match the parent style
+		i = node.style.length;
+		while (i--) {
+			var prop = node.style[i];
+			if (css(parent, prop) === css(node, prop)) {
+				node.style.removeProperty(prop);
+			}
+		}
+
+		// Can only remove / merge tags if no inline styling left.
+		// If there is any inline style left then it means it at least partially
+		// doesn't match the parent style so must stay
+		if (!node.style.length) {
+			removeAttr(node, 'style');
+
+			// Remove font attributes if match parent
+			if (tagName === 'FONT') {
+				if (css(node, 'fontFamily').toLowerCase() ===
+					css(parent, 'fontFamily').toLowerCase()) {
+					removeAttr(node, 'face');
+				}
+
+				if (css(node, 'color') === css(parent, 'color')) {
+					removeAttr(node, 'color');
+				}
+
+				if (css(node, 'fontSize') === css(parent, 'fontSize')) {
+					removeAttr(node, 'size');
+				}
+			}
+
+			// Spans and font tags with no attributes can be safely removed
+			if (!node.attributes.length && /SPAN|FONT/.test(tagName)) {
+				removeKeepChildren(node);
+			} else if (mergeTags.test(tagName)) {
+				var isBold = /B|STRONG/.test(tagName);
+				var isItalic = tagName === 'EM';
+
+				while (parent && isInline(parent) &&
+					(!isBold || /bold|700/i.test(css(parent, 'fontWeight'))) &&
+					(!isItalic || css(parent, 'fontStyle') === 'italic')) {
+
+					// Remove if parent match
+					if ((parent.tagName === tagName ||
+						(isBold && /B|STRONG/.test(parent.tagName))) &&
+						attributesMatch(parent, node)) {
+						removeKeepChildren(node);
+						break;
+					}
+
+					parent = parent.parentNode;
+				}
+			}
+		}
+
+		// Merge siblings if attributes, including inline styles, match
+		var next = node.nextSibling;
+		if (next && next.tagName === tagName && attributesMatch(next, node)) {
+			appendChild(node, next);
+			removeKeepChildren(next);
+		}
 	}
 
 	/**
@@ -1616,7 +1825,7 @@
 				' /></div>',
 
 		image:
-			'<div><label for="link">{url}</label> ' +
+			'<div><label for="image">{url}</label> ' +
 				'<input type="text" id="image" dir="ltr" placeholder="https://" /></div>' +
 			'<div><label for="width">{width}</label> ' +
 				'<input type="text" id="width" size="2" dir="ltr" /></div>' +
@@ -1778,7 +1987,9 @@
 					var isLtr = css(node, 'direction') === 'ltr';
 					var align = css(node, 'textAlign');
 
-					return align === 'left' || align === (isLtr ? 'start' : 'end');
+					// Can be -moz-left
+					return /left/.test(align) ||
+						align === (isLtr ? 'start' : 'end');
 				}
 			},
 			exec: 'justifyleft',
@@ -1802,7 +2013,9 @@
 					var isLtr = css(node, 'direction') === 'ltr';
 					var align = css(node, 'textAlign');
 
-					return align === 'right' || align === (isLtr ? 'end' : 'start');
+					// Can be -moz-right
+					return /right/.test(align) ||
+						align === (isLtr ? 'end' : 'start');
 				}
 			},
 			exec: 'justifyright',
@@ -2167,11 +2380,11 @@
 						var attrs  = '';
 
 						if (width) {
-							attrs += ' width="' + parseInt(width) + '"';
+							attrs += ' width="' + parseInt(width, 10) + '"';
 						}
 
 						if (height) {
-							attrs += ' height="' + parseInt(height) + '"';
+							attrs += ' height="' + parseInt(height, 10) + '"';
 						}
 
 						attrs += ' src="' + entities(url) + '"';
@@ -2422,7 +2635,7 @@
 
 				on(content, 'click', '.button', function (e) {
 					var val = find(content, '#link')[0].value;
-					var idMatch = val.match(/(?:v=|v\/|embed\/|youtu.be\/)(.{11})/);
+					var idMatch = val.match(/(?:v=|v\/|embed\/|youtu.be\/)?([a-zA-Z0-9_-]{11})/);
 					var timeMatch = val.match(/[&|?](?:star)?t=((\d+[hms]?){1,3})/);
 					var time = 0;
 
@@ -2599,9 +2812,11 @@
 			},
 			exec: function () {
 				this.maximize(!this.maximize());
+				this.focus();
 			},
 			txtExec: function () {
 				this.maximize(!this.maximize());
+				this.focus();
 			},
 			tooltip: 'Maximize',
 			shortcut: 'Ctrl+Shift+M'
@@ -2615,9 +2830,11 @@
 			},
 			exec: function () {
 				this.toggleSourceMode();
+				this.focus();
 			},
 			txtExec: function () {
 				this.toggleSourceMode();
+				this.focus();
 			},
 			tooltip: 'View source',
 			shortcut: 'Ctrl+Shift+S'
@@ -3061,12 +3278,32 @@
 		 * @memberOf RangeHelper.prototype
 		 */
 		base.insertNode = function (node, endNode) {
-			var	input  = _prepareInput(node, endNode),
+			var	first, last,
+				input  = _prepareInput(node, endNode),
 				range  = base.selectedRange(),
-				parent = range.commonAncestorContainer;
+				parent = range.commonAncestorContainer,
+				emptyNodes = [];
 
 			if (!input) {
 				return false;
+			}
+
+			function removeIfEmpty(node) {
+				// Only remove empty node if it wasn't already empty
+				if (node && isEmpty(node) && emptyNodes.indexOf(node) < 0) {
+					remove(node);
+				}
+			}
+
+			if (range.startContainer !== range.endContainer) {
+				each(parent.childNodes, function (_, node) {
+					if (isEmpty(node)) {
+						emptyNodes.push(node);
+					}
+				});
+
+				first = input.firstChild;
+				last = input.lastChild;
 			}
 
 			range.deleteContents();
@@ -3079,6 +3316,15 @@
 				insertBefore(input, parent);
 			} else {
 				range.insertNode(input);
+
+				// If a node was split or its contents deleted, remove any resulting
+				// empty tags. For example:
+				// <p>|test</p><div>test|</div>
+				// When deleteContents could become:
+				// <p></p>|<div></div>
+				// So remove the empty ones
+				removeIfEmpty(first && first.previousSibling);
+				removeIfEmpty(last && last.nextSibling);
 			}
 
 			base.restoreRange();
@@ -5196,12 +5442,17 @@
 
 		traverse(body, function (node) {
 			if (isInline(node, true)) {
-				if (!wrapper) {
-					wrapper = createElement('p', {}, doc);
-					insertBefore(wrapper, node);
-				}
+				// Ignore text nodes unless they contain non-whitespace chars as
+				// whitespace will be collapsed.
+				// Ignore sceditor-ignore elements unless wrapping siblings
+				// Should still wrap both if wrapping siblings.
+				if (wrapper || node.nodeType === TEXT_NODE ?
+					/\S/.test(node.nodeValue) : !is(node, '.sceditor-ignore')) {
+					if (!wrapper) {
+						wrapper = createElement('p', {}, doc);
+						insertBefore(wrapper, node);
+					}
 
-				if (node.nodeType !== TEXT_NODE || node.nodeValue !== '') {
 					appendChild(wrapper, node);
 				}
 			} else {
@@ -5480,7 +5731,6 @@
 			replaceEmoticons,
 			handleCommand,
 			initEditor,
-			initPlugins,
 			initLocale,
 			initToolBar,
 			initOptions,
@@ -5488,6 +5738,7 @@
 			initResize,
 			initEmoticons,
 			handlePasteEvt,
+			handleCutCopyEvt,
 			handlePasteData,
 			handleKeyDown,
 			handleBackSpace,
@@ -5615,12 +5866,21 @@
 
 			var FormatCtor = SCEditor.formats[options.format];
 			format = FormatCtor ? new FormatCtor() : {};
+			/*
+			 * Plugins should be initialized before the formatters since
+			 * they may wish to add or change formatting handlers and
+			 * since the bbcode format caches its handlers,
+			 * such changes must be done first.
+			 */
+			pluginManager = new PluginManager(base);
+			(options.plugins || '').split(',').forEach(function (plugin) {
+				pluginManager.register(plugin.trim());
+			});
 			if ('init' in format) {
 				format.init.call(base);
 			}
 
 			// create the editor
-			initPlugins();
 			initEmoticons();
 			initToolBar();
 			initEditor();
@@ -5639,7 +5899,7 @@
 				off(globalWin, 'load', loaded);
 
 				if (options.autofocus) {
-					autofocus();
+					autofocus(!!options.autofocusEnd);
 				}
 
 				autoExpand();
@@ -5654,17 +5914,6 @@
 			if (globalDoc.readyState === 'complete') {
 				loaded();
 			}
-		};
-
-		initPlugins = function () {
-			var plugins   = options.plugins;
-
-			plugins       = plugins ? plugins.toString().split(',') : [];
-			pluginManager = new PluginManager(base);
-
-			plugins.forEach(function (plugin) {
-				pluginManager.register(plugin.trim());
-			});
 		};
 
 		/**
@@ -5699,7 +5948,8 @@
 				allowfullscreen: true
 			});
 
-			/* This needs to be done right after they are created because,
+			/*
+			 * This needs to be done right after they are created because,
 			 * for any reason, the user may not want the value to be tinkered
 			 * by any filters.
 			 */
@@ -5810,7 +6060,8 @@
 		initEvents = function () {
 			var form = original.form;
 			var compositionEvents = 'compositionstart compositionend';
-			var eventsToForward = 'keydown keyup keypress focus blur contextmenu';
+			var eventsToForward =
+				'keydown keyup keypress focus blur contextmenu input';
 			var checkSelectionEvents = 'onselectionchange' in wysiwygDocument ?
 				'selectionchange' :
 				'keyup focus blur contextmenu mouseup touchend click';
@@ -5822,6 +6073,8 @@
 				on(form, 'submit', base.updateOriginal, EVENT_CAPTURE);
 			}
 
+			on(window, 'pagehide', base.updateOriginal);
+			on(window, 'pageshow', handleFormReset);
 			on(wysiwygBody, 'keypress', handleKeyPress);
 			on(wysiwygBody, 'keydown', handleKeyDown);
 			on(wysiwygBody, 'keydown', handleBackSpace);
@@ -5829,6 +6082,7 @@
 			on(wysiwygBody, 'blur', valueChangedBlur);
 			on(wysiwygBody, 'keyup', valueChangedKeyUp);
 			on(wysiwygBody, 'paste', handlePasteEvt);
+			on(wysiwygBody, 'cut copy', handleCutCopyEvt);
 			on(wysiwygBody, compositionEvents, handleComposition);
 			on(wysiwygBody, checkSelectionEvents, checkSelectionChanged);
 			on(wysiwygBody, eventsToForward, handleEvent);
@@ -6133,10 +6387,9 @@
 		 * Autofocus the editor
 		 * @private
 		 */
-		autofocus = function () {
+		autofocus = function (focusEnd) {
 			var	range, txtPos,
-				node     = wysiwygBody.firstChild,
-				focusEnd = !!options.autofocusEnd;
+				node = wysiwygBody.firstChild;
 
 			// Can't focus invisible elements
 			if (!isVisible(editorContainer)) {
@@ -6559,13 +6812,14 @@
 
 			off(globalDoc, 'click', handleDocumentClick);
 
-			// TODO: make off support null nodes?
 			var form = original.form;
 			if (form) {
 				off(form, 'reset', handleFormReset);
-				off(form, 'submit', base.updateOriginal);
+				off(form, 'submit', base.updateOriginal, EVENT_CAPTURE);
 			}
 
+			off(window, 'pagehide', base.updateOriginal);
+			off(window, 'pageshow', handleFormReset);
 			remove(sourceEditor);
 			remove(toolbar);
 			remove(editorContainer);
@@ -6640,6 +6894,70 @@
 		};
 
 		/**
+		 * Handles the WYSIWYG editors cut & copy events
+		 *
+		 * By default browsers also copy inherited styling from the stylesheet and
+		 * browser default styling which is unnecessary.
+		 *
+		 * This will ignore inherited styles and only copy inline styling.
+		 * @private
+		 */
+		handleCutCopyEvt = function (e) {
+			var range = rangeHelper.selectedRange();
+			if (range) {
+				var container = createElement('div', {}, wysiwygDocument);
+				var firstParent;
+
+				// Copy all inline parent nodes up to the first block parent so can
+				// copy inline styles
+				var parent = range.commonAncestorContainer;
+				while (parent && isInline(parent, true)) {
+					if (parent.nodeType === ELEMENT_NODE) {
+						var clone = parent.cloneNode();
+						if (container.firstChild) {
+							appendChild(clone, container.firstChild);
+						}
+
+						appendChild(container, clone);
+						firstParent = firstParent || clone;
+					}
+					parent = parent.parentNode;
+				}
+
+				appendChild(firstParent || container, range.cloneContents());
+				removeWhiteSpace(container);
+
+				e.clipboardData.setData('text/html', container.innerHTML);
+
+				// TODO: Refactor into private shared module with plaintext plugin
+				// innerText adds two newlines after <p> tags so convert them to
+				// <div> tags
+				each(find(container, 'p'), function (_, elm) {
+					convertElement(elm, 'div');
+				});
+				// Remove collapsed <br> tags as innerText converts them to newlines
+				each(find(container, 'br'), function (_, elm) {
+					if (!elm.nextSibling || !isInline(elm.nextSibling, true)) {
+						remove(elm);
+					}
+				});
+
+				// range.toString() doesn't include newlines so can't use that.
+				// selection.toString() seems to use the same method as innerText
+				// but needs to be normalised first so using container.innerText
+				appendChild(wysiwygBody, container);
+				e.clipboardData.setData('text/plain', container.innerText);
+				remove(container);
+
+				if (e.type === 'cut') {
+					range.deleteContents();
+				}
+
+				e.preventDefault();
+			}
+		};
+
+		/**
 		 * Handles the WYSIWYG editors paste event
 		 * @private
 		 */
@@ -6667,10 +6985,14 @@
 				e.preventDefault();
 
 				for (var i = 0; i < types.length; i++) {
-					// Normalise image pasting to paste as a data-uri
-					if (globalWin.FileReader && items &&
-						IMAGE_MIME_REGEX.test(items[i].type)) {
-						return loadImage(clipboard.items[i].getAsFile());
+					// Word sometimes adds copied text as an image so if HTML
+					// exists prefer that over images
+					if (types.indexOf('text/html') < 0) {
+						// Normalise image pasting to paste as a data-uri
+						if (globalWin.FileReader && items &&
+							IMAGE_MIME_REGEX.test(items[i].type)) {
+							return loadImage(clipboard.items[i].getAsFile());
+						}
 					}
 
 					data[types[i]] = clipboard.getData(types[i]);
@@ -6749,7 +7071,9 @@
 
 			pluginManager.call('pasteHtml', paste);
 
+			var parent = rangeHelper.getFirstBlockParent();
 			base.wysiwygEditorInsertHtml(paste.val, null, true);
+			merge(parent);
 		};
 
 		/**
@@ -6811,6 +7135,10 @@
 			rangeHelper.insertHTML(html, endHtml);
 			rangeHelper.saveRange();
 			replaceEmoticons();
+
+			// Fix any invalid nesting, e.g. if a quote or other block is inserted
+			// into a paragraph
+			fixNesting(wysiwygBody);
 
 			// Scroll the editor after the end of the selection
 			marker   = find(wysiwygBody, '#sceditor-end-marker')[0];
@@ -7310,6 +7638,7 @@
 				rangeHelper.clear();
 			}
 
+			currentSelection = null;
 			base.blur();
 
 			if (isInSourceMode) {
@@ -7736,6 +8065,7 @@
 		 * * Keypress
 		 * * blur
 		 * * focus
+		 * * input
 		 * * nodechanged - When the current node containing
 		 * 		the selection changes in WYSIWYG mode
 		 * * contextmenu
@@ -7900,7 +8230,7 @@
 				// Fix FF bug where it shows the cursor in the wrong place
 				// if the editor hasn't had focus before. See issue #393
 				if (!currentSelection) {
-					autofocus();
+					autofocus(true);
 				}
 
 				// Check if cursor is set after a BR when the BR is the only

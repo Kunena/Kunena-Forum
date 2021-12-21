@@ -700,5 +700,22 @@ jQuery(document).ready(function ($) {
 				}
 			}*/
 		});
+
+		if (sceditor.instance(textarea).val().length > 0)
+		{
+			$('#form_submit_button').removeAttr("disabled");
+		}
+
+		sceditor.instance(textarea).bind('valuechanged', function(e) {
+			if (sceditor.instance(textarea).val().length > 0)
+			{
+				$('#form_submit_button').removeAttr("disabled");
+			}
+
+			if (sceditor.instance(textarea).val().length == 0 && $('#form_submit_button').disabled === undefined)
+			{
+				$('#form_submit_button').prop("disabled", true);
+			}
+		});
 	}
 });

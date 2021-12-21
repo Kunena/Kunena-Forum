@@ -211,7 +211,8 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 												<tr <?php if ($this->config->legacy_urls != 1) : echo 'class="changed"'; endif; ?>>
 													<td><?php echo Text::_('COM_KUNENA_CFG_LEGACY_URLS') ?></td>
 													<td><?php echo $this->lists ['legacy_urls'] ?></td>
-													<td><?php echo Text::sprintf('COM_KUNENA_CFG_LEGACY_URLS_DESC', $this->lists['legacy_urls_version'], $this->lists['legacy_urls_desc']) ?></td>
+													<td><?php echo Text::sprintf('COM_KUNENA_CFG_LEGACY_URLS_DESC', $this->lists['legacy_urls_version'], $this->lists['legacy_urls_desc']);
+													if ($this->config->legacy_urls == 1): echo ' ' . Text::_('COM_KUNENA_CONFIG_LEGACY_URL_DEPRECATED_DESC'); endif; ?></td>
 												</tr>
 												<tr <?php if ($this->config->sef_redirect != 1) : echo 'class="changed"'; endif; ?>>
 													<td><?php echo Text::_('COM_KUNENA_SEF_REDIRECT') ?></td>

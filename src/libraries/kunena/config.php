@@ -1041,9 +1041,10 @@ class KunenaConfig extends CMSObject
 
 	/**
 	 * @var    integer  Legacy URLs; select, boolean
+	 * @deprecated Kunena 5.2.0
 	 * @since  K4.0.0
 	 */
-	public $legacy_urls = 1;
+	public $legacy_urls = 0;
 
 	/**
 	 * @var    integer  Attachment protection; select, boolean

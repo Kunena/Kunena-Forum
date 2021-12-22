@@ -310,7 +310,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	protected $_alias = null;
 
 	/**
-	 * @var     KunenaCategory[]
+	 * @var     false|array
 	 * @since   Kunena 6.0
 	 */
 	protected $_channels = false;

@@ -1530,7 +1530,14 @@ class KunenaUser extends CMSObject
 	 */
 	public function getWebsiteName()
 	{
-		return trim($this->websitename) ? $this->websitename : $this->websiteurl;
+		if (!empty($this->websitename))
+		{
+			return trim($this->websitename);
+		}
+		else
+		{
+			return $this->websiteurl;
+		}
 	}
 
 	/**

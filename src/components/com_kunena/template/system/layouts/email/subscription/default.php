@@ -5,7 +5,7 @@
  * @package         Kunena.Template.Crypsis
  * @subpackage      Layout.Email
  *
- * @copyright   (C) 2008 - 2020 Kunena Team. All rights reserved.
+ * @copyright   (C) 2008 - 2021 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/

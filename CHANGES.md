@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [5.2.8-dev]
+* When button insert all is clicked prevent press enter fire the button
 * [#8622](https://github.com/Kunena/Kunena-Forum/issues/8622): Fixes icons disappearing in Kunena 5.2.7
 * Wrong language string for desc crypsis b4 in backend
 * Update link to ebay dev page in config panel and remove useless

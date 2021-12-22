@@ -177,6 +177,10 @@ jQuery(function ($) {
 		fileCount = 0;
 	});
 
+	$('#insert-all').bind('keypress keydown keyup', function(e){
+		if(e.keyCode == 13) { e.preventDefault(); }
+	});
+
 	$('#insert-all').on('click', function (e) {
 		e.preventDefault();
 

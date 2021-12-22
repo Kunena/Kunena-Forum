@@ -546,7 +546,7 @@ jQuery(function ($) {
 	if ($('#kmessageid').val() > 0) {
 		$.ajax({
 			type: 'POST',
-			url: Joomla.getOptions('com_kunena.kunena_upload_files_preload'),
+			url: Joomla.getOptions('com_kunena.kunena_upload_files_preload_for_edit'),
 			async: true,
 			dataType: 'json',
 			data: {mes_id: $('#kmessageid').val()}

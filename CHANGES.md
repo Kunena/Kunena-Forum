@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Update link to ebay dev page in config panel and remove useless
 
 ### Changed
+* Change the javascript variable com_kunena.kunena_upload_files_preload to com_kunena.kunena_upload_files_preload_for_edit
 * On some files the date of copyright was forgot to be changed
 * Renamme variable editor_type into editorType
 * Set legacy url to disabled by default and set as deprecated and set a notice message when still enabled

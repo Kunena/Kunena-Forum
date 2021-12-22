@@ -351,7 +351,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 						<?php
 
 						echo $this->subLayout('Widget/Editor')
-							->setLayout($this->editor_type)->set('message', $this->message)
+							->setLayout($this->editorType)->set('message', $this->message)
 							->set('config', $this->config)
 							->set('poll', $this->message->getTopic()->getPoll())
 							->set('allow_polls', $this->topic->getCategory()->allow_polls)

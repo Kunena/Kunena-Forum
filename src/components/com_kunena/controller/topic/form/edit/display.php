@@ -141,12 +141,12 @@ class ComponentKunenaControllerTopicFormEditDisplay extends KunenaControllerDisp
 
 		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
 
-		$this->editor_type = $this->template->params->get('editor');
+		$this->editorType = $this->template->params->get('editor');
 
 		// Just set default value in case of the template aren't saved
-		if ($this->editor_type === 1 || $this->editor_type === 0 || strlen($this->editor_type) <= 1)
+		if ($this->editorType === 1 || $this->editorType === 0 || strlen($this->editorType) <= 1)
 		{
-			$this->editor_type = 'ckeditor';
+			$this->editorType = 'ckeditor';
 		}
 	}
 

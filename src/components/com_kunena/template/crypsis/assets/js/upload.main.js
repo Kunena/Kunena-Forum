@@ -235,8 +235,7 @@ jQuery(function ($) {
 
 		if ($('#message').length > 0)
 		{
-			var ckeditor_existing_content = CKEDITOR.instances.message.getData();
-			CKEDITOR.instances.message.setData(ckeditor_existing_content+' '+content_to_inject);
+			CKEDITOR.instances.message.insertText(content_to_inject);
 		}
 
 		$('#files .btn.btn-primary').each(function () {

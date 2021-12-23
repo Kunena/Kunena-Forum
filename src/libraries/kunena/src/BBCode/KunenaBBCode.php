@@ -2174,26 +2174,37 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			$username = KunenaUserHelper::get($userid)->getName();
 		}
-		else
+
+		$matches_post = [];
+		preg_match('/post=(\d{1,})/', $default, $matches_post);
+
+		$postid = 0;
+		foreach($matches_post as $match)
 		{
-			$quoteParams = explode(' ', $default);
-
-			// To support old bbcode tags used before Kunena 5.2.x
-			if (isset($params['post']))
+			if (is_numeric($match))
 			{
-				$message = KunenaMessageHelper::get($params['post']);
+				$postid = (int) $match;
 			}
-
-			$username = $quoteParams['0'];
 		}
 
-		if (isset($message))
+		if ($postid > 0)
 		{
+			$message = KunenaMessageHelper::get($postid);
 			$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $message->getUrl(null, false);
 		}
-		else
+
+		// Support bbcode quote tag done in K5.1 and first versions of K5.2
+		if ($userid==0 && $postid==0)
 		{
-			$msglink = Uri::getInstance()->toString(array('scheme', 'host', 'port'));
+			$user  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
+			$username = '';
+
+			if ($user)
+			{
+				$username = $user . " " . Text::_('COM_KUNENA_POST_WROTE') . ': ';
+			}
+
+			$msglink = '';
 		}
 
 		$layout = KunenaLayout::factory('BBCode/Quote');

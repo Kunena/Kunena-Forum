@@ -83,7 +83,8 @@ $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(Kunena
 {
 				echo $this->message->getCategory()->topictemplate;
 					   }
-					   else
+					   
+					   if (!empty($this->message->message))
 {
 						   echo $this->escape($this->message->message);
 					   } ?>

@@ -321,13 +321,13 @@ Text::script('COM_KUNENA_POLL_TITLE');
                 <div class="col-md-10">
 					<?php if (!$this->config->allowChangeSubject && $this->topic->exists() && !KunenaUserHelper::getMyself()->isModerator($this->message->getCategory())) : ?>
                         <input class="form-control" type="text" name="subject" id="subject"
-                               value="<?php echo $this->escape($this->message->subject); ?>" disabled/>
+                               value="<?php echo !empty($this->message->subject) ? $this->escape($this->message->subject): ''; ?>" disabled/>
 					<?php else : ?>
                         <input class="form-control" type="text"
                                placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_SUBJECT') ?>"
                                name="subject" id="subject"
                                maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>"
-                               tabindex="6" value="<?php echo $this->escape($this->message->subject); ?>"/>
+                               tabindex="6" value="<?php echo !empty($this->message->subject) ? $this->escape($this->message->subject): ''; ?>"/>
 					<?php endif; ?>
                 </div>
             </div>

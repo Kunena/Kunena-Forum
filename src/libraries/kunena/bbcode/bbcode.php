@@ -647,13 +647,17 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			'simple_end'   => "</sup>",
 			'class'        => 'inline',
 			'allow_in'     => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'plain_start'  => "<sup>",
+			'plain_end'    => "</sup>",
 		),
 
 		'sub' => array(
 			'simple_start' => "<sub>",
 			'simple_end'   => "</sub>",
 			'class'        => 'inline',
-			'allow_in'     => array('listitem', 'block', 'columns', 'inline', 'link'),
+			'allow_in'     => ['listitem', 'block', 'columns', 'inline', 'link'],
+			'plain_start'  => "<sub>",
+			'plain_end'    => "</sub>",
 		),
 
 		'spoiler' => array(

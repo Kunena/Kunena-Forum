@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.8-dev]
 ### Fixed
+* Fix Undefined array key "plain_start" and "plain_end" when using [sub] and [sup] bbcode
 * Fix to support bbcode tag in K5.1 and fix link to post for K5.2
 * [#7990](https://github.com/Kunena/Kunena-Forum/issues/7990):[CKEditor] The Insert All Button does not place the attachments in the place of the cursor #7990
 * When button insert all is clicked prevent press enter fire the button

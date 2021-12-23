@@ -223,15 +223,17 @@ class KunenaLayout extends KunenaBase
 	 *
 	 * @return  string
 	 *
-	 * @since   Kunena 6.0
+	 * @since   Kunena 4.0
 	 */
 	public function formatLargeNumber(int $number, $precision = 3)
 	{
 		// Do we need to reduce the number of significant digits?
 		if ($number >= 10000)
 		{
+			$precisionToInt = -1 * (log10($number) + 1) + $precision;
+
 			// Round the number to n significant digits
-			$number = round($number, -1 * (log10($number) + 1) + $precision);
+			$number = round($number, (int)$precisionToInt);
 		}
 
 		if ($number < 10000)

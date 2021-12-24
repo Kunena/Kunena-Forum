@@ -272,7 +272,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 
 			if (strstr($params['host'], 'soundcloud.') && !empty($path[1]))
 			{
-				return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $params['url'] . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+				return '<iframe allowtransparency="true" width="100%" height="350" src="https://w.soundcloud.com/player/?url=' . $params['url'] . '&amp;auto_play=false&amp;visual=true" style="border: 0"></iframe><br />';
 			}
 		}
 
@@ -312,11 +312,11 @@ class KunenaBBCode extends \Nbbc\BBCode
 
 				if ($uri->isSSL())
 				{
-					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="https://www.youtube-nocookie.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="https://www.youtube-nocookie.com/embed/' . urlencode($video) . '" allowfullscreen style="border: 0"></iframe></div>';
 				}
 				else
 				{
-					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="http://www.youtube-nocookie.com/embed/' . urlencode($video) . '" frameborder="0" allowfullscreen></iframe></div>';
+					return '<div class="embed-responsive embed-responsive-16by9"><iframe width="425" height="344" src="http://www.youtube-nocookie.com/embed/' . urlencode($video) . '" allowfullscreen style="border: 0"></iframe></div>';
 				}
 			}
 		}
@@ -1306,7 +1306,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				$url = "https://{$content}";
 			}
 
-			return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+			return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" style="border: 0"></iframe></div>';
 		}
 
 		// Display tag in activity streams etc..
@@ -1317,7 +1317,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		if (!empty($content))
 		{
-			return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" frameborder="0" scrolling="no"></iframe></div>';
+			return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" style="border: 0"></iframe></div>';
 		}
 		else
 		{
@@ -2557,7 +2557,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				$vid_allowpar = ['flashvars', 'wmode', 'bgcolor', 'quality'];
 				break;
 			case 'iframe' :
-				return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" frameborder="0" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen></iframe></div>';
+				return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen style="border: 0"></iframe></div>';
 				break;
 			case 'mediaplayer' :
 				$vid_par1     = [[1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95'], [1, 'codebase', 'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab'], [4, 'type', 'application/x-mplayer2'], [4, 'pluginspage', 'http://www.microsoft.com/Windows/MediaPlayer/'], [6, 'src', $vid_source], [6, 'autostart', 'false'], [6, 'autosize', 'true'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
@@ -3346,7 +3346,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 			if ($url_parsed['host'] == 'soundcloud.com')
 			{
-				return '<iframe allowtransparency="true" width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
+				return '<iframe allowtransparency="true" width="100%" height="350" style="border: 0" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
 			}
 		}
 	}

@@ -355,7 +355,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                                                     loading=lazy
                                                     src="<?php echo $icon->relpath; ?>"
                                                     alt="<?php echo $icon->name; ?>"
-                                                    border="0"/>
+                                                    style="border:0;"/>
 											<?php endif; ?>
                                         </label>
 										<?php endforeach; ?>

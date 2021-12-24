@@ -56,7 +56,7 @@ use Joomla\CMS\Language\Text;
                                src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0">
                         <img loading=lazy width="1" height="1" alt=""
                              src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
-                             border="0">
+                             style="border:0;">
                     </form>
                 </dd>
                 <hr class="hr-condensed">

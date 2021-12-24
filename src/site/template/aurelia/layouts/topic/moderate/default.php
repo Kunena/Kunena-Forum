@@ -126,7 +126,7 @@ $labels          = $this->ktemplate->params->get('labels');
                                                     loading=lazy
                                                     src="<?php echo $icon->relpath; ?>"
                                                     alt="<?php echo $icon->name; ?>"
-                                                    border="0"/>
+                                                    style=border:0;/>
 											<?php endif; ?>
                                         </label>
 										<?php endforeach; ?>
@@ -163,7 +163,7 @@ $labels          = $this->ktemplate->params->get('labels');
                                                     loading=lazy
                                                     src="<?php echo $icon->relpath; ?>"
                                                     alt="<?php echo $icon->name; ?>"
-                                                    border="0"/>
+                                                    style="border:0;"/>
 											<?php endif; ?>
                                         </label>
 										<?php endforeach; ?>

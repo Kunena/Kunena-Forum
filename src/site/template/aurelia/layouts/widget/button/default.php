@@ -35,7 +35,7 @@ $icon          = $this->icon;
 
 <a <?php echo $id; ?> class="<?php echo $normal . $primary . $success . $right . ' kbutton-' . $this->name; ?>"
                       href="<?php echo $this->url; ?>" rel="nofollow"
-                      title="<?php echo $title; ?>" name="<?php echo $this->name; ?>" <?php echo $modal; ?>>
+                      title="<?php echo $title; ?>" <?php echo $modal; ?>>
 	<?php
 	if (!empty($icon)) : ?>
 		<?php echo $icon; ?>

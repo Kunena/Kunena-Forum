@@ -154,7 +154,7 @@ EOF;
 	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
-	public function onExtensionBeforeInstall(string $method, string $type, string $manifest, int $eid): bool
+	public function onExtensionBeforeInstall(string $method, string $type, $manifest, int $eid): bool
 	{
 		// We don't want to handle discover install (where there's no manifest provided)
 		if (!$manifest)

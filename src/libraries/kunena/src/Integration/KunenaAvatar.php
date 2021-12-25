@@ -157,7 +157,7 @@ class KunenaAvatar
 			else
 			{
 				$link = '<span' . $class . ' title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">
-				<img loading=lazy src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
+				<img alt="" loading=lazy src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
 			}
 		}
 		else

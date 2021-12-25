@@ -183,7 +183,7 @@ jQuery(function ($) {
 						const name = '';
 					}
 
-					const object = $('<div><p><img src="' + data.path + '" width="100" height="100" /><br /><span>' + name + '</span><br /></p></div>');
+					const object = $('<div><p><img alt="" src="' + data.path + '" width="100" height="100" /><br /><span>' + name + '</span><br /></p></div>');
 					data.uploaded = true;
 					data.result = false;
 

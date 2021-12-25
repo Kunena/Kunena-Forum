@@ -496,7 +496,7 @@ jQuery(function ($) {
                     $(data.files).each(function (index, file) {
                         let image = '';
                         if (file.image === true) {
-                            image = '<img src="' + file.path + '" width="100" height="100" /><br />';
+                            image = '<img alt="" src="' + file.path + '" width="100" height="100" /><br />';
                         } else {
                             image = Joomla.getOptions('com_kunena.icons.attach') + ' <br />';
                         }

@@ -208,7 +208,7 @@ jQuery(document).ready(function ($) {
                             const label = $('<label>', {
                                 'class': 'radio inline',
                                 'for': 'radio' + value.id
-                            }).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
+                            }).append($('<img alt="">', {'src': value.path, 'border': '0', 'al': ''}));
                         }
 
                         span_object.append(label);

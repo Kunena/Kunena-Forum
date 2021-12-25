@@ -100,7 +100,7 @@ jQuery(document).ready(function ($) {
 				if (align === 'left' || align === 'right')
 					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
 	
-				return '<img' + attribs +
+				return '<img alt="" ' + attribs +
 					' src="' + sceditor.escapeUriScheme(content) + '" />';
 			}
 		})
@@ -186,7 +186,7 @@ jQuery(document).ready(function ($) {
 				if (align === 'left' || align === 'right')
 					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
 	
-				return '<img' + attribs +
+				return '<img alt="" ' + attribs +
 					' src="' + sceditor.escapeUriScheme(content) + '" />';
 			}
 		})
@@ -271,7 +271,7 @@ jQuery(document).ready(function ($) {
 				if (align === 'left' || align === 'right')
 					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
 	
-				return '<img' + attribs +
+				return '<img alt="" ' + attribs +
 					' src="' + sceditor.escapeUriScheme(content) + '" />';
 			}
 		})
@@ -356,7 +356,7 @@ jQuery(document).ready(function ($) {
 				if (align === 'left' || align === 'right')
 					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
 	
-				return '<img' + attribs +
+				return '<img alt="" ' + attribs +
 					' src="' + sceditor.escapeUriScheme(content) + '" />';
 			}
 		})
@@ -441,7 +441,7 @@ jQuery(document).ready(function ($) {
 				if (align === 'left' || align === 'right')
 					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
 	
-				return '<img' + attribs +
+				return '<img alt="" ' + attribs +
 					' src="' + sceditor.escapeUriScheme(content) + '" />';
 			}
 		})

@@ -362,22 +362,22 @@ class Kunenagrid
 		{
 			if ($task == 'publish')
 			{
-				$img = '<img loading=lazy src="media/kunena/images/unpublish.png"/>';
+				$img = '<img alt="" loading=lazy src="media/kunena/images/unpublish.png"/>';
 			}
 
 			if ($task == 'unpublish')
 			{
-				$img = '<img loading=lazy src="media/kunena/images/tick.png"/>';
+				$img = '<img alt="" loading=lazy src="media/kunena/images/tick.png"/>';
 			}
 
 			if ($task == 'edit')
 			{
-				$img = '<img loading=lazy src="media/kunena/images/edit.png"/>';
+				$img = '<img alt="" loading=lazy src="media/kunena/images/edit.png"/>';
 			}
 
 			if ($task == 'delete')
 			{
-				$img = '<img loading=lazy src="media/kunena/images/delete.png"/>';
+				$img = '<img alt="" loading=lazy src="media/kunena/images/delete.png"/>';
 			}
 
 			$html[] = '<a class="grid_' . $task . ' hasTip" alt="' . $alt . '"';

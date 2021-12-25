@@ -14,6 +14,7 @@ namespace Kunena\Forum\Libraries\Folder;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 
 /**
@@ -37,7 +38,8 @@ class KunenaFolder
 		// Make sure we have an index.html file in the current folder
 		if (!File::exists($folder . '/index.html'))
 		{
-			$contents = '<html><body></body></html>';
+			$lang = Factory::getApplication()->getLanguage();
+			$contents = '<html lang="' . $lang->getLocale() . '"><body></body></html>';
 			File::write($folder . '/index.html', $contents);
 		}
 	}

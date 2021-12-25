@@ -1239,6 +1239,14 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													</td>
 													<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC') ?></td>
 												</tr>
+												<tr <?php if ($this->config->ebayCertId != '') : echo 'class="changed"'; endif; ?>>
+													<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_LABEL') ?></td>
+													<td>
+														<input type="text" name="cfg_ebayCertId"
+														       value="<?php echo $this->escape($this->config->ebayCertId) ?>"/>
+													</td>
+													<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_DESC') ?></td>
+												</tr>
 												<tr <?php if ($this->config->twitter_consumer_key != '') : echo 'class="changed"'; endif; ?>>
 													<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_LABEL') ?></td>
 													<td>

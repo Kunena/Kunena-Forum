@@ -1187,7 +1187,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (is_numeric($ItemID) && $config->ebay_api_key && ini_get('allow_url_fopen'))
+		if (is_numeric($ItemID) && $config->ebay_api_key && $config->ebayCertId)
 		{
 			$options = new \Joomla\Registry\Registry;
 
@@ -1196,13 +1196,37 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			// Create a 'stream' transport.
 			$http = new \Joomla\CMS\Http\Http($options, $transport);
 
-			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebay_api_key . '&siteid=' . $config->ebay_language . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9', null, '10');
+			$data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
 
-			if ($response->code == '200')
+			$headersOauth = ['Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => 'Basic '.base64_encode($config->ebay_api_key . ':' . $config->ebayCertId)];
+
+			$responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
+
+			if ($responseOauth->code == '200')
 			{
-				$resp = json_decode($response->body);
+				$resp = json_decode($responseOauth->body);
 
-				return $resp;
+				$token = $resp->access_token;
+				
+				$headers = ['X-EBAY-API-IAF-TOKEN' => $token, 'X-EBAY-API-CALL-NAME' => 'GetSingleItem', 'X-EBAY-API-VERSION' => 1157];
+
+				$response = $http->get('https://open.api.ebay.com/shopping?callname=GetSingleItem&siteid=0&responseencoding=JSON&ItemID=' . $ItemID . '&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9', $headers, '10');
+
+				if ($response->code == '200')
+				{
+					$responseItem = json_decode($response->body);
+					
+					if ($responseItem->Ack == 'Success')
+					{
+						return $responseItem->Item;
+					}
+					else
+					{
+						$errors = $responseItem->Errors;
+
+						return $errors[0]->LongMessage;
+					}
+				}
 			}
 		}
 

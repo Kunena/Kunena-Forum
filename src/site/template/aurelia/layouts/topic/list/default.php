@@ -60,14 +60,13 @@ if (KunenaConfig::getInstance()->ratingEnabled)
 
 		<?php if ($view != 'user') : ?>
             <div class="float-end" id="filter-time">
-                <h2 class="filter-sel float-end">
-                    <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
-                          id="timeselect" name="timeselect"
-                          method="post" target="_self" class="form-inline hidden-xs-down">
-						<?php $this->displayTimeFilter('sel'); ?>
-						<?php echo HTMLHelper::_('form.token'); ?>
-                    </form>
-                </h2>
+                <h2 class="filter-sel float-end"></h2>
+                <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
+                      id="timeselect" name="timeselect"
+                      method="post" target="_self" class="form-inline hidden-xs-down">
+                    <?php $this->displayTimeFilter('sel'); ?>
+                    <?php echo HTMLHelper::_('form.token'); ?>
+                </form>
             </div>
 		<?php endif; ?>
     </div>

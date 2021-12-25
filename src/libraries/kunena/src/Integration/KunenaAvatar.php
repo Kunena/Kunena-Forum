@@ -151,16 +151,19 @@ class KunenaAvatar
 		{
 			if ($avatar == Uri::root() . 'media/kunena/core/svg/person.svg')
 			{
-				$link = '<span ' . $class . ' alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">' . KunenaSvgIcons::loadsvg('person') . '</span>';
+				$link = '<span ' . $class . ' title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">'
+					. KunenaSvgIcons::loadsvg('person') . '</span>';
 			}
 			else
 			{
-				$link = '<span' . $class . ' alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '"><img loading=lazy src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
+				$link = '<span' . $class . ' title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">
+				<img loading=lazy src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
 			}
 		}
 		else
 		{
-			$link = '<img loading=lazy' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
+			$link = '<img loading=lazy' . $class . ' src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"
+			  alt="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '" />';
 		}
 
 		return $link;

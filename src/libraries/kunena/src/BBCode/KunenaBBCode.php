@@ -672,29 +672,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			'allow_params' => false,
 		],
 		's'            => [
-			'simple_start' => "<strike>",
-			'simple_end'   => "</strike>",
+			'simple_start' => "<s>",
+			'simple_end'   => "</s>",
 			'class'        => 'inline',
 			'allow_in'     => ['listitem', 'block', 'columns', 'inline', 'link'],
-			'plain_start'  => "<i>",
-			'plain_end'    => "</i>",
+			'plain_start'  => "<s>",
+			'plain_end'    => "</s>",
 			'allow_params' => false,
-		],
-		'strike'       => [
-			'simple_start' => "<strike>",
-			'simple_end'   => "</strike>",
-			'class'        => 'inline',
-			'allow_in'     => ['listitem', 'block', 'columns', 'inline', 'link'],
-			'plain_start'  => "<i>",
-			'plain_end'    => "</i>",
-		],
-		'tt'           => [
-			'simple_start' => "<tt>",
-			'simple_end'   => "</tt>",
-			'class'        => 'inline',
-			'allow_in'     => ['listitem', 'block', 'columns', 'inline', 'link'],
-			'plain_start'  => "<i>",
-			'plain_end'    => "</i>",
 		],
 		'pre'          => [
 			'simple_start' => "<pre>",
@@ -2283,7 +2267,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		else
 		{
 			$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-			$code = '<pre xml:' . $type . '>' . $content . '</pre>';
+			$code = '<pre lang="xml:' . $type . '">' . $content . '</pre>';
 		}
 
 		return '<div class="highlight">' . $code . '</div>';

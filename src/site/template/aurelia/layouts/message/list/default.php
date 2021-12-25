@@ -43,16 +43,15 @@ $view    = Factory::getApplication()->input->getWord('view');
 		<?php if ($view != 'user')
 			:
 			?>
-            <h2 class="filter-time float-end" id="filter-time">
-                <div class="filter-sel float-end">
-                    <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
-                          id="timeselect" name="timeselect"
-                          method="post" target="_self" class="form-inline hidden-xs-down">
-						<?php $this->displayTimeFilter('sel'); ?>
-						<?php echo HTMLHelper::_('form.token'); ?>
-                    </form>
-                </div>
-            </h2>
+            <div class="filter-sel float-end">
+                <h2 class="filter-time float-end" id="filter-time"></h2>
+                <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
+                      id="timeselect" name="timeselect"
+                      method="post" target="_self" class="form-inline hidden-xs-down">
+                    <?php $this->displayTimeFilter('sel'); ?>
+                    <?php echo HTMLHelper::_('form.token'); ?>
+                </form>
+            </div>
 		<?php endif; ?>
     </div>
 </div>

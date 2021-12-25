@@ -662,8 +662,8 @@ class HtmlView extends KunenaView
 
 				if ($this->me->userid && $this->me->userid != $this->profile->userid)
 				{
-					$userkarma_minus = ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
-					$userkarma_plus  = ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
+					$userkarma_minus = ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-minus" border="0" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
+					$userkarma_plus  = ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-plus" border="0" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
 				}
 			}
 

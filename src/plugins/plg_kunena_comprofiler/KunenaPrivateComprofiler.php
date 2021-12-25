@@ -65,7 +65,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 		$resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
 		$url         = $_CB_framework->userProfileUrl($userid);
 		$html        = '<a href="' . $url . '" title="' .
-			Text::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" alt="' . Text::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
+			Text::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" title="' . Text::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
 
 		if ($resultArray > 0)
 		{

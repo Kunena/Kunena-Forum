@@ -74,6 +74,6 @@ class TopicEditHistory extends KunenaLayout
 	 */
 	public function getSamePageAnchorLink($anchor, $name, $rel = 'nofollow', $class = '')
 	{
-		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anchor . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
+		return '<a ' . ($class ? 'class="' . $class . '"' : '') . ' href="#' . $anchor . '"' . ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
 }

@@ -64,8 +64,9 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 					   href="https://twitter.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
 						<time class="dt-updated"
 						      title="<?php echo Text::_('COM_KUNENA_WIDGET_TWITTER_TIME_POSTED_TITLE'); ?>: <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
-						      datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
-						      pubdate=""><?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?></time>
+						      datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>">
+                            <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?>
+                        </time>
 					</a>
 				</div>
 			</div>

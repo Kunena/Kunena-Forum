@@ -34,6 +34,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Joomla\Database\DatabaseQuery;
 use RuntimeException;
 use StdClass;
 
@@ -270,7 +271,7 @@ class ToolsController extends FormController
 		{
 			$db->getQuery(true);
 
-			// TODO: need to find a way to make this query working with JdatabaseQuery
+			// TODO: need to find a way to make this query working with DatabaseQuery
 			$db->setQuery(
 				"INSERT INTO #__kunena_users (userid, showOnline)
 				SELECT a.id AS userid, 1 AS showOnline
@@ -297,7 +298,7 @@ class ToolsController extends FormController
 		{
 			$db->getQuery(true);
 
-			// TODO: need to find a way to make this query working with JdatabaseQuery
+			// TODO: need to find a way to make this query working with DatabaseQuery
 			$db->setQuery(
 				"DELETE a
 				FROM #__kunena_users AS a
@@ -325,7 +326,7 @@ class ToolsController extends FormController
 
 			$db->getQuery(true);
 
-			// TODO: need to find a way to make this query working with JdatabaseQuery
+			// TODO: need to find a way to make this query working with DatabaseQuery
 			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned > " . $db->quote($now->toSql()));
 
 			try

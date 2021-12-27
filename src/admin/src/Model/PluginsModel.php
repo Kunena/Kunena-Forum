@@ -12,7 +12,7 @@ namespace Kunena\Forum\Administrator\Model;
 \defined('_JEXEC') or die;
 
 use Exception;
-use JDatabaseQuery;
+use Joomla\Database\DatabaseQuery;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
@@ -33,7 +33,6 @@ class PluginsModel extends ListModel
 	 * Constructor.
 	 *
 	 * @param   MVCFactoryInterface|null  $factory  mvc
-	 *
 	 * @param   array                     $config   An optional associative array of configuration settings.
 	 *
 	 * @throws Exception
@@ -121,7 +120,7 @@ class PluginsModel extends ListModel
 	/**
 	 * Returns an object list
 	 *
-	 * @param   JDatabaseQuery  $query       The query
+	 * @param   DatabaseQuery   $query       The query
 	 * @param   int             $limitstart  Offset
 	 * @param   int             $limit       The number of records
 	 *
@@ -130,7 +129,7 @@ class PluginsModel extends ListModel
 	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
-	protected function internalGetList(JDatabaseQuery $query, $limitstart = 0, $limit = 0): array
+	protected function internalGetList(DatabaseQuery $query, int $limitstart = 0, int $limit = 0): array
 	{
 		$search   = $this->getState('filter.name') ? $this->getState('filter.name') : $this->getState('filter.search');
 		$ordering = $this->getState('list.ordering', 'ordering');

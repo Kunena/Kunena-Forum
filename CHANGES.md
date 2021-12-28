@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.8-dev]
 ### Fixed
+* Missing to apply changes for ebay in crypsisb3 and crypsisb4 templates
+* The setting of ebay cert id wasn't saved and improve code ebay
 * Change code in bbcode to comply changes to ebay API in order to retrieve ebay item
 * Fix Undefined array key "plain_start" and "plain_end" when using [sub] and [sup] bbcode
 * Fix to support bbcode tag in K5.1 and fix link to post for K5.2

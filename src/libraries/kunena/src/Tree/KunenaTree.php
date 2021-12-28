@@ -165,6 +165,7 @@ class KunenaTree implements Iterator
 	 *
 	 * @since   Kunena 6.0
 	 */
+	#[\ReturnTypeWillChange]
 	public function rewind()
 	{
 		$this->heap = [0];
@@ -180,6 +181,7 @@ class KunenaTree implements Iterator
 	 *
 	 * @since   Kunena 6.0
 	 */
+	#[\ReturnTypeWillChange]
 	public function next()
 	{
 		$id = array_shift($this->heap);
@@ -206,6 +208,7 @@ class KunenaTree implements Iterator
 	 *
 	 * @since   Kunena 6.0
 	 */
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		$id = reset($this->heap);
@@ -218,6 +221,7 @@ class KunenaTree implements Iterator
 	 *
 	 * @since   Kunena 6.0
 	 */
+	#[\ReturnTypeWillChange]
 	public function key()
 	{
 		return reset($this->heap);

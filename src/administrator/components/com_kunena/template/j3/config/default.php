@@ -1239,11 +1239,11 @@ Check back soon!') : echo 'class="changed"'; endif; ?>>
 													</td>
 													<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC') ?></td>
 												</tr>
-												<tr <?php if ($this->config->ebayCertId != '') : echo 'class="changed"'; endif; ?>>
+												<tr <?php if ($this->config->ebay_cert_id != '') : echo 'class="changed"'; endif; ?>>
 													<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_LABEL') ?></td>
 													<td>
-														<input type="text" name="cfg_ebayCertId"
-														       value="<?php echo $this->escape($this->config->ebayCertId) ?>"/>
+														<input type="text" name="cfg_ebay_cert_id"
+														       value="<?php echo $this->escape($this->config->ebay_cert_id) ?>"/>
 													</td>
 													<td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_DESC') ?></td>
 												</tr>

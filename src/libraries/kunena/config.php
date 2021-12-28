@@ -1104,7 +1104,7 @@ class KunenaConfig extends CMSObject
 	 * @var    string  Define ebay cert Id key to be allowed to display ebay widget; select, boolean
 	 * @since  5.2.0
 	 */
-	public $ebayCertId = '';
+	public $ebay_cert_id = '';
 
 	/**
 	 * @var    string  Define twitter API consumer key; select, boolean

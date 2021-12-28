@@ -1187,50 +1187,51 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (is_numeric($ItemID) && $config->ebay_api_key && $config->ebayCertId)
+		$options = new \Joomla\Registry\Registry;
+
+		$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
+
+		// Create a 'stream' transport.
+		$http = new \Joomla\CMS\Http\Http($options, $transport);
+
+		$data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
+
+		$headersOauth = ['Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => 'Basic '. base64_encode($config->ebay_api_key . ':' . $config->ebay_cert_id)];
+
+		$responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
+
+		if ($responseOauth->code == '200')
 		{
-			$options = new \Joomla\Registry\Registry;
+			$resp = json_decode($responseOauth->body);
 
-			$transport = new \Joomla\CMS\Http\Transport\StreamTransport($options);
+			$token = $resp->access_token;
 
-			// Create a 'stream' transport.
-			$http = new \Joomla\CMS\Http\Http($options, $transport);
+			$headers = ['X-EBAY-API-IAF-TOKEN' => $token, 'X-EBAY-API-CALL-NAME' => 'GetSingleItem', 'X-EBAY-API-VERSION' => 1157];
 
-			$data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
+			$response = $http->get('https://open.api.ebay.com/shopping?callname=GetSingleItem&siteid=0&responseencoding=JSON&ItemID=' . $ItemID . '&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9', $headers, '10');
 
-			$headersOauth = ['Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => 'Basic '.base64_encode($config->ebay_api_key . ':' . $config->ebayCertId)];
-
-			$responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
-
-			if ($responseOauth->code == '200')
+			if ($response->code == '200')
 			{
-				$resp = json_decode($responseOauth->body);
+				$responseItem = json_decode($response->body);
 
-				$token = $resp->access_token;
-				
-				$headers = ['X-EBAY-API-IAF-TOKEN' => $token, 'X-EBAY-API-CALL-NAME' => 'GetSingleItem', 'X-EBAY-API-VERSION' => 1157];
-
-				$response = $http->get('https://open.api.ebay.com/shopping?callname=GetSingleItem&siteid=0&responseencoding=JSON&ItemID=' . $ItemID . '&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9', $headers, '10');
-
-				if ($response->code == '200')
+				if ($responseItem->Ack == 'Success')
 				{
-					$responseItem = json_decode($response->body);
-					
-					if ($responseItem->Ack == 'Success')
-					{
-						return $responseItem->Item;
-					}
-					else
-					{
-						$errors = $responseItem->Errors;
+					return $responseItem->Item;
+				}
+				else
+				{
+					$errors = $responseItem->Errors;
 
-						return $errors[0]->LongMessage;
-					}
+					return $errors[0]->LongMessage;
 				}
 			}
 		}
+		else
+		{
+			$respOauthError = json_decode($responseOauth->body);
 
-		return '';
+			return $respOauthError->error_description;
+		}
 	}
 
 	/**
@@ -1812,12 +1813,12 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			return true;
 		}
 
-		$config = KunenaFactory::getTemplate()->params;
-
+		/*$config = KunenaFactory::getTemplate()->params;
+		echo 'hmvc '.$config->get('ebay');
 		if (KunenaFactory::getTemplate()->isHmvc() && !$config->get('ebay'))
 		{
 			return false;
-		}
+		}*/
 
 		$config = KunenaFactory::getConfig();
 
@@ -1843,7 +1844,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (empty($config->ebay_api_key))
+		if (empty($config->ebay_api_key) || empty($config->ebay_cert_id))
 		{
 			echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
 
@@ -1862,17 +1863,22 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		{
 			$ebay = self::getEbayItemFromCache($ItemID);
 
-			if (is_object($ebay) && $ebay->Ack == 'Success')
+			if (is_object($ebay))
 			{
 				return (string) $layout
 					->set('content', $ItemID)
 					// ->set('params', $params)
-					->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
-					->set('pictureurl', $ebay->Item->PictureURL[0])
-					->set('status', $ebay->Item->ListingStatus)
-					->set('ack', $ebay->Ack)
-					->set('title', $ebay->Item->Title)
+					->set('naturalurl', $ebay->ViewItemURLForNaturalSearch)
+					->set('pictureurl', $ebay->PictureURL[0])
+					->set('status', $ebay->ListingStatus)
+					->set('title', $ebay->Title)
 					->setLayout(is_numeric($ItemID) ? 'default' : 'search');
+			}
+			else
+			{
+				echo '<b>' . $ebay . '</b>';
+
+				return false;
 			}
 		}
 	}

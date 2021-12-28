@@ -1700,7 +1700,13 @@ REGEX;
         else
             $string = "";
         if ($array === false)
-            $array = $this->stack;
+
+		if ($string === null)
+        {
+	        $string = '';
+        }
+
+		$array = $this->stack;
         foreach ($array as $item) {
             $item += [self::BBCODE_STACK_TOKEN => null, self::BBCODE_STACK_TEXT => null, self::BBCODE_STACK_TAG => ['_name' => '']];
 
@@ -1737,6 +1743,11 @@ REGEX;
                 ." items; pattern=\"<tt>"
                 .htmlspecialchars($pattern)."</tt>\"<br>\n");
         }
+
+	    if ($pattern === null)
+	    {
+		    $pattern = '';
+	    }
 
         if (strlen($pattern) <= 0)
             return;
@@ -1780,6 +1791,11 @@ REGEX;
                 .htmlspecialchars($pattern)."</tt>\"<br>\n");
         }
 
+	    if ($pattern === null)
+	    {
+		    $pattern = '';
+	    }
+
         if (strlen($pattern) <= 0)
             return;
 
@@ -1819,7 +1835,12 @@ REGEX;
                 .htmlspecialchars($pattern)."</tt>\"<br>\n");
         }
 
-        if (strlen($pattern) <= 0)
+		if ($pattern === null)
+		{
+			$pattern = '';
+		}
+
+		if (strlen($pattern) <= 0)
             return $pos;
 
         foreach (str_split($pattern) as $char) {

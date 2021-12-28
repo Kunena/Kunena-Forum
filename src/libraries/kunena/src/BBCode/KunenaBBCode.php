@@ -117,12 +117,13 @@ class KunenaBBCode extends \Nbbc\BBCode
 	/**
 	 * Use KunenaBbcode::getInstance() instead.
 	 *
+	 * @internal
+	 *
 	 * @param   bool  $relative  relative
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @internal
+	 * @throws  Exception
 	 */
 	public function __construct($relative = true)
 	{
@@ -187,8 +188,8 @@ class KunenaBBCode extends \Nbbc\BBCode
 	 *
 	 * @return  mixed
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public static function getInstance($relative = true): KunenaBBCode
 	{
@@ -196,6 +197,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 
 		if (!isset($instance[\intval($relative)]))
 		{
+			$instance                     = [];
 			$instance[\intval($relative)] = new KunenaBBCode($relative);
 		}
 
@@ -209,8 +211,8 @@ class KunenaBBCode extends \Nbbc\BBCode
 	 *
 	 * @return  string|void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function parseUrl($params)
 	{
@@ -417,11 +419,11 @@ class KunenaBBCode extends \Nbbc\BBCode
 	}
 
 	/**
+	 * @see     BBCode::SetEnableSmileys()
+	 *
 	 * @param   string  $email  email
 	 *
 	 * @return  void
-	 * @see     BBCode::SetEnableSmileys()
-	 *
 	 * @since   Kunena 6.0
 	 */
 	public function IsValidEmail($email)
@@ -453,7 +455,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 
 	/**
 	 * Used for Smart Auto Linking, it loads the content of the url given to search the title from it
-	 * 
+	 *
 	 * @param   string  $url  url
 	 *
 	 * @return  string|void
@@ -464,7 +466,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 	{
 		$str = @file_get_contents($url);
 
-		if ($str !==false)
+		if ($str !== false)
 		{
 			if (\strlen($str) > 0)
 			{
@@ -578,15 +580,16 @@ class KunenaBBCode extends \Nbbc\BBCode
 	}
 
 	/**
-	 * @param   bool    $email_too  email
+	 * @see     BBCode::IsValidURL()
+	 * Regular expression taken from https://gist.github.com/729294
+	 *
 	 * @param   bool    $local_too  local
 	 *
 	 * @param   string  $string     string
 	 *
-	 * @return  boolean
+	 * @param   bool    $email_too  email
 	 *
-	 * @see     BBCode::IsValidURL()
-	 * Regular expression taken from https://gist.github.com/729294
+	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -1105,7 +1108,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			'plain_start'   => "\n * ",
 			'plain_end'     => "\n",
 		],
-		'li' => [
+		'li'           => [
 			'simple_start'  => "<li>",
 			'simple_end'    => "</li>\n",
 			'class'         => 'listitem',
@@ -1168,8 +1171,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	];
 
 	/**
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function __construct()
 	{
@@ -1201,8 +1204,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  string
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public static function getEbayItem(int $ItemID): string
 	{
@@ -1319,8 +1322,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|mixed|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoEmail($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1371,8 +1374,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoURL($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1482,8 +1485,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoSize($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1632,8 +1635,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoSpoiler($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1682,8 +1685,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoHide($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1733,8 +1736,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoConfidential($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1821,8 +1824,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  bool|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoMap($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1878,8 +1881,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoEbay($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -1913,8 +1916,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  false|string
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public static function renderEbayLayout(int $ItemID)
 	{
@@ -1962,8 +1965,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  string
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public static function getEbayItemFromCache(int $ItemID): string
 	{
@@ -1984,8 +1987,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoArticle($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -2130,8 +2133,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function DoQuote($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -2146,7 +2149,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		preg_match('/userid=(\d{1,})/', $default, $matches);
 
 		$userid = 0;
-		foreach($matches as $match)
+		foreach ($matches as $match)
 		{
 			if (is_numeric($match))
 			{
@@ -2163,7 +2166,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		preg_match('/post=(\d{1,})/', $default, $matches_post);
 
 		$postid = 0;
-		foreach($matches_post as $match)
+		foreach ($matches_post as $match)
 		{
 			if (is_numeric($match))
 			{
@@ -2178,9 +2181,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		}
 
 		// Support bbcode quote tag done in K5.1 and first versions of K5.2
-		if ($userid==0 && $postid==0)
+		if ($userid == 0 && $postid == 0)
 		{
-			$user  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
+			$user     = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 			$username = '';
 
 			if ($user)
@@ -2214,8 +2217,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoCode($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -2283,8 +2286,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function doTableau($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -2346,8 +2349,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string|void
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoVideo($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -2627,9 +2630,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
+	 * @since   Kunena 6.0
 	 * @throws  Exception
 	 * @throws  null
-	 * @since   Kunena 6.0
 	 */
 	public function DoAttachment($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -2738,9 +2741,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  string|void
 	 *
-	 * @throws Exception
-	 * @throws null
 	 * @since   Kunena 6.0
+	 * @throws null
+	 * @throws Exception
 	 */
 	protected function renderAttachment(KunenaAttachment $attachment, object $bbcode, $displayImage = true)
 	{
@@ -2789,9 +2792,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
+	 * @since   Kunena 6.0
 	 * @throws  Exception
 	 * @throws  null
-	 * @since   Kunena 6.0
 	 */
 	public function DoFile($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -2879,9 +2882,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
+	 * @since   Kunena 6.0
 	 * @throws  Exception
 	 * @throws  null
-	 * @since   Kunena 6.0
 	 */
 	public function DoImage($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -2976,8 +2979,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoTerminal($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -3006,8 +3009,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoTweet($bbcode, $action, $name, $default, $params, $content)
 	{
@@ -3052,8 +3055,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  string|void
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	public function renderTweet(int $tweetid): string
 	{
@@ -3092,8 +3095,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  object
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws Exception
 	 */
 	protected function getTweet(int $tweetid)
 	{
@@ -3347,8 +3350,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @return  boolean|string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws  Exception
 	 */
 	public function DoPrivate($bbcode, $action, $name, $default, $params, $content)
 	{

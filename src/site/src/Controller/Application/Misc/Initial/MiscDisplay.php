@@ -161,6 +161,11 @@ class MiscDisplay extends Display
 		$body   = $params->get('body');
 		$format = $params->get('body_format');
 
+		if ($this->header === null)
+		{
+			$this->header = '';
+		}
+
 		$this->header = htmlspecialchars($this->header, ENT_COMPAT, 'UTF-8');
 
 		if ($format == 'html')

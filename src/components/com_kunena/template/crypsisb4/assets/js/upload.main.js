@@ -186,6 +186,7 @@ jQuery(function ($) {
 		fileCount = 0;
 	});
 
+	// Prevent the press on enter key to press the button enter all when previously clicked
 	$('#insert-all').bind('keypress keydown keyup', function(e){
 		if(e.keyCode == 13) { e.preventDefault(); }
 	});

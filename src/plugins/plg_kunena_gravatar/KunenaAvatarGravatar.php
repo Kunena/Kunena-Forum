@@ -12,7 +12,7 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\Uri\Uri;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;

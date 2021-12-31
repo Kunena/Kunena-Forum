@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Site
  *
- * @copyright  (C) 2008 - 2021 Kunena Team. All rights reserved.
+ * @copyright  (C) 2008 - 2022 Kunena Team. All rights reserved.
  * @license https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link https://www.kunena.org
  **/

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.8-dev]
 ### Fixed
+* [#8677](https://github.com/Kunena/Kunena-Forum/issues/8677): Profile position top or bottom shows the content vertically #8677
 * Missing to apply changes for ebay in crypsisb3 and crypsisb4 templates
 * The setting of ebay cert id wasn't saved and improve code ebay
 * Change code in bbcode to comply changes to ebay API in order to retrieve ebay item
@@ -13,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Fix to support bbcode tag in K5.1 and fix link to post for K5.2
 * [#7990](https://github.com/Kunena/Kunena-Forum/issues/7990):[CKEditor] The Insert All Button does not place the attachments in the place of the cursor #7990
 * When button insert all is clicked prevent press enter fire the button
-* [#8622](https://github.com/Kunena/Kunena-Forum/issues/8622): Fixes icons disappearing in Kunena 5.2.7
+* [#8622](https://github.com/Kunena/Kunena-Forum/issues/8622): Community Builder avatars are not displayed, fixes icons disappearing in Kunena 5.2.7
 * Wrong language string for desc crypsis b4 in backend
 * Update link to ebay dev page in config panel and remove useless
 

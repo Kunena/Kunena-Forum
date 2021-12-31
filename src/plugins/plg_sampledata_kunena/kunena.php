@@ -151,7 +151,7 @@ class PlgSampledataKunena extends CMSPlugin
 	private function enablePlugin(string $pluginName): bool
 	{
 		// Create a new db object.
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 
 		$query

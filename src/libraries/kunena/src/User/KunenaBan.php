@@ -136,7 +136,7 @@ class KunenaBan extends parentAlias
 
 		// Always load the data -- if item does not exist: fill empty data
 		$this->load($identifier);
-		$this->_db = Factory::getContainer()->get('db');
+		$this->_db = Factory::getContainer()->get('DatabaseDriver');
 	}
 
 	/**
@@ -407,7 +407,7 @@ class KunenaBan extends parentAlias
 	public static function getBannedUsers($start = 0, $limit = 50): array
 	{
 		$c   = __CLASS__;
-		$db  = Factory::getContainer()->get('db');
+		$db  = Factory::getContainer()->get('DatabaseDriver');
 		$now = new Date;
 
 		$query = $db->getQuery(true);
@@ -459,7 +459,7 @@ class KunenaBan extends parentAlias
 		}
 
 		$c  = __CLASS__;
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$query = $db->getQuery(true);
 		$query->select('*')

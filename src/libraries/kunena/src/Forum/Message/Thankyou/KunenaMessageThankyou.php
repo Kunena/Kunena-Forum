@@ -127,7 +127,7 @@ class KunenaMessageThankyou extends CMSObject
 			throw new KunenaException(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'));
 		}
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$time  = Factory::getDate();
 		$query = $db->getQuery(true);
 		$query->insert($db->quoteName('#__kunena_thankyou'))
@@ -175,7 +175,7 @@ class KunenaMessageThankyou extends CMSObject
 	 */
 	protected function internalSavethankyou(KunenaMessage $message): bool
 	{
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_users'))
 			->set('thankyou = thankyou+1')
@@ -234,7 +234,7 @@ class KunenaMessageThankyou extends CMSObject
 			throw new KunenaException(Text::_('COM_KUNENA_THANKYOU_NOT_PRESENT'));
 		}
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->delete($db->quoteName('#__kunena_thankyou'))
 			->where('postid = ' . $db->quote($this->id))

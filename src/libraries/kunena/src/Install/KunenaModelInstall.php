@@ -159,7 +159,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$lang->load('com_kunena.libraries', KUNENA_INSTALLER_ADMINPATH);
 
 		parent::__construct();
-		$this->db = Factory::getContainer()->get('db');
+		$this->db = Factory::getContainer()->get('DatabaseDriver');
 
 		if (\function_exists('ignore_user_abort'))
 		{
@@ -459,7 +459,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 */
 	public function uninstallPlugin(string $folder, string $name): void
 	{
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 			->from($db->quoteName('#__extensions'))
@@ -484,7 +484,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 */
 	public function uninstallModule(string $name): void
 	{
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 			->from($db->quoteName('#__extensions'))
@@ -2949,7 +2949,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		}
 		else
 		{
-			$db    = Factory::getContainer()->get('db');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select('version')->from('#__kunena_version')->order('id');
 			$query->setLimit(1);
@@ -3011,7 +3011,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$langCode = $languages[0]->lang_code;
 
 		// First fix all broken menu items
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true)
 			->update($db->quoteName('#__menu'))
 			->set($db->quoteName('component_id') . ' = ' . $component_id)
@@ -3244,7 +3244,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		if ($state === null)
 		{
 			// First run
-			$db    = Factory::getContainer()->get('db');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select('MAX(id)')->from('#__kunena_messages');
 			$db->setQuery($query);

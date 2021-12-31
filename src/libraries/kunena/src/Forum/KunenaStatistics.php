@@ -195,7 +195,7 @@ class KunenaStatistics
 	 */
 	public function __construct()
 	{
-		$this->_db     = Factory::getContainer()->get('db');
+		$this->_db     = Factory::getContainer()->get('DatabaseDriver');
 		$this->_config = KunenaConfig::getInstance();
 
 		$this->showStats            = (bool) $this->_config->showStats;
@@ -234,7 +234,7 @@ class KunenaStatistics
 	{
 		$smilies = null;
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query
 			->select('COUNT(*)')
@@ -515,7 +515,7 @@ class KunenaStatistics
 
 		if ($this->topPolls < $limit)
 		{
-			$db    = Factory::getContainer()->get('db');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query
 				->select(

@@ -114,7 +114,7 @@ abstract class KunenaMessageHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = Factory::getContainer()->get('db');
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$query  = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
@@ -215,7 +215,7 @@ abstract class KunenaMessageHelper
 	 */
 	protected static function loadMessagesByTopic(int $topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false): array
 	{
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
@@ -296,7 +296,7 @@ abstract class KunenaMessageHelper
 			}
 		}
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('m.*, t.message')
 			->from('#__kunena_messages AS m')
@@ -589,7 +589,7 @@ abstract class KunenaMessageHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = Factory::getContainer()->get('db');
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$query  = $db->getQuery(true);
 		$query->select(
 			'm.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
@@ -654,7 +654,7 @@ abstract class KunenaMessageHelper
 	 */
 	public static function recount($topicids = false)
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		if (\is_array($topicids))
 		{
@@ -706,7 +706,7 @@ abstract class KunenaMessageHelper
 			return false;
 		}
 
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$idlist = implode(',', $ids);
 		$query  = $db->getQuery(true);
@@ -747,7 +747,7 @@ abstract class KunenaMessageHelper
 			return false;
 		}
 
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$query = $db->getQuery(true);
 		$query->select('ip')

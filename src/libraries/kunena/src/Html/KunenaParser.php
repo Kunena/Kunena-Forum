@@ -58,7 +58,7 @@ abstract class KunenaParser
 	 */
 	public static function getEmoticons($grayscale = false, $emoticonbar = false, $addPath = true): array
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$query = $db->getQuery(true)
 			->select([$db->quoteName('code'), $db->quoteName($column, 'file')])

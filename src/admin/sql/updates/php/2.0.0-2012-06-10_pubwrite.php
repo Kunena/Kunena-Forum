@@ -29,7 +29,7 @@ function kunena_200_2012_06_10_pubWrite($parent)
 
 	if ($config->pubWrite)
 	{
-		$db     = Factory::getContainer()->get('db');
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$params = '{"access_post":["1"],"access_reply":["1"]}';
 		$query  = "UPDATE `#__kunena_categories` SET params={$db->quote($params)} WHERE accesstype LIKE 'joomla.%' AND params=''";
 		$db->setQuery($query);

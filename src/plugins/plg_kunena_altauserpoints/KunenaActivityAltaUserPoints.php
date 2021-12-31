@@ -306,7 +306,7 @@ class KunenaActivityAltaUserPoints extends KunenaActivity
 			return false;
 		}
 
-		$_db   = Factory::getContainer()->get('db');
+		$_db   = Factory::getContainer()->get('DatabaseDriver');
 		$query = $_db->getQuery();
 		$query->select($_db->quoteName('points'))
 			->from($_db->quoteName('#__alpha_userpoints'))

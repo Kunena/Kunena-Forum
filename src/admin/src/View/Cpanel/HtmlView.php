@@ -110,7 +110,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// The column "state" in kunena_version indicate from which version to update
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$db->setQuery("SELECT state FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
 		$stateVersion = $db->loadResult();
 

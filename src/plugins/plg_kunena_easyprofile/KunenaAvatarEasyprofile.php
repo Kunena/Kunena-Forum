@@ -88,7 +88,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
 		}
 		else
 		{
-			$db    = Factory::getContainer()->get('db');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName('params'))
 				->from('#__jsn_fields')

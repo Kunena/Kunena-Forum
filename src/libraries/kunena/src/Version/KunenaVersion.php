@@ -157,7 +157,7 @@ class KunenaVersion
 	 */
 	public function getDBVersion($prefix = 'kunena_')
 	{
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = "SHOW TABLES LIKE {$db->quote($db->getPrefix() . $prefix . 'version')}";
 		$db->setQuery($query);
 

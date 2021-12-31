@@ -202,7 +202,7 @@ class CategoriesModel extends KunenaModel
 			else
 			{
 				// New category is by default child of the first section -- this will help new users to do it right
-				$db = Factory::getContainer()->get('db');
+				$db = Factory::getContainer()->get('DatabaseDriver');
 
 				$query = $db->getQuery(true)
 					->select('a.id, a.name')

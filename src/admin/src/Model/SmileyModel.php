@@ -95,7 +95,7 @@ class SmileyModel extends AdminModel
 	 */
 	public function getSmiley()
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$id = $this->getState($this->getName() . '.id');
 

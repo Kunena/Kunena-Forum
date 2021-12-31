@@ -103,7 +103,7 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	public function enablePlugin($pluginName)
 	{
 		// Create a new db object.
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 
 		$query

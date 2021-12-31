@@ -91,7 +91,7 @@ class KunenaRate extends CMSObject
 	public function __construct($identifier = 0)
 	{
 		// Always load the topic -- if rate does not exist: fill empty data
-		$this->_db = Factory::getContainer()->get('db');
+		$this->_db = Factory::getContainer()->get('DatabaseDriver');
 		$this->load($identifier);
 
 		parent::__construct($identifier);

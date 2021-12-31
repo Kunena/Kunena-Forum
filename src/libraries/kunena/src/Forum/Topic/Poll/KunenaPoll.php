@@ -111,7 +111,7 @@ class KunenaPoll extends CMSObject
 	public function __construct($identifier = 0)
 	{
 		// Always load the topic -- if poll does not exist: fill empty data
-		$this->_db = Factory::getContainer()->get('db');
+		$this->_db = Factory::getContainer()->get('DatabaseDriver');
 		$this->load($identifier);
 
 		parent::__construct($identifier);
@@ -702,7 +702,7 @@ class KunenaPoll extends CMSObject
 		$this->_exists = false;
 
 		// Delete options
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->delete($db->quoteName('#__kunena_polls_options'))
 			->where($db->quoteName('pollid') . ' = ' . $db->quote($this->id));

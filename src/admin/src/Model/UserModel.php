@@ -57,7 +57,7 @@ class UserModel extends KunenaModel
 	 */
 	public function getSubscriptions(): array
 	{
-		$db     = Factory::getContainer()->get('db');
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$userid = $this->getState($this->getName() . '.id');
 
 		$query = $db->getQuery(true);
@@ -113,7 +113,7 @@ class UserModel extends KunenaModel
 	 */
 	public function getIPlist(): array
 	{
-		$db     = Factory::getContainer()->get('db');
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$userid = $this->getState($this->getName() . '.id');
 
 		$query = $db->getQuery(true);
@@ -222,7 +222,7 @@ class UserModel extends KunenaModel
 	 */
 	public function getListUserRanks(): string
 	{
-		$db   = Factory::getContainer()->get('db');
+		$db   = Factory::getContainer()->get('DatabaseDriver');
 		$user = $this->getUser();
 
 		// Grab all special ranks
@@ -272,7 +272,7 @@ class UserModel extends KunenaModel
 	 */
 	public function getMoveUser()
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$userids = (array) $this->app->getUserState('kunena.usermove.userids');
 

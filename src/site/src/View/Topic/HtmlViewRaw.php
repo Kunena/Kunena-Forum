@@ -80,7 +80,7 @@ class KunenaViewTopic extends KunenaView
 		{
 			$search = $this->app->input->get('search');
 
-			$db     = Factory::getContainer()->get('db');
+			$db     = Factory::getContainer()->get('DatabaseDriver');
 			$kquery = $db->getQuery(true);
 			$kquery->select('*')->from("{$db->quoteName('#__kunena_smileys')}")->where("code LIKE '%{$db->escape($search)}%' AND emoticonbar=1");
 			$db->setQuery($kquery);

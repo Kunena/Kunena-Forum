@@ -601,7 +601,7 @@ class KunenaUser extends CMSObject
 			$this->userid = 0;
 		}
 
-		$this->_db     = Factory::getContainer()->get('db');
+		$this->_db     = Factory::getContainer()->get('DatabaseDriver');
 		$this->_app    = Factory::getApplication();
 		$this->_config = KunenaFactory::getConfig();
 	}
@@ -2053,7 +2053,7 @@ class KunenaUser extends CMSObject
 
 		$groupid_list = implode(',', $groups);
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true)
 			->select($db->quoteName('title'))
 			->from($db->quoteName('#__usergroups'))

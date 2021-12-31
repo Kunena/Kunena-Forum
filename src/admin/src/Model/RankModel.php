@@ -95,7 +95,7 @@ class RankModel extends AdminModel
 	 */
 	public function getRank()
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$id = $this->getState($this->getName() . '.id');
 

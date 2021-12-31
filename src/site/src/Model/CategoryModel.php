@@ -202,7 +202,7 @@ class CategoryModel extends CategoriesModel
 			if ($this->me->userid && \count($modcats))
 			{
 				$catlist = implode(',', $modcats);
-				$db      = Factory::getContainer()->get('db');
+				$db      = Factory::getContainer()->get('DatabaseDriver');
 				$query   = $db->getQuery(true);
 				$query->select('catid, COUNT(*) AS count')
 					->from($db->quoteName('#__kunena_messages'))

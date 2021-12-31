@@ -23,7 +23,7 @@ use Joomla\CMS\Language\Text;
  */
 function kunena_520_2020_08_20_updaterankstitle($parent)
 {
-	$db = Factory::getContainer()->get('db');
+	$db = Factory::getContainer()->get('DatabaseDriver');
 
 	$query = $db->getQuery(true);
 

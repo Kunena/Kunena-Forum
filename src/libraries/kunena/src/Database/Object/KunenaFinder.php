@@ -86,7 +86,7 @@ abstract class KunenaFinder
 			throw new DomainException('Table name missing from ' . \get_class($this));
 		}
 
-		$this->db    = Factory::getContainer()->get('db');
+		$this->db    = Factory::getContainer()->get('DatabaseDriver');
 		$this->query = $this->db->getQuery(true);
 		$this->query->from($this->db->quoteName($this->table, 'a'));
 	}

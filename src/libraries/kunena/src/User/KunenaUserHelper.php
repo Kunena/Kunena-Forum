@@ -250,7 +250,7 @@ abstract class KunenaUserHelper
 		{
 			$userlist = implode(',', $e_userids);
 
-			$db = Factory::getContainer()->get('db');
+			$db = Factory::getContainer()->get('DatabaseDriver');
 
 			$query = $db->getQuery(true);
 			$query->select('u.name, u.username, u.email, u.block AS blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid')
@@ -324,7 +324,7 @@ abstract class KunenaUserHelper
 	{
 		if (self::$_total === null)
 		{
-			$db     = Factory::getContainer()->get('db');
+			$db     = Factory::getContainer()->get('DatabaseDriver');
 			$config = KunenaFactory::getConfig();
 
 			if ($config->userlistCountUsers == '1')
@@ -373,7 +373,7 @@ abstract class KunenaUserHelper
 	public static function getTotalRanks(): int
 	{
 		$total = 0;
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('COUNT(*)')
 			->from($db->quoteName('#__kunena_ranks'));
@@ -406,7 +406,7 @@ abstract class KunenaUserHelper
 
 		if (self::$_topposters < $limit)
 		{
-			$db    = Factory::getContainer()->get('db');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName(['u.id', 'ku.posts'], [null, 'count']));
 			$query->from($db->quoteName(['#__kunena_users'], ['ku']));
@@ -464,7 +464,7 @@ abstract class KunenaUserHelper
 		$recurs = $recursive ? ' >= ' : ' = ';
 
 		// Find users and their groups.
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true)
 			->select($db->quoteName('m.*'))
 			->from($db->quoteName('#__usergroups', 'ug1'))
@@ -524,7 +524,7 @@ abstract class KunenaUserHelper
 		{
 			$app    = Factory::getApplication();
 			$config = KunenaFactory::getConfig();
-			$db     = Factory::getContainer()->get('db');
+			$db     = Factory::getContainer()->get('DatabaseDriver');
 			$query  = $db->getQuery(true);
 			$query->select('COUNT(*)')
 				->from($db->quoteName('#__session'))
@@ -578,7 +578,7 @@ abstract class KunenaUserHelper
 		{
 			$app    = Factory::getApplication();
 			$config = KunenaFactory::getConfig();
-			$db     = Factory::getContainer()->get('db');
+			$db     = Factory::getContainer()->get('DatabaseDriver');
 			$query  = $db->getQuery(true);
 			$query->select('userid, MAX(time) AS time')
 				->from($db->quoteName('#__session'))
@@ -682,7 +682,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function recount()
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		/*
 		$query = $db->getQuery(true);
@@ -722,7 +722,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function recountBanned()
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Update banned state
 		$query = "UPDATE #__kunena_users AS u
@@ -755,7 +755,7 @@ abstract class KunenaUserHelper
 	 */
 	public static function recountPostsNull()
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// If user has no user_topics, set posts into 0
 		$query = $db->getQuery(true);

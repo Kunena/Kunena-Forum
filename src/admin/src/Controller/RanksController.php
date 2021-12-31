@@ -125,7 +125,7 @@ class RanksController extends FormController
 	 */
 	public function save($key = null, $urlVar = null)
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		if (!Session::checkToken())
 		{
@@ -245,7 +245,7 @@ class RanksController extends FormController
 	 */
 	public function remove(): void
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		if (!Session::checkToken())
 		{

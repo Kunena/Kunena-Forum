@@ -115,7 +115,7 @@ abstract class KunenaAttachmentHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = Factory::getContainer()->get('db');
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_attachments'))
@@ -250,7 +250,7 @@ abstract class KunenaAttachmentHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = Factory::getContainer()->get('db');
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_attachments'))
@@ -589,7 +589,7 @@ abstract class KunenaAttachmentHelper
 	public static function cleanup(): bool
 	{
 		// Find up to 50 orphan attachments and delete them
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('a.*')
 			->from($db->quoteName('#__kunena_attachments', 'a'))
@@ -706,7 +706,7 @@ abstract class KunenaAttachmentHelper
 			$orderby = ' ORDER BY id ASC';
 		}
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_attachments'))
@@ -754,7 +754,7 @@ abstract class KunenaAttachmentHelper
 	{
 		$attachments = null;
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query
 			->select('COUNT(*)')

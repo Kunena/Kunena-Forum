@@ -954,7 +954,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	{
 		if (!isset($this->_aliases))
 		{
-			$db    = Factory::getContainer()->get('db');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select('*')
 				->from($db->quoteName('#__kunena_aliases'))
@@ -983,7 +983,7 @@ class KunenaCategory extends KunenaDatabaseObject
 			return false;
 		}
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->delete()
 			->from($db->quoteName('#__kunena_aliases'))
@@ -1511,7 +1511,7 @@ class KunenaCategory extends KunenaDatabaseObject
 
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
@@ -1565,7 +1565,7 @@ class KunenaCategory extends KunenaDatabaseObject
 
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__kunena_topics', 'tt'))
@@ -1619,7 +1619,7 @@ class KunenaCategory extends KunenaDatabaseObject
 		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 
-		$db        = Factory::getContainer()->get('db');
+		$db        = Factory::getContainer()->get('DatabaseDriver');
 		$queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->quote($this->id)}";
 
 		// Delete user topics
@@ -1798,7 +1798,7 @@ class KunenaCategory extends KunenaDatabaseObject
 		elseif ($this->last_topic_id == $topic->id)
 		{
 			// If last topic/post got moved or deleted, we need to find last post
-			$db    = Factory::getContainer()->get('db');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select('*')
 				->from($db->quoteName('#__kunena_topics'))
@@ -2013,7 +2013,7 @@ class KunenaCategory extends KunenaDatabaseObject
 			return true;
 		}
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = "REPLACE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->quote($alias)},'catid',{$db->quote($this->id)})";
 		$db->setQuery($query);
 

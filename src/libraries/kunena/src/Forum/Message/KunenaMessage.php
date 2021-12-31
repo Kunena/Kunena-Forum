@@ -194,7 +194,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 */
 	public function __construct($properties = null)
 	{
-		$this->_db = Factory::getContainer()->get('db');
+		$this->_db = Factory::getContainer()->get('DatabaseDriver');
 		parent::__construct($properties);
 	}
 
@@ -666,7 +666,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		if ($once && $sentusers)
 		{
 			$sentusers = implode(',', $sentusers);
-			$db        = Factory::getContainer()->get('db');
+			$db        = Factory::getContainer()->get('DatabaseDriver');
 			$query     = $db->getQuery(true)
 				->update($db->quoteName('#__kunena_user_topics'))
 				->set($db->quoteName('subscribed') . ' = 2')
@@ -1000,7 +1000,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			}
 		}
 
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Delete thank yous
 		$queries[] = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)}";

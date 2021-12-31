@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Install\KunenaInstallerException;
  */
 function kunena_160_2010_05_30_polls($parent)
 {
-	$db = Factory::getContainer()->get('db');
+	$db = Factory::getContainer()->get('DatabaseDriver');
 
 	$upgraded = false;
 

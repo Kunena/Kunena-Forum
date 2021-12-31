@@ -76,7 +76,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 */
 	public function getTopHits(int $limit = 0): array
 	{
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true)
 			->select($db->quoteName(['u.*', 'ju.username', 'ju.email', 'ju.lastvisitDate'], [null, null, 'last_login']))
 			->from($db->quoteName('#__alpha_userpoints', 'a'))

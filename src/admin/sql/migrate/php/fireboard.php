@@ -62,7 +62,7 @@ class KunenaMigratorFireboard
 		if (KunenaInstaller::detectTable('fb_version'))
 		{
 			// Get installed version.
-			$db = Factory::getContainer()->get('db');
+			$db = Factory::getContainer()->get('DatabaseDriver');
 			$db->setQuery("SELECT version, versiondate AS date FROM `#__fb_version` ORDER BY id DESC", 0, 1);
 			$version = $db->loadRow();
 

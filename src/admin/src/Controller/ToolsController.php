@@ -257,7 +257,7 @@ class ToolsController extends FormController
 		$userRename  = $this->app->input->getBool('userRename', 0);
 		$userDelLife = $this->app->input->getBool('userDelLife', 0);
 
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		if (!Session::checkToken())
 		{
@@ -432,7 +432,7 @@ class ToolsController extends FormController
 			$state->current = 0;
 			$state->reload  = 0;
 
-			$db    = Factory::getContainer()->get('db');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
 			$query->select('MAX(thread)')->from('#__kunena_messages');
 			$db->setQuery($query);
@@ -785,7 +785,7 @@ class ToolsController extends FormController
 
 		if ($reString != null)
 		{
-			$db = Factory::getContainer()->get('db');
+			$db = Factory::getContainer()->get('DatabaseDriver');
 
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__kunena_messages'))
@@ -854,7 +854,7 @@ class ToolsController extends FormController
 			$where     = 'time < ' . $cleanDate;
 		}
 
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		if (!empty($where))
 		{
@@ -886,7 +886,7 @@ class ToolsController extends FormController
 
 		if ($deleteIpUsers)
 		{
-			$db    = Factory::getContainer()->get('db');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__kunena_users'))
 				->set('ip=NULL');

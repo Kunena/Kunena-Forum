@@ -97,7 +97,7 @@ class KunenaModelSchema extends BaseDatabaseModel
 	public function __construct()
 	{
 		parent::__construct();
-		$this->db = Factory::getContainer()->get('db');
+		$this->db = Factory::getContainer()->get('DatabaseDriver');
 	}
 
 	/**

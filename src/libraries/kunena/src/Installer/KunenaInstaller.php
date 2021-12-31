@@ -82,7 +82,7 @@ class KunenaInstaller
 		}
 
 		// Get installed version.
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('version')
 			->from($db->quoteName('#__kunena_version'))
@@ -107,7 +107,7 @@ class KunenaInstaller
 	 */
 	public static function detectTable(string $table, $prefix = '#__', $reload = false): bool
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		if (self::$tables === null || $reload)
 		{
@@ -150,7 +150,7 @@ class KunenaInstaller
 			return false;
 		}
 
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		if ($prefix == '#__')
 		{

@@ -71,7 +71,7 @@ class KunenaTopicUser extends CMSObject
 		$topic = KunenaTopicHelper::get($topic);
 
 		// Always fill empty data
-		$this->_db = Factory::getContainer()->get('db');
+		$this->_db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Create the table object
 		$table = $this->getTable();

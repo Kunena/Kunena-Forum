@@ -87,7 +87,7 @@ class KunenaTableMap
 		$this->_tbl_key    = $key;
 		$this->_tbl_mapped = $mapped;
 		$this->{$mapped}   = [];
-		$this->_db         = $db ? $db : Factory::getContainer()->get('db');
+		$this->_db         = $db ? $db : Factory::getContainer()->get('DatabaseDriver');
 
 		// Initialise the table properties.
 		$fields = $this->getFields();

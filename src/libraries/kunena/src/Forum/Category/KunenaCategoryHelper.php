@@ -99,7 +99,7 @@ abstract class KunenaCategoryHelper
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_categories'))
@@ -265,7 +265,7 @@ abstract class KunenaCategoryHelper
 	public static function getSubscriptions($user = null): array
 	{
 		$user  = KunenaUserHelper::get($user);
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('category_id'))
 			->from($db->quoteName('#__kunena_user_categories'))
@@ -415,7 +415,7 @@ abstract class KunenaCategoryHelper
 	public static function getLatestSubscriptions($user, $limitstart = 0, $limit = 0, $params = []): array
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		$db     = Factory::getContainer()->get('db');
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$config = KunenaFactory::getConfig();
 
 		if ($limit < 1)
@@ -535,7 +535,7 @@ abstract class KunenaCategoryHelper
 		}
 
 		$catlist = implode(',', array_keys($catlist));
-		$db      = Factory::getContainer()->get('db');
+		$db      = Factory::getContainer()->get('DatabaseDriver');
 		$query   = $db->getQuery(true);
 		$query->select('t.category_id, COUNT(*) AS new')
 			->from($db->quoteName('#__kunena_topics', 't'))
@@ -911,7 +911,7 @@ abstract class KunenaCategoryHelper
 	 */
 	public static function recount($categories = '')
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		if (\is_array($categories))
 		{
@@ -1007,7 +1007,7 @@ abstract class KunenaCategoryHelper
 	 */
 	public static function fixAliases()
 	{
-		$db = Factory::getContainer()->get('db');
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$rows    = 0;
 		$queries = [];
@@ -1056,7 +1056,7 @@ abstract class KunenaCategoryHelper
 	 */
 	public static function getAlias($categoryId, $alias): bool
 	{
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_categories'))

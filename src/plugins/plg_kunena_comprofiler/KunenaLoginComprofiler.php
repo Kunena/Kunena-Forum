@@ -98,7 +98,7 @@ class KunenaLoginComprofiler
 	 */
 	public function getRememberMe()
 	{
-		$db    = Factory::getContainer()->get('db');
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
 		$query->select('params')
 			->from($db->quoteName('#__extensions'))

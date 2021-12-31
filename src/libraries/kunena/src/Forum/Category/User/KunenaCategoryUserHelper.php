@@ -154,7 +154,7 @@ abstract class KunenaCategoryUserHelper
 		}
 
 		$idlist = implode(',', $ids);
-		$db     = Factory::getContainer()->get('db');
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$query  = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_user_categories'))
@@ -207,7 +207,7 @@ abstract class KunenaCategoryUserHelper
 		$updateList = [];
 		$insertList = [];
 
-		$db   = Factory::getContainer()->get('db');
+		$db   = Factory::getContainer()->get('DatabaseDriver');
 		$time = Factory::getDate()->toUnix();
 
 		foreach ($items as $item)

@@ -4,7 +4,7 @@
  *
  * @package        Kunena.Installer
  *
- * @copyright      Copyright (C) 2008 - 2021 Kunena Team. All rights reserved.
+ * @copyright      Copyright (C) 2008 - 2022 Kunena Team. All rights reserved.
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
@@ -29,7 +29,7 @@ class KunenaVersion
 	/**
 	 * Retrieve installed Kunena version, copyright and license as string.
 	 *
-	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2021 Copyright: Kunena Team. All rights reserved. |
+	 * @return  string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2022 Copyright: Kunena Team. All rights reserved. |
 	 *                License: GNU General Public License"
 	 *
 	 * @since   Kunena 6.0
@@ -54,7 +54,7 @@ class KunenaVersion
 	/**
 	 * Retrieve copyright information as string.
 	 *
-	 * @return  string "© 2008 - 2021 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	 * @return  string "© 2008 - 2022 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	 *
 	 * @since   Kunena 6.0
 	 */

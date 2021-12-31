@@ -13,6 +13,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
 
@@ -62,7 +63,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -70,14 +71,14 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onBeforePost(string $message): void
+	public function onBeforePost(KunenaMessage $message): void
 	{
 		$params = ['actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onBeforePost', $params);
 	}
 
 	/**
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -85,14 +86,14 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onBeforeReply(string $message): void
+	public function onBeforeReply(KunenaMessage $message): void
 	{
 		$params = ['actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onBeforeReply', $params);
 	}
 
 	/**
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -100,14 +101,14 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onBeforeEdit(string $message): void
+	public function onBeforeEdit(KunenaMessage $message): void
 	{
 		$params = ['actor' => $message->get('modified_by'), 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onBeforeEdit', $params);
 	}
 
 	/**
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -115,14 +116,14 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onAfterPost(string $message): void
+	public function onAfterPost(KunenaMessage $message): void
 	{
 		$params = ['actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterPost', $params);
 	}
 
 	/**
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -130,14 +131,14 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onAfterReply(string $message): void
+	public function onAfterReply(KunenaMessage $message): void
 	{
 		$params = ['actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterReply', $params);
 	}
 
 	/**
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -145,14 +146,14 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onAfterEdit(string $message): void
+	public function onAfterEdit(KunenaMessage $message): void
 	{
 		$params = ['actor' => $message->get('modified_by'), 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterEdit', $params);
 	}
 
 	/**
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -160,7 +161,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onAfterDelete(string $message): void
+	public function onAfterDelete(KunenaMessage $message): void
 	{
 		$my     = Factory::getApplication()->getIdentity();
 		$params = ['actor' => $my->id, 'message' => $message];
@@ -168,7 +169,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	}
 
 	/**
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -176,7 +177,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onAfterUndelete(string $message): void
+	public function onAfterUndelete(KunenaMessage $message): void
 	{
 		$my     = Factory::getApplication()->getIdentity();
 		$params = ['actor' => $my->id, 'message' => $message];

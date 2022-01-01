@@ -113,11 +113,11 @@ class KunenaLogin
 	 * @param   int     $rememberme  If the user want to be remembered the next time it want to log
 	 * @param   null    $secretkey   The secret key for the TFA feature
 	 *
-	 * @return  boolean
+	 * @return  null|string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function loginUser(string $username, string $password, $rememberme = 0, $secretkey = null): bool
+	public function loginUser(string $username, string $password, $rememberme = 0, $secretkey = null): ?string
 	{
 		foreach ($this->instances as $login)
 		{

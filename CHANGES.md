@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * The setting of ebay cert id wasn't saved and improve code ebay
 * Change code in bbcode to comply changes to ebay API in order to retrieve ebay item
 * Fix Undefined array key "plain_start" and "plain_end" when using [sub] and [sup] bbcode
-* Fix to support bbcode tag in K5.1 and fix link to post for K5.2
+* Fix to support bbcode quote tag in K5.1 and fix link to post for K5.2
 * [#7990](https://github.com/Kunena/Kunena-Forum/issues/7990):[CKEditor] The Insert All Button does not place the attachments in the place of the cursor #7990
 * When button insert all is clicked prevent press enter fire the button
 * [#8622](https://github.com/Kunena/Kunena-Forum/issues/8622): Community Builder avatars are not displayed, fixes icons disappearing in Kunena 5.2.7
@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Update link to ebay dev page in config panel and remove useless
 
 ### Changed
+* Update copyright year on files to 2022
 * Missing comment on js on the code which prevent the press on enter key
 * Change the javascript variable com_kunena.kunena_upload_files_preload to com_kunena.kunena_upload_files_preload_for_edit
 * On some files the date of copyright was forgot to be changed

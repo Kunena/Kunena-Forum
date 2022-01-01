@@ -133,11 +133,11 @@ class KunenaLogin
 	/**
 	 * @param   null  $return  logout user
 	 *
-	 * @return  boolean
+	 * @return  null|string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function logoutUser($return = null): bool
+	public function logoutUser($return = null): ?string
 	{
 		foreach ($this->instances as $login)
 		{

@@ -105,7 +105,7 @@ class CategoryController extends FormController
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 */
-	protected function internalSave(): KunenaCategory
+	protected function internalSave()
 	{
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
@@ -127,6 +127,14 @@ class CategoryController extends FormController
 		$input      = $this->app->input;
 		$post       = $input->post->getArray();
 		$accesstype = strtr($input->getCmd('accesstype', 'joomla.level'), '.', '-');
+
+		if (empty($post['name']))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORY_MANAGER_PLEASE_SET_A_TITLE'), 'notice');
+
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return false;
+		}
 
 		if ($post['task'] === 'save2copy')
 		{

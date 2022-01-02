@@ -1033,13 +1033,6 @@ class ConfigModel extends AdminModel
 	public $superAdminUserlist = 0;
 
 	/**
-	 * @var     boolean  Legacy URLs, this setting is deprecated and it will be removed in a future version of Kunena
-	 * @deprecated  Kunena 6.0 No longer used
-	 * @since   Kunena 4.0.0
-	 */
-	public $legacyUrls = 0;
-
-	/**
 	 * @var     boolean  Attachment protection
 	 * @since   Kunena 4.0.0
 	 */
@@ -1736,18 +1729,9 @@ class ConfigModel extends AdminModel
 		$lists ['accessComponent'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_accessComponent', 'class="inputbox form-control"size="1"', 'value', 'text', $config->accessComponent);
 		$lists ['componentUrl']    = preg_replace('|/+|', '/', Uri::root() . ($config->get('sef_rewrite') ? '' : 'index.php') . ($config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
 
-		// Added new options into Kunena 4.0.0
-		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-		$query->select('version')->from('#__kunena_version')->order('id');
-		$query->setLimit(1);
-		$db->setQuery($query);
-		$lists['legacyUrls_version'] = $db->loadResult();
-
 		$options                       = [];
 		$options[]                     = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));
 		$options[]                     = HTMLHelper::_('select.option', '1', 'Kunena 1.x');
-		$lists['legacyUrls']           = HTMLHelper::_('select.genericlist', $options, 'cfg_legacyUrls', 'class="inputbox form-control"size="1"', 'value', 'text', $config->legacyUrls);
 		$lists['attachmentProtection'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_attachmentProtection', 'class="inputbox form-control"size="1"', 'value', 'text', $config->attachmentProtection);
 
 		// Option to select if the stats link need to be showed for all users or only for registered users

@@ -280,14 +280,6 @@ $wa->useScript('multiselect');
                                                         <td><?php echo $this->lists ['accessComponent'] ?></td>
                                                         <td><?php echo Text::sprintf('COM_KUNENA_CFG_ACCESS_COMPONENT_DESC', $this->lists ['componentUrl'], Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND')) ?></td>
                                                     </tr>
-                                                    <tr <?php if ($this->config->legacyUrls != 1)
-														:
-														echo 'class="changed"';
-													endif; ?>>
-                                                        <td><?php echo Text::_('COM_KUNENA_CFG_LEGACY_URLS') ?></td>
-                                                        <td><?php echo $this->lists ['legacyUrls'] ?></td>
-                                                        <td><?php echo Text::sprintf('COM_KUNENA_CFG_LEGACY_URLS_DESC', $this->lists['legacyUrls_version']) ?></td>
-                                                    </tr>
                                                     <tr <?php if ($this->config->sefRedirect != 1)
 														:
 														echo 'class="changed"';

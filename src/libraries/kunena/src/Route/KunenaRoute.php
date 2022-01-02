@@ -277,55 +277,6 @@ abstract class KunenaRoute
 			return false;
 		}
 
-		// Support legacy URIs
-		$legacyUrls = self::$config->get('legacyUrls', 1);
-
-		if ($legacyUrls && $uri->getVar('func'))
-		{
-			$result = KunenaLegacy::convert($uri);
-			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-			if (!$result)
-			{
-				return false;
-			}
-
-			return $uri;
-		}
-
-		// Check URI
-		switch ($uri->getVar('view', 'home'))
-		{
-			case 'announcement':
-				if ($legacyUrls)
-				{
-					KunenaLegacy::convert($uri);
-				}
-				break;
-
-			case 'attachment':
-			case 'category':
-			case 'common':
-			case 'credits':
-			case 'home':
-			case 'misc':
-			case 'search':
-			case 'statistics':
-			case 'topic':
-			case 'topics':
-			case 'user':
-			case 'users':
-				break;
-
-			default:
-				if (!$legacyUrls || !KunenaLegacy::convert($uri))
-				{
-					KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
-					return false;
-				}
-		}
-
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
 		return $uri;

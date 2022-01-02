@@ -196,7 +196,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property boolean $accessComponent
  * @property boolean $statsLinkAllowed
  * @property boolean $superAdminUserlist
- * @property boolean $legacyUrls
  * @property boolean $attachmentProtection
  * @property boolean $categoryIcons
  * @property boolean $avatarCrop
@@ -1258,13 +1257,6 @@ class KunenaConfig extends CMSObject
 	 * @since  Kunena 3.0.6
 	 */
 	public $superAdminUserlist = 0;
-
-	/**
-	 * @var     boolean  Legacy URLs, this setting is deprecated and it will be removed in a future version of Kunena
-	 * @deprecated  Kunena 6.0 No longer used
-	 * @since   Kunena 4.0.0
-	 */
-	public $legacyUrls = 0;
 
 	/**
 	 * @var     boolean  Attachment protection

@@ -16,9 +16,9 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>
 <ul class="nav float-end">
@@ -30,7 +30,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
         </a>
 
         <div class="dropdown-menu dropdown-menu-right" id="userdropdown">
-            <form action="<?php echo Route::_('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
+            <form action="<?php echo KunenaRoute::current('index.php?option=com_kunena'); ?>" method="post" class="form-inline">
                 <input type="hidden" name="view" value="user"/>
                 <input type="hidden" name="task" value="login"/>
 				<?php echo HTMLHelper::_('form.token'); ?>

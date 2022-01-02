@@ -107,6 +107,20 @@ class Router extends RouterView
 	}
 
 	/**
+	 * Generic method to preprocess a URL, need to owerwrite to avoir Joomla! mess the itemid
+	 *
+	 * @param   array  $query  An associative array of URL arguments
+	 *
+	 * @return  array  The URL arguments to use to assemble the subsequent URL.
+	 *
+	 * @since   3.5
+	 */
+	public function preprocess($query)
+	{
+		return $query;
+	}
+
+	/**
 	 * Build SEF URL
 	 *
 	 * All SEF URLs are formatted like this:

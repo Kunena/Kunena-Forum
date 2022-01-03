@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Exception\KunenaException;
-use Kunena\Forum\Libraries\Route\KunenaLegacy;
 use StdClass;
 
 KunenaMenuFix::initialize();
@@ -209,11 +208,6 @@ abstract class KunenaMenuFix
 					self::$filtered[$item->id]                                           = $itemid;
 					self::$same[$item->route][$item->id]                                 = $item;
 					self::$structure[$language][$home ? $home->id : 0][$view][$item->id] = $itemid;
-
-					if (KunenaLegacy::isLegacy($view))
-					{
-						self::$legacy[$item->id] = $item->id;
-					}
 				}
 			}
 		}
@@ -282,7 +276,6 @@ abstract class KunenaMenuFix
 		foreach (self::$legacy as $itemid)
 		{
 			$item = self::$items[$itemid];
-			KunenaLegacy::convertMenuItem($item);
 			$table = Table::getInstance('menu');
 			$table->load($item->id);
 			$data = [

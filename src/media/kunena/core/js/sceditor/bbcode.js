@@ -2375,6 +2375,11 @@
 					var name = attribute[0];
 					var value = attribute[1];
 
+					// code tags should skip most styles
+					if (name === 'style' && element.nodeName === 'CODE') {
+						return false;
+					}
+
 					if (name === 'style' && value) {
 						return value[isStrict ? 'every' : 'some'](isStyleMatch);
 					} else {
@@ -2435,7 +2440,7 @@
 				var ret = '';
 
 				dom.traverse(node, function (node) {
-					var	curTag       = '',
+					var	content      = '',
 						nodeType     = node.nodeType,
 						tag          = node.nodeName.toLowerCase(),
 						vChild       = validChildren[tag],
@@ -2472,7 +2477,7 @@
 
 						// don't convert iframe contents
 						if (tag !== 'iframe') {
-							curTag = toBBCode(node, vChild);
+							content = toBBCode(node, vChild);
 						}
 
 						// TODO: isValidChild is no longer needed. Should use
@@ -2482,13 +2487,13 @@
 							// code tags should skip most styles
 							if (tag !== 'code') {
 								// First parse inline codes
-								curTag = handleTags(node, curTag, false);
+								content = handleTags(node, content, false);
 							}
 
-							curTag = handleTags(node, curTag, true);
-							ret += handleBlockNewlines(node, curTag);
+							content = handleTags(node, content, true);
+							ret += handleBlockNewlines(node, content);
 						} else {
-							ret += curTag;
+							ret += content;
 						}
 					} else {
 						ret += node.nodeValue;

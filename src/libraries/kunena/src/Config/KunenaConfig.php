@@ -204,6 +204,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property boolean $teaser
  * @property boolean $ebayLanguage
  * @property string  $ebayApiKey
+ * @property string  $ebayCertId
  * @property string  $twitterConsumerKey
  * @property string  $twitterConsumerSecret
  * @property boolean $allowChangeSubject
@@ -1305,6 +1306,12 @@ class KunenaConfig extends CMSObject
 	 * @since  Kunena 3.0.7
 	 */
 	public $ebayApiKey = '';
+
+	/**
+	 * @var    string  Define ebay cert Id key to be allowed to display ebay widget; select, boolean
+	 * @since  5.2.0
+	 */
+	public $ebayCertId = '';
 
 	/**
 	 * @var     string  Define twitter API consumer key

@@ -1211,24 +1211,51 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (is_numeric($ItemID) && $config->ebayApiKey && ini_get('allow_url_fopen'))
+		$options = new Registry;
+
+		$transport = new StreamTransport($options);
+
+		// Create a 'stream' transport.
+		$http = new Http($options, $transport);
+
+		$data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
+
+		$headersOauth = ['Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => 'Basic '. base64_encode($config->ebay_api_key . ':' . $config->ebayCertId)];
+
+		$responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
+
+		if ($responseOauth->code == '200')
 		{
-			$options = new Registry;
+			$resp = json_decode($responseOauth->body);
 
-			$transport = new StreamTransport($options);
+			$token = $resp->access_token;
 
-			// Create a 'stream' transport.
-			$http = new Http($options, $transport);
+			$headers = ['X-EBAY-API-IAF-TOKEN' => $token, 'X-EBAY-API-CALL-NAME' => 'GetSingleItem', 'X-EBAY-API-VERSION' => 1157];
 
-			$response = $http->get('http://open.api.ebay.com/shopping?callname=GetSingleItem&appid=' . $config->ebayApiKey . '&siteid=' . $config->ebayLanguage . '&responseencoding=JSON&ItemID=' . $ItemID . '&version=889&trackingid=' . $config->ebayAffiliateId . '&trackingpartnercode=9', null, '10');
+			$response = $http->get('https://open.api.ebay.com/shopping?callname=GetSingleItem&siteid=0&responseencoding=JSON&ItemID=' . $ItemID . '&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9', $headers, '10');
 
 			if ($response->code == '200')
 			{
-				return json_decode($response->body);
+				$responseItem = json_decode($response->body);
+
+				if ($responseItem->Ack == 'Success')
+				{
+					return $responseItem->Item;
+				}
+				else
+				{
+					$errors = $responseItem->Errors;
+
+					return $errors[0]->LongMessage;
+				}
 			}
 		}
+		else
+		{
+			$respOauthError = json_decode($responseOauth->body);
 
-		return '';
+			return $respOauthError->error_description;
+		}
 	}
 
 	/**
@@ -1923,7 +1950,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (empty($config->ebayApiKey))
+		if (empty($config->ebayApiKey) || empty($config->ebayCertId))
 		{
 			echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
 
@@ -1943,17 +1970,22 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			$ebay = self::getEbayItemFromCache($ItemID);
 
-			if (\is_object($ebay) && $ebay->Ack == 'Success')
+			if (\is_object($ebay))
 			{
 				return (string) $layout
 					->set('content', $ItemID)
 					// ->set('params', $params)
-					->set('naturalurl', $ebay->Item->ViewItemURLForNaturalSearch)
-					->set('pictureurl', $ebay->Item->PictureURL[0])
-					->set('status', $ebay->Item->ListingStatus)
-					->set('ack', $ebay->Ack)
-					->set('title', $ebay->Item->Title)
+					->set('naturalurl', $ebay->ViewItemURLForNaturalSearch)
+					->set('pictureurl', $ebay->PictureURL[0])
+					->set('status', $ebay->ListingStatus)
+					->set('title', $ebay->Title)
 					->setLayout(is_numeric($ItemID) ? 'default' : 'search');
+			}
+			else
+			{
+				echo '<b>' . $ebay . '</b>';
+
+				return false;
 			}
 		}
 	}
@@ -2143,13 +2175,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			return true;
 		}
 
-		$default = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
+		$default  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 
 		$matches = [];
 		preg_match('/userid=(\d{1,})/', $default, $matches);
 
 		$userid = 0;
-		foreach ($matches as $match)
+		foreach($matches as $match)
 		{
 			if (is_numeric($match))
 			{
@@ -2166,7 +2198,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		preg_match('/post=(\d{1,})/', $default, $matches_post);
 
 		$postid = 0;
-		foreach ($matches_post as $match)
+		foreach($matches_post as $match)
 		{
 			if (is_numeric($match))
 			{
@@ -2181,9 +2213,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		}
 
 		// Support bbcode quote tag done in K5.1 and first versions of K5.2
-		if ($userid == 0 && $postid == 0)
+		if ($userid==0 && $postid==0)
 		{
-			$user     = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
+			$user  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 			$username = '';
 
 			if ($user)

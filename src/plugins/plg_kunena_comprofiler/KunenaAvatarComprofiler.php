@@ -88,16 +88,16 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 			$cbUser = CBuser::getInstance($user->userid);
 		}
 
-		/*
-		if ($cbUser === null)
-		{*/
-		if ($sizex <= 144)
+		if ($cbUser !== null)
 		{
-			$url = $cbUser->getField('avatar', null, 'csv');
-		}
-		else
-		{
-			$url = $cbUser->getField('avatar', null, 'csv', 'none', 'list');
+			if ($sizex <= 144)
+			{
+				$url = $cbUser->getField('avatar', null, 'csv');
+			}
+			else
+			{
+				$url = $cbUser->getField('avatar', null, 'csv', 'none', 'list');
+			}
 		}
 
 		if ($url === null)
@@ -108,7 +108,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 			}
 
 			return selectTemplate() . 'images/avatar/nophoto_n.png';
-		}
+		}s
 
 		return $url;
 	}

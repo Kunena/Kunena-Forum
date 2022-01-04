@@ -160,7 +160,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
 		$this->canSubscribe = $this->canSubscribe();
 
-		$this->editor_type = $this->ktemplate->params->get('editor_type');
+		$this->editorType = $this->ktemplate->params->get('editorType');
 
 		$this->selectcatlist = false;
 

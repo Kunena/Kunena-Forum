@@ -127,7 +127,7 @@ class TemplateController extends FormController
 	{
 		$params = $this->app->input->get('jform', [], 'post', 'array');
 
-		if ($params['editor_type']=='ckeditor')
+		if ($params['editorType']=='ckeditor')
 		{
 			$editorButtons = $this->SaveCKeditorParamFile($params);
 		}

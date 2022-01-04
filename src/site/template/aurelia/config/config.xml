@@ -159,7 +159,7 @@
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_BBCODE">
-        <field name="editor_type" type="list" default="ckeditor" label="COM_KUNENA_TEMPLATE_EDITOR_TO_USE"
+        <field name="editorType" type="list" default="ckeditor" label="COM_KUNENA_TEMPLATE_EDITOR_TO_USE"
                description="COM_KUNENA_TEMPLATE_EDITOR_TO_USE_DESC">
             <option value="ckeditor">COM_KUNENA_TEMPLATE_EDITOR_TO_USE_CKEDITOR</option>
             <option value="sceditor">COM_KUNENA_TEMPLATE_EDITOR_TO_USE_SCEDITOR</option>

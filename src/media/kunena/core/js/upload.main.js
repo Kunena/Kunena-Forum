@@ -154,6 +154,10 @@ jQuery(function ($) {
         fileCount = 0;
     });
 
+    $('#insert-all').bind('keypress keydown keyup', function(e){
+		if(e.keyCode == 13) { e.preventDefault(); }
+	});
+
     $('#insert-all').on('click', function (e) {
         e.preventDefault();
 
@@ -190,8 +194,11 @@ jQuery(function ($) {
             });
         }
 
-        const ckeditor_existing_content = CKEDITOR.instances.message.getData();
-        CKEDITOR.instances.message.setData(ckeditor_existing_content + ' ' + content_to_inject);
+		// Prevent the press on enter key to press the button enter all when previously clicked
+		if ($('#message').length > 0)
+		{
+			CKEDITOR.instances.message.insertText(content_to_inject);
+		}
 
         $('#files .btn.btn-primary').each(function () {
             $('#files .btn.btn-primary').addClass('btn-success');

@@ -108,7 +108,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 			}
 
 			return selectTemplate() . 'images/avatar/nophoto_n.png';
-		}s
+		}
 
 		return $url;
 	}

@@ -216,11 +216,23 @@ class KunenaRate extends CMSObject
 
 		$time  = Factory::getDate();
 		$query = $this->_db->getQuery(true);
+		$values = [
+			$this->_db->quote($this->topic_id),
+			$this->_db->quote($user->userid),
+			$this->_db->quote($this->stars),
+			$this->_db->quote($time->toSQL()),
+		];
+
 		$query->insert($this->_db->quoteName('#__kunena_rate'))
-			->set($this->_db->quoteName('topic_id') . ' = ' . $this->_db->quote($this->topic_id))
-			->set($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($user->userid))
-			->set($this->_db->quoteName('rate') . ' = ' . $this->_db->quote($this->stars))
-			->set($this->_db->quoteName('time') . ' = ' . $this->_db->quote($time->toSQL()));
+			->columns(
+				[
+					$this->_db->quoteName('topic_id'),
+					$this->_db->quoteName('userid'),
+					$this->_db->quoteName('rate'),
+					$this->_db->quoteName('time'),
+				]
+			)
+			->values(implode(', ', $values));
 		$this->_db->setQuery($query);
 
 		try

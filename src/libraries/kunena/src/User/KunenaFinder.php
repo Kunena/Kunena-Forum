@@ -96,7 +96,9 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	{
 		if ($this->config->userlistCountUsers == '1')
 		{
-			$this->query->where('(a.block=0 OR a.activation="")');
+			$this->query
+				->where($this->db->quoteName('a.block') . ' = 0')
+				->orWhere($this->db->quoteName('a.activation') . ' = ""');
 		}
 		elseif ($this->config->userlistCountUsers == '2')
 		{

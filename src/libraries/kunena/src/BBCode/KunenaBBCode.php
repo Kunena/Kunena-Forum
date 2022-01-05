@@ -1220,7 +1220,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		$data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
 
-		$headersOauth = ['Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => 'Basic '. base64_encode($config->ebay_api_key . ':' . $config->ebayCertId)];
+		$headersOauth = ['Content-Type' => 'application/x-www-form-urlencoded',
+		                 'Authorization' => 'Basic ' . base64_encode($config->ebayApiKey . ':' . $config->ebayCertId), ];
 
 		$responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
 
@@ -1232,7 +1233,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 			$headers = ['X-EBAY-API-IAF-TOKEN' => $token, 'X-EBAY-API-CALL-NAME' => 'GetSingleItem', 'X-EBAY-API-VERSION' => 1157];
 
-			$response = $http->get('https://open.api.ebay.com/shopping?callname=GetSingleItem&siteid=0&responseencoding=JSON&ItemID=' . $ItemID . '&trackingid=' . $config->ebay_affiliate_id . '&trackingpartnercode=9', $headers, '10');
+			$response = $http->get('https://open.api.ebay.com/shopping?callname=GetSingleItem&siteid=0&responseencoding=JSON&ItemID='
+				. $ItemID . '&trackingid=' . $config->ebayAffiliateId . '&trackingpartnercode=9', $headers, '10');
 
 			if ($response->code == '200')
 			{
@@ -1256,6 +1258,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 			return $respOauthError->error_description;
 		}
+
+		return '';
 	}
 
 	/**
@@ -2178,7 +2182,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		$default  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 
 		$matches = [];
-		preg_match('/userid=(\d{1,})/', $default, $matches);
+		preg_match('/userid=(\d+)/', $default, $matches);
 
 		$userid = 0;
 		foreach($matches as $match)
@@ -2195,7 +2199,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		}
 
 		$matches_post = [];
-		preg_match('/post=(\d{1,})/', $default, $matches_post);
+		preg_match('/post=(\d+)/', $default, $matches_post);
 
 		$postid = 0;
 		foreach($matches_post as $match)

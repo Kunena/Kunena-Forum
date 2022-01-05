@@ -81,10 +81,10 @@ class TableKunenaCategories extends KunenaTable
 	public $accesstype = null;
 
 	/**
-	 * @var     null
+	 * @var     integer
 	 * @since   Kunena 6.0
 	 */
-	public $access = null;
+	public int $access;
 
 	/**
 	 * @var     null

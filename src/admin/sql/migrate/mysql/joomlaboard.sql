@@ -177,8 +177,7 @@ CREATE TABLE `#__kunena_announcement`
     `ordering`     tinyint(4) NOT NULL default '0',
     `showdate`     tinyint(1) NOT NULL default '1',
     PRIMARY KEY (`id`)
-)
-    DEFAULT ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `#__kunena_favorites`
 (
@@ -186,8 +185,7 @@ CREATE TABLE `#__kunena_favorites`
     `userid` int(11) NOT NULL default '0',
     KEY `thread` (`thread`),
     KEY `userid` (`userid`)
-)
-    DEFAULT ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `#__kunena_whoisonline`
 (
@@ -203,16 +201,14 @@ CREATE TABLE `#__kunena_whoisonline`
     `userip` varchar(20) NOT NULL default '',
     `user`   tinyint(2)  NOT NULL default '0',
     PRIMARY KEY (`id`)
-)
-    DEFAULT ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `#__kunena_groups`
 (
     `id`    int(4)       NOT NULL auto_increment,
     `title` varchar(255) NULL,
     PRIMARY KEY (id)
-)
-    DEFAULT ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `#__kunena_ranks`
 (
@@ -222,8 +218,7 @@ CREATE TABLE `#__kunena_ranks`
     `rankSpecial` tinyint(1) unsigned   NOT NULL default '0',
     `rankImage`   varchar(255)          NOT NULL default '',
     PRIMARY KEY (`rankId`)
-)
-    DEFAULT ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `#__kunena_groups`
 VALUES ('1', 'Registered User');

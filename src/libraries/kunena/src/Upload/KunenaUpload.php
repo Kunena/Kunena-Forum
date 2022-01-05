@@ -516,7 +516,7 @@ class KunenaUpload
 	 *
 	 * @param   int  $fileSize  The size of file in bytes
 	 *
-	 * @return  boolean
+	 * @return  integer
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
@@ -533,7 +533,7 @@ class KunenaUpload
 		return (int) max(
 			0,
 			min(
-				$this->toBytes(ini_get('upload_max_fileSize')),
+				$this->toBytes(ini_get('upload_max_filesize')),
 				$this->toBytes(ini_get('post_max_size')),
 				$this->toBytes(ini_get('memory_limit'))
 			)

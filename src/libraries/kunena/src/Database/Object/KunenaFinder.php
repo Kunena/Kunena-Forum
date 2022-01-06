@@ -282,7 +282,7 @@ abstract class KunenaFinder
 		}
 		else
 		{
-			$query->clear()->select('COUNT(*)');
+			$query->clear('select')->select('COUNT(*)');
 			$this->db->setQuery($query);
 		}
 

@@ -17,7 +17,6 @@ use Joomla\CMS\Categories\CategoryFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\RouterViewConfiguration;
-use Joomla\CMS\Component\Router\Rules\MenuRules;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Menu\AbstractMenu;
@@ -30,7 +29,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Site\Service\KunenaNomenuRules as NomenuRules;
 
 /**
  * Routing class of com_kunena
@@ -78,9 +76,7 @@ class Router extends RouterView
 
 		parent::__construct($app, $menu);
 
-		$this->attachRule(new MenuRules($this));
 		$this->attachRule(new StandardRules($this));
-		$this->attachRule(new NomenuRules($this));
 	}
 
 	/**
@@ -104,20 +100,6 @@ class Router extends RouterView
 		}
 
 		return $instance;
-	}
-
-	/**
-	 * Generic method to preprocess a URL, need to owerwrite to avoir Joomla! mess the itemid
-	 *
-	 * @param   array  $query  An associative array of URL arguments
-	 *
-	 * @return  array  The URL arguments to use to assemble the subsequent URL.
-	 *
-	 * @since   3.5
-	 */
-	public function preprocess($query)
-	{
-		return $query;
 	}
 
 	/**

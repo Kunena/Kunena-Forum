@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
- * Class ComponentAnnouncementControllerListDisplay
+ * Class AnnouncementListingDisplay
  *
  * @since   Kunena 4.0
  */
@@ -69,7 +69,7 @@ class AnnouncementListingDisplay extends KunenaControllerDisplay
 		{
 			$itemid     = KunenaRoute::fixMissingItemID();
 			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=list&Itemid={$itemid}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=listing&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
 

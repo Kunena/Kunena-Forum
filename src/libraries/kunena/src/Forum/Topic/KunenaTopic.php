@@ -1024,6 +1024,12 @@ class KunenaTopic extends KunenaDatabaseObject
 					case 'last':
 						$mesid = $this->last_post_id;
 						break;
+					case 'unread':
+						// Special case, improves caching
+						$uri->setVar('layout', 'unread');
+
+						// $mesid = $this->lastread ? $this->lastread : $this->last_post_id;
+						break;
 				}
 			}
 

@@ -6,5 +6,5 @@ Available layouts for the announcements are:
 
 * Announcement/Edit - Edit announcement (available only for global moderators and administrators).
 * Announcement/Item - Display announcement.
-* Announcement/List - Display list of announcements.
-* Announcement/List/Row - Display one row or item in the list of announcements.
+* Announcement/Listing - Display list of announcements.
+* Announcement/Listing/Row - Display one row or item in the list of announcements.

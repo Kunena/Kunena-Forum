@@ -65,7 +65,7 @@ class AnnouncementItem extends KunenaLayout
 
 		if ($this->buttons)
 		{
-			$this->buttons['cpanel'] = $this->getButton(KunenaAnnouncementHelper::getUri('list'), 'list', 'announcement', 'communication');
+			$this->buttons['cpanel'] = $this->getButton(KunenaAnnouncementHelper::getUri('listing'), 'list', 'announcement', 'communication');
 		}
 
 		return $this->buttons;

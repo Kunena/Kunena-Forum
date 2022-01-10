@@ -10,11 +10,12 @@
  * @link            https://www.kunena.org
  **/
 defined('_JEXEC') or die();
+
 use Joomla\CMS\Language\Text;
 
 $this->addScript('ckeditor.js');
 $this->addScriptOptions('com_kunena.ckeditor_config', $this->template->params->get('ckeditorcustomprefixconfigfile') . 'ckeditor_config.js');
-$this->addScriptOptions('com_kunena.ckeditor_buttons_configuration', $this->template->params->get('editorButtons'));
+$this->addScriptOptions('com_kunena.ckeditor_buttons_configuration', $this->template->params->get('ckeditorParams'));
 $this->addScriptOptions('com_kunena.ckeditor_subfolder', Joomla\CMS\Uri\Uri::root(true));
 $this->addScriptOptions('com_kunena.ckeditor_skiname', $this->template->params->get('nameskinckeditor'));
 
@@ -42,19 +43,17 @@ $this->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaHtmlP
 	}
 </script>
 
-<textarea class="span12" name="message" id="message" rows="12" tabindex="7" required="required"
-          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
-	{
-		echo $this->message->getCategory()->topictemplate;
-	}
-	else
-	{
-		echo $this->escape($this->message->message);
-	} ?>
+<textarea class="span12" name="message" id="message" rows="12" tabindex="7" required="required" placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
+																																								{
+																																									echo $this->message->getCategory()->topictemplate;
+																																								}
+																																								else
+																																								{
+																																									echo $this->escape($this->message->message);
+																																								} ?>
 </textarea>
 
-<input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
-				       value="<?php echo $this->config->pollnboptions; ?>"/>
+<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $this->config->pollnboptions; ?>" />
 
 <!-- Hidden preview placeholder -->
 <div class="controls" id="kbbcode-preview" style="display: none;"></div>
@@ -62,9 +61,7 @@ $this->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaHtmlP
 <!-- end of Bootstrap modal to be used with bbcode editor -->
 <div class="control-group">
 	<div class="controls">
-		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
-		       value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
-		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
-		       value="<?php echo $this->config->disemoticons ? 0 : 1 ?>"/>
+		<input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $this->config->disemoticons ? 0 : 1 ?>" />
 	</div>
 </div>

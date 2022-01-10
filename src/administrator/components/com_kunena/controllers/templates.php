@@ -877,7 +877,7 @@ class KunenaAdminControllerTemplates extends KunenaController
 				$ckeditorSettings = '';
 			}
 
-			return $params['ckeditorParams'];
+			return $ckeditorSettings;
 		}
 
 		return $params['ckeditorParams'] = '';

@@ -213,16 +213,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "4.1.27",
+            "version": "4.1.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "2d9a11e6f487e3bcc17e22b7552fb6a10cec5c7c"
+                "reference": "e9bc22a3819f9d356068c0e372193ebcc9b06014"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/2d9a11e6f487e3bcc17e22b7552fb6a10cec5c7c",
-                "reference": "2d9a11e6f487e3bcc17e22b7552fb6a10cec5c7c",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/e9bc22a3819f9d356068c0e372193ebcc9b06014",
+                "reference": "e9bc22a3819f9d356068c0e372193ebcc9b06014",
                 "shasum": ""
             },
             "require": {
@@ -299,7 +299,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Codeception/Codeception/issues",
-                "source": "https://github.com/Codeception/Codeception/tree/4.1.27"
+                "source": "https://github.com/Codeception/Codeception/tree/4.1.28"
             },
             "funding": [
                 {
@@ -307,7 +307,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-12-22T06:40:46+00:00"
+            "time": "2022-01-05T16:41:25+00:00"
         },
         {
             "name": "codeception/lib-asserts",
@@ -470,16 +470,16 @@
         },
         {
             "name": "codeception/stub",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Stub.git",
-                "reference": "4c9cf3e19bd5f064e08e7f3ba6be651c218dc6ae"
+                "reference": "ce0a9e418c775ca8b737d50c2b4ac1132f3990d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Stub/zipball/4c9cf3e19bd5f064e08e7f3ba6be651c218dc6ae",
-                "reference": "4c9cf3e19bd5f064e08e7f3ba6be651c218dc6ae",
+                "url": "https://api.github.com/repos/Codeception/Stub/zipball/ce0a9e418c775ca8b737d50c2b4ac1132f3990d8",
+                "reference": "ce0a9e418c775ca8b737d50c2b4ac1132f3990d8",
                 "shasum": ""
             },
             "require": {
@@ -502,9 +502,9 @@
             "description": "Flexible Stub wrapper for PHPUnit's Mock Builder",
             "support": {
                 "issues": "https://github.com/Codeception/Stub/issues",
-                "source": "https://github.com/Codeception/Stub/tree/4.0.0"
+                "source": "https://github.com/Codeception/Stub/tree/4.0.1"
             },
-            "time": "2021-12-07T14:39:17+00:00"
+            "time": "2022-01-08T09:35:36+00:00"
         },
         {
             "name": "composer/pcre",
@@ -8355,5 +8355,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

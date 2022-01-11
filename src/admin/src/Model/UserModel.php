@@ -49,11 +49,10 @@ class UserModel extends KunenaModel
 	}
 
 	/**
-	 * @return  array|KunenaTopic[]|boolean
+	 * @return array
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function getSubscriptions(): array
 	{
@@ -106,9 +105,9 @@ class UserModel extends KunenaModel
 	}
 
 	/**
-	 * @return  array|boolean
+	 * @return array
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public function getIPlist(): array
@@ -215,9 +214,9 @@ class UserModel extends KunenaModel
 	}
 
 	/**
-	 * @return  array|mixed|void
+	 * @return string
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public function getListUserRanks(): string

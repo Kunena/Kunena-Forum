@@ -31,7 +31,7 @@ class KunenaSvgIcons
 	 * @param   string  $group    Load the svg location
 	 * @param   string  $iconset  Load iconset when topicIcons
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 */

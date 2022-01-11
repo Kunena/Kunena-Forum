@@ -293,7 +293,7 @@ abstract class KunenaDiagnostics
 	/**
 	 * @param   string  $function  function
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 */

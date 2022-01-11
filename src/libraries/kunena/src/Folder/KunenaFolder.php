@@ -32,6 +32,7 @@ class KunenaFolder
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public static function createIndex(string $folder): void
 	{

@@ -581,10 +581,10 @@ abstract class KunenaAttachmentHelper
 	}
 
 	/**
-	 * @return  boolean|void
+	 * @return bool
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public static function cleanup(): bool
 	{
@@ -745,9 +745,9 @@ abstract class KunenaAttachmentHelper
 	/**
 	 * Load the total count of attachments
 	 *
-	 * @return  boolean
+	 * @return bool|null
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 * @since   Kunena 5.1
 	 */
 	public static function getTotalAttachments(): ?bool

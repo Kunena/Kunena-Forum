@@ -55,11 +55,10 @@ class InstallController extends FormController
 	/**
 	 * Uninstall Kunena
 	 *
-	 * @return  boolean|void
+	 * @return bool
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 6.0
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaInstallerException
 	 */
 	public function uninstall(): bool
 	{

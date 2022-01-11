@@ -278,10 +278,10 @@ class KunenaMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  KunenaTopic
+	 * @return \Kunena\Forum\Libraries\Forum\Topic\KunenaTopic|null
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function getTopic(): ?KunenaTopic
 	{
@@ -766,10 +766,9 @@ class KunenaMessage extends KunenaDatabaseObject
 	/**
 	 * Method to save the \Kunena\Forum\Libraries\Forum\Message\Message object to the database.
 	 *
-	 * @return  boolean|KunenaExceptionAuthorise
+	 * @return bool
 	 *
-	 * @throws  null
-	 * @throws  Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public function save(): bool

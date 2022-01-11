@@ -458,7 +458,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 	 *
 	 * @param   string  $url  url
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -3089,10 +3089,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 *
 	 * @param   int  $tweetid  The tweet id to render in layout
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function renderTweet(int $tweetid): string
 	{

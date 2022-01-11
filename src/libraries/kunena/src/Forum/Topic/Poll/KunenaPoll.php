@@ -190,11 +190,10 @@ class KunenaPoll extends CMSObject
 	}
 
 	/**
-	 * @return  integer
+	 * @return int|null
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
+	 * @throws \Exception
 	 */
 	public function getTotal(): ?int
 	{

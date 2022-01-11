@@ -65,11 +65,10 @@ class LogsController extends FormController
 	/**
 	 * Clean
 	 *
-	 * @return  boolean|void
+	 * @return bool
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 5.0
+	 * @throws \Exception
 	 */
 	public function clean(): bool
 	{

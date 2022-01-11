@@ -221,11 +221,10 @@ class KunenaMessageFinder extends KunenaFinder
 	 *
 	 * @param   string  $access  Kunena action access control check.
 	 *
-	 * @return  array|KunenaMessage[]
+	 * @return array
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function find($access = 'read'): array
 	{

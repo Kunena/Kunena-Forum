@@ -111,7 +111,7 @@ class KunenaBBCodeEditor
 	 * @param   null   $pos       pos
 	 * @param   mixed  $where     where
 	 *
-	 * @return  boolean|void
+	 * @return bool
 	 *
 	 * @since   Kunena 6.0
 	 */

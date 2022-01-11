@@ -611,7 +611,7 @@ abstract class KunenaTableObject
 	/**
 	 * For internal use only.
 	 *
-	 * @return  array
+	 * @return array|null
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -689,7 +689,7 @@ abstract class KunenaTableObject
 	}
 
 	/**
-	 * @return  mixed|string
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 */

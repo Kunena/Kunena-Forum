@@ -1180,8 +1180,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	 *
 	 * @return mixed
 	 *
-	 * @throws KunenaSchemaException
 	 * @since   Kunena 6.0
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+	 * @throws \DOMException
 	 */
 	public function updateSchemaTable(string $table)
 	{
@@ -1230,8 +1231,9 @@ class KunenaModelSchema extends BaseDatabaseModel
 	/**
 	 * @return  array
 	 *
-	 * @throws  KunenaSchemaException
 	 * @since   Kunena
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
+	 * @throws \DOMException
 	 */
 	public function updateSchema(): array
 	{

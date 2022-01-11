@@ -64,11 +64,10 @@ class UserController extends KunenaController
 	 * @param   bool  $cachable   catchable
 	 * @param   bool  $urlparams  urlparams
 	 *
-	 * @return  BaseController|void
+	 * @return \Joomla\CMS\MVC\Controller\BaseController
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function display($cachable = false, $urlparams = false): BaseController
 	{

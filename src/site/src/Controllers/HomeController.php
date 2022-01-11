@@ -44,12 +44,11 @@ class HomeController extends KunenaController
 	 * @param   bool  $cachable   catchable
 	 * @param   bool  $urlparams  urlparams
 	 *
-	 * @return  KunenaController|void
+	 * @return \Kunena\Forum\Libraries\Controller\KunenaController
 	 *
 	 * @since   Kunena 1.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws \Kunena\Forum\Libraries\Exception\KunenaException
 	 */
 	public function display($cachable = false, $urlparams = false): KunenaController
 	{

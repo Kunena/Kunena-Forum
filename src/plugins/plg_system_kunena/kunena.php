@@ -150,9 +150,9 @@ EOF;
 	 * @param   string  $manifest  manifest
 	 * @param   int     $eid       id
 	 *
-	 * @return  boolean|void
-	 * @throws Exception
+	 * @return bool
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function onExtensionBeforeInstall(string $method, string $type, $manifest, int $eid): bool
 	{

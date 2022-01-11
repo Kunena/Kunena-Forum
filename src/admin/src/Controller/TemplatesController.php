@@ -63,11 +63,10 @@ class TemplatesController extends FormController
 	/**
 	 * Install the new template
 	 *
-	 * @return  boolean|void
+	 * @return bool
 	 *
-	 * @throws  Exception
-	 * @throws  null
 	 * @since   Kunena 2.0
+	 * @throws \Exception
 	 */
 	public function install(): bool
 	{

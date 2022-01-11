@@ -160,7 +160,7 @@ class KunenaLoginJoomla
 	/**
 	 * Return the parameters of the plugin
 	 *
-	 * @return  object
+	 * @return object|null
 	 *
 	 * @since   Kunena 5.1
 	 */

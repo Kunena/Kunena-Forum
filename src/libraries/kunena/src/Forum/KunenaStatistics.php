@@ -207,11 +207,10 @@ class KunenaStatistics
 	}
 
 	/**
-	 * @return  KunenaStatistics
+	 * @return \Kunena\Forum\Libraries\Forum\KunenaStatistics|null
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getInstance(): ?KunenaStatistics
 	{
@@ -224,11 +223,11 @@ class KunenaStatistics
 	}
 
 	/**
-	 * @return  integer
+	 * @return int|null
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 */
 	public static function getTotalEmoticons(): ?int
 	{
@@ -457,14 +456,13 @@ class KunenaStatistics
 	}
 
 	/**
-	 * @param   int  $limit  limit
+* @param   int  $limit  limit
 	 *
-	 * @return  array|KunenaTopic[]
+	 * @return array
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 */
 	public function loadTopTopics($limit = 0): array
 	{

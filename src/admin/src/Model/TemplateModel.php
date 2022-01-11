@@ -29,17 +29,17 @@ use stdClass;
 class TemplateModel extends AdminModel
 {
 	/**
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 *
 	 * @param   bool   $loadData  loadData
 	 *
 	 * @param   array  $data      data
 	 *
-	 * @return  object|mixed
+	 * @return object
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
-	 *
+	 * @throws \Exception
 	 */
 	public function getForm($data = [], $loadData = true): object
 	{

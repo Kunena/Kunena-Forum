@@ -70,7 +70,7 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return  array|boolean
+	 * @return array
 	 *
 	 * @since   Kunena 5.0
 	 */
@@ -126,16 +126,15 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 * @param   KunenaUser  $user       user
-	 * @param   string      $task       task
-	 * @param   bool        $xhtml      xhtml
-	 * @param   string      $avatarTab  avatartab
+	 * @param   int     $userid
+	 * @param   string  $task       task
+	 * @param   bool    $xhtml      xhtml
+	 * @param   string  $avatarTab  avatartab
 	 *
 	 * @return  boolean
 	 *
-	 * @throws  Exception
-	 *
 	 * @since   Kunena 5.0
+	 * @throws \Exception
 	 */
 	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
 	{

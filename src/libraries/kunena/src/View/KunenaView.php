@@ -662,14 +662,14 @@ class KunenaView extends HtmlView
 	/**
 	 * Load a template file -- first look in the templates folder for an override
 	 *
-	 * @param   string  $tpl         The name of the template source file ...
-	 *                               automatically searches the template paths and compiles as needed.
-	 * @param   array   $hmvcParams  Extra parameters for HMVC.
+	 * @param   string|null  $tpl         The name of the template source file ...
+	 *                                    automatically searches the template paths and compiles as needed.
+	 * @param   array|null   $hmvcParams  Extra parameters for HMVC.
 	 *
-	 * @return  string|void The output of the the template script.
+	 * @return string The output of the the template script.
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function loadTemplateFile(string $tpl = null, array $hmvcParams = null): string
 	{

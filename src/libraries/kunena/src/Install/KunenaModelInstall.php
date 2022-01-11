@@ -624,10 +624,10 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @param   string  $path  path
 	 * @param   string  $name  name
 	 *
-	 * @return  boolean|null|void
+	 * @return bool|null
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function installModule(string $path, string $name): ?bool
 	{
@@ -689,9 +689,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @param   null    $dest      dest
 	 * @param   bool    $silent    silent
 	 *
-	 * @return  boolean|null|void
+	 * @return bool|null
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public function extract(string $path, string $filename, $dest = null, bool $silent = false): ?bool
@@ -1158,9 +1158,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @param   array    $versionlist  versionlist
 	 * @param   boolean  $state        state
 	 *
-	 * @return  mixed|null|stdClass
+	 * @return \stdClass|null
 	 *
-	 * @throws KunenaInstallerException
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaInstallerException
 	 * @since   Kunena 6.0
 	 */
 	public function getInstalledVersion(string $prefix, array $versionlist, $state = false): ?stdClass
@@ -1522,9 +1522,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 	 * @param   string  $oldtable   old table
 	 * @param   string  $newtable   newtable
 	 *
-	 * @return  array|void
+	 * @return array
 	 *
-	 * @throws KunenaInstallerException
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaInstallerException
 	 * @since   Kunena 6.0
 	 */
 	protected function migrateTable(string $oldprefix, string $oldtable, string $newtable): array
@@ -2333,7 +2333,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 	/**
 	 * @param   object  $action  action
 	 *
-	 * @return  array|mixed|null
+	 * @return array|null
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -2616,9 +2616,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 	// TODO: move to migration
 
 	/**
-	 * @return  mixed|stdClass
+	 * @return \stdClass
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	protected function getAvatarStatus(): stdClass
@@ -2883,9 +2883,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @return  mixed|stdClass
+	 * @return \stdClass
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	protected function getAttachmentStatus(): stdClass
@@ -3308,9 +3308,9 @@ class KunenaModelInstall extends BaseDatabaseModel
 	}
 
 	/**
-	 * @return  array|null|void
+	 * @return array|null
 	 *
-	 * @throws  KunenaInstallerException
+	 * @throws \Kunena\Forum\Libraries\Install\KunenaInstallerException
 	 * @since   Kunena 6.0
 	 */
 	public function createVersionTable(): ?array

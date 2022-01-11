@@ -292,11 +292,11 @@ abstract class KunenaCategoryHelper
 	 * @param   bool        $reverse    reverse
 	 * @param   string      $authorise  authorise
 	 *
-	 * @return  array|KunenaCategory[]
+	 * @return array
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 */
 	public static function getCategories($ids = false, $reverse = false, $authorise = 'read'): array
 	{
@@ -721,11 +721,11 @@ abstract class KunenaCategoryHelper
 	 * @param   int    $levels   levels
 	 * @param   array  $params   params
 	 *
-	 * @return  array|KunenaCategory[]
+	 * @return array
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  null
 	 */
 	public static function getChildren($parents = 0, $levels = 0, $params = []): array
 	{
@@ -766,11 +766,11 @@ abstract class KunenaCategoryHelper
 	 * @param   array  $params    params
 	 * @param   bool   $optimize  optimize
 	 *
-	 * @return  array|KunenaCategory[]
+	 * @return array
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws null
 	 */
 	protected static function _getChildren(array $parents, int $levels, array $params, bool $optimize): array
 	{
@@ -1048,11 +1048,11 @@ abstract class KunenaCategoryHelper
 	 * @param   mixed  $categoryId  category
 	 * @param   mixed  $alias       alias
 	 *
-	 * @return  boolean|void
+	 * @return bool
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getAlias($categoryId, $alias): bool
 	{

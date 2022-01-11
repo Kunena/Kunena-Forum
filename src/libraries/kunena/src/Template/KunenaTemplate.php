@@ -387,10 +387,10 @@ class KunenaTemplate
 	 * @param   string  $content  content
 	 * @param   string  $type     type
 	 *
-	 * @return  Document|void
+	 * @return \Joomla\CMS\Document\Document
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function addScriptDeclaration(string $content, $type = 'text/javascript'): Document
 	{
@@ -1042,9 +1042,9 @@ HTML;
 	 * @param   mixed   $options  Scrip options as array or string
 	 * @param   bool    $merge    Whether merge with existing (true) or replace (false)
 	 *
-	 * @return  Document|void
+	 * @return \Joomla\CMS\Document\Document
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since   Kunena 3.5
 	 */
 	public function addScriptOptions(string $key, $options, $merge = true): Document
@@ -1524,7 +1524,7 @@ HTML;
 	 * @param   int     $id     id
 	 * @param   string  $style  style
 	 *
-	 * @return  stdClass|void
+	 * @return \StdClass
 	 *
 	 * @since      Kunena 5.0.0-Beta4
 	 */
@@ -1793,9 +1793,8 @@ HTML;
 	/**
 	 * @param   mixed  $topic  topic
 	 *
-	 * @return  stdClass|void
+	 * @return \StdClass
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
 	public function getTopicLabel($topic): StdClass
@@ -1832,7 +1831,7 @@ HTML;
 	 * @param   int     $id     id
 	 * @param   string  $style  style
 	 *
-	 * @return  stdClass|void
+	 * @return \StdClass
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -1882,9 +1881,8 @@ HTML;
 	/**
 	 * @param   bool  $class  class
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
 	public function tooltips(bool $class = false): string
@@ -1905,11 +1903,11 @@ HTML;
 	/**
 	 * @param   bool  $topic_ids  topics id's
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function recaptcha(bool $topic_ids = false): string
 	{

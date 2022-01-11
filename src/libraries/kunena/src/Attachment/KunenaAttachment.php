@@ -642,10 +642,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  string
+	 * @return string|null
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 4.0
+	 * @throws \Exception
 	 */
 	public function getImageLink(): ?string
 	{
@@ -860,9 +860,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	 * @param   string    $key    key
 	 * @param   null|int  $catid  catid
 	 *
-	 * @return  boolean|void
+	 * @return bool
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 * @since   Kunena 4.0
 	 */
 	public function upload(string $key = 'kattachment', int $catid = null): bool
@@ -1062,9 +1062,9 @@ class KunenaAttachment extends KunenaDatabaseObject
 	/**
 	 * Remove the BBCode [attachment=attachmentID][/attachment] from text message
 	 *
-	 * @param   string  $editor_text  editor text
+	 * @param   string|null  $editor_text  editor text
 	 *
-	 * @return  boolean|void
+	 * @return bool
 	 *
 	 * @since   Kunena 6.0
 	 */

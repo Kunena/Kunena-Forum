@@ -826,11 +826,10 @@ class KunenaCategory extends KunenaDatabaseObject
 	 * @param   bool  $children  children
 	 * @param   bool  $xhtml     xhtml
 	 *
-	 * @return  boolean|string
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
-	 * @throws  null
-	 * @throws  Exception
+	 * @throws \Exception
 	 */
 	public function getMarkReadUrl($children = false, $xhtml = true): string
 	{
@@ -946,7 +945,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  array  Array of Kunena aliases.
+	 * @return array|null Array of Kunena aliases.
 	 *
 	 * @since   Kunena 6.0
 	 */

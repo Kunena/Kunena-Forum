@@ -279,12 +279,11 @@ abstract class KunenaTopicHelper
 	 * @param   int    $limit       limit
 	 * @param   array  $params      params
 	 *
-	 * @return  array|KunenaTopic[]
+	 * @return array
 	 *
 	 * @since   Kunena
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws \Exception
 	 */
 	public static function getLatestTopics($categories = false, $limitstart = 0, $limit = 0, $params = []): array
 	{

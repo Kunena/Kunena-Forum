@@ -111,11 +111,10 @@ class KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  string|boolean
-	 *
-	 * @throws  Exception
+	 * @return string
 	 *
 	 * @since   Kunena 5.0
+	 * @throws \Exception
 	 */
 	public function getStatisticsURL(string $action = '', bool $xhtml = true): string
 	{
@@ -134,9 +133,7 @@ class KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  string|void
-	 *
-	 * @throws  Exception
+	 * @return string
 	 *
 	 * @since   Kunena 5.0
 	 */
@@ -174,7 +171,7 @@ class KunenaProfile
 	 * @param   int   $userid  userid
 	 * @param   bool  $xhtml   xhtml
 	 *
-	 * @return  void
+	 * @return bool
 	 *
 	 * @since   Kunena 5.0
 	 */

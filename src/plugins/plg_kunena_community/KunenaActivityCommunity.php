@@ -103,10 +103,10 @@ class KunenaActivityCommunity extends KunenaActivity
 	/**
 	 * @param $message
 	 *
-	 * @return  mixed|string|void
+	 * @return string
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 */
 	private function buildContent($message): string
 	{

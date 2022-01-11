@@ -204,7 +204,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @param   integer  $id  id
 	 *
-	 * @return  mixed|string
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 */

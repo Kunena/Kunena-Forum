@@ -147,11 +147,11 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	/**
 	 * Get users.
 	 *
-	 * @return  array|KunenaUser[]
+	 * @return array
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 */
 	public function find(): array
 	{

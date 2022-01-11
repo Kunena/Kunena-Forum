@@ -108,7 +108,7 @@ abstract class KunenaControllerBase implements Serializable
 	/**
 	 * Get the options.
 	 *
-	 * @return  Registry  Object with the options.
+	 * @return \Joomla\Registry\Registry|null Object with the options.
 	 *
 	 * @since   Kunena 4.0
 	 */

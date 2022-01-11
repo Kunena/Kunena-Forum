@@ -261,10 +261,10 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  KunenaUser
+	 * @return \Kunena\Forum\Libraries\User\KunenaUser|null
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function getAuthor(): ?KunenaUser
 	{
@@ -277,7 +277,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  KunenaDate
+	 * @return \Kunena\Forum\Libraries\Date\KunenaDate|null
 	 *
 	 * @since   Kunena 6.0
 	 */

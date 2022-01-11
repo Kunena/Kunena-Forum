@@ -308,7 +308,7 @@ class KunenaPagination
 	 *
 	 * @param   integer  $index  The row index
 	 *
-	 * @return  integer  Rationalised offset for a row with a given index.
+	 * @return int|null Rationalised offset for a row with a given index.
 	 *
 	 * @since   1.5
 	 */
@@ -551,7 +551,7 @@ class KunenaPagination
 	/**
 	 * Create and return the pagination pages counter string, ie. Page 2 of 4.
 	 *
-	 * @return  string   Pagination pages counter string.
+	 * @return string|null Pagination pages counter string.
 	 *
 	 * @since   1.5
 	 */

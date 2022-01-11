@@ -99,11 +99,11 @@ class CategoryController extends FormController
 	/**
 	 * Internal method to save category
 	 *
-	 * @return KunenaCategory|void|boolean
+	 * @return false|KunenaCategory
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
+	 *@throws  Exception
+	 * @throws  null
 	 */
 	protected function internalSave()
 	{

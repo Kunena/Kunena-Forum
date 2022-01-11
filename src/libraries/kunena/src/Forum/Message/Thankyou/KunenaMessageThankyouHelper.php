@@ -50,11 +50,11 @@ abstract class KunenaMessageThankyouHelper
 	 * @param   int   $identifier  The message to load - Can be only an integer.
 	 * @param   bool  $reload      reload
 	 *
-	 * @return  KunenaMessageThankyou|void
+	 * @return \Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyou
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public static function get(int $identifier, $reload = false): KunenaMessageThankyou
 	{

@@ -329,7 +329,7 @@ class CategoriesModel extends KunenaModel
 	}
 
 	/**
-	 * @param   Table|bool  $table  table
+	 * @param   \Joomla\CMS\Table\Table  $table  table
 	 *
 	 * @return  array
 	 *

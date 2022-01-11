@@ -89,11 +89,10 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  boolean|string
+	 * @return string
 	 *
 	 * @since   Kunena 5.0
-	 *@throws  Exception
-	 *
+	 * @throws \Exception
 	 */
 	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{

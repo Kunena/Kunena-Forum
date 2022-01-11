@@ -200,7 +200,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 	/**
 	 * @param   int  $userid  userid
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 */

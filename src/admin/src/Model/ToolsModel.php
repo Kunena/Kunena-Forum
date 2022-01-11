@@ -685,10 +685,10 @@ class ToolsModel extends AdminModel
 	/**
 	 * Method to check the tables collation.
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 1.6
+	 * @throws \Exception
 	 */
 	protected function internalGetTablesCollation(): string
 	{
@@ -852,7 +852,7 @@ class ToolsModel extends AdminModel
 	 *
 	 * @param   string  $path  Path to extension directory
 	 *
-	 * @return  string  Version number
+	 * @return string|null Version number
 	 *
 	 * @since   Kunena 6.0
 	 */

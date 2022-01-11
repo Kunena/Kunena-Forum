@@ -734,11 +734,11 @@ abstract class KunenaMessageHelper
 	 *
 	 * @param   int  $userid  userid
 	 *
-	 * @return  boolean|mixed
+	 * @return bool
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 */
 	public static function getLastUserIP(int $userid): bool
 	{

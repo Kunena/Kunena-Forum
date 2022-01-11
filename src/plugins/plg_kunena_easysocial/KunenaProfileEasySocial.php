@@ -53,11 +53,10 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return string|void
+	 * @return string
 	 *
 	 * @since   Kunena 5.0
-	 *@throws Exception
-	 *
+	 * @throws \Exception
 	 */
 	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
@@ -120,7 +119,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return  array|void
+	 * @return array
 	 *
 	 * @since   Kunena 5.0
 	 */

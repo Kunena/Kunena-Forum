@@ -112,7 +112,7 @@ class KunenaProfiler extends Profiler
 	}
 
 	/**
-	 * @return  array|KunenaProfilerItem[]
+	 * @return array
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -216,7 +216,7 @@ class KunenaProfilerItem
 	}
 
 	/**
-	 * @return  array|KunenaProfilerItem[]
+	 * @return array
 	 *
 	 * @since   Kunena 6.0
 	 */

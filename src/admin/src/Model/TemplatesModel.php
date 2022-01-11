@@ -82,16 +82,17 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 *
 	 * @param   bool   $loadData  loadData
 	 *
 	 * @param   array  $data      data
 	 *
-	 * @return  boolean|mixed
+	 * @return bool
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+	 * @throws \Exception
 	 */
 	public function getForm($data = [], $loadData = true): bool
 	{
@@ -454,12 +455,12 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @return  array|mixed
+	 * @see     \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 * @return array
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+	 * @throws \Exception
 	 */
 	protected function loadFormData(): array
 	{

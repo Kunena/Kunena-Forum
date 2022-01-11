@@ -237,11 +237,10 @@ class KunenaTopicUser extends CMSObject
 	 * @param   KunenaMessage|null  $message    message
 	 * @param   int                 $postDelta  postdelta
 	 *
-	 * @return  boolean|void
+	 * @return bool
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
+	 * @throws \Exception
 	 */
 	public function update(KunenaMessage $message = null, int $postDelta = 0): bool
 	{

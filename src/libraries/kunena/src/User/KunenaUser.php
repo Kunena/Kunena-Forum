@@ -943,10 +943,10 @@ class KunenaUser extends CMSObject
 	}
 
 	/**
-	 * @return  array
+	 * @return array|null
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function getAllowedCategories(): ?array
 	{
@@ -2043,7 +2043,7 @@ class KunenaUser extends CMSObject
 	/**
 	 * @param   integer  $userid  userid
 	 *
-	 * @return  mixed|string
+	 * @return string
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -2072,9 +2072,9 @@ class KunenaUser extends CMSObject
 	 * @param   object   $rank   Rank
 	 * @param   integer  $catid  Catid
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public function rankCss(object $rank, int $catid): string
@@ -2163,9 +2163,9 @@ class KunenaUser extends CMSObject
 	/**
 	 * @param   string  $name  name
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public function profileIcon(string $name): string

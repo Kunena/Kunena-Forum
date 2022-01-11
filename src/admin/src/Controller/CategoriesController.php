@@ -772,11 +772,10 @@ class CategoriesController extends KunenaController
 	/**
 	 * Method to do batch process on selected categories, to move or copy them.
 	 *
-	 * @return  boolean|void
+	 * @return bool
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 5.1.0
+	 * @throws \Exception
 	 */
 	public function batchCategories(): bool
 	{

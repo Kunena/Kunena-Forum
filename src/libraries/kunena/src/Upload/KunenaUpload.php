@@ -417,7 +417,7 @@ class KunenaUpload
 	 *
 	 * @param   array  $file  Entry from $_FILES array.
 	 *
-	 * @return  RuntimeException
+	 * @return \RuntimeException|null
 	 *
 	 * @since   Kunena 6.0
 	 */

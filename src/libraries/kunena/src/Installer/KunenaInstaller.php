@@ -39,7 +39,7 @@ class KunenaInstaller
 	 *
 	 * @param   string  $version  version
 	 *
-	 * @return  boolean|void  True if version can be safely downgraded.
+	 * @return bool True if version can be safely downgraded.
 	 *
 	 * @since   Kunena 6.0
 	 */

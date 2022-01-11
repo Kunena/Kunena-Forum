@@ -153,11 +153,10 @@ class CpanelController extends FormController
 	 * @param   bool  $cachable   cachable
 	 * @param   bool  $urlparams  url params
 	 *
-	 * @return  BaseController|void
+	 * @return void
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
+	 * @throws \Exception
 	 */
 	public function display($cachable = false, $urlparams = false): void
 	{

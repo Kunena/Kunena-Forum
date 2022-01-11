@@ -99,11 +99,11 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	}
 
 	/**
-	 * @return  KunenaPrivateMessage|mixed
+	 * @return \Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
+	 * @throws \Exception
 	 */
 	public function firstOrNew(): KunenaPrivateMessage
 	{
@@ -116,11 +116,11 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 	/**
 	 * Get private messages.
 	 *
-	 * @return  array|KunenaPrivateMessage[]
+	 * @return array
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public function find(): array
 	{

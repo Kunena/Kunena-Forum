@@ -154,7 +154,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  KunenaTableMap
+	 * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -170,7 +170,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  KunenaTableMap
+	 * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -186,7 +186,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @return  KunenaTableMap
+	 * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
 	 *
 	 * @since   Kunena 6.0
 	 */

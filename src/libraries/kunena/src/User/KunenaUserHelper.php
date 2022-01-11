@@ -117,15 +117,15 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @param   mixed   $id    The user to load - Can be an integer or string - If string, it is converted to ID
+	 * @param   mixed   $id         The user to load - Can be an integer or string - If string, it is converted to ID
 	 *                              automatically.
-	 * @param   string  $name  Optionnal name of user if it doesn't exist
+	 * @param   string  $name       Optionnal name of user if it doesn't exist
 	 *
-	 * @return  KunenaUser
+	 * @return \Kunena\Forum\Libraries\User\KunenaUser|null
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public static function getAuthor($id, $name): ?KunenaUser
 	{
@@ -160,11 +160,11 @@ abstract class KunenaUserHelper
 	 *                              automatically.
 	 * @param   bool   $reload      Reload user from database.
 	 *
-	 * @return  KunenaUser
+	 * @return \Kunena\Forum\Libraries\User\KunenaUser|null
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function get($identifier = null, $reload = false): ?KunenaUser
 	{
@@ -394,11 +394,11 @@ abstract class KunenaUserHelper
 	/**
 	 * @param   int  $limit  limit
 	 *
-	 * @return  array
+	 * @return array|null
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getTopPosters($limit = 0): ?array
 	{
@@ -566,11 +566,11 @@ abstract class KunenaUserHelper
 	/**
 	 * Get the list of users online by giving list of userid
 	 *
-	 * @return  array
+	 * @return array|null
 	 *
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
 	 */
 	public static function getOnlineUsers(): ?array
 	{
@@ -664,7 +664,7 @@ abstract class KunenaUserHelper
 	}
 
 	/**
-	 * @return  KunenaUser
+	 * @return \Kunena\Forum\Libraries\User\KunenaUser|null
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -794,7 +794,7 @@ abstract class KunenaUserHelper
 	/**
 	 * Return is the user IP is ipv6 or not
 	 *
-	 * @param   int  $ip  ip
+	 * @param   string  $ip  ip
 	 *
 	 * @return  boolean
 	 *

@@ -222,9 +222,9 @@ class KunenaBan extends parentAlias
 	 *
 	 * @access  public
 	 *
-	 * @param   int  $identifier  The ban object to be loaded
+	 * @param   null  $identifier  The ban object to be loaded
 	 *
-	 * @return  KunenaBan  The ban object.
+	 * @return \Kunena\Forum\Libraries\User\KunenaBan|null The ban object.
 	 *
 	 * @since   Kunena 1.6
 	 */
@@ -338,10 +338,10 @@ class KunenaBan extends parentAlias
 	 *
 	 * @access  public
 	 *
-	 * @param   int   $identifier  The ban object to be loaded
+	 * @param   null  $identifier  The ban object to be loaded
 	 * @param   bool  $create      create
 	 *
-	 * @return  KunenaBan  The ban object.
+	 * @return \Kunena\Forum\Libraries\User\KunenaBan|null The ban object.
 	 *
 	 * @since   Kunena 1.6
 	 */
@@ -369,10 +369,10 @@ class KunenaBan extends parentAlias
 	 *
 	 * @access  public
 	 *
-	 * @param   int   $identifier  The ban object to be loaded
+	 * @param   null  $identifier  The ban object to be loaded
 	 * @param   bool  $create      create
 	 *
-	 * @return  KunenaBan The ban object.
+	 * @return \Kunena\Forum\Libraries\User\KunenaBan|null The ban object.
 	 *
 	 * @since   Kunena 1.6
 	 */

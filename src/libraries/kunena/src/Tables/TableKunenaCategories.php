@@ -461,7 +461,7 @@ class TableKunenaCategories extends KunenaTable
 	/**
 	 * @param   string  $where  where
 	 *
-	 * @return  boolean|mixed
+	 * @return bool
 	 *
 	 * @since   Kunena 6.0
 	 */

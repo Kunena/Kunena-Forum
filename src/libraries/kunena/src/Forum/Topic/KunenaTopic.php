@@ -945,16 +945,15 @@ class KunenaTopic extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   int|void  $limitstart  Null if all pages need to be active.
-	 * @param   int       $limit       limit
-	 * @param   int       $display     display
-	 * @param   string    $prefix      prefix
+	 * @param   int     $limitstart  Null if all pages need to be active.
+	 * @param   int     $limit       limit
+	 * @param   int     $display     display
+	 * @param   string  $prefix      prefix
 	 *
-	 * @return  KunenaPagination
+	 * @return \Kunena\Forum\Libraries\Pagination\KunenaPagination|null
 	 *
-	 * @throws  null
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function getPagination($limitstart = 0, $limit = 6, $display = 4, $prefix = ''): ?KunenaPagination
 	{
@@ -975,13 +974,12 @@ class KunenaTopic extends KunenaDatabaseObject
 	}
 
 	/**
-	 * @param   mixed   $category  category
-	 * @param   string  $action    action
+	 * @param   mixed  $category  category
+	 * @param   null   $action    action
 	 *
-	 * @return  Uri|void
+	 * @return \Joomla\CMS\Uri\Uri
 	 *
-	 * @throws  null
-	 * @throws  Exception
+	 * @throws \Exception
 	 * @since   Kunena 6.0
 	 */
 	public function getUri($category = null, $action = null): Uri

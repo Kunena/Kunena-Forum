@@ -343,12 +343,11 @@ class KunenaTopicFinder extends KunenaFinder
 	 *
 	 * @param   string  $access  Kunena action access control check.
 	 *
-	 * @return  array|KunenaTopic[]
+	 * @return array
 	 *
 	 * @since   Kunena 6.0
 	 *
-	 * @throws  Exception
-	 * @throws  null
+	 * @throws \Exception
 	 */
 	public function find($access = 'read'): array
 	{

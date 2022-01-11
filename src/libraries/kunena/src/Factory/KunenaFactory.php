@@ -100,10 +100,10 @@ abstract class KunenaFactory
 	 *
 	 * @param   array|bool  $update  An array containing session options
 	 *
-	 * @return  KunenaSession
+	 * @return \Kunena\Forum\Libraries\Session\KunenaSession|null
 	 *
-	 * @throws  Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public static function getSession($update = false): ?KunenaSession
 	{

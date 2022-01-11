@@ -197,13 +197,13 @@ class KunenaAvatar
 
 	/**
 	 * @param   KunenaUser  $user   user
-	 * @param   int|string  $sizex  sizex
+	 * @param   int         $sizex  sizex
 	 * @param   int         $sizey  sizey
 	 *
-	 * @return  string|void
+	 * @return string
 	 *
-	 * @throws Exception
 	 * @since   Kunena 6.0
+	 * @throws \Exception
 	 */
 	public function getURL(KunenaUser $user, $sizex = 90, int $sizey = 90): string
 	{

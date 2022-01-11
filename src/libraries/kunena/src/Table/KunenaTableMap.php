@@ -198,7 +198,7 @@ class KunenaTableMap
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getDBO
 	 *
-	 * @return  DatabaseDriver  The internal database driver object.
+	 * @return \Joomla\Database\DatabaseDriver|null The internal database driver object.
 	 *
 	 * @since   Kunena 6.0
 	 */

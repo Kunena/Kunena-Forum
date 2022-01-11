@@ -585,8 +585,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_attachStart" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_attachStart"
                                                                    value="<?php echo $this->escape($this->config->attachStart) ?>"/>
                                                         </td>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START_DESC') ?></td>
@@ -597,8 +597,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_attachEnd" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_attachEnd"
                                                                    value="<?php echo $this->escape($this->config->attachEnd) ?>"/>
                                                         </td>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END_DESC') ?></td>
@@ -695,8 +695,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_thankYouMax" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_thankYouMax"
                                                                    value="<?php echo $this->escape($this->config->thankYouMax) ?>"/>
                                                         </td>
                                                         <td><?php echo Text::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
@@ -1183,9 +1183,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control ksm-field"
                                                                    name="cfg_captchaPostLimit"
-                                                                   class="ksm-field"
                                                                    value="<?php echo $this->escape($this->config->captchaPostLimit) ?>"/>
                                                         </td>
                                                         <td><?php echo Text::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT_DESC') ?></td>
@@ -1203,9 +1202,8 @@ $wa->useScript('multiselect');
                                                         <td align="left" valign="top"
                                                             width="25%"><?php echo Text::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
                                                         <td align="left" valign="top" width="25%">
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control ksm-field-large"
                                                                    name="cfg_stopForumSpamKey"
-                                                                   class="ksm-field-large"
                                                                    value="<?php echo $this->escape($this->config->stopForumSpamKey); ?>"/>
                                                         </td>
                                                         <td align="left"
@@ -1290,8 +1288,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_AVSIZE') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_avatarSize" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_avatarSize"
                                                                    value="<?php echo $this->escape($this->config->avatarSize) ?>"/>
                                                             kB
                                                         </td>
@@ -1303,8 +1301,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_AVATAR_QUALITY') ?></td>
                                                         <td class="nowrap">
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_avatarQuality" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_avatarQuality"
                                                                    value="<?php echo $this->escape($this->config->avatarQuality) ?>"/>
                                                             %
                                                         </td>
@@ -1439,8 +1437,7 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_IMGSIZE') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control" name="cfg_imageSize"
-                                                                   class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field" name="cfg_imageSize"
                                                                    value="<?php echo $this->escape($this->config->imageSize) ?>"/>
                                                             kB
                                                         </td>
@@ -1461,8 +1458,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_IMGWIDTH') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_imageWidth" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_imageWidth"
                                                                    value="<?php echo $this->escape($this->config->imageWidth) ?>"/>
                                                             px
                                                         </td>
@@ -1474,8 +1471,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_IMGHEIGHT') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_imageHeight" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_imageHeight"
                                                                    value="<?php echo $this->escape($this->config->imageHeight) ?>"/>
                                                             px
                                                         </td>
@@ -1487,8 +1484,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_IMGTHUMBWIDTH') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_thumbWidth" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_thumbWidth"
                                                                    value="<?php echo $this->escape($this->config->thumbWidth) ?>"/>
                                                             px
                                                         </td>
@@ -1500,7 +1497,7 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_IMGTHUMBHEIGHT') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
                                                                    name="cfg_thumbHeight"
                                                                    value="<?php echo $this->escape($this->config->thumbHeight) ?>"/>
                                                             px
@@ -1513,8 +1510,8 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_IMGQUALITY') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_imageQuality" class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_imageQuality"
                                                                    value="<?php echo $this->escape($this->config->imageQuality) ?>"/>
                                                             %
                                                         </td>
@@ -1567,8 +1564,7 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_FILESIZE') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control" name="cfg_fileSize"
-                                                                   class="ksm-field"
+                                                            <input type="text" class="form-control ksm-field" name="cfg_fileSize"
                                                                    value="<?php echo $this->escape($this->config->fileSize) ?>"/> <?php echo Text::_('COM_KUNENA_A_FILESIZE_KB') ?>
                                                         </td>
                                                         <td>
@@ -1934,8 +1930,7 @@ $wa->useScript('multiselect');
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_RSS_FEEDBURNER_URL') ?></td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                   class="ksm-field-large"
+                                                            <input type="text" class="form-control ksm-field-large"
                                                                    name="cfg_rssFeedBurnerUrl"
                                                                    value="<?php echo $this->escape($this->config->rssFeedBurnerUrl) ?>"/>
                                                         </td>
@@ -2415,7 +2410,7 @@ $wa->useScript('multiselect');
                         </div>
                     </article>
                 </form>
-				<?php // Load the setting comfirmation box form. ?>
+				<?php // Load the setting confirmation box form. ?>
 				<?php echo $this->loadTemplate('setting'); ?>
                 <div class="clearfix"></div>
             </div>

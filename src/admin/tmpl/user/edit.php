@@ -39,7 +39,7 @@ jQuery(function($) {
 	});
 });
 '
-    );
+);
 ?>
 
 <div id="kunena" class="container-fluid">

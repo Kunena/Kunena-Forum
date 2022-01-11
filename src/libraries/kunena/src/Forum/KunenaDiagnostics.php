@@ -1608,10 +1608,10 @@ abstract class KunenaDiagnostics
 	//      $db    = Factory::getContainer()->get('DatabaseDriver');
 	//      $query = $db->getQuery(true);
 	//      $query->from("#__kunena_users");
-	// 
+	//
 	//      return $query;
 	//  }
-	// 
+	//
 	//  /**
 	//   * @param   QueryInterface  $query  query
 	//   *

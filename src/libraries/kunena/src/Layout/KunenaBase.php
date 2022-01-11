@@ -453,7 +453,7 @@ class KunenaBase extends KunenaLayoutBase
 	 * @param   string  $content  content
 	 * @param   string  $type     type
 	 *
-	 * @return  \Joomla\CMS\Document\Document|void
+	 * @return  \Joomla\CMS\Document\Document
 	 *
 	 * @since   Kunena 6.0
 	 *
@@ -471,7 +471,7 @@ class KunenaBase extends KunenaLayoutBase
 	 * @param   boolean  $options  options
 	 * @param   boolean  $merge    merge
 	 *
-	 * @return  \Joomla\CMS\Document\Document|void
+	 * @return  \Joomla\CMS\Document\Document
 	 *
 	 * @since   Kunena 6.0
 	 *

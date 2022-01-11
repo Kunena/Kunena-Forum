@@ -133,7 +133,7 @@ class HtmlView extends BaseHtmlView
 			return parent::display($tpl);
 		}
 
-		$this->user         = $this->get('user'); 
+		$this->user         = $this->get('user');
 		$this->sub          = $this->get('subscriptions');
 		$this->subsCatsList = $this->get('catSubscriptions');
 		$this->ipslist      = $this->get('IPlist');

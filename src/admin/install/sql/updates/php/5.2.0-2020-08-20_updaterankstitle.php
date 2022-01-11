@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 
 // Kunena 5.2.0: Update ranks rank_title value to have string which can be translated
 /**
- * @param $parent
+ * @param   string  $parent  parent
  *
  * @return array
  * @since Kunena

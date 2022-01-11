@@ -81,7 +81,7 @@ class KunenaAvatarGravatar extends KunenaAvatar
 		{
 			$gravatar->enableSecureImages();
 		}
-		else 
+		else
 		{
 			$gravatar->disableSecureImages();
 		}

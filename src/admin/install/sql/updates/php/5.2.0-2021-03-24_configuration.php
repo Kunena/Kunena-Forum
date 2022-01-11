@@ -15,7 +15,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 // Kunena 5.2.0: Convert configuration options which was wrong default value
 /**
- * @param $parent
+ * @param   string  $parent  parent
  *
  * @return array
  * @throws Exception

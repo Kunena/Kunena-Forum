@@ -233,7 +233,7 @@ class KunenaLayout extends KunenaBase
 			$precisionToInt = -1 * (log10($number) + 1) + $precision;
 
 			// Round the number to n significant digits
-			$number = round($number, (int)$precisionToInt);
+			$number = round($number, (int) $precisionToInt);
 		}
 
 		if ($number < 10000)

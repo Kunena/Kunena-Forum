@@ -421,7 +421,7 @@ class HtmlView extends KunenaView
 	 * @param   string  $action  action
 	 * @param   bool    $xhtml   xhtml
 	 *
-	 * @return  void|string
+	 * @return  string
 	 *
 	 * @since   Kunena 6.0
 	 *

@@ -19,8 +19,8 @@ use Joomla\CMS\Image\Image;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use RuntimeException;
 
-define('MIME_GIF', 'image/gif');
-define('MIME_PNG', 'image/png');
+\define('MIME_GIF', 'image/gif');
+\define('MIME_PNG', 'image/png');
 
 /**
  * Helper class for image manipulation.
@@ -62,47 +62,46 @@ class KunenaImage extends Image
 
 			if ($orientation != 1)
 			{
-
 				switch ($orientation)
 				{
 					case 1: // Nothing
 						$angle  = 0;
-						$flip = 0;
+						$flip   = 0;
 						break;
 
 					case 2: // Horizontal flip
 						$angle  = 0;
-						$flip = 1;
+						$flip   = 1;
 						break;
 
 					case 3: // 180 rotate left
 						$angle  = 180;
-						$flip = 0;
+						$flip   = 0;
 						break;
 
 					case 4: // Vertical flip
 						$angle  = 0;
-						$flip = 2;
+						$flip   = 2;
 						break;
 
 					case 5: // Vertical flip + 90 rotate
 						$angle  = 90;
-						$flip = 2;
+						$flip   = 2;
 						break;
 
 					case 6: // 270 rotate left
 						$angle  = 270;
-						$flip = 0;
+						$flip   = 0;
 						break;
 
 					case 7: // Horizontal flip + 90 rotate
 						$angle  = 90;
-						$flip = 1;
+						$flip   = 1;
 						break;
 
 					case 8: // 90 rotate left
 						$angle  = 90;
-						$flip = 0;
+						$flip   = 0;
 						break;
 				}
 			}
@@ -250,13 +249,15 @@ class KunenaImage extends Image
 				$dimensions->height,
 				$this->getWidth(),
 				$this->getHeight()
-				);
+			);
 		}
 		else
 		{
-			call_user_func_array($resizemethod, array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
+			\call_user_func_array(
+				$resizemethod,
+				array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
 				$dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight(), )
-				);
+			);
 		}
 
 		// If we are resizing to a new image, create a new KunenaImage object.

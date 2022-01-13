@@ -878,7 +878,7 @@ abstract class KunenaRoute
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public static function stringURLSafe(string $string, $default = null)
+	public static function stringURLSafe($string, $default = null)
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 

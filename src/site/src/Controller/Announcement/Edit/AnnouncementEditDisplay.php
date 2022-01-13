@@ -67,7 +67,7 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
 
 			if ($id)
 			{
-				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=edit&&id={$id}&Itemid={$itemid}", false));
+				$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=edit&id={$id}&Itemid={$itemid}", false));
 			}
 			else
 			{

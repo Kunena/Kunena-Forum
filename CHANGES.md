@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.9-dev]
 ### Fixed
+* Fix ckeditor not respecting configured buttons #8724
 
 ## [5.2.8]
 ### Fixed

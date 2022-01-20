@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.9-dev]
 ### Fixed
+* Message: array_diff(): Argument #2 must be of type array, null given
 * Fix ckeditor not respecting configured buttons #8724
 
 ## [5.2.8]

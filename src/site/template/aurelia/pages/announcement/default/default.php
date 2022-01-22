@@ -20,7 +20,7 @@ $content = $this->execute('Announcement/Item');
 
 $this->addBreadcrumb(
 	Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
-	'index.php?option=com_kunena&view=announcement&layout=list'
+	'index.php?option=com_kunena&view=announcement&layout=listing'
 );
 
 echo $content;

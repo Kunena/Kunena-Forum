@@ -957,7 +957,7 @@ class KunenaForumCategory extends KunenaDatabaseObject
 		if (KunenaFactory::getConfig()->read_only)
 		{
 			// Special case to ignore authorisation.
-			if ($action != 'read')
+			if ($action != 'topic.read' && $action != 'read')
 			{
 				return false;
 			}

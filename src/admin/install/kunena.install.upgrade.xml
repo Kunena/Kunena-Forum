@@ -71,7 +71,7 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE allow_anonymous allowAnonymous tinyint(4)   NOT NULL default '0';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE post_anonymous postAnonymous tinyint(4)   NOT NULL default '0';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE allow_polls allowPolls tinyint(4)   NOT NULL default '0';</query>
-            <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE ttopic_ordering opicOrdering varchar(16)  NOT NULL default 'lastpost';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE topic_ordering topicOrdering varchar(16)  NOT NULL default 'lastpost';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE allow_ratings allowRatings tinyint(4)   NOT NULL default '0';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_id rankId mediumint(8) unsigned NOT NULL auto_increment;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE rank_title rankTitle varchar(255) NOT NULL default '';</query>

@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Message: array_diff(): Argument #2 must be of type array, null given
 * Fix ckeditor not respecting configured buttons #8724
 
+### Changed
+* Update copyright year on files to 2022 where it has been forgotten
+
 ## [5.2.8]
 ### Fixed
 * [#8677](https://github.com/Kunena/Kunena-Forum/issues/8677): Profile position top or bottom shows the content vertically #8677

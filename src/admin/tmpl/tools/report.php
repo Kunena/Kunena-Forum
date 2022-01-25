@@ -16,9 +16,14 @@ use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-$this->document->addScriptDeclaration(
-	"
-jQuery(document).ready(function ($) {
+/** @var WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->usePreset('chosen')
+	->registerAndUseScript('joomla-chosen', 'legacy/joomla-chosen.min.js', [], [], ['chosen'])
+	->useScript('multiselect')
+	->addInlineScript(
+		"
+		jQuery(document).ready(function ($) {
 	$('#link_sel_all').click(function(e) {
 		$('#report_final').select();
 		try {
@@ -45,12 +50,8 @@ jQuery(document).ready(function ($) {
 		}
 	});
 });
-"
-);
-
-/** @var WebAssetManager $wa */
-$wa = $this->document->getWebAssetManager();
-$wa->useScript('multiselect');
+	"
+	);
 ?>
 
 <div id="kunena" class="container-fluid">

@@ -48,7 +48,7 @@ class KunenaLoginJoomla
 	 * @param   boolean  $rememberme  Remember the user next time it wants login
 	 * @param   null     $secretkey   The secretkey given by user when TFA is enabled
 	 *
-	 * @return  boolean
+	 * @return  boolean|\Exception  True on success, false if failed or silent handling is configured, or a \Exception object on authentication error.
 	 *
 	 * @since   Kunena
 	 *
@@ -67,14 +67,14 @@ class KunenaLoginJoomla
 
 		try
 		{
-			$error   = Factory::getApplication()->login($credentials, $options);
+			$logged   = Factory::getApplication()->login($credentials, $options);
 		}
 		catch (Exception $e)
 		{
 			throw $e;
 		}
 
-		return is_bool($error) ? '' : $error;
+		return $logged;
 	}
 
 	/**

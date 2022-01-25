@@ -970,13 +970,13 @@ class ToolsController extends FormController
 			}
 		}
 
-		$error = $login->loginUser($username, $password);
+		$logged = $login->loginUser($username, $password);
 
 		$user = Factory::getUser(UserHelper::getUserId($username));
 
 		$isRoot = $user->authorise('core.admin');
 
-		if ($error===false && $isRoot)
+		if ($logged && $isRoot)
 		{
 			$this->app->setUserState('com_kunena.uninstall.allowed', true);
 

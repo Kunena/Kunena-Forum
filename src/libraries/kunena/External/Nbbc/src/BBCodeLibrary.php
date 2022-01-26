@@ -450,22 +450,22 @@ class BBCodeLibrary {
             }
 
             if ($bbcode->getURLTargetable() !== false && isset($params['target'])) {
-                $target = ' target="'.htmlspecialchars($params['target']).'"';
+                $target = ' target="'.htmlspecialchars($params['target'], ENT_QUOTES).'"';
             } else {
                 $target = '';
             }
 
             if ($bbcode->getURLTarget() !== false && empty($target)) {
-                $target = ' target="'.htmlspecialchars($bbcode->getURLTarget()).'"';
+                $target = ' target="'.htmlspecialchars($bbcode->getURLTarget(), ENT_QUOTES).'"';
             }
 
             // If $detect_urls is on, it's possble the $content is already
             // enclosed in an <a href> tag. Remove that if that is the case.
             $content = preg_replace('/^\\<a [^\\>]*\\>(.*?)<\\/a>$/', "\\1", $content);
 
-            return $bbcode->fillTemplate($bbcode->getURLTemplate(), ["url" => $url, "target" => $target, "content" => $content]);
+            return $bbcode->fillTemplate($bbcode->getURLTemplate(), array("url" => $url, "target" => $target, "content" => $content));
         } else {
-            return htmlspecialchars($params['_tag']).$content.htmlspecialchars($params['_endtag']);
+            return htmlspecialchars($params['_tag'], ENT_QUOTES).$content.htmlspecialchars($params['_endtag'], ENT_QUOTES);
         }
     }
 
@@ -496,9 +496,9 @@ class BBCodeLibrary {
             : $bbcode->unHTMLEncode(strip_tags($content));
 
         if ($bbcode->isValidEmail($email)) {
-            return $bbcode->fillTemplate($bbcode->getEmailTemplate(), ["email" => $email, "content" => $content]);
+            return $bbcode->fillTemplate($bbcode->getEmailTemplate(), array("email" => $email, "content" => $content));
         } else {
-            return htmlspecialchars($params['_tag']).$content.htmlspecialchars($params['_endtag']);
+            return htmlspecialchars($params['_tag'], ENT_QUOTES).$content.htmlspecialchars($params['_endtag'], ENT_QUOTES);
         }
     }
 
@@ -623,7 +623,7 @@ class BBCodeLibrary {
         }
 
         $wikiURL = $bbcode->getWikiURL();
-        return $bbcode->fillTemplate($bbcode->getWikiURLTemplate(), ["wikiURL" => $wikiURL, "name" => $name, "title" => $title]);
+        return $bbcode->fillTemplate($bbcode->getWikiURLTemplate(), array("wikiURL" => $wikiURL, "name" => $name, "title" => $title));
     }
 
 
@@ -662,16 +662,16 @@ class BBCodeLibrary {
                 $localImgURL = $bbcode->getLocalImgURL();
 
                 return "<img src=\""
-                .htmlspecialchars((empty($localImgURL) ? '' : $localImgURL.'/').ltrim($urlParts['path'], '/')).'" alt="'
-                .htmlspecialchars(basename($content)).'" class="bbcode_img" />';
+                .htmlspecialchars((empty($localImgURL) ? '' : $localImgURL.'/').ltrim($urlParts['path'], '/'), ENT_QUOTES).'" alt="'
+                .htmlspecialchars(basename($content), ENT_QUOTES).'" class="bbcode_img" />';
             } elseif ($bbcode->isValidURL($content, false)) {
                 // Remote URL, or at least we don't know where it is.
-                return '<img src="'.htmlspecialchars($content).'" alt="'
-                .htmlspecialchars(basename($content)).'" class="bbcode_img" />';
+                return '<img src="'.htmlspecialchars($content, ENT_QUOTES).'" alt="'
+                .htmlspecialchars(basename($content), ENT_QUOTES).'" class="bbcode_img" />';
             }
         }
 
-        return htmlspecialchars($params['_tag']).htmlspecialchars($content).htmlspecialchars($params['_endtag']);
+        return htmlspecialchars($params['_tag'], ENT_QUOTES).htmlspecialchars($content, ENT_QUOTES).htmlspecialchars($params['_endtag'], ENT_QUOTES);
     }
 
     /**
@@ -730,24 +730,24 @@ class BBCodeLibrary {
         }
 
         if (isset($params['name'])) {
-            $title = htmlspecialchars(trim($params['name']))." wrote";
+            $title = htmlspecialchars(trim($params['name']), ENT_QUOTES)." wrote";
             if (isset($params['date'])) {
-                $title .= " on ".htmlspecialchars(trim($params['date']));
+                $title .= " on ".htmlspecialchars(trim($params['date']), ENT_QUOTES);
             }
             $title .= ":";
             if (isset($params['url'])) {
                 $url = trim($params['url']);
                 if ($bbcode->isValidURL($url)) {
-                    $title = "<a href=\"".htmlspecialchars($params['url'])."\">".$title."</a>";
+                    $title = "<a href=\"".htmlspecialchars($params['url'], ENT_QUOTES)."\">".$title."</a>";
                 }
             }
         } elseif (!is_string($default)) {
             $title = "Quote:";
         } else {
-            $title = htmlspecialchars(trim($default))." wrote:";
+            $title = htmlspecialchars(trim($default), ENT_QUOTES)." wrote:";
         }
 
-        return $bbcode->fillTemplate($bbcode->getQuoteTemplate(), ["title" => $title, "content" => $content]);
+        return $bbcode->fillTemplate($bbcode->getQuoteTemplate(), array("title" => $title, "content" => $content));
     }
 
     /**
@@ -808,7 +808,7 @@ class BBCodeLibrary {
         $default = trim($default);
 
         if ($action == BBCode::BBCODE_CHECK) {
-            if (!is_string($default) || strlen($default) == "") {
+            if (!is_string($default) || strlen($default) == 0) {
                 return true;
             } elseif (isset($listStyles[$default])) {
                 return true;
@@ -820,7 +820,7 @@ class BBCodeLibrary {
         }
 
         // Choose a list element (<ul> or <ol>) and a style.
-        if (!is_string($default) || strlen($default) == "") {
+        if (!is_string($default) || strlen($default) == 0) {
             $elem = 'ul';
             $type = '';
         } elseif ($default == '1') {

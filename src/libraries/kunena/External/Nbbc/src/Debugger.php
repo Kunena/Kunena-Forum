@@ -66,21 +66,23 @@ class Debugger {
     // File to log messages to
     public static $log_file = '';
 
-    /**
-     * Store log information to a file - Modified method by Kunena team
-     *
-     * @param int     $level
-     * @param string  $string
-     * @param boolean $logAll
-     */
-    public static function log($level, $string, $logAll = false)
-    {
-        if ($level >= static::$level)
-        {
-            SELF::storeLog($string);
+    public static function log($level, $string) {
+        if ($level >= static::$level) {
+            if (strpos($string, "\n") === false) {
+                $string .= "\n";
+            }
+
+            $date = new \DateTime();
+            $string = '['.$date->format('Y-m-d H:i:s.u').'] '.$string;
+
+            if (static::$log_file) {
+                file_put_contents(static::$log_file, $string, FILE_APPEND);
+            } else {
+                echo $string;
+            }
         }
     }
-    
+
     /**
      * Added by Kunena Team
      */

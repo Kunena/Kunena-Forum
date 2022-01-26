@@ -1,6 +1,6 @@
 # The New BBCode Parser (NBBC)
 
-[![Build Status](https://img.shields.io/travis/vanilla/nbbc.svg?style=flat-square)](https://travis-ci.org/vanilla/nbbc)
+[![Build Status](https://circleci.com/gh/vanilla/nbbc.svg?style=svg)](https://app.circleci.com/pipelines/github/vanilla/nbbc)
 [![Packagist Version](https://img.shields.io/packagist/v/vanilla/nbbc.svg?style=flat-square)](https://packagist.org/packages/vanilla/nbbc)
 
 ## Overview

@@ -3130,7 +3130,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 				$data = [
 					'menutype'     => 'kunenamenu',
 					'title'        => $menuitem ['name'],
-					'alias'        => $menuitem ['alias'] . '-' . $langCode,
+					'alias'        => $menuitem ['alias'],
 					'link'         => $menuitem ['link'],
 					'type'         => 'component',
 					'published'    => 1,

@@ -110,14 +110,14 @@ class KunenaLogin
 	 *
 	 * @param   string  $username    The username of user which need to be logged
 	 * @param   string  $password    The password of user which need to be logged
-	 * @param   int     $rememberme  If the user want to be remembered the next time it want to log
+	 * @param   boolean $rememberme  If the user want to be remembered the next time it want to log
 	 * @param   null    $secretkey   The secret key for the TFA feature
 	 *
-	 * @return  null|string
+	 * @return  boolean|string
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function loginUser(string $username, string $password, $rememberme = 0, $secretkey = null): ?bool
+	public function loginUser(string $username, string $password, bool $rememberme = null, $secretkey = null): ?bool
 	{
 		foreach ($this->instances as $login)
 		{

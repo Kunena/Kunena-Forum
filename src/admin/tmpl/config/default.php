@@ -1444,11 +1444,11 @@ $wa->useScript('multiselect');
                                                         <td>
 															<?php
 															echo Text::sprintf(
-																'COM_KUNENA_A_IMGSIZE_DESC',
-																ini_get('post_max_size'),
-																ini_get('upload_max_fileSize'),
-																function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
-															)
+														'COM_KUNENA_A_IMGSIZE_DESC',
+														ini_get('post_max_size'),
+														ini_get('upload_max_fileSize'),
+														function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
+													)
 															?>
                                                         </td>
                                                     </tr>
@@ -1570,11 +1570,11 @@ $wa->useScript('multiselect');
                                                         <td>
 															<?php
 															echo Text::sprintf(
-																'COM_KUNENA_A_FILESIZE_DESC',
-																ini_get('post_max_size'),
-																ini_get('upload_max_fileSize'),
-																function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
-															)
+														'COM_KUNENA_A_FILESIZE_DESC',
+														ini_get('post_max_size'),
+														ini_get('upload_max_fileSize'),
+														function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
+													)
 															?>
                                                         </td>
                                                     </tr>

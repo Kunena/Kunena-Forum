@@ -1285,6 +1285,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			return self::renderInstagram($bbcode, $content);
 		}
+
+		return false;
 	}
 
 	/**
@@ -1488,6 +1490,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				->set('target', $target)
 				->set('internal', $internal);
 		}
+
+		return false;
 	}
 
 	// Format a [list] tag, which is complicated by the number of different
@@ -1555,6 +1559,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				->set('content', $content)
 				->set('size', $default);
 		}
+
+		return false;
 	}
 
 	/**
@@ -1704,6 +1710,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				->set('content', $content)
 				->set('params', $params);
 		}
+
+		return false;
 	}
 
 	/**
@@ -1755,6 +1763,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			return '<br />' . Text::_('COM_KUNENA_BBCODE_HIDDENTEXT') . '<br />';
 		}
+
+		return false;
 	}
 
 	/**
@@ -1823,6 +1833,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT_GUESTS') . '</div>';
 		}
+
+		return false;
 	}
 
 	/**
@@ -1900,6 +1912,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				->set('params', $params)
 				->set('config', $kunena_config);
 		}
+
+		return false;
 	}
 
 	/**
@@ -1992,6 +2006,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				return false;
 			}
 		}
+
+		return false;
 	}
 
 	/**
@@ -3033,6 +3049,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				->set('content', $content)
 				->set('params', $params);
 		}
+
+		return false;
 	}
 
 	/**
@@ -3122,6 +3140,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			return '<b>' . $tweet->error . '</b>';
 		}
+
+		return false;
 	}
 
 	/**
@@ -3326,6 +3346,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				return $tweet;
 			}
 		}
+
+		return false;
 	}
 
 	/**
@@ -3372,6 +3394,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 				return '<iframe allowtransparency="true" width="100%" height="350" style="border: 0" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
 			}
 		}
+
+		return false;
 	}
 
 	/**
@@ -3455,5 +3479,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		{
 			return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_SECURE_TEXT_GUESTS') . '</div>';
 		}
+
+		return false;
 	}
 }

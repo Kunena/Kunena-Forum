@@ -969,6 +969,8 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 			return true;
 		}
+
+		return false;
 	}
 
 	/**

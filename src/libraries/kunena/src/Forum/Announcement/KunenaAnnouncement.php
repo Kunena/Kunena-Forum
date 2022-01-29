@@ -322,7 +322,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 		// Special case to ignore authorisation.
 		if ($action == 'none')
 		{
-			return;
+			return true;
 		}
 
 		// Load user if not given.
@@ -414,7 +414,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|null
+	 * @return  KunenaExceptionAuthorise|boolean
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
@@ -431,13 +431,13 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return;
+		return true;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|null
+	 * @return  KunenaExceptionAuthorise|boolean
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
@@ -460,7 +460,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			}
 		}
 
-		return;
+		return true;
 	}
 
 	/**

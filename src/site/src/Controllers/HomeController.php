@@ -111,7 +111,7 @@ class HomeController extends KunenaController
 		$controller->execute('display');
 
 		// Set redirect and message
-		$this->setRedirect($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());
+		return $this->setRedirect($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());
 	}
 
 	/**

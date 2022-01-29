@@ -162,5 +162,7 @@ class HtmlView extends BaseHtmlView
 				// return false;
 			}
 		}
+
+		return true;
 	}
 }

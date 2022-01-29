@@ -160,6 +160,8 @@ class KunenaBBCodeEditor
 		array_splice($editor_values, $pos, 0, $new_elements_values);
 
 		$this->editor_elements = array_combine($editor_keys, $editor_values);
+
+		return true;
 	}
 
 	/**

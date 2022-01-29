@@ -1447,6 +1447,8 @@ class HtmlView extends KunenaView
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->render('Topic/Edit', $tpl);
+
+		return true;
 	}
 
 	/**
@@ -1518,6 +1520,8 @@ class HtmlView extends KunenaView
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->render('Topic/Edit', $tpl);
+
+		return true;
 	}
 
 	/**
@@ -1593,6 +1597,8 @@ class HtmlView extends KunenaView
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->render('Topic/Edit', $tpl);
+
+		return true;
 	}
 
 	/**

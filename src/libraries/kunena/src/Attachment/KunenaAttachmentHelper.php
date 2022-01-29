@@ -637,6 +637,8 @@ abstract class KunenaAttachmentHelper
 
 			return false;
 		}
+
+		return true;
 	}
 
 	/**

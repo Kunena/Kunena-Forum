@@ -106,5 +106,7 @@ class InstallController extends FormController
 
 			return true;
 		}
+
+		return false;
 	}
 }

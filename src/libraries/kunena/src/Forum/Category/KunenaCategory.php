@@ -820,8 +820,6 @@ class KunenaCategory extends KunenaDatabaseObject
 
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
 		}
-
-		return true;
 	}
 
 	/**

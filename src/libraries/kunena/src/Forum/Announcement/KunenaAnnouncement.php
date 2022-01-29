@@ -398,7 +398,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 * @since   Kunena 6.0
 	 */
 	protected function authoriseNew(KunenaUser $user): ?KunenaExceptionAuthorise
@@ -414,7 +414,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
@@ -431,13 +431,13 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
@@ -460,13 +460,13 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 			}
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0

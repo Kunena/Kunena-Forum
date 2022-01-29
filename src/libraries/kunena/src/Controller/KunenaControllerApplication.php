@@ -41,7 +41,7 @@ class KunenaControllerApplication extends KunenaControllerDisplay
 		}
 		else
 		{
-			$subviewfixed = $subview;
+			$subviewfixed = ucfirst($subview);
 		}
 
 		// Define HMVC controller and execute it.

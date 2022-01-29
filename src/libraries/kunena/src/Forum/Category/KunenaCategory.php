@@ -791,7 +791,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  boolean|\Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise
+	 * @return  \Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2031,7 +2031,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  boolean|\Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise
+	 * @return  \Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2052,13 +2052,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2071,13 +2071,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2097,13 +2097,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2123,13 +2123,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS'), 401);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2147,13 +2147,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES'), 401);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2166,7 +2166,7 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_SECTION'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
@@ -2185,7 +2185,7 @@ class KunenaCategory extends KunenaDatabaseObject
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  null
@@ -2201,13 +2201,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_IS_ALIAS'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2220,13 +2220,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_CATEGORY_LOCKED'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2244,13 +2244,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_MODERATOR'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2268,13 +2268,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_NOT_GLOBAL_MODERATOR'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2292,13 +2292,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2317,13 +2317,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED'), 403);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 */
@@ -2335,13 +2335,13 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POLL_NOT_LOGGED'), 401);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
 	 * @param   KunenaUser  $user  user
 	 *
-	 * @return  KunenaExceptionAuthorise|boolean
+	 * @return  KunenaExceptionAuthorise
 	 *
 	 * @since   Kunena 6.0
 	 * @throws  Exception
@@ -2354,6 +2354,6 @@ class KunenaCategory extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED'), 403);
 		}
 
-		return true;
+		return;
 	}
 }

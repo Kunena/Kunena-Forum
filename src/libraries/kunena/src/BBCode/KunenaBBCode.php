@@ -141,7 +141,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 		if (JDEBUG && KunenaFactory::getConfig()->debug && KunenaForum::isDev())
 		{
 			/*
-			 * Uncomment the two lines only whne need to have the log of debug else it's too way slow
+			 * Uncomment the two lines only whne need to have the log of debug else it's way too slow
 			 *
 			 * $this->setDebug(true);
 			 * $this->setLogFile(Factory::getApplication()->get('log_path'). '/kunena.NBBC_BBCODE.php');
@@ -157,28 +157,6 @@ class KunenaBBCode extends \Nbbc\BBCode
 
 		PluginHelper::importPlugin('kunena');
 		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
-	}
-
-	/**
-	 * @param   mixed  $url_pattern  mixed
-	 *
-	 * @return void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function SetURLPattern($url_pattern): void
-	{
-	}
-
-	/**
-	 * @param $enable
-	 *
-	 * @return void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function SetURLTarget($enable)
-	{
 	}
 
 	/**

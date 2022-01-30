@@ -1263,9 +1263,16 @@ REGEX;
     // Note that only one of the e, h, k, or u "formatting flags" may be specified;
     // these flags are mutually-exclusive.
     public function fillTemplate($template, $insert_array, $default_array = []) {
-        /*HACK BY KUNENA >*/
-        if (is_array($template)) return call_user_func($template, $insert_array);
-        /*< HACK BY KUNENA*/
+        /*START HACK BY KUNENA >*/
+        if (is_array($template) && !$template[0]->autoLink_disable) 
+        { 
+            return call_user_func($template, $insert_array);
+        }
+        else
+        {
+            $template = '<a href="{$url/h}">{$text/h}</a>';
+        }
+        /*< END HACK BY KUNENA*/
 
         $pieces = preg_split('/(\{\$[a-zA-Z0-9_.:\/-]+\})/', $template, -1, PREG_SPLIT_DELIM_CAPTURE);
 

@@ -71,7 +71,16 @@ class KunenaRequest
 			$subpart = '' . $ex[2] . '\\';
 		}
 
-		$classnamespaced = 'Kunena\Forum\Site\Controller\\' . $ex[0] . '\\' . $ex[1] . '\\' . $subpart . str_replace(' ', '', $words);
+		if ($ex[1] == 'Display')
+		{
+			$subpartstart = '';
+		}
+		else
+		{
+			$subpartstart = $ex[1] . '\\';
+		}
+
+		$classnamespaced = 'Kunena\Forum\Site\Controller\\' . $ex[0] . '\\' . $subpartstart . $subpart . str_replace(' ', '', $words);
 
 		if (!class_exists($classnamespaced))
 		{

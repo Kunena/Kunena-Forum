@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.2.9-dev]
 ### Fixed
+* [#8723](https://github.com/Kunena/Kunena-Forum/issues/8723): Upgrade or reinstallation removes the Kunena custom.css #8723
 * [#8736](https://github.com/Kunena/Kunena-Forum/issues/8736): Read-only mode prevents search results
 * Message: array_diff(): Argument #2 must be of type array, null given
 * Fix ckeditor not respecting configured buttons #8724

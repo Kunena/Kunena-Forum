@@ -335,9 +335,9 @@ class Com_KunenaInstallerScript
 		}
 
 		// Delete some CSS files under old locations in /assets/css
-		$this->deleteFiles($sitePath . '/template/crypsis/assets/css', array('jssocials.css', 'jssocials-theme-classic.css', 'jssocials-theme-flat.css', 'jssocials-theme-minima.css', 'jssocials-theme-plain.css', 'wbbtheme.css', 'fancybox.black-min.css', 'fancybox.black.css', 'fancybox.white-min.css', 'fancybox.white.css'));
-		$this->deleteFiles($sitePath . '/template/crypsisb3/assets/css', array('jssocials.css', 'jssocials-theme-classic.css', 'jssocials-theme-flat.css', 'jssocials-theme-minima.css', 'jssocials-theme-plain.css', 'wbbtheme.css', 'fancybox.black-min.css', 'fancybox.black.css', 'fancybox.white-min.css', 'fancybox.white.css'));
-		$this->deleteFiles($sitePath . '/template/crypsisb4/assets/css', array('jssocials.css', 'jssocials-theme-classic.css', 'jssocials-theme-flat.css', 'jssocials-theme-minima.css', 'jssocials-theme-plain.css', 'wbbtheme.css'));
+		$this->deleteFiles($sitePath . '/template/crypsis/assets/css', array('custom.css', 'jssocials.css', 'jssocials-theme-classic.css', 'jssocials-theme-flat.css', 'jssocials-theme-minima.css', 'jssocials-theme-plain.css', 'wbbtheme.css', 'fancybox.black-min.css', 'fancybox.black.css', 'fancybox.white-min.css', 'fancybox.white.css'));
+		$this->deleteFiles($sitePath . '/template/crypsisb3/assets/css', array('custom.css', 'jssocials.css', 'jssocials-theme-classic.css', 'jssocials-theme-flat.css', 'jssocials-theme-minima.css', 'jssocials-theme-plain.css', 'wbbtheme.css', 'fancybox.black-min.css', 'fancybox.black.css', 'fancybox.white-min.css', 'fancybox.white.css'));
+		$this->deleteFiles($sitePath . '/template/crypsisb4/assets/css', array('custom.css', 'jssocials.css', 'jssocials-theme-classic.css', 'jssocials-theme-flat.css', 'jssocials-theme-minima.css', 'jssocials-theme-plain.css', 'wbbtheme.css'));
 
 		$language_folders = Folder::folders(JPATH_ROOT . '/language');
 

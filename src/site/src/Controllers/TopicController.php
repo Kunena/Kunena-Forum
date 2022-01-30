@@ -44,6 +44,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
@@ -320,6 +321,95 @@ class TopicController extends KunenaController
 		}
 
 		echo json_encode($success);
+
+		jexit();
+	}
+
+	/**
+	 * Load global rate for the topic
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public function loadrate()
+	{
+		$user = Factory::getApplication()->getIdentity();
+
+		$topicid  = $this->app->input->get('topic_id', 0, 'int');
+
+		if ($user->id == 0 || KunenaTopicHelper::get($topicid)->first_post_userid == $this->me->userid)
+		{
+			$response = KunenaRateHelper::getSelected($topicid);
+		}
+		else
+		{
+			$response = KunenaRateHelper::getRate($topicid, $user->id);
+		}
+
+		// Set the MIME type and header for JSON output.
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+
+		while (@ob_end_clean())
+		{
+		}
+
+		echo new JsonResponse($response);
+
+		jexit();
+	}
+
+	/**
+	 * Save rate for user logged in by JSON call
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 *
+	 */
+	public function setrate()
+	{
+		$starid   = $this->app->input->get('starid', 0, 'int');
+		$topicid  = $this->app->input->get('topic_id', 0, 'int');
+		$response = [];
+		$user     = KunenaUserHelper::getMyself();
+
+		if ($user->exists() || $this->config->ratingEnabled)
+		{
+			$rate           = KunenaRateHelper::get($topicid);
+			$rate->stars    = $starid;
+			$rate->topic_id = $topicid;
+
+			$response = $rate->save($this->me);
+
+			$selected = KunenaRateHelper::getSelected($topicid);
+
+			$topic         = KunenaTopicHelper::get($topicid);
+			$topic->rating = $selected;
+			$topic->save();
+		}
+
+		// Set the MIME type and header for JSON output.
+		header('Content-type: application/json');
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+
+		while (@ob_end_clean())
+		{
+		}
+
+		echo new JsonResponse($response);
 
 		jexit();
 	}

@@ -27,9 +27,9 @@ if ($this->category->allowRatings)
 
 	<input id="topic_id" type="hidden" value="<?php echo $this->topic->id; ?>"/>
 	<input type="hidden" id="krating_url" name="krating_url"
-		   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=getrate&format=raw'); ?>"/>
+		   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadrate&format=json'); ?>"/>
 	<input type="hidden" id="krating_submit_url" name="url"
-		   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=rate&topic_id=' . $this->topic->id . '&format=raw'); ?>"/>
+		   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setrate&topic_id=' . $this->topic->id . '&format=json'); ?>"/>
 	<div id="krating"
 		 title="<?php echo Text::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->topic->rating, $this->topic->getReviewCount()); ?>"
 		 class="hasTooltip">

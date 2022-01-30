@@ -27,7 +27,7 @@ use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
- * Class ComponentKunenaControllerApplicationAjaxDefaultDisplay
+ * Class AjaxDisplay
  *
  * @since   Kunena 4.0
  */

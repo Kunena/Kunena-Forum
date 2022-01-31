@@ -24,6 +24,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 
 /**
@@ -169,7 +170,7 @@ class KunenaRate extends CMSObject
 	/**
 	 * Perform insert the rate into table
 	 *
-	 * @param   string  $user  user
+	 * @param   KunenaUser  $user  user
 	 *
 	 * @return  JsonResponse
 	 *
@@ -179,7 +180,7 @@ class KunenaRate extends CMSObject
 	 * @internal param int $userid
 	 *
 	 */
-	public function save(string $user)
+	public function save(KunenaUser $user)
 	{
 		$user  = KunenaFactory::getUser($user);
 		$topic = KunenaTopicHelper::get($this->topic_id);

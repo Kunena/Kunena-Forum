@@ -409,7 +409,7 @@ class TopicController extends KunenaController
 		{
 		}
 
-		echo new JsonResponse($response);
+		echo $response;
 
 		jexit();
 	}

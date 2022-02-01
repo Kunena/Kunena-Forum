@@ -2738,15 +2738,15 @@ class TopicController extends KunenaController
 				}
 
 				$user = $this->app->getIdentity();
-				$mail = Factory::getMailer();
-				$mail->setSubject($mailsubject);
-				$mail->setSender([$this->config->getEmail(), $mailnamesender]);
-				$mail->addReplyTo($this->me->email, $this->me->username);
+				$mailer = Factory::getMailer();
+				$mailer->setSubject($mailsubject);
+				$mailer->setSender([$this->config->getEmail(), $mailnamesender]);
+				$mailer->addReplyTo($this->me->email, $this->me->username);
 
-				$mailer = new MailTemplate('com_kunena.report', $user->getParam('language', $this->app->get('language')), $mail);
-				$mailer->addTemplateData(
+				$mailTemplate = new MailTemplate('com_kunena.report', $user->getParam('language', $this->app->get('language')), $mailer);
+				$mailTemplate->addTemplateData(
 					[
-						'mail'        => $mail,
+						'mail'        => $mailer,
 						'me'          => $this->me,
 						'subject'     => $reason,
 						'message'     => $message,
@@ -2755,7 +2755,7 @@ class TopicController extends KunenaController
 					]
 				);
 
-				KunenaEmail::send($mailer, $receivers);
+				KunenaEmail::send($mailTemplate, $receivers, $mailer);
 
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_SUCCESS'));
 			}

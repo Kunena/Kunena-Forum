@@ -44,7 +44,7 @@ abstract class KunenaEmail
 	 *
 	 * @throws Exception
 	 */
-	public static function send(MailTemplate $mail, array $receivers): bool
+	public static function send(MailTemplate $mailTemplate, array $receivers): bool
 	{
 		if (isset(static::$mailer_error_status))
 		{
@@ -73,7 +73,7 @@ abstract class KunenaEmail
 			&& MailHelper::isEmailAddress($config->get('emailVisibleAddress'))
 		)
 		{
-			$mail->AddAddress($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle));
+			$mailTemplate->AddAddress($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle));
 
 			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
 			if ($emailRecipientCount > 9)
@@ -90,23 +90,23 @@ abstract class KunenaEmail
 		{
 			if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to')
 			{
-				$mail->ClearAddresses();
-				$mail->addRecipient($emails);
+				$mailTemplate->ClearAddresses();
+				$mailTemplate->addRecipient($emails);
 			}
 			elseif ($emailRecipientPrivacy == 'cc')
 			{
-				$mail->ClearCCs();
-				$mail->addCC($emails);
+				$mailTemplate->ClearCCs();
+				$mailTemplate->addCC($emails);
 			}
 			else
 			{
-				$mail->ClearBCCs();
-				$mail->addBCC($emails);
+				$mailTemplate->ClearBCCs();
+				$mailTemplate->addBCC($emails);
 			}
 
 			try
 			{
-				$result = $mail->Send();
+				$result = $mailTemplate->Send();
 
 				if ($result === false)
 				{

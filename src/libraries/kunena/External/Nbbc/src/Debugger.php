@@ -83,29 +83,6 @@ class Debugger {
         }
     }
 
-    /**
-     * Added by Kunena Team
-     */
-    protected static function storeLog($string)
-    {
-        if (strpos($string, "\n") === false)
-        {
-            $string .= "\n";
-        }
-        
-        $date   = new \DateTime;
-        $string = '[' . $date->format('Y-m-d H:i:s.u') . '] ' . $string;
-        
-        if (static::$log_file)
-        {
-            file_put_contents(static::$log_file, $string, FILE_APPEND);
-        }
-        else
-        {
-            echo $string;
-        }
-    }
-
     public static function debug($string) {
         static::log(static::$debug, $string);
     }

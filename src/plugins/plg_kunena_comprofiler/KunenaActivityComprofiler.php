@@ -187,7 +187,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	/**
 	 * @param   int  $actor    actor
 	 * @param   int  $target   target
-	 * @param   int  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -195,7 +195,7 @@ class KunenaActivityComprofiler extends KunenaActivity
 	 * @since   Kunena 6.0
 	 *
 	 */
-	public function onAfterThankyou(int $actor, int $target, int $message): void
+	public function onAfterThankyou(int $actor, int $target, KunenaMessage $message): void
 	{
 		$params = ['actor' => $actor, 'target' => $target, 'message' => $message];
 		KunenaIntegrationComprofiler::trigger('onAfterThankyou', $params);

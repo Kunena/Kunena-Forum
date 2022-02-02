@@ -17,7 +17,7 @@
 
     <update>
         <schemas>
-            <schemapath type="mysql">administrator/components/com_kunena/install/sql/updates/mysql</schemapath>
+            <schemapath type="mysql">administrator/components/com_kunena/sql/updates/mysql</schemapath>
         </schemas>
     </update>
 

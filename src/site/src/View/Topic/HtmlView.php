@@ -1393,8 +1393,8 @@ class HtmlView extends KunenaView
 
 		$arrayanynomousbox = implode(',', $arrayanynomousbox);
 		$arraypollcatid    = implode(',', $arraypollcatid);
-		$this->document->addScriptDeclaration('var arrayanynomousbox={' . $arrayanynomousbox . '}');
-		$this->document->addScriptDeclaration('var pollcategoriesid = {' . $arraypollcatid . '};');
+		$this->document->getWebAssetManager()->addInlineScript('var arrayanynomousbox={' . $arrayanynomousbox . '}');
+		$this->document->getWebAssetManager()->addInlineScript('var pollcategoriesid = {' . $arraypollcatid . '};');
 
 		$catParams = ['ordering'    => 'ordering',
 		              'toplevel'    => 0,

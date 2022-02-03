@@ -546,10 +546,20 @@ CREATE TABLE IF NOT EXISTS `#__kunena_version`
     `installdate` date        NOT NULL,
     `build`       varchar(20) NOT NULL,
     `versionname` varchar(40) NULL,
-    `sampleData`  tinyint(4)  NOT NULL default '0',
+    `sampleData`  boolean     NOT NULL default 1,
     `state`       text        NOT NULL,
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
+
+INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.reply', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
+        '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
+INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.replymoderator', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
+        '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
+INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.report', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
+        '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');

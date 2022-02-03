@@ -15,12 +15,6 @@
 
     <scriptfile>script.php</scriptfile>
 
-    <update>
-        <schemas>
-            <schemapath type="mysql">administrator/components/com_kunena/sql/updates/mysql</schemapath>
-        </schemas>
-    </update>
-
     <files folder="packages">
         <filename type="library" id="kunena">lib_kunena_v@kunenaversion@.zip</filename>
         <filename type="file" id="kunena_media">kunena_media_v@kunenaversion@.zip</filename>

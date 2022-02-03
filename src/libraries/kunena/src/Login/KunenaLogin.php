@@ -117,7 +117,7 @@ class KunenaLogin
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function loginUser(string $username, string $password, bool $rememberme = null, $secretkey = null): ?bool
+	public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null): ?bool
 	{
 		foreach ($this->instances as $login)
 		{

@@ -345,6 +345,19 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.0.4.sql';
 			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.4.0.sql';
 			$this->deleteFiles[] = '/administrator/components/com_kunena/sql/updates/mysql/5.5.0.sql';
+
+			// Remove kunena templates from K5.0
+			$templatename = ['crypsis', 'crypsisb4', 'crypsisb5', 'blue_eagle5', 'blue_eagle'];
+
+			foreach ($templatename as $template)
+			{
+				$templatepath = JPATH_SITE . '/components/com_kunena/template/' . $template;
+
+				if (is_dir($templatepath))
+				{
+					$this->deleteFolders[] = $templatepath;
+				}
+			}
 		}
 	}
 

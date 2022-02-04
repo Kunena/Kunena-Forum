@@ -136,7 +136,7 @@ class KunenaTemplate
 	 * @var     array
 	 * @since   Kunena 6.0
 	 */
-	protected $default = [];
+	protected $default = ['Aurelia'];
 
 	/**
 	 * @var     array

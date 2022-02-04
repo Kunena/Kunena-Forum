@@ -853,7 +853,7 @@ class KunenaUser extends CMSObject
 	 * @throws Exception
 	 * @since Kunena 1.6
 	 */
-	public function getName($visitorname = '', $escape = true): string
+	public function getName($visitorname = '', $escape = true)
 	{
 		$profile = KunenaFactory::getProfile();
 
@@ -876,7 +876,7 @@ class KunenaUser extends CMSObject
 			return $name;
 		}
 
-		return $profile->getProfileName($this);
+		return $profile->getProfileName($this, $visitorname);
 	}
 
 	/**

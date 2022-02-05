@@ -1047,7 +1047,7 @@ HTML;
 	 * @throws \Exception
 	 * @since   Kunena 3.5
 	 */
-	public function addScriptOptions(string $key, $options, $merge = true): Document
+	public function addScriptOptions(string $key, $options, $merge = true)
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');

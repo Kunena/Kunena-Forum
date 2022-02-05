@@ -189,10 +189,10 @@ class CategoryIndex extends KunenaLayout
 
 			if (CMSApplication::getInstance('site')->get('sef_suffix'))
 			{
-				return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=default{$params}") . '?format=feed&type=rss';
+				return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=feed{$params}") . '?format=feed&type=rss';
 			}
 
-			return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=default{$params}", $xhtml);
+			return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=feed{$params}", $xhtml);
 		}
 
 		return false;

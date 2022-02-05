@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Application\Category\Initial;
+namespace Kunena\Forum\Site\Controller\Application\Category\Feed;
 
 \defined('_JEXEC') or die();
 
@@ -48,7 +48,7 @@ class CategoryDisplay extends KunenaControllerDisplay
 	}
 
 	/**
-	 * Redirect unread layout to the page that contains the first unread message.
+	 * Prepare the content of the feed.
 	 *
 	 * @return  void
 	 *
@@ -78,19 +78,6 @@ class CategoryDisplay extends KunenaControllerDisplay
 
 		$this->topics = $model->getTopics();
 
-		$title = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
-		$this->setTitle($title);
-
-		$metaDesc = $this->document->getDescription() . '. ' . KunenaParser::parseText($this->category->name . ' - ' . $this->config->boardTitle);
-		$this->document->setDescription($metaDesc);
-
-		// Create image for feed
-		$image                 = new FeedImage;
-		$image->title          = $this->document->getTitle();
-		$image->url            = KunenaFactory::getTemplate()->getImagePath('icons/rss.png');
-		$image->description    = $this->document->getDescription();
-		$this->document->image = $image;
-
 		foreach ($this->topics as $topic)
 		{
 			if ($this->config->rssType == 'topic')
@@ -113,7 +100,6 @@ class CategoryDisplay extends KunenaControllerDisplay
 
 			$this->createItem($title, $url, $description, $this->category->name, $date, $userid, $username);
 		}
-
 	}
 
 	/**
@@ -125,9 +111,37 @@ class CategoryDisplay extends KunenaControllerDisplay
 	 */
 	protected function prepareDocument()
 	{
-		$this->setMetaData('robots', 'follow, noindex');
+		$title = Text::_('COM_KUNENA_THREADS_IN_FORUM') . ': ' . $this->category->name;
+		$this->setTitle($title);
+
+		$metaDesc = $this->document->getDescription() . '. ' . KunenaParser::parseText($this->category->name . ' - ' . $this->config->boardTitle);
+		$this->setDescription($metaDesc);
+
+		// Create image for feed
+		$image                 = new FeedImage;
+		$image->title          = $this->document->getTitle();
+		$image->url            = KunenaFactory::getTemplate()->getImagePath('icons/rss.png');
+		$image->description    = $this->document->getDescription();
+		$this->document->image = $image;
 	}
 
+	/**
+	 * Create the item for the feed
+	 * 
+	 * @param   string   $title        title
+	 * @param   string   $url          url
+	 * @param   string   $description  description
+	 * @param   string   $category     category
+	 * @param   integer  $date         date
+	 * @param   integer  $userid       userid
+	 * @param   string   $username     username
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
 	public function createItem($title, $url, $description, $category, $date, $userid, $username)
 	{
 		if ($this->config->rssAuthorInTitle)

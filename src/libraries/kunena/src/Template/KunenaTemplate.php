@@ -387,12 +387,12 @@ class KunenaTemplate
 	 * @param   string  $content  content
 	 * @param   string  $type     type
 	 *
-	 * @return \Joomla\CMS\Document\Document
+	 * @return \Joomla\CMS\Document\Document|boolean
 	 *
 	 * @since   Kunena 6.0
 	 * @throws \Exception
 	 */
-	public function addScriptDeclaration(string $content, $type = 'text/javascript'): Document
+	public function addScriptDeclaration(string $content, $type = 'text/javascript')
 	{
 		$app    = Factory::getApplication();
 		$format = $app->input->getCmd('format');
@@ -1042,7 +1042,7 @@ HTML;
 	 * @param   mixed   $options  Scrip options as array or string
 	 * @param   bool    $merge    Whether merge with existing (true) or replace (false)
 	 *
-	 * @return \Joomla\CMS\Document\Document
+	 * @return \Joomla\CMS\Document\Document|boolean
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 3.5

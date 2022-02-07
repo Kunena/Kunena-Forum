@@ -40,7 +40,7 @@ class KunenaFolder
 		if (!File::exists($folder . '/index.html'))
 		{
 			$lang = Factory::getApplication()->getLanguage();
-			$contents = '<html lang="' . $lang->getLocale() . '"><body></body></html>';
+			$contents = '<html lang="' . str_replace('_', '-', $lang->getLocale()[2]) . '"><body></body></html>';
 			File::write($folder . '/index.html', $contents);
 		}
 	}

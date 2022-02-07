@@ -111,11 +111,11 @@ class KunenaAccessJoomla
 	 * @param   string  $accesstype  Access type.
 	 * @param   null    $id          Group id.
 	 *
-	 * @return  string|null
+	 * @return  string|null|array
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getGroupName(string $accesstype, $id = null): ?string
+	public function getGroupName(string $accesstype, $id = null)
 	{
 		static $groups = [];
 

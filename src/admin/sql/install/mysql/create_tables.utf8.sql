@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments`
 CREATE TABLE IF NOT EXISTS `#__kunena_categories`
 (
     `id`               int(11)      NOT NULL auto_increment,
-    `parentid`         int(11)      NULL     default '0',
+    `parentid`         int          DEFAULT NULL,
     `name`             tinytext     NULL,
     `alias`            varchar(191) NOT NULL,
     `icon`             varchar(20)  NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `pubAccess`        int          DEFAULT NULL,
     `pubRecurse`       tinyint      DEFAULT NULL,
     `adminAccess`      int          DEFAULT NULL,
-    `adminRecurse`     tinyint(4)   NULL     default '1',
+    `adminRecurse`     tinyint      DEFAULT NULL,
     `ordering`         int(11)      NOT NULL default '0',
     `published`        tinyint(4)   NOT NULL default '0',
     `channels`         text         NULL,
@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_users`
     `pollid`   int(11)   NULL,
     `userid`   int(11)   NULL,
     `votes`    int(11)   NULL,
-    `lasttime` datetime  NOT NULL default '1000-01-01 00:00:00',
+    `lasttime` datetime  NULL DEFAULT NULL,
     `lastvote` int(11)   NULL,
     UNIQUE KEY `pollid` (pollid, userid)
 )
@@ -299,11 +299,11 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private_user_map`
 
 CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
 (
-    `rankId`      mediumint             NOT NULL,
-    `rankTitle`   varchar(191)          NOT NULL default '',
-    `rankMin`     mediumint             DEFAULT NULL,
-    `rankSpecial` tinyint(1) unsigned   NOT NULL default '0',
-    `rankImage`   varchar(191)          NOT NULL default '',
+    `rankId`      mediumint NOT NULL,
+    `rankTitle`   varchar(255),
+    `rankMin`     mediumint DEFAULT NULL,
+    `rankSpecial` tinyint(1),
+    `rankImage`   varchar(255),
     PRIMARY KEY (rankId)
 )
     ENGINE = InnoDB
@@ -425,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `view`             varchar(8)   NOT NULL default '',
     `signature`        text         NULL,
     `moderator`        int(11)      NULL     default '0',
-    `banned`           datetime     NULL     DEFAULT '1000-01-01 00:00:00',
+    `banned`           datetime     NULL     DEFAULT NULL,
     `ordering`         int(11)      NULL     default '0',
     `posts`            int(11)      NULL     default '0',
     `avatar`           varchar(191) NULL,

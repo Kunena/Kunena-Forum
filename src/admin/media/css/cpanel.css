@@ -8,38 +8,38 @@
  **/
 
 .kadmin-welcome h3 {
-	margin: 0;
-	padding: 0;
+  padding: 0;
+  margin: 0;
 }
 
 table.thisform tr.row0 {
-	background-color: #F7F8F9;
+  background-color: #f7f8f9;
 }
 
 table.thisform tr.row1 {
-	background-color: #eeeeee;
+  background-color: #eee;
 }
 
 table.thisform th {
-	font-size: 15px;
-	font-weight: normal;
-	font-variant: small-caps;
-	padding: 6px 4px 2px;
-	text-align: left;
-	height: 25px;
-	color: #666666;
-	background: url(../images/background.gif) repeat;
+  height: 25px;
+  padding: 6px 4px 2px;
+  font-size: 15px;
+  font-weight: normal;
+  font-variant: small-caps;
+  color: #666;
+  text-align: left;
+  background: url(../images/background.gif) repeat;
 }
 
 table.thisform td {
-	padding: 3px;
-	text-align: left;
+  padding: 3px;
+  text-align: left;
 }
 
 div.icon a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 div.icon-container {
-	float: left;
+  float: left;
 }

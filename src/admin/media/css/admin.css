@@ -10,309 +10,309 @@
 /** Joomla 1.6 backend fix **/
 DIV#element-box,
 DIV.m {
-	background-color: #FFF !important;
+  background-color: #fff !important;
 }
 
 .jgrid SPAN.state {
-	width: 20px;
-	height: 13px;
-	text-align: center;
-	float: left;
-	background-repeat: no-repeat !important;
+  float: left;
+  width: 20px;
+  height: 13px;
+  text-align: center;
+  background-repeat: no-repeat !important;
 }
 
 div.pagetitle {
-	display: block !important;
+  display: block !important;
 }
 
 /** end Joomla 1.6 backend fix **/
 
 #submenu-box {
-	display: none !important;
+  display: none !important;
 }
 
 #kadmin table {
-	margin: 0;
-	padding: 0;
-	width: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 #kadmin table td {
-	padding: 5px;
+  padding: 5px;
 }
 
 table.kadmin-adminform td {
-	vertical-align: top;
+  vertical-align: top;
 }
 
 /* Small icons  */
 
 /* Large icons */
 div.kadmin-functitle.icon-cpanel {
-	background: url(../icons/kunena-logo-48-white.png) 5px 5px no-repeat;
+  background: url(../icons/kunena-logo-48-white.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-config {
-	background: url(../icons/large/config.png) 5px 5px no-repeat;
+  background: url(../icons/large/config.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-profiles {
-	background: url(../icons/large/users.png) 5px 5px no-repeat;
+  background: url(../icons/large/users.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-template {
-	background: url(../icons/large/templates.png) 5px 5px no-repeat;
+  background: url(../icons/large/templates.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-smilies {
-	background: url(../icons/large/smileys.png) 5px 5px no-repeat;
+  background: url(../icons/large/smileys.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-ranks {
-	background: url(../icons/large/ranks.png) 5px 5px no-repeat;
+  background: url(../icons/large/ranks.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-topicIcons {
-	background: url(../icons/large/topicIcons.png) 5px 5px no-repeat;
+  background: url(../icons/large/topicIcons.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-files {
-	background: url(../icons/large/files.png) 5px 5px no-repeat;
+  background: url(../icons/large/files.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-images {
-	background: url(../icons/large/images.png) 5px 5px no-repeat;
+  background: url(../icons/large/images.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-prune {
-	background: url(../icons/large/prune.png) 5px 5px no-repeat;
+  background: url(../icons/large/prune.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-syncUsers {
-	background: url(../icons/large/syncUsers.png) 5px 5px no-repeat;
+  background: url(../icons/large/syncUsers.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-recount {
-	background: url(../icons/large/recount.png) 5px 5px no-repeat;
+  background: url(../icons/large/recount.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-trash {
-	background: url(../icons/large/trash.png) 5px 5px no-repeat;
+  background: url(../icons/large/trash.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-stats {
-	background: url(../icons/large/stats.png) 5px 5px no-repeat;
+  background: url(../icons/large/stats.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-support {
-	background: url(../icons/large/support.png) 5px 5px no-repeat;
+  background: url(../icons/large/support.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-editCss {
-	background: url(../icons/large/css.png) 5px 5px no-repeat;
+  background: url(../icons/large/css.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.icon-purgerestatements {
-	background: url(../icons/large/purgerestatements.png) 5px 5px no-repeat;
+  background: url(../icons/large/purgerestatements.png) 5px 5px no-repeat;
 }
 
 div.kadmin-functitle.no-icon {
-	text-indent: 5px !important;
+  text-indent: 5px !important;
 }
 
 .left {
-	text-align: left;
+  text-align: left;
 }
 
 .right {
-	text-align: right;
+  text-align: right;
 }
 
 .center {
-	text-align: center;
+  text-align: center;
 }
 
 .nowrap {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 table.adminform,
 form.adminform {
-	margin-top: 10px !important;
+  margin-top: 10px !important;
 }
 
 #kadmin-menu a {
-	display: block;
-	font-size: 11px;
-	border-left: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	height: 25px;
-	line-height: 25px;
-	text-indent: 30px;
+  display: block;
+  height: 25px;
+  font-size: 11px;
+  line-height: 25px;
+  text-indent: 30px;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
 }
 
 .kadmin-functitle {
-	font-size: 16px;
-	text-align: left;
-	padding: 5px;
-	border: 1px solid #CCC;
-	font-weight: bold;
-	clear: both;
-	display: block;
-	height: 48px;
-	line-height: 44px;
-	text-indent: 60px;
+  display: block;
+  height: 48px;
+  padding: 5px;
+  clear: both;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 44px;
+  text-align: left;
+  text-indent: 60px;
+  border: 1px solid #ccc;
 }
 
 .krow0 td {
-	padding: 8px 5px;
-	text-align: left;
-	border-bottom: 1px dotted #ccc;
+  padding: 8px 5px;
+  text-align: left;
+  border-bottom: 1px dotted #ccc;
 }
 
 .krow1 td {
-	padding: 8px 5px;
-	text-align: left;
-	border-bottom: 1px dotted #ccc;
+  padding: 8px 5px;
+  text-align: left;
+  border-bottom: 1px dotted #ccc;
 }
 
 #kcongifcover fieldset {
-	border: 1px solid #CFDCEB;
+  border: 1px solid #cfdceb;
 }
 
 #kcongifcover fieldset legend {
-	color: #666;
+  color: #666;
 }
 
 table.kadmin-sort td {
-	height: 35px;
+  height: 35px;
 }
 
 div.tpl-thumbnail img {
-	float: left;
-	margin-bottom: 10px;
-	border: 4px solid #ccc;
-	padding: 2px;
-	max-width: 300px;
+  float: left;
+  max-width: 300px;
+  padding: 2px;
+  margin-bottom: 10px;
+  border: 4px solid #ccc;
 }
 
 input.ksm-field {
-	width: 50px;
+  width: 50px;
 }
 
 input.ksm-field-large {
-	width: 100%;
+  width: 100%;
 }
 
 .kadmin-statscover {
-	padding: 0;
+  padding: 0;
 }
 
 table.kadmin-stat {
-	background-color: #FFFFFF;
-	border: 1px solid #ddd;
-	padding: 1px;
-	width: 100%;
+  width: 100%;
+  padding: 1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
 }
 
 table.kadmin-stat th {
-	background: #EEE;
-	border-bottom: 1px solid #CCC;
-	border-top: 1px solid #EEE;
-	color: #666;
-	font-size: 11px;
-	padding: 3px 4px;
-	text-align: left;
+  padding: 3px 4px;
+  font-size: 11px;
+  color: #666;
+  text-align: left;
+  background: #eee;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #ccc;
 }
 
 table.kadmin-stat td {
-	font-size: 11px;
-	line-height: 140%;
-	padding: 4px;
-	text-align: left;
+  padding: 4px;
+  font-size: 11px;
+  line-height: 140%;
+  text-align: left;
 }
 
 table.kadmin-stat caption {
-	clear: both;
-	font-size: 14px;
-	font-weight: bold;
-	margin: 10px 0 2px 0;
-	padding: 2px;
-	text-align: left;
+  padding: 2px;
+  margin: 10px 0 2px;
+  clear: both;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
 }
 
 table.kadmin-stat .col1 {
-	background-color: #F1F3F5;
+  background-color: #f1f3f5;
 }
 
 table.kadmin-stat .col2 {
-	background-color: #FBFBFB;
+  background-color: #fbfbfb;
 }
 
 /* standard form style table */
 div.col {
-	float: left;
+  float: left;
 }
 
 div.width-45 {
-	width: 45%;
+  width: 45%;
 }
 
 div.width-55 {
-	width: 55%;
+  width: 55%;
 }
 
 div.width-50 {
-	width: 50%;
+  width: 50%;
 }
 
 div.width-70 {
-	width: 70%;
+  width: 70%;
 }
 
 div.width-30 {
-	width: 30%;
+  width: 30%;
 }
 
 div.width-60 {
-	width: 60%;
+  width: 60%;
 }
 
 div.width-40 {
-	width: 40%;
+  width: 40%;
 }
 
 table.admintable td {
-	padding: 3px;
+  padding: 3px;
 }
 
 table.admintable td.key,
 table.admintable td.paramlist_key {
-	background-color: #f6f6f6;
-	text-align: right;
-	width: 140px;
-	color: #666;
-	font-weight: bold;
-	border-bottom: 1px solid #e9e9e9;
-	border-right: 1px solid #e9e9e9;
+  width: 140px;
+  font-weight: bold;
+  color: #666;
+  text-align: right;
+  background-color: #f6f6f6;
+  border-right: 1px solid #e9e9e9;
+  border-bottom: 1px solid #e9e9e9;
 }
 
 fieldset.adminform label, fieldset.adminform span.faux-label {
-	background-color: #f6f6f6;
-	text-align: right;
-	width: 150px;
-	color: #666;
-	font-weight: bold;
-	border-bottom: 1px solid #e9e9e9;
-	border-right: 1px solid #e9e9e9;
-	margin-right: 10px;
+  width: 150px;
+  margin-right: 10px;
+  font-weight: bold;
+  color: #666;
+  text-align: right;
+  background-color: #f6f6f6;
+  border-right: 1px solid #e9e9e9;
+  border-bottom: 1px solid #e9e9e9;
 }
 
 div.current input, div.current textarea, div.current select {
-	margin: 0 2px 0 2px !important;
+  margin: 0 2px !important;
 }
 
 .icon-big {
-	font-size: 32px;
-	margin-top: 20px;
+  margin-top: 20px;
+  font-size: 32px;
 }

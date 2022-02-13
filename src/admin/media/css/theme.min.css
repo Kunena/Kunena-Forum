@@ -2484,7 +2484,8 @@ a:hover, a:focus, a:active {
 
 .proj-t-card {
 	position: relative;
-	overflow: hidden
+	overflow: hidden;
+	min-height: 170px;
 }
 
 .proj-t-card .pt-badge {

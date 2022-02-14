@@ -3364,16 +3364,16 @@
         },
         {
             "name": "phing/phing",
-            "version": "2.17.1",
+            "version": "2.17.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "a386de3986429c07434476844726a9f2679e8af2"
+                "reference": "8b8cee3eb12c24502fc4c227ac5889746248a140"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/a386de3986429c07434476844726a9f2679e8af2",
-                "reference": "a386de3986429c07434476844726a9f2679e8af2",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/8b8cee3eb12c24502fc4c227ac5889746248a140",
+                "reference": "8b8cee3eb12c24502fc4c227ac5889746248a140",
                 "shasum": ""
             },
             "require": {
@@ -3456,7 +3456,7 @@
             "support": {
                 "irc": "irc://irc.freenode.net/phing",
                 "issues": "https://www.phing.info/trac/report",
-                "source": "https://github.com/phingofficial/phing/tree/2.17.1"
+                "source": "https://github.com/phingofficial/phing/tree/2.17.2"
             },
             "funding": [
                 {
@@ -3472,7 +3472,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-01-17T11:33:15+00:00"
+            "time": "2022-02-09T09:50:58+00:00"
         },
         {
             "name": "php-cs-fixer/diff",

@@ -1034,6 +1034,55 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 	/**
 	 * @param   string  $prefix  prefix
+	 *
+	 * @return void
+	 * @throws KunenaInstallerException
+	 * @since   Kunena 6.0
+	 */
+	public function cleanMailTemplates()
+	{
+		$query = $this->db->getQuery(true);
+
+		$conditions = array(
+			$this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.reply')
+		);
+
+		$query->delete($this->db->quoteName('#__mail_templates'));
+		$query->where($conditions);
+
+		$this->db->setQuery($query);
+
+		$result = $this->db->execute();
+
+		$query = $this->db->getQuery(true);
+
+		$conditions = array(
+			$this->db->quoteName('user_id') . ' = ' . $this->db->quote('com_kunena.replymoderator')
+		);
+
+		$query->delete($this->db->quoteName('#__mail_templates'));
+		$query->where($conditions);
+
+		$this->db->setQuery($query);
+
+		$result = $this->db->execute();
+
+		$query = $this->db->getQuery(true);
+
+		$conditions = array(
+			$this->db->quoteName('user_id') . ' = ' . $this->db->quote('com_kunena.report')
+		);
+
+		$query->delete($this->db->quoteName('#__mail_templates'));
+		$query->where($conditions);
+
+		$this->db->setQuery($query);
+
+		$result = $this->db->execute();
+	}
+
+	/**
+	 * @param   string  $prefix  prefix
 	 * @param   bool    $reload  reload
 	 *
 	 * @return  mixed

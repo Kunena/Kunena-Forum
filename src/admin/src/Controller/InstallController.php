@@ -78,6 +78,7 @@ class InstallController extends FormController
 			$installer = new KunenaModelInstall;
 			$installer->uninstall();
 			$installer->deleteTables('kunena_');
+			$installer->cleanMailTemplates();
 
 			$app->enqueueMessage(Text::_('COM_KUNENA_INSTALL_REMOVED'));
 

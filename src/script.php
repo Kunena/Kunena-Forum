@@ -390,6 +390,27 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 		$db = Factory::getDbo();
 
+		$table = $db->getPrefix() . 'kunena_version';
+
+		$db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
+
+		if ($db->loadResult() == $table)
+		{
+			$db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
+			$installed = $db->loadResult();
+
+			if (!empty($installed))
+			{
+				if (version_compare($installed, '5.2.99', '<'))
+				{
+					$query = "ALTER TABLE `#__kunena_version` ADD `sampleData` boolean NOT NULL default '0' AFTER `versionname`;";
+					$db->setQuery($query);
+
+					$db->execute();
+				}
+			}
+		}
+
 		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
 		{
 			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';

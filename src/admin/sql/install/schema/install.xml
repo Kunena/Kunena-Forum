@@ -1213,6 +1213,9 @@
         <field name="state"
                type="text"
                null="0"/>
+         <field name="sampleData"
+               type="boolean"
+               null="0"/>
         <key name="PRIMARY"
              unique="1"
              columns="id"/>

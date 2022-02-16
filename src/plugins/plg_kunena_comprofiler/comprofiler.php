@@ -26,10 +26,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 class plgKunenaComprofiler extends CMSPlugin
 {
 	/**
-	 * @var     string  Looks like it's CB version 2.6.0 which works on Joomla! 4.0
+	 * @var     string  CB version 2.7.0 works with Php 8.1 and with Joomla! 4.0/4.1
 	 * @since   Kunena 6.0
 	 */
-	public $minCBVersion = '2.6.0';
+	public $minCBVersion = '2.7.0';
 
 	/**
 	 * plgKunenaComprofiler constructor.

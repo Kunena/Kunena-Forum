@@ -27,7 +27,7 @@ use ScssPhp\ScssPhp\Type;
 class Nested extends Formatter
 {
     /**
-     * @var integer
+     * @var int
      */
     private $depth;
 
@@ -221,7 +221,7 @@ class Nested extends Formatter
      *
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $block
      *
-     * @return boolean
+     * @return bool
      */
     private function hasFlatChild($block)
     {

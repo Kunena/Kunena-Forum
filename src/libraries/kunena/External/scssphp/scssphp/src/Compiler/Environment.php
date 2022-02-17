@@ -32,6 +32,26 @@ class Environment
     public $parent;
 
     /**
+     * @var Environment|null
+     */
+    public $declarationScopeParent;
+
+    /**
+     * @var Environment|null
+     */
+    public $parentStore;
+
+    /**
+     * @var array|null
+     */
+    public $selectors;
+
+    /**
+     * @var string|null
+     */
+    public $marker;
+
+    /**
      * @var array
      */
     public $store;
@@ -42,7 +62,7 @@ class Environment
     public $storeUnreduced;
 
     /**
-     * @var integer
+     * @var int
      */
     public $depth;
 }

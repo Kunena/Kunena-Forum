@@ -38,8 +38,8 @@ $embedSourceMap = false;
 /**
  * Parse argument
  *
- * @param integer $i
- * @param array $options
+ * @param int      $i
+ * @param string[] $options
  *
  * @return string|null
  */

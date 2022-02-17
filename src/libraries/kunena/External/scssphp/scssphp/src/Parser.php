@@ -12,6 +12,18 @@
 
 namespace ScssPhp\ScssPhp;
 
+use ScssPhp\ScssPhp\Block\AtRootBlock;
+use ScssPhp\ScssPhp\Block\CallableBlock;
+use ScssPhp\ScssPhp\Block\ContentBlock;
+use ScssPhp\ScssPhp\Block\DirectiveBlock;
+use ScssPhp\ScssPhp\Block\EachBlock;
+use ScssPhp\ScssPhp\Block\ElseBlock;
+use ScssPhp\ScssPhp\Block\ElseifBlock;
+use ScssPhp\ScssPhp\Block\ForBlock;
+use ScssPhp\ScssPhp\Block\IfBlock;
+use ScssPhp\ScssPhp\Block\MediaBlock;
+use ScssPhp\ScssPhp\Block\NestedPropertyBlock;
+use ScssPhp\ScssPhp\Block\WhileBlock;
 use ScssPhp\ScssPhp\Exception\ParserException;
 use ScssPhp\ScssPhp\Logger\LoggerInterface;
 use ScssPhp\ScssPhp\Logger\QuietLogger;
@@ -125,7 +137,7 @@ class Parser
      * @api
      *
      * @param string|null          $sourceName
-     * @param integer              $sourceIndex
+     * @param int                  $sourceIndex
      * @param string|null          $encoding
      * @param Cache|null           $cache
      * @param bool                 $cssOnly
@@ -305,7 +317,7 @@ class Parser
      * @param string       $buffer
      * @param string|array $out
      *
-     * @return boolean
+     * @return bool
      */
     public function parseValue($buffer, &$out)
     {
@@ -334,7 +346,7 @@ class Parser
      * @param string|array $out
      * @param bool         $shouldValidate
      *
-     * @return boolean
+     * @return bool
      */
     public function parseSelector($buffer, &$out, $shouldValidate = true)
     {
@@ -371,7 +383,7 @@ class Parser
      * @param string       $buffer
      * @param string|array $out
      *
-     * @return boolean
+     * @return bool
      */
     public function parseMediaQueryList($buffer, &$out)
     {
@@ -428,7 +440,7 @@ class Parser
      * position into $s. Then if a chain fails, use $this->seek($s) to
      * go back where we started.
      *
-     * @return boolean
+     * @return bool
      */
     protected function parseChunk()
     {
@@ -447,7 +459,8 @@ class Parser
             ) {
                 ! $this->cssOnly || $this->assertPlainCssValid(false, $s);
 
-                $atRoot = $this->pushSpecialBlock(Type::T_AT_ROOT, $s);
+                $atRoot = new AtRootBlock();
+                $this->registerPushedBlock($atRoot, $s);
                 $atRoot->selector = $selector;
                 $atRoot->with     = $with;
 
@@ -461,7 +474,8 @@ class Parser
                 $this->mediaQueryList($mediaQueryList) &&
                 $this->matchChar('{', false)
             ) {
-                $media = $this->pushSpecialBlock(Type::T_MEDIA, $s);
+                $media = new MediaBlock();
+                $this->registerPushedBlock($media, $s);
                 $media->queryList = $mediaQueryList[2];
 
                 return true;
@@ -477,7 +491,8 @@ class Parser
             ) {
                 ! $this->cssOnly || $this->assertPlainCssValid(false, $s);
 
-                $mixin = $this->pushSpecialBlock(Type::T_MIXIN, $s);
+                $mixin = new CallableBlock(Type::T_MIXIN);
+                $this->registerPushedBlock($mixin, $s);
                 $mixin->name = $mixinName;
                 $mixin->args = $args;
 
@@ -509,7 +524,8 @@ class Parser
                 ];
 
                 if (! empty($hasBlock)) {
-                    $include = $this->pushSpecialBlock(Type::T_INCLUDE, $s);
+                    $include = new ContentBlock();
+                    $this->registerPushedBlock($include, $s);
                     $include->child = $child;
                 } else {
                     $this->append($child, $s);
@@ -599,7 +615,8 @@ class Parser
             ) {
                 ! $this->cssOnly || $this->assertPlainCssValid(false, $s);
 
-                $func = $this->pushSpecialBlock(Type::T_FUNCTION, $s);
+                $func = new CallableBlock(Type::T_FUNCTION);
+                $this->registerPushedBlock($func, $s);
                 $func->name = $fnName;
                 $func->args = $args;
 
@@ -631,7 +648,8 @@ class Parser
             ) {
                 ! $this->cssOnly || $this->assertPlainCssValid(false, $s);
 
-                $each = $this->pushSpecialBlock(Type::T_EACH, $s);
+                $each = new EachBlock();
+                $this->registerPushedBlock($each, $s);
 
                 foreach ($varNames[2] as $varName) {
                     $each->vars[] = $varName[1];
@@ -660,7 +678,8 @@ class Parser
                     $cond = reset($cond[2]);
                 }
 
-                $while = $this->pushSpecialBlock(Type::T_WHILE, $s);
+                $while = new WhileBlock();
+                $this->registerPushedBlock($while, $s);
                 $while->cond = $cond;
 
                 return true;
@@ -680,7 +699,8 @@ class Parser
             ) {
                 ! $this->cssOnly || $this->assertPlainCssValid(false, $s);
 
-                $for = $this->pushSpecialBlock(Type::T_FOR, $s);
+                $for = new ForBlock();
+                $this->registerPushedBlock($for, $s);
                 $for->var   = $varName[1];
                 $for->start = $start;
                 $for->end   = $end;
@@ -697,7 +717,8 @@ class Parser
             ) {
                 ! $this->cssOnly || $this->assertPlainCssValid(false, $s);
 
-                $if = $this->pushSpecialBlock(Type::T_IF, $s);
+                $if = new IfBlock();
+                $this->registerPushedBlock($if, $s);
 
                 while (
                     $cond[0] === Type::T_LIST &&
@@ -776,20 +797,21 @@ class Parser
 
             if (isset($last) && $last[0] === Type::T_IF) {
                 list(, $if) = $last;
+                assert($if instanceof IfBlock);
 
                 if ($this->literal('@else', 5)) {
                     if ($this->matchChar('{', false)) {
-                        $else = $this->pushSpecialBlock(Type::T_ELSE, $s);
+                        $else = new ElseBlock();
                     } elseif (
                         $this->literal('if', 2) &&
                         $this->functionCallArgumentsList($cond, false, '{', false)
                     ) {
-                        $else = $this->pushSpecialBlock(Type::T_ELSEIF, $s);
+                        $else = new ElseifBlock();
                         $else->cond = $cond;
                     }
 
                     if (isset($else)) {
-                        $else->dontAppend = true;
+                        $this->registerPushedBlock($else, $s);
                         $if->cases[] = $else;
 
                         return true;
@@ -827,7 +849,8 @@ class Parser
                 ($t1 = $this->supportsQuery($supportQuery)) &&
                 ($t2 = $this->matchChar('{', false))
             ) {
-                $directive = $this->pushSpecialBlock(Type::T_DIRECTIVE, $s);
+                $directive = new DirectiveBlock();
+                $this->registerPushedBlock($directive, $s);
                 $directive->name  = 'supports';
                 $directive->value = $supportQuery;
 
@@ -848,11 +871,12 @@ class Parser
                     $dirName = [Type::T_STRING, '', $dirName];
                 }
                 if ($dirName === 'media') {
-                    $directive = $this->pushSpecialBlock(Type::T_MEDIA, $s);
+                    $directive = new MediaBlock();
                 } else {
-                    $directive = $this->pushSpecialBlock(Type::T_DIRECTIVE, $s);
+                    $directive = new DirectiveBlock();
                     $directive->name = $dirName;
                 }
+                $this->registerPushedBlock($directive, $s);
 
                 if (isset($dirValue)) {
                     ! $this->cssOnly || ($dirValue = $this->assertPlainCssValid($dirValue));
@@ -1028,7 +1052,8 @@ class Parser
             if ($this->matchChar('{', false)) {
                 ! $this->cssOnly || $this->assertPlainCssValid(false);
 
-                $propBlock = $this->pushSpecialBlock(Type::T_NESTED_PROPERTY, $s);
+                $propBlock = new NestedPropertyBlock();
+                $this->registerPushedBlock($propBlock, $s);
                 $propBlock->prefix = $name;
                 $propBlock->hasValue = $foundSomething;
 
@@ -1054,12 +1079,13 @@ class Parser
                 }
             }
 
-            if (isset($block->type) && $block->type === Type::T_INCLUDE) {
+            if ($block instanceof ContentBlock) {
                 $include = $block->child;
+                assert(\is_array($include));
                 unset($block->child);
                 $include[3] = $block;
                 $this->append($include, $s);
-            } elseif (empty($block->dontAppend)) {
+            } elseif (!$block instanceof ElseBlock && !$block instanceof ElseifBlock) {
                 $type = isset($block->type) ? $block->type : Type::T_BLOCK;
                 $this->append([$type, $block], $s);
             }
@@ -1088,20 +1114,34 @@ class Parser
      * Push block onto parse tree
      *
      * @param array|null $selectors
-     * @param integer $pos
+     * @param int        $pos
      *
      * @return Block
      */
     protected function pushBlock($selectors, $pos = 0)
     {
+        $b = new Block();
+        $b->selectors = $selectors;
+
+        $this->registerPushedBlock($b, $pos);
+
+        return $b;
+    }
+
+    /**
+     * @param Block $b
+     * @param int   $pos
+     *
+     * @return void
+     */
+    private function registerPushedBlock(Block $b, $pos)
+    {
         list($line, $column) = $this->getSourcePosition($pos);
 
-        $b = new Block();
         $b->sourceName   = $this->sourceName;
         $b->sourceLine   = $line;
         $b->sourceColumn = $column;
         $b->sourceIndex  = $this->sourceIndex;
-        $b->selectors    = $selectors;
         $b->comments     = [];
         $b->parent       = $this->env;
 
@@ -1126,15 +1166,15 @@ class Parser
                 $this->append(null);
             }
         }
-
-        return $b;
     }
 
     /**
      * Push special (named) block onto parse tree
      *
+     * @deprecated
+     *
      * @param string  $type
-     * @param integer $pos
+     * @param int     $pos
      *
      * @return Block
      */
@@ -1183,11 +1223,11 @@ class Parser
     /**
      * Peek input stream
      *
-     * @param string  $regex
-     * @param array   $out
-     * @param integer $from
+     * @param string $regex
+     * @param array  $out
+     * @param int    $from
      *
-     * @return integer
+     * @return int
      */
     protected function peek($regex, &$out, $from = null)
     {
@@ -1204,7 +1244,7 @@ class Parser
     /**
      * Seek to position in input stream (or return current position in input stream)
      *
-     * @param integer $where
+     * @param int $where
      */
     protected function seek($where)
     {
@@ -1215,7 +1255,8 @@ class Parser
      * Assert a parsed part is plain CSS Valid
      *
      * @param array|false $parsed
-     * @param int $startPos
+     * @param int         $startPos
+     *
      * @throws ParserException
      */
     protected function assertPlainCssValid($parsed, $startPos = null)
@@ -1243,7 +1284,10 @@ class Parser
 
     /**
      * Check a parsed element is plain CSS Valid
+     *
      * @param array $parsed
+     * @param bool  $allowExpression
+     *
      * @return bool|array
      */
     protected function isPlainCssValidElement($parsed, $allowExpression = false)
@@ -1423,7 +1467,7 @@ class Parser
      * @param array  $m     Matches (passed by reference)
      * @param string $delim Delimiter
      *
-     * @return boolean True if match; false otherwise
+     * @return bool True if match; false otherwise
      */
     protected function matchString(&$m, $delim)
     {
@@ -1459,11 +1503,11 @@ class Parser
     /**
      * Try to match something on head of buffer
      *
-     * @param string  $regex
-     * @param array   $out
-     * @param boolean $eatWhitespace
+     * @param string $regex
+     * @param array  $out
+     * @param bool   $eatWhitespace
      *
-     * @return boolean
+     * @return bool
      */
     protected function match($regex, &$out, $eatWhitespace = null)
     {
@@ -1489,10 +1533,10 @@ class Parser
     /**
      * Match a single string
      *
-     * @param string  $char
-     * @param boolean $eatWhitespace
+     * @param string $char
+     * @param bool   $eatWhitespace
      *
-     * @return boolean
+     * @return bool
      */
     protected function matchChar($char, $eatWhitespace = null)
     {
@@ -1516,11 +1560,11 @@ class Parser
     /**
      * Match literal string
      *
-     * @param string  $what
-     * @param integer $len
-     * @param boolean $eatWhitespace
+     * @param string $what
+     * @param int    $len
+     * @param bool   $eatWhitespace
      *
-     * @return boolean
+     * @return bool
      */
     protected function literal($what, $len, $eatWhitespace = null)
     {
@@ -1544,7 +1588,7 @@ class Parser
     /**
      * Match some whitespace
      *
-     * @return boolean
+     * @return bool
      */
     protected function whitespace()
     {
@@ -1643,7 +1687,7 @@ class Parser
      * Append statement to current block
      *
      * @param array|null $statement
-     * @param integer $pos
+     * @param int        $pos
      */
     protected function append($statement, $pos = null)
     {
@@ -1688,7 +1732,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function mediaQueryList(&$out)
     {
@@ -1700,7 +1744,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function mediaQuery(&$out)
     {
@@ -1754,7 +1798,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function supportsQuery(&$out)
     {
@@ -1887,7 +1931,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function mediaExpression(&$out)
     {
@@ -1920,7 +1964,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function argValues(&$out)
     {
@@ -1945,7 +1989,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function argValue(&$out)
     {
@@ -2025,10 +2069,10 @@ class Parser
     /**
      * Parse directive value list that considers $vars as keyword
      *
-     * @param array          $out
-     * @param boolean|string $endChar
+     * @param array       $out
+     * @param bool|string $endChar
      *
-     * @return boolean
+     * @return bool
      */
     protected function directiveValue(&$out, $endChar = false)
     {
@@ -2089,7 +2133,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function valueList(&$out)
     {
@@ -2105,10 +2149,11 @@ class Parser
      * Parse a function call, where externals () are part of the call
      * and not of the value list
      *
-     * @param $out
-     * @param bool $mandatoryEnclos
+     * @param array       $out
+     * @param bool        $mandatoryEnclos
      * @param null|string $charAfter
-     * @param null|bool $eatWhiteSp
+     * @param null|bool   $eatWhiteSp
+     *
      * @return bool
      */
     protected function functionCallArgumentsList(&$out, $mandatoryEnclos = true, $charAfter = null, $eatWhiteSp = null)
@@ -2145,7 +2190,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function spaceList(&$out)
     {
@@ -2155,12 +2200,12 @@ class Parser
     /**
      * Parse generic list
      *
-     * @param array   $out
-     * @param string  $parseItem The name of the method used to parse items
-     * @param string  $delim
-     * @param boolean $flatten
+     * @param array  $out
+     * @param string $parseItem The name of the method used to parse items
+     * @param string $delim
+     * @param bool   $flatten
      *
-     * @return boolean
+     * @return bool
      */
     protected function genericList(&$out, $parseItem, $delim = '', $flatten = true)
     {
@@ -2256,11 +2301,11 @@ class Parser
     /**
      * Parse expression
      *
-     * @param array   $out
-     * @param boolean $listOnly
-     * @param boolean $lookForExp
+     * @param array $out
+     * @param bool  $listOnly
+     * @param bool  $lookForExp
      *
-     * @return boolean
+     * @return bool
      */
     protected function expression(&$out, $listOnly = false, $lookForExp = true)
     {
@@ -2322,11 +2367,11 @@ class Parser
      * Parse expression specifically checking for lists in parenthesis or brackets
      *
      * @param array   $out
-     * @param integer $s
+     * @param int     $s
      * @param string  $closingParen
      * @param array   $allowedTypes
      *
-     * @return boolean
+     * @return bool
      */
     protected function enclosedExpression(&$out, $s, $closingParen = ')', $allowedTypes = [Type::T_LIST, Type::T_MAP])
     {
@@ -2381,8 +2426,8 @@ class Parser
     /**
      * Parse left-hand side of subexpression
      *
-     * @param array   $lhs
-     * @param integer $minP
+     * @param array $lhs
+     * @param int   $minP
      *
      * @return array
      */
@@ -2437,7 +2482,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function value(&$out)
     {
@@ -2645,7 +2690,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function parenValue(&$out)
     {
@@ -2684,7 +2729,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function progid(&$out)
     {
@@ -2717,7 +2762,7 @@ class Parser
      * @param string $name
      * @param array  $func
      *
-     * @return boolean
+     * @return bool
      */
     protected function func($name, &$func)
     {
@@ -2771,7 +2816,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function argumentList(&$out)
     {
@@ -2816,7 +2861,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function argumentDef(&$out)
     {
@@ -2878,7 +2923,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function map(&$out)
     {
@@ -2920,7 +2965,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function color(&$out)
     {
@@ -2946,7 +2991,7 @@ class Parser
      *
      * @param array $unit
      *
-     * @return boolean
+     * @return bool
      */
     protected function unit(&$unit)
     {
@@ -2971,8 +3016,9 @@ class Parser
      * Parse string
      *
      * @param array $out
+     * @param bool  $keepDelimWithInterpolation
      *
-     * @return boolean
+     * @return bool
      */
     protected function string(&$out, $keepDelimWithInterpolation = false)
     {
@@ -3053,7 +3099,8 @@ class Parser
 
     /**
      * @param string $out
-     * @param bool $inKeywords
+     * @param bool   $inKeywords
+     *
      * @return bool
      */
     protected function matchEscapeCharacter(&$out, $inKeywords = false)
@@ -3103,10 +3150,10 @@ class Parser
     /**
      * Parse keyword or interpolation
      *
-     * @param array   $out
-     * @param boolean $restricted
+     * @param array $out
+     * @param bool  $restricted
      *
-     * @return boolean
+     * @return bool
      */
     protected function mixedKeyword(&$out, $restricted = false)
     {
@@ -3147,14 +3194,14 @@ class Parser
     /**
      * Parse an unbounded string stopped by $end
      *
-     * @param string  $end
-     * @param array   $out
-     * @param string  $nestOpen
-     * @param string  $nestClose
-     * @param boolean $rtrim
+     * @param string $end
+     * @param array  $out
+     * @param string $nestOpen
+     * @param string $nestClose
+     * @param bool   $rtrim
      * @param string $disallow
      *
-     * @return boolean
+     * @return bool
      */
     protected function openString($end, &$out, $nestOpen = null, $nestClose = null, $rtrim = true, $disallow = null)
     {
@@ -3230,9 +3277,9 @@ class Parser
      * Parser interpolation
      *
      * @param string|array $out
-     * @param boolean      $lookWhite save information about whitespace before and after
+     * @param bool         $lookWhite save information about whitespace before and after
      *
-     * @return boolean
+     * @return bool
      */
     protected function interpolation(&$out, $lookWhite = true)
     {
@@ -3287,7 +3334,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function propertyName(&$out)
     {
@@ -3342,7 +3389,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function customProperty(&$out)
     {
@@ -3400,9 +3447,9 @@ class Parser
      * Parse comma separated selector list
      *
      * @param array $out
-     * @param string|boolean $subSelector
+     * @param string|bool $subSelector
      *
-     * @return boolean
+     * @return bool
      */
     protected function selectors(&$out, $subSelector = false)
     {
@@ -3436,9 +3483,9 @@ class Parser
      * Parse whitespace separated selector list
      *
      * @param array          $out
-     * @param string|boolean $subSelector
+     * @param string|bool $subSelector
      *
-     * @return boolean
+     * @return bool
      */
     protected function selector(&$out, $subSelector = false)
     {
@@ -3494,7 +3541,8 @@ class Parser
      * - but this require a better formal selector representation instead of the array we have now
      *
      * @param string $out
-     * @param bool $keepEscapedNumber
+     * @param bool   $keepEscapedNumber
+     *
      * @return bool
      */
     protected function matchEscapeCharacterInSelector(&$out, $keepEscapedNumber = false)
@@ -3539,9 +3587,9 @@ class Parser
      * }}
      *
      * @param array          $out
-     * @param string|boolean $subSelector
+     * @param string|bool $subSelector
      *
-     * @return boolean
+     * @return bool
      */
     protected function selectorSingle(&$out, $subSelector = false)
     {
@@ -3765,7 +3813,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function variable(&$out)
     {
@@ -3792,11 +3840,11 @@ class Parser
     /**
      * Parse a keyword
      *
-     * @param string  $word
-     * @param boolean $eatWhitespace
-     * @param boolean $inSelector
+     * @param string $word
+     * @param bool   $eatWhitespace
+     * @param bool   $inSelector
      *
-     * @return boolean
+     * @return bool
      */
     protected function keyword(&$word, $eatWhitespace = null, $inSelector = false)
     {
@@ -3859,11 +3907,11 @@ class Parser
     /**
      * Parse a keyword that should not start with a number
      *
-     * @param string  $word
-     * @param boolean $eatWhitespace
-     * @param boolean $inSelector
+     * @param string $word
+     * @param bool   $eatWhitespace
+     * @param bool   $inSelector
      *
-     * @return boolean
+     * @return bool
      */
     protected function restrictedKeyword(&$word, $eatWhitespace = null, $inSelector = false)
     {
@@ -3883,7 +3931,7 @@ class Parser
      *
      * @param string|array $placeholder
      *
-     * @return boolean
+     * @return bool
      */
     protected function placeholder(&$placeholder)
     {
@@ -3912,7 +3960,7 @@ class Parser
      *
      * @param array $out
      *
-     * @return boolean
+     * @return bool
      */
     protected function url(&$out)
     {
@@ -3947,7 +3995,7 @@ class Parser
      * Consume an end of statement delimiter
      * @param bool $eatWhitespace
      *
-     * @return boolean
+     * @return bool
      */
     protected function end($eatWhitespace = null)
     {
@@ -4065,7 +4113,7 @@ class Parser
     /**
      * Get source line number and column (given character position in the buffer)
      *
-     * @param integer $pos
+     * @param int $pos
      *
      * @return array
      */

@@ -27,7 +27,7 @@ class OutputBlock
     public $type;
 
     /**
-     * @var integer
+     * @var int
      */
     public $depth;
 
@@ -57,12 +57,12 @@ class OutputBlock
     public $sourceName;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     public $sourceLine;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     public $sourceColumn;
 }

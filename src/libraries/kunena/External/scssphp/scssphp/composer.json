@@ -42,7 +42,7 @@
         "symfony/phpunit-bridge": "^5.1",
         "thoughtbot/bourbon": "^7.0",
         "twbs/bootstrap": "~5.0",
-        "twbs/bootstrap4": "4.6.0",
+        "twbs/bootstrap4": "4.6.1",
         "zurb/foundation": "~6.5"
     },
     "repositories": [
@@ -50,16 +50,16 @@
             "type": "package",
             "package": {
                 "name": "sass/sass-spec",
-                "version": "2021.09.15",
+                "version": "2021.11.30",
                 "source": {
                     "type": "git",
                     "url": "https://github.com/sass/sass-spec.git",
-                    "reference": "eb2d7a0865c1faf0b55a39ff962b24aca9b4c955"
+                    "reference": "ee5b460ac84b1ce27b86e22c0252b4296444cf3a"
                 },
                 "dist": {
                     "type": "zip",
-                    "url": "https://api.github.com/repos/sass/sass-spec/zipball/eb2d7a0865c1faf0b55a39ff962b24aca9b4c955",
-                    "reference": "eb2d7a0865c1faf0b55a39ff962b24aca9b4c955",
+                    "url": "https://api.github.com/repos/sass/sass-spec/zipball/ee5b460ac84b1ce27b86e22c0252b4296444cf3a",
+                    "reference": "ee5b460ac84b1ce27b86e22c0252b4296444cf3a",
                     "shasum": ""
                 }
             }
@@ -86,16 +86,16 @@
             "type": "package",
             "package": {
                 "name": "twbs/bootstrap4",
-                "version": "v4.6.0",
+                "version": "v4.6.1",
                 "source": {
                     "type": "git",
                     "url": "https://github.com/twbs/bootstrap.git",
-                    "reference": "6ffb0b48e455430f8a5359ed689ad64c1143fac2"
+                    "reference": "043a03c95a2ad6738f85b65e53b9dbdfb03b8d10"
                 },
                 "dist": {
                     "type": "zip",
-                    "url": "https://api.github.com/repos/twbs/bootstrap/zipball/6ffb0b48e455430f8a5359ed689ad64c1143fac2",
-                    "reference": "6ffb0b48e455430f8a5359ed689ad64c1143fac2",
+                    "url": "https://api.github.com/repos/twbs/bootstrap/zipball/043a03c95a2ad6738f85b65e53b9dbdfb03b8d10",
+                    "reference": "043a03c95a2ad6738f85b65e53b9dbdfb03b8d10",
                     "shasum": ""
                 }
             }
@@ -103,6 +103,9 @@
     ],
     "bin": ["bin/pscss"],
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
     }
 }

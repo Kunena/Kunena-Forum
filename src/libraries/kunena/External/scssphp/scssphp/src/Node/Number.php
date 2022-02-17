@@ -38,7 +38,7 @@ class Number extends Node implements \ArrayAccess
     const PRECISION = 10;
 
     /**
-     * @var integer
+     * @var int
      * @deprecated use {Number::PRECISION} instead to read the precision. Configuring it is not supported anymore.
      */
     public static $precision = self::PRECISION;
@@ -81,7 +81,7 @@ class Number extends Node implements \ArrayAccess
     ];
 
     /**
-     * @var integer|float
+     * @var int|float
      */
     private $dimension;
 
@@ -100,7 +100,7 @@ class Number extends Node implements \ArrayAccess
     /**
      * Initialize number
      *
-     * @param integer|float   $dimension
+     * @param int|float       $dimension
      * @param string[]|string $numeratorUnits
      * @param string[]        $denominatorUnits
      *
@@ -147,7 +147,7 @@ class Number extends Node implements \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * @return bool
      */
     #[\ReturnTypeWillChange]
     public function offsetExists($offset)
@@ -173,7 +173,7 @@ class Number extends Node implements \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
@@ -200,7 +200,7 @@ class Number extends Node implements \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * @return void
      */
     #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
@@ -209,7 +209,7 @@ class Number extends Node implements \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * @return void
      */
     #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
@@ -220,7 +220,7 @@ class Number extends Node implements \ArrayAccess
     /**
      * Returns true if the number is unitless
      *
-     * @return boolean
+     * @return bool
      */
     public function unitless()
     {

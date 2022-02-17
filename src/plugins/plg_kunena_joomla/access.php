@@ -80,24 +80,24 @@ class KunenaAccessJoomla
 
 		if ($category->accesstype == 'joomla.group')
 		{
-			$groupname  = $this->getGroupName($category->accesstype, $category->pubAccess);
-			$accessname = Text::sprintf($category->pubRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? Text::_($groupname) : Text::_('COM_KUNENA_NOBODY'));
+			$groupname  = (string) $this->getGroupName($category->accesstype, $category->pubAccess);
+			$accessname = Text::sprintf($category->pubRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? Text::_((string) $groupname) : Text::_('COM_KUNENA_NOBODY'));
 
 			$list["joomla.group.{$category->pubAccess}"] = ['type'  => 'joomla.group', 'id' => $category->pubAccess, 'alias' => $accessname,
 			                                                'title' => $accessname, ];
 
-			$groupname = $this->getGroupName($category->accesstype, $category->adminAccess);
+			$groupname = (string) $this->getGroupName((string) $category->accesstype,  (string) $category->adminAccess);
 
 			if ($groupname && $category->pubAccess != $category->adminAccess)
 			{
-				$accessname                                    = Text::sprintf($category->adminRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', Text::_($groupname));
+				$accessname                                    = Text::sprintf($category->adminRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', Text::_((string) $groupname));
 				$list["joomla.group.{$category->adminAccess}"] = ['type'  => 'joomla.group', 'id' => $category->adminAccess, 'alias' => $accessname,
 				                                                  'title' => $accessname, ];
 			}
 		}
 		else
 		{
-			$groupname                                = $this->getGroupName($category->accesstype, $category->access);
+			$groupname                                = (string) $this->getGroupName($category->accesstype, $category->access);
 			$list["joomla.level.{$category->access}"] = ['type'  => 'joomla.level', 'id' => $category->access, 'alias' => $groupname,
 			                                             'title' => $groupname, ];
 		}

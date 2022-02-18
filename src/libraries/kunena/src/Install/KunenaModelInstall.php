@@ -1052,12 +1052,19 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 		$this->db->setQuery($query);
 
-		$result = $this->db->execute();
+		try
+		{
+			$this->db->execute();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
 
 		$query = $this->db->getQuery(true);
 
 		$conditions = array(
-			$this->db->quoteName('user_id') . ' = ' . $this->db->quote('com_kunena.replymoderator')
+			$this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.replymoderator')
 		);
 
 		$query->delete($this->db->quoteName('#__mail_templates'));
@@ -1065,12 +1072,19 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 		$this->db->setQuery($query);
 
-		$result = $this->db->execute();
+		try
+		{
+			$this->db->execute();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
 
 		$query = $this->db->getQuery(true);
 
 		$conditions = array(
-			$this->db->quoteName('user_id') . ' = ' . $this->db->quote('com_kunena.report')
+			$this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.report')
 		);
 
 		$query->delete($this->db->quoteName('#__mail_templates'));
@@ -1078,7 +1092,14 @@ class KunenaModelInstall extends BaseDatabaseModel
 
 		$this->db->setQuery($query);
 
-		$result = $this->db->execute();
+		try
+		{
+			$this->db->execute();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+		}
 	}
 
 	/**

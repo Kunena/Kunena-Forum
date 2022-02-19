@@ -34,35 +34,23 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                 <input type="hidden" name="task" value="login"/>
 				<?php echo HTMLHelper::_('form.token'); ?>
 
-                <div class="form-group" id="kform-desktop-login-username">
+                <div class="mod-login__username form-group" id="kform-desktop-login-username">
                     <div class="input-group">
-                        <div class="input-group-prepend">
-							<span class="input-group-text">
-								<?php echo KunenaIcons::user(); ?>
-								<label for="kdesktop-username" class="element-invisible">
-									<?php echo Text::_('JGLOBAL_USERNAME'); ?>
-								</label>
-							</span>
-                            <input class="form-control" id="kdesktop-username" name="username" tabindex="1"
-                                   autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"
-                                   type="text">
-                        </div>
+                        <input id="kdesktop-username" type="text" name="username" class="form-control" tabindex="1" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>">
+                        <label for="kdesktop-username" class="visually-hidden"><?php echo Text::_('JGLOBAL_USERNAME'); ?></label>
+                        <span class="input-group-text" title="Username">
+						<?php echo KunenaIcons::user(); ?>
+					</span>
                     </div>
                 </div>
 
-                <div class="form-group" id="kform-desktop-login-password">
+                <div class="mod-login__username form-group" id="kform-desktop-login-password">
                     <div class="input-group">
-                        <div class="input-group-prepend">
-							<span class="input-group-text">
-								<?php echo KunenaIcons::lock(); ?>
-								<label for="klogin-desktop-passwd" class="element-invisible">
-									<?php echo Text::_('JGLOBAL_PASSWORD'); ?>
-								</label>
-							</span>
-                            <input class="form-control" id="klogin-desktop-passwd" name="password" tabindex="2"
-                                   autocomplete="current-password"
-                                   placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" type="password">
-                        </div>
+                        <input id="klogin-desktop-passwd" type="password" name="password" class="form-control" tabindex="1" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>">
+                        <label for="klogin-desktop-passwd" class="visually-hidden"><?php echo Text::_('JGLOBAL_PASSWORD'); ?></label>
+                        <span class="input-group-text" title="password">
+						<?php echo KunenaIcons::lock(); ?>
+					</span>
                     </div>
                 </div>
 

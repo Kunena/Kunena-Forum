@@ -1366,3 +1366,12 @@ a .rounded,
 .btn-group {
   margin-bottom: 0;
 }
+
+#kform-desktop-login-password .input-group,
+#kform-desktop-login-username .input-group {
+  flex-wrap: nowrap;
+}
+
+.table>:not(:first-child) {
+  border-top: 0;
+}

@@ -160,7 +160,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics)
             <tbody class="topic-list">
 			<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
                 <tr>
-                    <th scope="col"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></th>
+                    <th scope="col" colspan="4" class="text-center"><?php echo Text::_('COM_KUNENA_VIEW_NO_TOPICS') ?></th>
                 </tr>
 			<?php else : ?>
 				<?php $counter = 2; ?>

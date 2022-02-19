@@ -460,17 +460,15 @@ Text::script('COM_KUNENA_POLL_TITLE');
             <h2>
 				<?php echo Text::_('COM_KUNENA_POST_SUBSCRIBE'); ?>
             </h2>
-            <div class="shadow-lg pl-5 pt-3 pb-1 mb-5 rounded">
+            <div class="shadow-lg p-3 mb-5 rounded">
                 <div class="form-group row" id="kpost-subscribe">
                     <div class="controls">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="subscribeMe" id="subscribeMe"
-                                   value="1" <?php if ($this->subscriptionsChecked)
-							{
-								echo 'checked="checked"';
-							} ?>/>
-                            <label class="custom-control-label"
-                                   for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionsChecked)
+                            {
+	                            echo 'checked="checked"';
+                            } ?>>
+                            <label class="form-check-label" for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
                         </div>
                     </div>
                 </div>
@@ -481,7 +479,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
             <h2>
 				<?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?>
             </h2>
-            <div class="shadow-lg pl-5 pt-3 pb-1 mb-5 rounded">
+            <div class="shadow-lg p-3 mb-5 rounded">
                 <div class="form-group row" id="kanynomous-check">
                     <div class="controls">
                         <div class="custom-control custom-checkbox">

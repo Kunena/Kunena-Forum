@@ -393,6 +393,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		$table = $db->getPrefix() . 'kunena_version';
 
 		$db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
+		$upgrade = 0;
 
 		if ($db->loadResult() == $table)
 		{
@@ -407,6 +408,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 					$db->setQuery($query);
 
 					$db->execute();
+
+					$upgrade = 1;
 				}
 			}
 		}
@@ -423,6 +426,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$installdate = Factory::getDate('now');
 			$state       = '';
 			$sampleData  = 0;
+
+			if ($upgrade == 1)
+			{
+				$sampleData = 1;
+			}
 
 			$query = $db->getQuery(true);
 

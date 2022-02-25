@@ -41,12 +41,12 @@ UPDATE `#__kunena_users_banned` SET `created_time` = CASE WHEN `created_time` IN
 UPDATE `#__kunena_users_banned` SET `modified_time` = CASE WHEN `modified_time` IN ('0000-00-00 00:00:00', '1000-01-01 00:00:00') THEN NULL ELSE `modified_time` END;
 ALTER TABLE `#__kunena_topics` CHANGE `params` `params` TEXT NULL;
 ALTER TABLE `#__kunena_user_topics` CHANGE `params` `params` text NULL;
-INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
 VALUES ('com_kunena.reply', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
-INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
 VALUES ('com_kunena.replymoderator', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
-INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
 VALUES ('com_kunena.report', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');

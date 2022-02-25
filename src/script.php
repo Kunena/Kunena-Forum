@@ -114,6 +114,12 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			return false;
 		}
 
+		$sqlfiles = JPATH_ADMINISTRATOR . '/components/com_kunena/sql/updates/mysql';
+		if (is_dir($sqlfiles))
+		{
+			Folder::delete($sqlfiles);
+		}
+
 		return parent::preflight($type, $parent);
 	}
 

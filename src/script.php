@@ -11,9 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
@@ -289,20 +287,40 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			return true;
 		}
 
-		$db->setQuery("SELECT version FROM {$table} ORDER BY `id` DESC", 0, 1);
-		$installed = $db->loadResult();
+		$installed = $db->setQuery(
+			$db->getQuery(true)
+				->select('version')
+				->from('#__kunena_version')->order('id DESC')
+				->setLimit(1)
+		)->loadResult();
 
 		if (!$installed)
 		{
 			return true;
 		}
 
-		// Don't allow to upgrade before he version 5.1.0
+		// Don't allow to upgrade before the version 5.1.0
 		if (version_compare($installed, '5.1.0', '<'))
 		{
-			$app->enqueueMessage('You should not updgrade Kunena from the version ' . $installed . ', you can do the upgrade only since 5.1.0', 'notice');
+			$app->enqueueMessage('You should not upgrade Kunena from the version ' . $installed . ', you can do the upgrade only since 5.1.0', 'notice');
 
 			return false;
+		}
+
+		// Add Kunena version into joomla schema.
+		if (version_compare($installed, '6.0.0-RC1-DEV', '<'))
+		{
+			$extensionId = $db->setQuery(
+				$db->getQuery(true)
+					->select('extension_id')
+					->from('#__extensions')
+					->where('name = ' . $db->quote('com_kunena'))
+			)->loadResult();
+
+			$query = "INSERT INTO `#__schemas` (`extension_id`, `version_id`) VALUES ({$extensionId}, {$db->quote($installed)});";
+			$db->setQuery($query);
+
+			$db->execute();
 		}
 
 		return true;
@@ -461,7 +479,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 					$db->quoteName('installdate'),
 					$db->quoteName('state'),
 				]
-				)
+			)
 				->values(implode(', ', $values));
 				$db->setQuery($query);
 

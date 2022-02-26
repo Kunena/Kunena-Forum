@@ -20,10 +20,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_announcement`
     `created_by`   int(11)    NOT NULL default '0',
     `sdescription` text       NOT NULL,
     `description`  text       NOT NULL,
-    `created`      datetime            DEFAULT NULL,
+    `created`      datetime   NOT NULL DEFAULT '1000-01-01 00:00:00',
     `published`    tinyint(1) NOT NULL default '0',
-    `publish_up`   datetime            DEFAULT NULL,
-    `publish_down` datetime            DEFAULT NULL,
+    `publish_up`   datetime   NOT NULL DEFAULT '1000-01-01 00:00:00',
+    `publish_down` datetime   NOT NULL DEFAULT '1000-01-01 00:00:00',
     `ordering`     tinyint(4) NOT NULL default '0',
     `showdate`     tinyint(1) NOT NULL default '1',
     PRIMARY KEY (id)
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `published`        tinyint(4)   NOT NULL default '0',
     `channels`         text         NULL,
     `checked_out`      int(11)      NOT NULL default '0',
-    `checked_out_time` datetime     NULL     DEFAULT NULL,
+    `checked_out_time` datetime 	NOT NULL DEFAULT '1000-01-01 00:00:00',
     `review`           tinyint(4)   NOT NULL default '0',
     `allowAnonymous`   tinyint 		NOT NULL DEFAULT '0',
     `postAnonymous`    tinyint      NOT NULL DEFAULT '0',
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics`
     `last_post_message`     text       NULL,
     `last_post_guest_name`  tinytext   NULL,
     `rating`                tinyint(6) NOT NULL default '0',
-    `params`                text       NULL,
+    `params`                text       CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     PRIMARY KEY (id),
     KEY `category_id` (category_id),
     KEY `locked` (locked),
@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_users`
     `pollid`   int(11)   NULL,
     `userid`   int(11)   NULL,
     `votes`    int(11)   NULL,
-    `lasttime` datetime  NULL DEFAULT NULL,
+    `lasttime` datetime  NOT NULL DEFAULT '1000-01-01 00:00:00',
     `lastvote` int(11)   NULL,
     UNIQUE KEY `pollid` (pollid, userid)
 )
@@ -300,10 +300,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private_user_map`
 CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
 (
     `rankId`      mediumint UNSIGNED NOT NULL AUTO_INCREMENT,
-    `rankTitle`   varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+    `rankTitle`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
     `rankMin`     mediumint UNSIGNED NOT NULL DEFAULT '0',
     `rankSpecial` tinyint UNSIGNED NOT NULL DEFAULT '0',
-    `rankImage`   varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+    `rankImage`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     PRIMARY KEY (rankId)
 )
     ENGINE = InnoDB
@@ -316,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_rate`
     `topic_id` int(11)               NULL,
     `userid`   int(11)               NULL,
     `rate`     mediumint(8) unsigned NOT NULL default '0',
-    `time`     DATETIME              NULL     DEFAULT NULL,
+    `time`     datetime 			 NOT NULL,
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB
@@ -355,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_thankyou`
     `postid`       int(11)  NOT NULL,
     `userid`       int(11)  NOT NULL,
     `targetuserid` int(11)  NOT NULL,
-    `time`         datetime NULL DEFAULT NULL,
+    `time`         datetime NOT NULL,
     UNIQUE KEY `postid` (postid, userid),
     KEY `userid` (userid),
     KEY `targetuserid` (targetuserid)
@@ -425,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `view`             varchar(8)   NOT NULL default '',
     `signature`        text         NULL,
     `moderator`        int(11)      NULL     default '0',
-    `banned`           datetime     NULL     DEFAULT NULL,
+    `banned`           datetime     DEFAULT '1000-01-01 00:00:00',
     `ordering`         int(11)      NULL     default '0',
     `posts`            int(11)      NULL     default '0',
     `avatar`           varchar(191) NULL,
@@ -498,7 +498,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users_banned`
     `blocked`        tinyint(4)   NOT NULL default '0',
     `expiration`     datetime     NULL     DEFAULT NULL,
     `created_by`     int(11)      NOT NULL,
-    `created_time`   datetime     NULL     DEFAULT NULL,
+    `created_time`   datetime     NOT NULL,
     `reason_private` text         NULL,
     `reason_public`  text         NULL,
     `modified_by`    int(11)      NULL,

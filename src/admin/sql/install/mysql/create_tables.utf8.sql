@@ -20,10 +20,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_announcement`
     `created_by`   int(11)    NOT NULL default '0',
     `sdescription` text       NOT NULL,
     `description`  text       NOT NULL,
-    `created`      datetime   NOT NULL DEFAULT '1000-01-01 00:00:00',
+    `created`      datetime   NULL DEFAULT NULL,
     `published`    tinyint(1) NOT NULL default '0',
-    `publish_up`   datetime   NOT NULL DEFAULT '1000-01-01 00:00:00',
-    `publish_down` datetime   NOT NULL DEFAULT '1000-01-01 00:00:00',
+    `publish_up`   datetime   NULL DEFAULT NULL,
+    `publish_down` datetime   NULL DEFAULT NULL,
     `ordering`     tinyint(4) NOT NULL default '0',
     `showdate`     tinyint(1) NOT NULL default '1',
     PRIMARY KEY (id)
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `published`        tinyint(4)   NOT NULL default '0',
     `channels`         text         NULL,
     `checked_out`      int(11)      NOT NULL default '0',
-    `checked_out_time` datetime 	NOT NULL DEFAULT '1000-01-01 00:00:00',
+    `checked_out_time` datetime     NULL DEFAULT NULL,
     `review`           tinyint(4)   NOT NULL default '0',
     `allowAnonymous`   tinyint 		NOT NULL DEFAULT '0',
     `postAnonymous`    tinyint      NOT NULL DEFAULT '0',
@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_users`
     `pollid`   int(11)   NULL,
     `userid`   int(11)   NULL,
     `votes`    int(11)   NULL,
-    `lasttime` datetime  NOT NULL DEFAULT '1000-01-01 00:00:00',
+    `lasttime` datetime  NULL DEFAULT NULL,
     `lastvote` int(11)   NULL,
     UNIQUE KEY `pollid` (pollid, userid)
 )
@@ -300,10 +300,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private_user_map`
 CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
 (
     `rankId`      mediumint UNSIGNED NOT NULL AUTO_INCREMENT,
-    `rankTitle`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+    `rankTitle`   varchar(255) DEFAULT NULL,
     `rankMin`     mediumint UNSIGNED NOT NULL DEFAULT '0',
     `rankSpecial` tinyint UNSIGNED NOT NULL DEFAULT '0',
-    `rankImage`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `rankImage`   varchar(255) DEFAULT NULL,
     PRIMARY KEY (rankId)
 )
     ENGINE = InnoDB
@@ -425,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `view`             varchar(8)   NOT NULL default '',
     `signature`        text         NULL,
     `moderator`        int(11)      NULL     default '0',
-    `banned`           datetime     DEFAULT '1000-01-01 00:00:00',
+    `banned`           datetime     NULL     DEFAULT NULL,
     `ordering`         int(11)      NULL     default '0',
     `posts`            int(11)      NULL     default '0',
     `avatar`           varchar(191) NULL,
@@ -554,12 +554,12 @@ CREATE TABLE IF NOT EXISTS `#__kunena_version`
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
 
-INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
 VALUES ('com_kunena.reply', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
-INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
 VALUES ('com_kunena.replymoderator', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
-INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
 VALUES ('com_kunena.report', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');

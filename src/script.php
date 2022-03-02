@@ -11,10 +11,12 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -110,12 +112,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		if (!$this->checkRequirements($manifest->version))
 		{
 			return false;
-		}
-
-		$sqlfiles = JPATH_ADMINISTRATOR . '/components/com_kunena/sql/updates/mysql';
-		if (is_dir($sqlfiles))
-		{
-			Folder::delete($sqlfiles);
 		}
 
 		return parent::preflight($type, $parent);
@@ -307,21 +303,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			return false;
 		}
 
-		// Add Kunena version into joomla schema.
-		if (version_compare($installed, '6.0.0-RC1-DEV', '<'))
-		{
-			$extensionId = $db->setQuery(
-				$db->getQuery(true)
-					->select('extension_id')
-					->from('#__extensions')
-					->where('name = ' . $db->quote('com_kunena'))
-			)->loadResult();
-
-			$query = "INSERT INTO `#__schemas` (`extension_id`, `version_id`) VALUES ({$extensionId}, {$db->quote($installed)});";
-			$db->setQuery($query);
-
-			$db->execute();
-		}
 
 		return true;
 	}
@@ -453,6 +434,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 			if ($upgrade == 1)
 			{
+				$state = $installed;
 				$sampleData = 1;
 			}
 
@@ -484,6 +466,36 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				$db->setQuery($query);
 
 				$db->execute();
+		}
+
+		$version = '';
+		$date    = '';
+		$file    = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+		if (file_exists($file))
+		{
+			$manifest = simplexml_load_file($file);
+			$version  = (string) $manifest->version;
+			$date     = (string) $manifest->creationDate;
+		}
+		else
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('version')->from('#__kunena_version')->order('id');
+			$query->setLimit(1);
+			$db->setQuery($query);
+
+			$version = $db->loadResult();
+
+			if (!empty($version->versiondate))
+			{
+				$date = (string) $version->versiondate;
+			}
+			else
+			{
+				$date = new Date('now');
+			}
 		}
 
 		return true;
@@ -577,6 +589,78 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 */
 	public function install($parent)
 	{
+		$db = Factory::getDbo();
+
+		$query = $db->getQuery(true);
+
+		// Check first if one of the template items is already in he database
+		$query->select($db->quoteName(array('template_id')))
+			->from($db->quoteName('#__mail_templates'))
+			->where($db->quoteName('template_id') . " = " . $db->quote('com_kunena.reply'));
+		$db->setQuery($query);
+
+		$templateExist = $db->loadResult();
+
+		if (!$templateExist)
+		{
+			$query = $db->getQuery(true);
+
+			$values = [
+				$db->quote('com_kunena.reply'),
+				$db->quote('com_kunena'),
+				$db->quote(''),
+				$db->quote(Text::_('COM_KUNENA_SENDMAIL_REPLY_SUBJECT')),
+				$db->quote(Text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(''),
+				$db->quote(''),
+				$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
+			];
+
+			$values2 = [
+				$db->quote('com_kunena.replymoderator'),
+				$db->quote('com_kunena'),
+				$db->quote(''),
+				$db->quote(Text::_('COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT')),
+				$db->quote(Text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(''),
+				$db->quote(''),
+				$db->quote('{tags":["mail", "subject", "message", "messageUrl", "once"]}'),
+			];
+
+			$values3 = [
+				$db->quote('com_kunena.report'),
+				$db->quote('com_kunena'),
+				$db->quote(''),
+				$db->quote(Text::_('COM_KUNENA_SENDMAIL_REPORT_SUBJECT')),
+				$db->quote(Text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(''),
+				$db->quote(''),
+				$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),
+			];
+
+			$query->insert($db->quoteName('#__mail_templates'))
+				->columns(
+				[
+					$db->quoteName('template_id'),
+					$db->quoteName('extension'),
+					$db->quoteName('language'),
+					$db->quoteName('subject'),
+					$db->quoteName('body'),
+					$db->quoteName('htmlbody'),
+					$db->quoteName('attachments'),
+					$db->quoteName('params'),
+				]
+				)
+					->values(implode(', ', $values))
+					->values(implode(', ', $values2))
+					->values(implode(', ', $values3));
+				$db->setQuery($query);
+
+				$db->execute();
+		}
+
+		// Notice $parent->getParent() returns JInstaller object
+		$parent->getParent()->setRedirectUrl('index.php?option=com_kunena');
 	}
 
 	/**

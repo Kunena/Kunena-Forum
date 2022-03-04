@@ -120,6 +120,11 @@ class ConfigController extends FormController
 					}
 				}
 
+				if ($postname == 'avatarTypes')
+				{
+					$postvalue = preg_replace("/\s+/", "", $postvalue);
+				}
+
 				// No matter what got posted, we only store config parameters defined
 				// in the config class. Anything else posted gets ignored.
 				if (\array_key_exists($postname, $properties))

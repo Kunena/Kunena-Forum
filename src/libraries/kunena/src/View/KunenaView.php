@@ -518,7 +518,7 @@ class KunenaView extends HtmlView
 	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
-	public function render(string $layout, string $tpl, array $hmvcParams = []): void
+	public function render(string $layout, $tpl, array $hmvcParams = []): void
 	{
 		if ($this->inLayout)
 		{
@@ -617,7 +617,7 @@ class KunenaView extends HtmlView
 
 		// Load the template script
 		$filetofind      = $this->_createFileName('template', ['name' => $file]);
-		$this->_template = Path::find($this->_path['template'], $filetofind);
+		$this->_template[$file] = Path::find($this->_path['template'], $filetofind);
 
 		// If alternate layout can't be found, fall back to default layout
 		if ($this->_template == false)

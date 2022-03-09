@@ -500,8 +500,8 @@ abstract class KunenaForum
 		$template = preg_replace('/[^A-Z0-9_]/i', '', $template);
 		$template = $template ? $template : null;
 
-		$view  = "KunenaView{$viewName}";
-		$model = "KunenaModel{$viewName}";
+		$view  = 'Kunena\Forum\Site\View\\' . $viewName . '\HtmlView';
+		$model = 'Kunena\Forum\Site\Model\\' . $viewName . 'Model';
 
 		// Load potentially needed language files
 		KunenaFactory::loadLanguage();

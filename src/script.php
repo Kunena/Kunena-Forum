@@ -308,7 +308,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		}
 
 		// Add Kunena version into joomla schema.
-		if (version_compare($installed, '6.0.0-RC1-DEV', '<'))
+		if (version_compare($installed, '6.0.0-RC2-DEV2', '<'))
 		{
 			$extensionId = $db->setQuery(
 				$db->getQuery(true)

@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics`
     `last_post_message`     text       NULL,
     `last_post_guest_name`  tinytext   NULL,
     `rating`                tinyint(6) NOT NULL default '0',
-    `params`                text       CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `params`                text       NULL,
     PRIMARY KEY (id),
     KEY `category_id` (category_id),
     KEY `locked` (locked),

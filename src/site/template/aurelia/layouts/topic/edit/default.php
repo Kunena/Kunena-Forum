@@ -195,7 +195,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
         <input id="kurl_topicons_request" type="hidden"
                value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=topicIcons&format=raw', false); ?>"/>
         <input id="kurl_category_template_text" type="hidden"
-               value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=categorytemplatetext&format=raw', false); ?>"/>
+               value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=categorytemplatetext&format=raw&' . Session::getFormToken() . '=1', false); ?>"/>
         <input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>"/>
         <input id="kpreview_url" type="hidden" name="kpreview_url"
                value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>"/>

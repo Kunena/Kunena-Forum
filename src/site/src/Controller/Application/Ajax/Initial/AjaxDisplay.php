@@ -97,7 +97,7 @@ class AjaxDisplay extends KunenaControllerDisplay
 		}
 		else
 		{
-			$display = $this->input->getCmd('display', 'Undefined') . '/Display';
+			$display = $this->input->getCmd('display', 'Undefined') . '/' . $format . '/Display';
 
 			try
 			{

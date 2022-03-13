@@ -209,6 +209,44 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
 	}
 
 	/**
+	 * @param   int  $code  code
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @since   Kunena 6.0
+	 */
+	public function setResponseStatus($code = 404): void
+	{
+		switch ((int) $code)
+		{
+			case 400:
+				Factory::getApplication()->setHeader('Status', '400 Bad Request', true);
+				break;
+			case 401:
+				Factory::getApplication()->setHeader('Status', '401 Unauthorized', true);
+				break;
+			case 403:
+				Factory::getApplication()->setHeader('Status', '403 Forbidden', true);
+				break;
+			case 404:
+				Factory::getApplication()->setHeader('Status', '404 Not Found', true);
+				break;
+			case 410:
+				Factory::getApplication()->setHeader('Status', '410 Gone', true);
+				break;
+			case 503:
+				Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
+				break;
+			case 500:
+			default:
+				Factory::getApplication()->setHeader('Status', '500 Internal Server Error', true);
+		}
+
+		Factory::getApplication()->sendHeaders();
+	}
+
+	/**
 	 * Initialize and display the layout.
 	 *
 	 * @return  KunenaBase|KunenaLayout

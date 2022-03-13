@@ -80,11 +80,11 @@ class AjaxDisplay extends KunenaControllerDisplay
 		{
 			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
 		}
-		elseif (!Session::checkToken())
+		/*elseif (!Session::checkToken())
 		{
 			// Invalid access token.
 			$content = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
-		}
+		}*/
 		elseif ($this->config->boardOffline && !$this->me->isAdmin())
 		{
 			// Forum is offline.
@@ -97,7 +97,7 @@ class AjaxDisplay extends KunenaControllerDisplay
 		}
 		else
 		{
-			$display = $this->input->getCmd('display', 'Undefined') . '/Display';
+			$display = $this->input->getCmd('display', 'Undefined') . '/' . $format . '/Display';
 
 			try
 			{

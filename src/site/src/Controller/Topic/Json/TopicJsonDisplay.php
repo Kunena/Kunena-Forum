@@ -44,37 +44,7 @@ class TopicJsonDisplay extends KunenaControllerDisplay
 	 * @var     string
 	 * @since   Kunena 6.0
 	 */
-	public $headerText;
-
-	/**
-	 * @var     KunenaCategory
-	 * @since   Kunena 6.0
-	 */
-	public $category;
-
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $total;
-
-	/**
-	 * @var     KunenaTopic
-	 * @since   Kunena 6.0
-	 */
-	public $topics;
-
-	/**
-	 * @var     KunenaPagination
-	 * @since   Kunena 6.0
-	 */
-	public $pagination;
-
-	/**
-	 * @var     KunenaUser
-	 * @since   Kunena 6.0
-	 */
-	public $me;
+	public $response;
 
 	/**
 	 * @var     string
@@ -92,26 +62,10 @@ class TopicJsonDisplay extends KunenaControllerDisplay
 	 */
 	protected function before()
 	{
-	    $catid    = $this->app->input->getInt('catid', 0);
-	    
-	    $category = KunenaCategoryHelper::get($catid);
-	    
-	    $response = $category->topictemplate;
+		$catid    = $this->app->input->getInt('catid', 0);
 
-	    return $response;
-	}
+		$category = KunenaCategoryHelper::get($catid);
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		
+		$this->response = $category->topictemplate;
 	}
 }

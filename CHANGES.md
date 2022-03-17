@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Fix ckeditor not respecting configured buttons #8724
 
 ### Changed
+* Update CKeditor to 4.18.0
 * Update CKeditor to 4.17.2
 * [#8769](https://github.com/Kunena/Kunena-Forum/issues/8769): A line in the backend views.ini needs an adjustment #8769
 * Update copyright year on files to 2022 where it has been forgotten

@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
- * Class JHtmlKunenaForum
+ * Class KunenaForum
  *
  * @since   Kunena 6.0
  */

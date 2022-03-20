@@ -2,20 +2,19 @@
 /**
  * Kunena Component
  *
- * @package       Kunena.Framework
- * @subpackage    Form
+ * @package         Kunena.Administrator
+ * @subpackage      Field
  *
- * @copyright     Copyright (C) 2008 - 2022 Kunena Team. All rights reserved.
- * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link          https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - 2022 Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Libraries\Form\Fields;
+namespace Kunena\Forum\Administrator\Field;
 
-\defined('_JEXEC') or die();
+\defined('_JEXEC') or die;
 
-use Exception;
-use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -23,17 +22,19 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
- * Class Joomla\CMS\Form\FormField|KunenaCategoryList
+ * Kunenacategorylist field.
  *
- * @since   Kunena 6.0
+ * @since  1.6
  */
-class KunenaCategoryList extends FormField
+class KunenacategorylistField extends ListField
 {
 	/**
-	 * @var     string
-	 * @since   Kunena 6.0s
+	 * The form field type.
+	 *
+	 * @var    string
+	 * @since  Kunena 6.0
 	 */
-	protected $type = 'KunenaCategoryList';
+	protected $type = 'KunenacategoryList';
 
 	/**
 	 * @return  string
@@ -85,6 +86,7 @@ class KunenaCategoryList extends FormField
 		$options = $this->getOptions();
 
 		return HTMLHelper::_('select.genericlist', $options, $this->element, $attribs, $this->value);
+		//return HTMLHelper::_('kunenaforum.categorylist', $options, $this->element, $attribs, $this->value);
 	}
 
 	/**
@@ -92,7 +94,7 @@ class KunenaCategoryList extends FormField
 	 *
 	 * @return  array  The field option objects.
 	 *
-	 * @since   11.1
+	 * @since   Kunena 6.0
 	 */
 	protected function getOptions(): array
 	{

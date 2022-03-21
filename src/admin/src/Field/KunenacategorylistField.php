@@ -14,6 +14,7 @@ namespace Kunena\Forum\Administrator\Field;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -24,7 +25,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 /**
  * Kunenacategorylist field.
  *
- * @since  1.6
+ * @since  Kunena 6.0
  */
 class KunenacategorylistField extends ListField
 {
@@ -52,6 +53,7 @@ class KunenacategorylistField extends ListField
 			return '';
 		}
 
+		Factory::getApplication()->bootComponent('com_kunena');
 		KunenaFactory::loadLanguage('com_kunena');
 
 		$size  = $this->element['size'];
@@ -85,8 +87,7 @@ class KunenacategorylistField extends ListField
 		// Get the field options.
 		$options = $this->getOptions();
 
-		return HTMLHelper::_('select.genericlist', $options, $this->element, $attribs, $this->value);
-		//return HTMLHelper::_('kunenaforum.categorylist', $options, $this->element, $attribs, $this->value);
+		return HTMLHelper::_('kunenaforum.categorylist', $this->name, 0, $options, $this->element, $attribs, 'value', 'text', $this->value);
 	}
 
 	/**

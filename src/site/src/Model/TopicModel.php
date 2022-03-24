@@ -13,7 +13,6 @@
 namespace Kunena\Forum\Site\Model;
 
 use Exception;
-use Joomla\CMS\MVC\Model\ListModel;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -25,6 +24,7 @@ use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Poll\KunenaPoll;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 \defined('_JEXEC') or die();
@@ -34,7 +34,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  *
  * @since   Kunena 2.0
  */
-class TopicModel extends ListModel
+class TopicModel extends KunenaModel
 {
 	/**
 	 * @var     boolean
@@ -59,14 +59,6 @@ class TopicModel extends ListModel
 	 * @since   Kunena 6.0
 	 */
 	protected $topic = false;
-
-	private $config;
-
-	private $me;
-
-	private $app;
-
-	private $threaded;
 
 	/**
 	 * @return  array|boolean|KunenaMessage[]

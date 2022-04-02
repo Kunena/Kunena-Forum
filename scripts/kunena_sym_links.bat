@@ -15,34 +15,21 @@ echo You need to define two variables before to launch the script
 echo This script needs administrator rights to run correctly
 echo:
 
-SET /p GitSource=Kunena GIT repository in ........:
-SET /p GitTarget=Joomla installation in ...:
-
-pause
-
-echo:
-echo You have set the Kunena GIT repository in ........:  %GitSource%
-echo You have set the Joomla installation in ...:  %GitTarget%
-echo:
-
-if exist %GitTarget%\configuration.php (
-goto WHATTODO
-) else (
-echo You need to have a Joomla! installation to run this script
-)
 
 :WHATTODO
-echo 1 : Make the symbolic links for Kunena with Kunena-Addons
-echo 2 : Make the symbolic links for blue eagle
-echo 3 : Delete the symbolic links
-echo 4 : Exit
+echo 1 : Make the symbolic links for Kunena
+echo 2 : Make the symbolic links for Kunena-Addons
+echo 3 : Make the symbolic links for blue eagle
+echo 4 : Delete the symbolic links
+echo 5 : Exit
 
 set /p choice=What do-you want to do ? :
 (
 if %choice%==1 goto MKLINK
-if %choice%==2 goto MKLINKBLUEEAGLE
-if %choice%==3 goto DELETESYM
-if %choice%==4 exit
+if %choice%==2 goto MKLINKADDONS
+if %choice%==3 goto MKLINKBLUEEAGLE
+if %choice%==4 goto DELETESYM
+if %choice%==5 exit
 )
 goto:eof
 
@@ -99,6 +86,20 @@ pause
 goto:eof
 
 :MKLINK
+SET /p GitSource=Kunena GIT repository in ........:
+SET /p GitTarget=Joomla installation in ...:
+
+echo:
+echo You have set the Kunena GIT repository in ........:  %GitSource%
+echo You have set the Joomla installation in ...:  %GitTarget%
+echo:
+
+if exist %GitTarget%\configuration.php (
+goto WHATTODO
+) else (
+echo You need to have a Joomla! installation to run this script
+)
+
 echo Delete existing directories for Kunena
 IF exist %GitTarget%\administrator\components\com_kunena ( rmdir /S/q %GitTarget%\administrator\components\com_kunena )
 IF exist %GitTarget%\components\com_kunena ( rmdir /S/q %GitTarget%\components\com_kunena )
@@ -117,13 +118,7 @@ IF exist %GitTarget%\plugins\kunena\gravatar ( rmdir /S/q %GitTarget%\plugins\ku
 IF exist %GitTarget%\plugins\kunena\joomla ( rmdir /S/q %GitTarget%\plugins\kunena\joomla )
 IF exist %GitTarget%\plugins\kunena\kunena ( rmdir /S/q %GitTarget%\plugins\kunena\kunena )
 IF exist %GitTarget%\plugins\sampledata\kunena ( rmdir /S/q %GitTarget%\plugins\sampledata\kunena )
-echo Delete existing directories for Kunena-Addons
-IF exist %GitTarget%\modules\mod_kunenalatest ( rmdir /S/q %GitTarget%\modules\mod_kunenalatest )
-IF exist %GitTarget%\modules\mod_kunenalogin ( rmdir /S/q %GitTarget%\modules\mod_kunenalogin )
-IF exist %GitTarget%\modules\mod_kunenasearch ( rmdir /S/q %GitTarget%\modules\mod_kunenasearch )
-IF exist %GitTarget%\modules\mod_kunenastats ( rmdir /S/q %GitTarget%\modules\mod_kunenastats )
-IF exist %GitTarget%\plugins\search\kunena ( rmdir /S/q %GitTarget%\plugins\search\kunena )
-IF exist %GitTarget%\plugins\content\kunenadiscuss ( rmdir /S/q %GitTarget%\plugins\content\kunenadiscuss )
+
 
 echo Make symbolic links for Kunena
 mklink /d %GitTarget%\administrator\components\com_kunena %GitSource%\src\admin
@@ -143,6 +138,26 @@ mklink /d %GitTarget%\plugins\kunena\joomla %GitSource%\src\plugins\plg_kunena_j
 mklink /d %GitTarget%\plugins\kunena\kunena %GitSource%\src\plugins\plg_kunena_kunena
 mklink /d %GitTarget%\plugins\sampledata\kunena %GitSource%\src\plugins\plg_sampledata_kunena
 mklink /d %GitTarget%\media\kunena %GitSource%\src\media\kunena
+pause
+
+
+:MKLINKADDONS
+SET /p GitSource=Kunena-Addons GIT repository in ........:
+SET /p GitTarget=Joomla installation in ...:
+
+echo:
+echo You have set the Kunena-Addons GIT repository in ........:  %GitSource%
+echo You have set the Joomla installation in ...:  %GitTarget%
+echo:
+
+echo Delete existing directories for Kunena-Addons
+IF exist %GitTarget%\modules\mod_kunenalatest ( rmdir /S/q %GitTarget%\modules\mod_kunenalatest )
+IF exist %GitTarget%\modules\mod_kunenalogin ( rmdir /S/q %GitTarget%\modules\mod_kunenalogin )
+IF exist %GitTarget%\modules\mod_kunenasearch ( rmdir /S/q %GitTarget%\modules\mod_kunenasearch )
+IF exist %GitTarget%\modules\mod_kunenastats ( rmdir /S/q %GitTarget%\modules\mod_kunenastats )
+IF exist %GitTarget%\plugins\search\kunena ( rmdir /S/q %GitTarget%\plugins\search\kunena )
+IF exist %GitTarget%\plugins\content\kunenadiscuss ( rmdir /S/q %GitTarget%\plugins\content\kunenadiscuss )
+
 echo Make symbolic links for Kunena-Addons
 IF exist %GitSource%\modules\kunenalatest ( mklink /d %GitTarget%\modules\mod_kunenalatest %GitSource%\modules\kunenalatest )
 IF exist %GitSource%\modules\kunenalogin ( mklink /d %GitTarget%\modules\mod_kunenalogin %GitSource%\modules\kunenalogin )
@@ -150,12 +165,8 @@ IF exist %GitSource%\modules\kunenasearch ( mklink /d %GitTarget%\modules\mod_ku
 IF exist %GitSource%\modules\kunenastats ( mklink /d %GitTarget%\modules\mod_kunenastats %GitSource%\modules\kunenastats )
 IF exist %GitSource%\plugins\search\kunena ( mklink /d %GitTarget%\plugins\search\kunena %GitSource%\plugins\search\kunena )
 IF exist %GitSource%\plugins\content\kunenadiscuss ( mklink /d %GitTarget%\plugins\content\kunenadiscuss %GitSource%\plugins\content\kunenadiscuss )
-
 pause
 goto:eof
-
-
-
 
 
 

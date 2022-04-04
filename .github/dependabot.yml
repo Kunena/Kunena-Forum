@@ -51,3 +51,8 @@ updates:
   - dependency-name: codeception/codeception
     versions:
     - 4.1.15
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10

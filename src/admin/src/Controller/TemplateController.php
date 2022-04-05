@@ -24,10 +24,12 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
 
 /**
  * Kunena Template Controller
@@ -729,6 +731,73 @@ class TemplateController extends FormController
 		$template->clearCache();
 
 		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT_SELECTED'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	/**
+	 * Uninstall Kunena template
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 * @since   Kunena 2.0
+	 */
+	public function uninstall(): void
+	{
+		$cid      = $this->app->input->get('cid', [], 'array');
+		$id       = array_shift($cid);
+		$template = $id;
+
+		if (!Session::checkToken())
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		// Initialize variables
+		$otemplate = KunenaTemplateHelper::parseXmlFile($id);
+
+		if (!$otemplate)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (\in_array($id, $this->locked))
+		{
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_SYSTEM_TEMPLATE', $otemplate->name), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (KunenaTemplateHelper::isDefault($template))
+		{
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_DEFAULT_TEMPLATE', $otemplate->name), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$tpl = KPATH_SITE . '/template/' . $template;
+
+		// Delete the template directory
+		if (is_dir($tpl))
+		{
+			// Clear all cache, just in case.
+			KunenaCacheHelper::clearAll();
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $id));
+		}
+		else
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
+		}
+
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

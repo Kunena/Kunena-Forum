@@ -8,7 +8,8 @@ ALTER TABLE `#__kunena_categories` CHANGE `pub_access` `pubAccess` int NOT NULL 
 ALTER TABLE `#__kunena_categories` CHANGE `admin_access` `adminAccess` int NOT NULL DEFAULT '0';
 ALTER TABLE `#__kunena_categories` CHANGE `topic_ordering` `topicOrdering` varchar(16);
 ALTER TABLE `#__kunena_categories` CHANGE `allow_ratings` `allowRatings` tinyint NOT NULL DEFAULT '0';
-ALTER TABLE `#__kunena_categories` CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL DEFAULT '1000-01-01 00:00:00';
+# Changed on version 6.0.0-r-dev2
+ALTER TABLE `#__kunena_categories` CHANGE `checked_out_time` `checked_out_time` datetime NULL DEFAULT NULL;
 ALTER TABLE `#__kunena_categories` CHANGE `ordering` `ordering` int(11) NOT NULL DEFAULT '0';
 ALTER TABLE `#__kunena_ranks` CHANGE `rank_title` `rankTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '';
 ALTER TABLE `#__kunena_ranks` CHANGE `rank_image` `rankImage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL;

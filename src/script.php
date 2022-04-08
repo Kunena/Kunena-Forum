@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
@@ -438,7 +439,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			}
 		}
 
-		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
+		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install' || strtolower($type) == 'update')
 		{
 			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
 
@@ -451,7 +452,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			$state       = '';
 			$sampleData  = 0;
 
-			if ($upgrade == 1)
+			if (strtolower($type) == 'update')
 			{
 				$sampleData = 1;
 			}

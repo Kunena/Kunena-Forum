@@ -28,7 +28,7 @@
 		</field>
 		<field name="bootstrap"
 			type="list"
-			default="0"
+			default="1"
 			label="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP"
 			description="COM_KUNENA_TEMPLATE_LOAD_BOOTSTRAP_DESC">
 			<option value="0">COM_KUNENA_NO</option>

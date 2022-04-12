@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
 $this->ktemplate = KunenaFactory::getTemplate();
@@ -27,7 +26,6 @@ if ($bootstrap)
 	HTMLHelper::_('bootstrap.framework');
 }
 
-
 $tabs = $this->getTabs();
 ?>
 
@@ -36,8 +34,9 @@ $tabs = $this->getTabs();
 </h1>
 
 <h2 class="float-end">
-	<?php if ($this->profile->isAuthorised('edit')) :
-	?>
+	<?php if ($this->profile->isAuthorised('edit'))
+		:
+		?>
 		<?php echo $this->profile->getLink(
 			KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_EDIT'),
 			Text::_('COM_KUNENA_EDIT'),
@@ -65,20 +64,25 @@ echo $this->subLayout('User/Item/Summary')
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_summary'); ?>
 
 <div class="tabs">
-	<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
 		<?php foreach ($tabs as $name => $tab) : ?>
-			<li class="nav-item" role="presentation">
-				<button <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?> id="<?php echo $name; ?>-tab" data-bs-toggle="tab" data-bs-target="#<?php echo $name; ?>" type="button" role="tab" aria-controls="home" aria-selected="true"><?php echo $tab->title; ?></button>
-			</li>
+            <li class="nav-item" role="presentation">
+                <button <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
+                        id="<?php echo $name; ?>-tab" data-bs-toggle="tab" data-bs-target="#<?php echo $name; ?>"
+                        type="button" role="tab"
+                        aria-controls="home" aria-selected="true"><?php echo $tab->title; ?></button>
+            </li>
 		<?php endforeach; ?>
-	</ul>
-	<div class="tab-content" id="myTabContent">
+    </ul>
+    <div class="tab-content" id="myTabContent">
 		<?php foreach ($tabs as $name => $tab) : ?>
-			<div class="tab-pane fade show <?php echo $tab->active ? ' in active show' : ''; ?>" id="<?php echo $name; ?>" role="tabpanel" aria-labelledby="<?php echo $name; ?>-tab">
+            <div class="tab-pane fade show <?php echo $tab->active ? ' in active show' : ''; ?>"
+                 id="<?php echo $name; ?>" role="tabpanel" aria-labelledby="<?php echo $name; ?>-tab">
 				<?php echo $tab->content; ?>
-			</div>
+            </div>
 		<?php endforeach; ?>
-	</div>
+    </div>
 </div>
 
 <div class="clearfix"></div>
+

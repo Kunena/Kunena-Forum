@@ -39,56 +39,64 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 	<?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName())); ?>
 
 	<?php echo $this->profile->getLink(
-		KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
-		Text::_('COM_KUNENA_BACK'),
-		'nofollow',
-		'',
-		'btn btn-outline-primary border float-end'
-	); ?>
+	KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
+	Text::_('COM_KUNENA_BACK'),
+	'nofollow',
+	'',
+	'btn btn-outline-primary border float-end'
+); ?>
 </h2>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post" enctype="multipart/form-data" name="kuserform" class="form-validate" id="kuserform">
-	<input type="hidden" name="task" value="save" />
-	<input type="hidden" name="userid" value="<?php echo (int) $this->user->id; ?>" />
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post"
+      enctype="multipart/form-data" name="kuserform"
+      class="form-validate" id="kuserform">
+    <input type="hidden" name="task" value="save"/>
+    <input type="hidden" name="userid" value="<?php echo (int) $this->user->id; ?>"/>
 	<?php echo HTMLHelper::_('form.token'); ?>
 
-	<div class="tabs">
-		<ul id="UserEdit" class="nav nav-tabs">
+    <div class="tabs">
+        <ul id="UserEdit" class="nav nav-tabs">
 
-			<?php foreach ($tabs as $name => $tab) :
-			?>
-				<?php if ($name == 'avatar' && !$avatar instanceof \KunenaAvatarKunena) : ?>
-				<?php else : ?>
-					<li class="nav-item <?php echo $tab->active ? 'active' : ''; ?>">
-						<a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?> href="#edit<?php echo $name; ?>" data-bs-toggle="tab" rel="nofollow"><?php echo $tab->title; ?></a>
-					</li>
-				<?php endif; ?>
+			<?php foreach ($tabs as $name => $tab)
+				:
+				?>
+				<?php if ($name == 'avatar' && !$avatar instanceof \KunenaAvatarKunena): ?>
+			<?php else : ?>
+                <li class="nav-item <?php echo $tab->active ? 'active' : ''; ?>">
+                    <a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
+                            href="#edit<?php echo $name; ?>" data-bs-toggle="tab"
+                            rel="nofollow"><?php echo $tab->title; ?></a>
+                </li>
+			<?php endif; ?>
 			<?php endforeach; ?>
-		</ul>
-		<div class="tab-content">
+        </ul>
+        <div class="tab-content">
 
-			<?php foreach ($tabs as $name => $tab) :
-			?>
-				<?php if ($name == 'avatar' && !$avatar instanceof \KunenaAvatarKunena) : ?>
-				<?php else : ?>
-					<div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>" id="edit<?php echo $name; ?>">
-						<div class="row">
-							<?php echo $tab->content; ?>
-						</div>
-					</div>
-				<?php endif; ?>
+			<?php foreach ($tabs as $name => $tab)
+				:
+				?>
+				<?php if ($name == 'avatar' && !$avatar instanceof \KunenaAvatarKunena): ?>
+			<?php else : ?>
+                <div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>"
+                     id="edit<?php echo $name; ?>">
+                    <div class="row">
+						<?php echo $tab->content; ?>
+                    </div>
+                </div>
+			<?php endif; ?>
 			<?php endforeach; ?>
 
-		</div>
-		<br />
+        </div>
+        <br/>
 
-		<div class="center">
-			<button class="btn btn-outline-primary validate" type="submit">
+        <div class="center">
+            <button class="btn btn-outline-primary validate" type="submit">
 				<?php echo KunenaIcons::save(); ?><?php echo Text::_('COM_KUNENA_SAVE'); ?>
-			</button>
-			<button class="btn btn-outline-primary border" type="button" name="cancel" onclick="window.history.back();" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
+            </button>
+            <button class="btn btn-outline-primary border" type="button" name="cancel" onclick="window.history.back();"
+                    title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
 				<?php echo KunenaIcons::cancel(); ?><?php echo Text::_('COM_KUNENA_CANCEL'); ?>
-			</button>
-		</div>
-	</div>
+            </button>
+        </div>
+    </div>
 </form>

@@ -18,7 +18,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
-HTMLHelper::_('bootstrap.framework');
+$this->ktemplate = KunenaFactory::getTemplate();
+$bootstrap = $this->ktemplate->params->get('bootstrap');
+
+if ($bootstrap)
+{
+	HTMLHelper::_('bootstrap.framework');
+}
 
 $tabs = $this->getTabs();
 ?>

@@ -105,10 +105,15 @@ class KunenaTemplateAurelia extends KunenaTemplate
 	 */
 	public function initialize(): void
 	{
-		HTMLHelper::_('bootstrap.dropdown');
-		HTMLHelper::_('bootstrap.tooltip');
-		HTMLHelper::_('bootstrap.renderModal');
-		HTMLHelper::_('bootstrap.collapse');
+		$bootstrap = $this->params->get('bootstrap');
+
+		if ($bootstrap)
+		{
+			HTMLHelper::_('bootstrap.dropdown');
+			HTMLHelper::_('bootstrap.tooltip');
+			HTMLHelper::_('bootstrap.renderModal');
+			HTMLHelper::_('bootstrap.collapse');
+		}
 
 		$doc = Factory::getApplication()->getDocument();
 

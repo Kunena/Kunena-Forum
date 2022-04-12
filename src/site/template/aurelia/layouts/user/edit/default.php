@@ -22,7 +22,13 @@ use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
-HTMLHelper::_('bootstrap.framework');
+$this->ktemplate = KunenaFactory::getTemplate();
+$bootstrap = $this->ktemplate->params->get('bootstrap');
+
+if ($bootstrap)
+{
+	HTMLHelper::_('bootstrap.framework');
+}
 
 $this->profile = KunenaFactory::getUser($this->user->id);
 $this->me      = KunenaUserHelper::getMyself();

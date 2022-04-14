@@ -200,17 +200,18 @@ if ($saveOrder)
 													'width'       => '800px',
 													'bodyHeight'  => '70',
 													'modalWidth'  => '80',
-													'closeButton' => true,
+													'closeButton' => false,
 													'backdrop'    => 'static',
 													'keyboard'    => false,
-													'footer'      => '<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" aria-label="Close">
-		                                                ' . Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
-														. '<button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" aria-hidden="true"'
-														. ' onclick="jQuery(\'#plugin' . $item->extension_id . 'Modal iframe\').contents().find(\'#saveBtn\').click();">'
-														. Text::_("JSAVE") . '</button>'
-														. '<button type="button" class="btn btn-outline-success" aria-hidden="true" onclick="jQuery(\'#plugin' . $item->extension_id
-														. 'Modal iframe\').contents().find(\'#applyBtn\').click(); return false;">'
-														. Text::_("JAPPLY") . '</button>',
+													'footer'      => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"'
+														. ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#closeBtn\'})">'
+														. Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
+														. '<button type="button" class="btn btn-primary" data-bs-dismiss="modal"'
+														. ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#saveBtn\'})">'
+														. Text::_('JSAVE') . '</button>'
+														. '<button type="button" class="btn btn-success"'
+														. ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#applyBtn\'})">'
+														. Text::_('JAPPLY') . '</button>',
 												]
 								); ?>
 										<?php else : ?>
@@ -255,3 +256,12 @@ if ($saveOrder)
 		<?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>
+<script>
+	Array.from(document.querySelectorAll('.modal')).forEach(modalEl => {
+		modalEl.addEventListener('hidden.bs.modal', () => {
+			setTimeout(() => {
+				window.parent.location.reload();
+			}, 1000);
+		});
+	});
+</script>

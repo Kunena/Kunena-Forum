@@ -29,7 +29,7 @@
     "bootstrap": "~4.3",
     "choices.js": "^7.0.0",
     "chosen-js": "1.6.2",
-    "codemirror": "5.40.0",
+    "codemirror": "5.58.2",
     "cropperjs": "1.2.2",
     "css-vars-ponyfill": "^1.17.2",
     "diff": "3.4.0",

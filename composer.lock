@@ -1707,20 +1707,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kunena/Codestyle.git",
-                "reference": "fd180d2ffaf8485585c8d743cc2a1e923223b962"
+                "reference": "250f660901a54b70b65966f5750ed985a6297a6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kunena/Codestyle/zipball/fd180d2ffaf8485585c8d743cc2a1e923223b962",
-                "reference": "fd180d2ffaf8485585c8d743cc2a1e923223b962",
+                "url": "https://api.github.com/repos/Kunena/Codestyle/zipball/250f660901a54b70b65966f5750ed985a6297a6b",
+                "reference": "250f660901a54b70b65966f5750ed985a6297a6b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.0",
-                "squizlabs/php_codesniffer": "~3.0"
+                "php": ">=7.4.0"
             },
             "default-branch": true,
-            "type": "library",
+            "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-or-later"
@@ -1730,7 +1729,7 @@
                 "issues": "https://github.com/Kunena/Codestyle/issues",
                 "source": "https://github.com/Kunena/Codestyle/tree/master"
             },
-            "time": "2019-10-14T10:40:12+00:00"
+            "time": "2022-04-15T11:32:59+00:00"
         },
         {
             "name": "mehr-als-nix/parallel",
@@ -4520,16 +4519,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.5.5",
+            "version": "1.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d77a607667f29ae099c0686f99664bd451fd23df"
+                "reference": "799dd8c2d2c9c704bb55d2078078cb970cf0f6d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d77a607667f29ae099c0686f99664bd451fd23df",
-                "reference": "d77a607667f29ae099c0686f99664bd451fd23df",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/799dd8c2d2c9c704bb55d2078078cb970cf0f6d1",
+                "reference": "799dd8c2d2c9c704bb55d2078078cb970cf0f6d1",
                 "shasum": ""
             },
             "require": {
@@ -4555,7 +4554,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.5.5"
+                "source": "https://github.com/phpstan/phpstan/tree/1.5.6"
             },
             "funding": [
                 {
@@ -4575,7 +4574,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-14T12:20:26+00:00"
+            "time": "2022-04-15T11:13:37+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

@@ -20,6 +20,16 @@
 			"Codeception\\Module\\" : "src"
 		}
 	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"install-codestandards": [
+			"Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+		]
+	},
 	"minimum-stability" : "dev",
 	"prefer-stable" : true
 }

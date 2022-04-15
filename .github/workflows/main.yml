@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-18.04]
-        php-versions: ['7.4']
+        php-versions: ['7.4', '8.0', '8.1']
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
     - name: Checkout
@@ -17,12 +17,20 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
-        extensions: intl #optional
-        ini-values: "post_max_size=256M" #optional
+        extensions: intl, fileinfo, mbstring
+        ini-values: post_max_size=256M, upload_max_filesize=256M, max_execution_time=300, max_input_time=300
+        tools: cs2pr, phpcs
     - name: Check PHP Version
       run: php -v
     - name: Composer & Npm Install
       run: |
        composer validate --no-check-all --strict
-       composer install --no-progress --no-suggest
-       npm install selenium-standalone
+       composer install --no-progress --no-suggest --no-interaction --optimize-autoloader
+       pwd
+    - name: Run phpcs
+      continue-on-error: true
+      run: |
+        phpcs -q --standard=$GITHUB_WORKSPACE/vendor/kunena/codestyle/Kunena/ruleset.xml --report=checkstyle $GITHUB_WORKSPACE/src --report-checkstyle=$GITHUB_WORKSPACE/phpcs-report.xml
+    - name: Show PHPCS results in PR
+      continue-on-error: true
+      run: cs2pr $GITHUB_WORKSPACE/phpcs-report.xml --graceful-warnings --colorize

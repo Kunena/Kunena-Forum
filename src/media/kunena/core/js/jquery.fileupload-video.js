@@ -67,10 +67,10 @@
         if (options.disabled) {
           return data;
         }
-	      const file = data.files[data.index];
-	      let url,
-		      video;
-	      if (
+        var file = data.files[data.index],
+          url,
+          video;
+        if (
           this._videoElement.canPlayType &&
           this._videoElement.canPlayType(file.type) &&
           ($.type(options.maxFileSize) !== 'number' ||

@@ -26,9 +26,9 @@
 })(function ($) {
   'use strict';
 
-	const originalAdd = $.blueimp.fileupload.prototype.options.add;
+  var originalAdd = $.blueimp.fileupload.prototype.options.add;
 
-	// The File Upload Processing plugin extends the fileupload widget
+  // The File Upload Processing plugin extends the fileupload widget
   // with file processing functionality:
   $.widget('blueimp.fileupload', $.blueimp.fileupload, {
     options: {
@@ -42,8 +42,8 @@
                 */
       ],
       add: function (e, data) {
-	      const $this = $(this);
-	      data.process(function () {
+        var $this = $(this);
+        data.process(function () {
           return $this.fileupload('process', data);
         });
         originalAdd.call(this, e, data);
@@ -61,24 +61,24 @@
     },
 
     _processFile: function (data, originalData) {
-	    const that = this,
-		    // eslint-disable-next-line new-cap
-		    dfd = $.Deferred().resolveWith(that, [data]);
-	    let chain = dfd.promise();
-	    this._trigger('process', null, data);
+      var that = this,
+        // eslint-disable-next-line new-cap
+        dfd = $.Deferred().resolveWith(that, [data]),
+        chain = dfd.promise();
+      this._trigger('process', null, data);
       $.each(data.processQueue, function (i, settings) {
-	      const func = function (data) {
-		      if (originalData.errorThrown) {
-			      // eslint-disable-next-line new-cap
-			      return $.Deferred().rejectWith(that, [originalData]).promise();
-		      }
-		      return that.processActions[settings.action].call(
-			      that,
-			      data,
-			      settings
-		      );
-	      };
-	      chain = chain[that._promisePipe](func, settings.always && func);
+        var func = function (data) {
+          if (originalData.errorThrown) {
+            // eslint-disable-next-line new-cap
+            return $.Deferred().rejectWith(that, [originalData]).promise();
+          }
+          return that.processActions[settings.action].call(
+            that,
+            data,
+            settings
+          );
+        };
+        chain = chain[that._promisePipe](func, settings.always && func);
       });
       chain
         .done(function () {
@@ -97,12 +97,12 @@
     // substring as key for the option map,
     // e.g. "@autoUpload" is replaced with options.autoUpload:
     _transformProcessQueue: function (options) {
-	    const processQueue = [];
-	    $.each(options.processQueue, function () {
-	      const settings = {},
-		      action = this.action,
-		      prefix = this.prefix === true ? action : this.prefix;
-	      $.each(this, function (key, value) {
+      var processQueue = [];
+      $.each(options.processQueue, function () {
+        var settings = {},
+          action = this.action,
+          prefix = this.prefix === true ? action : this.prefix;
+        $.each(this, function (key, value) {
           if ($.type(value) === 'string' && value.charAt(0) === '@') {
             settings[key] =
               options[
@@ -120,7 +120,7 @@
       options.processQueue = processQueue;
     },
 
-    // Returns the number of files currently in the processsing queue:
+    // Returns the number of files currently in the processing queue:
     processing: function () {
       return this._processing;
     },
@@ -128,23 +128,23 @@
     // Processes the files given as files property of the data parameter,
     // returns a Promise object that allows to bind callbacks:
     process: function (data) {
-	    const that = this,
-		    options = $.extend({}, this.options, data);
-	    if (options.processQueue && options.processQueue.length) {
+      var that = this,
+        options = $.extend({}, this.options, data);
+      if (options.processQueue && options.processQueue.length) {
         this._transformProcessQueue(options);
         if (this._processing === 0) {
           this._trigger('processstart');
         }
         $.each(data.files, function (index) {
-	        const opts = index ? $.extend({}, options) : options,
-		        func = function () {
-			        if (data.errorThrown) {
-				        // eslint-disable-next-line new-cap
-				        return $.Deferred().rejectWith(that, [data]).promise();
-			        }
-			        return that._processFile(opts, data);
-		        };
-	        opts.index = index;
+          var opts = index ? $.extend({}, options) : options,
+            func = function () {
+              if (data.errorThrown) {
+                // eslint-disable-next-line new-cap
+                return $.Deferred().rejectWith(that, [data]).promise();
+              }
+              return that._processFile(opts, data);
+            };
+          opts.index = index;
           that._processing += 1;
           that._processingQueue = that._processingQueue[that._promisePipe](
             func,

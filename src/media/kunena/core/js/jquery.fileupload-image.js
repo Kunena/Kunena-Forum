@@ -52,7 +52,6 @@
       disableImageHead: '@',
       disableMetaDataParsers: '@',
       disableExif: '@',
-      disableExifThumbnail: '@',
       disableExifOffsets: '@',
       includeExifTags: '@',
       excludeExifTags: '@',
@@ -82,7 +81,8 @@
       crop: '@',
       orientation: '@',
       forceResize: '@',
-      disabled: '@disableImageResize'
+      disabled: '@disableImageResize',
+      imageSmoothingQuality: '@imageSmoothingQuality'
     },
     {
       action: 'saveImage',
@@ -163,11 +163,11 @@
         if (options.disabled) {
           return data;
         }
-	      const that = this,
-		      file = data.files[data.index],
-		      // eslint-disable-next-line new-cap
-		      dfd = $.Deferred();
-	      if (
+        var that = this,
+          file = data.files[data.index],
+          // eslint-disable-next-line new-cap
+          dfd = $.Deferred();
+        if (
           ($.type(options.maxFileSize) === 'number' &&
             file.size > options.maxFileSize) ||
           (options.fileTypes && !options.fileTypes.test(file.type)) ||
@@ -198,49 +198,41 @@
         }
         // eslint-disable-next-line no-param-reassign
         options = $.extend({ canvas: true }, options);
-	      const that = this,
-		      // eslint-disable-next-line new-cap
-		      dfd = $.Deferred(),
-		      img = (options.canvas && data.canvas) || data.img,
-		      resolve = function (newImg) {
-			      if (
-				      newImg &&
-				      (newImg.width !== img.width ||
-					      newImg.height !== img.height ||
-					      options.forceResize)
-			      ) {
-				      data[newImg.getContext ? 'canvas' : 'img'] = newImg;
-			      }
-			      data.preview = newImg;
-			      dfd.resolveWith(that, [data]);
-		      };
-	      let thumbnail,
-		      thumbnailBlob;
-	      if (data.exif) {
-          if (options.orientation === true) {
-            options.orientation = data.exif.get('Orientation');
-          }
-          if (options.thumbnail) {
-            thumbnail = data.exif.get('Thumbnail');
-            thumbnailBlob = thumbnail && thumbnail.get('Blob');
-            if (thumbnailBlob) {
-              loadImage(thumbnailBlob, resolve, options);
-              return dfd.promise();
+        var that = this,
+          // eslint-disable-next-line new-cap
+          dfd = $.Deferred(),
+          img = (options.canvas && data.canvas) || data.img,
+          resolve = function (newImg) {
+            if (
+              newImg &&
+              (newImg.width !== img.width ||
+                newImg.height !== img.height ||
+                options.forceResize)
+            ) {
+              data[newImg.getContext ? 'canvas' : 'img'] = newImg;
             }
-          }
-          // Prevent orienting browser oriented images:
-          if (loadImage.orientation) {
-            data.orientation = data.orientation || options.orientation;
-          }
-          // Prevent orienting the same image twice:
-          if (data.orientation) {
-            delete options.orientation;
-          } else {
-            data.orientation = options.orientation;
+            data.preview = newImg;
+            dfd.resolveWith(that, [data]);
+          },
+          thumbnail,
+          thumbnailBlob;
+        if (data.exif && options.thumbnail) {
+          thumbnail = data.exif.get('Thumbnail');
+          thumbnailBlob = thumbnail && thumbnail.get('Blob');
+          if (thumbnailBlob) {
+            options.orientation = data.exif.get('Orientation');
+            loadImage(thumbnailBlob, resolve, options);
+            return dfd.promise();
           }
         }
+        if (data.orientation) {
+          // Prevent orienting the same image twice:
+          delete options.orientation;
+        } else {
+          data.orientation = options.orientation || loadImage.orientation;
+        }
         if (img) {
-          resolve(loadImage.scale(img, options));
+          resolve(loadImage.scale(img, options, data));
           return dfd.promise();
         }
         return data;
@@ -252,11 +244,11 @@
         if (!data.canvas || options.disabled) {
           return data;
         }
-	      const that = this,
-		      file = data.files[data.index],
-		      // eslint-disable-next-line new-cap
-		      dfd = $.Deferred();
-	      if (data.canvas.toBlob) {
+        var that = this,
+          file = data.files[data.index],
+          // eslint-disable-next-line new-cap
+          dfd = $.Deferred();
+        if (data.canvas.toBlob) {
           data.canvas.toBlob(
             function (blob) {
               if (!blob.name) {
@@ -291,10 +283,10 @@
         if (options.disabled) {
           return data;
         }
-	      const that = this,
-		      // eslint-disable-next-line new-cap
-		      dfd = $.Deferred();
-	      loadImage.parseMetaData(
+        var that = this,
+          // eslint-disable-next-line new-cap
+          dfd = $.Deferred();
+        loadImage.parseMetaData(
           data.files[data.index],
           function (result) {
             $.extend(data, result);
@@ -316,11 +308,11 @@
         ) {
           return data;
         }
-	      const that = this,
-		      file = data.files[data.index],
-		      // eslint-disable-next-line new-cap
-		      dfd = $.Deferred();
-	      if (data.orientation && data.exifOffsets) {
+        var that = this,
+          file = data.files[data.index],
+          // eslint-disable-next-line new-cap
+          dfd = $.Deferred();
+        if (data.orientation === true && data.exifOffsets) {
           // Reset Exif Orientation data:
           loadImage.writeExifData(data.imageHead, data, 'Orientation', 1);
         }

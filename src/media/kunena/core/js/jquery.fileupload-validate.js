@@ -57,7 +57,7 @@
             */
 
       // Function returning the current number of files,
-      // has to be overriden for maxNumberOfFiles validation:
+      // has to be overridden for maxNumberOfFiles validation:
       getNumberOfFiles: $.noop,
 
       // Error and info messages:
@@ -75,11 +75,11 @@
           return data;
         }
         // eslint-disable-next-line new-cap
-	      const dfd = $.Deferred(),
-		      settings = this.options,
-		      file = data.files[data.index];
-	      let fileSize;
-	      if (options.minFileSize || options.maxFileSize) {
+        var dfd = $.Deferred(),
+          settings = this.options,
+          file = data.files[data.index],
+          fileSize;
+        if (options.minFileSize || options.maxFileSize) {
           fileSize = file.size;
         }
         if (

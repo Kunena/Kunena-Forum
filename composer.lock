@@ -59,16 +59,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.219.4",
+            "version": "3.219.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "2bbbf5f1ff0764441372fc9e312e6b463da0043e"
+                "reference": "7e8da5b45d545ca3129a14e972001698212b1a00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2bbbf5f1ff0764441372fc9e312e6b463da0043e",
-                "reference": "2bbbf5f1ff0764441372fc9e312e6b463da0043e",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7e8da5b45d545ca3129a14e972001698212b1a00",
+                "reference": "7e8da5b45d545ca3129a14e972001698212b1a00",
                 "shasum": ""
             },
             "require": {
@@ -144,9 +144,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.219.4"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.219.5"
             },
-            "time": "2022-04-14T18:14:31+00:00"
+            "time": "2022-04-15T18:16:29+00:00"
         },
         {
             "name": "behat/gherkin",
@@ -1536,16 +1536,16 @@
         },
         {
             "name": "joomla-projects/joomla-browser",
-            "version": "v4.0.0.x-dev",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-projects/joomla-browser.git",
-                "reference": "20b859dc5726026ac7d010b88a021b231dd4fa1d"
+                "reference": "3e7376f86ac634bd7674372b49394df104b852a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/20b859dc5726026ac7d010b88a021b231dd4fa1d",
-                "reference": "20b859dc5726026ac7d010b88a021b231dd4fa1d",
+                "url": "https://api.github.com/repos/joomla-projects/joomla-browser/zipball/3e7376f86ac634bd7674372b49394df104b852a2",
+                "reference": "3e7376f86ac634bd7674372b49394df104b852a2",
                 "shasum": ""
             },
             "require": {
@@ -1589,7 +1589,7 @@
                 "issues": "https://github.com/joomla-projects/joomla-browser/issues",
                 "source": "https://github.com/joomla-projects/joomla-browser/tree/v4.0.0"
             },
-            "time": "2022-04-14T14:24:43+00:00"
+            "time": "2022-04-15T21:05:43+00:00"
         },
         {
             "name": "joomla/cms-coding-standards",
@@ -1707,12 +1707,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kunena/Codestyle.git",
-                "reference": "250f660901a54b70b65966f5750ed985a6297a6b"
+                "reference": "1ad023ee50dfe459b91e94acc4beccd8d5d08b87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kunena/Codestyle/zipball/250f660901a54b70b65966f5750ed985a6297a6b",
-                "reference": "250f660901a54b70b65966f5750ed985a6297a6b",
+                "url": "https://api.github.com/repos/Kunena/Codestyle/zipball/1ad023ee50dfe459b91e94acc4beccd8d5d08b87",
+                "reference": "1ad023ee50dfe459b91e94acc4beccd8d5d08b87",
                 "shasum": ""
             },
             "require": {
@@ -1727,9 +1727,9 @@
             "description": "Kunena forum codestyle for joomla",
             "support": {
                 "issues": "https://github.com/Kunena/Codestyle/issues",
-                "source": "https://github.com/Kunena/Codestyle/tree/master"
+                "source": "https://github.com/Kunena/Codestyle/tree/1.0.1"
             },
-            "time": "2022-04-15T11:32:59+00:00"
+            "time": "2022-04-15T22:15:02+00:00"
         },
         {
             "name": "mehr-als-nix/parallel",

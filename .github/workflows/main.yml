@@ -30,7 +30,7 @@ jobs:
     - name: Run phpcs
       continue-on-error: true
       run: |
-        phpcs -q --standard=$GITHUB_WORKSPACE/vendor/kunena/codestyle/Kunena/ruleset.xml --report=checkstyle $GITHUB_WORKSPACE/src --report-checkstyle=$GITHUB_WORKSPACE/phpcs-report.xml
+        phpcs --extensions=php -p --standard=$GITHUB_WORKSPACE/vendor/kunena/codestyle/Kunena/ruleset.xml --report=checkstyle $GITHUB_WORKSPACE/src --report-checkstyle=$GITHUB_WORKSPACE/phpcs-report.xml
     - name: Show PHPCS results in PR
       continue-on-error: true
       run: cs2pr $GITHUB_WORKSPACE/phpcs-report.xml --graceful-warnings --colorize

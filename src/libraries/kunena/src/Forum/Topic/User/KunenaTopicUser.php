@@ -64,7 +64,6 @@ class KunenaTopicUser extends CMSObject
 	 * @since   Kunena 6.0
 	 *
 	 * @internal
-	 *
 	 */
 	public function __construct($topic = null, $user = null)
 	{
@@ -118,7 +117,6 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false): KunenaTopicUser
 	{
@@ -130,7 +128,6 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function reset(): void
 	{
@@ -148,7 +145,6 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load($topic_id = null, $user = null): bool
 	{
@@ -190,7 +186,6 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete(): bool
 	{
@@ -297,7 +292,6 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopic(): KunenaTopic
 	{
@@ -327,7 +321,6 @@ class KunenaTopicUser extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save($updateOnly = false): bool
 	{

@@ -17,7 +17,6 @@ use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
  * KunenaActivityAltaUserPoints class to handle profile integration with AltaUserPoints
@@ -52,7 +51,6 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 *
 	 * @since   Kunena 5.0
 	 *@throws  Exception
-	 *
 	 */
 	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
@@ -99,7 +97,6 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	}
 
 	/**
-	 *
 	 * @param   KunenaLayout  $view    view
 	 * @param   object        $params  params
 	 *

@@ -101,7 +101,6 @@ class KunenaAccess
 	/**
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct()
 	{
@@ -157,7 +156,6 @@ class KunenaAccess
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function clearCache()
 	{
@@ -259,7 +257,6 @@ class KunenaAccess
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance(): ?KunenaAccess
 	{
@@ -467,7 +464,6 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAdminStatus($user = null): array
 	{
@@ -493,7 +489,6 @@ jQuery(document).ready(function ($) {
 	 * @since   Kunena 6.0
 	 *
 	 * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
-	 *
 	 */
 	public function setModerator($category, $user = null, $status = true): bool
 	{
@@ -549,7 +544,6 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getModeratorStatus($user = null): array
 	{
@@ -568,7 +562,6 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAllowedCategories($user = null)
 	{
@@ -646,7 +639,6 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function isModerator($user = null, $catid = 0): bool
 	{
@@ -693,7 +685,6 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function isAdmin($user = null, $catid = 0): bool
 	{
@@ -777,7 +768,6 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getAllowedHold($user, int $catid, $string = true)
 	{
@@ -829,7 +819,6 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getSubscribers(int $catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null): array
 	{
@@ -1012,7 +1001,6 @@ jQuery(document).ready(function ($) {
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function loadSubscribers(KunenaTopic $topic, $type)
 	{

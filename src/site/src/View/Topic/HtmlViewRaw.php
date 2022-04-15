@@ -17,10 +17,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\View\KunenaView;
 
 /**
@@ -37,7 +34,6 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayEdit($tpl = null)
 	{
@@ -70,7 +66,6 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 4.0
-	 *
 	 */
 	public function displayListEmoji($tpl = null)
 	{
@@ -122,7 +117,6 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function displayTopicIcons()
 	{
@@ -206,7 +200,6 @@ class KunenaViewTopic extends KunenaView
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 5.1
-	 *
 	 */
 	public function displayCategorytemplatetext($tpl = null)
 	{

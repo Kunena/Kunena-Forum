@@ -72,7 +72,6 @@ class TemplateModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTemplateDetails()
 	{
@@ -102,7 +101,6 @@ class TemplateModel extends AdminModel
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -140,7 +138,6 @@ class TemplateModel extends AdminModel
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
 	{

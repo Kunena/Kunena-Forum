@@ -87,7 +87,6 @@ class KunenaRate extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -107,7 +106,6 @@ class KunenaRate extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load(int $id): bool
 	{
@@ -160,7 +158,6 @@ class KunenaRate extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($identifier = null, $reload = false)
 	{
@@ -178,7 +175,6 @@ class KunenaRate extends CMSObject
 	 * @since    Kunena 2.0
 	 *
 	 * @internal param int $userid
-	 *
 	 */
 	public function save(KunenaUser $user)
 	{
@@ -264,7 +260,6 @@ class KunenaRate extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUsers($start = 0, $limit = 0): void
 	{
@@ -324,7 +319,6 @@ class KunenaRate extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopicUserRate(): int
 	{

@@ -77,7 +77,6 @@ class KunenaSession extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($identifier)
 	{
@@ -169,7 +168,6 @@ class KunenaSession extends CMSObject
 	 * @return  KunenaSession
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($update = false, $userid = null): KunenaSession
 	{
@@ -192,7 +190,6 @@ class KunenaSession extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function updateSessionInfo(): void
 	{
@@ -212,7 +209,6 @@ class KunenaSession extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function isNewSession(): bool
 	{
@@ -237,7 +233,6 @@ class KunenaSession extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   1.5
-	 *
 	 */
 	public function save($updateOnly = false): bool
 	{

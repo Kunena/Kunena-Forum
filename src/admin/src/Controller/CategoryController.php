@@ -133,6 +133,7 @@ class CategoryController extends FormController
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORY_MANAGER_PLEASE_SET_A_TITLE'), 'notice');
 
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
 			return false;
 		}
 

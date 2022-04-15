@@ -55,7 +55,6 @@ class KunenaRead extends CMSObject
 	 * @since   Kunena 6.0
 	 *
 	 * @internal
-	 *
 	 */
 	public function __construct($topic = null, $user = null)
 	{
@@ -109,7 +108,6 @@ class KunenaRead extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($id = null, $user = null, $reload = false): KunenaRead
 	{
@@ -121,7 +119,6 @@ class KunenaRead extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getTopic(): KunenaRead
 	{
@@ -147,7 +144,6 @@ class KunenaRead extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function reset(): void
 	{
@@ -165,7 +161,6 @@ class KunenaRead extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load($topic_id = null, $user = null): bool
 	{
@@ -209,7 +204,6 @@ class KunenaRead extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save($updateOnly = false): bool
 	{
@@ -257,7 +251,6 @@ class KunenaRead extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete(): bool
 	{

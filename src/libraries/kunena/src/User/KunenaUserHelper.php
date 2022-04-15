@@ -164,7 +164,6 @@ abstract class KunenaUserHelper
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function get($identifier = null, $reload = false): ?KunenaUser
 	{
@@ -398,7 +397,6 @@ abstract class KunenaUserHelper
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getTopPosters($limit = 0): ?array
 	{
@@ -570,7 +568,6 @@ abstract class KunenaUserHelper
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getOnlineUsers(): ?array
 	{

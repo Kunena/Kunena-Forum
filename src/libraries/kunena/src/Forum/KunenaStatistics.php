@@ -210,7 +210,6 @@ class KunenaStatistics
 	 * @return \Kunena\Forum\Libraries\Forum\KunenaStatistics|null
 	 *
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance(): ?KunenaStatistics
 	{
@@ -462,7 +461,6 @@ class KunenaStatistics
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function loadTopTopics($limit = 0): array
 	{

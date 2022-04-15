@@ -86,7 +86,7 @@ class KunenaAccessJoomla
 			$list["joomla.group.{$category->pubAccess}"] = ['type'  => 'joomla.group', 'id' => $category->pubAccess, 'alias' => $accessname,
 			                                                'title' => $accessname, ];
 
-			$groupname = (string) $this->getGroupName((string) $category->accesstype,  (string) $category->adminAccess);
+			$groupname = (string) $this->getGroupName((string) $category->accesstype, (string) $category->adminAccess);
 
 			if ($groupname && $category->pubAccess != $category->adminAccess)
 			{

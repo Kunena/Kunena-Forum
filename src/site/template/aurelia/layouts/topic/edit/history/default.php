@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
+
 ?>
 <div class="float-end">
     <div class="btn btn-outline-primary border btn-small" data-bs-toggle="collapse" data-bs-target="#history">X</div>

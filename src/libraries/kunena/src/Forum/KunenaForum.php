@@ -148,7 +148,6 @@ abstract class KunenaForum
 	 * @since   Kunena 6.0
 	 *
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::setup()
-	 *
 	 */
 	public static function enabled($checkAdmin = true): bool
 	{
@@ -250,7 +249,6 @@ abstract class KunenaForum
 	 * @see     \Kunena\Forum\Libraries\Forum\KunenaForum::installed()
 	 *
 	 * Alternatively you could use method_exists() to check that the new API is in there.
-	 *
 	 */
 	public static function setup(): void
 	{

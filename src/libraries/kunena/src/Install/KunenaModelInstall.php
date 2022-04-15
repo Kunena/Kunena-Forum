@@ -1044,7 +1044,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$query = $this->db->getQuery(true);
 
 		$conditions = array(
-			$this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.reply')
+			$this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.reply'),
 		);
 
 		$query->delete($this->db->quoteName('#__mail_templates'));
@@ -1064,7 +1064,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$query = $this->db->getQuery(true);
 
 		$conditions = array(
-			$this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.replymoderator')
+			$this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.replymoderator'),
 		);
 
 		$query->delete($this->db->quoteName('#__mail_templates'));
@@ -1084,7 +1084,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 		$query = $this->db->getQuery(true);
 
 		$conditions = array(
-			$this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.report')
+			$this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.report'),
 		);
 
 		$query->delete($this->db->quoteName('#__mail_templates'));

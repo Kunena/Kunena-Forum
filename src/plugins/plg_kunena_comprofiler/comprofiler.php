@@ -86,7 +86,6 @@ class plgKunenaComprofiler extends CMSPlugin
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function onKunenaDisplay(string $type, $view = null, $params = null): void
 	{
@@ -117,7 +116,6 @@ class plgKunenaComprofiler extends CMSPlugin
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function onKunenaPrepare(string $context, &$item, object $params, $page = 0): void
 	{

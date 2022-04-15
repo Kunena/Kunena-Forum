@@ -725,7 +725,6 @@ abstract class KunenaCategoryHelper
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getChildren($parents = 0, $levels = 0, $params = []): array
 	{
@@ -770,7 +769,6 @@ abstract class KunenaCategoryHelper
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected static function _getChildren(array $parents, int $levels, array $params, bool $optimize): array
 	{
@@ -1052,7 +1050,6 @@ abstract class KunenaCategoryHelper
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getAlias($categoryId, $alias): bool
 	{

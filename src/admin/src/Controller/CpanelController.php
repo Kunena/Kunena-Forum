@@ -17,7 +17,6 @@ namespace Kunena\Forum\Administrator\Controller;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\KunenaForum;

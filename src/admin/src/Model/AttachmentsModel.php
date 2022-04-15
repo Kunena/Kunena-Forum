@@ -181,7 +181,6 @@ class AttachmentsModel extends ListModel
 	}
 
 	/**
-	 *
 	 * @return  QueryInterface
 	 *
 	 * @since   Kunena 6.0

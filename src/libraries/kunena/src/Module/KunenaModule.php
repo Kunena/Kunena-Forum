@@ -84,7 +84,7 @@ abstract class KunenaModule
 		// Load CSS only once
 		if (static::$css)
 		{
-			$this->document->getWebAssetManager()->registerAndUseStyle('mod_kunena_css',Uri::root(true) . static::$css);
+			$this->document->getWebAssetManager()->registerAndUseStyle('mod_kunena_css', Uri::root(true) . static::$css);
 			static::$css = null;
 		}
 

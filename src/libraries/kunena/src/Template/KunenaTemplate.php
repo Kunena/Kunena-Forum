@@ -1907,7 +1907,6 @@ HTML;
 	 *
 	 * @throws \Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function recaptcha(bool $topic_ids = false): string
 	{

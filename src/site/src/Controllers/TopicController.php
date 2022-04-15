@@ -332,7 +332,6 @@ class TopicController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function loadrate()
 	{
@@ -373,7 +372,6 @@ class TopicController extends KunenaController
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function setrate()
 	{

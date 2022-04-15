@@ -14,24 +14,8 @@ namespace Kunena\Forum\Site\Controller\Topic\Json;
 
 \defined('_JEXEC') or die();
 
-use Exception;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Pagination\KunenaPagination;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\KunenaUser;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Site\Model\CategoryModel;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay

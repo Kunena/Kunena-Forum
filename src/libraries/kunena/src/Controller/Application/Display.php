@@ -344,8 +344,6 @@ class Display extends KunenaControllerDisplay
 		return (bool) $this->page->getPath();
 	}
 
-
-
 	/**
 	 * @return  KunenaLayout
 	 *

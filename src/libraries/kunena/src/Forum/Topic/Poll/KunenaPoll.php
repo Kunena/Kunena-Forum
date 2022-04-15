@@ -106,7 +106,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -126,7 +125,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function load($id)
 	{
@@ -182,7 +180,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($identifier = null, $reset = false): KunenaPoll
 	{
@@ -216,7 +213,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getOptions()
 	{
@@ -279,7 +275,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUserCount()
 	{
@@ -312,7 +307,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getUsers($start = 0, $limit = 0)
 	{
@@ -346,7 +340,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getMyTime($user = null)
 	{
@@ -383,7 +376,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function vote(int $option, $change = false, $user = null): bool
 	{
@@ -551,7 +543,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getLastVoteId($user = null)
 	{
@@ -582,7 +573,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function getMyVotes($user = null)
 	{
@@ -618,7 +608,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	protected function changeOptionVotes(int $option, int $delta): bool
 	{
@@ -679,7 +668,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function delete(): bool
 	{
@@ -769,7 +757,6 @@ class KunenaPoll extends CMSObject
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function save($updateOnly = false): bool
 	{

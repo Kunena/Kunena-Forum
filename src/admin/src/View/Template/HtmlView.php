@@ -38,7 +38,6 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function display($tpl = null)
 	{

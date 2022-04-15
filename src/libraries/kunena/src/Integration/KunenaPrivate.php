@@ -41,7 +41,6 @@ class KunenaPrivate
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public static function getInstance($integration = null)
 	{
@@ -78,7 +77,6 @@ class KunenaPrivate
 	 *
 	 * @throws Exception
 	 * @since   Kunena 6.0
-	 *
 	 */
 	public function showIcon(int $userid): string
 	{
@@ -155,7 +153,6 @@ class KunenaPrivate
 	 * @since    Kunena 6.0
 	 *
 	 * @internal param $text
-	 *
 	 */
 	public function showNewIcon(int $userid, $class = '', $icon = ''): string
 	{

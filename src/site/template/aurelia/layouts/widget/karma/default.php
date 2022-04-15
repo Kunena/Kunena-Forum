@@ -46,4 +46,3 @@ else
 $karma .= ' ' . HTMLHelper::_('kunenaforum.link', $url, $karmaIcon);
 
 echo $karma;
-

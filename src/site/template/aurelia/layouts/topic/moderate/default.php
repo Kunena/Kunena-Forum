@@ -211,15 +211,15 @@ $labels          = $this->ktemplate->params->get('labels');
                                    for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
 
                             <div class="controls" id="modtopicslist"> <?php echo HTMLHelper::_(
-									'select.genericlist',
-									$this->getTopicOptions(),
-									'targettopic',
-									'class="form-control"',
-									'value',
-									'text',
-									0,
-									'kmod_topics'
-								); ?> </div>
+								'select.genericlist',
+								$this->getTopicOptions(),
+								'targettopic',
+								'class="form-control"',
+								'value',
+								'text',
+								0,
+								'kmod_topics'
+							); ?> </div>
                         </div>
                         <div class="control-group" id="kmod_targetid" style="display: none;">
                             <label class="control-label"

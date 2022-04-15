@@ -34,7 +34,6 @@ use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\View\KunenaView;
 
 /**

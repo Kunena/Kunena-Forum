@@ -75,7 +75,7 @@
     "karma-jasmine-ajax": "^0.1.13",
     "karma-json-fixtures-preprocessor": "0.0.6",
     "karma-verbose-reporter": "^0.0.6",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "path": "^0.12.7",
     "postcss": "^7.0.36",
     "selenium-standalone": "^6.16.0",

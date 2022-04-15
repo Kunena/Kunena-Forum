@@ -224,8 +224,7 @@ abstract class KunenaFactory
 
 			$english = false;
 
-			if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
-				&& !self::getConfig()->get('debug') && self::getConfig()->get('fallbackEnglish')
+			if (self::getConfig()->get('fallbackEnglish')
 			)
 			{
 				$lang->load($file, $lookup2, 'en-GB', true, false);

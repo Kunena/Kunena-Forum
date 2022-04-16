@@ -11,6 +11,7 @@
  **/
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -72,32 +73,34 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                         </div>
                     </div>
                 </div>
-<!--                <div class="row clearfix">
+			<?php endif; ?>
+	        <?php if (!Factory::getLanguage()->getTag() != "en-GB" && !$this->getLanguagePack()): ?>
+                <div class="row clearfix">
                     <div class="col-xl-3 col-md-3">
                         <div class="card proj-t-card bg-warning">
                             <div class="card-body">
                                 <div class="row align-items-center mb-30">
                                     <div class="col-auto">
-                                        <i class="fas fa-database text-white f-30"></i>
+                                        <i class="fas fa-language text-white f-30"></i>
                                     </div>
                                     <div class="col pl-0">
-                                        <h6 class="mb-0 text-white">Install</h6>
-                                        <h6 class="mb-0 text-white">Kunena Menus</h6>
+                                        <h6 class="mb-0 text-white">Language</h6>
+                                        <h6 class="mb-0 text-white">Kunena Language Pack not installed</h6>
                                     </div>
                                 </div>
                                 <div>
-									<ul id="sample-data-wrapper" class="list-group list-group-flush sample-data">
-										<li class="list-group-item sampledata-kunena">
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item kunena">
 											<div class="d-flex justify-content-between align-items-center">
-												<div class="sample-data__title me-2">
-													<span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
-													Kunena Menus					</div>
-												<button type="button" class="btn btn-secondary btn-sm apply-sample-data" data-type="kunena" data-steps="1">
-													<span class="fas fa-upload" aria-hidden="true"></span> Install
-													<span class="visually-hidden">Kunena Menus</span>
-												</button>
+												<div class="title me-2">
+                                                    <i class="fas fa-language"></i>
+													Kunena Languages
+                                                </div>
+												<a href="https://www.kunena.org/download" target="_blank" class="btn btn-secondary btn-sm">
+													Download
+												</a>
 											</div>
-											<p class="sample-data__desc small mt-1">Install Kunena Menus</p>
+											<p class="sample-data__desc small mt-1">Install Kunena Language Pack</p>
 										</li>
 										<li class="list-group-item sampledata-progress-kunena d-none">
 											<div class="progress mb-3">
@@ -110,8 +113,8 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             </div>
                         </div>
                     </div>
-                </div>-->
-			<?php endif; ?>
+                </div>
+	        <?php endif; ?>
 			<?php if (!$this->KunenaMenusExists): ?>
 			<div class="row clearfix">
                     <div class="col-xl-3 col-md-3">

@@ -165,4 +165,24 @@ class HtmlView extends BaseHtmlView
 
 		return true;
 	}
+
+	public function getLanguagePack()
+	{
+		$lang = false;
+		$db = Factory::getContainer()->get('DatabaseDriver');
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__extensions'))
+			->where($db->quoteName('type') . ' = ' . $db->quote('package'))
+			->andwhere($db->quoteName('name') . ' = ' . $db->quote('Kunena Language Pack'));
+		$db->setQuery($query);
+		$list = (array) $db->loadObjectList();
+
+		if ($list)
+		{
+			$lang = true;
+		}
+
+		return $lang;
+	}
 }

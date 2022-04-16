@@ -57,6 +57,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		],
 		'Joomla!' => [
 			'4.1' => '4.1.2',
+			'4.2' => '4.2.0-dev',
 			'0'   => '4.1.2', // Preferred version
 		],
 	];
@@ -301,7 +302,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 			return false;
 		}
-
 
 		return true;
 	}
@@ -639,7 +639,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 			$query->insert($db->quoteName('#__mail_templates'))
 				->columns(
-				[
+					[
 					$db->quoteName('template_id'),
 					$db->quoteName('extension'),
 					$db->quoteName('language'),
@@ -648,11 +648,11 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 					$db->quoteName('htmlbody'),
 					$db->quoteName('attachments'),
 					$db->quoteName('params'),
-				]
+					]
 				)
-					->values(implode(', ', $values))
-					->values(implode(', ', $values2))
-					->values(implode(', ', $values3));
+				->values(implode(', ', $values))
+				->values(implode(', ', $values2))
+				->values(implode(', ', $values3));
 				$db->setQuery($query);
 
 				$db->execute();

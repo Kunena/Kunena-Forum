@@ -50,16 +50,6 @@ class DisplayController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = []): BaseController
 	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
-		KunenaFactory::loadLanguage('com_kunena.views', 'admin');
-		KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
-		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
-		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
-		KunenaFactory::loadLanguage('com_kunena.models', 'admin');
-		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
-		KunenaFactory::loadLanguage('com_plugins', 'admin');
-		KunenaFactory::loadLanguage('com_kunena', 'site');
-
 		$document = Factory::getApplication()->getDocument();
 		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/theme.min.css');
 

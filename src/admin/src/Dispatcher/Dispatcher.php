@@ -12,12 +12,11 @@
 
 namespace Kunena\Forum\Administrator\Dispatcher;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use function defined;
 
 /**
  * ComponentDispatcher class for com_kunena
@@ -56,8 +55,6 @@ class Dispatcher extends ComponentDispatcher
 	}
 
 	/**
-	 *
-	 *
 	 * @since K6.0
 	 */
 	private function applyViewAndController(): void

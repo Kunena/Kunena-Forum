@@ -22,7 +22,6 @@
             <filename>tr-TR.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/tr-TR">
-            <filename>tr-TR.com_kunena.controllers.ini</filename>
             <filename>tr-TR.com_kunena.ini</filename>
             <filename>tr-TR.com_kunena.models.ini</filename>
             <filename>tr-TR.com_kunena.templates.ini</filename>

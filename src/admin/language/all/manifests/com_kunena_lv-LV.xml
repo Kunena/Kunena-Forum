@@ -22,7 +22,6 @@
             <filename>lv-LV.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/lv-LV">
-            <filename>lv-LV.com_kunena.controllers.ini</filename>
             <filename>lv-LV.com_kunena.ini</filename>
             <filename>lv-LV.com_kunena.models.ini</filename>
             <filename>lv-LV.com_kunena.templates.ini</filename>

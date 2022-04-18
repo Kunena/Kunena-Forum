@@ -22,7 +22,6 @@
             <filename>af-ZA.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/af-ZA">
-            <filename>af-ZA.com_kunena.controllers.ini</filename>
             <filename>af-ZA.com_kunena.ini</filename>
             <filename>af-ZA.com_kunena.models.ini</filename>
             <filename>af-ZA.com_kunena.templates.ini</filename>

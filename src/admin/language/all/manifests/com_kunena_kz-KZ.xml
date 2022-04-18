@@ -22,7 +22,6 @@
             <filename>kz-KZ.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/kz-KZ">
-            <filename>kz-KZ.com_kunena.controllers.ini</filename>
             <filename>kz-KZ.com_kunena.ini</filename>
             <filename>kz-KZ.com_kunena.models.ini</filename>
             <filename>kz-KZ.com_kunena.templates.ini</filename>

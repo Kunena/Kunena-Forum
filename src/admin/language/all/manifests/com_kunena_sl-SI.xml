@@ -21,8 +21,7 @@
             <filename>sl-SI.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/sl-SI">
-            <filename>sl-SI.com_kunena.controllers.ini</filename>
-            <filename>sl-SI.com_kunena.ini</filename>
+             <filename>sl-SI.com_kunena.ini</filename>
             <filename>sl-SI.com_kunena.models.ini</filename>
             <filename>sl-SI.com_kunena.templates.ini</filename>
             <filename>sl-SI.com_kunena.views.ini</filename>

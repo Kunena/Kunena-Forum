@@ -22,7 +22,6 @@
             <filename>zh-TW.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/zh-TW">
-            <filename>zh-TW.com_kunena.controllers.ini</filename>
             <filename>zh-TW.com_kunena.ini</filename>
             <filename>zh-TW.com_kunena.models.ini</filename>
             <filename>zh-TW.com_kunena.templates.ini</filename>

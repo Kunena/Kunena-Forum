@@ -22,7 +22,6 @@
             <filename>lt-LT.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/lt-LT">
-            <filename>lt-LT.com_kunena.controllers.ini</filename>
             <filename>lt-LT.com_kunena.ini</filename>
             <filename>lt-LT.com_kunena.models.ini</filename>
             <filename>lt-LT.com_kunena.templates.ini</filename>

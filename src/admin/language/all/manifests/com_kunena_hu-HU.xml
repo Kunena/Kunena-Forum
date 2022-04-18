@@ -22,7 +22,6 @@
             <filename>hu-HU.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/hu-HU">
-            <filename>hu-HU.com_kunena.controllers.ini</filename>
             <filename>hu-HU.com_kunena.ini</filename>
             <filename>hu-HU.com_kunena.models.ini</filename>
             <filename>hu-HU.com_kunena.templates.ini</filename>

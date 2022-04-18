@@ -22,7 +22,6 @@
             <filename>sr-YU.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/sr-YU">
-            <filename>sr-YU.com_kunena.controllers.ini</filename>
             <filename>sr-YU.com_kunena.ini</filename>
             <filename>sr-YU.com_kunena.models.ini</filename>
             <filename>sr-YU.com_kunena.templates.ini</filename>

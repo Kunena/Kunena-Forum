@@ -22,7 +22,6 @@
             <filename>sr-RS.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/sr-RS">
-            <filename>sr-RS.com_kunena.controllers.ini</filename>
             <filename>sr-RS.com_kunena.ini</filename>
             <filename>sr-RS.com_kunena.models.ini</filename>
             <filename>sr-RS.com_kunena.templates.ini</filename>

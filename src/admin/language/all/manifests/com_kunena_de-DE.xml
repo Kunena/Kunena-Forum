@@ -21,7 +21,6 @@
             <filename>de-DE.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/de-DE">
-            <filename>de-DE.com_kunena.controllers.ini</filename>
             <filename>de-DE.com_kunena.ini</filename>
             <filename>de-DE.com_kunena.models.ini</filename>
             <filename>de-DE.com_kunena.templates.ini</filename>

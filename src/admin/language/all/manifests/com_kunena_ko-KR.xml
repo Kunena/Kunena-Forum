@@ -22,7 +22,6 @@
             <filename>ko-KR.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/ko-KR">
-            <filename>ko-KR.com_kunena.controllers.ini</filename>
             <filename>ko-KR.com_kunena.ini</filename>
             <filename>ko-KR.com_kunena.models.ini</filename>
             <filename>ko-KR.com_kunena.templates.ini</filename>

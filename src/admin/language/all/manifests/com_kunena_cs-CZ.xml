@@ -22,7 +22,6 @@
             <filename>cs-CZ.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/cs-CZ">
-            <filename>cs-CZ.com_kunena.controllers.ini</filename>
             <filename>cs-CZ.com_kunena.ini</filename>
             <filename>cs-CZ.com_kunena.models.ini</filename>
             <filename>cs-CZ.com_kunena.templates.ini</filename>

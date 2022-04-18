@@ -21,7 +21,6 @@
             <filename>eo-XX.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/eo-XX">
-            <filename>eo-XX.com_kunena.controllers.ini</filename>
             <filename>eo-XX.com_kunena.ini</filename>
             <filename>eo-XX.com_kunena.models.ini</filename>
             <filename>eo-XX.com_kunena.templates.ini</filename>

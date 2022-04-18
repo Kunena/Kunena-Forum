@@ -22,7 +22,6 @@
             <filename>hr-HR.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/hr-HR">
-            <filename>hr-HR.com_kunena.controllers.ini</filename>
             <filename>hr-HR.com_kunena.ini</filename>
             <filename>hr-HR.com_kunena.models.ini</filename>
             <filename>hr-HR.com_kunena.templates.ini</filename>

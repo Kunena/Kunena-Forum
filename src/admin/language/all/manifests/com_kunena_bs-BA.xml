@@ -22,7 +22,6 @@
             <filename>bs-BA.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/bs-BA">
-            <filename>bs-BA.com_kunena.controllers.ini</filename>
             <filename>bs-BA.com_kunena.ini</filename>
             <filename>bs-BA.com_kunena.models.ini</filename>
             <filename>bs-BA.com_kunena.templates.ini</filename>

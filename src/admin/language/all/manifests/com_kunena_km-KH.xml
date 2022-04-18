@@ -22,7 +22,6 @@
             <filename>km-KH.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/km-KH">
-            <filename>km-KH.com_kunena.controllers.ini</filename>
             <filename>km-KH.com_kunena.ini</filename>
             <filename>km-KH.com_kunena.models.ini</filename>
             <filename>km-KH.com_kunena.templates.ini</filename>

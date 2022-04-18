@@ -22,7 +22,6 @@
             <filename>sv-SE.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/sv-SE">
-            <filename>sv-SE.com_kunena.controllers.ini</filename>
             <filename>sv-SE.com_kunena.ini</filename>
             <filename>sv-SE.com_kunena.models.ini</filename>
             <filename>sv-SE.com_kunena.templates.ini</filename>

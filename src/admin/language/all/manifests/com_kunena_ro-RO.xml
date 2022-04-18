@@ -22,7 +22,6 @@
             <filename>ro-RO.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/ro-RO">
-            <filename>ro-RO.com_kunena.controllers.ini</filename>
             <filename>ro-RO.com_kunena.ini</filename>
             <filename>ro-RO.com_kunena.models.ini</filename>
             <filename>ro-RO.com_kunena.templates.ini</filename>

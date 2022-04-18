@@ -22,7 +22,6 @@
             <filename>nl-NL.com_kunena.views.ini</filename>
         </files>
         <files folder="site" target="language/nl-NL">
-            <filename>nl-NL.com_kunena.controllers.ini</filename>
             <filename>nl-NL.com_kunena.ini</filename>
             <filename>nl-NL.com_kunena.models.ini</filename>
             <filename>nl-NL.com_kunena.templates.ini</filename>

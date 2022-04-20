@@ -752,7 +752,7 @@ abstract class KunenaAttachmentHelper
 	 * @throws \Exception
 	 * @since   Kunena 5.1
 	 */
-	public static function getTotalAttachments(): ?bool
+	public static function getTotalAttachments(): ?int
 	{
 		$attachments = null;
 

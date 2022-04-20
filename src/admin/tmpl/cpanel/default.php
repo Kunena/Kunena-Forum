@@ -84,8 +84,8 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         <i class="fas fa-language text-white f-30"></i>
                                     </div>
                                     <div class="col pl-0">
-                                        <h6 class="mb-0 text-white">Language</h6>
-                                        <h6 class="mb-0 text-white">Kunena Language Pack not installed</h6>
+                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LANGUAGE'); ?></h6>
+                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LANGUAGE_PACK_NOT_INSTALLED'); ?></h6>
                                     </div>
                                 </div>
                                 <div>
@@ -94,13 +94,13 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
 											<div class="d-flex justify-content-between align-items-center">
 												<div class="title me-2">
                                                     <i class="fas fa-language"></i>
-													Kunena Languages
+													<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_LANGUAGE'); ?>
                                                 </div>
 												<a href="https://www.kunena.org/download" target="_blank" class="btn btn-secondary btn-sm">
-													Download
+													<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_DONWLOAD_LANGUAGE_PACK'); ?>
 												</a>
 											</div>
-											<p class="sample-data__desc small mt-1">Install Kunena Language Pack</p>
+											<p class="sample-data__desc small mt-1"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_LANGUAGE_PACK'); ?></p>
 										</li>
 										<li class="list-group-item sampledata-progress-kunena d-none">
 											<div class="progress mb-3">
@@ -242,7 +242,6 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                     <h3 class="fw-700 text-cyan">
 										<?php echo $count['sections'] . ' / ' . $count['categories']; ?>
                                     </h3>
-                                    <p class="mb-0">Last Edit: Welcome</p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-list-alt bg-cyan"></i>
@@ -292,7 +291,6 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan"><?php echo KunenaAttachmentHelper::getTotalAttachments(); ?></h3>
-                                    <p class="mb-0">photo.png (topic id: 44343)</p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-photo-video bg-cyan"></i>
@@ -397,7 +395,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalRanks(); ?></h3>
-                                    <p class="mb-0">Groups</p>
+                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?></p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-bars bg-cyan"></i>

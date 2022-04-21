@@ -10,8 +10,11 @@
 jQuery(document).ready(function ($) {
     const qreply = $('.qreply');
     const editor = $('#editor');
-    const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
-    const arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
+
+    if(Joomla.getOptions('com_kunena.pollcategoriesid') != undefined){
+		const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+    }
+
     const pollexist = $('#poll_exist_edit');
     const pollcatid = jQuery('#poll_catid').val();
     const polliconstatus = false;
@@ -19,9 +22,13 @@ jQuery(document).ready(function ($) {
     // Check is anynomous options can be displayed on newtopic page
     const catiddefault = $('#postcatid').val();
 
-    if (arrayanynomousbox !== null) {
-        if (arrayanynomousbox[catiddefault] == 1) {
-            $('#kanonymous').prop('checked', true);
+    if(Joomla.getOptions('com_kunena.arrayanynomousbox') != undefined){
+		const arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
+
+		if (arrayanynomousbox !== null) {
+            if (arrayanynomousbox[catiddefault] == 1) {
+                $('#kanonymous').prop('checked', true);
+            }
         }
     }
 

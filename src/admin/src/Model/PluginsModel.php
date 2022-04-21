@@ -269,7 +269,7 @@ class PluginsModel extends ListModel
 		$query->from($db->quoteName('#__extensions', 'a'));
 
 		$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
-		$query->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
+		$query->where('(' . $db->quoteName('folder') . ' = ' . $db->quote('kunena') . ' OR ' . $db->quoteName('element') . ' LIKE ' . $db->quote('%kunena%') .')');
 
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS editor');

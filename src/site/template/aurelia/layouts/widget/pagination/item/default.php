@@ -33,5 +33,5 @@ elseif (!empty($item->active))
 else
 {
 	// Doesn't match any other condition, render disabled item.
-	echo '<li class="page-item"><a class="page-link disabled">' . $item->text . '</a></li>';
+	echo '<li class="page-item disabled"><a class="page-link">' . $item->text . '</a></li>';
 }

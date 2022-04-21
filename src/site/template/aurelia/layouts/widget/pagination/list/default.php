@@ -40,7 +40,7 @@ $last = 0;
 		{
 			if ($last + 1 != $k)
 			{
-				echo '<li class="page-item"><a class="disabled">...</a></li>';
+				echo '<li class="page-item disabled"><a class="">...</a></li>';
 			}
 
 			$last = $k;

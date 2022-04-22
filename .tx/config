@@ -45,12 +45,6 @@ source_file = src/admin/language/en-GB/en-GB.com_kunena.views.ini
 source_lang = en-GB
 minimum_perc = 1
 
-[o:Kunena-Forum:p:kunena-forum-6:r:src-site-language-en-gb-en-gb-com-kunena-controllers-ini--k6-0]
-file_filter = src/site/language/<lang>/<lang>.com_kunena.controllers.ini
-source_file = src/site/language/en-GB/en-GB.com_kunena.controllers.ini
-source_lang = en-GB
-minimum_perc = 1
-
 [o:Kunena-Forum:p:kunena-forum-6:r:src-site-language-en-gb-en-gb-com-kunena-ini--k6-0]
 file_filter = src/site/language/<lang>/<lang>.com_kunena.ini
 source_file = src/site/language/en-GB/en-GB.com_kunena.ini

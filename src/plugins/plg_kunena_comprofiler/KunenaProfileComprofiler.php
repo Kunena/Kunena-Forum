@@ -228,27 +228,30 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @since Kunena 5.2
 	 */
-	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true)
+	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
 	{
 		global $ueConfig;
 
-		if ($ueConfig['name_format'] == 1)
+		if ($user->exists())
 		{
-			return $user->name;
-		}
-		elseif ($ueConfig['name_format'] == 2)
-		{
-			return $user->name . ' (' . $user->username . ')';
-		}
-		elseif ($ueConfig['name_format'] == 3)
-		{
-			return $user->username;
-		}
-		elseif ($ueConfig['name_format'] == 4)
-		{
-			return $user->username . ' (' . $user->name . ')';
+			if ($ueConfig['name_format'] == 1)
+			{
+				return $user->name;
+			}
+			elseif ($ueConfig['name_format'] == 2)
+			{
+				return $user->name . ' (' . $user->username . ')';
+			}
+			elseif ($ueConfig['name_format'] == 3)
+			{
+				return $user->username;
+			}
+			elseif ($ueConfig['name_format'] == 4)
+			{
+				return $user->username . ' (' . $user->name . ')';
+			}
 		}
 
-		return false;
+		return $visitorname;
 	}
 }

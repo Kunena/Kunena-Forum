@@ -82,6 +82,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 
 		// Get CUser object
 		$cbUser = null;
+		$url = null;
 
 		if ($user->userid)
 		{

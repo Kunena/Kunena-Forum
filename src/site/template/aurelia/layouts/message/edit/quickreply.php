@@ -46,7 +46,6 @@ $this->addScript('jquery.caret.js');
 $this->addScript('jquery.atwho.js');
 
 $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
-$this->addScriptOptions('com_kunena.kunena_quickReplymesid', $message->displayField('id'));
 
 $this->addScript('assets/js/quickreply.js');
 
@@ -195,8 +194,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                                 </div>
                             </div>
 						<?php endif; ?>
-                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
-                           role="button" class="btn btn-outline-primary border btn-small btn-link float-end"
+                        <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>"
+                           href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
+                           role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor"
                            rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
                         <br/>
 
@@ -313,7 +313,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 							}
 							else
 							{
-								echo '<textarea class="qreply form-control test' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
+								echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
 							} ?>
                         </div>
 
@@ -354,8 +354,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                                 </div>
                             </div>
 						<?php endif; ?>
-                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
-                           role="button" class="btn btn-outline-primary border btn-small btn-link float-end"
+                        <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>"
+                           href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
+                           role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor"
                            rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
                         <br/>
                     </div>

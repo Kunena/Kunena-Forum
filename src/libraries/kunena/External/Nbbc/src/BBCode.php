@@ -1264,17 +1264,14 @@ REGEX;
     // these flags are mutually-exclusive.
     public function fillTemplate($template, $insert_array, $default_array = []) {
         /*START HACK BY KUNENA >*/
-        if (is_array($template) && !$template[0]->autoLink_disable) 
+        if (is_array($template) ) 
         { 
             return call_user_func($template, $insert_array);
-        }
-        else
-        {
-            $template = '<a href="{$url/h}">{$text/h}</a>';
         }
         /*< END HACK BY KUNENA*/
 
         $pieces = preg_split('/(\{\$[a-zA-Z0-9_.:\/-]+\})/', $template, -1, PREG_SPLIT_DELIM_CAPTURE);
+   
 
         // Special (common) high-speed case:  No inserts found in the template.
         if (count($pieces) <= 1)
@@ -2111,7 +2108,8 @@ REGEX;
         // Set up the special "_content" and "_defaultcontent" parameters.
         $params['_content'] = $contents;
         $params['_defaultcontent'] = !empty($params['_default']) ? $params['_default'] : $contents;
-
+ 
+        
         // Now use common template-formatting logic.
         if (isset($tag_rule['template'])) {
             if (isset($tag_rule['default'])) {

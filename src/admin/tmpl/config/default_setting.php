@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Administrator.Template
+ * @package         Kunena.Administrator.Config
  * @subpackage      Configuration
  *
  * @copyright       Copyright (C) 2008 - 2022 Kunena Team. All rights reserved.

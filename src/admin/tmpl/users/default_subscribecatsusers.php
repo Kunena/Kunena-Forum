@@ -17,9 +17,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>
 
-<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post"
-	  name="subscribecatsusers"
-	  id="subscribecatsusers">
+
 
 	<div class="modal hide fade" id="subscribecatsusersModal">
 		<div class="modal-dialog">
@@ -41,13 +39,11 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						<?php echo Text::_('JCANCEL'); ?>
 					</button>
 					<button class="btn btn-outline-primary" type="submit"
-							onclick="document.getElementById('subscribecatsusers').submit();">
+							onclick="Joomla.submitbutton('users.subscribeuserstocategories');">>
 						<?php echo Text::_('JSUBMIT'); ?>
 					</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<input type="hidden" name="task" value="users.subscribeuserstocategories"/>
-	<?php echo HTMLHelper::_('form.token') ?>
-</form>
+

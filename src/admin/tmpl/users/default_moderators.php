@@ -14,14 +14,14 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="modal hide fade" id="moderateModal">
+<div class="modal hide fade" id="moderateModal" tabindex="-1" aria-labelledby="moderateModal" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel"><?php echo Text::_('COM_KUNENA_BATCH_USERS_OPTIONS'); ?></h5>
+				<h5 class="modal-title" id="exampleModalLabel"><?php echo Text::_('COM_KUNENA_CATEGORIES_CONFIRM_DELETE_TITLE_MODAL'); ?></h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body span11">
+			<div class="modal-body">
 				<p><?php echo Text::_('COM_KUNENA_BATCH_USERS_TIP'); ?></p>
 				<div class="control-group">
 					<div class="controls">
@@ -30,14 +30,8 @@ use Joomla\CMS\Language\Text;
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-outline-primary" type="button" onclick="document.id('catid').value='';"
-						data-bs-dismiss="modal">
-					<?php echo Text::_('JCANCEL'); ?>
-				</button>
-				<button class="btn btn-outline-primary" type="submit"
-						onclick="Joomla.submitbutton('users.batchModerators');">
-					<?php echo Text::_('JSUBMIT'); ?>
-				</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_('JCANCEL'); ?></button>
+				<button type="button" class="btn btn-danger" onclick="Joomla.submitbutton('users.batchmoderators');"><?php echo Text::_('COM_KUNENA_CATEGORIES_DELETE_MODAL_BUTTON_LABEL'); ?></button>
 			</div>
 		</div>
 	</div>

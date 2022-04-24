@@ -795,7 +795,7 @@ class UsersController extends KunenaController
 	 * @throws  null
 	 * @since   Kunena 2.0
 	 */
-	public function batchModerators(): void
+	public function batchmoderators(): void
 	{
 		if (!Session::checkToken())
 		{

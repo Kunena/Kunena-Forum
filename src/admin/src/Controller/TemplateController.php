@@ -69,6 +69,7 @@ class TemplateController extends FormController
 		parent::__construct($config, $factory, $app, $input);
 
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=templates';
+		$this->baseurlTemplate = 'administrator/index.php?option=com_kunena&view=template';
 		$this->config  = KunenaFactory::getConfig();
 	}
 
@@ -696,7 +697,7 @@ class TemplateController extends FormController
 			return;
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=addnew", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=addnew', false));
 	}
 
 	/**

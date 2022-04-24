@@ -39,6 +39,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 			</div>
 		</div>
 	</div>
-	<input type="hidden" name="task" value="setDefault"/>
+	<input type="hidden" name="task" value="config.setDefault"/>
 	<?php echo HTMLHelper::_('form.token') ?>
 </form>

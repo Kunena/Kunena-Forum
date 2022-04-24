@@ -172,6 +172,6 @@ class ConfigController extends FormController
 		KunenaConfig::getInstance()->reset();
 		KunenaConfig::getInstance()->save();
 
-		$this->setRedirect($this->baseurl, Text::_('COM_KUNENA_CONFIG_DEFAULT'));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false), Text::_('COM_KUNENA_CONFIG_DEFAULT'));
 	}
 }

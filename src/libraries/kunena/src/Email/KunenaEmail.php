@@ -73,7 +73,7 @@ abstract class KunenaEmail
 			&& MailHelper::isEmailAddress($config->get('emailVisibleAddress'))
 		)
 		{
-			$mailTemplate->AddAddress($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle));
+			$mailTemplate->addRecipient($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle), 'to');
 
 			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
 			if ($emailRecipientCount > 9)
@@ -90,18 +90,15 @@ abstract class KunenaEmail
 		{
 			if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to')
 			{
-				$mailTemplate->ClearAddresses();
-				$mailTemplate->addRecipient($emails);
+				$mailTemplate->addRecipient($emails, null, 'to');
 			}
 			elseif ($emailRecipientPrivacy == 'cc')
 			{
-				$mailTemplate->ClearCCs();
-				$mailTemplate->addCC($emails);
+				$mailTemplate->addRecipient($emails, null, 'cc');
 			}
 			else
 			{
-				$mailTemplate->ClearBCCs();
-				$mailTemplate->addBCC($emails);
+				$mailTemplate->addRecipient($emails, null, 'bcc');
 			}
 
 			try

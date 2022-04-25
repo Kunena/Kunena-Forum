@@ -458,13 +458,8 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	public function sendNotification($url = null, $approved = false)
+	public function sendNotification($url = null, $approved = false): bool
 	{
-		if ($this->hold > 1)
-		{
-			return false;
-		}
-
 		$config = KunenaFactory::getConfig();
 
 		if (!$config->get('sendEmails'))
@@ -472,23 +467,8 @@ class KunenaMessage extends KunenaDatabaseObject
 			return false;
 		}
 
-		$this->urlNotification = $url;
-
-		// Factory::getApplication()->RegisterEvent( 'onBeforeRespond', array($this, 'notificationCloseConnection') );
-		Factory::getApplication()->RegisterEvent('onAfterRespond', [$this, 'notificationPost']);
-	}
-
-	/**
-	 * @return  boolean
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function notificationPost(): bool
-	{
 		// Restore app input context
 		Factory::getApplication()->input->set('message', $this);
-		$config = KunenaFactory::getConfig();
 
 		$url = $this->urlNotification;
 

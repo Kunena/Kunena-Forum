@@ -595,7 +595,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			$mailer = new MailTemplate('com_kunena.reply', $user->getParam('language', $app->get('language')), $mail);
 			$mailer->addTemplateData(
 				[
-					'mail'       => $mail,
+					'mail'       => '',
 					'subject'    => $subject,
 					'message'    => $this,
 					'messageUrl' => $url,
@@ -612,7 +612,7 @@ class KunenaMessage extends KunenaDatabaseObject
 			$mailer = new MailTemplate('com_kunena.replymoderator', $user->getParam('language', $app->get('language')), $mail);
 			$mailer->addTemplateData(
 				[
-					'mail'       => $mail,
+					'mail'       => '',
 					'subject'    => $subject,
 					'message'    => $this,
 					'messageUrl' => $url,

@@ -29,8 +29,10 @@ use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 class KunenaDate extends Date
 {
 	/**
-	 * @param   string  $date  date
-	 * @param   null    $tz    tz
+	 * Return an instance of KunenaDate object
+	 * 
+	 * @param   string  $date  String in a format accepted by strtotime(), defaults to "now".
+	 * @param   mixed   $tz    Time zone to be used for the date. Might be a string or a DateTimeZone object.
 	 *
 	 * @return  KunenaDate
 	 *

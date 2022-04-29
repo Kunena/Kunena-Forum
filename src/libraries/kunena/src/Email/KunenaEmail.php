@@ -88,17 +88,19 @@ abstract class KunenaEmail
 
 		foreach ($chunks as $emails)
 		{
+			$email = array_pop($emails);
+
 			if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to')
 			{
-				$mailTemplate->addRecipient($emails, null, 'to');
+				$mailTemplate->addRecipient($email, null, 'to');
 			}
 			elseif ($emailRecipientPrivacy == 'cc')
 			{
-				$mailTemplate->addRecipient($emails, null, 'cc');
+				$mailTemplate->addRecipient($email, null, 'cc');
 			}
 			else
 			{
-				$mailTemplate->addRecipient($emails, null, 'bcc');
+				$mailTemplate->addRecipient($email, null, 'bcc');
 			}
 
 			try

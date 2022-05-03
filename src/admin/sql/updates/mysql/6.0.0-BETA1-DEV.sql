@@ -31,11 +31,11 @@ ALTER TABLE `#__kunena_users_banned` CHANGE `modified_time` `modified_time` date
 ALTER TABLE `#__kunena_topics` CHANGE `params` `params` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
 ALTER TABLE `#__kunena_user_topics` CHANGE `params` `params` text NULL;
 INSERT IGNORE INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
-VALUES ('com_kunena.reply', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
+VALUES ('com_kunena.reply', '', 'COM_KUNENA_SENDMAIL_REPLY_SUBJECT', 'COM_KUNENA_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
 INSERT IGNORE INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
-VALUES ('com_kunena.replymoderator', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
+VALUES ('com_kunena.replymoderator', '', 'COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT', 'COM_KUNENA_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
 INSERT IGNORE INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
-VALUES ('com_kunena.report', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
+VALUES ('com_kunena.report', '', 'COM_KUNENA_SENDMAIL_REPORT_SUBJECT', 'COM_KUNENA_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');

@@ -555,11 +555,11 @@ CREATE TABLE IF NOT EXISTS `#__kunena_version`
     DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
-VALUES ('com_kunena.reply', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
+VALUES ('com_kunena.reply', '', 'COM_KUNENA_SENDMAIL_REPLY_SUBJECT', 'COM_KUNENA_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
 INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
-VALUES ('com_kunena.replymoderator', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
+VALUES ('com_kunena.replymoderator', '', 'COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT', 'COM_KUNENA_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
 INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
-VALUES ('com_kunena.report', '', 'COM_CONFIG_SENDMAIL_SUBJECT', 'COM_CONFIG_SENDMAIL_BODY', '', '',
+VALUES ('com_kunena.report', '', 'COM_KUNENA_SENDMAIL_REPORT_SUBJECT', 'COM_KUNENA_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');

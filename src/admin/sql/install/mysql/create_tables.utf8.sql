@@ -561,5 +561,5 @@ INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `
 VALUES ('com_kunena.replymoderator', '', 'COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT', 'COM_KUNENA_SENDMAIL_BODY', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');
 INSERT INTO `#__mail_templates` (`template_id`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
-VALUES ('com_kunena.report', '', 'COM_KUNENA_SENDMAIL_REPORT_SUBJECT', 'COM_KUNENA_SENDMAIL_BODY', '', '',
+VALUES ('com_kunena.report', '', 'COM_KUNENA_SENDMAIL_REPORT_SUBJECT', 'COM_KUNENA_SENDMAIL_BODY_REPORTMODERATOR', '', '',
         '{"tags":["mail", "subject", "message", "messageUrl", "once"]}');

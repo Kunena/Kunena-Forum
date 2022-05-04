@@ -631,7 +631,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 				$db->quote('com_kunena'),
 				$db->quote(''),
 				$db->quote(Text::_('COM_KUNENA_SENDMAIL_REPORT_SUBJECT')),
-				$db->quote(Text::_('COM_KUNENA_SENDMAIL_BODY')),
+				$db->quote(Text::_('COM_KUNENA_SENDMAIL_BODY_REPORTMODERATOR')),
 				$db->quote(''),
 				$db->quote(''),
 				$db->quote('{"tags":["mail", "subject", "message", "messageUrl", "once"]}'),

@@ -134,7 +134,7 @@
                  versionname="Internal">
             <query mode="silenterror">UPDATE `#__mail_templates` SET `subject` = 'COM_KUNENA_SENDMAIL_REPLY_SUBJECT', `body` = 'COM_KUNENA_SENDMAIL_BODY' WHERE template_id = 'com_kunena.reply';</query>
             <query mode="silenterror">UPDATE `#__mail_templates` SET `subject` = 'COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT', `body` = 'COM_KUNENA_SENDMAIL_BODY' WHERE template_id = 'com_kunena.replymoderator';</query>
-            <query mode="silenterror">UPDATE `#__mail_templates` SET `subject` = 'COM_KUNENA_SENDMAIL_REPORT_SUBJECT', `body` = 'COM_KUNENA_SENDMAIL_BODY' WHERE template_id = 'com_kunena.report';</query>
+            <query mode="silenterror">UPDATE `#__mail_templates` SET `subject` = 'COM_KUNENA_SENDMAIL_REPORT_SUBJECT', `body` = 'COM_KUNENA_SENDMAIL_BODY_REPORTMODERATOR' WHERE template_id = 'com_kunena.report';</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

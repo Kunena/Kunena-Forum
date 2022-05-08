@@ -398,6 +398,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 		$db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
 		$upgrade = 0;
+		$installed = 'NONE';
 
 		if ($db->loadResult() == $table)
 		{
@@ -431,8 +432,12 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
 		if ($upgrade == 1)
 		{
-			$state = $installed;
 			$sampleData = 1;
+		}
+
+		if ($installed != 'NONE')
+		{
+			$state = $installed;
 		}
 
 		$query = $db->getQuery(true);

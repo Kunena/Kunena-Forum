@@ -166,6 +166,13 @@ class HtmlView extends BaseHtmlView
 		return true;
 	}
 
+	/**
+	 * Method to get the Kunena language pack installed 
+	 *
+	 * @return  boolean
+	 *
+	 * @since   Kunena 6.0
+	 */
 	public function getLanguagePack()
 	{
 		$lang = false;

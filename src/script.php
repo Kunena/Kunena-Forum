@@ -418,38 +418,36 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 			}
 		}
 
-		if (strtolower($type) == 'install' || strtolower($type) == 'discover_install')
+		$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+		$manifest    = simplexml_load_file($file);
+		$version     = (string) $manifest->version;
+		$build       = (string) $manifest->version;
+		$date        = (string) $manifest->creationDate;
+		$versionname = (string) $manifest->versionname;
+		$installdate = Factory::getDate('now');
+		$state       = '';
+		$sampleData  = 0;
+
+		if ($upgrade == 1)
 		{
-			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+			$state = $installed;
+			$sampleData = 1;
+		}
 
-			$manifest    = simplexml_load_file($file);
-			$version     = (string) $manifest->version;
-			$build       = (string) $manifest->version;
-			$date        = (string) $manifest->creationDate;
-			$versionname = (string) $manifest->versionname;
-			$installdate = Factory::getDate('now');
-			$state       = '';
-			$sampleData  = 0;
+		$query = $db->getQuery(true);
 
-			if ($upgrade == 1)
-			{
-				$state = $installed;
-				$sampleData = 1;
-			}
+		$values = [
+			$db->quote($version),
+			$db->quote($build),
+			$db->quote($date),
+			$db->quote($versionname),
+			$db->quote($sampleData),
+			$db->quote($installdate),
+			$db->quote($state),
+		];
 
-			$query = $db->getQuery(true);
-
-			$values = [
-				$db->quote($version),
-				$db->quote($build),
-				$db->quote($date),
-				$db->quote($versionname),
-				$db->quote($sampleData),
-				$db->quote($installdate),
-				$db->quote($state),
-			];
-
-			$query->insert($db->quoteName('#__kunena_version'))
+		$query->insert($db->quoteName('#__kunena_version'))
 			->columns(
 				[
 					$db->quoteName('version'),
@@ -461,11 +459,10 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 					$db->quoteName('state'),
 				]
 			)
-				->values(implode(', ', $values));
-				$db->setQuery($query);
+			->values(implode(', ', $values));
+		$db->setQuery($query);
 
-				$db->execute();
-		}
+		$db->execute();
 
 		$version = '';
 		$date    = '';

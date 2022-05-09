@@ -413,9 +413,9 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 					$db->setQuery($query);
 
 					$db->execute();
-
-					$upgrade = 1;
 				}
+
+				$upgrade = 1;
 			}
 		}
 

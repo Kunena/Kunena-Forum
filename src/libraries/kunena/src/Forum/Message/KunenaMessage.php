@@ -597,7 +597,8 @@ class KunenaMessage extends KunenaDatabaseObject
 				[
 					'mail'       => '',
 					'subject'    => $subject,
-					'message'    => $this,
+					'name'       => $this->name,
+					'message'    => $this->message,
 					'messageUrl' => $url,
 					'once'       => $once,
 				]
@@ -614,7 +615,8 @@ class KunenaMessage extends KunenaDatabaseObject
 				[
 					'mail'       => '',
 					'subject'    => $subject,
-					'message'    => $this,
+					'name'       => $this->name,
+					'message'    => $this->message,
 					'messageUrl' => $url,
 					'once'       => $once,
 				]
@@ -677,13 +679,13 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
 	 * @param   bool                 $xhtml     xhtml
 	 *
-	 * @return  boolean
+	 * @return  string
 	 *
 	 * @throws  null
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	public function getPermaUrl($category = null, $xhtml = true): bool
+	public function getPermaUrl($category = null, $xhtml = true): string
 	{
 		$uri = $this->getPermaUri($category);
 

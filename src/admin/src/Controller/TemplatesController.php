@@ -72,6 +72,7 @@ class TemplatesController extends FormController
 		$tmpKunena = KunenaPath::tmpdir() . '/kinstall/';
 		$dest      = KPATH_SITE . '/template/';
 		$file      = $this->app->input->files->get('install_package', null, 'raw');
+		$result    = true;
 
 		if (!Session::checkToken())
 		{
@@ -87,6 +88,7 @@ class TemplatesController extends FormController
 				Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $this->escape($file['name'])),
 				'notice'
 			);
+			$result = false;
 		}
 		else
 		{
@@ -105,97 +107,106 @@ class TemplatesController extends FormController
 						Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
 						'notice'
 					);
+					$result = false;
 				}
 			}
 
-			if (is_dir($tmpKunena))
+			if ($result)
 			{
-				$templates = KunenaTemplateHelper::parseXmlFiles($tmpKunena);
-
-				if (!empty($templates))
+				if (is_dir($tmpKunena))
 				{
-					foreach ($templates as $template)
-					{
-						// Never overwrite locked templates
-						if (\in_array($template->directory, $this->locked))
-						{
-							continue;
-						}
+					$templates = KunenaTemplateHelper::parseXmlFiles($tmpKunena);
 
-						if (is_dir($dest . $template->directory))
+					if (!empty($templates))
+					{
+						foreach ($templates as $template)
 						{
-							// Check that the template is comptatible with the actual Kunena version
-							if (!KunenaTemplateHelper::templateIsKunenaCompatible($template->targetversion))
+							// Never overwrite locked templates
+							if (\in_array($template->directory, $this->locked))
 							{
-								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_COMPATIBLE_WITH_KUNENA_INSTALLED_VERSION', $template->name, $template->version), 'error');
+								continue;
 							}
 
-							if (is_file($dest . $template->directory . '/config/params.ini'))
+							if (is_dir($dest . $template->directory))
 							{
-								if (is_file($tmpKunena . $template->sourcedir . '/config/params.ini'))
+								// Check that the template is compatible with the actual Kunena version
+								if (!KunenaTemplateHelper::templateIsKunenaCompatible($template->targetversion))
 								{
-									File::delete($tmpKunena . $template->sourcedir . '/config/params.ini');
+									$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_COMPATIBLE_WITH_KUNENA_INSTALLED_VERSION', $template->name, $template->version), 'error');
+									$result = false;
 								}
 
-								File::move($dest . $template->directory . '/config/params.ini', $tmpKunena . $template->sourcedir . 'config/params.ini');
-							}
-
-							if (is_dir($dest . $template->directory . '/assets/images'))
-							{
-								if (is_dir($tmpKunena . $template->sourcedir . '/assets/images'))
+								if (is_file($dest . $template->directory . '/config/params.ini'))
 								{
-									Folder::delete($tmpKunena . $template->sourcedir . '/assets/images');
+									if (is_file($tmpKunena . $template->sourcedir . '/config/params.ini'))
+									{
+										File::delete($tmpKunena . $template->sourcedir . '/config/params.ini');
+									}
+
+									File::move($dest . $template->directory . '/config/params.ini', $tmpKunena . $template->sourcedir . 'config/params.ini');
 								}
 
-								Folder::move($dest . $template->directory . '/assets/images', $tmpKunena . $template->sourcedir . '/assets/images');
+								if (is_dir($dest . $template->directory . '/assets/images'))
+								{
+									if (is_dir($tmpKunena . $template->sourcedir . '/assets/images'))
+									{
+										Folder::delete($tmpKunena . $template->sourcedir . '/assets/images');
+									}
+
+									Folder::move($dest . $template->directory . '/assets/images', $tmpKunena . $template->sourcedir . '/assets/images');
+								}
+
+								if (is_file($dest . $template->directory . '/assets/scss/custom.scss'))
+								{
+									File::move($dest . $template->directory . '/assets/scss/custom.scss', $tmpKunena . $template->sourcedir . '/assets/scss/custom.scss');
+								}
+
+								if (is_file($dest . $template->directory . '/assets/css/custom.css'))
+								{
+									File::move($dest . $template->directory . '/assets/css/custom.css', $tmpKunena . $template->sourcedir . '/assets/css/custom.css');
+								}
+
+								Folder::delete($dest . $template->directory);
 							}
 
-							if (is_file($dest . $template->directory . '/assets/scss/custom.scss'))
+							$success = Folder::move($tmpKunena . $template->sourcedir, $dest . $template->directory);
+
+							if ($success !== true)
 							{
-								File::move($dest . $template->directory . '/assets/scss/custom.scss', $tmpKunena . $template->sourcedir . '/assets/scss/custom.scss');
+								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_FAILED', $template->directory), 'notice');
+								$result = false;
 							}
-
-							if (is_file($dest . $template->directory . '/assets/css/custom.css'))
+							else
 							{
-								File::move($dest . $template->directory . '/assets/css/custom.css', $tmpKunena . $template->sourcedir . '/assets/css/custom.css');
+								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_SUCCESS', $template->directory));
 							}
-
-							Folder::delete($dest . $template->directory);
 						}
 
-						$success = Folder::move($tmpKunena . $template->sourcedir, $dest . $template->directory);
-
-						if ($success !== true)
+						// Delete the tmp install directory
+						if (is_dir($tmpKunena))
 						{
-							$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_FAILED', $template->directory), 'notice');
+							Folder::delete($tmpKunena);
 						}
-						else
-						{
-							$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_SUCCESS', $template->directory));
-						}
+
+						// Clear all cache, just in case.
+						KunenaCacheHelper::clearAll();
 					}
-
-					// Delete the tmp install directory
-					if (is_dir($tmpKunena))
+					else
 					{
-						Folder::delete($tmpKunena);
+						$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_MISSING_FILE'), 'error');
+						$result = false;
 					}
-
-					// Clear all cache, just in case.
-					KunenaCacheHelper::clearAll();
 				}
 				else
 				{
-					$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_MISSING_FILE'), 'error');
+					$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'), 'error');
 				}
-			}
-			else
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE') . ' ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'), 'error');
 			}
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+		return $result;
 	}
 
 	/**

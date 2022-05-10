@@ -21,10 +21,11 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 <div id="kunena" class="container-fluid">
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
-			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
+			<form action="<?php echo KunenaRoute::_('administrator/index.php') ?>"
 				  method="post"
 				  enctype="multipart/form-data" id="adminForm" name="adminForm">
-				<input type="hidden" name="task" value="install"/>
+				  <input type="hidden" name="option" value="com_kunena"/>
+				  <input type="hidden" name="task" value="templates.install"/>
 				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<fieldset>

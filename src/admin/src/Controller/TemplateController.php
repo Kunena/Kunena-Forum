@@ -18,7 +18,6 @@ use Exception;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
@@ -790,6 +789,8 @@ class TemplateController extends FormController
 		// Delete the template directory
 		if (is_dir($tpl))
 		{
+			$retval = Folder::delete($tpl);
+
 			// Clear all cache, just in case.
 			KunenaCacheHelper::clearAll();
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $id));

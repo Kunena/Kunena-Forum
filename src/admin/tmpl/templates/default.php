@@ -44,7 +44,7 @@ $wa->useScript('multiselect');
 						<tr>
 							<th width="1%"></th>
 							<th><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME'); ?></th>
-							<th class="center"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?></th>
+							<th class="text-center"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'); ?></th>
 							<th><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR'); ?></th>
 							<th><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_VERSION'); ?></th>
 							<th><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DATE'); ?></th>
@@ -77,20 +77,20 @@ $wa->useScript('multiselect');
 													<?php echo $this->escape($row->name); ?></a>
 							</span>
 								</td>
-								<td class="center">
+								<td class="tbody-icon">
 									<?php if ($row->published == 1)
 										:
 										?>
 										<a class="tbody-icon jgrid" title="Default"><span
-													class="icon-featured" style="color: green; border: 2px solid green;"></span></a>
+													class="icon-color-featured icon-star"></span></a>
 										
 									<?php else
 
 										:
 										?>
 										<a href="javascript: void(0);"
-										   onclick="return Joomla.listItemTask('cb<?php echo urlencode($row->directory); ?>','publish')">
-											<span class="icon-featured pl-2"
+										   onclick="return Joomla.listItemTask('cb<?php echo urlencode($row->directory); ?>','template.publish')">
+											<span class="icon-unfeatured"
 												  title="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT'); ?>"></span>
 										</a>
 									<?php endif; ?>

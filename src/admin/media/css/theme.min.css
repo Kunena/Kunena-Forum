@@ -1,12 +1,12 @@
-html {
+/* html {
 	font-family: sans-serif;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%
-}
+} */
 
-body {
+/* body {
 	margin: 0
-}
+} */
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
 	display: block
@@ -179,11 +179,11 @@ td, th {
 	padding: 0
 }
 
-*, body {
+/* *, body {
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 	-moz-osx-font-smoothing: grayscale
-}
+} */
 
 ::-moz-selection {
 	background: #b3d4fc;
@@ -225,9 +225,9 @@ textarea {
 	padding: 0.2em 0
 }
 
-* {
+/* * {
 	outline: none !important
-}
+} */
 
 a {
 	color: #212121;
@@ -1075,25 +1075,25 @@ a:hover, a:focus, a:active {
 	background: transparent !important
 }
 
-.bg-primary {
+/* .bg-primary {
 	background-color: #007bff !important
-}
+} */
 
-.bg-success {
+/* .bg-success {
 	background-color: #2dce89 !important
-}
+} */
 
-.bg-info {
+/* .bg-info {
 	background-color: #11cdef !important
-}
+} */
 
-.bg-warning {
+/* .bg-warning {
 	background-color: #fb6340 !important
-}
+} */
 
-.bg-danger {
+/* .bg-danger {
 	background-color: #f5365c !important
-}
+} */
 
 .bg-muted {
 	background-color: #6c757d !important
@@ -6886,7 +6886,7 @@ span.value {
 	text-align: center
 }
 
-body {
+#kunena {
 	color: #212121;
 	font-size: .8rem;
 	line-height: 1.5;
@@ -6898,9 +6898,9 @@ p {
 	font-size: 14px
 }
 
-.dropdown-toggle:after, .dropdown-toggle::after {
+/* .dropdown-toggle:after, .dropdown-toggle::after {
 	display: none
-}
+} */
 
 .tooltip {
 	font-family: "Nunito Sans", sans-serif;
@@ -6976,7 +6976,7 @@ p {
 	flex-grow: 1
 }
 
-.dropdown-menu {
+/* .dropdown-menu {
 	padding: 5px;
 	font-size: 12px;
 	background-color: #fff;
@@ -7040,7 +7040,7 @@ p {
 .dropdown-menu.dropdown-menu-right::after {
 	right: 10px;
 	left: auto
-}
+} */
 
 .wrapper .header-top {
 	background-color: #fff;

@@ -44,35 +44,33 @@ class KunenaSvgIcons
 
 		if ($group == 'default')
 		{
-			$file = Uri::root() . 'media/kunena/core/svg/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/core/svg/' . $svgname;
 		}
 		elseif ($group == 'social')
 		{
-			$file = Uri::root() . 'media/kunena/core/images/social/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/core/images/social/' . $svgname;
 		}
 		elseif ($group == 'systemtopicIcons')
 		{
-			$file = Uri::root() . 'media/kunena/core/svg/' . $iconset . '/system/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/core/svg/' . $iconset . '/system/' . $svgname;
 		}
 		elseif ($group == 'usertopicIcons')
 		{
-			$file = Uri::root() . 'media/kunena/core/svg/' . $iconset . '/user/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/core/svg/' . $iconset . '/user/' . $svgname;
 		}
 		else
 		{
-			$file = Uri::root() . $group . $svgname;
+			$file = JPATH_SITE . '/' . $group . $svgname;
 		}
 
 		$iconfile = new DOMDocument;
-		$opts     = [
-			'http' => [
-				'user_agent' => 'PHP libxml agent',
-			],
-		];
-		$context  = stream_context_create($opts);
-		libxml_set_streams_context($context);
-		$iconfile->load($file . '.svg');
 
-		return $iconfile->saveHTML($iconfile->getElementsByTagName('svg')[0]);
+		if ($iconfile->load($file . '.svg'))
+		{
+			return $iconfile->saveHTML($iconfile->getElementsByTagName('svg')[0]);
+		}
+		else {
+			return '';
+		}
 	}
 }

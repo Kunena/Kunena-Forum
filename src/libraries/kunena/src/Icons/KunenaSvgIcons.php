@@ -44,23 +44,23 @@ class KunenaSvgIcons
 
 		if ($group == 'default')
 		{
-				$file = JPATH_SITE . '/media/kunena/core/svg/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/core/svg/' . $svgname;
 		}
 		elseif ($group == 'social')
 		{
-				$file = JPATH_SITE . '/media/kunena/core/images/social/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/core/images/social/' . $svgname;
 		}
 		elseif ($group == 'systemtopicIcons')
 		{
-				$file = JPATH_SITE . '/media/kunena/core/svg/' . $iconset . '/system/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/core/svg/' . $iconset . '/system/' . $svgname;
 		}
 		elseif ($group == 'usertopicIcons')
 		{
-				$file = JPATH_SITE . '/media/kunena/core/svg/' . $iconset . '/user/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/core/svg/' . $iconset . '/user/' . $svgname;
 		}
 		else
 		{
-				$file = JPATH_SITE . '/' . $group . $svgname;
+			$file = JPATH_SITE . '/' . $group . $svgname;
 		}
 
 		$svg = file_get_contents($file . '.svg');

@@ -63,13 +63,10 @@ class KunenaSvgIcons
 			$file = JPATH_SITE . '/' . $group . $svgname;
 		}
 
-		$svg = file_get_contents($file . '.svg');
+		$iconfile = new DOMDocument;
 
-		if ($svg)
+		if ($iconfile->load($file . '.svg'))
 		{
-			$iconfile = new DOMDocument;
-			$iconfile->load($file . '.svg');
-
 			return $iconfile->saveHTML($iconfile->getElementsByTagName('svg')[0]);
 		}
 		else {

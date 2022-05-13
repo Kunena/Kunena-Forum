@@ -182,7 +182,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 			// Dropdown Item version
 			$this->topicButtons->set(
 				'lock_dropdown',
-				$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, ftruealse, KunenaIcons::lock())
+				$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, true, KunenaIcons::lock())
 			);
 
 			$this->topicButtons->set(

@@ -47,12 +47,12 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<li><?php echo $this->topicButtons->get('delete') ?></li>
-					<li><?php echo $this->topicButtons->get('permdelete') ?></li>
-					<li><?php echo $this->topicButtons->get('undelete') ?></li>
-					<li><?php echo $this->topicButtons->get('moderate') ?></li>
-					<li><?php echo $this->topicButtons->get('sticky') ?></li>
-					<li><?php echo $this->topicButtons->get('lock') ?></li>
+					<li><?php echo $this->topicButtons->get('delete_dropdown') ?></li>
+					<li><?php echo $this->topicButtons->get('permdelete_dropdown') ?></li>
+					<li><?php echo $this->topicButtons->get('undelete_dropdown') ?></li>
+					<li><?php echo $this->topicButtons->get('moderate_dropdown') ?></li>
+					<li><?php echo $this->topicButtons->get('sticky_dropdown') ?></li>
+					<li><?php echo $this->topicButtons->get('lock_dropdown') ?></li>
 				</ul>
 			</div>
 		<?php endif ?>
@@ -75,9 +75,9 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><?php echo $this->topicButtons->get('reply') ?></li>
-						<li><?php echo $this->topicButtons->get('subscribe') ?></li>
-						<li><?php echo $this->topicButtons->get('favorite') ?></li>
+						<li><?php echo $this->topicButtons->get('reply_dropdown') ?></li>
+						<li><?php echo $this->topicButtons->get('subscribe_dropdown') ?></li>
+						<li><?php echo $this->topicButtons->get('favorite_dropdown') ?></li>
 					</ul>
 				</div>
 			<?php endif ?>
@@ -97,12 +97,12 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><?php echo $this->topicButtons->get('delete') ?></li>
-						<li><?php echo $this->topicButtons->get('permdelete') ?></li>
-						<li><?php echo $this->topicButtons->get('undelete') ?></li>
-						<li><?php echo $this->topicButtons->get('moderate') ?></li>
-						<li><?php echo $this->topicButtons->get('sticky') ?></li>
-						<li><?php echo $this->topicButtons->get('lock') ?></li>
+						<li><?php echo $this->topicButtons->get('delete_dropdown') ?></li>
+						<li><?php echo $this->topicButtons->get('permdelete_dropdown') ?></li>
+						<li><?php echo $this->topicButtons->get('undelete_dropdown') ?></li>
+						<li><?php echo $this->topicButtons->get('moderate_dropdown') ?></li>
+						<li><?php echo $this->topicButtons->get('sticky_dropdown') ?></li>
+						<li><?php echo $this->topicButtons->get('lock_dropdown') ?></li>
 					</ul>
 				</div>
 			<?php endif ?>

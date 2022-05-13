@@ -133,7 +133,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'message',
 					'communication',
 					'reply',
-					false,
+					true,
 					KunenaIcons::pencil()
 				)
 			);
@@ -162,7 +162,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'message',
 						'communication',
 						"kreply{$mesid}",
-						false,
+						true,
 						KunenaIcons::pencil()
 					)
 				);
@@ -190,7 +190,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'message',
 					'communication',
 					'quote',
-					false,
+					true,
 					KunenaIcons::quote()
 				)
 			);
@@ -252,7 +252,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'message',
 						'user',
 						'thankyou',
-						false,
+						true,
 						KunenaIcons::poll_add()
 					)
 				);
@@ -287,7 +287,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'message',
 						'user',
 						'unthankyou',
-						false,
+						true,
 						KunenaIcons::poll_rem()
 					)
 				);
@@ -322,7 +322,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'message',
 						'user',
 						'btn_report',
-						false,
+						true,
 						KunenaIcons::report()
 					)
 				);
@@ -360,7 +360,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'message',
 					'moderation',
 					'edit',
-					false,
+					true,
 					KunenaIcons::edit()
 				)
 			);
@@ -390,7 +390,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'message',
 					'moderation',
 					'edit',
-					false,
+					true,
 					KunenaIcons::shield()
 				)
 			);
@@ -422,7 +422,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'message',
 						'moderation',
 						'approve',
-						false,
+						true,
 						KunenaIcons::check()
 					)
 				);
@@ -450,7 +450,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'message',
 					'moderation',
 					'delete',
-					false,
+					true,
 					KunenaIcons::delete()
 				)
 			);
@@ -481,7 +481,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'message',
 						'moderation',
 						'undelete',
-						false,
+						true,
 						KunenaIcons::back()
 					)
 				);
@@ -511,7 +511,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'message',
 						'moderation',
 						'permdelete',
-						false,
+						true,
 						KunenaIcons::delete()
 					)
 				);
@@ -541,7 +541,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'message',
 					'moderation',
 					'delete',
-					false,
+					true,
 					KunenaIcons::delete()
 				)
 			);

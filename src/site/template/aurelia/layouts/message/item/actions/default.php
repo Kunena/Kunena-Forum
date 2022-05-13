@@ -109,12 +109,12 @@ endif; ?>
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><?php echo $this->messageButtons->get('reply'); ?></li>
-                    <li><?php echo $this->messageButtons->get('quote'); ?></li>
-                    <li><?php echo $this->messageButtons->get('edit'); ?></li>
+                    <li><?php echo $this->messageButtons->get('reply_dropdown'); ?></li>
+                    <li><?php echo $this->messageButtons->get('quote_dropdown'); ?></li>
+                    <li><?php echo $this->messageButtons->get('edit_dropdown'); ?></li>
 					<?php
 					if ($config->userDeleteMessage > 0) : ?>
-                        <li><?php echo $this->messageButtons->get('delete'); ?></li>
+                        <li><?php echo $this->messageButtons->get('delete_dropdown'); ?></li>
 					<?php endif; ?>
                 </ul>
             </div>
@@ -128,12 +128,12 @@ endif; ?>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><?php echo $this->messageButtons->get('moderate'); ?></li>
-                        <li><?php echo $this->messageButtons->get('delete'); ?></li>
-                        <li><?php echo $this->messageButtons->get('undelete'); ?></li>
-                        <li><?php echo $this->messageButtons->get('permdelete'); ?></li>
-                        <li><?php echo $this->messageButtons->get('publish'); ?></li>
-                        <li><?php echo $this->messageButtons->get('spam'); ?></li>
+                        <li><?php echo $this->messageButtons->get('moderate_dropdown'); ?></li>
+                        <li><?php echo $this->messageButtons->get('delete_dropdown'); ?></li>
+                        <li><?php echo $this->messageButtons->get('undelete_dropdown'); ?></li>
+                        <li><?php echo $this->messageButtons->get('permdelete_dropdown'); ?></li>
+                        <li><?php echo $this->messageButtons->get('publish_dropdown'); ?></li>
+                        <li><?php echo $this->messageButtons->get('spam_dropdown'); ?></li>
                     </ul>
                 </div>
 			<?php endif; ?>

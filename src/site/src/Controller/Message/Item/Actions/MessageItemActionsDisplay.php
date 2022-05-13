@@ -124,6 +124,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 				)
 			);
 
+			// Dropdown Item version
+			$this->messageButtons->set(
+				'reply_dropdown',
+				$this->getButton(
+					sprintf($layout, 'reply'),
+					'reply',
+					'message',
+					'communication',
+					'reply',
+					true,
+					KunenaIcons::pencil()
+				)
+			);
+
 			if ($me->exists() && $this->config->quickReply)
 			{
 				$this->messageButtons->set(
@@ -138,6 +152,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						KunenaIcons::pencil()
 					)
 				);
+
+				// Dropdown Item version
+				$this->messageButtons->set(
+					'quickReply_dropdown',
+					$this->getButton(
+						sprintf($layout, 'reply'),
+						'quickReply',
+						'message',
+						'communication',
+						"kreply{$mesid}",
+						true,
+						KunenaIcons::pencil()
+					)
+				);
 			}
 
 			$this->messageButtons->set(
@@ -149,6 +177,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'communication',
 					'quote',
 					$button,
+					KunenaIcons::quote()
+				)
+			);
+
+			// Dropdown Item version
+			$this->messageButtons->set(
+				'quote_dropdown',
+				$this->getButton(
+					sprintf($layout, 'reply&quote=1'),
+					'quote',
+					'message',
+					'communication',
+					'quote',
+					true,
 					KunenaIcons::quote()
 				)
 			);
@@ -200,6 +242,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						KunenaIcons::poll_add()
 					)
 				);
+
+				// Dropdown Item version
+				$this->messageButtons->set(
+						'thankyou_dropdown',
+					$this->getButton(
+						sprintf($task, 'thankyou'),
+						'thankyou',
+						'message',
+						'user',
+						'thankyou',
+						true,
+						KunenaIcons::poll_add()
+					)
+				);
 			}
 		}
 
@@ -221,6 +277,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						KunenaIcons::poll_rem()
 					)
 				);
+
+				// Dropdown Item version
+				$this->messageButtons->set(
+					'unthankyou_dropdown',
+					$this->getButton(
+						sprintf($task, 'unthankyou&userid=' . $me->userid),
+						'unthankyou',
+						'message',
+						'user',
+						'unthankyou',
+						true,
+						KunenaIcons::poll_rem()
+					)
+				);
 			}
 		}
 
@@ -239,6 +309,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'user',
 						'btn_report',
 						$button,
+						KunenaIcons::report()
+					)
+				);
+
+				// Dropdown Item version
+				$this->messageButtons->set(
+					'report_dropdown',
+					$this->getButton(
+						sprintf($layout, '#report' . $mesid . ''),
+						'report',
+						'message',
+						'user',
+						'btn_report',
+						true,
 						KunenaIcons::report()
 					)
 				);
@@ -266,6 +350,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					KunenaIcons::edit()
 				)
 			);
+
+			// Dropdown Item version
+			$this->messageButtons->set(
+				'edit_dropdown',
+				$this->getButton(
+					sprintf($layout, 'edit'),
+					'edit',
+					'message',
+					'moderation',
+					'edit',
+					true,
+					KunenaIcons::edit()
+				)
+			);
 		}
 
 		if ($this->message->isAuthorised('move'))
@@ -279,6 +377,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'moderation',
 					'edit',
 					$button,
+					KunenaIcons::shield()
+				)
+			);
+
+			// Dropdown Item version
+			$this->messageButtons->set(
+				'moderate_dropdown',
+				$this->getButton(
+					sprintf($layout, 'moderate'),
+					'moderate',
+					'message',
+					'moderation',
+					'edit',
+					true,
 					KunenaIcons::shield()
 				)
 			);
@@ -300,6 +412,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						KunenaIcons::check()
 					)
 				);
+
+				// Dropdown Item version
+				$this->messageButtons->set(
+					'publish_dropdown',
+					$this->getButton(
+						sprintf($task, 'approve'),
+						'approve',
+						'message',
+						'moderation',
+						'approve',
+						true,
+						KunenaIcons::check()
+					)
+				);
 			}
 
 			$this->messageButtons->set(
@@ -310,7 +436,21 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'message',
 					'moderation',
 					'delete',
-					'',
+					$button,
+					KunenaIcons::delete()
+				)
+			);
+
+			// Dropdown Item version
+			$this->messageButtons->set(
+				'delete_dropdown',
+				$this->getButton(
+					sprintf($task, 'delete'),
+					'delete',
+					'message',
+					'moderation',
+					'delete',
+					true,
 					KunenaIcons::delete()
 				)
 			);
@@ -331,6 +471,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						KunenaIcons::back()
 					)
 				);
+
+				// Dropdown Item version
+				$this->messageButtons->set(
+					'undelete_dropdown',
+					$this->getButton(
+						sprintf($task, 'undelete'),
+						'undelete',
+						'message',
+						'moderation',
+						'undelete',
+						true,
+						KunenaIcons::back()
+					)
+				);
 			}
 
 			if ($this->message->getTopic()->isAuthorised('permdelete'))
@@ -347,6 +501,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						KunenaIcons::delete()
 					)
 				);
+
+				// Dropdown Item version
+				$this->messageButtons->set(
+					'permdelete_dropdown',
+					$this->getButton(
+						sprintf($task, 'permdelete'),
+						'permdelete',
+						'message',
+						'moderation',
+						'permdelete',
+						true,
+						KunenaIcons::delete()
+					)
+				);
 			}
 		}
 		elseif ($this->message->isAuthorised('delete'))
@@ -360,6 +528,20 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 					'moderation',
 					'delete',
 					$button,
+					KunenaIcons::delete()
+				)
+			);
+
+			// Dropdown Item version
+			$this->messageButtons->set(
+				'delete_dropdown',
+				$this->getButton(
+					sprintf($task, 'delete'),
+					'delete',
+					'message',
+					'moderation',
+					'delete',
+					true,
 					KunenaIcons::delete()
 				)
 			);

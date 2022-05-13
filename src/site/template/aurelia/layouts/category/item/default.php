@@ -28,9 +28,9 @@ $this->addStyleSheet('rating.css');
 <?php if ($this->category->headerdesc) : ?>
     <div class="clearfix"></div>
     <br>
-    <h1 class="alert alert-info shadow-lg rounded">
-        <a class="close" data-bs-dismiss="alert" href="#"></a>
+    <h1 class="alert alert-info shadow-lg rounded alert-dismissible fade show">
 		<?php echo $this->category->displayField('headerdesc'); ?>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </h1>
 <?php endif; ?>
 

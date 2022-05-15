@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
- * Kunena Access Control for Joomla 2.5+
+ * Kunena Access Control for Joomla 4.0
  *
  * @since   Kunena 6.0
  */

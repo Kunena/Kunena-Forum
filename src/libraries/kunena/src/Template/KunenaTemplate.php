@@ -331,7 +331,10 @@ class KunenaTemplate
 				$this->addScriptDeclaration(
 					"
 					document.addEventListener('DOMContentLoaded', () => {
-						document.querySelector('" . $id . "').classList.add('active');
+						let activeMenuItem = document.querySelector('" . $id . "');
+						if (activeMenuItem) {
+							activeMenuItem.classList.add('active');
+						}
 					});
 				"
 				);
@@ -347,7 +350,10 @@ class KunenaTemplate
 					$this->addScriptDeclaration(
 						"
 						document.addEventListener('DOMContentLoaded', () => {
-							document.querySelector('" . $id . "').classList.add('active');
+							let activeMenuItem = document.querySelector('" . $id . "');
+							if (activeMenuItem) {
+								activemenuItem.classList.add('active');
+							}
 						});
 					"
 					);
@@ -543,10 +549,17 @@ class KunenaTemplate
 			$this->addScriptDeclaration(
 				'
 				document.addEventListener("DOMContentLoaded", () => {
-					document.querySelector(".current").classList.add("active");
-					document.querySelector(".current").classList.add("alias-parent-active");
-					document.querySelector(".alias-parent-active").classList.add("active");
-					document.querySelector(".alias-parent-active").classList.add("alias-parent-active");
+					let currentMenuItem = document.querySelector(".current");
+					let parentMenuItem = document.querySelector(".alias-parent-active");
+
+					if (currentMenuItem) {
+						currentMenuItem.classList.add("active");
+						currentMenuItem.classList.add("alias-parent-active");
+					}
+					if (parentMenuItem) {
+						parentMenuItem.classList.add("active");
+						parentMenuItem.classList.add("alias-parent-active");
+					}
 				});
 			'
 			);

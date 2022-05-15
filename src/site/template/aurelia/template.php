@@ -112,6 +112,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 			HTMLHelper::_('bootstrap.tooltip');
 			HTMLHelper::_('bootstrap.renderModal');
 			HTMLHelper::_('bootstrap.collapse');
+			HTMLHelper::_('bootstrap.alert');
 		}
 
 		$doc = Factory::getApplication()->getDocument();

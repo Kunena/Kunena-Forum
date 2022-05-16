@@ -238,7 +238,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'message',
 						'user',
 						'thankyou',
-						$button,
+						false,
 						KunenaIcons::poll_add()
 					)
 				);
@@ -273,7 +273,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 						'message',
 						'user',
 						'unthankyou',
-						$button,
+						false,
 						KunenaIcons::poll_rem()
 					)
 				);

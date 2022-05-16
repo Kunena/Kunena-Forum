@@ -121,10 +121,7 @@ class TemplateModel extends AdminModel
 		$value = $this->getUserStateFromRequest($context . '.edit', 'name', '', 'cmd');
 		$this->setState('template', $value);
 
-		if (empty($app->getUserState('kunena.edit.templatename')))
-		{
-			$app->setUserState('kunena.edit.templatename', $value);
-		}
+		$app->setUserState('kunena.edit.templatename', $value);
 	}
 
 	/**

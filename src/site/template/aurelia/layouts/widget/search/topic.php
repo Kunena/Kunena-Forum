@@ -23,29 +23,23 @@ $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 <div class="kunena-search search">
 	<form role="search" action="<?php echo KunenaRoute::_(); ?>" method="post">
-		<input type="hidden" name="view" value="search"/>
-		<input type="hidden" name="task" value="results"/>
-		<?php if (isset($this->catid))
-		:
-			?>
-			<input type="hidden" name="catids[]" value="<?php echo $this->catid; ?>"/>
+		<input type="hidden" name="view" value="search" />
+		<input type="hidden" name="task" value="results" />
+		<?php if (isset($this->catid)) :
+		?>
+			<input type="hidden" name="catids[]" value="<?php echo $this->catid; ?>" />
 		<?php endif; ?>
 
-		<?php if (isset($this->id))
-		:
-			?>
-			<input type="hidden" name="ids[]" value="<?php echo $this->id; ?>"/>
+		<?php if (isset($this->id)) :
+		?>
+			<input type="hidden" name="ids[]" value="<?php echo $this->id; ?>" />
 		<?php endif; ?>
 		<?php echo HTMLHelper::_('form.token'); ?>
 		<div class="input-group">
-			<label for="mod-search-searchword"></label>
-			<input name="query" class="form-control hasTooltip" id="mod-search-searchword" type="search" maxlength="64"
-				   placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>" data-original-title="<?php echo Text::_('COM_KUNENA_WIDGET_SEARCH_INPUT_TOOLTIP'); ?>" />
-			<span class="input-group-append">
-				<button class="btn btn-light border" type="submit">
+			<input name="query" class="form-control hasTooltip" id="mod-search-searchword" type="search" maxlength="64" placeholder="<?php echo Text::_('COM_KUNENA_MENU_SEARCH'); ?>" data-original-title="<?php echo Text::_('COM_KUNENA_WIDGET_SEARCH_INPUT_TOOLTIP'); ?>" />
+			<button class="btn btn-outline-primary" type="submit">
 				<?php echo KunenaIcons::search(); ?>
 			</button>
-			</span>
 		</div>
 	</form>
 </div>

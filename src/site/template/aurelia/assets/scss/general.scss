@@ -919,47 +919,47 @@ div.pagination a.disabled:hover {
   vertical-align: middle;
 }
 
-.search {
-  position: relative;
-  float: left;
-  width: 230px;
-  height: 30px;
-  padding: 5px 0;
-  line-height: 22px;
-}
+// .search {
+//   position: relative;
+//   float: left;
+//   width: 230px;
+//   height: 30px;
+//   padding: 5px 0;
+//   line-height: 22px;
+// }
 
-.kunena-search .search {
-  padding: 0;
-}
+// .kunena-search .search {
+//   padding: 0;
+// }
 
-.search input {
-  position: absolute;
-  float: Left;
-  width: 0;
-  height: 30px;
-  padding: 0 2px;
-  margin-left: 210px;
-  line-height: 18px;
-  border-radius: 1px;
-  transition: all .7s ease-in-out;
-}
+// .search input {
+//   position: absolute;
+//   float: Left;
+//   width: 0;
+//   height: 30px;
+//   padding: 0 2px;
+//   margin-left: 210px;
+//   line-height: 18px;
+//   border-radius: 1px;
+//   transition: all .7s ease-in-out;
+// }
 
-.search:hover input, .search input:focus {
-  width: 200px;
-  margin-left: 0;
-}
+// .search:hover input, .search input:focus {
+//   width: 200px;
+//   margin-left: 0;
+// }
 
-.search .btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 30px;
-  border-radius: 1px;
+// .search .btn {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   height: 30px;
+//   border-radius: 1px;
 
-  i {
-    margin-top: -3px;
-  }
-}
+//   i {
+//     margin-top: -3px;
+//   }
+// }
 
 .glyphicon-white {
   color: #fff;
@@ -977,12 +977,12 @@ div.pagination a.disabled:hover {
   padding-left: 0;
 }
 
-.form-control {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  font-size: 15px;
-}
+// .form-control {
+//   width: 100%;
+//   max-width: 100%;
+//   height: auto;
+//   font-size: 15px;
+// }
 
 i {
   margin: 0;

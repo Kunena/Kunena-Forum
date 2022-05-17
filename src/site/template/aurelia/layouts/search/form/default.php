@@ -58,13 +58,11 @@ $this->addScript('assets/js/search.js');
 		<?php echo Text::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?>
     </h1>
 
-    <div class="" id="search">
-        <div class="card card-body">
+    <div class="collapse show" id="search">
+        <div class="card card-body mb-3">
             <div class="row">
-                <fieldset class="col-md-6">
-                    <legend>
-						<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?>
-                    </legend>
+                <fieldset class="col-md-6 row">
+                    <legend><?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="text" name="query" class="form-control"
@@ -79,20 +77,20 @@ $this->addScript('assets/js/search.js');
                     </div>
                 </fieldset>
 
-				<?php if (!$this->config->pubProfile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubProfile)
-					:
-					?>
-                    <fieldset class="col-md-6">
-                        <legend>
-							<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?>
-                        </legend>
-                        <div class="form-group">
-                            <input id="kusersearch" type="text" name="searchuser" class="form-control"
-                                   value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"
-                                   placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>"/>
+				<?php if (!$this->config->pubProfile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubProfile)  : ?>
+                    <fieldset class="col-md-6 row">
+                        <legend><?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input id="kusersearch" type="text" name="searchuser" class="form-control"
+									value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>"
+									placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>"/>
+							</div>
+						</div>
+						<div class="col-md-6">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="exactname" value="1"
+                                    <input type="checkbox" name="exactname" value="1" 
 										<?php if ($this->state->get('query.exactname'))
 										{
 											echo ' checked="checked" ';
@@ -114,7 +112,7 @@ $this->addScript('assets/js/search.js');
 			<?php echo Text::_('COM_KUNENA_SEARCH_OPTIONS'); ?>
         </h2>
 
-        <div class="" id="search-options">
+        <div class="collapse show" id="search-options">
             <div class="card card-body">
                 <div class="row">
                     <fieldset class="col-md-4">
@@ -141,19 +139,16 @@ $this->addScript('assets/js/search.js');
                         <legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
                         </legend>
-                        <div class="control-group">
-                            <div class="controls" id="searchatdate">
-                                <div class="input-group date">
-									<?php echo $this->displayInput('searchatdate', '<span class="input-group-addon">' . KunenaIcons::grid() . '</span>', 'searchatdate'); ?>
-                                </div>
-                            </div>
-                        </div>
+						<div id="searchatdate" class="input-group input-group date" data-date-format="yyyy-dd-mm">
+							<input type="text" class="form-control" name="searchatdate" data-date-format="yyyy-dd-mm">
+							<button class="btn btn-outline-secondary" type="button" id="button-searchatdate"><?php echo KunenaIcons::grid(); ?></button>
+						</div>
                     </fieldset>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <fieldset class="form-group">
+                        <fieldset class="form-group row">
                             <legend>
 								<?php echo Text::_('COM_KUNENA_SEARCH_START'); ?>
                             </legend>
@@ -162,7 +157,7 @@ $this->addScript('assets/js/search.js');
                                        value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5"/>
                             </div>
                             <div class="col-md-6">
-								<?php $this->displayLimitlist('limit'); ?>
+								<?php $this->displayLimitList('limit'); ?>
                             </div>
                         </fieldset>
 
@@ -213,7 +208,7 @@ $this->addScript('assets/js/search.js');
                         <legend>
 							<?php echo Text::_('COM_KUNENA_SEARCH_SEARCHIN'); ?>
                         </legend>
-						<?php $this->displayCategoryList('categorylist', 'class="form-control" size="10" multiple="multiple"'); ?>
+						<?php $this->displayCategoryList('categorylist', 'class="form-select" size="10" multiple'); ?>
                         <label>
                             <input type="checkbox" name="childforums" value="1"
 								<?php if ($this->state->get('query.childforums'))
@@ -227,7 +222,7 @@ $this->addScript('assets/js/search.js');
             </div>
         </div>
 
-        <div class="text-center">
+        <div class="text-center mt-3">
             <button type="submit" class="btn btn-outline-primary border">
 				<?php echo KunenaIcons::search(); ?><?php echo ' ' . Text::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
             </button>

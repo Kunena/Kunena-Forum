@@ -913,11 +913,11 @@ div.pagination a.disabled:hover {
   text-align: left;
 }
 
-.form-group select {
-  display: inline-block;
-  width: auto;
-  vertical-align: middle;
-}
+// .form-group select {
+//   display: inline-block;
+//   width: auto;
+//   vertical-align: middle;
+// }
 
 // .search {
 //   position: relative;
@@ -1196,9 +1196,9 @@ a.dropdown-toggle {
   box-shadow: 0 0 0 1px #d4d4d4, 0 0 0 0 #fff, 0 1px 1px rgba(0, 0, 0, .1);
 }
 
-#search select#mode {
-  margin-left: 0;
-}
+// #search select#mode {
+//   margin-left: 0;
+// }
 
 #ann-showdate select,
 #ann-publish select,
@@ -1355,9 +1355,9 @@ a .rounded,
   margin-bottom: 3em; /* or 35px */
 }
 
-.form-select, .custom-select {
-  background-image: none !important;
-}
+// .form-select, .custom-select {
+//   background-image: none !important;
+// }
 
 .user-circle {
   display: flex;

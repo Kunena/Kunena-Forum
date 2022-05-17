@@ -122,6 +122,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		$wa->useScript('jquery');
 
 		$this->addScript('assets/js/main.js');
+		$this->addScript('assets/js/tooltips.js');
 
 		// Compile CSS from SCSS files.
 		$this->compileScss('assets/scss/aurelia.scss', 'kunena.css');
@@ -182,6 +183,11 @@ EOF;
 		}
 
 		$doc->addStyleDeclaration($styles);
+
+		$jsOptions = [];
+		$jsOptions['hasTooltips'] = $this->params->get('tooltips');
+		// $doc->addScriptOptions('com_kunena', $jsOptions, true);
+		$this->addScriptOptions('com_kunena.tooltips', $this->params->get('tooltips'));
 
 		parent::initialize();
 	}

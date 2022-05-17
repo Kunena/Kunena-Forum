@@ -1911,6 +1911,8 @@ HTML;
 
 			return 'hasTooltip';
 		}
+
+		return '';
 	}
 
 	/**

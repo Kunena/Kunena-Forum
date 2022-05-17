@@ -112,9 +112,9 @@ if ($user->userid > 1)
     <div class="profile-expand center">
 		<span class="heading btn btn-outline-primary border btn-xs heading-less hasTooltip"
               style="display:none;"
-              data-original-title="<?php echo Text::_('COM_KUNENA_USER_PROFILE_TOOLTIP_LABEL_SHOW_LESS') ?>"><?php echo KunenaIcons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_SHOW_LESS') ?></span>
+              title="<?php echo Text::_('COM_KUNENA_USER_PROFILE_TOOLTIP_LABEL_SHOW_LESS') ?>"><?php echo KunenaIcons::arrowup(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_SHOW_LESS') ?></span>
         <span class="heading btn btn-outline-primary border btn-xs hasTooltip"
-              data-original-title="<?php echo Text::_('COM_KUNENA_USER_PROFILE_TOOLTIP_LABEL_MORE') ?>"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
+              title="<?php echo Text::_('COM_KUNENA_USER_PROFILE_TOOLTIP_LABEL_MORE') ?>"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
         <div class="content" style="display:none;">
             <ul>
 				<?php if ($canseekarma && $config->showKarma)

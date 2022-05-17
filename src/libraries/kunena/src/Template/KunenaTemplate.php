@@ -352,7 +352,7 @@ class KunenaTemplate
 						document.addEventListener('DOMContentLoaded', () => {
 							let activeMenuItem = document.querySelector('" . $id . "');
 							if (activeMenuItem) {
-								activemenuItem.classList.add('active');
+								activeMenuItem.classList.add('active');
 							}
 						});
 					"

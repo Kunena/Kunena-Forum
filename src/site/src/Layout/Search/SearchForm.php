@@ -41,7 +41,7 @@ class SearchForm extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayModeList(string $id, string $attributes = 'class="form-control"')
+	public function displayModeList(string $id, string $attributes = 'class="form-select mb-3"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_SEARCH_SEARCH_POSTS'));
@@ -60,7 +60,7 @@ class SearchForm extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayDateList(string $id, string $attributes = 'class="form-control"')
+	public function displayDateList(string $id, string $attributes = 'class="form-select mb-3"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'lastvisit', Text::_('COM_KUNENA_SEARCH_DATE_LASTVISIT'));
@@ -86,7 +86,7 @@ class SearchForm extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayBeforeAfterList(string $id, string $attributes = 'class="form-control"')
+	public function displayBeforeAfterList(string $id, string $attributes = 'class="form-select mb-3"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'after', Text::_('COM_KUNENA_SEARCH_DATE_NEWER'));
@@ -105,7 +105,7 @@ class SearchForm extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displaySortByList(string $id, string $attributes = 'class="form-control"')
+	public function displaySortByList(string $id, string $attributes = 'class="form-select mb-3"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'title', Text::_('COM_KUNENA_SEARCH_SORTBY_TITLE'));
@@ -132,7 +132,7 @@ class SearchForm extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayOrderList(string $id, string $attributes = 'class="form-control"')
+	public function displayOrderList(string $id, string $attributes = 'class="form-select mb-3"')
 	{
 		$options   = [];
 		$options[] = HTMLHelper::_('select.option', 'inc', Text::_('COM_KUNENA_SEARCH_SORTBY_INC'));
@@ -151,7 +151,7 @@ class SearchForm extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayLimitList(string $id, string $attributes = 'class="form-control"')
+	public function displayLimitList(string $id, string $attributes = 'class="form-select mb-3"')
 	{
 		// Limit value list
 		$options = [];
@@ -187,7 +187,7 @@ class SearchForm extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayCategoryList(string $id, string $attributes = 'class="form-control"')
+	public function displayCategoryList(string $id, string $attributes = 'class="form-select"')
 	{
 		// Category select list
 		$options   = [];

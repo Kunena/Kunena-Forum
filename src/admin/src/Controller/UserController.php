@@ -164,7 +164,7 @@ class UserController extends FormController
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'), 'success');
 			}
 
 			if ($type === 'save')

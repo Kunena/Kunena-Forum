@@ -109,7 +109,7 @@ class AttachmentsController extends FormController
 			}
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

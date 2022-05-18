@@ -106,12 +106,12 @@ class LogsController extends FormController
 
 		if ($numRows > 0)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_LOG_ENTRIES_DELETED', $numRows));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_LOG_ENTRIES_DELETED', $numRows), 'success');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_LOG_ENTRIES_DELETED_NOTHING_TO_DELETE'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_LOG_ENTRIES_DELETED_NOTHING_TO_DELETE'), 'notice');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 	}

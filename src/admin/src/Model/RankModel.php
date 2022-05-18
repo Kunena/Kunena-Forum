@@ -113,7 +113,7 @@ class RankModel extends AdminModel
 			}
 			catch (RuntimeException $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}

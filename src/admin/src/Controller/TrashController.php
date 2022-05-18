@@ -95,7 +95,7 @@ class TrashController extends FormController
 
 				if (!$success)
 				{
-					$this->app->enqueueMessage($topic->getError());
+					$this->app->enqueueMessage($topic->getError(), 'error');
 				}
 			}
 
@@ -103,7 +103,7 @@ class TrashController extends FormController
 			{
 				KunenaTopicHelper::recount($cid);
 				KunenaCategoryHelper::recount($topic->getCategory()->id);
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
 			}
 		}
 		elseif ($type == 'messages')
@@ -124,7 +124,7 @@ class TrashController extends FormController
 
 				if (!$success)
 				{
-					$this->app->enqueueMessage($message->getError());
+					$this->app->enqueueMessage($message->getError(), 'error');
 				}
 			}
 
@@ -132,7 +132,7 @@ class TrashController extends FormController
 			{
 				KunenaTopicHelper::recount($cid);
 				KunenaCategoryHelper::recount($topic->getCategory()->id);
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
 			}
 		}
 
@@ -194,7 +194,7 @@ class TrashController extends FormController
 				}
 				else
 				{
-					$this->app->enqueueMessage($target->getError(), 'notice');
+					$this->app->enqueueMessage($target->getError(), 'error');
 				}
 			}
 		}
@@ -219,7 +219,7 @@ class TrashController extends FormController
 				}
 				else
 				{
-					$this->app->enqueueMessage($target->getError(), 'notice');
+					$this->app->enqueueMessage($target->getError(), 'error');
 				}
 			}
 		}
@@ -233,7 +233,7 @@ class TrashController extends FormController
 
 		if ($nbItems > 0)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nbItems));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nbItems), 'success');
 		}
 
 		KunenaUserHelper::recount();

@@ -139,7 +139,7 @@ class CategoriesController extends KunenaController
 				{
 					$this->app->enqueueMessage(
 						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
-						'notice'
+						'error'
 					);
 				}
 			}
@@ -154,12 +154,12 @@ class CategoriesController extends KunenaController
 
 		if ($count == 1 && $name)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVED', $this->escape($name)));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVED', $this->escape($name)), 'success');
 		}
 
 		if ($count > 1)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count), 'success');
 		}
 	}
 
@@ -433,7 +433,7 @@ class CategoriesController extends KunenaController
 		{
 			if (!$category->isAuthorised('admin'))
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'error');
 			}
 			elseif (!$category->isCheckedOut($this->me->userid))
 			{
@@ -444,7 +444,7 @@ class CategoriesController extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETE_FAILED', $this->escape($category->getError())), 'notice');
+					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETE_FAILED', $this->escape($category->getError())), 'error');
 				}
 			}
 			else
@@ -455,12 +455,12 @@ class CategoriesController extends KunenaController
 
 		if ($count == 1 && $name)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETED', $this->escape($name)));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETED', $this->escape($name)), 'success');
 		}
 
 		if ($count > 1)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_DELETED', $count));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_DELETED', $count), 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -494,7 +494,7 @@ class CategoriesController extends KunenaController
 
 		if (!$category->isAuthorised('admin'))
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'error');
 		}
 		elseif (!$category->isCheckedOut($this->me->userid))
 		{
@@ -555,7 +555,7 @@ class CategoriesController extends KunenaController
 
 			if (!$category->getParent()->tryAuthorise('admin'))
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->getParent()->name)), 'notice');
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->getParent()->name)), 'error');
 			}
 			elseif (!$category->isCheckedOut($this->me->userid))
 			{
@@ -566,7 +566,7 @@ class CategoriesController extends KunenaController
 				{
 					$this->app->enqueueMessage(
 						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
-						'notice'
+						'error'
 					);
 				}
 			}
@@ -581,7 +581,7 @@ class CategoriesController extends KunenaController
 
 		if ($success)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_NEW_ORDERING_SAVED'));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_NEW_ORDERING_SAVED'), 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -690,7 +690,7 @@ class CategoriesController extends KunenaController
 
 		if (!$category->getParent()->tryAuthorise('admin'))
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->getParent()->name)), 'notice');
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->getParent()->name)), 'error');
 
 			return;
 		}
@@ -792,7 +792,7 @@ class CategoriesController extends KunenaController
 
 		if ($catParent == 0 || empty($cid))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_NOT_SELECTED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_NOT_SELECTED'), 'notice');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return false;
@@ -816,14 +816,14 @@ class CategoriesController extends KunenaController
 					}
 					catch (RuntimeException $e)
 					{
-						$this->app->enqueueMessage($e->getMessage());
+						$this->app->enqueueMessage($e->getMessage(), 'error');
 
 						return false;
 					}
 				}
 			}
 
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_MOVE_SUCCESS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_MOVE_SUCCESS'), 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));

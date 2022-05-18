@@ -1410,7 +1410,7 @@ class HtmlView extends KunenaView
 		if (!$this->topic->category_id)
 		{
 			$msg = Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError());
-			$this->app->enqueueMessage($msg, 'notice');
+			$this->app->enqueueMessage($msg, 'error');
 
 			return false;
 		}
@@ -1486,7 +1486,7 @@ class HtmlView extends KunenaView
 		}
 		catch (Exception $e)
 		{
-			$this->app->enqueueMessage($e->getMessage(), 'notice');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 
 			return false;
 		}
@@ -1548,7 +1548,7 @@ class HtmlView extends KunenaView
 		}
 		catch (Exception $e)
 		{
-			$this->app->enqueueMessage($e->getMessage(), 'notice');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 
 			return false;
 		}

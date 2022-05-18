@@ -113,7 +113,7 @@ class ConfigController extends FormController
 				{
 					if (empty($postvalue))
 					{
-						$this->app->enqueueMessage(Text::_('COM_KUNENA_IMAGEWIDTH_IMAGEHEIGHT_EMPTY_CONFIG_NOT_SAVED'));
+						$this->app->enqueueMessage(Text::_('COM_KUNENA_IMAGEWIDTH_IMAGEHEIGHT_EMPTY_CONFIG_NOT_SAVED'), 'error');
 						$this->setRedirect(KunenaRoute::_($urlVar, false));
 
 						return;
@@ -138,7 +138,7 @@ class ConfigController extends FormController
 
 		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_CONFIGSAVED'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_CONFIGSAVED'), 'success');
 
 		if ($this->task == 'apply')
 		{

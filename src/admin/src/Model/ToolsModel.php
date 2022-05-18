@@ -601,7 +601,7 @@ class ToolsModel extends AdminModel
 		}
 		catch (RuntimeException $e)
 		{
-			Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 			return;
 		}
@@ -710,7 +710,7 @@ class ToolsModel extends AdminModel
 				}
 				catch (RuntimeException $e)
 				{
-					Factory::getApplication()->enqueueMessage($e->getMessage());
+					Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 					return false;
 				}

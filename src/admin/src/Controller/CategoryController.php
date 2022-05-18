@@ -130,7 +130,7 @@ class CategoryController extends FormController
 
 		if (empty($post['name']))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORY_MANAGER_PLEASE_SET_A_TITLE'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORY_MANAGER_PLEASE_SET_A_TITLE'), 'error');
 
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
@@ -155,12 +155,12 @@ class CategoryController extends FormController
 		if ($category->exists() && !$category->isAuthorised('admin'))
 		{
 			// Category exists and user is not admin in category
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'notice');
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'error');
 		}
 		elseif (!$category->exists() && !$me->isAdmin($parent))
 		{
 			// Category doesn't exist and user is not admin in parent, parentid=0 needs global admin rights
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($parent->name)), 'notice');
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($parent->name)), 'error');
 		}
 		elseif (!$category->isCheckedOut($me->userid))
 		{
@@ -236,7 +236,7 @@ class CategoryController extends FormController
 
 		if ($success)
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVED', $this->escape($category->name)));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVED', $this->escape($category->name)), 'success');
 		}
 
 		if (!empty($post['rmmod']))
@@ -252,7 +252,7 @@ class CategoryController extends FormController
 							'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED',
 							$this->escape($user->getName()),
 							$this->escape($category->name)
-						)
+						), 'success'
 					);
 				}
 			}

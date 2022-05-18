@@ -156,7 +156,7 @@ class SmiliesController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				$this->app->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
@@ -178,13 +178,13 @@ class SmiliesController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				$this->app->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_SAVED'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_SAVED'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -214,7 +214,7 @@ class SmiliesController extends FormController
 
 		if ($upload)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'), 'success');
 		}
 		else
 		{
@@ -264,13 +264,13 @@ class SmiliesController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				$this->app->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_DELETED'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_DELETED'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 

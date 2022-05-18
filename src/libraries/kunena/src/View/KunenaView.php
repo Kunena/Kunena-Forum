@@ -290,7 +290,7 @@ class KunenaView extends HtmlView
 			}
 			catch (Exception $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
@@ -303,7 +303,7 @@ class KunenaView extends HtmlView
 			}
 			catch (Exception $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}

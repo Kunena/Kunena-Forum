@@ -219,7 +219,7 @@ class CategoriesModel extends KunenaModel
 				}
 				catch (RuntimeException $e)
 				{
-					Factory::getApplication()->enqueueMessage($e->getMessage());
+					Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 					return;
 				}
@@ -289,7 +289,7 @@ class CategoriesModel extends KunenaModel
 
 				if (!$table->store())
 				{
-					Factory::getApplication()->enqueueMessage($table->getError());
+					Factory::getApplication()->enqueueMessage($table->getError(), 'error');
 
 					return false;
 				}

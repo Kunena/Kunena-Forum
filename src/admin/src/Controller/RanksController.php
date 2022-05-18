@@ -165,7 +165,7 @@ class RanksController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				$this->app->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
@@ -188,13 +188,13 @@ class RanksController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				$this->app->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_RANK_SAVED'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_RANK_SAVED'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -224,7 +224,7 @@ class RanksController extends FormController
 
 		if ($upload)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_RANKS_UPLOAD_SUCCESS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_RANKS_UPLOAD_SUCCESS'), 'success');
 		}
 		else
 		{
@@ -275,13 +275,13 @@ class RanksController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				$this->app->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_RANK_DELETED'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_RANK_DELETED'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 

@@ -141,7 +141,7 @@ abstract class KunenaError
 		if (self::$debug)
 		{
 			$app = Factory::getApplication();
-			$app->enqueueMessage(Text::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'notice');
+			$app->enqueueMessage(Text::sprintf('COM_KUNENA_WARNING_' . strtoupper($where), $msg), 'warning');
 		}
 	}
 

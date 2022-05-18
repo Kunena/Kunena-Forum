@@ -226,14 +226,14 @@ class ToolsController extends FormController
 		{
 			Factory::getApplication()->enqueueMessage(
 				"" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
-				. Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS')
+				. Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS'), 'success'
 			);
 		}
 		else
 		{
 			Factory::getApplication()->enqueueMessage(
 				"" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
-				. Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS')
+				. Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS'), 'success'
 			);
 		}
 
@@ -286,12 +286,12 @@ class ToolsController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
 
-			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_ADD_DONE', $db->getAffectedRows()));
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_ADD_DONE', $db->getAffectedRows()), 'success');
 		}
 
 		if ($userDel)
@@ -312,12 +312,12 @@ class ToolsController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
 
-			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()), 'success');
 		}
 
 		if ($userDelLife)
@@ -335,7 +335,7 @@ class ToolsController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
@@ -352,12 +352,12 @@ class ToolsController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
 
-			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()), 'success');
 		}
 
 		if ($userRename)
@@ -378,15 +378,15 @@ class ToolsController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
 
-			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()));
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()), 'success');
 		}
 
-		Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()));
+		Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()), 'success');
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
@@ -722,7 +722,7 @@ class ToolsController extends FormController
 		$installer->deleteMenu();
 		$installer->createMenu();
 
-		Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_MENU_CREATED'));
+		Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_MENU_CREATED'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -751,11 +751,11 @@ class ToolsController extends FormController
 
 		if ($errors)
 		{
-			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_FIXED_LEGACY_FAILED', $errors[0]), 'notice');
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_FIXED_LEGACY_FAILED', $errors[0]), 'error');
 		}
 		else
 		{
-			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', \count($legacy)));
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', \count($legacy)), 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -800,7 +800,7 @@ class ToolsController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
@@ -809,18 +809,18 @@ class ToolsController extends FormController
 
 			if ($count > 0)
 			{
-				Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_RE_PURGED', $count, $reString));
+				Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_RE_PURGED', $count, $reString), 'success');
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			}
 			else
 			{
-				Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_RE_PURGE_FAILED', $reString));
+				Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_MENU_RE_PURGE_FAILED', $reString), 'error');
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			}
 		}
 		else
 		{
-			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_MENU_RE_PURGE_FORGOT_STATEMENT'));
+			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_MENU_RE_PURGE_FORGOT_STATEMENT'), 'warning');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 	}
@@ -875,7 +875,7 @@ class ToolsController extends FormController
 		}
 		catch (RuntimeException $e)
 		{
-			Factory::getApplication()->enqueueMessage($e->getMessage());
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 			return;
 		}
@@ -898,22 +898,22 @@ class ToolsController extends FormController
 			}
 			catch (RuntimeException $e)
 			{
-				Factory::getApplication()->enqueueMessage($e->getMessage());
+				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 				return;
 			}
 
-			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_USERS_DONE', $count));
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_USERS_DONE', $count), 'success');
 		}
 
 		if ($count > 0)
 		{
-			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_DONE', $count));
+			Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_TOOLS_CLEANUP_IP_DONE', $count), 'success');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 		else
 		{
-			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_TOOLS_CLEANUP_IP_FAILED'));
+			Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_TOOLS_CLEANUP_IP_FAILED'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 		}
 	}
@@ -965,7 +965,7 @@ class ToolsController extends FormController
 		{
 			if (empty($code) || $code == 0)
 			{
-				Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_SECRETKEY_INVALID'));
+				Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_SECRETKEY_INVALID'), 'error');
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			}
 		}
@@ -985,7 +985,7 @@ class ToolsController extends FormController
 			return;
 		}
 
-		Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_FAILED'));
+		Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_FAILED'), 'error');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 

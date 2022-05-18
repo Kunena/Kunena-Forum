@@ -1633,7 +1633,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			catch (RuntimeException $e)
 			{
 				$app = Factory::getApplication();
-				$app->enqueueMessage($e->getMessage());
+				$app->enqueueMessage($e->getMessage(), 'error');
 			}
 
 			// So are we moving the whole topic?
@@ -1801,7 +1801,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		catch (RuntimeException $e)
 		{
 			$app = Factory::getApplication();
-			$app->enqueueMessage($query);
+			$app->enqueueMessage($query, 'error');
 		}
 
 		// Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)
@@ -1815,7 +1815,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		catch (RuntimeException $e)
 		{
 			$app = Factory::getApplication();
-			$app->enqueueMessage($e->getMessage());
+			$app->enqueueMessage($e->getMessage(), 'error');
 		}
 
 		$query = 'UPDATE ' . $this->_db->quoteName('#__kunena_messages') . ' SET ' . $this->_db->quoteName('time') . ' = IF(time <= @ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread=' . $target->id . ' ORDER BY time ASC, id ASC';
@@ -1828,7 +1828,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		catch (RuntimeException $e)
 		{
 			$app = Factory::getApplication();
-			$app->enqueueMessage($e->getMessage());
+			$app->enqueueMessage($e->getMessage(), 'error');
 		}
 
 		if ($keep_poll)
@@ -1858,7 +1858,7 @@ class KunenaTopic extends KunenaDatabaseObject
 				catch (RuntimeException $e)
 				{
 					$app = Factory::getApplication();
-					$app->enqueueMessage($e->getMessage());
+					$app->enqueueMessage($e->getMessage(), 'error');
 				}
 			}
 

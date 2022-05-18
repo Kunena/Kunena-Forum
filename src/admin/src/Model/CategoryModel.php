@@ -78,7 +78,7 @@ class CategoryModel extends CategoriesModel
 				}
 				catch (RuntimeException $e)
 				{
-					Factory::getApplication()->enqueueMessage($e->getMessage());
+					Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
 					return;
 				}

@@ -150,7 +150,7 @@ class HtmlView extends BaseHtmlView
 				{
 					$modelInstall->processUpgradeXMLNode($action);
 
-					$app->enqueueMessage(Text::sprintf('COM_KUNENA_INSTALL_VERSION_UPGRADED', $vernum));
+					$app->enqueueMessage(Text::sprintf('COM_KUNENA_INSTALL_VERSION_UPGRADED', $vernum), 'success');
 				}
 
 				$query = "UPDATE `#__kunena_version` SET state='';";

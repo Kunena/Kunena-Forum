@@ -927,7 +927,7 @@ abstract class KunenaRoute
 		}
 		catch (\RuntimeException $e)
 		{
-			$app->enqueueMessage($e->getMessage());
+			$app->enqueueMessage($e->getMessage(), 'error');
 		}
 
 		$vars = [];

@@ -184,9 +184,6 @@ EOF;
 
 		$doc->addStyleDeclaration($styles);
 
-		$jsOptions = [];
-		$jsOptions['hasTooltips'] = $this->params->get('tooltips');
-		// $doc->addScriptOptions('com_kunena', $jsOptions, true);
 		$this->addScriptOptions('com_kunena.tooltips', $this->params->get('tooltips'));
 
 		parent::initialize();

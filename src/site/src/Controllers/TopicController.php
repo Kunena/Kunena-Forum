@@ -620,7 +620,7 @@ class TopicController extends KunenaController
 			}
 			catch (Exception $e)
 			{
-				$this->app->enqueueMessage($e->getMessage(), 'notice');
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 				$this->setRedirectBack();
 
 				return;
@@ -639,7 +639,7 @@ class TopicController extends KunenaController
 			}
 			catch (Exception $e)
 			{
-				$this->app->enqueueMessage($e->getMessage(), 'notice');
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 				$this->setRedirectBack();
 
 				return;
@@ -923,7 +923,7 @@ class TopicController extends KunenaController
 		// Display possible warnings (upload failed etc)
 		foreach ($message->getErrors() as $warning)
 		{
-			$this->app->enqueueMessage($warning, 'notice');
+			$this->app->enqueueMessage($warning, 'error');
 		}
 
 		// Create Poll
@@ -947,18 +947,18 @@ class TopicController extends KunenaController
 
 				if (!$poll->save())
 				{
-					$this->app->enqueueMessage($poll->getError(), 'notice');
+					$this->app->enqueueMessage($poll->getError(), 'error');
 				}
 				else
 				{
 					$topic->poll_id = $poll->id;
 					$topic->save();
-					$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'));
+					$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
 				}
 			}
 			else
 			{
-				$this->app->enqueueMessage($topic->getError(), 'notice');
+				$this->app->enqueueMessage($topic->getError(), 'error');
 			}
 		}
 
@@ -975,7 +975,7 @@ class TopicController extends KunenaController
 		{
 			if ($topic->subscribe(1))
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'), 'success');
 
 				// Activity integration
 				$activity = KunenaFactory::getActivityIntegration();
@@ -983,17 +983,17 @@ class TopicController extends KunenaController
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC') . ' ' . $topic->getError());
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC') . ' ' . $topic->getError(), 'error');
 			}
 		}
 
 		if ($message->hold == 1)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCES_REVIEW'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCES_REVIEW'), 'success');
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_POSTED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_POSTED'), 'success');
 		}
 
 		$category = KunenaCategoryHelper::get($this->return);
@@ -1155,7 +1155,7 @@ class TopicController extends KunenaController
 		// When the bbcode urls and images are removed just remove the others links
 		$text = preg_replace('/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)(#?[\w \.-]*)(\??[\w \.-]*)(\=?[\w \.-]*)/i', '', $text);
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SAVED_WITHOUT_LINKS_AND_IMAGES'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SAVED_WITHOUT_LINKS_AND_IMAGES'), 'success');
 
 		return $text;
 	}
@@ -1353,7 +1353,7 @@ class TopicController extends KunenaController
 		catch (Exception $e)
 		{
 			$this->app->setUserState('com_kunena.postfields', $fields);
-			$this->app->enqueueMessage($e->getMessage(), 'notice');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -1469,12 +1469,12 @@ class TopicController extends KunenaController
 				}
 				catch (Exception $e)
 				{
-					$this->app->enqueueMessage($e->getMessage(), 'notice');
+					$this->app->enqueueMessage($e->getMessage(), 'error');
 				}
 
 				if ($message->publish(KunenaForum::DELETED))
 				{
-					$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'));
+					$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'), 'success');
 				}
 
 				$this->setRedirect($message->getUrl($this->return, false));
@@ -1528,7 +1528,7 @@ class TopicController extends KunenaController
 		// Display possible warnings (upload failed etc)
 		foreach ($message->getErrors() as $warning)
 		{
-			$this->app->enqueueMessage($warning, 'notice');
+			$this->app->enqueueMessage($warning, 'error');
 		}
 
 		$subscribe = $this->app->input->getInt('subscribeMe');
@@ -1573,17 +1573,17 @@ class TopicController extends KunenaController
 					// Create a new poll
 					if (!$topic->isAuthorised('poll.create'))
 					{
-						$this->app->enqueueMessage($topic->getError(), 'notice');
+						$this->app->enqueueMessage($topic->getError(), 'error');
 					}
 					elseif (!$poll->save())
 					{
-						$this->app->enqueueMessage($poll->getError(), 'notice');
+						$this->app->enqueueMessage($poll->getError(), 'error');
 					}
 					else
 					{
 						$topic->poll_id = $poll->id;
 						$topic->save();
-						$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'));
+						$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
 					}
 				}
 				else
@@ -1593,15 +1593,15 @@ class TopicController extends KunenaController
 						// Edit existing poll
 						if (!$topic->isAuthorised('poll.edit'))
 						{
-							$this->app->enqueueMessage($topic->getError(), 'notice');
+							$this->app->enqueueMessage($topic->getError(), 'error');
 						}
 						elseif (!$poll->save())
 						{
-							$this->app->enqueueMessage($poll->getError(), 'notice');
+							$this->app->enqueueMessage($poll->getError(), 'error');
 						}
 						else
 						{
-							$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_EDITED'));
+							$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_EDITED'), 'success');
 						}
 					}
 				}
@@ -1612,15 +1612,15 @@ class TopicController extends KunenaController
 				if (!$topic->isAuthorised('poll.delete'))
 				{
 					// Error: No permissions to delete poll
-					$this->app->enqueueMessage($topic->getError(), 'notice');
+					$this->app->enqueueMessage($topic->getError(), 'error');
 				}
 				elseif (!$poll->delete())
 				{
-					$this->app->enqueueMessage($poll->getError(), 'notice');
+					$this->app->enqueueMessage($poll->getError(), 'error');
 				}
 				else
 				{
-					$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_DELETED'));
+					$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_DELETED'), 'success');
 				}
 			}
 		}
@@ -1630,7 +1630,7 @@ class TopicController extends KunenaController
 
 		$activity->onAfterEdit($message);
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_EDIT'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_EDIT'), 'success');
 
 		if ($message->hold == 1)
 		{
@@ -1640,7 +1640,7 @@ class TopicController extends KunenaController
 				$message->sendNotification();
 			}
 
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_MODERATED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_MODERATED'), 'success');
 		}
 
 		// Redirect edit first message when category is under review
@@ -1755,7 +1755,7 @@ class TopicController extends KunenaController
 
 		if (!$message->isAuthorised($type))
 		{
-			$this->app->enqueueMessage($message->getError());
+			$this->app->enqueueMessage($message->getError(), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -1773,13 +1773,13 @@ class TopicController extends KunenaController
 			}
 			catch (Exception $e)
 			{
-				$this->app->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 				$this->setRedirectBack();
 
 				return;
 			}
 
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_THANKYOU_SUCCESS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_THANKYOU_SUCCESS'), 'success');
 
 			if ($this->config->logModeration)
 			{
@@ -1805,13 +1805,13 @@ class TopicController extends KunenaController
 			}
 			catch (Exception $e)
 			{
-				$this->app->enqueueMessage($e->getMessage());
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 				$this->setRedirectBack();
 
 				return;
 			}
 
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_THANKYOU_REMOVED_SUCCESS'), 'success');
 
 			if ($this->config->logModeration)
 			{
@@ -1865,7 +1865,7 @@ class TopicController extends KunenaController
 
 		if ($topic->isAuthorised('read') && $topic->subscribe(1))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'), 'success');
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
@@ -1873,7 +1873,7 @@ class TopicController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC') . ' ' . $topic->getError(), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC') . ' ' . $topic->getError(), 'error');
 		}
 
 		$this->setRedirectBack();
@@ -1906,11 +1906,11 @@ class TopicController extends KunenaController
 			}
 			catch (Exception $e)
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC') . ' ' . $topic->getError(), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC') . ' ' . $topic->getError(), 'error');
 				$this->setRedirectBack();
 			}
 
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNSUBSCRIBED_TOPIC'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNSUBSCRIBED_TOPIC'), 'success');
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
@@ -1941,7 +1941,7 @@ class TopicController extends KunenaController
 
 		if ($topic->isAuthorised('read') && $topic->favorite(1))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_FAVORITED_TOPIC'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_FAVORITED_TOPIC'), 'success');
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
@@ -1949,7 +1949,7 @@ class TopicController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_FAVORITED_TOPIC') . ' ' . $topic->getError(), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_FAVORITED_TOPIC') . ' ' . $topic->getError(), 'error');
 		}
 
 		$this->setRedirectBack();
@@ -1976,7 +1976,7 @@ class TopicController extends KunenaController
 
 		if ($topic->isAuthorised('read') && $topic->favorite(0))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNFAVORITED_TOPIC'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNFAVORITED_TOPIC'), 'success');
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
@@ -1984,7 +1984,7 @@ class TopicController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC') . ' ' . $topic->getError(), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC') . ' ' . $topic->getError(), 'error');
 		}
 
 		$this->setRedirectBack();
@@ -2011,11 +2011,11 @@ class TopicController extends KunenaController
 
 		if (!$topic->isAuthorised('sticky'))
 		{
-			$this->app->enqueueMessage($topic->getError(), 'notice');
+			$this->app->enqueueMessage($topic->getError(), 'error');
 		}
 		elseif ($topic->sticky(1))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_SET'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_SET'), 'success');
 
 			if ($this->config->logModeration)
 			{
@@ -2034,7 +2034,7 @@ class TopicController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_NOT_SET'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_NOT_SET'), 'error');
 		}
 
 		$this->setRedirectBack();
@@ -2061,11 +2061,11 @@ class TopicController extends KunenaController
 
 		if (!$topic->isAuthorised('sticky'))
 		{
-			$this->app->enqueueMessage($topic->getError(), 'notice');
+			$this->app->enqueueMessage($topic->getError(), 'error');
 		}
 		elseif ($topic->sticky(0))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_UNSET'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_UNSET'), 'success');
 
 			if ($this->config->logModeration)
 			{
@@ -2084,7 +2084,7 @@ class TopicController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_NOT_UNSET'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_NOT_UNSET'), 'error');
 		}
 
 		$this->setRedirectBack();
@@ -2111,11 +2111,11 @@ class TopicController extends KunenaController
 
 		if (!$topic->isAuthorised('lock'))
 		{
-			$this->app->enqueueMessage($topic->getError(), 'notice');
+			$this->app->enqueueMessage($topic->getError(), 'error');
 		}
 		elseif ($topic->lock(1))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_SET'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_SET'), 'success');
 
 			if ($this->config->logModeration)
 			{
@@ -2134,7 +2134,7 @@ class TopicController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_NOT_SET'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_NOT_SET'), 'error');
 		}
 
 		$this->setRedirectBack();
@@ -2161,11 +2161,11 @@ class TopicController extends KunenaController
 
 		if (!$topic->isAuthorised('lock'))
 		{
-			$this->app->enqueueMessage($topic->getError(), 'notice');
+			$this->app->enqueueMessage($topic->getError(), 'error');
 		}
 		elseif ($topic->lock(0))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_UNSET'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_UNSET'), 'success');
 
 			if ($this->config->logModeration)
 			{
@@ -2184,7 +2184,7 @@ class TopicController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_NOT_UNSET'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_LOCK_NOT_UNSET'), 'error');
 		}
 
 		$this->setRedirectBack();
@@ -2240,11 +2240,11 @@ class TopicController extends KunenaController
 				);
 			}
 
-			$this->app->enqueueMessage($msg);
+			$this->app->enqueueMessage($msg, 'success');
 		}
 		else
 		{
-			$this->app->enqueueMessage($target->getError(), 'notice');
+			$this->app->enqueueMessage($target->getError(), 'error');
 		}
 
 		if (!$target->isAuthorised('read'))
@@ -2311,11 +2311,11 @@ class TopicController extends KunenaController
 				);
 			}
 
-			$this->app->enqueueMessage($msg);
+			$this->app->enqueueMessage($msg, 'success');
 		}
 		else
 		{
-			$this->app->enqueueMessage($target->getError(), 'notice');
+			$this->app->enqueueMessage($target->getError(), 'error');
 		}
 
 		$this->setRedirect($target->getUrl($this->return, false));
@@ -2375,18 +2375,18 @@ class TopicController extends KunenaController
 
 			if ($topic->exists())
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'), 'success');
 				$url = $topic->getUrl($this->return, false);
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_SUCCESS_DELETE'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_SUCCESS_DELETE'), 'success');
 				$url = $topic->getCategory()->getUrl($this->return, false);
 			}
 		}
 		else
 		{
-			$this->app->enqueueMessage($target->getError(), 'notice');
+			$this->app->enqueueMessage($target->getError(), 'error');
 		}
 
 		if (isset($url))
@@ -2447,7 +2447,7 @@ class TopicController extends KunenaController
 				);
 			}
 
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'), 'success');
 
 			// Only email if message wasn't modified by the author before approval
 			// TODO: this is just a workaround for #1862, we need to find better solution.
@@ -2461,7 +2461,7 @@ class TopicController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage($target->getError(), 'notice');
+			$this->app->enqueueMessage($target->getError(), 'error');
 		}
 
 		$this->setRedirect($target->getUrl($this->return, false));
@@ -2579,11 +2579,11 @@ class TopicController extends KunenaController
 
 		if ($error)
 		{
-			$this->app->enqueueMessage($error, 'notice');
+			$this->app->enqueueMessage($error, 'error');
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'), 'success');
 		}
 
 		if ($targetobject)
@@ -2616,7 +2616,7 @@ class TopicController extends KunenaController
 		if (!$this->me->exists() || $this->config->reportMsg == 0)
 		{
 			// Deny access if report feature has been disabled or user is guest
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'warning');
 			$this->setRedirectBack();
 
 			return;
@@ -2625,7 +2625,7 @@ class TopicController extends KunenaController
 		if (!$this->config->get('sendEmails'))
 		{
 			// Emails have been disabled
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_DISABLED'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_DISABLED'), 'warning');
 			$this->setRedirectBack();
 
 			return;
@@ -2657,7 +2657,7 @@ class TopicController extends KunenaController
 		if (!$target->isAuthorised('read'))
 		{
 			// Deny access if user cannot read target
-			$this->app->enqueueMessage($target->getError(), 'notice');
+			$this->app->enqueueMessage($target->getError(), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -2695,7 +2695,7 @@ class TopicController extends KunenaController
 		if (empty($reason) && empty($text))
 		{
 			// Do nothing: empty subject or reason is empty
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_FORG0T_SUB_MES'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_FORG0T_SUB_MES'), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -2755,11 +2755,11 @@ class TopicController extends KunenaController
 
 				KunenaEmail::send($mailTemplate, $receivers, $mailer);
 
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_SUCCESS'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_SUCCESS'), 'success');
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_NOT_SEND'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_NOT_SEND'), 'success');
 			}
 		}
 
@@ -2804,7 +2804,7 @@ class TopicController extends KunenaController
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'), 'success');
 			}
 		}
 		elseif (!$this->config->pollAllowVoteOne)
@@ -2818,7 +2818,7 @@ class TopicController extends KunenaController
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS'), 'success');
 			}
 		}
 
@@ -2857,7 +2857,7 @@ class TopicController extends KunenaController
 			);
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS'), 'success');
 		$this->setRedirect($topic->getUrl($this->return, false));
 	}
 }

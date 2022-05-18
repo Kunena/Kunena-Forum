@@ -124,7 +124,7 @@ class AnnouncementController extends KunenaController
 					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
 				}
 
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)));
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)), 'success');
 			}
 		}
 
@@ -192,7 +192,7 @@ class AnnouncementController extends KunenaController
 					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
 				}
 
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)));
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)), 'success');
 			}
 		}
 
@@ -256,7 +256,7 @@ class AnnouncementController extends KunenaController
 					);
 				}
 
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'), 'success');
 			}
 		}
 
@@ -346,7 +346,7 @@ class AnnouncementController extends KunenaController
 			);
 		}
 
-		$this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'));
+		$this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'), 'success');
 		$this->setRedirect($announcement->getUrl('default', false));
 	}
 }

@@ -163,7 +163,7 @@ class UsersController extends KunenaController
 			return;
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_TRASHED_DONE'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_TRASHED_DONE'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -262,11 +262,11 @@ class UsersController extends KunenaController
 
 		if ($error)
 		{
-			$this->app->enqueueMessage($error, 'notice');
+			$this->app->enqueueMessage($error, 'error');
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_MOVED_DONE'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_MOVED_DONE'), 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -306,7 +306,7 @@ class UsersController extends KunenaController
 		$options = ['clientid' => 0];
 		$this->app->logout((int) $id, $options);
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_USER_LOGOUT_DONE'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_A_USER_LOGOUT_DONE'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -349,7 +349,7 @@ class UsersController extends KunenaController
 		{
 			if ($my->id == $user->userid)
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_YOURSELF'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_YOURSELF'), 'error');
 				continue;
 			}
 
@@ -357,7 +357,7 @@ class UsersController extends KunenaController
 
 			if ($instance->authorise('core.admin'))
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'), 'error');
 				continue;
 			}
 
@@ -365,7 +365,7 @@ class UsersController extends KunenaController
 
 			if (!$result)
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_USER_DELETE_KUNENA_USER_TABLE_FAILED', $user->userid), 'notice');
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_USER_DELETE_KUNENA_USER_TABLE_FAILED', $user->userid), 'error');
 				continue;
 			}
 
@@ -374,7 +374,7 @@ class UsersController extends KunenaController
 
 			if (!$jresult)
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $user->userid), 'notice');
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_USER_DELETE_JOOMLA_USER_TABLE_FAILED', $user->userid), 'error');
 				continue;
 			}
 
@@ -383,7 +383,7 @@ class UsersController extends KunenaController
 
 		if (!empty($usernames))
 		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_USER_DELETE_DONE_SUCCESSFULLY', implode(', ', $usernames)));
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_USER_DELETE_DONE_SUCCESSFULLY', implode(', ', $usernames)), 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -442,7 +442,7 @@ class UsersController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -501,7 +501,7 @@ class UsersController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -552,7 +552,7 @@ class UsersController extends KunenaController
 
 		$this->setModerate($user, $modCatids);
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_MODERATE_DONE'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_MODERATE_DONE'), 'success');
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
@@ -662,7 +662,7 @@ class UsersController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -721,7 +721,7 @@ class UsersController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -780,7 +780,7 @@ class UsersController extends KunenaController
 		}
 		else
 		{
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -847,7 +847,7 @@ class UsersController extends KunenaController
 			}
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_SET_MODERATORS_DONE'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_SET_MODERATORS_DONE'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -903,14 +903,14 @@ class UsersController extends KunenaController
 				}
 				catch (Exception $e)
 				{
-					$this->app->enqueueMessage($e->getMessage());
+					$this->app->enqueueMessage($e->getMessage(), 'error');
 
 					return;
 				}
 			}
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_REMOVE_CAT_SUBSCRIPTIONS_DONE'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_REMOVE_CAT_SUBSCRIPTIONS_DONE'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -952,14 +952,14 @@ class UsersController extends KunenaController
 				}
 				catch (Exception $e)
 				{
-					$this->app->enqueueMessage($e->getMessage(), 'notice');
+					$this->app->enqueueMessage($e->getMessage(), 'error');
 
 					return;
 				}
 			}
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_REMOVE_TOPIC_SUBSCRIPTIONS_DONE'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_REMOVE_TOPIC_SUBSCRIPTIONS_DONE'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -1013,7 +1013,7 @@ class UsersController extends KunenaController
 			}
 		}
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_ADD_CATEGORIES_SUBSCRIPTIONS_DONE'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_USERS_ADD_CATEGORIES_SUBSCRIPTIONS_DONE'), 'success');
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

@@ -299,12 +299,12 @@ class Display extends KunenaControllerDisplay
 						'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
 						KunenaDate::getInstance($banned->expiration)->toKunena('date_today')
 					),
-					'notice'
+					'error'
 				);
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'error');
 			}
 		}
 

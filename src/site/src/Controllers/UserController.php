@@ -230,7 +230,7 @@ class UserController extends KunenaController
 		{
 			if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay)
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'warning');
 				$this->setRedirectBack();
 
 				return;
@@ -241,23 +241,23 @@ class UserController extends KunenaController
 		{
 			if ($this->me->userid == $target->userid)
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_INCREASE'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_INCREASE'), 'warning');
 				$karmaDelta = -10;
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_INCREASED'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_INCREASED'), 'success');
 			}
 		}
 		else
 		{
 			if ($this->me->userid == $target->userid)
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_DECREASE'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_SELF_DECREASE'), 'warning');
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_DECREASED'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_DECREASED'), 'success');
 			}
 		}
 
@@ -265,7 +265,7 @@ class UserController extends KunenaController
 
 		if ($this->me->userid != $target->userid && !$this->me->save())
 		{
-			$this->app->enqueueMessage($this->me->getError(), 'notice');
+			$this->app->enqueueMessage($this->me->getError(), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -279,7 +279,7 @@ class UserController extends KunenaController
 		}
 		catch (Exception $e)
 		{
-			$this->app->enqueueMessage($e->getMessage(), 'notice');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 			$this->setRedirectBack();
 
 			return;
@@ -380,12 +380,12 @@ class UserController extends KunenaController
 
 		if ($this->user->userid == $this->me->userid)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED'), 'success');
 			$edited_by_moderator = 0;
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED_BY_MODERATOR'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED_BY_MODERATOR'), 'success');
 			$edited_by_moderator = 1;
 		}
 
@@ -445,14 +445,14 @@ class UserController extends KunenaController
 			// Do a password safety check.
 			if ($post_password != $post_password2)
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH'), 'error');
 
 				return false;
 			}
 
 			if (\strlen($post_password) < $params->get('minimum_length'))
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM'), 'notice');
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM'), 'error');
 
 				return false;
 			}
@@ -483,7 +483,7 @@ class UserController extends KunenaController
 			// We set a maximum length to prevent abuse since it is unfiltered.
 			if ($valueLength > 4096)
 			{
-				$this->app->enqueueMessage(Text::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'warning');
+				$this->app->enqueueMessage(Text::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'error');
 			}
 
 			// We don't allow white space inside passwords
@@ -496,7 +496,7 @@ class UserController extends KunenaController
 			{
 				$this->app->enqueueMessage(
 					Text::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
-					'warning'
+					'error'
 				);
 
 				$validPassword = false;
@@ -511,7 +511,7 @@ class UserController extends KunenaController
 				{
 					$this->app->enqueueMessage(
 						Text::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
-						'warning'
+						'error'
 					);
 
 					$validPassword = false;
@@ -527,7 +527,7 @@ class UserController extends KunenaController
 				{
 					$this->app->enqueueMessage(
 						Text::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
-						'warning'
+						'error'
 					);
 
 					$validPassword = false;
@@ -543,7 +543,7 @@ class UserController extends KunenaController
 				{
 					$this->app->enqueueMessage(
 						Text::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
-						'warning'
+						'error'
 					);
 
 					$validPassword = false;
@@ -557,7 +557,7 @@ class UserController extends KunenaController
 				{
 					$this->app->enqueueMessage(
 						Text::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
-						'warning'
+						'error'
 					);
 
 					$validPassword = false;
@@ -634,7 +634,7 @@ class UserController extends KunenaController
 				// When the bbcode urls and images are removed just remove the others links
 				$signature = preg_replace('/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)(#?[\w \.-]*)(\??[\w \.-]*)(\=?[\w \.-]*)/i', '', $signature);
 
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED_WITHOUT_LINKS_IMAGES'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED_WITHOUT_LINKS_IMAGES'), 'success');
 			}
 
 			$user->signature = $signature;
@@ -838,7 +838,7 @@ class UserController extends KunenaController
 				KunenaUserHelper::recountBanned();
 			}
 
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		if (!empty($DelAvatar) || !empty($DelProfileInfo))
@@ -854,7 +854,7 @@ class UserController extends KunenaController
 
 			$user->avatar = '';
 			$user->save();
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted);
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted, 'success');
 		}
 
 		$now       = new Date;
@@ -876,13 +876,13 @@ class UserController extends KunenaController
 			$user->websiteurl  = '';
 			$user->signature   = '';
 			$user->save();
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'), 'success');
 		}
 		elseif (!empty($DelSignature))
 		{
 			$user->signature = '';
 			$user->save();
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE'), 'success');
 		}
 
 		if (!empty($banDelPosts))
@@ -902,7 +902,7 @@ class UserController extends KunenaController
 				$mes->publish(KunenaForum::DELETED);
 			}
 
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES'), 'success');
 		}
 
 		if (!empty($banDelPostsPerm))
@@ -922,7 +922,7 @@ class UserController extends KunenaController
 				$mes->delete();
 			}
 
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_PERM_BAD_MESSAGES'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_PERM_BAD_MESSAGES'), 'success');
 		}
 
 		$this->setRedirect($user->getUrl(false));
@@ -977,6 +977,7 @@ class UserController extends KunenaController
 			}
 			catch (Exception $e)
 			{
+				// Is this empty by design?
 				$this->app->enqueueMessage();
 
 				return false;
@@ -985,7 +986,7 @@ class UserController extends KunenaController
 			if ($result != false)
 			{
 				// Report accepted. There is no need to display the reason
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'), 'success');
 
 				return true;
 			}
@@ -1133,7 +1134,7 @@ class UserController extends KunenaController
 
 		if ($me->save())
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'), 'success');
 		}
 
 		$this->setRedirectBack();
@@ -1173,7 +1174,7 @@ class UserController extends KunenaController
 
 		if ($me->save())
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'), 'success');
 		}
 
 		$this->setRedirectBack();
@@ -1461,7 +1462,7 @@ class UserController extends KunenaController
 
 			if ($number > 0)
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number));
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number), 'success');
 				$this->setRedirectBack();
 
 				return;

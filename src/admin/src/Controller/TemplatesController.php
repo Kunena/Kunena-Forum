@@ -86,7 +86,7 @@ class TemplatesController extends FormController
 		{
 			$this->app->enqueueMessage(
 				Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $this->escape($file['name'])),
-				'notice'
+				'error'
 			);
 			$result = false;
 		}
@@ -105,7 +105,7 @@ class TemplatesController extends FormController
 				{
 					$this->app->enqueueMessage(
 						Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
-						'notice'
+						'error'
 					);
 					$result = false;
 				}
@@ -173,12 +173,12 @@ class TemplatesController extends FormController
 
 							if ($success !== true)
 							{
-								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_FAILED', $template->directory), 'notice');
+								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_FAILED', $template->directory), 'error');
 								$result = false;
 							}
 							else
 							{
-								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_SUCCESS', $template->directory));
+								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_SUCCESS', $template->directory), 'success');
 							}
 						}
 
@@ -264,7 +264,7 @@ class TemplatesController extends FormController
 
 		if (!$templatename)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -275,7 +275,7 @@ class TemplatesController extends FormController
 
 		if ($return)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
 		}
 		else
 		{
@@ -316,7 +316,7 @@ class TemplatesController extends FormController
 		{
 			$this->app->enqueueMessage(
 				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-				. Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.')
+				. Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error'
 			);
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
@@ -328,14 +328,14 @@ class TemplatesController extends FormController
 
 		if ($return)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $templatename, false));
 		}
 		else
 		{
 			$this->app->enqueueMessage(
 				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file)
+				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error'
 			);
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $templatename, false));
 		}
@@ -359,7 +359,7 @@ class TemplatesController extends FormController
 
 		if (File::getExt($filename) !== 'css')
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseCss&id=' . $templatename, false));
 		}
 
@@ -395,7 +395,7 @@ class TemplatesController extends FormController
 
 		if (!$templatename)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -406,11 +406,11 @@ class TemplatesController extends FormController
 
 		if ($return)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
 		}
 	}
 
@@ -440,7 +440,7 @@ class TemplatesController extends FormController
 
 		if (!$templatename)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
 			return;
@@ -451,12 +451,12 @@ class TemplatesController extends FormController
 
 		if ($return)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
 			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseCss", false));
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
 			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseCss", false));
 		}
 	}

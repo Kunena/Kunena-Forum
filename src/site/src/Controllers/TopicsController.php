@@ -45,7 +45,7 @@ class TopicsController extends KunenaController
 	 */
 	public function none()
 	{
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_CONTROLLER_NO_TASK'));
+		$this->app->enqueueMessage(Text::_('COM_KUNENA_CONTROLLER_NO_TASK'), 'error');
 		$this->setRedirectBack();
 	}
 
@@ -94,7 +94,7 @@ class TopicsController extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage($topic->getError(), 'notice');
+					$this->app->enqueueMessage($topic->getError(), 'error');
 				}
 			}
 
@@ -163,7 +163,7 @@ class TopicsController extends KunenaController
 				}
 			}
 
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirectBack();
@@ -207,7 +207,7 @@ class TopicsController extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage($topic->getError(), 'notice');
+					$this->app->enqueueMessage($topic->getError(), 'error');
 				}
 			}
 		}
@@ -229,7 +229,7 @@ class TopicsController extends KunenaController
 				}
 			}
 
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirectBack();
@@ -273,7 +273,7 @@ class TopicsController extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage($topic->getError(), 'notice');
+					$this->app->enqueueMessage($topic->getError(), 'error');
 				}
 			}
 		}
@@ -295,7 +295,7 @@ class TopicsController extends KunenaController
 				}
 			}
 
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirectBack();
@@ -326,7 +326,7 @@ class TopicsController extends KunenaController
 
 		if (!$topics)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'notice');
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'error');
 			$this->setRedirectBack();
 		}
 		else
@@ -340,7 +340,7 @@ class TopicsController extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage($topic->getError(), 'notice');
+					$this->app->enqueueMessage($topic->getError(), 'error');
 				}
 			}
 		}
@@ -362,7 +362,7 @@ class TopicsController extends KunenaController
 				}
 			}
 
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirectBack();
@@ -426,7 +426,7 @@ class TopicsController extends KunenaController
 						}
 						else
 						{
-							$this->app->enqueueMessage($topic->getError(), 'notice');
+							$this->app->enqueueMessage($topic->getError(), 'error');
 						}
 					}
 				}
@@ -442,7 +442,7 @@ class TopicsController extends KunenaController
 						}
 						else
 						{
-							$this->app->enqueueMessage($message->getError(), 'notice');
+							$this->app->enqueueMessage($message->getError(), 'error');
 						}
 					}
 				}
@@ -469,7 +469,7 @@ class TopicsController extends KunenaController
 				}
 			}
 
-			$this->app->enqueueMessage($message);
+			$this->app->enqueueMessage($message, 'success');
 		}
 
 		$this->setRedirectBack();
@@ -514,11 +514,11 @@ class TopicsController extends KunenaController
 				}
 			}
 
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNFAVORITE_YES'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNFAVORITE_YES'), 'success');
 		}
 		else
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC'), 'success');
 		}
 
 		$this->setRedirectBack();
@@ -550,7 +550,7 @@ class TopicsController extends KunenaController
 
 		if (KunenaTopicHelper::subscribe(array_keys($topics), 0, $userid))
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNSUBSCRIBE_YES'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNSUBSCRIBE_YES'), 'success');
 		}
 		else
 		{
@@ -598,14 +598,14 @@ class TopicsController extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage($message->getError(), 'notice');
+					$this->app->enqueueMessage($message->getError(), 'error');
 				}
 			}
 		}
 
 		if ($success)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'), 'success');
 		}
 
 		$this->setRedirectBack();
@@ -648,14 +648,14 @@ class TopicsController extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage($message->getError(), 'notice');
+					$this->app->enqueueMessage($message->getError(), 'error');
 				}
 			}
 		}
 
 		if ($success)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'), 'success');
 		}
 
 		$this->setRedirectBack();
@@ -698,14 +698,14 @@ class TopicsController extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage($message->getError(), 'notice');
+					$this->app->enqueueMessage($message->getError(), 'error');
 				}
 			}
 		}
 
 		if ($success)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_UNDELETE'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_UNDELETE'), 'success');
 		}
 
 		$this->setRedirectBack();
@@ -748,14 +748,14 @@ class TopicsController extends KunenaController
 				}
 				else
 				{
-					$this->app->enqueueMessage($message->getError(), 'notice');
+					$this->app->enqueueMessage($message->getError(), 'error');
 				}
 			}
 		}
 
 		if ($success)
 		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_BULKMSG_DELETED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_BULKMSG_DELETED'), 'success');
 		}
 
 		$this->setRedirectBack();

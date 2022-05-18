@@ -101,7 +101,7 @@ class CategoryController extends CategoriesController
 			}
 			else
 			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'));
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'), 'success');
 			}
 		}
 		else
@@ -134,11 +134,11 @@ class CategoryController extends CategoriesController
 
 				if (\count($categories) > 1)
 				{
-					$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'));
+					$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'), 'success');
 				}
 				else
 				{
-					$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_FORUM_MARKED'));
+					$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_FORUM_MARKED'), 'success');
 				}
 			}
 		}
@@ -180,7 +180,7 @@ class CategoryController extends CategoriesController
 
 			if ($success)
 			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_USER_SUBCRIBED', $category->name));
+				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_USER_SUBCRIBED', $category->name), 'success');
 			}
 		}
 
@@ -231,11 +231,11 @@ class CategoryController extends CategoriesController
 
 				if ($success && $userid == $me->userid)
 				{
-					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name));
+					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name), 'success');
 				}
 				else
 				{
-					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $category->name));
+					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $category->name), 'success');
 				}
 			}
 		}

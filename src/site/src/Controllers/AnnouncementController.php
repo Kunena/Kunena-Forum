@@ -260,7 +260,7 @@ class AnnouncementController extends KunenaController
 			}
 		}
 
-		$this->setRedirect(KunenaAnnouncementHelper::getUrl('list', false));
+		$this->setRedirect(KunenaAnnouncementHelper::getUrl('listing', false));
 	}
 
 	/**

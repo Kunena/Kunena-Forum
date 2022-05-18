@@ -19,9 +19,9 @@ use Joomla\Archive\Archive;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
@@ -31,7 +31,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
  *
  * @since   Kunena 2.0
  */
-class TemplatesController extends FormController
+class TemplatesController extends KunenaController
 {
 	/**
 	 * @var     null|string

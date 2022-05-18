@@ -139,6 +139,7 @@ class KunenaProfile
 	 */
 	public function getUserListURL(string $action = '', bool $xhtml = true): string
 	{
+		return '';
 	}
 
 	/**

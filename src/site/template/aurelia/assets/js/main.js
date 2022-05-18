@@ -40,9 +40,10 @@ jQuery(document).ready(function ($) {
 		$("input.kcheckallcategory:checkbox").not(this).prop('checked', this.checked);
 	});
 
-	$(document).ready(function () {
-		$('[rel=popover]').popover();
-	});
+	var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+		var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  		return new bootstrap.Popover(popoverTriggerEl)
+	})
 
 	$('#avatar_gallery_select').change(function () {
 		const gallery_selected = $("select#avatar_gallery_select").val();

@@ -42,9 +42,9 @@ jQuery(document).ready(function ($) {
 	}
 
 	if (jQuery.fn.datepicker !== undefined) {
-		jQuery('#searchatdate .input-append.date').datepicker({
+		jQuery("#searchatdate.input-group.date").datepicker({
 			orientation: "top auto",
-			language: "kunena"
+			language: "kunena",
 		});
 	}
 });

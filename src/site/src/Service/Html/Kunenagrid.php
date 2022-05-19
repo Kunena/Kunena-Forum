@@ -58,7 +58,7 @@ class Kunenagrid
 
 		if ($toggle)
 		{
-			return '<a class="grid_' . $bool . ' hasTip" title="' . $title . '" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" href="#toggle"></a>';
+			return '<a class="grid_' . $bool . ' hasTip" data-bs-toggle="tooltip" title="' . $title . '" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" href="#toggle"></a>';
 		}
 
 		return '<a class="grid_' . $bool . '" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}"></a>';
@@ -143,7 +143,7 @@ class Kunenagrid
 			$direction = ($direction == 'desc') ? 'asc' : 'desc';
 		}
 
-		$html = '<a href="javascript:kunenatableOrdering(\'' . $order . '\',\'' . $direction . '\',\'' . $task . '\',\'' . $form . '\');" title="' . Text::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN') . '">';
+		$html = '<a href="javascript:kunenatableOrdering(\'' . $order . '\',\'' . $direction . '\',\'' . $task . '\',\'' . $form . '\');" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN') . '">';
 		$html .= Text::_($title);
 
 		if ($order == $selected)
@@ -211,7 +211,7 @@ class Kunenagrid
 			$date = HTMLHelper::_('date', $row->checked_out_time, Text::_('DATE_FORMAT_LC1'));
 			$time = HTMLHelper::_('date', $row->checked_out_time, 'H:i');
 
-			$hover = '<span class="editlinktip hasTip" title="' . Text::_('COM_KUNENA_LIB_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time . '">';
+			$hover = '<span class="editlinktip hasTip" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_LIB_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time . '">';
 		}
 
 		return $hover . HTMLHelper::_('image', 'admin/checked_out.png', null, null, true) . '</span>';
@@ -234,7 +234,7 @@ class Kunenagrid
 			return '';
 		}
 
-		return '<input type="checkbox" id="cb' . $rowNum . '" name="' . $name . '[]" value="' . $recId . '" onclick="Joomla.isChecked(this.checked);" title="' . Text::sprintf('COM_KUNENA_LIB_CHECKBOX_ROW_N', ($rowNum + 1)) . '" />';
+		return '<input type="checkbox" id="cb' . $rowNum . '" name="' . $name . '[]" value="' . $recId . '" onclick="Joomla.isChecked(this.checked);" data-bs-toggle="tooltip" title="' . Text::sprintf('COM_KUNENA_LIB_CHECKBOX_ROW_N', ($rowNum + 1)) . '" />';
 	}
 
 	/**
@@ -325,7 +325,7 @@ class Kunenagrid
 
 			$html[] = '<a class="btn btn-outline-primary btn-xs ' . $active . '" ';
 			$html[] = ' href="javascript:void(0);" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
-			$html[] = ' title="' . $title . '">';
+			$html[] = ' data-bs-toggle="tooltip" title="' . $title . '">';
 			$html[] = $icon;
 			$html[] = '</a>';
 		}
@@ -353,7 +353,7 @@ class Kunenagrid
 
 			$html[] = '<a class="btn btn-outline-primary btn-xs ' . $active . '" ';
 			$html[] = ' href="javascript:void(0);" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
-			$html[] = ' title="' . $title . '">';
+			$html[] = ' data-bs-toggle="tooltip" title="' . $title . '">';
 			$html[] = '<i class="fa fa-' . $class . '" aria-hidden="true">';
 			$html[] = '</i>';
 			$html[] = '</a>';
@@ -382,7 +382,7 @@ class Kunenagrid
 
 			$html[] = '<a class="grid_' . $task . ' hasTip" alt="' . $alt . '"';
 			$html[] = ' href="#" onclick="return Joomla.listItemTask(\'' . $checkbox . $i . '\',\'' . $prefix . $task . '\')"';
-			$html[] = 'title="' . $title . '">';
+			$html[] = 'data-bs-toggle="tooltip" title="' . $title . '">';
 			$html[] = $img;
 			$html[] = '</a>';
 		}
@@ -405,7 +405,7 @@ class Kunenagrid
 	 */
 	public static function task(int $i, string $img, string $alt, string $task, $prefix = '', $bootstrap = false)
 	{
-		return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img loading=lazy src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" title="' . $alt . '" />');
+		return self::action($i, $task, $prefix, $alt, '', $task, $bootstrap, '<img loading=lazy src="' . KunenaFactory::getTemplate()->getImagePath($img) . '" alt="' . $alt . '" data-bs-toggle="tooltip" title="' . $alt . '" />');
 	}
 
 	/**
@@ -419,7 +419,7 @@ class Kunenagrid
 	 */
 	public static function order($rows, $image = 'filesave.png', $task = 'saveOrder'): string
 	{
-		return '<a href="javascript:saveOrder(' . (\count($rows) - 1) . ', \'' . $task . '\')" class="saveOrder" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
+		return '<a href="javascript:saveOrder(' . (\count($rows) - 1) . ', \'' . $task . '\')" class="saveOrder" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_LIB_SAVE_ORDER') . '"></a>';
 	}
 
 	/**
@@ -438,7 +438,7 @@ class Kunenagrid
 
 		if ($enabled)
 		{
-			return '<a class="move_up" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" title="' . $alt . '"></a>';
+			return '<a class="move_up" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" data-bs-toggle="tooltip" title="' . $alt . '"></a>';
 		}
 
 		return '<span class="move_up"></span>';
@@ -460,7 +460,7 @@ class Kunenagrid
 
 		if ($enabled)
 		{
-			return '<a class="move_down" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" title="' . $alt . '"></a>';
+			return '<a class="move_down" href="#order" rel="{id:\'cb' . $i . '\', task:\'' . $task . '\'}" data-bs-toggle="tooltip" title="' . $alt . '"></a>';
 		}
 
 		return '<span class="move_down"></span>';

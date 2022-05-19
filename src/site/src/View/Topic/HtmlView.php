@@ -662,8 +662,8 @@ class HtmlView extends KunenaView
 
 				if ($this->me->userid && $this->me->userid != $this->profile->userid)
 				{
-					$userkarma_minus = ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-minus" border="0" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
-					$userkarma_plus  = ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-plus" border="0" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
+					$userkarma_minus = ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-minus" border="0" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"> </span>');
+					$userkarma_plus  = ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmaup&userid=' . $this->profile->userid . '&' . Session::getFormToken() . '=1', '<span class="kkarma-plus" border="0" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>');
 				}
 			}
 
@@ -1052,8 +1052,8 @@ class HtmlView extends KunenaView
 
 				foreach ($loaded_users as $userid => $user)
 				{
-					$thankyou_delete = $canUnthankyou === true ? ' <a title="' . Text::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
-						. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")) . '"><img loading=lazy src="' . $this->ktemplate->getImagePath('icons/publish_x.png') . '" title="" alt="" /></a>' : '';
+					$thankyou_delete = $canUnthankyou === true ? ' <a data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
+						. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")) . '"><img loading=lazy src="' . $this->ktemplate->getImagePath('icons/publish_x.png') . '" data-bs-toggle="tooltip" title="" alt="" /></a>' : '';
 					$thankyou[]      = $loaded_users[$userid]->getLink() . $thankyou_delete;
 				}
 			}

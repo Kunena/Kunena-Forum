@@ -576,7 +576,7 @@ class HtmlView extends KunenaView
 			if (isset($rss_params))
 			{
 				$document = Factory::getApplication()->getDocument();
-				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="' . Text::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
+				$document->addCustomTag('<link rel="alternate" type="application/rss+xml" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . $this->getRSSURL($rss_params) . '" />');
 			}
 		}
 

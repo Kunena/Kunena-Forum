@@ -68,7 +68,7 @@ class KunenaDate extends Date
 	 */
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset = false, $class = ''): string
 	{
-		return '<span class="kdate ' . $class . '" title="' . $this->toKunena($title, $offset) . '">' . $this->toKunena($mode, $offset) . '</span>';
+		return '<span class="kdate ' . $class . '" data-bs-toggle="tooltip" title="' . $this->toKunena($title, $offset) . '">' . $this->toKunena($mode, $offset) . '</span>';
 	}
 
 	/**

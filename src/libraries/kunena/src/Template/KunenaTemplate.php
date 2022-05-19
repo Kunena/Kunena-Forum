@@ -653,7 +653,7 @@ class KunenaTemplate
 		}
 
 		return <<<HTML
-					<a {$id} class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
+					<a {$id} class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" data-bs-toggle="tooltip" title="{$title}">
 						<span class="{$name}"><span>{$text}</span></span>
 					</a>
 HTML;
@@ -669,7 +669,7 @@ HTML;
 	 */
 	public function getIcon(string $name, $title = ''): string
 	{
-		return '<span class="kicon ' . $name . '" title="' . $title . '"></span>';
+		return '<span class="kicon ' . $name . '" data-bs-toggle="tooltip" title="' . $title . '"></span>';
 	}
 
 	/**
@@ -799,7 +799,7 @@ HTML;
 	 */
 	public function getPaginationItemActive(object $item): string
 	{
-		return '<a title="' . $item->text . '" href="' . $item->link . '" class="pagenav">' . $item->text . '</a>';
+		return '<a data-bs-toggle="tooltip" title="' . $item->text . '" href="' . $item->link . '" class="pagenav">' . $item->text . '</a>';
 	}
 
 	/**

@@ -37,7 +37,7 @@ HTMLHelper::_('behavior.core');
 				?>
 				<div class="form-group">
 					<div class="input-group float-end" role="group">
-						<div class="input-group-btn">
+						<div class="input-group">
 							<?php echo HTMLHelper::_('select.genericlist', $options, 'task', 'class="form-control float-start"', 'value', 'text', 0, 'kchecktask'); ?>
 							<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
 								   value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>

@@ -21,7 +21,7 @@ $actions      = $this->getActions();
 	<?php if ($announcement->showdate)
 		:
 		?>
-		<small title="<?php echo $announcement->displayField('created', 'ago'); ?>">
+		<small data-bs-toggle="tooltip" title="<?php echo $announcement->displayField('created', 'ago'); ?>">
 			<?php echo $announcement->displayField('created', 'date_today'); ?>
 		</small>
 	<?php endif; ?>

@@ -35,7 +35,7 @@ $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 	<?php if ($canLink)
 	:
 		?>
-	<a href="<?php echo $this->escape($url); ?>" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>
+	<a href="<?php echo $this->escape($url); ?>" data-bs-toggle="tooltip" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>
 	<?php endif; ?>
 
 		<img loading=lazy src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?> alt="<?php echo $alt; ?>"/>

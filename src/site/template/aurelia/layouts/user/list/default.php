@@ -297,7 +297,7 @@ $this->addScript('assets/js/search.js');
 				<?php if ($config->userlistJoinDate)
 				:
 					?>
-					<td title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>"
+					<td data-bs-toggle="tooltip" title="<?php echo $user->getRegisterDate()->toKunena('ago'); ?>"
 						class="col-md-2 hidden-xs-down">
 						<?php echo $user->getRegisterDate()->toKunena('datetime_today'); ?>
 					</td>
@@ -306,7 +306,7 @@ $this->addScript('assets/js/search.js');
 				<?php if ($config->userlistLastVisitDate)
 				:
 					?>
-					<td title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>"
+					<td data-bs-toggle="tooltip" title="<?php echo $user->getLastVisitDate()->toKunena('ago'); ?>"
 						class="col-md-2 hidden-xs-down">
 						<?php echo $user->getLastVisitDate()->toKunena('datetime_today'); ?>
 					</td>

@@ -23,7 +23,7 @@ $dateText = '';
 if ($this->config->editMarkup && $this->message->modified_time)
 {
 	$dateText  = $message->getModifiedTime()->toKunena('config_postDateFormat') . ' ';
-	$dateTitle = 'title="' . $message->getModifiedTime()->toKunena('config_postDateFormatHover') . '"';
+	$dateTitle = 'data-bs-toggle="tooltip" title="' . $message->getModifiedTime()->toKunena('config_postDateFormatHover') . '"';
 }
 ?>
 	<div>

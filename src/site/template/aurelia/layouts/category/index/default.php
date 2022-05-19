@@ -137,10 +137,10 @@ foreach ($this->sections as $section) :
 														)</sup>
 												<?php endif; ?>
 												<?php if ($category->locked) : ?>
-                                                    <span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?> title="<?php echo Text::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo KunenaIcons::lock(); ?></span>
+                                                    <span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_LOCKED_CATEGORY') ?>"><?php echo KunenaIcons::lock(); ?></span>
 												<?php endif; ?>
 												<?php if ($category->review) : ?>
-                                                    <span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?> title="<?php echo Text::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo KunenaIcons::shield(); ?></span>
+                                                    <span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo KunenaIcons::shield(); ?></span>
 												<?php endif; ?>
 
 												<?php if (KunenaFactory::getConfig()->enableRss) : ?>
@@ -218,7 +218,7 @@ foreach ($this->sections as $section) :
                                     <div class="alert alert-warning" role="alert" style="margin-top:10px;">
                                         <a class="alert-link"
                                            href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid=' . \intval($category->id)); ?>"
-                                           title="<?php echo Text::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
+                                           data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_SHOWCAT_PENDING') ?>"
                                            rel="nofollow"><?php echo \intval($this->pending[$category->id]) . ' ' . Text::_('COM_KUNENA_SHOWCAT_PENDING') ?></a>
                                     </div>
 								<?php endif; ?>

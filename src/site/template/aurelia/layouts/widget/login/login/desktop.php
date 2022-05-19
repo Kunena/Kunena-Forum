@@ -38,7 +38,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                     <div class="input-group">
                         <input id="kdesktop-username" type="text" name="username" class="form-control" tabindex="1" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>">
                         <label for="kdesktop-username" class="visually-hidden"><?php echo Text::_('JGLOBAL_USERNAME'); ?></label>
-                        <span class="input-group-text" title="Username">
+                        <span class="input-group-text" data-bs-toggle="tooltip" title="Username">
 						<?php echo KunenaIcons::user(); ?>
 					</span>
                     </div>
@@ -48,7 +48,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                     <div class="input-group">
                         <input id="klogin-desktop-passwd" type="password" name="password" class="form-control" tabindex="1" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>">
                         <label for="klogin-desktop-passwd" class="visually-hidden"><?php echo Text::_('JGLOBAL_PASSWORD'); ?></label>
-                        <span class="input-group-text" title="password">
+                        <span class="input-group-text" data-bs-toggle="tooltip" title="password">
 						<?php echo KunenaIcons::lock(); ?>
 					</span>
                     </div>

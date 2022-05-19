@@ -76,7 +76,7 @@ if ($this->config->showUserStats)
                 <li class="list-group-item">
                     <strong><?php echo Text::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong>
                     <span
-                            title="<?php echo $this->profile->getRegisterDate()->toKunena('ago'); ?>"><?php echo $this->profile->getRegisterDate()->toKunena('date_today', 'utc'); ?></span>
+                            data-bs-toggle="tooltip" title="<?php echo $this->profile->getRegisterDate()->toKunena('ago'); ?>"><?php echo $this->profile->getRegisterDate()->toKunena('date_today', 'utc'); ?></span>
                 </li>
 			<?php endif; ?>
 
@@ -86,7 +86,7 @@ if ($this->config->showUserStats)
                 <li class="list-group-item">
                     <strong><?php echo Text::_('COM_KUNENA_MYPROFILE_LASTLOGIN'); ?>:</strong>
                     <span
-                            title="<?php echo $this->profile->getLastVisitDate()->toKunena('ago'); ?>"><?php echo $this->profile->getLastVisitDate()->toKunena('config_postDateFormat'); ?></span>
+                            data-bs-toggle="tooltip" title="<?php echo $this->profile->getLastVisitDate()->toKunena('ago'); ?>"><?php echo $this->profile->getLastVisitDate()->toKunena('config_postDateFormat'); ?></span>
                 </li>
 			<?php endif; ?>
 

@@ -13,19 +13,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	if (Joomla) {
 		let displayTooltips = Joomla.getOptions('com_kunena.tooltips', '0');
-		let tooltipTriggerList = [].slice.call(document.querySelectorAll('#kunena [title]'))
+		let tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
 
-		if (displayTooltips == 0) {
-			// Remove Tooltips
-			let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-				tooltipTriggerEl.setAttribute('data-original-title', tooltipTriggerEl.title);
-				tooltipTriggerEl.title = "";
-			});
-		} else {
-			// Initialize Tooltips
-			let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-				return new bootstrap.Tooltip(tooltipTriggerEl)
-			});
-		}
+		tooltipTriggerList.forEach(tooltipTriggerEl => {
+			let toggle = tooltipTriggerEl.getAttribute("data-bs-toggle");
+			if (toggle == null || toggle == "tooltip") {
+				if (displayTooltips == 0) {
+					// Remove Tooltips
+					// let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+						if (tooltipTriggerEl.title) {
+							tooltipTriggerEl.setAttribute('data-original-title', tooltipTriggerEl.title);
+							tooltipTriggerEl.title = "";
+						}
+					// });
+				} else {
+					// Initialize Tooltips
+					// let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+						new bootstrap.Tooltip(tooltipTriggerEl)
+					// });
+				}
+			}
+		});
 	}
 });

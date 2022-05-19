@@ -20,17 +20,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			if (toggle == null || toggle == "tooltip") {
 				if (displayTooltips == 0) {
 					// Remove Tooltips
-					// let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-						if (tooltipTriggerEl.title) {
-							tooltipTriggerEl.setAttribute('data-original-title', tooltipTriggerEl.title);
-							tooltipTriggerEl.title = "";
-						}
-					// });
+					if (tooltipTriggerEl.title) {
+						tooltipTriggerEl.setAttribute('data-original-title', tooltipTriggerEl.title);
+						tooltipTriggerEl.title = "";
+					}
 				} else {
 					// Initialize Tooltips
-					// let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-						new bootstrap.Tooltip(tooltipTriggerEl)
-					// });
+					new bootstrap.Tooltip(tooltipTriggerEl)
 				}
 			}
 		});

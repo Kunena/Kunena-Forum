@@ -818,7 +818,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		],
 		'acronym'      => [
 			'mode'     => BBCode::BBCODE_MODE_ENHANCED,
-			'template' => '<span class="bbcode_acronym" title="{$_default/e}">{$_content/v}</span>',
+			'template' => '<span class="bbcode_acronym" data-bs-toggle="tooltip" title="{$_default/e}">{$_content/v}</span>',
 			'class'    => 'inline',
 			'allow_in' => ['listitem', 'block', 'columns', 'inline', 'link'],
 		],

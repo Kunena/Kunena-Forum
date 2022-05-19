@@ -85,28 +85,28 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 				:
 				?>
                 <span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
-							title="<?php echo Text::_('COM_KUNENA_FAVORITE'); ?>"><?php echo KunenaIcons::star(); ?></span>
+							data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_FAVORITE'); ?>"><?php echo KunenaIcons::star(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($userTopic->posts)
 				:
 				?>
                 <span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
-							title="<?php echo Text::_('COM_KUNENA_MYPOSTS'); ?>"><?php echo KunenaIcons::flag(); ?></span>
+							data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPOSTS'); ?>"><?php echo KunenaIcons::flag(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($topic->attachments)
 				:
 				?>
                 <span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
-							title="<?php echo Text::_('COM_KUNENA_ATTACH'); ?>"><?php echo KunenaIcons::attach(); ?></span>
+							data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_ATTACH'); ?>"><?php echo KunenaIcons::attach(); ?></span>
 			<?php endif; ?>
 
 			<?php if ($topic->poll_id && $category->allowPolls)
 				:
 				?>
                 <span <?php echo KunenaTemplate::getInstance()->tooltips(true); ?>
-							title="<?php echo Text::_('COM_KUNENA_ADMIN_POLLS'); ?>"><?php echo KunenaIcons::poll(); ?></span>
+							data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_ADMIN_POLLS'); ?>"><?php echo KunenaIcons::poll(); ?></span>
 			<?php endif; ?>
         </div>
 

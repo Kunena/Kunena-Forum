@@ -39,7 +39,7 @@ $this->addScript('assets/js/profile.js');
 				<input class="form-control hasTooltip" id="personalText" type="text"
 					   maxlength="<?php echo (int) $this->config->maxPersonalText; ?>"
 					   name="personalText" value="<?php echo $this->escape($this->profile->personalText); ?>"
-					   title="<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
+					   data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT_DESC') ?>"/>
 			</td>
 		</tr>
 	<?php endif; ?>
@@ -54,7 +54,7 @@ $this->addScript('assets/js/profile.js');
 				<div class="input-group date">
 					<input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="yyyy-mm-dd"
 						   value="<?php echo $this->profile->birthdate == '1000-01-01' ? '' : $this->profile->birthdate; ?>"
-						   title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
+						   data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>
 			</div>
@@ -69,7 +69,7 @@ $this->addScript('assets/js/profile.js');
 		<td>
 			<input id="location" type="text" name="location" class="form-control hasTooltip"
 				   value="<?php echo $this->escape($this->profile->location); ?>"
-				   title="<?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION_DESC') ?>"/>
+				   data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION_DESC') ?>"/>
 		</td>
 	</tr>
 	<tr>
@@ -90,7 +90,7 @@ $this->addScript('assets/js/profile.js');
 				'select.genericlist',
 				$gender,
 				'gender',
-				'class="inputbox form-control hasTooltip" title="' . Text::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"',
+				'class="inputbox form-control hasTooltip" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"',
 				'value',
 				'text',
 				$this->escape($this->profile->gender),
@@ -106,7 +106,7 @@ $this->addScript('assets/js/profile.js');
 			</label>
 		</td>
 		<td>
-				<span class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
+				<span class="hasTooltip" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
 					. '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
 					<input id="social-site" type="text" maxlength="25" name="websitename" class="form-control"
 						   value="<?php echo $this->escape($this->profile->websitename); ?>"/>
@@ -121,7 +121,7 @@ $this->addScript('assets/js/profile.js');
 		</td>
 		<td>
 				<span class="hasTooltip"
-					  title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
+					  data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
 					<input id="social-url" type="url" name="websiteurl" class="form-control"
 						   value="<?php echo $this->escape($this->profile->getWebsiteURL()); ?>"/>
 				</span>
@@ -144,7 +144,7 @@ $this->addScript('assets/js/profile.js');
 					<?php if ($social != 'qqsocial')
 					:
 						?>
-					<span class="hasTooltip" title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")
+					<span class="hasTooltip" data-bs-toggle="tooltip" title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")
 						. '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
 					<?php endif; ?>
 						<input id="social-<?php echo $key; ?>" type="text" name="<?php echo $key ?>"
@@ -165,7 +165,7 @@ $this->addScript('assets/js/profile.js');
 				</label>
 			</td>
 			<td>
-			<span class="hasTooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_SIGNATURE')
+			<span class="hasTooltip" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_SIGNATURE')
 				. '::' . Text::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>">
 				<textarea class="input-xxlarge form-control" maxlength="<?php echo (int) $this->config->maxSig; ?>"
 						  name="signature" id="signature" rows="10"

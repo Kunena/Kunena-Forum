@@ -46,7 +46,7 @@ $attachments = $this->attachments;
                 <th class="col-md-1 center">
                     <label>
                         <input type="checkbox" name="checkall-toggle" value="cid"
-                               title="<?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)"/>
+                               data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)"/>
                     </label>
                 </th>
 			<?php endif; ?>

@@ -32,15 +32,15 @@ else
 
 if ($this->topicicontype == 'svg')
 {
-	$karmaIcon = '<span class="glyphicon-karma glyphicon glyphicon-' . $karmatype . '-sign text-danger" title="' . $karmatext . '"></span>';
+	$karmaIcon = '<span class="glyphicon-karma glyphicon glyphicon-' . $karmatype . '-sign text-danger" data-bs-toggle="tooltip" title="' . $karmatext . '"></span>';
 }
 elseif ($this->topicicontype == 'fa')
 {
-	$karmaIcon = '<i class="fa fa-' . $karmatype . '-circle" title="' . $karmatext . '"></i>';
+	$karmaIcon = '<i class="fa fa-' . $karmatype . '-circle" data-bs-toggle="tooltip" title="' . $karmatext . '"></i>';
 }
 else
 {
-	$karmaIcon = '<span class="kicon-profile kicon-profile-' . $karmatype . '" title="' . $karmatext . '"></span>';
+	$karmaIcon = '<span class="kicon-profile kicon-profile-' . $karmatype . '" data-bs-toggle="tooltip" title="' . $karmatext . '"></span>';
 }
 
 $karma .= ' ' . HTMLHelper::_('kunenaforum.link', $url, $karmaIcon);

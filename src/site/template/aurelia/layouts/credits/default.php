@@ -68,7 +68,7 @@ use Joomla\CMS\Language\Text;
 
             <p>
 				<?php echo Text::_('COM_KUNENA_CREDITS_GO_BACK'); ?>
-                <a href="javascript:window.history.back()" title="<?php echo Text::_('COM_KUNENA_CREDITS_GO_BACK'); ?>">
+                <a href="javascript:window.history.back()" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_CREDITS_GO_BACK'); ?>">
 					<?php echo Text::_('COM_KUNENA_USER_RETURN_B'); ?>
                 </a>
             </p>

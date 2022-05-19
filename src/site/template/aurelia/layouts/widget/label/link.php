@@ -16,7 +16,7 @@ namespace Kunena\Forum\Site;
 
 $label       = $this->label;
 $link        = ' href="' . $this->link . '"';
-$description = isset($this->description) ? ' title="' . $this->description . '"' : '';
+$description = isset($this->description) ? ' data-bs-toggle="tooltip" title="' . $this->description . '"' : '';
 $class       = ' class="label label-' . $this->state . ' ' . '"';
 ?>
 <a <?php echo $link . $description . $class; ?>>

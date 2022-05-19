@@ -35,7 +35,7 @@ else
 	<td>
 		<?php echo $this->message->getAuthor()->getLink(); ?>
 	</td>
-	<td title="<?php echo $this->message->getTime()->toKunena('config_postDateFormatHover'); ?>">
+	<td data-bs-toggle="tooltip" title="<?php echo $this->message->getTime()->toKunena('config_postDateFormatHover'); ?>">
 		<?php echo $this->message->getTime()->toKunena('config_postDateFormat'); ?>
 	</td>
 </tr>

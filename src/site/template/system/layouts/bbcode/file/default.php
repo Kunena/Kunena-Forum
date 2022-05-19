@@ -32,7 +32,7 @@ $size     = $this->size;
 		?>
 
 		<?php echo Text::_('COM_KUNENA_FILENAME'); ?>
-		<a href="<?php echo $url; ?>" title="<?php echo $this->escape($filename); ?>">
+		<a href="<?php echo $url; ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape($filename); ?>">
 			<?php echo $this->escape(KunenaAttachmentHelper::shortenFilename($filename)); ?>
 		</a>
 

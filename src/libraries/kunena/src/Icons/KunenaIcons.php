@@ -721,7 +721,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa fa-rss ' . $class . '" title="' . Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
+			return '<i class="fa fa-rss ' . $class . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_CATEGORIES_LABEL_GETRSS') . '" aria-hidden="true"></i>';
 		}
 
 		return KunenaSvgIcons::loadsvg('rss');
@@ -883,7 +883,7 @@ class KunenaIcons
 		if ($topicicontype == 'fa')
 		{
 			return '<span id="kbutton-poll-add"><i class="fa fa-plus btn btn-xs btn-small btn-default"
-						title="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
+						data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
 		}
 
 		return KunenaSvgIcons::loadsvg('pie-chart-fill');
@@ -905,7 +905,7 @@ class KunenaIcons
 		if ($topicicontype == 'fa')
 		{
 			return '<span id="kbutton-poll-rem"><i class="fa fa-minus btn btn-xs btn-small btn-default"
-						title="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
+						data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_POLL_ADD_POLL_OPTION') . '" aria-hidden="true"> </i></span>';
 		}
 
 		return KunenaSvgIcons::loadsvg('bar-chart');
@@ -1056,7 +1056,7 @@ class KunenaIcons
 
 		if ($topicicontype == 'fa')
 		{
-			return '<i class="fa ' . $categoryicon . $bigicon . $newchar . '" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
+			return '<i class="fa ' . $categoryicon . $bigicon . $newchar . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
 		}
 
 		if ($topicicontype == 'svg')
@@ -1082,17 +1082,17 @@ class KunenaIcons
 				}
 				else
 				{
-					return '<span class="icon ' . $categoryicon . $bigicon . '" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"></span>';
+					return '<span class="icon ' . $categoryicon . $bigicon . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"></span>';
 				}
 			}
 		}
 
 		if ($topicicontype == 'image')
 		{
-			return '<div class="' . $categoryicon . $bigicon . $newchar . '" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </div>';
+			return '<div class="' . $categoryicon . $bigicon . $newchar . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </div>';
 		}
 
-		return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
+		return '<i class="icon ' . $categoryicon . $bigicon . $newchar . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"> </i>';
 	}
 
 	/**

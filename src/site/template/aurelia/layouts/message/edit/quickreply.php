@@ -212,13 +212,13 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                             <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
                             <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit"
                                    value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
-                                   title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
+                                   data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
 							       ?>"/>
 							<?php // TODO: remove data on cancel.
 							?>
                             <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel"
                                    value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>"
-                                   title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>"
+                                   data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>"
                                    data-bs-dismiss="modal" aria-hidden="true"/>
                         </div>
                         <input type="hidden" id="kurl_emojis" name="kurl_emojis"
@@ -371,13 +371,13 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                         <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
                         <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit"
                                value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
-                               title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
+                               data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
 						       ?>"/>
 						<?php // TODO: remove data on cancel.
 						?>
                         <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel"
                                value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>"
-                               title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>"
+                               data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>"
                                data-bs-dismiss="modal" aria-hidden="true"/>
                     </div>
                     <input type="hidden" id="kurl_emojis" name="kurl_emojis"

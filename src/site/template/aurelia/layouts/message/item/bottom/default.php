@@ -175,7 +175,7 @@ else
 
 		if ($message->modified_time)
 		{
-			$datehover = 'title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormatHover') . '"';
+			$datehover = 'data-bs-toggle="tooltip" title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormatHover') . '"';
 			$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormat') . ' ';
 		}
 		?>
@@ -195,7 +195,7 @@ else
 			{
 				if (!empty($this->thankyou_delete[$userid]))
 				{
-					$list[] = $thank . ' <a title="' . Text::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
+					$list[] = $thank . ' <a data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
 						. $this->thankyou_delete[$userid] . '">' . KunenaIcons::cancel() . '</a>';
 				}
 				else

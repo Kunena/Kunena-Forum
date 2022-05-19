@@ -151,12 +151,12 @@ class KunenaAvatar
 		{
 			if ($avatar == Uri::root() . 'media/kunena/core/svg/person.svg')
 			{
-				$link = '<span ' . $class . ' title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">'
+				$link = '<span ' . $class . ' data-bs-toggle="tooltip" title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">'
 					. KunenaSvgIcons::loadsvg('person') . '</span>';
 			}
 			else
 			{
-				$link = '<span' . $class . ' title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">
+				$link = '<span' . $class . ' data-bs-toggle="tooltip" title="' . Text::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()) . '">
 				<img alt="" loading=lazy src="' . $avatar . '" width="' . $size->x . '" height="' . $size->y . '"></span>';
 			}
 		}

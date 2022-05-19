@@ -1107,7 +1107,7 @@ class KunenaUser extends CMSObject
 
 			if (!empty($link))
 			{
-				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\">{$name}</a>";
+				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" data-bs-toggle=\"tooltip\" title=\"{$title}\">{$name}</a>";
 			}
 			else
 			{
@@ -1650,18 +1650,18 @@ class KunenaUser extends CMSObject
 
 				if ($topicicontype == 'svg')
 				{
-					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+					$karmaMinusIcon = '<span class="glyphicon-karma glyphicon glyphicon-minus-sign text-danger" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon  = '<span class="glyphicon-karma glyphicon glyphicon-plus-sign text-success" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 				elseif ($topicicontype == 'fa')
 				{
-					$karmaMinusIcon = '<i class="fa fa-minus-circle" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
-					$karmaPlusIcon  = '<i class="fa fa-plus-circle" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
+					$karmaMinusIcon = '<i class="fa fa-minus-circle" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></i>';
+					$karmaPlusIcon  = '<i class="fa fa-plus-circle" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></i>';
 				}
 				else
 				{
-					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
-					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
+					$karmaMinusIcon = '<span class="kicon-profile kicon-profile-minus" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_KARMA_SMITE') . '"></span>';
+					$karmaPlusIcon  = '<span class="kicon-profile kicon-profile-plus" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_KARMA_APPLAUD') . '"></span>';
 				}
 
 				$view->userkarma_minus = ' ' . HTMLHelper::_('link', 'index.php?option=com_kunena&view=user&task=karmadown&userid=' . $this->userid . '&' . Session::getFormToken() . '=1', $karmaMinusIcon);
@@ -2240,7 +2240,7 @@ class KunenaUser extends CMSObject
 					return false;
 				}
 
-				return $this->getLink('<span class="profile" title="' . Text::_('COM_KUNENA_VIEW_PROFILE') . '"></span>');
+				return $this->getLink('<span class="profile" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_VIEW_PROFILE') . '"></span>');
 				break;
 		}
 	}
@@ -2337,7 +2337,7 @@ class KunenaUser extends CMSObject
 
 			if (!empty($link))
 			{
-				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" title=\"{$title}\" {$rels}>{$name}</a>";
+				$this->_link[$key] = "<a class=\"{$class}\" href=\"{$link}\" data-bs-toggle=\"tooltip\" title=\"{$title}\" {$rels}>{$name}</a>";
 			}
 			else
 			{
@@ -2378,14 +2378,14 @@ class KunenaUser extends CMSObject
 		{
 			if (!empty($this->$name))
 			{
-				return '<a href="' . $this->escape($url) . '" ' . KunenaTemplate::getInstance()->tooltips(true) . ' target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
+				return '<a href="' . $this->escape($url) . '" ' . KunenaTemplate::getInstance()->tooltips(true) . ' target="_blank" data-bs-toggle="tooltip" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
 			}
 		}
 		else
 		{
 			if (!empty($this->$name))
 			{
-				return '<span class="kicon-profile kicon-profile-' . $name . ' ' . KunenaTemplate::getInstance()->tooltips() . '" title="' . $title . ': ' . $value . '"></span>';
+				return '<span class="kicon-profile kicon-profile-' . $name . ' ' . KunenaTemplate::getInstance()->tooltips() . '" data-bs-toggle="tooltip" title="' . $title . ': ' . $value . '"></span>';
 			}
 		}
 

@@ -29,7 +29,7 @@ if ($this->config->ratingEnabled && $this->category->allowRatings)
 	:
 		?>
 		<div id="krating-top"
-			 title="<?php echo Text::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->topic->rating, $this->topic->getReviewCount()); ?>"
+			 data-bs-toggle="tooltip" title="<?php echo Text::sprintf('COM_KUNENA_RATE_TOOLTIP', $this->topic->rating, $this->topic->getReviewCount()); ?>"
 			 class="hasTooltip">
 			<ul class="c-rating">
 				<li class="c-rating__item is-active" data-index="0"></li>

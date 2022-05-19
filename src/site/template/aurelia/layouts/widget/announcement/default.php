@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 	<h5>
 		<a class="btn-link"
 			href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=listing'); ?>"
-			title="<?php echo Text::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>">
+			data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>">
 			<?php echo $this->announcement->displayField('title'); ?>
 		</a>
 
@@ -42,7 +42,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 		<div>
 			<a class="btn-link"
 				href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=default&id=' . $this->announcement->id); ?>"
-				title="<?php echo $this->announcement->displayField('title') ?>">
+				data-bs-toggle="tooltip" title="<?php echo $this->announcement->displayField('title') ?>">
 				<?php echo Text::_('COM_KUNENA_ANN_READMORE'); ?>
 			</a>
 		</div>

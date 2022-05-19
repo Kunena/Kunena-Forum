@@ -822,6 +822,6 @@ class KunenaView extends HtmlView
 			}
 		}
 
-		return HTMLHelper::_('link', $uri, $content, $title, $class, $rel);
+		return HTMLHelper::_('kunenaforum.link', $uri, $content, $title, $class, $rel);
 	}
 }

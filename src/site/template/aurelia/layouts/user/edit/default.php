@@ -93,7 +93,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 				<?php echo KunenaIcons::save(); ?><?php echo Text::_('COM_KUNENA_SAVE'); ?>
             </button>
             <button class="btn btn-outline-primary border" type="button" name="cancel" onclick="window.history.back();"
-                    title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
+                    data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
 				<?php echo KunenaIcons::cancel(); ?><?php echo Text::_('COM_KUNENA_CANCEL'); ?>
             </button>
         </div>

@@ -221,7 +221,7 @@ EOF;
 		if (in_array($name, $buttonsDropdown))
 		{
 			return <<<HTML
-				<a {$id} style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a {$id} style="" href="{$link}" rel="nofollow" data-bs-toggle="tooltip" title="{$title}">
 				{$text}
 				</a>
 HTML;
@@ -229,7 +229,7 @@ HTML;
 		else
 		{
 			return <<<HTML
-				<a {$id} style="" href="{$link}" rel="nofollow" title="{$title}">
+				<a {$id} style="" href="{$link}" rel="nofollow" data-bs-toggle="tooltip" title="{$title}">
 				<span class="{$name}"></span>
 				{$text}
 				</a>
@@ -247,7 +247,7 @@ HTML;
 	 */
 	public function getIcon($name, $title = ''): string
 	{
-		return '<span class="kicon ' . $name . '" title="' . $title . '"></span>';
+		return '<span class="kicon ' . $name . '" data-bs-toggle="tooltip" title="' . $title . '"></span>';
 	}
 
 	/**

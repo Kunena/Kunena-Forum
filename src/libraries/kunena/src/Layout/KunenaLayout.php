@@ -404,7 +404,7 @@ class KunenaLayout extends KunenaBase
 			$class .= ' locked';
 		}
 
-		$link = HTMLHelper::_('link', $url, $content, $title, $class, $con);
+		$link = HTMLHelper::_('kunenaforum.link', $url, $content, $title, $class, $con);
 
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 

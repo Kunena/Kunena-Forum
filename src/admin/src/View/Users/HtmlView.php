@@ -90,7 +90,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$sortFields   = [];
 		$sortFields[] = HTMLHelper::_('select.option', 'username', Text::_('COM_KUNENA_USRL_USERNAME'));
-		$sortFields[] = HTMLHelper::_('select.option', 'email', Text::_('COM_KUNENA_USRL_EMAIL'));
+		$sortFields[] = HTMLHelper::_('select.option', 'email', Text::_('COM_KUNENA_USER_SORT_FIELDS_EMAIL'));
 		$sortFields[] = HTMLHelper::_('select.option', 'rank', Text::_('COM_KUNENA_A_RANKS'));
 		$sortFields[] = HTMLHelper::_('select.option', 'signature', Text::_('COM_KUNENA_GEN_SIGNATURE'));
 		$sortFields[] = HTMLHelper::_('select.option', 'enabled', Text::_('COM_KUNENA_USRL_ENABLED'));

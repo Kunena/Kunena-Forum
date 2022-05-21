@@ -63,7 +63,7 @@ class KunenaLoginJoomla
 			$credentials['secretkey'] = $secretkey;
 		}
 
-		$options = ['remember' => $rememberme, 'silent'=> false];
+		$options = ['remember' => $rememberme, 'silent' => false];
 
 		try
 		{

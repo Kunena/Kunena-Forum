@@ -2740,15 +2740,15 @@ class TopicController extends KunenaController
 				$mailer->setSubject($mailsubject);
 				$mailer->setSender([$this->config->getEmail(), $mailnamesender]);
 				$mailer->addReplyTo($this->me->email, $this->me->username);
-
+				var_dump($message); die();
 				$mailTemplate = new MailTemplate('com_kunena.report', $user->getParam('language', $this->app->get('language')), $mailer);
 				$mailTemplate->addTemplateData(
 					[
 						'mail'        => '',
-						'me'          => $this->me,
-						'subject'     => $reason,
-						'message'     => $message,
-						'messageLink' => $msglink,
+						'name'        => $this->me->username,
+						'reason'      => $reason,
+						'message'     => $message->message,
+						'messageUrl'  => $msglink,
 						'content'     => $text,
 					]
 				);

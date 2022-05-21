@@ -84,7 +84,7 @@ class KunenaAccessJoomla
 			$accessname = Text::sprintf($category->pubRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? Text::_((string) $groupname) : Text::_('COM_KUNENA_NOBODY'));
 
 			$list["joomla.group.{$category->pubAccess}"] = ['type'  => 'joomla.group', 'id' => $category->pubAccess, 'alias' => $accessname,
-			                                                'title' => $accessname, ];
+															'title' => $accessname, ];
 
 			$groupname = (string) $this->getGroupName((string) $category->accesstype, (string) $category->adminAccess);
 
@@ -92,14 +92,14 @@ class KunenaAccessJoomla
 			{
 				$accessname                                    = Text::sprintf($category->adminRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', Text::_((string) $groupname));
 				$list["joomla.group.{$category->adminAccess}"] = ['type'  => 'joomla.group', 'id' => $category->adminAccess, 'alias' => $accessname,
-				                                                  'title' => $accessname, ];
+																'title' => $accessname, ];
 			}
 		}
 		else
 		{
 			$groupname                                = (string) $this->getGroupName($category->accesstype, $category->access);
 			$list["joomla.level.{$category->access}"] = ['type'  => 'joomla.level', 'id' => $category->access, 'alias' => $groupname,
-			                                             'title' => $groupname, ];
+														'title' => $groupname, ];
 		}
 
 		return $list;

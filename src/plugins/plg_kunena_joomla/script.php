@@ -99,7 +99,9 @@ class plgKunenaJoomlaInstallerScript extends InstallerScript
 	}
 
 	/**
-	 * @param $pluginName
+	 * method to enable the plugin
+	 * 
+	 * @param  string  $pluginName  The name of plugin to enable
 	 *
 	 * @return boolean|false
 	 * @since version

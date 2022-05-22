@@ -51,7 +51,7 @@ class KunenaProfileKunena extends KunenaProfile
 	 * @return  string
 	 *
 	 * @since   Kunena 5.0
-	 *@throws  null
+	 * @throws  null
 	 *
 	 * @throws  Exception
 	 */

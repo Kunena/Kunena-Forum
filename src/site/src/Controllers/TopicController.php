@@ -2749,7 +2749,7 @@ class TopicController extends KunenaController
 						'reason'      => $reason,
 						'message'     => $message->message,
 						'messageUrl'  => $msglink,
-						'content'     => $text,
+						'subject'     => $message->subject,
 					]
 				);
 

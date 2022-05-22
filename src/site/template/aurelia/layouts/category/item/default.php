@@ -150,7 +150,7 @@ $this->addStyleSheet('rating.css');
 											0,
 											$options,
 											[],
-											'class="form-control fbs" disabled="disabled"',
+											'class="form-select fbs" disabled="disabled"',
 											'value',
 											'text',
 											0,

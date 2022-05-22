@@ -110,28 +110,24 @@ $view    = Factory::getApplication()->input->getWord('view');
                     <th scope="col" class="hidden-xs-down">
                         <div class="form-group">
                             <div class="input-group" role="group">
-                                <div class="input-group-btn">
-                                    <label>
-										<?php if (!empty($this->moreUri))
-										{
-											echo HTMLHelper::_('link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-start', 'nofollow');
-										} ?>
-										<?php
-										if (!empty($this->actions))
-											:
-											?>
-											<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-control kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
-											<?php
-											if (isset($this->actions['move']))
-												:
-												$options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
-												echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-control fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
-											endif; ?>
-                                            <input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
-                                                   value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
-										<?php endif; ?>
-                                    </label>
-                                </div>
+								<?php if (!empty($this->moreUri))
+								{
+									echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-start', 'nofollow');
+								} ?>
+								<?php
+								if (!empty($this->actions))
+									:
+									?>
+									<?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-select kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+									<?php
+									if (isset($this->actions['move']))
+										:
+										$options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
+										echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-select fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+									endif; ?>
+									<input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
+											value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
+								<?php endif; ?>
                             </div>
                         </div>
                     </th>

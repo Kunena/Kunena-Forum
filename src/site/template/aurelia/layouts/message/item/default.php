@@ -90,9 +90,7 @@ $list = [];
                         <h5 class="modal-title" id="reportModalLabel">
 							<?php echo Text::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
                         </h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 						<?php echo $this->subRequest('Topic/Report')->set('id', $this->topic->id); ?>

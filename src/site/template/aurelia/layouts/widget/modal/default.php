@@ -29,9 +29,7 @@ $data        = $this->data;
 		<div class="modal-content">
 			<div class="modal-header">
 				<h3 class="modal-title"><?php echo $label ?></h3>
-				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<p><?php echo $description ?></p>

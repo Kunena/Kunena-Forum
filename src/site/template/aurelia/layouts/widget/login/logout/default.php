@@ -77,6 +77,7 @@ $config         = KunenaFactory::getTemplate()->params;
 								<?php echo $this->me->getLastVisitDate()->toKunena('config_postDateFormat'); ?>
                             </p>
                         </div>
+
                         <div class="dropdown-divider"></div>
 
 						<?php if ($status)

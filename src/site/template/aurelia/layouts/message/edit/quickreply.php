@@ -75,9 +75,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
                     <h3 class="modal-title">
 						<?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?>
                     </h3>
-                    <button type="button" class="close kreply-cancel" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close kreply-cancel" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="card-body">

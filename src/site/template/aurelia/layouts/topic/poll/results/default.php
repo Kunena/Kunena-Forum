@@ -135,8 +135,7 @@ if ($this->show_title && !empty($this->poll->polltimetolive))
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;
-								</button>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
 								<h3>
 									<?php echo Text::_('COM_KUNENA_TOPIC_MODAL_LABEL_VOTE_RESET'); ?>
 								</h3>

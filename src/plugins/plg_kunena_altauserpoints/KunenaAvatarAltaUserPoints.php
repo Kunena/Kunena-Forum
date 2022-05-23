@@ -82,7 +82,14 @@ class KunenaAvatarAltaUserPoints extends KunenaAvatar
 		{
 			$profile = AltaUserPointsHelper::getUserInfo('', $user->userid);
 
-			$avatar = ($profile->avatar != '') ? Uri::root() . '/components/com_altauserpoints/assets/images/avatars/' . $profile->avatar : Uri::root() . '/components/com_altauserpoints/assets/images/avatars/' . 'generic_gravatar_grey.png';
+			if ($profile->avatar != '') 
+			{
+				$avatar = Uri::root() . '/components/com_altauserpoints/assets/images/avatars/' . $profile->avatar;
+			}
+			else
+			{
+				$avatar = Uri::root() . '/components/com_altauserpoints/assets/images/avatars/' . 'generic_gravatar_grey.png';
+			}
 
 			$avatar = '<img loading=lazy src="' . $avatar . '" border="0" alt="" width="' . $size->x . '" height="' . $size->y . '" />';
 		}

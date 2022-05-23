@@ -271,13 +271,25 @@ class KunenaActivityCommunity extends KunenaActivity
 		$params->set('actor_url', 'index.php?option=com_community&view=profile&userid=' . $actor->id); // Actor Link
 
 		// Finally, send notifications
-		CNotificationLibrary::add('kunena_thankyou', $actor->id, $target->id, Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT'), Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT'), '', $params);
+		CNotificationLibrary::add('kunena_thankyou', 
+									$actor->id,
+									$target->id,
+									Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT'),
+									Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT'),
+									'',
+									$params);
 
 		$act          = new stdClass;
 		$act->cmd     = 'wall.write';
 		$act->actor   = $actor->id;
 		$act->target  = $target->id;
-		$act->title   = Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_WALL', $params->get('actor_url'), $params->get('actor'), $params->get('recipientUrl'), $params->get('recipientName'), $params->get('url'), $params->get('title'));
+		$act->title   = Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_WALL', 
+									$params->get('actor_url'), 
+									$params->get('actor'), 
+									$params->get('recipientUrl'), 
+									$params->get('recipientName'), 
+									$params->get('url'), 
+									$params->get('title'));
 		$act->content = null;
 		$act->app     = 'kunena.message.thankyou';
 		$act->cid     = $target->id;

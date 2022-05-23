@@ -303,9 +303,9 @@ Text::script('COM_KUNENA_POLL_TITLE');
                            class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_GEN_EMAIL'); ?></label>
                     <div class="col-md-10">
                         <div class="md-form mt-0">
-                            <input type="text" id="email" name="email" size="35"
+                            <input type="email" id="email" name="email" size="35"
                                    placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>"
-                                   class="form-control" maxlength="45" tabindex="5"
+                                   class="form-control validate-email" maxlength="45" tabindex="5"
                                    value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>"
                                    required/>
                             <br/>

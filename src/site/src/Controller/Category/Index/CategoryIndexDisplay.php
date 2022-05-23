@@ -162,7 +162,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 		$options            = [];
 		$options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 		$catParams          = ['sections' => 1, 'catid' => 0];
-		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', $catid, $options, $catParams, 'class="form-control inputbox fbs" size="1" onchange = "this.form.submit()"');
+		$this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', $catid, $options, $catParams, 'class="form-select inputbox fbs" size="1" onchange = "this.form.submit()"');
 
 		if ($catid)
 		{

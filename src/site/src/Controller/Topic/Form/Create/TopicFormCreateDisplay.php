@@ -190,7 +190,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 			$catid,
 			$options,
 			$catParams,
-			'class="form-control inputbox required"',
+			'class="form-select inputbox required"',
 			'value',
 			'text',
 			$this->selected,

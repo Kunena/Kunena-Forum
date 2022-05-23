@@ -80,58 +80,31 @@ $config         = KunenaFactory::getTemplate()->params;
 
                         <div class="dropdown-divider"></div>
 
-						<?php if ($status)
-						:
-						?>
-                        <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
-                              id="status-form" class="form-inline">
-                            <div>
-                                <input id="status-online" class="hide" type="radio" value="0" name="status"/>
-                                <label for="status-online" class="btn btn-link">
-                                    <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . Session::getFormToken() . '=1'); ?>"
-                                       class="btn btn-link">
-										<?php echo KunenaIcons::online(); ?>
-										<?php echo Text::_('COM_KUNENA_ONLINE') ?>
-                                    </a>
-                                </label>
-                            </div>
+						<?php if ($status) : ?>
+  						<div id="status-online">
+							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=0&' . Session::getFormToken() . '=1'); ?>"
+								class="btn btn-sm btn-outline-success text-center d-block m-2">
+								<?php echo KunenaIcons::online(); ?>
+								<?php echo Text::_('COM_KUNENA_ONLINE') ?>
+							</a>
 
-                            <div>
-                                <input id="status-away" class="hide" type="radio" value="1" name="status"/>
-                                <label for="status-away" class="btn btn-link">
-                                    <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . Session::getFormToken() . '=1'); ?>"
-                                       class="btn btn-link">
-										<?php echo KunenaIcons::away(); ?>
-										<?php echo Text::_('COM_KUNENA_AWAY') ?>
-                                    </a>
-                                </label>
-                            </div>
-                            <div>
-                                <input id="status-busy" class="hide" type="radio" value="2" name="status"/>
-                                <label for="status-busy" class="btn btn-link">
-                                    <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . Session::getFormToken() . '=1');
-									?>"
-                                       class="btn btn-link">
-										<?php echo KunenaIcons::busy(); ?>
-										<?php echo Text::_('COM_KUNENA_BUSY') ?>
-                                    </a>
-                                </label>
-                            </div>
-                            <div>
-                                <input id="status-invisible" class="hide" type="radio" value="3" name="status"/>
-                                <label for="status-invisible" class="btn btn-link">
-                                    <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . Session::getFormToken() . '=1'); ?>"
-                                       class="btn btn-link">
-										<?php echo KunenaIcons::invisible(); ?>
-										<?php echo Text::_('COM_KUNENA_INVISIBLE') ?>
-                                    </a>
-                                </label>
-                            </div>
-                            <input type="hidden" name="view" value="user"/>
-                            <input type="hidden" name="task" value="status"/>
-							<?php echo HTMLHelper::_('form.token'); ?>
-                        </form>
-                        <div class="dropdown-divider"></div>
+							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=1&' . Session::getFormToken() . '=1'); ?>"
+								class="btn btn-sm btn-outline-warning text-center d-block m-2">
+								<?php echo KunenaIcons::away(); ?>
+								<?php echo Text::_('COM_KUNENA_AWAY') ?>
+							</a>
+							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=2&' . Session::getFormToken() . '=1'); ?>"
+								class="btn btn-sm btn-outline-danger text-center d-block m-2">
+								<?php echo KunenaIcons::busy(); ?>
+								<?php echo Text::_('COM_KUNENA_BUSY') ?>
+							</a>
+							<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=status&status=3&' . Session::getFormToken() . '=1'); ?>"
+								class="btn btn-sm btn-outline-secondary text-center d-block m-2">
+								<?php echo KunenaIcons::invisible(); ?>
+								<?php echo Text::_('COM_KUNENA_INVISIBLE') ?>
+							</a>
+						</div> 
+                       <div class="dropdown-divider"></div>
 
                         <div id="statustext">
 							<?php HTMLHelper::_('bootstrap.renderModal', 'statusText'); ?>

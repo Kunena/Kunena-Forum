@@ -53,7 +53,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 				<label for="email"><?php echo Text::_('COM_KUNENA_USRL_EMAIL'); ?></label>
 			</td>
 			<td>
-				<input class="required validate-email form-control" type="text" id="email" name="email"
+				<input class="required validate-email form-control" type="email" id="email" name="email"
 					   value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
 			</td>
 		</tr>

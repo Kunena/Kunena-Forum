@@ -90,7 +90,7 @@ $this->addScript('assets/js/profile.js');
 				'select.genericlist',
 				$gender,
 				'gender',
-				'class="inputbox form-control hasTooltip" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"',
+				'class="inputbox form-select hasTooltip" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_MYPROFILE_GENDER') . '" size="1"',
 				'value',
 				'text',
 				$this->escape($this->profile->gender),

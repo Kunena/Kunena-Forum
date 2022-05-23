@@ -214,7 +214,7 @@ $labels          = $this->ktemplate->params->get('labels');
 								'select.genericlist',
 								$this->getTopicOptions(),
 								'targettopic',
-								'class="form-control"',
+								'class="form-select"',
 								'value',
 								'text',
 								0,

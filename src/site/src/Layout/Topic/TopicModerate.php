@@ -108,7 +108,7 @@ class TopicModerate extends KunenaLayout
 			0,
 			$options,
 			$params,
-			'class="inputbox kmove_selectbox form-control"',
+			'class="inputbox kmove_selectbox form-select"',
 			'value',
 			'text',
 			$this->category->id,

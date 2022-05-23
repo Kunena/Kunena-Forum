@@ -16,9 +16,9 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 HTMLHelper::_('bootstrap.framework');
@@ -112,9 +112,7 @@ $labels          = $this->ktemplate->params->get('labels');
 										:
 										$this->category->iconset = 'default';
 									endif; ?>
-                                    <img loading=lazy
-                                         src="<?php echo Uri::root() . 'media/kunena/topic_icons/' . $this->category->iconset . '/user/svg/' . $icon->svg; ?>"
-                                         alt="<?php echo $icon->name; ?>" width="32" height="32"/>
+                                    <?php echo KunenaSvgIcons::loadsvg($icon->svg, 'usertopicIcons', $this->category->iconset); ?>
 									<?php elseif ($this->config->topicIcons && $topicicontype == 'fa')
 									:
 									?>

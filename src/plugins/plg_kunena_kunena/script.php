@@ -99,7 +99,7 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
 	}
 
 	/**
-	 * @param $pluginName
+	 * @param   string  $pluginName  The name of plugin to enable
 	 *
 	 * @return boolean|false
 	 * @since version

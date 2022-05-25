@@ -2190,7 +2190,7 @@ class KunenaUser extends CMSObject
 				return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" data-bs-toggle="tooltip" data-placement="right" title="' . $title . '"></span>';
 				break;
 			case 'birthdate' :
-				if (!$this->birthdate)
+				if (!$this->birthdate || $this->birthdate == '0001-01-01')
 				{
 					return false;
 				}
@@ -2228,6 +2228,11 @@ class KunenaUser extends CMSObject
 				break;
 			case 'private' :
 				$pms = KunenaFactory::getPrivateMessaging();
+
+				if (empty($pms->showIcon($this->userid)))
+				{
+					return false;
+				}
 
 				return '<span data-bs-toggle="tooltip" data-placement="right" title="' . Text::_('COM_KUNENA_VIEW_PMS') . '" >' . $pms->showIcon($this->userid) . '</span>';
 				break;

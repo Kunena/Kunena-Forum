@@ -128,7 +128,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		$this->compileScss('assets/scss/aurelia.scss', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
-		$storage = $this->params->get('storage');
+		$storage = $this->params->get('localstorage');
 
 		if ($storage)
 		{

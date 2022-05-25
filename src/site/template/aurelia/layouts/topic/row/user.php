@@ -128,11 +128,11 @@ if (!empty($this->spacing)) : ?>
 			<?php endif; ?>
             <div class="float-end">
 				<?php /** TODO: New Feature - LABELS
-				 * <span class="label label-info">
+				 * <span class="badge bg-info">
 				 * <?php echo Text::_('COM_KUNENA_TOPIC_ROW_TABLE_LABEL_QUESTION'); ?>
 				 * </span>    */ ?>
 				<?php if ($topic->locked != 0) : ?>
-                    <span class="label label-warning">
+                    <span class="badge bg-warning">
 						<span data-bs-toggle="tooltip"
                               title="<?php echo Text::_('COM_KUNENA_LOCKED'); ?>"><?php echo KunenaIcons::lock(); ?></span>
 					</span>

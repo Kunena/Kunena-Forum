@@ -404,9 +404,9 @@ Text::script('COM_KUNENA_POLL_TITLE');
                 <div class="form-group row krow<?php echo 1 + $this->k ^= 1; ?> p-3 mb-5" id="kpost-attachments">
                     <div class="controls">
                         <div id="kattach_form">
-							<span class="label label-info"><?php echo Text::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>
+							<span class="badge bg-info"><?php echo Text::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED') ?>
 								: <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?></span><br/><br/>
-                            <span class="label label-info"><?php echo Text::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>
+                            <span class="badge bg-info"><?php echo Text::_('COM_KUNENA_UPLOAD_MAX_FILES_WEIGHT') ?>
 								: <?php echo $this->config->fileSize != 0 ? round($this->config->fileSize / 1024, 1) : $this->config->fileSize ?> <?php echo Text::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?> <?php echo Text::_('COM_KUNENA_UPLOAD_MAX_IMAGES_WEIGHT') ?>
 								: <?php echo $this->config->imageSize != 0 ? round($this->config->imageSize / 1024, 1) : $this->config->imageSize ?> <?php echo Text::_('COM_KUNENA_UPLOAD_ATTACHMENT_FILE_WEIGHT_MB') ?>
 							</span>

@@ -433,7 +433,7 @@
 
 		email: {
 			label: "E-mail",
-			logo: "fa fa-at",
+			logo: "fas fa-at",
 			shareUrl: "mailto:{to}?subject={text}&body={url}",
 			countUrl: "",
 			shareIn: "self"
@@ -441,14 +441,14 @@
 
 		twitter: {
 			label: "Tweet",
-			logo: "fa fa-twitter",
+			logo: "fab fa-twitter",
 			shareUrl: "https://twitter.com/share?url={url}&text={text}&via={via}&hashtags={hashtags}",
 			countUrl: ""
 		},
 
 		facebook: {
 			label: "Like",
-			logo: "fa fa-facebook",
+			logo: "fab fa-facebook",
 			shareUrl: "https://facebook.com/sharer/sharer.php?u={url}&quote={text}",
 			countUrl: "",
 			getCount: function (data) {
@@ -458,7 +458,7 @@
 
 		vkontakte: {
 			label: "Like",
-			logo: "fa fa-vk",
+			logo: "fab fa-vk",
 			shareUrl: "https://vk.com/share.php?url={url}&title={title}&description={text}",
 			countUrl: "https://vk.com/share.php?act=count&index=1&url={url}",
 			getCount: function (data) {
@@ -468,14 +468,14 @@
 
 		googleplus: {
 			label: "+1",
-			logo: "fa fa-google",
+			logo: "fab fa-google",
 			shareUrl: "https://plus.google.com/share?url={url}",
 			countUrl: ""
 		},
 
 		linkedin: {
 			label: "Share",
-			logo: "fa fa-linkedin",
+			logo: "fab fa-linkedin",
 			shareUrl: "https://www.linkedin.com/shareArticle?mini=true&url={url}&text={text}",
 			countUrl: "",
 			getCount: function (data) {
@@ -485,7 +485,7 @@
 
 		pinterest: {
 			label: "Pin it",
-			logo: "fa fa-pinterest",
+			logo: "fab fa-pinterest",
 			shareUrl: "https://pinterest.com/pin/create/bookmarklet/?media={media}&url={url}&description={text}",
 			countUrl: "https://api.pinterest.com/v1/urls/count.json?&url={url}&callback=?",
 			getCount: function (data) {
@@ -495,7 +495,7 @@
 
 		telegram: {
 			label: "Telegram",
-			logo: "fa fa-telegram",
+			logo: "fab fa-telegram",
 			shareUrl: "tg://msg?text={url} {text}",
 			countUrl: "",
 			shareIn: "self"
@@ -503,7 +503,7 @@
 
 		whatsapp: {
 			label: "WhatsApp",
-			logo: "fa fa-whatsapp",
+			logo: "fab fa-whatsapp",
 			shareUrl: "whatsapp://send?text={url} {text}",
 			countUrl: "",
 			shareIn: "self"
@@ -511,14 +511,14 @@
 
 		line: {
 			label: "LINE",
-			logo: "fa fa-comment",
+			logo: "far fa-comment",
 			shareUrl: "http://line.me/R/msg/text/?{text} {url}",
 			countUrl: ""
 		},
 
 		viber: {
 			label: "Viber",
-			logo: "fa fa-volume-control-phone",
+			logo: "fab fa-volume-control-phone",
 			shareUrl: "viber://forward?text={url} {text}",
 			countUrl: "",
 			shareIn: "self"
@@ -526,21 +526,21 @@
 
 		pocket: {
 			label: "Pocket",
-			logo: "fa fa-get-pocket",
+			logo: "fab fa-get-pocket",
 			shareUrl: "https://getpocket.com/save?url={url}&title={title}",
 			countUrl: ""
 		},
 
 		messenger: {
 			label: "Share",
-			logo: "fa fa-commenting",
+			logo: "fab fa-facebook-messenger",
 			shareUrl: "fb-messenger://share?link={url}",
 			countUrl: "",
 			shareIn: "self"
 		},
 		rss: {
 			label: "RSS",
-			logo: "fa fa-rss",
+			logo: "fas fa-rss",
 			shareUrl: "/feeds/",
 			countUrl: "",
 			shareIn: "blank"

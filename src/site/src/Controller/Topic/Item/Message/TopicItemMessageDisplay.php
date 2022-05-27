@@ -129,10 +129,10 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 		}
 
 		// Thank you info and buttons.
-		$thankyou             = [];
+		$this->thankyou             = [];
 		$this->total_thankyou = 0;
 		$this->more_thankyou  = 0;
-		$thankyou_delete      = [];
+		$this->thankyou_delete      = [];
 
 		if (isset($this->message->thankyou))
 		{
@@ -163,10 +163,10 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 				{
 					if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory()))
 					{
-						$thankyou_delete[$userid] = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
+						$this->thankyou_delete[$userid] = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
 					}
 
-					$thankyou[$userid] = $loaded_users[$userid]->getLink();
+					$this->thankyou[$userid] = $loaded_users[$userid]->getLink();
 				}
 			}
 		}

@@ -136,6 +136,26 @@
             <query mode="silenterror">UPDATE `#__mail_templates` SET `subject` = 'COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT', `body` = 'COM_KUNENA_SENDMAIL_BODY' WHERE template_id = 'com_kunena.replymoderator';</query>
             <query mode="silenterror">UPDATE `#__mail_templates` SET `subject` = 'COM_KUNENA_SENDMAIL_REPORT_SUBJECT', `body` = 'COM_KUNENA_SENDMAIL_BODY_REPORTMODERATOR' WHERE template_id = 'com_kunena.report';</query>
         </version>
+        <version version="6.0.0-RC4-DEV"
+                 versiondate="2022-05-28"
+                 versionname="Internal">
+            <phpfile name="6.0.0-2022-05-284_configuration"/>
+        </version>
+        <version version="6.0.0-RC4-DEV"
+                 versiondate="2022-05-28"
+                 versionname="Internal">
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 0;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=1;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=5;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=8;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=11;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=15;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=20;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=22;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=28;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=38;</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `emoticonbar` = 1 WHERE id=51;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

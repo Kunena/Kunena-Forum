@@ -1017,8 +1017,7 @@ jQuery(document).ready(function ($) {
 				->leftJoin($db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
 				->where($db->quoteName('ut.topic_id') . ' = ' . $db->quote($topic->id))
 				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
-				->andWhere($db->quoteName('ku.banned') . ' <> 0')
-				->orWhere($db->quoteName('ku.banned') . ' IS NULL')
+				->andWhere($db->quoteName('ku.banned') . ' = ' . $db->quote('1000-01-01 00:00:00'))
 				->andWhere($db->quoteName('ut.topic_id') . ' = ' . $db->quote($topic->id))
 				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
 				->group($db->quoteName('user_id'));
@@ -1035,8 +1034,7 @@ jQuery(document).ready(function ($) {
 				->leftJoin($db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
 				->where($db->quoteName('category_id') . ' = ' . $db->quote($category->id))
 				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
-				->andWhere($db->quoteName('ku.banned') . ' <> 0')
-				->orWhere($db->quoteName('ku.banned') . ' IS NULL')
+				->andWhere($db->quoteName('ku.banned') . ' = ' . $db->quote('1000-01-01 00:00:00'))
 				->andWhere($db->quoteName('category_id') . ' = ' . $db->quote($category->id))
 				->andWhere($db->quoteName('ut.subscribed') . ' = 1')
 				->group($db->quoteName('user_id'));

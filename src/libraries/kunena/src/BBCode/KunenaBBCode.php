@@ -2976,7 +2976,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		// Obey image security settings.
 		if ($config->bbcodeImgSecure != 'image')
 		{
-			if ($bbcode->autoLink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png|svg)$/ui", $fileurl))
+			if ($bbcode->autoLink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl))
 			{
 				// If the image has not legal extension, return it as link or text.
 				if ($config->bbcodeImgSecure == 'link')

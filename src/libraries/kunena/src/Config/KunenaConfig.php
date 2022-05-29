@@ -531,7 +531,7 @@ class KunenaConfig extends CMSObject
 	 * @var    integer  Image height
 	 * @since  Kunena 1.0.0
 	 */
-	public $imageHeight = 100;
+	public $imageHeight = 800;
 
 	/**
 	 * @var    integer  Image width

@@ -1,0 +1,26 @@
+/**
+* Kunena Component
+* $package Kunena.Template.Aurelia
+*
+* $copyright     Copyright (C) 2008 - 2022 Kunena Team. All rights reserved.
+* $license https://www.gnu.org/copyleft/gpl.html GNU/GPL
+* $link https://www.kunena.org
+**/
+
+/*
+ * All url()'s should be relative paths from media folder inside the template or 'JROOT/media/kunena'.
+ * Scss parser will automatically search for all the files from the lookup paths and use the first match.
+ */
+#kunena.layout {
+  @import "variables";
+  @import "quirks";
+  @import "general";
+  @import "editor";
+  @import "icons";
+  @import "user";
+  @import "profile";
+  @import "categories";
+  @import "mediaqueries";
+  @import "twitter";
+  /*	@import 'debug'; */
+}

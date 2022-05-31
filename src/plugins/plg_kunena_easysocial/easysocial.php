@@ -17,7 +17,6 @@
 
 defined('_JEXEC') or die('Unauthorized Access');
 
-use EasySocialPlugins;
 use Joomla\CMS\Filesystem\File;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
@@ -29,7 +28,6 @@ if (!File::exists($file))
 }
 
 require_once $file;
-require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 
 /**
  * @package     Kunena

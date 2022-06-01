@@ -105,7 +105,7 @@ abstract class KunenaEmail
 
 			try
 			{
-				$result = $mailTemplate->Send();
+				$result = $mailTemplate->send();
 
 				if ($result === false)
 				{

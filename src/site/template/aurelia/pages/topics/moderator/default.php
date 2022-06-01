@@ -14,7 +14,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
-$content = $this->execute('Topic/List/Moderator')
+$content = $this->execute('Topic/Listing/Moderator')
 	->setLayout('moderator');
 
 $this->addBreadcrumb(

@@ -165,6 +165,13 @@
 		(22, ':unsure:', '22.png', 'unsure-grey.png', 1),
 		(23, ':o', '23.png', 'shocked-grey.png', 1);</query>
         </version>
+        <version version="6.0.0-RC4-DEV"
+                 versiondate="2022-06-01"
+                 versionname="Internal">
+            <query mode="silenterror">UPDATE `#__mail_templates` SET `extension` = 'com_kunena' WHERE template_id = 'com_kunena.reply';</query>
+            <query mode="silenterror">UPDATE `#__mail_templates` SET `extension` = 'com_kunena' WHERE template_id = 'com_kunena.replymoderator';</query>
+            <query mode="silenterror">UPDATE `#__mail_templates` SET `extension` = 'com_kunena' WHERE template_id = 'com_kunena.report';</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

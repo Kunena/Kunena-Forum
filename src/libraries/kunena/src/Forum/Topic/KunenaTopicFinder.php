@@ -283,14 +283,14 @@ class KunenaTopicFinder extends KunenaFinder
 		$subQuery = $this->db->getQuery(true);
 		$subQuery->select($this->db->quoteName('st.id') . ', MAX(' . $this->db->quoteName('sut.last_post_id') . ') AS ' . $this->db->quoteName('max_post_id'))
 			->from($this->db->quoteName('#__kunena_topics', 'st'))
-			->leftJoin($this->db->quoteName('#__kunena_user_topics', 'sut'), 'ON ' . $this->db->quoteName('sut.topic_id') . ' = ' . $this->db->quoteName('st.id'))
+			->leftJoin($this->db->quoteName('#__kunena_user_topics', 'sut'), $this->db->quoteName('sut.topic_id') . ' = ' . $this->db->quoteName('st.id'))
 			->where($this->db->quoteName('sut.user_id') . ' IN (' . $userlist . ')')
 			->group($this->db->quoteName('st.last_post_id'))
 			->order($this->db->quoteName('st.last_post_id') . ' DESC');
 
 		// Hard limit on sub-query to make derived table faster to sort.
-		$this->query->innerJoin('(' . $this->db->quoteName($subQuery) . ' LIMIT 1000) AS ' . $this->db->quoteName('uu') . ' ON ' . $this->db->quoteName('uu.id') . ' = ' . $this->db->quoteName('a.id'))
-			->innerJoin($this->db->quoteName('#__kunena_user_topics', 'ut'), ' ON ' . $this->db->quoteName('ut.topic_id') . ' = ' . $this->db->quoteName('a.id') . ' AND ' . $this->db->quoteName('ut.owner') . ' = 1');
+		$this->query->innerJoin('(' . $subQuery . ' LIMIT 1000) AS ' . $this->db->quoteName('uu') . ' ON ' . $this->db->quoteName('uu.id') . ' = ' . $this->db->quoteName('a.id'))
+			->innerJoin($this->db->quoteName('#__kunena_user_topics', 'ut'), $this->db->quoteName('ut.topic_id') . ' = ' . $this->db->quoteName('a.id') . ' AND ' . $this->db->quoteName('ut.owner') . ' = 1');
 
 		if ($negate)
 		{

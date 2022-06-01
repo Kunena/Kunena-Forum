@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Topic\KunenaList\Moderator;
+namespace Kunena\Forum\Site\Controller\Topic\Listing\Moderator;
 
 \defined('_JEXEC') or die();
 
@@ -19,19 +19,19 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
-use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 
 /**
  * Class ComponentTopicControllerListDisplay
  *
  * @since   Kunena 4.0
  */
-class TopicListModeratorDisplay extends KunenaControllerDisplay
+class TopicListingModeratorDisplay extends ListDisplay
 {
 	/**
 	 * Prepare topic list for moderators.
@@ -128,7 +128,7 @@ class TopicListModeratorDisplay extends KunenaControllerDisplay
 		}
 
 		$actions        = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$this->actions1 = $this->getTopicActions($topics, $actions);
+		$this->actions = $this->getTopicActions($topics, $actions);
 
 		$this->headerText = Text::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
 	}

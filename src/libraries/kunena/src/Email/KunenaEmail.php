@@ -123,9 +123,6 @@ abstract class KunenaEmail
 			{
 				$success = false;
 				Log::add($e->getMessage(), Log::ERROR, 'kunena');
-
-				// After logging the error let's bubble it up so it will be shown to the user
-				throw $e;
 			}
 
 			if (isset(static::$mailer_error_status))

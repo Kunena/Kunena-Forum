@@ -109,17 +109,17 @@ class TopicListingModeratorDisplay extends ListDisplay
 			->filterByMoved(false)
 			->where('locked', '=', 0);
 
-		$pagination = new KunenaPagination($finder->count(), $start, $limit);
+		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
 		if ($moreUri)
 		{
-			$pagination->setUri($moreUri);
+			$this->pagination->setUri($moreUri);
 		}
 
 		$topics = $finder
 			->order('last_post_time', -1)
-			->start($pagination->limitstart)
-			->limit($pagination->limit)
+			->start($this->pagination->limitstart)
+			->limit($this->pagination->limit)
 			->find();
 
 		if ($topics)

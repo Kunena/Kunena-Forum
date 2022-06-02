@@ -18,6 +18,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
  * Class KunenaProfileCommunity
@@ -155,18 +156,18 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @since Kunena 5.2
 	 */
-	public function getProfileName(int $userid, $visitorname = '', $escape = true)
+	public function getProfileName(KunenaUser $user, $visitorname = '', $escape = true)
 	{
 		$cconfig         = CFactory::getConfig();
 		$displayusername = $cconfig->get('displayname');
 
 		if ($displayusername == 'name')
 		{
-			return CFactory::getUser($userid)->name;
+			return CFactory::getUser($user->userid)->name;
 		}
 		else
 		{
-			return CFactory::getUser($userid)->username;
+		    return CFactory::getUser($user->userid)->username;
 		}
 	}
 }

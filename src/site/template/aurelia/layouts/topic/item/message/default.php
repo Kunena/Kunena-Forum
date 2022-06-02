@@ -12,13 +12,10 @@
 
 defined('_JEXEC') or die();
 
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
-
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
-$template     = KunenaTemplate::getInstance();
-$direction    = $template->params->get('avatarPosition');
+$direction    = $this->ktemplate->params->get('avatarPosition');
 $sideProfile  = $this->profile->getSideProfile($this);
-$quick        = $template->params->get('quick');
+$quick        = $this->ktemplate->params->get('quick');
 
 if ($direction === "left") : ?>
     <div class="row message">

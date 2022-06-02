@@ -36,7 +36,7 @@ require_once $file;
  */
 class plgKunenaEasySocial extends EasySocialPlugins
 {
-	private $params;
+	public $params;
 
 	/**
 	 * plgKunenaEasySocial constructor.

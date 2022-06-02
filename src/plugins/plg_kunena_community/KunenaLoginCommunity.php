@@ -72,6 +72,6 @@ class KunenaLoginCommunity
 			return CRoute::_('index.php?option=com_community&view=register');
 		}
 
-		return;
+		//return;
 	}
 }

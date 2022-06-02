@@ -17,6 +17,7 @@ use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
  * KunenaActivityAltaUserPoints class to handle profile integration with AltaUserPoints
@@ -165,9 +166,9 @@ class KunenaProfileAltaUserPoints extends KunenaProfile
 	 *
 	 * @since   Kunena 5.2
 	 */
-	public function getProfileName(int $userid, string $visitorname = '', bool $escape = true)
+	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true)
 	{
-		$referrid = AltaUserPointsHelper::getAnyUserReferreID($userid);
+		$referrid = AltaUserPointsHelper::getAnyUserReferreID($user->userid);
 		$userinfo = AltaUserPointsHelper::getUserInfo($referrid);
 
 		return $userinfo->username;

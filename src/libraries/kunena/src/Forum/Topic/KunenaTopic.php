@@ -673,7 +673,7 @@ class KunenaTopic extends KunenaDatabaseObject
 					->from($this->_db->quoteName('#__kunena_messages', 'm'))
 					->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $this->_db->quoteName('t.mesid') . ' = ' . $this->_db->quoteName('m.id'))
 					->where($this->_db->quoteName('m.thread') . ' = ' . $db->quote($this->id) . ' AND ' . $this->_db->quoteName('m.hold') . ' = ' . $this->_db->quote($this->hold))
-					->order($this->_db->quoteName('m.time') . ' ASC, ' . $this->_db->quoteName('m.id') . ' ASC');
+					->order($this->_db->quoteName('m.time') . ' DESC, ' . $this->_db->quoteName('m.id') . ' DESC');
 				$query->setLimit(1);
 				$db->setQuery($query);
 

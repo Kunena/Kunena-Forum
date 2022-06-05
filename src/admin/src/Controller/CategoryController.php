@@ -137,9 +137,9 @@ class CategoryController extends FormController
 			return false;
 		}
 
-		if ($post['task'] === 'category.save2copy')
+		if ($post['task'] === 'category.save2copycategory')
 		{
-			$post['title'] = $this->app->getUserState('com_kunena.category_title');
+			$post['name'] = $this->app->getUserState('com_kunena.category_title');
 			$post['alias'] = $this->app->getUserState('com_kunena.category_alias');
 			$post['catid'] = $this->app->getUserState('com_kunena.category_catid');
 		}
@@ -339,7 +339,7 @@ class CategoryController extends FormController
 		$this->app->setUserState('com_kunena.category_catid', 0);
 
 		$this->internalSave();
-		$this->setRedirect(KunenaRoute::_($this->basecategoryurl, false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	/**

@@ -137,7 +137,7 @@ class CategoryController extends FormController
 			return false;
 		}
 
-		if ($post['task'] === 'save2copy')
+		if ($post['task'] === 'category.save2copy')
 		{
 			$post['title'] = $this->app->getUserState('com_kunena.category_title');
 			$post['alias'] = $this->app->getUserState('com_kunena.category_alias');
@@ -326,7 +326,7 @@ class CategoryController extends FormController
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 */
-	public function save2copy(): void
+	public function save2copycategory(): void
 	{
 		$postCatid = $this->app->input->post->get('catid', '', 'raw');
 		$postAlias = $this->app->input->post->get('alias', '', 'raw');
@@ -374,7 +374,7 @@ class CategoryController extends FormController
 	 * @throws  Exception
 	 * @since   Kunena 2.0.0-BETA2
 	 */
-	public function save2new(): void
+	public function save2newcategory(): void
 	{
 		$this->internalSave();
 		$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));

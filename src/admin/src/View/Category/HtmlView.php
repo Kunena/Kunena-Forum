@@ -153,12 +153,12 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::spacer();
 		ToolbarHelper::apply('category.apply');
 		ToolbarHelper::save('category.save');
-		ToolbarHelper::save2new('category.save2new');
+		ToolbarHelper::save2new('category.save2newcategory');
 
 		// If an existing item, can save to a copy.
 		if ($this->category->exists())
 		{
-			ToolbarHelper::save2copy('category.save2copy');
+			ToolbarHelper::save2copy('category.save2copycategory');
 		}
 
 		ToolbarHelper::cancel('category.cancel');

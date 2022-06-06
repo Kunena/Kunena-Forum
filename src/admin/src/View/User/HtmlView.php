@@ -306,7 +306,7 @@ class HtmlView extends BaseHtmlView
 		// Set the title bar text
 		ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
 		ToolbarHelper::spacer();
-		ToolbarHelper::custom('moveMessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		ToolbarHelper::custom('user.moveMessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES', false);
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();

@@ -59,9 +59,9 @@ class UserModel extends KunenaModel
 		$userid = $this->getState($this->getName() . '.id');
 
 		$query = $db->getQuery(true);
-		$query->select('topic_id AS thread')
+		$query->select($db->quoteName('topic_id') . ' AS thread')
 			->from($db->quoteName('#__kunena_user_topics'))
-			->where('user_id = ' . $userid . ' AND subscribed=1');
+			->where($db->quoteName('user_id') . ' = ' . $userid . ' AND ' . $db->quoteName('subscribed') . '=1');
 		$db->setQuery($query);
 
 		try
@@ -117,7 +117,7 @@ class UserModel extends KunenaModel
 		$query = $db->getQuery(true);
 		$query->select('ip')
 			->from($db->quoteName('#__kunena_messages'))
-			->where('userid = ' . $userid)
+			->where($db->quoteName('userid') . ' = ' . $userid)
 			->group('ip');
 		$db->setQuery($query);
 

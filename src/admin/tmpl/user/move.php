@@ -33,9 +33,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 					<table class="table table-striped">
 						<thead>
 						<tr>
-							<th width="25%">Ttitle</th>
-							<th width="25%">Opiton</th>
-							<th>Description</th>
+							<th width="25%"><?php echo Text::_('COM_KUNENA_MOVE_USERMESSAGES_TITLE'); ?></th>
+							<th width="25%"><?php echo Text::_('COM_KUNENA_MOVE_USERMESSAGES_OPTION'); ?></th>
+							<th><?php echo Text::_('COM_KUNENA_MOVE_USERMESSAGES_DESCRIPTION'); ?></th>
 						</tr>
 						</thead>
 						<tbody>

@@ -122,13 +122,13 @@ if ($this->list->saveOrder && !empty($this->items))
                     <table class="table table-striped" id="categoryList">
                         <thead>
                         <tr>
-                            <th width="1%" class="nowrap center hidden-phone">
-								<?php echo HTMLHelper::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', 'asc', '', null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
-                            </th>
                             <th width="1%" class="hidden-phone">
                                 <input type="checkbox" name="checkall-toggle" value=""
                                        title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>"
                                        onclick="Joomla.checkAll(this)"/>
+                            </th>
+                            <th width="1%" class="nowrap center hidden-phone">
+								<?php echo HTMLHelper::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', 'asc', '', null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
                             </th>
                             <th width="5%" class="nowrap center">
 								<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'p.published', $this->list->Direction, $this->list->Ordering); ?>
@@ -288,9 +288,25 @@ if ($this->list->saveOrder && !empty($this->items))
                                                value="<?php echo $item->ordering; ?>"
                                                class="width-20 text-area-order hidden">
 									<?php endif; ?>
-                                    <td class="center hidden-phone">
-										<?php echo HTMLHelper::_('grid.id', $i, (int) $item->id); ?>
-                                    </td>
+                                    <td class="text-center d-none d-md-table-cell">
+										<?php
+										$iconClass = '';
+										if (!$canChange)
+										{
+											$iconClass = ' inactive';
+										}
+										elseif (!$saveOrder)
+										{
+											$iconClass = ' inactive" title="' . Text::_('JORDERINGDISABLED');
+										}
+										?>
+										<span class="sortable-handler<?php echo $iconClass ?>">
+											<span class="icon-ellipsis-v"></span>
+										</span>
+										<?php if ($canChange && $saveOrder) : ?>
+											<input type="text" class="hidden" name="order[]" size="5" value="<?php echo $item->lft; ?>">
+										<?php endif; ?>
+									</td>
                                     <td class="center">
 										<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, '', 'cb'); ?>
                                     </td>

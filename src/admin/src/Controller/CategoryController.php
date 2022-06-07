@@ -379,4 +379,18 @@ class CategoryController extends FormController
 		$this->internalSave();
 		$this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));
 	}
+
+	/**
+	 * Method to cehckin
+	 *
+	 * @return  void
+	 *
+	 * @throws  null
+	 * @throws  Exception
+	 * @since   Kunena 6.0.0
+	 */
+	public function checkin()
+	{
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
 }

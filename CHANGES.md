@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.2.9-dev]
+## [5.2.9]
 ### Fixed
 * Fix stripped/broken [code] bbcode when "type" is not specified 
 * [#8723](https://github.com/Kunena/Kunena-Forum/issues/8723): Upgrade or reinstallation removes the Kunena custom.css #8723
@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Fix ckeditor not respecting configured buttons #8724
 
 ### Changed
+* Update CKeditor to 4.19.0
 * Update CKeditor to 4.18.0
 * Update CKeditor to 4.17.2
 * [#8769](https://github.com/Kunena/Kunena-Forum/issues/8769): A line in the backend views.ini needs an adjustment #8769

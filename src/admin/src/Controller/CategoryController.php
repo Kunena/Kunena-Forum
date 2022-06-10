@@ -381,7 +381,7 @@ class CategoryController extends FormController
 	}
 
 	/**
-	 * Method to cehckin
+	 * Method to checkin
 	 *
 	 * @return  void
 	 *
@@ -391,6 +391,8 @@ class CategoryController extends FormController
 	 */
 	public function checkin()
 	{
+		// TODO : need to implement the logic to checkin teh category
+
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

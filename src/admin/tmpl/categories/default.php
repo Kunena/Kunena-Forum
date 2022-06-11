@@ -23,28 +23,11 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('multiselect');
 
-if (!empty($this->list->Ordering))
-{
-	$wa->addInlineScript(
-		'Joomla.orderTable = function () {
-		var table = document.getElementById("sortTable");
-		var direction = document.getElementById("directionTable");
-		var order = table.options[table.selectedIndex].value;
-		if (order != ' . $this->list->Ordering . ') {
-        dirn = "asc";
-        } else {
-        dirn = direction.options[direction.selectedIndex].value;
-        }
-        Joomla.tableOrdering(order, dirn, "");
-        }'
-	);
-}
-
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
-$saveOrder = $listOrder == 'a.ordering';
+$saveOrder = ($listOrder == 'a.order' && strtolower($listDirn) == 'asc');
 
-if ($this->list->saveOrder && !empty($this->items))
+if ($saveOrder && !empty($this->items))
 {
 	$saveOrderingUrl = $this->list->saveOrderingUrl;
 	HTMLHelper::_('draggablelist.draggable');
@@ -123,12 +106,10 @@ if ($this->list->saveOrder && !empty($this->items))
                         <thead>
                         <tr>
                             <th width="1%" class="hidden-phone">
-                                <input type="checkbox" name="checkall-toggle" value=""
-                                       title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>"
-                                       onclick="Joomla.checkAll(this)"/>
+                                <?php echo HTMLHelper::_('grid.checkall'); ?>
                             </th>
                             <th width="1%" class="nowrap center hidden-phone">
-								<?php echo HTMLHelper::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', 'asc', '', null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
+								<?php echo HTMLHelper::_('searchtools.sort', '', 'a.lft', $this->list->Direction, $this->list->Ordering, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-sort'); ?>
                             </th>
                             <th width="5%" class="nowrap center">
 								<?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'p.published', $this->list->Direction, $this->list->Ordering); ?>
@@ -258,7 +239,7 @@ if ($this->list->saveOrder && !empty($this->items))
 
 						if ($this->pagination->total >= 0)
 							:
-							foreach ($this->categories as $item) :
+							foreach ($this->categories as $item) : 
 								$canEdit = $this->me->isAdmin($item);
 								$canCheckin = $this->user->authorise('core.admin', 'com_checkIn') || $item->checked_out == $this->user->id || $item->checked_out == 0;
 								$canEditOwn = $canEdit;
@@ -268,26 +249,6 @@ if ($this->list->saveOrder && !empty($this->items))
                                     <td class="text-center">
 										<?php echo HTMLHelper::_('grid.id', $i, $item->id, false, 'cid', 'cb', $item->name); ?>
                                     </td>
-									<?php
-									$iconClass = '';
-
-									if (!$canChange)
-									{
-										$iconClass = ' inactive';
-									}
-                                    elseif (!$saveOrder)
-									{
-										$iconClass = ' inactive" title="' . Text::_('JORDERINGDISABLED');
-									}
-									?>
-                                    <span class="sortable-handler <?php echo $iconClass ?>">
-											<span class="icon-ellipsis-v" aria-hidden="true"></span>
-										</span>
-									<?php if ($canChange && $saveOrder) : ?>
-                                        <input type="text" name="order[]" size="5"
-                                               value="<?php echo $item->ordering; ?>"
-                                               class="width-20 text-area-order hidden">
-									<?php endif; ?>
                                     <td class="text-center d-none d-md-table-cell">
 										<?php
 										$iconClass = '';

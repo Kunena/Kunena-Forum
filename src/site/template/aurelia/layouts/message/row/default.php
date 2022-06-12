@@ -188,7 +188,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 		?>
         <td class="center">
             <label>
-                <input class="kcheck" type="checkbox" name="topics[<?php echo $message->id; ?>]"
+                <input class="kcheck" type="checkbox" name="posts[<?php echo $message->id; ?>]"
                        value="1"/>
             </label>
         </td>

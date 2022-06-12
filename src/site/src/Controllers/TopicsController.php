@@ -369,6 +369,8 @@ class TopicsController extends KunenaController
 	}
 
 	/**
+	 * Move posts or messages
+	 * 
 	 * @return  void
 	 *
 	 * @throws  null
@@ -386,16 +388,20 @@ class TopicsController extends KunenaController
 		}
 
 		$topics_ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
-		$topics_ids = ArrayHelper::toInteger($topics_ids);
-
-		$topics = KunenaTopicHelper::getTopics($topics_ids);
-
 		$messages_ids = array_keys($this->app->input->get('posts', [], 'post', 'array'));
-		$messages_ids = ArrayHelper::toInteger($messages_ids);
 
-		$messages = KunenaMessageHelper::getMessages($messages_ids);
+		if (!empty($topics_ids))
+		{
+			$topics_ids = ArrayHelper::toInteger($topics_ids);
+			$topics = KunenaTopicHelper::getTopics($topics_ids);
+		}
+		else
+		{
+			$messages_ids = ArrayHelper::toInteger($messages_ids);
+			$messages = KunenaMessageHelper::getMessages($messages_ids);
+		}
 
-		if (!$topics && !$messages)
+		if (!$topics_ids && !$messages_ids)
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_NO_MESSAGES_OR_TOPICS_SELECTED'), 'notice');
 			$this->setRedirectBack();

@@ -820,7 +820,7 @@ jQuery(document).ready(function ($) {
 	 * @throws Exception
 	 * @since   Kunena 6.0
 	 */
-	public function getSubscribers(int $catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null): array
+	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null): array
 	{
 		$topic    = KunenaTopicHelper::get($topic);
 		$category = $topic->getCategory();

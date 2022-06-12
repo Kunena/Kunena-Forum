@@ -17,6 +17,7 @@
 
 defined('_JEXEC') or die('Unauthorized Access');
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
@@ -221,22 +222,22 @@ class KunenaActivityEasySocial extends KunenaActivity
 			if (!$message->parent)
 			{
 				// New topic: Send email only to category subscribers
-				$mailsubs = $config->category_subscriptions != 'disabled' ? Access::CATEGORY_SUBSCRIPTION : 0;
+				$mailsubs = $config->category_subscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
 			}
 			elseif ($config->category_subscriptions != 'post')
 			{
 				// Existing topic: Send email only to topic subscribers
-				$mailsubs = $config->topic_subscriptions != 'disabled' ? Access::TOPIC_SUBSCRIPTION : 0;
+			    $mailsubs = $config->topic_subscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
 			}
 			else
 			{
 				// Existing topic: Send email to both category and topic subscribers
-				$mailsubs = $config->topic_subscriptions == 'disabled' ? Access::CATEGORY_SUBSCRIPTION : Access::CATEGORY_SUBSCRIPTION | Access::TOPIC_SUBSCRIPTION;
+			    $mailsubs = $config->topic_subscriptions == 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 			}
 		}
 
 		// Get all subscribers, moderators and admins who will get the email
-		$me          = Helper::get();
+		$me          = Factory::getApplication()->getIdentity();
 		$acl         = KunenaAccess::getInstance();
 		$subscribers = $acl->getSubscribers($message->catid, $message->thread, $mailsubs, $mailmods, $mailadmins, $me->userid);
 

@@ -276,7 +276,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                 </div>
 			<?php endif; ?>
 
-			<?php if ($this->category->allowAnonymous && !$this->me->userid) : ?>
+			<?php if (!$this->category->allowAnonymous && !$this->me->userid) : ?>
                 <div class="alert alert-info"><?php echo Text::_('COM_KUNENA_GEN_INFO_GUEST_CANNOT_EDIT_DELETE_MESSAGE'); ?></div>
                 <div class="form-group row" id="kanynomous-check-name">
                     <label for="kauthorname"

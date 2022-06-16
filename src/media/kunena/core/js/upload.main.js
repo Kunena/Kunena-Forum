@@ -467,13 +467,14 @@ jQuery(function ($) {
             data.uploaded = false;
             data.context.append(removeButton.clone(true).data(data));
 
-            const error = null;
-            $.each(data.result.data.exceptions, function (index, error) {
-                error = $('<div class="alert alert-error"/>').text(error.message);
+            var error = null;
+
+            if (data.result.message.length > 0) {
+                error = $('<div class="alert alert-danger" role="alert">').text(data.result.message);
                 data.context.find('span')
                     .append('<br>')
                     .append(error);
-            });
+            }
         }
     }).on('fileuploadfail', function (e, data) {
         $.each(data.files, function (index, file) {

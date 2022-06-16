@@ -767,7 +767,12 @@ class KunenaAttachment extends KunenaDatabaseObject
 
 				try
 				{
-					$this->$authFunction($user);
+					$exception = $this->$authFunction($user);
+
+					if ($exception)
+					{
+						break;
+					}
 				}
 				catch (Exception $e)
 				{
@@ -1103,7 +1108,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 404);
 		}
 
-		return true;
+		return;
 	}
 
 	/**
@@ -1137,7 +1142,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 			}
 		}
 
-		return true;
+		return;
 	}
 
 	/**
@@ -1156,6 +1161,6 @@ class KunenaAttachment extends KunenaDatabaseObject
 			return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
 		}
 
-		return true;
+		return;
 	}
 }

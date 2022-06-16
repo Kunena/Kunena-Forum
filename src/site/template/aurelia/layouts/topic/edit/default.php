@@ -67,6 +67,10 @@ $this->doc->addScriptOptions('com_kunena.allowEditPoll', $this->config->allowEdi
 $this->doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
 $this->doc->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
 $this->doc->addScriptOptions(
+	'com_kunena.kunena_upload_files_set_inline',
+	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinline&format=json&' . Session::getFormToken() . '=1', false)
+);
+$this->doc->addScriptOptions(
 	'com_kunena.kunena_upload_files_rem',
 	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' .
 		Session::getFormToken() . '=1', false)

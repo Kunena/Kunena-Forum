@@ -440,9 +440,10 @@ Text::script('COM_KUNENA_POLL_TITLE');
                             </button>
                             <div class="clearfix"></div>
                             <br/>
-                            <div id="progress" class="progress progress-striped" style="display: none;">
-                                <div class="bar"></div>
-                            </div>
+							<div id="progress" class="progress" style="display: none;">
+								<div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+
                             <!-- The container for the uploaded files -->
                             <div id="files" class="files"></div>
                             <div id="dropzone">

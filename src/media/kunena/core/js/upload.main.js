@@ -347,11 +347,6 @@ jQuery(function ($) {
         .bind('fileuploaddrop', function (e, data) {
             $('#form_submit_button').prop('disabled', true);
 
-            $('#progress').css(
-                'display',
-                'block'
-            );
-
             $('#remove-all').show();
             $('#insert-all').show();
 
@@ -388,15 +383,12 @@ jQuery(function ($) {
             }
         })
         .on('fileuploadadd', function (e, data) {
-            $('#progress .bar').css(
+            $('#progress-bar').css(
                 'width',
                 '0%'
             );
 
-            $('#progress').css(
-                'display',
-                'block'
-            );
+			$('#progress').show();
 
             data.context = $('<div/>').appendTo('#files');
 
@@ -434,10 +426,13 @@ jQuery(function ($) {
     }).on('fileuploaddone', function (e, data) {
         // $.each(data.result.data, function (index, file)
         const progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#progress .bar').css(
+
+        $('.progress-bar').css(
             'width',
             progress + '%'
         );
+
+        $('.progress-bar').prop('aria-valuenow', progress);
 
         const link = $('<a>')
             .attr('target', '_blank')

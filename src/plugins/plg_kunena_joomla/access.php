@@ -212,7 +212,7 @@ class KunenaAccessJoomla
 				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC2') . '<br /><br />' .
-					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC_J25'),
+					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_HINT_DESC'),
 				'input' => HTMLHelper::_('access.usergroup', 'pubAccess', $category->pubAccess, 'class="inputbox form-control" size="10"', false),
 			];
 
@@ -225,7 +225,7 @@ class KunenaAccessJoomla
 				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC2') . '<br /><br />' .
-					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC_J25'),
+					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_HINT_DESC'),
 				'input' => HTMLHelper::_('access.usergroup', 'adminAccess', $category->adminAccess, 'class="inputbox form-control" size="10"', false),
 			];
 

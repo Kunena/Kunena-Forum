@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -22,8 +23,16 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 // TODO: Add generic form version
 
+$this->ktemplate = KunenaFactory::getTemplate();
+$bootstrap = $this->ktemplate->params->get('bootstrap');
+
 HTMLHelper::_('behavior.multiselect');
-HTMLHelper::_('dropdown.init');
+
+if ($bootstrap)
+{
+	HTMLHelper::_('dropdown.init');
+}
+
 echo $this->subLayout('Widget/Datepicker');
 
 // Load caret.js always before atwho.js script and use it for autocomplete, emojiis...

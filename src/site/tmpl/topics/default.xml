@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+    <layout title="COM_KUNENA_MENU_TOPICS_DEFAULT">
+        <message>COM_KUNENA_MENU_TOPICS_DEFAULT_DESC</message>
+    </layout>
+
+    <!-- Add fields to the request variables for the layout. -->
+    <fields name="request">
+        <fieldset name="request">
+            <field name="mode"
+                   type="list"
+                   default="replies"
+                   label="COM_KUNENA_MENU_SELECTEDVIEW"
+                   description="COM_KUNENA_MENU_SELECTEDVIEW_DESC">
+                <option value="replies">COM_KUNENA_TOPICS_MODE_OPTION_REPLIES</option>
+                <option value="topics">COM_KUNENA_TOPICS_MODE_OPTION_TOPICS</option>
+                <option value="noreplies">COM_KUNENA_TOPICS_MODE_OPTION_NOREPLIES</option>
+                <option value="sticky">COM_KUNENA_TOPICS_MODE_OPTION_STICKY</option>
+                <option value="locked">COM_KUNENA_TOPICS_MODE_OPTION_LOCKED</option>
+                <option value="unapproved">COM_KUNENA_TOPICS_MODE_OPTION_UNAPROVED</option>
+                <option value="deleted">COM_KUNENA_TOPICS_MODE_OPTION_DELETED</option>
+            </field>
+        </fieldset>
+    </fields>
+    <fields name="params">
+        <fieldset name="basic"
+                  label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
+            <field name="topics_catselection"
+                   type="radio"
+                   default=""
+                   label="COM_KUNENA_COM_A_LATESTCATEGORY_IN"
+                   description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
+                <option value="">COM_KUNENA_A_USE_GLOBAL</option>
+                <option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
+                <option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
+            </field>
+            <field name="topics_deletedtopics"
+                   type="radio"
+                   default="0"
+                   label="COM_KUNENA_TOPICS_MODE_OPTION_DELETED"
+                   description="COM_KUNENA_TOPICS_MODE_OPTION_DELETED_DESC">
+                <option value="1">COM_KUNENA_SHOW</option>
+                <option value="0">COM_KUNENA_HIDE</option>
+            </field>
+            <field name="topics_categories"
+                   type="kunenacategorylist"
+                   default=""
+                   label="COM_KUNENA_COM_A_LATESTCATEGORY"
+                   description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"
+                   multiple="true"
+                   size="10">
+                <option value="">COM_KUNENA_A_USE_GLOBAL</option>
+                <option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
+            </field>
+            <field name="topics_time"
+                   type="list"
+                   default=""
+                   label="COM_KUNENA_A_TOPICS_TIME"
+                   description="COM_KUNENA_A_TOPICS_TIME_DESC">
+                <option value="">COM_KUNENA_A_USE_GLOBAL</option>
+                <option value="-1">COM_KUNENA_SHOW_ALL</option>
+                <option value="0">COM_KUNENA_SHOW_LASTVISIT</option>
+                <option value="4">COM_KUNENA_SHOW_4_HOURS</option>
+                <option value="8">COM_KUNENA_SHOW_8_HOURS</option>
+                <option value="12">COM_KUNENA_SHOW_12_HOURS</option>
+                <option value="24">COM_KUNENA_SHOW_24_HOURS</option>
+                <option value="48">COM_KUNENA_SHOW_48_HOURS</option>
+                <option value="168">COM_KUNENA_SHOW_WEEK</option>
+                <option value="720">COM_KUNENA_SHOW_MONTH</option>
+                <option value="8760">COM_KUNENA_SHOW_YEAR</option>
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

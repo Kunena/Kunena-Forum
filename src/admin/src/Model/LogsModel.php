@@ -162,7 +162,7 @@ class LogsModel extends ListModel
 		}
 
 		// Create a new query object.
-		$db     = $this->getDbo();
+		$db     = $this->getDatabase();
 		$finder = new KunenaLogFinder;
 
 		// Filter by type.

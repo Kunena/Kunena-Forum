@@ -255,7 +255,7 @@ class UsersModel extends ListModel
 	protected function getListQuery(): QueryInterface
 	{
 		// Create a new query object.
-		$db    = $this->getDbo();
+		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
 		// Select the required fields from the table.

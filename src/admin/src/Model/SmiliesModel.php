@@ -129,7 +129,7 @@ class SmiliesModel extends ListModel
 	 */
 	protected function getListQuery(): QueryInterface
 	{
-		$db    = $this->getDbo();
+		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select(

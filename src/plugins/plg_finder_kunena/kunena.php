@@ -577,7 +577,7 @@ class plgFinderKunena extends Adapter
 
 		if (!$messages[$cat_id])
 		{
-			$db    = Factory::getDbo();
+			$db    = $this->getDatabase();
 			$query = $db->getQuery(true);
 			$query->select('m.id');
 			$query->from('#__kunena_messages as m');
@@ -604,7 +604,7 @@ class plgFinderKunena extends Adapter
 
 		if (!$messages[$topic_id])
 		{
-			$db    = Factory::getDbo();
+			$db    = $this->getDatabase();
 			$query = $db->getQuery(true);
 			$query->select('m.*, t.message');
 			$query->from('#__kunena_messages AS m');

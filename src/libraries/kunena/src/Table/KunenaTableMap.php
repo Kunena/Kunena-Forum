@@ -194,7 +194,7 @@ class KunenaTableMap
 	}
 
 	/**
-	 * Method to get the JDatabaseDriver object.
+	 * Method to get the DatabaseDriver object.
 	 *
 	 * @link    http://docs.joomla.org/Joomla\CMS\Table\Table/getDBO
 	 *

@@ -152,7 +152,7 @@ class StatisticsModel extends ListModel
 		}
 
 		// Create a new query object.
-		$db     = $this->getDbo();
+		$db     = $this->getDatabase();
 		$finder = new KunenaLogFinder;
 
 		// Filter by username or name.

@@ -55,7 +55,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	public function getUserListURL($action = '', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig();
-		$my     = Factory::getUser();
+		$my     = $this->getCurrentUser();
 
 		if ($config->userlist_allowed == 0 && $my->id == 0)
 		{

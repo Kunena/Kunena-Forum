@@ -475,7 +475,7 @@ abstract class KunenaTableObject
 	 *
 	 * @since   Kunena 4.0
 	 */
-	public static function getDbo(): DatabaseDriver
+	public static function getDatabase(): DatabaseDriver
 	{
 		return static::$db;
 	}

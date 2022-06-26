@@ -53,7 +53,7 @@ class KunenaTableMap
 	protected $_tbl_mapped = '';
 
 	/**
-	 * JDatabaseDriver object.
+	 * DatabaseDriver object.
 	 *
 	 * @var     DatabaseDriver
 	 * @since   Kunena 6.0
@@ -202,7 +202,7 @@ class KunenaTableMap
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getDbo(): ?DatabaseDriver
+	public function getDatabase(): ?DatabaseDriver
 	{
 		return $this->_db;
 	}

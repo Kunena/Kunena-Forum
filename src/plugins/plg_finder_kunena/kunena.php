@@ -30,6 +30,8 @@ use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use Kunena\Forum\Libraries\Tables\TableKunenaMessages;
 use Kunena\Forum\Libraries\Tables\TableKunenaTopics;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Joomla\CMS\Access\Access;
+use Joomla\Database\QueryInterface;
 
 /**
  * Finder adapter for com_kunena.
@@ -643,10 +645,8 @@ class plgFinderKunena extends Adapter
 		}
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();
-		$groups_r     = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
-		$groups       = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
-
-		$catlist = [];
+		$groups_r     = (array) Access::getGroupsByUser($user->id, true);
+		$groups       = (array) Access::getGroupsByUser($user->id, false);
 
 		// Check against Joomla access level
 		if ($category->accesstype == 'joomla.level')

@@ -400,7 +400,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 			}
 		}
 
-		$doc = Factory::getApplication()->getDocument();
+		$doc = $this->app->getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -435,8 +435,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 
-		$config = Factory::getApplication();
-		$robots = $config->get('robots');
+		$robots = $this->app->get('robots');
 		$image  = null;
 
 		if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))

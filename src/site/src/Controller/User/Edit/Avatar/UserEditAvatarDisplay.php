@@ -105,7 +105,7 @@ class UserEditAvatarDisplay extends UserEditDisplay
 
 		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE');
 
-		$this->doc = Factory::getApplication()->getDocument();
+		$this->doc = $this->app->getDocument();
 		$this->wa  = $this->doc->getWebAssetManager();
 	}
 

@@ -201,7 +201,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 
 		$this->pagination = new KunenaPagination($this->total, $limitstart, $limit);
 		$this->pagination->setDisplayedPages(5);
-		$doc  = Factory::getApplication()->getDocument();
+		$doc  = $this->app->getDocument();
 		$page = $this->pagination->pagesCurrent;
 
 		if ($page > 1)
@@ -246,9 +246,8 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 		$categorydesc = $this->category->description;
 
 		$menu_item = $this->app->getMenu()->getActive();
-		$doc       = Factory::getApplication()->getDocument();
-		$config    = Factory::getApplication();
-		$robots    = $config->get('robots');
+		$doc       = $this->app->getDocument();
+		$robots    = $this->app->get('robots');
 
 		if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader))
 		{

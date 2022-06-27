@@ -60,7 +60,7 @@ class CategoryDisplay extends KunenaControllerDisplay
 		$this->config = KunenaFactory::getConfig();
 		$catid = $this->input->getInt('catid', 0);
 		$model = new CategoryModel;
-		$this->document = Factory::getApplication()->getDocument();
+		$this->document = $this->app->getDocument();
 
 		if (!$this->config->enableRss)
 		{

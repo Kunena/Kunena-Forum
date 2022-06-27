@@ -102,7 +102,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 		$this->ktemplate->addScriptOptions('com_kunena.arrayanynomousbox', json_encode($arrayanynomousbox));
 		$this->ktemplate->addScriptOptions('com_kunena.pollcategoriesid', json_encode($arraypollcatid));
 
-		$doc = Factory::getApplication()->getDocument();
+		$doc = $this->app->getDocument();
 		$doc->setMetaData('robots', 'nofollow, noindex');
 
 		foreach ($doc->_links as $key => $value)
@@ -130,7 +130,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
 		PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
+		$this->app->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 
 		$this->action = 'edit';
 
@@ -195,7 +195,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 		$this->selectcatlist = false;
 
 		/** @var HtmlDocument $doc */
-		$this->doc = Factory::getApplication()->getDocument();
+		$this->doc = $this->app->getDocument();
 		$this->wa  = $this->doc->getWebAssetManager();
 	}
 

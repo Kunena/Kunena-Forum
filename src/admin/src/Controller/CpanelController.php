@@ -63,7 +63,7 @@ class CpanelController extends FormController
 	{
 		$updateInfo = null;
 
-		if (KunenaForum::installed() && Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_installer'))
+		if (KunenaForum::installed() && $this->app->getIdentity()->authorise('core.manage', 'com_installer'))
 		{
 			$updateSite = 'https://update.kunena.org/%';
 			$db         = Factory::getContainer()->get('DatabaseDriver');
@@ -109,7 +109,7 @@ class CpanelController extends FormController
 		if (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<'))
 		{
 			// Has updates
-			Factory::getApplication()->enqueueMessage(
+			$this->app->enqueueMessage(
 				Text::_(
 					'Kunena Update Found.
 					<a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">
@@ -124,7 +124,7 @@ class CpanelController extends FormController
 		elseif (!empty($updateInfo->addons))
 		{
 			// Has updated add-ons
-			Factory::getApplication()->enqueueMessage(
+			$this->app->enqueueMessage(
 				Text::_(
 					'Kunena Update Found.
 					<a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">

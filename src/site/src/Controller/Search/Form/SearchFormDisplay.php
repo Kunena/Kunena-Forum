@@ -60,7 +60,7 @@ class SearchFormDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
+		$Itemid = $this->app->input->getCmd('Itemid');
 
 		if (!$Itemid && $this->config->sefRedirect)
 		{
@@ -103,8 +103,7 @@ class SearchFormDisplay extends KunenaControllerDisplay
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 
-		$config = Factory::getApplication();
-		$robots = $config->get('robots');
+		$robots = $this->app->get('robots');
 
 		if ($robots == 'noindex, follow')
 		{

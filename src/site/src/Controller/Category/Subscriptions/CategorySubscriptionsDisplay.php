@@ -168,8 +168,7 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
 	{
 		$menu_item = $this->app->getMenu()->getActive();
 
-		$config = Factory::getApplication();
-		$robots = $config->get('robots');
+		$robots = $this->app->get('robots');
 
 		if ($robots == 'noindex, follow')
 		{

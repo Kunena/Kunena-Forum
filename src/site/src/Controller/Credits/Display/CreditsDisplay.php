@@ -79,7 +79,7 @@ class CreditsDisplay extends KunenaControllerDisplay
 			$this->app->redirect(KunenaRoute::_($baseurl, false));
 		}
 
-		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
+		$Itemid = $this->app->input->getCmd('Itemid');
 
 		if (!$Itemid && $this->config->sefRedirect)
 		{

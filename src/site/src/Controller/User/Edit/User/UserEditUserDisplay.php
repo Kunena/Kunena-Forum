@@ -68,7 +68,7 @@ class UserEditUserDisplay extends UserEditDisplay
 		// Check to see if Frontend User Params have been enabled.
 		if ($userParams->get('frontend_userparams', 0))
 		{
-			Factory::getApplication()->getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
+			$this->app->getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
 
 			Form::addFormPath(JPATH_ROOT . '/components/com_users/forms');
 			Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
@@ -79,7 +79,7 @@ class UserEditUserDisplay extends UserEditDisplay
 			$form         = Form::getInstance('com_users.profile', 'frontend');
 			$data         = new StdClass;
 			$data->params = $registry->toArray();
-			Factory::getApplication()->triggerEvent('onContentPrepareForm', [$form, $data]);
+			$this->app->triggerEvent('onContentPrepareForm', [$form, $data]);
 
 			$form->bind($data);
 			$this->frontendForm = $form->getFieldset('params');

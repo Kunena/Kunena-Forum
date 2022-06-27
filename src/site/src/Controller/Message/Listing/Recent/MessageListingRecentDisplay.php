@@ -154,7 +154,7 @@ class MessageListingRecentDisplay extends ListDisplay
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		$doc = Factory::getApplication()->getDocument();
+		$doc = $this->app->getDocument();
 
 		if (!$start)
 		{

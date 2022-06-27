@@ -206,7 +206,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 			->find();
 
 		$this->prepareMessages($mesid);
-		$doc = Factory::getApplication()->getDocument();
+		$doc = $this->app->getDocument();
 
 		if ($this->me->exists())
 		{
@@ -270,8 +270,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
 		PluginHelper::importPlugin('kunena');
 		KunenaParser::prepareContent($content, 'topic_top');
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
+		$this->app->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
+		$this->app->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
 
 		// Get user data, captcha & quick reply.
 		$this->userTopic  = $this->topic->getUserTopic();
@@ -573,7 +573,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 	protected function prepareDocument()
 	{
 		$this->image = '';
-		$doc         = Factory::getApplication()->getDocument();
+		$doc         = $this->app->getDocument();
 		$this->setMetaData('og:url', Uri::current(), 'property');
 		$this->setMetaData('og:type', 'article', 'property');
 		$this->setMetaData('og:title', $this->topic->displayField('subject'), 'property');
@@ -645,8 +645,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 		$this->setMetaData('twitter:image', $image, 'property');
 		$this->setMetaData('twitter:description', $multispaces_replaced);
 
-		$config = Factory::getApplication();
-		$robots = $config->get('robots');
+		$robots = $this->app->get('robots');
 
 		if ($robots == 'noindex, follow')
 		{

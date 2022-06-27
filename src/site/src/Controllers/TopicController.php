@@ -335,7 +335,7 @@ class TopicController extends KunenaController
 	 */
 	public function loadrate()
 	{
-		$user = Factory::getApplication()->getIdentity();
+		$user = $this->app->getIdentity();
 
 		$topicid  = $this->app->input->get('topic_id', 0, 'int');
 

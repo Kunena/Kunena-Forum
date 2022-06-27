@@ -82,7 +82,7 @@ class SearchResultsDisplay extends KunenaControllerDisplay
 		$this->total   = $this->model->getTotal();
 		$this->results = $this->model->getResults();
 
-		$doc = Factory::getApplication()->getDocument();
+		$doc = $this->app->getDocument();
 		$doc->setMetaData('robots', 'follow, noindex');
 
 		foreach ($doc->_links as $key => $value)

@@ -68,7 +68,7 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}
 
-		if (!$this->config->statsLinkAllowed && Factory::getApplication()->getIdentity()->guest)
+		if (!$this->config->statsLinkAllowed && $this->app->getIdentity()->guest)
 		{
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}

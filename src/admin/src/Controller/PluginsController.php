@@ -88,7 +88,7 @@ class PluginsController extends AdminController
 		$this->registerTask('orderup', 'reOrder');
 		$this->registerTask('orderdown', 'reOrder');
 
-		Factory::getApplication()->getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
+		$this->app->getLanguage()->load('com_plugins', JPATH_ADMINISTRATOR);
 	}
 
 	/**
@@ -120,8 +120,7 @@ class PluginsController extends AdminController
 		else
 		{
 			// Get the model from com_plugins.
-			$app   = Factory::getApplication();
-			$model = $app->bootComponent('com_plugins')->getMVCFactory()->createModel('Plugin', 'Administrator', ['ignore_request' => true]);
+			$model = $this->app->bootComponent('com_plugins')->getMVCFactory()->createModel('Plugin', 'Administrator', ['ignore_request' => true]);
 
 			// Make sure the item ids are integers
 			$cid  = ArrayHelper::toInteger($cid);

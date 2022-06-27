@@ -69,9 +69,7 @@ class InstallController extends FormController
 			return false;
 		}
 
-		$app = Factory::getApplication();
-
-		$allowed = $app->getUserState('com_kunena.uninstall.allowed');
+		$allowed = $this->app->getUserState('com_kunena.uninstall.allowed');
 
 		if ($allowed)
 		{
@@ -80,9 +78,9 @@ class InstallController extends FormController
 			$installer->deleteTables('kunena_');
 			$installer->cleanMailTemplates();
 
-			$app->enqueueMessage(Text::_('COM_KUNENA_INSTALL_REMOVED'));
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_INSTALL_REMOVED'));
 
-			$app->setUserState('com_kunena.uninstall.allowed', null);
+			$this->app->setUserState('com_kunena.uninstall.allowed', null);
 
 			$installer = new Installer;
 			$component = ComponentHelper::getComponent('com_kunena');

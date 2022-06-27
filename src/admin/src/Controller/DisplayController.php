@@ -49,7 +49,7 @@ class DisplayController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = []): BaseController
 	{
-		$document = Factory::getApplication()->getDocument();
+		$document = $this->app->getDocument();
 		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/theme.min.css');
 
 		return parent::display($cachable, $urlparams);

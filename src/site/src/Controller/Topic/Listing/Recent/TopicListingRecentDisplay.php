@@ -178,7 +178,7 @@ class TopicListingRecentDisplay extends ListDisplay
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		$doc = Factory::getApplication()->getDocument();
+		$doc = $this->app->getDocument();
 
 		$page = $this->pagination->pagesCurrent;
 
@@ -233,7 +233,7 @@ class TopicListingRecentDisplay extends ListDisplay
 
 		$actions = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
 
-		$params      = Factory::getApplication()->getMenu()->getActive()->getParams();
+		$params      = $this->app->getMenu()->getActive()->getParams();
 		$title       = $params->get('page_title');
 		$pageheading = $params->get('show_page_heading');
 
@@ -326,7 +326,7 @@ class TopicListingRecentDisplay extends ListDisplay
 				break;
 		}
 
-		$doc = Factory::getApplication()->getDocument();
+		$doc = $this->app->getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -363,8 +363,8 @@ class TopicListingRecentDisplay extends ListDisplay
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
 		$image     = null;
-		$config    = Factory::getApplication();
-		$robots    = $config->get('robots');
+
+		$robots    = $this->app->get('robots');
 		$menu_item = $this->app->getMenu()->getActive();
 
 		$this->setMetaData('og:url', Uri::current(), 'property');

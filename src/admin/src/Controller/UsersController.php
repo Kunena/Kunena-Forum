@@ -272,7 +272,7 @@ class UsersController extends KunenaController
 
 		$users = KunenaUserHelper::loadUsers($cid);
 
-		$my        = Factory::getApplication()->getIdentity();
+		$my        = $this->app->getIdentity();
 		$usernames = [];
 
 		foreach ($users as $user)

@@ -117,7 +117,7 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 
 		PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
+		$this->app->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
 
 		// FIXME: need to improve BBCode class on this...
 		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);

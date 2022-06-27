@@ -142,7 +142,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 		$params->set('kunena_layout', 'list');
 		PluginHelper::importPlugin('kunena');
 		KunenaParser::prepareContent($content, 'topicList_default');
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic.list', &$this->topic, &$params, 0]);
+		$this->app->triggerEvent('onKunenaPrepare', ['kunena.topic.list', &$this->topic, &$params, 0]);
 	}
 
 	/**
@@ -162,8 +162,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 
 		$menu_item = $this->app->getMenu()->getActive();
 
-		$config = Factory::getApplication();
-		$robots = $config->get('robots');
+		$robots = $this->app->get('robots');
 
 		if ($robots == 'noindex, follow')
 		{

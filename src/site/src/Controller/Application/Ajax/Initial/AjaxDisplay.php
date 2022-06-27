@@ -132,7 +132,7 @@ class AjaxDisplay extends KunenaControllerDisplay
 
 		$this->me       = KunenaUserHelper::getMyself();
 		$this->config   = KunenaConfig::getInstance();
-		$this->document = Factory::getApplication()->getDocument();
+		$this->document = $this->app->getDocument();
 		$template       = KunenaFactory::getTemplate();
 		$template->initialize();
 	}

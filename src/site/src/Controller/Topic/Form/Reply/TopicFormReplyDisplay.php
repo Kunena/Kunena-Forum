@@ -87,7 +87,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}
 
-		$doc = Factory::getApplication()->getDocument();
+		$doc = $this->app->getDocument();
 
 		foreach ($doc->_links as $key => $value)
 		{
@@ -136,7 +136,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
 		PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
+		$this->app->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 
 		$this->headerText = Text::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ': ' . $this->topic->subject;
 
@@ -165,7 +165,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 		$this->selectcatlist = false;
 
 		/** @var HtmlDocument $doc */
-		$this->doc = Factory::getApplication()->getDocument();
+		$this->doc = $this->app->getDocument();
 		$this->wa  = $this->doc->getWebAssetManager();
 	}
 

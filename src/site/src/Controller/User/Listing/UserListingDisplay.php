@@ -84,7 +84,7 @@ class UserListingDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		if (!$this->config->userlistAllowed && Factory::getApplication()->getIdentity()->guest)
+		if (!$this->config->userlistAllowed && $this->app->getIdentity()->guest)
 		{
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
 		}

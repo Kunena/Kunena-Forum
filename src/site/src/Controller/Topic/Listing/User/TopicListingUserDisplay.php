@@ -135,7 +135,7 @@ class TopicListingUserDisplay extends ListDisplay
 			case 'plugin':
 				$pluginmode = $this->state->get('list.modetype');
 
-				Factory::getApplication()->triggerEvent('onKunenaGetUserTopics', [$pluginmode, &$finder, &$order, &$categoryIds, $this]);
+				$this->app->triggerEvent('onKunenaGetUserTopics', [$pluginmode, &$finder, &$order, &$categoryIds, $this]);
 				break;
 
 			default :
@@ -145,10 +145,10 @@ class TopicListingUserDisplay extends ListDisplay
 				break;
 		}
 
-		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
-		$view   = Factory::getApplication()->input->getCmd('view');
-		$layout = Factory::getApplication()->input->getCmd('layout');
-		$format = Factory::getApplication()->input->getCmd('format');
+		$Itemid = $this->input->getCmd('Itemid');
+		$view   = $this->input->getCmd('view');
+		$layout = $this->input->getCmd('layout');
+		$format = $this->input->getCmd('format');
 
 		if (!$Itemid && $format != 'feed')
 		{
@@ -254,7 +254,7 @@ class TopicListingUserDisplay extends ListDisplay
 				$canonicalUrl     = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=default');
 		}
 
-		$doc = Factory::getApplication()->getDocument();
+		$doc = $this->app->getDocument();
 
 		if (!$start)
 		{
@@ -331,8 +331,7 @@ class TopicListingUserDisplay extends ListDisplay
 		$total      = $this->pagination->pagesTotal;
 		$headerText = $this->headerText . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
 
-		$config    = Factory::getApplication();
-		$robots    = $config->get('robots');
+		$robots    = $this->app->get('robots');
 		$menu_item = $this->app->getMenu()->getActive();
 
 		$this->setMetaData('og:url', Uri::current(), 'property');

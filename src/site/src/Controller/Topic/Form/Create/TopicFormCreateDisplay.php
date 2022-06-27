@@ -65,8 +65,8 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		$catid = $this->input->getInt('catid', 0);
 		$saved = $this->app->getUserState('com_kunena.postfields');
 
-		$Itemid = Factory::getApplication()->input->getCmd('Itemid');
-		$format = Factory::getApplication()->input->getCmd('format');
+		$Itemid = $this->input->getCmd('Itemid');
+		$format = $this->input->getCmd('format');
 
 		if (!$Itemid && $format != 'feed' && $this->config->sefRedirect)
 		{
@@ -220,7 +220,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		$this->editorType = $this->ktemplate->params->get('editorType');
 
 		/** @var HtmlDocument $doc */
-		$this->doc = Factory::getApplication()->getDocument();
+		$this->doc = $this->app->getDocument();
 		$this->wa  = $this->doc->getWebAssetManager();
 
 		return true;

@@ -564,7 +564,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
 		PluginHelper::importPlugin('kunena');
 
-		Factory::getApplication()->triggerEvent('onKunenaGetButtons', ['message.action', $this->messageButtons, $this]);
+		$this->app->triggerEvent('onKunenaGetButtons', ['message.action', $this->messageButtons, $this]);
 	}
 
 	/**

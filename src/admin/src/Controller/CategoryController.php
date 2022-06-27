@@ -79,7 +79,7 @@ class CategoryController extends KunenaController
 	public function save($key = null, $urlVar = null)
 	{
 		$this->internalSave();
-		$postCatid = $this->app->input->post->get('catid', '', 'raw');
+		$postCatid = $this->input->post->get('catid', '', 'raw');
 
 		if ($this->app->isClient('administrator'))
 		{
@@ -126,9 +126,8 @@ class CategoryController extends KunenaController
 			return false;
 		}
 
-		$input      = $this->app->input;
-		$post       = $input->post->getArray();
-		$accesstype = strtr($input->getCmd('accesstype', 'joomla.level'), '.', '-');
+		$post       = $this->input->post->getArray();
+		$accesstype = strtr($this->input->getCmd('accesstype', 'joomla.level'), '.', '-');
 
 		if (empty($post['name']))
 		{
@@ -146,9 +145,9 @@ class CategoryController extends KunenaController
 			$post['catid'] = $this->app->getUserState('com_kunena.category_catid');
 		}
 
-		$post['access'] = $input->getInt("access-{$accesstype}", $input->getInt('access'));
-		$post['params'] = $input->get("params-{$accesstype}", [], 'array');
-		$post['params'] += $input->get("params", [], 'array');
+		$post['access'] = $this->input->getInt("access-{$accesstype}", $this->input->getInt('access'));
+		$post['params'] = $this->input->get("params-{$accesstype}", [], 'array');
+		$post['params'] += $this->input->get("params", [], 'array');
 		$success        = false;
 
 		$category = KunenaCategoryHelper::get(\intval($post ['catid']));
@@ -209,9 +208,9 @@ class CategoryController extends KunenaController
 				);
 			}
 
-			$aliasesAll = explode(',', $input->getString('aliasesAll'));
+			$aliasesAll = explode(',', $this->input->getString('aliasesAll'));
 
-			$aliases = $input->post->getArray(['aliases' => '']);
+			$aliases = $this->input->post->getArray(['aliases' => '']);
 
 			if ($aliasesAll && $aliases)
 			{
@@ -298,7 +297,7 @@ class CategoryController extends KunenaController
 	 */
 	public function cancel($key = null, $urlVar = null)
 	{
-		$postCatid = $this->app->input->post->get('catid', '', 'raw');
+		$postCatid = $this->input->post->get('catid', '', 'raw');
 		$category  = KunenaCategoryHelper::get($postCatid);
 		$category->checkIn();
 
@@ -316,9 +315,9 @@ class CategoryController extends KunenaController
 	 */
 	public function save2copycategory(): void
 	{
-		$postCatid = $this->app->input->post->get('catid', '', 'raw');
-		$postAlias = $this->app->input->post->get('alias', '', 'raw');
-		$postName  = $this->app->input->post->get('name', '', 'raw');
+		$postCatid = $this->input->post->get('catid', '', 'raw');
+		$postAlias = $this->input->post->get('alias', '', 'raw');
+		$postName  = $this->input->post->get('name', '', 'raw');
 
 		list($title, $alias) = $this->internalGenerateNewTitle($postCatid, $postAlias, $postName);
 

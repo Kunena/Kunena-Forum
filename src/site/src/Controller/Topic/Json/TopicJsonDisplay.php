@@ -46,7 +46,7 @@ class TopicJsonDisplay extends KunenaControllerDisplay
 	 */
 	protected function before()
 	{
-		$catid    = $this->app->input->getInt('catid', 0);
+		$catid    = $this->input->getInt('catid', 0);
 
 		$category = KunenaCategoryHelper::get($catid);
 

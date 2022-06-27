@@ -85,7 +85,7 @@ class TemplateController extends FormController
 	 */
 	public function save($key = null, $urlVar = null)
 	{
-		$template = $this->app->input->get('templatename', '');
+		$template = $this->input->get('templatename', '');
 		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 
 		if (!Session::checkToken())
@@ -127,7 +127,7 @@ class TemplateController extends FormController
 	 */
 	protected function internalSaveParamFile(string $template): void
 	{
-		$params = $this->app->input->get('jform', [], 'post', 'array');
+		$params = $this->input->get('jform', [], 'post', 'array');
 
 		if ($params['editorType']=='ckeditor')
 		{
@@ -536,8 +536,8 @@ class TemplateController extends FormController
 	 */
 	public function applychanges(): void
 	{
-		$template = $this->app->input->get('templatename', '');
-		$menus    = $this->app->input->get('selections', [], 'array');
+		$template = $this->input->get('templatename', '');
+		$menus    = $this->input->get('selections', [], 'array');
 		$menus    = ArrayHelper::toInteger($menus);
 
 		if (!Session::checkToken())
@@ -576,7 +576,7 @@ class TemplateController extends FormController
 	 */
 	public function restore(): void
 	{
-		$template = $this->app->input->get('templatename');
+		$template = $this->input->get('templatename');
 		$file     = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
 		if (file_exists($file))
@@ -606,7 +606,7 @@ class TemplateController extends FormController
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
-		$cid      = $this->app->input->get('cid', [], 'array');
+		$cid      = $this->input->get('cid', [], 'array');
 		$template = array_shift($cid);
 
 		if (!$template)
@@ -642,7 +642,7 @@ class TemplateController extends FormController
 	 */
 	public function chooseScss(): void
 	{
-		$template     = $this->app->input->getArray(['cid' => '']);
+		$template     = $this->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 		$this->app->setUserState('kunena.templatename', $templatename);
 
@@ -669,7 +669,7 @@ class TemplateController extends FormController
 	 */
 	public function chooseCss(): void
 	{
-		$template     = $this->app->input->getArray(['cid' => '']);
+		$template     = $this->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
 		$this->app->setUserState('kunena.templatename', $templatename);
@@ -710,7 +710,7 @@ class TemplateController extends FormController
 	 */
 	public function publish(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$id  = array_shift($cid);
 
 		if (!Session::checkToken())
@@ -745,7 +745,7 @@ class TemplateController extends FormController
 	 */
 	public function uninstall(): void
 	{
-		$cid      = $this->app->input->get('cid', [], 'array');
+		$cid      = $this->input->get('cid', [], 'array');
 		$id       = array_shift($cid);
 		$template = $id;
 

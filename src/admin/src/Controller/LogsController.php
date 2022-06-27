@@ -80,7 +80,7 @@ class LogsController extends FormController
 			return false;
 		}
 
-		$days      = $this->app->input->getInt('clean_days', 0);
+		$days      = $this->input->getInt('clean_days', 0);
 		$timestamp = new Date('now -' . $days . ' days');
 
 		$db    = Factory::getContainer()->get('DatabaseDriver');

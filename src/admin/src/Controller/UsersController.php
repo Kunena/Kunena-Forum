@@ -455,10 +455,10 @@ class UsersController extends KunenaController
 			return;
 		}
 
-		$modCatids = $this->app->input->get('catid', [], 'array');
+		$modCatids = $this->input->get('catid', [], 'array');
 		$modCatids = ArrayHelper::toInteger($modCatids);
 
-		$cid    = $this->app->input->get('cid', [], 'array');
+		$cid    = $this->input->get('cid', [], 'array');
 		$cid    = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
@@ -536,7 +536,7 @@ class UsersController extends KunenaController
 			return;
 		}
 
-		$cid    = $this->app->input->get('cid', [], 'array');
+		$cid    = $this->input->get('cid', [], 'array');
 		$cid    = ArrayHelper::toInteger($cid);
 		$userid = array_shift($cid);
 
@@ -912,9 +912,9 @@ class UsersController extends KunenaController
 			return;
 		}
 
-		$userids = $this->app->input->get('cid', [], 'array');
+		$userids = $this->input->get('cid', [], 'array');
 		$userids = ArrayHelper::toInteger($userids);
-		$catids  = $this->app->input->get('catid', [], 'array');
+		$catids  = $this->input->get('catid', [], 'array');
 		$catids  = ArrayHelper::toInteger($catids);
 
 		if (empty($userids))

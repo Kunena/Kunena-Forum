@@ -69,7 +69,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function lock(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 1);
@@ -174,7 +174,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function unlock(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'locked', 0);
@@ -192,7 +192,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function review(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 1);
@@ -210,7 +210,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function unreview(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'review', 0);
@@ -228,7 +228,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function allowAnonymous(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allowAnonymous', 1);
@@ -246,7 +246,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function denyAnonymous(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allowAnonymous', 0);
@@ -264,7 +264,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function allowPolls(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allowPolls', 1);
@@ -282,7 +282,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function denyPolls(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'allowPolls', 0);
@@ -300,7 +300,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function publish(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 1);
@@ -318,7 +318,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function unpublish(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->setVariable($cid, 'published', 0);
@@ -346,7 +346,7 @@ class CategoriesController extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -376,7 +376,7 @@ class CategoriesController extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$id = array_shift($cid);
@@ -413,7 +413,7 @@ class CategoriesController extends KunenaController
 			return;
 		}
 
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		if (empty($cid))
@@ -488,7 +488,7 @@ class CategoriesController extends KunenaController
 			return;
 		}
 
-		$id = $this->app->input->getInt('catid', 0);
+		$id = $this->input->getInt('catid', 0);
 
 		$category = KunenaCategoryHelper::get($id);
 
@@ -529,9 +529,9 @@ class CategoriesController extends KunenaController
 			return;
 		}
 
-		$cid   = $this->app->input->get('cid', [], 'array');
+		$cid   = $this->input->get('cid', [], 'array');
 		$cid   = ArrayHelper::toInteger($cid);
-		$order = $this->app->input->get('order', [], 'array');
+		$order = $this->input->get('order', [], 'array');
 		$order = ArrayHelper::toInteger($order);
 
 		if (empty($cid))
@@ -652,7 +652,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function orderup(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), -1);
@@ -722,7 +722,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function orderdown(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 		$cid = ArrayHelper::toInteger($cid);
 
 		$this->orderUpDown(array_shift($cid), 1);
@@ -740,7 +740,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function archive(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 
 		if (!empty($cid))
 		{
@@ -760,7 +760,7 @@ class CategoriesController extends KunenaController
 	 */
 	public function trash(): void
 	{
-		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = $this->input->get('cid', [], 'array');
 
 		if (!empty($cid))
 		{
@@ -786,9 +786,9 @@ class CategoriesController extends KunenaController
 			return false;
 		}
 
-		$cid       = $this->app->input->get('cid', '', 'array');
-		$catParent = $this->app->input->getInt('batchCatidTarget', 0);
-		$task      = $this->app->input->getString('move_copy');
+		$cid       = $this->input->get('cid', '', 'array');
+		$catParent = $this->input->getInt('batchCatidTarget', 0);
+		$task      = $this->input->getString('move_copy');
 
 		if ($catParent == 0 || empty($cid))
 		{

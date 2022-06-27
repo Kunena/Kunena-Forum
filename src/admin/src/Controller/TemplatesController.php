@@ -71,7 +71,7 @@ class TemplatesController extends KunenaController
 	{
 		$tmpKunena = KunenaPath::tmpdir() . '/kinstall/';
 		$dest      = KPATH_SITE . '/template/';
-		$file      = $this->app->input->files->get('install_package', null, 'raw');
+		$file      = $this->input->files->get('install_package', null, 'raw');
 		$result    = true;
 
 		if (!Session::checkToken())
@@ -220,10 +220,10 @@ class TemplatesController extends KunenaController
 	 */
 	public function editscss(): void
 	{
-		$template     = $this->app->input->getArray(['cid' => '']);
+		$template     = $this->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
-		$filename = $this->app->input->get('filename');
+		$filename = $this->input->get('filename');
 
 		if (File::getExt($filename) !== 'scss')
 		{
@@ -248,11 +248,11 @@ class TemplatesController extends KunenaController
 	 */
 	public function applyScss(): void
 	{
-		$template     = $this->app->input->getArray(['cid' => '']);
+		$template     = $this->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
-		$filename    = $this->app->input->get('filename', '', 'cmd');
-		$filecontent = $this->app->input->post->get('filecontent', '', 'raw');
+		$filename    = $this->input->get('filename', '', 'cmd');
+		$filecontent = $this->input->post->get('filecontent', '', 'raw');
 
 		if (!Session::checkToken())
 		{
@@ -298,11 +298,11 @@ class TemplatesController extends KunenaController
 	 */
 	public function saveScss(): void
 	{
-		$template     = $this->app->input->getArray(['cid' => '']);
+		$template     = $this->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
-		$filename    = $this->app->input->get('filename');
-		$filecontent = $this->app->input->get('filecontent', '', 'raw');
+		$filename    = $this->input->get('filename');
+		$filecontent = $this->input->get('filecontent', '', 'raw');
 
 		if (!Session::checkToken('post'))
 		{
@@ -352,10 +352,10 @@ class TemplatesController extends KunenaController
 	 */
 	public function editCss(): void
 	{
-		$template     = $this->app->input->getArray(['cid' => '']);
+		$template     = $this->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
 
-		$filename = $this->app->input->get('filename');
+		$filename = $this->input->get('filename');
 
 		if (File::getExt($filename) !== 'css')
 		{
@@ -380,10 +380,10 @@ class TemplatesController extends KunenaController
 	 */
 	public function applyCss(): void
 	{
-		$template     = $this->app->input->getArray(['cid' => '']);
+		$template     = $this->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
-		$filename     = $this->app->input->get('filename');
-		$filecontent  = $this->app->input->get('filecontent', '', 'raw');
+		$filename     = $this->input->get('filename');
+		$filecontent  = $this->input->get('filecontent', '', 'raw');
 
 		if (!Session::checkToken())
 		{
@@ -425,10 +425,10 @@ class TemplatesController extends KunenaController
 	 */
 	public function saveCss(): void
 	{
-		$template     = $this->app->input->getArray(['cid' => '']);
+		$template     = $this->input->getArray(['cid' => '']);
 		$templatename = array_shift($template['cid']);
-		$filename     = $this->app->input->get('filename');
-		$filecontent  = $this->app->input->get('filecontent', '', 'raw');
+		$filename     = $this->input->get('filename');
+		$filecontent  = $this->input->get('filecontent', '', 'raw');
 
 		if (!Session::checkToken())
 		{

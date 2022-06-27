@@ -60,7 +60,7 @@ class SearchFormDisplay extends KunenaControllerDisplay
 		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
 		$this->state = $this->model->getState();
 
-		$Itemid = $this->app->input->getCmd('Itemid');
+		$Itemid = $this->input->getCmd('Itemid');
 
 		if (!$Itemid && $this->config->sefRedirect)
 		{

@@ -135,10 +135,10 @@ class SmiliesController extends FormController
 			return;
 		}
 
-		$smileyCode        = $this->app->input->getString('smileyCode');
-		$smileyLocation    = basename($this->app->input->getString('smiley_url'));
-		$smileyEmoticonBar = $this->app->input->getInt('smileyEmoticonBar', 0);
-		$smileyId          = $this->app->input->getInt('smileyId', 0);
+		$smileyCode        = $this->input->getString('smileyCode');
+		$smileyLocation    = basename($this->input->getString('smiley_url'));
+		$smileyEmoticonBar = $this->input->getInt('smileyEmoticonBar', 0);
+		$smileyId          = $this->input->getInt('smileyId', 0);
 
 		if (!$smileyId)
 		{
@@ -207,7 +207,7 @@ class SmiliesController extends FormController
 			return;
 		}
 
-		$file = $this->app->input->files->get('Filedata');
+		$file = $this->input->files->get('Filedata');
 
 		// TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\KunenaUploadHelper::upload()
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');

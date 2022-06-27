@@ -135,11 +135,11 @@ class RanksController extends FormController
 			return;
 		}
 
-		$rankTitle   = $this->app->input->getString('rankTitle');
-		$rankImage   = basename($this->app->input->getString('rankImage'));
-		$rankSpecial = $this->app->input->getInt('rankSpecial', 0);
-		$rankMin     = $this->app->input->getInt('rankMin');
-		$rankid      = $this->app->input->getInt('rankid', 0);
+		$rankTitle   = $this->input->getString('rankTitle');
+		$rankImage   = basename($this->input->getString('rankImage'));
+		$rankSpecial = $this->input->getInt('rankSpecial', 0);
+		$rankMin     = $this->input->getInt('rankMin');
+		$rankid      = $this->input->getInt('rankid', 0);
 
 		if (!$rankid)
 		{
@@ -217,7 +217,7 @@ class RanksController extends FormController
 			return;
 		}
 
-		$file = $this->app->input->files->get('Filedata');
+		$file = $this->input->files->get('Filedata');
 
 		// TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\UploadHelper::upload()
 		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getRankPath(), 'html');

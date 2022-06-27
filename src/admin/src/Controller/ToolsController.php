@@ -89,8 +89,8 @@ class ToolsController extends FormController
 			return;
 		}
 
-		$fix    = $this->app->input->getCmd('fix');
-		$delete = $this->app->input->getCmd('delete');
+		$fix    = $this->input->getCmd('fix');
+		$delete = $this->input->getCmd('delete');
 
 		if ($fix)
 		{
@@ -134,7 +134,7 @@ class ToolsController extends FormController
 			return;
 		}
 
-		$ids = $this->app->input->get('prune_forum', [], 'array');
+		$ids = $this->input->get('prune_forum', [], 'array');
 		$ids = ArrayHelper::toInteger($ids);
 
 		$categories = KunenaCategoryHelper::getCategories($ids, false, 'admin');
@@ -148,15 +148,15 @@ class ToolsController extends FormController
 		}
 
 		// Convert days to seconds for timestamp functions...
-		$pruneDays = $this->app->input->getInt('pruneDays', 36500);
+		$pruneDays = $this->input->getInt('pruneDays', 36500);
 		$pruneDate = Factory::getDate()->toUnix() - ($pruneDays * 86400);
 
-		$trashDelete = $this->app->input->getInt('trashDelete', 0);
+		$trashDelete = $this->input->getInt('trashDelete', 0);
 
 		$where   = [];
 		$where[] = " AND tt.last_post_time < {$pruneDate}";
 
-		$controlOptions = $this->app->input->getString('controlOptions', 0);
+		$controlOptions = $this->input->getString('controlOptions', 0);
 
 		if ($controlOptions == 'answered')
 		{
@@ -197,7 +197,7 @@ class ToolsController extends FormController
 		}
 
 		// Keep sticky topics?
-		if ($this->app->input->getInt('keepsticky', 1))
+		if ($this->input->getInt('keepsticky', 1))
 		{
 			$where[] = ' AND tt.ordering=0';
 		}
@@ -252,10 +252,10 @@ class ToolsController extends FormController
 	 */
 	public function syncUsers(): void
 	{
-		$userAdd     = $this->app->input->getBool('userAdd', 0);
-		$userDel     = $this->app->input->getBool('userDel', 0);
-		$userRename  = $this->app->input->getBool('userRename', 0);
-		$userDelLife = $this->app->input->getBool('userDelLife', 0);
+		$userAdd     = $this->input->getBool('userAdd', 0);
+		$userDel     = $this->input->getBool('userDel', 0);
+		$userRename  = $this->input->getBool('userRename', 0);
+		$userDelLife = $this->input->getBool('userDelLife', 0);
 
 		$db = Factory::getContainer()->get('DatabaseDriver');
 
@@ -781,7 +781,7 @@ class ToolsController extends FormController
 			return;
 		}
 
-		$reString = $this->app->input->getString('reString');
+		$reString = $this->input->getString('reString');
 
 		if ($reString != null)
 		{
@@ -845,7 +845,7 @@ class ToolsController extends FormController
 			return;
 		}
 
-		$cleanupDays = $this->app->input->getInt('cleanup_ip_days', 365);
+		$cleanupDays = $this->input->getInt('cleanup_ip_days', 365);
 		$where       = '';
 
 		if ($cleanupDays)
@@ -882,7 +882,7 @@ class ToolsController extends FormController
 
 		$count = $db->getAffectedRows();
 
-		$deleteIpUsers = $this->app->input->getBool('deleteIpUsers', 0);
+		$deleteIpUsers = $this->input->getBool('deleteIpUsers', 0);
 
 		if ($deleteIpUsers)
 		{
@@ -955,9 +955,9 @@ class ToolsController extends FormController
 		}
 
 		// Check if the user has the super-administrator rights
-		$username = $this->app->input->getString('username');
-		$password = $this->app->input->getString('password');
-		$code     = $this->app->input->getInt('secretkey');
+		$username = $this->input->getString('username');
+		$password = $this->input->getString('password');
+		$code     = $this->input->getInt('secretkey');
 
 		$login = KunenaLogin::getInstance();
 

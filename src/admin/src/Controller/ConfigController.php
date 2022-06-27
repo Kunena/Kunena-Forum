@@ -94,7 +94,7 @@ class ConfigController extends FormController
 		}
 
 		$properties = KunenaConfig::getInstance()->getProperties();
-		$postConfig = $this->app->input->post->getArray();
+		$postConfig = $this->input->post->getArray();
 
 		foreach ($postConfig as $postsetting => $postvalue)
 		{

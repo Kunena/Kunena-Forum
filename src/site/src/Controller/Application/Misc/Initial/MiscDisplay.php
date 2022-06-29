@@ -131,7 +131,7 @@ class MiscDisplay extends Display
 	{
 		parent::before();
 
-		$params       = ComponentHelper::getParams('com_kunena');
+		$params       = $this->app->getParams('com_kunena');
 		$this->header = $params->get('page_title');
 		$Itemid       = $this->input->getInt('Itemid');
 

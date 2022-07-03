@@ -269,7 +269,7 @@ if ($saveOrder && !empty($this->items))
 										<?php endif; ?>
 									</td>
                                     <td class="center">
-										<?php echo HTMLHelper::_('kunenagrid.published', $i, $item->published, 'category.'); ?>
+										<?php echo HTMLHelper::_('jgrid.published', $item->published,  $i, 'category.'); ?>
                                     </td>
                                     <td class="center">
 										<?php if (!$this->filter->Item || ($this->filter->Item != $item->id && $item->parentid))

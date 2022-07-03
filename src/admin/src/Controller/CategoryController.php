@@ -379,13 +379,13 @@ class CategoryController extends KunenaController
 	 */
 	public function checkin()
 	{
-		// TODO : need to implement the logic to checkin teh category
+		// TODO : need to implement the logic to checkin the category
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
-	
+
 	/**
-	 * Publish
+	 * Publish category item
 	 *
 	 * @return  void
 	 *
@@ -395,15 +395,15 @@ class CategoryController extends KunenaController
 	 */
 	public function publish(): void
 	{
-	    $cid = $this->app->input->get('cid', [], 'array');
-	    $cid = ArrayHelper::toInteger($cid);
-	    
-	    $this->setVariable($cid, 'published', 1);
-	    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid);
+
+		$this->setVariable($cid, 'published', 1);
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
-	
+
 	/**
-	 * Unpublish
+	 * Unpublish category item
 	 *
 	 * @return  void
 	 *
@@ -413,13 +413,13 @@ class CategoryController extends KunenaController
 	 */
 	public function unpublish(): void
 	{
-	    $cid = $this->app->input->get('cid', [], 'array');
-	    $cid = ArrayHelper::toInteger($cid);
-	    
-	    $this->setVariable($cid, 'published', 0);
-	    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$cid = $this->app->input->get('cid', [], 'array');
+		$cid = ArrayHelper::toInteger($cid);
+
+		$this->setVariable($cid, 'published', 0);
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
-	
+
 	/**
 	 * Set variable
 	 *
@@ -435,75 +435,75 @@ class CategoryController extends KunenaController
 	 */
 	protected function setVariable(array $cid, string $variable, string $value): void
 	{
-	    KunenaFactory::loadLanguage('com_kunena', 'admin');
-	    
-	    if (!Session::checkToken('post'))
-	    {
-	        $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-	        
-	        return;
-	    }
-	    
-	    if (empty($cid))
-	    {
-	        $this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
-	        
-	        return;
-	    }
-	    
-	    $count = 0;
-	    $name  = null;
-	    
-	    $categories = KunenaCategoryHelper::getCategories($cid);
-	    
-	    foreach ($categories as $category)
-	    {
-	        if ($category->get($variable) == $value)
-	        {
-	            continue;
-	        }
-	        
-	        if (!$category->isAuthorised('admin'))
-	        {
-	            $this->app->enqueueMessage(
-	                Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
-	                'notice'
-	                );
-	        }
-	        elseif (!$category->isCheckedOut($this->me->userid))
-	        {
-	            $category->set($variable, $value);
-	            
-	            if ($category->save())
-	            {
-	                $count++;
-	                $name = $category->name;
-	            }
-	            else
-	            {
-	                $this->app->enqueueMessage(
-	                    Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
-	                    'error'
-	                    );
-	            }
-	        }
-	        else
-	        {
-	            $this->app->enqueueMessage(
-	                Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
-	                'notice'
-	                );
-	        }
-	    }
-	    
-	    if ($count == 1 && $name)
-	    {
-	        $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVED', $this->escape($name)), 'success');
-	    }
-	    
-	    if ($count > 1)
-	    {
-	        $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count), 'success');
-	    }
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
+
+		if (!Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+
+			return;
+		}
+
+		if (empty($cid))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
+
+			return;
+		}
+
+		$count = 0;
+		$name  = null;
+
+		$categories = KunenaCategoryHelper::getCategories($cid);
+
+		foreach ($categories as $category)
+		{
+			if ($category->get($variable) == $value)
+			{
+				continue;
+			}
+
+			if (!$category->isAuthorised('admin'))
+			{
+				$this->app->enqueueMessage(
+					Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
+					'notice'
+					);
+			}
+			elseif (!$category->isCheckedOut($this->me->userid))
+			{
+				$category->set($variable, $value);
+
+				if ($category->save())
+				{
+					$count++;
+					$name = $category->name;
+				}
+				else
+				{
+					$this->app->enqueueMessage(
+						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
+						'error'
+						);
+				}
+			}
+			else
+			{
+				$this->app->enqueueMessage(
+					Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
+					'notice'
+					);
+			}
+		}
+
+		if ($count == 1 && $name)
+		{
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVED', $this->escape($name)), 'success');
+		}
+
+		if ($count > 1)
+		{
+			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count), 'success');
+		}
 	}
 }

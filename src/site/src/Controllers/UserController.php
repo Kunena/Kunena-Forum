@@ -582,11 +582,22 @@ class UserController extends KunenaController
 		$user     = new User($this->user->id);
 
 		// Bind the form fields to the user table and save.
-		if (!$user->bind($post) || !$user->save(true))
+		try 
 		{
-			$this->app->enqueueMessage($user->getError(), 'error');
+			$user->bind($post);
+		}
+		catch (Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+		}
 
-			return false;
+		try
+		{
+			$user->save(true);
+		}
+		catch (Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
 
 		// Reload the user.

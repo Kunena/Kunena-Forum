@@ -287,11 +287,13 @@ class CategoriesModel extends KunenaModel
 			{
 				$table->ordering = $order[$i];
 
-				if (!$table->store())
+				try
 				{
-					Factory::getApplication()->enqueueMessage($table->getError(), 'error');
-
-					return false;
+					$table->store();
+				}
+				catch (Exception $e)
+				{
+					Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 				}
 
 				// Remember to reOrder within position and client_id

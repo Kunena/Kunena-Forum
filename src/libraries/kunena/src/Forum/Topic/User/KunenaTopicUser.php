@@ -197,11 +197,13 @@ class KunenaTopicUser extends CMSObject
 		// Create the table object
 		$table = $this->getTable();
 
-		$result = $table->delete(['topic_id' => $this->topic_id, 'user_id' => $this->user_id]);
-
-		if (!$result)
+		try
 		{
-			$this->setError($table->getError());
+			$result = $table->delete(['topic_id' => $this->topic_id, 'user_id' => $this->user_id]);
+		}
+		catch (Exception $e)
+		{
+			throw new Exception($e->getMessage());
 		}
 
 		$this->_exists = false;
@@ -332,8 +334,6 @@ class KunenaTopicUser extends CMSObject
 		// Check and store the object.
 		if (!$table->check())
 		{
-			$this->setError($table->getError());
-
 			return false;
 		}
 
@@ -347,9 +347,13 @@ class KunenaTopicUser extends CMSObject
 		}
 
 		// Store the topic data in the database
-		if (!$result = $table->store())
+		try 
 		{
-			$this->setError($table->getError());
+			$result = $table->store();
+		}
+		catch (Exception $e)
+		{
+			throw new Exception($e->getMessage());
 		}
 
 		// Fill up \Kunena\Forum\Libraries\Forum\Topic\TopicUser object in case we created a new topic.

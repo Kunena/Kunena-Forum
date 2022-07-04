@@ -130,18 +130,21 @@ class CategoriesController extends KunenaController
 			{
 				$category->set($variable, $value);
 
-				if ($category->save())
+				try
 				{
-					$count++;
-					$name = $category->name;
+					$category->save();
 				}
-				else
+				catch (Exception $e) 
 				{
 					$this->app->enqueueMessage(
-						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
+						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
 						'error'
-					);
+						);
 				}
+
+				// At this point the category should be saved without errors
+				$count++;
+				$name = $category->name;
 			}
 			else
 			{
@@ -437,15 +440,18 @@ class CategoriesController extends KunenaController
 			}
 			elseif (!$category->isCheckedOut($this->me->userid))
 			{
-				if ($category->delete())
+				try 
 				{
-					$count++;
-					$name = $category->name;
+					$category->delete();
 				}
-				else
+				catch (Exception $e)
 				{
-					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETE_FAILED', $this->escape($category->getError())), 'error');
+					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETE_FAILED', $this->escape($e->getMessage())), 'error');
 				}
+
+				// At this point the category should be deleted without errors
+				$count++;
+				$name = $category->name;
 			}
 			else
 			{
@@ -560,14 +566,17 @@ class CategoriesController extends KunenaController
 			elseif (!$category->isCheckedOut($this->me->userid))
 			{
 				$category->set('ordering', $order [$category->id]);
-				$success = $category->save();
 
-				if (!$success)
+				try
+				{
+					$category->save();
+				}
+				catch (Exception $e)
 				{
 					$this->app->enqueueMessage(
-						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
+						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
 						'error'
-					);
+						);
 				}
 			}
 			else

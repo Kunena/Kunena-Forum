@@ -679,11 +679,13 @@ class KunenaPoll extends CMSObject
 		// Create the table object
 		$table = $this->getTable();
 
-		$success = $table->delete($this->id);
-
-		if (!$success)
+		try
 		{
-			$this->setError($table->getError());
+			$table->delete($this->id);
+		}
+		catch (Exception $e) 
+		{
+			throw new Exception($e->getMessage());
 		}
 
 		$this->_exists = false;
@@ -725,11 +727,14 @@ class KunenaPoll extends CMSObject
 		if ($success && $topic->exists() && $topic->poll_id)
 		{
 			$topic->poll_id = 0;
-			$success        = $topic->save();
 
-			if (!$success)
+			try
 			{
-				$this->setError($topic->getError());
+				$topic->save();
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
 			}
 		}
 
@@ -776,11 +781,13 @@ class KunenaPoll extends CMSObject
 		$table->exists($this->_exists);
 
 		// Store the topic data in the database
-		if (!$table->store())
+		try
 		{
-			$this->setError($table->getError());
-
-			return false;
+			$table->store();
+		} 
+		catch (Exception $e)
+		{
+			throw new Exception($e->getMessage());
 		}
 
 		// Set the id for the \Kunena\Forum\Libraries\Forum\Topic\Topic object in case we created a new topic.

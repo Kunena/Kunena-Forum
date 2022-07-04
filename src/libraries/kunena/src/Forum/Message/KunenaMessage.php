@@ -775,11 +775,13 @@ class KunenaMessage extends KunenaDatabaseObject
 		if ($newTopic)
 		{
 			// Create topic, but do not cascade changes to category etc..
-			if (!$topic->save(false))
+			try
 			{
-				$this->setError($topic->getError());
-
-				return false;
+				$topic->save(false);
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
 			}
 
 			$this->_thread = $this->thread = $topic->id;
@@ -829,11 +831,13 @@ class KunenaMessage extends KunenaDatabaseObject
 			$table->bind($this->getProperties());
 			$table->exists(true);
 
-			if (!$table->store())
+			try
 			{
-				$this->setError($table->getError());
-
-				return false;
+				$table->store();
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
 			}
 		}
 
@@ -1059,9 +1063,13 @@ class KunenaMessage extends KunenaDatabaseObject
 		{
 			$topic = KunenaTopicHelper::get($this->_thread);
 
-			if (!$topic->update($this, -1))
+			try
 			{
-				$this->setError($topic->getError());
+				$topic->update($this, -1);
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
 			}
 		}
 

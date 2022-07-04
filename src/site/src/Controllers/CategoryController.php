@@ -109,12 +109,14 @@ class CategoryController extends CategoriesController
 			// One category
 			$category = KunenaCategoryHelper::get($catid);
 
-			if (!$category->isAuthorised('read'))
+			try
 			{
-				$this->app->enqueueMessage($category->getError(), 'error');
+				$category->isAuthorised('read');
+			}
+			catch (Exception $e)
+			{
+				$this->app->enqueueMessage($e->getMessage(), 'error');
 				$this->setRedirectBack();
-
-				return;
 			}
 
 			$session = KunenaFactory::getSession();
@@ -166,12 +168,14 @@ class CategoryController extends CategoriesController
 
 		$category = KunenaCategoryHelper::get($this->app->input->getInt('catid', 0));
 
-		if (!$category->isAuthorised('read'))
+		try
 		{
-			$this->app->enqueueMessage($category->getError(), 'error');
+			$category->isAuthorised('read');
+		}
+		catch (Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 			$this->setRedirectBack();
-
-			return;
 		}
 
 		if ($this->me->exists())

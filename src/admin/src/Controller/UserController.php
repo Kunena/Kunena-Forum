@@ -291,13 +291,13 @@ class UserController extends FormController
 			{
 				list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
-				foreach ($messages as $object)
+				foreach ($messages as $message)
 				{
-					$topic = $object->getTopic();
+					$topic = $message->getTopic();
 
-					if (!$object->isAuthorised('move'))
+					if (!$message->isAuthorised('move'))
 					{
-						$error = $object->getError();
+						$error = $message->getError();
 					}
 					else
 					{

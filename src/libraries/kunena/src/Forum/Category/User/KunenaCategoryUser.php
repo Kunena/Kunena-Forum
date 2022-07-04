@@ -163,7 +163,7 @@ class KunenaCategoryUser extends CMSObject
 		// Check and store the object.
 		if (!$table->check())
 		{
-			$this->setError($table->getError());
+			throw new Exception($table->getError());
 
 			return false;
 		}
@@ -184,7 +184,7 @@ class KunenaCategoryUser extends CMSObject
 		}
 		catch (Exception $e)
 		{
-			KunenaError::displayDatabaseError($e);
+			throw new Exception($e->getMessage());
 
 			return false;
 		}

@@ -889,7 +889,15 @@ class TopicController extends KunenaController
 		}
 
 		// Save message
-		$success = $message->save();
+		try
+		{
+			$message->save();
+		}
+		catch (Exception $e)
+		{
+			$this->app->enqueueMessage($e->getMessage(), 'error');
+			$this->setRedirectBack();
+		}
 
 		// Save IP address of user
 		if ($this->config->ipTracking)
@@ -907,14 +915,6 @@ class TopicController extends KunenaController
 				$category,
 				$topic
 			);
-		}
-
-		if (!$success)
-		{
-			$this->app->enqueueMessage($message->getError(), 'error');
-			$this->setRedirectBack();
-
-			return;
 		}
 
 		// Message has been sent, we can now clear saved form
@@ -945,16 +945,18 @@ class TopicController extends KunenaController
 
 				$poll->setOptions($poll_options);
 
-				if (!$poll->save())
+				try
 				{
-					$this->app->enqueueMessage($poll->getError(), 'error');
+					$poll->save();
 				}
-				else
+				catch (Exception $e)
 				{
-					$topic->poll_id = $poll->id;
-					$topic->save();
-					$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
+					$this->app->enqueueMessage($e->getMessage(), 'error');
 				}
+
+				$topic->poll_id = $poll->id;
+				$topic->save();
+				$this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
 			}
 			else
 			{

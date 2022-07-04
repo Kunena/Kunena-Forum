@@ -355,25 +355,25 @@ class UsersController extends KunenaController
 		if (!$ban->id)
 		{
 			$ban->ban($userid);
-			$success = $ban->save();
 		}
 		else
 		{
 			$now = new Date;
 			$ban->setExpiration($now);
-			$success = $ban->save();
 		}
 
 		$message = Text::_('COM_KUNENA_USER_BANNED_DONE');
 
-		if (!$success)
+		try
 		{
-			$this->app->enqueueMessage($ban->getError(), 'error');
+			$ban->save();
 		}
-		else
+		catch (Exception $e) 
 		{
-			$this->app->enqueueMessage($message, 'success');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
+
+		$this->app->enqueueMessage($message, 'success');
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
@@ -414,25 +414,25 @@ class UsersController extends KunenaController
 		if (!$ban->id)
 		{
 			$ban->ban($userid);
-			$success = $ban->save();
 		}
 		else
 		{
 			$now = new Date;
 			$ban->setExpiration($now);
-			$success = $ban->save();
 		}
 
 		$message = Text::_('COM_KUNENA_USER_UNBAN_DONE');
 
-		if (!$success)
+		try
 		{
-			$this->app->enqueueMessage($ban->getError(), 'error');
+			$ban->save();
 		}
-		else
+		catch (Exception $e)
 		{
-			$this->app->enqueueMessage($message, 'success');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
+
+		$this->app->enqueueMessage($message, 'success');
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
@@ -580,17 +580,21 @@ class UsersController extends KunenaController
 			if ($user->moderator != !empty($moderator))
 			{
 				$user->moderator = \intval(!empty($moderator));
-				$success         = $user->save();
+
+				try
+				{
+					$success = $user->save();
+				}
+				catch (Exception $e)
+				{
+					$this->app->enqueueMessage($e->getMessage(), 'error');
+				}
 			}
 		}
 
 		$message = Text::_('COM_KUNENA_USER_UNMODERATE_DONE');
 
-		if (!$success)
-		{
-			$this->app->enqueueMessage($user->getError(), 'error');
-		}
-		else
+		if ($success)
 		{
 			$this->app->enqueueMessage($message, 'success');
 		}
@@ -634,25 +638,25 @@ class UsersController extends KunenaController
 		if (!$ban->id)
 		{
 			$ban->ban($userid, null, 1);
-			$success = $ban->save();
 		}
 		else
 		{
 			$now = new Date;
 			$ban->setExpiration($now);
-			$success = $ban->save();
 		}
 
 		$message = Text::_('COM_KUNENA_USER_BLOCKED_DONE');
 
-		if (!$success)
+		try
 		{
-			$this->app->enqueueMessage($ban->getError(), 'error');
+			$ban->save();
 		}
-		else
+		catch (Exception $e)
 		{
-			$this->app->enqueueMessage($message, 'success');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
+
+		$this->app->enqueueMessage($message, 'success');
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
@@ -693,25 +697,25 @@ class UsersController extends KunenaController
 		if (!$ban->id)
 		{
 			$ban->ban($userid, null, 1);
-			$success = $ban->save();
 		}
 		else
 		{
 			$now = new Date;
 			$ban->setExpiration($now);
-			$success = $ban->save();
 		}
 
 		$message = Text::_('COM_KUNENA_USER_UNBLOCK_DONE');
 
-		if (!$success)
+		try
 		{
-			$this->app->enqueueMessage($ban->getError(), 'error');
+			$ban->save();
 		}
-		else
+		catch (Exception $e)
 		{
-			$this->app->enqueueMessage($message, 'success');
+			$this->app->enqueueMessage($e->getMessage(), 'error');
 		}
+
+		$this->app->enqueueMessage($message, 'success');
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}

@@ -265,11 +265,13 @@ class KunenaTopic extends KunenaDatabaseObject
 		$usertopic             = $this->getUserTopic($user);
 		$usertopic->subscribed = (int) $value;
 
-		if (!$usertopic->save())
+		try 
 		{
-			$this->setError($usertopic->getError());
-
-			return false;
+			$usertopic->save();
+		}
+		catch (Exception $e)
+		{
+			throw new Exception($e->getMessage());
 		}
 
 		return true;
@@ -304,11 +306,13 @@ class KunenaTopic extends KunenaDatabaseObject
 		$usertopic           = $this->getUserTopic($user);
 		$usertopic->favorite = (int) $value;
 
-		if (!$usertopic->save())
+		try
 		{
-			$this->setError($usertopic->getError());
-
-			return false;
+			$usertopic->save();
+		}
+		catch (Exception $e)
+		{
+			throw new Exception($e->getMessage());
 		}
 
 		return true;
@@ -358,9 +362,13 @@ class KunenaTopic extends KunenaDatabaseObject
 		{
 			$category = $this->getCategory();
 
-			if (!$category->update($this, $topicDelta, $postDelta))
+			try
 			{
-				$this->setError($category->getError());
+				$category->update($this, $topicDelta, $postDelta);
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
 			}
 		}
 
@@ -720,18 +728,26 @@ class KunenaTopic extends KunenaDatabaseObject
 			// Update user topic
 			$usertopic = $this->getUserTopic($message->userid);
 
-			if (!$usertopic->update($message, $postdelta))
+			try
 			{
-				$this->setError($usertopic->getError());
+				$usertopic->update($message, $postdelta);
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
 			}
 
 			// Update post count from user
 			$user        = KunenaUserHelper::get($message->userid);
 			$user->posts += $postdelta;
 
-			if (!$user->save())
+			try
 			{
-				$this->setError($user->getError());
+				$user->save();
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
 			}
 		}
 		else
@@ -1759,11 +1775,13 @@ class KunenaTopic extends KunenaDatabaseObject
 		// We will soon need target topic id, so save if it doesn't exist
 		if (!$target->exists())
 		{
-			if (!$target->save(false))
+			try
 			{
-				$this->setError($target->getError());
-
-				return false;
+				$target->save(false);
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
 			}
 		}
 
@@ -1931,11 +1949,13 @@ class KunenaTopic extends KunenaDatabaseObject
 			);
 
 			// Save target topic
-			if (!$target->save(false))
+			try
 			{
-				$this->setError($target->getError());
-
-				return false;
+				$target->save(false);
+			}
+			catch (Exception $e)
+			{
+				throw new Exception($e->getMessage());
 			}
 
 			// Update user topic information (topic, category)

@@ -802,23 +802,34 @@ abstract class KunenaTableObject
 	{
 		if ($this->exists())
 		{
-			$ret = static::$db->updateObject(static::$tbl, $this, static::$tbl_keys, $updateNulls);
+			try 
+			{
+				static::$db->updateObject(static::$tbl, $this, static::$tbl_keys, $updateNulls);
+			}
+			catch (RuntimeException $e)
+			{
+				throw new RuntimeException(\get_class($this) . '::store failed - ' . $e->getMessage());
+
+				return false;
+			}
 		}
 		else
 		{
-			$ret = static::$db->insertObject(static::$tbl, $this, static::$tbl_keys);
+			try
+			{
+				static::$db->insertObject(static::$tbl, $this, static::$tbl_keys);
+			}
+			catch (RuntimeException $e)
+			{
+				throw new RuntimeException(\get_class($this) . '::store failed - ' . $e->getMessage());
+
+				return false;
+			}
 		}
 
 		if (static::$locked)
 		{
 			$this->unlock();
-		}
-
-		if (!$ret)
-		{
-			$this->setError(\get_class($this) . '::store failed - ' . static::$db->getErrorMsg());
-
-			return false;
 		}
 
 		$this->_exists = true;

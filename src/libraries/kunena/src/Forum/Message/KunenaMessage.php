@@ -822,7 +822,7 @@ class KunenaMessage extends KunenaDatabaseObject
 					$topic->delete();
 				}
 
-				$this->setError(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
+				throw new Exception(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
 
 				return false;
 			}
@@ -931,7 +931,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
 			if (!$attachment->delete())
 			{
-				$this->setError($attachment->getError());
+				throw new Exception($attachment->getError());
 			}
 			else
 			{
@@ -981,7 +981,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
 			if (!$attachment->delete())
 			{
-				$this->setError($attachment->getError());
+				throw new Exception($attachment->getError());
 			}
 		}
 
@@ -1091,7 +1091,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		}
 		elseif (!$topic->update($this, $postDelta))
 		{
-			$this->setError($topic->getError());
+			throw new Exception($topic->getError());
 		}
 
 		// Activity integration
@@ -1558,14 +1558,14 @@ class KunenaMessage extends KunenaDatabaseObject
 			// Email address must be valid
 			if (!MailHelper::isEmailAddress($this->email))
 			{
-				$this->setError(Text::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_INVALID'));
+				throw new Exception(Text::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_INVALID'));
 
 				return false;
 			}
 		}
 		elseif (!KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askEmail)
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY'));
+			throw new Exception(Text::_('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY'));
 
 			return false;
 		}
@@ -1598,7 +1598,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
 		if ($this->hold < 0 || $this->hold > 3)
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_MESSAGE_ERROR_HOLD_INVALID'));
+			throw new Exception(Text::_('COM_KUNENA_LIB_MESSAGE_ERROR_HOLD_INVALID'));
 
 			return false;
 		}
@@ -1636,7 +1636,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
 			if ($lastPostTime + $config->floodProtection > Factory::getDate()->toUnix())
 			{
-				$this->setError(Text::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int) $config->floodProtection));
+				throw new Exception(Text::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int) $config->floodProtection));
 
 				return false;
 			}
@@ -1669,7 +1669,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
 			if ($id)
 			{
-				$this->setError(Text::_('COM_KUNENA_POST_DUPLICATE_IGNORED'));
+				throw new Exception(Text::_('COM_KUNENA_POST_DUPLICATE_IGNORED'));
 
 				return false;
 			}

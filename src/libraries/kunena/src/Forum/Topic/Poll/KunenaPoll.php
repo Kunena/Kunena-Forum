@@ -381,7 +381,7 @@ class KunenaPoll extends CMSObject
 	{
 		if (!$this->exists())
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));
+			throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));
 
 			return false;
 		}
@@ -390,7 +390,7 @@ class KunenaPoll extends CMSObject
 
 		if (!isset($options[$option]))
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_DOES_NOT_EXIST'));
+			throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_DOES_NOT_EXIST'));
 
 			return false;
 		}
@@ -399,7 +399,7 @@ class KunenaPoll extends CMSObject
 
 		if (!$user->exists())
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_NOT_EXIST'));
+			throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_NOT_EXIST'));
 
 			return false;
 		}
@@ -476,7 +476,7 @@ class KunenaPoll extends CMSObject
 			{
 				KunenaError::displayDatabaseError($e);
 
-				$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
+				throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
 
 				return false;
 			}
@@ -508,7 +508,7 @@ class KunenaPoll extends CMSObject
 			{
 				KunenaError::displayDatabaseError($e);
 
-				$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
+				throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
 
 				return false;
 			}
@@ -635,7 +635,7 @@ class KunenaPoll extends CMSObject
 		{
 			KunenaError::displayDatabaseError($e);
 
-			$this->setError(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_SAVE_FAIL'));
+			throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_SAVE_FAIL'));
 
 			return false;
 		}
@@ -770,7 +770,7 @@ class KunenaPoll extends CMSObject
 
 		if ($isnew && empty($this->newOptions))
 		{
-			$this->setError(Text::_('COM_KUNENA_LIB_POLL_SAVE_ERROR_NEW_AND_NO_OPTIONS'));
+			throw new Exception(Text::_('COM_KUNENA_LIB_POLL_SAVE_ERROR_NEW_AND_NO_OPTIONS'));
 
 			return false;
 		}

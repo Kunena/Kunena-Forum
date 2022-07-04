@@ -910,7 +910,7 @@ class KunenaUser extends CMSObject
 
 		if (!$result)
 		{
-			$this->setError($table->getError());
+			throw new Exception($table->getError());
 		}
 
 		$access = KunenaAccess::getInstance();
@@ -1296,7 +1296,7 @@ class KunenaUser extends CMSObject
 		// Check and store the object.
 		if (!$table->check())
 		{
-			$this->setError($table->getError());
+			throw new Exception($table->getError());
 
 			return false;
 		}
@@ -1324,7 +1324,7 @@ class KunenaUser extends CMSObject
 		// Store the user data in the database
 		if (!$result = $table->store())
 		{
-			$this->setError($table->getError());
+			throw new Exception($table->getError());
 		}
 
 		$access = KunenaAccess::getInstance();

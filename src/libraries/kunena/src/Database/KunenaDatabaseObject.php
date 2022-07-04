@@ -331,7 +331,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 
 		if (\in_array(false, $result, true))
 		{
-			$this->setError($table->getError());
+			throw new Exception($table->getError());
 
 			return false;
 		}

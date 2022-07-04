@@ -750,8 +750,8 @@ abstract class KunenaTableObject
 				static::$db->quoteName($orderingFilter) . ' = ' . static::$db->quote($filterValue) : '');
 		}
 
-		// Set the error to empty and return true.
-		$this->setError('');
+		// Throw exception to empty and return true.
+		throw new Exception('');
 
 		return true;
 	}

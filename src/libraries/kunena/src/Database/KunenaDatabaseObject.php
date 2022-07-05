@@ -249,11 +249,13 @@ abstract class KunenaDatabaseObject extends CMSObject
 		}
 
 		// Store the data, the store() method from Joomla\CMS\Table\Table return only boolean and not exception.
-		$result = $table->store();
-
-		if (!$result)
+		try
 		{
-			throw new KunenaException($table->getError());
+			$table->store();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaException($e->getMessage());
 		}
 
 		// If item was created, load the object.

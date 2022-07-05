@@ -906,11 +906,13 @@ class KunenaUser extends CMSObject
 		// Delete user table object
 		$table = $this->getTable();
 
-		$result = $table->delete($this->userid);
-
-		if (!$result)
+		try
 		{
-			throw new Exception($table->getError());
+			$result = $table->delete($this->userid);
+		}
+		catch (Exception $e)
+		{
+			throw new Exception($e->getMessage());
 		}
 
 		$access = KunenaAccess::getInstance();

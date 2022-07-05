@@ -797,7 +797,7 @@ class KunenaBan extends parentAlias
 		// Check and store the object.
 		if (!$table->check())
 		{
-			$this->setError($table->getError());
+			throw new KunenaException($table->getError());
 
 			return false;
 		}
@@ -824,7 +824,7 @@ class KunenaBan extends parentAlias
 			// Change user block also in Joomla
 			if (!$user)
 			{
-				$this->setError("User {$this->userid} does not exist!");
+				throw new KunenaException("User {$this->userid} does not exist!");
 
 				return false;
 			}
@@ -852,11 +852,13 @@ class KunenaBan extends parentAlias
 		}
 
 		// Store the ban data in the database
-		$result = $table->store();
-
-		if (!$result)
+		try
 		{
-			$this->setError($table->getError());
+			$result = $table->store();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaException($e->getMessage());
 		}
 
 		// Set the id for the \Kunena\Forum\Libraries\User\Ban object in case we created a new ban.
@@ -923,11 +925,13 @@ class KunenaBan extends parentAlias
 		// Create the user table object
 		$table = $this->getTable();
 
-		$result = $table->delete($this->id);
-
-		if (!$result)
+		try
 		{
-			$this->setError($table->getError());
+			$result = $table->delete($this->id);
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaException($e->getMessage());
 		}
 
 		return $result;

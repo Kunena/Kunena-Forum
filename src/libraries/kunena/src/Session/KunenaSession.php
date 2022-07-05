@@ -270,9 +270,13 @@ class KunenaSession extends CMSObject
 		}
 
 		// Store the user data in the database
-		if (!$result = $table->store())
+		try
 		{
-			$this->setError($table->getError());
+			$result = $table->store();
+		}
+		catch (Exception $e)
+		{
+			throw new RuntimeException($e->getMessage());
 		}
 
 		// Set the id for the Joomla\CMS\User\User object in case we created a new user.
@@ -308,11 +312,13 @@ class KunenaSession extends CMSObject
 		// Create the user table object
 		$table = $this->getTable();
 
-		$result = $table->delete($this->userid);
-
-		if (!$result)
+		try
 		{
-			$this->setError($table->getError());
+			$result = $table->delete($this->userid);
+		} 
+		catch (Exception $e) 
+		{
+			throw new RuntimeException($e->getMessage());
 		}
 
 		return $result;

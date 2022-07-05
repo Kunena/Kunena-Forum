@@ -618,7 +618,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		{
 			if (!$exists)
 			{
-				$this->setError(Text::_('COM_KUNENA_LIB_TOPIC_NOT_EXISTS'));
+				throw new Exception(Text::_('COM_KUNENA_LIB_TOPIC_NOT_EXISTS'));
 
 				return false;
 			}
@@ -1664,7 +1664,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		// Find out where we are moving the messages
 		if (!$target || !$target->exists())
 		{
-			$this->setError(Text::sprintf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
+			throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
 
 			return false;
 		}
@@ -1676,7 +1676,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			if ($target == $this)
 			{
 				// We cannot move topic into itself
-				$this->setError(Text::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $this->id, $this->id));
+				throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $this->id, $this->id));
 
 				return false;
 			}
@@ -1684,7 +1684,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			if ($this->moved_id)
 			{
 				// Moved topic cannot be merged with another topic -- it has no posts to be moved
-				$this->setError(Text::sprintf('COM_KUNENA_MODERATION_ERROR_ALREADY_SHADOW', $this->id));
+				throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_ALREADY_SHADOW', $this->id));
 
 				return false;
 			}
@@ -1692,7 +1692,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			if ($this->poll_id && $target->poll_id)
 			{
 				// We cannot currently have 2 polls in one topic -- fail
-				$this->setError(Text::_('COM_KUNENA_MODERATION_CANNOT_MOVE_TOPIC_WITH_POLL_INTO_ANOTHER_WITH_POLL'));
+				throw new Exception(Text::_('COM_KUNENA_MODERATION_CANNOT_MOVE_TOPIC_WITH_POLL_INTO_ANOTHER_WITH_POLL'));
 
 				return false;
 			}
@@ -1710,7 +1710,7 @@ class KunenaTopic extends KunenaDatabaseObject
 			if ($target->isSection())
 			{
 				// Section cannot have any topics
-				$this->setError(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_MOVE_SECTION'));
+				throw new Exception(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_MOVE_SECTION'));
 
 				return false;
 			}
@@ -1765,7 +1765,7 @@ class KunenaTopic extends KunenaDatabaseObject
 		}
 		else
 		{
-			$this->setError(Text::_('COM_KUNENA_MODERATION_ERROR_WRONG_TARGET'));
+			throw new Exception(Text::_('COM_KUNENA_MODERATION_ERROR_WRONG_TARGET'));
 
 			return false;
 		}

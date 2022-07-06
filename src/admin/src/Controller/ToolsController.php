@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
@@ -972,7 +973,7 @@ class ToolsController extends FormController
 
 		$logged = $login->loginUser($username, $password);
 
-		$user = Factory::getUser(UserHelper::getUserId($username));
+		$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserByUsername($username);
 
 		$isRoot = $user->authorise('core.admin');
 

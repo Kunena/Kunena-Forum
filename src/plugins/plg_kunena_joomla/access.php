@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
@@ -455,13 +456,7 @@ class KunenaAccessJoomla
 	 */
 	public function authoriseCategories(int $userid, array $categories): array
 	{
-		$user = Factory::getUser($userid);
-
-		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
-		if (!($user instanceof User))
-		{
-			$user = User::getInstance();
-		}
+		$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();
 		$groups_r     = (array) Access::getGroupsByUser($user->id, true);

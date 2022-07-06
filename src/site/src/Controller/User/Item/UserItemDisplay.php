@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
@@ -102,7 +103,7 @@ class UserItemDisplay extends KunenaControllerDisplay
 		$this->state = $model->getState();
 
 		$this->me      = KunenaUserHelper::getMyself();
-		$this->user    = Factory::getUser($userid);
+		$this->user    = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
 		$this->candisplaymail = $this->me->canDisplayEmail($this->profile);

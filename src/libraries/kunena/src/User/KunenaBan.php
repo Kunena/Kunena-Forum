@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject as parentAlias;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Date\KunenaDate;
@@ -818,8 +819,7 @@ class KunenaBan extends parentAlias
 
 		if ($this->userid)
 		{
-			// The non-deprecated methods provided by Joomla! to load an user doesn't allow to load an user by id :(
-			$user = Factory::getUser($this->userid);
+			$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->userid);
 
 			// Change user block also in Joomla
 			if (!$user)

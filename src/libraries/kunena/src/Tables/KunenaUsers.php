@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Tables;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -647,7 +648,9 @@ class KunenaUsers extends KunenaTable
 	 */
 	public function check(): bool
 	{
-		if (!$this->userid || !Factory::getUser($this->userid))
+		$user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->userid);
+
+		if (!$this->userid || !$user)
 		{
 			// FIXME: find a way to throw exception because it prevent guest to post
 			$this->setError(Text::sprintf('COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid));

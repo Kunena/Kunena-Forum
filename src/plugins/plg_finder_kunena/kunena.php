@@ -635,13 +635,7 @@ class plgFinderKunena extends Adapter
 	protected function getAccessLevel($item)
 	{
 		$category = KunenaCategoryHelper::get($item);
-		$user     = Factory::getUser(0);
-
-		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
-		if (!($user instanceof User))
-		{
-			$user = User::getInstance();
-		}
+		$user     = $this->getApplication()->getIdentity();
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();
 		$groups_r     = (array) Access::getGroupsByUser($user->id, true);

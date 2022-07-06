@@ -29,6 +29,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -344,7 +345,7 @@ class UserController extends KunenaController
 		}
 		else
 		{
-			$this->user = Factory::getUser($userid);
+			$this->user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
 		}
 
 		$success = $this->saveUser();
@@ -959,7 +960,7 @@ class UserController extends KunenaController
 			return false;
 		}
 
-		$spammer = Factory::getUser($userid);
+		$spammer = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
 
 		// TODO: remove this query by getting the ip of user by an another way
 		$query = $this->db->getQuery(true);

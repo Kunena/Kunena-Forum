@@ -19,12 +19,17 @@ use Joomla\Component\Finder\Administrator\Indexer\Adapter;
 use Joomla\Component\Finder\Administrator\Indexer\Indexer;
 use Joomla\Component\Finder\Administrator\Indexer\Result;
 use Joomla\Component\Finder\Administrator\Indexer\Helper;
+use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use Kunena\Forum\Libraries\Tables\TableKunenaMessages;
 use Kunena\Forum\Libraries\Tables\TableKunenaTopics;
+use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 
 /**
  * Finder adapter for com_kunena.
@@ -353,7 +358,7 @@ class plgFinderKunena extends Adapter
 			return false;
 		}
 
-		Forum::setup();
+		KunenaForum::setup();
 
 		return true;
 	}
@@ -404,7 +409,7 @@ class plgFinderKunena extends Adapter
 	{
 		Log::add('FinderIndexerAdapter::getItem', Log::INFO);
 
-		$message = \Kunena\Forum\Libraries\Forum\Message\Helper::get($id);
+		$message = KunenaMessageHelper::get($id);
 
 		// Convert the item to a result object.
 		$item = $this->createIndexerResult($message);
@@ -450,7 +455,7 @@ class plgFinderKunena extends Adapter
 		}
 
 		// Convert the items to result objects.
-		$messages = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($ids, 'none');
+		$messages = KunenaMessageHelper::getMessages($ids, 'none');
 		$items    = [];
 
 		foreach ($messages as &$message)
@@ -458,7 +463,7 @@ class plgFinderKunena extends Adapter
 			$items[] = $this->createIndexerResult($message);
 		}
 
-		\Kunena\Forum\Libraries\Forum\Message\Helper::cleanup();
+		KunenaMessageHelper::cleanup();
 		KunenaRoute::cleanup();
 
 		return $items;
@@ -489,7 +494,7 @@ class plgFinderKunena extends Adapter
 		$item->alias = KunenaRoute::stringURLSafe($message->subject);
 
 		// Set body context.
-		$item->body    = \Kunena\Forum\Libraries\Html\Parser::stripBBCode($message->message);
+		$item->body    = KunenaParser::stripBBCode($message->message);
 		$item->summary = $item->body;
 
 		// Set other information.
@@ -526,7 +531,7 @@ class plgFinderKunena extends Adapter
 	 */
 	protected function getUrl($id, $extension, $view)
 	{
-		$item = \Kunena\Forum\Libraries\Forum\Message\Helper::get($id);
+		$item = KunenaMessageHelper::get($id);
 
 		return "index.php?option=com_kunena&view={$view}&catid={$item->catid}&id={$item->thread}&mesid={$item->id}";
 	}
@@ -579,7 +584,7 @@ class plgFinderKunena extends Adapter
 			$query->where('c.id = ' . $db->quote($cat_id));
 			$db->setQuery($query);
 			$ids               = $db->loadColumn();
-			$messages[$cat_id] = \Kunena\Forum\Libraries\Forum\Message\Helper::getMessages($ids);
+			$messages[$cat_id] = KunenaMessageHelper::getMessages($ids);
 		}
 
 		return $messages[$cat_id];
@@ -610,7 +615,7 @@ class plgFinderKunena extends Adapter
 
 			foreach ($results as $result)
 			{
-				$list[] = new \Kunena\Forum\Libraries\Forum\Message\Message($result);
+				$list[] = new KunenaMessage($result);
 			}
 
 			$messages[$topic_id] = $list;
@@ -628,14 +633,12 @@ class plgFinderKunena extends Adapter
 	 */
 	protected function getAccessLevel($item)
 	{
-		$category = \Kunena\Forum\Libraries\Forum\Category\Helper::get($item);
+		$category = KunenaCategoryHelper::get($item);
 		$user     = $this->getApplication()->getIdentity();
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();
 		$groups_r     = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);
 		$groups       = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, false);
-
-		$catlist = [];
 
 		// Check against Joomla access level
 		if ($category->accesstype == 'joomla.level')

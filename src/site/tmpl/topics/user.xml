@@ -28,7 +28,7 @@
     </fields>
     <fields name="params">
         <fieldset name="basic"
-                  label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL" addfieldprefix="Kunena\Forum\Administrator\Field">
+                  label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
             <field name="header"
                    type="text"
                    default=""

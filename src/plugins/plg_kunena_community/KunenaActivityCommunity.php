@@ -44,6 +44,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	public function __construct(object $params)
 	{
 		$this->params = $params;
+
+		parent::__construct();
 	}
 
 	/**

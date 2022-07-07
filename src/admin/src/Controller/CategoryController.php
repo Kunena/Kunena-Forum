@@ -19,8 +19,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
-use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -33,7 +31,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  *
  * @since   Kunena 6.0
  */
-class CategoryController extends KunenaController
+class CategoryController extends FormController
 {
 	/**
 	 * @var     string
@@ -263,6 +261,20 @@ class CategoryController extends KunenaController
 	}
 
 	/**
+	 * Escapes a value for output in a view script.
+	 *
+	 * @param   string  $var  The output to escape.
+	 *
+	 * @return  string The escaped value.
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function escape(string $var): string
+	{
+		return htmlspecialchars($var, ENT_COMPAT);
+	}
+
+	/**
 	 * Apply
 	 *
 	 * @return  void
@@ -378,131 +390,8 @@ class CategoryController extends KunenaController
 	 */
 	public function checkin()
 	{
-		// TODO : need to implement the logic to checkin the category
+		// TODO : need to implement the logic to checkin teh category
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Publish category item
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 * @since   Kunena 2.0.0-BETA2
-	 */
-	public function publish(): void
-	{
-		$cid = $this->app->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid);
-
-		$this->setVariable($cid, 'published', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Unpublish category item
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 * @since   Kunena 2.0.0-BETA2
-	 */
-	public function unpublish(): void
-	{
-		$cid = $this->app->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid);
-
-		$this->setVariable($cid, 'published', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	/**
-	 * Set variable
-	 *
-	 * @param   array   $cid       id
-	 * @param   string  $variable  variable
-	 * @param   string  $value     value
-	 *
-	 * @return  void
-	 *
-	 * @throws null
-	 * @throws Exception
-	 * @since   Kunena 3.0
-	 */
-	protected function setVariable(array $cid, string $variable, string $value): void
-	{
-		KunenaFactory::loadLanguage('com_kunena', 'admin');
-
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-
-			return;
-		}
-
-		if (empty($cid))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice');
-
-			return;
-		}
-
-		$count = 0;
-		$name  = null;
-
-		$categories = KunenaCategoryHelper::getCategories($cid);
-
-		foreach ($categories as $category)
-		{
-			if ($category->get($variable) == $value)
-			{
-				continue;
-			}
-
-			if (!$category->isAuthorised('admin'))
-			{
-				$this->app->enqueueMessage(
-					Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
-					'notice'
-					);
-			}
-			elseif (!$category->isCheckedOut($this->me->userid))
-			{
-				$category->set($variable, $value);
-
-				if ($category->save())
-				{
-					$count++;
-					$name = $category->name;
-				}
-				else
-				{
-					$this->app->enqueueMessage(
-						Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
-						'error'
-						);
-				}
-			}
-			else
-			{
-				$this->app->enqueueMessage(
-					Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
-					'notice'
-					);
-			}
-		}
-
-		if ($count == 1 && $name)
-		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_SAVED', $this->escape($name)), 'success');
-		}
-
-		if ($count > 1)
-		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count), 'success');
-		}
 	}
 }

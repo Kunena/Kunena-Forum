@@ -21,6 +21,7 @@
         <filename type="component" id="com_kunena">com_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="finder" id="kunena">plg_finder_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="finder">plg_kunena_finder_v@kunenaversion@.zip</filename>
+        <filename type="plugin" group="kunena" id="altauserpoints">plg_kunena_altauserpoints_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="community">plg_kunena_community_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="comprofiler">plg_kunena_comprofiler_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="kunena" id="easysocial">plg_kunena_easysocial_v@kunenaversion@.zip</filename>

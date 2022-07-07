@@ -245,7 +245,7 @@ if ($saveOrder && !empty($this->items))
 								$canEditOwn = $canEdit;
 								$canChange  = $canEdit && $canCheckin;
 								?>
-                                <tr class="row<?php echo $i % 2; ?>" data-draggable-group="<?php echo $item->id; ?>">
+								<tr class="row<?php echo $i % 2; ?>" data-draggable-group="<?php echo $item->parentid; ?>" data-item-id="<?php echo $item->id ?>">
                                     <td class="text-center">
 										<?php echo HTMLHelper::_('grid.id', $i, $item->id, false, 'cid', 'cb', $item->name); ?>
                                     </td>
@@ -269,7 +269,7 @@ if ($saveOrder && !empty($this->items))
 										<?php endif; ?>
 									</td>
                                     <td class="center">
-										<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, '', 'cb'); ?>
+										<?php echo HTMLHelper::_('jgrid.published', $item->published,  $i, 'category.'); ?>
                                     </td>
                                     <td class="center">
 										<?php if (!$this->filter->Item || ($this->filter->Item != $item->id && $item->parentid))

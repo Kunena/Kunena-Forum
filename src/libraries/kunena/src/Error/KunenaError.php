@@ -171,7 +171,7 @@ abstract class KunenaError
 				'<a href="https://www.kunena.org/">www.kunena.org</a>'
 			), 'error');
 		}
-		elseif (KunenaFactory::getUser()->isAdmin() && Factory::getApplication()->isClient('site'))
+		elseif (KunenaFactory::getUser()->isAdmin() && $app->isClient('site'))
 		{
 			$app->enqueueMessage('Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage(), 'error');
 		}

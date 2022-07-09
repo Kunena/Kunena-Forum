@@ -796,11 +796,13 @@ class KunenaBan extends parentAlias
 		$table->bind($this->getProperties());
 
 		// Check and store the object.
-		if (!$table->check())
+		try
 		{
-			throw new KunenaException($table->getError());
-
-			return false;
+			$table->check();
+		}
+		catch (Exception $e)
+		{
+			throw new KunenaException($e->getMessage());
 		}
 
 		// Are we creating a new ban

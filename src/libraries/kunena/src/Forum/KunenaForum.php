@@ -346,32 +346,24 @@ abstract class KunenaForum
 	 */
 	protected static function buildVersion(): void
 	{
-		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@')
+		$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+
+		if (file_exists($file))
 		{
-			$file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
-
-			if (file_exists($file))
-			{
-				$manifest           = simplexml_load_file($file);
-				self::$version      = (string) $manifest->version . '-GIT';
-				self::$version_date = (string) $manifest->creationDate;
-			}
-			else
-			{
-				$db    = Factory::getContainer()->get('DatabaseDriver');
-				$query = $db->getQuery(true);
-				$query->select('version')->from('#__kunena_version')->order('id');
-				$query->setLimit(1);
-				$db->setQuery($query);
-
-				self::$version      = $db->loadResult();
-				self::$version_date = Factory::getDate()->format('Y-m-d');
-			}
+			$manifest           = simplexml_load_file($file);
+			self::$version      = (string) $manifest->version;
+			self::$version_date = (string) $manifest->creationDate;
 		}
 		else
 		{
-			self::$version      = strtoupper('@kunenaversion@');
-			self::$version_date = strtoupper('@kunenaversiondate@');
+			$db    = Factory::getContainer()->get('DatabaseDriver');
+			$query = $db->getQuery(true);
+			$query->select('version')->from('#__kunena_version')->order('id');
+			$query->setLimit(1);
+			$db->setQuery($query);
+
+			self::$version      = $db->loadResult();
+			self::$version_date = Factory::getDate()->format('Y-m-d');
 		}
 
 		self::$version_major = substr(self::$version, 0, 3);

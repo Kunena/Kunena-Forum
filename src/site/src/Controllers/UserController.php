@@ -609,14 +609,15 @@ class UserController extends KunenaController
 			$session->set('user', $this->user);
 
 			// Update session if username has been changed
-			if ($username && $username != $this->user->username)
+			// TODO : the table session isn't able to be loaded with that
+			/* if ($username && $username != $this->user->username)
 			{
 				$table = Table::getInstance('session', 'JTable');
 				$table->load($session->getId());
 
 				$table->username = $this->user->username;
 				$table->store();
-			}
+			}*/
 		}
 
 		return true;

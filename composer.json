@@ -26,7 +26,8 @@
 			"third-party/required-plugin": true,
             "my-organization/*": true,
             "unnecessary/plugin": false,
-			"allow-plugins.phing/phing-composer-configurator": true
+			"phing/phing-composer-configurator": true,
+			"composer/package-versions-deprecated": true
 		}
 	},
 	"scripts": {

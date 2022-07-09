@@ -22,10 +22,12 @@
 	},
 	"config": {
 		"allow-plugins": {
-            "third-party/required-plugin": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"third-party/required-plugin": true,
             "my-organization/*": true,
-            "unnecessary/plugin": false
-        }
+            "unnecessary/plugin": false,
+			"allow-plugins.phing/phing-composer-configurator": true
+		}
 	},
 	"scripts": {
 		"install-codestandards": [

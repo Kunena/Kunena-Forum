@@ -92,7 +92,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		}
 
 		\CFactory::load('libraries', 'activities');
-		$table = CActivityStream::add($act);
+		$table = \CActivityStream::add($act);
 
 		if (is_object($table))
 		{

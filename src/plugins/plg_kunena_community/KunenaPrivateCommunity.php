@@ -74,7 +74,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 */
 	public function getInboxURL(): string
 	{
-		return CRoute::_('index.php?option=com_community&view=inbox');
+		return \CRoute::_('index.php?option=com_community&view=inbox');
 	}
 
 	/**

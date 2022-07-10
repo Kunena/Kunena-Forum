@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Session\Session;
 use Joomla\Component\Menus\Administrator\Model\ItemModel;
+use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaSampleData;
@@ -29,7 +30,7 @@ class PlgSampledataKunena extends CMSPlugin
 	/**
 	 * Database object
 	 *
-	 * @var    JDatabaseDriver
+	 * @var    DatabaseDriver
 	 *
 	 * @since   4.0.0
 	 */
@@ -38,7 +39,7 @@ class PlgSampledataKunena extends CMSPlugin
 	/**
 	 * Application object
 	 *
-	 * @var    JApplicationCms
+	 * @var    ApplicationCms
 	 *
 	 * @since   4.0.0
 	 */

@@ -14,6 +14,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
+use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
@@ -65,7 +66,7 @@ class plgSystemKunenaInstallerScript extends InstallerScript
 	/**
 	 * Database object
 	 *
-	 * @var    JDatabaseDriver
+	 * @var    DatabaseDriver
 	 *
 	 * @since   4.0.0
 	 */

@@ -36,7 +36,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
  *
  * @since Kunena
  */
-class plgFinderKunena extends Adapter
+class PlgFinderKunena extends Adapter
 {
 	/**
 	 * The plugin identifier.

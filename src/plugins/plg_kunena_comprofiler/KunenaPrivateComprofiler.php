@@ -10,6 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 defined('_JEXEC') or die();
 
 use CBLib\Application\Application;
@@ -161,7 +163,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
 
 		$userid = Application::MyUser()->getUserId();
 
-		$cbUser = CBuser::getInstance((int) $userid);
+		$cbUser = \CBuser::getInstance((int) $userid);
 
 		if ($cbUser === null)
 		{

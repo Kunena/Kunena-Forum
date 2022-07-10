@@ -10,6 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Gravatar;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
@@ -17,6 +19,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Pedrollo\GravatarLib\Gravatar;
 
 /**
  * Class KunenaAvatarGravatar
@@ -48,8 +51,6 @@ class KunenaAvatarGravatar extends KunenaAvatar
 	 * @return string
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
 	 */
 	public function getEditURL(): string
 	{
@@ -64,13 +65,11 @@ class KunenaAvatarGravatar extends KunenaAvatar
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
 	 */
 	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		$user     = KunenaFactory::getUser($user);
-		$gravatar = new Pedrollo\GravatarLib\Gravatar($user->email);
+		$gravatar = new Gravatar($user->email);
 		$gravatar->setAvatarSize(min($sizex, $sizey));
 		$gravatar->setDefaultImage($this->params->get("default_image", false));
 		$gravatar->setMaxRating('g');

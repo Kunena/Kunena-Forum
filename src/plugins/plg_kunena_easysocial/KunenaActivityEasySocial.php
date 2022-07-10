@@ -15,6 +15,8 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
+namespace Kunena\Forum\Plugin\Kunena\Easysocial;
+
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Factory;
@@ -24,6 +26,7 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
+use Exception;
 
 /**
  * @package  Easysocial
@@ -44,7 +47,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 * @param   object  $params  params
 	 *
 	 * @since   Kunena 5.0
-	 * @throws Exception
 	 */
 	public function __construct(object $params)
 	{
@@ -70,7 +72,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			$this->assignBadge('thread.new', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_NEW_TITLE'));
 		}
 
-		$stream = FD::stream();
+		$stream = \FD::stream();
 
 		$tmpl = $stream->getTemplate();
 
@@ -92,9 +94,9 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 */
 	public function assignPoints(string $command, $target = null)
 	{
-		$user = FD::user($target);
+		$user = \FD::user($target);
 
-		$points = FD::points();
+		$points = \FD::points();
 
 		return $points->assign($command, 'com_kunena', $user->id);
 	}
@@ -110,8 +112,8 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 */
 	public function assignBadge(string $command, string $message, $target = null)
 	{
-		$user  = FD::user($target);
-		$badge = FD::badges();
+		$user  = \FD::user($target);
+		$badge = \FD::badges();
 
 		return $badge->log('com_kunena', $command, $user->id, $user->id);
 	}
@@ -147,7 +149,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 			$this->assignBadge('thread.reply', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_REPLY_TITLE'));
 		}
 
-		$stream = FD::stream();
+		$stream = \FD::stream();
 		$tmpl   = $stream->getTemplate();
 		$tmpl->setActor($message->userid, SOCIAL_TYPE_USER);
 		$tmpl->setContext($message->id, 'kunena');
@@ -177,7 +179,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 		];
 
 		// Add notifications in EasySocial
-		FD::notify('post.reply', $recipients, [], $options);
+		\FD::notify('post.reply', $recipients, [], $options);
 	}
 
 	/**
@@ -277,7 +279,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 
 		$this->assignBadge('thread.thanks', Text::_('PLG_KUNENA_EASYSOCIAL_BADGE_THANKED_TITLE'), $target);
 
-		$tmpl = FD::stream()->getTemplate();
+		$tmpl = \FD::stream()->getTemplate();
 
 		$tmpl->setActor($actor, SOCIAL_TYPE_USER);
 		$tmpl->setTarget($target);
@@ -285,7 +287,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 		$tmpl->setVerb('thanked');
 		$tmpl->setAccess('core.view');
 
-		FD::stream()->add($tmpl);
+		\FD::stream()->add($tmpl);
 	}
 
 	/**
@@ -297,7 +299,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 */
 	public function onBeforeDeleteTopic(object $target): void
 	{
-		FD::stream()->delete($target->id, 'thread.new');
+		\FD::stream()->delete($target->id, 'thread.new');
 	}
 
 	/**
@@ -309,6 +311,6 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 */
 	public function onAfterDeleteTopic(object $topic): void
 	{
-		FD::stream()->delete($topic->id, 'thread.new');
+		\FD::stream()->delete($topic->id, 'thread.new');
 	}
 }

@@ -10,6 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
@@ -21,6 +23,8 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
+use Exception;
+use RuntimeException;
 
 /**
  * Class KunenaAccessCommunity

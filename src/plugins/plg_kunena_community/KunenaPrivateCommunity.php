@@ -10,6 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
@@ -45,7 +47,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	public function __construct($params)
 	{
 		$this->params = $params;
-		CFactory::load('libraries', 'messaging');
+		\CFactory::load('libraries', 'messaging');
 	}
 
 	/**
@@ -62,7 +64,7 @@ class KunenaPrivateCommunity extends KunenaPrivate
 			$text = Text::_('COM_KUNENA_PMS_INBOX');
 		}
 
-		return '<a href="' . CRoute::_('index.php?option=com_community&view=inbox') . '" rel="follow">' . $text . '</a>';
+		return '<a href="' . \CRoute::_('index.php?option=com_community&view=inbox') . '" rel="follow">' . $text . '</a>';
 	}
 
 	/**
@@ -81,22 +83,20 @@ class KunenaPrivateCommunity extends KunenaPrivate
 	 * @return  string
 	 *
 	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
 	 */
 	protected function getOnClick(int $userid): string
 	{
 		if (!$this->loaded)
 		{
 			// PM popup requires JomSocial css to be loaded from selected template
-			$config   = CFactory::getConfig();
+			$config   = \CFactory::getConfig();
 			$document = Factory::getApplication()->getDocument();
 			$document->addStyleSheet('components/com_community/assets/window.css');
 			$document->addStyleSheet('components/com_community/templates/' . $config->get('template') . '/assets/css/style.css');
 			$this->loaded = true;
 		}
 
-		return ' onclick="' . CMessaging::getPopup($userid) . '"';
+		return ' onclick="' . \CMessaging::getPopup($userid) . '"';
 	}
 
 	/**

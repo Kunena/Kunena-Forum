@@ -17,11 +17,11 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
- * Class plgKunenaCommunity
+ * Class PlgKunenaCommunity
  *
  * @since   Kunena 6.0
  */
-class plgKunenaCommunity extends CMSPlugin
+class PlgKunenaCommunity extends CMSPlugin
 {
 	/**
 	 * plgKunenaCommunity constructor.
@@ -77,8 +77,6 @@ class plgKunenaCommunity extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/KunenaAccessCommunity.php";
-
 		return new KunenaAccessCommunity($this->params);
 	}
 
@@ -99,8 +97,6 @@ class plgKunenaCommunity extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/KunenaLoginCommunity.php";
 
 		return new KunenaLoginCommunity($this->params);
 	}
@@ -123,8 +119,6 @@ class plgKunenaCommunity extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/KunenaAvatarCommunity.php";
-
 		return new KunenaAvatarCommunity($this->params);
 	}
 
@@ -145,8 +139,6 @@ class plgKunenaCommunity extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/KunenaProfileCommunity.php";
 
 		return new KunenaProfileCommunity($this->params);
 	}
@@ -169,8 +161,6 @@ class plgKunenaCommunity extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/KunenaPrivateCommunity.php";
-
 		return new KunenaPrivateCommunity($this->params);
 	}
 
@@ -192,8 +182,6 @@ class plgKunenaCommunity extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/KunenaActivityCommunity.php";
 
 		return new KunenaActivityCommunity($this->params);
 	}

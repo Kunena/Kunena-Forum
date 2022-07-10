@@ -10,6 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Kunena;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Access\Access;
@@ -20,6 +22,8 @@ use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Exception;
+use RuntimeException;
 
 /**
  * Class KunenaProfile
@@ -73,7 +77,7 @@ class KunenaProfileKunena extends KunenaProfile
 	 *
 	 * @return  array
 	 *
-	 * @throws  Exception
+	 * @throws  RuntimeException
 	 *
 	 * @since   Kunena 5.0
 	 */

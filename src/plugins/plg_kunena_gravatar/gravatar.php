@@ -20,7 +20,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
  *
  * @since   Kunena 6.0
  */
-class plgKunenaGravatar extends CMSPlugin
+class PlgKunenaGravatar extends CMSPlugin
 {
 	/**
 	 * plgKunenaGravatar constructor.
@@ -57,9 +57,6 @@ class plgKunenaGravatar extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once KPATH_FRAMEWORK . '/External/Emberlabs/Gravatar.php';
-		require_once __DIR__ . '/KunenaAvatarGravatar.php';
 
 		return new KunenaAvatarGravatar($this->params);
 	}

@@ -10,6 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Kunena;
+
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -20,6 +22,7 @@ use Kunena\Forum\Libraries\Image\KunenaImageHelper;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Exception;
 
 /**
  * Class KunenaAvatar

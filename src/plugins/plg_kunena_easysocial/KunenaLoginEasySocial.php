@@ -15,6 +15,8 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
+namespace Kunena\Forum\Plugin\Kunena\Easysocial;
+
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Component\ComponentHelper;
@@ -51,7 +53,7 @@ class KunenaLoginEasySocial
 	 */
 	public function getLoginURL()
 	{
-		return FRoute::dashboard();
+		return \FRoute::dashboard();
 	}
 
 	/**
@@ -61,7 +63,7 @@ class KunenaLoginEasySocial
 	 */
 	public function getLogoutURL()
 	{
-		return FRoute::dashboard();
+		return \FRoute::dashboard();
 	}
 
 	/**
@@ -75,7 +77,7 @@ class KunenaLoginEasySocial
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{
-			return FRoute::registration();
+			return \FRoute::registration();
 		}
 
 		return;

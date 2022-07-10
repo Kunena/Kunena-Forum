@@ -15,6 +15,8 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
+namespace Kunena\Forum\Plugin\Kunena\Easysocial;
+
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -58,9 +60,10 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	{
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
+		// Why using class from Jomsocial here ??
 		if (class_exists('CFactory') && method_exists('CFactory', 'loadUsers'))
 		{
-			CFactory::loadUsers($userlist);
+			\CFactory::loadUsers($userlist);
 		}
 
 		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -73,7 +76,7 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 */
 	public function getEditURL(): string
 	{
-		return FRoute::profile(['layout' => 'edit']);
+		return \FRoute::profile(['layout' => 'edit']);
 	}
 
 	/**
@@ -84,14 +87,12 @@ class KunenaAvatarEasySocial extends KunenaAvatar
 	 * @return  mixed
 	 *
 	 * @since   Kunena 5.0
-	 *
-	 * @throws Exception
 	 */
 	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		$user = KunenaFactory::getUser($user);
 
-		$user = FD::user($user->userid);
+		$user = \FD::user($user->userid);
 
 		return $user->getAvatar(SOCIAL_AVATAR_LARGE);
 	}

@@ -10,9 +10,12 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Exception;
 
 /**
  * Class KunenaIntegrationComprofiler

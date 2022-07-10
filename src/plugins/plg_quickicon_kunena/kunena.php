@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
  *
  * @since  Kunena 6.0
  */
-class plgQuickiconKunena extends CMSPlugin
+class PlgQuickiconKunena extends CMSPlugin
 {
 	/**
 	 * Load the language file on instantiation.

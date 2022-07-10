@@ -13,6 +13,8 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
+use Kunena\Forum\Plugin\Kunena\Kunena\KunenaAvatarKunena;
+use Kunena\Forum\Plugin\Kunena\Kunena\KunenaProfileKunena;
 
 /**
  * Class PlgKunenaKunena
@@ -33,8 +35,6 @@ class PlgKunenaKunena extends CMSPlugin
 			return false;
 		}
 
-		require_once __DIR__ . "/avatar.php";
-
 		return new KunenaAvatarKunena($this->params);
 	}
 
@@ -49,8 +49,6 @@ class PlgKunenaKunena extends CMSPlugin
 		{
 			return false;
 		}
-
-		require_once __DIR__ . "/profile.php";
 
 		return new KunenaProfileKunena($this->params);
 	}

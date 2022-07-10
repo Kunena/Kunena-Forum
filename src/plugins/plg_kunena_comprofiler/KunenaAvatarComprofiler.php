@@ -10,11 +10,14 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Exception;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\AvatarComprofiler
@@ -50,7 +53,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 	 */
 	public function load(array $userlist): void
 	{
-		CBuser::advanceNoticeOfUsersNeeded($userlist);
+		\CBuser::advanceNoticeOfUsersNeeded($userlist);
 	}
 
 	/**
@@ -86,7 +89,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar
 
 		if ($user->userid)
 		{
-			$cbUser = CBuser::getInstance($user->userid);
+			$cbUser = \CBuser::getInstance($user->userid);
 		}
 
 		if ($cbUser !== null)

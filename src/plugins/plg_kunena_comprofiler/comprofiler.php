@@ -17,13 +17,19 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaAccessComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaAvatarComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaActivityComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaLoginComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaPrivateComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaProfileComprofiler;
 
 /**
- * Class plgKunenaComprofiler
+ * Class PlgKunenaComprofiler
  *
  * @since   Kunena 6.0
  */
-class plgKunenaComprofiler extends CMSPlugin
+class PlgKunenaComprofiler extends CMSPlugin
 {
 	/**
 	 * @var     string  CB version 2.7.3 works with Php 8.1 and with Joomla! 4.0/4.1
@@ -150,8 +156,6 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/KunenaAccessComprofiler.php";
-
 		return new KunenaAccessComprofiler($this->params);
 	}
 
@@ -173,8 +177,6 @@ class plgKunenaComprofiler extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/KunenaLoginComprofiler.php";
 
 		return new KunenaLoginComprofiler($this->params);
 	}
@@ -198,8 +200,6 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/KunenaAvatarComprofiler.php";
-
 		return new KunenaAvatarComprofiler($this->params);
 	}
 
@@ -221,8 +221,6 @@ class plgKunenaComprofiler extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/KunenaProfileComprofiler.php";
 
 		return new KunenaProfileComprofiler($this->params);
 	}
@@ -246,8 +244,6 @@ class plgKunenaComprofiler extends CMSPlugin
 			return;
 		}
 
-		require_once __DIR__ . "/KunenaPrivateComprofiler.php";
-
 		return new KunenaPrivateComprofiler($this->params);
 	}
 
@@ -270,8 +266,6 @@ class plgKunenaComprofiler extends CMSPlugin
 		{
 			return;
 		}
-
-		require_once __DIR__ . "/KunenaActivityComprofiler.php";
 
 		return new KunenaActivityComprofiler($this->params);
 	}

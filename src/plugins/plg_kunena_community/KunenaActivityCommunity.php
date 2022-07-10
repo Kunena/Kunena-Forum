@@ -11,6 +11,8 @@
  * @link             https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
@@ -19,6 +21,7 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
+use Exception;
 
 /**
  * Class KunenaActivityCommunity
@@ -57,11 +60,11 @@ class KunenaActivityCommunity extends KunenaActivity
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
-			CFactory::load('libraries', 'userpoints');
-			CUserPoints::assignPoint('com_kunena.thread.new');
+			\CFactory::load('libraries', 'userpoints');
+			\CUserPoints::assignPoint('com_kunena.thread.new');
 		}
 
-		$act          = new stdClass;
+		$act          = new \stdClass;
 		$act->cmd     = 'wall.write';
 		$act->actor   = $message->userid;
 		$act->target  = 0;
@@ -88,7 +91,7 @@ class KunenaActivityCommunity extends KunenaActivity
 			return;
 		}
 
-		CFactory::load('libraries', 'activities');
+		\CFactory::load('libraries', 'activities');
 		$table = CActivityStream::add($act);
 
 		if (is_object($table))
@@ -108,7 +111,7 @@ class KunenaActivityCommunity extends KunenaActivity
 	 */
 	private function buildContent($message): string
 	{
-		$parent               = new stdClass;
+		$parent               = new \stdClass;
 		$parent->forceSecure  = true;
 		$parent->forceMinimal = true;
 
@@ -173,8 +176,8 @@ class KunenaActivityCommunity extends KunenaActivity
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
-			CFactory::load('libraries', 'userpoints');
-			CUserPoints::assignPoint('com_kunena.thread.reply');
+			\CFactory::load('libraries', 'userpoints');
+			\CUserPoints::assignPoint('com_kunena.thread.reply');
 		}
 
 		// Get users who have subscribed to the topic, excluding current user.
@@ -190,10 +193,10 @@ class KunenaActivityCommunity extends KunenaActivity
 
 		foreach ($subscribers as $userid)
 		{
-			$actor  = CFactory::getUser($message->userid);
-			$target = CFactory::getUser($userid);
+			$actor  = \CFactory::getUser($message->userid);
+			$target = \CFactory::getUser($userid);
 
-			$params = new CParameter('');
+			$params = new \CParameter('');
 			$params->set('actorName', $actor->getDisplayName());
 			$params->set('recipientName', $target->getDisplayName());
 			$params->set('url', Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getPermaUrl(null) . '#' . $message->id); // {url} tag for activity. Used when hovering over avatar in notification window, as well as in email notification
@@ -204,12 +207,12 @@ class KunenaActivityCommunity extends KunenaActivity
 			$params->set('actor_url', 'index.php?option=com_community&view=profile&userid=' . $actor->id); // Actor Link
 
 			// Finally, send notifications
-			CNotificationLibrary::add('kunena_reply', $actor->id, $target->id, Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE_ACT'), Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TEXT'), '', $params);
+			\CNotificationLibrary::add('kunena_reply', $actor->id, $target->id, Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE_ACT'), Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TEXT'), '', $params);
 		}
 
 		// Activity stream
 
-		$act          = new stdClass;
+		$act          = new \stdClass;
 		$act->cmd     = 'wall.write';
 		$act->actor   = $message->userid;
 		$act->target  = 0; // No target
@@ -231,8 +234,8 @@ class KunenaActivityCommunity extends KunenaActivity
 			return;
 		}
 
-		CFactory::load('libraries', 'activities');
-		$table = CActivityStream::add($act);
+		\CFactory::load('libraries', 'activities');
+		$table = \CActivityStream::add($act);
 
 		if (is_object($table))
 		{
@@ -250,14 +253,14 @@ class KunenaActivityCommunity extends KunenaActivity
 	 */
 	public function onAfterThankyou(int $actor, int $target, int $message): void
 	{
-		CFactory::load('libraries', 'userpoints');
-		CUserPoints::assignPoint('com_kunena.thread.thankyou', $target);
+		\CFactory::load('libraries', 'userpoints');
+		\CUserPoints::assignPoint('com_kunena.thread.thankyou', $target);
 
-		$actor  = CFactory::getUser($actor);
-		$target = CFactory::getUser($target);
+		$actor  = \CFactory::getUser($actor);
+		$target = \CFactory::getUser($target);
 
 		// Create CParameter use for params
-		$params = new CParameter('');
+		$params = new \CParameter('');
 		$params->set('actorName', $actor->getDisplayName());
 		$params->set('recipientName', $target->getDisplayName());
 		$params->set('recipientUrl', 'index.php?option=com_community&view=profile&userid=' . $target->id); // Actor Link
@@ -269,7 +272,7 @@ class KunenaActivityCommunity extends KunenaActivity
 		$params->set('actor_url', 'index.php?option=com_community&view=profile&userid=' . $actor->id); // Actor Link
 
 		// Finally, send notifications
-		CNotificationLibrary::add('kunena_thankyou', 
+		\CNotificationLibrary::add('kunena_thankyou', 
 									$actor->id,
 									$target->id,
 									Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT'),
@@ -277,7 +280,7 @@ class KunenaActivityCommunity extends KunenaActivity
 									'',
 									$params);
 
-		$act          = new stdClass;
+		$act          = new \stdClass;
 		$act->cmd     = 'wall.write';
 		$act->actor   = $actor->id;
 		$act->target  = $target->id;
@@ -305,8 +308,8 @@ class KunenaActivityCommunity extends KunenaActivity
 			return;
 		}
 
-		CFactory::load('libraries', 'activities');
-		$table = CActivityStream::add($act);
+		\CFactory::load('libraries', 'activities');
+		$table = \CActivityStream::add($act);
 
 		if (is_object($table))
 		{
@@ -322,10 +325,10 @@ class KunenaActivityCommunity extends KunenaActivity
 	 */
 	public function onAfterDeleteTopic($target): void
 	{
-		CFactory::load('libraries', 'activities');
-		CActivityStream::remove('kunena.thread.post', $target->id);
+		\CFactory::load('libraries', 'activities');
+		\CActivityStream::remove('kunena.thread.post', $target->id);
 
 		// TODO: Need get replied id
-		CActivityStream::remove('kunena.thread.replied', $target->id);
+		\CActivityStream::remove('kunena.thread.replied', $target->id);
 	}
 }

@@ -21,7 +21,7 @@ use Joomla\CMS\Plugin\PluginHelper;
  * @subpackage     Kunena.finder
  * @since          2.5
  */
-class plgKunenaFinder extends CMSPlugin
+class PlgKunenaFinder extends CMSPlugin
 {
 	/**
 	 * Finder after save message method

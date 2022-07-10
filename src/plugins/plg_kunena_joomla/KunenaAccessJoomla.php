@@ -9,6 +9,9 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
+namespace Kunena\Forum\Plugin\Kunena\Joomla;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Access\Access;
@@ -22,6 +25,7 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Exception;
 
 /**
  * Kunena Access Control for Joomla 4.0
@@ -289,7 +293,7 @@ class KunenaAccessJoomla
 
 		foreach ($admins as $userid)
 		{
-			$item              = new StdClass;
+			$item              = new \StdClass;
 			$item->user_id     = (int) $userid;
 			$item->category_id = 0;
 			$item->role        = KunenaForum::ADMINISTRATOR;

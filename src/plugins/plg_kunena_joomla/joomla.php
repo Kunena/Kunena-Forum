@@ -13,13 +13,15 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
+use Kunena\Forum\Plugin\Kunena\Joomla\KunenaAccessJoomla;
+use Kunena\Forum\Plugin\Kunena\Joomla\KunenaLoginJoomla;
 
 /**
  * Class plgKunenaJoomla
  *
  * @since   Kunena 6.0
  */
-class plgKunenaJoomla extends CMSPlugin
+class PlgKunenaJoomla extends CMSPlugin
 {
 	/**
 	 * plgKunenaJoomla constructor.
@@ -50,8 +52,6 @@ class plgKunenaJoomla extends CMSPlugin
 			return false;
 		}
 
-		require_once __DIR__ . "/access.php";
-
 		return new KunenaAccessJoomla($this->params);
 	}
 
@@ -62,8 +62,6 @@ class plgKunenaJoomla extends CMSPlugin
 	 */
 	public function onKunenaGetLogin()
 	{
-		require_once __DIR__ . "/login.php";
-
 		return new KunenaLoginJoomla($this->params);
 	}
 }

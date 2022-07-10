@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
  *
  * @since   Kunena 6.0
  */
-class plgSystemKunena extends CMSPlugin
+class PlgSystemKunena extends CMSPlugin
 {
 	/**
 	 * @param   object  $subject  Subject

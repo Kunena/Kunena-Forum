@@ -11,6 +11,8 @@
  * @link             https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
@@ -19,6 +21,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use RuntimeException;
 
 /**
  * Class KunenaProfileCommunity
@@ -63,7 +66,7 @@ class KunenaProfileCommunity extends KunenaProfile
 			return false;
 		}
 
-		return CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
+		return \CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
 	}
 
 	/**
@@ -71,7 +74,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @return  array
 	 *
-	 * @throws  Exception
+	 * @throws  RuntimeException
 	 *
 	 * @since   Kunena 5.0
 	 */
@@ -137,12 +140,12 @@ class KunenaProfileCommunity extends KunenaProfile
 	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
 	{
 		// Make sure that user profile exist.
-		if (!$userid || CFactory::getUser($userid) === null)
+		if (!$userid || \CFactory::getUser($userid) === null)
 		{
 			return false;
 		}
 
-		return CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
+		return \CRoute::_('index.php?option=com_community&view=profile&userid=' . (int) $userid, $xhtml);
 	}
 
 	/**
@@ -158,16 +161,16 @@ class KunenaProfileCommunity extends KunenaProfile
 	 */
 	public function getProfileName(KunenaUser $user, $visitorname = '', $escape = true)
 	{
-		$cconfig         = CFactory::getConfig();
+		$cconfig         = \CFactory::getConfig();
 		$displayusername = $cconfig->get('displayname');
 
 		if ($displayusername == 'name')
 		{
-			return CFactory::getUser($user->userid)->name;
+			return \CFactory::getUser($user->userid)->name;
 		}
 		else
 		{
-		    return CFactory::getUser($user->userid)->username;
+			return \CFactory::getUser($user->userid)->username;
 		}
 	}
 }

@@ -15,6 +15,8 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
+namespace Kunena\Forum\Plugin\Kunena\Easysocial;
+
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Factory;
@@ -68,7 +70,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 			return false;
 		}
 
-		return FRoute::users([], $xhtml);
+		return \FRoute::users([], $xhtml);
 	}
 
 	/**
@@ -85,13 +87,13 @@ class KunenaProfileEasySocial extends KunenaProfile
 	{
 		if ($userid)
 		{
-			$user = ES::user($userid);
+			$user = \ES::user($userid);
 
 			// When simple urls are enabled, we just hardcode the url
-			$config  = ES::config();
-			$jConfig = ES::jConfig();
+			$config  = \ES::config();
+			$jConfig = \ES::jConfig();
 
-			if (!ES::isSh404Installed() && $config->get('users.simpleUrl') && $jConfig->getValue('sef'))
+			if (!\ES::isSh404Installed() && $config->get('users.simpleUrl') && $jConfig->getValue('sef'))
 			{
 				return rtrim(Uri::root(), '/') . '/' . $user->getAlias(false);
 			}
@@ -111,7 +113,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 			$options['layout'] = $task;
 		}
 
-		$url = FRoute::profile($options, $xhtml);
+		$url = \FRoute::profile($options, $xhtml);
 
 		return $url;
 	}
@@ -139,7 +141,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	{
 		$userid = $view->profile->userid;
 
-		$user = FD::user($userid);
+		$user = \FD::user($userid);
 
 		$gender = $user->getFieldData('GENDER');
 
@@ -149,7 +151,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 		}
 
 		$data     = $user->getFieldData('BIRTHDAY');
-		$json     = FD::json();
+		$json     = \FD::json();
 		$birthday = null;
 
 		// Legacy
@@ -167,7 +169,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 		// New format
 		if (isset($data['date']) && !$birthday)
 		{
-			$birthday = FD::date($data['date']);
+			$birthday = \FD::date($data['date']);
 		}
 
 		if (!is_null($birthday))
@@ -186,7 +188,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	public function getLegacyDate(int $birthday)
 	{
 		$birthday = json_decode($birthday);
-		$birthday = FD::date($birthday->day . '-' . $birthday->month . '-' . $birthday->year);
+		$birthday = \FD::date($birthday->day . '-' . $birthday->month . '-' . $birthday->year);
 
 		return $birthday;
 	}
@@ -203,7 +205,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	{
 		$options = ['layout' => 'edit'];
 
-		return FRoute::profile($options, $xhtml);
+		return \FRoute::profile($options, $xhtml);
 	}
 
 	/**
@@ -218,16 +220,16 @@ class KunenaProfileEasySocial extends KunenaProfile
 	 */
 	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true)
 	{
-		$config          = ES::config();
+		$config          = \ES::config();
 		$displayusername = $config->get('users.displayName');
 
 		if ($displayusername == 'username')
 		{
-			return FD::user($user->userid)->username;
+			return \FD::user($user->userid)->username;
 		}
 		else
 		{
-			return FD::user($user->userid)->name;
+			return \FD::user($user->userid)->name;
 		}
 	}
 }

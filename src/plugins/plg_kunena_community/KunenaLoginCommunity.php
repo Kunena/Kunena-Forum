@@ -10,6 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Community;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
@@ -46,7 +48,7 @@ class KunenaLoginCommunity
 	 */
 	public function getLoginURL(): string
 	{
-		return CRoute::_('index.php?option=com_community&view=frontpage');
+		return \CRoute::_('index.php?option=com_community&view=frontpage');
 	}
 
 	/**
@@ -56,7 +58,7 @@ class KunenaLoginCommunity
 	 */
 	public function getLogoutURL(): string
 	{
-		return CRoute::_('index.php?option=com_community&view=frontpage');
+		return \CRoute::_('index.php?option=com_community&view=frontpage');
 	}
 
 	/**
@@ -69,7 +71,7 @@ class KunenaLoginCommunity
 
 		if ($usersConfig->get('allowUserRegistration'))
 		{
-			return CRoute::_('index.php?option=com_community&view=register');
+			return \CRoute::_('index.php?option=com_community&view=register');
 		}
 
 		//return;

@@ -10,6 +10,8 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
@@ -18,6 +20,8 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Exception;
+use RuntimeException;
 
 /**
  * Class KunenaProfileComprofiler
@@ -135,7 +139,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 		}
 
 		// Get CUser object
-		$cbUser = CBuser::getInstance($user->userid);
+		$cbUser = \CBuser::getInstance($user->userid);
 
 		if ($cbUser === null)
 		{

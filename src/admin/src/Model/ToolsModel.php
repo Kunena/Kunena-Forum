@@ -879,13 +879,7 @@ class ToolsModel extends AdminModel
 			{
 				// Is it a valid Joomla installation manifest file?
 				$manifest   = $installer->isManifest($file);
-				$newVersion = $manifest ? (string) $manifest->version[0] : null;
-
-				// We check all files just in case if there are more than one manifest file
-				if (version_compare($newVersion, $version, '>'))
-				{
-					$version = $newVersion;
-				}
+				$version = $manifest ? (string) $manifest->version[0] : null;
 			}
 		}
 

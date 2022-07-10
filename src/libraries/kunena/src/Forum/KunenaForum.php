@@ -487,7 +487,11 @@ abstract class KunenaForum
 		// Filter input
 		$viewName = preg_replace('/[^A-Z0-9_]/i', '', $viewName);
 		$layout   = preg_replace('/[^A-Z0-9_]/i', '', $layout);
-		$template = preg_replace('/[^A-Z0-9_]/i', '', $template);
+		if (!empty( $template))
+		{
+			$template = preg_replace('/[^A-Z0-9_]/i', '', $template);
+		}
+
 		$template = $template ? $template : null;
 
 		$view  = 'Kunena\Forum\Site\View\\' . $viewName . '\HtmlView';

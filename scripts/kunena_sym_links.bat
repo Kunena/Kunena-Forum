@@ -94,9 +94,7 @@ echo You have set the Kunena GIT repository in ........:  %GitSource%
 echo You have set the Joomla installation in ...:  %GitTarget%
 echo:
 
-if exist %GitTarget%\configuration.php (
-goto WHATTODO
-) else (
+if not exist %GitTarget%\configuration.php (
 echo You need to have a Joomla! installation to run this script
 )
 
@@ -139,7 +137,7 @@ mklink /d %GitTarget%\plugins\kunena\kunena %GitSource%\src\plugins\plg_kunena_k
 mklink /d %GitTarget%\plugins\sampledata\kunena %GitSource%\src\plugins\plg_sampledata_kunena
 mklink /d %GitTarget%\media\kunena %GitSource%\src\media\kunena
 pause
-
+goto:eof
 
 :MKLINKADDONS
 SET /p GitSource=Kunena-Addons GIT repository in ........:

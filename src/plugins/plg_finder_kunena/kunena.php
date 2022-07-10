@@ -470,7 +470,9 @@ class PlgFinderKunena extends Adapter
 	}
 
 	/**
-	 * @param $message
+	 * Method to create the results with Joomla! indexer
+	 * 
+	 * @param KunenaMessage $message  The KunenaMessage object
 	 *
 	 * @return Result
 	 * @since Kunena
@@ -562,7 +564,9 @@ class PlgFinderKunena extends Adapter
 	}
 
 	/**
-	 * @param $cat_id
+	 * Method to retrieve the messages under the category given
+	 * 
+	 * @param int $cat_id The id of the category
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -590,7 +594,9 @@ class PlgFinderKunena extends Adapter
 	}
 
 	/**
-	 * @param $topic_id
+	 * Method to retrieve the messages under the topic given
+	 * 
+	 * @param int $topic_id The id of the topic
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -624,15 +630,17 @@ class PlgFinderKunena extends Adapter
 	}
 
 	/**
-	 * @param $item
+	 * Method to retrieve the access level of the category
+	 * 
+	 * @param int $catid The id of the category
 	 *
 	 * @return integer
 	 * @since Kunena
 	 * @throws Exception
 	 */
-	protected function getAccessLevel($item)
+	protected function getAccessLevel($catid)
 	{
-		$category = KunenaCategoryHelper::get($item);
+		$category = KunenaCategoryHelper::get($catid);
 		$user     = $this->getApplication()->getIdentity();
 
 		$accesslevels = (array) $user->getAuthorisedViewLevels();

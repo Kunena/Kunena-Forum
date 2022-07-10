@@ -605,7 +605,7 @@ class UserController extends KunenaController
 		if (KunenaUserHelper::getMyself()->userid == $this->user->id)
 		{
 			$this->user->load($this->user->id);
-			$session = Factory::getSession();
+			$session = $this->app->getSession();
 			$session->set('user', $this->user);
 
 			// Update session if username has been changed

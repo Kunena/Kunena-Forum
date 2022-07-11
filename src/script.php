@@ -82,7 +82,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 	 *
 	 * @since ?
 	 */
-	private $oldRelease;
+	private $oldRelease = '5.0.0';
 
 	/**
 	 *  Constructor

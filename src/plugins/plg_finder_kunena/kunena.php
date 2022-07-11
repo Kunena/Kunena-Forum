@@ -241,7 +241,7 @@ class plgFinderKunena extends Adapter
 	 * much content is available for indexing. It is important to track the
 	 * progress correctly so we can display it to the user.
 	 *
-	 * @return  boolean  True on success.
+	 * @return   boolean  True on success.
 	 *
 	 * @since   2.5
 	 * @throws  Exception on error.
@@ -339,7 +339,7 @@ class plgFinderKunena extends Adapter
 	/**
 	 * Method to setup the indexer to be run.
 	 *
-	 * @return  boolean  True on success.
+	 * @return   boolean  True on success.
 	 *
 	 * @since   2.5
 	 * @throws Exception
@@ -368,7 +368,7 @@ class plgFinderKunena extends Adapter
 	/**
 	 * Method to get the number of content items available to index.
 	 *
-	 * @return  integer  The number of content items available to index.
+	 * @return   integer  The number of content items available to index.
 	 *
 	 * @since   2.5
 	 * @throws  Exception on database error.
@@ -473,8 +473,8 @@ class plgFinderKunena extends Adapter
 
 	/**
 	 * Method to create the results with Joomla! indexer
-	 * 
-	 * @param KunenaMessage $message  The KunenaMessage object
+	 *
+	 * @param   KunenaMessage $message  The KunenaMessage object
 	 *
 	 * @return Result
 	 * @since Kunena
@@ -567,8 +567,8 @@ class plgFinderKunena extends Adapter
 
 	/**
 	 * Method to retrieve the messages under the category given
-	 * 
-	 * @param int $cat_id The id of the category
+	 *
+	 * @param   int $cat_id The id of the category
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -597,8 +597,8 @@ class plgFinderKunena extends Adapter
 
 	/**
 	 * Method to retrieve the messages under the topic given
-	 * 
-	 * @param int $topic_id The id of the topic
+	 *
+	 * @param   int $topic_id The id of the topic
 	 *
 	 * @return mixed
 	 * @since Kunena
@@ -633,8 +633,8 @@ class plgFinderKunena extends Adapter
 
 	/**
 	 * Method to retrieve the access level of the category
-	 * 
-	 * @param int $catid The id of the category
+	 *
+	 * @param   int $catid The id of the category
 	 *
 	 * @return integer
 	 * @since Kunena

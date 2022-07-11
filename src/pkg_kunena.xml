@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension type="package" version="4.0" method="upgrade">
-    <name>Kunena Forum Package</name>
+    <name>pkg_kunena</name>
     <packagename>kunena</packagename>
     <version>6.1.0-DEV</version>
     <versionname>INTERNAL</versionname>

@@ -45,11 +45,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use KunenaProfileKunena;
+use Kunena\Forum\Plugin\Kunena\Kunena\KunenaProfileKunena;
 use RuntimeException;
 use stdClass;
-
-require_once JPATH_PLUGINS . '/kunena/kunena/profile.php';
 
 /**
  * Kunena User Controller

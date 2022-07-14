@@ -189,7 +189,7 @@ class TrashModel extends KunenaModel
 	 */
 	protected function internalGetMessages(): array
 	{
-		$db   = Factory::getContainer()->get('DatabaseDriver');
+		$db   = $this->getDatabase();
 		$join = [];
 
 		$query = $db->getQuery(true)

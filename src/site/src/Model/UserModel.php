@@ -43,7 +43,7 @@ class UserModel extends KunenaModel
 
 		if ($total === false)
 		{
-			$db    = Factory::getContainer()->get('DatabaseDriver');
+			$db    = $this->getDatabase();
 			$where = $this->getQueryWhere();
 			$query = $db->getQuery(true);
 			$query->select('COUNT(*)')->from($db->quoteName('#__users', 'u')->where("{$where}"));
@@ -75,7 +75,7 @@ class UserModel extends KunenaModel
 		// Hide super admins from the list
 		if (KunenaFactory::getConfig()->superAdminUserlist)
 		{
-			$db    = Factory::getContainer()->get('DatabaseDriver');
+			$db    = $this->getDatabase();
 			$query = $db->getQuery(true);
 			$query->select($db->quoteName('user_id'))->from($db->quoteName('#__user_usergroup_map'))->where($db->quoteName('group_id') . ' = 8');
 			$db->setQuery($query);
@@ -160,7 +160,7 @@ class UserModel extends KunenaModel
 					$orderby = 'u.username ';
 			}
 
-			$db     = Factory::getContainer()->get('DatabaseDriver');
+			$db     = $this->getDatabase();
 			$where  = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
 			$query  = $db->getQuery(true);
@@ -202,7 +202,7 @@ class UserModel extends KunenaModel
 
 		if ($total === false)
 		{
-			$db     = Factory::getContainer()->get('DatabaseDriver');
+			$db     = $this->getDatabase();
 			$where  = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
 
@@ -239,7 +239,7 @@ class UserModel extends KunenaModel
 
 		if ($search)
 		{
-			$db = Factory::getContainer()->get('DatabaseDriver');
+			$db = $this->getDatabase();
 
 			if ($this->config->username)
 			{

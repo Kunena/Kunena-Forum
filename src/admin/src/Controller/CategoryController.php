@@ -209,17 +209,22 @@ class CategoryController extends KunenaController
 				);
 			}
 
-			$aliasesAll = explode(',', $input->getString('aliasesAll'));
+			$aliasesInput = $this->app->input->getString('aliases_all');
 
-			$aliases = $input->post->getArray(['aliases' => '']);
-
-			if ($aliasesAll && $aliases)
+			if (!empty($aliasesInput))
 			{
-				$aliases = array_diff($aliasesAll, $aliases);
+				$aliases_all = explode(',', $aliasesInput);
 
-				foreach ($aliases as $alias)
+				$aliases = $this->app->input->post->getArray(array('aliases' => ''));
+
+				if ($aliases_all && $aliases)
 				{
-					$category->deleteAlias($alias);
+					$aliases = array_diff($aliases_all, $aliases['aliases']);
+
+					foreach ($aliases_all as $alias)
+					{
+						$category->deleteAlias($alias);
+					}
 				}
 			}
 

@@ -2300,7 +2300,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 		else
 		{
 			$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-			$code = '<pre lang="xml:' . $type . '">' . $content . '</pre>';
+			if ($type) {
+				$code = '<pre xml:' . $type . '>' . $content . '</pre>';
+			} else {
+				$code = '<pre>' . $content . '</pre>';
+			}
 		}
 
 		return '<div class="highlight">' . $code . '</div>';

@@ -50,7 +50,13 @@ class DisplayController extends BaseController
 	public function display($cachable = false, $urlparams = []): BaseController
 	{
 		$document = $this->app->getDocument();
-		$document->addStyleSheet(Uri::base(true) . '/components/com_kunena/media/css/theme.min.css');
+		$view = Factory::getApplication()->input->getCmd('view', 'ranks');
+
+		if ($view !== 'ranks') {
+			$wa = $document->getWebAssetManager();
+			$wa->registerStyle('kunena_theme', Uri::base(true) . '/components/com_kunena/media/css/theme.min.css', [], [], []);
+			$wa->useStyle('kunena_theme');
+		}
 
 		return parent::display($cachable, $urlparams);
 	}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			label="Search"
+			hint="Filter" />
+                        <field
+			name="rankSpecial"
+			type="list"
+			label="Special"
+                        onchange="this.form.submit();">
+			<option value="">Select Special</option>
+                        <option value="1">JYES</option>
+                        <option value="0">JNO</option>
+                </field>
+                <field
+			name="rankMin"
+			type="number"
+                        min="0"
+                        max="99999"
+                        default=""
+			label="Minimum Post Count"
+                        onchange="this.form.submit();"/>
+	</fields>
+
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="COM_CONTENT_LIST_FULL_ORDERING"
+			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
+			onchange="this.form.submit();"
+			default="a.id DESC">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.`rankId` ASC">ID Ascending</option>
+			<option value="a.`rankId` DESC">ID Descending</option>
+			<option value="a.`rankTitle` ASC">Title Ascending</option>
+			<option value="a.`rankTitle` DESC">Title Descending</option>
+			<option value="a.`rankSpecial` ASC">Special Ascending</option>
+			<option value="a.`rankSpecial` DESC">Special Descending</option>
+			<option value="a.`rankMin` ASC">Min Ascending</option>
+			<option value="a.`rankMin` DESC">Min Descending</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="input-mini"
+			default="25"
+			onchange="this.form.submit();" />
+	</fields>
+</form>

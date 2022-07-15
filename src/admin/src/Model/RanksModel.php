@@ -37,11 +37,11 @@ class RanksModel extends ListModel
 		if (empty($config['filter_fields']))
 		{
 			$config['filter_fields'] = [
-				'id',
-				'title',
-				'min',
-				'special',
-				'image',
+				'rankId', 'a.`rankId`',
+				'rankTitle', 'a.`rankTitle`',
+				'rankMin', 'a.`rankMin`',
+				'rankSpecial', 'a.`rankSpecial`',
+				'rankImage', 'a.`rankImage`',
 			];
 		}
 
@@ -49,22 +49,9 @@ class RanksModel extends ListModel
 	}
 
 	/**
-	 * @param   array    $data      data
-	 * @param   boolean  $loadData  load data
-	 *
-	 * @return void
-	 *
-	 * @since  Kunena 6.0
-	 */
-	public function getForm($data = [], $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
-
-	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * Note. Calling getState in this method will result in recursion.s
+	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @param   string  $ordering   ordering
 	 * @param   string  $direction  direction
@@ -74,8 +61,10 @@ class RanksModel extends ListModel
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState($ordering = 'a.rankId', $direction = 'asc')
 	{
+		// For some reason kunena sets option to com_m instead of com_kunena.
+		// That is why the workaround to set the context manually
 		$this->context = 'com_kunena.admin.ranks';
 
 		$app = Factory::getApplication();
@@ -89,26 +78,12 @@ class RanksModel extends ListModel
 			$this->context .= '.' . $layout;
 		}
 
-		$filterActive = '';
+		$this->setState('filter.rankTitle', $this->getUserStateFromRequest($this->context . 'filter.rankTitle', 'filter_rankTitle', null, 'string'));
+		$this->setState('filter.rankSpecial', $this->getUserStateFromRequest($this->context . 'filter.rankSpecial', 'filter_rankSpecial', null, 'string'));
+		$this->setState('filter.rankMin', $this->getUserStateFromRequest($this->context . 'filter.rankMin', 'filter_rankMin', null, 'int'));
+		$this->setState('filter.search', $this->getUserStateFromRequest($this->context . 'filter.search', 'filter_search', null, 'string'));
 
-		// List state information
-
-		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
-		$this->setState('filter.search', $value);
-
-		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.title', 'filterTitle', '', 'string');
-		$this->setState('filter.title', $value);
-
-		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.special', 'filter_special', '', 'string');
-		$this->setState('filter.special', $value !== '' ? (int) $value : null);
-
-		$filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.min', 'filter_min', '', 'string');
-		$this->setState('filter.min', $value !== '' ? (int) $value : null);
-
-		$this->setState('filter.active', !empty($filterActive));
-
-		// List state information.
-		parent::populateState('id', 'asc');
+		parent::populateState($ordering, $direction);
 	}
 
 	/**
@@ -121,9 +96,9 @@ class RanksModel extends ListModel
 	protected function getStoreId($id = ''): string
 	{
 		// Compile the store id.
-		$id .= ':' . $this->getState('filter.title');
-		$id .= ':' . $this->getState('filter.special');
-		$id .= ':' . $this->getState('filter.min');
+		$id .= ':' . $this->getState('filter.search');
+		$id .= ':' . $this->getState('filter.rankSpecial');
+		$id .= ':' . $this->getState('filter.rankMin');
 
 		return parent::getStoreId($id);
 	}
@@ -142,28 +117,29 @@ class RanksModel extends ListModel
 			$this->getState(
 				'list.select',
 				'a.rankId, a.rankTitle, a.rankMin, a.rankSpecial, a.rankImage'
-			)
-		);
+				)
+			);
 
 		$query->from($db->quoteName('#__kunena_ranks', 'a'));
 
 		// Filter by access level.
-		$filter = $this->getState('filter.title');
+		$filter = $this->getState('filter.search');
 
 		if (!empty($filter))
 		{
+			// Searching on title down't work as expected because title is stored as language string
 			$title = $db->quote('%' . $db->escape($filter, true) . '%');
 			$query->where('(a.rankTitle LIKE ' . $title . ')');
 		}
 
-		$filter = $this->getState('filter.special');
+		$filter = $this->getState('filter.rankSpecial');
 
 		if (is_numeric($filter))
 		{
 			$query->where('a.rankSpecial = ' . (int) $filter);
 		}
 
-		$filter = $this->getState('filter.min');
+		$filter = $this->getState('filter.rankMin');
 
 		if (is_numeric($filter))
 		{
@@ -171,28 +147,27 @@ class RanksModel extends ListModel
 		}
 
 		// Add the list ordering clause.
-		$direction = strtoupper($this->state->get('list.direction'));
+		$orderCol  = $this->state->get('list.ordering', 'a.id');
+		$orderDirn = $this->state->get('list.direction', 'ASC');
 
-		switch ($this->state->get('list.ordering'))
-		{
-			case 'title':
-				$query->order('a.rankTitle ' . $direction);
-				break;
-			case 'min':
-				$query->order('a.rankMin ' . $direction);
-				break;
-			case 'special':
-				$query->order('a.rankSpecial ' . $direction);
-				break;
-			case 'image':
-				$query->order('a.rankImage ' . $direction);
-				break;
-			default:
-				$query->order('a.rankId ' . $direction);
+		if ($orderCol && $orderDirn) {
+			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 		}
 
 		$db->setQuery($query);
 
 		return $query;
+	}
+
+	/**
+	 * Get an array of data items
+	 *
+	 * @return mixed Array of data items on success, false on failure.
+	 */
+	public function getItems()
+	{
+		$items = parent::getItems();
+
+		return $items;
 	}
 }

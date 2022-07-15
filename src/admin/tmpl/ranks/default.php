@@ -79,7 +79,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 $link       = Route::_('index.php?option=com_kunena&task=file.edit&id=' . (int) $item->rankId);
 
                                 ?>
-                                <tr class="row<?php echo $i % 2; ?>" data-draggable-group="0" item-id="<?php echo $item->rankId; ?>">
+                                <tr data-draggable-group="0" item-id="<?php echo $item->rankId; ?>">
                                     <td class="text-center">
                                         <?php echo HTMLHelper::_('grid.id', $i, $item->rankId, false, 'cid', 'cb', $item->rankTitle); ?>
                                     </td>

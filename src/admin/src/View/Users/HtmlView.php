@@ -54,6 +54,7 @@ class HtmlView extends BaseHtmlView
 		$this->state      = $this->get('State');
 		$this->pagination = $this->get('Pagination');
 		$this->modCatList = $this->get('ModcatsList');
+		$this->filterForm    = $this->get('FilterForm');
 
 		$this->sortFields          = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();

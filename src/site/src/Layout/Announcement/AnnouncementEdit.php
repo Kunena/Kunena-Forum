@@ -43,7 +43,7 @@ class AnnouncementEdit extends KunenaLayout
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function displayInput($name, $attributes = '', $id = null)
+	public function displayInput($name, $attributes = '', $id = false)
 	{
 		switch ($name)
 		{

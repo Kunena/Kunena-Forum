@@ -32,7 +32,7 @@ abstract class KunenaAnnouncementHelper
 	 * @var     KunenaAnnouncement[]
 	 * @since   Kunena 6.0
 	 */
-	public static $_instances = false;
+	public static $_instances = null;
 
 	/**
 	 * Returns the global Announcement object, only creating it if it doesn't already exist.

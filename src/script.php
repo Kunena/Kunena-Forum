@@ -57,7 +57,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 		],
 		'Joomla!' => [
 			'4.1' => '4.1.3',
-			'4.2' => '4.2.0-beta3',
+			'4.2' => '4.2.0-rc1',
 			'0'   => '4.1.3', // Preferred version
 		],
 	];

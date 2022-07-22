@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/license
+ * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license/
  */
 
 /**
@@ -13,10 +13,10 @@
  * (1) https://ckeditor.com/cke4/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) https://ckeditor.com/cke4/builder/7b9c034a7f5de0689be76fc0161c467d
+ * (2) https://ckeditor.com/cke4/builder/ca77a6a15d05ee586ce7e533bb996bdc
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) https://ckeditor.com/cke4/builder/download/7b9c034a7f5de0689be76fc0161c467d
+ * (3) https://ckeditor.com/cke4/builder/download/ca77a6a15d05ee586ce7e533bb996bdc
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -63,12 +63,12 @@ var CKBUILDER_CONFIG = {
 		'colorbutton' : 1,
 		'colordialog' : 1,
 		'contextmenu' : 1,
+		'copyformatting' : 1,
 		'dialogadvtab' : 1,
 		'editorplaceholder' : 1,
 		'elementspath' : 1,
 		'enterkey' : 1,
 		'entities' : 1,
-		'filebrowser' : 1,
 		'find' : 1,
 		'floatingspace' : 1,
 		'font' : 1,
@@ -84,7 +84,6 @@ var CKBUILDER_CONFIG = {
 		'maximize' : 1,
 		'removeformat' : 1,
 		'resize' : 1,
-		'scayt' : 1,
 		'selectall' : 1,
 		'showborders' : 1,
 		'smiley' : 1,

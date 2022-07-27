@@ -352,9 +352,9 @@ class KunenaModelTopics extends KunenaModel
 			'starttime' => $time,
 			'hold'      => $hold,
 			'where'     => $where, );
-		var_dump($latestcategory);
+
 		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
-		
+
 		$this->_common();
 	}
 

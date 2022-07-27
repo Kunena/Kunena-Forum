@@ -148,21 +148,16 @@ class KunenaModelTopics extends KunenaModel
 					$latestcategory    = $this->config->rss_excluded_categories;
 					$latestcategory_in = 0;
 				}
-				else
+				elseif (!empty($this->config->rss_included_categories))
 				{
 					$latestcategory    = $this->config->rss_included_categories;
 					$latestcategory_in = 1;
 				}
-			}
-
-			if (!is_array($latestcategory))
-			{
-				$latestcategory = explode(',', $latestcategory);
-			}
-
-			if (empty($latestcategory) || in_array(0, $latestcategory))
-			{
-				$latestcategory = false;
+				else
+				{
+					$latestcategory_in = 1;
+					$latestcategory = false;
+				}
 			}
 		}
 
@@ -357,9 +352,9 @@ class KunenaModelTopics extends KunenaModel
 			'starttime' => $time,
 			'hold'      => $hold,
 			'where'     => $where, );
-
+		var_dump($latestcategory);
 		list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($latestcategory, $limitstart, $limit, $params);
-
+		
 		$this->_common();
 	}
 

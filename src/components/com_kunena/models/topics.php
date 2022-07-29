@@ -148,16 +148,22 @@ class KunenaModelTopics extends KunenaModel
 					$latestcategory    = $this->config->rss_excluded_categories;
 					$latestcategory_in = 0;
 				}
-				elseif (!empty($this->config->rss_included_categories))
+				else
 				{
 					$latestcategory    = $this->config->rss_included_categories;
 					$latestcategory_in = 1;
 				}
-				else
-				{
-					$latestcategory_in = 1;
-					$latestcategory = false;
-				}
+				
+			}
+
+			if (!is_array($latestcategory))
+			{
+				$latestcategory = explode(',', $latestcategory);
+			}
+
+			if (count($latestcategory)==0)
+			{
+				$latestcategory = false;
 			}
 		}
 
@@ -183,7 +189,8 @@ class KunenaModelTopics extends KunenaModel
 		else
 		{
 			// Selection time.
-			$value = $this->getInt('sel', $this->config->rss_timelimit);
+
+		    $value = $this->getInt('sel', $this->config->rss_timelimit);
 			$this->setState('list.time', $value);
 		}
 
@@ -282,7 +289,7 @@ class KunenaModelTopics extends KunenaModel
 		{
 			$time = 0;
 		}
-		elseif ($time == 0)
+		elseif ($time == 0 || Factory::getDocument()->getType() == 'feed')
 		{
 			$time = KunenaFactory::getSession()->lasttime;
 		}

@@ -302,14 +302,23 @@ abstract class KunenaForumTopicHelper
 			$catlist += $category->getChannels();
 		}
 
-		if (empty($catlist))
+		if (count($catlist)>0)
 		{
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			$catlist = implode(',', array_keys($catlist));
 
-			return array(0, array());
+			if ($exclude)
+			{
+				$catlist = "AND tt.category_id NOT IN ({$catlist})";
+			}
+			else
+			{
+				$catlist = "AND tt.category_id IN ({$catlist})";
+			}
 		}
-
-		$catlist = implode(',', array_keys($catlist));
+		else
+		{
+			$catlist = '';
+		}
 
 		$whereuser = array();
 
@@ -343,11 +352,11 @@ abstract class KunenaForumTopicHelper
 
 		if ($exclude)
 		{
-			$where = "tt.hold IN ({$hold}) AND tt.category_id NOT IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
+			$where = "tt.hold IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
 		}
 		else
 		{
-			$where = "tt.hold IN ({$hold}) AND tt.category_id IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
+			$where = "tt.hold IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
 		}
 
 		if (!$moved)
@@ -366,7 +375,7 @@ abstract class KunenaForumTopicHelper
 		}
 
 		$db->setQuery($query);
-
+echo $query;
 		try
 		{
 			$total = (int) $db->loadResult();
@@ -377,7 +386,7 @@ abstract class KunenaForumTopicHelper
 
 			return array(0, array());
 		}
-
+		var_dump($total);
 		if (!$total)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -434,7 +443,7 @@ abstract class KunenaForumTopicHelper
 
 		unset($results);
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-
+		
 		return array($total, $topics);
 	}
 

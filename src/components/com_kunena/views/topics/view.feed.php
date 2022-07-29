@@ -191,7 +191,7 @@ class KunenaViewTopics extends KunenaView
 	public function displayTopicRows()
 	{
 		$firstpost = $this->state->get('list.mode') == 'topics';
-
+		var_dump($this->topics); die();
 		foreach ($this->topics as $topic)
 		{
 			if ($firstpost)

@@ -375,7 +375,7 @@ abstract class KunenaForumTopicHelper
 		}
 
 		$db->setQuery($query);
-echo $query;
+
 		try
 		{
 			$total = (int) $db->loadResult();
@@ -386,7 +386,7 @@ echo $query;
 
 			return array(0, array());
 		}
-		var_dump($total);
+
 		if (!$total)
 		{
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
@@ -443,7 +443,7 @@ echo $query;
 
 		unset($results);
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-		
+
 		return array($total, $topics);
 	}
 

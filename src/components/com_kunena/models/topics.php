@@ -189,8 +189,7 @@ class KunenaModelTopics extends KunenaModel
 		else
 		{
 			// Selection time.
-
-		    $value = $this->getInt('sel', $this->config->rss_timelimit);
+			$value = $this->getString('sel', $this->config->rss_timelimit);
 			$this->setState('list.time', $value);
 		}
 
@@ -285,17 +284,37 @@ class KunenaModelTopics extends KunenaModel
 		$limit      = $this->getState('list.limit');
 		$time       = $this->getState('list.time');
 
-		if ($time < 0)
+		if (Factory::getDocument()->getType() != 'feed')
 		{
-			$time = 0;
-		}
-		elseif ($time == 0 || Factory::getDocument()->getType() == 'feed')
-		{
-			$time = KunenaFactory::getSession()->lasttime;
+			if ($time < 0)
+			{
+				$time = 0;
+			}
+			elseif ($time == 0)
+			{
+				$time = KunenaFactory::getSession()->lasttime;
+			}
+			else
+			{
+				$time = Factory::getDate()->toUnix() - ((int) $time * 3600);
+			}
 		}
 		else
 		{
-			$time = Factory::getDate()->toUnix() - ((int) $time * 3600);
+			if ($time == 'month')
+			{
+				$time = new \DateTime('1 month ago');
+			}
+			elseif ($time == 'week')
+			{
+				$time = new \DateTime('1 week ago');
+			}
+			else
+			{
+				$time = new \DateTime('1 year ago');
+			}
+
+			$time = $time->getTimestamp();
 		}
 
 		$latestcategory    = $this->getState('list.categories');

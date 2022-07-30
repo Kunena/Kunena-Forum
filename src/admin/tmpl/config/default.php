@@ -1833,7 +1833,7 @@ $wa->useScript('multiselect');
                                                         <td><?php echo $this->lists ['rssSpecification'] ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_A_RSS_SPEC_DESC') ?></td>
                                                     </tr>
-                                                    <tr <?php if ($this->config->rssTimeLimit != 'month')
+                                                    <tr <?php if ($this->config->rssTimeLimit != '1 month')
 														:
 														echo 'class="changed"';
 													endif; ?>>

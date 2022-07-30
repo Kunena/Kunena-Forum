@@ -1389,9 +1389,9 @@ class ConfigModel extends AdminModel
 			// ------
 
 			$rssTimeLimit    = [];
-			$rssTimeLimit [] = HTMLHelper::_('select.option', 'week', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_WEEK'));
-			$rssTimeLimit [] = HTMLHelper::_('select.option', 'month', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_MONTH'));
-			$rssTimeLimit [] = HTMLHelper::_('select.option', 'year', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_YEAR'));
+			$rssTimeLimit [] = HTMLHelper::_('select.option', '1 week', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_WEEK'));
+			$rssTimeLimit [] = HTMLHelper::_('select.option', '1 month', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_MONTH'));
+			$rssTimeLimit [] = HTMLHelper::_('select.option', '1 year', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_YEAR'));
 
 			// Build the html select list
 			$lists ['rssTimeLimit'] = HTMLHelper::_('select.genericlist', $rssTimeLimit, 'cfg_rssTimeLimit', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssTimeLimit);

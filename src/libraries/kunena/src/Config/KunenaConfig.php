@@ -747,7 +747,7 @@ class KunenaConfig extends CMSObject
 	 * @var    string  RSS time limit
 	 * @since  Kunena 1.0.6
 	 */
-	public $rssTimeLimit = 'month';
+	public $rssTimeLimit = '1 month';
 
 	/**
 	 * @var    integer  RSS limit

@@ -71,7 +71,7 @@ class WidgetFooter extends KunenaLayout
 			}
 			else
 			{
-				$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&type=rss&layout=default&{$rssType}&Itemid={$itemid}", true);
+				$url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&type=rss&layout=feed&{$rssType}&Itemid={$itemid}", true);
 			}
 
 			$doc = Factory::getApplication()->getDocument();

@@ -334,14 +334,23 @@ abstract class KunenaTopicHelper
 			$catlist += $category->getChannels();
 		}
 
-		if (empty($catlist))
+		if (count($catlist)>0)
 		{
-			KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+			$catlist = implode(',', array_keys($catlist));
 
-			return [0, []];
+			if ($exclude)
+			{
+				$catlist = "AND tt.category_id NOT IN ({$catlist})";
+			}
+			else
+			{
+				$catlist = "AND tt.category_id IN ({$catlist})";
+			}
 		}
-
-		$catlist = implode(',', array_keys($catlist));
+		else
+		{
+			$catlist = '';
+		}
 
 		$whereuser = [];
 
@@ -375,11 +384,11 @@ abstract class KunenaTopicHelper
 
 		if ($exclude)
 		{
-			$where = "tt.hold IN ({$hold}) AND tt.category_id NOT IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
+			$where = "tt.hold IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
 		}
 		else
 		{
-			$where = "tt.hold IN ({$hold}) AND tt.category_id IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
+			$where = "tt.hold IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
 		}
 
 		if (!$moved)

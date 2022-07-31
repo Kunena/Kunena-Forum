@@ -292,6 +292,8 @@ jQuery(document).ready(function ($) {
 			customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),
 			on: {
 				instanceReady: function (event) {
+					CKEDITOR.plugins.clipboard.preventDefaultDropOnElement(event.editor.document);
+					
 					if (event.editor.getData().length > 0)
 					{
 						$('#form_submit_button').removeAttr("disabled");

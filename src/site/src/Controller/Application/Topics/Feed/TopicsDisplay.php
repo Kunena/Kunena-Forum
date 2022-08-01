@@ -58,6 +58,7 @@ class TopicsDisplay extends KunenaControllerDisplay
 		$this->config = KunenaFactory::getConfig();
 		$this->document = Factory::getApplication()->getDocument();
 		$this->topicsModel = new TopicsModel;
+		$mode = $this->getInput()->getWord('mode', 'topics');
 
 		if (!$this->config->enableRss)
 		{
@@ -89,7 +90,20 @@ class TopicsDisplay extends KunenaControllerDisplay
 
 		$this->setTitle(Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT'));
 
-		$this->displayTopicRows();
+		if ($mode == 'topics')
+		{
+			$this->topics = $this->topicsModel->getTopics();
+			$this->displayTopicRows();
+		}
+		elseif ($mode == 'posts')
+		{
+			$this->displayPosts();
+		}
+		else
+		{
+			$this->topics = $this->topicsModel->getTopics();
+			$this->displayRecentReplies();
+		}
 	}
 
 	/**
@@ -116,6 +130,45 @@ class TopicsDisplay extends KunenaControllerDisplay
 	}
 
 	/**
+	 * Prepare to display the recent replies
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function displayRecentReplies()
+	{
+		foreach ($this->topics as $topic)
+		{
+			$id   = $topic->last_post_id;
+			$page = 'last';
+
+			if (!$this->me->userid && $this->config->teaser && $id != $topic->first_post_id)
+			{
+				$description = Text::_('COM_KUNENA_TEASER_TEXT');
+			}
+			else
+			{
+				$description = $topic->last_post_message;
+			}
+
+			$date     = new Date($topic->last_post_time);
+			$userid   = $topic->last_post_userid;
+			$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
+
+			$title    = $topic->subject;
+			$category = $topic->getCategory();
+			$url      = $topic->getUrl($category, true, $page);
+
+			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
+		}
+	}
+
+	/**
+	 * Prepare to display the topic rows
+	 * 
 	 * @return  void
 	 *
 	 * @since   Kunena 6.0
@@ -124,9 +177,7 @@ class TopicsDisplay extends KunenaControllerDisplay
 	 */
 	public function displayTopicRows()
 	{
-		$topics = $this->topicsModel->getTopics();
-
-		foreach ($topics as $topic)
+		foreach ($this->topics as $topic)
 		{
 			$page        = 'first';
 			$description = $topic->first_post_message;
@@ -143,6 +194,73 @@ class TopicsDisplay extends KunenaControllerDisplay
 	}
 
 	/**
+	 * Prepare to display the posts
+	 * 
+	 * @param   null  $tpl  tpl
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function displayPosts($tpl = null)
+	{
+		$this->layout   = 'posts';
+		$this->messages = $this->topicsModel->getMessages();
+
+		// TODO: if start != 0, add information from it into description
+		$this->document->setGenerator($this->config->boardTitle);
+
+		$this->setTitle(Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT'));
+
+		$this->displayPostRows();
+	}
+
+	/**
+	 * Prepare to display the posts rows
+	 * 
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws  Exception
+	 */
+	public function displayPostRows()
+	{
+		foreach ($this->messages as $message)
+		{
+			if (!isset($this->topics[$message->thread]))
+			{
+				// TODO: INTERNAL ERROR
+				return;
+			}
+
+			$topic    = $this->topics[$message->thread];
+			$title    = $message->subject;
+			$category = $topic->getCategory();
+			$url      = $message->getUrl($category);
+
+			if (!$this->me->userid && $this->config->teaser && $message->id != $topic->first_post_id)
+			{
+				$description = Text::_('COM_KUNENA_TEASER_TEXT');
+			}
+			else
+			{
+				$description = $message->message;
+			}
+
+			$date     = new Date($message->time);
+			$userid   = $message->userid;
+			$username = KunenaFactory::getUser($userid)->getName($message->name);
+
+			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
+		}
+	}
+
+	/**
+	 * Create the item for the RSS feed
+	 * 
 	 * @param   string   $title        title
 	 * @param   string   $url          url
 	 * @param   string   $description  description

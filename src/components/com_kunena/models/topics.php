@@ -153,7 +153,6 @@ class KunenaModelTopics extends KunenaModel
 					$latestcategory    = $this->config->rss_included_categories;
 					$latestcategory_in = 1;
 				}
-				
 			}
 
 			if (!is_array($latestcategory))
@@ -161,7 +160,7 @@ class KunenaModelTopics extends KunenaModel
 				$latestcategory = explode(',', $latestcategory);
 			}
 
-			if (count($latestcategory)==0)
+			if (empty($latestcategory) || in_array(0, $latestcategory))
 			{
 				$latestcategory = false;
 			}

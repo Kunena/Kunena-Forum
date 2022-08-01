@@ -155,17 +155,21 @@ class KunenaModelTopics extends KunenaModel
 				}
 			}
 
-			if (!is_array($latestcategory))
+			if (!empty($latestcategory) && !is_array($latestcategory))
 			{
 				$latestcategory = explode(',', $latestcategory);
 			}
+			else
+			{
+				$latestcategory = array();
+			}
 
-			if (empty($latestcategory) || in_array(0, $latestcategory))
+			if (count($latestcategory) == 0)
 			{
 				$latestcategory = false;
 			}
 		}
-
+		
 		$this->setState('list.categories', $latestcategory);
 		$this->setState('list.categories.in', $latestcategory_in);
 
@@ -545,7 +549,7 @@ class KunenaModelTopics extends KunenaModel
 	{
 		if ($this->topics === false)
 		{
-			$this->getPosts();
+		    $this->getPosts();
 		}
 
 		return $this->messages;

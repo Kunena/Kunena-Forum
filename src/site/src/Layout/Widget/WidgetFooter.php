@@ -59,7 +59,7 @@ class WidgetFooter extends KunenaLayout
 					$rssType = 'mode=replies';
 					break;
 				case 'post' :
-					$rssType = 'layout=posts';
+					$rssType = 'mode=posts';
 					break;
 			}
 

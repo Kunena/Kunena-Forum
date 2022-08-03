@@ -592,7 +592,7 @@ class KunenaUsers extends KunenaTable
 			return false;
 		}
 
-		if ($data !== null)
+		if ($data['posts'] !== null)
 		{
 			$this->_exists = true;
 		}

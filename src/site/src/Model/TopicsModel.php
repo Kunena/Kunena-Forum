@@ -698,12 +698,16 @@ class TopicsModel extends KunenaModel
 				}
 			}
 
-			if (!\is_array($latestCategory))
+			if (!empty($latestCategory) && !\is_array($latestCategory))
 			{
 				$latestCategory = explode(',', $latestCategory);
 			}
+			else
+			{
+				$latestCategory = array();
+			}
 
-			if (empty($latestCategory) || \in_array(0, $latestCategory))
+			if (count($latestCategory) == 0)
 			{
 				$latestCategory = false;
 			}

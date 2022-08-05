@@ -589,6 +589,16 @@ class KunenaMessage extends KunenaDatabaseObject
 		$ok         = true;
 		$start_time = microtime(true);
 
+		// Check if teh message needs to be added to the mail by following the mailFull setting from Kunena config
+		if ($config->mailFull)
+		{
+			$mailMessage = Text::_('COM_KUNENA_SENDMAIL_BODY_MESSAGE') . $this->message;
+		}
+		else
+		{
+			$mailMessage = '';
+		}
+
 		// Send email to all subscribers.
 		if (!empty($receivers[1]))
 		{
@@ -598,7 +608,7 @@ class KunenaMessage extends KunenaDatabaseObject
 					'mail'       => '',
 					'subject'    => $subject,
 					'name'       => $this->name,
-					'message'    => $this->message,
+					'message'    => $mailMessage,
 					'messageUrl' => $url,
 					'once'       => $once,
 				]
@@ -616,7 +626,7 @@ class KunenaMessage extends KunenaDatabaseObject
 					'mail'       => '',
 					'subject'    => $subject,
 					'name'       => $this->name,
-					'message'    => $this->message,
+					'message'    => $mailMessage,
 					'messageUrl' => $url,
 					'once'       => $once,
 				]

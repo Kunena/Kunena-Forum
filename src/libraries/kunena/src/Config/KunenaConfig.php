@@ -1608,16 +1608,16 @@ class KunenaConfig extends CMSObject
 	public $plugins;
 
 	/**
-	 * @var    string to define the header image size
+	 * @var    string to define the header height image size
 	 * @since  Kunena 6.0
 	 */
-	public $emailHeadersizey = 560;
+	public $emailHeaderSizeY = 560;
 
 	/**
-	 * @var    string to define the header image size
+	 * @var    string to define the header width image size
 	 * @since  Kunena 6.0
 	 */
-	public $emailHeadersizex = 560;
+	public $emailHeaderSizeX = 560;
 
 	public $moderator_id;
 

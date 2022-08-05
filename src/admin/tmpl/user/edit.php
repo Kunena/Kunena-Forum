@@ -53,6 +53,9 @@ jQuery(function($) {
                     <input type="hidden" name="boxchecked" value="1"/>
                     <input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
+					
+					<h1 style="text-transform: capitalize;"><?php echo Text::_('COM_KUNENA_USER_TITLE_EDIT_USERNAME'); ?>
+                                    : <?php echo $this->user->username; ?></h1>
 
                     <article class="data-block">
                         <div class="data-container">

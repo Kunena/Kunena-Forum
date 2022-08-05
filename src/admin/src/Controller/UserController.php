@@ -185,7 +185,7 @@ class UserController extends FormController
 				// Global moderator is a special case
 				if (KunenaUserHelper::getMyself()->isAdmin())
 				{
-					KunenaAccess::getInstance()->setModerator((object) [], $user, \in_array(0, $modCatids, true));
+					KunenaAccess::getInstance()->setModerator(0, $user, \in_array(0, $modCatids, true));
 				}
 
 				$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
@@ -249,7 +249,7 @@ class UserController extends FormController
 	 * @throws  Exception
 	 * @since   Kunena 2.0
 	 */
-	public function apply(): void
+	public function applychanges(): void
 	{
 		if (!Session::checkToken('post'))
 		{

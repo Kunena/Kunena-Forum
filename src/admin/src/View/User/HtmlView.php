@@ -147,7 +147,7 @@ class HtmlView extends BaseHtmlView
 		$yesnoMod [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));
 
 		// Build the html select list
-		$this->selectMod = HTMLHelper::_('select.genericlist', $yesnoMod, 'moderator', 'class="inputbox form-control" size="2"', 'value', 'text', $this->user->moderator);
+		$this->selectMod = HTMLHelper::_('select.genericlist', $yesnoMod, 'moderator', 'class="form-select" aria-invalid="false"', 'value', 'text', $this->user->moderator);
 
 		// Make the select list for the moderator flag
 		$yesnoOrder [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_USER_ORDER_ASC'));

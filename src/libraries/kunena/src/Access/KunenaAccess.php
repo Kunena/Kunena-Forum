@@ -379,7 +379,7 @@ jQuery(document).ready(function ($) {
 			$accesstypes[$string] = HTMLHelper::_('select.option', $category->accesstype, $string);
 		}
 
-		return HTMLHelper::_('select.genericlist', $accesstypes, 'accesstype', 'class="inputbox form-control" size="' . \count($accesstypes) . '" onchange="kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype);
+		return HTMLHelper::_('select.genericlist', $accesstypes, 'accesstype', 'class="form-select" size="' . \count($accesstypes) . '" onchange="kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype);
 	}
 
 	/**

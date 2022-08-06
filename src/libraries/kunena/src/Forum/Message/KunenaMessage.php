@@ -592,11 +592,11 @@ class KunenaMessage extends KunenaDatabaseObject
 		// Check if teh message needs to be added to the mail by following the mailFull setting from Kunena config
 		if ($config->mailFull)
 		{
-			$mailMessage = Text::_('COM_KUNENA_SENDMAIL_BODY_MESSAGE') . $this->message;
+			$mailMessage = $this->message;
 		}
 		else
 		{
-			$mailMessage = '';
+			$mailMessage = Text::_('COM_KUNENA_SENDMAIL_NO_BODY_MESSAGE_PREVIEW');
 		}
 
 		// Send email to all subscribers.

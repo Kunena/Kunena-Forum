@@ -189,7 +189,7 @@ class KunenaAccessJoomla
 						'access.usergroup',
 						'params-joomla-level[access_post][]',
 						$category->params->get('access_post', [2, 6, 8]),
-						'multiple="multiple" class="inputbox form-control" size="10"',
+						'multiple="multiple" class="inputbox form-control form-select" size="10"',
 						false
 					),
 				];
@@ -200,7 +200,7 @@ class KunenaAccessJoomla
 						'access.usergroup',
 						'params-joomla-level[access_reply][]',
 						$category->params->get('access_reply', [2, 6, 8]),
-						'multiple="multiple" class="inputbox form-control" size="10"',
+						'multiple="multiple" class="inputbox form-control form-select" size="10"',
 						false
 					),
 				];
@@ -218,26 +218,26 @@ class KunenaAccessJoomla
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC2') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_HINT_DESC'),
-				'input' => HTMLHelper::_('access.usergroup', 'pubAccess', $category->pubAccess, 'class="inputbox form-control" size="10"', false),
+				'input' => HTMLHelper::_('access.usergroup', 'pubAccess', $category->pubAccess, 'class="form-select" multiple size="10"', false),
 			];
 
 			$html ['joomla-group']['pubRecurse']  = [
 				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_DESC'),
-				'input' => HTMLHelper::_('select.genericlist', $yesno, 'pubRecurse', 'class="inputbox form-control" size="1"', 'value', 'text', $category->pubRecurse),
+				'input' => HTMLHelper::_('select.genericlist', $yesno, 'pubRecurse', 'class="form-select" size="1"', 'value', 'text', $category->pubRecurse),
 			];
 			$html ['joomla-group']['adminAccess'] = [
 				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC2') . '<br /><br />' .
 					Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_HINT_DESC'),
-				'input' => HTMLHelper::_('access.usergroup', 'adminAccess', $category->adminAccess, 'class="inputbox form-control" size="10"', false),
+				'input' => HTMLHelper::_('access.usergroup', 'adminAccess', $category->adminAccess, 'class="form-select" multiple size="10"', false),
 			];
 
 			$html ['joomla-group']['adminRecurse'] = [
 				'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_TITLE'),
 				'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_DESC'),
-				'input' => HTMLHelper::_('select.genericlist', $yesno, 'adminRecurse', 'class="inputbox form-control" size="1"', 'value', 'text', $category->adminRecurse),
+				'input' => HTMLHelper::_('select.genericlist', $yesno, 'adminRecurse', 'class="form-select" size="1"', 'value', 'text', $category->adminRecurse),
 			];
 
 			if (!$category->isSection())
@@ -249,7 +249,7 @@ class KunenaAccessJoomla
 						'access.usergroup',
 						'params-joomla-group[access_post][]',
 						$category->params->get('access_post', [2, 6, 8]),
-						'multiple="multiple" class="inputbox form-control" size="10"',
+						'multiple="multiple" class="form-select" multiple size="10"',
 						false
 					),
 				];
@@ -260,7 +260,7 @@ class KunenaAccessJoomla
 						'access.usergroup',
 						'params-joomla-group[access_reply][]',
 						$category->params->get('access_reply', [2, 6, 8]),
-						'multiple="multiple" class="inputbox form-control" size="10"',
+						'multiple="multiple" class="form-select" multiple size="10"',
 						false
 					),
 				];

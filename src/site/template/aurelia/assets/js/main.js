@@ -68,7 +68,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	if ($.fn.datepicker !== undefined) {
-		$('.input-append.date').datepicker({
+		$('.date').datepicker({
 			orientation: "top auto",
 			format: "yyyy-mm-dd",
 			language: "kunena"

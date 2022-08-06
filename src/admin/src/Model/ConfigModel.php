@@ -1581,11 +1581,11 @@ class ConfigModel extends AdminModel
 		$latestCategoryIn[]        = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_LATESTCATEGORY_IN_SHOW'));
 		$lists['latestCategoryIn'] = HTMLHelper::_('select.genericlist', $latestCategoryIn, 'cfg_latestCategoryIn', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('latestCategoryIn'));
 
-		$optionsShowHide = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL'))];
+		$optionsShowHide         = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL'))];
+		$params                  = array('sections' => false, 'action' => 'read');
+		$lists['latestCategory'] = HTMLHelper::_('kunenaforum.categorylist', 'cfg_latestCategory[]', 0, $optionsShowHide, $params, 'class="form-select" multiple="multiple"', 'value', 'text', explode(',', $config->latestCategory), 'latestCategory');
 
-		$lists['latestCategory'] = HTMLHelper::_('select.genericlist', $optionsShowHide, 'cfg_latestCategory', 'class="inputbox form-control"multiple="multiple"', 'value', 'text', explode(',', $config->getValue('latestCategory')), 'latestCategory');
-
-		$lists['topicIcons'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_topicIcons', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('topicIcons'));
+		$lists['topicIcons'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_topicIcons', 'class="inputbox form-control"size="1"', 'value', 'text', $config->topicIcons);
 
 		$lists['debug'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_debug', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('debug'));
 

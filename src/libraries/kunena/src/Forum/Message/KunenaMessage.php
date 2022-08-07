@@ -589,7 +589,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		$ok         = true;
 		$start_time = microtime(true);
 
-		// Check if teh message needs to be added to the mail by following the mailFull setting from Kunena config
+		// Check if the message needs to be added to the mail by following the mailFull setting from Kunena config
 		if ($config->mailFull)
 		{
 			$mailMessage = $this->message;

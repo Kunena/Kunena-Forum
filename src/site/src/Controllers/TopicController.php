@@ -2673,22 +2673,6 @@ class TopicController extends KunenaController
 			$template->reportMessage($message, $reason, $text);
 		}
 
-		if ($this->config->logModeration)
-		{
-			KunenaLog::log(
-				KunenaLog::TYPE_REPORT,
-				$log,
-				[
-					'mesid'   => $message->id,
-					'reason'  => $reason,
-					'message' => $text,
-				],
-				$topic->getCategory(),
-				$topic,
-				$message->getAuthor()
-			);
-		}
-
 		// Load language file from the template.
 		KunenaFactory::getTemplate()->loadLanguage();
 
@@ -2756,6 +2740,22 @@ class TopicController extends KunenaController
 
 				KunenaEmail::send($mailTemplate, $receivers, $mailer);
 
+				if ($this->config->logModeration)
+				{
+					KunenaLog::log(
+						KunenaLog::TYPE_REPORT,
+						$log,
+						[
+							'mesid'   => $message->id,
+							'reason'  => $reason,
+							'message' => $text,
+						],
+						$topic->getCategory(),
+						$topic,
+						$message->getAuthor()
+					);
+				}
+
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_SUCCESS'), 'success');
 			}
 			else
@@ -2763,7 +2763,7 @@ class TopicController extends KunenaController
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_NOT_SEND'), 'success');
 			}
 		}
-
+die();
 		$this->setRedirect($target->getUrl($this->return, false));
 	}
 

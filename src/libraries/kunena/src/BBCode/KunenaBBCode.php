@@ -1160,8 +1160,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 	 */
 	public function __construct()
 	{
-		$this->config = KunenaFactory::getConfig();
+		$this->config         = KunenaFactory::getConfig();
 		$this->templateParams = KunenaFactory::getTemplate()->params;
+		$this->me             = KunenaUserHelper::getMyself();
 
 		if (!$this->config->disableEmoticons)
 		{
@@ -1730,8 +1731,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			return '';
 		}
 
-		$me = KunenaUserHelper::getMyself();
-
 		if (!Factory::getApplication()->getIdentity()->guest)
 		{
 			$layout = KunenaLayout::factory('BBCode/Hide');
@@ -1739,7 +1738,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			if ($layout->getPath())
 			{
 				return (string) $layout
-					->set('me', $me)
+					->set('me', $this->me)
 					->set('content', $content)
 					->set('params', $params);
 			}
@@ -1789,9 +1788,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			return '';
 		}
 
-		$me        = KunenaUserHelper::getMyself();
 		$message   = $this->getMessage();
-		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
+		$moderator = $this->me->userid && $this->me->isModerator($message ? $message->getCategory() : null);
 
 		if (isset($bbcode->parent->message->userid))
 		{
@@ -1802,14 +1800,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			$message_userid = $bbcode->parent->userid;
 		}
 
-		if (($me->userid && $message_userid == $me->userid) || $moderator)
+		if (($this->me->userid && $message_userid == $this->me->userid) || $moderator)
 		{
 			$layout = KunenaLayout::factory('BBCode/Confidential');
 
 			if ($layout->getPath())
 			{
 				return (string) $layout
-					->set('me', $me)
+					->set('me', $this->me)
 					->set('content', $content)
 					->set('params', $params);
 			}
@@ -3412,9 +3410,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			return '';
 		}
 
-		$me        = KunenaUserHelper::getMyself();
 		$message   = $this->getMessage();
-		$moderator = $me->userid && $me->isModerator($message ? $message->getCategory() : null);
+		$moderator = $this->me->userid && $this->me->isModerator($message ? $message->getCategory() : null);
 
 		if (isset($bbcode->parent->message->userid))
 		{
@@ -3438,14 +3435,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 			}
 		}
 
-		if (($me->userid && $message_userid == $me->userid) || $moderator)
+		if (($this->me->userid && $message_userid == $this->me->userid) || $moderator)
 		{
 			$layout = KunenaLayout::factory('BBCode/Private');
 
 			if ($layout->getPath())
 			{
 				return (string) $layout
-					->set('me', $me)
+					->set('me', $this->me)
 					->set('content', $pm)
 					->set('params', $params);
 			}

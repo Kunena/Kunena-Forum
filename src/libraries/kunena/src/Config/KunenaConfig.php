@@ -19,7 +19,6 @@ namespace Kunena\Forum\Libraries\Config;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
@@ -255,7 +254,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  *
  * @since   Kunena 6.0
  */
-class KunenaConfig extends CMSObject
+class KunenaConfig extends Registry 
 {
 	/**
 	 * @var    integer  ID
@@ -1693,7 +1692,7 @@ class KunenaConfig extends CMSObject
 		if ($config)
 		{
 			$params = json_decode($config['params']);
-			$this->bind($params);
+			$this->setRegistry($params);
 		}
 
 		// Perform custom validation of config data before we let anybody access it.
@@ -1708,7 +1707,7 @@ class KunenaConfig extends CMSObject
 		{
 			if ($name == '38432UR24T5bBO6')
 			{
-				$this->bind($registry->toArray());
+				$this->set($registry->toArray());
 			}
 			elseif ($name && $registry instanceof Registry)
 			{
@@ -1718,15 +1717,49 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
-	 * @param   mixed  $properties  properties
+	 * Set a value with Registry Joomla class.
+	 * 
+	 * @param   string  $path       Registry Path (e.g. joomla.content.showauthor)
+	 * @param   mixed   $value      Value of entry
 	 *
-	 * @return  void
+	 * @return  mixed  The value of the that has been set.
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function bind($properties): void
+	public function setRegistry($value)
 	{
-		$this->setProperties($properties);
+		$this->set('kunena.configuration.settings', $value);
+	}
+
+	/**
+	 * Get a registry value.
+	 *
+	 * @param   string  $value    Value to retrieve by registry path (e.g. kunena.configuration.settings.boardTitle)
+	 * @param   mixed   $default  Optional default value, returned if the internal value is null.
+	 *
+	 * @return  mixed  Value of entry or null
+	 *
+	 * @since   1.0
+	 */
+	public function getValue($value, $default = null)
+	{
+		return $this->get('kunena.configuration.settings.' . $value, $default);
+	}
+
+	/**
+	 * Get a value with Registry Joomla class.
+	 *
+	 * @param   string  $path       Registry Path (e.g. joomla.content.showauthor)
+	 *
+	 * @return  mixed  Value of entry or null
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function getFromRegistry()
+	{
+		$data = $this->get('kunena.configuration.settings');
+
+		return $data;
 	}
 
 	/**
@@ -1747,23 +1780,25 @@ class KunenaConfig extends CMSObject
 	}
 
 	/**
+	 * Save the Kunena configuration settings into teh database.
+	 * 
+	 * @param   object  $configNewParams       The Kunena settings to save
+	 * 
 	 * @return  void
 	 *
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	public function save(): void
+	public function save($configNewParams): void
 	{
 		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Perform custom validation of config data before we write it.
 		$this->check();
 
-		// Get current configuration
-		$params = $this->getProperties();
-		unset($params['id']);
+		//unset($params['id']);
 
-		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
+		$db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($configNewParams))}");
 
 		try
 		{
@@ -1786,7 +1821,7 @@ class KunenaConfig extends CMSObject
 	public function reset(): void
 	{
 		$instance = new KunenaConfig;
-		$this->bind($instance->getProperties());
+		$this->set($instance->getFromRegistry());
 	}
 
 	/**
@@ -1813,7 +1848,7 @@ class KunenaConfig extends CMSObject
 	 */
 	public function getEmail(): string
 	{
-		$email = $this->get('email');
+		$email = $this->email;
 
 		return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
 	}

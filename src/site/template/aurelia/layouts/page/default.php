@@ -16,30 +16,30 @@ namespace Kunena\Forum\Site;
 
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
-$config = KunenaFactory::getTemplate()->params;
+$templateParams = KunenaFactory::getTemplate()->params;
 ?>
 
 <div id="kunena" class="layout <?php echo $this->options->get('pageclass_sfx'); ?>">
 	<?php
 
-	if ($config->get('displayMenu'))
+	if ($templateParams->get('displayMenu'))
 	{
 		echo $this->subLayout('Widget/MenuBar');
 	}
 
-	if ($config->get('displayModule'))
+	if ($templateParams->get('displayModule'))
 	{
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
 	}
 
-	if ($config->get('displayBreadcrumb'))
+	if ($templateParams->get('displayBreadcrumb'))
 	{
 		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
 	}
 
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
 
-	if ($config->get('displayAnnouncement'))
+	if ($templateParams->get('displayAnnouncement'))
 	{
 		echo $this->subRequest('Widget/Announcement');
 	}
@@ -47,17 +47,17 @@ $config = KunenaFactory::getTemplate()->params;
 	// Display current view/layout
 	echo $this->content;
 
-	if ($config->get('displayBreadcrumb'))
+	if ($templateParams->get('displayBreadcrumb'))
 	{
 		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
 	}
 
-	if ($config->get('displayModule'))
+	if ($templateParams->get('displayModule'))
 	{
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
 	}
 
-	if ($config->get('displayFooter'))
+	if ($templateParams->get('displayFooter'))
 	{
 		echo $this->subLayout('Widget/Footer');
 	}

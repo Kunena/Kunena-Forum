@@ -2763,7 +2763,7 @@ class TopicController extends KunenaController
 				$this->app->enqueueMessage(Text::_('COM_KUNENA_REPORT_NOT_SEND'), 'success');
 			}
 		}
-die();
+
 		$this->setRedirect($target->getUrl($this->return, false));
 	}
 

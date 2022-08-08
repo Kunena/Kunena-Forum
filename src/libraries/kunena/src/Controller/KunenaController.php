@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -24,6 +25,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
@@ -80,13 +82,16 @@ class KunenaController extends BaseController
 	protected $app;
 
 	/**
-	 * @param   array                                             $config  config
-	 * @param   \Joomla\CMS\MVC\Factory\MVCFactoryInterface|null  $factory
-	 * @param   null                                              $app
-	 * @param   null                                              $input
+	 * Constructor.
 	 *
-	 * @throws \Exception
-	 * @since   Kunena 6.0
+	 * @param   array                $config   An optional associative array of configuration settings.
+	 *                                         Recognized key values include 'name', 'default_task', 'model_path', and
+	 *                                         'view_path' (this list is not meant to be comprehensive).
+	 * @param   MVCFactoryInterface  $factory  The factory.
+	 * @param   CMSApplication       $app      The Application for the dispatcher
+	 * @param   Input                $input    Input
+	 *
+	 * @since   6.0
 	 */
 	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
@@ -394,7 +399,7 @@ class KunenaController extends BaseController
 
 			// Joomla 2.5+ multi-language support
 			/*
-			// FIXME:
+			FIXME:
 			if (isset($active->language) && $active->language != '*') {
 				$language = Factory::getApplication()->getDocument()->getLanguage();
 				if (strtolower($active->language) != strtolower($language)) {

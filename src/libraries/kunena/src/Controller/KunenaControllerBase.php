@@ -202,9 +202,9 @@ abstract class KunenaControllerBase implements Serializable
 
 	/**
 	 * Needed since PHP 8.1.0 else give drepreciation warning
-	 * 
+	 *
 	 * @since   Kunena 6.0
-	 * 
+	 *
 	 * @return string
 	 */
 	public function __serialize()
@@ -226,9 +226,9 @@ abstract class KunenaControllerBase implements Serializable
 
 	/**
 	 * Needed since PHP 8.1.0 else give drepreciation warning
-	 * 
+	 *
 	 * @since  Kunena 6.0
-	 * @param  unknown $input
+	 * @param   Input  $input  The input object
 	 * @return \Joomla\Input\Input
 	 */
 	public function __unserialize($input)

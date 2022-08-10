@@ -719,7 +719,7 @@ class KunenaView extends HtmlView
 			$output = ob_get_contents();
 			ob_end_clean();
 
-			if (JDEBUG || $this->config->get('debug'))
+			if (JDEBUG || $this->config->getValue('debug'))
 			{
 				$output = trim($output);
 				$output = "\n<!-- START {$templateFile} -->\n{$output}\n<!-- END {$templateFile} -->\n";

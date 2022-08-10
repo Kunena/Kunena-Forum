@@ -462,7 +462,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (!$config->get('sendEmails'))
+		if (!$config->getValue('sendEmails'))
 		{
 			return false;
 		}
@@ -538,14 +538,14 @@ class KunenaMessage extends KunenaDatabaseObject
 			return true;
 		}
 
-		if (!$config->getEmail())
+		if (!$config->getValueEmail())
 		{
 			KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
 
 			return false;
 		}
 
-		if (!MailHelper::isEmailAddress($config->getEmail()))
+		if (!MailHelper::isEmailAddress($config->getValueEmail()))
 		{
 			KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
 
@@ -577,7 +577,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		$user = Factory::getApplication()->getIdentity();
 		$mail = Factory::getMailer();
 		$mail->setSubject($mailsubject);
-		$mail->setSender([$config->getEmail(), $mailnamesender]);
+		$mail->setSender([$config->getValueEmail(), $mailnamesender]);
 		$app = Factory::getApplication();
 
 		// Here is after respond sends. so close connection to leave browser, and

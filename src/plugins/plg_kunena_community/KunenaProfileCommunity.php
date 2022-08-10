@@ -162,7 +162,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	public function getProfileName(KunenaUser $user, $visitorname = '', $escape = true)
 	{
 		$cconfig         = \CFactory::getConfig();
-		$displayusername = $cconfig->get('displayname');
+		$displayusername = $cconfig->getValue('displayname');
 
 		if ($displayusername == 'name')
 		{

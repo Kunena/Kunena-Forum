@@ -134,7 +134,7 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
 	{
 		$config     = ComponentHelper::getParams('com_jsn');
-		$formatName = $config->get('formatname', 'NAME');
+		$formatName = $config->getValue('formatname', 'NAME');
 
 		if ($formatName == 'NAME')
 		{

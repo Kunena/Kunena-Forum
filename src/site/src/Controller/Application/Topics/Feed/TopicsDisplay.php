@@ -68,7 +68,7 @@ class TopicsDisplay extends KunenaControllerDisplay
 		KunenaParser::$relative = false;
 		$cache            = Factory::getCache('com_kunena_rss', 'output');
 
-		if (!$this->config->get('cache'))
+		if (!$this->config->getValue('cache'))
 		{
 			$cache->setCaching(0);
 		}

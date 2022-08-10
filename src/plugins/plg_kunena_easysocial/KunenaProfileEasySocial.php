@@ -93,7 +93,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 			$config  = \ES::config();
 			$jConfig = \ES::jConfig();
 
-			if (!\ES::isSh404Installed() && $config->get('users.simpleUrl') && $jConfig->getValue('sef'))
+			if (!\ES::isSh404Installed() && $config->getValue('users.simpleUrl') && $jconfig->getValueValue('sef'))
 			{
 				return rtrim(Uri::root(), '/') . '/' . $user->getAlias(false);
 			}
@@ -221,7 +221,7 @@ class KunenaProfileEasySocial extends KunenaProfile
 	public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true)
 	{
 		$config          = \ES::config();
-		$displayusername = $config->get('users.displayName');
+		$displayusername = $config->getValue('users.displayName');
 
 		if ($displayusername == 'username')
 		{

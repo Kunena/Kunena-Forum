@@ -260,12 +260,12 @@ abstract class KunenaForum
 		// Setup output caching.
 		$cache = Factory::getCache('com_kunena', 'output');
 
-		if (!$config->get('cache'))
+		if (!$config->getValue('cache'))
 		{
 			$cache->setCaching(0);
 		}
 
-		$cache->setLifeTime($config->get('cacheTime', 60));
+		$cache->setLifeTime($config->getValue('cacheTime', 60));
 
 		// Setup error logging.
 		$options    = ['logger' => 'w3c', 'text_file' => 'kunena.php'];

@@ -1726,7 +1726,7 @@ class ConfigModel extends AdminModel
 		// Added new options into Kunena 3.0.0
 		$lists ['autoLink']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoLink', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoLink);
 		$lists ['accessComponent'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_accessComponent', 'class="inputbox form-control"size="1"', 'value', 'text', $config->accessComponent);
-		$lists ['componentUrl']    = preg_replace('|/+|', '/', Uri::root() . ($config->get('sef_rewrite') ? '' : 'index.php') . ($config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
+		$lists ['componentUrl']    = preg_replace('|/+|', '/', Uri::root() . ($config->getValue('sef_rewrite') ? '' : 'index.php') . ($config->getValue('sef') ? '/component/kunena' : '?option=com_kunena'));
 
 		$options                       = [];
 		$options[]                     = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));

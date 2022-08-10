@@ -2624,7 +2624,7 @@ class TopicController extends KunenaController
 			return;
 		}
 
-		if (!$this->config->get('sendEmails'))
+		if (!$this->config->getValue('sendEmails'))
 		{
 			// Emails have been disabled
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_DISABLED'), 'warning');
@@ -2633,7 +2633,7 @@ class TopicController extends KunenaController
 			return;
 		}
 
-		if (!$this->config->getEmail() || !MailHelper::isEmailAddress($this->config->getEmail()))
+		if (!$this->config->getValueEmail() || !MailHelper::isEmailAddress($this->config->getValueEmail()))
 		{
 			// Error: email address is invalid
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_INVALID'), 'error');
@@ -2740,7 +2740,7 @@ class TopicController extends KunenaController
 				$user = $this->app->getIdentity();
 				$mailer = Factory::getMailer();
 				$mailer->setSubject($mailsubject);
-				$mailer->setSender([$this->config->getEmail(), $mailnamesender]);
+				$mailer->setSender([$this->config->getValueEmail(), $mailnamesender]);
 				$mailer->addReplyTo($this->me->email, $this->me->username);
 
 				$mailTemplate = new MailTemplate('com_kunena.report', $user->getParam('language', $this->app->get('language')), $mailer);

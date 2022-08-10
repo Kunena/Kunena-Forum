@@ -288,11 +288,11 @@ class UserModel extends KunenaModel
 		$config = KunenaFactory::getConfig();
 
 		// List state information
-		$limit = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlistRows'), 'int');
+		$limit = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_limit", 'limit', $config->getValue('userlistRows'), 'int');
 
 		if ($limit < 1 || $limit > 100)
 		{
-			$limit = $config->get('userlistRows');
+			$limit = $config->getValue('userlistRows');
 		}
 
 		if ($limit < 1)

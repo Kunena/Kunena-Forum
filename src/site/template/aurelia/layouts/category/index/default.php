@@ -39,17 +39,17 @@ $mmm             = 0;
 $this->ktemplate = KunenaTemplate::getInstance();
 $config          = $this->ktemplate->params;
 
-if ($config->get('socialshare') == 1)
+if ($config->getValue('socialshare') == 1)
 {
 	echo "<div>" . $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate) . "</div>";
 }
 
-if ($config->get('socialshare') == 2)
+if ($config->getValue('socialshare') == 2)
 {
 	echo "<div>" . $this->subLayout('Widget/Socialcustomtag') . "</div>";
 }
 
-if ($config->get('displayModule'))
+if ($config->getValue('displayModule'))
 {
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
 }
@@ -57,7 +57,7 @@ if ($config->get('displayModule'))
 foreach ($this->sections as $section) :
 	$Itemid      = KunenaRoute::getCategoryItemid($section);
 
-	if ($config->get('displayModule'))
+	if ($config->getValue('displayModule'))
 	{
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
 	} ?>
@@ -282,14 +282,14 @@ foreach ($this->sections as $section) :
     </div>
     <!-- Begin: Category Module Position -->
 	<?php
-	if ($config->get('displayModule'))
+	if ($config->getValue('displayModule'))
 	{
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm);
 	} ?>
     <!-- Finish: Category Module Position -->
 <?php endforeach;
 
-if ($config->get('displayModule'))
+if ($config->getValue('displayModule'))
 {
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_bottom');
 }

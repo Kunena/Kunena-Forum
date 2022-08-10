@@ -69,7 +69,7 @@ class WidgetStatisticsDisplay extends KunenaControllerDisplay
 
 		$this->config = KunenaConfig::getInstance();
 
-		if (!$this->config->get('showStats'))
+		if (!$this->config->getValue('showStats'))
 		{
 			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
 		}

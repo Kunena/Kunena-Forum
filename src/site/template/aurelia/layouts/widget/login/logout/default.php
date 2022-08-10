@@ -30,7 +30,7 @@ $config         = KunenaFactory::getTemplate()->params;
 ?>
 
 <div class="klogout">
-	<?php if ($config->get('displayDropdownMenu'))
+	<?php if ($config->getValue('displayDropdownMenu'))
 		:
 		?>
         <ul class="nav float-end">

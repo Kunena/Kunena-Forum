@@ -15,6 +15,12 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Plugin\Kunena\Community\KunenaAccessCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\KunenaActivityCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\KunenaAvatarCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\KunenaLoginCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\KunenaPrivateCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\KunenaProfileCommunity;
 
 /**
  * Class PlgKunenaCommunity

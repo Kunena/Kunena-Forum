@@ -73,7 +73,7 @@ abstract class KunenaEmail
 			&& MailHelper::isEmailAddress($config->getValue('emailVisibleAddress'))
 		)
 		{
-			$mailTemplate->addRecipient($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle), 'to');
+			$mailTemplate->addRecipient($config->emailVisibleAddress, MailHelper::cleanAddress($config->getValue('boardTitle'), 'to'));
 
 			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
 			if ($emailRecipientCount > 9)

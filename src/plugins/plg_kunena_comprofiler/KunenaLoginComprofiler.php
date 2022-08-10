@@ -150,7 +150,7 @@ class KunenaLoginComprofiler
 		$usersConfig = ComponentHelper::getParams('com_users');
 
 		if ($ueConfig['reg_admin_allowcbregistration'] == 1
-			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersconfig->getValue('allowUserRegistration'))
+			|| ($ueConfig['reg_admin_allowcbregistration'] == 0 && $usersConfig->get('allowUserRegistration'))
 		)
 		{
 			return $_CB_framework->viewUrl('registers');

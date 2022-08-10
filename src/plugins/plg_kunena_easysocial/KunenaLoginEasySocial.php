@@ -75,7 +75,7 @@ class KunenaLoginEasySocial
 	{
 		$usersConfig = ComponentHelper::getParams('com_users');
 
-		if ($usersconfig->getValue('allowUserRegistration'))
+		if ($usersConfig->get('allowUserRegistration'))
 		{
 			return \FRoute::registration();
 		}

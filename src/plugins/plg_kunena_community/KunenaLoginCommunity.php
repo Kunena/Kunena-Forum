@@ -69,7 +69,7 @@ class KunenaLoginCommunity
 	{
 		$usersConfig = ComponentHelper::getParams('com_users');
 
-		if ($usersconfig->getValue('allowUserRegistration'))
+		if ($usersConfig->get('allowUserRegistration'))
 		{
 			return \CRoute::_('index.php?option=com_community&view=register');
 		}

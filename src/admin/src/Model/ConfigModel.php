@@ -1384,7 +1384,7 @@ class ConfigModel extends AdminModel
 			$rssType [] = HTMLHelper::_('select.option', 'recent', Text::_('COM_KUNENA_A_RSS_TYPE_RECENT'));
 
 			// Build the html select list
-			$lists ['rssType'] = HTMLHelper::_('select.genericlist', $rssType, 'cfg_rssType', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssType);
+			$lists ['rssType'] = HTMLHelper::_('select.genericlist', $rssType, 'cfg_rssType', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rssType'));
 
 			// ------
 
@@ -1394,7 +1394,7 @@ class ConfigModel extends AdminModel
 			$rssTimeLimit [] = HTMLHelper::_('select.option', '1 year', Text::_('COM_KUNENA_A_RSS_TIMELIMIT_YEAR'));
 
 			// Build the html select list
-			$lists ['rssTimeLimit'] = HTMLHelper::_('select.genericlist', $rssTimeLimit, 'cfg_rssTimeLimit', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssTimeLimit);
+			$lists ['rssTimeLimit'] = HTMLHelper::_('select.genericlist', $rssTimeLimit, 'cfg_rssTimeLimit', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rssTimeLimit'));
 
 			// ------
 
@@ -1406,7 +1406,7 @@ class ConfigModel extends AdminModel
 			$rssSpecification [] = HTMLHelper::_('select.option', 'atom1.0', 'Atom 1.0');
 
 			// Build the html select list
-			$lists ['rssSpecification'] = HTMLHelper::_('select.genericlist', $rssSpecification, 'cfg_rssSpecification', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssSpecification);
+			$lists ['rssSpecification'] = HTMLHelper::_('select.genericlist', $rssSpecification, 'cfg_rssSpecification', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rssSpecification'));
 
 			// ------
 
@@ -1416,12 +1416,12 @@ class ConfigModel extends AdminModel
 			$rssAuthorFormat [] = HTMLHelper::_('select.option', 'both', Text::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_BOTH'));
 
 			// Build the html select list
-			$lists ['rssAuthorFormat'] = HTMLHelper::_('select.genericlist', $rssAuthorFormat, 'cfg_rssAuthorFormat', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssAuthorFormat);
+			$lists ['rssAuthorFormat'] = HTMLHelper::_('select.genericlist', $rssAuthorFormat, 'cfg_rssAuthorFormat', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rssAuthorFormat'));
 
 			// ------
 
 			// Build the html select list
-			$lists ['rssAuthorInTitle'] = HTMLHelper::_('select.genericlist', $rssYesNo, 'cfg_rssAuthorInTitle', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssAuthorInTitle);
+			$lists ['rssAuthorInTitle'] = HTMLHelper::_('select.genericlist', $rssYesNo, 'cfg_rssAuthorInTitle', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rssAuthorInTitle'));
 
 			// ------
 
@@ -1436,17 +1436,17 @@ class ConfigModel extends AdminModel
 			$rssWordCount [] = HTMLHelper::_('select.option', '1000', '1000');
 
 			// Build the html select list
-			$lists ['rssWordCount'] = HTMLHelper::_('select.genericlist', $rssWordCount, 'cfg_rssWordCount', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssWordCount);
+			$lists ['rssWordCount'] = HTMLHelper::_('select.genericlist', $rssWordCount, 'cfg_rssWordCount', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rssWordCount'));
 
 			// ------
 
 			// Build the html select list
-			$lists ['rssAllowHtml'] = HTMLHelper::_('select.genericlist', $rssYesNo, 'cfg_rssAllowHtml', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssAllowHtml);
+			$lists ['rssAllowHtml'] = HTMLHelper::_('select.genericlist', $rssYesNo, 'cfg_rssAllowHtml', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rssAllowHtml'));
 
 			// ------
 
 			// Build the html select list
-			$lists ['rssOldTitles'] = HTMLHelper::_('select.genericlist', $rssYesNo, 'cfg_rssOldTitles', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssOldTitles);
+			$lists ['rssOldTitles'] = HTMLHelper::_('select.genericlist', $rssYesNo, 'cfg_rssOldTitles', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rssOldTitles'));
 
 			// ------
 
@@ -1459,12 +1459,12 @@ class ConfigModel extends AdminModel
 			$rssCache [] = HTMLHelper::_('select.option', '1800', '30');
 			$rssCache [] = HTMLHelper::_('select.option', '3600', '60');
 
-			$lists ['rssCache'] = HTMLHelper::_('select.genericlist', $rssCache, 'cfg_rssCache', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rssCache);
+			$lists ['rssCache'] = HTMLHelper::_('select.genericlist', $rssCache, 'cfg_rssCache', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rssCache'));
 
 			// ------
 
 			// Build the html select list - (moved enableRss here, to keep all rss-related features together)
-			$lists ['enableRss'] = HTMLHelper::_('select.genericlist', $rssYesNo, 'cfg_enableRss', 'class="inputbox form-control"size="1"', 'value', 'text', $config->enableRss);
+			$lists ['enableRss'] = HTMLHelper::_('select.genericlist', $rssYesNo, 'cfg_enableRss', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('enableRss'));
 		}
 
 		// Build the html select list
@@ -1473,81 +1473,81 @@ class ConfigModel extends AdminModel
 		$yesno [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
 		$yesno [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
-		$lists ['disableEmoticons']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disableEmoticons', 'class="inputbox form-control"size="1"', 'value', 'text', $config->disableEmoticons);
-		$lists ['regOnly']               = HTMLHelper::_('select.genericlist', $yesno, 'cfg_regOnly', 'class="inputbox form-control"size="1"', 'value', 'text', $config->regOnly);
-		$lists ['boardOffline']          = HTMLHelper::_('select.genericlist', $yesno, 'cfg_boardOffline', 'class="inputbox form-control"size="1"', 'value', 'text', $config->boardOffline);
-		$lists ['pubWrite']              = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pubWrite', 'class="inputbox form-control"size="1"', 'value', 'text', $config->pubWrite);
-		$lists ['showHistory']           = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showHistory', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showHistory);
-		$lists ['showAnnouncement']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showAnnouncement', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showAnnouncement);
-		$lists ['avatarOnCategory']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_avatarOnCategory', 'class="inputbox form-control"size="1"', 'value', 'text', $config->avatarOnCategory);
-		$lists ['showChildCatIcon']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showChildCatIcon', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showChildCatIcon);
-		$lists ['showUserStats']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showUserStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showUserStats);
-		$lists ['showWhoIsOnline']       = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showWhoIsOnline', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showWhoIsOnline);
-		$lists ['showPopSubjectStats']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showPopSubjectStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showPopSubjectStats);
-		$lists ['showGenStats']          = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showGenStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showGenStats);
-		$lists ['showPopUserStats']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showPopUserStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showPopUserStats);
-		$lists ['allowSubscriptions']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowSubscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $config->allowSubscriptions);
-		$lists ['subscriptionsChecked']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_subscriptionsChecked', 'class="inputbox form-control"size="1"', 'value', 'text', $config->subscriptionsChecked);
-		$lists ['allowFavorites']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowFavorites', 'class="inputbox form-control"size="1"', 'value', 'text', $config->allowFavorites);
-		$lists ['showEmail']             = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showEmail', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showEmail);
-		$lists ['askEmail']              = HTMLHelper::_('select.genericlist', $yesno, 'cfg_askEmail', 'class="inputbox form-control"size="1"', 'value', 'text', $config->askEmail);
-		$lists ['allowAvatarUpload']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowAvatarUpload', 'class="inputbox form-control"size="1"', 'value', 'text', $config->allowAvatarUpload);
-		$lists ['allowAvatarGallery']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowAvatarGallery', 'class="inputbox form-control"size="1"', 'value', 'text', $config->allowAvatarGallery);
-		$lists ['showStats']             = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showStats);
-		$lists ['showRanking']           = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showRanking', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showRanking);
-		$lists ['username']              = HTMLHelper::_('select.genericlist', $yesno, 'cfg_username', 'class="inputbox form-control"size="1"', 'value', 'text', $config->username);
-		$lists ['showNew']               = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showNew', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showNew);
-		$lists ['editMarkup']            = HTMLHelper::_('select.genericlist', $yesno, 'cfg_editMarkup', 'class="inputbox form-control"size="1"', 'value', 'text', $config->editMarkup);
-		$lists ['showKarma']             = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showKarma', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showKarma);
-		$lists ['enableForumJump']       = HTMLHelper::_('select.genericlist', $yesno, 'cfg_enableForumJump', 'class="inputbox form-control"size="1"', 'value', 'text', $config->enableForumJump);
-		$lists ['userlistOnline']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistOnline', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistOnline);
-		$lists ['userlistAvatar']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistAvatar', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistAvatar);
-		$lists ['userlistPosts']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistPosts', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistPosts);
-		$lists ['userlistKarma']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistKarma', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistKarma);
-		$lists ['userlistEmail']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistEmail', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistEmail);
-		$lists ['userlistJoinDate']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistJoinDate', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistJoinDate);
-		$lists ['userlistLastVisitDate'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistLastVisitDate', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistLastVisitDate);
-		$lists ['userlistUserHits']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistUserHits', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistUserHits);
-		$lists ['reportMsg']             = HTMLHelper::_('select.genericlist', $yesno, 'cfg_reportMsg', 'class="inputbox form-control"size="1"', 'value', 'text', $config->reportMsg);
+		$lists ['disableEmoticons']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disableEmoticons', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('disableEmoticons'));
+		$lists ['regOnly']               = HTMLHelper::_('select.genericlist', $yesno, 'cfg_regOnly', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('regOnly'));
+		$lists ['boardOffline']          = HTMLHelper::_('select.genericlist', $yesno, 'cfg_boardOffline', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('boardOffline'));
+		$lists ['pubWrite']              = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pubWrite', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('pubWrite'));
+		$lists ['showHistory']           = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showHistory', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showHistory'));
+		$lists ['showAnnouncement']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showAnnouncement', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showAnnouncement'));
+		$lists ['avatarOnCategory']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_avatarOnCategory', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('avatarOnCategory'));
+		$lists ['showChildCatIcon']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showChildCatIcon', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showChildCatIcon'));
+		$lists ['showUserStats']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showUserStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showUserStats'));
+		$lists ['showWhoIsOnline']       = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showWhoIsOnline', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showWhoIsOnline'));
+		$lists ['showPopSubjectStats']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showPopSubjectStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showPopSubjectStats'));
+		$lists ['showGenStats']          = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showGenStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showGenStats'));
+		$lists ['showPopUserStats']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showPopUserStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showPopUserStats'));
+		$lists ['allowSubscriptions']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowSubscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('allowSubscriptions'));
+		$lists ['subscriptionsChecked']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_subscriptionsChecked', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('subscriptionsChecked'));
+		$lists ['allowFavorites']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowFavorites', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('allowFavorites'));
+		$lists ['showEmail']             = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showEmail', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showEmail'));
+		$lists ['askEmail']              = HTMLHelper::_('select.genericlist', $yesno, 'cfg_askEmail', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('askEmail'));
+		$lists ['allowAvatarUpload']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowAvatarUpload', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('allowAvatarUpload'));
+		$lists ['allowAvatarGallery']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowAvatarGallery', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('allowAvatarGallery'));
+		$lists ['showStats']             = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showStats'));
+		$lists ['showRanking']           = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showRanking', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showRanking'));
+		$lists ['username']              = HTMLHelper::_('select.genericlist', $yesno, 'cfg_username', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('username'));
+		$lists ['showNew']               = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showNew', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showNew'));
+		$lists ['editMarkup']            = HTMLHelper::_('select.genericlist', $yesno, 'cfg_editMarkup', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('editMarkup'));
+		$lists ['showKarma']             = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showKarma', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showKarma'));
+		$lists ['enableForumJump']       = HTMLHelper::_('select.genericlist', $yesno, 'cfg_enableForumJump', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('enableForumJump'));
+		$lists ['userlistOnline']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistOnline', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistOnline'));
+		$lists ['userlistAvatar']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistAvatar', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistAvatar'));
+		$lists ['userlistPosts']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistPosts', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistPosts'));
+		$lists ['userlistKarma']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistKarma', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistKarma'));
+		$lists ['userlistEmail']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistEmail', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistEmail'));
+		$lists ['userlistJoinDate']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistJoinDate', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistJoinDate'));
+		$lists ['userlistLastVisitDate'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistLastVisitDate', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistLastVisitDate'));
+		$lists ['userlistUserHits']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userlistUserHits', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistUserHits'));
+		$lists ['reportMsg']             = HTMLHelper::_('select.genericlist', $yesno, 'cfg_reportMsg', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('reportMsg'));
 
 		$captcha   = [];
 		$captcha[] = HTMLHelper::_('select.option', '-1', Text::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_NOBODY'));
 		$captcha[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_REGISTERED_USERS'));
 		$captcha[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_GUESTS_REGISTERED_USERS'));
 
-		$lists ['captcha']  = HTMLHelper::_('select.genericlist', $captcha, 'cfg_captcha', 'class="inputbox form-control"size="1"', 'value', 'text', $config->captcha);
-		$lists ['mailFull'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_mailFull', 'class="inputbox form-control"size="1"', 'value', 'text', $config->mailFull);
+		$lists ['captcha']  = HTMLHelper::_('select.genericlist', $captcha, 'cfg_captcha', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('captcha'));
+		$lists ['mailFull'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_mailFull', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('mailFull'));
 
 		// New for 1.0.5
-		$lists ['showSpoilerTag']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showSpoilerTag', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showSpoilerTag);
-		$lists ['showVideoTag']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showVideoTag', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showVideoTag);
-		$lists ['showEbayTag']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showEbayTag', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showEbayTag);
-		$lists ['trimLongUrls']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_trimLongUrls', 'class="inputbox form-control"size="1"', 'value', 'text', $config->trimLongUrls);
-		$lists ['autoEmbedYoutube'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedYoutube', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoEmbedYoutube);
-		$lists ['autoEmbedEbay']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedEbay', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoEmbedEbay);
-		$lists ['highlightCode']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_highlightCode', 'class="inputbox form-control"size="1"', 'value', 'text', $config->highlightCode);
+		$lists ['showSpoilerTag']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showSpoilerTag', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showSpoilerTag'));
+		$lists ['showVideoTag']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showVideoTag', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showVideoTag'));
+		$lists ['showEbayTag']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showEbayTag', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showEbayTag'));
+		$lists ['trimLongUrls']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_trimLongUrls', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('trimLongUrls'));
+		$lists ['autoEmbedYoutube'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedYoutube', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('autoEmbedYoutube'));
+		$lists ['autoEmbedEbay']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedEbay', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('autoEmbedEbay'));
+		$lists ['highlightCode']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_highlightCode', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('highlightCode'));
 
 		// New for 1.5.8 -> SEF
-		$lists ['sef'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sef', 'class="inputbox form-control"size="1"', 'value', 'text', $config->sef);
+		$lists ['sef'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sef', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('sef'));
 
 		// New for 1.6 -> Hide images and files for guests
-		$lists['showImgForGuest']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showImgForGuest', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showImgForGuest);
-		$lists['showFileForGuest'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showFileForGuest', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showFileForGuest);
+		$lists['showImgForGuest']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showImgForGuest', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showImgForGuest'));
+		$lists['showFileForGuest'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showFileForGuest', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showFileForGuest'));
 
 		// New for 1.6 -> Check Image MIME types
-		$lists['checkMimeTypes'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_checkMimeTypes', 'class="inputbox form-control"size="1"', 'value', 'text', $config->checkMimeTypes);
+		$lists['checkMimeTypes'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_checkMimeTypes', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('checkMimeTypes'));
 
 		// New for 1.6 -> Poll
-		$lists['pollAllowVoteOne']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pollAllowVoteOne', 'class="inputbox form-control"size="1"', 'value', 'text', $config->pollAllowVoteOne);
-		$lists['pollEnabled']          = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pollEnabled', 'class="inputbox form-control"size="1"', 'value', 'text', $config->pollEnabled);
-		$lists['showPopPollStats']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showPopPollStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showPopPollStats);
-		$lists['pollResultsUserslist'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pollResultsUserslist', 'class="inputbox form-control"size="1"', 'value', 'text', $config->pollResultsUserslist);
+		$lists['pollAllowVoteOne']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pollAllowVoteOne', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('pollAllowVoteOne'));
+		$lists['pollEnabled']          = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pollEnabled', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('pollEnabled'));
+		$lists['showPopPollStats']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showPopPollStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showPopPollStats'));
+		$lists['pollResultsUserslist'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pollResultsUserslist', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('pollResultsUserslist'));
 
 		// New for 1.6 -> Choose ordering system
 		$orderingSystem_list     = [];
 		$orderingSystem_list[]   = HTMLHelper::_('select.option', 'mesid', Text::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_NEW'));
 		$orderingSystem_list[]   = HTMLHelper::_('select.option', 'replyid', Text::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_OLD'));
-		$lists['orderingSystem'] = HTMLHelper::_('select.genericlist', $orderingSystem_list, 'cfg_orderingSystem', 'class="inputbox form-control"size="1"', 'value', 'text', $config->orderingSystem);
+		$lists['orderingSystem'] = HTMLHelper::_('select.genericlist', $orderingSystem_list, 'cfg_orderingSystem', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('orderingSystem'));
 
 		// New for 1.6: datetime
 		$dateformatlist               = [];
@@ -1556,17 +1556,17 @@ class ConfigModel extends AdminModel
 		$dateformatlist[]             = HTMLHelper::_('select.option', 'ago', $time->toKunena('ago'));
 		$dateformatlist[]             = HTMLHelper::_('select.option', 'datetime_today', $time->toKunena('datetime_today'));
 		$dateformatlist[]             = HTMLHelper::_('select.option', 'datetime', $time->toKunena('datetime'));
-		$lists['postDateFormat']      = HTMLHelper::_('select.genericlist', $dateformatlist, 'cfg_postDateFormat', 'class="inputbox form-control"size="1"', 'value', 'text', $config->postDateFormat);
-		$lists['postDateFormatHover'] = HTMLHelper::_('select.genericlist', $dateformatlist, 'cfg_postDateFormatHover', 'class="inputbox form-control"size="1"', 'value', 'text', $config->postDateFormatHover);
+		$lists['postDateFormat']      = HTMLHelper::_('select.genericlist', $dateformatlist, 'cfg_postDateFormat', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('postDateFormat'));
+		$lists['postDateFormatHover'] = HTMLHelper::_('select.genericlist', $dateformatlist, 'cfg_postDateFormatHover', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('postDateFormatHover'));
 
 		// New for 1.6: hide ip
-		$lists['hideIp'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_hideIp', 'class="inputbox form-control"size="1"', 'value', 'text', $config->hideIp);
+		$lists['hideIp'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_hideIp', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('hideIp'));
 
 		// New for 1.6: choose if you want that ghost message box checked by default
-		$lists['boxGhostMessage'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_boxGhostMessage', 'class="inputbox form-control"size="1"', 'value', 'text', $config->boxGhostMessage);
+		$lists['boxGhostMessage'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_boxGhostMessage', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('boxGhostMessage'));
 
 		// New for 1.6 -> Thank you button
-		$lists ['showThankYou'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showThankYou', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showThankYou);
+		$lists ['showThankYou'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showThankYou', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showThankYou'));
 
 		$listUserDeleteMessage      = [];
 		$listUserDeleteMessage[]    = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED'));
@@ -1574,42 +1574,42 @@ class ConfigModel extends AdminModel
 		$listUserDeleteMessage[]    = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_A_DELETEMESSAGE_ALWAYS_ALLOWED'));
 		$listUserDeleteMessage[]    = HTMLHelper::_('select.option', '3', Text::_('COM_KUNENA_CONFIG_DELETEMESSAGE_NOT_FIRST_MESSAGE'));
 		$listUserDeleteMessage[]    = HTMLHelper::_('select.option', '4', Text::_('COM_KUNENA_CONFIG_DELETEMESSAGE_ONLY_LAST_MESSAGE'));
-		$lists['userDeleteMessage'] = HTMLHelper::_('select.genericlist', $listUserDeleteMessage, 'cfg_userDeleteMessage', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userDeleteMessage);
+		$lists['userDeleteMessage'] = HTMLHelper::_('select.genericlist', $listUserDeleteMessage, 'cfg_userDeleteMessage', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userDeleteMessage'));
 
 		$latestCategoryIn          = [];
 		$latestCategoryIn[]        = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_LATESTCATEGORY_IN_HIDE'));
 		$latestCategoryIn[]        = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_LATESTCATEGORY_IN_SHOW'));
-		$lists['latestCategoryIn'] = HTMLHelper::_('select.genericlist', $latestCategoryIn, 'cfg_latestCategoryIn', 'class="inputbox form-control"size="1"', 'value', 'text', $config->latestCategoryIn);
+		$lists['latestCategoryIn'] = HTMLHelper::_('select.genericlist', $latestCategoryIn, 'cfg_latestCategoryIn', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('latestCategoryIn'));
 
 		$optionsShowHide = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL'))];
 
-		$lists['latestCategory'] = HTMLHelper::_('select.genericlist', $optionsShowHide, 'cfg_latestCategory', 'class="inputbox form-control"multiple="multiple"', 'value', 'text', explode(',', $config->latestCategory), 'latestCategory');
+		$lists['latestCategory'] = HTMLHelper::_('select.genericlist', $optionsShowHide, 'cfg_latestCategory', 'class="inputbox form-control"multiple="multiple"', 'value', 'text', explode(',', $config->getValue('latestCategory')), 'latestCategory');
 
-		$lists['topicIcons'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_topicIcons', 'class="inputbox form-control"size="1"', 'value', 'text', $config->topicIcons);
+		$lists['topicIcons'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_topicIcons', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('topicIcons'));
 
-		$lists['debug'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_debug', 'class="inputbox form-control"size="1"', 'value', 'text', $config->debug);
+		$lists['debug'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_debug', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('debug'));
 
-		$lists['showBannedReason'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showBannedReason', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showBannedReason);
+		$lists['showBannedReason'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showBannedReason', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showBannedReason'));
 
-		$lists['timeToCreatePage'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_timeToCreatePage', 'class="inputbox form-control"size="1"', 'value', 'text', $config->timeToCreatePage);
+		$lists['timeToCreatePage'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_timeToCreatePage', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('timeToCreatePage'));
 
-		$lists['showPopThankYouStats'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showPopThankYouStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showPopThankYouStats);
+		$lists['showPopThankYouStats'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showPopThankYouStats', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showPopThankYouStats'));
 
 		$seeRestoreDeleted       = [];
 		$seeRestoreDeleted[]     = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_A_SEE_RESTORE_DELETED_NOBODY'));
 		$seeRestoreDeleted[]     = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINSMODS'));
 		$seeRestoreDeleted[]     = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINS'));
-		$lists ['modSeeDeleted'] = HTMLHelper::_('select.genericlist', $seeRestoreDeleted, 'cfg_modSeeDeleted', 'class="inputbox form-control"size="1"', 'value', 'text', $config->modSeeDeleted);
+		$lists ['modSeeDeleted'] = HTMLHelper::_('select.genericlist', $seeRestoreDeleted, 'cfg_modSeeDeleted', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('modSeeDeleted'));
 
 		$listBbcodeImgSecure             = [];
 		$listBbcodeImgSecure[]           = HTMLHelper::_('select.option', 'text', Text::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_TEXT'));
 		$listBbcodeImgSecure[]           = HTMLHelper::_('select.option', 'link', Text::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_LINK'));
 		$listBbcodeImgSecure[]           = HTMLHelper::_('select.option', 'image', Text::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_IMAGE'));
-		$lists ['bbcodeImgSecure']       = HTMLHelper::_('select.genericlist', $listBbcodeImgSecure, 'cfg_bbcodeImgSecure', 'class="inputbox form-control"size="1"', 'value', 'text', $config->bbcodeImgSecure);
-		$lists ['listCatShowModerators'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_listCatShowModerators', 'class="inputbox form-control"size="1"', 'value', 'text', $config->listCatShowModerators);
+		$lists ['bbcodeImgSecure']       = HTMLHelper::_('select.genericlist', $listBbcodeImgSecure, 'cfg_bbcodeImgSecure', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('bbcodeImgSecure'));
+		$lists ['listCatShowModerators'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_listCatShowModerators', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('listCatShowModerators'));
 		$showlightbox                    = $yesno;
 		$showlightbox[]                  = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_A_LIGHTBOX_NO_JS'));
-		$lists ['lightbox']              = HTMLHelper::_('select.genericlist', $showlightbox, 'cfg_lightbox', 'class="inputbox form-control"size="1"', 'value', 'text', $config->lightbox);
+		$lists ['lightbox']              = HTMLHelper::_('select.genericlist', $showlightbox, 'cfg_lightbox', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('lightbox'));
 
 		$timesel[] = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_SHOW_SELECT_ALL'));
 		$timesel[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_SHOW_LASTVISIT'));
@@ -1623,47 +1623,47 @@ class ConfigModel extends AdminModel
 		$timesel[] = HTMLHelper::_('select.option', 8760, Text::_('COM_KUNENA_SHOW_YEAR'));
 
 		// Build the html select list
-		$lists ['showListTime'] = HTMLHelper::_('select.genericlist', $timesel, 'cfg_showListTime', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showListTime);
+		$lists ['showListTime'] = HTMLHelper::_('select.genericlist', $timesel, 'cfg_showListTime', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showListTime'));
 
 		$sessionTimeType[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_SHOW_SESSION_TYPE_ALL'));
 		$sessionTimeType[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_SHOW_SESSION_TYPE_VALID'));
 		$sessionTimeType[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_SHOW_SESSION_TYPE_TIME'));
 
-		$lists ['showSessionType'] = HTMLHelper::_('select.genericlist', $sessionTimeType, 'cfg_showSessionType', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showSessionType);
+		$lists ['showSessionType'] = HTMLHelper::_('select.genericlist', $sessionTimeType, 'cfg_showSessionType', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showSessionType'));
 
 		$userlistAllowed           = [];
 		$userlistAllowed []        = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
 		$userlistAllowed []        = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
-		$lists ['userlistAllowed'] = HTMLHelper::_('select.genericlist', $userlistAllowed, 'cfg_userlistAllowed', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistAllowed);
-		$lists ['pubProfile']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pubProfile', 'class="inputbox form-control"size="1"', 'value', 'text', $config->pubProfile);
+		$lists ['userlistAllowed'] = HTMLHelper::_('select.genericlist', $userlistAllowed, 'cfg_userlistAllowed', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistAllowed'));
+		$lists ['pubProfile']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pubProfile', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('pubProfile'));
 
 		$userlistCountUsers[]         = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ALL'));
 		$userlistCountUsers[]         = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVATED_ACCOUNT'));
 		$userlistCountUsers[]         = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVE'));
 		$userlistCountUsers[]         = HTMLHelper::_('select.option', 3, Text::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_NON_BLOCKED_USERS'));
-		$lists ['userlistCountUsers'] = HTMLHelper::_('select.genericlist', $userlistCountUsers, 'cfg_userlistCountUsers', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userlistCountUsers);
+		$lists ['userlistCountUsers'] = HTMLHelper::_('select.genericlist', $userlistCountUsers, 'cfg_userlistCountUsers', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userlistCountUsers'));
 
 		// Added new options into K1.6.4
-		$lists ['allowSubscriptions'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowSubscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $config->allowSubscriptions);
+		$lists ['allowSubscriptions'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowSubscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('allowSubscriptions'));
 
 		$categorySubscriptions           = [];
 		$categorySubscriptions[]         = HTMLHelper::_('select.option', 'disabled', Text::_('COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_DISABLED'));
 		$categorySubscriptions[]         = HTMLHelper::_('select.option', 'topic', Text::_('COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_TOPIC'));
 		$categorySubscriptions[]         = HTMLHelper::_('select.option', 'post', Text::_('COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_POST'));
-		$lists ['categorySubscriptions'] = HTMLHelper::_('select.genericlist', $categorySubscriptions, 'cfg_categorySubscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $config->categorySubscriptions);
+		$lists ['categorySubscriptions'] = HTMLHelper::_('select.genericlist', $categorySubscriptions, 'cfg_categorySubscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('categorySubscriptions'));
 
 		$topicSubscriptions           = [];
 		$topicSubscriptions[]         = HTMLHelper::_('select.option', 'disabled', Text::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_DISABLED'));
 		$topicSubscriptions[]         = HTMLHelper::_('select.option', 'first', Text::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_FIRST'));
 		$topicSubscriptions[]         = HTMLHelper::_('select.option', 'every', Text::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_EVERY'));
-		$lists ['topicSubscriptions'] = HTMLHelper::_('select.genericlist', $topicSubscriptions, 'cfg_topicSubscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $config->topicSubscriptions);
+		$lists ['topicSubscriptions'] = HTMLHelper::_('select.genericlist', $topicSubscriptions, 'cfg_topicSubscriptions', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('topicSubscriptions'));
 
 		// Added new options into K1.6.6
 		$emailRecipientPrivacy           = [];
 		$emailRecipientPrivacy[]         = HTMLHelper::_('select.option', 'to', Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_TO'));
 		$emailRecipientPrivacy[]         = HTMLHelper::_('select.option', 'cc', Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_CC'));
 		$emailRecipientPrivacy[]         = HTMLHelper::_('select.option', 'bcc', Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_BCC'));
-		$lists ['emailRecipientPrivacy'] = HTMLHelper::_('select.genericlist', $emailRecipientPrivacy, 'cfg_emailRecipientPrivacy', 'class="inputbox form-control"size="1"', 'value', 'text', $config->emailRecipientPrivacy);
+		$lists ['emailRecipientPrivacy'] = HTMLHelper::_('select.genericlist', $emailRecipientPrivacy, 'cfg_emailRecipientPrivacy', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('emailRecipientPrivacy'));
 
 		$uploads               = [];
 		$uploads[]             = HTMLHelper::_('select.option', 'everybody', Text::_('COM_KUNENA_EVERYBODY'));
@@ -1671,34 +1671,34 @@ class ConfigModel extends AdminModel
 		$uploads[]             = HTMLHelper::_('select.option', 'moderator', Text::_('COM_KUNENA_MODERATORS'));
 		$uploads[]             = HTMLHelper::_('select.option', 'admin', Text::_('COM_KUNENA_ADMINS'));
 		$uploads[]             = HTMLHelper::_('select.option', '', Text::_('COM_KUNENA_NOBODY'));
-		$lists ['imageUpload'] = HTMLHelper::_('select.genericlist', $uploads, 'cfg_imageUpload', 'class="inputbox form-control"size="1"', 'value', 'text', $config->imageUpload);
-		$lists ['fileUpload']  = HTMLHelper::_('select.genericlist', $uploads, 'cfg_fileUpload', 'class="inputbox form-control"size="1"', 'value', 'text', $config->fileUpload);
+		$lists ['imageUpload'] = HTMLHelper::_('select.genericlist', $uploads, 'cfg_imageUpload', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('imageUpload'));
+		$lists ['fileUpload']  = HTMLHelper::_('select.genericlist', $uploads, 'cfg_fileUpload', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('fileUpload'));
 
 		$topicLayout[]         = HTMLHelper::_('select.option', 'flat', Text::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_FLAT'));
 		$topicLayout[]         = HTMLHelper::_('select.option', 'threaded', Text::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_THREADED'));
 		$topicLayout[]         = HTMLHelper::_('select.option', 'indented', Text::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_INDENTED'));
-		$lists ['topicLayout'] = HTMLHelper::_('select.genericlist', $topicLayout, 'cfg_topicLayout', 'class="inputbox form-control"size="1"', 'value', 'text', $config->topicLayout);
+		$lists ['topicLayout'] = HTMLHelper::_('select.genericlist', $topicLayout, 'cfg_topicLayout', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('topicLayout'));
 
-		$lists ['showImgFilesManageProfile'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showImgFilesManageProfile', 'class="inputbox form-control"size="1"', 'value', 'text', $config->showImgFilesManageProfile);
+		$lists ['showImgFilesManageProfile'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_showImgFilesManageProfile', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('showImgFilesManageProfile'));
 
-		$lists ['holdGuestPosts'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_holdGuestPosts', 'class="inputbox form-control"size="1"', 'value', 'text', $config->holdGuestPosts);
+		$lists ['holdGuestPosts'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_holdGuestPosts', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('holdGuestPosts'));
 
-		$lists ['pickupCategory'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pickupCategory', 'class="inputbox form-control"size="1"', 'value', 'text', $config->pickupCategory);
+		$lists ['pickupCategory'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_pickupCategory', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('pickupCategory'));
 
 		$articleDisplay[]         = HTMLHelper::_('select.option', 'full', Text::_('COM_KUNENA_COM_A_FULL_ARTICLE'));
 		$articleDisplay[]         = HTMLHelper::_('select.option', 'intro', Text::_('COM_KUNENA_COM_A_INTRO_ARTICLE'));
 		$articleDisplay[]         = HTMLHelper::_('select.option', 'link', Text::_('COM_KUNENA_COM_A_ARTICLE_LINK'));
-		$lists ['articleDisplay'] = HTMLHelper::_('select.genericlist', $articleDisplay, 'cfg_articleDisplay', 'class="inputbox form-control"size="1"', 'value', 'text', $config->articleDisplay);
+		$lists ['articleDisplay'] = HTMLHelper::_('select.genericlist', $articleDisplay, 'cfg_articleDisplay', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('articleDisplay'));
 
-		$lists ['sendEmails']            = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sendEmails', 'class="inputbox form-control"size="1"', 'value', 'text', $config->sendEmails);
-		$lists ['enableThreadedLayouts'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_enableThreadedLayouts', 'class="inputbox form-control"size="1"', 'value', 'text', $config->enableThreadedLayouts);
+		$lists ['sendEmails']            = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sendEmails', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('sendEmails'));
+		$lists ['enableThreadedLayouts'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_enableThreadedLayouts', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('enableThreadedLayouts'));
 
 		$defaultSort           = [];
 		$defaultSort[]         = HTMLHelper::_('select.option', 'asc', Text::_('COM_KUNENA_OPTION_DEFAULT_SORT_FIRST'));
 		$defaultSort[]         = HTMLHelper::_('select.option', 'desc', Text::_('COM_KUNENA_OPTION_DEFAULT_SORT_LAST'));
-		$lists ['defaultSort'] = HTMLHelper::_('select.genericlist', $defaultSort, 'cfg_defaultSort', 'class="inputbox form-control"size="1"', 'value', 'text', $config->defaultSort);
+		$lists ['defaultSort'] = HTMLHelper::_('select.genericlist', $defaultSort, 'cfg_defaultSort', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('defaultSort'));
 
-		$lists ['fallbackEnglish'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_fallbackEnglish', 'class="inputbox form-control"size="1"', 'value', 'text', $config->fallbackEnglish);
+		$lists ['fallbackEnglish'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_fallbackEnglish', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('fallbackEnglish'));
 
 		$cacheTime           = [];
 		$cacheTime[]         = HTMLHelper::_('select.option', '60', Text::_('COM_KUNENA_CFG_OPTION_1_MINUTE'));
@@ -1709,8 +1709,8 @@ class ConfigModel extends AdminModel
 		$cacheTime[]         = HTMLHelper::_('select.option', '900', Text::_('COM_KUNENA_CFG_OPTION_15_MINUTES'));
 		$cacheTime[]         = HTMLHelper::_('select.option', '1800', Text::_('COM_KUNENA_CFG_OPTION_30_MINUTES'));
 		$cacheTime[]         = HTMLHelper::_('select.option', '3600', Text::_('COM_KUNENA_CFG_OPTION_60_MINUTES'));
-		$lists ['cache']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_cache', 'class="inputbox form-control"size="1"', 'value', 'text', $config->cache);
-		$lists ['cacheTime'] = HTMLHelper::_('select.genericlist', $cacheTime, 'cfg_cacheTime', 'class="inputbox form-control"size="1"', 'value', 'text', $config->cacheTime);
+		$lists ['cache']     = HTMLHelper::_('select.genericlist', $yesno, 'cfg_cache', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('cache'));
+		$lists ['cacheTime'] = HTMLHelper::_('select.genericlist', $cacheTime, 'cfg_cacheTime', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('cacheTime'));
 
 		// Added new options into Kunena 2.0.1
 		$mailOptions   = [];
@@ -1718,26 +1718,22 @@ class ConfigModel extends AdminModel
 		$mailOptions[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CFG_OPTION_UNAPPROVED_POSTS'));
 		$mailOptions[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CFG_OPTION_ALL_NEW_POSTS'));
 
-		$lists ['mailModerators']     = HTMLHelper::_('select.genericlist', $mailOptions, 'cfg_mailModerators', 'class="inputbox form-control"size="1"', 'value', 'text', $config->mailModerators);
-		$lists ['mailAdministrators'] = HTMLHelper::_('select.genericlist', $mailOptions, 'cfg_mailAdministrators', 'class="inputbox form-control"size="1"', 'value', 'text', $config->mailAdministrators);
+		$lists ['mailModerators']     = HTMLHelper::_('select.genericlist', $mailOptions, 'cfg_mailModerators', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('mailModerators'));
+		$lists ['mailAdministrators'] = HTMLHelper::_('select.genericlist', $mailOptions, 'cfg_mailAdministrators', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('mailAdministrators'));
 
-		$lists ['ipTracking'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_ipTracking', 'class="inputbox form-control"size="1"', 'value', 'text', $config->ipTracking);
+		$lists ['ipTracking'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_ipTracking', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('ipTracking'));
 
 		// Added new options into Kunena 3.0.0
-		$lists ['autoLink']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoLink', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoLink);
-		$lists ['accessComponent'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_accessComponent', 'class="inputbox form-control"size="1"', 'value', 'text', $config->accessComponent);
+		$lists ['autoLink']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoLink', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('autoLink'));
+		$lists ['accessComponent'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_accessComponent', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('accessComponent'));
 		$lists ['componentUrl']    = preg_replace('|/+|', '/', Uri::root() . ($config->getValue('sef_rewrite') ? '' : 'index.php') . ($config->getValue('sef') ? '/component/kunena' : '?option=com_kunena'));
-
-		$options                       = [];
-		$options[]                     = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));
-		$options[]                     = HTMLHelper::_('select.option', '1', 'Kunena 1.x');
-		$lists['attachmentProtection'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_attachmentProtection', 'class="inputbox form-control"size="1"', 'value', 'text', $config->attachmentProtection);
+		$lists['attachmentProtection'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_attachmentProtection', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('attachmentProtection'));
 
 		// Option to select if the stats link need to be showed for all users or only for registered users
-		$lists ['statsLinkAllowed']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_statsLinkAllowed', 'class="inputbox form-control"size="1"', 'value', 'text', $config->statsLinkAllowed);
-		$lists ['superAdminUserlist'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_superAdminUserlist', 'class="inputbox form-control"size="1"', 'value', 'text', $config->superAdminUserlist);
-		$lists ['avatarCrop']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_avatarCrop', 'class="inputbox form-control"size="1"', 'value', 'text', $config->avatarCrop);
-		$lists ['userReport']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userReport', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userReport);
+		$lists ['statsLinkAllowed']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_statsLinkAllowed', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('statsLinkAllowed'));
+		$lists ['superAdminUserlist'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_superAdminUserlist', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('superAdminUserlist'));
+		$lists ['avatarCrop']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_avatarCrop', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('avatarCrop'));
+		$lists ['userReport']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userReport', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userReport'));
 
 		$searchTime           = [];
 		$searchTime[]         = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_CFG_SEARCH_DATE_YESTERDAY'));
@@ -1748,9 +1744,9 @@ class ConfigModel extends AdminModel
 		$searchTime[]         = HTMLHelper::_('select.option', 180, Text::_('COM_KUNENA_CFG_SEARCH_DATE_6MONTHS'));
 		$searchTime[]         = HTMLHelper::_('select.option', 365, Text::_('COM_KUNENA_CFG_SEARCH_DATE_YEAR'));
 		$searchTime[]         = HTMLHelper::_('select.option', 'all', Text::_('COM_KUNENA_CFG_SEARCH_DATE_ANY'));
-		$lists ['searchTime'] = HTMLHelper::_('select.genericlist', $searchTime, 'cfg_searchTime', 'class="inputbox form-control"size="1"', 'value', 'text', $config->searchTime);
+		$lists ['searchTime'] = HTMLHelper::_('select.genericlist', $searchTime, 'cfg_searchTime', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('searchTime'));
 
-		$lists ['teaser'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_teaser', 'class="inputbox form-control"size="1"', 'value', 'text', $config->teaser);
+		$lists ['teaser'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_teaser', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('teaser'));
 
 		// List of eBay language code
 		$ebayLanguage   = [];
@@ -1776,7 +1772,7 @@ class ConfigModel extends AdminModel
 		$ebayLanguage[] = HTMLHelper::_('select.option', '212', 'pl-PL');
 		$ebayLanguage[] = HTMLHelper::_('select.option', '216', 'sg-SG');
 
-		$lists['ebayLanguage'] = HTMLHelper::_('select.genericlist', $ebayLanguage, 'cfg_ebayLanguage', 'class="inputbox form-control"size="1"', 'value', 'text', $config->ebayLanguage);
+		$lists['ebayLanguage'] = HTMLHelper::_('select.genericlist', $ebayLanguage, 'cfg_ebayLanguage', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('ebayLanguage'));
 
 		$userEdit          = [];
 		$userEdit[]        = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_EDIT_ALLOWED_NEVER'));
@@ -1784,32 +1780,32 @@ class ConfigModel extends AdminModel
 		$userEdit[]        = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES'));
 		$userEdit[]        = HTMLHelper::_('select.option', '3', Text::_('COM_KUNENA_EDIT_ALLOWED_ONLY_LAST_MESSAGE'));
 		$userEdit[]        = HTMLHelper::_('select.option', '4', Text::_('COM_KUNENA_EDIT_ALLOWED_ONLY_FIRST_MESSAGE'));
-		$lists['userEdit'] = HTMLHelper::_('select.genericlist', $userEdit, 'cfg_userEdit', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userEdit);
+		$lists['userEdit'] = HTMLHelper::_('select.genericlist', $userEdit, 'cfg_userEdit', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userEdit'));
 
-		$lists ['allowChangeSubject'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowChangeSubject', 'class="inputbox form-control"size="1"', 'value', 'text', $config->allowChangeSubject);
+		$lists ['allowChangeSubject'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_allowChangeSubject', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('allowChangeSubject'));
 
 		// K5.0
-		$lists ['readOnly'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_readOnly', 'class="inputbox form-control"size="1"', 'value', 'text', $config->readOnly);
+		$lists ['readOnly'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_readOnly', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('readOnly'));
 
-		$lists['ratingEnabled'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_ratingEnabled', 'class="inputbox form-control"size="1"', 'value', 'text', $config->ratingEnabled);
+		$lists['ratingEnabled'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_ratingEnabled', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('ratingEnabled'));
 
-		$lists ['urlSubjectTopic'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_urlSubjectTopic', 'class="inputbox form-control"size="1"', 'value', 'text', $config->urlSubjectTopic);
+		$lists ['urlSubjectTopic'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_urlSubjectTopic', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('urlSubjectTopic'));
 
-		$lists ['logModeration'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_logModeration', 'class="inputbox form-control"size="1"', 'value', 'text', $config->logModeration);
+		$lists ['logModeration'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_logModeration', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('logModeration'));
 
-		$lists ['attachmentUtf8'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_attachmentUtf8', 'class="inputbox form-control"size="1"', 'value', 'text', $config->attachmentUtf8);
+		$lists ['attachmentUtf8'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_attachmentUtf8', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('attachmentUtf8'));
 
-		$lists ['autoEmbedSoundcloud'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedSoundcloud', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoEmbedSoundcloud);
+		$lists ['autoEmbedSoundcloud'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedSoundcloud', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('autoEmbedSoundcloud'));
 
-		$lists ['userStatus'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userStatus', 'class="inputbox form-control"size="1"', 'value', 'text', $config->userStatus);
+		$lists ['userStatus'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userStatus', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('userStatus'));
 
 		// K5.1
-		$lists ['signature'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_signature', 'class="inputbox form-control"size="1"', 'value', 'text', $config->signature);
-		$lists ['personal']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_personal', 'class="inputbox form-control"size="1"', 'value', 'text', $config->personal);
-		$lists ['social']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_social', 'class="inputbox form-control"size="1"', 'value', 'text', $config->social);
+		$lists ['signature'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_signature', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('signature'));
+		$lists ['personal']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_personal', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('personal'));
+		$lists ['social']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_social', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('social'));
 
-		$lists ['plainEmail']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_plainEmail', 'class="inputbox form-control"size="1"', 'value', 'text', $config->plainEmail);
-		$lists ['smartLinking'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_smartLinking', 'class="inputbox form-control"size="1"', 'value', 'text', $config->smartLinking);
+		$lists ['plainEmail']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_plainEmail', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('plainEmail'));
+		$lists ['smartLinking'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_smartLinking', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('smartLinking'));
 
 		$rankImages           = [];
 		$rankImages[]         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RANK_TEXT'));
@@ -1817,43 +1813,43 @@ class ConfigModel extends AdminModel
 		$rankImages[]         = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_RANK_USERGROUP'));
 		$rankImages[]         = HTMLHelper::_('select.option', '3', Text::_('COM_KUNENA_RANK_BOTH'));
 		$rankImages[]         = HTMLHelper::_('select.option', '4', Text::_('COM_KUNENA_RANK_CSS'));
-		$lists ['rankImages'] = HTMLHelper::_('select.genericlist', $rankImages, 'cfg_rankImages', 'class="inputbox form-control"size="1"', 'value', 'text', $config->rankImages);
+		$lists ['rankImages'] = HTMLHelper::_('select.genericlist', $rankImages, 'cfg_rankImages', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('rankImages'));
 
-		$lists['defaultAvatar']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_defaultAvatar', 'class="inputbox form-control"size="1"', 'value', 'text', $config->defaultAvatar);
-		$lists['defaultAvatarSmall'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_defaultAvatarSmall', 'class="inputbox form-control"size="1"', 'value', 'text', $config->defaultAvatarSmall);
-		$lists ['quickReply']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_quickReply', 'class="inputbox form-control"size="1"', 'value', 'text', $config->quickReply);
-		$lists ['avatarEdit']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_avatarEdit', 'class="inputbox form-control"size="1"', 'value', 'text', $config->avatarEdit);
+		$lists['defaultAvatar']      = HTMLHelper::_('select.genericlist', $yesno, 'cfg_defaultAvatar', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('defaultAvatar'));
+		$lists['defaultAvatarSmall'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_defaultAvatarSmall', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('defaultAvatarSmall'));
+		$lists ['quickReply']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_quickReply', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('quickReply'));
+		$lists ['avatarEdit']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_avatarEdit', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('avatarEdit'));
 
-		$lists ['moderatorPermDelete'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_moderatorPermDelete', 'class="inputbox form-control"size="1"', 'value', 'text', $config->moderatorPermDelete);
+		$lists ['moderatorPermDelete'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_moderatorPermDelete', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('moderatorPermDelete'));
 
 		$avatarType           = [];
 		$avatarType[]         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_AVATAR_IMAGE'));
 		$avatarType[]         = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_AVATAR_ICONTYPE'));
-		$lists ['avatarType'] = HTMLHelper::_('select.genericlist', $avatarType, 'cfg_avatarType', 'class="inputbox form-control"size="1"', 'value', 'text', $config->avatarType);
+		$lists ['avatarType'] = HTMLHelper::_('select.genericlist', $avatarType, 'cfg_avatarType', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('avatarType'));
 
-		$lists ['sefRedirect'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sefRedirect', 'class="inputbox form-control"size="1"', 'value', 'text', $config->sefRedirect);
+		$lists ['sefRedirect'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sefRedirect', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('sefRedirect'));
 
 		$userEditPoll   = [];
 		$userEditPoll[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_ALLOW'));
 		$userEditPoll[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DISALLOW'));
 
-		$lists ['allowUserEditPoll'] = HTMLHelper::_('select.genericlist', $userEditPoll, 'cfg_allowEditPoll', 'class="inputbox form-control"size="1"', 'value', 'text', $config->allowEditPoll);
+		$lists ['allowUserEditPoll'] = HTMLHelper::_('select.genericlist', $userEditPoll, 'cfg_allowEditPoll', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('allowEditPoll'));
 
 		// K 5.1.2
-		$lists ['useSystemEmails']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_useSystemEmails', 'class="inputbox form-control"size="1"', 'value', 'text', $config->useSystemEmails);
-		$lists ['autoEmbedInstagram'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedInstagram', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoEmbedInstagram);
+		$lists ['useSystemEmails']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_useSystemEmails', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('useSystemEmails'));
+		$lists ['autoEmbedInstagram'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedInstagram', 'class="inputbox form-control"size="1"', 'value', 'text', $config->getValue('autoEmbedInstagram'));
 
 		// K 5.1.19
-		$lists ['display_filename_attachment'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_display_filename_attachment', 'class="inputbox" size="1"', 'value', 'text', $config->display_filename_attachment);
+		$lists ['display_filename_attachment'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_display_filename_attachment', 'class="inputbox" size="1"', 'value', 'text', $config->getValue('display_filename_attachment'));
 
 		// K5.2.0
-		$lists ['new_users_prevent_post_url_images'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_new_users_prevent_post_url_images', 'class="inputbox" size="1"', 'value', 'text', $config->new_users_prevent_post_url_images);
+		$lists ['new_users_prevent_post_url_images'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_new_users_prevent_post_url_images', 'class="inputbox" size="1"', 'value', 'text', $config->getValue('new_users_prevent_post_url_images'));
 
 		// K6.0
-		$lists ['utmSource'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_utmSource', 'class="inputbox form-control" size="1"', 'value', 'text', $config->utmSource);
+		$lists ['utmSource'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_utmSource', 'class="inputbox form-control" size="1"', 'value', 'text', $config->getValue('utmSource'));
 
-		$lists ['disableRe'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disableRe', 'class="inputbox form-control" size="1"', 'value', 'text', $config->disableRe);
-		$lists ['profiler']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_profiler', 'class="inputbox form-control" size="1"', 'value', 'text', $config->profiler);
+		$lists ['disableRe'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disableRe', 'class="inputbox form-control" size="1"', 'value', 'text', $config->getValue('disableRe'));
+		$lists ['profiler']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_profiler', 'class="inputbox form-control" size="1"', 'value', 'text', $config->getValue('profiler'));
 
 		return $lists;
 	}

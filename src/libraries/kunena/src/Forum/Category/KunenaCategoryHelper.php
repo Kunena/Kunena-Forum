@@ -537,6 +537,7 @@ abstract class KunenaCategoryHelper
 		$catlist = implode(',', array_keys($catlist));
 		$db      = Factory::getContainer()->get('DatabaseDriver');
 		$query   = $db->getQuery(true);
+
 		$query->select('t.category_id, COUNT(*) AS new')
 			->from($db->quoteName('#__kunena_topics', 't'))
 			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON uc.category_id = t.category_id AND uc.user_id=' . $db->quote($user->userid))
@@ -544,8 +545,8 @@ abstract class KunenaCategoryHelper
 			->where('t.category_id IN (' . $catlist . ')')
 			->where('t.hold = 0')
 			->where('t.last_post_time > ' . $db->quote($session->getAllReadTime()))
-			->where('uc.allreadtime IS NULL OR t.last_post_time > uc.allreadtime')
-			->where('ur.topic_id IS NULL OR t.last_post_id != ur.message_id')
+			->where('(uc.allreadtime IS NULL OR t.last_post_time > uc.allreadtime)')
+			->where('(ur.topic_id IS NULL OR t.last_post_id != ur.message_id)')
 			->group($db->quoteName('category_id'));
 		$db->setQuery($query);
 

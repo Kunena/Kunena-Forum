@@ -31,7 +31,7 @@ function kunena_520_2021_03_24_configuration($parent)
 	{
 		unset($config->latestcategory);
 
-		$config->latestcategory = 0;
+		$config->latestCategory = 0;
 
 		// Save configuration
 		$config->save();

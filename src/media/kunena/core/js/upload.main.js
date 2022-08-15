@@ -13,9 +13,9 @@ jQuery(function ($) {
     $.widget('blueimp.fileupload', $.blueimp.fileupload, {
         options: {
             // The maximum width of resized images:
-            imageMaxWidth: Joomla.getOptions('com_kunena.imagewidth'),
+            imageMaxWidth: Joomla.getOptions('com_kunena.imageWidth'),
             // The maximum height of resized images:
-            imageMaxHeight: Joomla.getOptions('com_kunena.imageheight')
+            imageMaxHeight: Joomla.getOptions('com_kunena.imageHeight')
         }
     });
 

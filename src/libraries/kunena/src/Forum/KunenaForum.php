@@ -353,6 +353,7 @@ abstract class KunenaForum
 			$manifest           = simplexml_load_file($file);
 			self::$version      = (string) $manifest->version;
 			self::$version_date = (string) $manifest->creationDate;
+			self::$version_name = (string) $manifest->versionname;
 		}
 		else
 		{
@@ -364,6 +365,7 @@ abstract class KunenaForum
 
 			self::$version      = $db->loadResult();
 			self::$version_date = Factory::getDate()->format('Y-m-d');
+			self::$version_name = 'Git Repository';
 		}
 
 		self::$version_major = substr(self::$version, 0, 3);

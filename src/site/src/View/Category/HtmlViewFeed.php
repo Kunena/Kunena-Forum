@@ -69,7 +69,7 @@ class KunenaViewCategory extends KunenaView
 
 		foreach ($this->topics as $topic)
 		{
-			if ($this->config->rss_type == 'topic')
+			if ($this->config->rssType == 'topic')
 			{
 				$description = Text::sprintf('COM_KUNENA_RSS_TOPICS_CONTAINS_MESSAGES', $topic->posts) . ' - ' . Text::sprintf('COM_KUNENA_RSS_LAST_AUTHOR', KunenaFactory::getUser($topic->last_post_userid)->getName($topic->last_post_guest_name));
 			}

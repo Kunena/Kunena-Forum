@@ -141,20 +141,7 @@ class KunenaImage extends Image
 	 */
 	public function resize($width, $height, $createNew = true, $scaleMethod = self::SCALE_INSIDE)
 	{
-	    /* $config = KunenaFactory::getConfig();
-	    
-	    switch ($config->avatarresizemethod)
-	    {
-	        case '0':*/
-	            $resizemethod = 'imagecopyresized';
-	          /*  break;
-	        case '1':
-	            $resizemethod = 'imagecopyresampled';
-	            break;
-	        default:
-	            $resizemethod = 'self::imageCopyResampledBicubic';
-	            break;
-	    }*/
+		$resizemethod = 'imagecopyresized';
 
 		// Make sure the resource handle is valid.
 		if (!$this->isLoaded())

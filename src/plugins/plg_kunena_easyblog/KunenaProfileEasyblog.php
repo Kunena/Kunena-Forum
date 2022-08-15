@@ -57,7 +57,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getUser();
 
-		if ($config->userlist_allowed == 0 && $my->id == 0)
+		if ($config->userlistAllowed == 0 && $my->id == 0)
 		{
 			return false;
 		}

@@ -207,14 +207,14 @@ class KunenaActivityEasySocial extends KunenaActivity
 		if ($message->hold == 1)
 		{
 			$mailsubs   = 0;
-			$mailmods   = $config->mailmod >= 0;
-			$mailadmins = $config->mailadmin >= 0;
+			$mailmods   = $config->mailModerators >= 0;
+			$mailadmins = $config->mailAdministrators >= 0;
 		}
 		else
 		{
-			$mailsubs   = (bool) $config->allowsubscriptions;
-			$mailmods   = $config->mailmod >= 1;
-			$mailadmins = $config->mailadmin >= 1;
+			$mailsubs   = (bool) $config->allowSubscriptions;
+			$mailmods   = $config->mailModerators >= 1;
+			$mailadmins = $config->mailAdministrators >= 1;
 		}
 
 		if ($mailsubs)
@@ -222,17 +222,17 @@ class KunenaActivityEasySocial extends KunenaActivity
 			if (!$message->parent)
 			{
 				// New topic: Send email only to category subscribers
-				$mailsubs = $config->category_subscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
+				$mailsubs = $config->categorySubscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
 			}
-			elseif ($config->category_subscriptions != 'post')
+			elseif ($config->categorySubscriptions != 'post')
 			{
 				// Existing topic: Send email only to topic subscribers
-			    $mailsubs = $config->topic_subscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
+				$mailsubs = $config->topicSubscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
 			}
 			else
 			{
 				// Existing topic: Send email to both category and topic subscribers
-			    $mailsubs = $config->topic_subscriptions == 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
+				$mailsubs = $config->topicSubscriptions == 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 			}
 		}
 

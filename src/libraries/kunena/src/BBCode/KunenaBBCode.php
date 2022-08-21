@@ -2795,7 +2795,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 		if (!$attachment->isAuthorised() && !$this->config->showImgForGuest && $attachment->id != '0')
 		{
-			return;
+			return (string) $layout->setLayout('unauthorised');
 		}
 
 		if (!$attachment->isAuthorised())

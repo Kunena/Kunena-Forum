@@ -223,13 +223,20 @@ class KunenaProfileEasySocial extends KunenaProfile
 		$config          = \ES::config();
 		$displayusername = $config->get('users.displayName');
 
-		if ($displayusername == 'username')
+		if ($user->userid > 0)
 		{
-			return \FD::user($user->userid)->username;
+			if ($displayusername == 'username')
+			{
+				return FD::user($user->userid)->username;
+			}
+			else
+			{
+				return FD::user($user->userid)->name;
+			}
 		}
 		else
 		{
-			return \FD::user($user->userid)->name;
+			return $visitorname;
 		}
 	}
 }

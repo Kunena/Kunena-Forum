@@ -655,7 +655,35 @@ class TemplateController extends FormController
 			return;
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseScss", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=chooseScss", false));
+	}
+
+	/**
+	 * Edit Scss
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 * @since   Kunena 2.0
+	 */
+	public function editscss(): void
+	{
+		$template     = $this->app->input->getArray(['cid' => '']);
+		$templatename = array_shift($template['cid']);
+
+		$filename = $this->app->input->get('filename');
+
+		if (File::getExt($filename) !== 'scss')
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'warning');
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $template, false));
+		}
+
+		$this->app->setUserState('kunena.templatename', $templatename);
+		$this->app->setUserState('kunena.editscss.filename', $filename);
+
+		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editScss", false));
 	}
 
 	/**
@@ -674,7 +702,7 @@ class TemplateController extends FormController
 
 		$this->app->setUserState('kunena.templatename', $templatename);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=chooseCss", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=chooseCss", false));
 	}
 
 	/**

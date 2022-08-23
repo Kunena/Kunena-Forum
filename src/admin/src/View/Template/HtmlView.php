@@ -67,7 +67,7 @@ class HtmlView extends BaseHtmlView
 
 			return parent::display($tpl);
 		}
-		elseif ($this->getLayout() == "ChooseScss")
+		elseif ($this->getLayout() == "chooseScss")
 		{
 			$this->setToolBarChooseScss();
 			$this->templatename = $app->getUserState('kunena.templatename');
@@ -83,6 +83,18 @@ class HtmlView extends BaseHtmlView
 
 			$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss';
 			$this->files = Folder::files($this->dir, '\.scss$', false, false);
+
+			return parent::display($tpl);
+		}
+		elseif ($this->getLayout() == "editScss")
+		{
+			$this->setToolBarEditScss();
+			$this->templatename = $app->getUserState('kunena.templatename');
+			$this->filename     = $app->getUserState('kunena.editscss.filename');
+			$this->content      = $this->get('FileScssParsed');
+
+			$this->scss_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/' . $this->filename;
+			$this->ftp       = $this->get('FTPcredentials');
 
 			return parent::display($tpl);
 		}
@@ -122,7 +134,7 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::spacer();
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		ToolbarHelper::custom('editCss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		ToolbarHelper::custom('template.editCss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();
@@ -138,7 +150,25 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::spacer();
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		ToolbarHelper::custom('editscss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITSCSS');
+		ToolbarHelper::custom('template.editScss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITSCSS');
+		ToolbarHelper::spacer();
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarEditScss(): void
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		ToolbarHelper::spacer();
+		ToolbarHelper::apply('applyScss');
+		ToolbarHelper::spacer();
+		ToolbarHelper::save('saveScss');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();

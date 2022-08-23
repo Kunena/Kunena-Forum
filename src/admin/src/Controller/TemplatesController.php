@@ -210,34 +210,6 @@ class TemplatesController extends KunenaController
 	}
 
 	/**
-	 * Edit Scss
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function editscss(): void
-	{
-		$template     = $this->input->getArray(['cid' => '']);
-		$templatename = array_shift($template['cid']);
-
-		$filename = $this->input->get('filename');
-
-		if (File::getExt($filename) !== 'scss')
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'warning');
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $template, false));
-		}
-
-		$this->app->setUserState('kunena.templatename', $templatename);
-		$this->app->setUserState('kunena.editscss.filename', $filename);
-
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editscss", false));
-	}
-
-	/**
 	 * Apply scss
 	 *
 	 * @return  void

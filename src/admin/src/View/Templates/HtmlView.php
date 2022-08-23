@@ -208,42 +208,6 @@ class HtmlView extends BaseHtmlView
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	public function displayEditScss(): void
-	{
-		$this->setToolBarEditScss();
-		$this->templatename = $this->app->getUserState('kunena.templatename');
-		$this->filename     = $this->app->getUserState('kunena.editscss.filename');
-		$this->content      = $this->get('FileScssParsed');
-
-		$this->scss_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/' . $this->filename;
-		$this->ftp       = $this->get('FTPcredentials');
-		$this->display();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function setToolBarEditScss(): void
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-		ToolbarHelper::spacer();
-		ToolbarHelper::apply('applyScss');
-		ToolbarHelper::spacer();
-		ToolbarHelper::save('saveScss');
-		ToolbarHelper::spacer();
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		ToolbarHelper::spacer();
-	}
-
-	/**
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
 	public function displayEditCss(): void
 	{
 		$this->setToolBarEditCss();

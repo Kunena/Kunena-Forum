@@ -314,34 +314,6 @@ class TemplatesController extends KunenaController
 	}
 
 	/**
-	 * Edit Css
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function editCss(): void
-	{
-		$template     = $this->app->input->getArray(['cid' => '']);
-		$templatename = array_shift($template['cid']);
-
-		$filename = $this->app->input->get('filename');
-
-		if (File::getExt($filename) !== 'css')
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseCss&id=' . $templatename, false));
-		}
-
-		$this->app->setUserState('kunena.editCss.tmpl', $templatename);
-		$this->app->setUserState('kunena.editCss.filename', $filename);
-
-		$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=editCss", false));
-	}
-
-	/**
 	 * Apply Css
 	 *
 	 * @return  void

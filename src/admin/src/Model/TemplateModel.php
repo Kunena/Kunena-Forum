@@ -90,6 +90,52 @@ class TemplateModel extends AdminModel
 	}
 
 	/**
+	 * @return  string|void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function getFileScssParsed()
+	{
+		$app = Factory::getApplication();
+
+		$template = $app->getUserState('kunena.templatename');
+		$filename = $app->getUserState('kunena.editscss.filename');
+
+		$content = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/scss/' . $filename);
+		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
+
+		if ($content === false)
+		{
+			return;
+		}
+
+		return $content;
+	}
+
+	/**
+	 * @return  string|void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	public function getFileContentParsed()
+	{
+		$app = Factory::getApplication();
+
+		$template = $app->getUserState('kunena.templatename');
+		$filename = $app->getUserState('kunena.editCss.filename');
+		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/css/' . $filename);
+
+		if ($content === false)
+		{
+			return;
+		}
+
+		$content = htmlspecialchars($content, ENT_COMPAT);
+
+		return $content;
+	}
+
+	/**
 	 * Method to auto-populate the model state.
 	 *
 	 * Note. Calling getState in this method will result in recursion.

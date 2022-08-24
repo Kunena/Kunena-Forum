@@ -62,7 +62,7 @@ class HtmlView extends BaseHtmlView
 				fclose($fp);
 			}
 
-			$this->dir   = KPATH_SITE . '/template/' . $this->templatename . '/assets/css';
+			$this->dir   = KPATH_MEDIA . '/core/css';
 			$this->files = Folder::files($this->dir, '\.css$', false, false);
 
 			return parent::display($tpl);
@@ -96,6 +96,10 @@ class HtmlView extends BaseHtmlView
 			$this->scss_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/' . $this->filename;
 			$this->ftp       = $this->get('FTPcredentials');
 
+			return parent::display($tpl);
+		}
+		elseif ($this->getLayout() == "editCss")
+		{
 			return parent::display($tpl);
 		}
 		else

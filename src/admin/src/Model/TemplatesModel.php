@@ -158,48 +158,6 @@ class TemplatesModel extends AdminModel
 	}
 
 	/**
-	 * @return  string|void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getFileScssParsed()
-	{
-		$template = $this->app->getUserState('kunena.templatename');
-		$filename = $this->app->getUserState('kunena.editscss.filename');
-
-		$content = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/scss/' . $filename);
-		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
-
-		if ($content === false)
-		{
-			return;
-		}
-
-		return $content;
-	}
-
-	/**
-	 * @return  string|void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getFileContentParsed()
-	{
-		$template = $this->app->getUserState('kunena.templatename');
-		$filename = $this->app->getUserState('kunena.editCss.filename');
-		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/css/' . $filename);
-
-		if ($content === false)
-		{
-			return;
-		}
-
-		$content = htmlspecialchars($content, ENT_COMPAT);
-
-		return $content;
-	}
-
-	/**
 	 * @return  boolean
 	 *
 	 * @since   Kunena 6.0

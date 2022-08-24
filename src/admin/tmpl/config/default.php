@@ -862,25 +862,25 @@ $wa->useScript('multiselect');
                                                         </td>
                                                         <td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_DESC') ?></td>
                                                     </tr>
-                                                    <tr <?php if ($this->config->emailHeaderSizeY != 560)
+                                                    <tr <?php if ($this->config->getValue('emailHeaderSizeY') != 560)
 														:
 														echo 'class="changed"';
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEY') ?></td>
                                                         <td><input name="cfg_emailHeaderSizeY" type="text"
                                                                    class="inputbox form-control"
-                                                                   value="<?php echo $this->escape($this->config->emailHeaderSizeY) ?>">
+                                                                   value="<?php echo $this->escape($this->config->getValue('emailHeaderSizeY')) ?>">
                                                         </td>
                                                         <td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEY_DESC') ?></td>
                                                     </tr>
-                                                    <tr <?php if ($this->config->emailHeaderSizeX != 560)
+                                                    <tr <?php if ($this->config->getValue('emailHeaderSizeX') != 560)
 														:
 														echo 'class="changed"';
 													endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEX') ?></td>
                                                         <td><input name="cfg_emailHeaderSizeX" type="text"
                                                                    class="inputbox form-control"
-                                                                   value="<?php echo $this->escape($this->config->emailHeaderSizeX) ?>">
+                                                                   value="<?php echo $this->escape($this->config->getValue('emailHeaderSizeX')) ?>">
                                                         </td>
                                                         <td><?php echo Text::_('COM_KUNENA_EMAIL_HEADER_SIZEX_DESC') ?></td>
                                                     </tr>

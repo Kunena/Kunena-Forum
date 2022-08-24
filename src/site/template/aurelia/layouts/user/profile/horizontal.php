@@ -20,15 +20,13 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 $user              = $this->user;
-$this->ktemplate   = KunenaFactory::getTemplate();
 $avatar            = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
-$config            = KunenaConfig::getInstance();
-$show              = $config->showUserStats;
-$optional_username = KunenaFactory::getTemplate()->params->get('optional_username');
+$show              = $this->config->showUserStats;
+$optional_username = $this->ktemplate->params->get('optional_username');
 
 $canseekarma = false;
 
-if ($config->showKarma)
+if ($this->config->showKarma)
 {
 	$canseekarma = $user->canSeeKarma();
 
@@ -57,7 +55,7 @@ if ($config->showKarma)
 				:
 				?>
 				<li>
-					<?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avatarEdit); ?>
+					<?php echo $user->getLink($avatar, null, '', '', null, 0, $this->config->avatarEdit); ?>
 				</li>
 				<?php if (isset($this->topic_starter) && $this->topic_starter)
 				:
@@ -73,7 +71,7 @@ if ($config->showKarma)
 
 				<?php endif; ?>
 				<?php
-					if ($user->exists() && $config->userStatus)
+					if ($user->exists() && $this->config->userStatus)
 					:
 					?>
 					<li>
@@ -121,7 +119,7 @@ if ($config->showKarma)
 			</li>
 			<?php endif; ?>
 
-			<?php if ($canseekarma && $config->showKarma)
+			<?php if ($canseekarma && $this->config->showKarma)
 			:
 				if ($user->karma > 0)
 				:
@@ -134,12 +132,12 @@ if ($config->showKarma)
 			<li>
 				<strong> <?php echo Text::_('COM_KUNENA_KARMA'); ?>: <?php echo $karmanumber; ?></strong>
 				<span>
-					<?php $this->subLayout('Widget/Karma')->set('topicicontype', KunenaFactory::getTemplate()->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown') . $this->subLayout('Widget/Karma')->set('topicicontype', KunenaFactory::getTemplate()->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown'); ?> 
+					<?php $this->subLayout('Widget/Karma')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown') . $this->subLayout('Widget/Karma')->set('topicicontype', KunenaFactory::getTemplate()->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown'); ?> 
 				</span>
 			</li>
 			<?php endif; ?>
 
-			<?php if ($show && isset($user->thankyou) && $config->showThankYou)
+			<?php if ($show && isset($user->thankyou) && $this->config->showThankYou)
 			:
 			?>
 			<li>

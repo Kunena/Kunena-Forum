@@ -27,10 +27,9 @@ $signature            = $this->profile->getSignature();
 $attachments          = $message->getAttachments();
 $attachs              = $message->getNbAttachments();
 $topicStarter         = $this->topic->first_post_userid == $this->message->userid;
-$config               = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 
-if ($config->orderingSystem == 'mesid')
+if ($this->config->orderingSystem == 'mesid')
 {
 	$this->numLink = $this->location;
 }
@@ -86,7 +85,7 @@ else
 			<?php endif ?>
         </div>
         <div class="profile-horizontal-bottom">
-			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
+			<?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id)->set('ktemplate', $this->ktemplate)->set('config', $this->config); ?>
         </div>
     </div>
 	<?php if ($this->config->reportMsg && $this->me->exists()) : ?>

@@ -79,7 +79,7 @@ $announcement = $this->announcement;
 	<?php endif; ?>
 
     <td>
-		<?php if (KunenaConfig::getInstance()->username)
+		<?php if ($this->config->username)
 			:
 			?>
 			<?php echo $announcement->getAuthor()->username; ?>

@@ -19,7 +19,6 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
-$this->ktemplate = KunenaFactory::getTemplate();
 $bootstrap = $this->ktemplate->params->get('bootstrap');
 
 if ($bootstrap)

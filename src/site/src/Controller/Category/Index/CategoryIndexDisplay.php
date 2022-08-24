@@ -91,8 +91,9 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 	{
 		parent::before();
 
-		$this->me        = KunenaUserHelper::getMyself();
-		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->me             = KunenaUserHelper::getMyself();
+		$this->ktemplate      = KunenaFactory::getTemplate();
+		$this->templateParams = $this->ktemplate->params;
 
 		// Get sections to display.
 		$catid        = $this->input->getInt('catid', 0);

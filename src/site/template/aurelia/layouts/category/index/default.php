@@ -36,20 +36,18 @@ if ($this->config->getValue('enableForumJump'))
 }
 
 $mmm             = 0;
-$this->ktemplate = KunenaTemplate::getInstance();
-$templateParams  = $this->ktemplate->params;
 
-if ($templateParams->get('socialshare') == 1)
+if ($this->templateParams->get('socialshare') == 1)
 {
 	echo "<div>" . $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate) . "</div>";
 }
 
-if ($templateParams->get('socialshare') == 2)
+if ($this->templateParams->get('socialshare') == 2)
 {
 	echo "<div>" . $this->subLayout('Widget/Socialcustomtag') . "</div>";
 }
 
-if ($templateParams->get('displayModule'))
+if ($this->templateParams->get('displayModule'))
 {
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
 }
@@ -57,7 +55,7 @@ if ($templateParams->get('displayModule'))
 foreach ($this->sections as $section) :
 	$Itemid      = KunenaRoute::getCategoryItemid($section);
 
-	if ($templateParams->get('displayModule'))
+	if ($this->templateParams->get('displayModule'))
 	{
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_top_' . ++$mmm);
 	} ?>
@@ -229,7 +227,7 @@ foreach ($this->sections as $section) :
 							<?php if ($last->exists()) :
 								$author = $last->getLastPostAuthor();
 								$time = $last->getLastPostTime();
-								$avatar = $this->config->avatarOnCategory ? $author->getAvatarImage($templateParams->get('avatarType'), 'thumb') : null;
+								$avatar = $this->config->avatarOnCategory ? $author->getAvatarImage($this->templateParams->get('avatarType'), 'thumb') : null;
 								?>
 
                                 <td colspan="5" class="hidden-xs-down">
@@ -281,14 +279,14 @@ foreach ($this->sections as $section) :
     </div>
     <!-- Begin: Category Module Position -->
 	<?php
-	if ($templateParams->get('displayModule'))
+	if ($this->templateParams->get('displayModule'))
 	{
 		echo $this->subLayout('Widget/Module')->set('position', 'kunena_section_' . ++$mmm);
 	} ?>
     <!-- Finish: Category Module Position -->
 <?php endforeach;
 
-if ($templateParams->get('displayModule'))
+if ($this->templateParams->get('displayModule'))
 {
 	echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_bottom');
 }

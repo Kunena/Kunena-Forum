@@ -66,6 +66,8 @@ class AnnouncementItemDisplay extends KunenaControllerDisplay
 			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=default&id={$id}&Itemid={$itemid}", false));
 			$controller->redirect();
 		}
+
+		$this->actions      = $this->getActions();
 	}
 
 	/**

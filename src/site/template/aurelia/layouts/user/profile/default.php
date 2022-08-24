@@ -13,24 +13,18 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
 $user            = $this->user;
-$this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'post');
-$config          = KunenaConfig::getInstance();
-$show            = $config->showUserStats;
+$show            = $this->config->showUserStats;
 
-$activityIntegration = KunenaFactory::getActivityIntegration();
-$points              = $activityIntegration->getUserPoints($user->userid);
-$medals              = $activityIntegration->getUserMedals($user->userid);
-$optional_username   = KunenaFactory::getTemplate()->params->get('optional_username');
+$optional_username   = $this->ktemplate->params->get('optional_username');
 
 $canseekarma = false;
 
-if ($config->showKarma)
+if ($this->config->showKarma)
 {
 	$canseekarma = $user->canSeeKarma();
 
@@ -55,7 +49,7 @@ if ($config->showKarma)
 			:
 			?>
             <li>
-				<?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avatarEdit); ?>
+				<?php echo $user->getLink($avatar, null, '', '', null, 0, $this->config->avatarEdit); ?>
 				<?php
 				if (isset($this->topic_starter) && $this->topic_starter)
 					:
@@ -69,7 +63,7 @@ if ($config->showKarma)
             </li>
 		<?php endif; ?>
 
-		<?php if ($user->exists() && $config->userStatus)
+		<?php if ($user->exists() && $this->config->userStatus)
 			:
 			?>
             <li>
@@ -117,7 +111,7 @@ if ($user->userid > 1)
               data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_USER_PROFILE_TOOLTIP_LABEL_MORE') ?>"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
         <div class="content" style="display:none;">
             <ul>
-				<?php if ($canseekarma && $config->showKarma)
+				<?php if ($canseekarma && $this->config->showKarma)
 					:
 					?>
                     <li>
@@ -134,7 +128,7 @@ if ($user->userid > 1)
                     </li>
 				<?php endif; ?>
 
-				<?php if ($show && isset($user->thankyou) && $config->showThankYou)
+				<?php if ($show && isset($user->thankyou) && $this->config->showThankYou)
 					:
 					?>
                     <li>
@@ -142,19 +136,19 @@ if ($user->userid > 1)
                     </li>
 				<?php endif; ?>
 
-				<?php if ($show && !empty($points))
+				<?php if ($show && !empty($this->points))
 					:
 					?>
                     <li>
-						<?php echo Text::_('COM_KUNENA_AUP_POINTS') . ' ' . $points; ?>
+						<?php echo Text::_('COM_KUNENA_AUP_POINTS') . ' ' . $this->points; ?>
                     </li>
 				<?php endif; ?>
 
-				<?php if ($show && !empty($medals))
+				<?php if ($show && !empty($this->medals))
 					:
 					?>
                     <li>
-						<?php echo implode(' ', $medals); ?>
+						<?php echo implode(' ', $this->medals); ?>
                     </li>
 				<?php endif; ?>
 

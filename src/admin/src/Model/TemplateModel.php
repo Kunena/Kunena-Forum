@@ -121,9 +121,8 @@ class TemplateModel extends AdminModel
 	{
 		$app = Factory::getApplication();
 
-		$template = $app->getUserState('kunena.templatename');
 		$filename = $app->getUserState('kunena.editCss.filename');
-		$content  = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/css/' . $filename);
+		$content  = file_get_contents(KPATH_MEDIA . '/core/css/' . $filename);
 
 		if ($content === false)
 		{

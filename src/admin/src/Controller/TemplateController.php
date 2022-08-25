@@ -734,6 +734,184 @@ class TemplateController extends FormController
 	}
 
 	/**
+	 * Apply scss
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 * @since   Kunena 2.0
+	 */
+	public function applyScss(): void
+	{
+		$this->internalSaveScss();
+	}
+
+	/**
+	 * Save Scss
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 * @since   Kunena 2.0
+	 */
+	public function saveScss(): void
+	{
+		$this->internalSaveScss();
+	}
+
+	/**
+	 * Internal method to save Scss or apply changes
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function internalSaveScss(): void
+	{
+		$template     = $this->app->input->getArray(['cid' => '']);
+		$templatename = array_shift($template['cid']);
+
+		$filename    = $this->app->input->get('filename');
+		$filecontent = $this->app->input->get('filecontent', '', 'raw');
+
+		if (!Session::checkToken('post'))
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (!$templatename)
+		{
+			$this->app->enqueueMessage(
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+				. Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error'
+				);
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$file   = KPATH_SITE . '/template/' . $templatename . '/assets/scss/' . $filename;
+		$return = File::write($file, $filecontent);
+
+		if ($return && $task == 'applyScss')
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $templatename, false));
+		}
+		elseif (!$return && $task == 'applyScss')
+		{
+			$this->app->enqueueMessage(
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error'
+			);
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $templatename, false));
+		}
+		elseif ($return && $task == 'saveScss')
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+		else
+		{
+			$this->app->enqueueMessage(
+				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file),
+				'error'
+			);
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+	}
+
+	/**
+	 * Apply Css
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 * @since   Kunena 2.0
+	 */
+	public function applyCss(): void
+	{
+		$this->internalSaveCss();
+	}
+
+	/**
+	 * Save Css
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 * @throws  null
+	 * @since   Kunena 2.0
+	 */
+	public function saveCss(): void
+	{
+		$this->internalSaveCss();
+	}
+
+	/**
+	 * Internal method to save Css or apply changes
+	 *
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function internalSaveCss(): void
+	{
+		$template     = $this->app->input->getArray(['cid' => '']);
+		$templatename = array_shift($template['cid']);
+		$filename     = $this->app->input->get('filename');
+		$filecontent  = $this->app->input->get('filecontent', '', 'raw');
+		$task         = $this->app->input->get('task');
+
+		if (!Session::checkToken())
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		if (!$templatename)
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+			return;
+		}
+
+		$file   = KPATH_MEDIA . '/core/css/' . $filename;
+		$return = File::write($file, $filecontent);
+
+		if ($return && $task == 'applyCss')
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
+			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=chooseCss", false));
+		}
+		elseif (!$return && $task == 'applyCss')
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=chooseCss", false));
+		}
+		elseif ($return && $task == 'saveCss')
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+		else
+		{
+			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+	}
+
+	/**
 	 * Add a new template
 	 *
 	 * @return  void

@@ -100,6 +100,13 @@ class HtmlView extends BaseHtmlView
 		}
 		elseif ($this->getLayout() == "editCss")
 		{
+			$this->setToolBarEditCss();
+			$this->templatename = $app->getUserState('kunena.templatename');
+			$this->filename     = $app->getUserState('kunena.editCss.filename');
+			$this->content      = $this->get('FileContentParsed');
+			$this->cssPath      = KPATH_MEDIA . '/core/css/' . $this->filename;
+			$this->ftp          = $this->get('FTPcredentials');
+
 			return parent::display($tpl);
 		}
 		else
@@ -170,9 +177,27 @@ class HtmlView extends BaseHtmlView
 	{
 		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 		ToolbarHelper::spacer();
-		ToolbarHelper::apply('applyScss');
+		ToolbarHelper::apply('template.applyScss');
 		ToolbarHelper::spacer();
-		ToolbarHelper::save('saveScss');
+		ToolbarHelper::save('template.saveScss');
+		ToolbarHelper::spacer();
+		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarEditCss(): void
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
+		ToolbarHelper::spacer();
+		ToolbarHelper::apply('template.applyCss');
+		ToolbarHelper::spacer();
+		ToolbarHelper::save('template.saveCss');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
 		ToolbarHelper::cancel();

@@ -775,6 +775,7 @@ class TemplateController extends FormController
 
 		$filename    = $this->app->input->get('filename');
 		$filecontent = $this->app->input->get('filecontent', '', 'raw');
+		$task         = $this->app->input->get('task');
 
 		if (!Session::checkToken('post'))
 		{
@@ -801,7 +802,7 @@ class TemplateController extends FormController
 		if ($return && $task == 'applyScss')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $templatename, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=editScss', false));
 		}
 		elseif (!$return && $task == 'applyScss')
 		{
@@ -809,7 +810,7 @@ class TemplateController extends FormController
 				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
 				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error'
 			);
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $templatename, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=chooseScss', false));
 		}
 		elseif ($return && $task == 'saveScss')
 		{
@@ -892,7 +893,7 @@ class TemplateController extends FormController
 		if ($return && $task == 'applyCss')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
-			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=chooseCss", false));
+			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editCss", false));
 		}
 		elseif (!$return && $task == 'applyCss')
 		{

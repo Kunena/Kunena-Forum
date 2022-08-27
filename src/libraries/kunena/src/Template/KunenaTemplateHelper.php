@@ -212,34 +212,19 @@ abstract class KunenaTemplateHelper
 	 * @return boolean
 	 * @since Kunena 5.2
 	 */
-	public static function templateIsKunenaCompatible($targetversion = null)
+	public static function templateIsKunenaCompatible($targetversion = null) :bool
 	{
 		if ($targetversion === null)
+		{
+			return false;
+		}
+
+		// Validate that the template version is allowed
+		if (preg_match('/^' . $targetversion . '/', KunenaForum::version())) 
 		{
 			return true;
 		}
 
-		// Get the Kunena version family (e.g. 6.0)
-		$kVersion = KunenaForum::version();
-		$kVersionParts = explode('.', $kVersion);
-		$kVersionShort = $kVersionParts[0] . '.' . $kVersionParts[1];
-
-		$targetKunenaVersion = $targetversion;
-		$targetVersionParts = explode('.', $targetKunenaVersion);
-		$targetVersionShort = $targetVersionParts[0] . '.' . $targetVersionParts[1];
-
-		// The target version MUST be in the same Kunena branch
-		if ($kVersionShort == $targetVersionShort)
-		{
-			return false;
-		}
-
-		// If the target version is major.minor.revision we must make sure our current Kunena version is AT LEAST equal to that.
-		if (version_compare($targetKunenaVersion, KunenaForum::version(), 'gt'))
-		{
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 }

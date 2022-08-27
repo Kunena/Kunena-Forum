@@ -40,6 +40,12 @@ class TemplatesController extends KunenaController
 	protected $baseurl = null;
 
 	/**
+	 * @var     array
+	 * @since   Kunena 2.0
+	 */
+	protected $locked = ['aurelia'];
+
+	/**
 	 * Construct
 	 *
 	 * @param   array  $config  config
@@ -121,15 +127,14 @@ class TemplatesController extends KunenaController
 								continue;
 							}
 
-							if (is_dir($dest . $template->directory))
+							// Check that the template is compatible with the actual Kunena version
+							if (!KunenaTemplateHelper::templateIsKunenaCompatible($template->targetversion))
 							{
-								// Check that the template is compatible with the actual Kunena version
-								if (!KunenaTemplateHelper::templateIsKunenaCompatible($template->targetversion))
-								{
-									$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_COMPATIBLE_WITH_KUNENA_INSTALLED_VERSION', $template->name, $template->version), 'error');
-									$result = false;
-								}
-
+								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_COMPATIBLE_WITH_KUNENA_INSTALLED_VERSION', $template->name, $template->version), 'error');
+								$result = false;
+							}
+							else
+							{
 								if (is_file($dest . $template->directory . '/config/params.ini'))
 								{
 									if (is_file($tmpKunena . $template->sourcedir . '/config/params.ini'))
@@ -161,18 +166,18 @@ class TemplatesController extends KunenaController
 								}
 
 								Folder::delete($dest . $template->directory);
-							}
 
-							$success = Folder::move($tmpKunena . $template->sourcedir, $dest . $template->directory);
+								$success = Folder::move($tmpKunena . $template->sourcedir, $dest . $template->directory);
 
-							if ($success !== true)
-							{
-								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_FAILED', $template->directory), 'error');
-								$result = false;
-							}
-							else
-							{
-								$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_SUCCESS', $template->directory), 'success');
+								if ($success !== true)
+								{
+									$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_FAILED', $template->directory), 'error');
+									$result = false;
+								}
+								else
+								{
+									$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_SUCCESS', $template->directory), 'success');
+								}
 							}
 						}
 

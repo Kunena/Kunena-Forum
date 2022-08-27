@@ -48,13 +48,13 @@ class HtmlView extends BaseHtmlView
 			$this->setToolBarChooseCss();
 			$this->templatename = $app->getUserState('kunena.templatename');
 
-			$file = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/custom.css';
+			$file = KPATH_MEDIA . '/core/css/custom.css';
 
-			if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
+			if (!file_exists($file) && Folder::exists(KPATH_MEDIA . '/core/css/'))
 			{
-				if (!Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/'))
+				if (!Folder::exists(KPATH_MEDIA . '/core/css/'))
 				{
-					Folder::create(KPATH_SITE . '/template/' . $this->templatename . '/assets/css/');
+					Folder::create(KPATH_MEDIA . '/core/css/');
 				}
 
 				$fp = fopen($file, "w");
@@ -111,9 +111,9 @@ class HtmlView extends BaseHtmlView
 		}
 		elseif ($this->getLayout() == "addnew")
 		{
-		    $this->setToolBarAddnew();
+			$this->setToolBarAddnew();
 
-		    return parent::display($tpl);
+			return parent::display($tpl);
 		}
 		else
 		{

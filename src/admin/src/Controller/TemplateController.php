@@ -50,6 +50,12 @@ class TemplateController extends FormController
 	public $config = null;
 
 	/**
+	 * @var     array
+	 * @since   Kunena 2.0
+	 */
+	protected $locked = ['aurelia'];
+
+	/**
 	 * Constructor.
 	 *
 	 * @param   MVCFactoryInterface|null  $factory  The factory.

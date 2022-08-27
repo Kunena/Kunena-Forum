@@ -40,12 +40,6 @@ class TemplatesController extends KunenaController
 	protected $baseurl = null;
 
 	/**
-	 * @var     array
-	 * @since   Kunena 2.0
-	 */
-	protected $locked = ['aurelia'];
-
-	/**
 	 * Construct
 	 *
 	 * @param   array  $config  config

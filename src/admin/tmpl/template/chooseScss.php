@@ -20,7 +20,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 	<div class="row">
 		<div id="j-main-container" class="col-md-12" role="main">
 			<div class="card card-block bg-faded p-2">
-				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=template') ?>"
+				<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"
 					  method="post" id="adminForm"
 					  name="adminForm">
 					<input type="hidden" name="task" value=""/>

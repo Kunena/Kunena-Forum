@@ -109,6 +109,12 @@ class HtmlView extends BaseHtmlView
 
 			return parent::display($tpl);
 		}
+		elseif ($this->getLayout() == "addnew")
+		{
+		    $this->setToolBarAddnew();
+
+		    return parent::display($tpl);
+		}
 		else
 		{
 			$this->form         = $this->get('Form');
@@ -200,6 +206,18 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::save('template.saveCss');
 		ToolbarHelper::spacer();
 		ToolbarHelper::spacer();
+		ToolbarHelper::cancel();
+		ToolbarHelper::spacer();
+	}
+
+	/**
+	 * @return  void
+	 *
+	 * @since   Kunena 6.0
+	 */
+	protected function setToolBarAddnew(): void
+	{
+		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'), 'color-palette');
 		ToolbarHelper::cancel();
 		ToolbarHelper::spacer();
 	}

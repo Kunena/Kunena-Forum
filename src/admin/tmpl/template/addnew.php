@@ -29,9 +29,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 				<?php echo HTMLHelper::_('form.token'); ?>
 
 				<fieldset>
-					<legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?>
-						- <?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></legend>
-
 					<div>
 						<label for="install_package"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD'); ?>
 							:</label>

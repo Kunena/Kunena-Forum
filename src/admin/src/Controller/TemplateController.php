@@ -661,7 +661,7 @@ class TemplateController extends FormController
 			return;
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=chooseScss", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=choosescss", false));
 	}
 
 	/**
@@ -683,13 +683,13 @@ class TemplateController extends FormController
 		if (File::getExt($filename) !== 'scss')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'warning');
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseScss&id=' . $template, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosescss&id=' . $template, false));
 		}
 
 		$this->app->setUserState('kunena.templatename', $templatename);
 		$this->app->setUserState('kunena.editscss.filename', $filename);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editScss", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editscss", false));
 	}
 
 	/**
@@ -708,7 +708,7 @@ class TemplateController extends FormController
 
 		$this->app->setUserState('kunena.templatename', $templatename);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=chooseCss", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=choosecss", false));
 	}
 
 	/**
@@ -730,13 +730,13 @@ class TemplateController extends FormController
 		if (File::getExt($filename) !== 'css')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=chooseCss&id=' . $templatename, false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename, false));
 		}
 
 		$this->app->setUserState('kunena.editCss.tmpl', $templatename);
 		$this->app->setUserState('kunena.editCss.filename', $filename);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editCss", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editcss", false));
 	}
 
 	/**
@@ -808,7 +808,7 @@ class TemplateController extends FormController
 		if ($return && $task == 'applyScss')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
-			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=editScss', false));
+			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=editscss', false));
 		}
 		elseif (!$return && $task == 'applyScss')
 		{
@@ -816,7 +816,7 @@ class TemplateController extends FormController
 				Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
 				. Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error'
 			);
-			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=chooseScss', false));
+			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=choosescss', false));
 		}
 		elseif ($return && $task == 'saveScss')
 		{
@@ -899,12 +899,12 @@ class TemplateController extends FormController
 		if ($return && $task == 'applyCss')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
-			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editCss", false));
+			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editcss", false));
 		}
 		elseif (!$return && $task == 'applyCss')
 		{
 			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=chooseCss", false));
+			$this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=choosecss", false));
 		}
 		elseif ($return && $task == 'saveCss')
 		{

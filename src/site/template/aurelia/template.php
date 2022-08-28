@@ -124,8 +124,6 @@ class KunenaTemplateAurelia extends KunenaTemplate
 		$this->addScript('assets/js/main.js');
 		$this->addScript('assets/js/tooltips.js');
 
-		// Compile CSS from SCSS files.
-		$this->compileScss('assets/scss/aurelia.scss', 'kunena.css');
 		$this->addStyleSheet('kunena.css');
 
 		$storage = $this->params->get('localstorage');
@@ -139,7 +137,6 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		if (file_exists($filenamescss) && 0 != fileSize($filenamescss))
 		{
-			$this->compileScss('assets/scss/custom.scss', 'kunena-custom.css');
 			$this->addStyleSheet('kunena-custom.css');
 		}
 

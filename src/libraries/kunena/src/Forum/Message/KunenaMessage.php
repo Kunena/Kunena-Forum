@@ -1560,11 +1560,11 @@ class KunenaMessage extends KunenaDatabaseObject
 			$this->name = $author->getName();
 		}
 
-		// Check email address
-		$this->email = trim($this->email);
-
-		if ($this->email)
+		if (isset($this->email))
 		{
+			// Check email address
+			$this->email = trim($this->email);
+
 			// Email address must be valid
 			if (!MailHelper::isEmailAddress($this->email))
 			{

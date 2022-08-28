@@ -288,7 +288,10 @@ class TableKunenaMessages extends KunenaTable
 			$this->time = Factory::getDate()->toUnix();
 		}
 
-		$this->modified_reason = trim($this->modified_reason);
+		if (isset($this->modified_reason))
+		{
+			$this->modified_reason = trim($this->modified_reason);
+		}
 
 		return true;
 	}

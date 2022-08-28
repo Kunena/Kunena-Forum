@@ -43,7 +43,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$app = Factory::getApplication();
 
-		if ($this->getLayout() == "chooseCss")
+		if ($this->getLayout() == "choosecss")
 		{
 			$this->setToolBarChooseCss();
 			$this->templatename = $app->getUserState('kunena.templatename');
@@ -67,7 +67,7 @@ class HtmlView extends BaseHtmlView
 
 			return parent::display($tpl);
 		}
-		elseif ($this->getLayout() == "chooseScss")
+		elseif ($this->getLayout() == "choosescss")
 		{
 			$this->setToolBarChooseScss();
 			$this->templatename = $app->getUserState('kunena.templatename');
@@ -86,7 +86,7 @@ class HtmlView extends BaseHtmlView
 
 			return parent::display($tpl);
 		}
-		elseif ($this->getLayout() == "editScss")
+		elseif ($this->getLayout() == "editscss")
 		{
 			$this->setToolBarEditScss();
 			$this->templatename = $app->getUserState('kunena.templatename');
@@ -98,7 +98,7 @@ class HtmlView extends BaseHtmlView
 
 			return parent::display($tpl);
 		}
-		elseif ($this->getLayout() == "editCss")
+		elseif ($this->getLayout() == "editcss")
 		{
 			$this->setToolBarEditCss();
 			$this->templatename = $app->getUserState('kunena.templatename');

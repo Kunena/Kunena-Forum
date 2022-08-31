@@ -274,17 +274,17 @@ class HtmlView extends KunenaView
 
 		Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
 
-		foreach ($this->messages as $message)
+		foreach ($this->messages as $this->message)
 		{
 			$this->position++;
-			$this->topic    = $message->getTopic();
+			$this->topic    = $this->message->getTopic();
 			$this->category = $this->topic->getCategory();
 			$usertype       = $this->me->getType($this->category->id, true);
 
 			// TODO: add context (options, template) to caching
 			$this->cache = true;
 			$cache       = Factory::getCache('com_kunena', 'output');
-			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$message->id}";
+			$cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
 			$cachegroup  = 'com_kunena.posts';
 
 			// FIXME: enable caching after fixing the issues

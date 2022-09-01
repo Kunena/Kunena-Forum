@@ -368,6 +368,9 @@ class HtmlView extends KunenaView
 				$this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
 				$this->firstPostTime    = $this->topic->first_post_time;
 				$this->firstUserName    = $this->topic->first_post_guest_name;
+				$this->lastPostAuthor   = $this->topic->getLastPostAuthor();
+				$this->lastPostTime     = $this->topic->last_post_time;
+				$this->lastUserName     = $this->topic->last_post_guest_name;
 				$this->module           = $this->getModulePosition('kunena_topic_' . $this->position);
 				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 				$this->pages            = ceil($this->topic->getTotal() / $this->config->messagesPerPage);

@@ -1786,7 +1786,7 @@ HTML;
 		$scssContent = file_get_contents($inputFile);
 		$style = $scss->compileString($scssContent, $inputFile);
 
-		file_put_contents($outputDir . "/kunena.css", $style->getCss());
+		file_put_contents($outputDir . "/" . $outputFile, $style->getCss());
 	}
 
 	/**

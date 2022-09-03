@@ -143,11 +143,11 @@ class KunenaTemplateAurelia extends KunenaTemplate
 			$this->addStyleSheet('kunena-custom.css');
 		}
 
-		$filename = JPATH_SITE . '/components/com_kunena/template/aurelia/assets/css/custom.css';
+		$filename = KPATH_MEDIA . '/core/css/custom.css';
 
 		if (file_exists($filename))
 		{
-			$this->addStyleSheet('assets/css/custom.css');
+			$this->addStyleSheet('custom.css');
 		}
 
 		$this->loadFontawesome();

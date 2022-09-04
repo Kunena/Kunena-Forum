@@ -240,6 +240,13 @@ class KunenaTopicFinder extends KunenaFinder
 
 		return $this;
 	}
+	
+	public function filterTopicNotIn(string $topicsId): KunenaTopicFinder
+	{
+	    $this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . $topicsId . ')');
+	    
+	    return $this;
+	}
 
 	/**
 	 * Filter topics where group of people have (not) posted after the topic owner.
@@ -281,11 +288,10 @@ class KunenaTopicFinder extends KunenaFinder
 		$userlist = implode(',', $list);
 
 		$subQuery = $this->db->getQuery(true);
-		$subQuery->select($this->db->quoteName('st.id') . ', MAX(' . $this->db->quoteName('sut.last_post_id') . ') AS ' . $this->db->quoteName('max_post_id'))
-			->from($this->db->quoteName('#__kunena_topics', 'st'))
-			->leftJoin($this->db->quoteName('#__kunena_user_topics', 'sut'), $this->db->quoteName('sut.topic_id') . ' = ' . $this->db->quoteName('st.id'))
+		$subQuery->select('*')
+			->from($this->db->quoteName('#__kunena_messages', 'mes'))
 			->where($this->db->quoteName('sut.user_id') . ' IN (' . $userlist . ')')
-			->group($this->db->quoteName('st.last_post_id'))
+			->group($this->db->quoteName('mes.thread'))
 			->order($this->db->quoteName('st.last_post_id') . ' DESC');
 
 		// Hard limit on sub-query to make derived table faster to sort.

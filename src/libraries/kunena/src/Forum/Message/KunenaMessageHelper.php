@@ -771,13 +771,13 @@ abstract class KunenaMessageHelper
 
 		return $ip;
 	}
-	
+
 	/**
-	 * Get last IP address used by the user
+	 * Get the messages from users given
 	 *
 	 * @param   array  $users
 	 *
-	 * @return bool
+	 * @return object
 	 *
 	 * @since   Kunena 6.0
 	 *

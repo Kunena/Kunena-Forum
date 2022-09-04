@@ -240,74 +240,19 @@ class KunenaTopicFinder extends KunenaFinder
 
 		return $this;
 	}
-	
-	public function filterTopicNotIn(string $topicsId): KunenaTopicFinder
-	{
-	    $this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . $topicsId . ')');
-	    
-	    return $this;
-	}
 
 	/**
-	 * Filter topics where group of people have (not) posted after the topic owner.
+	 * Filter topics with topics Id given.
 	 *
-	 * @param   array  $users   users
-	 * @param   bool   $negate  negate
+	 * @param   string  $topicsId   The list of ID of topics to filter (the strong should be like that: 1,2,3)
 	 *
 	 * @return  $this
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function filterAnsweredBy(array $users, $negate = false): KunenaTopicFinder
+	public function filterTopicNotIn(string $topicsId): KunenaTopicFinder
 	{
-		$list = [];
-
-		foreach ($users as $user)
-		{
-			if ($user instanceof KunenaUser)
-			{
-				$list[] = (int) $user->userid;
-			}
-			elseif ($user instanceof User)
-			{
-				$list[] = (int) $user->id;
-			}
-			else
-			{
-				$list[] = (int) $user;
-			}
-		}
-
-		if (empty($list))
-		{
-			$this->query->where('0');
-
-			return $this;
-		}
-
-		$userlist = implode(',', $list);
-
-		$subQuery = $this->db->getQuery(true);
-		$subQuery->select('*')
-			->from($this->db->quoteName('#__kunena_messages', 'mes'))
-			->where($this->db->quoteName('sut.user_id') . ' IN (' . $userlist . ')')
-			->group($this->db->quoteName('mes.thread'))
-			->order($this->db->quoteName('st.last_post_id') . ' DESC');
-
-		// Hard limit on sub-query to make derived table faster to sort.
-		$this->query->innerJoin('(' . $subQuery . ' LIMIT 1000) AS ' . $this->db->quoteName('uu') . ' ON ' . $this->db->quoteName('uu.id') . ' = ' . $this->db->quoteName('a.id'))
-			->innerJoin($this->db->quoteName('#__kunena_user_topics', 'ut'), $this->db->quoteName('ut.topic_id') . ' = ' . $this->db->quoteName('a.id') . ' AND ' . $this->db->quoteName('ut.owner') . ' = 1');
-
-		if ($negate)
-		{
-			// Topic owner has posted after $users (or $users haven't replied at all).
-			$this->query->where($this->db->quoteName('ut.last_post_id') . ' > ' . $this->db->quoteName('uu.max_post_id'));
-		}
-		else
-		{
-			// One of the $users has posted after topic owner.
-			$this->query->where($this->db->quoteName('ut.last_post_id') . ' < ' . $this->db->quoteName('uu.max_post_id'));
-		}
+		$this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . $topicsId . ')');
 
 		return $this;
 	}

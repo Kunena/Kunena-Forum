@@ -21,10 +21,12 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 
 /**
  * Class ComponentTopicControllerListDisplay
@@ -102,12 +104,23 @@ class TopicListingModeratorDisplay extends ListDisplay
 
 		$categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse);
 
+		$threadsId = KunenaMessageHelper::getMessagesFromUsers(array_keys($access->getModerators() + $access->getAdmins()));
+		$threadSearch = [];
+
+		foreach($threadsId as $thread)
+		{
+			$threadSearch[] = $thread->thread;
+		}
+
+		$threadSearch = implode(',', $threadSearch);
+
 		$finder = new KunenaTopicFinder;
-		$finder
+		$this->topics = $finder
 			->filterByCategories($categories)
-			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
 			->filterByMoved(false)
-			->where('locked', '=', 0);
+			->filterTopicNotIn($threadSearch)
+			->where('locked', '=', 0)->order('last_post_time', -1)
+			->find();
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
@@ -116,19 +129,13 @@ class TopicListingModeratorDisplay extends ListDisplay
 			$this->pagination->setUri($moreUri);
 		}
 
-		$topics = $finder
-			->order('last_post_time', -1)
-			->start($this->pagination->limitstart)
-			->limit($this->pagination->limit)
-			->find();
-
-		if ($topics)
+		if ($this->topics)
 		{
 			$this->prepareTopics();
 		}
 
 		$actions        = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$this->actions = $this->getTopicActions($topics, $actions);
+		$this->actions = $this->getTopicActions($this->topics, $actions);
 
 		$this->headerText = Text::_('COM_KUNENA_TOPICS_NEEDS_ATTENTION');
 	}

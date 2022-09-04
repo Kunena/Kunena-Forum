@@ -16,12 +16,14 @@ namespace Kunena\Forum\Libraries\Forum\Message;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\User\User;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
 
@@ -768,5 +770,65 @@ abstract class KunenaMessageHelper
 		}
 
 		return $ip;
+	}
+	
+	/**
+	 * Get last IP address used by the user
+	 *
+	 * @param   array  $users
+	 *
+	 * @return bool
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws \Exception
+	 */
+	public static function getMessagesFromUsers(array $users)
+	{
+		$list = [];
+
+		foreach ($users as $user)
+		{
+			if ($user instanceof KunenaUser)
+			{
+				$list[] = (int) $user->userid;
+			}
+			elseif ($user instanceof User)
+			{
+				$list[] = (int) $user->id;
+			}
+			else
+			{
+				$list[] = (int) $user;
+			}
+		}
+
+		if (empty($list))
+		{
+			return;
+		}
+
+		$userlist = implode(',', $list);
+
+		$db = Factory::getContainer()->get('DatabaseDriver');
+
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName('thread'))
+			->from($db->quoteName('#__kunena_messages'))
+			->where($db->quoteName('userid') . ' IN (' . $userlist . ')')
+			->group($db->quoteName('thread'));
+
+		$db->setQuery($query);
+
+		try
+		{
+			$threads = $db->loadObjectList();
+		}
+		catch (ExecutionFailureException $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $threads;
 	}
 }

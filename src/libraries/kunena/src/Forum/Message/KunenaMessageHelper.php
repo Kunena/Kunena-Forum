@@ -119,7 +119,7 @@ abstract class KunenaMessageHelper
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
-			->where('m.id IN (' . $idlist . ')');
+			->where($db->quoteName('m.id') . ' IN (' . $idlist . ')');
 		$db->setQuery($query);
 
 		try
@@ -220,9 +220,9 @@ abstract class KunenaMessageHelper
 		$query->select('m.*, t.message')
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
-			->where('m.thread = ' . $db->quote($topic_id))
-			->andWhere('m.hold IN (' . $hold . ')')
-			->order('m.time ' . $ordering);
+			->where($db->quoteName('m.thread') . ' = ' . $db->quote($topic_id))
+			->andWhere($db->quoteName('m.hold') . ' IN (' . $hold . ')')
+			->order($db->quoteName('m.time') . $ordering);
 		$query->setLimit($limit, $start);
 		$db->setQuery($query);
 
@@ -271,8 +271,10 @@ abstract class KunenaMessageHelper
 	 */
 	public static function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = []): array
 	{
+		$db    = Factory::getContainer()->get('DatabaseDriver');
+
 		$reverse     = isset($params['reverse']) ? (int) $params['reverse'] : 0;
-		$orderby     = isset($params['orderby']) ? (string) $params['orderby'] : 'm.time DESC';
+		$orderby     = isset($params['orderby']) ? (string) $params['orderby'] : $db->quoteName('m.time') . ' DESC';
 		$starttime   = isset($params['starttime']) ? (int) $params['starttime'] : 0;
 		$mode        = isset($params['mode']) ? $params['mode'] : 'recent';
 		$user        = isset($params['user']) ? $params['user'] : false;
@@ -296,11 +298,10 @@ abstract class KunenaMessageHelper
 			}
 		}
 
-		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
-		$query->select('m.*, t.message')
-			->from('#__kunena_messages AS m')
-			->innerJoin('#__kunena_messages_text AS t ON m.id = t.mesid')
+		$query->select($db->quoteName(array('m.*', 't.message')))
+			->from($db->quoteName('#__kunena_messages', 'm'))
+			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
 			->order($orderby);
 
 		$authorise = 'read';
@@ -364,7 +365,7 @@ abstract class KunenaMessageHelper
 		}
 
 		$allowed = implode(',', array_keys($catlist));
-		$query->where('m.catid IN (' . $allowed . ')');
+		$query->where($db->quoteName('m.catid') . ' IN (' . $allowed . ')');
 
 		$query->where($hold);
 
@@ -598,8 +599,8 @@ abstract class KunenaMessageHelper
 		)
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages', 'mm') . ' ON m.thread = mm.thread')
-			->where('m.id IN (' . $idlist . ')')
-			->group('m.id, mm.hold');
+			->where($db->quoteName('m.id') . ' IN (' . $idlist . ')')
+			->group([$db->quoteName('m.id'), $db->quoteName('mm.hold')]);
 		$db->setQuery($query);
 
 		try
@@ -658,11 +659,11 @@ abstract class KunenaMessageHelper
 
 		if (\is_array($topicids))
 		{
-			$where = 'WHERE m.thread IN (' . implode(',', $topicids) . ')';
+			$where = $db->quoteName('m.thread') . ' IN (' . implode(',', $topicids) . ')';
 		}
 		elseif ((int) $topicids)
 		{
-			$where = 'WHERE m.thread = ' . $db->quote((int) $topicids);
+			$where = $db->quoteName('m.thread') . ' = ' . $db->quote((int) $topicids);
 		}
 		else
 		{
@@ -673,7 +674,8 @@ abstract class KunenaMessageHelper
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . ' ON tt.id = m.thread')
-			->set('m.catid = tt.category_id ' . $where);
+			->set('m.catid = tt.category_id')
+			->where($where);
 		$db->setQuery($query);
 
 		try
@@ -710,11 +712,11 @@ abstract class KunenaMessageHelper
 
 		$idlist = implode(',', $ids);
 		$query  = $db->getQuery(true);
-		$query->select('m.*, t.message')
+		$query->select($db->quoteName(array('m.*', 't.message')))
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
-			->where('m.thread IN (' . $idlist . ')')
-			->andWhere('m.hold = 0');
+			->where($db->quoteName('m.thread') . ' IN (' . $idlist . ')')
+			->andWhere($db->quoteName('m.hold') . ' = 0');
 		$db->setQuery($query);
 
 		try
@@ -750,11 +752,11 @@ abstract class KunenaMessageHelper
 		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		$query = $db->getQuery(true);
-		$query->select('ip')
+		$query->select($db->quoteName('ip'))
 			->from($db->quoteName('#__kunena_messages'))
-			->where('userid=' . $userid)
-			->group('ip')
-			->order('time DESC');
+			->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
+			->group($db->quoteName('ip'))
+			->order($db->quoteName('time') . ' DESC');
 		$query->setLimit(1);
 		$db->setQuery($query);
 

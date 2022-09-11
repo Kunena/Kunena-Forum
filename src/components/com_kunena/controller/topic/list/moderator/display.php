@@ -87,10 +87,20 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 
 		$categories = KunenaForumCategoryHelper::getCategories($categoryIds, $reverse);
 
+		$threadsId = KunenaForumMessageHelper::getMessagesFromUsers(array_keys($access->getModerators() + $access->getAdmins()));
+		$threadSearch = [];
+
+		foreach($threadsId as $thread)
+		{
+			$threadSearch[] = $thread->thread;
+		}
+
+		$threadSearch = implode(',', $threadSearch);
+
 		$finder = new KunenaForumTopicFinder;
-		$finder
+		$this->topics = $finder
 			->filterByCategories($categories)
-			->filterAnsweredBy(array_keys($access->getModerators() + $access->getAdmins()), true)
+			->filterTopicNotIn($threadSearch)
 			->filterByMoved(false)
 			->where('locked', '=', 0);
 
@@ -100,12 +110,6 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 		{
 			$this->pagination->setUri($this->moreUri);
 		}
-
-		$this->topics = $finder
-			->order('last_post_time', -1)
-			->start($this->pagination->limitstart)
-			->limit($this->pagination->limit)
-			->find();
 
 		if ($this->topics)
 		{

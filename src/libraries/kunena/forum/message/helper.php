@@ -11,6 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\User\User;
 
 /**
  * Kunena Forum Message Helper Class
@@ -665,5 +666,65 @@ abstract class KunenaForumMessageHelper
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Get the messages from users given
+	 *
+	 * @param   array  $users
+	 *
+	 * @return object
+	 *
+	 * @since   Kunena 6.0
+	 *
+	 * @throws \Exception
+	 */
+	public static function getMessagesFromUsers(array $users)
+	{
+		$list = [];
+
+		foreach ($users as $user)
+		{
+			if ($user instanceof KunenaUser)
+			{
+				$list[] = (int) $user->userid;
+			}
+			elseif ($user instanceof User)
+			{
+				$list[] = (int) $user->id;
+			}
+			else
+			{
+				$list[] = (int) $user;
+			}
+		}
+
+		if (empty($list))
+		{
+			return;
+		}
+
+		$userlist = implode(',', $list);
+
+		$db = Factory::getContainer()->get('DatabaseDriver');
+
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName('thread'))
+			->from($db->quoteName('#__kunena_messages'))
+			->where($db->quoteName('userid') . ' IN (' . $userlist . ')')
+			->group($db->quoteName('thread'));
+
+		$db->setQuery($query);
+
+		try
+		{
+			$threads = $db->loadObjectList();
+		}
+		catch (JDatabaseExceptionExecuting $e)
+		{
+			KunenaError::displayDatabaseError($e);
+		}
+
+		return $threads;
 	}
 }

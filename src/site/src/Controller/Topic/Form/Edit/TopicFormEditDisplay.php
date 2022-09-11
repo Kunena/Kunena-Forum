@@ -194,6 +194,13 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
 		$this->selectcatlist = false;
 
+		$this->UserCanPostImage = true;
+
+		if ($this->config->new_users_prevent_post_url_images && $this->me->posts < $this->config->minimal_user_posts_add_url_image)
+		{
+			$this->UserCanPostImage = false;
+		}
+
 		/** @var HtmlDocument $doc */
 		$this->doc = Factory::getApplication()->getDocument();
 		$this->wa  = $this->doc->getWebAssetManager();

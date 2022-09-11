@@ -386,7 +386,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 							</div>
 						<?php endif; ?>
 
-						<?php if ($this->allowedExtensions)
+						<?php if ($this->allowedExtensions && $this->UserCanPostImage)
 							:
 							?>
 							<div class="control-group krow<?php echo 1 + $this->k ^= 1; ?>" id="kpost-attachments">

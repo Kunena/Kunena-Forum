@@ -368,7 +368,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 			</div>
 		<?php endif; ?>
 
-		<?php if ($this->allowedExtensions) : ?>
+		<?php if ($this->allowedExtensions && $this->UserCanPostImage) : ?>
 			<h2>
 				<?php echo Text::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?>
 			</h2>

@@ -159,6 +159,13 @@ class ComponentKunenaControllerTopicFormReplyDisplay extends KunenaControllerDis
 		{
 			$this->editorType = 'ckeditor';
 		}
+
+		$this->UserCanPostImage = true;
+
+		if ($this->config->new_users_prevent_post_url_images && $this->me->posts < $this->config->minimal_user_posts_add_url_image)
+		{
+			$this->UserCanPostImage = false;
+		}
 	}
 
 	/**

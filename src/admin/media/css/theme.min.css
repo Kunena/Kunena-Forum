@@ -8449,3 +8449,13 @@ select.form-control {
 	height: 32px;
 	width: 32px;
 }
+
+#params-joomla-levelaccess_post,
+#params-joomla-levelaccess_reply,
+#pubAccess,
+#adminAccess,
+#params-joomla-groupaccess_post,
+#params-joomla-groupaccess_reply,
+#channels {
+	height: 150px !important;
+}

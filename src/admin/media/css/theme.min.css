@@ -8459,4 +8459,5 @@ select.form-control {
 #params-joomla-groupaccess_reply,
 #channels {
 	height: auto !important;
+	min-width: 20vw;
 }

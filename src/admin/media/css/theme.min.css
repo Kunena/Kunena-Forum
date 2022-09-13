@@ -8457,5 +8457,5 @@ select.form-control {
 #params-joomla-groupaccess_post,
 #params-joomla-groupaccess_reply,
 #channels {
-	height: 150px !important;
+	height: auto !important;
 }

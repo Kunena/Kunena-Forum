@@ -185,7 +185,7 @@ td, th {
 	-moz-osx-font-smoothing: grayscale
 } */
 
-::-moz-selection {
+/* ::-moz-selection {
 	background: #b3d4fc;
 	text-shadow: none
 }
@@ -193,7 +193,7 @@ td, th {
 ::selection {
 	background: #b3d4fc;
 	text-shadow: none
-}
+} */
 
 hr {
 	display: block;
@@ -8434,12 +8434,12 @@ hr {
 	text-align: center
 }
 
-select.input-medium,
+/* select.input-medium,
 select option{
 	background-color: var(--atum-bg-light);
 	color: #495057;
 	border-color: #eaeaea;
-}
+} */
 select.form-control {
 	background-color: var(--atum-bg-light);
 }
@@ -8452,6 +8452,7 @@ select.form-control {
 
 #params-joomla-levelaccess_post,
 #params-joomla-levelaccess_reply,
+#assetgroups_1,
 #pubAccess,
 #adminAccess,
 #params-joomla-groupaccess_post,

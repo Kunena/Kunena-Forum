@@ -1404,7 +1404,7 @@ class KunenaCategory extends KunenaDatabaseObject
 
 		$this->params = $registry;
 
-		// Register category if it exists
+        // Register category if it exists
 		if ($exists)
 		{
 			KunenaCategoryHelper::register($this);

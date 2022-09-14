@@ -128,7 +128,7 @@ abstract class KunenaCategoryHelper
 			$cat_instances [$id] = $kunenacategory;
 		}
 
-		// TODO: remove this by adding level into table
+        // TODO: remove this by adding level into table
 		self::buildTree($cat_instances);
 		$heap = [null];
 
@@ -237,10 +237,21 @@ abstract class KunenaCategoryHelper
 	{
 		if ($instance->exists())
 		{
-			$instance->level                  = isset(self::$_instances [$instance->parentid]) ? self::$_instances [$instance->parentid]->level + 1 : 0;
-			self::$_instances [$instance->id] = $instance;
+            if ($instance->parentid == 0)
+            {
+                $instance->level = 0;
+            } elseif (isset(self::$_instances [$instance->parentid]))
+            {
+                $instance->level = self::$_instances [$instance->parentid]->level + 1;
+            } else
+            {
+                $parentCategory = self::get($instance->parentid);
+                $instance->level = $parentCategory->level + 1;
+            }
 
-			if (!isset(self::$_tree [(int) $instance->id]))
+            self::$_instances [$instance->id] = $instance;
+
+            if (!isset(self::$_tree [(int) $instance->id]))
 			{
 				self::$_tree [$instance->id]                      = [];
 				self::$_tree [$instance->parentid][$instance->id] = &self::$_tree [$instance->id];
@@ -775,7 +786,7 @@ abstract class KunenaCategoryHelper
 	{
 		$list = [];
 
-		foreach ($parents as $parent)
+        foreach ($parents as $parent)
 		{
 			if ($parent instanceof KunenaCategory)
 			{
@@ -882,7 +893,7 @@ abstract class KunenaCategoryHelper
 			}
 		}
 
-		return $list;
+        return $list;
 	}
 
 	/**

@@ -91,7 +91,7 @@ class HtmlView extends BaseHtmlView
 		// Preprocess the list of items to find ordering divisions.
 		$ordering = [];
 
-		foreach ($this->categories as $item)
+        foreach ($this->categories as $item)
 		{
 			$ordering[$item->parentid][] = $item->id;
 		}

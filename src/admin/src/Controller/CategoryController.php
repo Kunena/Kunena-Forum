@@ -214,9 +214,9 @@ class CategoryController extends KunenaController
 			{
 				$aliases_all = explode(',', $aliasesInput);
 
-				$aliases = $this->app->input->post->getArray(array('aliases' => ''));
+				$aliases = $this->app->input->post->getArray(['aliases' => []]);
 
-				if ($aliases_all && $aliases)
+				if ($aliases_all && count($aliases['aliases']) > 1)
 				{
 					$aliases = array_diff($aliases_all, $aliases['aliases']);
 

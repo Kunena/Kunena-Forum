@@ -130,7 +130,7 @@ mklink /d %GitTarget%\plugins\kunena\comprofiler %GitSource%\src\plugins\plg_kun
 mklink /d %GitTarget%\plugins\kunena\easyprofile %GitSource%\src\plugins\plg_kunena_easyprofile
 mklink /d %GitTarget%\plugins\kunena\easysocial %GitSource%\src\plugins\plg_kunena_easysocial
 mklink /d %GitTarget%\plugins\kunena\finder %GitSource%\src\plugins\plg_kunena_finder
-mklink /d %GitTarget%\plugins\finder\kunena %GitSource%\src\plugins\plg_kunena_kunena
+mklink /d %GitTarget%\plugins\finder\kunena %GitSource%\src\plugins\plg_finder_kunena
 mklink /d %GitTarget%\plugins\kunena\gravatar %GitSource%\src\plugins\plg_kunena_gravatar
 mklink /d %GitTarget%\plugins\kunena\joomla %GitSource%\src\plugins\plg_kunena_joomla
 mklink /d %GitTarget%\plugins\kunena\kunena %GitSource%\src\plugins\plg_kunena_kunena

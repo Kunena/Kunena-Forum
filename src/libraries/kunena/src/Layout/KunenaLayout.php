@@ -15,6 +15,7 @@ namespace Kunena\Forum\Libraries\Layout;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -282,7 +283,8 @@ class KunenaLayout extends KunenaBase
 			if (strpos($class, 'hasTooltip') !== false)
 			{
 				// Tooltips will decode HTML and we don't want the HTML to be parsed
-				$title = $this->escape($title);
+                $filter = InputFilter::getInstance();
+				$title  = $filter->clean($title, 'string');
 			}
 		}
 
@@ -376,8 +378,9 @@ class KunenaLayout extends KunenaBase
 				if (strpos($class, 'hasTooltip') !== false)
 				{
 					// Tooltips will decode HTML and we don't want the HTML to be parsed
-					$title = $this->escape($title);
-				}
+                    $filter = InputFilter::getInstance();
+                    $title  = $filter->clean($title, 'string');
+                }
 			}
 		}
 
@@ -458,7 +461,8 @@ class KunenaLayout extends KunenaBase
 			if (strpos($class, 'hasTooltip') !== false)
 			{
 				// Tooltips will decode HTML and we don't want the HTML to be parsed
-				$title = $this->escape($title);
+                $filter = InputFilter::getInstance();
+				$title  = $filter->clean($title, 'string');
 			}
 		}
 

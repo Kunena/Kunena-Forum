@@ -38,7 +38,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						:
 							?>
 							<tr>
-								<td class="hidden-phone center">
+								<td class="d-none d-md-table-cell center">
 									<input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
 										   value="<?php echo $this->escape($user->id); ?>"
 										   onclick="Joomla.isChecked(this.checked);"/>
@@ -56,7 +56,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						:
 							?>
 							<tr>
-								<td class="hidden-phone center">
+								<td class="d-none d-md-table-cell center">
 									<input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
 										   value="<?php echo $this->escape($user->id); ?>"
 										   onclick="Joomla.isChecked(this.checked);"/>
@@ -74,7 +74,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 						:
 							?>
 							<tr>
-								<td class="hidden-phone center">
+								<td class="d-none d-md-table-cell center">
 									<input type="checkbox" id="cb<?php echo $sub->id; ?>" name="cid[]"
 										   value="<?php echo $this->escape($sub->id); ?>"
 										   onclick="Joomla.isChecked(this.checked);"/>

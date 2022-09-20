@@ -50,7 +50,7 @@ if (KunenaConfig::getInstance()->ratingEnabled)
 				<?php echo $this->escape($this->headerText); ?>
 
 				<?php if ($layout != 'unread') : ?>
-                    <small class="hidden-xs-down">
+                    <small class="d-none d-sm-block">
                         (<?php echo KunenaCategory::getInstance()->totalCount($this->pagination->total); ?>)
                     </small>
 				<?php endif; ?>
@@ -63,7 +63,7 @@ if (KunenaConfig::getInstance()->ratingEnabled)
                 <h2 class="filter-sel float-end"></h2>
                 <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
                       id="timeselect" name="timeselect"
-                      method="post" target="_self" class="form-inline hidden-xs-down">
+                      method="post" target="_self" class="form-inline d-none d-sm-block">
                     <?php $this->displayTimeFilter('sel'); ?>
                     <?php echo HTMLHelper::_('form.token'); ?>
                 </form>
@@ -101,16 +101,16 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics)
         <table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?> shadow-lg rounded">
             <thead>
             <tr>
-                <th scope="col" class="center hidden-xs-down">
+                <th scope="col" class="center d-none d-md-table-cell">
                     <a id="forumtop"> </a>
                     <a href="#forumbottom" rel="nofollow">
 						<?php echo KunenaIcons::arrowdown(); ?>
                     </a>
                 </th>
-                <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
-                <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
+                <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+                <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
                     / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
-                <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+                <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
 
 				<?php if (!empty($this->actions)) : ?>
                     <th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/>
@@ -120,7 +120,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics)
             </thead>
             <tfoot>
             <tr>
-                <th scope="col" class="center hidden-xs-down">
+                <th scope="col" class="center d-none d-md-table-cell">
                     <a id="forumbottom"> </a>
                     <a href="#forumtop" rel="nofollow">
                         <span class="dropdown-divider"></span>
@@ -128,7 +128,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics)
                     </a>
                 </th>
 				<?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
-                    <th scope="col" class="hidden-xs-down">
+                    <th scope="col" class="d-none d-md-table-cell">
                         <div class="form-group">
                             <div class="input-group" role="group">
 								<?php if (!empty($this->topics) && !empty($this->moreUri))

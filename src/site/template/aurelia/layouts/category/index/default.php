@@ -105,7 +105,7 @@ foreach ($this->sections as $section) :
 				<?php else : ?>
 					<?php if (!empty($this->categories[$section->id])) : ?>
                         <tr>
-                            <td colspan="1">
+                            <td colspan="1" class="d-none d-md-table-cell">
                                 <div class="p-2"></div>
                             </td>
                             <td colspan="7">
@@ -120,7 +120,7 @@ foreach ($this->sections as $section) :
 					foreach ($this->categories[$section->id] as $category) : ?>
                         <tr class="category<?php echo $this->escape($category->class_sfx); ?>"
                             id="category<?php echo $category->id; ?>">
-                            <td colspan="1" id="kcat-icon">
+                            <td colspan="1" id="kcat-icon" class="d-none d-md-table-cell">
 								<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '', null, true, false); ?>
                             </td>
                             <td colspan="6">

@@ -97,14 +97,14 @@ class KunenaAdminTemplate
 		{
 			$limit = 'limitstart.value=' . (int) $item->base;
 
-			return '<li class="page-item hidden-sm-down"><a class="page-link" href="#" title="' . $item->text . '" onclick="document.adminForm.' . $item->prefix . $limit . ';
+			return '<li class="page-item d-none d-md-block"><a class="page-link" href="#" title="' . $item->text . '" onclick="document.adminForm.' . $item->prefix . $limit . ';
 			 Joomla.submitform();return false;">' . $display . '</a></li>';
 		}
 
 		// Check if the item is the active (or current) page.
 		if (!empty($item->active))
 		{
-			return '<li class="page-item active hidden-sm-down"><a class="page-link">' . $display . '</a></li>';
+			return '<li class="page-item active d-none d-md-block"><a class="page-link">' . $display . '</a></li>';
 		}
 
 		// Doesn't match any other condition, render disabled item.

@@ -34,7 +34,7 @@ $wa->useScript('multiselect');
 					<input type="hidden" name="boxchecked" value="0"/>
 					<?php echo HTMLHelper::_('form.token'); ?>
 
-					<div class="btn-group pull-right hidden-phone">
+					<div class="btn-group pull-right d-none d-md-block">
 						<label for="limit"
 							   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 					</div>

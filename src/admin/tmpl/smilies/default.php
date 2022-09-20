@@ -94,10 +94,10 @@ $wa->useScript('multiselect');
                                                 <i class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
                                             </button>
                                         </div>
-                                        <div class="btn-group pull-right hidden-phone">
+                                        <div class="btn-group pull-right d-none d-md-block">
 											<?php echo $this->pagination->getLimitBox(); ?>
                                         </div>
-                                        <div class="btn-group pull-right hidden-phone">
+                                        <div class="btn-group pull-right d-none d-md-block">
                                             <label for="directionTable"
                                                    class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
                                             <select name="directionTable" id="directionTable" class="input-medium"
@@ -128,14 +128,14 @@ $wa->useScript('multiselect');
                                                 class="center"><?php echo Text::_('COM_KUNENA_EMOTICON'); ?></th>
                                             <th width="8%"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->list->Direction, $this->list->Ordering); ?></th>
                                             <th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->list->Direction, $this->list->Ordering); ?></th>
-                                            <th width="1%" class="nowrap center hidden-phone">
+                                            <th width="1%" class="nowrap center d-none d-md-table-cell">
 												<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering); ?>
                                             </th>
                                         </tr>
                                         <tr>
-                                            <td class="hidden-phone center">
+                                            <td class="d-none d-md-table-cell center">
                                             </td>
-                                            <td class="hidden-phone center">
+                                            <td class="d-none d-md-table-cell center">
                                             </td>
                                             <td class="nowrap center">
                                                 <label for="filter_code"
@@ -158,7 +158,7 @@ $wa->useScript('multiselect');
                                                        value="<?php echo $this->filter->Location; ?>"
                                                        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
                                             </td>
-                                            <td class="hidden-phone center">
+                                            <td class="d-none d-md-table-cell center">
                                             </td>
                                         </tr>
                                         </thead>
@@ -179,12 +179,12 @@ $wa->useScript('multiselect');
 												:
 												?>
                                                 <tr>
-                                                    <td class="hidden-phone center">
+                                                    <td class="d-none d-md-table-cell center">
                                                         <input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
                                                                value="<?php echo $this->escape($row->id); ?>"
                                                                onclick="Joomla.isChecked(this.checked);"/>
                                                     </td>
-                                                    <td class="hidden-phone center">
+                                                    <td class="d-none d-md-table-cell center">
                                                         <a href="#edit"
                                                            onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','smiley.edit')">
                                                             <img loading=lazy
@@ -192,7 +192,7 @@ $wa->useScript('multiselect');
                                                                  alt="<?php echo $this->escape($row->location); ?>"/>
                                                         </a>
                                                     </td>
-                                                    <td class="hidden-phone">
+                                                    <td class="d-none d-md-table-cell">
 														<?php echo $this->escape($row->code); ?>
                                                     </td>
                                                     <td>

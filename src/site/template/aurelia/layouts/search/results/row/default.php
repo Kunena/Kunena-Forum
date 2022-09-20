@@ -42,7 +42,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
 	</div>
 
 	<div class="col-md-10">
-		<small class="text-muted float-end hidden-phone"
+		<small class="text-muted float-end d-none d-md-block"
 		       style="margin-top:-5px;"> <?php echo KunenaIcons::clock(); ?> <?php echo $message->getTime()->toSpan(); ?><?php if ($message->modified_time)
 				:
 				?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan();

@@ -93,10 +93,10 @@ $wa->useScript('multiselect');
                                                 <i class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
                                             </button>
                                         </div>
-                                        <div class="btn-group pull-right hidden-phone">
+                                        <div class="btn-group pull-right d-none d-md-block">
 											<?php echo $this->pagination->getLimitBox(); ?>
                                         </div>
-                                        <div class="btn-group pull-right hidden-phone">
+                                        <div class="btn-group pull-right d-none d-md-block">
                                             <label for="directionTable"
                                                    class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
                                             <select name="directionTable" id="directionTable" class="input-medium"
@@ -136,14 +136,14 @@ $wa->useScript('multiselect');
                                             <th width="10%" class="nowrap center">
 												<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->list->Direction, $this->list->Ordering); ?>
                                             </th>
-                                            <th width="1%" class="nowrap center hidden-phone">
+                                            <th width="1%" class="nowrap center d-none d-md-table-cell">
 												<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering); ?>
                                             </th>
                                         </tr>
                                         <tr>
-                                            <td class="hidden-phone">
+                                            <td class="d-none d-md-table-cell">
                                             </td>
-                                            <td class="hidden-phone">
+                                            <td class="d-none d-md-table-cell">
                                             </td>
                                             <td class="nowrap">
                                                 <label for="filterTitle"
@@ -175,7 +175,7 @@ $wa->useScript('multiselect');
                                                        value="<?php echo $this->filter->MinPostCount; ?>"
                                                        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
                                             </td>
-                                            <td class="hidden-phone">
+                                            <td class="d-none d-md-table-cell">
                                             </td>
                                         </tr>
                                         </thead>

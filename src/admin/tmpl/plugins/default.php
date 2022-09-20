@@ -61,12 +61,12 @@ if ($saveOrder)
                                         class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
                             </button>
                         </div>
-                        <div class="btn-group pull-right hidden-phone">
+                        <div class="btn-group pull-right d-none d-md-block">
                             <label for="limit"
                                    class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 							<?php echo $this->pagination->getLimitBox(); ?>
                         </div>
-                        <div class="btn-group pull-right hidden-phone">
+                        <div class="btn-group pull-right d-none d-md-block">
                             <label for="directionTable"
                                    class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
                             <select name="directionTable" id="directionTable" class="input-medium"
@@ -88,7 +88,7 @@ if ($saveOrder)
                     <table class="table table-striped" id="articleList">
                         <thead>
                         <tr>
-                            <th width="1%" class="hidden-phone">
+                            <th width="1%" class="d-none d-md-table-cell">
                                 <input type="checkbox" name="checkall-toggle" value=""
                                        title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>"
                                        onclick="Joomla.checkAll(this)"/>
@@ -99,18 +99,18 @@ if ($saveOrder)
                             <th class="title">
 								<?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_NAME_HEADING', 'name', $this->list->Direction, $this->list->Ordering); ?>
                             </th>
-                            <th width="15%" class="nowrap hidden-phone">
+                            <th width="15%" class="nowrap d-none d-md-table-cell">
 								<?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_ELEMENT_HEADING', 'element', $this->list->Direction, $this->list->Ordering); ?>
                             </th>
-                            <th width="10%" class="hidden-phone center">
+                            <th width="10%" class="d-none d-md-table-cell center">
 								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access', $this->list->Direction, $this->list->Ordering); ?>
                             </th>
-                            <th width="1%" class="nowrap center hidden-phone">
+                            <th width="1%" class="nowrap center d-none d-md-table-cell">
 								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'extension_id', $this->list->Direction, $this->list->Ordering); ?>
                             </th>
                         </tr>
                         <tr>
-                            <td class="hidden-phone">
+                            <td class="d-none d-md-table-cell">
                             </td>
                             <td class="nowrap center">
                                 <label for="filter_enabled"
@@ -152,7 +152,7 @@ if ($saveOrder)
 									<?php echo HTMLHelper::_('select.options', HTMLHelper::_('access.assetgroups'), 'value', 'text', $this->filter->Access, true); ?>
                                 </select>
                             </td>
-                            <td class="nowrap center hidden-phone">
+                            <td class="nowrap center d-none d-md-table-cell">
                             </td>
                         </tr>
                         </thead>
@@ -174,7 +174,7 @@ if ($saveOrder)
 								$canChange  = $this->user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
 								?>
                                 <tr>
-                                    <td class="center hidden-phone">
+                                    <td class="center d-none d-md-table-cell">
 										<?php echo HTMLHelper::_('grid.id', $i, $item->extension_id); ?>
                                     </td>
                                     <td class="center">
@@ -218,13 +218,13 @@ if ($saveOrder)
 											<?php echo $item->name; ?>
 										<?php endif; ?>
                                     </td>
-                                    <td class="nowrap small hidden-phone">
+                                    <td class="nowrap small d-none d-md-table-cell">
 										<?php echo $this->escape($item->element); ?>
                                     </td>
-                                    <td class="small hidden-phone center">
+                                    <td class="small d-none d-md-table-cell center">
 										<?php echo $this->escape($item->access_level); ?>
                                     </td>
-                                    <td class="center hidden-phone">
+                                    <td class="center d-none d-md-table-cell">
 										<?php echo (int) $item->extension_id; ?>
                                     </td>
                                 </tr>

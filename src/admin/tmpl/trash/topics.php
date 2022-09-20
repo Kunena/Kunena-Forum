@@ -66,12 +66,12 @@ $wa->useScript('multiselect');
 											class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 								</button>
 							</div>
-							<div class="btn-group pull-right hidden-phone">
+							<div class="btn-group pull-right d-none d-md-block">
 								<label for="limit"
 									   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 								<?php echo $this->pagination->getLimitBox(); ?>
 							</div>
-							<div class="btn-group pull-right hidden-phone">
+							<div class="btn-group pull-right d-none d-md-block">
 								<label for="directionTable"
 									   class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
 								<select name="directionTable" id="directionTable" class="input-medium"
@@ -118,11 +118,11 @@ $wa->useScript('multiselect');
 								</th>
 							</tr>
 							<tr>
-								<td class="hidden-phone">
+								<td class="d-none d-md-table-cell">
 								</td>
-								<td class="hidden-phone">
+								<td class="d-none d-md-table-cell">
 								</td>
-								<td class="hidden-phone">
+								<td class="d-none d-md-table-cell">
 									<label for="filterTitle"
 										   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 									<input class="input-block-level input-filter form-control" type="text"
@@ -132,7 +132,7 @@ $wa->useScript('multiselect');
 										   value="<?php echo $this->filterTitle; ?>"
 										   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 								</td>
-								<td class="hidden-phone">
+								<td class="d-none d-md-table-cell">
 									<label for="filter_category"
 										   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
 									<input class="input-block-level input-filter form-control" type="text"

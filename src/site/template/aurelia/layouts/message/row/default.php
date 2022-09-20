@@ -40,14 +40,14 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
 	if ($topic->unread)
 		:
 		?>
-        <th scope="row" class="hidden-xs-down topic-item-unread">
+        <th scope="row" class="d-none d-md-table-cell topic-item-unread">
 			<?php echo $this->getTopicLink($topic, 'unread', $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, true); ?>
         </th>
 	<?php else
 
 		:
 		?>
-        <th scope="row" class="hidden-xs-down">
+        <th scope="row" class="d-none d-md-table-cell">
 			<?php echo $this->getTopicLink($topic, $this->message, $topic->getIcon($topic->getCategory()->iconset), '', null, $category, true, false); ?>
         </th>
 	<?php endif; ?>
@@ -151,14 +151,14 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
         </div>
     </td>
 
-    <td class="hidden-xs-down">
+    <td class="d-none d-md-table-cell">
         <div class="replies"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>:<span
                     class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
         <div class="views"><?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>:<span
                     class="viewsnum"><?php echo $this->formatLargeNumber($topic->hits); ?></span></div>
     </td>
 
-    <td class="hidden-xs-down">
+    <td class="d-none d-md-table-cell">
         <div class="row">
 			<?php if ($config->avatarOnCategory)
 			:

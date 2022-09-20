@@ -69,12 +69,12 @@ if ($saveOrder && !empty($this->items))
                                         class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
                             </button>
                         </div>
-                        <div class="btn-group pull-right hidden-phone">
+                        <div class="btn-group pull-right d-none d-md-block">
                             <label for="limit"
                                    class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 							<?php echo $this->pagination->getLimitBox(); ?>
                         </div>
-                        <div class="btn-group pull-right hidden-phone">
+                        <div class="btn-group pull-right d-none d-md-block">
                             <label for="directionTable"
                                    class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
                             <select name="directionTable" id="directionTable" class="form-select input-medium"
@@ -105,10 +105,10 @@ if ($saveOrder && !empty($this->items))
                     <table class="table table-striped" id="categoryList">
                         <thead>
                         <tr>
-                            <th width="1%" class="hidden-phone">
+                            <th width="1%" class="d-none d-md-table-cell">
                                 <?php echo HTMLHelper::_('grid.checkall'); ?>
                             </th>
-                            <th width="1%" class="nowrap center hidden-phone">
+                            <th width="1%" class="nowrap center d-none d-md-block">
 								<?php echo HTMLHelper::_('searchtools.sort', '', 'a.lft', $this->list->Direction, $this->list->Ordering, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-sort'); ?>
                             </th>
                             <th width="5%" class="nowrap center">
@@ -120,7 +120,7 @@ if ($saveOrder && !empty($this->items))
                             <th width="51%" class="nowrap">
 								<?php echo HTMLHelper::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->list->Direction, $this->list->Ordering); ?>
                             </th>
-                            <th width="20%" class="nowrap center hidden-phone">
+                            <th width="20%" class="nowrap center d-none d-md-block">
 								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->list->Direction, $this->list->Ordering); ?>
                             </th>
                             <th width="5%" class="nowrap center">
@@ -135,14 +135,14 @@ if ($saveOrder && !empty($this->items))
                             <th width="5%" class="nowrap center">
 								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->list->Direction, $this->list->Ordering); ?>
                             </th>
-                            <th width="1%" class="nowrap center hidden-phone">
+                            <th width="1%" class="nowrap center d-none d-md-block">
 								<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->list->Direction, $this->list->Ordering); ?>
                             </th>
                         </tr>
                         <tr>
-                            <td class="hidden-phone">
+                            <td class="d-none d-md-table-cell">
                             </td>
-                            <td class="hidden-phone">
+                            <td class="d-none d-md-table-cell">
                             </td>
                             <td class="nowrap center">
                                 <label for="filter_published"
@@ -166,7 +166,7 @@ if ($saveOrder && !empty($this->items))
                                        value="<?php echo $this->filter->Title; ?>"
                                        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
                             </td>
-                            <td class="nowrap center hidden-phone">
+                            <td class="nowrap center d-none d-md-table-cell">
                                 <label for="filterAccess"
                                        class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
                                 <select name="filterAccess" id="filterAccess"
@@ -216,7 +216,7 @@ if ($saveOrder && !empty($this->items))
 									<?php echo HTMLHelper::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filter->Anonymous); ?>
                                 </select>
                             </td>
-                            <td class="nowrap center hidden-phone">
+                            <td class="nowrap center d-none d-md-table-cell">
                             </td>
                         </tr>
                         </thead>
@@ -307,13 +307,13 @@ if ($saveOrder && !empty($this->items))
 											<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
                                         </small>
                                     </td>
-                                    <td class="center hidden-phone">
+                                    <td class="center d-none d-md-table-cell">
                                         <span><?php echo $item->accessname; ?></span>
                                         <small>
 											<?php echo Text::sprintf('(Access: %s)', $this->escape($item->accesstype)); ?>
                                         </small>
                                     </td>
-                                    <td class="center hidden-phone">
+                                    <td class="center d-none d-md-table-cell">
                                         <a class="btn btn-micro <?php echo $item->locked ? 'active' : ''; ?>"
                                            href="javascript: void(0);"
                                            onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->locked ? 'un' : '') . 'lock'; ?>')">
@@ -323,28 +323,28 @@ if ($saveOrder && !empty($this->items))
 									<?php if ($item->isSection())
 										:
 										?>
-                                        <td class="center hidden-phone" colspan="3">
+                                        <td class="center d-none d-md-table-cell" colspan="3">
 											<?php echo Text::_('COM_KUNENA_SECTION'); ?>
                                         </td>
 									<?php else
 
 										:
 										?>
-                                        <td class="center hidden-phone">
+                                        <td class="center d-none d-md-table-cell">
                                             <a class="btn btn-micro <?php echo $item->review ? 'active' : ''; ?>"
                                                href="javascript: void(0);"
                                                onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->review ? 'un' : '') . 'review'; ?>')">
 												<?php echo $item->review == 1 ? $img_yes : $img_no; ?>
                                             </a>
                                         </td>
-                                        <td class="center hidden-phone">
+                                        <td class="center d-none d-md-table-cell">
                                             <a class="btn btn-micro <?php echo $item->allowPolls ? 'active' : ''; ?>"
                                                href="javascript: void(0);"
                                                onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->allowPolls ? 'deny' : 'allow') . '_polls'; ?>')">
 												<?php echo $item->allowPolls == 1 ? $img_yes : $img_no; ?>
                                             </a>
                                         </td>
-                                        <td class="center hidden-phone">
+                                        <td class="center d-none d-md-table-cell">
                                             <a class="btn btn-micro <?php echo $item->allowAnonymous ? 'active' : ''; ?>"
                                                href="javascript: void(0);"
                                                onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo($item->allowAnonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
@@ -353,7 +353,7 @@ if ($saveOrder && !empty($this->items))
                                         </td>
 									<?php endif; ?>
 
-                                    <td class="center hidden-phone">
+                                    <td class="center d-none d-md-table-cell">
 										<?php echo (int) $item->id; ?>
                                     </td>
                                 </tr>

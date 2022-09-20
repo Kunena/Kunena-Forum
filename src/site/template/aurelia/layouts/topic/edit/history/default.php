@@ -56,7 +56,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
                 </ul>
             </div>
             <div class="col-md-10">
-                <small class="text-muted float-end hidden-xs-down" style="margin-top:-5px;">
+                <small class="text-muted float-end d-none d-sm-block" style="margin-top:-5px;">
 					<?php echo KunenaIcons::clock(); ?><?php echo $this->message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
                 </small>
                 <div class="badger-left badger-info khistory"

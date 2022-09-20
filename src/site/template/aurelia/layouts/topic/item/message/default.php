@@ -19,7 +19,7 @@ $quick        = $this->ktemplate->params->get('quick');
 
 if ($direction === "left") : ?>
     <div class="row message">
-        <div class="col-md-2 shadow rounded hidden-xs-down">
+        <div class="col-md-2 shadow rounded d-none d-sm-block">
 			<?php
 			echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')
 				->set('user', $this->profile)
@@ -51,7 +51,7 @@ if ($direction === "left") : ?>
 					->set('captchaEnabled', $this->captchaEnabled)->setLayout('quickReply'); ?>
 			<?php endif; ?>
         </div>
-        <div class="col-md-2 shadow rounded hidden-xs-down">
+        <div class="col-md-2 shadow rounded d-none d-sm-block">
 			<?php
 			echo $sideProfile ? $sideProfile : $this->subLayout('User/Profile')
 				->set('user', $this->profile)

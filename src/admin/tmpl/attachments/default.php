@@ -68,12 +68,12 @@ Joomla.tableOrdering(order, dirn, "");
 										class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
 							</button>
 						</div>
-						<div class="btn-group pull-right hidden-phone">
+						<div class="btn-group pull-right d-none d-md-block">
 							<label for="limit"
 								   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 							<?php echo $this->pagination->getLimitBox(); ?>
 						</div>
-						<div class="btn-group pull-right hidden-phone">
+						<div class="btn-group pull-right d-none d-md-block">
 							<label for="directionTable"
 								   class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
 							<select name="directionTable" id="directionTable" class="input-medium"
@@ -108,7 +108,7 @@ Joomla.tableOrdering(order, dirn, "");
 							<th><?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering); ?></th>
 						</tr>
 						<tr>
-							<td class="hidden-phone">
+							<td class="d-none d-md-table-cell">
 							</td>
 							<td class="nowrap">
 								<label for="filterTitle"
@@ -166,7 +166,7 @@ Joomla.tableOrdering(order, dirn, "");
 									   value="<?php echo $this->filter->Post; ?>"
 									   title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
 							</td>
-							<td class="nowrap center hidden-phone">
+							<td class="nowrap center d-none d-md-table-cell">
 							</td>
 						</tr>
 						</thead>

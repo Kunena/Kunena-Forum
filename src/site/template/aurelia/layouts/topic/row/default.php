@@ -59,11 +59,11 @@ if (!empty($this->spacing)) : ?>
 
 <tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
 	<?php if ($topic->unread) : ?>
-        <th scope="row" class="hidden-xs-down center topic-item-unread">
+        <th scope="row" class="d-none d-md-table-cell center topic-item-unread">
 			<?php echo $this->getTopicLink($topic, 'unread', KunenaTemplate::getInstance()->getTopicIcon($topic), '', null, $category, true, true); ?>
         </th>
 	<?php else : ?>
-        <th scope="row" class="center hidden-xs-down">
+        <th scope="row" class="center d-none d-md-table-cell">
 			<?php echo $this->getTopicLink($topic, null, KunenaTemplate::getInstance()->getTopicIcon($topic), '', null, $category, true, false); ?>
         </th>
 	<?php endif; ?>
@@ -145,14 +145,14 @@ if (!empty($this->spacing)) : ?>
         </div>
     </td>
 
-    <td class="hidden-xs-down">
+    <td class="d-none d-md-table-cell">
         <div class="replies"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>:<span
                     class="repliesnum"><?php echo $this->formatLargeNumber($topic->getReplies()); ?></span></div>
         <div class="views"><?php echo Text::_('COM_KUNENA_GEN_HITS'); ?>:<span
                     class="viewsnum"><?php echo $this->formatLargeNumber($topic->hits); ?></span></div>
     </td>
 
-    <td class="hidden-xs-down">
+    <td class="d-none d-md-table-cell">
         <div class="row">
 			<?php if ($config->avatarOnCategory) : ?>
             <div class="col-xs-6 col-md-3">

@@ -30,7 +30,7 @@ elseif ($count == 1 && empty($display))
 $last = 0;
 ?>
 
-<nav class="hidden-xs-down">
+<nav class="d-none d-sm-block">
 	<ul class="pagination ms-0">
 		<?php
 		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);

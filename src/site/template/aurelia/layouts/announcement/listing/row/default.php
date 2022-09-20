@@ -23,7 +23,7 @@ $announcement = $this->announcement;
 ?>
 
 <tr>
-    <td class="nowrap hidden-xs-down">
+    <td class="nowrap d-none d-md-table-cell">
 		<?php echo $announcement->displayField('created', 'date_today'); ?>
     </td>
 
@@ -91,7 +91,7 @@ $announcement = $this->announcement;
 		<?php endif; ?>
     </td>
 
-    <td class="center hidden-xs-down">
+    <td class="center d-none d-md-table-cell">
 		<?php echo $announcement->displayField('id'); ?>
     </td>
 

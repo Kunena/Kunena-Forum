@@ -28,7 +28,7 @@ $avatar = $this->config->avatarOnCategory ? $topic->getAuthor()->getAvatarImage(
 	<td>
 		<h3>
 			<?php echo $this->getCategoryLink($this->category); ?>
-			<small class="hidden-xs-down">
+			<small class="d-none d-sm-block">
 				(<?php echo Text::sprintf('COM_KUNENA_X_TOPICS_MORE', $this->formatLargeNumber($this->category->getTopics())); ?>
 				)
 			</small>
@@ -51,7 +51,7 @@ $avatar = $this->config->avatarOnCategory ? $topic->getAuthor()->getAvatarImage(
 		:
 		?>
 		<td class="center">
-		<span class="hidden-xs-down">
+		<span class="d-none d-sm-block">
 			<?php echo $topic->getLastPostAuthor()->getLink($avatar); ?>
 		</span>
 		</td>

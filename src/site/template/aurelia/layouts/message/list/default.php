@@ -30,7 +30,7 @@ $view    = Factory::getApplication()->input->getWord('view');
         <div class="float-start">
             <h1>
 				<?php echo $this->escape($this->headerText); ?>
-                <small class="hidden-xs-down">
+                <small class="d-none d-sm-block">
                     (<?php echo Text::sprintf($this->messagemore, $this->formatLargeNumber($this->pagination->total)); ?>
                     )
                 </small>
@@ -47,7 +47,7 @@ $view    = Factory::getApplication()->input->getWord('view');
                 <h2 class="filter-time float-end" id="filter-time"></h2>
                 <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
                       id="timeselect" name="timeselect"
-                      method="post" target="_self" class="form-inline hidden-xs-down">
+                      method="post" target="_self" class="form-inline d-none d-sm-block">
                     <?php $this->displayTimeFilter('sel'); ?>
                     <?php echo HTMLHelper::_('form.token'); ?>
                 </form>
@@ -79,16 +79,16 @@ $view    = Factory::getApplication()->input->getWord('view');
                 <th scope="row">&nbsp;</th>
             </tr>
 		<?php else : ?>
-            <th scope="col" class="center hidden-xs-down">
+            <th scope="col" class="center d-none d-md-table-cell">
                 <a id="forumtop"> </a>
                 <a href="#forumbottom" rel="nofollow">
 					<?php echo KunenaIcons::arrowdown(); ?>
                 </a>
             </th>
-            <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
-            <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
+            <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+            <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
                 / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
-            <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+            <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
 
 			<?php if (!empty($this->actions)) : ?>
                 <th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/></th>
@@ -99,7 +99,7 @@ $view    = Factory::getApplication()->input->getWord('view');
         <tfoot>
 		<?php if (!empty($this->messages)) : ?>
             <tr>
-                <th scope="col" class="center hidden-xs-down">
+                <th scope="col" class="center d-none d-md-table-cell">
                     <a id="forumbottom"> </a>
                     <a href="#forumtop" rel="nofollow">
                         <span class="dropdown-divider"></span>
@@ -107,7 +107,7 @@ $view    = Factory::getApplication()->input->getWord('view');
                     </a>
                 </th>
 				<?php if (!empty($this->actions)) : ?>
-                    <th scope="col" class="hidden-xs-down">
+                    <th scope="col" class="d-none d-md-table-cell">
                         <div class="form-group">
                             <div class="input-group" role="group">
 								<?php if (!empty($this->moreUri))

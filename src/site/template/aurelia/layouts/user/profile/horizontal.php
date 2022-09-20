@@ -60,7 +60,7 @@ if ($this->config->showKarma)
 				<?php if (isset($this->topic_starter) && $this->topic_starter)
 				:
 				?>
-				<span class="hidden-sm hidden-md topic-starter"><?php echo Text::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
+				<span class="d-none d-lg-block topic-starter"><?php echo Text::_('COM_KUNENA_TOPIC_AUTHOR') ?></span>
 				<?php endif; ?>
 
 				<?php // If (!$this->topic_starter && $user->isModerator()) :

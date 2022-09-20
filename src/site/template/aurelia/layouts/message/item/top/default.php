@@ -179,7 +179,7 @@ endif; ?>
 		$dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormat') . ' ';
 	}
 	?>
-    <div class="alert alert-info hidden-xs-down" <?php echo $datehover ?>>
+    <div class="alert alert-info d-none d-sm-block" <?php echo $datehover ?>>
 		<?php echo Text::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateshown, $message->getModifier()->getLink(null, null, '', '', null, $this->category->id)); ?>
 		<?php if ($message->modified_reason)
 		{

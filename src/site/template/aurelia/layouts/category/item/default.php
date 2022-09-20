@@ -70,16 +70,16 @@ $this->addStyleSheet('rating.css');
         <table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
             <thead>
             <tr>
-                <th scope="col" class="center hidden-xs-down">
+                <th scope="col" class="center d-none d-md-table-cell">
                     <a id="forumtop"> </a>
                     <a href="#forumbottom" rel="nofollow">
 						<?php echo KunenaIcons::arrowdown(); ?>
                     </a>
                 </th>
-                <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
-                <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
+                <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+                <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
                     / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
-                <th scope="col" class="hidden-xs-down"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+                <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
 
 				<?php if (!empty($this->topicActions)) : ?>
                     <th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/>
@@ -107,14 +107,14 @@ $this->addStyleSheet('rating.css');
             <tfoot>
 			<?php if ($this->topics) : ?>
                 <tr>
-                    <th scope="col" class="center hidden-xs-down">
+                    <th scope="col" class="center d-none d-md-table-cell">
                         <a id="forumbottom"> </a>
                         <a href="#forumtop" rel="nofollow">
                             <span class="dropdown-divider"></span>
 							<?php echo KunenaIcons::arrowup(); ?>
                         </a>
                     </th>
-                    <th scope="col" class="hidden-xs-down">
+                    <th scope="col" class="d-none d-md-table-cell">
                         <div class="form-group">
                             <div class="input-group" role="group">
 								<?php if (!empty($this->moreUri))

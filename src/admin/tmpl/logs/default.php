@@ -67,12 +67,12 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                         class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
                             </button>
                         </div>
-                        <div class="btn-group pull-right hidden-phone">
+                        <div class="btn-group pull-right d-none d-md-block">
                             <label for="limit"
                                    class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 							<?php echo $this->pagination->getLimitBox(); ?>
                         </div>
-                        <div class="btn-group pull-right hidden-phone">
+                        <div class="btn-group pull-right d-none d-md-block">
                             <label for="directionTable"
                                    class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
                             <select name="directionTable" id="directionTable" class="input-medium"

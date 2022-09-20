@@ -303,7 +303,7 @@ jQuery(function($) {
                                                     <thead>
                                                     <tr>
 														<?php /*
-															<th width="1%" class="hidden-phone">
+															<th width="1%" class="d-none d-md-table-cell">
 																<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
 															</th>
 															*/ ?>
@@ -342,7 +342,7 @@ jQuery(function($) {
                                                     <thead>
                                                     <tr>
 														<?php /*
-															<th width="1%" class="hidden-phone">
+															<th width="1%" class="d-none d-md-table-cell">
 																<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
 															</th>
 															*/ ?>

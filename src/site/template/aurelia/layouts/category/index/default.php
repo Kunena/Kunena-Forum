@@ -153,7 +153,7 @@ foreach ($this->sections as $section) :
                                 </div>
 
 								<?php if (!empty($category->description)) : ?>
-                                    <div class="hidden-xs-down header-desc"><?php echo $category->displayField('description'); ?></div>
+                                    <div class="d-none d-sm-block header-desc"><?php echo $category->displayField('description'); ?></div>
 								<?php endif; ?>
 
 								<?php
@@ -230,7 +230,7 @@ foreach ($this->sections as $section) :
 								$avatar = $this->config->avatarOnCategory ? $author->getAvatarImage($this->templateParams->get('avatarType'), 'thumb') : null;
 								?>
 
-                                <td colspan="5" class="hidden-xs-down">
+                                <td colspan="5" class="d-none d-md-table-cell">
                                     <div class="row">
 										<?php if ($avatar) : ?>
                                         <div class="col-xs-6 col-md-3" id="kcat-avatar">

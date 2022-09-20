@@ -64,24 +64,24 @@ $wa->useScript('multiselect');
                             <th width="1%" class="nowrap center"><input type="checkbox" name="toggle" value=""
                                                                         onclick="Joomla.checkAll(this)"/></th>
                             <th><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
-                            <th class="hidden-phone"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+                            <th class="d-none d-md-table-cell"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
                             <th width="5%"
-                                class="hidden-phone"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_GEN_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+                                class="d-none d-md-table-cell"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_GEN_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
                             <th width="10%"
-                                class="nowrap hidden-phone hidden-tablet"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_A_RANKS', 'rank', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+                                class="nowrap d-none d-md-table-cell"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_A_RANKS', 'rank', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
                             <th width="5%"
-                                class="nowrap center hidden-phone hidden-tablet"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+                                class="nowrap center d-none d-lg-table-cell"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
                             <th width="5%"
-                                class="nowrap center hidden-phone"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_USRL_ENABLED', 'enabled', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+                                class="nowrap center d-none d-md-table-cell"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_USRL_ENABLED', 'enabled', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
                             <th width="5%"
-                                class="nowrap center hidden-phone"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_USRL_BANNED', 'banned', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+                                class="nowrap center d-none d-md-table-cell"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_USRL_BANNED', 'banned', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
                             <th width="5%"
-                                class="nowrap center hidden-phone hidden-tablet"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+                                class="nowrap center d-none d-lg-table-cell"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
                             <th width="1%"
                                 class="nowrap center"><?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
                         </tr>
                         <tr>
-                            <td class="hidden-phone">
+                            <td class="d-none d-md-table-cell">
                             </td>
                             <td class="nowrap">
                                 <label for="filter_username"
@@ -122,7 +122,7 @@ $wa->useScript('multiselect');
 									<?php echo HTMLHelper::_('select.options', $this->ranksOptions(), 'value', 'text', $this->filter->Rank); ?>
                                 </select>
                             </td>
-                            <td class="nowrap center hidden-phone">
+                            <td class="nowrap center d-none d-md-table-cell">
                                 <label for="filter_signature"
                                        class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></label>
                                 <select name="filter_signature" id="filter_signature"
@@ -161,7 +161,7 @@ $wa->useScript('multiselect');
 									<?php echo HTMLHelper::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filter->Moderator); ?>
                                 </select>
                             </td>
-                            <td class="nowrap center hidden-phone">
+                            <td class="nowrap center d-none d-md-table-cell">
                             </td>
                         </tr>
                         </thead>
@@ -214,12 +214,12 @@ $wa->useScript('multiselect');
                                            title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($user->name); ?>">
 											<?php echo $this->escape($user->ip); ?></a>
                                     </td>
-                                    <td class="hidden-phone hidden-tablet">
+                                    <td class="d-none d-lg-table-cell">
                                         <a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->userid); ?>"
                                            title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($user->name); ?>">
 											<?php echo $this->escape($user->getRank(0, 'title')); ?></a>
                                     </td>
-                                    <td class="center hidden-phone hidden-tablet">
+                                    <td class="center d-none d-lg-table-cell">
 										<span class="editlinktip <?php echo $user->signature ? 'hasTip' : ''; ?>"
                                               title="<?php echo $this->escape($user->signature); ?> ">
 											<?php
@@ -237,21 +237,21 @@ $wa->useScript('multiselect');
 											<?php } ?>
 										</span>
                                     </td>
-                                    <td class="center hidden-phone">
+                                    <td class="center d-none d-md-table-cell">
                                         <a class="btn btn-micro <?php echo !$user->isBlocked() ? 'active' : ''; ?>"
                                            href="javascript: void(0);"
                                            onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
 											<?php echo !$user->isBlocked() ? $img_yes : $img_no; ?>
                                         </a>
                                     </td>
-                                    <td class="center hidden-phone">
+                                    <td class="center d-none d-md-table-cell">
                                         <a class="btn btn-micro <?php echo $user->isBanned() ? 'active' : ''; ?>"
                                            href="javascript: void(0);"
                                            onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
 											<?php echo $user->isBanned() ? $img_yes : $img_no; ?>
                                         </a>
                                     </td>
-                                    <td class="center hidden-phone hidden-tablet">
+                                    <td class="center d-none d-lg-table-cell">
 										<?php if ($user->moderator)
 											:
 											?>

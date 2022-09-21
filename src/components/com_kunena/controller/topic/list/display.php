@@ -79,10 +79,10 @@ abstract class ComponentKunenaControllerTopicListDisplay extends KunenaControlle
 			KunenaUserHelper::loadUsers($userIds);
 		}
 
-		$topicIds = array_keys($this->topics);
+		$topicIds = array_keys((array) $this->topics);
 		KunenaForumTopicHelper::getUserTopics($topicIds);
 
-		$mesIds += KunenaForumTopicHelper::fetchNewStatus($this->topics);
+		$mesIds += KunenaForumTopicHelper::fetchNewStatus((array) $this->topics);
 
 		// Fetch also last post positions when user can see unapproved or deleted posts.
 		// TODO: Optimize? Take account of configuration option...

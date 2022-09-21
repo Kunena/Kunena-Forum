@@ -706,7 +706,7 @@ abstract class KunenaForumMessageHelper
 
 		$userlist = implode(',', $list);
 
-		$db = Factory::getContainer()->get('DatabaseDriver');
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('thread'))

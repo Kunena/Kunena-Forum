@@ -102,7 +102,8 @@ class ComponentKunenaControllerTopicListModeratorDisplay extends ComponentKunena
 			->filterByCategories($categories)
 			->filterTopicNotIn($threadSearch)
 			->filterByMoved(false)
-			->where('locked', '=', 0);
+			->where('locked', '=', 0)
+			->find();
 
 		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 

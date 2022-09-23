@@ -155,7 +155,16 @@ class KunenaModelTopics extends KunenaModel
 				}
 			}
 
-			if (empty($latestcategory) || in_array(0, $latestcategory))
+			if (!empty($latestcategory) && !is_array($latestcategory))
+			{
+				$latestcategory = explode(',', $latestcategory);
+			}
+			else
+			{
+				$latestcategory = array();
+			}
+
+			if (count($latestcategory) == 0)
 			{
 				$latestcategory = false;
 			}

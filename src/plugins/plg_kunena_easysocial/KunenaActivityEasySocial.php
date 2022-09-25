@@ -25,6 +25,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use Exception;
 
@@ -54,13 +55,13 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function onAfterPost(string $message): void
+	public function onAfterPost(KunenaMessage $message): void
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{
@@ -123,7 +124,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @internal  param $string
 	 *
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
@@ -133,7 +134,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @throws Exception
 	 */
-	public function onAfterReply(string $message): void
+	public function onAfterReply(KunenaMessage $message): void
 	{
 		$length = StringHelper::strlen($message->message);
 
@@ -187,7 +188,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @internal  param $string
 	 *
-	 * @param   string  $message  message
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return   array|boolean
 	 *
@@ -197,7 +198,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 	 *
 	 * @throws Exception
 	 */
-	public function getSubscribers(string $message)
+	public function getSubscribers(KunenaMessage $message)
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -241,7 +242,7 @@ class KunenaActivityEasySocial extends KunenaActivity
 		// Get all subscribers, moderators and admins who will get the email
 		$me          = Factory::getApplication()->getIdentity();
 		$acl         = KunenaAccess::getInstance();
-		$subscribers = $acl->getSubscribers($message->catid, $message->thread, $mailsubs, $mailmods, $mailadmins, $me->userid);
+		$subscribers = $acl->getSubscribers($message->catid, $message->thread, $mailsubs, $mailmods, $mailadmins, $me->id);
 
 		if (!$subscribers)
 		{
@@ -262,15 +263,15 @@ class KunenaActivityEasySocial extends KunenaActivity
 	}
 
 	/**
-	 * @param   int  $actor    actor
-	 * @param   int  $target   target
-	 * @param   int  $message  message
+	 * @param   int            $actor    actor
+	 * @param   int            $target   target
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @return  void
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function onAfterThankyou(int $actor, int $target, int $message): void
+	public function onAfterThankyou(int $actor, int $target, KunenaMessage $message): void
 	{
 		if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
 		{

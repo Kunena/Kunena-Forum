@@ -5,6 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [5.2.10-Dev]
+### Fixed
+* Warning: in_array() expects parameter 2 to be array,in topics.php
+* [#9275](https://github.com/Kunena/Kunena-Forum/issues/9275) : Menu item Moderate Topics causes an error (part 2) 
+* [#9273](https://github.com/Kunena/Kunena-Forum/issues/9273) : Menu item Moderate Topics causes error Call to undefined
+* Solved menu doesn't follow categories selected in menu
+* [#9142](https://github.com/Kunena/Kunena-Forum/issues/9142) : Port from K6.0:New users can add picture in messages or
+* [#9082](https://github.com/Kunena/Kunena-Forum/issues/9082) : Backport from K6.0:menu item Moderator Topics no topics 
+* [#9206](https://github.com/Kunena/Kunena-Forum/issues/9206) : The text email multiple recipients "_DESC" need be changed
+* RSS feed when using setting by posts
+* No topics is displayed in recent discussions page
+* For RSS time limit the setting RSS History (timelimit) isn't used
+* Missing debug part
+* Php 8.0.x empty RSS list (Part 2) 
+* Php 8.0.x empty RSS list
+* [#9126](https://github.com/Kunena/Kunena-Forum/issues/9126): CKEditor : It lacks the button for Fontsize
+
+### Changed
+* Update Ckeditor to 4.19.1
+
+### Removed
+* Remove Joomla! 3.9 allowed install
 
 ## [5.2.9]
 ### Fixed

@@ -159,7 +159,7 @@ class KunenaModelTopics extends KunenaModel
 			{
 				$latestcategory = explode(',', $latestcategory);
 			}
-			else
+			elseif (empty($latestcategory) && !is_array($latestcategory))
 			{
 				$latestcategory = array();
 			}

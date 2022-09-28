@@ -233,7 +233,7 @@ foreach ($this->sections as $section) :
 								$avatar = $this->config->avatarOnCategory ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
 								?>
 
-                                <td colspan="5" class="d-none d-md-table-cell">
+                                <td colspan="5">
                                     <div class="row">
 										<?php if ($avatar) : ?>
                                         <div class="col-xs-6 col-md-3" id="kcat-avatar">

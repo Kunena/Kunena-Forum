@@ -157,6 +157,9 @@ class KunenaBBCode extends \Nbbc\BBCode
 
 		PluginHelper::importPlugin('kunena');
 		Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
+
+        // Load Kunena Library Language file as this method can also be used outside Kunena (e.g. EasySocial)
+        Factory::getLanguage()->load('com_kunena.libraries', JPATH_ADMINISTRATOR . '/components/com_kunena');
 	}
 
 	/**
@@ -2115,7 +2118,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
 						if (!empty($article->fulltext))
 						{
-							$link = '<a href="' . $url . '" class="readon">' . Text::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE') . '</a>';
+							$link = '<a href="' . $url . '" class="readon">' . Text::_('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE') . '</a>';
 						}
 						else
 						{

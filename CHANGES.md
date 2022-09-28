@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.2.10-Dev]
+## [5.2.10]
 ### Fixed
 * Warning: in_array() expects parameter 2 to be array,in topics.php
 * [#9275](https://github.com/Kunena/Kunena-Forum/issues/9275) : Menu item Moderate Topics causes an error (part 2) 

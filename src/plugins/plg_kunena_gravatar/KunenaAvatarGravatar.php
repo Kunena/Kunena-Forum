@@ -69,7 +69,7 @@ class KunenaAvatarGravatar extends KunenaAvatar
 	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
 	{
 		$user     = KunenaFactory::getUser($user);
-		$gravatar = new Gravatar($user->email);
+		$gravatar = new Gravatar();
 		$gravatar->setAvatarSize(min($sizex, $sizey));
 		$gravatar->setDefaultImage($this->params->get("default_image", false));
 		$gravatar->setMaxRating('g');
@@ -85,6 +85,6 @@ class KunenaAvatarGravatar extends KunenaAvatar
 			$gravatar->disableSecureImages();
 		}
 
-		return $gravatar->buildGravatarURL(true);
+		return $gravatar->buildGravatarURL($user->email);
 	}
 }

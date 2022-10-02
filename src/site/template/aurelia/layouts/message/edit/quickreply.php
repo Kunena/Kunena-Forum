@@ -178,11 +178,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 							?>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="checkbox"
+                                    <input style="float: left; margin-right: 10px;" type="checkbox"
                                            id="kanonymous<?php echo $message->displayField('id'); ?>"
                                            name="anonymous"
                                            value="1"
-                                           class="kinputbox postinput form-control" <?php if ($category->postAnonymous)
+                                           <?php if ($category->postAnonymous)
 									{
 										echo 'checked="checked"';
 									} ?> />
@@ -338,11 +338,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply)
 							?>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="checkbox"
+                                    <input style="float: left; margin-right: 10px;" type="checkbox"
                                            id="kanonymous<?php echo $message->displayField('id'); ?>"
                                            name="anonymous"
                                            value="1"
-                                           class="kinputbox postinput form-control" <?php if ($category->postAnonymous)
+                                           <?php if ($category->postAnonymous)
 									{
 										echo 'checked="checked"';
 									} ?> />

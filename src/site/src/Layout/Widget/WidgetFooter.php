@@ -46,9 +46,9 @@ class WidgetFooter extends KunenaLayout
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ($config->enableRss)
+		if ($config->getValue('enableRss'))
 		{
-			$mode = $config->rssType;
+			$mode = $config->getValue('rssType');
 
 			switch ($mode)
 			{
@@ -94,7 +94,7 @@ class WidgetFooter extends KunenaLayout
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (!$config->timeToCreatePage)
+		if (!$config->getValue('timeToCreatePage'))
 		{
 			return;
 		}

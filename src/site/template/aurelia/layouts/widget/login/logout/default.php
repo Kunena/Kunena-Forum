@@ -25,12 +25,12 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 $markAllReadUrl = KunenaCategoryHelper::get()->getMarkReadUrl();
 $config         = KunenaFactory::getConfig();
-$status         = $config->userStatus;
-$config         = KunenaFactory::getTemplate()->params;
+$status         = $config->getValue('userStatus');
+$tmpParams      = KunenaFactory::getTemplate()->params;
 ?>
 
 <div class="klogout">
-	<?php if ($config->getValue('displayDropdownMenu'))
+	<?php if ($tmpParams->get('displayDropdownMenu'))
 		:
 		?>
         <ul class="nav float-end">

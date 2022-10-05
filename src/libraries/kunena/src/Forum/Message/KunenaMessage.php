@@ -1398,7 +1398,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		// Remove userid, email and ip address
 		$this->userid = 0;
 		$this->ip     = '';
-		$this->email  = '';
+		$this->email  = null;
 	}
 
 	/**

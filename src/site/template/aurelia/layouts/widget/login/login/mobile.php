@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>
 <ul class="nav float-end">
-    <li class="dropdown mobile-user">
+    <li class="dropdown mobile-user dropstart">
         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" id="klogin-mobile">
 			<?php echo KunenaIcons::user(); ?>
             <span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>

@@ -34,7 +34,7 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
 		:
 		?>
         <ul class="nav float-end">
-            <li class="dropdown mobile-user">
+            <li class="dropdown mobile-user dropstart">
                 <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">
 					<?php

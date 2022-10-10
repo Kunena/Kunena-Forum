@@ -86,6 +86,14 @@ class PlgFinderKunena extends Adapter
 	 */
 	protected $state_field = 'published';
 
+    /**
+     * The table name.
+     *
+     * @var string
+     * @since  2.5
+     */
+    protected $table = '#__kunena_messages';
+
 	/**
 	 * Method to reindex the link information for an item that has been saved.
 	 * This event is fired before the data is actually saved so we are going

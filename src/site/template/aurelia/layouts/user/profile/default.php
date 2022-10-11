@@ -27,11 +27,11 @@ $canseekarma = false;
 if ($this->config->showKarma)
 {
 	$canseekarma = $user->canSeeKarma();
-
-	$rankImage    = $user->getRank($this->category_id, 'image');
-	$rankTitle    = $user->getRank($this->category_id, 'title');
-	$personalText = $user->getPersonalText();
 }
+
+$rankImage    = $user->getRank($this->category_id, 'image');
+$rankTitle    = $user->getRank($this->category_id, 'title');
+$personalText = $user->getPersonalText();
 ?>
     <ul class="unstyled center profilebox">
         <li>

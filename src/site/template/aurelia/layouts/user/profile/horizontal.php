@@ -30,12 +30,12 @@ $canseekarma = false;
 
 if ($config->showKarma)
 {
-	$canseekarma = $user->canSeeKarma();
-
-	$rankImage    = $user->getRank($this->category_id, 'image');
-	$rankTitle    = $user->getRank($this->category_id, 'title');
-	$personalText = $user->getPersonalText();
+	$canseekarma = $user->canSeeKarma();	
 }
+
+$rankImage    = $user->getRank($this->category_id, 'image');
+$rankTitle    = $user->getRank($this->category_id, 'title');
+$personalText = $user->getPersonalText();
 ?>
 <div class="container">
 	<div class="row">

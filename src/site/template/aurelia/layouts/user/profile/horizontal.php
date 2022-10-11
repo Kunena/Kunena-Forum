@@ -30,7 +30,7 @@ $canseekarma = false;
 
 if ($config->showKarma)
 {
-	$canseekarma = $user->canSeeKarma();	
+	$canseekarma = $user->canSeeKarma();
 }
 
 $rankImage    = $user->getRank($this->category_id, 'image');

@@ -177,6 +177,11 @@
                  versionname="Internal">
             <phpfile name="6.0.2-2022-07-30_rss_timelimit_configuration_change"/>
         </version>
+        <version version="6.0.4-DEV"
+                 versiondate="2022-10-13s"
+                 versionname="Internal">
+            <query mode="silenterror">UPDATE `#__kunena_messages` SET `email` = NULL;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

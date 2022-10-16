@@ -19,17 +19,14 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>
-<ul class="nav float-end">
-    <li class="dropdown mobile-user">
-        <a href="#" class="dropdown-toggle" id="klogin-desktop" role="button" data-bs-toggle="dropdown"
-           aria-expanded="false">
+    <div class="btn-group ">
+        <button class="btn btn-light dropdown-toggle" id="klogin-desktop" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
 			<?php echo KunenaIcons::user(); ?>
             <span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>
-            <b class="caret"></b>
-        </a>
+        </button>
 
-        <div class="dropdown-menu dropdown-menu-right" id="userdropdown">
-            <form action="<?php echo KunenaRoute::current('index.php?option=com_kunena'); ?>" method="post">
+        <div class="dropdown-menu dropdown-menu-end" id="kdesktop-userdropdown">
+            <form id="kdesktop-loginform" action="<?php echo KunenaRoute::current('index.php?option=com_kunena'); ?>" method="post">
                 <input type="hidden" name="view" value="user"/>
                 <input type="hidden" name="task" value="login"/>
 				<?php echo HTMLHelper::_('form.token'); ?>
@@ -131,5 +128,4 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
             </form>
 			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_login'); ?>
         </div>
-    </li>
-</ul>
+    </div>

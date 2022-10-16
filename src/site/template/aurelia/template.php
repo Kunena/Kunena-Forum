@@ -112,6 +112,7 @@ class KunenaTemplateAurelia extends KunenaTemplate
 			HTMLHelper::_('bootstrap.tooltip');
 			HTMLHelper::_('bootstrap.renderModal');
 			HTMLHelper::_('bootstrap.collapse');
+			HTMLHelper::_('bootstrap.offcanvas');
 			HTMLHelper::_('bootstrap.alert');
 		}
 
@@ -123,6 +124,11 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
 		$this->addScript('assets/js/main.js');
 		$this->addScript('assets/js/tooltips.js');
+
+		if ($bootstrap)
+		{
+            $this->addScript('assets/js/offcanvas.js');
+        }
 
 		$this->addStyleSheet('kunena.css');
 

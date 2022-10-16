@@ -33,10 +33,8 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
 	<?php if ($tmpParams->get('displayDropdownMenu'))
 		:
 		?>
-        <ul class="nav float-end">
-            <li class="dropdown mobile-user dropstart">
-                <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                   aria-expanded="false">
+            <div class="btn-group">
+                <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 					<?php
 					$showOnlineStatus = $this->me->showOnline == 1;
 
@@ -57,10 +55,9 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
 						:
 						echo $this->me->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' none', 20, 20, 'none');
 					endif; ?>
-                    <b class="caret"></b>
-                </a>
+                </button>
 
-                <div class="dropdown-menu dropdown-menu-right" id="nav-menu userdropdownlogout" role="menu">
+                <div class="dropdown-menu dropdown-menu-end" id="nav-menu userdropdownlogout" role="menu">
 					<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent'))
 						:
 						?>
@@ -177,8 +174,7 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
 						<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_logout_bottom'); ?>
 					<?php endif ?>
                 </div>
-            </li>
-        </ul>
+            </div>
 	<?php
 	endif;
 

@@ -12,26 +12,29 @@
 
 defined('_JEXEC') or die();
 
-use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Joomla\CMS\Language\Text;
 
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg rounded border"
-	 itemscope="" itemtype="https://schema.org/SiteNavigationElement">
-	<button class="navbar-toggler" aria-expanded="false" aria-controls="knav-collapse" aria-label="Toggle navigation"
-			type="button" data-bs-target=".knav-collapse" data-bs-toggle="collapse">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="knav-collapse collapse navbar-collapse">
-		<?php echo $this->subRequest('Widget/Menu');
-		?>
-	</div>
-	<button class="navbar-toggler float-end" aria-expanded="false" aria-controls="knav-usercollapse"
-			aria-label="Toggle navigation" type="button" data-bs-target=".knav-usercollapse" data-bs-toggle="collapse">
-		<?php echo KunenaIcons::user(); ?>
-	</button>
-	<div class="knav-usercollapse navbar-collapse collapse">
-		<?php echo $this->subRequest('Widget/Login');
-		?>
-	</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg rounded border">
+	<div class="container-fluid">
+        <button class="navbar-toggler" aria-expanded="false" aria-controls="knav-offcanvas" aria-label="Toggle navigation"
+                type="button" data-bs-target="#offcanvasKunena" data-bs-toggle="offcanvas">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="knav-offcanvas offcanvas offcanvas-start" id="offcanvasKunena" data-bs-scroll="false" >
+            <div class="offcanvas-header">
+            <h5 class="offcanvas-title"><?php echo Text::_('COM_KUNENA_TEMPLATE_AURELIA_KUNENA_MENU'); ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+            <?php echo $this->subRequest('Widget/Menu');
+            ?>
+            </div>
+        </div>
+        <div class="float-end">
+            <?php echo $this->subRequest('Widget/Login');
+            ?>
+        </div>
+    </div>
 </nav>

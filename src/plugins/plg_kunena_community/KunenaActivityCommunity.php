@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use Exception;
@@ -245,13 +246,13 @@ class KunenaActivityCommunity extends KunenaActivity
 	}
 
 	/**
-	 * @param   int  $actor    actor
-	 * @param   int  $target   target
-	 * @param   int  $message  message
+	 * @param   int            $actor    actor
+	 * @param   int            $target   target
+	 * @param   KunenaMessage  $message  message
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function onAfterThankyou(int $actor, int $target, int $message): void
+	public function onAfterThankyou(int $actor, int $target, KunenaMessage $message): void
 	{
 		\CFactory::load('libraries', 'userpoints');
 		\CUserPoints::assignPoint('com_kunena.thread.thankyou', $target);

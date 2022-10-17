@@ -27,7 +27,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 			<?php echo $this->setLayout('desktop'); ?>
 		<?php endif; ?>
 	</div>
-	<div class="d-md-none">
+	<div class="d-lg-none">
 		<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu'))
 	:
 			?>

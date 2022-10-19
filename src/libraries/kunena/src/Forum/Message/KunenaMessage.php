@@ -599,6 +599,8 @@ class KunenaMessage extends KunenaDatabaseObject
 			$mailMessage = Text::_('COM_KUNENA_SENDMAIL_NO_BODY_MESSAGE_PREVIEW');
 		}
 
+		$messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getUrl(null, false);
+
 		// Send email to all subscribers.
 		if (!empty($receivers[1]))
 		{
@@ -609,7 +611,7 @@ class KunenaMessage extends KunenaDatabaseObject
 					'subject'    => $subject,
 					'name'       => $this->name,
 					'message'    => $mailMessage,
-					'messageUrl' => $url,
+					'messageUrl' => $messageLink,
 					'once'       => $once,
 				]
 			);
@@ -627,7 +629,7 @@ class KunenaMessage extends KunenaDatabaseObject
 					'subject'    => $subject,
 					'name'       => $this->name,
 					'message'    => $mailMessage,
-					'messageUrl' => $url,
+					'messageUrl' => $messageLink,
 					'once'       => $once,
 				]
 			);

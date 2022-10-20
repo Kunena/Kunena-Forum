@@ -115,6 +115,18 @@ class Pkg_KunenaInstallerScript
 	{
 		/** @var JInstallerComponent $parent */
 		$manifest = $parent->getParent()->getManifest();
+		$app = Factory::getApplication();
+
+		// Prevent to be installed on Joomla! 4.x and later
+		if (version_compare(JVERSION, '4.0', '>='))
+		{
+			$app->enqueueMessage(sprintf('Joomla! %s is not supported. Kunena 5.2 only works on Joomla! 3.10.x',
+				JVERSION
+				), 'notice'
+			);
+
+			return false;
+		}
 
 		// Prevent installation if requirements are not met.
 		if (!$this->checkRequirements($manifest->version))

@@ -163,6 +163,16 @@ class KunenaModelTopics extends KunenaModel
 			{
 				$latestcategory = array();
 			}
+			else
+			{
+				if (count($latestcategory) == 1)
+				{
+					if ($latestcategory[0] == 0)
+					{
+						$latestcategory = array();
+					}
+				}
+			}
 
 			if (count($latestcategory) == 0)
 			{

@@ -114,7 +114,7 @@ abstract class KunenaMessageThankyouHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__kunena_thankyou'))
-			->where('postid IN (' . $idlist . ')');
+			->where($db->quoteName('postid') . ' IN (' . $idlist . ')');
 		$db->setQuery($query);
 
 		try
@@ -161,12 +161,12 @@ abstract class KunenaMessageThankyouHelper
 
 		if (!empty($starttime))
 		{
-			$where [] = "time >= UNIX_TIMESTAMP({$db->quote(\intval($starttime))})";
+			$where [] = $db->quoteName('time') . ' >= UNIX_TIMESTAMP(' . $db->quote(\intval($starttime)) . ')';
 		}
 
 		if (!empty($endtime))
 		{
-			$where [] = "time <= UNIX_TIMESTAMP({$db->quote(\intval($endtime))})";
+			$where [] = $db->quoteName('time') . ' <= UNIX_TIMESTAMP({' . $db->quote(\intval($endtime)) . ')';
 		}
 
 		$query = $db->getQuery(true);
@@ -219,8 +219,8 @@ abstract class KunenaMessageThankyouHelper
 		$query->select('s.userid, count(s.' . $field . ') AS countid, u.username')
 			->from($db->quoteName('#__kunena_thankyou', 's'))
 			->innerJoin($db->quoteName('#__users', 'u'))
-			->where('s.' . $field . ' = u.id')
-			->group('s.' . $field)
+			->where($db->quoteName('s.' . $field) . ' = u.id')
+			->group($db->quoteName('s.' . $field))
 			->order('countid DESC');
 		$query->setLimit($limit, $limitstart);
 		$db->setQuery($query);

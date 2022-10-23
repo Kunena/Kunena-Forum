@@ -1631,7 +1631,10 @@ class KunenaMessage extends KunenaDatabaseObject
 
 		if ($config->floodProtection && !$this->getCategory()->isAuthorised('moderate') && !$this->exists())
 		{
-			$this->_db->setQuery("SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}");
+			$query = $this->_db->getQuery(true);
+			$query->select('MAX(time)')
+				->from($this->_db->quoteName('#__kunena_messages'))
+				->where($this->_db->quoteName('ip') . ' = ' . $this->_db->quote($this->ip));
 
 			try
 			{

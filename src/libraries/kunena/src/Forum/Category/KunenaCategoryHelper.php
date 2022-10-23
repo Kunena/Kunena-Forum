@@ -551,16 +551,16 @@ abstract class KunenaCategoryHelper
 
 		$query->select('t.category_id, COUNT(*) AS new')
 			->from($db->quoteName('#__kunena_topics', 't'))
-			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON uc.category_id = t.category_id AND uc.user_id=' . $db->quote($user->userid))
-			->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ur.topic_id = t.id AND ur.user_id=' . $db->quote($user->userid))
+			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON '.  $db->quoteName('uc.category_id') . ' = ' . $db->quoteName('t.category_id') . ' AND '. $db->quoteName('uc.user_id') . ' = ' . $db->quote($user->userid))
+			->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('t.id') . ' AND ' . $db->quoteName('ur.user_id') . ' = ' . $db->quote($user->userid))
 			->where($db->quoteName('t.category_id') . ' IN (' . $catlist . ')')
 			->where($db->quoteName('t.hold') . ' = 0')
 			->where($db->quoteName('t.last_post_time') . ' > ' . $db->quote($session->getAllReadTime()))
-			->where('(uc.allreadtime IS NULL OR t.last_post_time > uc.allreadtime)')
-			->where('(ur.topic_id IS NULL OR t.last_post_id != ur.message_id)')
+			->where('(' . $db->quoteName('uc.allreadtime') . ' IS NULL OR ' . $db->quoteName('t.last_post_time') . ' > ' . $db->quoteName('uc.allreadtime') . ')')
+			->where('(' . $db->quoteName('ur.topic_id') . ' IS NULL OR ' . $db->quoteName('t.last_post_id') . ' != ' . $db->quoteName('ur.message_id') . ')')
 			->group($db->quoteName('category_id'));
 		$db->setQuery($query);
-
+		echo $query;
 		try
 		{
 			$newlist = (array) $db->loadObjectList('category_id');
@@ -786,7 +786,7 @@ abstract class KunenaCategoryHelper
 	{
 		$list = [];
 
-        foreach ($parents as $parent)
+		foreach ($parents as $parent)
 		{
 			if ($parent instanceof KunenaCategory)
 			{
@@ -893,7 +893,7 @@ abstract class KunenaCategoryHelper
 			}
 		}
 
-        return $list;
+		return $list;
 	}
 
 	/**
@@ -975,7 +975,7 @@ abstract class KunenaCategoryHelper
 		$query = $db->getQuery(true);
 		$query
 			->update($db->quoteName('#__kunena_categories', 'c'))
-			->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON c.id = tt.category_id AND tt.hold = 0')
+			->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0')
 			->set(
 				"c.numTopics = 0,
 				c.numPosts = 0,

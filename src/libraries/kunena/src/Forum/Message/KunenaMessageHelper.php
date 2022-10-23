@@ -219,7 +219,7 @@ abstract class KunenaMessageHelper
 	{
 		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
-		$query->select('m.*, t.message')
+		$query->select($db->quoteName(array('m.*', 't.message')))
 			->from($db->quoteName('#__kunena_messages', 'm'))
 			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
 			->where($db->quoteName('m.thread') . ' = ' . $db->quote($topic_id))
@@ -303,7 +303,7 @@ abstract class KunenaMessageHelper
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName(array('m.*', 't.message')))
 			->from($db->quoteName('#__kunena_messages', 'm'))
-			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
+			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
 			->order($orderby);
 
 		$authorise = 'read';
@@ -314,19 +314,19 @@ abstract class KunenaMessageHelper
 		{
 			case 'unapproved':
 				$authorise = 'approve';
-				$hold      = "m.hold = 1";
+				$hold      = $db->quoteName('m.hold') . '= 1';
 				break;
 			case 'deleted':
 				$authorise = 'undelete';
-				$hold      = "m.hold >= 2";
+				$hold      = $db->quoteName('m.hold') . ' >= 2';
 				break;
 			case 'mythanks':
 				$userfield = 'th.userid';
-				$query->innerJoin($db->quoteName('#__kunena_thankyou', 'th') . ' ON m.id = th.postid');
+				$query->innerJoin($db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $db->quoteName('m.id') . ' = ' .  $db->quoteName('th.postid'));
 				break;
 			case 'thankyou':
 				$userfield = 'th.targetuserid';
-				$query->innerJoin($db->quoteName('#__kunena_thankyou', 'th') . ' ON m.id = th.postid');
+				$query->innerJoin($db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('th.postid'));
 				break;
 			case 'recent':
 			default:
@@ -600,7 +600,7 @@ abstract class KunenaMessageHelper
 				SUM(mm.time>m.time) AS after_count'
 		)
 			->from($db->quoteName('#__kunena_messages', 'm'))
-			->innerJoin($db->quoteName('#__kunena_messages', 'mm') . ' ON m.thread = mm.thread')
+			->innerJoin($db->quoteName('#__kunena_messages', 'mm') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('mm.thread'))
 			->where($db->quoteName('m.id') . ' IN (' . $idlist . ')')
 			->group([$db->quoteName('m.id'), $db->quoteName('mm.hold')]);
 		$db->setQuery($query);

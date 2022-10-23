@@ -675,8 +675,8 @@ abstract class KunenaMessageHelper
 		// Update catid in all messages
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_messages', 'm'))
-			->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . ' ON tt.id = m.thread')
-			->set('m.catid = tt.category_id')
+			->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('m.thread'))
+			->set($db->quoteName('m.catid') . ' = ' . $db->quoteName('tt.category_id'))
 			->where($where);
 		$db->setQuery($query);
 
@@ -716,7 +716,7 @@ abstract class KunenaMessageHelper
 		$query  = $db->getQuery(true);
 		$query->select($db->quoteName(array('m.*', 't.message')))
 			->from($db->quoteName('#__kunena_messages', 'm'))
-			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
+			->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
 			->where($db->quoteName('m.thread') . ' IN (' . $idlist . ')')
 			->andWhere($db->quoteName('m.hold') . ' = 0');
 		$db->setQuery($query);

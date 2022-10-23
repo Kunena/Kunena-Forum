@@ -307,15 +307,15 @@ abstract class KunenaTopicHelper
 
 		if (strstr('ut.last_', $orderby))
 		{
-			$post_time_field = 'ut.last_post_time';
+			$post_time_field = $db->quoteName('ut.last_post_time');
 		}
 		elseif (strstr('tt.first_', $orderby))
 		{
-			$post_time_field = 'tt.first_post_time';
+			$post_time_field = $db->quoteName('tt.first_post_time');
 		}
 		else
 		{
-			$post_time_field = 'tt.last_post_time';
+			$post_time_field = $db->quoteName('tt.last_post_time');
 		}
 
 		if (!$exclude)
@@ -340,11 +340,11 @@ abstract class KunenaTopicHelper
 
 			if ($exclude)
 			{
-				$catlist = "AND tt.category_id NOT IN ({$catlist})";
+				$catlist = 'AND ' . $db->quoteName('tt.category_id') . ' NOT IN (' . $catlist . ')';
 			}
 			else
 			{
-				$catlist = "AND tt.category_id IN ({$catlist})";
+				$catlist = 'AND ' . $db->quoteName('tt.category_id') . ' IN (' . $catlist . ')';
 			}
 		}
 		else
@@ -356,54 +356,61 @@ abstract class KunenaTopicHelper
 
 		if (!empty($params['started']))
 		{
-			$whereuser[] = 'ut.owner=1';
+			$whereuser[] = $db->quoteName('ut.owner') . '=1';
 		}
 
 		if (!empty($params['replied']))
 		{
-			$whereuser[] = '(ut.owner=0 AND ut.posts>0)';
+			$whereuser[] = '(' . $db->quoteName('ut.owner') . '=0 AND ' . $db->quoteName('ut.posts') . '>0)';
 		}
 
 		if (!empty($params['posted']))
 		{
-			$whereuser[] = 'ut.posts>0';
+			$whereuser[] = $db->quoteName('ut.posts') . '>0';
 		}
 
 		if (!empty($params['favorited']))
 		{
-			$whereuser[] = 'ut.favorite=1';
+			$whereuser[] = $db->quoteName('ut.favorite') . '=1';
 		}
 
 		if (!empty($params['subscribed']))
 		{
-			$whereuser[] = 'ut.subscribed=1';
+			$whereuser[] = $db->quoteName('ut.subscribed') . '=1';
 		}
 
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->quote($starttime)}" : '');
-		$whereuser = ($whereuser ? " AND ut.user_id={$db->quote($user->userid)} AND (" . implode(' OR ', $whereuser) . ')' : '');
+		$whereuser = ($whereuser ? ' AND ' . $db->quoteName('ut.user_id') . ' = ' . $db->quote($user->userid) . ' AND (' . implode(' OR ', $whereuser) . ')' : '');
 
 		if ($exclude)
 		{
-			$where = "tt.hold IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
+			$where = $db->quoteName('tt.hold') . " IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
 		}
 		else
 		{
-			$where = "tt.hold IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
+			$where = $db->quoteName('tt.hold') . " IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
 		}
 
 		if (!$moved)
 		{
-			$where .= " AND tt.moved_id='0'";
+			$where .= ' AND ' . $db->quoteName('tt.moved_id') . ' =0';
 		}
 
 		// Get total count
 		if ($whereuser)
 		{
-			$query = "SELECT COUNT(*) FROM #__kunena_user_topics AS ut INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id WHERE {$where}";
+			$query = $db->getQuery(true);
+			$query->select('COUNT(*)')
+				->from($db->quoteName('#__kunena_user_topics', 'ut'))
+				->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id'))
+				->where($where);
 		}
 		else
 		{
-			$query = "SELECT COUNT(*) FROM #__kunena_topics AS tt WHERE {$where}";
+			$query = $db->getQuery(true);
+			$query->select('COUNT(*)')
+				->from($db->quoteName('#__kunena_user_topics', 'tt'))
+				->where($where);
 		}
 
 		$db->setQuery($query);
@@ -678,7 +685,7 @@ abstract class KunenaTopicHelper
 			->set($db->quoteName('tt.last_post_userid') . ' = 0')
 			->set($db->quoteName('tt.last_post_message') . ' =  \'\'')
 			->set($db->quoteName('tt.last_post_guest_name') . ' =  \'\'')
-			->where('tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL ' . $topics . ' ' . $threads);
+			->where($db->quoteName('tt.moved_id') . '=0 AND ' . $db->quoteName('tt.hold') . '!=4 AND ' . $db->quoteName('m.id') . ' IS NULL ' . $topics . ' ' . $threads);
 		$db->setQuery($query);
 
 		try

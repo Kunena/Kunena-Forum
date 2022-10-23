@@ -560,7 +560,7 @@ abstract class KunenaCategoryHelper
 			->where('(' . $db->quoteName('ur.topic_id') . ' IS NULL OR ' . $db->quoteName('t.last_post_id') . ' != ' . $db->quoteName('ur.message_id') . ')')
 			->group($db->quoteName('category_id'));
 		$db->setQuery($query);
-		echo $query;
+
 		try
 		{
 			$newlist = (array) $db->loadObjectList('category_id');

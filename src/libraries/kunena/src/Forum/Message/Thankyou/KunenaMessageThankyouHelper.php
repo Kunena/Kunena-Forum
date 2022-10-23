@@ -216,12 +216,12 @@ abstract class KunenaMessageThankyouHelper
 
 		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true);
-		$query->select('s.userid, count(s.' . $field . ') AS countid, u.username')
+		$query->select(array($db->quoteName('s.userid'), 'COUNT(' . $db->quoteName('s.' . $field). ') AS countid', $db->quoteName('u.username')))
 			->from($db->quoteName('#__kunena_thankyou', 's'))
 			->innerJoin($db->quoteName('#__users', 'u'))
 			->where($db->quoteName('s.' . $field) . ' = u.id')
 			->group($db->quoteName('s.' . $field))
-			->order('countid DESC');
+			->order($db->quoteName('countid') . ' DESC');
 		$query->setLimit($limit, $limitstart);
 		$db->setQuery($query);
 
@@ -255,15 +255,15 @@ abstract class KunenaMessageThankyouHelper
 		$categories = KunenaCategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = $db->getQuery(true);
-		$query->select('s.postid, COUNT(*) AS countid, m.catid, m.thread, m.id, m.subject')
+		$query->select(array($db->quoteName('s.postid'), 'COUNT(*) AS countid', $db->quoteName('m.catid'), $db->quoteName('m.thread'), $db->quoteName('m.id'), $db->quoteName('m.subject')))
 			->from($db->quoteName('#__kunena_thankyou', 's'))
-			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON s.postid = m.id')
-			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON m.thread = tt.id')
-			->where('m.catid IN (' . $catlist . ')')
-			->andWhere('m.hold = 0')
-			->andWhere('tt.hold = 0')
+			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON ' . $db->quoteName('s.postid') . ' = ' . $db->quoteName('m.id'))
+			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
+			->where($db->quoteName('m.catid') . ' IN (' . $catlist . ')')
+			->andWhere($db->quoteName('m.hold') . ' = 0')
+			->andWhere($db->quoteName('tt.hold') . ' = 0')
 			->group('s.postid')
-			->order('countid DESC');
+			->order($db->quoteName('countid') . ' DESC');
 		$query->setLimit($limit, $limitstart);
 		$db->setQuery($query);
 
@@ -306,14 +306,14 @@ abstract class KunenaMessageThankyouHelper
 		$categories = KunenaCategoryHelper::getCategories();
 		$catlist    = implode(',', array_keys($categories));
 		$query      = $db->getQuery(true);
-		$query->select('m.catid, m.thread, m.id')
+		$query->select($db->quoteName(array('m.catid', 'm.thread', 'm.id')))
 			->from($db->quoteName('#__kunena_thankyou', 't'))
-			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON m.id = t.postid')
-			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON m.thread = tt.id')
-			->where('m.catid IN (' . $catlist . ')')
-			->where('m.hold = 0')
-			->where('tt.hold = 0')
-			->where('t.' . $field . ' = ' . $db->quote(\intval($userid)));
+			->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.postid'))
+			->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
+			->where($db->quoteName('m.catid') . ' IN (' . $catlist . ')')
+			->where($db->quoteName('m.hold') . ' = 0')
+			->where($db->quoteName('tt.hold') . ' = 0')
+			->where($db->quoteName('t.' . $field) . ' = ' . $db->quote(\intval($userid)));
 		$query->setLimit($limit, $limitstart);
 		$db->setQuery($query);
 
@@ -345,9 +345,9 @@ abstract class KunenaMessageThankyouHelper
 		// Users who have no thank yous, set thankyou count to 0
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName('#__kunena_users', 'u'))
-			->leftJoin($db->quoteName('#__kunena_thankyou', 't') . ' ON t.targetuserid = u.userid')
-			->set('u.thankyou = 0')
-			->where('t.targetuserid IS NULL');
+			->leftJoin($db->quoteName('#__kunena_thankyou', 't') . ' ON ' . $db->quoteName('t.targetuserid') . ' = ' . $db->quoteName('u.userid'))
+			->set($db->quoteName('u.thankyou') .' = 0')
+			->where($db->quoteName('t.targetuserid') . ' IS NULL');
 		$db->setQuery($query);
 
 		try
@@ -381,7 +381,7 @@ abstract class KunenaMessageThankyouHelper
 		$query    = $db->getQuery(true);
 		$subquery = $db->getQuery(true);
 
-		$subquery->select('targetuserid AS userid, COUNT(*) AS thankyou')
+		$subquery->select(array($db->quoteName('targetuserid', 'userid'), 'COUNT(*) AS thankyou'))
 			->from($db->quoteName('#__kunena_thankyou'))
 			->group($db->quoteName('targetuserid'));
 

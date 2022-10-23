@@ -549,7 +549,7 @@ abstract class KunenaCategoryHelper
 		$db      = Factory::getContainer()->get('DatabaseDriver');
 		$query   = $db->getQuery(true);
 
-		$query->select('t.category_id, COUNT(*) AS new')
+		$query->select(array($db->quoteName('t.category_id'), 'COUNT(*) AS new'))
 			->from($db->quoteName('#__kunena_topics', 't'))
 			->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON '.  $db->quoteName('uc.category_id') . ' = ' . $db->quoteName('t.category_id') . ' AND '. $db->quoteName('uc.user_id') . ' = ' . $db->quote($user->userid))
 			->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('t.id') . ' AND ' . $db->quoteName('ur.user_id') . ' = ' . $db->quote($user->userid))
@@ -973,17 +973,19 @@ abstract class KunenaCategoryHelper
 
 		// Update categories which have no published topics
 		$query = $db->getQuery(true);
+		$fields = array(
+			$db->quoteName('c.numTopics') . ' = 0',
+			$db->quoteName('c.numPosts') . ' = 0',
+			$db->quoteName('c.last_topic_id') . ' = 0',
+			$db->quoteName('c.last_post_id') . ' = 0',
+			$db->quoteName('c.last_post_time') . ' = 0',
+		);
+
 		$query
 			->update($db->quoteName('#__kunena_categories', 'c'))
 			->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0')
-			->set(
-				"c.numTopics = 0,
-				c.numPosts = 0,
-				c.last_topic_id = 0,
-				c.last_post_id = 0,
-				c.last_post_time = 0"
-			)
-			->where("tt.id IS NULL");
+			->set($fields)
+			->where($db->quoteName('tt.id') . ' IS NULL');
 		$db->setQuery($query);
 
 		try

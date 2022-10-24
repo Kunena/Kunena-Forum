@@ -178,9 +178,10 @@
             <phpfile name="6.0.2-2022-07-30_rss_timelimit_configuration_change"/>
         </version>
         <version version="6.0.4-DEV"
-                 versiondate="2022-10-13s"
+                 versiondate="2022-10-13"
                  versionname="Internal">
             <query mode="silenterror">UPDATE `#__kunena_messages` SET `email` = NULL;</query>
+            <query mode="silenterror">UPDATE `#__kunena_users` SET banned = '1000-01-01 00:00:00' WHERE banned != '9999-12-31 23:59:59';</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

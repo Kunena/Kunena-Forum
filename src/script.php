@@ -27,7 +27,7 @@ use Kunena\Forum\Libraries\Install\KunenaInstallerException;
  *
  * @since Kunena
  */
-class PkgKunenaInstallerScript extends InstallerScript
+class Pkg_KunenaInstallerScript extends InstallerScript
 {
 	/**
 	 * Minimum Joomla! version required to install the extension

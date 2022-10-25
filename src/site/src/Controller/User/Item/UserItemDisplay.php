@@ -104,7 +104,8 @@ class UserItemDisplay extends KunenaControllerDisplay
 		$this->state = $model->getState();
 
 		$this->me      = KunenaUserHelper::getMyself();
-		$this->user    = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
+		// Need to pass directly the $this->input->getInt('userid',0) to the loadUserById() to set 0 when userid is not set else it fails
+		$this->user    = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->input->getInt('userid',0));
 		$this->profile = KunenaUserHelper::get($userid);
 		$this->profile->tryAuthorise('read');
 		$this->candisplaymail = $this->me->canDisplayEmail($this->profile);
@@ -164,7 +165,7 @@ class UserItemDisplay extends KunenaControllerDisplay
 			$controller->redirect();
 		}
 
-		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName()); 
 	}
 
 	/**

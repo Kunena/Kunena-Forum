@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Email;
 use ErrorException;
 use Exception;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailTemplate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -35,16 +36,14 @@ abstract class KunenaEmail
 	public static $mailer_error_status = null;
 
 	/**
-	 * @param   MailTemplate  $mail       mail
-	 * @param   array         $receivers  receivers
+	 * @param   Mail $mail      mail
+	 * @param   array                 $receivers receivers
 	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
+	 * @return boolean
 	 * @throws Exception
+	 * @since Kunena
 	 */
-	public static function send(MailTemplate $mailTemplate, array $receivers): bool
+	public static function send($mail, array $receivers)
 	{
 		if (isset(static::$mailer_error_status))
 		{
@@ -70,10 +69,10 @@ abstract class KunenaEmail
 		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
 		if ($emailRecipientCount > 1
 			&& $emailRecipientPrivacy == 'bcc'
-			&& MailHelper::isEmailAddress($config->get('emailVisibleAddress'))
-		)
+			&& MailHelper::isEmailAddress($config->emailVisibleAddress)
+			)
 		{
-			$mailTemplate->addRecipient($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle), 'to');
+			$mail->AddAddress($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle));
 
 			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
 			if ($emailRecipientCount > 9)
@@ -88,47 +87,30 @@ abstract class KunenaEmail
 
 		foreach ($chunks as $emails)
 		{
-			$email = array_pop($emails);
-
 			if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to')
 			{
-				$mailTemplate->addRecipient($email, null, 'to');
+				$mail->ClearAddresses();
+				$mail->addRecipient($emails);
 			}
 			elseif ($emailRecipientPrivacy == 'cc')
 			{
-				$mailTemplate->addRecipient($email, null, 'cc');
+				$mail->ClearCCs();
+				$mail->addCC($emails);
 			}
 			else
 			{
-				$mailTemplate->addRecipient($email, null, 'bcc');
+				$mail->ClearBCCs();
+				$mail->addBCC($emails);
 			}
 
 			try
 			{
-				$result = $mailTemplate->send();
-
-				if ($result === false)
-				{
-					// Mail is turned off, or broken
-					return false;
-				}
-
-				if (is_subclass_of($result, 'Exception'))
-				{
-					// Mail send is failed
-					$success = false;
-				}
+				$mail->Send();
 			}
 			catch (Exception $e)
 			{
 				$success = false;
 				Log::add($e->getMessage(), Log::ERROR, 'kunena');
-			}
-
-			if (isset(static::$mailer_error_status))
-			{
-				$success = false;
-				break;
 			}
 		}
 

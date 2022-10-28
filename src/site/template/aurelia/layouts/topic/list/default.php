@@ -54,7 +54,7 @@ if (KunenaConfig::getInstance()->ratingEnabled)
                         (<?php echo KunenaCategory::getInstance()->totalCount($this->pagination->total); ?>)
                     </small>
 				<?php endif; ?>
-				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
+				<?php // ToDo:: <span class="badge bg-success"> <?php echo $this->topics->count->unread; ?/></span> ?>
             </h1>
         </div>
 

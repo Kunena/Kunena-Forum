@@ -35,7 +35,7 @@ $view    = Factory::getApplication()->input->getWord('view');
                     )
                 </small>
 
-				<?php // ToDo:: <span class="badge badge-success"> <?php echo $this->topics->count->unread; ?/></span>
+				<?php // ToDo:: <span class="badge bg-success"> <?php echo $this->topics->count->unread; ?/></span>
 				?>
             </h1>
         </div>

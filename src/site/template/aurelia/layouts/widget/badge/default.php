@@ -17,7 +17,7 @@ namespace Kunena\Forum\Site;
 $label       = $this->label;
 $tooltip     = 'data-bs-toggle="tooltip"';
 $description = isset($this->description) ? ' ' . $tooltip . ' data-bs-toggle="tooltip" title="' . $this->description . '"' : '';
-$class       = ' class="' . ' badge badge-' . $this->state . '"';
+$class       = ' class="badge bg-' . $this->state . '"';
 ?>
 <span <?php echo $description . $class; ?> >
 	<?php echo $label; ?>

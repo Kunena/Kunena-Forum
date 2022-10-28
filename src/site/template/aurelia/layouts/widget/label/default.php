@@ -20,7 +20,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 $this->ktemplate = KunenaFactory::getTemplate();
 $icon            = $this->ktemplate->getTopicLabel($this->topic);
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
-$class           = ' class="' . ' badge badge-' . $icon->labeltype . '"';
+$class           = ' class="badge me-1 bg-' . $icon->labeltype . '"';
 
 if ($topicicontype == 'B3')
 {

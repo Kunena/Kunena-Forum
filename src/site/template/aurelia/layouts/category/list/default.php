@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
             <h3>
 				<?php echo $this->escape($this->headerText); ?>
-                <span class="badge badge-info"><?php echo (int) $this->pagination->total; ?></span>
+                <span class="badge bg-info"><?php echo (int) $this->pagination->total; ?></span>
 
 				<?php if (!empty($this->actions) && !empty($this->categories)) : ?>
                     <div class="form-group">

@@ -27,7 +27,7 @@ if ($this->approved)
 else
 {
 	$msg1 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT');
-	$msg1 .= " " . $config->boarTtitle;
+	$msg1 .= " " . $config->boardTitle;
 }
 
 $msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');

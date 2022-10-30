@@ -608,7 +608,7 @@ class KunenaMessage extends KunenaDatabaseObject
 				}
 			}
 		}
-die();
+
 		return true;
 	}
 

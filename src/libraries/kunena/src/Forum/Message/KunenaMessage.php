@@ -557,8 +557,11 @@ class KunenaMessage extends KunenaDatabaseObject
 					continue;
 				}
 
-				$receivers[$emailTo->subscription][] = $emailTo->email;
-				$sentusers[]                         = $emailTo->id;
+				if ($config->emailVisibleAddress != $emailTo->email)
+				{
+					$receivers[$emailTo->subscription][] = $emailTo->email;
+					$sentusers[]                         = $emailTo->id;
+				}
 			}
 
 			$mailnamesender  = !empty($config->email_sender_name) ? MailHelper::cleanAddress($config->email_sender_name) : MailHelper::cleanAddress($config->boardTitle);

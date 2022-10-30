@@ -88,7 +88,7 @@ if (!$config->plain_email) :
 
 		</style>
 
-		<title><?php echo Text::_('COM_KUNENA_REPORT_MSG') . " " . $config->board_title; ?></title>
+		<title><?php echo Text::_('COM_KUNENA_REPORT_MSG') . " " . $config->boardTitle; ?></title>
 
 	</head>
 

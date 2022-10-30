@@ -49,6 +49,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -2705,6 +2706,30 @@ class TopicController extends KunenaController
 
 				$msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);
 
+				$mail = Factory::getMailer();
+				$mail->setSender([$this->config->getEmail(), $mailnamesender]);
+				$mail->setSubject($mailsubject);
+				$mail->addReplyTo($this->me->email, $this->me->username);
+
+				// Render the email.
+				$layout = KunenaLayout::factory('Email/Report')->debug(false)
+					->set('mail', $mail)
+					->set('message', $message)
+					->set('me', $this->me)
+					->set('title', $reason)
+					->set('content', $text)
+					->set('messageLink', $msglink);
+
+				try
+				{
+					$body = trim($layout->render());
+					$mail->setBody($body);
+				}
+				catch (Exception $e)
+				{
+					// TODO: display exception
+				}
+
 				$receivers = [];
 
 				foreach ($emailToList as $emailTo)
@@ -2719,26 +2744,7 @@ class TopicController extends KunenaController
 					}
 				}
 
-				$user = $this->app->getIdentity();
-				$mailer = Factory::getMailer();
-				$mailer->setSubject($mailsubject);
-				$mailer->setSender([$this->config->getEmail(), $mailnamesender]);
-				$mailer->addReplyTo($this->me->email, $this->me->username);
-
-				$mailTemplate = new MailTemplate('com_kunena.report', $user->getParam('language', $this->app->get('language')), $mailer);
-				$mailTemplate->addTemplateData(
-					[
-						'mail'           => '',
-						'name'           => $this->me->username,
-						'reason'         => $reason,
-						'reasonMessage'  => $text,
-						'message'        => $message->message,
-						'messageUrl'     => $msglink,
-						'subject'        => $message->subject,
-					]
-				);
-
-				KunenaEmail::send($mailTemplate, $receivers, $mailer);
+				KunenaEmail::send($mail, $receivers);
 
 				if ($this->config->logModeration)
 				{

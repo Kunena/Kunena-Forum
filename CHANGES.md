@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [5.2.11-DEV]
+### Fixed
+* [#8825](https://github.com/Kunena/Kunena-Forum/issues/8825) : If "Visible E-mail Recipient" is the same mail than one
+* [#9302](https://github.com/Kunena/Kunena-Forum/issues/9302) : The My Topics menu item does not show any topics
+
+### Changed
+* Prevent user from trying the installation on Joomla 4.x
+* Update Ckeditor to 4.20
 
 ## [5.2.10.1]
 ### Fixed

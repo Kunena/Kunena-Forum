@@ -458,7 +458,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	 * @throws  Exception
 	 * @since   Kunena 6.0
 	 */
-	public function sendNotification($url = null, $approved = false): bool
+	public function sendNotification($url = null, $approved = false)
 	{
 		$config = KunenaFactory::getConfig();
 
@@ -467,28 +467,24 @@ class KunenaMessage extends KunenaDatabaseObject
 			return false;
 		}
 
-		// Restore app input context
-		Factory::getApplication()->input->set('message', $this);
-
-		$url = $this->urlNotification;
-
 		if ($this->hold > 1)
 		{
 			return false;
 		}
-
-		if ($this->hold == 1)
+		elseif ($this->hold == 1)
 		{
-			$mailsubs            = 0;
-			$mailModeratorss     = $config->mailModerators >= 0;
-			$mailAdministratorss = $config->mailAdministrators >= 0;
+			$mailsubs   = 0;
+			$mailmods   = $config->mailModerators >= 0;
+			$mailadmins = $config->mailAdministrators >= 0;
 		}
 		else
 		{
-			$mailsubs            = (bool) $config->allowSubscriptions;
-			$mailModeratorss     = $config->mailModerators >= 1;
-			$mailAdministratorss = $config->mailAdministrators >= 1;
+			$mailsubs   = (bool) $config->allowSubscriptions;
+			$mailmods   = $config->mailModerators >= 1;
+			$mailadmins = $config->mailAdministrators >= 1;
 		}
+
+		$this->_approved = $approved;
 
 		$once = false;
 
@@ -513,8 +509,8 @@ class KunenaMessage extends KunenaDatabaseObject
 					? KunenaAccess::CATEGORY_SUBSCRIPTION
 					: KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 
-				// FIXME: category subscription can override topic
-				$once = $config->topicSubscriptions == 'first';
+					// FIXME: category subscription can override topic
+					$once = $config->topicSubscriptions == 'first';
 			}
 		}
 
@@ -528,154 +524,88 @@ class KunenaMessage extends KunenaDatabaseObject
 			$this->catid,
 			$this->thread,
 			$mailsubs,
-			$mailModeratorss,
-			$mailAdministratorss,
-			$this->userid
+			$mailmods,
+			$mailadmins,
+			KunenaUserHelper::getMyself()->userid
 		);
 
-		if (empty($emailToList))
+		if ($emailToList)
 		{
-			return true;
-		}
-
-		if (!$config->getEmail())
-		{
-			KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
-
-			return false;
-		}
-
-		if (!MailHelper::isEmailAddress($config->getEmail()))
-		{
-			KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
-
-			return false;
-		}
-
-		$topic = $this->getTopic();
-
-		// Make a list from all receivers; split the receivers into two distinct groups.
-		$sentusers = [];
-		$receivers = [0 => [], 1 => []];
-
-		foreach ($emailToList as $emailTo)
-		{
-			if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email))
+			if (!$config->getEmail())
 			{
-				continue;
+				KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
+
+				return false;
+			}
+			elseif (!MailHelper::isEmailAddress($config->getEmail()))
+			{
+				KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
+
+				return false;
 			}
 
-			$receivers[$emailTo->subscription][] = $emailTo->email;
-			$sentusers[]                         = $emailTo->id;
-		}
+			$topic = $this->getTopic();
 
-		$mailnamesender = !empty($config->email_sender_name) ? MailHelper::cleanAddress($config->email_sender_name) : MailHelper::cleanAddress($config->boardTitle);
-		$mailsubject    = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
-		$subject        = $this->subject ? $this->subject : $topic->subject;
+			// Make a list from all receivers; split the receivers into two distinct groups.
+			$sentusers = [];
+			$receivers = [0 => [], 1 => []];
 
-		// Create email.
-		$user = Factory::getApplication()->getIdentity();
-		$mail = Factory::getMailer();
-		$mail->setSubject($mailsubject);
-		$mail->setSender([$config->getEmail(), $mailnamesender]);
-		$app = Factory::getApplication();
-
-		// Here is after respond sends. so close connection to leave browser, and
-		// continue to work
-		static::notificationCloseConnection();
-		$app->getSession()->close();
-		ob_flush();
-
-		$ok         = true;
-		$start_time = microtime(true);
-
-		// Check if the message needs to be added to the mail by following the mailFull setting from Kunena config
-		if ($config->mailFull)
-		{
-			$mailMessage = $this->message;
-		}
-		else
-		{
-			$mailMessage = Text::_('COM_KUNENA_SENDMAIL_NO_BODY_MESSAGE_PREVIEW');
-		}
-
-		$messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getUrl(null, false);
-
-		// Send email to all subscribers.
-		if (!empty($receivers[1]))
-		{
-			$mailer = new MailTemplate('com_kunena.reply', $user->getParam('language', $app->get('language')), $mail);
-			$mailer->addTemplateData(
-				[
-					'mail'       => '',
-					'subject'    => $subject,
-					'name'       => $this->name,
-					'message'    => $mailMessage,
-					'messageUrl' => $messageLink,
-					'once'       => $once,
-				]
-			);
-
-			$ok = KunenaEmail::send($mailer, $receivers[1]);
-		}
-
-		// Send email to all moderators.
-		if (!empty($receivers[0]))
-		{
-			$mailer = new MailTemplate('com_kunena.replymoderator', $user->getParam('language', $app->get('language')), $mail);
-			$mailer->addTemplateData(
-				[
-					'mail'       => '',
-					'subject'    => $subject,
-					'name'       => $this->name,
-					'message'    => $mailMessage,
-					'messageUrl' => $messageLink,
-					'once'       => $once,
-				]
-			);
-
-			if (!KunenaEmail::send($mailer, $receivers[0]))
+			foreach ($emailToList as $emailTo)
 			{
-				$ok = false;
+				if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email))
+				{
+					continue;
+				}
+
+				$receivers[$emailTo->subscription][] = $emailTo->email;
+				$sentusers[]                         = $emailTo->id;
 			}
-		}
 
-		$end_time = microtime(true);
+			$mailnamesender  = !empty($config->email_sender_name) ? MailHelper::cleanAddress($config->email_sender_name) : MailHelper::cleanAddress($config->boardTitle);
+			$mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+			$subject     = $this->subject ? $this->subject : $topic->subject;
 
-		$time_secs   = ($end_time - $start_time);
-		$mid         = $this->thread;
-		$recv_amount = \count($receivers[1]) + \count($receivers[0]);
+			// Create email.
+			$mail = Factory::getMailer();
+			$mail->setSubject($mailsubject);
+			$mail->setSender([$config->getEmail(), $mailnamesender]);
 
-		Log::add("$recv_amount subscriptions for msg $mid sent for {$time_secs} [ms]", Log::DEBUG, 'kunena');
-		KunenaLog::log(
-			($ok) ? KunenaLog::TYPE_REPORT : KunenaLog::TYPE_ERROR,
-			KunenaLog::LOG_TOPIC_NOTIFY,
-			"$recv_amount subscriptions sent for $time_secs sec",
-			$this->getCategory(),
-			$this->getTopic(),
-			KunenaFactory::getUser($this->userid)
-		);
-
-		// Update subscriptions.
-		if ($once && $sentusers)
-		{
-			$sentusers = implode(',', $sentusers);
-			$db        = Factory::getContainer()->get('DatabaseDriver');
-			$query     = $db->getQuery(true)
-				->update($db->quoteName('#__kunena_user_topics'))
-				->set($db->quoteName('subscribed') . ' = 2')
-				->where($db->quoteName('topic_id') . ' = ' . $db->quote($this->thread))
-				->where($db->quoteName('user_id') . ' IN (' . $sentusers . ')')
-				->where($db->quoteName('subscribed') . ' = 1');
-			$db->setQuery($query);
-
-			try
+			// Send email to all subscribers.
+			if (!empty($receivers[1]))
 			{
-				$db->execute();
+				$this->attachEmailBody($mail, 1, $subject, $url, $once);
+				KunenaEmail::send($mail, $receivers[1]);
 			}
-			catch (ExecutionFailureException $e)
+
+			// Send email to all moderators.
+			if (!empty($receivers[0]))
 			{
-				KunenaError::displayDatabaseError($e);
+				$this->attachEmailBody($mail, 0, $subject, $url, $once);
+				KunenaEmail::send($mail, $receivers[0]);
+			}
+
+			// Update subscriptions.
+			if ($once && $sentusers)
+			{
+				$sentusers = implode(',', $sentusers);
+				$db        = Factory::getDbo();
+				$query     = $db->getQuery(true)
+					->update('#__kunena_user_topics')
+					->set('subscribed=2')
+					->where("topic_id={$this->thread}")
+					->where("user_id IN ({$sentusers})")
+					->where('subscribed=1');
+
+				$db->setQuery($query);
+
+				try
+				{
+					$db->execute();
+				}
+				catch (ExecutionFailureException $e)
+				{
+					KunenaError::displayDatabaseError($e);
+				}
 			}
 		}
 
@@ -1755,6 +1685,7 @@ class KunenaMessage extends KunenaDatabaseObject
 		}
 		catch (Exception $e)
 		{
+			// TODO: throw exception here
 		}
 
 		$mail->setBody($msg);

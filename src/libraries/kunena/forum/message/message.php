@@ -496,8 +496,11 @@ class KunenaForumMessage extends KunenaDatabaseObject
 					continue;
 				}
 
-				$receivers[$emailTo->subscription][] = $emailTo->email;
-				$sentusers[]                         = $emailTo->id;
+				if ($config->emailVisibleAddress != $emailTo->email)
+				{
+					$receivers[$emailTo->subscription][] = $emailTo->email;
+					$sentusers[]                         = $emailTo->id;
+				}
 			}
 
 			$mailnamesender  = !empty($config->email_sender_name) ? \Joomla\CMS\Mail\MailHelper::cleanAddress($config->email_sender_name) : \Joomla\CMS\Mail\MailHelper::cleanAddress($config->board_title);

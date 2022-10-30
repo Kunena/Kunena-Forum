@@ -19,7 +19,7 @@ $user              = $this->message->getAuthor();
 $this->messageLink = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->message->getUrl(null, false);
 
 // Report moderator email (HTML)
-if (!$config->plain_email) :
+if (!$config->plainEmail) :
 	$this->mail->isHTML(true);
 	$this->mail->Encoding = 'base64';
 	?>

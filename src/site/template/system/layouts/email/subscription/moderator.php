@@ -35,7 +35,7 @@ $more = ($this->once ?
 		$this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
 			'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') . "\n" : '');
 
-if (!$config->plain_email) :
+if (!$config->plainEmail) :
 
 // New post email for subscribers (HTML)
 	$this->mail->isHtml(true);

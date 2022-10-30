@@ -293,7 +293,7 @@ class KunenaRate extends CMSObject
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function _add(int $userid, int $time): void
+	public function _add(int $userid, string $time): void
 	{
 		$this->users[$userid] = $time;
 	}

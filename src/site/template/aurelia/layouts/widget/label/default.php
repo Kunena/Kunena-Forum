@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $icon            = $this->ktemplate->getTopicLabel($this->topic);
@@ -29,6 +30,10 @@ if ($topicicontype == 'B3')
 elseif ($topicicontype == 'fa')
 {
 	$icons = '<i class="fa fa-' . $icon->fa . '" aria-hidden="true"></i>';
+}
+elseif ($topicicontype == 'svg') 
+{
+    $icons = KunenaSvgIcons::loadsvg($icon->svg);
 }
 else
 {

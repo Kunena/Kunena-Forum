@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE extension>
-<extension type="package" version="2.5" method="upgrade">
+<extension type="package" version="4.0" method="upgrade">
     <name>Kunena Language Pack</name>
     <packagename>kunena_languages</packagename>
     <version>@kunenaversion@</version>

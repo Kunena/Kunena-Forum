@@ -52,11 +52,19 @@ class KunenaSvgIcons
 		}
 		elseif ($group == 'systemtopicIcons')
 		{
-			$file = JPATH_SITE . '/media/kunena/core/svg/' . $iconset . '/system/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/topic_icons/' . $iconset . '/system/svg/' . $svgname;
+
+            if (!\file_exists($file . '.svg')) {
+                $file = JPATH_SITE . '/media/kunena/core/svg/' . $svgname;
+            }
 		}
 		elseif ($group == 'usertopicIcons')
 		{
-			$file = JPATH_SITE . '/media/kunena/core/svg/' . $iconset . '/user/' . $svgname;
+			$file = JPATH_SITE . '/media/kunena/topic_icons/' . $iconset . '/user/svg/' . $svgname;
+
+            if (!\file_exists($file . '.svg')) {
+                $file = JPATH_SITE . '/media/kunena/core/svg/' . $svgname;
+            }
 		}
 		else
 		{

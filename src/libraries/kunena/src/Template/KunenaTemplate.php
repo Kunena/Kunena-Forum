@@ -1378,10 +1378,10 @@ HTML;
 			{
 				if ($categoryIconset != 'default')
 				{
-					return KunenaSvgIcons::loadsvg($icon->svg, 'usertopicIcons', $categoryIconset . '/' . $icon->src);
+					return KunenaSvgIcons::loadsvg($icon->svg, 'usertopicIcons', $categoryIconset);
 				}
 
-				return KunenaSvgIcons::loadsvg($icon->svg);
+				return KunenaSvgIcons::loadsvg($icon->svg, 'usertopicIcons');
 			}
 			elseif ($topicicontype == 'fa')
 			{

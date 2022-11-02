@@ -143,11 +143,13 @@ $labels          = $this->ktemplate->params->get('labels');
 								<?php if ($topicicontype == 'svg')
 								:
 								?>
-                                <label class="radio inline" for="radio<?php echo $icon->id; ?>"><span
-                                            class="badge bg-<?php echo $icon->name; ?>"><span
-                                                class="icon icon-<?php echo $icon->b3; ?>"
-                                                aria-hidden="true"></span><span
-                                                class="sr-only"></span><?php echo $icon->name; ?></span>
+                                <label class="radio inline" for="radio<?php echo $icon->id; ?>">
+									<?php
+									if (!$this->category->iconset)
+										:
+										$this->category->iconset = 'default';
+									endif; ?>
+                                    <?php echo KunenaSvgIcons::loadsvg($icon->svg, 'usertopicIcons', $this->category->iconset); ?>
 									<?php elseif ($topicicontype == 'fa')
 									:
 									?>

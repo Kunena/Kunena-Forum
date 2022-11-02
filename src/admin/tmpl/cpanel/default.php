@@ -373,7 +373,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
 											<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>
                                         </a>
                                     </h6>
-                                    <h3 class="fw-700 text-cyan"><?php echo count(KunenaTemplate::getInstance()->getTemplatePaths()); ?></h3>
+                                    <h3 class="fw-700 text-cyan"><?php echo round(count(KunenaTemplate::getInstance()->getTemplatePaths()) / 2) - 1; ?></h3>
                                     <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES_INSTALLED'); ?></p>
                                 </div>
                                 <div class="col-auto">

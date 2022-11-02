@@ -109,6 +109,8 @@ class TemplatesController extends KunenaController
 					);
 					$result = false;
 				}
+
+                File::delete($dest . $file ['name']);
 			}
 
 			if ($result)

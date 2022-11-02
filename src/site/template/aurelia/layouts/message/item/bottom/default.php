@@ -117,8 +117,8 @@ else
 		<?php endif; ?>
 	<?php endif; ?>
 	<?php if (!empty($attachments) && $attachs->readable) : ?>
-        <div class="cart pb-3 pd-3">
-            <h5 class="card-header"> <?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?> </h5>
+        <div class="card pb-3 pd-3 mb-3">
+            <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
             <div class="card-body kattach">
                 <ul class="thumbnails" style="list-style:none;">
 					<?php foreach ($attachments as $attachment) :

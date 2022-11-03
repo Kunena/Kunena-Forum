@@ -101,7 +101,7 @@ class KunenaProfileEasyblog extends KunenaProfile
 	 * @return boolean
 	 * @since K2.0
 	 */
-	public function getEditProfileURL($userid, $xhtml = true)
+	public function getEditProfileURL($userid, $xhtml = true): string
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}

@@ -214,7 +214,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
+	public function getEditProfileURL(int $userid, bool $xhtml = true): string
 	{
 		global $_CB_framework;
 

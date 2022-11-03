@@ -93,7 +93,7 @@ class KunenaProfileEasyprofile extends KunenaProfile
 	 *
 	 * @since   Kunena 6.0
 	 */
-	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
+	public function getEditProfileURL(int $userid, bool $xhtml = true): string
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}

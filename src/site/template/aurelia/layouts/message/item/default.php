@@ -27,6 +27,14 @@ $attachments          = $message->getAttachments();
 $attachs              = $message->getNbAttachments();
 $config               = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
+$displayAttachments   = false;
+
+foreach ($attachments as $attachment) {
+    if (!$attachment->inline) {
+        $displayAttachments = true;
+        break;
+    }
+}
 
 if ($config->orderingSystem == 'mesid')
 {
@@ -101,7 +109,7 @@ $list = [];
         <div class="clearfix"></div>
 	<?php endif; ?>
 <?php endif; ?>
-<?php if (!empty($attachments)) : ?>
+<?php if (!empty($attachments) && $displayAttachments && $attachs->readable) : ?>
     <div class="card pb-3 pd-3 mb-3">
         <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
         <div class="card-body kattach">

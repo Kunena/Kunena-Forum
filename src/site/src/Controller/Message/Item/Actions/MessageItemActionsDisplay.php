@@ -199,7 +199,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 		{
 			// User is not allowed to write a post.
 			$this->message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') :
-				($me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : ' ');
+				($me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : '');
 		}
 
 		$login = KunenaLogin::getInstance();

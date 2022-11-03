@@ -119,7 +119,7 @@ class KunenaProfileCommunity extends KunenaProfile
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
+	public function getEditProfileURL(int $userid, bool $xhtml = true): string
 	{
 		return $this->getProfileURL($userid, 'edit', $xhtml);
 	}

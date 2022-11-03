@@ -172,11 +172,12 @@ class KunenaProfile
 	 * @param   int   $userid  userid
 	 * @param   bool  $xhtml   xhtml
 	 *
-	 * @return bool
+	 * @return string
 	 *
 	 * @since   Kunena 5.0
 	 */
-	public function getEditProfileURL(int $userid, bool $xhtml = true): bool
+	public function getEditProfileURL(int $userid, bool $xhtml = true): string
 	{
+		return '';
 	}
 }

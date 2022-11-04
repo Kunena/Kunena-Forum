@@ -158,7 +158,7 @@ abstract class KunenaForum
 
 		$config = KunenaFactory::getConfig();
 
-		return !$config->getValue('boardOffline')
+		return !$config->boardOffline
 			|| ($checkAdmin && self::installed() && KunenaUserHelper::getMyself()->isAdmin());
 	}
 
@@ -260,12 +260,12 @@ abstract class KunenaForum
 		// Setup output caching.
 		$cache = Factory::getCache('com_kunena', 'output');
 
-		if (!$config->getValue('cache'))
+		if (!$config->cache)
 		{
 			$cache->setCaching(0);
 		}
 
-		$cache->setLifeTime($config->getValue('cacheTime', 60));
+		$cache->setLifeTime($config->cacheTime, 60));
 
 		// Setup error logging.
 		$options    = ['logger' => 'w3c', 'text_file' => 'kunena.php'];

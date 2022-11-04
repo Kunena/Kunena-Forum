@@ -61,7 +61,7 @@ class KunenaProfileCommunity extends KunenaProfile
 		$config = KunenaFactory::getConfig();
 		$my     = Factory::getApplication()->getIdentity();
 
-		if ($config->getValue('userlistAllowed') == 0 && $my->id == 0)
+		if ($config->userlistAllowed == 0 && $my->id == 0)
 		{
 			return false;
 		}

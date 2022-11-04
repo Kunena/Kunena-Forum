@@ -462,7 +462,7 @@ class KunenaMessage extends KunenaDatabaseObject
 	{
 		$config = KunenaFactory::getConfig();
 
-		if (!$config->getValue('sendEmails'))
+		if (!$config->sendEmails)
 		{
 			return false;
 		}

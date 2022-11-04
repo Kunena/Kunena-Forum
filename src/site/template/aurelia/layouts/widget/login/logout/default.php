@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 $markAllReadUrl = KunenaCategoryHelper::get()->getMarkReadUrl();
 $config         = KunenaFactory::getConfig();
-$status         = $config->getValue('userStatus');
+$status         = $config->userStatus;
 $tmpParams      = KunenaFactory::getTemplate()->params;
 ?>
 

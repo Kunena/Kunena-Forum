@@ -129,7 +129,7 @@ class CategoryItem extends KunenaLayout
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$config          = KunenaConfig::getInstance();
 
-		if ($config->getValue('readOnly'))
+		if ($config->readOnly)
 		{
 			return false;
 		}

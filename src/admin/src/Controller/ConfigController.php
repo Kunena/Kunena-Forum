@@ -19,7 +19,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\String\StringHelper;
-use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -94,8 +93,7 @@ class ConfigController extends FormController
 			return;
 		}
 
-		$config = KunenaConfig::getInstance();
-		$properties = ArrayHelper::fromObject($config);
+		$properties = KunenaConfig::getInstance()->getProperties();
 		$postConfig = $this->input->post->getArray();
 
 		foreach ($postConfig as $postsetting => $postvalue)
@@ -131,12 +129,12 @@ class ConfigController extends FormController
 				// in the config class. Anything else posted gets ignored.
 				if (\array_key_exists($postname, $properties))
 				{
-					$config->setValue($postname, $postvalue);
+					KunenaConfig::getInstance()->set($postname, $postvalue);
 				}
 			}
 		}
 
-		$config->save();
+		KunenaConfig::getInstance()->save();
 
 		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 

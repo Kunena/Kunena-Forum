@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
     const editor = $('#editor');
 
     if(Joomla.getOptions('com_kunena.pollcategoriesid') != undefined){
-		const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+		var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
     }
 
     const pollexist = $('#poll_exist_edit');

@@ -135,7 +135,9 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 		$this->category = KunenaCategoryHelper::get($catid);
 		list($this->topic, $this->message) = $this->category->newTopic($saved);
 
-		$this->ktemplate->setCategoryIconset($this->topic->getCategory()->iconset);
+        // When no categoy set, use default icon set
+        $iconset = $catid ? $this->topic->getCategory()->iconset : 'default';
+		$this->ktemplate->setCategoryIconset($iconset);
 
 		// Get topic icons if they are enabled.
 		if ($this->config->topicIcons)

@@ -745,7 +745,14 @@ class KunenaPoll extends CMSObject
 	 */
 	public function getTimeToLive(): int
 	{
-		return Factory::getDate($this->polltimetolive)->toUnix();
+		if (!empty($this->polltimetolive))
+		{
+			return Factory::getDate($this->polltimetolive)->toUnix();
+		}
+		else
+		{
+			return 0;
+		}
 	}
 
 	/**

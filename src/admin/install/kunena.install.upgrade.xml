@@ -184,6 +184,11 @@
             <query mode="silenterror">UPDATE `#__kunena_users` SET banned = '1000-01-01 00:00:00' WHERE banned IS NULL;</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY COLUMN `banned` datetime NOT NULL default '1000-01-01 00:00:00';</query>
         </version>
+        <version version="6.0.5-DEV"
+                 versiondate="2022-11-06"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_polls` CHANGE `polltimetolive` `polltimetolive` DATETIME NULL DEFAULT '1000-01-01 00:00:00'; </query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

@@ -97,11 +97,11 @@ class TopicPollDisplay extends KunenaControllerDisplay
 			$this->userhasvoted = 0;
 		}
 
-		$datenow            = new \Joomla\CMS\Date\Date('now');
-		$datepolltimetolive = new \Joomla\CMS\Date\Date($this->poll->polltimetolive);
-
 		if (!empty($this->poll->polltimetolive))
 		{
+			$datenow            = new \Joomla\CMS\Date\Date('now');
+			$datepolltimetolive = new \Joomla\CMS\Date\Date($this->poll->polltimetolive);
+
 			if ($datepolltimetolive < $datenow)
 			{
 				$this->polllifespan = true;

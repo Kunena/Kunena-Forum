@@ -23,7 +23,7 @@ $this->addScript('poll.js');
 
 $polllifespan = '';
 
-if ($this->show_title && !empty($this->poll->polltimetolive))
+if ($this->show_title && $this->poll->polltimetolive > '1000-01-01 00:00:00')
 {
 	if (!$this->polllifespan)
 	{

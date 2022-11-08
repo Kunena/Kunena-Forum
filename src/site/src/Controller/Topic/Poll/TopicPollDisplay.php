@@ -97,19 +97,12 @@ class TopicPollDisplay extends KunenaControllerDisplay
 			$this->userhasvoted = 0;
 		}
 
-		if (!empty($this->poll->polltimetolive))
+		// Check if the poll has ended or if it still active
+		if ($this->poll->polltimetolive != '1000-01-01 00:00:00')
 		{
-			$datenow            = new \Joomla\CMS\Date\Date('now');
-			$datepolltimetolive = new \Joomla\CMS\Date\Date($this->poll->polltimetolive);
-
-			if ($datepolltimetolive < $datenow)
-			{
-				$this->polllifespan = true;
-			}
-			else
-			{
-				$this->polllifespan = false;
-			}
+			$origin = new \DateTimeImmutable('now');
+			$target = new \DateTimeImmutable($this->poll->polltimetolive);
+			$this->intervalTimeToLive = $origin->diff($target);
 		}
 
 		if (!empty($this->alwaysVote))

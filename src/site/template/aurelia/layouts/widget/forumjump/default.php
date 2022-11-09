@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -19,8 +20,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" id="jumpto" name="jumpto" method="post"
-	  target="_self">
-	<input type="hidden" name="view" value="category"/>
-	<input type="hidden" name="task" value="jump"/>
-	<div class="selector col-3"><?php echo $this->categorylist; ?></div>
+      target="_self">
+    <input type="hidden" name="view" value="category"/>
+    <input type="hidden" name="task" value="jump"/>
+    <div class="selector col-3"><?php echo $this->categorylist; ?></div>
 </form>

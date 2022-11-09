@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -15,11 +16,11 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 $content = $this->execute('Topic/Listing/Moderator')
-	->setLayout('moderator');
+    ->setLayout('moderator');
 
 $this->addBreadcrumb(
-	$content->headerText,
-	'index.php?option=com_kunena&view=topics&layout=moderator'
+    $content->headerText,
+    'index.php?option=com_kunena&view=topics&layout=moderator'
 );
 
 echo $content;

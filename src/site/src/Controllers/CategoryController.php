@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -32,214 +33,187 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class CategoryController extends CategoriesController
 {
-	/**
-	 * @param   array  $config  config
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-		$this->baseurl  = 'index.php?option=com_kunena&view=category&layout=manage';
-		$this->baseurl2 = 'index.php?option=com_kunena&view=category';
-	}
+    /**
+     * @param   array  $config  config
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        $this->baseurl  = 'index.php?option=com_kunena&view=category&layout=manage';
+        $this->baseurl2 = 'index.php?option=com_kunena&view=category';
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function jump()
-	{
-		$catid = $this->app->input->getInt('catid', 0);
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function jump()
+    {
+        $catid = $this->app->input->getInt('catid', 0);
 
-		if (!$catid)
-		{
-			$this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list', false));
-		}
-		else
-		{
-			$this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}", false));
-		}
-	}
+        if (!$catid) {
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list', false));
+        } else {
+            $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}", false));
+        }
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 */
-	public function markread()
-	{
-		if (!Session::checkToken('request'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  null
+     * @throws  Exception
+     */
+    public function markread()
+    {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		$catid    = $this->app->input->getInt('catid', 0);
-		$children = $this->app->input->getBool('children', 0);
+        $catid    = $this->app->input->getInt('catid', 0);
+        $children = $this->app->input->getBool('children', 0);
 
-		if (!$catid)
-		{
-			// All categories
-			$session = KunenaFactory::getSession();
-			$session->markAllCategoriesRead();
+        if (!$catid) {
+            // All categories
+            $session = KunenaFactory::getSession();
+            $session->markAllCategoriesRead();
 
-			if (!$session->save())
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
-			}
-			else
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'), 'success');
-			}
-		}
-		else
-		{
-			// One category
-			$category = KunenaCategoryHelper::get($catid);
+            if (!$session->save()) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
+            } else {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'), 'success');
+            }
+        } else {
+            // One category
+            $category = KunenaCategoryHelper::get($catid);
 
-			if (!$category->isAuthorised('read'))
-			{
-				$this->app->enqueueMessage($category->getError(), 'error');
-				$this->setRedirectBack();
+            if (!$category->isAuthorised('read')) {
+                $this->app->enqueueMessage($category->getError(), 'error');
+                $this->setRedirectBack();
 
-				return;
-			}
+                return;
+            }
 
-			$session = KunenaFactory::getSession();
+            $session = KunenaFactory::getSession();
 
-			if ($session->userid)
-			{
-				$categories = [$category->id => $category];
+            if ($session->userid) {
+                $categories = [$category->id => $category];
 
-				if ($children)
-				{
-					// Include all levels of child categories.
-					$categories += $category->getChildren(-1);
-				}
+                if ($children) {
+                    // Include all levels of child categories.
+                    $categories += $category->getChildren(-1);
+                }
 
-				// Mark all unread topics in selected categories as read.
-				KunenaCategoryUserHelper::markRead(array_keys($categories));
+                // Mark all unread topics in selected categories as read.
+                KunenaCategoryUserHelper::markRead(array_keys($categories));
 
-				if (\count($categories) > 1)
-				{
-					$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'), 'success');
-				}
-				else
-				{
-					$this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_FORUM_MARKED'), 'success');
-				}
-			}
-		}
+                if (\count($categories) > 1) {
+                    $this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_ALL_MARKED'), 'success');
+                } else {
+                    $this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_FORUM_MARKED'), 'success');
+                }
+            }
+        }
 
-		$this->setRedirectBack();
-	}
+        $this->setRedirectBack();
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 */
-	public function subscribe()
-	{
-		if (!Session::checkToken('get'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  null
+     * @throws  Exception
+     */
+    public function subscribe()
+    {
+        if (!Session::checkToken('get')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		$category = KunenaCategoryHelper::get($this->app->input->getInt('catid', 0));
+        $category = KunenaCategoryHelper::get($this->app->input->getInt('catid', 0));
 
-		if (!$category->isAuthorised('read'))
-		{
-			$this->app->enqueueMessage($category->getError(), 'error');
-			$this->setRedirectBack();
+        if (!$category->isAuthorised('read')) {
+            $this->app->enqueueMessage($category->getError(), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		if ($this->me->exists())
-		{
-			$success = $category->subscribe(1);
+        if ($this->me->exists()) {
+            $success = $category->subscribe(1);
 
-			if ($success)
-			{
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_USER_SUBCRIBED', $category->name), 'success');
-			}
-		}
+            if ($success) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_USER_SUBCRIBED', $category->name), 'success');
+            }
+        }
 
-		$this->setRedirectBack();
-	}
+        $this->setRedirectBack();
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 */
-	public function unsubscribe()
-	{
-		if (!Session::checkToken('request'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  null
+     * @throws  Exception
+     */
+    public function unsubscribe()
+    {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		$me = KunenaUserHelper::getMyself();
+        $me = KunenaUserHelper::getMyself();
 
-		$userid = $this->app->input->getInt('userid');
+        $userid = $this->app->input->getInt('userid');
 
-		$catid  = $this->app->input->getInt('catid', 0);
-		$catids = $catid
-			? [$catid]
-			: array_keys($this->app->input->get('categories', [], 'post'));
-		$catids = ArrayHelper::toInteger($catids);
+        $catid  = $this->app->input->getInt('catid', 0);
+        $catids = $catid
+            ? [$catid]
+            : array_keys($this->app->input->get('categories', [], 'post'));
+        $catids = ArrayHelper::toInteger($catids);
 
-		$categories = KunenaCategoryHelper::getCategories($catids);
+        $categories = KunenaCategoryHelper::getCategories($catids);
 
-		foreach ($categories as $category)
-		{
-			if (!$category->isAuthorised('read'))
-			{
-				$this->app->enqueueMessage($category->getError(), 'error');
-				continue;
-			}
+        foreach ($categories as $category) {
+            if (!$category->isAuthorised('read')) {
+                $this->app->enqueueMessage($category->getError(), 'error');
+                continue;
+            }
 
-			if ($this->me->exists())
-			{
-				$success = $category->subscribe(0, $userid);
+            if ($this->me->exists()) {
+                $success = $category->subscribe(0, $userid);
 
-				if ($success && $userid == $me->userid)
-				{
-					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name), 'success');
-				}
-				else
-				{
-					$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $category->name), 'success');
-				}
-			}
-		}
+                if ($success && $userid == $me->userid) {
+                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name), 'success');
+                } else {
+                    $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_CATEGORY_NAME_MODERATOR_UNSUBCRIBED_USER', $category->name), 'success');
+                }
+            }
+        }
 
-		$this->setRedirectBack();
-	}
+        $this->setRedirectBack();
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  * @package Kunena.Build

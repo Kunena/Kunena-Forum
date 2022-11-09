@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -19,8 +20,8 @@ use Joomla\CMS\Language\Text;
 $content = $this->execute('User/Listing');
 
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_USRL_USERLIST'),
-	'index.php?option=com_kunena&view=user&layout=list'
+    Text::_('COM_KUNENA_USRL_USERLIST'),
+    'index.php?option=com_kunena&view=user&layout=list'
 );
 
 echo $content;

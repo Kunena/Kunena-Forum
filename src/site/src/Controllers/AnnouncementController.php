@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -31,322 +32,279 @@ use Kunena\Forum\Libraries\Log\KunenaLog;
  */
 class AnnouncementController extends KunenaController
 {
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function none()
-	{
-		// FIXME: This is workaround for task=none on edit.
-		$this->edit();
-	}
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function none()
+    {
+        // FIXME: This is workaround for task=none on edit.
+        $this->edit();
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function edit()
-	{
-		$cid = $this->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid, []);
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function edit()
+    {
+        $cid = $this->input->get('cid', [], 'array');
+        $cid = ArrayHelper::toInteger($cid, []);
 
-		$announcement = KunenaAnnouncementHelper::get(array_pop($cid));
+        $announcement = KunenaAnnouncementHelper::get(array_pop($cid));
 
-		$this->setRedirect($announcement->getUrl('edit', false));
-	}
+        $this->setRedirect($announcement->getUrl('edit', false));
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function publish()
-	{
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function publish()
+    {
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		$cid = $this->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid, []);
+        $cid = $this->input->get('cid', [], 'array');
+        $cid = ArrayHelper::toInteger($cid, []);
 
-		foreach ($cid as $id)
-		{
-			$announcement = KunenaAnnouncementHelper::get($id);
-			$date_today   = Factory::getDate();
+        foreach ($cid as $id) {
+            $announcement = KunenaAnnouncementHelper::get($id);
+            $date_today   = Factory::getDate();
 
-			if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today)
-			{
-				continue;
-			}
+            if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today) {
+                continue;
+            }
 
-			$announcement->published = 1;
+            $announcement->published = 1;
 
-			try
-			{
-				$announcement->isAuthorised('edit');
-			}
-			catch (Exception $e)
-			{
-				$this->app->enqueueMessage($e->getMessage(), 'error');
-			}
+            try {
+                $announcement->isAuthorised('edit');
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+            }
 
-			try
-			{
-				$announcement->save();
-			}
-			catch (Exception $e)
-			{
-				$this->app->enqueueMessage($e->getMessage(), 'error');
-				$this->setRedirectBack();
+            try {
+                $announcement->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirectBack();
 
-				return;
-			}
+                return;
+            }
 
-			if ($announcement->isAuthorised('edit') || $announcement->save())
-			{
-				if ($this->config->logModeration)
-				{
-					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
-				}
+            if ($announcement->isAuthorised('edit') || $announcement->save()) {
+                if ($this->config->logModeration) {
+                    KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
+                }
 
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)), 'success');
-			}
-		}
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_PUBLISH', $this->escape($announcement->title)), 'success');
+            }
+        }
 
-		$this->setRedirectBack();
-	}
+        $this->setRedirectBack();
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function unpublish()
-	{
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function unpublish()
+    {
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		$cid = $this->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid, []);
+        $cid = $this->input->get('cid', [], 'array');
+        $cid = ArrayHelper::toInteger($cid, []);
 
-		foreach ($cid as $id)
-		{
-			$announcement = KunenaAnnouncementHelper::get($id);
-			$date_today   = Factory::getDate();
+        foreach ($cid as $id) {
+            $announcement = KunenaAnnouncementHelper::get($id);
+            $date_today   = Factory::getDate();
 
-			if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today)
-			{
-				continue;
-			}
+            if ($announcement->published == 0 && $announcement->publish_down > $date_today && $announcement->publish_down > $date_today) {
+                continue;
+            }
 
-			$announcement->published = 0;
+            $announcement->published = 0;
 
-			try
-			{
-				$announcement->isAuthorised('edit');
-			}
-			catch (Exception $e)
-			{
-				$this->app->enqueueMessage($e->getMessage(), 'error');
-			}
+            try {
+                $announcement->isAuthorised('edit');
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+            }
 
-			try
-			{
-				$announcement->save();
-			}
-			catch (Exception $e)
-			{
-				$this->app->enqueueMessage($e->getMessage(), 'error');
-				$this->setRedirectBack();
+            try {
+                $announcement->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirectBack();
 
-				return;
-			}
+                return;
+            }
 
-			if ($announcement->isAuthorised('edit') || !$announcement->save())
-			{
-				if ($this->config->logModeration)
-				{
-					KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
-				}
+            if ($announcement->isAuthorised('edit') || !$announcement->save()) {
+                if ($this->config->logModeration) {
+                    KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
+                }
 
-				$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)), 'success');
-			}
-		}
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title)), 'success');
+            }
+        }
 
-		$this->setRedirectBack();
-	}
+        $this->setRedirectBack();
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function delete()
-	{
-		if (!Session::checkToken('request'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function delete()
+    {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		$cid = $this->app->input->get('cid', (array) $this->app->input->getInt('id'), 'post', 'array');
-		$cid = ArrayHelper::toInteger($cid);
+        $cid = $this->app->input->get('cid', (array) $this->app->input->getInt('id'), 'post', 'array');
+        $cid = ArrayHelper::toInteger($cid);
 
-		foreach ($cid as $id)
-		{
-			$announcement = KunenaAnnouncementHelper::get($id);
+        foreach ($cid as $id) {
+            $announcement = KunenaAnnouncementHelper::get($id);
 
-			try
-			{
-				$announcement->isAuthorised('delete');
-			}
-			catch (Exception $e)
-			{
-				$this->app->enqueueMessage($e->getMessage(), 'error');
-			}
+            try {
+                $announcement->isAuthorised('delete');
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+            }
 
-			try
-			{
-				$announcement->delete();
-			}
-			catch (Exception $e)
-			{
-				$this->app->enqueueMessage($e->getMessage(), 'error');
-				$this->setRedirectBack();
+            try {
+                $announcement->delete();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirectBack();
 
-				return;
-			}
+                return;
+            }
 
-			if ($announcement->isAuthorised('delete') || $announcement->delete())
-			{
-				if ($this->config->logModeration)
-				{
-					KunenaLog::log(
-						KunenaLog::TYPE_MODERATION,
-						KunenaLog::LOG_ANNOUNCEMENT_DELETE,
-						['id' => $announcement->id]
-					);
-				}
+            if ($announcement->isAuthorised('delete') || $announcement->delete()) {
+                if ($this->config->logModeration) {
+                    KunenaLog::log(
+                        KunenaLog::TYPE_MODERATION,
+                        KunenaLog::LOG_ANNOUNCEMENT_DELETE,
+                        ['id' => $announcement->id]
+                    );
+                }
 
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'), 'success');
-			}
-		}
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_ANN_DELETED'), 'success');
+            }
+        }
 
-		$this->setRedirect(KunenaAnnouncementHelper::getUrl('listing', false));
-	}
+        $this->setRedirect(KunenaAnnouncementHelper::getUrl('listing', false));
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function save()
-	{
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirectBack();
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function save()
+    {
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		$now                    = new Date;
-		$fields                 = [];
-		$fields['title']        = $this->app->input->getString('title', '');
-		$fields['description']  = $this->app->input->getString('description', '');
-		$fields['sdescription'] = $this->app->input->getString('sdescription', '');
-		$fields['created']      = $this->app->input->getString('created');
-		$fields['publish_up']   = $this->app->input->getString('publish_up');
-		$fields['publish_down'] = $this->app->input->getString('publish_down');
-		$fields['published']    = $this->app->input->getInt('published', 1);
-		$fields['showdate']     = $this->app->input->getInt('showdate', 1);
+        $now                    = new Date();
+        $fields                 = [];
+        $fields['title']        = $this->app->input->getString('title', '');
+        $fields['description']  = $this->app->input->getString('description', '');
+        $fields['sdescription'] = $this->app->input->getString('sdescription', '');
+        $fields['created']      = $this->app->input->getString('created');
+        $fields['publish_up']   = $this->app->input->getString('publish_up');
+        $fields['publish_down'] = $this->app->input->getString('publish_down');
+        $fields['published']    = $this->app->input->getInt('published', 1);
+        $fields['showdate']     = $this->app->input->getInt('showdate', 1);
 
-		$id           = $this->app->input->getInt('id');
-		$announcement = KunenaAnnouncementHelper::get($id);
+        $id           = $this->app->input->getInt('id');
+        $announcement = KunenaAnnouncementHelper::get($id);
 
-		if ($fields['created'] == null)
-		{
-			$fields['created'] = $now->toSql();
-		}
+        if ($fields['created'] == null) {
+            $fields['created'] = $now->toSql();
+        }
 
-		if ($fields['publish_up'] == null)
-		{
-			$fields['publish_up'] = $now->toSql();
-		}
+        if ($fields['publish_up'] == null) {
+            $fields['publish_up'] = $now->toSql();
+        }
 
-		if ($fields['publish_down'] == null)
-		{
-			$fields['publish_down'] = '1000-01-01 00:00:00';
-		}
+        if ($fields['publish_down'] == null) {
+            $fields['publish_down'] = '1000-01-01 00:00:00';
+        }
 
-		$announcement->bind($fields);
+        $announcement->bind($fields);
 
-		try
-		{
-			$announcement->isAuthorised($id ? 'edit' : 'create');
-		}
-		catch (Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'error');
-			$this->setRedirectBack();
+        try {
+            $announcement->isAuthorised($id ? 'edit' : 'create');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		try
-		{
-			$announcement->save();
-		}
-		catch (Exception $e)
-		{
-			$this->app->enqueueMessage($e->getMessage(), 'error');
-			$this->setRedirectBack();
+        try {
+            $announcement->save();
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
 
-			return;
-		}
+            return;
+        }
 
-		if ($this->config->logModeration)
-		{
-			KunenaLog::log(
-				KunenaLog::TYPE_MODERATION,
-				$id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT :
-				KunenaLog::LOG_ANNOUNCEMENT_CREATE,
-				['id' => $announcement->id]
-			);
-		}
+        if ($this->config->logModeration) {
+            KunenaLog::log(
+                KunenaLog::TYPE_MODERATION,
+                $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT :
+                KunenaLog::LOG_ANNOUNCEMENT_CREATE,
+                ['id' => $announcement->id]
+            );
+        }
 
-		$this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'), 'success');
-		$this->setRedirect($announcement->getUrl('default', false));
-	}
+        $this->app->enqueueMessage(Text::_($id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD'), 'success');
+        $this->setRedirect($announcement->getUrl('default', false));
+    }
 }

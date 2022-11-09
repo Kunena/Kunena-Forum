@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -32,150 +33,144 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class WidgetLoginDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Widget/Login';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Widget/Login';
 
-	/**
-	 * @var     object
-	 * @since   Kunena 6.0
-	 */
-	public $me;
+    /**
+     * @var     object
+     * @since   Kunena 6.0
+     */
+    public $me;
 
-	/**
-	 * @var     object
-	 * @since   Kunena 6.0
-	 */
-	public $my;
+    /**
+     * @var     object
+     * @since   Kunena 6.0
+     */
+    public $my;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $registrationUrl;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $registrationUrl;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $resetPasswordUrl;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $resetPasswordUrl;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $remindUsernameUrl;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $remindUsernameUrl;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $rememberMe;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $rememberMe;
 
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $lastvisitDate;
+    /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
+    public $lastvisitDate;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $announcementsUrl;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $announcementsUrl;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $pm_link;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $pm_link;
 
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $inboxCount;
+    /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
+    public $inboxCount;
 
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $inboxCountValue;
+    /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
+    public $inboxCountValue;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $profile_edit_url;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $profile_edit_url;
 
-	/**
-	 * @var     object
-	 * @since   Kunena 5.1
-	 */
-	public $plglogin;
+    /**
+     * @var     object
+     * @since   Kunena 5.1
+     */
+    public $plglogin;
 
-	/**
-	 * Prepare login display.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare login display.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$login = KunenaLogin::getInstance();
+        $login = KunenaLogin::getInstance();
 
-		$params         = new Registry($login->getParams());
-		$this->plglogin = $params->get('login', '1');
+        $params         = new Registry($login->getParams());
+        $this->plglogin = $params->get('login', '1');
 
-		if (!$login->enabled())
-		{
-			return false;
-		}
+        if (!$login->enabled()) {
+            return false;
+        }
 
-		$this->me   = KunenaUserHelper::getMyself();
-		$this->name = ($this->me->exists() ? 'Widget/Login/Logout' : 'Widget/Login/Login');
+        $this->me   = KunenaUserHelper::getMyself();
+        $this->name = ($this->me->exists() ? 'Widget/Login/Logout' : 'Widget/Login/Login');
 
-		$this->my = Factory::getApplication()->getIdentity();
+        $this->my = Factory::getApplication()->getIdentity();
 
-		if ($this->my->guest)
-		{
-			$this->registrationUrl   = $login->getRegistrationUrl();
-			$this->resetPasswordUrl  = $login->getResetUrl();
-			$this->remindUsernameUrl = $login->getRemindUrl();
-			$this->rememberMe        = $login->getRememberMe();
-		}
-		else
-		{
-			$this->lastvisitDate = KunenaDate::getInstance($this->my->lastvisitDate);
+        if ($this->my->guest) {
+            $this->registrationUrl   = $login->getRegistrationUrl();
+            $this->resetPasswordUrl  = $login->getResetUrl();
+            $this->remindUsernameUrl = $login->getRemindUrl();
+            $this->rememberMe        = $login->getRememberMe();
+        } else {
+            $this->lastvisitDate = KunenaDate::getInstance($this->my->lastvisitDate);
 
-			$private = KunenaFactory::getPrivateMessaging();
+            $private = KunenaFactory::getPrivateMessaging();
 
-			if ($private)
-			{
-				$this->inboxCountValue = $private->getUnreadCount($this->me->userid);
-				$this->inboxCount      = $this->inboxCountValue ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->inboxCountValue) : Text::_('COM_KUNENA_PMS_INBOX');
-				$this->pm_link         = $private->getInboxURL();
-			}
+            if ($private) {
+                $this->inboxCountValue = $private->getUnreadCount($this->me->userid);
+                $this->inboxCount      = $this->inboxCountValue ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->inboxCountValue) : Text::_('COM_KUNENA_PMS_INBOX');
+                $this->pm_link         = $private->getInboxURL();
+            }
 
-			$profile = KunenaFactory::getProfile();
+            $profile = KunenaFactory::getProfile();
 
-			$this->profile_edit_url = $profile->getEditProfileURL($this->me->userid);
+            $this->profile_edit_url = $profile->getEditProfileURL($this->me->userid);
 
-			// Display announcements.
-			if ($this->me->isModerator())
-			{
-				$this->announcementsUrl = KunenaAnnouncementHelper::getUrl('listing');
-			}
-		}
+            // Display announcements.
+            if ($this->me->isModerator()) {
+                $this->announcementsUrl = KunenaAnnouncementHelper::getUrl('listing');
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

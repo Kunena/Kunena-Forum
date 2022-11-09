@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -9,6 +10,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -70,7 +72,7 @@ $wa->useScript('multiselect');
                                            value="<?php echo $this->list->Ordering; ?>"/>
                                     <input type="hidden" name="filter_order_Dir"
                                            value="<?php echo $this->list->Direction; ?>"/>
-									<?php echo HTMLHelper::_('form.token'); ?>
+                                    <?php echo HTMLHelper::_('form.token'); ?>
 
                                     <div id="filter-bar" class="btn-toolbar">
                                         <div class="filter-search btn-group pull-left">
@@ -94,7 +96,7 @@ $wa->useScript('multiselect');
                                             </button>
                                         </div>
                                         <div class="btn-group pull-right d-none d-md-block">
-											<?php echo $this->pagination->getLimitBox(); ?>
+                                            <?php echo $this->pagination->getLimitBox(); ?>
                                         </div>
                                         <div class="btn-group pull-right d-none d-md-block">
                                             <label for="directionTable"
@@ -102,7 +104,7 @@ $wa->useScript('multiselect');
                                             <select name="directionTable" id="directionTable" class="input-medium"
                                                     onchange="Joomla.orderTable()">
                                                 <option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-												<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
+                                                <?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
                                             </select>
                                         </div>
                                         <div class="btn-group pull-right">
@@ -111,7 +113,7 @@ $wa->useScript('multiselect');
                                             <select name="sortTable" id="sortTable" class="input-medium"
                                                     onchange="Joomla.orderTable()">
                                                 <option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-												<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
+                                                <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
                                             </select>
                                         </div>
                                         <div class="clearfix"></div>
@@ -125,19 +127,19 @@ $wa->useScript('multiselect');
                                                        onclick="Joomla.checkAll(this)"/>
                                             </th>
                                             <th width="10%">
-												<?php echo Text::_('COM_KUNENA_RANKSIMAGE'); ?>
+                                                <?php echo Text::_('COM_KUNENA_RANKSIMAGE'); ?>
                                             </th>
                                             <th width="58%">
-												<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->list->Direction, $this->list->Ordering); ?>
+                                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->list->Direction, $this->list->Ordering); ?>
                                             </th>
                                             <th width="10%" class="nowrap center">
-												<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->list->Direction, $this->list->Ordering); ?>
+                                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->list->Direction, $this->list->Ordering); ?>
                                             </th>
                                             <th width="10%" class="nowrap center">
-												<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->list->Direction, $this->list->Ordering); ?>
+                                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->list->Direction, $this->list->Ordering); ?>
                                             </th>
                                             <th width="1%" class="nowrap center d-none d-md-table-cell">
-												<?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering); ?>
+                                                <?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering); ?>
                                             </th>
                                         </tr>
                                         <tr>
@@ -162,7 +164,7 @@ $wa->useScript('multiselect');
                                                         class="select-filter filter form-control"
                                                         onchange="Joomla.orderTable()">
                                                     <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-													<?php echo HTMLHelper::_('select.options', $this->specialOptions(), 'value', 'text', $this->filter->Special); ?>
+                                                    <?php echo HTMLHelper::_('select.options', $this->specialOptions(), 'value', 'text', $this->filter->Special); ?>
                                                 </select>
                                             </td>
                                             <td class="nowrap center">
@@ -182,19 +184,17 @@ $wa->useScript('multiselect');
                                         <tfoot>
                                         <tr>
                                             <td colspan="6">
-												<?php echo $this->pagination->getListFooter(); ?>
+                                                <?php echo $this->pagination->getListFooter(); ?>
                                             </td>
                                         </tr>
                                         </tfoot>
                                         <tbody>
-										<?php
-										$i = 0;
+                                        <?php
+                                        $i = 0;
 
-										if ($this->pagination->total > 0)
-											:
-											foreach ($this->items as $id => $row)
-												:
-												?>
+                                        if ($this->pagination->total > 0) :
+                                            foreach ($this->items as $id => $row) :
+                                                ?>
                                                 <tr>
                                                     <td>
                                                         <input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]"
@@ -212,47 +212,44 @@ $wa->useScript('multiselect');
                                                     <td class="nowrap">
                                                         <a href="#edit"
                                                            onclick="return Joomla.listItemTask('cb<?php echo $id; ?>','rank.edit')">
-															<?php echo Text::_($row->rankTitle); ?>
+                                                            <?php echo Text::_($row->rankTitle); ?>
                                                         </a>
                                                     </td>
                                                     <td class="nowrap center">
-														<?php echo $row->rankSpecial == 1 ? Text::_('COM_KUNENA_YES') : Text::_('COM_KUNENA_NO'); ?>
+                                                        <?php echo $row->rankSpecial == 1 ? Text::_('COM_KUNENA_YES') : Text::_('COM_KUNENA_NO'); ?>
                                                     </td>
                                                     <td class="nowrap center">
-														<?php echo $this->escape($row->rankMin); ?>
+                                                        <?php echo $this->escape($row->rankMin); ?>
                                                     </td>
                                                     <td class="nowrap center">
-														<?php echo $this->escape($row->rankId); ?>
+                                                        <?php echo $this->escape($row->rankId); ?>
                                                     </td>
                                                 </tr>
-											<?php
-											endforeach;
-										else:
-											?>
+                                                <?php
+                                            endforeach;
+                                        else :
+                                            ?>
                                             <tr>
                                                 <td colspan="10">
                                                     <div class="card card-block bg-faded p-2 center filter-state">
-															<span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
-																<?php
-																if ($this->filter->Active)
-																	:
-																	?>
+                                                            <span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
+                                                                <?php
+                                                                if ($this->filter->Active) :
+                                                                    ?>
                                                                     <button class="btn btn-outline-primary"
                                                                             type="button"
                                                                             onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-																<?php else
-
-																	:
-																	?>
+                                                                <?php else :
+                                                                    ?>
                                                                     <button class="btn btn-outline-success"
                                                                             type="button"
                                                                             onclick="Joomla.submitbutton('add');"><?php echo Text::_('COM_KUNENA_NEW_RANK'); ?></button>
-																<?php endif; ?>
-															</span>
+                                                                <?php endif; ?>
+                                                            </span>
                                                     </div>
                                                 </td>
                                             </tr>
-										<?php endif; ?>
+                                        <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </form>
@@ -265,7 +262,7 @@ $wa->useScript('multiselect');
                                       enctype="multipart/form-data">
                                     <input type="hidden" name="task" value="ranks.rankUpload"/>
                                     <input type="hidden" name="boxchecked" value="0"/>
-									<?php echo HTMLHelper::_('form.token'); ?>
+                                    <?php echo HTMLHelper::_('form.token'); ?>
 
                                     <input type="file" id="file-upload" class="btn btn-outline-primary"
                                            name="Filedata"/>
@@ -282,6 +279,6 @@ $wa->useScript('multiselect');
     </div>
 
     <div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+        <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

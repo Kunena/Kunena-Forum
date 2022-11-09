@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -23,30 +24,28 @@ $content = $this->execute('Topic/Moderate');
 $parents   = KunenaCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
-foreach ($parents as $parent)
-{
-	$this->addBreadcrumb(
-		$parent->displayField('name'),
-		$parent->getUri()
-	);
+foreach ($parents as $parent) {
+    $this->addBreadcrumb(
+        $parent->displayField('name'),
+        $parent->getUri()
+    );
 }
 
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_MENU_TOPIC'),
-	$content->topic->getUri()
+    Text::_('COM_KUNENA_MENU_TOPIC'),
+    $content->topic->getUri()
 );
 
-if ($content->message)
-{
-	$this->addBreadcrumb(
-		Text::_('COM_KUNENA_MESSAGE'),
-		$content->message->getUri()
-	);
+if ($content->message) {
+    $this->addBreadcrumb(
+        Text::_('COM_KUNENA_MESSAGE'),
+        $content->message->getUri()
+    );
 }
 
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'),
-	$content->uri
+    Text::_('COM_KUNENA_MESSAGE_ACTIONS_LABEL_MODERATE'),
+    $content->uri
 );
 
 echo $content;

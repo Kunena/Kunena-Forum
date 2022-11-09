@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -22,12 +23,11 @@ $content = $this->execute('Category/Topics');
 $parents   = KunenaCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
-foreach ($parents as $parent)
-{
-	$this->addBreadcrumb(
-		$parent->displayField('name'),
-		$parent->getUri()
-	);
+foreach ($parents as $parent) {
+    $this->addBreadcrumb(
+        $parent->displayField('name'),
+        $parent->getUri()
+    );
 }
 
 echo $this->subRequest('Category/Index');

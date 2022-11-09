@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -17,17 +18,16 @@ namespace Kunena\Forum\Site;
 $attachment = $this->attachment;
 $location   = $attachment->getUrl();
 
-if (!$attachment->isPdf())
-{
-	return;
+if (!$attachment->isPdf()) {
+    return;
 }
 ?>
 <div class="clearfix"></div>
 
 <object class="pdf" data="<?php echo $location; ?>" type="application/pdf" width="100%" height="auto"
-		style="min-height: 300px;">
-	<p>
-		This browser does not support PDFs. Please download the PDF to view it: <a href="<?php echo $location; ?>">Download
-			PDF</a>
-	</p>
+        style="min-height: 300px;">
+    <p>
+        This browser does not support PDFs. Please download the PDF to view it: <a href="<?php echo $location; ?>">Download
+            PDF</a>
+    </p>
 </object>

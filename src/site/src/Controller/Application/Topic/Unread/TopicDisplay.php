@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,58 +29,57 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
  */
 class TopicDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * Return true if layout exists.
-	 *
-	 * @return  boolean
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function exists()
-	{
-		return KunenaFactory::getTemplate()->isHmvc();
-	}
+    /**
+     * Return true if layout exists.
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function exists()
+    {
+        return KunenaFactory::getTemplate()->isHmvc();
+    }
 
-	/**
-	 * Redirect unread layout to the page that contains the first unread message.
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		$catid = $this->input->getInt('catid', 0);
-		$id    = $this->input->getInt('id', 0);
+    /**
+     * Redirect unread layout to the page that contains the first unread message.
+     *
+     * @return  void
+     *
+     * @throws  null
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        $catid = $this->input->getInt('catid', 0);
+        $id    = $this->input->getInt('id', 0);
 
-		$category = KunenaCategoryHelper::get($catid);
-		$category->tryAuthorise();
+        $category = KunenaCategoryHelper::get($catid);
+        $category->tryAuthorise();
 
-		$topic = KunenaTopicHelper::get($id);
-		$topic->tryAuthorise();
+        $topic = KunenaTopicHelper::get($id);
+        $topic->tryAuthorise();
 
-		KunenaTopicHelper::fetchNewStatus([$topic->id => $topic]);
-		$message = KunenaMessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
-		$message->tryAuthorise();
+        KunenaTopicHelper::fetchNewStatus([$topic->id => $topic]);
+        $message = KunenaMessageHelper::get($topic->lastread ? $topic->lastread : $topic->last_post_id);
+        $message->tryAuthorise();
 
-		while (@ob_end_clean())
-		{
-		}
+        while (@ob_end_clean()) {
+        }
 
-		$this->app->redirect($topic->getUrl($category, false, $message));
-	}
+        $this->app->redirect($topic->getUrl($category, false, $message));
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		$this->setMetaData('robots', 'follow, noindex');
-	}
+    /**
+     * Prepare document.
+     *
+     * @return void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+        $this->setMetaData('robots', 'follow, noindex');
+    }
 }

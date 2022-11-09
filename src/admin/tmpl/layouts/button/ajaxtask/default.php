@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -9,6 +10,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Router\Route;
@@ -19,6 +21,6 @@ $class      = (isset($this->class)) ? " {$this->class}" : 'btn-outline-success';
 ?>
 <a href="<?php echo Route::_($this->uri); ?>" data-bs-toggle="ajaxmodal"<?php echo $dataTarget . $dataForm; ?>
    class="btn btn-small <?php echo $class; ?>">
-	<i class="icon-apply" title="<?php echo $this->title; ?>"></i>
-	<?php echo $this->title; ?>
+    <i class="icon-apply" title="<?php echo $this->title; ?>"></i>
+    <?php echo $this->title; ?>
 </a>

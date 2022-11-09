@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     Forum.Administrator
  * @subpackage  com_kunena

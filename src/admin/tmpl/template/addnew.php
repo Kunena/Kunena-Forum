@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -9,6 +10,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -19,28 +21,28 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 ?>
 
 <div id="kunena" class="container-fluid">
-	<div class="row">
-		<div id="j-main-container" class="col-md-12" role="main">
-			<form action="<?php echo KunenaRoute::_('administrator/index.php') ?>"
-				  method="post"
-				  enctype="multipart/form-data" id="adminForm" name="adminForm">
-				  <input type="hidden" name="option" value="com_kunena"/>
-				  <input type="hidden" name="task" value="templates.install"/>
-				<?php echo HTMLHelper::_('form.token'); ?>
+    <div class="row">
+        <div id="j-main-container" class="col-md-12" role="main">
+            <form action="<?php echo KunenaRoute::_('administrator/index.php') ?>"
+                  method="post"
+                  enctype="multipart/form-data" id="adminForm" name="adminForm">
+                  <input type="hidden" name="option" value="com_kunena"/>
+                  <input type="hidden" name="task" value="templates.install"/>
+                <?php echo HTMLHelper::_('form.token'); ?>
 
-				<fieldset>
-					<div>
-						<label for="install_package"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD'); ?>
-							:</label>
-						<input class="input_box" name="install_package" type="file"/>
-						<input class="btn btn-outline-primary" type="submit" name="submit"
-							   value="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>"/>
-					</div>
-				</fieldset>
-			</form>
-		</div>
-	</div>
-	<div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
-	</div>
+                <fieldset>
+                    <div>
+                        <label for="install_package"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD'); ?>
+                            :</label>
+                        <input class="input_box" name="install_package" type="file"/>
+                        <input class="btn btn-outline-primary" type="submit" name="submit"
+                               value="<?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE'); ?> &amp; <?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL'); ?>"/>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="pull-right small">
+        <?php echo KunenaVersion::getLongVersionHTML(); ?>
+    </div>
 </div>

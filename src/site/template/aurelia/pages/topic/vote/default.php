@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -18,28 +19,27 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 
 $content = $this->request('Topic/Poll')
-	->setProperties(['alwaysVote' => true])
-	->execute();
+    ->setProperties(['alwaysVote' => true])
+    ->execute();
 
 // Display breadcrumb path to the current category / topic / message / report.
 $parents   = KunenaCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
-foreach ($parents as $parent)
-{
-	$this->addBreadcrumb(
-		$parent->displayField('name'),
-		$parent->getUri()
-	);
+foreach ($parents as $parent) {
+    $this->addBreadcrumb(
+        $parent->displayField('name'),
+        $parent->getUri()
+    );
 }
 
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_MENU_TOPIC'),
-	$content->topic->getUri()
+    Text::_('COM_KUNENA_MENU_TOPIC'),
+    $content->topic->getUri()
 );
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_POLL_STATS_NAME'),
-	$content->uri
+    Text::_('COM_KUNENA_POLL_STATS_NAME'),
+    $content->uri
 );
 
 echo $content;

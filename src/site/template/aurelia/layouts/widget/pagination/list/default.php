@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -18,49 +19,43 @@ $data = $this->pagination->getData();
 
 $count = count($data->pages);
 
-if ($count == 0)
-{
-	return;
-}
-elseif ($count == 1 && empty($display))
-{
-	return;
+if ($count == 0) {
+    return;
+} elseif ($count == 1 && empty($display)) {
+    return;
 }
 
 $last = 0;
 ?>
 
 <nav class="d-none d-sm-block">
-	<ul class="pagination ms-0">
-		<?php
-		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);
-		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->previous);
+    <ul class="pagination ms-0">
+        <?php
+        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->start);
+        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->previous);
 
-		foreach ($data->pages as $k => $item)
-		{
-			if ($last + 1 != $k)
-			{
-				echo '<li class="page-item disabled"><a class="">...</a></li>';
-			}
+        foreach ($data->pages as $k => $item) {
+            if ($last + 1 != $k) {
+                echo '<li class="page-item disabled"><a class="">...</a></li>';
+            }
 
-			$last = $k;
+            $last = $k;
 
-			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
-		}
+            echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
+        }
 
-		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->next);
-		echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->end);
-		?>
-	</ul>
+        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->next);
+        echo $this->subLayout('Widget/Pagination/Item')->set('item', $data->end);
+        ?>
+    </ul>
 </nav>
 
 <nav class="d-block d-sm-none">
-	<ul class="pagination ms-0">
-		<?php
-		foreach ($data->pages as $k => $item)
-		{
-			echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
-		}
-		?>
-	</ul>
+    <ul class="pagination ms-0">
+        <?php
+        foreach ($data->pages as $k => $item) {
+            echo $this->subLayout('Widget/Pagination/Item')->set('item', $item);
+        }
+        ?>
+    </ul>
 </nav>

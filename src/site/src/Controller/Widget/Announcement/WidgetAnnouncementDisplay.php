@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -26,54 +27,51 @@ use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
  */
 class WidgetAnnouncementDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Widget/Announcement';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Widget/Announcement';
 
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	public $announcement;
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    public $announcement;
 
-	/**
-	 * Prepare announcement box display.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare announcement box display.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$config = KunenaConfig::getInstance();
+        $config = KunenaConfig::getInstance();
 
-		if (!$config->showAnnouncement)
-		{
-			return false;
-		}
+        if (!$config->showAnnouncement) {
+            return false;
+        }
 
-		$items              = KunenaAnnouncementHelper::getAnnouncements();
-		$this->announcement = array_pop($items);
+        $items              = KunenaAnnouncementHelper::getAnnouncements();
+        $this->announcement = array_pop($items);
 
-		if (!$this->announcement || !$this->announcement->isAuthorised('read'))
-		{
-			return false;
-		}
+        if (!$this->announcement || !$this->announcement->isAuthorised('read')) {
+            return false;
+        }
 
-		$view   = $this->input->getWord('view', 'default');
-		$layout = $this->input->getWord('layout', 'default');
+        $view   = $this->input->getWord('view', 'default');
+        $layout = $this->input->getWord('layout', 'default');
 
-		if ($view == 'topic' && $layout != 'default' || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default')
-		{
-			return false;
-		}
+        if ($view == 'topic' && $layout != 'default' || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default') {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

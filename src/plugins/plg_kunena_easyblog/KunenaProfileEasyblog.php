@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -25,84 +26,82 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  */
 class KunenaProfileEasyblog extends KunenaProfile
 {
-	/**
-	 * @var null
-	 * @since version
-	 */
-	protected $params = null;
+    /**
+     * @var null
+     * @since version
+     */
+    protected $params = null;
 
-	/**
-	 * KunenaProfileEasyblog constructor.
-	 *
-	 * @param $params
-	 *
-	 * @since K2.0
-	 */
-	public function __construct($params)
-	{
-		$this->params = $params;
-	}
+    /**
+     * KunenaProfileEasyblog constructor.
+     *
+     * @param $params
+     *
+     * @since K2.0
+     */
+    public function __construct($params)
+    {
+        $this->params = $params;
+    }
 
-	/**
-	 * @param   string  $action  action
-	 * @param   bool    $xhtml   xhtml
-	 *
-	 * @return boolean
-	 * @since K2.0
-	 * @throws Exception
-	 * @throws null
-	 */
-	public function getUserListURL($action = '', $xhtml = true)
-	{
-		$config = KunenaFactory::getConfig();
-		$my     = Factory::getUser();
+    /**
+     * @param   string  $action  action
+     * @param   bool    $xhtml   xhtml
+     *
+     * @return boolean
+     * @since K2.0
+     * @throws Exception
+     * @throws null
+     */
+    public function getUserListURL($action = '', $xhtml = true)
+    {
+        $config = KunenaFactory::getConfig();
+        $my     = Factory::getUser();
 
-		if ($config->userlistAllowed == 0 && $my->id == 0)
-		{
-			return false;
-		}
+        if ($config->userlistAllowed == 0 && $my->id == 0) {
+            return false;
+        }
 
-		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list' . $action, $xhtml);
-	}
+        return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list' . $action, $xhtml);
+    }
 
-	/**
-	 * @param           $userid
-	 * @param   string  $task   task
-	 * @param   bool    $xhtml  xhtml
-	 *
-	 * @return boolean
-	 * @since K2.0
-	 */
-	public function getProfileURL($userid, $task = '', $xhtml = true)
-	{
-		// Make sure that user profile exist.
-		if (!$userid)
-		{
-			return false;
-		}
+    /**
+     * @param           $userid
+     * @param   string  $task   task
+     * @param   bool    $xhtml  xhtml
+     *
+     * @return boolean
+     * @since K2.0
+     */
+    public function getProfileURL($userid, $task = '', $xhtml = true)
+    {
+        // Make sure that user profile exist.
+        if (!$userid) {
+            return false;
+        }
 
-		return Route::_('index.php?option=com_easyblog&view=blogger&layout=listings&id=' . $userid, false);
-	}
+        return Route::_('index.php?option=com_easyblog&view=blogger&layout=listings&id=' . $userid, false);
+    }
 
-	/**
-	 * @param $view
-	 * @param $params
-	 *
-	 * @since K2.0
-	 */
-	public function showProfile($view, &$params)
-	{
-	}
+    /**
+     * @param $view
+     * @param $params
+     *
+     * @since K2.0
+     */
+    public function showProfile($view, &$params)
+    {
+    }
 
-	/**
-	 * @param         $userid
-	 * @param   bool  $xhtml  xhtml
-	 *
-	 * @return boolean
-	 * @since K2.0
-	 */
-	public function getEditProfileURL($userid, $xhtml = true): string
-	{
-		return $this->getProfileURL($userid, 'edit', $xhtml);
-	}
+    /**
+     * @param         $userid
+     * @param   bool  $xhtml  xhtml
+     *
+     * @return boolean
+     * @since K2.0
+     */
+    public function getEditProfileURL($userid, $xhtml = true): string
+    {
+        return $this->getProfileURL($userid, 'edit', $xhtml);
+    }
 }

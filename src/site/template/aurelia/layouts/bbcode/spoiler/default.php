@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,17 +25,17 @@ $this->addScriptOptions('com_kunena.hide', Text::_('COM_KUNENA_LIB_BBCODE_SPOILE
 ?>
 
 <div class="kspoiler">
-	<div class="kspoiler-header">
-		<div class="kspoiler-title" style="display:inline-block;">
-			<?php echo $this->title; ?>
-		</div>
-		<div class="kspoiler-expand" style="display:inline-block;">
-			<input class="btn-link" type="button" id="kspoiler-show" value="<?php echo Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'); ?>"/>
-		</div>
-		<div class="kspoiler-wrapper" style="display:none;">
-			<div class="kspoiler-content">
-				<?php echo $this->content; ?>
-			</div>
-		</div>
-	</div>
+    <div class="kspoiler-header">
+        <div class="kspoiler-title" style="display:inline-block;">
+            <?php echo $this->title; ?>
+        </div>
+        <div class="kspoiler-expand" style="display:inline-block;">
+            <input class="btn-link" type="button" id="kspoiler-show" value="<?php echo Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'); ?>"/>
+        </div>
+        <div class="kspoiler-wrapper" style="display:none;">
+            <div class="kspoiler-content">
+                <?php echo $this->content; ?>
+            </div>
+        </div>
+    </div>
 </div>

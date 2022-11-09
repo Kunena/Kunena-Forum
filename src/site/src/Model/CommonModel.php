@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -23,21 +24,21 @@ use Joomla\CMS\MVC\Model\ListModel;
  */
 class CommonModel extends ListModel
 {
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @param   null  $ordering
-	 * @param   null  $direction
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function populateState($ordering = null, $direction = null): void
-	{
-		$params = $this->getParameters();
-		$this->setState('params', $params);
-	}
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @param   null  $ordering
+     * @param   null  $direction
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function populateState($ordering = null, $direction = null): void
+    {
+        $params = $this->getParameters();
+        $this->setState('params', $params);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,204 +29,191 @@ use stdClass;
  */
 class TemplateModel extends AdminModel
 {
-	/**
-	 * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
-	 *
-	 * @param   bool   $loadData  loadData
-	 *
-	 * @param   array  $data      data
-	 *
-	 * @return object
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws \Exception
-	 */
-	public function getForm($data = [], $loadData = true): object
-	{
-		$app = Factory::getApplication();
+    /**
+     * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
+     *
+     * @param   bool   $loadData  loadData
+     *
+     * @param   array  $data      data
+     *
+     * @return object
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws \Exception
+     */
+    public function getForm($data = [], $loadData = true): object
+    {
+        $app = Factory::getApplication();
 
-		// Load the configuration definition file.
-		$template = $this->getState('template');
-		$xml      = KunenaTemplate::getInstance($template)->getConfigXml();
+        // Load the configuration definition file.
+        $template = $this->getState('template');
+        $xml      = KunenaTemplate::getInstance($template)->getConfigXml();
 
-		// Get the form.
-		try
-		{
-			$form = $this->loadForm('com_kunena.template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
-		}
-		catch (Exception $e)
-		{
-			$app->enqueueMessage($e->getMessage(), 'error');
-		}
+        // Get the form.
+        try {
+            $form = $this->loadForm('com_kunena.template', $xml, ['control' => 'jform', 'load_data' => $loadData, 'file' => false], true, '//config');
+        } catch (Exception $e) {
+            $app->enqueueMessage($e->getMessage(), 'error');
+        }
 
-		if (empty($form))
-		{
-			return false;
-		}
+        if (empty($form)) {
+            return false;
+        }
 
-		return $form;
-	}
+        return $form;
+    }
 
-	/**
-	 * @return  boolean|stdClass
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function getTemplateDetails()
-	{
-		$app = Factory::getApplication();
+    /**
+     * @return  boolean|stdClass
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getTemplateDetails()
+    {
+        $app = Factory::getApplication();
 
-		$template = $app->getUserState('kunena.edit.template');
-		$details  = KunenaTemplateHelper::parseXmlFile((string) $template);
+        $template = $app->getUserState('kunena.edit.template');
+        $details  = KunenaTemplateHelper::parseXmlFile((string) $template);
 
-		if (empty($template))
-		{
-			$template = $this->getState('template');
-			$details  = KunenaTemplateHelper::parseXmlFile((string) $template);
-		}
+        if (empty($template)) {
+            $template = $this->getState('template');
+            $details  = KunenaTemplateHelper::parseXmlFile((string) $template);
+        }
 
-		return $details;
-	}
+        return $details;
+    }
 
-	/**
-	 * @return  string|void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getFileScssParsed()
-	{
-		$app = Factory::getApplication();
+    /**
+     * @return  string|void
+     *
+     * @since   Kunena 6.0
+     */
+    public function getFileScssParsed()
+    {
+        $app = Factory::getApplication();
 
-		$template = $app->getUserState('kunena.templatename');
-		$filename = $app->getUserState('kunena.editscss.filename');
+        $template = $app->getUserState('kunena.templatename');
+        $filename = $app->getUserState('kunena.editscss.filename');
 
-		$content = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/scss/' . $filename);
-		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
+        $content = file_get_contents(KPATH_SITE . '/template/' . $template . '/assets/scss/' . $filename);
+        $content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
 
-		if ($content === false)
-		{
-			return;
-		}
+        if ($content === false) {
+            return;
+        }
 
-		return $content;
-	}
+        return $content;
+    }
 
-	/**
-	 * @return  string|void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getFileContentParsed()
-	{
-		$app = Factory::getApplication();
+    /**
+     * @return  string|void
+     *
+     * @since   Kunena 6.0
+     */
+    public function getFileContentParsed()
+    {
+        $app = Factory::getApplication();
 
-		$filename = $app->getUserState('kunena.editCss.filename');
-		$content  = file_get_contents(KPATH_MEDIA . '/core/css/' . $filename);
+        $filename = $app->getUserState('kunena.editCss.filename');
+        $content  = file_get_contents(KPATH_MEDIA . '/core/css/' . $filename);
 
-		if ($content === false)
-		{
-			return;
-		}
+        if ($content === false) {
+            return;
+        }
 
-		$content = htmlspecialchars($content, ENT_COMPAT);
+        $content = htmlspecialchars($content, ENT_COMPAT);
 
-		return $content;
-	}
+        return $content;
+    }
 
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @param   null  $ordering   ordering
-	 * @param   null  $direction  direction
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function populateState($ordering = null, $direction = null)
-	{
-		// List state information.
-		$context = 'com_kunena.admin.templates';
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @param   null  $ordering   ordering
+     * @param   null  $direction  direction
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function populateState($ordering = null, $direction = null)
+    {
+        // List state information.
+        $context = 'com_kunena.admin.templates';
 
-		$app = Factory::getApplication();
+        $app = Factory::getApplication();
 
-		// Adjust the context to support modal layouts.
-		$layout = $app->input->get('layout');
+        // Adjust the context to support modal layouts.
+        $layout = $app->input->get('layout');
 
-		if ($layout)
-		{
-			$context .= '.' . $layout;
-		}
+        if ($layout) {
+            $context .= '.' . $layout;
+        }
 
-		// Edit state information
-		$value = $this->getUserStateFromRequest($context . '.edit', 'name', '', 'cmd');
-		$this->setState('template', $value);
+        // Edit state information
+        $value = $this->getUserStateFromRequest($context . '.edit', 'name', '', 'cmd');
+        $this->setState('template', $value);
 
-		$app->setUserState('kunena.edit.templatename', $value);
-	}
+        $app->setUserState('kunena.edit.templatename', $value);
+    }
 
-	/**
-	 * @param   string  $key        key
-	 * @param   string  $request    request
-	 * @param   null    $default    default
-	 * @param   string  $type       type
-	 * @param   bool    $resetPage  resetPage
-	 *
-	 * @return  mixed|null
-	 *
-	 * @throws Exception
-	 * @since   Kunena 6.0
-	 */
-	public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
-	{
-		$app      = Factory::getApplication();
-		$input    = $app->input;
-		$oldState = $app->getUserState($key);
-		$curState = ($oldState !== null) ? $oldState : $default;
-		$newState = $input->get($request, null, $type);
+    /**
+     * @param   string  $key        key
+     * @param   string  $request    request
+     * @param   null    $default    default
+     * @param   string  $type       type
+     * @param   bool    $resetPage  resetPage
+     *
+     * @return  mixed|null
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
+    {
+        $app      = Factory::getApplication();
+        $input    = $app->input;
+        $oldState = $app->getUserState($key);
+        $curState = ($oldState !== null) ? $oldState : $default;
+        $newState = $input->get($request, null, $type);
 
-		if (($curState != $newState) && ($resetPage))
-		{
-			$input->set('limitstart', 0);
-		}
+        if (($curState != $newState) && ($resetPage)) {
+            $input->set('limitstart', 0);
+        }
 
-		// Save the new value only if it is set in this request.
-		if ($newState !== null)
-		{
-			$app->setUserState($key, $newState);
-		}
-		else
-		{
-			$newState = $curState;
-		}
+        // Save the new value only if it is set in this request.
+        if ($newState !== null) {
+            $app->setUserState($key, $newState);
+        } else {
+            $newState = $curState;
+        }
 
-		return $newState;
-	}
+        return $newState;
+    }
 
-	/**
-	 * Load the data associated with the form
-	 *
-	 * @return array|mixed
-	 * @throws Exception
-	 * @since Kunena 3.0
-	 * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
-	 */
-	protected function loadFormData()
-	{
-		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
+    /**
+     * Load the data associated with the form
+     *
+     * @return array|mixed
+     * @throws Exception
+     * @since Kunena 3.0
+     * @see   \Joomla\CMS\MVC\Model\FormModel::loadFormData()
+     */
+    protected function loadFormData()
+    {
+        // Check the session for previously entered form data.
+        $data = Factory::getApplication()->getUserState('com_kunena.edit.template.data', array());
 
-		if (empty($data))
-		{
-			$template = $this->getState('template');
-			$data     = KunenaTemplate::getInstance($template)->params->toArray();
-		}
+        if (empty($data)) {
+            $template = $this->getState('template');
+            $data     = KunenaTemplate::getInstance($template)->params->toArray();
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

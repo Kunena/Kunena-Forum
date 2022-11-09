@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -14,12 +15,12 @@ defined('_JEXEC') or die();
 
 ?>
 <div id="kunena" class="layout">
-	<?php
-	echo $this->subLayout('Widget/MenuBar');
+    <?php
+    echo $this->subLayout('Widget/MenuBar');
 
-	// Display current view/layout
-	echo $this->content;
+    // Display current view/layout
+    echo $this->content;
 
-	echo $this->subLayout('Widget/Footer');
-	?>
+    echo $this->subLayout('Widget/Footer');
+    ?>
 </div>

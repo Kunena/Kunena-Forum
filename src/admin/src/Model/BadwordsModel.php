@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,33 +25,33 @@ use Joomla\CMS\MVC\Model\AdminModel;
  */
 class BadwordsModel extends AdminModel
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 *
-	 * @see     JController
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct();
-	}
+    /**
+     * Constructor.
+     *
+     * @param   array  $config  An optional associative array of configuration settings.
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     *
+     * @see     JController
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct();
+    }
 
-	/**
-	 * @inheritDoc
-	 *
-	 * @param   array    $data      data
-	 * @param   boolean  $loadData  load data
-	 *
-	 * @return void
-	 *
-	 * @since  Kunena 6.0
-	 */
-	public function getForm($data = [], $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
+    /**
+     * @inheritDoc
+     *
+     * @param   array    $data      data
+     * @param   boolean  $loadData  load data
+     *
+     * @return void
+     *
+     * @since  Kunena 6.0
+     */
+    public function getForm($data = [], $loadData = true)
+    {
+        // TODO: Implement getForm() method.
+    }
 }

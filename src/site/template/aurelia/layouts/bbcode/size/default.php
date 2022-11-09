@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -19,18 +20,13 @@ namespace Kunena\Forum\Site;
 // Change text size.
 $size_css = [1 => '0.6em', '0.8em', '1em', '1.2em', '1.4em', '1.8em'];
 
-if (isset($size_css[$this->size]))
-{
-	$class = 'style="font-size:' . $size_css[$this->size] . '"';
-}
-elseif ($this->size)
-{
-	// One of: px em pt %
-	$class = 'style="font-size:' . $this->size . '"';
-}
-else
-{
-	$class = 'style="font-size:' . $size_css[3] . '"';
+if (isset($size_css[$this->size])) {
+    $class = 'style="font-size:' . $size_css[$this->size] . '"';
+} elseif ($this->size) {
+    // One of: px em pt %
+    $class = 'style="font-size:' . $this->size . '"';
+} else {
+    $class = 'style="font-size:' . $size_css[3] . '"';
 }
 ?>
 <span <?php echo $class; ?>><?php echo $this->content; ?></span>

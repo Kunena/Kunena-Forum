@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,9 +25,9 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
  */
 class TopicEditEditor extends KunenaLayout
 {
-	/**
-	 * @var     KunenaTemplate
-	 * @since   Kunena 6.0
-	 */
-	public $ktemplate;
+    /**
+     * @var     KunenaTemplate
+     * @since   Kunena 6.0
+     */
+    public $ktemplate;
 }

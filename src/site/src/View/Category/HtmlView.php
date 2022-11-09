@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -23,25 +24,25 @@ use Kunena\Forum\Libraries\View\KunenaView;
  */
 class HtmlView extends KunenaView
 {
-	/**
-	 * @param   null  $tpl  tpl
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function displayDefault($tpl = null)
-	{
-	}
+    /**
+     * @param   null  $tpl  tpl
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function displayDefault($tpl = null)
+    {
+    }
 
-	/**
-	 * @param   string  $type  type
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function _prepareDocument($type)
-	{
-	}
+    /**
+     * @param   string  $type  type
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function _prepareDocument($type)
+    {
+    }
 }

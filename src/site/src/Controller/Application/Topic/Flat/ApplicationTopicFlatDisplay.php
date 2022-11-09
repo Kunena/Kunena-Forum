@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -26,37 +27,37 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class ApplicationTopicFlatDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * Return true if layout exists.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function exists()
-	{
-		$page = KunenaPage::factory("{$this->input->getCmd('view')}/default");
+    /**
+     * Return true if layout exists.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function exists()
+    {
+        $page = KunenaPage::factory("{$this->input->getCmd('view')}/default");
 
-		return (bool) $page->getPath();
-	}
+        return (bool) $page->getPath();
+    }
 
-	/**
-	 * Change topic layout to flat.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	protected function before()
-	{
-		$layout = $this->input->getWord('layout');
-		KunenaUserHelper::getMyself()->setTopicLayout($layout);
+    /**
+     * Change topic layout to flat.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    protected function before()
+    {
+        $layout = $this->input->getWord('layout');
+        KunenaUserHelper::getMyself()->setTopicLayout($layout);
 
-		parent::before();
-	}
+        parent::before();
+    }
 }

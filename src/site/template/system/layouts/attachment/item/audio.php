@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -17,16 +18,15 @@ namespace Kunena\Forum\Site;
 $attachment = $this->attachment;
 $location   = $attachment->getUrl();
 
-if (!$attachment->isAudio())
-{
-	return;
+if (!$attachment->isAudio()) {
+    return;
 }
 ?>
 <div class="clearfix"></div>
 
 <audio src="<?php echo $location; ?>" controls>
-	Your browser does not support the <code>audio</code> element.
+    Your browser does not support the <code>audio</code> element.
 </audio>
 <p><?php echo $attachment->getShortName(); ?><a href="<?php echo $location; ?>" data-bs-toggle="tooltip" title="Download" download> <i
-				class="icon icon-download"></i></a></p>
+                class="icon icon-download"></i></a></p>
 <div class="clearfix"></div>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -14,31 +15,28 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 
-if (empty($this->results))
-{
-	return;
+if (empty($this->results)) {
+    return;
 }
 
 ?>
-	<h2>
-		<?php echo Text::_('COM_KUNENA_SEARCH_RESULTS'); ?>
-		<small>
-			(<?php echo Text::sprintf('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords'))); ?>)
-		</small>
-	</h2>
+    <h2>
+        <?php echo Text::_('COM_KUNENA_SEARCH_RESULTS'); ?>
+        <small>
+            (<?php echo Text::sprintf('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords'))); ?>)
+        </small>
+    </h2>
 
-<?php if ($this->error)
-:
-	?>
-	<div class="alert alert-error">
-		<?php echo $this->error; ?>
-	</div>
+<?php if ($this->error) :
+    ?>
+    <div class="alert alert-error">
+        <?php echo $this->error; ?>
+    </div>
 <?php endif; ?>
 
 <?php
-foreach ($this->results as $message)
-{
-	echo $this->subLayout('Search/Results/Row')->set('message', $message);
+foreach ($this->results as $message) {
+    echo $this->subLayout('Search/Results/Row')->set('message', $message);
 }
 ?>
 

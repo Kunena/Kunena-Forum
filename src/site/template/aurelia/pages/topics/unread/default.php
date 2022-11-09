@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -15,11 +16,11 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 $content = $this->execute('Topic/Listing/Unread')
-	->setLayout('unread');
+    ->setLayout('unread');
 
 $this->addBreadcrumb(
-	(string) $content->headerText,
-	'index.php?option=com_kunena&view=topics&layout=unread'
+    (string) $content->headerText,
+    'index.php?option=com_kunena&view=topics&layout=unread'
 );
 
 echo $content;

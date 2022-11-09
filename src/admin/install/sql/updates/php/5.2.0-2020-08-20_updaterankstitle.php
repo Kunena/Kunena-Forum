@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -8,6 +9,7 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
@@ -23,247 +25,217 @@ use Joomla\CMS\Language\Text;
  */
 function kunena_520_2020_08_20_updaterankstitle($parent)
 {
-	$db = Factory::getContainer()->get('DatabaseDriver');
+    $db = Factory::getContainer()->get('DatabaseDriver');
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK1'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK1'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 1',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 1',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK2'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK2'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 2',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 2',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK3'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK3'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 3',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 3',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK4'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK4'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 4',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 4',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK5'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK5'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 5',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 5',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK6'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK6'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 6',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 6',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 7',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 7',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 8',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 8',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 9',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 9',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	$query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-	// Fields to update.
-	$fields = array(
-		$db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED'),
-	);
+    // Fields to update.
+    $fields = array(
+        $db->quoteName('rank_title') . ' = ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED'),
+    );
 
-	// Conditions for which records should be updated.
-	$conditions = array(
-		$db->quoteName('rank_id') . ' = 10',
-	);
+    // Conditions for which records should be updated.
+    $conditions = array(
+        $db->quoteName('rank_id') . ' = 10',
+    );
 
-	$query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
-	$db->setQuery($query);
+    $query->update($db->quoteName('#__kunena_ranks'))->set($fields)->where($conditions);
+    $db->setQuery($query);
 
-	try
-	{
-		$db->execute();
-	}
-	catch (Exception $e)
-	{
-		throw new Exception($e->getMessage(), $e->getCode());
-	}
+    try {
+        $db->execute();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage(), $e->getCode());
+    }
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_520_RANKS_TITLE_VALUE_IN_TABLES'), 'success' => true);
+    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_520_RANKS_TITLE_VALUE_IN_TABLES'), 'success' => true);
 }

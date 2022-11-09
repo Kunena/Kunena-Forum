@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -31,7 +32,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
 <div class="card">
     <div class="card-header">
         <i class="icon-list-view"></i>
-		<?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
+        <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
         : <?php echo $this->escape($this->category->name); ?>
     </div>
     <div class="card-body">
@@ -40,7 +41,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
               name="adminForm">
             <input type="hidden" name="task" value="save"/>
             <input type="hidden" name="catid" value="<?php echo \intval($this->category->id); ?>"/>
-			<?php echo HTMLHelper::_('form.token'); ?>
+            <?php echo HTMLHelper::_('form.token'); ?>
 
             <article class="data-block">
                 <div class="data-container">
@@ -49,37 +50,35 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                             <ul class="nav nav-tabs">
                                 <li class="nav-item active">
                                     <a class="nav-link active" href="#tab-general" data-bs-toggle="tab">
-										<?php echo Text::_('COM_KUNENA_BASICSFORUMINFO'); ?>
+                                        <?php echo Text::_('COM_KUNENA_BASICSFORUMINFO'); ?>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#tab-access" data-bs-toggle="tab">
-										<?php echo Text::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?>
+                                        <?php echo Text::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?>
                                     </a>
                                 </li>
-								<?php if (!$this->category->id || !$this->category->isSection())
-									:
-									?>
+                                <?php if (!$this->category->id || !$this->category->isSection()) :
+                                    ?>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#tab-settings" data-bs-toggle="tab">
-											<?php echo Text::_('COM_KUNENA_ADVANCEDDESCINFO'); ?>
+                                            <?php echo Text::_('COM_KUNENA_ADVANCEDDESCINFO'); ?>
                                         </a>
                                     </li>
-								<?php endif; ?>
+                                <?php endif; ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#tab-display" data-bs-toggle="tab">
-										<?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_TAB_DISPLAY'); ?>
+                                        <?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_TAB_DISPLAY'); ?>
                                     </a>
                                 </li>
-								<?php if (!$this->category->id || !$this->category->isSection())
-									:
-									?>
+                                <?php if (!$this->category->id || !$this->category->isSection()) :
+                                    ?>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#tab-mods" data-bs-toggle="tab">
-											<?php echo Text::_('COM_KUNENA_MODHEADER'); ?>
+                                            <?php echo Text::_('COM_KUNENA_MODHEADER'); ?>
                                         </a>
                                     </li>
-								<?php endif; ?>
+                                <?php endif; ?>
                             </ul>
                             <div class="tab-content"
                                  style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
@@ -89,7 +88,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                             <tr>
                                                 <td style="width:20%;"><?php echo Text::_('COM_KUNENA_PARENT'); ?></td>
                                                 <td style="width:20%;">
-													<?php echo $this->lists['categories']; ?>
+                                                    <?php echo $this->lists['categories']; ?>
                                                     <p><?php echo Text::_('COM_KUNENA_PARENTDESC'); ?></p>
                                                 </td>
                                             </tr>
@@ -108,12 +107,11 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                                            type="text"
                                                            name="alias" size="80"
                                                            value="<?php echo $this->escape($this->category->alias); ?>"/>
-													<?php
-													if ($this->lists['aliases'])
-														:
-														?>
-														<?php echo '<span id="aliascheck">' . $this->lists['aliases'] . '</span>'; ?>
-													<?php endif ?>
+                                                    <?php
+                                                    if ($this->lists['aliases']) :
+                                                        ?>
+                                                        <?php echo '<span id="aliascheck">' . $this->lists['aliases'] . '</span>'; ?>
+                                                    <?php endif ?>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -143,7 +141,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                             <tr>
                                                 <td style="width:20%;"><?php echo Text::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
                                                 <td style="width:20%;">
-												<textarea class="inputbox form-control" cols="50" rows="6"
+                                                <textarea class="inputbox form-control" cols="50" rows="6"
                                                           name="description"
                                                           id="description"
                                                           style="width: 500px;"><?php echo $this->escape($this->category->description); ?></textarea>
@@ -153,7 +151,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                             <tr>
                                                 <td style="width:20%;"><?php echo Text::_('COM_KUNENA_HEADERADD'); ?></td>
                                                 <td style="width:20%;">
-												<textarea class="inputbox form-control" cols="50" rows="6"
+                                                <textarea class="inputbox form-control" cols="50" rows="6"
                                                           name="headerdesc"
                                                           id="headerdesc"
                                                           style="width: 500px;"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
@@ -162,7 +160,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                             <tr>
                                                 <td style="width:20%;"><?php echo Text::_('COM_KUNENA_CATEGORY_TOPIC_TEMPLATE'); ?></td>
                                                 <td style="width:20%;">
-												<textarea class="inputbox form-control" cols="50" rows="6"
+                                                <textarea class="inputbox form-control" cols="50" rows="6"
                                                           name="topictemplate" id="topictemplate"
                                                           style="width: 500px;"><?php echo $this->escape($this->category->topictemplate); ?></textarea>
                                                 </td>
@@ -181,26 +179,23 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                                 <td style="width:50%;"><?php echo Text::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
                                             </tr>
                                             </thead>
-											<?php foreach ($this->lists['accesslists'] as $accesstype => $accesslist)
-											{
-												foreach ($accesslist as $accessinput)
-													:
-													?>
+                                            <?php foreach ($this->lists['accesslists'] as $accesstype => $accesslist) {
+                                                foreach ($accesslist as $accessinput) :
+                                                    ?>
                                                     <tr class="kaccess kaccess-<?php echo $accesstype ?>"
                                                         style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
                                                         <td style="width:20%;"><?php echo $accessinput['title'] ?></td>
                                                         <td style="width:20%;"><?php echo $accessinput['input'] ?></td>
                                                         <td style="width:20%;"><?php echo $accessinput['desc'] ?></td>
                                                     </tr>
-												<?php endforeach;
-											} ?>
+                                                <?php endforeach;
+                                            } ?>
                                         </table>
                                     </fieldset>
                                 </div>
 
-								<?php if (!$this->category->id || !$this->category->isSection())
-									:
-									?>
+                                <?php if (!$this->category->id || !$this->category->isSection()) :
+                                    ?>
                                     <div class="tab-pane" id="tab-settings">
                                         <fieldset>
                                             <table class="table table-striped">
@@ -266,7 +261,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                             </table>
                                         </fieldset>
                                     </div>
-								<?php endif; ?>
+                                <?php endif; ?>
                                 <div class="tab-pane" id="tab-display">
                                     <fieldset>
                                         <legend><?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_INDEX_LEGEND'); ?></legend>
@@ -284,9 +279,8 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                         </table>
                                     </fieldset>
                                 </div>
-								<?php if (!$this->category->id || !$this->category->isSection())
-									:
-									?>
+                                <?php if (!$this->category->id || !$this->category->isSection()) :
+                                    ?>
                                     <div class="tab-pane" id="tab-mods">
                                         <fieldset>
                                             <legend><?php echo Text::_('COM_KUNENA_MODSASSIGNED'); ?></legend>
@@ -301,30 +295,27 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
                                                 </thead>
 
                                                 <tbody>
-												<?php if (empty($this->moderators))
-													:
-													?>
+                                                <?php if (empty($this->moderators)) :
+                                                    ?>
                                                     <tr>
                                                         <td colspan="5"
                                                             style="text-align:center;"><?php echo Text::_('COM_KUNENA_NOMODS') ?></td>
                                                     </tr>
-												<?php else
-													:
-													foreach ($this->moderators as $ml)
-														:
-														?>
+                                                <?php else :
+                                                    foreach ($this->moderators as $ml) :
+                                                        ?>
                                                         <tr>
                                                             <td style="width:20%;"><?php echo $this->escape($ml->username); ?></td>
                                                             <td style="width:20%;"><?php echo $this->escape($ml->name); ?></td>
                                                             <td style="width:20%;"><?php echo $this->escape($ml->userid); ?></td>
                                                         </tr>
-													<?php endforeach;
-												endif; ?>
+                                                    <?php endforeach;
+                                                endif; ?>
                                                 </tbody>
                                             </table>
                                         </fieldset>
                                     </div>
-								<?php endif; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

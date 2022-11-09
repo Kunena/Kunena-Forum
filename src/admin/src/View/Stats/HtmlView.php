@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,33 +29,33 @@ use Kunena\Forum\Libraries\Forum\KunenaStatistics;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var \stdClass
-	 * @since version
-	 */
-	public $config;
+    /**
+     * @var \stdClass
+     * @since version
+     */
+    public $config;
 
-	/**
-	 * @internal param null $tpl
-	 *
-	 * @param   null  $tpl  tpl
-	 *
-	 * @return  void
-	 *
-	 * @since    Kunena 6.0
-	 *
-	 * @throws Exception
-	 */
-	public function displayDefault($tpl = null)
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
+    /**
+     * @internal param null $tpl
+     *
+     * @param   null  $tpl  tpl
+     *
+     * @return  void
+     *
+     * @since    Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public function displayDefault($tpl = null)
+    {
+        ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
 
-		$document = Factory::getApplication()->getDocument();
-		$document->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->boardTitle);
+        $document = Factory::getApplication()->getDocument();
+        $document->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->boardTitle);
 
-		$kunenaStats = KunenaStatistics::getInstance();
-		$kunenaStats->loadAll(true);
+        $kunenaStats = KunenaStatistics::getInstance();
+        $kunenaStats->loadAll(true);
 
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -23,18 +24,18 @@ use Joomla\CMS\MVC\Model\AdminModel;
  */
 class CloseModel extends AdminModel
 {
-	/**
-	 * @inheritDoc
-	 *
-	 * @param   array    $data      data
-	 * @param   boolean  $loadData  load data
-	 *
-	 * @return void
-	 *
-	 * @since  Kunena 6.0
-	 */
-	public function getForm($data = [], $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
+    /**
+     * @inheritDoc
+     *
+     * @param   array    $data      data
+     * @param   boolean  $loadData  load data
+     *
+     * @return void
+     *
+     * @since  Kunena 6.0
+     */
+    public function getForm($data = [], $loadData = true)
+    {
+        // TODO: Implement getForm() method.
+    }
 }

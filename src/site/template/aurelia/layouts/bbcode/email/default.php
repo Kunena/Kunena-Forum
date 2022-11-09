@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -21,10 +22,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 // Display email address (cloak it).
 echo HTMLHelper::_(
-	'email.cloak',
-	$this->escape($this->email),
-	$this->mailto,
-	$this->escape($this->text),
-	$this->escape($this->email),
-	$this->mailto
+    'email.cloak',
+    $this->escape($this->email),
+    $this->mailto,
+    $this->escape($this->text),
+    $this->escape($this->email),
+    $this->mailto
 );

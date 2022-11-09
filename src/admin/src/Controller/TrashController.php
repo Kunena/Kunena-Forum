@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -33,237 +34,200 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class TrashController extends FormController
 {
-	/**
-	 * @var     null|string
-	 * @since   Kunena 6.0
-	 */
-	protected $baseurl = null;
+    /**
+     * @var     null|string
+     * @since   Kunena 6.0
+     */
+    protected $baseurl = null;
 
-	/**
-	 * Construct
-	 *
-	 * @param   array  $config  config
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-		$this->baseurl = 'administrator/index.php?option=com_kunena&view=trash';
-	}
+    /**
+     * Construct
+     *
+     * @param   array  $config  config
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        $this->baseurl = 'administrator/index.php?option=com_kunena&view=trash';
+    }
 
-	/**
-	 * Purge
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function purge(): void
-	{
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    /**
+     * Purge
+     *
+     * @return  void
+     *
+     * @throws  null
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function purge(): void
+    {
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$cid = $this->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid, []);
+        $cid = $this->input->get('cid', [], 'array');
+        $cid = ArrayHelper::toInteger($cid, []);
 
-		$type = $this->input->getCmd('type', 'topics');
+        $type = $this->input->getCmd('type', 'topics');
 
-		if (empty($cid))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        if (empty($cid)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		if ($type == 'topics')
-		{
-			$topics = KunenaTopicHelper::getTopics($cid, 'none');
+        if ($type == 'topics') {
+            $topics = KunenaTopicHelper::getTopics($cid, 'none');
 
-			foreach ($topics as $topic)
-			{
-				$success = $topic->delete();
+            foreach ($topics as $topic) {
+                $success = $topic->delete();
 
-				if (!$success)
-				{
-					$this->app->enqueueMessage($topic->getError(), 'error');
-				}
-			}
+                if (!$success) {
+                    $this->app->enqueueMessage($topic->getError(), 'error');
+                }
+            }
 
-			if ($success)
-			{
-				KunenaTopicHelper::recount($cid);
-				KunenaCategoryHelper::recount($topic->getCategory()->id);
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
-			}
-		}
-		elseif ($type == 'messages')
-		{
-			$messages = KunenaMessageHelper::getMessages($cid, 'none');
+            if ($success) {
+                KunenaTopicHelper::recount($cid);
+                KunenaCategoryHelper::recount($topic->getCategory()->id);
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
+            }
+        } elseif ($type == 'messages') {
+            $messages = KunenaMessageHelper::getMessages($cid, 'none');
 
-			foreach ($messages as $message)
-			{
-				$success = $message->delete();
-				$target  = KunenaMessageHelper::get($message->id);
-				$topic   = KunenaTopicHelper::get($target->getTopic());
+            foreach ($messages as $message) {
+                $success = $message->delete();
+                $target  = KunenaMessageHelper::get($message->id);
+                $topic   = KunenaTopicHelper::get($target->getTopic());
 
-				if ($topic->attachments > 0)
-				{
-					$topic->attachments = $topic->attachments - 1;
-					$topic->save(false);
-				}
+                if ($topic->attachments > 0) {
+                    $topic->attachments = $topic->attachments - 1;
+                    $topic->save(false);
+                }
 
-				if (!$success)
-				{
-					$this->app->enqueueMessage($message->getError(), 'error');
-				}
-			}
+                if (!$success) {
+                    $this->app->enqueueMessage($message->getError(), 'error');
+                }
+            }
 
-			if ($success)
-			{
-				KunenaTopicHelper::recount($cid);
-				KunenaCategoryHelper::recount($topic->getCategory()->id);
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
-			}
-		}
+            if ($success) {
+                KunenaTopicHelper::recount($cid);
+                KunenaCategoryHelper::recount($topic->getCategory()->id);
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
+            }
+        }
 
-		if ($type == 'messages')
-		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
-		}
-		else
-		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-		}
+        if ($type == 'messages') {
+            $this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
+        } else {
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        }
 
-		return;
-	}
+        return;
+    }
 
-	/**
-	 * Restore
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function restore(): void
-	{
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    /**
+     * Restore
+     *
+     * @return  void
+     *
+     * @throws  null
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function restore(): void
+    {
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$cid = $this->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid, []);
+        $cid = $this->input->get('cid', [], 'array');
+        $cid = ArrayHelper::toInteger($cid, []);
 
-		$type = $this->input->getCmd('type', 'topics');
+        $type = $this->input->getCmd('type', 'topics');
 
-		if (empty($cid))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        if (empty($cid)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$nbItems = 0;
+        $nbItems = 0;
 
-		if ($type == 'messages')
-		{
-			$messages = KunenaMessageHelper::getMessages($cid, 'none');
+        if ($type == 'messages') {
+            $messages = KunenaMessageHelper::getMessages($cid, 'none');
 
-			foreach ($messages as $target)
-			{
-				if ($target->publish())
-				{
-					$nbItems++;
-				}
-				else
-				{
-					$this->app->enqueueMessage($target->getError(), 'error');
-				}
-			}
-		}
-		elseif ($type == 'topics')
-		{
-			$topics = KunenaTopicHelper::getTopics($cid, 'none');
+            foreach ($messages as $target) {
+                if ($target->publish()) {
+                    $nbItems++;
+                } else {
+                    $this->app->enqueueMessage($target->getError(), 'error');
+                }
+            }
+        } elseif ($type == 'topics') {
+            $topics = KunenaTopicHelper::getTopics($cid, 'none');
 
-			foreach ($topics as $target)
-			{
-				if ($target->getState() == KunenaForum::UNAPPROVED)
-				{
-					$status = KunenaForum::UNAPPROVED;
-				}
-				else
-				{
-					$status = KunenaForum::PUBLISHED;
-				}
+            foreach ($topics as $target) {
+                if ($target->getState() == KunenaForum::UNAPPROVED) {
+                    $status = KunenaForum::UNAPPROVED;
+                } else {
+                    $status = KunenaForum::PUBLISHED;
+                }
 
-				if ($target->publish($status))
-				{
-					$nbItems++;
-				}
-				else
-				{
-					$this->app->enqueueMessage($target->getError(), 'error');
-				}
-			}
-		}
-		else
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+                if ($target->publish($status)) {
+                    $nbItems++;
+                } else {
+                    $this->app->enqueueMessage($target->getError(), 'error');
+                }
+            }
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		if ($nbItems > 0)
-		{
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nbItems), 'success');
-		}
+        if ($nbItems > 0) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_TRASH_ITEMS_RESTORE_DONE', $nbItems), 'success');
+        }
 
-		KunenaUserHelper::recount();
-		KunenaTopicHelper::recount();
-		KunenaCategoryHelper::recount();
+        KunenaUserHelper::recount();
+        KunenaTopicHelper::recount();
+        KunenaCategoryHelper::recount();
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
+        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
 
-	/**
-	 * Method to redirect user on cancel on purge page
-	 *
-	 * @param   null  $key  key
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function cancel($key = null)
-	{
-		$type = $this->app->getUserState('com_kunena.type');
+    /**
+     * Method to redirect user on cancel on purge page
+     *
+     * @param   null  $key  key
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function cancel($key = null)
+    {
+        $type = $this->app->getUserState('com_kunena.type');
 
-		if ($type == 'messages')
-		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
-		}
-		else
-		{
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-		}
-	}
+        if ($type == 'messages') {
+            $this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
+        } else {
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        }
+    }
 }

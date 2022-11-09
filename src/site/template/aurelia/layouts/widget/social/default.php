@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -14,9 +15,8 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
-if ($this->me->socialshare == 0 && $this->me->exists())
-{
-	return false;
+if ($this->me->socialshare == 0 && $this->me->exists()) {
+    return false;
 }
 
 $socialtheme = $this->ktemplate->params->get('socialtheme');

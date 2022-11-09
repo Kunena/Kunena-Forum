@@ -24,16 +24,16 @@ $this->addScript('poll.js');
 
 $polllifespan = '';
 
-if ($this->show_title && $this->poll->polltimetolive != '1000-01-01 00:00:00') {
-    $origin = new \DateTimeImmutable('now');
-    $target = new \DateTimeImmutable($this->poll->polltimetolive);
-    $interval = $origin->diff($target);
-
-    if ($interval->format('%R%a') >= 1) {
-        $polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_RUNS_UNTILL', $this->poll->polltimetolive) . ')</span>';
-    } else {
-        $polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_WAS_ENDED', $this->poll->polltimetolive) . ')</span>';
-    }
+if ($this->show_title && $this->poll->polltimetolive != '1000-01-01 00:00:00')
+{
+	if ($this->intervalTimeToLive->format('%R%a')>=1)
+	{
+		$polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_RUNS_UNTILL', $this->poll->polltimetolive) . ')</span>';
+	}
+	else
+	{
+		$polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_WAS_ENDED', $this->poll->polltimetolive) . ')</span>';
+	}
 }
 ?>
 

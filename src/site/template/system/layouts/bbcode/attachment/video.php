@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -17,5 +18,5 @@ namespace Kunena\Forum\Site;
 $attachment = $this->attachment;
 ?>
 <div class="kmsgvideo">
-	<?php echo $this->subLayout('Attachment/Item')->set('attachment', $attachment); ?>
+    <?php echo $this->subLayout('Attachment/Item')->set('attachment', $attachment); ?>
 </div>

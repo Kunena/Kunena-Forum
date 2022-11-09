@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -23,12 +24,12 @@ use Kunena\Forum\Libraries\View\KunenaView;
  */
 class HtmlView extends KunenaView
 {
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function _prepareDocument()
-	{
-	}
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function _prepareDocument()
+    {
+    }
 }

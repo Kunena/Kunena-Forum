@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -21,82 +22,76 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
  */
 class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 {
-	/**
-	 * plgKunenaEasyblog constructor.
-	*
-	 * @param   DispatcherInterface  &$subject  The object to observe
-	 * @param   array                $config    An optional associative array of configuration settings.
-	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
-	 *                                         (this list is not meant to be comprehensive).
-	 *
-	 * @since Kunena
-	 */
-	public function __construct(&$subject, $config)
-	{
-		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::enabled()))
-		{
-			return;
-		}
+    /**
+     * plgKunenaEasyblog constructor.
+    *
+     * @param   DispatcherInterface  &$subject  The object to observe
+     * @param   array                $config    An optional associative array of configuration settings.
+     *                                          Recognized key values include 'name', 'group', 'params', 'language'
+     *                                         (this list is not meant to be comprehensive).
+     *
+     * @since Kunena
+     */
+    public function __construct(&$subject, $config)
+    {
+        // Do not load if Kunena version is not supported or Kunena is offline
+        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::enabled())) {
+            return;
+        }
 
-		// Do not load if Easyblog is not installed
-		$path = JPATH_ADMINISTRATOR . '/components/com_easyblog/includes/easyblog.php';
+        // Do not load if Easyblog is not installed
+        $path = JPATH_ADMINISTRATOR . '/components/com_easyblog/includes/easyblog.php';
 
-		if (!is_file($path))
-		{
-			return;
-		}
+        if (!is_file($path)) {
+            return;
+        }
 
-		include_once $path;
+        include_once $path;
 
-		parent::__construct($subject, $config);
+        parent::__construct($subject, $config);
 
-		$this->loadLanguage('plg_kunena_easyblog.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easyblog.sys', KPATH_ADMIN);
-	}
+        $this->loadLanguage('plg_kunena_easyblog.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easyblog.sys', KPATH_ADMIN);
+    }
 
-	/**
-	 * Get Kunena avatar integration object.
-	 *
-	 * @return KunenaAvatarEasyblog|null
-	 * @since Kunena
-	 */
-	public function onKunenaGetAvatar()
-	{
-		if (!isset($this->params))
-		{
-			return;
-		}
+    /**
+     * Get Kunena avatar integration object.
+     *
+     * @return KunenaAvatarEasyblog|null
+     * @since Kunena
+     */
+    public function onKunenaGetAvatar()
+    {
+        if (!isset($this->params)) {
+            return;
+        }
 
-		if (!$this->params->get('avatar', 1))
-		{
-			return;
-		}
+        if (!$this->params->get('avatar', 1)) {
+            return;
+        }
 
-		require_once __DIR__ . "/KunenaAvatarEasyblog.php";
+        require_once __DIR__ . "/KunenaAvatarEasyblog.php";
 
-		return new KunenaAvatarEasyblog($this->params);
-	}
+        return new KunenaAvatarEasyblog($this->params);
+    }
 
-	/**
-	 * Get Kunena profile integration object.
-	 *
-	 * @return KunenaProfileEasyblog|null
-	 * @since Kunena
-	 */
-	public function onKunenaGetProfile()
-	{
-		if (!isset($this->params))
-		{
-			return;
-		}
+    /**
+     * Get Kunena profile integration object.
+     *
+     * @return KunenaProfileEasyblog|null
+     * @since Kunena
+     */
+    public function onKunenaGetProfile()
+    {
+        if (!isset($this->params)) {
+            return;
+        }
 
-		if (!$this->params->get('profile', 1))
-		{
-			return;
-		}
+        if (!$this->params->get('profile', 1)) {
+            return;
+        }
 
-		require_once __DIR__ . "/KunenaProfileEasyblog.php";
+        require_once __DIR__ . "/KunenaProfileEasyblog.php";
 
-		return new KunenaProfileEasyblog($this->params);
-	}
+        return new KunenaProfileEasyblog($this->params);
+    }
 }

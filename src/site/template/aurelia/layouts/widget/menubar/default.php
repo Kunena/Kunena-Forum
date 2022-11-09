@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -17,7 +18,7 @@ use Joomla\CMS\Language\Text;
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg rounded border">
-	<div class="container-fluid">
+    <div class="container-fluid">
         <button class="navbar-toggler" aria-expanded="false" aria-controls="knav-offcanvas" aria-label="Toggle navigation"
                 type="button" data-bs-target="#offcanvasKunena" data-bs-toggle="offcanvas">
             <span class="navbar-toggler-icon"></span>

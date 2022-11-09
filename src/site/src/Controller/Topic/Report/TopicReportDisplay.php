@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -31,114 +32,102 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class TopicReportDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     KunenaTopic
-	 * @since   Kunena 6.0
-	 */
-	public $topic;
+    /**
+     * @var     KunenaTopic
+     * @since   Kunena 6.0
+     */
+    public $topic;
 
-	/**
-	 * @var     KunenaMessage|null
-	 * @since   Kunena 6.0
-	 */
-	public $message;
+    /**
+     * @var     KunenaMessage|null
+     * @since   Kunena 6.0
+     */
+    public $message;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $uri;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $uri;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Report';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Topic/Report';
 
-	/**
-	 * Prepare report message form.
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare report message form.
+     *
+     * @return  void
+     *
+     * @throws  null
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$id    = $this->input->getInt('id');
-		$mesid = $this->input->getInt('mesid');
+        $id    = $this->input->getInt('id');
+        $mesid = $this->input->getInt('mesid');
 
-		$me = KunenaUserHelper::getMyself();
+        $me = KunenaUserHelper::getMyself();
 
-		if (!$this->config->reportMsg)
-		{
-			// Deny access if report feature has been disabled.
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
-		}
+        if (!$this->config->reportMsg) {
+            // Deny access if report feature has been disabled.
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
 
-		if (!$me->exists())
-		{
-			// Deny access if user is guest.
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
-		}
+        if (!$me->exists()) {
+            // Deny access if user is guest.
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+        }
 
-		if (!$mesid)
-		{
-			$this->topic = KunenaTopicHelper::get($id);
-			$this->topic->tryAuthorise();
-		}
-		else
-		{
-			$this->message = KunenaMessageHelper::get($mesid);
-			$this->message->tryAuthorise();
-			$this->topic = $this->message->getTopic();
-		}
+        if (!$mesid) {
+            $this->topic = KunenaTopicHelper::get($id);
+            $this->topic->tryAuthorise();
+        } else {
+            $this->message = KunenaMessageHelper::get($mesid);
+            $this->message->tryAuthorise();
+            $this->topic = $this->message->getTopic();
+        }
 
-		$this->category = $this->topic->getCategory();
+        $this->category = $this->topic->getCategory();
 
-		$this->uri = "index.php?option=com_kunena&view=topic&layout=report&catid={$this->category->id}" .
-			"&id={$this->topic->id}" . ($this->message ? "&mesid={$this->message->id}" : '');
-	}
+        $this->uri = "index.php?option=com_kunena&view=topic&layout=report&catid={$this->category->id}" .
+            "&id={$this->topic->id}" . ($this->message ? "&mesid={$this->message->id}" : '');
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		$menu_item = $this->app->getMenu()->getActive();
+    /**
+     * Prepare document.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+        $menu_item = $this->app->getMenu()->getActive();
 
-		if ($menu_item)
-		{
-			$params             = $menu_item->getParams();
-			$params_title       = $params->get('page_title');
-			$params_description = $params->get('menu-meta_description');
+        if ($menu_item) {
+            $params             = $menu_item->getParams();
+            $params_title       = $params->get('page_title');
+            $params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle(Text::_('COM_KUNENA_REPORT_TO_MODERATOR'));
-			}
+            if (!empty($params_title)) {
+                $title = $params->get('page_title');
+                $this->setTitle($title);
+            } else {
+                $this->setTitle(Text::_('COM_KUNENA_REPORT_TO_MODERATOR'));
+            }
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$this->setDescription(Text::_('COM_KUNENA_REPORT_TO_MODERATOR'));
-			}
-		}
-	}
+            if (!empty($params_description)) {
+                $description = $params->get('menu-meta_description');
+                $this->setDescription($description);
+            } else {
+                $this->setDescription(Text::_('COM_KUNENA_REPORT_TO_MODERATOR'));
+            }
+        }
+    }
 }

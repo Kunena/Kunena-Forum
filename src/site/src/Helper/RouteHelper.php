@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     Kunena.Site
  * @subpackage  com_kunena

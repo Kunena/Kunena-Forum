@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -9,6 +10,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -75,7 +77,7 @@ $wa->useScript('multiselect');
                         <div class="btn-group pull-right d-none d-md-block">
                             <label for="limit"
                                    class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-							<?php echo $this->pagination->getLimitBox(); ?>
+                            <?php echo $this->pagination->getLimitBox(); ?>
                         </div>
                         <div class="btn-group pull-right d-none d-md-block">
                             <label for="directionTable"
@@ -83,7 +85,7 @@ $wa->useScript('multiselect');
                             <select name="directionTable" id="directionTable" class="input-medium"
                                     onchange="Joomla.orderTable()">
                                 <option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
+                                <?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
                             </select>
                         </div>
                         <div class="btn-group pull-right">
@@ -91,7 +93,7 @@ $wa->useScript('multiselect');
                                    class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
                             <select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
                                 <option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
                             </select>
                         </div>
                         <div class="clearfix"></div>
@@ -158,7 +160,7 @@ $wa->useScript('multiselect');
                                 <select name="filter_rank" id="filter_rank" class="select-filter filter form-control"
                                         onchange="Joomla.orderTable()">
                                     <option value=""><?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->ranksOptions(), 'value', 'text', $this->filter->Rank); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->ranksOptions(), 'value', 'text', $this->filter->Rank); ?>
                                 </select>
                             </td>
                             <td class="nowrap center d-none d-md-table-cell">
@@ -168,7 +170,7 @@ $wa->useScript('multiselect');
                                         class="select-filter filter form-control"
                                         onchange="Joomla.orderTable()">
                                     <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filter->Signature); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filter->Signature); ?>
                                 </select>
                             </td>
                             <td class="nowrap center">
@@ -177,7 +179,7 @@ $wa->useScript('multiselect');
                                 <select name="filter_block" id="filter_block" class="select-filter filter form-control"
                                         onchange="Joomla.orderTable()">
                                     <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->blockOptions(), 'value', 'text', $this->filter->Block, true); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->blockOptions(), 'value', 'text', $this->filter->Block, true); ?>
                                 </select>
                             </td>
                             <td class="nowrap center">
@@ -187,7 +189,7 @@ $wa->useScript('multiselect');
                                         class="select-filter filter form-control"
                                         onchange="Joomla.orderTable()">
                                     <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filter->Banned); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filter->Banned); ?>
                                 </select>
                             </td>
                             <td class="nowrap center">
@@ -197,7 +199,7 @@ $wa->useScript('multiselect');
                                         class="select-filter filter form-control"
                                         onchange="Joomla.orderTable()">
                                     <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filter->Moderator); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filter->Moderator); ?>
                                 </select>
                             </td>
                             <td class="nowrap center d-none d-md-table-cell">
@@ -207,140 +209,132 @@ $wa->useScript('multiselect');
                         <tfoot>
                         <tr>
                             <td colspan="12">
-								<?php echo $this->pagination->getListFooter(); ?>
+                                <?php echo $this->pagination->getListFooter(); ?>
                             </td>
                         </tr>
                         </tfoot>
                         <tbody>
-						<?php
-						$i                        = 0;
-						$img_no                   = '<i class="icon-cancel"></i>';
-						$img_yes                  = '<i class="icon-checkmark"></i>';
+                        <?php
+                        $i                        = 0;
+                        $img_no                   = '<i class="icon-cancel"></i>';
+                        $img_yes                  = '<i class="icon-checkmark"></i>';
 
-						if ($this->pagination->total > 0)
-							:
-							foreach ($this->users as $user)
-								:
-								$userBlockTask = $user->isBlocked() ? 'unblock' : 'block';
-								$userBannedTask   = $user->isBanned() ? 'unban' : 'ban';
-								$userModerateTask = $user->isModerator() ? 'unmoderate' : 'moderate';
-								?>
+                        if ($this->pagination->total > 0) :
+                            foreach ($this->users as $user) :
+                                $userBlockTask = $user->isBlocked() ? 'unblock' : 'block';
+                                $userBannedTask   = $user->isBanned() ? 'unban' : 'ban';
+                                $userModerateTask = $user->isModerator() ? 'unmoderate' : 'moderate';
+                                ?>
                                 <tr>
                                     <td>
-										<?php echo HTMLHelper::_('grid.id', $i, intval($user->userid)) ?>
+                                        <?php echo HTMLHelper::_('grid.id', $i, intval($user->userid)) ?>
                                     </td>
                                     <td>
-										<span class="editlinktip hasTip  kwho-<?php echo $user->getType(0, true); ?>"
+                                        <span class="editlinktip hasTip  kwho-<?php echo $user->getType(0, true); ?>"
                                               title="<?php echo $this->escape($user->username); ?> ">
-											<?php echo $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb'); ?>
-											<a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->userid); ?>"
+                                            <?php echo $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb'); ?>
+                                            <a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->userid); ?>"
                                                title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo Text::sprintf('COM_USERS_EDIT_USER', $this->escape($user->name)); ?>">
-											<span class="fa fa-pen-square mr-2"
+                                            <span class="fa fa-pen-square mr-2"
                                                   aria-hidden="true"></span><?php echo $this->escape($user->username); ?></a>
-											<small>
-												(<?php echo Text::sprintf('COM_KUNENA_LABEL_USER_NAME', $this->escape($user->name)); ?>
-												)
-											</small>
-										</span>
+                                            <small>
+                                                (<?php echo Text::sprintf('COM_KUNENA_LABEL_USER_NAME', $this->escape($user->name)); ?>
+                                                )
+                                            </small>
+                                        </span>
                                     </td>
                                     <td>
                                         <a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->userid); ?>"
                                            title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($user->name); ?>">
-											<?php echo $this->escape($user->email); ?></a>
+                                            <?php echo $this->escape($user->email); ?></a>
                                     </td>
                                     <td>
                                         <a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->userid); ?>"
                                            title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($user->name); ?>">
-											<?php echo $this->escape($user->ip); ?></a>
+                                            <?php echo $this->escape($user->ip); ?></a>
                                     </td>
                                     <td class="d-none d-lg-table-cell">
                                         <a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->userid); ?>"
                                            title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($user->name); ?>">
-											<?php echo $this->escape($user->getRank(0, 'title')); ?></a>
+                                            <?php echo $this->escape($user->getRank(0, 'title')); ?></a>
                                     </td>
                                     <td class="center d-none d-lg-table-cell">
-										<span class="editlinktip <?php echo $user->signature ? 'hasTip' : ''; ?>"
+                                        <span class="editlinktip <?php echo $user->signature ? 'hasTip' : ''; ?>"
                                               title="<?php echo $this->escape($user->signature); ?> ">
-											<?php
-											if ($user->signature)
-											{
-												?>
+                                            <?php
+                                            if ($user->signature) {
+                                                ?>
                                                 <a href="#edit"
                                                    onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','edit')"><?php echo Text::_('COM_KUNENA_YES'); ?></a>
-											<?php }
-											else
-											{
-												?>
+                                            <?php } else {
+                                                ?>
                                                 <a href="#edit"
                                                    onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','edit')"><?php echo Text::_('COM_KUNENA_NO'); ?></a>
-											<?php } ?>
-										</span>
+                                            <?php } ?>
+                                        </span>
                                     </td>
                                     <td class="center d-none d-md-table-cell">
                                         <a class="btn btn-micro <?php echo !$user->isBlocked() ? 'active' : ''; ?>"
                                            href="javascript: void(0);"
                                            onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
-											<?php echo !$user->isBlocked() ? $img_yes : $img_no; ?>
+                                            <?php echo !$user->isBlocked() ? $img_yes : $img_no; ?>
                                         </a>
                                     </td>
                                     <td class="center d-none d-md-table-cell">
                                         <a class="btn btn-micro <?php echo $user->isBanned() ? 'active' : ''; ?>"
                                            href="javascript: void(0);"
                                            onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
-											<?php echo $user->isBanned() ? $img_yes : $img_no; ?>
+                                            <?php echo $user->isBanned() ? $img_yes : $img_no; ?>
                                         </a>
                                     </td>
                                     <td class="center d-none d-lg-table-cell">
-										<?php if ($user->moderator)
-											:
-											?>
+                                        <?php if ($user->moderator) :
+                                            ?>
                                             <a class="btn btn-micro active"
                                                href="javascript: void(0);"
                                                onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
-												<?php echo $img_yes; ?>
+                                                <?php echo $img_yes; ?>
                                             </a>
-										<?php else
-
-											:
-											?>
+                                        <?php else :
+                                            ?>
                                             <a class="btn btn-micro active"
                                                href="javascript: void(0);"
                                                onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo $userModerateTask ?>')">
-												<?php echo $img_no; ?>
+                                                <?php echo $img_no; ?>
                                             </a>
-										<?php endif; ?>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="center"><?php echo $this->escape($user->userid); ?></td>
                                 </tr>
-								<?php $i++;
-							endforeach;
-						else                        :
-							?>
+                                <?php $i++;
+                            endforeach;
+                        else :
+                            ?>
                             <tr>
                                 <td colspan="10">
                                     <div class="card card-block bg-faded p-2 center filter-state">
-											<span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
-												<button class="btn btn-outline-primary" type="button"
+                                            <span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
+                                                <button class="btn btn-outline-primary" type="button"
                                                         onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-											</span>
+                                            </span>
                                     </div>
                                 </td>
                             </tr>
-						<?php endif; ?>
+                        <?php endif; ?>
                         </tbody>
                     </table>
-					<?php echo $this->loadTemplate('subscribecatsusers'); ?>
-					<?php echo $this->loadTemplate('moderators'); ?>
-					
-					<input type="hidden" name="task" value="">
-				<input type="hidden" name="boxchecked" value="0">
-				<?php echo HTMLHelper::_('form.token'); ?>
+                    <?php echo $this->loadTemplate('subscribecatsusers'); ?>
+                    <?php echo $this->loadTemplate('moderators'); ?>
+                    
+                    <input type="hidden" name="task" value="">
+                <input type="hidden" name="boxchecked" value="0">
+                <?php echo HTMLHelper::_('form.token'); ?>
                 </form>
                 <div class="clearfix"></div>
             </div>
         </div>
     </div>
     <div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+        <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

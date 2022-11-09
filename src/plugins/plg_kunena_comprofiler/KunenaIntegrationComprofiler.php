@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -21,67 +22,65 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  */
 class KunenaIntegrationComprofiler
 {
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected static $open = false;
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    protected static $open = false;
 
-	/**
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public static function open()
-	{
-		if (self::$open)
-		{
-			return;
-		}
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function open()
+    {
+        if (self::$open) {
+            return;
+        }
 
-		self::$open = true;
-		$params     = [];
-		self::trigger('onStart', $params);
-	}
+        self::$open = true;
+        $params     = [];
+        self::trigger('onStart', $params);
+    }
 
-	/**
-	 * Triggers CB events
-	 *
-	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
-	 *
-	 * @param   string  $event   event
-	 * @param   array   $params  params
-	 *
-	 * @return  void
-	 *
-	 * @throws Exception
-	 * @since   Kunena 6.0
-	 */
-	public static function trigger(string $event, array $params): void
-	{
-		global $_PLUGINS;
-		$config            = KunenaFactory::getConfig();
-		$params ['config'] = $config;
-		$_PLUGINS->loadPluginGroup('user');
-		$_PLUGINS->trigger('kunenaIntegration', [$event, &$config, &$params]);
-	}
+    /**
+     * Triggers CB events
+     *
+     * Current events: profileIntegration=0/1, avatarIntegration=0/1
+     *
+     * @param   string  $event   event
+     * @param   array   $params  params
+     *
+     * @return  void
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public static function trigger(string $event, array $params): void
+    {
+        global $_PLUGINS;
+        $config            = KunenaFactory::getConfig();
+        $params ['config'] = $config;
+        $_PLUGINS->loadPluginGroup('user');
+        $_PLUGINS->trigger('kunenaIntegration', [$event, &$config, &$params]);
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public static function close(): void
-	{
-		if (!self::$open)
-		{
-			return;
-		}
+    /**
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function close(): void
+    {
+        if (!self::$open) {
+            return;
+        }
 
-		self::$open = false;
-		$params     = [];
-		self::trigger('onEnd', $params);
-	}
+        self::$open = false;
+        $params     = [];
+        self::trigger('onEnd', $params);
+    }
 }

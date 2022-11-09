@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -19,27 +20,25 @@ use Joomla\CMS\Language\Text;
 ?>
 
 <?php if (!empty($this->onlineList)) : ?>
-	<div>
-		<?php
-		foreach ($this->onlineList as $user)
-		{
-			$onlinelist[] = $user->getLink(null, null, '');
-		}
-		?>
-		<?php echo implode(', ', $onlinelist); ?>
-	</div>
+    <div>
+        <?php
+        foreach ($this->onlineList as $user) {
+            $onlinelist[] = $user->getLink(null, null, '');
+        }
+        ?>
+        <?php echo implode(', ', $onlinelist); ?>
+    </div>
 <?php endif; ?>
 
 <?php if (!empty($this->hiddenList)) : ?>
-	<div>
-		<span><?php echo Text::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
+    <div>
+        <span><?php echo Text::_('COM_KUNENA_HIDDEN_USERS'); ?>:</span>
 
-		<?php
-		foreach ($this->hiddenList as $user)
-		{
-			$hiddenlist[] = $user->getLink(null, null, '');
-		}
-		?>
-		<?php echo implode(', ', $hiddenlist); ?>
-	</div>
+        <?php
+        foreach ($this->hiddenList as $user) {
+            $hiddenlist[] = $user->getLink(null, null, '');
+        }
+        ?>
+        <?php echo implode(', ', $hiddenlist); ?>
+    </div>
 <?php endif; ?>

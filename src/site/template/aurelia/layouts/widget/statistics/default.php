@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -25,18 +26,15 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
         </div>
     </div>
     <h2 class="card-header">
-		<?php if ($this->statisticsUrl)
-			:
-			?>
+        <?php if ($this->statisticsUrl) :
+            ?>
             <a href="<?php echo $this->statisticsUrl; ?>">
-				<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
+                <?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
             </a>
-		<?php else
-
-			:
-			?>
-			<?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
-		<?php endif; ?>
+        <?php else :
+            ?>
+            <?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
+        <?php endif; ?>
     </h2>
     <div class="shadow-lg rounded " id="kstats">
         <div class="card-body">
@@ -51,19 +49,19 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
                     <div class="col-md-3">
                         <ul class="list-unstyled">
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>:
                                 <strong><?php echo (int) $this->messageCount; ?></strong>
                             </li>
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>:
                                 <strong><?php echo (int) $this->sectionCount; ?></strong>
                             </li>
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>:
                                 <strong><?php echo (int) $this->todayTopicCount; ?></strong>
                             </li>
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>:
                                 <strong><?php echo (int) $this->todayReplyCount; ?></strong>
                             </li>
                         </ul>
@@ -72,19 +70,19 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
                     <div class="col-md-3">
                         <ul class="list-unstyled">
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>:
                                 <strong><?php echo (int) $this->topicCount; ?></strong>
                             </li>
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>:
                                 <strong><?php echo (int) $this->categoryCount; ?></strong>
                             </li>
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>:
                                 <strong><?php echo (int) $this->yesterdayTopicCount; ?></strong>
                             </li>
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>:
                                 <strong><?php echo (int) $this->yesterdayReplyCount; ?></strong>
                             </li>
                         </ul>
@@ -93,11 +91,11 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
                     <div class="col-md-3">
                         <ul class="list-unstyled">
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:
                                 <strong><?php echo $this->memberCount; ?></strong>
                             </li>
                             <li>
-								<?php echo Text::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
+                                <?php echo Text::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:
                                 <strong><?php echo $this->latestMemberLink; ?></strong>
                             </li>
                         </ul>

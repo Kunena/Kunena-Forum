@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -26,57 +27,51 @@ use RuntimeException;
  */
 class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $table = '#__kunena_attachments';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $table = '#__kunena_attachments';
 
-	/**
-	 * Get log entries.
-	 *
-	 * @return  array|KunenaCollection
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception|void
-	 */
-	public function find()
-	{
-		if ($this->skip)
-		{
-			return [];
-		}
+    /**
+     * Get log entries.
+     *
+     * @return  array|KunenaCollection
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception|void
+     */
+    public function find()
+    {
+        if ($this->skip) {
+            return [];
+        }
 
-		$query = clone $this->query;
-		$this->build($query);
-		$query->select('a.*');
-		$query->setLimit($this->limit, $this->start);
-		$this->db->setQuery($query);
+        $query = clone $this->query;
+        $this->build($query);
+        $query->select('a.*');
+        $query->setLimit($this->limit, $this->start);
+        $this->db->setQuery($query);
 
-		try
-		{
-			$results = (array) $this->db->loadObjectList('id');
-		}
-		catch (RuntimeException $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
+        try {
+            $results = (array) $this->db->loadObjectList('id');
+        } catch (RuntimeException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
 
-		$instances = [];
+        $instances = [];
 
-		if (!empty($results))
-		{
-			foreach ($results as $id => $result)
-			{
-				$instances[$id] = KunenaAttachmentHelper::get($id);
-			}
-		}
+        if (!empty($results)) {
+            foreach ($results as $id => $result) {
+                $instances[$id] = KunenaAttachmentHelper::get($id);
+            }
+        }
 
-		$instances = new KunenaCollection($instances);
+        $instances = new KunenaCollection($instances);
 
-		unset($results);
+        unset($results);
 
-		return $instances;
-	}
+        return $instances;
+    }
 }

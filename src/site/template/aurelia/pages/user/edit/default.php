@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -26,8 +27,8 @@ $document = Factory::getApplication()->getDocument();
 $document->addScriptOptions('com_kunena.avatartab', json_encode($avatartab));
 
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_EDIT'),
-	'index.php?option=com_kunena&view=user&layout=edit'
+    Text::_('COM_KUNENA_EDIT'),
+    'index.php?option=com_kunena&view=user&layout=edit'
 );
 
 echo $content;

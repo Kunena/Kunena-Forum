@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -38,201 +39,187 @@ use Kunena\Forum\Libraries\Table\KunenaTableMap;
  */
 class KunenaPrivateMessage extends KunenaDatabaseObject
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $_table = 'KunenaPrivate';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $_table = 'KunenaPrivate';
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	protected $_attachments = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    protected $_attachments = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	protected $_posts = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    protected $_posts = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	protected $_users = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    protected $_users = null;
 
-	/**
-	 * KunenaPrivateMessage constructor.
-	 *
-	 * @param   null  $properties  properties
-	 *
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function __construct($properties = null)
-	{
-		if (!empty($this->id))
-		{
-			$this->_exists = true;
-		}
-		else
-		{
-			parent::__construct($properties);
-		}
-	}
+    /**
+     * KunenaPrivateMessage constructor.
+     *
+     * @param   null  $properties  properties
+     *
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function __construct($properties = null)
+    {
+        if (!empty($this->id)) {
+            $this->_exists = true;
+        } else {
+            parent::__construct($properties);
+        }
+    }
 
-	/**
-	 * @param   string  $field  field
-	 *
-	 * @return integer|string
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
-	 */
-	public function displayField(string $field)
-	{
-		switch ($field)
-		{
-			case 'id':
-				return \intval($this->id);
-			case 'subject':
-				return KunenaParser::parseText($this->subject);
-			case 'body':
-				return KunenaParser::parseBBCode($this->body, $this);
-		}
+    /**
+     * @param   string  $field  field
+     *
+     * @return integer|string
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public function displayField(string $field)
+    {
+        switch ($field) {
+            case 'id':
+                return \intval($this->id);
+            case 'subject':
+                return KunenaParser::parseText($this->subject);
+            case 'body':
+                return KunenaParser::parseBBCode($this->body, $this);
+        }
 
-		return '';
-	}
+        return '';
+    }
 
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function check(): bool
-	{
-		$this->params = new Registry($this->params);
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function check(): bool
+    {
+        $this->params = new Registry($this->params);
 
-		if (!\is_null($this->_attachments))
-		{
-			$attachments       = array_values($this->_attachments->getMapped());
-			$this->attachments = \count($attachments);
-			$this->params->set('attachments', $attachments);
-		}
+        if (!\is_null($this->_attachments)) {
+            $attachments       = array_values($this->_attachments->getMapped());
+            $this->attachments = \count($attachments);
+            $this->params->set('attachments', $attachments);
+        }
 
-		if (!\is_null($this->_posts))
-		{
-			$this->params->set('receivers.posts', array_values($this->_posts->getMapped()));
-		}
+        if (!\is_null($this->_posts)) {
+            $this->params->set('receivers.posts', array_values($this->_posts->getMapped()));
+        }
 
-		if (!\is_null($this->_users))
-		{
-			$this->params->set('receivers.users', array_values($this->_users->getMapped()));
-		}
+        if (!\is_null($this->_users)) {
+            $this->params->set('receivers.users', array_values($this->_users->getMapped()));
+        }
 
-		return parent::check();
-	}
+        return parent::check();
+    }
 
-	/**
-	 * Delete attachments
-	 *
-	 * @see     KunenaDatabaseObject::delete()
-	 *
-	 * @return  mixed
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function delete(): bool
-	{
-		return parent::delete();
-	}
+    /**
+     * Delete attachments
+     *
+     * @see     KunenaDatabaseObject::delete()
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function delete(): bool
+    {
+        return parent::delete();
+    }
 
-	/**
-	 * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function attachments(): ?KunenaTableMap
-	{
-		if (\is_null($this->_attachments))
-		{
-			$this->_attachments = new KunenaTableMap('#__kunena_private_attachment_map', 'private_id', 'attachment_id');
-			$this->_attachments->load($this->id);
-		}
+    /**
+     * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
+     *
+     * @since   Kunena 6.0
+     */
+    public function attachments(): ?KunenaTableMap
+    {
+        if (\is_null($this->_attachments)) {
+            $this->_attachments = new KunenaTableMap('#__kunena_private_attachment_map', 'private_id', 'attachment_id');
+            $this->_attachments->load($this->id);
+        }
 
-		return $this->_attachments;
-	}
+        return $this->_attachments;
+    }
 
-	/**
-	 * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function posts(): ?KunenaTableMap
-	{
-		if (\is_null($this->_posts))
-		{
-			$this->_posts = new KunenaTableMap('#__kunena_private_post_map', 'private_id', 'message_id');
-			$this->_posts->load($this->id);
-		}
+    /**
+     * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
+     *
+     * @since   Kunena 6.0
+     */
+    public function posts(): ?KunenaTableMap
+    {
+        if (\is_null($this->_posts)) {
+            $this->_posts = new KunenaTableMap('#__kunena_private_post_map', 'private_id', 'message_id');
+            $this->_posts->load($this->id);
+        }
 
-		return $this->_posts;
-	}
+        return $this->_posts;
+    }
 
-	/**
-	 * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function users(): ?KunenaTableMap
-	{
-		if (\is_null($this->_users))
-		{
-			$this->_users = new KunenaTableMap('#__kunena_private_user_map', 'private_id', 'user_id');
-			$this->_users->load($this->id);
-		}
+    /**
+     * @return \Kunena\Forum\Libraries\Table\KunenaTableMap|null
+     *
+     * @since   Kunena 6.0
+     */
+    public function users(): ?KunenaTableMap
+    {
+        if (\is_null($this->_users)) {
+            $this->_users = new KunenaTableMap('#__kunena_private_user_map', 'private_id', 'user_id');
+            $this->_users->load($this->id);
+        }
 
-		return $this->_users;
-	}
+        return $this->_users;
+    }
 
-	/**
-	 * Save changes in the relations.
-	 *
-	 * @return void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
-	 */
-	protected function saveInternal()
-	{
-		if (!\is_null($this->_attachments))
-		{
-			$this->_attachments->setKey($this->id)->save();
-			$ids         = $this->_attachments->getMapped();
-			$attachments = KunenaAttachmentHelper::getById($ids, 'none');
+    /**
+     * Save changes in the relations.
+     *
+     * @return void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    protected function saveInternal()
+    {
+        if (!\is_null($this->_attachments)) {
+            $this->_attachments->setKey($this->id)->save();
+            $ids         = $this->_attachments->getMapped();
+            $attachments = KunenaAttachmentHelper::getById($ids, 'none');
 
-			foreach ($attachments as $attachment)
-			{
-				$attachment->protected = KunenaAttachment::PROTECTION_PRIVATE;
-				$attachment->save();
-			}
-		}
+            foreach ($attachments as $attachment) {
+                $attachment->protected = KunenaAttachment::PROTECTION_PRIVATE;
+                $attachment->save();
+            }
+        }
 
-		if (!\is_null($this->_posts))
-		{
-			$this->_posts->setKey($this->id)->save();
-		}
+        if (!\is_null($this->_posts)) {
+            $this->_posts->setKey($this->id)->save();
+        }
 
-		if (!\is_null($this->_users))
-		{
-			$this->_users->setKey($this->id)->save();
-		}
-	}
+        if (!\is_null($this->_users)) {
+            $this->_users->setKey($this->id)->save();
+        }
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -15,9 +16,8 @@ namespace Kunena\Forum\Site;
  * A light application to serve attachments to the users. Will only partially initialize Joomla to gain some speed.
  */
 
-if (version_compare(PHP_VERSION, '7.2', '<'))
-{
-	die('Your host needs to use PHP 7.2 or higher to run this version of Joomla!');
+if (version_compare(PHP_VERSION, '7.2', '<')) {
+    die('Your host needs to use PHP 7.2 or higher to run this version of Joomla!');
 }
 
 /*
@@ -47,21 +47,20 @@ use Kunena\Forum\Site\Controller\Application\Attachment\Initial\AttachmentDispla
 require_once JPATH_BASE . '/includes/defines.php';
 
 // Installation check, and check on removal of the install directory.
-if (!file_exists(JPATH_CONFIGURATION . '/configuration.php')
-	|| (fileSize(JPATH_CONFIGURATION . '/configuration.php') < 10)
-)
-{
-	echo 'No configuration file found and no installation code available. Exiting...';
+if (
+    !file_exists(JPATH_CONFIGURATION . '/configuration.php')
+    || (fileSize(JPATH_CONFIGURATION . '/configuration.php') < 10)
+) {
+    echo 'No configuration file found and no installation code available. Exiting...';
 
-	exit;
+    exit;
 }
 
 // Kunena check.
-if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_kunena/api.php'))
-{
-	echo 'Kunena Forum not installed. Exiting...';
+if (!file_exists(JPATH_ADMINISTRATOR . '/components/com_kunena/api.php')) {
+    echo 'Kunena Forum not installed. Exiting...';
 
-	exit;
+    exit;
 }
 
 // System includes
@@ -81,205 +80,194 @@ require_once JPATH_BASE . '/includes/framework.php';
  */
 class KunenaApplication extends WebApplication
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 2.0
-	 */
-	protected $_name = 'site';
+    /**
+     * @var     string
+     * @since   Kunena 2.0
+     */
+    protected $_name = 'site';
 
-	/**
-	 * @var     integer
-	 * @since   Kunena 2.0
-	 */
-	protected $_clientId = 0;
+    /**
+     * @var     integer
+     * @since   Kunena 2.0
+     */
+    protected $_clientId = 0;
 
-	/**
-	 * @var     array
-	 * @since   Kunena 2.0
-	 */
-	protected $userstate = [];
+    /**
+     * @var     array
+     * @since   Kunena 2.0
+     */
+    protected $userstate = [];
 
-	/**
-	 * @param   Input|null      $input   input
-	 * @param   Registry|null   $config  config
-	 * @param   WebClient|null  $client  client
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(Input $input = null, Registry $config = null, WebClient $client = null)
-	{
-		parent::__construct($input, $config, $client);
+    /**
+     * @param   Input|null      $input   input
+     * @param   Registry|null   $config  config
+     * @param   WebClient|null  $client  client
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(Input $input = null, Registry $config = null, WebClient $client = null)
+    {
+        parent::__construct($input, $config, $client);
 
-		// Load and set the dispatcher
-		$this->loadDispatcher();
+        // Load and set the dispatcher
+        $this->loadDispatcher();
 
-		// Register the application to FactoryF
-		Factory::$application = $this;
+        // Register the application to FactoryF
+        Factory::$application = $this;
 
-		// Enable sessions by default.
-		if (\is_null($this->config->get('session')))
-		{
-			$this->config->set('session', true);
-		}
+        // Enable sessions by default.
+        if (\is_null($this->config->get('session'))) {
+            $this->config->set('session', true);
+        }
 
-		// Set the session default name.
-		if (\is_null($this->config->get('session_name')))
-		{
-			$this->config->set('session_name', 'site');
-		}
+        // Set the session default name.
+        if (\is_null($this->config->get('session_name'))) {
+            $this->config->set('session_name', 'site');
+        }
 
-		// Create the session if a session name is passed.
-		if ($this->config->get('session') !== false)
-		{
-			$this->loadSession();
+        // Create the session if a session name is passed.
+        if ($this->config->get('session') !== false) {
+            $this->loadSession();
 
-			// Register the session with Factory
-			Factory::$session = $this->getSession();
-		}
-	}
+            // Register the session with Factory
+            Factory::$session = $this->getSession();
+        }
+    }
 
-	/**
-	 * @param   Session|null  $session  session
-	 *
-	 * @return  $this
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function loadSession(Session $session = null)
-	{
-		if ($session !== null)
-		{
-			$this['session'] = $session;
+    /**
+     * @param   Session|null  $session  session
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.0
+     */
+    public function loadSession(Session $session = null)
+    {
+        if ($session !== null) {
+            $this['session'] = $session;
 
-			return $this;
-		}
+            return $this;
+        }
 
-		// Generate a session name.
-		$name = md5($this->get('secret') . $this->get('session_name', \get_class($this)));
+        // Generate a session name.
+        $name = md5($this->get('secret') . $this->get('session_name', \get_class($this)));
 
-		// Calculate the session lifetime.
-		$lifetime = (($this->get('lifetime')) ? $this->get('lifetime') * 60 : 900);
+        // Calculate the session lifetime.
+        $lifetime = (($this->get('lifetime')) ? $this->get('lifetime') * 60 : 900);
 
-		// Get the session handler from the configuration.
-		$handler = $this->get('session_handler', 'none');
+        // Get the session handler from the configuration.
+        $handler = $this->get('session_handler', 'none');
 
-		// Initialize the options for Session.
-		$options = [
-			'name'   => $name,
-			'expire' => $lifetime,
-		];
+        // Initialize the options for Session.
+        $options = [
+            'name'   => $name,
+            'expire' => $lifetime,
+        ];
 
-		$session = Session::getInstance($handler, $options);
-		$session->initialise($this->input, $this['dispatcher']);
+        $session = Session::getInstance($handler, $options);
+        $session->initialise($this->input, $this['dispatcher']);
 
-		if ($session->getState() == 'expired')
-		{
-			$session->restart();
-		}
-		else
-		{
-			$session->start();
-		}
+        if ($session->getState() == 'expired') {
+            $session->restart();
+        } else {
+            $session->start();
+        }
 
-		// Set the session object.
-		$this['session'] = $session;
+        // Set the session object.
+        $this['session'] = $session;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function isSite()
-	{
-		return true;
-	}
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function isSite()
+    {
+        return true;
+    }
 
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function isAdmin()
-	{
-		return false;
-	}
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function isAdmin()
+    {
+        return false;
+    }
 
-	/**
-	 * @param   bool  $params  params
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getTemplate($params = false)
-	{
-		return 'system';
-	}
+    /**
+     * @param   bool  $params  params
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getTemplate($params = false)
+    {
+        return 'system';
+    }
 
-	/**
-	 * @param   string  $name     name
-	 * @param   null    $default  default
-	 *
-	 * @return  null
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getUserState($name, $default = null)
-	{
-		return isset($this->userstate[$name]) ? $this->userstate[$name] : $default;
-	}
+    /**
+     * @param   string  $name     name
+     * @param   null    $default  default
+     *
+     * @return  null
+     *
+     * @since   Kunena 6.0
+     */
+    public function getUserState($name, $default = null)
+    {
+        return isset($this->userstate[$name]) ? $this->userstate[$name] : $default;
+    }
 
-	/**
-	 * @param   string   $name   name
-	 * @param   boolean  $value  value
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function setUserState($name, $value)
-	{
-		$this->userstate[$name] = $value;
-	}
+    /**
+     * @param   string   $name   name
+     * @param   boolean  $value  value
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function setUserState($name, $value)
+    {
+        $this->userstate[$name] = $value;
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @since   Kunena 6.0
-	 */
-	protected function doExecute()
-	{
-		// Handle SEF.
-		$query    = $this->input->getString('query', 'foo');
-		$segments = explode('/', $query);
+    /**
+     * @return  void
+     *
+     * @throws  null
+     * @since   Kunena 6.0
+     */
+    protected function doExecute()
+    {
+        // Handle SEF.
+        $query    = $this->input->getString('query', 'foo');
+        $segments = explode('/', $query);
 
-		$segment = array_shift($segments);
-		$this->input->set('id', (int) $segment);
-		$segment = array_shift($segments);
+        $segment = array_shift($segments);
+        $this->input->set('id', (int) $segment);
+        $segment = array_shift($segments);
 
-		if ($segment == 'thumb')
-		{
-			$this->input->set('thumb', 1);
-		}
+        if ($segment == 'thumb') {
+            $this->input->set('thumb', 1);
+        }
 
-		$this->input->set('format', 'raw');
+        $this->input->set('format', 'raw');
 
-		$controller = new AttachmentDisplay;
-		echo $controller->execute();
-	}
+        $controller = new AttachmentDisplay();
+        echo $controller->execute();
+    }
 }
 
-$app = new KunenaApplication;
+$app = new KunenaApplication();
 
-try
-{
-	$app->execute();
-}
-catch (Exception $e)
-{
-	echo $e->getMessage();
+try {
+    $app->execute();
+} catch (Exception $e) {
+    echo $e->getMessage();
 }

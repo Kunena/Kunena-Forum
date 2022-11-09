@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,9 +29,9 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
  */
 class KunenaUser extends KunenaDatabaseObject
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $_table = 'KunenaPrivateUserMap';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $_table = 'KunenaPrivateUserMap';
 }

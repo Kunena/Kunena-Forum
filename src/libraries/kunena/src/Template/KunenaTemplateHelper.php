@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,203 +29,186 @@ use stdClass;
  */
 abstract class KunenaTemplateHelper
 {
-	/**
-	 * @var     array
-	 * @since   Kunena 6.0
-	 */
-	protected static $_instances = [];
+    /**
+     * @var     array
+     * @since   Kunena 6.0
+     */
+    protected static $_instances = [];
 
-	/**
-	 * isDefault
-	 *
-	 * @param   string  $template  template
-	 *
-	 * @return  integer
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
-	 */
-	public static function isDefault(string $template): int
-	{
-		$config         = KunenaFactory::getConfig();
-		$defaultemplate = $config->template;
+    /**
+     * isDefault
+     *
+     * @param   string  $template  template
+     *
+     * @return  integer
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public static function isDefault(string $template): int
+    {
+        $config         = KunenaFactory::getConfig();
+        $defaultemplate = $config->template;
 
-		return $defaultemplate == $template ? 1 : 0;
-	}
+        return $defaultemplate == $template ? 1 : 0;
+    }
 
-	/**
-	 * parseXmlFiles
-	 *
-	 * @param   null  $templateBaseDir  template
-	 *
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public static function parseXmlFiles($templateBaseDir = null): array
-	{
-		// Read the template folder to find templates
-		if (!$templateBaseDir)
-		{
-			$templateBaseDir = KPATH_SITE . '/template';
-		}
+    /**
+     * parseXmlFiles
+     *
+     * @param   null  $templateBaseDir  template
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     */
+    public static function parseXmlFiles($templateBaseDir = null): array
+    {
+        // Read the template folder to find templates
+        if (!$templateBaseDir) {
+            $templateBaseDir = KPATH_SITE . '/template';
+        }
 
-		$data = self::parseXmlFile('', $templateBaseDir);
+        $data = self::parseXmlFile('', $templateBaseDir);
 
-		if ($data)
-		{
-			// Guess template folder.
-			$data->directory = preg_replace('/[^a-z0-9_]/', '', preg_replace('/\s+/', '_', strtolower($data->name)));
+        if ($data) {
+            // Guess template folder.
+            $data->directory = preg_replace('/[^a-z0-9_]/', '', preg_replace('/\s+/', '_', strtolower($data->name)));
 
-			if (!$data->directory)
-			{
-				return [];
-			}
+            if (!$data->directory) {
+                return [];
+            }
 
-			// Template found from the root (folder cannot contain more than one template)
-			return ['' => $data];
-		}
+            // Template found from the root (folder cannot contain more than one template)
+            return ['' => $data];
+        }
 
-		$templateDirs = Folder::folders($templateBaseDir);
-		$rows         = [];
+        $templateDirs = Folder::folders($templateBaseDir);
+        $rows         = [];
 
-		// Check that the directory contains an xml file
-		foreach ($templateDirs as $templateDir)
-		{
-			$data = self::parseXmlFile($templateDir, $templateBaseDir);
+        // Check that the directory contains an xml file
+        foreach ($templateDirs as $templateDir) {
+            $data = self::parseXmlFile($templateDir, $templateBaseDir);
 
-			if ($data)
-			{
-				$rows[$templateDir] = $data;
-			}
-		}
+            if ($data) {
+                $rows[$templateDir] = $data;
+            }
+        }
 
-		ksort($rows);
+        ksort($rows);
 
-		return $rows;
-	}
+        return $rows;
+    }
 
-	/**
-	 * @param   string  $templateDir      template dir
-	 * @param   string  $templateBaseDir  template basedir
-	 *
-	 * @return  boolean|stdClass
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public static function parseXmlFile(string $templateDir, $templateBaseDir = null)
-	{
-		// Check if the xml file exists
-		if (!$templateBaseDir)
-		{
-			$templateBaseDir = KPATH_SITE . '/template';
-		}
+    /**
+     * @param   string  $templateDir      template dir
+     * @param   string  $templateBaseDir  template basedir
+     *
+     * @return  boolean|stdClass
+     *
+     * @since   Kunena 6.0
+     */
+    public static function parseXmlFile(string $templateDir, $templateBaseDir = null)
+    {
+        // Check if the xml file exists
+        if (!$templateBaseDir) {
+            $templateBaseDir = KPATH_SITE . '/template';
+        }
 
-		if (!is_file($templateBaseDir . '/' . $templateDir . '/config/template.xml'))
-		{
-			return false;
-		}
+        if (!is_file($templateBaseDir . '/' . $templateDir . '/config/template.xml')) {
+            return false;
+        }
 
-		$data = self::parseKunenaInstallFile($templateBaseDir . '/' . $templateDir . '/config/template.xml');
+        $data = self::parseKunenaInstallFile($templateBaseDir . '/' . $templateDir . '/config/template.xml');
 
-		if (!$data || $data->type != 'kunena-template')
-		{
-			return false;
-		}
+        if (!$data || $data->type != 'kunena-template') {
+            return false;
+        }
 
-		$data->sourcedir = basename($templateDir);
-		$data->directory = basename($templateDir);
+        $data->sourcedir = basename($templateDir);
+        $data->directory = basename($templateDir);
 
-		return $data;
-	}
+        return $data;
+    }
 
-	/**
-	 * parseKunenaInstallFile
-	 *
-	 * @param   string  $path  path
-	 *
-	 * @return  boolean|stdClass
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public static function parseKunenaInstallFile(string $path)
-	{
-		$xml = simplexml_load_file($path);
+    /**
+     * parseKunenaInstallFile
+     *
+     * @param   string  $path  path
+     *
+     * @return  boolean|stdClass
+     *
+     * @since   Kunena 6.0
+     */
+    public static function parseKunenaInstallFile(string $path)
+    {
+        $xml = simplexml_load_file($path);
 
-		if (!$xml || $xml->getName() != 'kinstall')
-		{
-			return false;
-		}
+        if (!$xml || $xml->getName() != 'kinstall') {
+            return false;
+        }
 
-		$data               = new stdClass;
-		$data->name         = (string) $xml->name;
+        $data               = new stdClass();
+        $data->name         = (string) $xml->name;
 
-		if ($xml->targetversion->attributes() !== null)
-		{
-			$data->targetversion = (string) $xml->targetversion->attributes()->version;
-		}
+        if ($xml->targetversion->attributes() !== null) {
+            $data->targetversion = (string) $xml->targetversion->attributes()->version;
+        }
 
-		$data->type         = (string) $xml->attributes()->type;
-		$data->creationdate = (string) $xml->creationDate;
-		$data->author       = (string) $xml->author;
-		$data->copyright    = (string) $xml->copyright;
-		$data->authorEmail  = (string) $xml->authorEmail;
-		$data->authorUrl    = (string) $xml->authorUrl;
-		$data->version      = (string) $xml->version;
-		$data->description  = (string) $xml->description;
-		$data->thumbnail    = (string) $xml->thumbnail;
-		$data->kversion     = (string) $xml->attributes()->version;
+        $data->type         = (string) $xml->attributes()->type;
+        $data->creationdate = (string) $xml->creationDate;
+        $data->author       = (string) $xml->author;
+        $data->copyright    = (string) $xml->copyright;
+        $data->authorEmail  = (string) $xml->authorEmail;
+        $data->authorUrl    = (string) $xml->authorUrl;
+        $data->version      = (string) $xml->version;
+        $data->description  = (string) $xml->description;
+        $data->thumbnail    = (string) $xml->thumbnail;
+        $data->kversion     = (string) $xml->attributes()->version;
 
-		if ($data->version == '@kunenaversion@')
-		{
-			$data->version = KunenaForum::version();
-		}
+        if ($data->version == '@kunenaversion@') {
+            $data->version = KunenaForum::version();
+        }
 
-		if ($data->creationdate == '@kunenaversiondate@')
-		{
-			$data->creationdate = KunenaForum::versionDate();
-		}
+        if ($data->creationdate == '@kunenaversiondate@') {
+            $data->creationdate = KunenaForum::versionDate();
+        }
 
-		if (!$data->version)
-		{
-			$data->version = Text::_('Unknown');
-		}
+        if (!$data->version) {
+            $data->version = Text::_('Unknown');
+        }
 
-		if (!$data->creationdate)
-		{
-			$data->creationdate = Text::_('Unknown');
-		}
+        if (!$data->creationdate) {
+            $data->creationdate = Text::_('Unknown');
+        }
 
-		if (!$data->author)
-		{
-			$data->author = Text::_('Unknown');
-		}
+        if (!$data->author) {
+            $data->author = Text::_('Unknown');
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 
-	/**
-	 * Check with the field targetversion in xml file of template zip if it's compatible with kunena
-	 *
-	 * @param   string $targetversion The versions of Kunena compatible with the template
-	 *
-	 * @return boolean
-	 * @since Kunena 5.2
-	 */
-	public static function templateIsKunenaCompatible($targetversion = null) :bool
-	{
-		if ($targetversion === null)
-		{
-			return false;
-		}
+    /**
+     * Check with the field targetversion in xml file of template zip if it's compatible with kunena
+     *
+     * @param   string $targetversion The versions of Kunena compatible with the template
+     *
+     * @return boolean
+     * @since Kunena 5.2
+     */
+    public static function templateIsKunenaCompatible($targetversion = null): bool
+    {
+        if ($targetversion === null) {
+            return false;
+        }
 
-		// Validate that the template version is allowed
-		if (preg_match('/^' . $targetversion . '/', KunenaForum::version())) 
-		{
-			return true;
-		}
+        // Validate that the template version is allowed
+        if (preg_match('/^' . $targetversion . '/', KunenaForum::version())) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

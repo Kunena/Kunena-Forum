@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,156 +29,150 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  */
 class KunenaProfile
 {
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected static $instance = false;
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    protected static $instance = false;
 
-	/**
-	 * @var boolean
-	 * @since Kunena 5.2
-	 */
-	public $enabled = true;
+    /**
+     * @var boolean
+     * @since Kunena 5.2
+     */
+    public $enabled = true;
 
-	/**
-	 * @param   null  $integration  integration
-	 *
-	 * @return  boolean|KunenaProfile
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public static function getInstance($integration = null)
-	{
-		if (self::$instance === false)
-		{
-			PluginHelper::importPlugin('kunena');
+    /**
+     * @param   null  $integration  integration
+     *
+     * @return  boolean|KunenaProfile
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public static function getInstance($integration = null)
+    {
+        if (self::$instance === false) {
+            PluginHelper::importPlugin('kunena');
 
-			$classes = Factory::getApplication()->triggerEvent('onKunenaGetProfile');
+            $classes = Factory::getApplication()->triggerEvent('onKunenaGetProfile');
 
-			foreach ($classes as $class)
-			{
-				if (!\is_object($class))
-				{
-					continue;
-				}
+            foreach ($classes as $class) {
+                if (!\is_object($class)) {
+                    continue;
+                }
 
-				self::$instance = $class;
-				break;
-			}
+                self::$instance = $class;
+                break;
+            }
 
-			if (!self::$instance)
-			{
-				self::$instance          = new self;
-				self::$instance->enabled = false;
-			}
-		}
+            if (!self::$instance) {
+                self::$instance          = new self();
+                self::$instance->enabled = false;
+            }
+        }
 
-		return self::$instance;
-	}
+        return self::$instance;
+    }
 
-	/**
-	 * @param   int  $limit  limit
-	 *
-	 * @return  array
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function getTopHits(int $limit = 0): array
-	{
-		if (!$limit)
-		{
-			$limit = KunenaFactory::getConfig()->popUserCount;
-		}
+    /**
+     * @param   int  $limit  limit
+     *
+     * @return  array
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getTopHits(int $limit = 0): array
+    {
+        if (!$limit) {
+            $limit = KunenaFactory::getConfig()->popUserCount;
+        }
 
-		return (array) $this->getTopHitsArray($limit);
-	}
+        return (array) $this->getTopHitsArray($limit);
+    }
 
-	/**
-	 * @param   int  $limit  limit
-	 *
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function getTopHitsArray(int $limit = 0): array
-	{
-		return [];
-	}
+    /**
+     * @param   int  $limit  limit
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getTopHitsArray(int $limit = 0): array
+    {
+        return [];
+    }
 
-	/**
-	 * @param   string  $action  action
-	 * @param   bool    $xhtml   xhtml
-	 *
-	 * @return string
-	 *
-	 * @since   Kunena 5.0
-	 * @throws \Exception
-	 */
-	public function getStatisticsURL(string $action = '', bool $xhtml = true): string
-	{
-		$config = KunenaFactory::getConfig();
-		$my     = Factory::getApplication()->getIdentity();
+    /**
+     * @param   string  $action  action
+     * @param   bool    $xhtml   xhtml
+     *
+     * @return string
+     *
+     * @since   Kunena 5.0
+     * @throws \Exception
+     */
+    public function getStatisticsURL(string $action = '', bool $xhtml = true): string
+    {
+        $config = KunenaFactory::getConfig();
+        $my     = Factory::getApplication()->getIdentity();
 
-		if ($config->statsLinkAllowed == 0 && $my->id == 0)
-		{
-			return false;
-		}
+        if ($config->statsLinkAllowed == 0 && $my->id == 0) {
+            return false;
+        }
 
-		return KunenaRoute::_('index.php?option=com_kunena&view=statistics' . $action, $xhtml);
-	}
+        return KunenaRoute::_('index.php?option=com_kunena&view=statistics' . $action, $xhtml);
+    }
 
-	/**
-	 * @param   string  $action  action
-	 * @param   bool    $xhtml   xhtml
-	 *
-	 * @return string
-	 *
-	 * @since   Kunena 5.0
-	 */
-	public function getUserListURL(string $action = '', bool $xhtml = true): string
-	{
-		return '';
-	}
+    /**
+     * @param   string  $action  action
+     * @param   bool    $xhtml   xhtml
+     *
+     * @return string
+     *
+     * @since   Kunena 5.0
+     */
+    public function getUserListURL(string $action = '', bool $xhtml = true): string
+    {
+        return '';
+    }
 
-	/**
-	 * @param   int     $userid     userid
-	 * @param   string  $task       task
-	 * @param   bool    $xhtml      xhtml
-	 * @param   string  $avatarTab  avatartab
-	 *
-	 * @return  boolean|void
-	 *
-	 * @since   Kunena 5.0
-	 */
-	public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
-	{
-	}
+    /**
+     * @param   int     $userid     userid
+     * @param   string  $task       task
+     * @param   bool    $xhtml      xhtml
+     * @param   string  $avatarTab  avatartab
+     *
+     * @return  boolean|void
+     *
+     * @since   Kunena 5.0
+     */
+    public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
+    {
+    }
 
-	/**
-	 * @param   KunenaLayout  $view    view
-	 * @param   object        $params  params
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 5.0
-	 */
-	public function showProfile(KunenaLayout $view, object $params)
-	{
-	}
+    /**
+     * @param   KunenaLayout  $view    view
+     * @param   object        $params  params
+     *
+     * @return  void
+     *
+     * @since   Kunena 5.0
+     */
+    public function showProfile(KunenaLayout $view, object $params)
+    {
+    }
 
-	/**
-	 * @param   int   $userid  userid
-	 * @param   bool  $xhtml   xhtml
-	 *
-	 * @return string
-	 *
-	 * @since   Kunena 5.0
-	 */
-	public function getEditProfileURL(int $userid, bool $xhtml = true): string
-	{
-		return '';
-	}
+    /**
+     * @param   int   $userid  userid
+     * @param   bool  $xhtml   xhtml
+     *
+     * @return string
+     *
+     * @since   Kunena 5.0
+     */
+    public function getEditProfileURL(int $userid, bool $xhtml = true): string
+    {
+        return '';
+    }
 }

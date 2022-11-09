@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,23 +25,23 @@ use Joomla\CMS\MVC\Controller\FormController;
  */
 class CloseController extends FormController
 {
-	/**
-	 * @var     null|string
-	 * @since   Kunena 2.0.0-BETA2
-	 */
-	protected $baseurl = null;
+    /**
+     * @var     null|string
+     * @since   Kunena 2.0.0-BETA2
+     */
+    protected $baseurl = null;
 
-	/**
-	 * Construct
-	 *
-	 * @param   array  $config  config
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0.0-BETA2
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena';
-	}
+    /**
+     * Construct
+     *
+     * @param   array  $config  config
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0.0-BETA2
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        $this->baseurl = 'index.php?option=com_kunena';
+    }
 }

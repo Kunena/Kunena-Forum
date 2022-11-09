@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -20,5 +21,5 @@ $description = isset($this->description) ? ' data-bs-toggle="tooltip" title="' .
 $class       = ' class="badge bg-' . $this->state . ' ' . '"';
 ?>
 <a <?php echo $link . $description . $class; ?>>
-	<?php echo $label; ?>
+    <?php echo $label; ?>
 </a>

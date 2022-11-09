@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -16,17 +17,15 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Language\Text;
 
-if (($this->getRSS()) !== null)
-:
-	?>
-	<div class="pull-right large-kicon"><?php echo $this->getRSS(); ?></div>
-	<div class="clearfix"></div>
+if (($this->getRSS()) !== null) :
+    ?>
+    <div class="pull-right large-kicon"><?php echo $this->getRSS(); ?></div>
+    <div class="clearfix"></div>
 <?php endif; ?>
 
-	<?php if (($time = $this->getTime()) !== null)
-	:
-		?>
-	<div class="d-flex justify-content-center">
-		<?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
-	</div>
-	<?php endif;
+    <?php if (($time = $this->getTime()) !== null) :
+        ?>
+    <div class="d-flex justify-content-center">
+        <?php echo Text::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time); ?>
+    </div>
+    <?php endif;

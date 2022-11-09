@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -16,22 +17,19 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 ?>
 
-<?php if ($this->plglogin)
-:
-	?>
-	<div class="d-none d-lg-block">
-		<?php
-		if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu'))
-	:
-			?>
-			<?php echo $this->setLayout('desktop'); ?>
-		<?php endif; ?>
-	</div>
-	<div class="d-lg-none">
-		<?php if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu'))
-	:
-			?>
-			<?php echo $this->setLayout('mobile'); ?>
-		<?php endif; ?>
-	</div>
+<?php if ($this->plglogin) :
+    ?>
+    <div class="d-none d-lg-block">
+        <?php
+        if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu')) :
+            ?>
+            <?php echo $this->setLayout('desktop'); ?>
+        <?php endif; ?>
+    </div>
+    <div class="d-lg-none">
+        <?php if (KunenaFactory::getTemplate()->params->get('displayDropdownMenu')) :
+            ?>
+            <?php echo $this->setLayout('mobile'); ?>
+        <?php endif; ?>
+    </div>
 <?php endif;

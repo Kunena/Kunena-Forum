@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,50 +25,50 @@ use Kunena\Forum\Libraries\Controller\KunenaController;
  */
 class SearchController extends KunenaController
 {
-	/**
-	 * @param   array  $config  config
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-	}
+    /**
+     * @param   array  $config  config
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function results()
-	{
-		$model = $this->getModel('Search', 'Kunena\Forum\Site\\');
-		$this->setRedirect(
-			$model->getSearchURL(
-				'search',
-				$model->getState('searchwords'),
-				$model->getState('list.start'),
-				$model->getState('list.limit'),
-				$model->getUrlParams(),
-				false
-			)
-		);
-	}
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function results()
+    {
+        $model = $this->getModel('Search', 'Kunena\Forum\Site\\');
+        $this->setRedirect(
+            $model->getSearchURL(
+                'search',
+                $model->getState('searchwords'),
+                $model->getState('list.start'),
+                $model->getState('list.limit'),
+                $model->getUrlParams(),
+                false
+            )
+        );
+    }
 
-	/**
-	 * Custom getModel() else it want to load from LegacyModelLoaderTrait
-	 *
-	 * @see     \Joomla\CMS\MVC\Controller\BaseController::getModel()
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getModel($name = '', $prefix = '', $config = [])
-	{
-		$className = $prefix . 'Model\\' . ucfirst($name) . 'Model';
+    /**
+     * Custom getModel() else it want to load from LegacyModelLoaderTrait
+     *
+     * @see     \Joomla\CMS\MVC\Controller\BaseController::getModel()
+     *
+     * @since   Kunena 6.0
+     */
+    public function getModel($name = '', $prefix = '', $config = [])
+    {
+        $className = $prefix . 'Model\\' . ucfirst($name) . 'Model';
 
-		$model = new $className($config);
+        $model = new $className($config);
 
-		return $model;
-	}
+        return $model;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -16,23 +17,22 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 $content = $this->execute('Topic/Item')
-	->setLayout(KunenaUserHelper::getMyself()->getTopicLayout());
+    ->setLayout(KunenaUserHelper::getMyself()->getTopicLayout());
 
 // Display breadcrumb path to the current category / topic / message / moderate.
 $parents   = KunenaCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
-foreach ($parents as $parent)
-{
-	$this->addBreadcrumb(
-		$parent->displayField('name'),
-		$parent->getUri()
-	);
+foreach ($parents as $parent) {
+    $this->addBreadcrumb(
+        $parent->displayField('name'),
+        $parent->getUri()
+    );
 }
 
 $this->addBreadcrumb(
-	$content->topic->subject,
-	$content->topic->getUri()
+    $content->topic->subject,
+    $content->topic->getUri()
 );
 
 echo $content;

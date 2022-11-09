@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -20,46 +21,39 @@ $config = KunenaFactory::getTemplate()->params;
 ?>
 
 <div id="kunena" class="layout <?php echo $this->options->get('pageclass_sfx'); ?>">
-	<?php
+    <?php
 
-	if ($config->get('displayMenu'))
-	{
-		echo $this->subLayout('Widget/MenuBar');
-	}
+    if ($config->get('displayMenu')) {
+        echo $this->subLayout('Widget/MenuBar');
+    }
 
-	if ($config->get('displayModule'))
-	{
-		echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
-	}
+    if ($config->get('displayModule')) {
+        echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
+    }
 
-	if ($config->get('displayBreadcrumb'))
-	{
-		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
-	}
+    if ($config->get('displayBreadcrumb')) {
+        echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+    }
 
-	echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
+    echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
 
-	if ($config->get('displayAnnouncement'))
-	{
-		echo $this->subRequest('Widget/Announcement');
-	}
+    if ($config->get('displayAnnouncement')) {
+        echo $this->subRequest('Widget/Announcement');
+    }
 
-	// Display current view/layout
-	echo $this->content;
+    // Display current view/layout
+    echo $this->content;
 
-	if ($config->get('displayBreadcrumb'))
-	{
-		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
-	}
+    if ($config->get('displayBreadcrumb')) {
+        echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+    }
 
-	if ($config->get('displayModule'))
-	{
-		echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
-	}
+    if ($config->get('displayModule')) {
+        echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
+    }
 
-	if ($config->get('displayFooter'))
-	{
-		echo $this->subLayout('Widget/Footer');
-	}
-	?>
+    if ($config->get('displayFooter')) {
+        echo $this->subLayout('Widget/Footer');
+    }
+    ?>
 </div>

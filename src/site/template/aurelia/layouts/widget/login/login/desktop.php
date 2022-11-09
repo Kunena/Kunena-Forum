@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -21,7 +22,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 ?>
     <div class="btn-group ">
         <button class="btn btn-light dropdown-toggle" id="klogin-desktop" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-			<?php echo KunenaIcons::user(); ?>
+            <?php echo KunenaIcons::user(); ?>
             <span class="login-text"><?php echo Text::_('JLOGIN'); ?></span>
         </button>
 
@@ -29,15 +30,15 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
             <form id="kdesktop-loginform" action="<?php echo KunenaRoute::current('index.php?option=com_kunena'); ?>" method="post">
                 <input type="hidden" name="view" value="user"/>
                 <input type="hidden" name="task" value="login"/>
-				<?php echo HTMLHelper::_('form.token'); ?>
+                <?php echo HTMLHelper::_('form.token'); ?>
 
                 <div class="mod-login__username form-group" id="kform-desktop-login-username">
                     <div class="input-group">
                         <input id="kdesktop-username" type="text" name="username" class="form-control" tabindex="1" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>">
                         <label for="kdesktop-username" class="visually-hidden"><?php echo Text::_('JGLOBAL_USERNAME'); ?></label>
                         <span class="input-group-text" data-bs-toggle="tooltip" title="Username">
-						<?php echo KunenaIcons::user(); ?>
-					</span>
+                        <?php echo KunenaIcons::user(); ?>
+                    </span>
                     </div>
                 </div>
 
@@ -46,36 +47,34 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                         <input id="klogin-desktop-passwd" type="password" name="password" class="form-control" tabindex="1" autocomplete="current-password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>">
                         <label for="klogin-desktop-passwd" class="visually-hidden"><?php echo Text::_('JGLOBAL_PASSWORD'); ?></label>
                         <span class="input-group-text" data-bs-toggle="tooltip" title="password">
-						<?php echo KunenaIcons::lock(); ?>
-					</span>
+                        <?php echo KunenaIcons::lock(); ?>
+                    </span>
                     </div>
                 </div>
 
-				<?php $login = KunenaLogin::getInstance(); ?>
-				<?php
-				if ($login->getTwoFactorMethods() > 1)
-					:
-					?>
+                <?php $login = KunenaLogin::getInstance(); ?>
+                <?php
+                if ($login->getTwoFactorMethods() > 1) :
+                    ?>
                     <div id="form-login-tfa" class="control-group center">
                         <div class="controls">
                             <div class="input-prepend input-append">
-							<span class="add-on">
-								<?php echo KunenaIcons::star(); ?>
-								<label for="k-lgn-secretkey" class="element-invisible">
-									<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
-								</label>
-						  </span>
+                            <span class="add-on">
+                                <?php echo KunenaIcons::star(); ?>
+                                <label for="k-lgn-secretkey" class="element-invisible">
+                                    <?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
+                                </label>
+                          </span>
                                 <input id="k-lgn-secretkey" type="text" name="secretkey" class="input-small"
                                        tabindex="3"
                                        size="18" placeholder="<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
                             </div>
                         </div>
                     </div>
-				<?php endif; ?>
+                <?php endif; ?>
 
-				<?php if ($this->rememberMe)
-					:
-					?>
+                <?php if ($this->rememberMe) :
+                    ?>
                     <div class="form-group row center" id="kform-login-remember">
                         <div class="controls">
                             <div class="custom-control custom-checkbox">
@@ -87,45 +86,42 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                             </div>
                         </div>
                     </div>
-				<?php endif; ?>
+                <?php endif; ?>
 
                 <div id="kform-login-desktop-submit" class="control-group center">
                     <p>
                         <button type="submit" tabindex="3" name="submit" class="btn btn-outline-primary">
-							<?php echo Text::_('JLOGIN'); ?>
+                            <?php echo Text::_('JLOGIN'); ?>
                         </button>
                     </p>
 
                     <p>
-						<?php if ($this->resetPasswordUrl)
-							:
-							?>
+                        <?php if ($this->resetPasswordUrl) :
+                            ?>
                             <a href="<?php echo $this->resetPasswordUrl; ?>">
-								<?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
+                                <?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'); ?>
                             </a>
                             <br/>
-						<?php endif ?>
+                        <?php endif ?>
 
-						<?php if ($this->remindUsernameUrl)
-							:
-							?>
+                        <?php if ($this->remindUsernameUrl) :
+                            ?>
                             <a href="<?php echo $this->remindUsernameUrl; ?>">
-								<?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
+                                <?php echo Text::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'); ?>
                             </a>
                             <br/>
-						<?php endif ?>
+                        <?php endif ?>
 
-						<?php if ($this->registrationUrl)
-							:
-							?>
+                        <?php if ($this->registrationUrl) :
+                            ?>
                             <a href="<?php echo $this->registrationUrl; ?>">
-								<?php echo Text::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'); ?>
+                                <?php echo Text::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'); ?>
                             </a>
-						<?php endif ?>
+                        <?php endif ?>
 
                     </p>
                 </div>
             </form>
-			<?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_login'); ?>
+            <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_login'); ?>
         </div>
     </div>

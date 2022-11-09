@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -27,44 +28,44 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @param   null  $tpl  tpl
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function display($tpl = null)
-	{
-		$this->setLayout('edit');
+    /**
+     * @param   null  $tpl  tpl
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function display($tpl = null)
+    {
+        $this->setLayout('edit');
 
-		$this->state        = $this->get('state');
-		$this->rankSelected = $this->get('rank');
-		$this->rankPath     = KunenaFactory::getTemplate()->getRankPath();
-		$this->listRanks    = $this->get('RanksPaths');
+        $this->state        = $this->get('state');
+        $this->rankSelected = $this->get('rank');
+        $this->rankPath     = KunenaFactory::getTemplate()->getRankPath();
+        $this->listRanks    = $this->get('RanksPaths');
 
-		$this->addToolbar();
+        $this->addToolbar();
 
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function addToolbar(): void
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
-		ToolbarHelper::spacer();
-		ToolbarHelper::save('rank.save');
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/ranks/edit-rank';
-		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-	}
+    /**
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function addToolbar(): void
+    {
+        ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'ranks');
+        ToolbarHelper::spacer();
+        ToolbarHelper::save('rank.save');
+        ToolbarHelper::spacer();
+        ToolbarHelper::cancel();
+        $helpUrl = 'https://docs.kunena.org/en/manual/backend/ranks/edit-rank';
+        ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+    }
 }

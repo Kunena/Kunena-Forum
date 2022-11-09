@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -23,22 +24,21 @@ $content = $this->execute('Topic/Form/Edit');
 $parents   = KunenaCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
-foreach ($parents as $parent)
-{
-	$this->addBreadcrumb(
-		$parent->displayField('name'),
-		$parent->getUri()
-	);
+foreach ($parents as $parent) {
+    $this->addBreadcrumb(
+        $parent->displayField('name'),
+        $parent->getUri()
+    );
 }
 
 $this->addBreadcrumb(
-	$content->topic->subject,
-	$content->topic->getUri()
+    $content->topic->subject,
+    $content->topic->getUri()
 );
 
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_EDIT'),
-	null
+    Text::_('COM_KUNENA_EDIT'),
+    null
 );
 
 echo $content;

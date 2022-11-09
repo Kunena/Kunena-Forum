@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -27,46 +28,39 @@ $params = $this->params;
 // Set google map API key if it filled in Kunena configuration
 $map_key = '';
 
-if (!empty($this->config->googleMapApiKey))
-{
-	$map_key = '&key=' . $this->config->googleMapApiKey;
+if (!empty($this->config->googleMapApiKey)) {
+    $map_key = '&key=' . $this->config->googleMapApiKey;
 }
 
 // Load JavaScript API.
-if (!isset($id))
-{
-	$uri = Uri::getInstance();
+if (!isset($id)) {
+    $uri = Uri::getInstance();
 
-	if ($uri->isSSL())
-	{
-		$this->addScript('https://maps.google.com/maps/api/js?v=quarterly&key=' . $map_key);
-	}
-	else
-	{
-		$this->addScript('http://maps.google.com/maps/api/js?v=quarterly&key=' . $map_key);
-	}
+    if ($uri->isSSL()) {
+        $this->addScript('https://maps.google.com/maps/api/js?v=quarterly&key=' . $map_key);
+    } else {
+        $this->addScript('http://maps.google.com/maps/api/js?v=quarterly&key=' . $map_key);
+    }
 
-	$id = 0;
+    $id = 0;
 }
 
-if (!empty($this->config->googleMapApiKey))
-{
-	$mapid      = 'kgooglemap' . $this->mapid;
-	$map_type   = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
-	$map_typeId = ['HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN'];
+if (!empty($this->config->googleMapApiKey)) {
+    $mapid      = 'kgooglemap' . $this->mapid;
+    $map_type   = isset($params['type']) ? strtoupper($params['type']) : 'ROADMAP';
+    $map_typeId = ['HYBRID', 'ROADMAP', 'SATELLITE', 'TERRAIN'];
 
-	if (!\in_array($map_type, $map_typeId))
-	{
-		$map_type = 'ROADMAP';
-	}
+    if (!\in_array($map_type, $map_typeId)) {
+        $map_type = 'ROADMAP';
+    }
 
-	$map_zoom      = isset($params['zoom']) ? (int) $params['zoom'] : 10;
-	$map_control   = isset($params['control']) ? (int) $params['control'] : 0;
-	$content       = json_encode(addslashes($this->content));
-	$contentString = Text::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
+    $map_zoom      = isset($params['zoom']) ? (int) $params['zoom'] : 10;
+    $map_control   = isset($params['control']) ? (int) $params['control'] : 0;
+    $content       = json_encode(addslashes($this->content));
+    $contentString = Text::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
 
-	$this->addScriptDeclaration(
-		"
+    $this->addScriptDeclaration(
+        "
 	// <![CDATA[
 		var geocoder;
 		var {$mapid};
@@ -100,20 +94,18 @@ if (!empty($this->config->googleMapApiKey))
 			}
 		});
 	// ]]>"
-	);
-	?>
+    );
+    ?>
 
-	<div id="<?php echo $mapid; ?>"
-		 class="kgooglemap"><?php echo Text::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
+    <div id="<?php echo $mapid; ?>"
+         class="kgooglemap"><?php echo Text::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE'); ?></div>
 
-	<?php
-}
-else
-{
-	?>
-	<div class="alert alert-info" role="alert">
-		<?php
-		echo Text::_('COM_KUNENA_GOOGLE_MAP_NO_KEY_UNABLE_TO_DISPLAY_MAP');
-		?>
-	</div>
+    <?php
+} else {
+    ?>
+    <div class="alert alert-info" role="alert">
+        <?php
+        echo Text::_('COM_KUNENA_GOOGLE_MAP_NO_KEY_UNABLE_TO_DISPLAY_MAP');
+        ?>
+    </div>
 <?php }

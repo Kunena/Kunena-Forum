@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -38,296 +39,264 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class UserController extends FormController
 {
-	/**
-	 * @var     null|string
-	 * @since   Kunena 6.0
-	 */
-	protected $baseurl = null;
+    /**
+     * @var     null|string
+     * @since   Kunena 6.0
+     */
+    protected $baseurl = null;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   MVCFactoryInterface|null  $factory  The factory.
-	 * @param   null                      $app      The CMSApplication for the dispatcher
-	 * @param   null                      $input    Input
-	 *
-	 * @param   array                     $config   An optional associative array of configuration settings.
-	 *
-	 * @throws Exception
-	 * @since   Kunena 2.0
-	 *
-	 * @see     BaseController
-	 */
-	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
-	{
-		parent::__construct($config, $factory, $app, $input);
+    /**
+     * Constructor.
+     *
+     * @param   MVCFactoryInterface|null  $factory  The factory.
+     * @param   null                      $app      The CMSApplication for the dispatcher
+     * @param   null                      $input    Input
+     *
+     * @param   array                     $config   An optional associative array of configuration settings.
+     *
+     * @throws Exception
+     * @since   Kunena 2.0
+     *
+     * @see     BaseController
+     */
+    public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
+    {
+        parent::__construct($config, $factory, $app, $input);
 
-		$this->baseurl = 'administrator/index.php?option=com_kunena&view=users';
-	}
+        $this->baseurl = 'administrator/index.php?option=com_kunena&view=users';
+    }
 
-	/**
-	 * Method to save the form data.
-	 *
-	 * @param   null  $key     key
-	 * @param   null  $urlVar  url var
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function save($key = null, $urlVar = null): void
-	{
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    /**
+     * Method to save the form data.
+     *
+     * @param   null  $key     key
+     * @param   null  $urlVar  url var
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function save($key = null, $urlVar = null): void
+    {
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$this->saveInternal('save');
+        $this->saveInternal('save');
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
+        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
 
-	/**
-	 * Internal method to save an user
-	 *
-	 * @param   string  $type  type
-	 *
-	 * @return  void
-	 *
-	 * @throws Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function saveInternal(string $type)
-	{
-		$newView      = $this->app->input->getString('newView');
-		$newRank      = $this->app->input->getString('newRank');
-		$signature    = $this->app->input->getString('signature');
-		$deleteSig    = $this->app->input->getInt('deleteSig');
-		$moderator    = $this->app->input->getInt('moderator');
-		$uid          = $this->app->input->getInt('uid');
-		$deleteAvatar = $this->app->input->getInt('deleteAvatar');
-		$newOrder     = $this->app->input->getInt('newOrder');
-		$modCatids    = $moderator ? $this->app->input->get('catid', [], 'array') : [];
-		$modCatids    = ArrayHelper::toInteger($modCatids);
-		KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+    /**
+     * Internal method to save an user
+     *
+     * @param   string  $type  type
+     *
+     * @return  void
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    protected function saveInternal(string $type)
+    {
+        $newView      = $this->app->input->getString('newView');
+        $newRank      = $this->app->input->getString('newRank');
+        $signature    = $this->app->input->getString('signature');
+        $deleteSig    = $this->app->input->getInt('deleteSig');
+        $moderator    = $this->app->input->getInt('moderator');
+        $uid          = $this->app->input->getInt('uid');
+        $deleteAvatar = $this->app->input->getInt('deleteAvatar');
+        $newOrder     = $this->app->input->getInt('newOrder');
+        $modCatids    = $moderator ? $this->app->input->get('catid', [], 'array') : [];
+        $modCatids    = ArrayHelper::toInteger($modCatids);
+        KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 
-		if ($uid)
-		{
-			$user = KunenaFactory::getUser($uid);
+        if ($uid) {
+            $user = KunenaFactory::getUser($uid);
 
-			// Prepare variables
-			if ($deleteSig === 1)
-			{
-				$user->signature = '';
-			}
-			else
-			{
-				$user->signature = $signature;
-			}
+            // Prepare variables
+            if ($deleteSig === 1) {
+                $user->signature = '';
+            } else {
+                $user->signature = $signature;
+            }
 
-			$user->personalText = $this->app->input->getString('personalText');
-			$birthdate          = $this->app->input->getString('birthdate');
+            $user->personalText = $this->app->input->getString('personalText');
+            $birthdate          = $this->app->input->getString('birthdate');
 
-			if ($birthdate)
-			{
-				$date = Factory::getDate($birthdate);
+            if ($birthdate) {
+                $date = Factory::getDate($birthdate);
 
-				$birthdate = $date->format('Y-m-d');
-			}
+                $birthdate = $date->format('Y-m-d');
+            }
 
-			$user->birthdate = $birthdate;
-			$user->location  = trim($this->app->input->getString('location'));
-			$user->gender    = $this->app->input->getInt('gender', '');
-			$this->cleanSocial($user, $this->app);
-			$user->websitename  = $this->app->input->getString('websitename');
-			$user->websiteurl   = $this->app->input->getString('websiteurl');
-			$user->hideEmail    = $this->app->input->getInt('hidemail');
-			$user->showOnline   = $this->app->input->getInt('showonline');
-			$user->canSubscribe = $this->app->input->getInt('cansubscribe');
-			$user->userListtime = $this->app->input->getInt('userlisttime');
-			$user->socialshare  = $this->app->input->getInt('socialshare');
-			$user->view         = $newView;
-			$user->ordering     = $newOrder;
-			$user->rank         = $newRank;
+            $user->birthdate = $birthdate;
+            $user->location  = trim($this->app->input->getString('location'));
+            $user->gender    = $this->app->input->getInt('gender', '');
+            $this->cleanSocial($user, $this->app);
+            $user->websitename  = $this->app->input->getString('websitename');
+            $user->websiteurl   = $this->app->input->getString('websiteurl');
+            $user->hideEmail    = $this->app->input->getInt('hidemail');
+            $user->showOnline   = $this->app->input->getInt('showonline');
+            $user->canSubscribe = $this->app->input->getInt('cansubscribe');
+            $user->userListtime = $this->app->input->getInt('userlisttime');
+            $user->socialshare  = $this->app->input->getInt('socialshare');
+            $user->view         = $newView;
+            $user->ordering     = $newOrder;
+            $user->rank         = $newRank;
 
-			if ($deleteAvatar === 1)
-			{
-				$user->avatar = '';
-			}
+            if ($deleteAvatar === 1) {
+                $user->avatar = '';
+            }
 
-			if (!$user->save())
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_FAILED'), 'error');
-			}
-			else
-			{
-				$this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'), 'success');
-			}
+            if (!$user->save()) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_FAILED'), 'error');
+            } else {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY'), 'success');
+            }
 
-			if ($type === 'save')
-			{
-				$this->setModerate($user, $modCatids);
-			}
-			else
-			{
-				// Update moderator rights
-				$categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
+            if ($type === 'save') {
+                $this->setModerate($user, $modCatids);
+            } else {
+                // Update moderator rights
+                $categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
 
-				foreach ($categories as $category)
-				{
-					$category->setModerator($user, \in_array($category->id, $modCatids, true));
-				}
+                foreach ($categories as $category) {
+                    $category->setModerator($user, \in_array($category->id, $modCatids, true));
+                }
 
-				// Global moderator is a special case
-				if (KunenaUserHelper::getMyself()->isAdmin())
-				{
-					KunenaAccess::getInstance()->setModerator(0, $user, \in_array(0, $modCatids, true));
-				}
+                // Global moderator is a special case
+                if (KunenaUserHelper::getMyself()->isAdmin()) {
+                    KunenaAccess::getInstance()->setModerator(0, $user, \in_array(0, $modCatids, true));
+                }
 
-				$this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
-			}
-		}
-	}
+                $this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
+            }
+        }
+    }
 
-	/**
-	 * Clean social items
-	 *
-	 * @param   KunenaUser      $user  user
-	 * @param   CMSApplication  $app   app
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function cleanSocial(KunenaUser $user, CMSApplication $app): void
-	{
-		foreach ($user->socialButtons() as $key => $social)
-		{
-			$user->$key = str_replace(' ', '', trim($app->input->getString($key, '')));
-		}
-	}
+    /**
+     * Clean social items
+     *
+     * @param   KunenaUser      $user  user
+     * @param   CMSApplication  $app   app
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function cleanSocial(KunenaUser $user, CMSApplication $app): void
+    {
+        foreach ($user->socialButtons() as $key => $social) {
+            $user->$key = str_replace(' ', '', trim($app->input->getString($key, '')));
+        }
+    }
 
-	/**
-	 * Set moderator rights on the user given
-	 *
-	 * @param   KunenaUser  $user       KunenaUser object
-	 * @param   array       $modCatids  modCatids
-	 *
-	 * @return  boolean
-	 *
-	 * @throws Exception
-	 * @since   Kunena 5.1
-	 */
-	protected function setModerate(KunenaUser $user, array $modCatids): bool
-	{
-		// Update moderator rights
-		$categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
+    /**
+     * Set moderator rights on the user given
+     *
+     * @param   KunenaUser  $user       KunenaUser object
+     * @param   array       $modCatids  modCatids
+     *
+     * @return  boolean
+     *
+     * @throws Exception
+     * @since   Kunena 5.1
+     */
+    protected function setModerate(KunenaUser $user, array $modCatids): bool
+    {
+        // Update moderator rights
+        $categories = KunenaCategoryHelper::getCategories(false, false, 'admin');
 
-		foreach ($categories as $category)
-		{
-			$category->setModerator($user, \in_array($category->id, $modCatids));
-		}
+        foreach ($categories as $category) {
+            $category->setModerator($user, \in_array($category->id, $modCatids));
+        }
 
-		// Global moderator is a special case
-		if (KunenaUserHelper::getMyself()->isAdmin())
-		{
-			KunenaAccess::getInstance()->setModerator(0, $user, \in_array(0, $modCatids));
-		}
+        // Global moderator is a special case
+        if (KunenaUserHelper::getMyself()->isAdmin()) {
+            KunenaAccess::getInstance()->setModerator(0, $user, \in_array(0, $modCatids));
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Apply
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function applychanges(): void
-	{
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+    /**
+     * Apply
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function applychanges(): void
+    {
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 
-			return;
-		}
+            return;
+        }
 
-		$this->saveInternal('apply');
-	}
+        $this->saveInternal('apply');
+    }
 
-	/**
-	 * Move Messages
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function moveMessages(): void
-	{
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    /**
+     * Move Messages
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @throws  null
+     * @since   Kunena 2.0
+     */
+    public function moveMessages(): void
+    {
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$catid = $this->app->input->getInt('catid');
-		$uids  = (array) $this->app->getUserState('kunena.usermove.userids');
+        $catid = $this->app->input->getInt('catid');
+        $uids  = (array) $this->app->getUserState('kunena.usermove.userids');
 
-		$error = null;
+        $error = null;
 
-		if ($uids)
-		{
-			foreach ($uids as $id)
-			{
-				list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
+        if ($uids) {
+            foreach ($uids as $id) {
+                list($total, $messages) = KunenaMessageHelper::getLatestMessages(false, 0, 0, ['starttime' => '-1', 'user' => $id]);
 
-				foreach ($messages as $object)
-				{
-					$topic = $object->getTopic();
+                foreach ($messages as $object) {
+                    $topic = $object->getTopic();
 
-					if (!$object->isAuthorised('move'))
-					{
-						$error = $object->getError();
-					}
-					else
-					{
-						$target = KunenaCategoryHelper::get($catid);
+                    if (!$object->isAuthorised('move')) {
+                        $error = $object->getError();
+                    } else {
+                        $target = KunenaCategoryHelper::get($catid);
 
-						if (!$topic->move($target, false, false, '', false))
-						{
-							$error = $topic->getError();
-						}
-					}
-				}
-			}
-		}
-		else
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+                        if (!$topic->move($target, false, false, '', false)) {
+                            $error = $topic->getError();
+                        }
+                    }
+                }
+            }
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		if ($error)
-		{
-			$this->app->enqueueMessage($error, 'error');
-		}
-		else
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_MOVED_DONE'), 'success');
-		}
+        if ($error) {
+            $this->app->enqueueMessage($error, 'error');
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_MOVED_DONE'), 'success');
+        }
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
+        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
 }

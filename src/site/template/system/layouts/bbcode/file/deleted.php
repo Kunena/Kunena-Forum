@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -17,7 +18,7 @@ namespace Kunena\Forum\Site;
 $title    = $this->title;
 ?>
 <div class="kmsgattach">
-	<h4>
-		<?php echo $title; ?>
-	</h4>
+    <h4>
+        <?php echo $title; ?>
+    </h4>
 </div>

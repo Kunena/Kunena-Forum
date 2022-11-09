@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -17,5 +18,5 @@ namespace Kunena\Forum\Site;
 // No breadcrumb - this page can only be accessed by creating a menu item for it.
 
 echo $this->subLayout('Widget/Custom')
-	->set('header', $this->header)
-	->set('body', $this->body);
+    ->set('header', $this->header)
+    ->set('body', $this->body);

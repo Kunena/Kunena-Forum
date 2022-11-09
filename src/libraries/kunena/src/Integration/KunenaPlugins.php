@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -26,34 +27,31 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  */
 class KunenaPlugins
 {
-	/**
-	 * Returns total kunena plugins.
-	 *
-	 * @return  integer Codename.
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public static function getTotalPlugins()
-	{
-		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-		$query->select('COUNT(*)')
-			->from($db->quoteName('#__extensions'))
-			->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
-			->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
-		$db->setQuery($query);
+    /**
+     * Returns total kunena plugins.
+     *
+     * @return  integer Codename.
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public static function getTotalPlugins()
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->getQuery(true);
+        $query->select('COUNT(*)')
+            ->from($db->quoteName('#__extensions'))
+            ->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
+            ->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
+        $db->setQuery($query);
 
-		try
-		{
-			$total = $db->setQuery($query)->loadResult();
-		}
-		catch (ExecutionFailureException $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
+        try {
+            $total = $db->setQuery($query)->loadResult();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
 
-		return (int) $total;
-	}
+        return (int) $total;
+    }
 }

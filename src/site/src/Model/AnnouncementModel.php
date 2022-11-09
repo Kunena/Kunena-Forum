@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -29,138 +30,132 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class AnnouncementModel extends ListModel
 {
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $total = false;
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    protected $total = false;
 
-	private $me;
+    private $me;
 
-	/**
-	 * @return  KunenaAnnouncement
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getNewAnnouncement()
-	{
-		return new KunenaAnnouncement;
-	}
+    /**
+     * @return  KunenaAnnouncement
+     *
+     * @since   Kunena 6.0
+     */
+    public function getNewAnnouncement()
+    {
+        return new KunenaAnnouncement();
+    }
 
-	/**
-	 * @return  KunenaAnnouncement
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getAnnouncement()
-	{
-		return KunenaAnnouncementHelper::get($this->getState('item.id'));
-	}
+    /**
+     * @return  KunenaAnnouncement
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function getAnnouncement()
+    {
+        return KunenaAnnouncementHelper::get($this->getState('item.id'));
+    }
 
-	/**
-	 * @return  boolean|void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getTotal()
-	{
-		if ($this->total === false)
-		{
-			return;
-		}
+    /**
+     * @return  boolean|void
+     *
+     * @since   Kunena 6.0
+     */
+    public function getTotal()
+    {
+        if ($this->total === false) {
+            return;
+        }
 
-		return $this->total;
-	}
+        return $this->total;
+    }
 
-	/**
-	 * @return  KunenaAnnouncement[]
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getAnnouncements()
-	{
-		$start = $this->getState('list.start');
-		$limit = $this->getState('list.limit');
+    /**
+     * @return  KunenaAnnouncement[]
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function getAnnouncements()
+    {
+        $start = $this->getState('list.start');
+        $limit = $this->getState('list.limit');
 
-		$this->total = KunenaAnnouncementHelper::getCount(!$this->me->isModerator());
+        $this->total = KunenaAnnouncementHelper::getCount(!$this->me->isModerator());
 
-		// If out of range, use last page
-		if ($limit && $this->total < $start)
-		{
-			$start = \intval($this->total / $limit) * $limit;
-		}
+        // If out of range, use last page
+        if ($limit && $this->total < $start) {
+            $start = \intval($this->total / $limit) * $limit;
+        }
 
-		$announces = KunenaAnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
+        $announces = KunenaAnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
 
-		if ($this->total < $start)
-		{
-			$this->setState('list.start', \intval($this->total / $limit) * $limit);
-		}
+        if ($this->total < $start) {
+            $this->setState('list.start', \intval($this->total / $limit) * $limit);
+        }
 
-		return $announces;
-	}
+        return $announces;
+    }
 
-	/**
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getannouncementActions()
-	{
-		$actions = [];
-		$user    = KunenaUserHelper::getMyself();
+    /**
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function getannouncementActions()
+    {
+        $actions = [];
+        $user    = KunenaUserHelper::getMyself();
 
-		if ($user->isModerator())
-		{
-			$actions[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-			$actions[] = HTMLHelper::_('select.option', 'unpublish', Text::_('COM_KUNENA_BULK_ANNOUNCEMENT_UNPUBLISH'));
-			$actions[] = HTMLHelper::_('select.option', 'publish', Text::_('COM_KUNENA_BULK_ANNOUNCEMENT_PUBLISH'));
-			$actions[] = HTMLHelper::_('select.option', 'edit', Text::_('COM_KUNENA_EDIT'));
-			$actions[] = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA__BULK_ANNOUNCEMENT_DELETE'));
-		}
+        if ($user->isModerator()) {
+            $actions[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+            $actions[] = HTMLHelper::_('select.option', 'unpublish', Text::_('COM_KUNENA_BULK_ANNOUNCEMENT_UNPUBLISH'));
+            $actions[] = HTMLHelper::_('select.option', 'publish', Text::_('COM_KUNENA_BULK_ANNOUNCEMENT_PUBLISH'));
+            $actions[] = HTMLHelper::_('select.option', 'edit', Text::_('COM_KUNENA_EDIT'));
+            $actions[] = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA__BULK_ANNOUNCEMENT_DELETE'));
+        }
 
-		return $actions;
-	}
+        return $actions;
+    }
 
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
 
-	 * @param   null  $ordering
-	 * @param   null  $direction
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function populateState($ordering = null, $direction = null): void
-	{
-		$id = $this->getInt('id', 0);
-		$this->setState('item.id', $id);
+     * @param   null  $ordering
+     * @param   null  $direction
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function populateState($ordering = null, $direction = null): void
+    {
+        $id = $this->getInt('id', 0);
+        $this->setState('item.id', $id);
 
-		$value = $this->getInt('limit', 0);
+        $value = $this->getInt('limit', 0);
 
-		if ($value < 1 || $value > 100)
-		{
-			$value = 20;
-		}
+        if ($value < 1 || $value > 100) {
+            $value = 20;
+        }
 
-		$this->setState('list.limit', $value);
+        $this->setState('list.limit', $value);
 
-		$value = $this->getInt('limitstart', 0);
+        $value = $this->getInt('limitstart', 0);
 
-		if ($value < 0)
-		{
-			$value = 0;
-		}
+        if ($value < 0) {
+            $value = 0;
+        }
 
-		$this->setState('list.start', $value);
-	}
+        $this->setState('list.start', $value);
+    }
 }

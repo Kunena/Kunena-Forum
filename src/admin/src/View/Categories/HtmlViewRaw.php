@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -25,69 +26,63 @@ use Joomla\Database\Exception\ExecutionFailureException;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @var mixed
-	 *
-	 * @since   Kunena 6.0
-	 */
-	private $app;
+    /**
+     * @var mixed
+     *
+     * @since   Kunena 6.0
+     */
+    private $app;
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function displayChkAliases(): void
-	{
-		$alias = $this->app->input->get('alias', null, 'string');
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function displayChkAliases(): void
+    {
+        $alias = $this->app->input->get('alias', null, 'string');
 
-		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-		$query->select('id')
-			->from($db->quoteName('#__kunena_categories'))
-			->where('alias = ' . $db->quote($alias));
-		$db->setQuery($query);
-		$result = $db->loadObject();
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->getQuery(true);
+        $query->select('id')
+            ->from($db->quoteName('#__kunena_categories'))
+            ->where('alias = ' . $db->quote($alias));
+        $db->setQuery($query);
+        $result = $db->loadObject();
 
-		if ($result)
-		{
-			$response['msg'] = 0;
-		}
-		else
-		{
-			$response['msg'] = 1;
-		}
+        if ($result) {
+            $response['msg'] = 0;
+        } else {
+            $response['msg'] = 1;
+        }
 
-		echo json_encode($response);
-	}
+        echo json_encode($response);
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function displayDeleteAlias(): void
-	{
-		$alias = $this->app->input->get('alias', null, 'string');
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function displayDeleteAlias(): void
+    {
+        $alias = $this->app->input->get('alias', null, 'string');
 
-		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-		$query->delete('*')
-			->from($db->quoteName('#__kunena_aliases'))
-			->where('alias = ' . $db->quote($alias));
-		$db->setQuery($query);
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->getQuery(true);
+        $query->delete('*')
+            ->from($db->quoteName('#__kunena_aliases'))
+            ->where('alias = ' . $db->quote($alias));
+        $db->setQuery($query);
 
-		$response['msg'] = 1;
+        $response['msg'] = 1;
 
-		try
-		{
-			$db->execute();
-		}
-		catch (ExecutionFailureException $e)
-		{
-			$response['msg'] = 0;
-		}
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            $response['msg'] = 0;
+        }
 
-		echo json_encode($response);
-	}
+        echo json_encode($response);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     Joomla.Libraries
  * @subpackage  Response

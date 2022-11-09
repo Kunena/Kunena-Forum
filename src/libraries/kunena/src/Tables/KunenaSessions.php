@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,96 +29,94 @@ use RuntimeException;
  */
 class KunenaSessions extends KunenaTable
 {
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $userid = 0;
+    /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
+    public $userid = 0;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $allowed = 'na';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $allowed = 'na';
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $allowedcats = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $allowedcats = null;
 
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $lasttime = 0;
+    /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
+    public $lasttime = 0;
 
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $readtopics = 0;
+    /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
+    public $readtopics = 0;
 
-	/**
-	 * @var     integer
-	 * @since   Kunena 6.0
-	 */
-	public $currvisit = 0;
+    /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
+    public $currvisit = 0;
 
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_exists = false;
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    protected $_exists = false;
 
-	/**
-	 * TableKunenaSessions constructor.
-	 *
-	 * @param   DatabaseDriver  $db  Database driver
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		parent::__construct('#__kunena_sessions', 'userid', $db);
-	}
+    /**
+     * TableKunenaSessions constructor.
+     *
+     * @param   DatabaseDriver  $db  Database driver
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        parent::__construct('#__kunena_sessions', 'userid', $db);
+    }
 
-	/**
-	 * @param   null  $oid    oid
-	 * @param   bool  $reset  reset
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function load($oid = null, $reset = true): bool
-	{
-		if (!$oid)
-		{
-			return false;
-		}
+    /**
+     * @param   null  $oid    oid
+     * @param   bool  $reset  reset
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function load($oid = null, $reset = true): bool
+    {
+        if (!$oid) {
+            return false;
+        }
 
-		return parent::load($oid, $reset);
-	}
+        return parent::load($oid, $reset);
+    }
 
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function check(): bool
-	{
-		$user = KunenaUserHelper::get($this->userid);
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function check(): bool
+    {
+        $user = KunenaUserHelper::get($this->userid);
 
-		if (!$user->exists())
-		{
-			throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid));
-		}
+        if (!$user->exists()) {
+            throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid));
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

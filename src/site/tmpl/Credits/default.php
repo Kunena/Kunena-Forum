@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -29,18 +30,17 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use stdClass;
 
 // Display offline message if Kunena hasn't been fully installed.
-if (!KunenaForum::isCompatible('6.0') || !KunenaForum::installed())
-{
-	$lang = Factory::getApplication()->getLanguage();
-	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
-	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
-	Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
-	Factory::getApplication()->sendHeaders();
-	?>
-	<h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
-	<div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
-	<?php
-	return;
+if (!KunenaForum::isCompatible('6.0') || !KunenaForum::installed()) {
+    $lang = Factory::getApplication()->getLanguage();
+    $lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
+    $lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
+    Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
+    Factory::getApplication()->sendHeaders();
+    ?>
+    <h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
+    <div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
+    <?php
+    return;
 }
 
 // Display time it took to create the entire page in the footer.
@@ -49,23 +49,20 @@ $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 
 // Prevent direct access to the component if the option has been disabled.
-if (!KunenaConfig::getInstance()->accessComponent)
-{
-	$active = Factory::getApplication()->getMenu()->getActive();
+if (!KunenaConfig::getInstance()->accessComponent) {
+    $active = Factory::getApplication()->getMenu()->getActive();
 
-	if (!$active)
-	{
-		// Prevent access without using a menu item.
-		Log::add("Kunena: Direct access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');
-		throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
-	}
+    if (!$active) {
+        // Prevent access without using a menu item.
+        Log::add("Kunena: Direct access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');
+        throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
+    }
 
-	if ($active->type != 'component' || $active->component != 'com_kunena')
-	{
-		// Prevent spoofed access by using random menu item.
-		Log::add("Kunena: spoofed access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');
-		throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
-	}
+    if ($active->type != 'component' || $active->component != 'com_kunena') {
+        // Prevent spoofed access by using random menu item.
+        Log::add("Kunena: spoofed access denied: " . Uri::getInstance()->toString(['path', 'query']), Log::WARNING, 'kunena');
+        throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
+    }
 }
 
 // Load router
@@ -87,16 +84,16 @@ $task    = $input->getCmd('task', 'display');
 // Get HMVC controller and if exists, execute it.
 KunenaControllerApplication::getInstance($view, $subview, $task, $input, $app);
 KunenaRoute::cacheLoad();
-$contents = (new KunenaControllerApplication)->execute();
+$contents = (new KunenaControllerApplication())->execute();
 KunenaRoute::cacheStore();
 
 // Import plugins and event listeners.
 PluginHelper::importPlugin('kunena');
 
 // Prepare and display the output.
-$params       = new stdClass;
+$params       = new stdClass();
 $params->text = '';
-$topics       = new stdClass;
+$topics       = new stdClass();
 $topics->text = '';
 PluginHelper::importPlugin('content');
 Factory::getApplication()->triggerEvent('onContentPrepare', ["com_kunena.{$view}", &$topics, &$params, 0]);
@@ -114,23 +111,21 @@ KunenaError::cleanup();
 $app->input->set('message', null);
 
 // Display profiler information.
-if (KUNENA_PROFILER)
-{
-	$kunena_profiler->stop('Total Time');
+if (KUNENA_PROFILER) {
+    $kunena_profiler->stop('Total Time');
 
-	echo '<div class="kprofiler">';
-	echo "<h3>Kunena Profile Information</h3>";
+    echo '<div class="kprofiler">';
+    echo "<h3>Kunena Profile Information</h3>";
 
-	foreach ($kunena_profiler->getAll() as $item)
-	{
-		echo sprintf(
-			"Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>",
-			$item->name,
-			$item->getInternalTime(),
-			$item->getTotalTime(),
-			$item->calls
-		);
-	}
+    foreach ($kunena_profiler->getAll() as $item) {
+        echo sprintf(
+            "Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>",
+            $item->name,
+            $item->getInternalTime(),
+            $item->getTotalTime(),
+            $item->calls
+        );
+    }
 
-	echo '</div>';
+    echo '</div>';
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -31,73 +32,68 @@ use stdClass;
  */
 class UserEdit extends KunenaLayout
 {
-	/**
-	 * @var     KunenaUser
-	 * @since   Kunena 6.0
-	 */
-	public $profile;
+    /**
+     * @var     KunenaUser
+     * @since   Kunena 6.0
+     */
+    public $profile;
 
-	/**
-	 * Method to get tabs for edit profile
-	 *
-	 * @return  array
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getTabsEdit()
-	{
-		$myProfile = $this->profile->isMyself() || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator();
+    /**
+     * Method to get tabs for edit profile
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function getTabsEdit()
+    {
+        $myProfile = $this->profile->isMyself() || KunenaUserHelper::getMyself()->isAdmin() || KunenaUserHelper::getMyself()->isModerator();
 
-		// Define all tabs.
-		$tabs = [];
+        // Define all tabs.
+        $tabs = [];
 
-		if ($myProfile)
-		{
-			$tab          = new stdClass;
-			$tab->title   = Text::_('COM_KUNENA_PROFILE_EDIT_USER');
-			$tab->content = $this->subRequest('User/Edit/User');
-			$tab->active  = true;
-			$tabs['User'] = $tab;
-		}
+        if ($myProfile) {
+            $tab          = new stdClass();
+            $tab->title   = Text::_('COM_KUNENA_PROFILE_EDIT_USER');
+            $tab->content = $this->subRequest('User/Edit/User');
+            $tab->active  = true;
+            $tabs['User'] = $tab;
+        }
 
-		if ($myProfile)
-		{
-			$tab             = new stdClass;
-			$tab->title      = Text::_('COM_KUNENA_PROFILE_EDIT_PROFILE');
-			$tab->content    = $this->subRequest('User/Edit/Profile');
-			$tab->active     = false;
-			$tabs['profile'] = $tab;
-		}
+        if ($myProfile) {
+            $tab             = new stdClass();
+            $tab->title      = Text::_('COM_KUNENA_PROFILE_EDIT_PROFILE');
+            $tab->content    = $this->subRequest('User/Edit/Profile');
+            $tab->active     = false;
+            $tabs['profile'] = $tab;
+        }
 
-		if ($myProfile)
-		{
-			if (KunenaConfig::getInstance()->allowAvatarUpload || KunenaConfig::getInstance()->allowAvatarGallery)
-			{
-				$tab            = new stdClass;
-				$tab->title     = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR');
-				$tab->content   = $this->subRequest('User/Edit/Avatar');
-				$tab->active    = false;
-				$tabs['avatar'] = $tab;
-			}
-		}
+        if ($myProfile) {
+            if (KunenaConfig::getInstance()->allowAvatarUpload || KunenaConfig::getInstance()->allowAvatarGallery) {
+                $tab            = new stdClass();
+                $tab->title     = Text::_('COM_KUNENA_PROFILE_EDIT_AVATAR');
+                $tab->content   = $this->subRequest('User/Edit/Avatar');
+                $tab->active    = false;
+                $tabs['avatar'] = $tab;
+            }
+        }
 
-		if ($myProfile)
-		{
-			$tab              = new stdClass;
-			$tab->title       = Text::_('COM_KUNENA_PROFILE_EDIT_SETTINGS');
-			$tab->content     = $this->subRequest('User/Edit/Settings');
-			$tab->active      = false;
-			$tabs['settings'] = $tab;
-		}
+        if ($myProfile) {
+            $tab              = new stdClass();
+            $tab->title       = Text::_('COM_KUNENA_PROFILE_EDIT_SETTINGS');
+            $tab->content     = $this->subRequest('User/Edit/Settings');
+            $tab->active      = false;
+            $tabs['settings'] = $tab;
+        }
 
-		PluginHelper::importPlugin('kunena');
+        PluginHelper::importPlugin('kunena');
 
-		$plugins = Factory::getApplication()->triggerEvent('on\Kunena\Forum\Libraries\User\KunenaUserTabsEdit', [$tabs]);
+        $plugins = Factory::getApplication()->triggerEvent('on\Kunena\Forum\Libraries\User\KunenaUserTabsEdit', [$tabs]);
 
-		$tabs = $tabs + $plugins;
+        $tabs = $tabs + $plugins;
 
-		return $tabs;
-	}
+        return $tabs;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -16,9 +17,8 @@ namespace Kunena\Forum\Site;
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 
-if (KunenaConfig::getInstance()->lightbox != 1)
-{
-	return false;
+if (KunenaConfig::getInstance()->lightbox != 1) {
+    return false;
 }
 
 $this->addStyleSheet('fancybox.css');

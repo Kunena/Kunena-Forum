@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,28 +25,28 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
  */
 class CategoryDescriptionDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Category/Description';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Category/Description';
 
-	/**
-	 * Prepare category display.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  null
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare category display.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  null
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$catid = $this->input->getInt('catid');
+        $catid = $this->input->getInt('catid');
 
-		$category = KunenaCategoryHelper::get($catid);
-		$category->tryAuthorise();
-	}
+        $category = KunenaCategoryHelper::get($catid);
+        $category->tryAuthorise();
+    }
 }

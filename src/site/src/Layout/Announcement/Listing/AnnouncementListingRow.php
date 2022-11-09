@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -25,62 +26,62 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class AnnouncementListingRow extends KunenaLayout
 {
-	/**
-	 * @var     KunenaAnnouncement
-	 * @since   Kunena 6.0
-	 */
-	public $announcement;
+    /**
+     * @var     KunenaAnnouncement
+     * @since   Kunena 6.0
+     */
+    public $announcement;
 
-	/**
-	 * Method to check if the user can publish an announcement
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function canPublish()
-	{
-		return $this->announcement->isAuthorised('edit');
-	}
+    /**
+     * Method to check if the user can publish an announcement
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function canPublish()
+    {
+        return $this->announcement->isAuthorised('edit');
+    }
 
-	/**
-	 * Method to check if the user can edit an announcement
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function canEdit()
-	{
-		return $this->announcement->isAuthorised('edit');
-	}
+    /**
+     * Method to check if the user can edit an announcement
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function canEdit()
+    {
+        return $this->announcement->isAuthorised('edit');
+    }
 
-	/**
-	 * Method to check if the user can delete an announcement
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function canDelete()
-	{
-		return $this->announcement->isAuthorised('delete');
-	}
+    /**
+     * Method to check if the user can delete an announcement
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function canDelete()
+    {
+        return $this->announcement->isAuthorised('delete');
+    }
 
-	/**
-	 * Method to display an announcement field
-	 *
-	 * @param   string  $name  The name of the field
-	 * @param   string  $mode  Define the way to display the date on the field
-	 *
-	 * @return  integer|string
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function displayField($name, $mode = null)
-	{
-		return $this->announcement->displayField($name, $mode);
-	}
+    /**
+     * Method to display an announcement field
+     *
+     * @param   string  $name  The name of the field
+     * @param   string  $mode  Define the way to display the date on the field
+     *
+     * @return  integer|string
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function displayField($name, $mode = null)
+    {
+        return $this->announcement->displayField($name, $mode);
+    }
 }

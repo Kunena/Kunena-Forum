@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -27,49 +28,45 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  */
 class MiscController extends KunenaController
 {
-	/**
-	 * @param   array  $config  config
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-	}
+    /**
+     * @param   array  $config  config
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+    }
 
-	/**
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function template()
-	{
-		$name = $this->input->getString(
-			'name',
-			$this->input->cookie->getString('kunena_template', '')
-		);
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function template()
+    {
+        $name = $this->input->getString(
+            'name',
+            $this->input->cookie->getString('kunena_template', '')
+        );
 
-		if ($name)
-		{
-			$name = KunenaPath::clean($name);
+        if ($name) {
+            $name = KunenaPath::clean($name);
 
-			if (!is_readable(KPATH_SITE . "/template/{$name}/config/template.xml"))
-			{
-				$name = 'aurelia';
-			}
+            if (!is_readable(KPATH_SITE . "/template/{$name}/config/template.xml")) {
+                $name = 'aurelia';
+            }
 
-			setcookie('kunena_template', $name, 0, Uri::root(true) . '/', '', true);
-		}
-		else
-		{
-			setcookie('kunena_template', null, time() - 3600, Uri::root(true) . '/', '', true);
-		}
+            setcookie('kunena_template', $name, 0, Uri::root(true) . '/', '', true);
+        } else {
+            setcookie('kunena_template', null, time() - 3600, Uri::root(true) . '/', '', true);
+        }
 
-		$this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));
-	}
+        $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));
+    }
 }

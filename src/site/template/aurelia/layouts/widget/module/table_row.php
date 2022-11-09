@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -16,14 +17,13 @@ namespace Kunena\Forum\Site;
 
 $modules = $this->renderPosition();
 
-if (!$modules)
-{
-	return;
+if (!$modules) {
+    return;
 }
 ?>
 <!-- Module position: <?php echo $this->position; ?> -->
 <tr>
-	<td colspan="<?php echo $this->cols; ?>">
-		<?php echo $modules; ?>
-	</td>
+    <td colspan="<?php echo $this->cols; ?>">
+        <?php echo $modules; ?>
+    </td>
 </tr>

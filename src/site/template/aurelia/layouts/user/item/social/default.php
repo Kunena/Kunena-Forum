@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -17,12 +18,10 @@ namespace Kunena\Forum\Site;
 $showAll = isset($this->showAll) ? $this->showAll : false;
 ?>
 <div class="inline float-end">
-	<?php foreach ($this->socials as $key => $social)
-	{
-		if (!empty($this->profile->$key))
-		{
-			echo $this->profile->socialButtonsTemplate($key, $showAll);
-		}
-	}
-	?>
+    <?php foreach ($this->socials as $key => $social) {
+        if (!empty($this->profile->$key)) {
+            echo $this->profile->socialButtonsTemplate($key, $showAll);
+        }
+    }
+    ?>
 </div>

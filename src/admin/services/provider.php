@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -30,31 +31,31 @@ use Kunena\Forum\Administrator\Extension\ForumComponent;
  * @since   Kunena 6.0
  */
 return new class implements ServiceProviderInterface {
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function register(Container $container)
-	{
-		$container->registerServiceProvider(new MVCFactory('\\Kunena\\Forum'));
-		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Kunena\\Forum'));
-		$container->registerServiceProvider(new RouterFactory('\\Kunena\\Forum'));
-		$container->set(
-			ComponentInterface::class,
-			function (Container $container) {
-				$component = new ForumComponent($container->get(ComponentDispatcherFactoryInterface::class));
+    /**
+     * Registers the service provider with a DI container.
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function register(Container $container)
+    {
+        $container->registerServiceProvider(new MVCFactory('\\Kunena\\Forum'));
+        $container->registerServiceProvider(new ComponentDispatcherFactory('\\Kunena\\Forum'));
+        $container->registerServiceProvider(new RouterFactory('\\Kunena\\Forum'));
+        $container->set(
+            ComponentInterface::class,
+            function (Container $container) {
+                $component = new ForumComponent($container->get(ComponentDispatcherFactoryInterface::class));
 
-				$component->setRegistry($container->get(Registry::class));
-				$component->setMVCFactory($container->get(MVCFactoryInterface::class));
-				$component->setRouterFactory($container->get(RouterFactoryInterface::class));
+                $component->setRegistry($container->get(Registry::class));
+                $component->setMVCFactory($container->get(MVCFactoryInterface::class));
+                $component->setRouterFactory($container->get(RouterFactoryInterface::class));
 
-				return $component;
-			}
-		);
-	}
+                return $component;
+            }
+        );
+    }
 };

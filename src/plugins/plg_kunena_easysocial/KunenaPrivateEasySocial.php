@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -29,85 +30,84 @@ use Kunena\Forum\Libraries\Integration\KunenaPrivate;
  */
 class KunenaPrivateEasySocial extends KunenaPrivate
 {
-	/**
-	 * @var     boolean
-	 * @since   Kunena 5.0
-	 */
-	protected $loaded = false;
+    /**
+     * @var     boolean
+     * @since   Kunena 5.0
+     */
+    protected $loaded = false;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 5.0
-	 */
-	protected $params = null;
+    /**
+     * @var     null
+     * @since   Kunena 5.0
+     */
+    protected $params = null;
 
-	/**
-	 * KunenaPrivateEasySocial constructor.
-	 *
-	 * @param   object  $params  params
-	 *
-	 * @since   Kunena 5.0
-	 */
-	public function __construct(object $params)
-	{
-		$this->params = $params;
+    /**
+     * KunenaPrivateEasySocial constructor.
+     *
+     * @param   object  $params  params
+     *
+     * @since   Kunena 5.0
+     */
+    public function __construct(object $params)
+    {
+        $this->params = $params;
 
-		// Process scripts
-		\ES::initialize();
-	}
+        // Process scripts
+        \ES::initialize();
+    }
 
-	/**
-	 * @param   string  $text  text
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 5.0
-	 */
-	public function getInboxLink(string $text): string
-	{
-		if (!$text)
-		{
-			$text = Text::_('COM_KUNENA_PMS_INBOX');
-		}
+    /**
+     * @param   string  $text  text
+     *
+     * @return  string
+     *
+     * @since   Kunena 5.0
+     */
+    public function getInboxLink(string $text): string
+    {
+        if (!$text) {
+            $text = Text::_('COM_KUNENA_PMS_INBOX');
+        }
 
-		$url = $this->getInboxURL();
+        $url = $this->getInboxURL();
 
-		return '<a href="' . $url . '" rel="follow">' . $text . '</a>';
-	}
+        return '<a href="' . $url . '" rel="follow">' . $text . '</a>';
+    }
 
-	/**
-	 * @return  string
-	 *
-	 * @since   Kunena 5.0
-	 */
-	public function getInboxURL(): string
-	{
-		return \FRoute::conversations();
-	}
+    /**
+     * @return  string
+     *
+     * @since   Kunena 5.0
+     */
+    public function getInboxURL(): string
+    {
+        return \FRoute::conversations();
+    }
 
-	/**
-	 * @param   int  $userid  userid
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 5.0
-	 */
-	protected function getOnClick(int $userid): string
-	{
-		$userid = (int) $userid;
+    /**
+     * @param   int  $userid  userid
+     *
+     * @return  string
+     *
+     * @since   Kunena 5.0
+     */
+    protected function getOnClick(int $userid): string
+    {
+        $userid = (int) $userid;
 
-		return ' data-es-conversations-compose data-es-conversations-id="' . $userid . '"';
-	}
+        return ' data-es-conversations-compose data-es-conversations-id="' . $userid . '"';
+    }
 
-	/**
-	 * @param   int  $userid  userid
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 5.0
-	 */
-	protected function getURL(int $userid): string
-	{
-		return "javascript:void(0)";
-	}
+    /**
+     * @param   int  $userid  userid
+     *
+     * @return  string
+     *
+     * @since   Kunena 5.0
+     */
+    protected function getURL(int $userid): string
+    {
+        return "javascript:void(0)";
+    }
 }

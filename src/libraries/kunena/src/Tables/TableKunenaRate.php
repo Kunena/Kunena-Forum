@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,37 +25,37 @@ use Joomla\Database\DatabaseDriver;
  */
 class TableKunenaRate extends KunenaTable
 {
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $topic_id = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $topic_id = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $userid = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $userid = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $rate = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $rate = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $time = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $time = null;
 
-	/**
-	 * @param   DatabaseDriver  $db  database driver
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		parent::__construct('#__kunena_rate', 'topic_id', $db);
-	}
+    /**
+     * @param   DatabaseDriver  $db  database driver
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        parent::__construct('#__kunena_rate', 'topic_id', $db);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -25,29 +26,29 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
  */
 class TopicItemRatingDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     KunenaTopic
-	 * @since   Kunena 6.0
-	 */
-	public $topic;
+    /**
+     * @var     KunenaTopic
+     * @since   Kunena 6.0
+     */
+    public $topic;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Item/Rating';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Topic/Item/Rating';
 
-	/**
-	 * Prepare topic actions display.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	protected function before()
-	{
-		parent::before();
-	}
+    /**
+     * Prepare topic actions display.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    protected function before()
+    {
+        parent::before();
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,38 +29,38 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @param   null  $tpl  tpl
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
-	 */
-	public function display($tpl = null)
-	{
-		$document = Factory::getApplication()->getDocument();
-		$document->setTitle(Text::_('COM_KUNENA_A_ICONS_MANAGER'));
+    /**
+     * @param   null  $tpl  tpl
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public function display($tpl = null)
+    {
+        $document = Factory::getApplication()->getDocument();
+        $document->setTitle(Text::_('COM_KUNENA_A_ICONS_MANAGER'));
 
-		$this->addToolbar();
+        $this->addToolbar();
 
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 
-	/**
-	 * Set the toolbar on log manager
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function addToolbar(): void
-	{
-		// Get the toolbar object instance
-		$this->bar = Toolbar::getInstance();
+    /**
+     * Set the toolbar on log manager
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function addToolbar(): void
+    {
+        // Get the toolbar object instance
+        $this->bar = Toolbar::getInstance();
 
-		// Set the title bar text
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_ICONS_MANAGER'));
-	}
+        // Set the title bar text
+        ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_ICONS_MANAGER'));
+    }
 }

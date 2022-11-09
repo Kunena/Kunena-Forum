@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -37,113 +38,99 @@ use Kunena\Forum\Site\Model\TopicsModel;
  */
 class TopicListingUnreadDisplay extends ListDisplay
 {
-	/**
-	 * Prepare topic list for moderators.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare topic list for moderators.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @throws  null
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$this->model = new TopicsModel([]);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state    = $this->model->getState();
-		$this->me       = KunenaUserHelper::getMyself();
-		$this->moreUri  = null;
-		$this->access   = KunenaAccess::getInstance();
-		$start          = $this->state->get('list.start');
-		$limit          = $this->state->get('list.limit');
-		$this->params   = ComponentHelper::getParams('com_kunena');
-		$Itemid         = $this->input->getInt('Itemid');
-		$this->embedded = $this->getOptions()->get('embedded', true);
+        $this->model = new TopicsModel([]);
+        $this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+        $this->state    = $this->model->getState();
+        $this->me       = KunenaUserHelper::getMyself();
+        $this->moreUri  = null;
+        $this->access   = KunenaAccess::getInstance();
+        $start          = $this->state->get('list.start');
+        $limit          = $this->state->get('list.limit');
+        $this->params   = ComponentHelper::getParams('com_kunena');
+        $Itemid         = $this->input->getInt('Itemid');
+        $this->embedded = $this->getOptions()->get('embedded', true);
 
-		// Handle &sel=x parameter.
-		$time = $this->state->get('list.time');
+        // Handle &sel=x parameter.
+        $time = $this->state->get('list.time');
 
-		if ($time < 0)
-		{
-			$time = null;
-		}
-		elseif ($time == 0)
-		{
-			$time = new Date(KunenaFactory::getSession()->lasttime);
-		}
-		else
-		{
-			$time = new Date(Factory::getDate()->toUnix() - ($time * 3600));
-		}
+        if ($time < 0) {
+            $time = null;
+        } elseif ($time == 0) {
+            $time = new Date(KunenaFactory::getSession()->lasttime);
+        } else {
+            $time = new Date(Factory::getDate()->toUnix() - ($time * 3600));
+        }
 
-		if (!$Itemid && $this->config->sefRedirect)
-		{
-			if ($this->config->moderator_id)
-			{
-				$itemidfix = $this->config->moderator_id;
-			}
-			else
-			{
-				$menu      = $this->app->getMenu();
-				$getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=unread"));
-				$itemidfix = $getid->id;
-			}
+        if (!$Itemid && $this->config->sefRedirect) {
+            if ($this->config->moderator_id) {
+                $itemidfix = $this->config->moderator_id;
+            } else {
+                $menu      = $this->app->getMenu();
+                $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=unread"));
+                $itemidfix = $getid->id;
+            }
 
-			if (!$itemidfix)
-			{
-				$itemidfix = KunenaRoute::fixMissingItemID();
-			}
+            if (!$itemidfix) {
+                $itemidfix = KunenaRoute::fixMissingItemID();
+            }
 
-			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=unread&Itemid={$itemidfix}", false));
-			$controller->redirect();
-		}
+            $controller = BaseController::getInstance("kunena");
+            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=unread&Itemid={$itemidfix}", false));
+            $controller->redirect();
+        }
 
-		$finder = new KunenaTopicFinder;
+        $finder = new KunenaTopicFinder();
 
-		$this->topics = $finder
-			->start($start)
-			->limit($limit)
-			->filterByTime($time)
-			->order('id', 0)
-			->filterByUserAccess($this->me)
-			->find();
+        $this->topics = $finder
+            ->start($start)
+            ->limit($limit)
+            ->filterByTime($time)
+            ->order('id', 0)
+            ->filterByUserAccess($this->me)
+            ->find();
 
-		$this->mesIds = [];
+        $this->mesIds = [];
 
-		$this->mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
+        $this->mesIds += KunenaTopicHelper::fetchNewStatus($this->topics, $this->me->userid);
 
-		$list = [];
+        $list = [];
 
-		$count = 0;
+        $count = 0;
 
-		foreach ($this->topics as $topic)
-		{
-			if ($topic->unread)
-			{
-				$list[] = $topic;
-				$count++;
-			}
-		}
+        foreach ($this->topics as $topic) {
+            if ($topic->unread) {
+                $list[] = $topic;
+                $count++;
+            }
+        }
 
-		$this->topics = $list;
+        $this->topics = $list;
 
-		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+        $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		if ($this->moreUri)
-		{
-			$this->pagination->setUri($this->moreUri);
-		}
+        if ($this->moreUri) {
+            $this->pagination->setUri($this->moreUri);
+        }
 
-		if ($this->topics)
-		{
-			$this->prepareTopics();
-		}
+        if ($this->topics) {
+            $this->prepareTopics();
+        }
 
-		$actions          = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
-		$this->actions    = $this->getTopicActions($this->topics, $actions);
-		$this->headerText = Text::_('COM_KUNENA_UNREAD');
-	}
+        $actions          = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
+        $this->actions    = $this->getTopicActions($this->topics, $actions);
+        $this->headerText = Text::_('COM_KUNENA_UNREAD');
+    }
 }

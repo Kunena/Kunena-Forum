@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -23,29 +24,21 @@ $icon            = $this->ktemplate->getTopicLabel($this->topic);
 $topicicontype   = $this->ktemplate->params->get('topicicontype');
 $class           = ' class="badge me-1 bg-' . $icon->labeltype . '"';
 
-if ($topicicontype == 'B3')
-{
-	$icons = '<span class="glyphicon glyphicon-' . $icon->b3 . '" aria-hidden="true"></span>';
-}
-elseif ($topicicontype == 'fa')
-{
-	$icons = '<i class="fa fa-' . $icon->fa . '" aria-hidden="true"></i>';
-}
-elseif ($topicicontype == 'svg') 
-{
+if ($topicicontype == 'B3') {
+    $icons = '<span class="glyphicon glyphicon-' . $icon->b3 . '" aria-hidden="true"></span>';
+} elseif ($topicicontype == 'fa') {
+    $icons = '<i class="fa fa-' . $icon->fa . '" aria-hidden="true"></i>';
+} elseif ($topicicontype == 'svg') {
     $icons = KunenaSvgIcons::loadsvg($icon->svg);
-}
-else
-{
-	$icons = '';
+} else {
+    $icons = '';
 }
 ?>
 <span <?php echo $class; ?> >
-	<?php
-	if ($topicicontype !== 0)
-		:
-		?>
-		<?php echo $icons ?>
-	<?php endif; ?>
-	<span class="sr-only"></span><?php echo Text::_($icon->name); ?>
+    <?php
+    if ($topicicontype !== 0) :
+        ?>
+        <?php echo $icons ?>
+    <?php endif; ?>
+    <span class="sr-only"></span><?php echo Text::_($icon->name); ?>
 </span>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -15,11 +16,11 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 $content = $this->execute('Topic/Listing/User')
-	->setLayout('user');
+    ->setLayout('user');
 
 $this->addBreadcrumb(
-	$content->headerText,
-	'index.php?option=com_kunena&view=topics&layout=user'
+    $content->headerText,
+    'index.php?option=com_kunena&view=topics&layout=user'
 );
 
 echo $content;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -32,92 +33,84 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class UserEditDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     User
-	 * @since   Kunena 6.0
-	 */
-	public $user;
+    /**
+     * @var     User
+     * @since   Kunena 6.0
+     */
+    public $user;
 
-	/**
-	 * @var     KunenaUser
-	 * @since   Kunena 6.0
-	 */
-	public $profile;
+    /**
+     * @var     KunenaUser
+     * @since   Kunena 6.0
+     */
+    public $profile;
 
-	public $headerText;
+    public $headerText;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Edit';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'User/Edit';
 
-	/**
-	 * Prepare user for editing.
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare user for editing.
+     *
+     * @return  void
+     *
+     * @throws  null
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		// If profile integration is disabled, this view doesn't exist.
-		$integration = KunenaFactory::getProfile();
+        // If profile integration is disabled, this view doesn't exist.
+        $integration = KunenaFactory::getProfile();
 
-		if (\get_class($integration) == 'KunenaProfileNone')
-		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
-		}
+        if (\get_class($integration) == 'KunenaProfileNone') {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
+        }
 
-		$userid = $this->input->getInt('userid');
+        $userid = $this->input->getInt('userid');
 
-		$this->user    = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
-		$this->profile = KunenaUserHelper::get($userid);
-		$this->profile->tryAuthorise('edit');
+        $this->user    = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
+        $this->profile = KunenaUserHelper::get($userid);
+        $this->profile->tryAuthorise('edit');
 
-		$this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
-	}
+        $this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		$menu_item = $this->app->getMenu()->getActive();
+    /**
+     * Prepare document.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+        $menu_item = $this->app->getMenu()->getActive();
 
-		if ($menu_item)
-		{
-			$params             = $menu_item->getParams();
-			$params_title       = $params->get('page_title');
-			$params_description = $params->get('menu-meta_description');
+        if ($menu_item) {
+            $params             = $menu_item->getParams();
+            $params_title       = $params->get('page_title');
+            $params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle($this->headerText);
-			}
+            if (!empty($params_title)) {
+                $title = $params->get('page_title');
+                $this->setTitle($title);
+            } else {
+                $this->setTitle($this->headerText);
+            }
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$this->setDescription($this->headerText);
-			}
-		}
-	}
+            if (!empty($params_description)) {
+                $description = $params->get('menu-meta_description');
+                $this->setDescription($description);
+            } else {
+                $this->setDescription($this->headerText);
+            }
+        }
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -27,44 +28,44 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * @param   null  $tpl  tpl
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function display($tpl = null)
-	{
-		$this->setLayout('edit');
+    /**
+     * @param   null  $tpl  tpl
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function display($tpl = null)
+    {
+        $this->setLayout('edit');
 
-		$this->state          = $this->get('state');
-		$this->smileySelected = $this->get('smiley');
-		$this->smileyPath     = KunenaFactory::getTemplate()->getSmileyPath();
-		$this->listSmileys    = $this->get('SmileysPaths');
+        $this->state          = $this->get('state');
+        $this->smileySelected = $this->get('smiley');
+        $this->smileyPath     = KunenaFactory::getTemplate()->getSmileyPath();
+        $this->listSmileys    = $this->get('SmileysPaths');
 
-		$this->addToolbar();
+        $this->addToolbar();
 
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function addToolbar(): void
-	{
-		ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
-		ToolbarHelper::spacer();
-		ToolbarHelper::save('smiley.save');
-		ToolbarHelper::spacer();
-		ToolbarHelper::cancel();
-		$helpUrl = 'https://docs.kunena.org/en/manual/backend/emoticons/edit-emoticon';
-		ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-	}
+    /**
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function addToolbar(): void
+    {
+        ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
+        ToolbarHelper::spacer();
+        ToolbarHelper::save('smiley.save');
+        ToolbarHelper::spacer();
+        ToolbarHelper::cancel();
+        $helpUrl = 'https://docs.kunena.org/en/manual/backend/emoticons/edit-emoticon';
+        ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+    }
 }

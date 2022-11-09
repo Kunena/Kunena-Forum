@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -29,107 +30,95 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $usersUrl;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $usersUrl;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Widget/WhoIsOnline';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Widget/WhoIsOnline';
 
-	/**
-	 * Prepare Who is online display.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare Who is online display.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$this->config = KunenaConfig::getInstance();
+        $this->config = KunenaConfig::getInstance();
 
-		if (!$this->config->getValue('showWhoIsOnline'))
-		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
-		}
+        if (!$this->config->getValue('showWhoIsOnline')) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
+        }
 
-		$me        = KunenaUserHelper::getMyself();
-		$moderator = \intval($me->isModerator()) + \intval($me->isAdmin());
+        $me        = KunenaUserHelper::getMyself();
+        $moderator = \intval($me->isModerator()) + \intval($me->isAdmin());
 
-		$users = KunenaUserHelper::getOnlineUsers();
-		KunenaUserHelper::loadUsers(array_keys($users));
-		$onlineusers = KunenaUserHelper::getOnlineCount();
+        $users = KunenaUserHelper::getOnlineUsers();
+        KunenaUserHelper::loadUsers(array_keys($users));
+        $onlineusers = KunenaUserHelper::getOnlineCount();
 
-		$who = '<strong>' . $onlineusers['user'] . ' </strong>';
+        $who = '<strong>' . $onlineusers['user'] . ' </strong>';
 
-		if ($onlineusers['user'] == 1)
-		{
-			$who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
-		}
-		else
-		{
-			$who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
-		}
+        if ($onlineusers['user'] == 1) {
+            $who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBER') . '&nbsp;';
+        } else {
+            $who .= Text::_('COM_KUNENA_WHO_ONLINE_MEMBERS') . '&nbsp;';
+        }
 
-		$who .= Text::_('COM_KUNENA_WHO_AND');
-		$who .= '<strong> ' . $onlineusers['guest'] . ' </strong>';
+        $who .= Text::_('COM_KUNENA_WHO_AND');
+        $who .= '<strong> ' . $onlineusers['guest'] . ' </strong>';
 
-		if ($onlineusers['guest'] == 1)
-		{
-			$who .= Text::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
-		}
-		else
-		{
-			$who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
-		}
+        if ($onlineusers['guest'] == 1) {
+            $who .= Text::_('COM_KUNENA_WHO_ONLINE_GUEST') . '&nbsp;';
+        } else {
+            $who .= Text::_('COM_KUNENA_WHO_ONLINE_GUESTS') . '&nbsp;';
+        }
 
-		$who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
-		$this->membersOnline = $who;
+        $who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
+        $this->membersOnline = $who;
 
-		$onlineList = [];
-		$hiddenList = [];
+        $onlineList = [];
+        $hiddenList = [];
 
-		foreach ($users as $userid => $usertime)
-		{
-			$user = KunenaUserHelper::get($userid);
+        foreach ($users as $userid => $usertime) {
+            $user = KunenaUserHelper::get($userid);
 
-			if (!$user->showOnline)
-			{
-				if ($moderator)
-				{
-					$hiddenList[$user->getName()] = $user;
-				}
-			}
-			else
-			{
-				$onlineList[$user->getName()] = $user;
-			}
-		}
+            if (!$user->showOnline) {
+                if ($moderator) {
+                    $hiddenList[$user->getName()] = $user;
+                }
+            } else {
+                $onlineList[$user->getName()] = $user;
+            }
+        }
 
-		ksort($onlineList);
-		ksort($hiddenList);
+        ksort($onlineList);
+        ksort($hiddenList);
 
-		$profile        = KunenaFactory::getProfile();
-		$this->usersUrl = $profile->getUserListURL();
-	}
+        $profile        = KunenaFactory::getProfile();
+        $this->usersUrl = $profile->getUserListURL();
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		$this->setTitle(Text::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));
-	}
+    /**
+     * Prepare document.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+        $this->setTitle(Text::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'));
+    }
 }

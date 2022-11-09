@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -16,5 +17,5 @@ namespace Kunena\Forum\Site;
 
 ?>
 <div id="kunena" class="layout">
-	<?php echo $this->content; ?>
+    <?php echo $this->content; ?>
 </div>

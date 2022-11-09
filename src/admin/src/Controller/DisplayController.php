@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -26,38 +27,38 @@ use Joomla\CMS\Uri\Uri;
  */
 class DisplayController extends BaseController
 {
-	/**
-	 * The default view.
-	 *
-	 * @var    string
-	 *
-	 * @since  Kunena 6.0
-	 */
-	protected $default_view = 'cpanel';
+    /**
+     * The default view.
+     *
+     * @var    string
+     *
+     * @since  Kunena 6.0
+     */
+    protected $default_view = 'cpanel';
 
-	/**
-	 * Method to display a view.
-	 *
-	 * @param   boolean  $cachable   If true, the view output will be cached
-	 * @param   array    $urlparams  An array of safe URL parameters and their variable types, for valid values see
-	 *                               {@link \JFilterInput::clean()}.
-	 *
-	 * @return  BaseController
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function display($cachable = false, $urlparams = []): BaseController
-	{
-		$document = $this->app->getDocument();
-		$view = Factory::getApplication()->input->getCmd('view', 'ranks');
+    /**
+     * Method to display a view.
+     *
+     * @param   boolean  $cachable   If true, the view output will be cached
+     * @param   array    $urlparams  An array of safe URL parameters and their variable types, for valid values see
+     *                               {@link \JFilterInput::clean()}.
+     *
+     * @return  BaseController
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function display($cachable = false, $urlparams = []): BaseController
+    {
+        $document = $this->app->getDocument();
+        $view = Factory::getApplication()->input->getCmd('view', 'ranks');
 
-		if ($view !== 'ranks') {
-			$wa = $document->getWebAssetManager();
-			$wa->registerStyle('kunena_theme', Uri::base(true) . '/components/com_kunena/media/css/theme.min.css', [], [], []);
-			$wa->useStyle('kunena_theme');
-		}
+        if ($view !== 'ranks') {
+            $wa = $document->getWebAssetManager();
+            $wa->registerStyle('kunena_theme', Uri::base(true) . '/components/com_kunena/media/css/theme.min.css', [], [], []);
+            $wa->useStyle('kunena_theme');
+        }
 
-		return parent::display($cachable, $urlparams);
-	}
+        return parent::display($cachable, $urlparams);
+    }
 }

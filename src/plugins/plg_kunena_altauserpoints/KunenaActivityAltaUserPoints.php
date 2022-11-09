@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -28,310 +29,285 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  */
 class KunenaActivityAltaUserPoints extends KunenaActivity
 {
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	protected $params = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    protected $params = null;
 
-	/**
-	 * KunenaActivityAltaUserPoints constructor.
-	 *
-	 * @param   object  $params  params
-	 *
-	 * @since   Kunena 6.0
-	 * @throws  Exception
-	 */
-	public function __construct($params)
-	{
-		$this->params = $params;
+    /**
+     * KunenaActivityAltaUserPoints constructor.
+     *
+     * @param   object  $params  params
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function __construct($params)
+    {
+        $this->params = $params;
 
-		parent::__construct();
-	}
+        parent::__construct();
+    }
 
-	/**
-	 * @param $message
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function onAfterPost($message): bool
-	{
-		// Check for permissions of the current category - activity only if public or registered
-		if ($this->_checkPermissions($message))
-		{
-			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
-			$referreid     = AltaUserPointsHelper::getReferreid($message->userid);
+    /**
+     * @param $message
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function onAfterPost($message): bool
+    {
+        // Check for permissions of the current category - activity only if public or registered
+        if ($this->_checkPermissions($message)) {
+            $datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
+            $referreid     = AltaUserPointsHelper::getReferreid($message->userid);
 
-			if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
-			{
-				if ($this->_checkRuleEnabled('plgaup_kunena_topic_create'))
-				{
-					$keyreference = $this->_buildKeyreference('plgaup_kunena_topic_create', $message->id);
-					AltaUserPointsHelper::newpoints('plgaup_kunena_topic_create', $referreid, $keyreference, $datareference);
-				}
-			}
-		}
+            if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+                if ($this->_checkRuleEnabled('plgaup_kunena_topic_create')) {
+                    $keyreference = $this->_buildKeyreference('plgaup_kunena_topic_create', $message->id);
+                    AltaUserPointsHelper::newpoints('plgaup_kunena_topic_create', $referreid, $keyreference, $datareference);
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * @param $message
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	private function _checkPermissions($message)
-	{
-		$category   = $message->getCategory();
-		$accesstype = $category->accesstype;
+    /**
+     * @param $message
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    private function _checkPermissions($message)
+    {
+        $category   = $message->getCategory();
+        $accesstype = $category->accesstype;
 
-		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level')
-		{
-			return false;
-		}
+        if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level') {
+            return false;
+        }
 
-		// FIXME: Joomla 2.5 can mix up groups and access levels
-		if ($accesstype == 'joomla.level' && $category->access <= 2)
-		{
-			return true;
-		}
+        // FIXME: Joomla 2.5 can mix up groups and access levels
+        if ($accesstype == 'joomla.level' && $category->access <= 2) {
+            return true;
+        }
 
-		if ($category->pubAccess == 1 || $category->pubAccess == 2)
-		{
-			return true;
-		}
+        if ($category->pubAccess == 1 || $category->pubAccess == 2) {
+            return true;
+        }
 
-		if ($category->adminAccess == 1 || $category->adminAccess == 2)
-		{
-			return true;
-		}
+        if ($category->adminAccess == 1 || $category->adminAccess == 2) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * @param $ruleName
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	private function _checkRuleEnabled($ruleName)
-	{
-		$ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);
+    /**
+     * @param $ruleName
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    private function _checkRuleEnabled($ruleName)
+    {
+        $ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);
 
-		return !empty($ruleEnabled[0]->published);
-	}
+        return !empty($ruleEnabled[0]->published);
+    }
 
-	/**
-	 * @param           $plugin_function
-	 * @param   string  $spc  spc
-	 *
-	 * @return  mixed
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function _buildKeyreference($plugin_function, $spc = '')
-	{
-		return AltaUserPointsHelper::buildKeyreference($plugin_function, $spc);
-	}
+    /**
+     * @param           $plugin_function
+     * @param   string  $spc  spc
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    protected function _buildKeyreference($plugin_function, $spc = '')
+    {
+        return AltaUserPointsHelper::buildKeyreference($plugin_function, $spc);
+    }
 
-	/**
-	 * @param $message
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 */
-	public function onAfterReply($message)
-	{
-		// Check for permissions of the current category - activity only if public or registered
-		if ($this->_checkPermissions($message))
-		{
-			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
-			$referreid     = AltaUserPointsHelper::getReferreid($message->userid);
+    /**
+     * @param $message
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     * @throws  null
+     */
+    public function onAfterReply($message)
+    {
+        // Check for permissions of the current category - activity only if public or registered
+        if ($this->_checkPermissions($message)) {
+            $datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
+            $referreid     = AltaUserPointsHelper::getReferreid($message->userid);
 
-			if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0))
-			{
-				if ($this->_checkRuleEnabled('plgaup_kunena_topic_reply'))
-				{
-					$keyreference = $this->_buildKeyreference('plgaup_kunena_topic_reply', $message->id);
-					AltaUserPointsHelper::newpoints('plgaup_kunena_topic_reply', $referreid, $keyreference, $datareference);
-				}
-			}
-		}
-	}
+            if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+                if ($this->_checkRuleEnabled('plgaup_kunena_topic_reply')) {
+                    $keyreference = $this->_buildKeyreference('plgaup_kunena_topic_reply', $message->id);
+                    AltaUserPointsHelper::newpoints('plgaup_kunena_topic_reply', $referreid, $keyreference, $datareference);
+                }
+            }
+        }
+    }
 
-	/**
-	 * @param $message
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function onAfterDelete($message): void
-	{
-		// Check for permissions of the current category - activity only if public or registered
-		if ($this->_checkPermissions($message))
-		{
-			$aupid = AltaUserPointsHelper::getAnyUserReferreID($message->userid);
+    /**
+     * @param $message
+     *
+     * @since   Kunena 6.0
+     */
+    public function onAfterDelete($message): void
+    {
+        // Check for permissions of the current category - activity only if public or registered
+        if ($this->_checkPermissions($message)) {
+            $aupid = AltaUserPointsHelper::getAnyUserReferreID($message->userid);
 
-			if ($aupid)
-			{
-				if ($this->_checkRuleEnabled('plgaup_kunena_message_delete'))
-				{
-					AltaUserPointsHelper::newpoints('plgaup_kunena_message_delete', $aupid);
-				}
-			}
-		}
-	}
+            if ($aupid) {
+                if ($this->_checkRuleEnabled('plgaup_kunena_message_delete')) {
+                    AltaUserPointsHelper::newpoints('plgaup_kunena_message_delete', $aupid);
+                }
+            }
+        }
+    }
 
-	/**
-	 * @param   int  $actor    actor
-	 * @param   int  $target   target
-	 * @param   int  $message  message
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws Exception
-	 */
-	public function onAfterThankyou(int $actor, int $target, int $message): void
-	{
-		$infoTargetUser = Text::_('COM_KUNENA_THANKYOU_GOT_FROM') . ': ' . KunenaFactory::getUser($actor)->username;
-		$infoRootUser   = Text::_('COM_KUNENA_THANKYOU_SAID_TO') . ': ' . KunenaFactory::getUser($target)->username;
+    /**
+     * @param   int  $actor    actor
+     * @param   int  $target   target
+     * @param   int  $message  message
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public function onAfterThankyou(int $actor, int $target, int $message): void
+    {
+        $infoTargetUser = Text::_('COM_KUNENA_THANKYOU_GOT_FROM') . ': ' . KunenaFactory::getUser($actor)->username;
+        $infoRootUser   = Text::_('COM_KUNENA_THANKYOU_SAID_TO') . ': ' . KunenaFactory::getUser($target)->username;
 
-		if ($this->_checkPermissions($message))
-		{
-			$aupactor         = AltaUserPointsHelper::getAnyUserReferreID($actor);
-			$auptarget        = AltaUserPointsHelper::getAnyUserReferreID($target);
-			$ruleName         = 'plgaup_kunena_message_thankyou';
-			$usertargetpoints = intval($this->_getPointsOnThankyou($ruleName));
+        if ($this->_checkPermissions($message)) {
+            $aupactor         = AltaUserPointsHelper::getAnyUserReferreID($actor);
+            $auptarget        = AltaUserPointsHelper::getAnyUserReferreID($target);
+            $ruleName         = 'plgaup_kunena_message_thankyou';
+            $usertargetpoints = intval($this->_getPointsOnThankyou($ruleName));
 
-			if ($usertargetpoints && $this->_checkRuleEnabled($ruleName))
-			{
-				// For target user
-				if ($auptarget)
-				{
-					AltaUserPointsHelper::newpoints($ruleName, $auptarget, '', $infoTargetUser, $usertargetpoints);
-				}
+            if ($usertargetpoints && $this->_checkRuleEnabled($ruleName)) {
+                // For target user
+                if ($auptarget) {
+                    AltaUserPointsHelper::newpoints($ruleName, $auptarget, '', $infoTargetUser, $usertargetpoints);
+                }
 
-				// For who has given the thank you
-				if ($aupactor)
-				{
-					AltaUserPointsHelper::newpoints($ruleName, $aupactor, '', $infoRootUser);
-				}
-			}
-		}
-	}
+                // For who has given the thank you
+                if ($aupactor) {
+                    AltaUserPointsHelper::newpoints($ruleName, $aupactor, '', $infoRootUser);
+                }
+            }
+        }
+    }
 
-	/**
-	 * @param   string  $ruleName  Rulename
-	 *
-	 * @return  void|integer
-	 *
-	 * @since   Kunena 6.0
-	 */
-	private function _getPointsOnThankyou($ruleName)
-	{
-		$ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);
+    /**
+     * @param   string  $ruleName  Rulename
+     *
+     * @return  void|integer
+     *
+     * @since   Kunena 6.0
+     */
+    private function _getPointsOnThankyou($ruleName)
+    {
+        $ruleEnabled = AltaUserPointsHelper::checkRuleEnabled($ruleName);
 
-		if (!empty($ruleEnabled[0]->published))
-		{
-			return $ruleEnabled[0]->points2;
-		}
+        if (!empty($ruleEnabled[0]->published)) {
+            return $ruleEnabled[0]->points2;
+        }
 
-		return;
-	}
+        return;
+    }
 
-	/**
-	 * @param $userid
-	 *
-	 * @return  array|boolean
-	 * @since   Kunena 6.0
-	 */
-	public function getUserMedals($userid)
-	{
-		if ($userid == 0)
-		{
-			return false;
-		}
+    /**
+     * @param $userid
+     *
+     * @return  array|boolean
+     * @since   Kunena 6.0
+     */
+    public function getUserMedals($userid)
+    {
+        if ($userid == 0) {
+            return false;
+        }
 
-		if (!defined("_AUP_MEDALS_LIVE_PATH"))
-		{
-			define('_AUP_MEDALS_LIVE_PATH', Uri::root(true) . '/components/com_altauserpoints/assets/images/awards/icons/');
-		}
+        if (!defined("_AUP_MEDALS_LIVE_PATH")) {
+            define('_AUP_MEDALS_LIVE_PATH', Uri::root(true) . '/components/com_altauserpoints/assets/images/awards/icons/');
+        }
 
-		$aupmedals = AltaUserPointsHelper::getUserMedals('', $userid);
-		$medals    = [];
+        $aupmedals = AltaUserPointsHelper::getUserMedals('', $userid);
+        $medals    = [];
 
-		foreach ($aupmedals as $medal)
-		{
-			$medals [] = '<img loading=lazy src="' . _AUP_MEDALS_LIVE_PATH . $this->escape($medal->icon) . '" alt="' . $this->escape($medal->rank) . '" title="' . $this->escape($medal->rank) . '" />';
-		}
+        foreach ($aupmedals as $medal) {
+            $medals [] = '<img loading=lazy src="' . _AUP_MEDALS_LIVE_PATH . $this->escape($medal->icon) . '" alt="' . $this->escape($medal->rank) . '" title="' . $this->escape($medal->rank) . '" />';
+        }
 
-		return $medals;
-	}
+        return $medals;
+    }
 
-	/**
-	 * @param $var
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function escape($var): string
-	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
-	}
+    /**
+     * @param $var
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function escape($var): string
+    {
+        return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+    }
 
-	/**
-	 * @param   int  $userid  userid
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getUserPoints($userid): bool
-	{
-		if ($userid == 0)
-		{
-			return false;
-		}
+    /**
+     * @param   int  $userid  userid
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function getUserPoints($userid): bool
+    {
+        if ($userid == 0) {
+            return false;
+        }
 
-		$_db   = Factory::getContainer()->get('DatabaseDriver');
-		$query = $_db->getQuery();
-		$query->select($_db->quoteName('points'))
-			->from($_db->quoteName('#__alpha_userpoints'))
-			->where($_db->quoteName('userid') . ' = ' . $_db->quote((int) $userid));
-		$_db->setQuery($query);
+        $_db   = Factory::getContainer()->get('DatabaseDriver');
+        $query = $_db->getQuery();
+        $query->select($_db->quoteName('points'))
+            ->from($_db->quoteName('#__alpha_userpoints'))
+            ->where($_db->quoteName('userid') . ' = ' . $_db->quote((int) $userid));
+        $_db->setQuery($query);
 
-		try
-		{
-			$userpoints = $_db->loadResult();
-		}
-		catch (RuntimeException $e)
-		{
-			KunenaError::displayDatabaseError($e);
-		}
+        try {
+            $userpoints = $_db->loadResult();
+        } catch (RuntimeException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
 
-		return $userpoints;
-	}
+        return $userpoints;
+    }
 
-	/**
-	 * @return  mixed
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function _getAUPversion()
-	{
-		return AltaUserPointsHelper::getAupVersion();
-	}
+    /**
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    protected function _getAUPversion()
+    {
+        return AltaUserPointsHelper::getAupVersion();
+    }
 }

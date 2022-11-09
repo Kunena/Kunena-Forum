@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -18,18 +19,17 @@ use Joomla\CMS\Language\Text;
 
 ?>
 <?php if (!empty($this->moderators)) : ?>
-	<div>
-		<?php
-		echo Text::_('COM_KUNENA_MODERATORS') . ": ";
+    <div>
+        <?php
+        echo Text::_('COM_KUNENA_MODERATORS') . ": ";
 
-		$mods_lin = [];
+        $mods_lin = [];
 
-		foreach ($this->moderators as $moderator)
-		{
-			$mods_lin[] = "{$moderator->getLink(null, null, '', '', null)}";
-		}
+        foreach ($this->moderators as $moderator) {
+            $mods_lin[] = "{$moderator->getLink(null, null, '', '', null)}";
+        }
 
-		echo implode(',&nbsp;', $mods_lin);
-		?>
-	</div>
+        echo implode(',&nbsp;', $mods_lin);
+        ?>
+    </div>
 <?php endif;

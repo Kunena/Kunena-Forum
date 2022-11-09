@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,32 +25,32 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
  */
 class TopicJsonDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $response;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $response;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Json';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Topic/Json';
 
-	/**
-	 * Prepare category display.
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		$catid    = $this->input->getInt('catid', 0);
+    /**
+     * Prepare category display.
+     *
+     * @return  void
+     *
+     * @throws  null
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        $catid    = $this->input->getInt('catid', 0);
 
-		$category = KunenaCategoryHelper::get($catid);
+        $category = KunenaCategoryHelper::get($catid);
 
-		$this->response = $category->topictemplate;
-	}
+        $this->response = $category->topictemplate;
+    }
 }

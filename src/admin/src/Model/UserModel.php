@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -34,301 +35,277 @@ use RuntimeException;
  */
 class UserModel extends KunenaModel
 {
-	/**
-	 * @param   array    $data      data
-	 * @param   boolean  $loadData  load data
-	 *
-	 * @return void
-	 *
-	 * @since  Kunena 6.0
-	 */
-	public function getForm($data = [], $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
+    /**
+     * @param   array    $data      data
+     * @param   boolean  $loadData  load data
+     *
+     * @return void
+     *
+     * @since  Kunena 6.0
+     */
+    public function getForm($data = [], $loadData = true)
+    {
+        // TODO: Implement getForm() method.
+    }
 
-	/**
-	 * @return array
-	 *
-	 * @since   Kunena 6.0
-	 * @throws \Exception
-	 */
-	public function getSubscriptions(): array
-	{
-		$db     = $this->getDatabase();
-		$userid = $this->getState($this->getName() . '.id');
+    /**
+     * @return array
+     *
+     * @since   Kunena 6.0
+     * @throws \Exception
+     */
+    public function getSubscriptions(): array
+    {
+        $db     = $this->getDatabase();
+        $userid = $this->getState($this->getName() . '.id');
 
-		$query = $db->getQuery(true);
-		$query->select($db->quoteName('topic_id') . ' AS thread')
-			->from($db->quoteName('#__kunena_user_topics'))
-			->where($db->quoteName('user_id') . ' = ' . $userid . ' AND ' . $db->quoteName('subscribed') . '=1');
-		$db->setQuery($query);
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName('topic_id') . ' AS thread')
+            ->from($db->quoteName('#__kunena_user_topics'))
+            ->where($db->quoteName('user_id') . ' = ' . $userid . ' AND ' . $db->quoteName('subscribed') . '=1');
+        $db->setQuery($query);
 
-		try
-		{
-			$subsList = (array) $db->loadObjectList();
-		}
-		catch (RuntimeException $e)
-		{
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        try {
+            $subsList = (array) $db->loadObjectList();
+        } catch (RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
-			return false;
-		}
+            return false;
+        }
 
-		$topicList = [];
+        $topicList = [];
 
-		if (!empty($subsList))
-		{
-			foreach ($subsList as $sub)
-			{
-				$topicList[] = $sub->thread;
-			}
+        if (!empty($subsList)) {
+            foreach ($subsList as $sub) {
+                $topicList[] = $sub->thread;
+            }
 
-			$topicList = KunenaTopicHelper::getTopics($topicList);
-		}
+            $topicList = KunenaTopicHelper::getTopics($topicList);
+        }
 
-		return $topicList;
-	}
+        return $topicList;
+    }
 
-	/**
-	 * @return  KunenaCategory[]
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function getCatSubscriptions(): array
-	{
-		$userid = $this->getState($this->getName() . '.id');
+    /**
+     * @return  KunenaCategory[]
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getCatSubscriptions(): array
+    {
+        $userid = $this->getState($this->getName() . '.id');
 
-		return KunenaCategoryHelper::getSubscriptions($userid);
-	}
+        return KunenaCategoryHelper::getSubscriptions($userid);
+    }
 
-	/**
-	 * @return array
-	 *
-	 * @throws \Exception
-	 * @since   Kunena 6.0
-	 */
-	public function getIPlist(): array
-	{
-		$db     = $this->getDatabase();
-		$userid = $this->getState($this->getName() . '.id');
+    /**
+     * @return array
+     *
+     * @throws \Exception
+     * @since   Kunena 6.0
+     */
+    public function getIPlist(): array
+    {
+        $db     = $this->getDatabase();
+        $userid = $this->getState($this->getName() . '.id');
 
-		$query = $db->getQuery(true);
-		$query->select('ip')
-			->from($db->quoteName('#__kunena_messages'))
-			->where($db->quoteName('userid') . ' = ' . $userid)
-			->group('ip');
-		$db->setQuery($query);
+        $query = $db->getQuery(true);
+        $query->select('ip')
+            ->from($db->quoteName('#__kunena_messages'))
+            ->where($db->quoteName('userid') . ' = ' . $userid)
+            ->group('ip');
+        $db->setQuery($query);
 
-		try
-		{
-			$ipList = implode("','", (array) $db->loadColumn());
-		}
-		catch (RuntimeException $e)
-		{
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        try {
+            $ipList = implode("','", (array) $db->loadColumn());
+        } catch (RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
-			return false;
-		}
+            return false;
+        }
 
-		$list = [];
+        $list = [];
 
-		if ($ipList)
-		{
-			$ipList = "'{$ipList}'";
-			$query  = $db->getQuery(true);
-			$query->select('m.ip,m.userid,u.username,COUNT(*) as mescnt')
-				->from($db->quoteName('#__kunena_messages', 'm'))
-				->innerJoin($db->quoteName('#__users', 'u') . ' ON m.userid = u.id')
-				->where('m.ip IN (' . $ipList . ')')
-				->group('m.userid,m.ip');
-			$db->setQuery($query);
+        if ($ipList) {
+            $ipList = "'{$ipList}'";
+            $query  = $db->getQuery(true);
+            $query->select('m.ip,m.userid,u.username,COUNT(*) as mescnt')
+                ->from($db->quoteName('#__kunena_messages', 'm'))
+                ->innerJoin($db->quoteName('#__users', 'u') . ' ON m.userid = u.id')
+                ->where('m.ip IN (' . $ipList . ')')
+                ->group('m.userid,m.ip');
+            $db->setQuery($query);
 
-			try
-			{
-				$list = (array) $db->loadObjectlist();
-			}
-			catch (RuntimeException $e)
-			{
-				Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            try {
+                $list = (array) $db->loadObjectlist();
+            } catch (RuntimeException $e) {
+                Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
-				return false;
-			}
-		}
+                return false;
+            }
+        }
 
-		$userIpsList = [];
+        $userIpsList = [];
 
-		foreach ($list as $item)
-		{
-			$userIpsList[$item->ip][] = $item;
-		}
+        foreach ($list as $item) {
+            $userIpsList[$item->ip][] = $item;
+        }
 
-		return $userIpsList;
-	}
+        return $userIpsList;
+    }
 
-	/**
-	 * @return  mixed
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function getListModCats()
-	{
-		$user = $this->getUser();
+    /**
+     * @return  mixed
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getListModCats()
+    {
+        $user = $this->getUser();
 
-		$modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
+        $modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
 
-		if (empty($modCatList))
-		{
-			$modCatList[] = 0;
-		}
+        if (empty($modCatList)) {
+            $modCatList[] = 0;
+        }
 
-		$categoryList = [];
+        $categoryList = [];
 
-		if ($this->me->isAdmin())
-		{
-			$categoryList[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
-		}
+        if ($this->me->isAdmin()) {
+            $categoryList[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
+        }
 
-		// Todo: fix params
-		$params = [
-			'sections' => false,
-			'action'   => 'read', ];
+        // Todo: fix params
+        $params = [
+            'sections' => false,
+            'action'   => 'read', ];
 
-		return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="form-select" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
-	}
+        return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="form-select" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
+    }
 
-	/**
-	 * @return  KunenaUser
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function getUser(): KunenaUser
-	{
-		$userid = $this->getState($this->getName() . '.id');
+    /**
+     * @return  KunenaUser
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getUser(): KunenaUser
+    {
+        $userid = $this->getState($this->getName() . '.id');
 
-		return KunenaUserHelper::get($userid);
-	}
+        return KunenaUserHelper::get($userid);
+    }
 
-	/**
-	 * @return string
-	 *
-	 * @throws \Exception
-	 * @since   Kunena 6.0
-	 */
-	public function getListUserRanks(): string
-	{
-		$db   = $this->getDatabase();
-		$user = $this->getUser();
+    /**
+     * @return string
+     *
+     * @throws \Exception
+     * @since   Kunena 6.0
+     */
+    public function getListUserRanks(): string
+    {
+        $db   = $this->getDatabase();
+        $user = $this->getUser();
 
-		// Grab all special ranks
-		$query = $db->getQuery(true);
-		$query->select('*')
-			->from($db->quoteName('#__kunena_ranks'))
-			->where('rankSpecial = \'1\'');
-		$db->setQuery($query);
+        // Grab all special ranks
+        $query = $db->getQuery(true);
+        $query->select('*')
+            ->from($db->quoteName('#__kunena_ranks'))
+            ->where('rankSpecial = \'1\'');
+        $db->setQuery($query);
 
-		try
-		{
-			$specialRanks = (array) $db->loadObjectList();
-		}
-		catch (RuntimeException $e)
-		{
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        try {
+            $specialRanks = (array) $db->loadObjectList();
+        } catch (RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
-			return false;
-		}
+            return false;
+        }
 
-		$yesnoRank [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RANK_NO_ASSIGNED'));
+        $yesnoRank [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RANK_NO_ASSIGNED'));
 
-		foreach ($specialRanks as $ranks)
-		{
-			$yesnoRank [] = HTMLHelper::_('select.option', $ranks->rankId, Text::_($ranks->rankTitle));
-		}
+        foreach ($specialRanks as $ranks) {
+            $yesnoRank [] = HTMLHelper::_('select.option', $ranks->rankId, Text::_($ranks->rankTitle));
+        }
 
-		// Build special ranks select list
-		return HTMLHelper::_('select.genericlist', $yesnoRank, 'newRank', 'class="inputbox form-control" size="5"', 'value', 'text', $user->rank);
-	}
+        // Build special ranks select list
+        return HTMLHelper::_('select.genericlist', $yesnoRank, 'newRank', 'class="inputbox form-control" size="5"', 'value', 'text', $user->rank);
+    }
 
-	/**
-	 * @return  mixed
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getMoveCatsList()
-	{
-		return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox form-control"', 'value', 'text');
-	}
+    /**
+     * @return  mixed
+     *
+     * @since   Kunena 6.0
+     */
+    public function getMoveCatsList()
+    {
+        return HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox form-control"', 'value', 'text');
+    }
 
-	/**
-	 * @return  array|void|null
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function getMoveUser()
-	{
-		$db = $this->getDatabase();
+    /**
+     * @return  array|void|null
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function getMoveUser()
+    {
+        $db = $this->getDatabase();
 
-		$userids = (array) $this->app->getUserState('kunena.usermove.userids');
+        $userids = (array) $this->app->getUserState('kunena.usermove.userids');
 
-		if (!$userids)
-		{
-			return $userids;
-		}
+        if (!$userids) {
+            return $userids;
+        }
 
-		$userids = implode(',', $userids);
-		$query   = $db->getQuery(true);
-		$query->select('id,username')
-			->from($db->quoteName('#__users'))
-			->where('id IN(' . $userids . ')');
-		$db->setQuery($query);
+        $userids = implode(',', $userids);
+        $query   = $db->getQuery(true);
+        $query->select('id,username')
+            ->from($db->quoteName('#__users'))
+            ->where('id IN(' . $userids . ')');
+        $db->setQuery($query);
 
-		try
-		{
-			$userids = (array) $db->loadObjectList();
-		}
-		catch (RuntimeException $e)
-		{
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        try {
+            $userids = (array) $db->loadObjectList();
+        } catch (RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
-			return;
-		}
+            return;
+        }
 
-		return $userids;
-	}
+        return $userids;
+    }
 
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @param   null  $ordering   ordering
-	 * @param   null  $direction  direction
-	 *
-	 * @return  void
-	 *
-	 * @throws Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function populateState($ordering = null, $direction = null): void
-	{
-		$context = 'com_kunena.admin.user';
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @param   null  $ordering   ordering
+     * @param   null  $direction  direction
+     *
+     * @return  void
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    protected function populateState($ordering = null, $direction = null): void
+    {
+        $context = 'com_kunena.admin.user';
 
-		$app = Factory::getApplication();
+        $app = Factory::getApplication();
 
-		// Adjust the context to support modal layouts.
-		$layout  = $app->input->get('layout');
-		$context = 'com_kunena.admin.user';
+        // Adjust the context to support modal layouts.
+        $layout  = $app->input->get('layout');
+        $context = 'com_kunena.admin.user';
 
-		if ($layout)
-		{
-			$context .= '.' . $layout;
-		}
+        if ($layout) {
+            $context .= '.' . $layout;
+        }
 
-		$value = Factory::getApplication()->input->getInt('userid');
-		$this->setState($this->getName() . '.id', $value);
-	}
+        $value = Factory::getApplication()->input->getInt('userid');
+        $this->setState($this->getName() . '.id', $value);
+    }
 }

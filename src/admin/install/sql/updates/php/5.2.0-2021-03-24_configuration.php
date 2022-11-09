@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -8,6 +9,7 @@
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link           https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
@@ -23,19 +25,18 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  */
 function kunena_520_2021_03_24_configuration($parent)
 {
-	$config = KunenaFactory::getConfig();
+    $config = KunenaFactory::getConfig();
 
-	$latestcategory = $config->latestcategory;
+    $latestcategory = $config->latestcategory;
 
-	if (!is_array($latestcategory))
-	{
-		unset($config->latestcategory);
+    if (!is_array($latestcategory)) {
+        unset($config->latestcategory);
 
-		$config->latestCategory = 0;
+        $config->latestCategory = 0;
 
-		// Save configuration
-		$config->save();
+        // Save configuration
+        $config->save();
 
-		return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_520_UPDATE_CONFIGURATION'), 'success' => true);
-	}
+        return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_520_UPDATE_CONFIGURATION'), 'success' => true);
+    }
 }

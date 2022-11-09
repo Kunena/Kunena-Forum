@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -20,46 +21,39 @@ $templateParams = KunenaFactory::getTemplate()->params;
 ?>
 
 <div id="kunena" class="layout <?php echo $this->options->get('pageclass_sfx'); ?>">
-	<?php
+    <?php
 
-	if ($templateParams->get('displayMenu'))
-	{
-		echo $this->subLayout('Widget/MenuBar');
-	}
+    if ($templateParams->get('displayMenu')) {
+        echo $this->subLayout('Widget/MenuBar');
+    }
 
-	if ($templateParams->get('displayModule'))
-	{
-		echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
-	}
+    if ($templateParams->get('displayModule')) {
+        echo $this->subLayout('Widget/Module')->set('position', 'kunena_top');
+    }
 
-	if ($templateParams->get('displayBreadcrumb'))
-	{
-		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
-	}
+    if ($templateParams->get('displayBreadcrumb')) {
+        echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+    }
 
-	echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
+    echo $this->subLayout('Widget/Module')->set('position', 'kunena_announcement');
 
-	if ($templateParams->get('displayAnnouncement'))
-	{
-		echo $this->subRequest('Widget/Announcement');
-	}
+    if ($templateParams->get('displayAnnouncement')) {
+        echo $this->subRequest('Widget/Announcement');
+    }
 
-	// Display current view/layout
-	echo $this->content;
+    // Display current view/layout
+    echo $this->content;
 
-	if ($templateParams->get('displayBreadcrumb'))
-	{
-		echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
-	}
+    if ($templateParams->get('displayBreadcrumb')) {
+        echo $this->subLayout('Widget/Breadcrumb')->set('breadcrumb', $this->breadcrumb);
+    }
 
-	if ($templateParams->get('displayModule'))
-	{
-		echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
-	}
+    if ($templateParams->get('displayModule')) {
+        echo $this->subLayout('Widget/Module')->set('position', 'kunena_bottom');
+    }
 
-	if ($templateParams->get('displayFooter'))
-	{
-		echo $this->subLayout('Widget/Footer');
-	}
-	?>
+    if ($templateParams->get('displayFooter')) {
+        echo $this->subLayout('Widget/Footer');
+    }
+    ?>
 </div>

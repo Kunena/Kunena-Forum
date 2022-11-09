@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -26,187 +27,174 @@ use Kunena\Forum\Libraries\Integration\KunenaPrivate;
  */
 class KunenaPrivateComprofiler extends KunenaPrivate
 {
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	protected $params = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    protected $params = null;
 
-	/**
-	 * KunenaPrivateComprofiler constructor.
-	 *
-	 * @param   object  $params  params
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(object $params)
-	{
-		$this->params = $params;
-	}
+    /**
+     * KunenaPrivateComprofiler constructor.
+     *
+     * @param   object  $params  params
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(object $params)
+    {
+        $this->params = $params;
+    }
 
-	/**
-	 * @param   int  $userid  userid
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function showIcon(int $userid): string
-	{
-		global $_CB_framework, $_CB_PMS;
+    /**
+     * @param   int  $userid  userid
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function showIcon(int $userid): string
+    {
+        global $_CB_framework, $_CB_PMS;
 
-		$myid = Application::MyUser()->getUserId();
+        $myid = Application::MyUser()->getUserId();
 
-		// Don't send messages from/to anonymous and to yourself
-		if ($myid == 0 || $userid == 0 || $userid == $myid)
-		{
-			return '';
-		}
+        // Don't send messages from/to anonymous and to yourself
+        if ($myid == 0 || $userid == 0 || $userid == $myid) {
+            return '';
+        }
 
-		outputCbTemplate(Application::Cms()->getClientId());
-		$resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
-		$url         = $_CB_framework->userProfileUrl($userid);
-		$html        = '<a href="' . $url . '" title="' .
-			Text::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" title="' . Text::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
+        outputCbTemplate(Application::Cms()->getClientId());
+        $resultArray = $_CB_PMS->getPMSlinks($userid, $myid, '', '', 1);
+        $url         = $_CB_framework->userProfileUrl($userid);
+        $html        = '<a href="' . $url . '" title="' .
+            Text::_('COM_KUNENA_VIEW_PMS') . '"><span class="kicon-profile kicon-profile-pm" title="' . Text::_('COM_KUNENA_VIEW_PMS') . '"></span></a>';
 
-		if ($resultArray > 0)
-		{
-			$linkItem = '<span class="pm" alt="' . Text::_('COM_KUNENA_VIEW_PMS') . '" />';
+        if ($resultArray > 0) {
+            $linkItem = '<span class="pm" alt="' . Text::_('COM_KUNENA_VIEW_PMS') . '" />';
 
-			foreach ($resultArray as $res)
-			{
-				if (is_array($res))
-				{
-					$html .= '<a href="' . cbSef($res["url"]) . '" title="' . CBTxt::T($res["tooltip"]) . '">' . $linkItem . '</a> ';
-				}
-			}
-		}
+            foreach ($resultArray as $res) {
+                if (is_array($res)) {
+                    $html .= '<a href="' . cbSef($res["url"]) . '" title="' . CBTxt::T($res["tooltip"]) . '">' . $linkItem . '</a> ';
+                }
+            }
+        }
 
-		return $html;
-	}
+        return $html;
+    }
 
-	/**
-	 * @param   int     $userid  userid
-	 * @param   string  $class   class
-	 * @param   string  $icon    icon
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function showNewIcon(int $userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2'): string
-	{
-		global $_CB_framework, $_CB_PMS;
+    /**
+     * @param   int     $userid  userid
+     * @param   string  $class   class
+     * @param   string  $icon    icon
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function showNewIcon(int $userid, $class = 'btn btn-small', $icon = 'icon icon-comments-2'): string
+    {
+        global $_CB_framework, $_CB_PMS;
 
-		$myid = Application::MyUser()->getUserId();
+        $myid = Application::MyUser()->getUserId();
 
-		// Don't send messages from/to anonymous and to yourself
-		if ($myid == 0 || $userid == 0)
-		{
-			return '';
-		}
+        // Don't send messages from/to anonymous and to yourself
+        if ($myid == 0 || $userid == 0) {
+            return '';
+        }
 
-		$url  = $_CB_framework->userProfileUrl($userid);
-		$html = '<a class="' . $class . '" href="' . $url . '" title="' .
-			Text::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
+        $url  = $_CB_framework->userProfileUrl($userid);
+        $html = '<a class="' . $class . '" href="' . $url . '" title="' .
+            Text::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
 
-		if ($userid == $myid)
-		{
-			$pmCount = $this->getUnreadCount($myid);
-			$text    = $pmCount ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $pmCount) : Text::_('COM_KUNENA_PMS_INBOX');
-			$url     = $this->getInboxURL();
+        if ($userid == $myid) {
+            $pmCount = $this->getUnreadCount($myid);
+            $text    = $pmCount ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $pmCount) : Text::_('COM_KUNENA_PMS_INBOX');
+            $url     = $this->getInboxURL();
 
-			return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
-		}
+            return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
+        }
 
-		return $html;
-	}
+        return $html;
+    }
 
-	/**
-	 * @return  void|string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getInboxURL()
-	{
-		global $_CB_framework;
+    /**
+     * @return  void|string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getInboxURL()
+    {
+        global $_CB_framework;
 
-		$userid = $this->getCBUserid();
+        $userid = $this->getCBUserid();
 
-		if ($userid === null)
-		{
-			return;
-		}
+        if ($userid === null) {
+            return;
+        }
 
-		return $_CB_framework->userProfileUrl($userid);
-	}
+        return $_CB_framework->userProfileUrl($userid);
+    }
 
-	/**
-	 * @return  integer|void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function getCBUserid()
-	{
-		global $_CB_framework;
+    /**
+     * @return  integer|void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getCBUserid()
+    {
+        global $_CB_framework;
 
-		$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
+        $cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
 
-		if (file_exists($cbpath))
-		{
-			require_once $cbpath;
-		}
-		else
-		{
-			return;
-		}
+        if (file_exists($cbpath)) {
+            require_once $cbpath;
+        } else {
+            return;
+        }
 
-		$userid = Application::MyUser()->getUserId();
+        $userid = Application::MyUser()->getUserId();
 
-		$cbUser = \CBuser::getInstance((int) $userid);
+        $cbUser = \CBuser::getInstance((int) $userid);
 
-		if ($cbUser === null)
-		{
-			return;
-		}
+        if ($cbUser === null) {
+            return;
+        }
 
-		return $userid;
-	}
+        return $userid;
+    }
 
-	/**
-	 * @param   string  $text  text
-	 *
-	 * @return  void|string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getInboxLink(string $text)
-	{
-		global $_CB_framework;
+    /**
+     * @param   string  $text  text
+     *
+     * @return  void|string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getInboxLink(string $text)
+    {
+        global $_CB_framework;
 
-		if (!$text)
-		{
-			$text = Text::_('COM_KUNENA_PMS_INBOX');
-		}
+        if (!$text) {
+            $text = Text::_('COM_KUNENA_PMS_INBOX');
+        }
 
-		$userid = $this->getCBUserid();
+        $userid = $this->getCBUserid();
 
-		if ($userid === null)
-		{
-			return;
-		}
+        if ($userid === null) {
+            return;
+        }
 
-		return '<a href="' . $_CB_framework->userProfileUrl($userid) . '" rel="follow">' . $text . '</a>';
-	}
+        return '<a href="' . $_CB_framework->userProfileUrl($userid) . '" rel="follow">' . $text . '</a>';
+    }
 
-	/**
-	 * @param   int  $userid  userid
-	 *
-	 * @return string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function getURL(int $userid): string
-	{
-	}
+    /**
+     * @param   int  $userid  userid
+     *
+     * @return string
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getURL(int $userid): string
+    {
+    }
 }

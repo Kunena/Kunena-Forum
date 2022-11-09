@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -27,63 +28,60 @@ use Kunena\Forum\Libraries\User\KunenaUser;
  */
 class KunenaAvatarGravatar extends KunenaAvatar
 {
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	protected $params = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    protected $params = null;
 
-	/**
-	 * KunenaAvatarGravatar constructor.
-	 *
-	 * @param   object  $params  params
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(object $params)
-	{
-		$this->params = $params;
-		require_once __DIR__ . '/gravatar.php';
-	}
+    /**
+     * KunenaAvatarGravatar constructor.
+     *
+     * @param   object  $params  params
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(object $params)
+    {
+        $this->params = $params;
+        require_once __DIR__ . '/gravatar.php';
+    }
 
-	/**
-	 * @return string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function getEditURL(): string
-	{
-		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
-	}
+    /**
+     * @return string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getEditURL(): string
+    {
+        return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
+    }
 
-	/**
-	 * @param   KunenaUser  $user   user
-	 * @param   int         $sizex  sizex
-	 * @param   int         $sizey  sizey
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
-	{
-		$user     = KunenaFactory::getUser($user);
-		$gravatar = new Pedrollo\GravatarLib\Gravatar();
-		$gravatar->setAvatarSize(min($sizex, $sizey));
-		$gravatar->setDefaultImage($this->params->get("default_image", false));
-		$gravatar->setMaxRating('g');
+    /**
+     * @param   KunenaUser  $user   user
+     * @param   int         $sizex  sizex
+     * @param   int         $sizey  sizey
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
+    {
+        $user     = KunenaFactory::getUser($user);
+        $gravatar = new Pedrollo\GravatarLib\Gravatar();
+        $gravatar->setAvatarSize(min($sizex, $sizey));
+        $gravatar->setDefaultImage($this->params->get("default_image", false));
+        $gravatar->setMaxRating('g');
 
-		$uri = Uri::getInstance();
+        $uri = Uri::getInstance();
 
-		if ($uri->isSSL())
-		{
-			$gravatar->enableSecureImages();
-		}
-		else
-		{
-			$gravatar->disableSecureImages();
-		}
+        if ($uri->isSSL()) {
+            $gravatar->enableSecureImages();
+        } else {
+            $gravatar->disableSecureImages();
+        }
 
-		return $gravatar->buildGravatarURL($user->email);
-	}
+        return $gravatar->buildGravatarURL($user->email);
+    }
 }

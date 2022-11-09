@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -40,45 +41,42 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerBase;
  */
 class KunenaRequest
 {
-	/**
-	 * Returns controller.
-	 *
-	 * @param   string      $path     Controller path.
-	 * @param   Input|null  $input    input
-	 * @param   mixed       $options  options
-	 *
-	 * @return  KunenaControllerBase| KunenaControllerDisplay
-	 *
-	 * @since   Kunena 6.0
-	 * @throws \Exception
-	 */
-	public static function factory(string $path, Input $input = null, $options = null)
-	{
-		// Normalize input.
-		$words = ucwords(strtolower(trim(preg_replace('/[^a-z0-9_]+/i', ' ', (string) $path))));
+    /**
+     * Returns controller.
+     *
+     * @param   string      $path     Controller path.
+     * @param   Input|null  $input    input
+     * @param   mixed       $options  options
+     *
+     * @return  KunenaControllerBase| KunenaControllerDisplay
+     *
+     * @since   Kunena 6.0
+     * @throws \Exception
+     */
+    public static function factory(string $path, Input $input = null, $options = null)
+    {
+        // Normalize input.
+        $words = ucwords(strtolower(trim(preg_replace('/[^a-z0-9_]+/i', ' ', (string) $path))));
 
-		if (!$words)
-		{
-			throw new InvalidArgumentException('No controller given.', 404);
-		}
+        if (!$words) {
+            throw new InvalidArgumentException('No controller given.', 404);
+        }
 
-		// Attempt to load controller.
-		$ex      = explode(' ', $words);
-		$subpart = '';
+        // Attempt to load controller.
+        $ex      = explode(' ', $words);
+        $subpart = '';
 
-		if (\count($ex) == 4)
-		{
-			$subpart = '' . $ex[2] . '\\';
-		}
+        if (\count($ex) == 4) {
+            $subpart = '' . $ex[2] . '\\';
+        }
 
-		$classnamespaced = 'Kunena\Forum\Site\Controller\\' . $ex[0] . '\\' . $ex[1] . '\\' . $subpart . str_replace(' ', '', $words);
+        $classnamespaced = 'Kunena\Forum\Site\Controller\\' . $ex[0] . '\\' . $ex[1] . '\\' . $subpart . str_replace(' ', '', $words);
 
-		if (!class_exists($classnamespaced))
-		{
-			throw new InvalidArgumentException(sprintf('In the KunenaRequest class the controller %s doesn\'t exist.', $classnamespaced), 404);
-		}
+        if (!class_exists($classnamespaced)) {
+            throw new InvalidArgumentException(sprintf('In the KunenaRequest class the controller %s doesn\'t exist.', $classnamespaced), 404);
+        }
 
-		// Create controller object.
-		return new $classnamespaced($input, null, $options);
-	}
+        // Create controller object.
+        return new $classnamespaced($input, null, $options);
+    }
 }

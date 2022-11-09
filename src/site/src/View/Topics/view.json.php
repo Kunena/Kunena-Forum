@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Latest Json
  *
@@ -28,59 +29,55 @@ use stdClass;
  */
 class json extends KunenaView
 {
-	/**
-	 * @param   null  $tpl  tmpl
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function display($tpl = null)
-	{
-		list($count, $topics) = KunenaTopicHelper::getLatestTopics(false, 0, 55);
+    /**
+     * @param   null  $tpl  tmpl
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function display($tpl = null)
+    {
+        list($count, $topics) = KunenaTopicHelper::getLatestTopics(false, 0, 55);
 
-		$template = KunenaFactory::getTemplate();
-		$list     = [];
+        $template = KunenaFactory::getTemplate();
+        $list     = [];
 
-		foreach ($topics as $topic)
-		{
-			$lastuser = $topic->getLastPostAuthor()->userid;
-			$users    = KunenaUserHelper::get($lastuser);
+        foreach ($topics as $topic) {
+            $lastuser = $topic->getLastPostAuthor()->userid;
+            $users    = KunenaUserHelper::get($lastuser);
 
-			$response           = new stdClass;
-			$response->id       = $topic->id;
-			$response->subject  = KunenaParser::parseText($topic->subject);
-			$response->category = $topic->getCategory()->name;
-			$response->icon     = $topic->getIcon($topic->getCategory()->iconset);
-			$response->message  = KunenaParser::stripBBCode($topic->last_post_message);
-			$response->started  = $topic->getFirstPostTime()->toKunena('config_postDateFormat');
-			$response->tooltip  = KunenaParser::stripBBCode($topic->last_post_message, 200, false);
-			$response->author   = $topic->getLastPostAuthor()->username;
-			$response->avatar   = $topic->getLastPostAuthor()->getAvatarImage($template->params->get('avatarType'), 'thumb');
-			$response->rank     = $users->getRank($topic->getCategory()->id, 'title');
-			$response->time     = $topic->getLastPostTime()->toKunena('config_postDateFormat');
+            $response           = new stdClass();
+            $response->id       = $topic->id;
+            $response->subject  = KunenaParser::parseText($topic->subject);
+            $response->category = $topic->getCategory()->name;
+            $response->icon     = $topic->getIcon($topic->getCategory()->iconset);
+            $response->message  = KunenaParser::stripBBCode($topic->last_post_message);
+            $response->started  = $topic->getFirstPostTime()->toKunena('config_postDateFormat');
+            $response->tooltip  = KunenaParser::stripBBCode($topic->last_post_message, 200, false);
+            $response->author   = $topic->getLastPostAuthor()->username;
+            $response->avatar   = $topic->getLastPostAuthor()->getAvatarImage($template->params->get('avatarType'), 'thumb');
+            $response->rank     = $users->getRank($topic->getCategory()->id, 'title');
+            $response->time     = $topic->getLastPostTime()->toKunena('config_postDateFormat');
 
-			if ($topic->unread)
-			{
-				$response->unread = true;
-			}
-			else
-			{
-				$response->unread = false;
-			}
+            if ($topic->unread) {
+                $response->unread = true;
+            } else {
+                $response->unread = false;
+            }
 
-			$list[] = $response;
-		}
+            $list[] = $response;
+        }
 
-		$json2 = [
-			'Count'  => $count,
-			'Topics' => $list,
-		];
+        $json2 = [
+            'Count'  => $count,
+            'Topics' => $list,
+        ];
 
-		$json = json_encode($json2, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $json = json_encode($json2, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-		echo $json;
-	}
+        echo $json;
+    }
 }

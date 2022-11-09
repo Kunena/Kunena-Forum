@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -9,6 +10,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
@@ -53,10 +55,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-	                                        <?php echo Text::_('COM_KUNENA_C_PRUNETAB'); ?>
+                                            <?php echo Text::_('COM_KUNENA_C_PRUNETAB'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-	                                        <?php echo Text::_('COM_KUNENA_C_PRUNETAB_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_C_PRUNETAB_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">
@@ -75,10 +77,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-	                                        <?php echo Text::_('COM_KUNENA_SYNC_USERS'); ?>
+                                            <?php echo Text::_('COM_KUNENA_SYNC_USERS'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-	                                        <?php echo Text::_('COM_KUNENA_SYNC_USERS_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_SYNC_USERS_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">
@@ -97,10 +99,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-	                                        <?php echo Text::_('COM_KUNENA_A_RECOUNT'); ?>
+                                            <?php echo Text::_('COM_KUNENA_A_RECOUNT'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-	                                        <?php echo Text::_('COM_KUNENA_A_RECOUNT_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_A_RECOUNT_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">
@@ -122,10 +124,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-	                                        <?php echo Text::_('COM_KUNENA_A_MENU_MANAGER'); ?>
+                                            <?php echo Text::_('COM_KUNENA_A_MENU_MANAGER'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-	                                        <?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">
@@ -144,10 +146,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-	                                        <?php echo Text::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?>
+                                            <?php echo Text::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-	                                        <?php echo Text::_('COM_KUNENA_A_PURGE_RE_STATEMENTS_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_A_PURGE_RE_STATEMENTS_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">
@@ -166,10 +168,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-	                                        <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?>
+                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-	                                        <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CLEANUP_IP_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">
@@ -188,10 +190,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-	                                        <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?>
+                                            <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-	                                        <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_DIAGNOSTICS_LABEL_DIAGNOSTICS_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">
@@ -210,10 +212,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-	                                        <?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?>
+                                            <?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-	                                        <?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">
@@ -225,9 +227,8 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                     </a>
                 </div>
 
-				<?php if (KunenaForum::isDev())
-					:
-					?>
+                <?php if (KunenaForum::isDev()) :
+                    ?>
                     <div class="col-xl-3 col-md-6">
                         <a href="<?php echo Route::_('index.php?option=com_kunena&view=install'); ?>">
                             <div class="card proj-t-card comp-card">
@@ -235,10 +236,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                                     <div class="row align-items-center">
                                         <div class="col">
                                             <h6 class="mb-25">
-	                                            <?php echo Text::_('COM_KUNENA_GIT_INSTALL'); ?>
+                                                <?php echo Text::_('COM_KUNENA_GIT_INSTALL'); ?>
                                             </h6>
                                             <h3 class="fw-700 text-cyan">
-	                                            <?php echo Text::_('COM_KUNENA_GIT_INSTALL_DESC'); ?>
+                                                <?php echo Text::_('COM_KUNENA_GIT_INSTALL_DESC'); ?>
                                             </h3>
                                         </div>
                                         <div class="col-auto">
@@ -249,10 +250,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                             </div>
                         </a>
                     </div>
-				<?php endif; ?>
+                <?php endif; ?>
         </div>
     </div>
     <div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+        <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

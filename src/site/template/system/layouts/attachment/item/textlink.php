@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -29,5 +30,5 @@ $config = KunenaConfig::getInstance();
    data-bs-content="Filesize: <?php echo number_format($attachment->size / 1024, 0, '', ',') . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
 " data-original-title="<?php echo $attachment->getShortName(); ?>" href="<?php echo $attachment->getUrl(); ?>"
    title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), (int) $config->attachStart, (int) $config->attachEnd); ?>">
-	<?php echo KunenaIcons::info(); ?>
+    <?php echo KunenaIcons::info(); ?>
 </a>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -25,33 +26,32 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class WidgetModule extends KunenaLayout
 {
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $position = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $position = null;
 
-	/**
-	 * Renders module position.
-	 *
-	 * @return  string
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function renderPosition()
-	{
-		$document = Factory::getApplication()->getDocument();
+    /**
+     * Renders module position.
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function renderPosition()
+    {
+        $document = Factory::getApplication()->getDocument();
 
-		if ($this->position && $document->countModules($this->position))
-		{
-			$renderer = $document->loadRenderer('modules');
-			$options  = ['style' => 'xhtml'];
+        if ($this->position && $document->countModules($this->position)) {
+            $renderer = $document->loadRenderer('modules');
+            $options  = ['style' => 'xhtml'];
 
-			return (string) $renderer->render($this->position, $options, null);
-		}
+            return (string) $renderer->render($this->position, $options, null);
+        }
 
-		return '';
-	}
+        return '';
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -22,85 +23,79 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
  */
 class plgKunenaEasyprofile extends CMSPlugin
 {
-	/**
-	 * plgKunenaEasyprofile constructor.
-	 *
-	 * @param   object  $subject                The object to observe
-	 * @param   array   $config                 An optional associative array of configuration settings.
-	 *                                          Recognized key values include 'name', 'group', 'params', 'language'
-	 *                                          (this list is not meant to be comprehensive).
-	 *
-	 * @throws Exception
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(object &$subject, $config = [])
-	{
-		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::enabled()))
-		{
-			return;
-		}
+    /**
+     * plgKunenaEasyprofile constructor.
+     *
+     * @param   object  $subject                The object to observe
+     * @param   array   $config                 An optional associative array of configuration settings.
+     *                                          Recognized key values include 'name', 'group', 'params', 'language'
+     *                                          (this list is not meant to be comprehensive).
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    public function __construct(object &$subject, $config = [])
+    {
+        // Do not load if Kunena version is not supported or Kunena is offline
+        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::enabled())) {
+            return;
+        }
 
-		// Do not load if Easyprofile is not installed
-		$path = JPATH_SITE . '/components/com_jsn/helpers/helper.php';
+        // Do not load if Easyprofile is not installed
+        $path = JPATH_SITE . '/components/com_jsn/helpers/helper.php';
 
-		if (!is_file($path))
-		{
-			return;
-		}
+        if (!is_file($path)) {
+            return;
+        }
 
-		include_once $path;
+        include_once $path;
 
-		parent::__construct($subject, $config);
+        parent::__construct($subject, $config);
 
-		$this->loadLanguage('plg_kunena_easyprofile.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easyprofile.sys', KPATH_ADMIN);
-	}
+        $this->loadLanguage('plg_kunena_easyprofile.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easyprofile.sys', KPATH_ADMIN);
+    }
 
-	/**
-	 * Get Kunena avatar integration object.
-	 *
-	 * @return  KunenaAvatarEasyprofile|void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function onKunenaGetAvatar()
-	{
-		if (!isset($this->params))
-		{
-			return;
-		}
+    /**
+     * Get Kunena avatar integration object.
+     *
+     * @return  KunenaAvatarEasyprofile|void
+     *
+     * @since   Kunena 6.0
+     */
+    public function onKunenaGetAvatar()
+    {
+        if (!isset($this->params)) {
+            return;
+        }
 
-		if (!$this->params->get('avatar', 1))
-		{
-			return;
-		}
+        if (!$this->params->get('avatar', 1)) {
+            return;
+        }
 
-		require_once __DIR__ . "/KunenaAvatarEasyprofile.php";
+        require_once __DIR__ . "/KunenaAvatarEasyprofile.php";
 
-		return new KunenaAvatarEasyprofile($this->params);
-	}
+        return new KunenaAvatarEasyprofile($this->params);
+    }
 
-	/**
-	 * Get Kunena profile integration object.
-	 *
-	 * @return  KunenaProfileEasyprofile|void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function onKunenaGetProfile()
-	{
-		if (!isset($this->params))
-		{
-			return;
-		}
+    /**
+     * Get Kunena profile integration object.
+     *
+     * @return  KunenaProfileEasyprofile|void
+     *
+     * @since   Kunena 6.0
+     */
+    public function onKunenaGetProfile()
+    {
+        if (!isset($this->params)) {
+            return;
+        }
 
-		if (!$this->params->get('profile', 1))
-		{
-			return;
-		}
+        if (!$this->params->get('profile', 1)) {
+            return;
+        }
 
-		require_once __DIR__ . "/KunenaProfileEasyprofile.php";
+        require_once __DIR__ . "/KunenaProfileEasyprofile.php";
 
-		return new KunenaProfileEasyprofile($this->params);
-	}
+        return new KunenaProfileEasyprofile($this->params);
+    }
 }

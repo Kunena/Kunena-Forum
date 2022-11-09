@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -21,9 +22,8 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
 $attachment = $this->attachment;
 
-if (!$attachment->getPath())
-{
-	return;
+if (!$attachment->getPath()) {
+    return;
 }
 
 $config = KunenaConfig::getInstance();
@@ -38,5 +38,5 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox=
 " data-original-title="<?php echo $attachment->getShortName(); ?>"
    href="<?php echo $attachment->getUrl(false, false, true); ?>"
    title="<?php echo KunenaAttachmentHelper::shortenFileName($attachment->getFilename(), (int) $config->attachStart, (int) $config->attachEnd); ?>" <?php echo $attributesLink; ?>>
-	<?php echo KunenaIcons::info(); ?>
+    <?php echo KunenaIcons::info(); ?>
 </a>

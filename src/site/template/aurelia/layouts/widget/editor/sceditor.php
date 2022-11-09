@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -9,6 +10,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
@@ -17,8 +19,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\Uri\Uri;
 
 $this->wa->registerAndUseScript('sceditor/sceditor', 'media/kunena/core/js/sceditor/sceditor.js')
-		->registerAndUseScript('sceditor/bbcode', 'media/kunena/core/js/sceditor/bbcode.js')
-		->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
+        ->registerAndUseScript('sceditor/bbcode', 'media/kunena/core/js/sceditor/bbcode.js')
+        ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
 
 $this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
 
@@ -69,36 +71,34 @@ $topictemplate = !$this->config->pickup_category;
 $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));
 ?>
 <script>
-	function localstorage() {
-		localStorage.getItem("copyKunenaeditor");
-	}
+    function localstorage() {
+        localStorage.getItem("copyKunenaeditor");
+    }
 
-	function localstorageremove() {
-		localStorage.removeItem("copyKunenaeditor");
-	}
+    function localstorageremove() {
+        localStorage.removeItem("copyKunenaeditor");
+    }
 </script>
 
 <textarea class="span12" name="message" id="message" rows="12" tabindex="7"
-		  placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate)
-{
-				echo $this->message->getCategory()->topictemplate;
-					   }
+          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate) {
+                echo $this->message->getCategory()->topictemplate;
+                       }
 
-					   if (!empty($this->message->message))
-{
-						   echo $this->escape($this->message->message);
-					   } ?>
+                       if (!empty($this->message->message)) {
+                           echo $this->escape($this->message->message);
+                       } ?>
 </textarea>
 
 <input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
-	   value="<?php echo $this->config->pollNbOptions; ?>"/>
+       value="<?php echo $this->config->pollNbOptions; ?>"/>
 
 <!-- end of Bootstrap modal to be used with bbcode editor -->
 <div class="control-group">
-	<div class="controls">
-		<input type="hidden" id="kurl_emojis" name="kurl_emojis"
-			   value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
-		<input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
-			   value="<?php echo $this->config->disableEmoticons ? 0 : 1 ?>"/>
-	</div>
+    <div class="controls">
+        <input type="hidden" id="kurl_emojis" name="kurl_emojis"
+               value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
+        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
+               value="<?php echo $this->config->disableEmoticons ? 0 : 1 ?>"/>
+    </div>
 </div>

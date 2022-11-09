@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,83 +25,75 @@ $announcement = $this->announcement;
 
 <tr>
     <td class="nowrap d-none d-md-table-cell">
-		<?php echo $announcement->displayField('created', 'date_today'); ?>
+        <?php echo $announcement->displayField('created', 'date_today'); ?>
     </td>
 
     <td class="nowrap">
         <div class="overflow">
-			<?php echo HTMLHelper::_(
-	'kunenaforum.link',
-	$announcement->getUri(),
-	$announcement->displayField('title'),
-	null,
-	'follow'
+            <?php echo HTMLHelper::_(
+                'kunenaforum.link',
+                $announcement->getUri(),
+                $announcement->displayField('title'),
+                null,
+                'follow'
 ); ?>
         </div>
     </td>
 
-	<?php if ($this->checkbox)
-		:
-		?>
+    <?php if ($this->checkbox) :
+        ?>
         <td class="center">
-			<?php if ($this->canPublish())
-			{
-				echo HTMLHelper::_('kunenagrid.published', $row, $announcement->published, '', true);
-			} ?>
+            <?php if ($this->canPublish()) {
+                echo HTMLHelper::_('kunenagrid.published', $row, $announcement->published, '', true);
+            } ?>
         </td>
         <td class="center">
-			<?php if ($this->canEdit())
-			{
-				echo HTMLHelper::_(
-					'kunenagrid.task',
-					$row,
-					'tick.png',
-					Text::_('COM_KUNENA_ANN_EDIT'),
-					'edit',
-					'',
-					true
-				);
-			} ?>
+            <?php if ($this->canEdit()) {
+                echo HTMLHelper::_(
+                    'kunenagrid.task',
+                    $row,
+                    'tick.png',
+                    Text::_('COM_KUNENA_ANN_EDIT'),
+                    'edit',
+                    '',
+                    true
+                );
+            } ?>
         </td>
         <td class="center">
-			<?php if ($this->canDelete())
-			{
-				echo HTMLHelper::_(
-					'kunenagrid.task',
-					$row,
-					'publish_x.png',
-					Text::_('COM_KUNENA_ANN_DELETE'),
-					'delete',
-					'',
-					true
-				);
-			} ?>
+            <?php if ($this->canDelete()) {
+                echo HTMLHelper::_(
+                    'kunenagrid.task',
+                    $row,
+                    'publish_x.png',
+                    Text::_('COM_KUNENA_ANN_DELETE'),
+                    'delete',
+                    '',
+                    true
+                );
+            } ?>
         </td>
-	<?php endif; ?>
+    <?php endif; ?>
 
     <td>
-		<?php if ($this->config->username)
-			:
-			?>
-			<?php echo $announcement->getAuthor()->username; ?>
-		<?php else
-
-			:
-			?>
-			<?php echo $announcement->getAuthor()->name; ?>
-		<?php endif; ?>
+        <?php if ($this->config->username) :
+            ?>
+            <?php echo $announcement->getAuthor()->username; ?>
+        <?php else :
+            ?>
+            <?php echo $announcement->getAuthor()->name; ?>
+        <?php endif; ?>
     </td>
 
     <td class="center d-none d-md-table-cell">
-		<?php echo $announcement->displayField('id'); ?>
+        <?php echo $announcement->displayField('id'); ?>
     </td>
 
-	<?php if ($this->checkbox)
-		:
-		?>
+    <?php if ($this->checkbox) :
+        ?>
         <td class="center">
-			<?php echo HTMLHelper::_('kunenagrid.id', $row, $announcement->id); ?>
+            <?php echo HTMLHelper::_('kunenagrid.id', $row, $announcement->id); ?>
         </td>
-	<?php endif; ?>
+    <?php endif; ?>
 
 </tr>

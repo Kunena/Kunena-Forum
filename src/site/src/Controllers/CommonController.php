@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,15 +25,15 @@ use Kunena\Forum\Libraries\Controller\KunenaController;
  */
 class CommonController extends KunenaController
 {
-	/**
-	 * @param   array  $config  config
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-	}
+    /**
+     * @param   array  $config  config
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+    }
 }

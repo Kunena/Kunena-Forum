@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -23,33 +24,31 @@ use Kunena\Forum\Plugin\Kunena\Kunena\KunenaProfileKunena;
  */
 class PlgKunenaKunena extends CMSPlugin
 {
-	/**
-	 * @return  false|KunenaAvatarKunena
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function onKunenaGetAvatar()
-	{
-		if (!$this->params->get('avatar', 1))
-		{
-			return false;
-		}
+    /**
+     * @return  false|KunenaAvatarKunena
+     *
+     * @since   Kunena 6.0
+     */
+    public function onKunenaGetAvatar()
+    {
+        if (!$this->params->get('avatar', 1)) {
+            return false;
+        }
 
-		return new KunenaAvatarKunena($this->params);
-	}
+        return new KunenaAvatarKunena($this->params);
+    }
 
-	/**
-	 * @return  false|KunenaProfileKunena
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function onKunenaGetProfile()
-	{
-		if (!$this->params->get('profile', 1))
-		{
-			return false;
-		}
+    /**
+     * @return  false|KunenaProfileKunena
+     *
+     * @since   Kunena 6.0
+     */
+    public function onKunenaGetProfile()
+    {
+        if (!$this->params->get('profile', 1)) {
+            return false;
+        }
 
-		return new KunenaProfileKunena($this->params);
-	}
+        return new KunenaProfileKunena($this->params);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -27,92 +28,84 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
  */
 class TopicEditEditor extends KunenaLayout
 {
-	/**
-	 * @var     KunenaConfig
-	 * @since   Kunena 6.0
-	 */
-	public $config;
+    /**
+     * @var     KunenaConfig
+     * @since   Kunena 6.0
+     */
+    public $config;
 
-	/**
-	 * @var     KunenaTemplate
-	 * @since   Kunena 6.0
-	 */
-	public $ktemplate;
+    /**
+     * @var     KunenaTemplate
+     * @since   Kunena 6.0
+     */
+    public $ktemplate;
 
-	/**
-	 * Define javascript variables to show or disable some bbcode buttons
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 *
-	 * @throws  Exception
-	 */
-	public function getBBcodesEnabled()
-	{
-		$this->ktemplate  = KunenaFactory::getTemplate();
-		$templatesettings = $this->ktemplate->params;
+    /**
+     * Define javascript variables to show or disable some bbcode buttons
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function getBBcodesEnabled()
+    {
+        $this->ktemplate  = KunenaFactory::getTemplate();
+        $templatesettings = $this->ktemplate->params;
 
-		$bbcodes = [
-			"spoiler",
-			"maps",
-			"twitter",
-			"link",
-			"picture",
-			"hide",
-			"table",
-			"code",
-			"quote",
-			"divider",
-			"instagram",
-			"soundcloud",
-			"confidential",
-			"hr",
-			"listitem",
-			"supscript",
-			"subscript",
-			"numericlist",
-			"bulletedlist",
-			"alignright",
-			"alignleft",
-			"center",
-			"underline",
-			"italic",
-			"bold",
-			"strikethrough",
-			"colors",
-			"size",
-			"video",
-			"emoticons",
-			"ebay",
-		];
+        $bbcodes = [
+            "spoiler",
+            "maps",
+            "twitter",
+            "link",
+            "picture",
+            "hide",
+            "table",
+            "code",
+            "quote",
+            "divider",
+            "instagram",
+            "soundcloud",
+            "confidential",
+            "hr",
+            "listitem",
+            "supscript",
+            "subscript",
+            "numericlist",
+            "bulletedlist",
+            "alignright",
+            "alignleft",
+            "center",
+            "underline",
+            "italic",
+            "bold",
+            "strikethrough",
+            "colors",
+            "size",
+            "video",
+            "emoticons",
+            "ebay",
+        ];
 
-		foreach ($bbcodes as $item)
-		{
-			$option = 0;
+        foreach ($bbcodes as $item) {
+            $option = 0;
 
-			if ($item == 'video' || $item == 'ebay')
-			{
-				$tag = "show" . $item . "tag";
+            if ($item == 'video' || $item == 'ebay') {
+                $tag = "show" . $item . "tag";
 
-				if ($this->config->$tag && $templatesettings->get($item))
-				{
-					$option = 1;
-				}
-			}
-			elseif ($item == 'emoticons')
-			{
-				if (!$this->config->disableEmoticons && $templatesettings->get($item))
-				{
-					$option = 1;
-				}
-			}
-			elseif ($templatesettings->get($item))
-			{
-				$option = 1;
-			}
+                if ($this->config->$tag && $templatesettings->get($item)) {
+                    $option = 1;
+                }
+            } elseif ($item == 'emoticons') {
+                if (!$this->config->disableEmoticons && $templatesettings->get($item)) {
+                    $option = 1;
+                }
+            } elseif ($templatesettings->get($item)) {
+                $option = 1;
+            }
 
-			$this->addScriptOptions("kunena_show" . $item . "tag", $option);
-		}
-	}
+            $this->addScriptOptions("kunena_show" . $item . "tag", $option);
+        }
+    }
 }

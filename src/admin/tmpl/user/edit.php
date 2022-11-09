@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -9,6 +10,7 @@
  * @license           https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link              https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -25,7 +27,7 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('multiselect');
 
 $this->document->addScriptDeclaration(
-	' var max_count = ' . (int) $this->config->maxSig . '
+    ' var max_count = ' . (int) $this->config->maxSig . '
 jQuery(function($) {
 	jQuery(\'#user-signature\').keypress(function (e) {
 		var len = jQuery(this).val().length;
@@ -52,9 +54,9 @@ jQuery(function($) {
                     <input type="hidden" name="task" value=""/>
                     <input type="hidden" name="boxchecked" value="1"/>
                     <input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>"/>
-					<?php echo HTMLHelper::_('form.token'); ?>
-					
-					<h1 style="text-transform: capitalize;"><?php echo Text::_('COM_KUNENA_USER_TITLE_EDIT_USERNAME'); ?>
+                    <?php echo HTMLHelper::_('form.token'); ?>
+                    
+                    <h1 style="text-transform: capitalize;"><?php echo Text::_('COM_KUNENA_USER_TITLE_EDIT_USERNAME'); ?>
                                     : <?php echo $this->user->username; ?></h1>
 
                     <article class="data-block">
@@ -111,21 +113,21 @@ jQuery(function($) {
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_UAVATAR'); ?></legend>
                                                 <div class="kwho-<?php echo $this->user->getType(0, true); ?>">
-													<?php echo $this->avatar; ?>
+                                                    <?php echo $this->avatar; ?>
                                                 </div>
-												<?php
-												if ($this->editavatar) : ?>
+                                                <?php
+                                                if ($this->editavatar) : ?>
                                                     <div>
                                                         <label><input type="checkbox" value="1"
                                                                       name="deleteAvatar"/> <?php echo Text::_('COM_KUNENA_DELAV'); ?>
                                                         </label>
                                                     </div>
-												<?php endif; ?>
+                                                <?php endif; ?>
                                             </fieldset>
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
                                                 <div>
-														<textarea id="user-signature" class="inputbox form-control"
+                                                        <textarea id="user-signature" class="inputbox form-control"
                                                                   name="signature"
                                                                   cols="4" rows="6"
                                                         ><?php echo $this->escape($this->user->signature); ?></textarea>
@@ -136,10 +138,10 @@ jQuery(function($) {
                                                     </label>
                                                 </div>
                                                 <div>
-													<?php echo Text::sprintf(
-	'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
-	intval($this->config->maxSig),
-	'<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxSig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'
+                                                    <?php echo Text::sprintf(
+                                                        'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
+                                                        intval($this->config->maxSig),
+                                                        '<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxSig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'
 ); ?>
                                                 </div>
                                             </fieldset>
@@ -152,7 +154,7 @@ jQuery(function($) {
                                                     <tr>
                                                         <td class="col-md-3">
                                                             <label for="personalText">
-																<?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
+                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
                                                             </label>
                                                         </td>
                                                         <td>
@@ -166,7 +168,7 @@ jQuery(function($) {
                                                     <tr>
                                                         <td>
                                                             <label for="birthdate">
-																<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
+                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
                                                             </label>
                                                         </td>
                                                         <td>
@@ -182,7 +184,7 @@ jQuery(function($) {
                                                     <tr>
                                                         <td>
                                                             <label for="location">
-																<?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>
+                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>
                                                             </label>
                                                         </td>
                                                         <td>
@@ -194,84 +196,84 @@ jQuery(function($) {
                                                     <tr>
                                                         <td>
                                                             <label for="gender">
-																<?php echo Text::_('COM_KUNENA_MYPROFILE_GENDER'); ?>
+                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_GENDER'); ?>
                                                             </label>
                                                         </td>
                                                         <td>
-															<?php
-															// Make the select list for the view type
-															$gender[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-															$gender[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-															$gender[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
-															// Build the html select list
-															echo HTMLHelper::_(
-																'select.genericlist',
-																$gender,
-																'gender',
-																'class="inputbox form-control" size="1"',
-																'value',
-																'text',
-																$this->escape($this->user->gender),
-																'gender'
-															);
-															?>
+                                                            <?php
+                                                            // Make the select list for the view type
+                                                            $gender[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+                                                            $gender[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+                                                            $gender[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+                                                            // Build the html select list
+                                                            echo HTMLHelper::_(
+                                                                'select.genericlist',
+                                                                $gender,
+                                                                'gender',
+                                                                'class="inputbox form-control" size="1"',
+                                                                'value',
+                                                                'text',
+                                                                $this->escape($this->user->gender),
+                                                                'gender'
+                                                            );
+                                                            ?>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <label for="social-site">
-																<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?>
+                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?>
                                                             </label>
                                                         </td>
                                                         <td>
-															<span class="hasTooltip"
+                                                            <span class="hasTooltip"
                                                                   title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
-																      . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
-																<input id="social-site" type="text" name="websitename"
+                                                                      . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
+                                                                <input id="social-site" type="text" name="websitename"
                                                                        class="inputbox form-control"
                                                                        value="<?php echo $this->escape($this->user->websitename); ?>"/>
-															</span>
+                                                            </span>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <label for="social-url">
-																<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?>
+                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?>
                                                             </label>
                                                         </td>
                                                         <td>
-															<span class="hasTooltip"
+                                                            <span class="hasTooltip"
                                                                   title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
-																<input id="social-url" type="text" name="websiteurl"
+                                                                <input id="social-url" type="text" name="websiteurl"
                                                                        class="inputbox form-control"
                                                                        value="<?php echo $this->escape($this->user->websiteurl); ?>"/>
-															</span>
+                                                            </span>
                                                         </td>
                                                     </tr>
 
-													<?php if ($this->config->social) : ?>
-														<?php foreach ($this->social as $key => $social) : ?>
+                                                    <?php if ($this->config->social) : ?>
+                                                        <?php foreach ($this->social as $key => $social) : ?>
                                                             <tr>
                                                                 <td>
                                                                     <label for="social-<?php echo $key; ?>">
-																		<?php echo Text::_('COM_KUNENA_MYPROFILE_' . $key); ?>
+                                                                        <?php echo Text::_('COM_KUNENA_MYPROFILE_' . $key); ?>
                                                                     </label>
                                                                 </td>
                                                                 <td>
-																	<?php if ($key != 'qq') : ?>
+                                                                    <?php if ($key != 'qq') : ?>
                                                                     <span class="hasTooltip"
                                                                           title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")
-																		      . '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
-																	<?php endif; ?>
-																		<input id="social-<?php echo $key; ?>"
+                                                                              . '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
+                                                                    <?php endif; ?>
+                                                                        <input id="social-<?php echo $key; ?>"
                                                                                type="text" class="inputbox form-control"
                                                                                name="<?php echo $key ?>"
                                                                                value="<?php echo $this->escape($this->user->$key); ?>"/>
-																	</span>
+                                                                    </span>
                                                                 </td>
                                                             </tr>
-														<?php endforeach; ?>
-													<?php endif; ?>
+                                                        <?php endforeach; ?>
+                                                    <?php endif; ?>
 
                                                     </tbody>
                                                 </table>
@@ -302,34 +304,32 @@ jQuery(function($) {
                                                 <table class="table table-striped">
                                                     <thead>
                                                     <tr>
-														<?php /*
-															<th width="1%" class="d-none d-md-table-cell">
-																<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
-															</th>
-															*/ ?>
+                                                        <?php /*
+                                                            <th width="1%" class="d-none d-md-table-cell">
+                                                                <input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
+                                                            </th>
+                                                            */ ?>
                                                         <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
                                                         <th width="1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
                                                     </tr>
                                                     </thead>
-													<?php
-													if (!empty($this->subsCatsList))
-														:
-														foreach ($this->subsCatsList as $cat)
-															:
-															?>
+                                                    <?php
+                                                    if (!empty($this->subsCatsList)) :
+                                                        foreach ($this->subsCatsList as $cat) :
+                                                            ?>
                                                             <tr>
                                                                 <td><?php echo $this->escape($cat->name); ?>
                                                                     <small><?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($cat->alias)); ?></small>
                                                                 </td>
                                                                 <td><?php echo $this->escape($cat->id); ?></td>
                                                             </tr>
-														<?php endforeach;
-													else:
-														?>
+                                                        <?php endforeach;
+                                                    else :
+                                                        ?>
                                                         <tr>
                                                             <td><?php echo Text::_('COM_KUNENA_NOCATSUBS'); ?></td>
                                                         </tr>
-													<?php endif; ?>
+                                                    <?php endif; ?>
                                                 </table>
                                             </fieldset>
                                         </div>
@@ -341,34 +341,31 @@ jQuery(function($) {
                                                 <table class="table table-striped">
                                                     <thead>
                                                     <tr>
-														<?php /*
-															<th width="1%" class="d-none d-md-table-cell">
-																<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
-															</th>
-															*/ ?>
+                                                        <?php /*
+                                                            <th width="1%" class="d-none d-md-table-cell">
+                                                                <input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
+                                                            </th>
+                                                            */ ?>
                                                         <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
                                                         <th width="1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
                                                     </tr>
                                                     </thead>
 
-													<?php
-													if ($this->sub)
-														:
-														foreach ($this->sub as $topic)
-															:
-															?>
+                                                    <?php
+                                                    if ($this->sub) :
+                                                        foreach ($this->sub as $topic) :
+                                                            ?>
                                                             <tr>
                                                                 <td><?php echo $this->escape($topic->subject); ?></td>
                                                                 <td><?php echo $this->escape($topic->id); ?></td>
                                                             </tr>
-														<?php endforeach;
-													else
-														:
-														?>
+                                                        <?php endforeach;
+                                                    else :
+                                                        ?>
                                                         <tr>
                                                             <td><?php echo Text::_('COM_KUNENA_NOSUBS'); ?></td>
                                                         </tr>
-													<?php endif; ?>
+                                                    <?php endif; ?>
                                                 </table>
                                             </fieldset>
                                         </div>
@@ -378,27 +375,24 @@ jQuery(function($) {
                                             <fieldset>
                                                 <legend><?php echo Text::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
                                                 <table class="table table-striped">
-													<?php
-													$i          = 0;
+                                                    <?php
+                                                    $i          = 0;
 
-													foreach ($this->ipslist as $ip => $list)
-														:
-														$userlist = [];
-														$mescnt = 0;
+                                                    foreach ($this->ipslist as $ip => $list) :
+                                                        $userlist = [];
+                                                        $mescnt = 0;
 
-														foreach ($list as $curuser)
-														{
-															if ($curuser->userid == $this->user->userid)
-															{
-																$mescnt += intval($curuser->mescnt);
-																continue;
-															}
+                                                        foreach ($list as $curuser) {
+                                                            if ($curuser->userid == $this->user->userid) {
+                                                                $mescnt += intval($curuser->mescnt);
+                                                                continue;
+                                                            }
 
-															$userlist[] = $this->escape($curuser->username) . ' (' . $this->escape($curuser->mescnt) . ')';
-														}
+                                                            $userlist[] = $this->escape($curuser->username) . ' (' . $this->escape($curuser->mescnt) . ')';
+                                                        }
 
-														$userlist = implode(', ', $userlist);
-														?>
+                                                        $userlist = implode(', ', $userlist);
+                                                        ?>
                                                         <tr>
                                                             <td width="30"><?php echo ++$i; ?></td>
                                                             <td width="60">
@@ -409,7 +403,7 @@ jQuery(function($) {
                                                                 )
                                                             </td>
                                                         </tr>
-													<?php endforeach; ?>
+                                                    <?php endforeach; ?>
                                                 </table>
                                             </fieldset>
                                         </div>
@@ -422,16 +416,16 @@ jQuery(function($) {
                                                         <td width="20%"><?php echo Text::_('COM_KUNENA_PREFOR'); ?></td>
                                                         <td><?php echo $this->selectOrder; ?></td>
                                                     </tr>
-													<?php foreach ($this->settings as $field) : ?>
+                                                    <?php foreach ($this->settings as $field) : ?>
                                                         <tr>
                                                             <td class="col-md-3">
-																<?php echo $field->label; ?>
+                                                                <?php echo $field->label; ?>
                                                             </td>
                                                             <td>
-																<?php echo $field->field; ?>
+                                                                <?php echo $field->field; ?>
                                                             </td>
                                                         </tr>
-													<?php endforeach ?>
+                                                    <?php endforeach ?>
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_RANKS'); ?></td>
                                                         <td><?php echo $this->selectRank; ?></td>
@@ -450,6 +444,6 @@ jQuery(function($) {
         </div>
     </div>
     <div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+        <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

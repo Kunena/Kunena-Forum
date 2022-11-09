@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -31,100 +32,92 @@ use StdClass;
  */
 class UserEditUserDisplay extends UserEditDisplay
 {
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	public $changeUsername;
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    public $changeUsername;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $frontendForm;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $frontendForm;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Edit/User';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'User/Edit/User';
 
-	/**
-	 * Load user form.
-	 *
-	 * @return  void
-	 * @throws  null
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Load user form.
+     *
+     * @return  void
+     * @throws  null
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$userParams = ComponentHelper::getParams('com_users');
+        $userParams = ComponentHelper::getParams('com_users');
 
-		// Check if user is allowed to change his name.
-		$this->changeUsername = $userParams->get('change_login_name', 1);
+        // Check if user is allowed to change his name.
+        $this->changeUsername = $userParams->get('change_login_name', 1);
 
-		// Check to see if Frontend User Params have been enabled.
-		if ($userParams->get('frontend_userparams', 0))
-		{
-			$this->app->getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
+        // Check to see if Frontend User Params have been enabled.
+        if ($userParams->get('frontend_userparams', 0)) {
+            $this->app->getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
 
-			Form::addFormPath(JPATH_ROOT . '/components/com_users/forms');
-			Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
+            Form::addFormPath(JPATH_ROOT . '/components/com_users/forms');
+            Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
 
-			PluginHelper::importPlugin('user');
+            PluginHelper::importPlugin('user');
 
-			$registry     = new Registry($this->user->params);
-			$form         = Form::getInstance('com_users.profile', 'frontend');
-			$data         = new StdClass;
-			$data->params = $registry->toArray();
-			$this->app->triggerEvent('onContentPrepareForm', [$form, $data]);
+            $registry     = new Registry($this->user->params);
+            $form         = Form::getInstance('com_users.profile', 'frontend');
+            $data         = new StdClass();
+            $data->params = $registry->toArray();
+            $this->app->triggerEvent('onContentPrepareForm', [$form, $data]);
 
-			$form->bind($data);
-			$this->frontendForm = $form->getFieldset('params');
-		}
+            $form->bind($data);
+            $this->frontendForm = $form->getFieldset('params');
+        }
 
-		$this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE');
-	}
+        $this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE');
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		$menu_item = $this->app->getMenu()->getActive();
+    /**
+     * Prepare document.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+        $menu_item = $this->app->getMenu()->getActive();
 
-		if ($menu_item)
-		{
-			$params             = $menu_item->getParams();
-			$params_title       = $params->get('page_title');
-			$params_description = $params->get('menu-meta_description');
+        if ($menu_item) {
+            $params             = $menu_item->getParams();
+            $params_title       = $params->get('page_title');
+            $params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle($this->headerText);
-			}
+            if (!empty($params_title)) {
+                $title = $params->get('page_title');
+                $this->setTitle($title);
+            } else {
+                $this->setTitle($this->headerText);
+            }
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$this->setDescription($this->headerText);
-			}
-		}
-	}
+            if (!empty($params_description)) {
+                $description = $params->get('menu-meta_description');
+                $this->setDescription($description);
+            } else {
+                $this->setDescription($this->headerText);
+            }
+        }
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -25,54 +26,53 @@ use UnexpectedValueException;
  */
 class TableKunenaKeywords extends KunenaTable
 {
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $id = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $id = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $name = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $name = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $public_count = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $public_count = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $total_count = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $total_count = null;
 
-	/**
-	 * @param   DatabaseDriver  $db  Database driver
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		parent::__construct('#__kunena_keywords', 'id', $db);
-	}
+    /**
+     * @param   DatabaseDriver  $db  Database driver
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        parent::__construct('#__kunena_keywords', 'id', $db);
+    }
 
-	/**
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function check(): bool
-	{
-		$this->name = trim($this->name);
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function check(): bool
+    {
+        $this->name = trim($this->name);
 
-		if (!$this->name)
-		{
-			throw new UnexpectedValueException;
-		}
+        if (!$this->name) {
+            throw new UnexpectedValueException();
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

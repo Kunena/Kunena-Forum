@@ -30,86 +30,81 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  */
 class AttachmentsController extends FormController
 {
-	/**
-	 * @var     null|string
-	 * @since   Kunena 2.0.0-BETA2
-	 */
-	protected $baseurl = null;
+    /**
+     * @var     null|string
+     * @since   Kunena 2.0.0-BETA2
+     */
+    protected $baseurl = null;
 
-	/**
-	 * Constructor
-	 *
-	 * @param   array  $config  Construct
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-		$this->baseurl = 'administrator/index.php?option=com_kunena&view=attachments';
-	}
+    /**
+     * Constructor
+     *
+     * @param   array  $config  Construct
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        $this->baseurl = 'administrator/index.php?option=com_kunena&view=attachments';
+    }
 
-	/**
-	 * Delete
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function delete(): void
-	{
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    /**
+     * Delete
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @throws  null
+     * @since   Kunena 2.0
+     */
+    public function delete(): void
+    {
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$cid = $this->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid, []);
+        $cid = $this->input->get('cid', [], 'array');
+        $cid = ArrayHelper::toInteger($cid, []);
 
-		if (!$cid)
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ATTACHMENTS_SELECTED'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        if (!$cid) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ATTACHMENTS_SELECTED'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		foreach ($cid as $id)
-		{
-			$attachment  = KunenaAttachmentHelper::get($id);
-			$message     = $attachment->getMessage();
-			$attachments = [$attachment->id, 1];
-			$attach      = [];
-			$removeList  = array_keys(array_diff_key($attachments, $attach));
-			$removeList  = ArrayHelper::toInteger($removeList);
-			$message->removeAttachments($removeList);
+        foreach ($cid as $id) {
+            $attachment  = KunenaAttachmentHelper::get($id);
+            $message     = $attachment->getMessage();
+            $attachments = [$attachment->id, 1];
+            $attach      = [];
+            $removeList  = array_keys(array_diff_key($attachments, $attach));
+            $removeList  = ArrayHelper::toInteger($removeList);
+            $message->removeAttachments($removeList);
 
-			$messageText = $attachment->removeBBCodeInMessage($message->message);
+            $messageText = $attachment->removeBBCodeInMessage($message->message);
 
-			if ($messageText !== false)
-			{
-				$message->message = $messageText;
-			}
+            if ($messageText !== false) {
+                $message->message = $messageText;
+            }
 
-			$message->save();
+            $message->save();
 
-			$topic = $message->getTopic();
-			$attachment->delete();
+            $topic = $message->getTopic();
+            $attachment->delete();
 
-			if ($topic->attachments > 0)
-			{
-				--$topic->attachments;
-				$topic->save(false);
-			}
-		}
+            if ($topic->attachments > 0) {
+                --$topic->attachments;
+                $topic->save(false);
+            }
+        }
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY'), 'success');
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY'), 'success');
+        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
 }

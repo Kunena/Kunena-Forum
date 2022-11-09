@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -23,21 +24,20 @@ $content = $this->execute('Topic/Poll');
 $parents   = KunenaCategoryHelper::getParents($content->category->id);
 $parents[] = $content->category;
 
-foreach ($parents as $parent)
-{
-	$this->addBreadcrumb(
-		$parent->displayField('name'),
-		$parent->getUri()
-	);
+foreach ($parents as $parent) {
+    $this->addBreadcrumb(
+        $parent->displayField('name'),
+        $parent->getUri()
+    );
 }
 
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_MENU_TOPIC'),
-	$content->topic->getUri()
+    Text::_('COM_KUNENA_MENU_TOPIC'),
+    $content->topic->getUri()
 );
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_POLL_STATS_NAME'),
-	$content->uri
+    Text::_('COM_KUNENA_POLL_STATS_NAME'),
+    $content->uri
 );
 
 echo $content;

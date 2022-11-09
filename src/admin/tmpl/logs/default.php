@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -9,6 +10,7 @@
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -49,12 +51,12 @@ $filterItem = $this->escape($this->state->get('item.id'));
                     <input type="hidden" name="boxchecked" value="1"/>
                     <input type="hidden" name="filter_order" value="<?php echo $this->list->Ordering; ?>"/>
                     <input type="hidden" name="filter_order_Dir" value="<?php echo $this->list->Direction; ?>"/>
-					<?php echo HTMLHelper::_('form.token'); ?>
+                    <?php echo HTMLHelper::_('form.token'); ?>
 
                     <div id="filter-bar" class="btn-toolbar">
                         <div class="btn-group pull-left">
-							<?php echo HTMLHelper::calendar($this->filter->TimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', ['class' => 'filter btn-wrapper', 'placeholder' => Text::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE')]); ?>
-							<?php echo HTMLHelper::calendar($this->filter->TimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', ['class' => 'filter wrapper', 'placeholder' => Text::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_END_DATE')]); ?>
+                            <?php echo HTMLHelper::calendar($this->filter->TimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', ['class' => 'filter btn-wrapper', 'placeholder' => Text::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE')]); ?>
+                            <?php echo HTMLHelper::calendar($this->filter->TimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', ['class' => 'filter wrapper', 'placeholder' => Text::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_END_DATE')]); ?>
                         </div>
                         <div class="btn-group pull-left">
                             <button class="btn btn-outline-primary tip" type="submit"
@@ -70,7 +72,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                         <div class="btn-group pull-right d-none d-md-block">
                             <label for="limit"
                                    class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-							<?php echo $this->pagination->getLimitBox(); ?>
+                            <?php echo $this->pagination->getLimitBox(); ?>
                         </div>
                         <div class="btn-group pull-right d-none d-md-block">
                             <label for="directionTable"
@@ -78,7 +80,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                             <select name="directionTable" id="directionTable" class="input-medium"
                                     onchange="Joomla.orderTable()">
                                 <option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
+                                <?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
                             </select>
                         </div>
                         <div class="btn-group pull-right">
@@ -86,7 +88,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                    class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
                             <select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
                                 <option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
                             </select>
                         </div>
                         <div class="btn-group pull-right">
@@ -94,7 +96,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                             <select name="filter_usertypes" id="filter_usertypes" class="input-medium filter"
                                     onchange="Joomla.orderTable()">
                                 <option value=""><?php echo 'All'; ?></option>
-								<?php echo HTMLHelper::_('select.options', $this->filter->UserFields, 'value', 'text', $this->filter->Usertypes); ?>
+                                <?php echo HTMLHelper::_('select.options', $this->filter->UserFields, 'value', 'text', $this->filter->Usertypes); ?>
                             </select>
                         </div>
                         <div class="clearfix"></div>
@@ -104,46 +106,45 @@ $filterItem = $this->escape($this->state->get('item.id'));
                         <thead>
                         <tr>
                             <th class="nowrap center" width="1%">
-								<?php echo !$this->group ? HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering) : 'Count'; ?>
+                                <?php echo !$this->group ? HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering) : 'Count'; ?>
                             </th>
                             <th class="nowrap center" width="1%" style="width: 130px;">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TIME_SORT_LABEL', 'time', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TIME_SORT_LABEL', 'time', $this->list->Direction, $this->list->Ordering); ?>
                             </th>
                             <th class="nowrap" width="1%">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TYPE_SORT_LABEL', 'type', $this->list->Direction, $this->list->Ordering); ?>
-								<?php echo $this->getGroupCheckbox('type'); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TYPE_SORT_LABEL', 'type', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo $this->getGroupCheckbox('type'); ?>
                             </th>
                             <th class="nowrap center">
                                 Operation
-								<?php echo $this->getGroupCheckbox('operation'); ?>
+                                <?php echo $this->getGroupCheckbox('operation'); ?>
                             </th>
                             <th class="nowrap">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_USER_SORT_LABEL', 'user', $this->list->Direction, $this->list->Ordering); ?>
-								<?php echo $this->getGroupCheckbox('user'); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_USER_SORT_LABEL', 'user', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo $this->getGroupCheckbox('user'); ?>
                             </th>
                             <th class="nowrap">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_CATEGORY_SORT_LABEL', 'category', $this->list->Direction, $this->list->Ordering); ?>
-								<?php echo $this->getGroupCheckbox('category'); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_CATEGORY_SORT_LABEL', 'category', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo $this->getGroupCheckbox('category'); ?>
                             </th>
                             <th class="nowrap">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TOPIC_SORT_LABEL', 'topic', $this->list->Direction, $this->list->Ordering); ?>
-								<?php echo $this->getGroupCheckbox('topic'); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TOPIC_SORT_LABEL', 'topic', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo $this->getGroupCheckbox('topic'); ?>
                             </th>
                             <th class="nowrap">
-								<?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TARGET_USER_SORT_LABEL', 'target_user', $this->list->Direction, $this->list->Ordering); ?>
-								<?php echo $this->getGroupCheckbox('target_user'); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TARGET_USER_SORT_LABEL', 'target_user', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo $this->getGroupCheckbox('target_user'); ?>
                             </th>
                             <th class="nowrap center">
                                 IP
-								<?php echo $this->getGroupCheckbox('ip'); ?>
+                                <?php echo $this->getGroupCheckbox('ip'); ?>
                             </th>
-							<?php if (!$this->group)
-								:
-								?>
+                            <?php if (!$this->group) :
+                                ?>
                                 <th class="nowrap center">
-									<?php echo Text::_('COM_KUNENA_LOG_MANAGER') ?>
+                                    <?php echo Text::_('COM_KUNENA_LOG_MANAGER') ?>
                                 </th>
-							<?php endif; ?>
+                            <?php endif; ?>
                         </tr>
                         <tr>
                             <td>
@@ -155,7 +156,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                 <select name="filterType" id="filterType" class="select-filter filter form-control"
                                         onchange="Joomla.orderTable()">
                                     <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->filter->TypeFields, 'value', 'text', $this->filter->Type); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->filter->TypeFields, 'value', 'text', $this->filter->Type); ?>
                                 </select>
                             </td>
                             <td>
@@ -163,7 +164,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                 <select name="filter_operation" id="filter_operation" class="filter form-control"
                                         onchange="Joomla.orderTable()">
                                     <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-									<?php echo HTMLHelper::_('select.options', $this->filter->OperationFields, 'value', 'text', $this->filter->Operation); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->filter->OperationFields, 'value', 'text', $this->filter->Operation); ?>
                                 </select>
                             </td>
                             <td>
@@ -216,37 +217,34 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                        value="<?php echo $this->filter->Ip; ?>"
                                        title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
                             </td>
-							<?php if (!$this->group)
-								:
-								?>
+                            <?php if (!$this->group) :
+                                ?>
                                 <td>
                                 </td>
-							<?php endif; ?>
+                            <?php endif; ?>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <td colspan="10">
-								<?php echo $this->pagination->getListFooter(); ?>
+                                <?php echo $this->pagination->getListFooter(); ?>
                             </td>
                         </tr>
                         </tfoot>
                         <tbody>
-						<?php
-						$i                = 0;
+                        <?php
+                        $i                = 0;
 
-						if ($this->pagination->total > 0)
-							:
-							foreach ($this->items as $item)
-								:
-								$date = new KunenaDate($item->time);
-								$user     = KunenaUserHelper::get($item->user_id);
-								$category = KunenaCategoryHelper::get($item->category_id);
-								$topic    = KunenaTopicHelper::get($item->topic_id);
-								$target   = KunenaUserHelper::get($item->target_user);
+                        if ($this->pagination->total > 0) :
+                            foreach ($this->items as $item) :
+                                $date = new KunenaDate($item->time);
+                                $user     = KunenaUserHelper::get($item->user_id);
+                                $category = KunenaCategoryHelper::get($item->category_id);
+                                $topic    = KunenaTopicHelper::get($item->topic_id);
+                                $target   = KunenaUserHelper::get($item->target_user);
 
-								// TODO : move this part of javascript outside of foreach
-								$this->document->addScriptDeclaration("jQuery( document ).ready(function() {
+                                // TODO : move this part of javascript outside of foreach
+                                $this->document->addScriptDeclaration("jQuery( document ).ready(function() {
 										jQuery('#link_sel_all" . $item->id . "').click(function() {
 											jQuery('#report_final" . $item->id . "').select();
 											try {
@@ -260,51 +258,51 @@ $filterItem = $this->escape($this->state->get('item.id'));
 											}
 										});
 									});");
-								?>
+                                ?>
                                 <tr>
                                     <td class="center">
-										<?php echo !$this->group ? $this->escape($item->id) : (int) $item->count; ?>
+                                        <?php echo !$this->group ? $this->escape($item->id) : (int) $item->count; ?>
                                     </td>
                                     <td class="center">
-										<?php echo $date->toSql(); ?>
+                                        <?php echo $date->toSql(); ?>
                                     </td>
                                     <td class="center">
-										<?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType((int) $item->type)) : ''; ?>
+                                        <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType((int) $item->type)) : ''; ?>
                                     </td>
                                     <td class="center">
-										<?php echo !$this->group || isset($this->group['operation']) ? Text::_("COM_KUNENA_{$item->operation}") : ''; ?>
+                                        <?php echo !$this->group || isset($this->group['operation']) ? Text::_("COM_KUNENA_{$item->operation}") : ''; ?>
                                     </td>
                                     <td>
-										<?php echo !$this->group || isset($this->group['user']) ? ($user->userid ? $this->escape($user->username) . ' <small>(' . $this->escape($item->user_id) . ')</small>' . '<br />' . $this->escape($user->name) : '') : ''; ?>
+                                        <?php echo !$this->group || isset($this->group['user']) ? ($user->userid ? $this->escape($user->username) . ' <small>(' . $this->escape($item->user_id) . ')</small>' . '<br />' . $this->escape($user->name) : '') : ''; ?>
                                     </td>
                                     <td>
-										<?php echo !$this->group || isset($this->group['category']) ? ($category->exists() ? $category->displayField('name') . ' <small>(' . $this->escape($item->category_id) . ')</small>' : '') : ''; ?>
+                                        <?php echo !$this->group || isset($this->group['category']) ? ($category->exists() ? $category->displayField('name') . ' <small>(' . $this->escape($item->category_id) . ')</small>' : '') : ''; ?>
                                     </td>
                                     <td>
-										<?php echo !$this->group || isset($this->group['topic']) ? ($topic->exists() ? $topic->displayField('subject') . ' <small>(' . $this->escape($item->topic_id) . ')</small>' : '') : ''; ?>
+                                        <?php echo !$this->group || isset($this->group['topic']) ? ($topic->exists() ? $topic->displayField('subject') . ' <small>(' . $this->escape($item->topic_id) . ')</small>' : '') : ''; ?>
                                     </td>
                                     <td>
-										<?php echo !$this->group || isset($this->group['target_user']) ? ($target->userid ? $this->escape($target->username) . ' <small>(' . $this->escape($item->target_user) . ')</small>' . '<br />' . $this->escape($target->name) : '') : ''; ?>
+                                        <?php echo !$this->group || isset($this->group['target_user']) ? ($target->userid ? $this->escape($target->username) . ' <small>(' . $this->escape($item->target_user) . ')</small>' . '<br />' . $this->escape($target->name) : '') : ''; ?>
                                     </td>
                                     <td class="center">
-										<?php echo !$this->group || isset($this->group['ip']) ? $this->escape($item->ip) : ''; ?>
+                                        <?php echo !$this->group || isset($this->group['ip']) ? $this->escape($item->ip) : ''; ?>
                                     </td>
-									<?php if (!$this->group) : ?>
+                                    <?php if (!$this->group) : ?>
                                         <td>
                                             <a href="#kerror<?php echo $item->id; ?>_form" role="button"
                                                class="btn openmodal"
                                                data-bs-toggle="modal"
                                                data-bs-target="#kerror<?php echo $item->id; ?>_form"
                                                rel="nofollow">
-												<?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
+                                                <?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
                                                     <span class="icon-warning" aria-hidden="true"></span>
-												<?php else: ?>
+                                                <?php else : ?>
                                                     <span class="icon-edit" aria-hidden="true"></span>
-												<?php endif; ?>
-												<?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
+                                                <?php endif; ?>
+                                                <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
                                             </a>
                                         </td>
-									<?php endif; ?>
+                                    <?php endif; ?>
                                 </tr>
 
                                 <div class="modal fade" id="kerror<?php echo $item->id; ?>_form" tabindex="-1"
@@ -315,9 +313,9 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                                 <h5 class="modal-title"
                                                     id="exampleModalLabel"><?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
                                                         <span class="icon-warning" aria-hidden="true"></span>
-													<?php else: ?>
+                                                                           <?php else : ?>
                                                         <span class="icon-edit" aria-hidden="true"></span>
-													<?php endif; ?>
+                                                                           <?php endif; ?>
                                                     Kunena <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
 
                                                     ID:<?php echo $item->id; ?></h5>
@@ -328,7 +326,7 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                             </div>
                                             <div class="modal-body">
                                                 <div>
-													<textarea style="margin-top: -3000px"
+                                                    <textarea style="margin-top: -3000px"
                                                               id="report_final<?php echo $item->id; ?>"
                                                               for="report_final<?php echo $item->id; ?>"><?php echo KunenaParser::plainBBCode((string) $item->data); ?></textarea>
                                                     <pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
@@ -346,27 +344,26 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                         </div>
                                     </div>
                                 </div>
-								<?php
-								$i++;
-							endforeach;
-						else:
-							?>
+                                <?php
+                                $i++;
+                            endforeach;
+                        else :
+                            ?>
                             <tr>
                                 <td colspan="10">
                                     <div class="card card-block bg-faded p-2 center filter-state">
-								<span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
-									<?php
-									if ($this->filter->Active)
-										:
-										?>
+                                <span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
+                                    <?php
+                                    if ($this->filter->Active) :
+                                        ?>
                                         <button class="btn btn-outline-primary" type="button"
                                                 onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-									<?php endif; ?>
-								</span>
+                                    <?php endif; ?>
+                                </span>
                                     </div>
                                 </td>
                             </tr>
-						<?php endif; ?>
+                        <?php endif; ?>
                         </tbody>
                     </table>
                 </form>
@@ -375,6 +372,6 @@ $filterItem = $this->escape($this->state->get('item.id'));
         </div>
     </div>
     <div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+        <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

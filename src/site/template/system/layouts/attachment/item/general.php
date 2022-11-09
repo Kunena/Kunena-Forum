@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -18,5 +19,5 @@ $attachment = $this->attachment;
 ?>
 
 <a href="<?php echo $attachment->getUrl(); ?>" data-bs-toggle="tooltip" title="<?php echo $attachment->getFilename(); ?>">
-	<?php echo $this->escape($attachment->getShortName()); ?>
+    <?php echo $this->escape($attachment->getShortName()); ?>
 </a>

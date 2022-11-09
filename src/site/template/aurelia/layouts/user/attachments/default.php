@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -25,14 +26,14 @@ HTMLHelper::_('behavior.core');
 $attachments = $this->attachments;
 ?>
 <h3>
-	<?php echo $this->headerText; ?>
+    <?php echo $this->headerText; ?>
 </h3>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user'); ?>" method="post" id="adminForm"
       name="adminForm">
     <input type="hidden" name="task" value="delfile"/>
     <input type="hidden" name="boxchecked" value="0"/>
-	<?php echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 
     <table class="table table-bordered table-striped table-hover">
         <thead>
@@ -40,98 +41,87 @@ $attachments = $this->attachments;
             <th class="col-md-1 center">
                 #
             </th>
-			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator())
-				:
-				?>
+            <?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :
+                ?>
                 <th class="col-md-1 center">
                     <label>
                         <input type="checkbox" name="checkall-toggle" value="cid"
                                data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)"/>
                     </label>
                 </th>
-			<?php endif; ?>
+            <?php endif; ?>
             <th class="col-md-1 center">
-				<?php echo Text::_('COM_KUNENA_FILETYPE'); ?>
+                <?php echo Text::_('COM_KUNENA_FILETYPE'); ?>
             </th>
             <th class="col-md-2">
-				<?php echo Text::_('COM_KUNENA_FILENAME'); ?>
+                <?php echo Text::_('COM_KUNENA_FILENAME'); ?>
             </th>
             <th class="col-md-2">
-				<?php echo Text::_('COM_KUNENA_FILESIZE'); ?>
+                <?php echo Text::_('COM_KUNENA_FILESIZE'); ?>
             </th>
             <th class="col-md-2">
-				<?php echo Text::_('COM_KUNENA_ATTACHMENT_MANAGER_TOPIC'); ?>
+                <?php echo Text::_('COM_KUNENA_ATTACHMENT_MANAGER_TOPIC'); ?>
             </th>
             <th class="col-md-1 center">
-				<?php echo Text::_('COM_KUNENA_PREVIEW'); ?>
+                <?php echo Text::_('COM_KUNENA_PREVIEW'); ?>
             </th>
-			<?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator())
-				:
-				?>
+            <?php if ($this->me->userid == $this->profile->userid || KunenaUserHelper::getMyself()->isModerator()) :
+                ?>
                 <th class="col-md-1 center">
-					<?php echo Text::_('COM_KUNENA_DELETE'); ?>
+                    <?php echo Text::_('COM_KUNENA_DELETE'); ?>
                 </th>
-			<?php endif; ?>
+            <?php endif; ?>
         </tr>
         </thead>
         <tbody>
-		<?php if (!$attachments)
-			:
-			?>
+        <?php if (!$attachments) :
+            ?>
             <tr>
                 <td colspan="8">
-					<?php echo Text::_('COM_KUNENA_USER_NO_ATTACHMENTS'); ?>
+                    <?php echo Text::_('COM_KUNENA_USER_NO_ATTACHMENTS'); ?>
                 </td>
             </tr>
-		<?php else
-			:
-			$i = $this->pagination->limitstart;
+        <?php else :
+            $i = $this->pagination->limitstart;
 
-			foreach ($attachments as $attachment)
-				:
-				$message = $attachment->getMessage();
-				$canDelete = $attachment->isAuthorised('delete');
+            foreach ($attachments as $attachment) :
+                $message = $attachment->getMessage();
+                $canDelete = $attachment->isAuthorised('delete');
 
-				if ($attachment->isAuthorised('read', $this->me))
-					:
-					?>
+                if ($attachment->isAuthorised('read', $this->me)) :
+                    ?>
                     <tr>
                         <td class="center"><?php echo ++$i; ?></td>
-						<?php
-						if ($canDelete)
-							:
-							?>
+                        <?php
+                        if ($canDelete) :
+                            ?>
                             <td class="center">
-								<?php echo HTMLHelper::_('grid.id', $i, \intval($attachment->id)); ?>
+                                <?php echo HTMLHelper::_('grid.id', $i, \intval($attachment->id)); ?>
                             </td>
-						<?php endif; ?>
+                        <?php endif; ?>
                         <td class="center">
-							<?php echo $attachment->isImage() ? KunenaIcons::picture() : KunenaIcons::file(); ?>
+                            <?php echo $attachment->isImage() ? KunenaIcons::picture() : KunenaIcons::file(); ?>
                         </td>
                         <td>
-							<?php echo $attachment->getShortName(10, 5); ?>
+                            <?php echo $attachment->getShortName(10, 5); ?>
                         </td>
                         <td>
-							<?php echo number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
+                            <?php echo number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
                         </td>
                         <td>
-							<?php
-							if ($message->exists())
-							{
-								echo $this->getTopicLink($message->getTopic(), $message, null, null, '', null, false, true);
-							}
-							else
-							{
-								echo Text::_('COM_KUNENA_USER_ATTACHMENT_MESSAGE_NOT_EXIST');
-							}
-							?>
+                            <?php
+                            if ($message->exists()) {
+                                echo $this->getTopicLink($message->getTopic(), $message, null, null, '', null, false, true);
+                            } else {
+                                echo Text::_('COM_KUNENA_USER_ATTACHMENT_MESSAGE_NOT_EXIST');
+                            }
+                            ?>
                         </td>
                         <td class="center">
-							<?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                            <?php echo $attachment->getLayout()->render('thumbnail'); ?>
                         </td>
-						<?php if ($canDelete)
-							:
-							?>
+                        <?php if ($canDelete) :
+                            ?>
                             <td class="center">
                                 <a href="#modaldelete<?php echo $i ?>" role="button" class="btn center"
                                    data-bs-toggle="modal"><?php echo KunenaIcons::delete(); ?></a>
@@ -159,21 +149,20 @@ $attachments = $this->attachments;
                                     </div>
                                 </div>
                             </td>
-						<?php endif; ?>
+                        <?php endif; ?>
                     </tr>
-				<?php endif; ?>
-			<?php endforeach; ?>
-		<?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         </tbody>
     </table>
     <div class="float-start">
-		<?php echo $this->subLayout('Widget/Pagination/List')
-			->set('pagination', $this->pagination->setDisplayedPages(4))
-			->set('display', true); ?>
+        <?php echo $this->subLayout('Widget/Pagination/List')
+            ->set('pagination', $this->pagination->setDisplayedPages(4))
+            ->set('display', true); ?>
     </div>
-	<?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && KunenaUserHelper::getMyself()->isModerator())
-		:
-		?>
+    <?php if ($attachments && $this->me->userid == $this->profile->userid || $attachments && KunenaUserHelper::getMyself()->isModerator()) :
+        ?>
         <a href="#modaldeleteall" class="btn btn-outline-primary border float-end"
            data-bs-toggle="modal"><?php echo Text::_('COM_KUNENA_FILES_DELETE'); ?></a>
 
@@ -197,5 +186,5 @@ $attachments = $this->attachments;
                 </div>
             </div>
         </div>
-	<?php endif; ?>
+    <?php endif; ?>
 </form>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,85 +29,77 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  */
 class AnnouncementItemDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $announcement;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $announcement;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Announcement/Item';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Announcement/Item';
 
-	/**
-	 * Prepare announcement display.
-	 *
-	 * @return  void
-	 * @throws  null
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare announcement display.
+     *
+     * @return  void
+     * @throws  null
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$id = $this->input->getInt('id', null);
+        $id = $this->input->getInt('id', null);
 
-		$this->announcement = KunenaAnnouncementHelper::get($id);
-		$this->announcement->tryAuthorise();
+        $this->announcement = KunenaAnnouncementHelper::get($id);
+        $this->announcement->tryAuthorise();
 
-		$Itemid = $this->input->getInt('Itemid');
+        $Itemid = $this->input->getInt('Itemid');
 
-		if (!$Itemid && $this->config->sefRedirect)
-		{
-			$itemid     = KunenaRoute::fixMissingItemID();
-			$controller = BaseController::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=default&id={$id}&Itemid={$itemid}", false));
-			$controller->redirect();
-		}
+        if (!$Itemid && $this->config->sefRedirect) {
+            $itemid     = KunenaRoute::fixMissingItemID();
+            $controller = BaseController::getInstance("kunena");
+            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=default&id={$id}&Itemid={$itemid}", false));
+            $controller->redirect();
+        }
 
-		$this->actions      = $this->getActions();
-	}
+        $this->actions      = $this->getActions();
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		$menu_item = $this->app->getMenu()->getActive();
+    /**
+     * Prepare document.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+        $menu_item = $this->app->getMenu()->getActive();
 
-		if ($menu_item)
-		{
-			$params             = $menu_item->getParams();
-			$params_title       = $params->get('page_title');
-			$params_description = $params->get('menu-meta_description');
+        if ($menu_item) {
+            $params             = $menu_item->getParams();
+            $params_title       = $params->get('page_title');
+            $params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle($this->announcement->title);
-			}
+            if (!empty($params_title)) {
+                $title = $params->get('page_title');
+                $this->setTitle($title);
+            } else {
+                $this->setTitle($this->announcement->title);
+            }
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$this->setDescription(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
-			}
-		}
-	}
+            if (!empty($params_description)) {
+                $description = $params->get('menu-meta_description');
+                $this->setDescription($description);
+            } else {
+                $this->setDescription(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
+            }
+        }
+    }
 }

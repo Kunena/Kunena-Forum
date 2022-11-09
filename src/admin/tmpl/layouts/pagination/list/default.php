@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -17,20 +18,18 @@ defined('_JEXEC') or die();
 $data     = $this->pagination->getData();
 $template = KunenaFactory::getAdminTemplate();
 
-if ($data->pages && count($data->pages) <= 1)
-{
-	return;
+if ($data->pages && count($data->pages) <= 1) {
+    return;
 }
 ?>
 <ul class="pagination pagination-sm justify-content-center">
-	<?php echo $template->paginationItem($data->start); ?>
-	<?php echo $template->paginationItem($data->previous); ?>
+    <?php echo $template->paginationItem($data->start); ?>
+    <?php echo $template->paginationItem($data->previous); ?>
 
-	<?php foreach ($data->pages as $k => $page)
-	{
-		echo $template->paginationItem($page);
-	} ?>
+    <?php foreach ($data->pages as $k => $page) {
+        echo $template->paginationItem($page);
+    } ?>
 
-	<?php echo $template->paginationItem($data->next); ?>
-	<?php echo $template->paginationItem($data->end); ?>
+    <?php echo $template->paginationItem($data->next); ?>
+    <?php echo $template->paginationItem($data->end); ?>
 </ul>

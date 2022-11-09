@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -9,6 +10,7 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -28,20 +30,20 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                     <input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>"/>
                     <input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>"/>
                     <input type="hidden" name="filename" value="<?php echo $this->escape($this->filename); ?>"/>
-					<?php echo HTMLHelper::_('form.token'); ?>
+                    <?php echo HTMLHelper::_('form.token'); ?>
 
-					<?php // TODO: redo FTP protection fields ?>
+                    <?php // TODO: redo FTP protection fields ?>
                     <fieldset>
                         <legend><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_SCSS_TEMPLATE'); ?></legend>
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <th>
-									<?php echo $this->escape($this->scss_path); ?>
+                                    <?php echo $this->escape($this->scss_path); ?>
                                 </th>
                             </tr>
                             <tr>
                                 <td>
-									<textarea class="input-xxlarge" cols="110" rows="25"
+                                    <textarea class="input-xxlarge" cols="110" rows="25"
                                               name="filecontent"><?php echo $this->content; ?></textarea>
                                 </td>
                             </tr>
@@ -52,6 +54,6 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
         </div>
     </div>
     <div class="pull-right small">
-		<?php echo KunenaVersion::getLongVersionHTML(); ?>
+        <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

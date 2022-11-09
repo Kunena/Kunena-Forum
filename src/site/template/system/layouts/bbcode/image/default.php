@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -32,17 +33,15 @@ $attributesImg  = ' style="max-height: ' . (int) $config->imageHeight . 'px;' . 
 $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 ?>
 <div class="kmsgimage">
-	<?php if ($canLink)
-	:
-		?>
-	<a href="<?php echo $this->escape($url); ?>" data-bs-toggle="tooltip" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>
-	<?php endif; ?>
+    <?php if ($canLink) :
+        ?>
+    <a href="<?php echo $this->escape($url); ?>" data-bs-toggle="tooltip" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>
+    <?php endif; ?>
 
-		<img loading=lazy src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?> alt="<?php echo $alt; ?>"/>
+        <img loading=lazy src="<?php echo $this->escape($url); ?>" <?php echo $attributesImg; ?> alt="<?php echo $alt; ?>"/>
 
-		<?php if ($canLink)
-		:
-			?>
-	</a>
-		<?php endif; ?>
+        <?php if ($canLink) :
+            ?>
+    </a>
+        <?php endif; ?>
 </div>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -36,181 +37,164 @@ use Kunena\Forum\Libraries\User\KunenaBan;
  */
 class TopicModerateDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     KunenaTopic
-	 * @since   Kunena 6.0
-	 */
-	public $topic;
+    /**
+     * @var     KunenaTopic
+     * @since   Kunena 6.0
+     */
+    public $topic;
 
-	/**
-	 * @var     KunenaMessage|null
-	 * @since   Kunena 6.0
-	 */
-	public $message;
+    /**
+     * @var     KunenaMessage|null
+     * @since   Kunena 6.0
+     */
+    public $message;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $uri;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $uri;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $title;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $title;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $topicIcons;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $topicIcons;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $userLink;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $userLink;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Moderate';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Topic/Moderate';
 
-	/**
-	 * Prepare topic moderate display.
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare topic moderate display.
+     *
+     * @return  void
+     *
+     * @throws  null
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$this->catid = $this->input->getInt('catid');
-		$id          = $this->input->getInt('id');
-		$mesid       = $this->input->getInt('mesid');
+        $this->catid = $this->input->getInt('catid');
+        $id          = $this->input->getInt('id');
+        $mesid       = $this->input->getInt('mesid');
 
-		if (!$mesid)
-		{
-			$this->topic = KunenaTopicHelper::get($id);
-			$this->topic->tryAuthorise('move');
-		}
-		else
-		{
-			$this->message = KunenaMessageHelper::get($mesid);
-			$this->message->tryAuthorise('move');
-			$this->topic = $this->message->getTopic();
-		}
+        if (!$mesid) {
+            $this->topic = KunenaTopicHelper::get($id);
+            $this->topic->tryAuthorise('move');
+        } else {
+            $this->message = KunenaMessageHelper::get($mesid);
+            $this->message->tryAuthorise('move');
+            $this->topic = $this->message->getTopic();
+        }
 
-		if ($this->config->readOnly)
-		{
-			throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
-		}
+        if ($this->config->readOnly) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '401');
+        }
 
-		$this->category = $this->topic->getCategory();
+        $this->category = $this->topic->getCategory();
 
-		$this->uri   = "index.php?option=com_kunena&view=topic&layout=moderate"
-			. "&catid={$this->category->id}&id={$this->topic->id}"
-			. ($this->message ? "&mesid={$this->message->id}" : '');
-		$this->title = !$this->message ?
-			Text::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :
-			Text::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
+        $this->uri   = "index.php?option=com_kunena&view=topic&layout=moderate"
+            . "&catid={$this->category->id}&id={$this->topic->id}"
+            . ($this->message ? "&mesid={$this->message->id}" : '');
+        $this->title = !$this->message ?
+            Text::_('COM_KUNENA_TITLE_MODERATE_TOPIC') :
+            Text::_('COM_KUNENA_TITLE_MODERATE_MESSAGE');
 
-		$template = KunenaTemplate::getInstance();
-		$template->setCategoryIconset($this->topic->getCategory()->iconset);
-		$this->topicIcons = $template->getTopicIcons(false);
+        $template = KunenaTemplate::getInstance();
+        $template->setCategoryIconset($this->topic->getCategory()->iconset);
+        $this->topicIcons = $template->getTopicIcons(false);
 
-		// Have a link to moderate user as well.
-		if (isset($this->message))
-		{
-			$user = $this->message->getAuthor();
+        // Have a link to moderate user as well.
+        if (isset($this->message)) {
+            $user = $this->message->getAuthor();
 
-			if ($user->exists())
-			{
-				$username       = $user->getName();
-				$this->userLink = $this->message->userid ? HTMLHelper::_(
-					'kunenaforum.link',
-					'index.php?option=com_kunena&view=user&userid=' . $this->message->userid,
-					$username . ' (' . $this->message->userid . ')',
-					$username . ' (' . $this->message->userid . ')'
-				)
-					: null;
-			}
-		}
+            if ($user->exists()) {
+                $username       = $user->getName();
+                $this->userLink = $this->message->userid ? HTMLHelper::_(
+                    'kunenaforum.link',
+                    'index.php?option=com_kunena&view=user&userid=' . $this->message->userid,
+                    $username . ' (' . $this->message->userid . ')',
+                    $username . ' (' . $this->message->userid . ')'
+                )
+                    : null;
+            }
+        }
 
-		if ($this->message)
-		{
-			$this->banHistory = KunenaBan::getUserHistory($this->message->userid);
-			$this->me         = $this->app->getIdentity();
+        if ($this->message) {
+            $this->banHistory = KunenaBan::getUserHistory($this->message->userid);
+            $this->me         = $this->app->getIdentity();
 
-			// Get thread and reply count from current message:
-			$db    = Factory::getContainer()->get('DatabaseDriver');
-			$query = $db->getQuery(true);
-			$query->select('COUNT(mm.id) AS replies')
-				->from($db->quoteName('#__kunena_messages', 'm'))
-				->innerJoin($db->quoteName('#__kunena_messages', 't') . ' ON m.thread=t.id')
-				->leftJoin($db->quoteName('#__kunena_messages', 'mm') . ' ON mm.thread=m.thread AND mm.time > m.time')
-				->where('m.id=' . $db->quote($this->message->id));
-			$query->setLimit(1);
-			$db->setQuery($query);
+            // Get thread and reply count from current message:
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->getQuery(true);
+            $query->select('COUNT(mm.id) AS replies')
+                ->from($db->quoteName('#__kunena_messages', 'm'))
+                ->innerJoin($db->quoteName('#__kunena_messages', 't') . ' ON m.thread=t.id')
+                ->leftJoin($db->quoteName('#__kunena_messages', 'mm') . ' ON mm.thread=m.thread AND mm.time > m.time')
+                ->where('m.id=' . $db->quote($this->message->id));
+            $query->setLimit(1);
+            $db->setQuery($query);
 
-			try
-			{
-				$this->replies = $db->loadResult();
-			}
-			catch (ExecutionFailureException $e)
-			{
-				KunenaError::displayDatabaseError($e);
+            try {
+                $this->replies = $db->loadResult();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
 
-				return;
-			}
-		}
+                return;
+            }
+        }
 
-		$this->banInfo = KunenaBan::getInstanceByUserid($this->app->getIdentity()->id, true);
-	}
+        $this->banInfo = KunenaBan::getInstanceByUserid($this->app->getIdentity()->id, true);
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		$menu_item = $this->app->getMenu()->getActive();
+    /**
+     * Prepare document.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+        $menu_item = $this->app->getMenu()->getActive();
 
-		if ($menu_item)
-		{
-			$params             = $menu_item->getParams();
-			$params_title       = $params->get('page_title');
-			$params_description = $params->get('menu-meta_description');
+        if ($menu_item) {
+            $params             = $menu_item->getParams();
+            $params_title       = $params->get('page_title');
+            $params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle($this->title);
-			}
+            if (!empty($params_title)) {
+                $title = $params->get('page_title');
+                $this->setTitle($title);
+            } else {
+                $this->setTitle($this->title);
+            }
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$this->setDescription($this->title);
-			}
-		}
-	}
+            if (!empty($params_description)) {
+                $description = $params->get('menu-meta_description');
+                $this->setDescription($description);
+            } else {
+                $this->setDescription($this->title);
+            }
+        }
+    }
 }

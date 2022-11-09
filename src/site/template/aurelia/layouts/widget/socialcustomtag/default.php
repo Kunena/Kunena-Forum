@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -18,9 +19,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
-if (KunenaUserHelper::getMyself()->socialshare == 0 && KunenaUserHelper::getMyself()->exists())
-{
-	return false;
+if (KunenaUserHelper::getMyself()->socialshare == 0 && KunenaUserHelper::getMyself()->exists()) {
+    return false;
 }
 
 $this->ktemplate = KunenaFactory::getTemplate();

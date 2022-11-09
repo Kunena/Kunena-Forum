@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -33,259 +34,237 @@ use RuntimeException;
  */
 class SmiliesController extends FormController
 {
-	/**
-	 * @var     null|string
-	 * @since   Kunena 6.0
-	 */
-	protected $baseurl = null;
+    /**
+     * @var     null|string
+     * @since   Kunena 6.0
+     */
+    protected $baseurl = null;
 
-	/**
-	 * Construct
-	 *
-	 * @param   array  $config  config
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-		$this->baseurl = 'administrator/index.php?option=com_kunena&view=smilies';
-	}
+    /**
+     * Construct
+     *
+     * @param   array  $config  config
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        $this->baseurl = 'administrator/index.php?option=com_kunena&view=smilies';
+    }
 
-	/**
-	 * Add
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function add(): void
-	{
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    /**
+     * Add
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @throws  null
+     * @since   Kunena 2.0
+     */
+    public function add(): void
+    {
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$this->setRedirect(Route::_('index.php?option=com_kunena&view=smiley&layout=add', false));
-	}
+        $this->setRedirect(Route::_('index.php?option=com_kunena&view=smiley&layout=add', false));
+    }
 
-	/**
-	 * Edit
-	 *
-	 * @param   null  $key     key
-	 * @param   null  $urlVar  url var
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	public function edit($key = null, $urlVar = null): void
-	{
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    /**
+     * Edit
+     *
+     * @param   null  $key     key
+     * @param   null  $urlVar  url var
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function edit($key = null, $urlVar = null): void
+    {
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$cid = $this->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid, []);
+        $cid = $this->input->get('cid', [], 'array');
+        $cid = ArrayHelper::toInteger($cid, []);
 
-		$id = array_shift($cid);
+        $id = array_shift($cid);
 
-		if (!$id)
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_SMILEYS_SELECTED'), 'notice');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        if (!$id) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_SMILEYS_SELECTED'), 'notice');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$this->setRedirect(Route::_("index.php?option=com_kunena&view=smiley&layout=edit&id={$id}", false));
-	}
+        $this->setRedirect(Route::_("index.php?option=com_kunena&view=smiley&layout=edit&id={$id}", false));
+    }
 
-	/**
-	 * Save
-	 *
-	 * @param   null  $key     key
-	 * @param   null  $urlVar  url var
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function save($key = null, $urlVar = null): void
-	{
-		$db = Factory::getContainer()->get('DatabaseDriver');
+    /**
+     * Save
+     *
+     * @param   null  $key     key
+     * @param   null  $urlVar  url var
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function save($key = null, $urlVar = null): void
+    {
+        $db = Factory::getContainer()->get('DatabaseDriver');
 
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$smileyCode        = $this->input->getString('smileyCode');
-		$smileyLocation    = basename($this->input->getString('smiley_url'));
-		$smileyEmoticonBar = $this->input->getInt('smileyEmoticonBar', 0);
-		$smileyId          = $this->input->getInt('smileyId', 0);
+        $smileyCode        = $this->input->getString('smileyCode');
+        $smileyLocation    = basename($this->input->getString('smiley_url'));
+        $smileyEmoticonBar = $this->input->getInt('smileyEmoticonBar', 0);
+        $smileyId          = $this->input->getInt('smileyId', 0);
 
-		if (!$smileyId)
-		{
-			$query = $db->getQuery(true)
-				->insert("{$db->quoteName('#__kunena_smileys')}")
-				->set("code={$db->quote($smileyCode)}")
-				->set("location={$db->quote($smileyLocation)}")
-				->set("emoticonbar={$db->quote($smileyEmoticonBar)}");
+        if (!$smileyId) {
+            $query = $db->getQuery(true)
+                ->insert("{$db->quoteName('#__kunena_smileys')}")
+                ->set("code={$db->quote($smileyCode)}")
+                ->set("location={$db->quote($smileyLocation)}")
+                ->set("emoticonbar={$db->quote($smileyEmoticonBar)}");
 
-			$db->setQuery($query);
+            $db->setQuery($query);
 
-			try
-			{
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				$this->app->enqueueMessage($e->getMessage(), 'error');
+            try {
+                $db->execute();
+            } catch (RuntimeException $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
 
-				return;
-			}
-		}
-		else
-		{
-			$query = $db->getQuery(true)
-				->update("{$db->quoteName('#__kunena_smileys')}")
-				->set("code={$db->quote($smileyCode)}")
-				->set("location={$db->quote($smileyLocation)}")
-				->set("emoticonbar={$db->quote($smileyEmoticonBar)}")
-				->where("id={$db->quote($smileyId)}");
+                return;
+            }
+        } else {
+            $query = $db->getQuery(true)
+                ->update("{$db->quoteName('#__kunena_smileys')}")
+                ->set("code={$db->quote($smileyCode)}")
+                ->set("location={$db->quote($smileyLocation)}")
+                ->set("emoticonbar={$db->quote($smileyEmoticonBar)}")
+                ->where("id={$db->quote($smileyId)}");
 
-			$db->setQuery($query);
+            $db->setQuery($query);
 
-			try
-			{
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				$this->app->enqueueMessage($e->getMessage(), 'error');
+            try {
+                $db->execute();
+            } catch (RuntimeException $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
 
-				return;
-			}
-		}
+                return;
+            }
+        }
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_SAVED'), 'success');
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_SAVED'), 'success');
+        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
 
-	/**
-	 * Smiley upload
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function smileyUpload(): void
-	{
-		if (!Session::checkToken())
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    /**
+     * Smiley upload
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @throws  null
+     * @since   Kunena 2.0
+     */
+    public function smileyUpload(): void
+    {
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$file = $this->input->files->get('Filedata');
+        $file = $this->input->files->get('Filedata');
 
-		// TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\KunenaUploadHelper::upload()
-		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');
+        // TODO : change this part to use other method than \Kunena\Forum\Libraries\Upload\KunenaUploadHelper::upload()
+        $upload = KunenaUploadHelper::upload($file, JPATH_ROOT . '/' . KunenaFactory::getTemplate()->getSmileyPath(), 'html');
 
-		if ($upload)
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'), 'success');
-		}
-		else
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'), 'error');
-		}
+        if ($upload) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'), 'error');
+        }
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
+        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
 
-	/**
-	 * Remove
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @throws  null
-	 * @since   Kunena 2.0
-	 */
-	public function remove(): void
-	{
-		$db = Factory::getContainer()->get('DatabaseDriver');
+    /**
+     * Remove
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @throws  null
+     * @since   Kunena 2.0
+     */
+    public function remove(): void
+    {
+        $db = Factory::getContainer()->get('DatabaseDriver');
 
-		if (!Session::checkToken('post'))
-		{
-			$this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
-			return;
-		}
+            return;
+        }
 
-		$cid = $this->input->get('cid', [], 'array');
-		$cid = ArrayHelper::toInteger($cid, []);
+        $cid = $this->input->get('cid', [], 'array');
+        $cid = ArrayHelper::toInteger($cid, []);
 
-		$cids = implode(',', $cid);
+        $cids = implode(',', $cid);
 
-		if ($cids)
-		{
-			$query = $db->getQuery(true)
-				->delete()->from("{$db->quoteName('#__kunena_smileys')}")
-				->where("id IN ($cids)");
+        if ($cids) {
+            $query = $db->getQuery(true)
+                ->delete()->from("{$db->quoteName('#__kunena_smileys')}")
+                ->where("id IN ($cids)");
 
-			$db->setQuery($query);
+            $db->setQuery($query);
 
-			try
-			{
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				$this->app->enqueueMessage($e->getMessage(), 'error');
+            try {
+                $db->execute();
+            } catch (RuntimeException $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
 
-				return;
-			}
-		}
+                return;
+            }
+        }
 
-		$this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_DELETED'), 'success');
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
-	}
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_DELETED'), 'success');
+        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
 
-	/**
-	 * Method to just redirect to main manager in case of use of cancel button
-	 *
-	 * @param   null  $key  key
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 4.0
-	 */
-	public function cancel($key = null): void
-	{
-		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
-	}
+    /**
+     * Method to just redirect to main manager in case of use of cancel button
+     *
+     * @param   null  $key  key
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 4.0
+     */
+    public function cancel($key = null): void
+    {
+        $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+    }
 }

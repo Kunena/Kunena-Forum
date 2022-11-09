@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -17,8 +18,8 @@ namespace Kunena\Forum\Site;
 $content = $this->execute('User/Ban/Form');
 
 $this->addBreadcrumb(
-	$content->headerText,
-	'index.php?option=com_kunena&view=user&layout=moderate'
+    $content->headerText,
+    'index.php?option=com_kunena&view=user&layout=moderate'
 );
 
 echo $content;

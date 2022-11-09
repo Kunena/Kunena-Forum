@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -38,343 +39,295 @@ use Kunena\Forum\Site\Model\TopicsModel;
  */
 class MessageListingRecentDisplay extends ListDisplay
 {
-	/**
-	 * @var     array|KunenaMessage[]
-	 * @since   Kunena 6.0
-	 */
-	public $messages;
+    /**
+     * @var     array|KunenaMessage[]
+     * @since   Kunena 6.0
+     */
+    public $messages;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Message/List';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Message/List';
 
-	/**
-	 * Prepare category list display.
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare category list display.
+     *
+     * @return  void
+     *
+     * @throws  null
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$this->model = new TopicsModel([]);
-		$this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
-		$this->state   = $this->model->getState();
-		$this->me      = KunenaUserHelper::getMyself();
-		$this->moreUri = null;
+        $this->model = new TopicsModel([]);
+        $this->model->initialize($this->getOptions(), $this->getOptions()->get('embedded', false));
+        $this->state   = $this->model->getState();
+        $this->me      = KunenaUserHelper::getMyself();
+        $this->moreUri = null;
 
-		$this->embedded = $this->getOptions()->get('embedded', false);
+        $this->embedded = $this->getOptions()->get('embedded', false);
 
-		if ($this->embedded)
-		{
-			$this->moreUri = new Uri(
-				'index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
-				. '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
-			);
-			$this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
-		}
+        if ($this->embedded) {
+            $this->moreUri = new Uri(
+                'index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
+                . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
+            );
+            $this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
+        }
 
-		$start      = $this->state->get('list.start');
-		$limit      = $this->state->get('list.limit');
-		$this->view = $this->state->get('view');
+        $start      = $this->state->get('list.start');
+        $limit      = $this->state->get('list.limit');
+        $this->view = $this->state->get('view');
 
-		// Handle &sel=x parameter.
-		$time = $this->state->get('list.time');
+        // Handle &sel=x parameter.
+        $time = $this->state->get('list.time');
 
-		if ($time < 0)
-		{
-			$time = null;
-		}
-		elseif ($time == 0)
-		{
-			$time = new Date(KunenaFactory::getSession()->lasttime);
-		}
-		else
-		{
-			$time = new Date(Factory::getDate()->toUnix() - ($time * 3600));
-		}
+        if ($time < 0) {
+            $time = null;
+        } elseif ($time == 0) {
+            $time = new Date(KunenaFactory::getSession()->lasttime);
+        } else {
+            $time = new Date(Factory::getDate()->toUnix() - ($time * 3600));
+        }
 
-		$userid = $this->state->get('user');
+        $userid = $this->state->get('user');
 
-		if ($userid == '*')
-		{
-			$userid = null;
-		}
+        if ($userid == '*') {
+            $userid = null;
+        }
 
-		$user = is_numeric($userid) ? KunenaUserHelper::get($userid) : null;
+        $user = is_numeric($userid) ? KunenaUserHelper::get($userid) : null;
 
-		// Get categories for the filter.
-		$categoryIds = $this->state->get('list.categories');
-		$reverse     = !$this->state->get('list.categories.in');
-		$authorise   = 'read';
-		$order       = 'time';
+        // Get categories for the filter.
+        $categoryIds = $this->state->get('list.categories');
+        $reverse     = !$this->state->get('list.categories.in');
+        $authorise   = 'read';
+        $order       = 'time';
 
-		$finder = new KunenaMessageFinder;
-		$finder->filterByTime($time);
+        $finder = new KunenaMessageFinder();
+        $finder->filterByTime($time);
 
-		switch ($this->state->get('list.mode'))
-		{
-			case 'unapproved' :
-				$authorise = 'topic.post.approve';
-				$finder
-					->filterByUser(null, 'author')
-					->filterByHold([1]);
-				break;
-			case 'deleted' :
-				$authorise = 'topic.post.undelete';
-				$finder
-					->filterByUser($user, 'author')
-					->filterByHold([2, 3]);
-				break;
-			case 'mythanks' :
-				$finder
-					->filterByUser($user, 'thanker')
-					->filterByHold([0]);
-				break;
-			case 'thankyou' :
-				$finder
-					->filterByUser($user, 'thankee')
-					->filterByHold([0]);
-				break;
-			default :
-				$finder
-					->filterByUser($user, 'author')
-					->filterByHold([0]);
-				break;
-		}
+        switch ($this->state->get('list.mode')) {
+            case 'unapproved':
+                $authorise = 'topic.post.approve';
+                $finder
+                    ->filterByUser(null, 'author')
+                    ->filterByHold([1]);
+                break;
+            case 'deleted':
+                $authorise = 'topic.post.undelete';
+                $finder
+                    ->filterByUser($user, 'author')
+                    ->filterByHold([2, 3]);
+                break;
+            case 'mythanks':
+                $finder
+                    ->filterByUser($user, 'thanker')
+                    ->filterByHold([0]);
+                break;
+            case 'thankyou':
+                $finder
+                    ->filterByUser($user, 'thankee')
+                    ->filterByHold([0]);
+                break;
+            default:
+                $finder
+                    ->filterByUser($user, 'author')
+                    ->filterByHold([0]);
+                break;
+        }
 
-		$categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
-		$finder->filterByCategories($categories);
+        $categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
+        $finder->filterByCategories($categories);
 
-		$this->pagination = new KunenaPagination($finder->count(), $start, $limit);
+        $this->pagination = new KunenaPagination($finder->count(), $start, $limit);
 
-		$doc = $this->app->getDocument();
+        $doc = $this->app->getDocument();
 
-		if (!$start)
-		{
-			foreach ($doc->_links as $key => $value)
-			{
-				if (\is_array($value))
-				{
-					if (\array_key_exists('relation', $value))
-					{
-						if ($value['relation'] == 'canonical')
-						{
-							$canonicalUrl               = KunenaRoute::_();
-							$doc->_links[$canonicalUrl] = $value;
-							unset($doc->_links[$key]);
-							break;
-						}
-					}
-				}
-			}
-		}
+        if (!$start) {
+            foreach ($doc->_links as $key => $value) {
+                if (\is_array($value)) {
+                    if (\array_key_exists('relation', $value)) {
+                        if ($value['relation'] == 'canonical') {
+                            $canonicalUrl               = KunenaRoute::_();
+                            $doc->_links[$canonicalUrl] = $value;
+                            unset($doc->_links[$key]);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
-		$pagdata = $this->pagination->getData();
+        $pagdata = $this->pagination->getData();
 
-		if ($pagdata->previous->link)
-		{
-			$pagdata->previous->link = str_replace('limitstart=0', '', $pagdata->previous->link);
-			$doc->addHeadLink($pagdata->previous->link, 'prev');
-		}
+        if ($pagdata->previous->link) {
+            $pagdata->previous->link = str_replace('limitstart=0', '', $pagdata->previous->link);
+            $doc->addHeadLink($pagdata->previous->link, 'prev');
+        }
 
-		if ($pagdata->next->link)
-		{
-			$doc->addHeadLink($pagdata->next->link, 'next');
-		}
+        if ($pagdata->next->link) {
+            $doc->addHeadLink($pagdata->next->link, 'next');
+        }
 
-		$page = $this->pagination->pagesCurrent;
+        $page = $this->pagination->pagesCurrent;
 
-		if ($page > 1)
-		{
-			foreach ($doc->_links as $key => $value)
-			{
-				if (\is_array($value))
-				{
-					if (\array_key_exists('relation', $value))
-					{
-						if ($value['relation'] == 'canonical')
-						{
-							$canonicalUrl               = KunenaRoute::_();
-							$doc->_links[$canonicalUrl] = $value;
-							unset($doc->_links[$key]);
-							break;
-						}
-					}
-				}
-			}
-		}
+        if ($page > 1) {
+            foreach ($doc->_links as $key => $value) {
+                if (\is_array($value)) {
+                    if (\array_key_exists('relation', $value)) {
+                        if ($value['relation'] == 'canonical') {
+                            $canonicalUrl               = KunenaRoute::_();
+                            $doc->_links[$canonicalUrl] = $value;
+                            unset($doc->_links[$key]);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
-		if ($this->moreUri)
-		{
-			$this->pagination->setUri($this->moreUri);
-		}
+        if ($this->moreUri) {
+            $this->pagination->setUri($this->moreUri);
+        }
 
-		$this->messages = $finder
-			->order($order, -1)
-			->start($this->pagination->limitstart)
-			->limit($this->pagination->limit)
-			->find();
+        $this->messages = $finder
+            ->order($order, -1)
+            ->start($this->pagination->limitstart)
+            ->limit($this->pagination->limit)
+            ->find();
 
-		// Load topics...
-		$topicIds = [];
+        // Load topics...
+        $topicIds = [];
 
-		foreach ($this->messages as $message)
-		{
-			$topicIds[(int) $message->thread] = (int) $message->thread;
-		}
+        foreach ($this->messages as $message) {
+            $topicIds[(int) $message->thread] = (int) $message->thread;
+        }
 
-		$this->topics = KunenaTopicHelper::getTopics($topicIds, 'none');
+        $this->topics = KunenaTopicHelper::getTopics($topicIds, 'none');
 
-		$userIds = $mesIds = [];
+        $userIds = $mesIds = [];
 
-		foreach ($this->messages as $message)
-		{
-			$userIds[(int) $message->userid] = (int) $message->userid;
-			$mesIds[(int) $message->id]      = (int) $message->id;
-		}
+        foreach ($this->messages as $message) {
+            $userIds[(int) $message->userid] = (int) $message->userid;
+            $mesIds[(int) $message->id]      = (int) $message->id;
+        }
 
-		if ($this->topics)
-		{
-			$this->prepareTopics($userIds, $mesIds);
-		}
+        if ($this->topics) {
+            $this->prepareTopics($userIds, $mesIds);
+        }
 
-		switch ($this->state->get('list.mode'))
-		{
-			case 'unapproved':
-				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
-				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
-				$actions           = ['approve', 'delete', 'move', 'permdelete'];
-				break;
-			case 'deleted':
-				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
-				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
-				$actions           = ['undelete', 'delete', 'move', 'permdelete'];
-				break;
-			case 'mythanks':
-				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
-				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
-				$actions           = ['approve', 'delete', 'permdelete'];
-				break;
-			case 'thankyou':
-				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
-				$this->messagemore = 'COM_KUNENA_PROFILE_THANKYOU_GIVEN_TIMES';
-				$actions           = ['approve', 'delete', 'permdelete'];
-				break;
-			case 'recent':
-			default:
-				$this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
-				$this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
+        switch ($this->state->get('list.mode')) {
+            case 'unapproved':
+                $this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+                $this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
+                $actions           = ['approve', 'delete', 'move', 'permdelete'];
+                break;
+            case 'deleted':
+                $this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+                $this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
+                $actions           = ['undelete', 'delete', 'move', 'permdelete'];
+                break;
+            case 'mythanks':
+                $this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+                $this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
+                $actions           = ['approve', 'delete', 'permdelete'];
+                break;
+            case 'thankyou':
+                $this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+                $this->messagemore = 'COM_KUNENA_PROFILE_THANKYOU_GIVEN_TIMES';
+                $actions           = ['approve', 'delete', 'permdelete'];
+                break;
+            case 'recent':
+            default:
+                $this->headerText  = Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+                $this->messagemore = 'COM_KUNENA_X_MESSAGES_MORE';
 
-				$view = $this->input->get('view');
+                $view = $this->input->get('view');
 
-				if ($view == 'user')
-				{
-					$userName              = $user->getName();
-					$charMapApostropheOnly = ['s', 'S', 'z', 'Z'];
+                if ($view == 'user') {
+                    $userName              = $user->getName();
+                    $charMapApostropheOnly = ['s', 'S', 'z', 'Z'];
 
-					if (\in_array(substr($userName, -1), $charMapApostropheOnly))
-					{
-						$userName2 = "";
-					}
-					else
-					{
-						$userName2 = "'s ";
-					}
+                    if (\in_array(substr($userName, -1), $charMapApostropheOnly)) {
+                        $userName2 = "";
+                    } else {
+                        $userName2 = "'s ";
+                    }
 
-					$this->headerText = Text::sprintf(Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT_NEW'), $userName, $userName2);
-				}
+                    $this->headerText = Text::sprintf(Text::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT_NEW'), $userName, $userName2);
+                }
 
-				$actions = ['approve', 'delete', 'move', 'permdelete'];
-		}
+                $actions = ['approve', 'delete', 'move', 'permdelete'];
+        }
 
-		$this->actions = $this->getMessageActions($this->messages, $actions);
-	}
+        $this->actions = $this->getMessageActions($this->messages, $actions);
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		$page  = $this->pagination->pagesCurrent;
-		$total = $this->pagination->pagesTotal;
-		$user  = KunenaUserHelper::get($this->state->get('user'));
+    /**
+     * Prepare document.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+        $page  = $this->pagination->pagesCurrent;
+        $total = $this->pagination->pagesTotal;
+        $user  = KunenaUserHelper::get($this->state->get('user'));
 
-		$headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
-		$menu_item       = $this->app->getMenu()->getActive();
-		$componentParams = ComponentHelper::getParams('com_config');
-		$robots          = $componentParams->get('robots');
+        $headerText      = $this->headerText . ' ' . Text::_('COM_KUNENA_FROM') . ' ' . $user->getName() . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+        $menu_item       = $this->app->getMenu()->getActive();
+        $componentParams = ComponentHelper::getParams('com_config');
+        $robots          = $componentParams->get('robots');
 
-		if ($robots == 'noindex, follow')
-		{
-			$this->setMetaData('robots', 'noindex, follow');
-		}
-		elseif ($robots == 'index, nofollow')
-		{
-			$this->setMetaData('robots', 'index, nofollow');
-		}
-		elseif ($robots == 'noindex, nofollow')
-		{
-			$this->setMetaData('robots', 'noindex, nofollow');
-		}
-		else
-		{
-			$this->setMetaData('robots', 'index, follow');
-		}
+        if ($robots == 'noindex, follow') {
+            $this->setMetaData('robots', 'noindex, follow');
+        } elseif ($robots == 'index, nofollow') {
+            $this->setMetaData('robots', 'index, nofollow');
+        } elseif ($robots == 'noindex, nofollow') {
+            $this->setMetaData('robots', 'noindex, nofollow');
+        } else {
+            $this->setMetaData('robots', 'index, follow');
+        }
 
-		if ($menu_item)
-		{
-			$params             = $menu_item->getParams();
-			$params_title       = $params->get('page_title');
-			$params_description = $params->get('menu-meta_description');
-			$params_robots      = $params->get('robots');
+        if ($menu_item) {
+            $params             = $menu_item->getParams();
+            $params_title       = $params->get('page_title');
+            $params_description = $params->get('menu-meta_description');
+            $params_robots      = $params->get('robots');
 
-			if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
-			{
-				$this->setTitle($headerText);
-			}
-			elseif (!empty($params_title))
-			{
-				$keywords = $params->get('menu-title');
-				$this->setTitle($keywords);
-			}
-			else
-			{
-				$title = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title;
-				$this->setTitle($title);
-			}
+            if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user'))) {
+                $this->setTitle($headerText);
+            } elseif (!empty($params_title)) {
+                $keywords = $params->get('menu-title');
+                $this->setTitle($keywords);
+            } else {
+                $title = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title;
+                $this->setTitle($title);
+            }
 
-			if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user')))
-			{
-				$this->setDescription($headerText);
-			}
-			elseif (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description') . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$description = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ': ' . $this->config->boardTitle . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
-				$this->setDescription($description);
-			}
+            if ($this->state->get('list.mode') == 'latest' && !empty($this->state->get('user'))) {
+                $this->setDescription($headerText);
+            } elseif (!empty($params_description)) {
+                $description = $params->get('menu-meta_description') . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+                $this->setDescription($description);
+            } else {
+                $description = $this->headerText . ' ' . Text::_('COM_KUNENA_ON') . ' ' . $menu_item->title . ': ' . $this->config->boardTitle . ($total > 1 && $page > 1 ? " - " . Text::_('COM_KUNENA_PAGES') . " {$page}" : '');
+                $this->setDescription($description);
+            }
 
-			if (!empty($params_robots))
-			{
-				$robots = $params->get('robots');
-				$this->setMetaData('robots', $robots);
-			}
-		}
-	}
+            if (!empty($params_robots)) {
+                $robots = $params->get('robots');
+                $this->setMetaData('robots', $robots);
+            }
+        }
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -19,8 +20,8 @@ use Joomla\CMS\Language\Text;
 $content = $this->execute('Statistics/WhoIsOnline');
 
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'),
-	'index.php?option=com_kunena&view=statistics&layout=whoisonline'
+    Text::_('COM_KUNENA_MENU_STATISTICS_WHOSONLINE'),
+    'index.php?option=com_kunena&view=statistics&layout=whoisonline'
 );
 
 echo $content;

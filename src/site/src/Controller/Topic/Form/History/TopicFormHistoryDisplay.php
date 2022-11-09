@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -35,106 +36,99 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class TopicFormHistoryDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'Topic/Edit/History';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'Topic/Edit/History';
 
-	/**
-	 * Prepare reply history display.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare reply history display.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$id = $this->input->getInt('id');
-		$me = KunenaUserHelper::getMyself();
+        $id = $this->input->getInt('id');
+        $me = KunenaUserHelper::getMyself();
 
-		$this->topic   = KunenaTopicHelper::get($id);
-		$category      = $this->topic->getCategory();
-		$this->history = KunenaMessageHelper::getMessagesByTopic(
-			$this->topic,
-			0,
-			(int) $this->config->historyLimit,
-			'DESC'
-		);
+        $this->topic   = KunenaTopicHelper::get($id);
+        $category      = $this->topic->getCategory();
+        $this->history = KunenaMessageHelper::getMessagesByTopic(
+            $this->topic,
+            0,
+            (int) $this->config->historyLimit,
+            'DESC'
+        );
 
-		$this->replycount   = $this->topic->getReplies();
-		$this->historycount = \count($this->history);
-		KunenaAttachmentHelper::getByMessage($this->history);
-		$userlist = [];
+        $this->replycount   = $this->topic->getReplies();
+        $this->historycount = \count($this->history);
+        KunenaAttachmentHelper::getByMessage($this->history);
+        $userlist = [];
 
-		foreach ($this->history as $message)
-		{
-			$messages[$message->id]           = $message;
-			$userlist[(int) $message->userid] = (int) $message->userid;
-		}
+        foreach ($this->history as $message) {
+            $messages[$message->id]           = $message;
+            $userlist[(int) $message->userid] = (int) $message->userid;
+        }
 
-		if ($me->exists())
-		{
-			$pmFinder = new KunenaFinder;
-			$pmFinder->filterByMessageIds(array_keys($messages))->order('id');
+        if ($me->exists()) {
+            $pmFinder = new KunenaFinder();
+            $pmFinder->filterByMessageIds(array_keys($messages))->order('id');
 
-			if (!$me->isModerator($category))
-			{
-				$pmFinder->filterByUser($me);
-			}
+            if (!$me->isModerator($category)) {
+                $pmFinder->filterByUser($me);
+            }
 
-			$pms = $pmFinder->find();
+            $pms = $pmFinder->find();
 
-			foreach ($pms as $pm)
-			{
-				$registry = new Registry($pm->params);
-				$posts    = $registry->get('receivers.posts');
+            foreach ($pms as $pm) {
+                $registry = new Registry($pm->params);
+                $posts    = $registry->get('receivers.posts');
 
-				foreach ($posts as $post)
-				{
-					if (!isset($messages[$post]->pm))
-					{
-						$messages[$post]->pm = [];
-					}
+                foreach ($posts as $post) {
+                    if (!isset($messages[$post]->pm)) {
+                        $messages[$post]->pm = [];
+                    }
 
-					$messages[$post]->pm[$pm->id] = $pm;
-				}
-			}
-		}
+                    $messages[$post]->pm[$pm->id] = $pm;
+                }
+            }
+        }
 
-		$this->history = $messages;
+        $this->history = $messages;
 
-		KunenaUserHelper::loadUsers($userlist);
+        KunenaUserHelper::loadUsers($userlist);
 
-		// Run events
-		$params = new Registry;
-		$params->set('ksource', 'kunena');
-		$params->set('kunena_view', 'topic');
-		$params->set('kunena_layout', 'history');
+        // Run events
+        $params = new Registry();
+        $params->set('ksource', 'kunena');
+        $params->set('kunena_view', 'topic');
+        $params->set('kunena_layout', 'history');
 
-		PluginHelper::importPlugin('kunena');
+        PluginHelper::importPlugin('kunena');
 
-		$this->app->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
+        $this->app->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
 
-		// FIXME: need to improve BBCode class on this...
-		$this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
-		$this->inline_attachments = [];
+        // FIXME: need to improve BBCode class on this...
+        $this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
+        $this->inline_attachments = [];
 
-		$this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
-	}
+        $this->headerText = Text::_('COM_KUNENA_POST_EDIT') . ' ' . $this->topic->subject;
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-
-	}
+    /**
+     * Prepare document.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+    }
 }

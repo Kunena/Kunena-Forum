@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,33 +25,33 @@ use Joomla\Database\DatabaseDriver;
  */
 class TableKunenaPrivatePostMap extends KunenaTable
 {
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $private_id = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $private_id = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $message_id = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $message_id = null;
 
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_autoincrement = false;
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    protected $_autoincrement = false;
 
-	/**
-	 * TableKunenaPrivatePostMap constructor.
-	 *
-	 * @param   DatabaseDriver  $db  database driver
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		parent::__construct('#__kunena_private_post_map', ['private_id', 'message_id'], $db);
-	}
+    /**
+     * TableKunenaPrivatePostMap constructor.
+     *
+     * @param   DatabaseDriver  $db  database driver
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        parent::__construct('#__kunena_private_post_map', ['private_id', 'message_id'], $db);
+    }
 }

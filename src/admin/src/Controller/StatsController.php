@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,23 +25,23 @@ use Joomla\CMS\MVC\Controller\FormController;
  */
 class StatsController extends FormController
 {
-	/**
-	 * @var     null|string
-	 * @since   Kunena 6.0
-	 */
-	protected $baseurl = null;
+    /**
+     * @var     null|string
+     * @since   Kunena 6.0
+     */
+    protected $baseurl = null;
 
-	/**
-	 * Construct
-	 *
-	 * @param   array  $config  config
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 2.0
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena&view=stats';
-	}
+    /**
+     * Construct
+     *
+     * @param   array  $config  config
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        $this->baseurl = 'index.php?option=com_kunena&view=stats';
+    }
 }

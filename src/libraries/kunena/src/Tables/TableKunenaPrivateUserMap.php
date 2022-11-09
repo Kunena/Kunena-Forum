@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,51 +25,51 @@ use Joomla\Database\DatabaseDriver;
  */
 class TableKunenaPrivateUserMap extends KunenaTable
 {
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $private_id = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $private_id = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $user_id = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $user_id = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $read_at = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $read_at = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $replied_at = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $replied_at = null;
 
-	/**
-	 * @var     null
-	 * @since   Kunena 6.0
-	 */
-	public $deleted_at = null;
+    /**
+     * @var     null
+     * @since   Kunena 6.0
+     */
+    public $deleted_at = null;
 
-	/**
-	 * @var     boolean
-	 * @since   Kunena 6.0
-	 */
-	protected $_autoincrement = false;
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    protected $_autoincrement = false;
 
-	/**
-	 * TableKunenaPrivateUserMap constructor.
-	 *
-	 * @param   DatabaseDriver  $db  database driver
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		parent::__construct('#__kunena_private_user_map', ['private_id', 'user_id'], $db);
-	}
+    /**
+     * TableKunenaPrivateUserMap constructor.
+     *
+     * @param   DatabaseDriver  $db  database driver
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        parent::__construct('#__kunena_private_user_map', ['private_id', 'user_id'], $db);
+    }
 }

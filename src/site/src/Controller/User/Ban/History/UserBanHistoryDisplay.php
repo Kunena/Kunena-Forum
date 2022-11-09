@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -28,96 +29,89 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class UserBanHistoryDisplay extends KunenaControllerDisplay
 {
-	/**
-	 * @var     KunenaUser
-	 * @since   Kunena 6.0
-	 */
-	public $me;
+    /**
+     * @var     KunenaUser
+     * @since   Kunena 6.0
+     */
+    public $me;
 
-	/**
-	 * @var     KunenaUser
-	 * @since   Kunena 6.0
-	 */
-	public $profile;
+    /**
+     * @var     KunenaUser
+     * @since   Kunena 6.0
+     */
+    public $profile;
 
-	/**
-	 * @var     array|KunenaBan[]
-	 * @since   Kunena 6.0
-	 */
-	public $banHistory;
+    /**
+     * @var     array|KunenaBan[]
+     * @since   Kunena 6.0
+     */
+    public $banHistory;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	public $headerText;
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $headerText;
 
-	/**
-	 * @var     string
-	 * @since   Kunena 6.0
-	 */
-	protected $name = 'User/Ban/History';
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    protected $name = 'User/Ban/History';
 
-	/**
-	 * Prepare ban history.
-	 *
-	 * @return  void
-	 *
-	 * @throws  null
-	 * @since   Kunena 6.0
-	 */
-	protected function before()
-	{
-		parent::before();
+    /**
+     * Prepare ban history.
+     *
+     * @return  void
+     *
+     * @throws  null
+     * @since   Kunena 6.0
+     */
+    protected function before()
+    {
+        parent::before();
 
-		$userid = $this->input->getInt('userid');
+        $userid = $this->input->getInt('userid');
 
-		$this->me      = KunenaUserHelper::getMyself();
-		$this->profile = KunenaUserHelper::get($userid);
-		$this->profile->tryAuthorise('ban');
+        $this->me      = KunenaUserHelper::getMyself();
+        $this->profile = KunenaUserHelper::get($userid);
+        $this->profile->tryAuthorise('ban');
 
-		$this->banHistory = KunenaBan::getUserHistory($this->profile->userid);
+        $this->banHistory = KunenaBan::getUserHistory($this->profile->userid);
 
-		$this->headerText = Text::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->profile->getName());
-	}
+        $this->headerText = Text::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->profile->getName());
+    }
 
-	/**
-	 * Prepare document.
-	 *
-	 * @return  void
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 6.0
-	 */
-	protected function prepareDocument()
-	{
-		$menu_item = $this->app->getMenu()->getActive();
+    /**
+     * Prepare document.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function prepareDocument()
+    {
+        $menu_item = $this->app->getMenu()->getActive();
 
-		if ($menu_item)
-		{
-			$params             = $menu_item->getParams();
-			$params_title       = $params->get('page_title');
-			$params_description = $params->get('menu-meta_description');
+        if ($menu_item) {
+            $params             = $menu_item->getParams();
+            $params_title       = $params->get('page_title');
+            $params_description = $params->get('menu-meta_description');
 
-			if (!empty($params_title))
-			{
-				$title = $params->get('page_title');
-				$this->setTitle($title);
-			}
-			else
-			{
-				$this->setTitle($this->headerText);
-			}
+            if (!empty($params_title)) {
+                $title = $params->get('page_title');
+                $this->setTitle($title);
+            } else {
+                $this->setTitle($this->headerText);
+            }
 
-			if (!empty($params_description))
-			{
-				$description = $params->get('menu-meta_description');
-				$this->setDescription($description);
-			}
-			else
-			{
-				$this->setDescription($this->headerText);
-			}
-		}
-	}
+            if (!empty($params_description)) {
+                $description = $params->get('menu-meta_description');
+                $this->setDescription($description);
+            } else {
+                $this->setDescription($this->headerText);
+            }
+        }
+    }
 }

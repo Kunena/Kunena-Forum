@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -19,8 +20,8 @@ use Joomla\CMS\Language\Text;
 $content = $this->execute('Statistics/General');
 
 $this->addBreadcrumb(
-	Text::_('COM_KUNENA_MENU_STATISTICS'),
-	'index.php?option=com_kunena&view=statistics&layout=default'
+    Text::_('COM_KUNENA_MENU_STATISTICS'),
+    'index.php?option=com_kunena&view=statistics&layout=default'
 );
 
 echo $content;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -14,27 +15,25 @@ defined('_JEXEC') or die();
 
 ?>
 <h3>
-	<?php echo $this->announcement->displayField('title'); ?>
+    <?php echo $this->announcement->displayField('title'); ?>
 
-	<?php if ($this->announcement->showdate)
-		:
-		?>
-		<small data-bs-toggle="tooltip" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">
-			<?php echo $this->announcement->displayField('created', 'date_today'); ?>
-		</small>
-	<?php endif; ?>
+    <?php if ($this->announcement->showdate) :
+        ?>
+        <small data-bs-toggle="tooltip" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">
+            <?php echo $this->announcement->displayField('created', 'date_today'); ?>
+        </small>
+    <?php endif; ?>
 </h3>
 
-<?php if (!empty($this->actions))
-	:
-	?>
-	<div>
-		<?php echo implode(' ', $this->actions); ?>
-	</div>
-	<br>
+<?php if (!empty($this->actions)) :
+    ?>
+    <div>
+        <?php echo implode(' ', $this->actions); ?>
+    </div>
+    <br>
 <?php endif; ?>
 
 <div class="shadow-lg rounded">
-	<div><?php echo $this->announcement->displayField('sdescription'); ?></div>
-	<div><?php echo $this->announcement->displayField('description'); ?></div>
+    <div><?php echo $this->announcement->displayField('sdescription'); ?></div>
+    <div><?php echo $this->announcement->displayField('description'); ?></div>
 </div>

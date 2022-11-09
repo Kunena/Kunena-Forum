@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -16,23 +17,14 @@ namespace Kunena\Forum\Site;
 
 $attachment = $this->attachment;
 
-if ($attachment->isImage())
-{
-	echo $this->render('image');
-}
-elseif ($attachment->isAudio())
-{
-	echo $this->render('audio');
-}
-elseif ($attachment->isVideo())
-{
-	echo $this->render('video');
-}
-elseif ($attachment->isPdf())
-{
-	echo $this->render('pdf');
-}
-else
-{
-	echo $this->render('file');
+if ($attachment->isImage()) {
+    echo $this->render('image');
+} elseif ($attachment->isAudio()) {
+    echo $this->render('audio');
+} elseif ($attachment->isVideo()) {
+    echo $this->render('video');
+} elseif ($attachment->isPdf()) {
+    echo $this->render('pdf');
+} else {
+    echo $this->render('file');
 }

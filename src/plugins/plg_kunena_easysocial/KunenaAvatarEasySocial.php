@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Plugin
  *
@@ -31,69 +32,68 @@ use Kunena\Forum\Libraries\User\KunenaUser;
  */
 class KunenaAvatarEasySocial extends KunenaAvatar
 {
-	/**
-	 * @var     null
-	 * @since   Kunena 5.0
-	 */
-	protected $params = null;
+    /**
+     * @var     null
+     * @since   Kunena 5.0
+     */
+    protected $params = null;
 
-	/**
-	 * \Kunena\Forum\Libraries\Integration\AvatarEasySocial constructor.
-	 *
-	 * @param   object  $params  params
-	 *
-	 * @since  Kunena 6.0
-	 */
-	public function __construct(object $params)
-	{
-		$this->params = $params;
-	}
+    /**
+     * \Kunena\Forum\Libraries\Integration\AvatarEasySocial constructor.
+     *
+     * @param   object  $params  params
+     *
+     * @since  Kunena 6.0
+     */
+    public function __construct(object $params)
+    {
+        $this->params = $params;
+    }
 
-	/**
-	 * @param   array  $userlist  userlist
-	 *
-	 * @return  void
-	 *
-	 * @since   Kunena 5.0
-	 */
-	public function load(array $userlist): void
-	{
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+    /**
+     * @param   array  $userlist  userlist
+     *
+     * @return  void
+     *
+     * @since   Kunena 5.0
+     */
+    public function load(array $userlist): void
+    {
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-		// Why using class from Jomsocial here ??
-		if (class_exists('CFactory') && method_exists('CFactory', 'loadUsers'))
-		{
-			\CFactory::loadUsers($userlist);
-		}
+        // Why using class from Jomsocial here ??
+        if (class_exists('CFactory') && method_exists('CFactory', 'loadUsers')) {
+            \CFactory::loadUsers($userlist);
+        }
 
-		KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-	}
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+    }
 
-	/**
-	 * @return  string
-	 *
-	 * @since   Kunena 5.0
-	 */
-	public function getEditURL(): string
-	{
-		return \FRoute::profile(['layout' => 'edit']);
-	}
+    /**
+     * @return  string
+     *
+     * @since   Kunena 5.0
+     */
+    public function getEditURL(): string
+    {
+        return \FRoute::profile(['layout' => 'edit']);
+    }
 
-	/**
-	 * @param   KunenaUser  $user   user
-	 * @param   int         $sizex  sizex
-	 * @param   int         $sizey  sizey
-	 *
-	 * @return  mixed
-	 *
-	 * @since   Kunena 5.0
-	 */
-	protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
-	{
-		$user = KunenaFactory::getUser($user);
+    /**
+     * @param   KunenaUser  $user   user
+     * @param   int         $sizex  sizex
+     * @param   int         $sizey  sizey
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 5.0
+     */
+    protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
+    {
+        $user = KunenaFactory::getUser($user);
 
-		$user = \FD::user($user->userid);
+        $user = \FD::user($user->userid);
 
-		return $user->getAvatar(SOCIAL_AVATAR_LARGE);
-	}
+        return $user->getAvatar(SOCIAL_AVATAR_LARGE);
+    }
 }

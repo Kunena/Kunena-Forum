@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -29,121 +30,106 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  */
 abstract class KunenaEmail
 {
-	/**
-	 * @var     object
-	 * @since   Kunena 6.0
-	 */
-	public static $mailer_error_status = null;
+    /**
+     * @var     object
+     * @since   Kunena 6.0
+     */
+    public static $mailer_error_status = null;
 
-	/**
-	 * @param   Mail $mail      mail
-	 * @param   array                 $receivers receivers
-	 *
-	 * @return boolean
-	 * @throws Exception
-	 * @since Kunena
-	 */
-	public static function send($mail, array $receivers)
-	{
-		if (isset(static::$mailer_error_status))
-		{
-			// Mailer is broken, so prevent any sending
-			Log::add(static::$mailer_error_status->getMessage(), Log::ERROR, 'kunena');
+    /**
+     * @param   Mail $mail      mail
+     * @param   array                 $receivers receivers
+     *
+     * @return boolean
+     * @throws Exception
+     * @since Kunena
+     */
+    public static function send($mail, array $receivers)
+    {
+        if (isset(static::$mailer_error_status)) {
+            // Mailer is broken, so prevent any sending
+            Log::add(static::$mailer_error_status->getMessage(), Log::ERROR, 'kunena');
 
-			return false;
-		}
+            return false;
+        }
 
-		$config = KunenaFactory::getConfig();
+        $config = KunenaFactory::getConfig();
 
-		if (!empty($config->emailRecipientCount))
-		{
-			$emailRecipientCount = $config->emailRecipientCount;
-		}
-		else
-		{
-			$emailRecipientCount = 1;
-		}
+        if (!empty($config->emailRecipientCount)) {
+            $emailRecipientCount = $config->emailRecipientCount;
+        } else {
+            $emailRecipientCount = 1;
+        }
 
-		$emailRecipientPrivacy = $config->emailRecipientPrivacy, 'bcc');
+        $emailRecipientPrivacy = $config->emailRecipientPrivacy, 'bcc');
 
-		// If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
-		if ($emailRecipientCount > 1
-			&& $emailRecipientPrivacy == 'bcc'
-			&& MailHelper::isEmailAddress($config->emailVisibleAddress)
-			)
-		{
-			$mail->AddAddress($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle));
+        // If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
+        if (
+            $emailRecipientCount > 1
+            && $emailRecipientPrivacy == 'bcc'
+            && MailHelper::isEmailAddress($config->emailVisibleAddress)
+        ) {
+            $mail->AddAddress($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle));
 
-			// Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
-			if ($emailRecipientCount > 9)
-			{
-				$emailRecipientCount--;
-			}
-		}
+            // Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
+            if ($emailRecipientCount > 9) {
+                $emailRecipientCount--;
+            }
+        }
 
-		$chunks = array_chunk($receivers, $emailRecipientCount);
+        $chunks = array_chunk($receivers, $emailRecipientCount);
 
-		$success = true;
+        $success = true;
 
-		foreach ($chunks as $emails)
-		{
-			if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to')
-			{
-				$mail->ClearAddresses();
-				$mail->addRecipient($emails);
-			}
-			elseif ($emailRecipientPrivacy == 'cc')
-			{
-				$mail->ClearCCs();
-				$mail->addCC($emails);
-			}
-			else
-			{
-				$mail->ClearBCCs();
-				$mail->addBCC($emails);
-			}
+        foreach ($chunks as $emails) {
+            if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to') {
+                $mail->ClearAddresses();
+                $mail->addRecipient($emails);
+            } elseif ($emailRecipientPrivacy == 'cc') {
+                $mail->ClearCCs();
+                $mail->addCC($emails);
+            } else {
+                $mail->ClearBCCs();
+                $mail->addBCC($emails);
+            }
 
-			try
-			{
-				$mail->Send();
-			}
-			catch (Exception $e)
-			{
-				$success = false;
-				Log::add($e->getMessage(), Log::ERROR, 'kunena');
-			}
-		}
+            try {
+                $mail->Send();
+            } catch (Exception $e) {
+                $success = false;
+                Log::add($e->getMessage(), Log::ERROR, 'kunena');
+            }
+        }
 
-		return $success;
-	}
+        return $success;
+    }
 
-	/**
-	 * @param   integer  $errno    error number
-	 * @param   string   $errstr   error string
-	 * @param   string   $errfile  error file
-	 * @param   string   $errline  error line
-	 *
-	 * @return  boolean
-	 *
-	 * @since   Kunena 6.0
-	 */
-	public static function on_mail_error(int $errno, string $errstr, string $errfile, string $errline): bool
-	{
-		if (strpos($errstr, "mail(): Failed to connect to mail server") !== false)
-		{
-			static::$mailer_error_status = new MailerBrokenException(
-				$errstr,
-				$errno,
-				Log::ERROR,
-				$errfile,
-				$errline
-			);
+    /**
+     * @param   integer  $errno    error number
+     * @param   string   $errstr   error string
+     * @param   string   $errfile  error file
+     * @param   string   $errline  error line
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public static function on_mail_error(int $errno, string $errstr, string $errfile, string $errline): bool
+    {
+        if (strpos($errstr, "mail(): Failed to connect to mail server") !== false) {
+            static::$mailer_error_status = new MailerBrokenException(
+                $errstr,
+                $errno,
+                Log::ERROR,
+                $errfile,
+                $errline
+            );
 
-			Log::add(static::$mailer_error_status->errorMessage(), Log::ERROR, 'kunena');
-		}
+            Log::add(static::$mailer_error_status->errorMessage(), Log::ERROR, 'kunena');
+        }
 
-		return false;
-	}
+        return false;
+    }
 }
 
 /**
@@ -151,13 +137,13 @@ abstract class KunenaEmail
  */
 class MailerBrokenException extends ErrorException
 {
-	/**
-	 * @return  string
-	 *
-	 * @since   Kunena 5.1.15
-	 */
-	public function errorMessage(): string
-	{
-		return "$this->code - $$this->message\n at: $$this->file:$$this->line";
-	}
+    /**
+     * @return  string
+     *
+     * @since   Kunena 5.1.15
+     */
+    public function errorMessage(): string
+    {
+        return "$this->code - $$this->message\n at: $$this->file:$$this->line";
+    }
 }

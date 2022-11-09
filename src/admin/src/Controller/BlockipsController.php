@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,23 +25,23 @@ use Joomla\CMS\MVC\Controller\FormController;
  */
 class BlockipsController extends FormController
 {
-	/**
-	 * @var     string
-	 * @since   Kunena 5.1
-	 */
-	protected $baseurl = null;
+    /**
+     * @var     string
+     * @since   Kunena 5.1
+     */
+    protected $baseurl = null;
 
-	/**
-	 * Construct
-	 *
-	 * @param   array  $config  config
-	 *
-	 * @throws  Exception
-	 * @since   Kunena 5.1
-	 */
-	public function __construct($config = [])
-	{
-		parent::__construct($config);
-		$this->baseurl = 'administrator/index.php?option=com_kunena&view=blockips';
-	}
+    /**
+     * Construct
+     *
+     * @param   array  $config  config
+     *
+     * @throws  Exception
+     * @since   Kunena 5.1
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        $this->baseurl = 'administrator/index.php?option=com_kunena&view=blockips';
+    }
 }

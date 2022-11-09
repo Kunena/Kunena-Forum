@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Kunena Component
  *
@@ -24,31 +25,31 @@ $description = $this->description;
 $data        = $this->data;
 ?>
 <div <?php echo $class . $id ?> tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-								style="display: none;">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="modal-title"><?php echo $label ?></h3>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<p><?php echo $description ?></p>
-				<div class="control-group">
-					<div class="controls">
-						<textarea <?php echo $name ?> style="resize: none; text-align: left;" class="input-block-level"
-													  rows="3"
-													  maxlength="255"><?php echo $data; ?></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-outline-primary border" type="submit" id="btn_statustext">
-					<?php echo Text::_('JSUBMIT'); ?>
-				</button>
-				<button class="btn btn-outline-primary border" type="button" data-bs-dismiss="modal">
-					<?php echo Text::_('JCANCEL'); ?>
-				</button>
-			</div>
-		</div>
-	</div>
+                                style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><?php echo $label ?></h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><?php echo $description ?></p>
+                <div class="control-group">
+                    <div class="controls">
+                        <textarea <?php echo $name ?> style="resize: none; text-align: left;" class="input-block-level"
+                                                      rows="3"
+                                                      maxlength="255"><?php echo $data; ?></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-primary border" type="submit" id="btn_statustext">
+                    <?php echo Text::_('JSUBMIT'); ?>
+                </button>
+                <button class="btn btn-outline-primary border" type="button" data-bs-dismiss="modal">
+                    <?php echo Text::_('JCANCEL'); ?>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

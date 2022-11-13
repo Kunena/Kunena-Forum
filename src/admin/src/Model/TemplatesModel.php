@@ -239,7 +239,7 @@ class TemplatesModel extends AdminModel
     public function getTemplatesXml()
     {
         // Get template xml file info
-        return self::loadTemplatesXml();
+        return self::loadPremiumTemplatesXml();
     }
 
     /**
@@ -249,11 +249,11 @@ class TemplatesModel extends AdminModel
      *
      * @since Kunena 5.1
      */
-    protected function loadTemplatesXml()
+    protected function loadPremiumTemplatesXml()
     {
         $this->template = [];
 
-        $url = 'https://update.kunena.org/templates.xml';
+        $url = 'https://update.kunena.org/paidTemplatesK6.0.xml';
 
         try {
             $transport = new StreamTransport($options = []);

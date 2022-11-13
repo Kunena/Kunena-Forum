@@ -63,7 +63,7 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
             $controller->redirect();
         }
 
-        if (!$this->config->getValue('showStats')) {
+        if (!$this->config->showStats) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
         }
 

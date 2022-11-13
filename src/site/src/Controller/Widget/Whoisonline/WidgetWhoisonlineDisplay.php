@@ -56,7 +56,7 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 
         $this->config = KunenaConfig::getInstance();
 
-        if (!$this->config->getValue('showWhoIsOnline')) {
+        if (!$this->config->showWhoIsOnline) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), '404');
         }
 

@@ -2265,7 +2265,7 @@ class TopicController extends KunenaController
             return;
         }
 
-        if (!$this->config->getValue('sendEmails')) {
+        if (!$this->config->sendEmails) {
             // Emails have been disabled
             $this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_DISABLED'), 'warning');
             $this->setRedirectBack();

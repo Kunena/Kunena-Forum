@@ -30,7 +30,7 @@ $kunena_profiler = KunenaProfiler::instance();
 $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 
-if ($this->config->getValue('enableForumJump')) {
+if ($this->config->enableForumJump) {
     echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 }
 
@@ -138,7 +138,7 @@ foreach ($this->sections as $section) :
                                                     <span <?php echo $this->ktemplate->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_GEN_MODERATED') ?>"><?php echo KunenaIcons::shield(); ?></span>
                                                 <?php endif; ?>
 
-                                                <?php if ($this->config->getValue('enableRss')) : ?>
+                                                <?php if ($this->config->enableRss) : ?>
                                                     <a href="<?php echo $this->getCategoryRSSURL($category->id); ?>"
                                                        rel="alternate" type="application/rss+xml">
                                                         <?php echo KunenaIcons::rss(); ?>
@@ -163,7 +163,7 @@ foreach ($this->sections as $section) :
                                                 <li>
                                                     <?php $totaltopics = KunenaCategory::getInstance()->totalCount($subcategory->getTopics()); ?>
 
-                                                    <?php if ($this->config->getValue('showChildCatIcon')) : ?>
+                                                    <?php if ($this->config->showChildCatIcon) : ?>
                                                         <?php echo $this->getCategoryLink($subcategory, $this->getSmallCategoryIcon($subcategory), '', null, true, false) . $this->getCategoryLink($subcategory, '', null, $this->ktemplate->tooltips(), true, false) . '<small class="hidden-xs-down muted"> ('
                                                             . $totaltopics . ')</small>';
                                                     else : ?>
@@ -192,7 +192,7 @@ foreach ($this->sections as $section) :
                                     </div>
                                 <?php endif; ?>
 
-                                <?php if ($category->getmoderators() && $this->config->getValue('listCatShowModerators')) : ?>
+                                <?php if ($category->getmoderators() && $this->config->listCatShowModerators) : ?>
                                     <br/>
                                     <div class="moderators">
                                         <?php
@@ -229,7 +229,7 @@ foreach ($this->sections as $section) :
                                     <div class="row">
                                         <?php if ($avatar) : ?>
                                         <div class="col-xs-6 col-md-3" id="kcat-avatar">
-                                            <?php echo $author->getLink($avatar, null, '', '', $this->ktemplate->tooltips(), $category->id, $this->config->getValue('avatarEdit')); ?>
+                                            <?php echo $author->getLink($avatar, null, '', '', $this->ktemplate->tooltips(), $category->id, $this->config->avatarEdit); ?>
                                         </div>
                                         <div class="col-xs-6 col-md-9" id="kcat-last">
                                         <?php else : ?>

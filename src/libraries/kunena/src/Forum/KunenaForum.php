@@ -263,7 +263,7 @@ abstract class KunenaForum
             $cache->setCaching(0);
         }
 
-        $cache->setLifeTime($config->cacheTime, 60));
+        $cache->setLifeTime($config->cacheTime, 60);
 
         // Setup error logging.
         $options    = ['logger' => 'w3c', 'text_file' => 'kunena.php'];

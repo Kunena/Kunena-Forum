@@ -180,7 +180,7 @@ class UserItemDisplay extends KunenaControllerDisplay
         }
 
         $menu_item = $this->app->getMenu()->getActive();
-        $robots    = $this->config->getValue('robots');
+        $robots    = $this->config->get('robots');
         $image     = '';
 
         $this->setMetaData('og:url', Uri::current(), 'property');

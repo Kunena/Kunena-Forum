@@ -116,17 +116,17 @@ class KunenaApplication extends WebApplication
         Factory::$application = $this;
 
         // Enable sessions by default.
-        if (\is_null($this->config->getValue('session'))) {
+        if (\is_null($this->config->session)) {
             $this->config->set('session', true);
         }
 
         // Set the session default name.
-        if (\is_null($this->config->getValue('session_name'))) {
+        if (\is_null($this->config->session_name)) {
             $this->config->set('session_name', 'site');
         }
 
         // Create the session if a session name is passed.
-        if ($this->config->getValue('session') !== false) {
+        if ($this->config->session !== false) {
             $this->loadSession();
 
             // Register the session with Factory

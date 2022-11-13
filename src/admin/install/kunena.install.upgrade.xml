@@ -129,13 +129,6 @@
                 KEY `user_id` (`user_id`)
                 );</query>
         </version>
-        <version version="6.0.0-RC3-DEV"
-                 versiondate="2022-05-03"
-                 versionname="Internal">
-            <query mode="silenterror">UPDATE `#__mail_templates` SET `subject` = 'COM_KUNENA_SENDMAIL_REPLY_SUBJECT', `body` = 'COM_KUNENA_SENDMAIL_BODY' WHERE template_id = 'com_kunena.reply';</query>
-            <query mode="silenterror">UPDATE `#__mail_templates` SET `subject` = 'COM_KUNENA_SENDMAIL_REPLYMODERATOR_SUBJECT', `body` = 'COM_KUNENA_SENDMAIL_BODY' WHERE template_id = 'com_kunena.replymoderator';</query>
-            <query mode="silenterror">UPDATE `#__mail_templates` SET `subject` = 'COM_KUNENA_SENDMAIL_REPORT_SUBJECT', `body` = 'COM_KUNENA_SENDMAIL_BODY_REPORTMODERATOR' WHERE template_id = 'com_kunena.report';</query>
-        </version>
         <version version="6.0.0-RC4-DEV"
                  versiondate="2022-05-29"
                  versionname="Internal">
@@ -165,13 +158,6 @@
 		(22, ':unsure:', '22.png', 'unsure-grey.png', 1),
 		(23, ':o', '23.png', 'shocked-grey.png', 1);</query>
         </version>
-        <version version="6.0.0-RC4-DEV"
-                 versiondate="2022-06-01"
-                 versionname="Internal">
-            <query mode="silenterror">UPDATE `#__mail_templates` SET `extension` = 'com_kunena' WHERE template_id = 'com_kunena.reply';</query>
-            <query mode="silenterror">UPDATE `#__mail_templates` SET `extension` = 'com_kunena' WHERE template_id = 'com_kunena.replymoderator';</query>
-            <query mode="silenterror">UPDATE `#__mail_templates` SET `extension` = 'com_kunena' WHERE template_id = 'com_kunena.report';</query>
-        </version>
         <version version="6.0.2-DEV"
                  versiondate="2022-07-30"
                  versionname="Internal">
@@ -188,6 +174,9 @@
                  versiondate="2022-11-06"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_polls` CHANGE `polltimetolive` `polltimetolive` DATETIME NULL DEFAULT '1000-01-01 00:00:00'; </query>
+            <query mode="silenterror">DELETE FROM `#__mail_templates` WHERE `template_id` = 'com_kunena.reply';</query>
+            <query mode="silenterror">DELETE FROM `#__mail_templates` WHERE `template_id` = 'com_kunena.replymoderator';</query>
+            <query mode="silenterror">DELETE FROM `#__mail_templates` WHERE `template_id` = 'com_kunena.report';</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

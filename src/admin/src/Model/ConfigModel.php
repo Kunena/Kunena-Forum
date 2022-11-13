@@ -1727,7 +1727,7 @@ class ConfigModel extends AdminModel
         // Added new options into Kunena 3.0.0
         $lists ['autoLink']        = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoLink', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoLink);
         $lists ['accessComponent'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_accessComponent', 'class="inputbox form-control"size="1"', 'value', 'text', $config->accessComponent);
-        $lists ['componentUrl']    = preg_replace('|/+|', '/', Uri::root() . ($config->sef_rewrite ? '' : 'index.php') . ($config->sef ? '/component/kunena' : '?option=com_kunena'));
+        $lists ['componentUrl']    = preg_replace('|/+|', '/', Uri::root() . ($config->get('sef_rewrite') ? '' : 'index.php') . ($config->get('sef') ? '/component/kunena' : '?option=com_kunena'));
         $lists['attachmentProtection'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_attachmentProtection', 'class="inputbox form-control"size="1"', 'value', 'text', $config->attachmentProtection);
 
         // Option to select if the stats link need to be showed for all users or only for registered users

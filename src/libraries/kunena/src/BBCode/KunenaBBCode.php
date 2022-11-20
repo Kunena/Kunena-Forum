@@ -428,28 +428,28 @@ class KunenaBBCode extends \Nbbc\BBCode
     protected function autoDetectURLs($string): array
     {
         $search = preg_split('/(?xi)
-		\b
-		(
-			(?:
-				(?:https?|ftp):\/\/
-				|
-				www\d{0,3}\.
-				|
-				mailto:
-				|
-				(?:[a-zA-Z0-9._-]{2,}@)
-			)
-			(?:
-				[^\s()<>]+
-				|
-				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
-			)+
-			(?:
-				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
-				|
-				[^\s`!()\[\]{};:\'"\.,<>?Â«Â»â€œâ€�â€˜â€™â„¢]
-			)
-		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
+        \b
+        (
+            (?:
+                (?:https?|ftp):\/\/
+                |
+                www\d{0,3}\.
+                |
+                mailto:
+                |
+                (?:[a-zA-Z0-9._-]{2,}@)
+            )
+            (?:
+                [^\s()<>]+
+                |
+                \((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
+            )+
+            (?:
+                \((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
+                |
+                [^\s`!()\[\]{};:\'"\.,<>?«»“”‘’™]
+            )
+        )/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 
         $output = [];
 
@@ -465,7 +465,7 @@ class KunenaBBCode extends \Nbbc\BBCode
                     }
 
                     // Never start URL from the middle of text (except for punctuation).
-                    $invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?Â«Â»â€œâ€�â€˜â€™]$#u', $search[$index - 1]);
+                    $invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index - 1]);
                     $invalid |= !$this->IsValidURL($url, true);
 
                     // We have a full, complete, and properly-formatted URL, with protocol.

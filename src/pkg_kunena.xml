@@ -3,8 +3,8 @@
 <extension type="package" version="3.4" method="upgrade">
 	<name>Kunena Forum Package</name>
 	<packagename>kunena</packagename>
-	<version>5.2.12-DEV</version>
-	<versionname>INTERNAL</versionname>
+	<version>5.2.12</version>
+	<versionname>Pessegueiro</versionname>
 	<creationDate>2022-06-08</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>

@@ -245,7 +245,7 @@ class ToolsModel extends AdminModel
         $catParams['unpublished'] = 1;
         $catParams['action']      = 'admin';
 
-        return HTMLHelper::_('select.genericlist', $catParams, 'prune_forum', 'class="inputbox form-control" multiple="multiple"', 'value', 'text', 0);
+        return HTMLHelper::_('kunenaforum.categorylist', 'prune_forum[]', 0, null, $catParams, 'class="inputbox form-control form-select" multiple="multiple"', 'value', 'text',0, 'PruneSelectCats');
     }
 
     /**

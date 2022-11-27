@@ -198,11 +198,11 @@ if ($this->config->showUserStats) {
             if (!empty($this->profile->getWebsiteName()) && !empty($this->profile->getWebsiteURL())) :
                 ?>
                 <a class="btn btn-outline-primary border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
-                   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></a>
+                   href="<?php echo htmlspecialchars($this->profile->getWebsiteURL(), ENT_COMPAT, 'UTF-8')  ?>"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></a>
             <?php elseif (empty($this->profile->getWebsiteName()) && !empty($this->profile->getWebsiteURL())) :
                 ?>
                 <a class="btn btn-outline-primary border btn-sm" rel="nofollow noopener noreferrer" target="_blank"
-                   href="<?php echo $this->profile->getWebsiteURL() ?>"><?php echo KunenaIcons::globe(); ?></a>
+                   href="<?php echo htmlspecialchars($this->profile->getWebsiteURL(), ENT_COMPAT, 'UTF-8')  ?>"><?php echo KunenaIcons::globe(); ?></a>
             <?php elseif (!empty($this->profile->getWebsiteName()) && empty($this->profile->getWebsiteURL())) :
                 ?>
                 <button class="btn btn-outline-primary border btn-sm"><?php echo KunenaIcons::globe() . ' ' . $this->profile->getWebsiteName(); ?></button>

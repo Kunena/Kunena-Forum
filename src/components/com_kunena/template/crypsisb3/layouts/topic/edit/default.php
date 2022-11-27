@@ -380,7 +380,7 @@ if (KunenaFactory::getTemplate()->params->get('formRecover'))
 									<input class="input-xxlarge form-control" name="modified_reason" size="40"
 									       maxlength="200"
 									       type="text"
-									       value="<?php echo $this->modified_reason; ?>" title="reason"
+									       value="<?php echo htmlspecialchars($this->message->modified_reason, ENT_COMPAT, 'UTF-8'); ?>" title="reason"
 									       placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
 								</div>
 							</div>

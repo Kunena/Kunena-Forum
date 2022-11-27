@@ -2136,21 +2136,24 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $maxwidth  = (int) $config->rteWidth;
         $maxheight = (int) (isset($params["height"]) && is_numeric($params["height"])) ? $params["height"] : $config->rteHeight;
 
-        if (preg_match('/(https?:\/\/.*?)\/(?:.*\/)*(.*\/.*)\?.*:toolbar=(yes|no)/', $content, $matches)) {
+        if (preg_match('/(https:\/\/public.tableau.com\/views)\/(.*)\/(.*)\?.*/', $content, $matches)) {
             $tableauserver = $matches[1];
             $vizualization = $matches[2];
-            $toolbar       = $matches[3];
+            $vizualizationTab = $matches[3];
+
+            if ($tableauserver != 'https://public.tableau.com/views') {
+                return '';
+            }
 
             $layout = KunenaLayout::factory('BBCode/Tableau');
 
             if ($layout->getPath()) {
                 return (string) $layout
                     ->set('params', $params)
-                    ->set('server', $tableauserver)
                     ->set('width', $maxwidth)
                     ->set('height', $maxheight)
-                    ->set('content', $vizualization)
-                    ->set('toolbar', $toolbar);
+                    ->set('vizualization', $vizualization)
+                    ->set('vizualizationTab', $vizualizationTab);
             }
         }
 

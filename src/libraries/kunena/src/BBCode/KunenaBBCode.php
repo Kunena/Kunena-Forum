@@ -1757,36 +1757,39 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $config = KunenaFactory::getConfig();
 
+        if (!is_numeric($content)) {
+            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
+
+            return false;
+        }
+
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
+            if (!is_numeric($config->ebayAffiliateId)) {
+                return false;
+            }
+
             return '<a target="_blank" rel="noopener noreferrer" href="http://www.ebay.com/itm/' . $content . '?lang=' . $config->ebayLanguageCode . '&campid=' . $config->ebayAffiliateId . '">www.ebay.com/itm/' . $content . '</a>';
         }
 
-        return self::renderEbayLayout($content);
+        return self::renderEbayLayout($content, $config);
     }
 
     /**
      * Render eBay layout from template
      *
-     * @param   int  $ItemID  id
+     * @param   int           $ItemID  id
+     * @param   KunenaConfig  $config  The KunenaConfig object
      *
      * @return  false|string
      *
      * @since   Kunena 6.0
      * @throws Exception
      */
-    public static function renderEbayLayout(int $ItemID)
+    public static function renderEbayLayout(int $ItemID, KunenaConfig $config)
     {
-        $config = KunenaFactory::getConfig();
-
         if (empty($config->ebayApiKey) || empty($config->ebayCertId)) {
             echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
-
-            return false;
-        }
-
-        if (!is_numeric($ItemID)) {
-            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
 
             return false;
         }

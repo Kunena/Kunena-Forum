@@ -4,9 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.2.12-DEV]
+## [5.2.13-DEV]
+### Fixed
+* Update code to render tableau object in a message
+* Check if the ebay is numeric and if config is defined before
+* Check that the value entered for colortext params
+* Use htmlspacialchars() to render websiteurl on profile to avoid weird
+* Use htmlspacialchars() to render modified reason on edit to avoid weird 
 
-## [5.2.11-DEV]
+## [5.2.12]
+### Fixed
+* Improve regex to detect script tags on spoiler
+
+## [5.2.11]
 ### Fixed
 * [#8825](https://github.com/Kunena/Kunena-Forum/issues/8825) : If "Visible E-mail Recipient" is the same mail than one
 * [#9302](https://github.com/Kunena/Kunena-Forum/issues/9302) : The My Topics menu item does not show any topics

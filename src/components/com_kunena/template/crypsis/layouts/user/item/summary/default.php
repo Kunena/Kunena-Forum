@@ -223,12 +223,12 @@ if ($this->config->showuserstats)
 								:
 								?>
 								<a class="btn btn-small" rel="nofollow noopener noreferrer" target="_blank"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName; ?></a>
+								   href="<?php echo htmlspecialchars($websiteURL, ENT_COMPAT, 'UTF-8') ?>"><?php echo KunenaIcons::globe() . ' ' . $websiteName; ?></a>
 							<?php elseif (empty($websiteName) && !empty($websiteURL))
 								:
 								?>
 								<a class="btn btn-small" rel="nofollow noopener noreferrer" target="_blank"
-								   href="<?php echo $websiteURL ?>"><?php echo KunenaIcons::globe(); ?></a>
+								   href="<?php echo htmlspecialchars($websiteURL, ENT_COMPAT, 'UTF-8') ?>"><?php echo KunenaIcons::globe(); ?></a>
 							<?php elseif (!empty($websiteName) && empty($websiteURL))
 								:
 								?>

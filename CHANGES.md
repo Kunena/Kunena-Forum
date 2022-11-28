@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.2.13-DEV]
+## [5.2.13]
 ### Fixed
+* Improve spoiler rendering
 * Update code to render tableau object in a message
 * Check if the ebay is numeric and if config is defined before
 * Check that the value entered for colortext params

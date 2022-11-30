@@ -478,8 +478,8 @@ class KunenaMessage extends KunenaDatabaseObject
                     ? KunenaAccess::CATEGORY_SUBSCRIPTION
                     : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 
-                    // FIXME: category subscription can override topic
-                    $once = $config->topicSubscriptions == 'first';
+                // FIXME: category subscription can override topic
+                $once = $config->topicSubscriptions == 'first';
             }
         }
 
@@ -519,7 +519,12 @@ class KunenaMessage extends KunenaDatabaseObject
                     continue;
                 }
 
-                if ($config->emailVisibleAddress != $emailTo->email || (count($emailToList) == 1 && $emailTo->moderator)) {
+                if (
+                    $config->emailVisibleAddress != $emailTo->email ||
+                    (count($emailToList) == 1 &&
+                        ($emailTo->moderator || $emailTo->subscription)
+                    )
+                ) {
                     $receivers[$emailTo->subscription][] = $emailTo->email;
                     $sentusers[]                         = $emailTo->id;
                 }
@@ -1478,10 +1483,10 @@ class KunenaMessage extends KunenaDatabaseObject
             $title2 = substr($string, $start, $length);
             $title  = preg_replace(
                 '/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
-                '|[\x00-\x7F][\x80-\xBF]+' .
-                '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
-                '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
-                '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
+                    '|[\x00-\x7F][\x80-\xBF]+' .
+                    '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
+                    '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
+                    '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
                 '',
                 $title2
             );

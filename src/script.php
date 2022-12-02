@@ -16,6 +16,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;

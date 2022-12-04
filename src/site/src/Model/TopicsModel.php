@@ -599,7 +599,10 @@ class TopicsModel extends KunenaModel
             }
         } else {
             if (Factory::getApplication()->getDocument()->getType() != 'feed') {
-                // Get configuration from menu item.
+                // Get configuration the categories selected from kunena latest module params when installed
+                $klatestCategory   = $params->get('topics_categories_klatest', []);
+                // Get configuration the categories selected from the active menu item
+                // TODO : the $latestCategory should always an array
                 $latestCategory   = $params->get('topics_categories', '');
                 $latestCategoryIn = $params->get('topics_catselection', '');
 
@@ -627,7 +630,7 @@ class TopicsModel extends KunenaModel
                 }
             }
 
-            if (!empty($latestCategory) && !\is_array($latestCategory)) {
+            if (!empty($latestCategory) && !\is_countable($latestCategory)) {
                 $latestCategory = explode(',', $latestCategory);
             } else {
                 $latestCategory = array();
@@ -636,6 +639,13 @@ class TopicsModel extends KunenaModel
             if (count($latestCategory) == 0) {
                 $latestCategory = false;
             }
+
+           if (Factory::getApplication()->getDocument()->getType() != 'feed') {
+               if (count($klatestCategory) > 0)
+               {
+                   $latestCategory = $klatestCategory;
+               }
+           }
         }
 
         $this->setState('list.categories', $latestCategory);

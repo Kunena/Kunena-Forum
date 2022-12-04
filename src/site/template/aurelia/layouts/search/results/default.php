@@ -20,15 +20,15 @@ if (empty($this->results)) {
 }
 
 ?>
-    <h2>
-        <?php echo Text::_('COM_KUNENA_SEARCH_RESULTS'); ?>
-        <small>
-            (<?php echo Text::sprintf('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords'))); ?>)
-        </small>
-    </h2>
+<h2>
+    <?php echo Text::_('COM_KUNENA_SEARCH_RESULTS'); ?>
+    <small>
+        (<?php echo Text::sprintf('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords'))); ?>)
+    </small>
+</h2>
 
 <?php if ($this->error) :
-    ?>
+?>
     <div class="alert alert-error">
         <?php echo $this->error; ?>
     </div>

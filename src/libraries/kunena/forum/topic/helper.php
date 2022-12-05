@@ -302,23 +302,14 @@ abstract class KunenaForumTopicHelper
 			$catlist += $category->getChannels();
 		}
 
-		if (count($catlist)>0)
+		if (empty($catlist))
 		{
-			$catlist = implode(',', array_keys($catlist));
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-			if ($exclude)
-			{
-				$catlist = "AND tt.category_id NOT IN ({$catlist})";
-			}
-			else
-			{
-				$catlist = "AND tt.category_id IN ({$catlist})";
-			}
+			return array(0, array());
 		}
-		else
-		{
-			$catlist = '';
-		}
+
+		$catlist = implode(',', array_keys($catlist));
 
 		$whereuser = array();
 
@@ -346,6 +337,8 @@ abstract class KunenaForumTopicHelper
 		{
 			$whereuser[] = 'ut.subscribed=1';
 		}
+		
+		
 
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
 		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (" . implode(' OR ', $whereuser) . ')' : '');

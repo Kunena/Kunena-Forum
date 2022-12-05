@@ -345,11 +345,11 @@ abstract class KunenaForumTopicHelper
 
 		if ($exclude)
 		{
-			$where = "tt.hold IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
+			$where = "tt.hold IN ({$hold}) AND tt.category_id NOT IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
 		}
 		else
 		{
-			$where = "tt.hold IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
+			$where = "tt.hold IN ({$hold}) AND tt.category_id IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
 		}
 
 		if (!$moved)

@@ -1782,21 +1782,16 @@ HTML;
     }
 
     /**
-     * Load fontawesome libraries with if enabled the compatibility layer for version 4.x
+     * Load fontawesome 6.x library which includes the compatiblity with v5 and v4
      *
      * @since Kunena 5.2
      */
     public function loadFontawesome()
     {
         $fontawesome          = $this->params->get('fontawesome');
-        $fontawesome_layer_v4 = $this->params->get('fontawesome_layer_v4');
 
         if ($fontawesome) {
-            $this->addScript('https://use.fontawesome.com/releases/v5.15.4/js/all.js', [], ['defer' => true]);
-        }
-
-        if ($fontawesome && $fontawesome_layer_v4) {
-            $this->addScript('https://use.fontawesome.com/releases/v5.15.4/js/v4-shims.js', [], ['defer' => true]);
+            $this->addScript('https://use.fontawesome.com/releases/v6.2.1/js/all.js', [], ['defer' => true]);
         }
     }
 

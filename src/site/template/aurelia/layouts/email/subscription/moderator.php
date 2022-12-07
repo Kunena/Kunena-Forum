@@ -149,13 +149,13 @@ if (!$config->plainEmail) :
                         </td>
                     </tr>
 
-                    <?php if (!empty($config->emailheader)) : ?>
+                    <?php if (!empty($config->emailHeader)) : ?>
                         <tr>
                             <td align="center" valign="top"
                                 style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 20px 0 0;"
                                 class="hero"><a target="_blank" style="text-decoration: none;"
                                                 href="#"><img border="0" vspace="0" hspace="0"
-                                                              src="<?php echo Uri::base() . KunenaConfig::getInstance()->emailheader; ?>"
+                                                              src="<?php echo Uri::base() . $config->emailHeader; ?>"
                                                               alt="Please enable images to view this content"
                                                               title="Forum"
                                                               width="560" style="

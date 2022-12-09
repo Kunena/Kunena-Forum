@@ -970,7 +970,7 @@ class KunenaUser extends CMSObject
     {
         $avatars = KunenaFactory::getAvatarIntegration();
 
-        if ($avatars) {
+        if (!$avatars) {
             $ktemplate     = KunenaFactory::getTemplate();
             $topicicontype = $ktemplate->params->get('topicicontype');
 

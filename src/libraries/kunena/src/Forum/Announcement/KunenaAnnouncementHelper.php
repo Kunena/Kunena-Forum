@@ -128,8 +128,8 @@ abstract class KunenaAnnouncementHelper
                 ->select('*')
                 ->from($db->quoteName('#__kunena_announcement'))
                 ->where($db->quoteName('published') . ' = 1')
-                ->andWhere($db->quoteName('publish_up') . ' = ' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate)
-                ->andWhere($db->quoteName('publish_down') . ' =' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
+                ->Where($db->quoteName('publish_up') . ' = ' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate)
+                ->Where($db->quoteName('publish_down') . ' =' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
                 ->order($db->quoteName('id') . ' DESC');
         } else {
             $query = $db->getQuery(true)

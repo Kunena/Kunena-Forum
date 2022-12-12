@@ -496,7 +496,7 @@ class KunenaForumMessage extends KunenaDatabaseObject
 					continue;
 				}
 
-				if ($config->emailVisibleAddress != $emailTo->email)
+				if ($config->email_visible_address != $emailTo->email)
 				{
 					$receivers[$emailTo->subscription][] = $emailTo->email;
 					$sentusers[]                         = $emailTo->id;

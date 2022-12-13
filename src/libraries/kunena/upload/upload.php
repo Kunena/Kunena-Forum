@@ -371,6 +371,9 @@ class KunenaUpload
 			}
 		}
 
+		// Need to set the filename to null else it will delete a file at Joomla! root if it have the same name that the one uploaded
+		$this->filename = null;
+
 		throw new RuntimeException(
 			Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
 			400

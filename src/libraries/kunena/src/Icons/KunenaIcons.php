@@ -1398,7 +1398,7 @@ class KunenaIcons
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return 'fa fa-exclamation';
+            return '<i class="fa-solid fa-exclamation" aria-hidden="true"></i>';
         }
 
         if ($topicicontype == 'image') {

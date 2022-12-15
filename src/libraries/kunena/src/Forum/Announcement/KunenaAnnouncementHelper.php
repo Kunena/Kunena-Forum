@@ -58,14 +58,14 @@ abstract class KunenaAnnouncementHelper
 
         $id = \intval($identifier);
 
-        if (empty(self::$_instances [$id])) {
-            self::$_instances [$id] = new KunenaAnnouncement(['id' => $id]);
-            self::$_instances [$id]->load();
+        if (empty(self::$_instances[$id])) {
+            self::$_instances[$id] = new KunenaAnnouncement(['id' => $id]);
+            self::$_instances[$id]->load();
         } elseif ($reload) {
-            self::$_instances [$id]->load();
+            self::$_instances[$id]->load();
         }
 
-        return self::$_instances [$id];
+        return self::$_instances[$id];
     }
 
     /**
@@ -128,8 +128,8 @@ abstract class KunenaAnnouncementHelper
                 ->select('*')
                 ->from($db->quoteName('#__kunena_announcement'))
                 ->where($db->quoteName('published') . ' = 1')
-                ->Where($db->quoteName('publish_up') . ' = ' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate)
-                ->Where($db->quoteName('publish_down') . ' =' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
+                ->Where('(' . $db->quoteName('publish_up') . ' = ' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_up') . ' <= ' . $nowDate . ')')
+                ->Where('(' . $db->quoteName('publish_down') . ' =' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate . ')')
                 ->order($db->quoteName('id') . ' DESC');
         } else {
             $query = $db->getQuery(true)
@@ -151,13 +151,13 @@ abstract class KunenaAnnouncementHelper
         $list             = [];
 
         foreach ($results as $announcement) {
-            if (isset(self::$_instances [$announcement['id']])) {
+            if (isset(self::$_instances[$announcement['id']])) {
                 continue;
             }
 
             $instance = new KunenaAnnouncement($announcement);
             $instance->exists(true);
-            self::$_instances [$instance->id] = $instance;
+            self::$_instances[$instance->id] = $instance;
             $list[]                           = $instance;
         }
 

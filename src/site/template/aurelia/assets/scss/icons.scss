@@ -195,7 +195,8 @@ svg {
 .category th svg,
 footer svg,
 .col-md-1 svg,
-.category-stickymsg a svg {
+.category-stickymsg a svg,
+[class*="category-"] th svg {
   width: 34px;
   height: 34px;
 }

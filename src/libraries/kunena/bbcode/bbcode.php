@@ -2859,8 +2859,13 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			}
 		}
 
+		// Get the words set on alt params when alt is used like that : alt=my words; see issue #6751
+		$matches = array(); 
+		$altText = null;
 		preg_match('/[img(\s*(?!alt)([\w\-\.]+\s*\/?]/', $params['_tag'], $matches);
-		$matches = rtrim($matches[0], "]");
+		if (count($matches) > 0) {
+			$altText = rtrim($matches[0], "]");
+		}
 
 		$config = KunenaFactory::getConfig();
 		$layout = KunenaLayout::factory('BBCode/Image')
@@ -2868,7 +2873,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			->set('url', null)
 			->set('filename', null)
 			->set('size', isset($params['size']) ? $params['size'] : 0)
-			->set('alt', isset($params['alt']) ? $matches : 0)
+			->set('alt', count($matches) > 0 ? $altText : 0)
 			->set('canLink', $bbcode->autolink_disable == 0);
 
 		if (Factory::getUser()->id == 0 && $config->showimgforguest == 0)

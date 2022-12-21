@@ -196,13 +196,13 @@ class ToolsController extends FormController
         if ($trashDelete) {
             Factory::getApplication()->enqueueMessage(
                 "" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
-                . Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS'),
+                    . Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS'),
                 'success'
             );
         } else {
             Factory::getApplication()->enqueueMessage(
                 "" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
-                . Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS'),
+                    . Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS'),
                 'success'
             );
         }
@@ -333,7 +333,46 @@ class ToolsController extends FormController
                 return;
             }
 
-            Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()), 'success');
+            $affectedRows = $db->getAffectedRows();
+
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__kunena_topics', 't'))
+                ->innerJoin($db->quoteName('#__users', 'u'))
+                ->set($db->quoteName('t.first_post_guest_name') . ' = ' . $db->quoteName('u.' . $queryName))
+                ->where($db->quoteName('t.first_post_userid') . ' = ' . $db->quoteName('u.id'));
+
+            $db->setQuery($query);
+
+            try {
+                $db->execute();
+            } catch (RuntimeException $e) {
+                Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+
+                return;
+            }
+
+            $affectedRows += $db->getAffectedRows();
+
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__kunena_topics', 't'))
+                ->innerJoin($db->quoteName('#__users', 'u'))
+                ->set($db->quoteName('t.last_post_guest_name') . ' = ' . $db->quoteName('u.' . $queryName))
+                ->where($db->quoteName('t.last_post_userid') . ' = ' . $db->quoteName('u.id'));
+
+            $db->setQuery($query);
+
+            try {
+                $db->execute();
+            } catch (RuntimeException $e) {
+                Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+
+                return;
+            }
+
+            $affectedRows += $db->getAffectedRows();
+
+
+            Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $affectedRows), 'success');
         }
 
         Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()), 'success');

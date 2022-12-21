@@ -15,6 +15,7 @@ use Joomla\String\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 
 require_once KPATH_FRAMEWORK . '/external/nbbc/src/BBCode.php';
@@ -2173,8 +2174,9 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		}
 
 		$highlight = KunenaFactory::getConfig()->highlightcode && empty($bbcode->parent->forceMinimal);
+		$statusPlgGeshi =  PluginHelper::isEnabled('content', 'GeSHi');
 
-		if ($highlight && !class_exists('GeSHi'))
+		if ($highlight && $statusPlgGeshi)
 		{
 			$paths = array(
 				JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi.php',
@@ -2188,22 +2190,17 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 					require_once $path;
 				}
 			}
-		}
 
-		if ($highlight && class_exists('GeSHi'))
-		{
 			$geshi = new GeSHi($bbcode->UnHTMLEncode($content), $type);
 			$geshi->enable_keyword_links(false);
 			$code = $geshi->parse_code();
 		}
-		else
-		{
-			$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-			if ($type) {
-				$code = '<pre xml:' . $type . '>' . $content . '</pre>';
-			} else {
-				$code = '<pre>' . $content . '</pre>';
-			}
+
+		$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
+		if ($type) {
+			$code = '<pre xml:' . $type . '>' . $content . '</pre>';
+		} else {
+			$code = '<pre>' . $content . '</pre>';
 		}
 
 		return '<div class="highlight">' . $code . '</div>';

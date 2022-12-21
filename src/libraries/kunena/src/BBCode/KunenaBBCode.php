@@ -1640,10 +1640,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $message   = $this->getMessage();
         $moderator = $this->me->userid && $this->me->isModerator($message ? $message->getCategory() : null);
 
-        if (isset($bbcode->parent->message->userid)) {
+        if ($bbcode->parent->message instanceof KunenaMessage) {
             $message_userid = $bbcode->parent->message->userid;
-        } else {
+        } elseif ($bbcode->parent instanceof KunenaMessage) {
             $message_userid = $bbcode->parent->userid;
+        } else {
+            $message_userid = 0;
         }
 
         if (($this->me->userid && $message_userid == $this->me->userid) || $moderator) {

@@ -21,7 +21,6 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Exception\KunenaException;
-use Aws\Ec2\Exception\Ec2Exception;
 
 /**
  * Class KunenaDatabaseObject

@@ -2095,6 +2095,7 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 			}
 		}
 
+		$username = '';
 		if ($userid > 0)
 		{
 			$username = KunenaUserHelper::get($userid)->getName();
@@ -2122,7 +2123,6 @@ class KunenaBbcodeLibrary extends Nbbc\BBCodeLibrary
 		if ($userid==0 && $postid==0)
 		{
 			$user  = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
-			$username = '';
 
 			if ($user)
 			{

@@ -284,31 +284,33 @@ class KunenaBBCode extends \Nbbc\BBCode
             $path   = explode('/', $params['path']);
             $itemid = '';
 
-            if ($path[1] == 'itm') {
-                if (isset($path[3]) && is_numeric($path[3])) {
-                    $itemid = $path[3];
-                } elseif (isset($path[2]) && is_numeric($path[2])) {
-                    $itemid = $path[2];
+            if (is_array($path)) {
+                if ($path[1] == 'itm') {
+                    if (isset($path[3]) && is_numeric($path[3])) {
+                        $itemid = $path[3];
+                    } elseif (isset($path[2]) && is_numeric($path[2])) {
+                        $itemid = $path[2];
+                    }
+
+                    if (isset($itemid)) {
+                        // Convert ebay item to embedded widget
+                        return KunenaBBCodeLibrary::renderEbayLayout($itemid);
+                    }
+
+                    return;
                 }
 
-                if (isset($itemid)) {
-                    // Convert ebay item to embedded widget
-                    return KunenaBBCodeLibrary::renderEbayLayout($itemid);
+                parse_str($params['query'], $query);
+
+                if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw'])) {
+                    // Convert ebay search to embedded widget
+                    KunenaBBCodeLibrary::renderEbayLayout($itemid);
                 }
 
-                return;
-            }
-
-            parse_str($params['query'], $query);
-
-            if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw'])) {
-                // Convert ebay search to embedded widget
-                KunenaBBCodeLibrary::renderEbayLayout($itemid);
-            }
-
-            if (strstr($params['host'], 'myworld.') && !empty($path[1])) {
-                // Convert seller listing to embedded widget
-                KunenaBBCodeLibrary::renderEbayLayout($itemid);
+                if (strstr($params['host'], 'myworld.') && !empty($path[1])) {
+                    // Convert seller listing to embedded widget
+                    KunenaBBCodeLibrary::renderEbayLayout($itemid);
+                }
             }
         }
 

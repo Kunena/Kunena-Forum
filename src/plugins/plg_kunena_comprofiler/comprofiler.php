@@ -30,7 +30,7 @@ class plgKunenaComprofiler extends CMSPlugin
      * @var     string  CB version 2.7.3 works with Php 8.1 and with Joomla! 4.0/4.1
      * @since   Kunena 6.0
      */
-    public $minCBVersion = '2.7.3';
+    public $minCBVersion = '2.7.4';
 
     /**
      * plgKunenaComprofiler constructor.

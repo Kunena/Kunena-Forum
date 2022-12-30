@@ -21,6 +21,7 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Exception\KunenaException;
+use Aws\Ec2\Exception\Ec2Exception;
 
 /**
  * Class KunenaDatabaseObject
@@ -225,13 +226,11 @@ abstract class KunenaDatabaseObject extends CMSObject
         // Include the Kunena plugins for the on save events.
         PluginHelper::importPlugin('kunena');
 
-        // Trigger the onKunenaBeforeSave event.
-        $result = Factory::getApplication()->triggerEvent('onKunenaBeforeSave', ["com_kunena.{$this->_name}", &$table, $isNew]);
-
-        if (\in_array(false, $result, true)) {
-            throw new KunenaException($table->getError());
-
-            return $this->_saving = false;
+        try {
+            // Trigger the onKunenaBeforeSave event.
+            Factory::getApplication()->triggerEvent('onKunenaBeforeSave', ["com_kunena.{$this->_name}", &$table, $isNew]);
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
         }
 
         // Store the data, the store() method from Joomla\CMS\Table\Table return only boolean and not exception.
@@ -309,13 +308,11 @@ abstract class KunenaDatabaseObject extends CMSObject
         // Include the Kunena plugins for the on save events.
         PluginHelper::importPlugin('kunena');
 
-        // Trigger the onKunenaBeforeDelete event.
-        $result = Factory::getApplication()->triggerEvent('onKunenaBeforeDelete', ["com_kunena.{$this->_name}", $table]);
-
-        if (\in_array(false, $result, true)) {
-            throw new Exception($table->getError());
-
-            return false;
+        try {
+            // Trigger the onKunenaBeforeDelete event.
+            Factory::getApplication()->triggerEvent('onKunenaBeforeDelete', ["com_kunena.{$this->_name}", $table]);
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
         }
 
         try {

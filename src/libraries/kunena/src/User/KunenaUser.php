@@ -1232,10 +1232,10 @@ class KunenaUser extends CMSObject
         $table->exists($this->_exists);
 
         // Check and store the object.
-        if (!$table->check()) {
-            throw new Exception($table->getError());
-
-            return false;
+        try {
+            $table->check();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
 
         // Are we creating a new user
@@ -1256,8 +1256,10 @@ class KunenaUser extends CMSObject
         }
 
         // Store the user data in the database
-        if (!$result = $table->store()) {
-            throw new Exception($table->getError());
+        try {
+            $result = $table->store();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
 
         $access = KunenaAccess::getInstance();

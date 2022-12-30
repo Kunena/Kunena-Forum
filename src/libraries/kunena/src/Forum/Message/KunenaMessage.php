@@ -929,8 +929,12 @@ class KunenaMessage extends KunenaDatabaseObject
             // We published message -> publish and recount topic
             $topic->hold = 0;
             $topic->recount();
-        } elseif (!$topic->update($this, $postDelta)) {
-            throw new Exception($topic->getError());
+        }
+
+        try {
+            $topic->update($this, $postDelta);
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
         }
 
         // Activity integration

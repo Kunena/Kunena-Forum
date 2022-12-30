@@ -167,7 +167,11 @@ class KunenaImage extends Image
             }
         }
 
-        $imgProperties = self::getImageFileProperties($this->getPath());
+        try {
+            $imgProperties = self::getImageFileProperties($this->getPath());
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
 
         if ($imgProperties->mime == MIME_GIF) {
             $trnprt_indx = imagecolortransparent($this->handle);

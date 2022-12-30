@@ -876,7 +876,11 @@ class KunenaAttachment extends KunenaDatabaseObject
             }
 
             if (stripos($type, 'image/') !== false) {
-                $imageInfo = KunenaImage::getImageFileProperties($uploadBasePath . $fileNameWithExt);
+                try {
+                    $imageInfo = KunenaImage::getImageFileProperties($uploadBasePath . $fileNameWithExt);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
 
                 if (number_format($file->size / 1024, 2) > $config->imageSize || $imageInfo->width > $config->imageWidth || $imageInfo->height > $config->imageHeight) {
                     // Calculate quality for both JPG and PNG.

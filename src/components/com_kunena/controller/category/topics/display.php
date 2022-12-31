@@ -142,7 +142,7 @@ class ComponentKunenaControllerCategoryTopicsDisplay extends KunenaControllerDis
 		if ($limitstart > 1 && !$this->topics)
 		{
 			$controller = JControllerLegacy::getInstance("kunena");
-			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
+			$controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$Itemid}", false));
 			$controller->redirect();
 		}
 

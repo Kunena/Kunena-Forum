@@ -5,7 +5,7 @@
  *
  * @package       Kunena.json_kunenalatest
  *
- * @copyright (C) 2008 - 2022 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2023 Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
  **/

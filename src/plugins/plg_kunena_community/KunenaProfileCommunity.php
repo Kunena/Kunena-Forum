@@ -6,7 +6,7 @@
  * @package          Kunena.Plugins
  * @subpackage       Community
  *
- * @copyright   (C)  2008 - 2022 Kunena Team. All rights reserved.
+ * @copyright   (C)  2008 - 2023 Kunena Team. All rights reserved.
  * @copyright   (C)  2013 - 2014 iJoomla, Inc. All rights reserved.
  * @license          https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link             https://www.kunena.org

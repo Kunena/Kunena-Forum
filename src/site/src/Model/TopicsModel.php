@@ -602,22 +602,29 @@ class TopicsModel extends KunenaModel
                 // Get configuration the categories selected from kunena latest module params when installed
                 $klatestCategory   = $params->get('topics_categories_klatest', []);
                 // Get configuration the categories selected from the active menu item
-                // TODO : the $latestCategory should always an array
-                $latestCategory   = $params->get('topics_categories', '');
+                $latestCategory   = $params->get('topics_categories', []);
                 $latestCategoryIn = $params->get('topics_catselection', '');
-
-                // Make sure that category list is an array.
-                if (!\is_array($latestCategory)) {
-                    $latestCategory = explode(',', $latestCategory);
-                }
-
-                // Default to global configuration.
-                if (\in_array('', $latestCategory, true)) {
-                    $latestCategory = $this->config->latestCategory;
-                }
-
-                if ($latestCategoryIn == '') {
+                
+                /*
+                 * Check if topics_catselection is set on "Use Global"=empty, "Show Categories"=1 or "Hide Categories"=0 then if selected "Show Categories" or "Hide Categories",
+                 * get the list of categories from the menu item with topics_categories.
+                 * From Kunena 6.1 in Kunena menus the default value of topics_catselection for option "Use Global" should be set to 2 instead of empty
+                 */
+                if ((empty($latestCategoryIn) || $latestCategoryIn==2) && count($klatestCategory) == 0) {
+                    if($this->config->latestCategory==0) {
+                        $latestCategory = false;
+                    }
+                    
                     $latestCategoryIn = $this->config->latestCategoryIn;
+                } elseif (count($klatestCategory) > 0) {
+                    $latestCategory = $klatestCategory;
+                } else {
+                    // Make sure that category list is an array.
+                    if (!\is_array($latestCategory)) {
+                        $latestCategory = explode(',', $latestCategory);
+                    }elseif (empty($latestCategory)) {
+                        $latestCategory = explode(',', $latestCategory);
+                    }
                 }
             } else {
                 // Use RSS configuration.
@@ -629,23 +636,6 @@ class TopicsModel extends KunenaModel
                     $latestCategoryIn = 1;
                 }
             }
-
-            if (!empty($latestCategory) && !\is_countable($latestCategory)) {
-                $latestCategory = explode(',', $latestCategory);
-            } else {
-                $latestCategory = array();
-            }
-
-            if (count($latestCategory) == 0) {
-                $latestCategory = false;
-            }
-
-           if (Factory::getApplication()->getDocument()->getType() != 'feed') {
-               if (count($klatestCategory) > 0)
-               {
-                   $latestCategory = $klatestCategory;
-               }
-           }
         }
 
         $this->setState('list.categories', $latestCategory);

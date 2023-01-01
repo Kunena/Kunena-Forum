@@ -5,7 +5,7 @@
  * @package         Kunena.Plugins
  * @subpackage      Easysocial
  *
- * @copyright      Copyright (C) 2008 - 2022 Kunena Team. All rights reserved.
+ * @copyright      Copyright (C) 2008 - 2023 Kunena Team. All rights reserved.
  * @copyright      Copyright (C) 2010 - 2014 Stack Ideas Sdn Bhd. All rights reserved.
  * @license        GNU/GPL, see LICENSE.php
  * EasySocial is free software. This version may have been modified pursuant

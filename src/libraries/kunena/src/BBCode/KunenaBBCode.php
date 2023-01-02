@@ -284,7 +284,7 @@ class KunenaBBCode extends \Nbbc\BBCode
             $path   = explode('/', $params['path']);
             $itemid = '';
 
-            if (is_array($path)) {
+            if (!empty($path[1])) {
                 if ($path[1] == 'itm') {
                     if (isset($path[3]) && is_numeric($path[3])) {
                         $itemid = $path[3];

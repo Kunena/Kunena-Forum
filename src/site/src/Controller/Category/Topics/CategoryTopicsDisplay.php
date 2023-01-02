@@ -155,6 +155,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 
         if ($limitstart > 1 && !$this->topics) {
+            $itemid     = KunenaRoute::fixMissingItemID();
             $controller = BaseController::getInstance("kunena");
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
             $controller->redirect();

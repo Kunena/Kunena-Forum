@@ -234,7 +234,7 @@ class KunenaBbcode extends Nbbc\BBCode
 			parse_str($params['query'], $query);
 			$path = explode('/', $params['path']);
 
-			if (is_array($path))
+			if (!empty($path[1]))
 			{
 				if ($path[1] == 'itm')
 				{

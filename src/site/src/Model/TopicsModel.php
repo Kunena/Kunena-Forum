@@ -604,7 +604,7 @@ class TopicsModel extends KunenaModel
                 // Get configuration the categories selected from the active menu item
                 $latestCategory   = $params->get('topics_categories', []);
                 $latestCategoryIn = $params->get('topics_catselection', '');
-                
+
                 /*
                  * Check if topics_catselection is set on "Use Global"=empty, "Show Categories"=1 or "Hide Categories"=0 then if selected "Show Categories" or "Hide Categories",
                  * get the list of categories from the menu item with topics_categories.

@@ -619,11 +619,13 @@ class TopicsModel extends KunenaModel
                 } elseif (count($klatestCategory) > 0) {
                     $latestCategory = $klatestCategory;
                 } else {
-                    // Make sure that category list is an array.
-                    if (!\is_array($latestCategory)) {
-                        $latestCategory = explode(',', $latestCategory);
-                    }elseif (empty($latestCategory)) {
-                        $latestCategory = explode(',', $latestCategory);
+                    // Make sure that category list is an array when it's different to zero.
+                    if ($latestCategory !=0 || !empty($latestCategory)){
+                        if (!\is_array($latestCategory)) {
+                            $latestCategory = explode(',', $latestCategory);
+                        }
+                    } else {
+                        $latestCategory = array();
                     }
                 }
             } else {

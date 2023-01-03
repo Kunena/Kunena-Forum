@@ -175,7 +175,7 @@ class TopicListingUserDisplay extends ListDisplay
             $controller->redirect();
         }
 
-        if ($categoryIds !== null) {
+        if (count($categoryIds) > 0) {
             $categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
             $finder->filterByCategories($categories);
         }

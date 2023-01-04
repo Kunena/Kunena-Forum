@@ -420,7 +420,10 @@ abstract class KunenaMessageHelper
         if (!$hold) {
             $me           = KunenaUserHelper::getMyself();
             $mes_instance = self::get($mesid);
-            $hold         = KunenaAccess::getInstance()->getAllowedHold($me->userid, $mes_instance->catid, false);
+
+            if ($mes_instance->exists()) {
+                $hold         = KunenaAccess::getInstance()->getAllowedHold($me->userid, $mes_instance->catid, false);
+            }
         }
 
         if (!isset(self::$_location [$mesid])) {

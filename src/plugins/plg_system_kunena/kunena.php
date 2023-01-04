@@ -131,8 +131,8 @@ EOF;
             return;
         }
 
-        if ($isnew && intval($user ['id'])) {
-            $kuser = KunenaFactory::getUser(intval($user ['id']));
+        if ($isnew && intval($user['id'])) {
+            $kuser = KunenaFactory::getUser(intval($user['id']));
             $kuser->save();
         }
     }
@@ -206,30 +206,6 @@ EOF;
         $app->redirect('index.php?option=com_installer');
 
         return true;
-    }
-
-    /**
-     * Adds the Kunena Privacy Information to Joomla Privacy plugin.
-     *
-     * @return  array
-     *
-     * @since   Kunena 5.1.6
-     */
-    public function onPrivacyCollectAdminCapabilities(): array
-    {
-        return [
-            'Kunena' => [
-                Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_EMAIL'),
-                Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_IP_ADDRESS'),
-                Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_USERPROFILE'),
-                Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_POSTS'),
-                Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_RATINGS'),
-                Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_STATISTICS'),
-                Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_COOKIES'),
-                Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_LOGS'),
-                Text::_('PLG_SYSTEM_KUNENA_PRIVACY_CAPABILITY_SOCIAL'),
-            ],
-        ];
     }
 
     /**

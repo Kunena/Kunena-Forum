@@ -541,6 +541,14 @@ workspace/kunena/build/tmp)
 			</fileset>
 		</copy>
 		<copy
+			todir="${tmp_dir}/packages/plg_privacy_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${project_dir}/plugins/plg_privacy_kunena">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+		<copy
 			todir="${tmp_dir}/packages/plg_system_kunena"
 			overwrite="true">
 			<filterchain refid="filter" />
@@ -761,6 +769,14 @@ workspace/kunena/build/tmp)
 				value="${tmp_dir}/packages/plg_quickicon_kunena" />
 		</phingcall>
 
+		<phingcall target="archive">
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_privacy_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_privacy_kunena" />
+		</phingcall>
 		<phingcall target="archive">
 			<property
 				name="destination.file"

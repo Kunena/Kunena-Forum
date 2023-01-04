@@ -41,10 +41,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 
         $class = 'nav-item item-' . $item->id;
 
-        if ($item->id == $this->active_id) {
-            $class .= ' current';
-        }
-
         if (in_array($item->id, $this->path)) {
             $class .= ' active';
         } elseif ($item->type == 'alias') {
@@ -100,6 +96,9 @@ use Joomla\CMS\HTML\HTMLHelper;
                     $attributes = [];
 
                     $attributes['class'] = 'nav-link';
+                    if ($item->id == $this->active_id) {
+                        $attributes['class'] .= ' active';
+                    }
 
                     $linktype = $item->title;
 

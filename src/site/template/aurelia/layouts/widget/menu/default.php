@@ -39,8 +39,6 @@ use Joomla\CMS\HTML\HTMLHelper;
             $columninx++;
         }
 
-        $class = 'nav-item item-' . $item->id;
-
         if (in_array($item->id, $this->path)) {
             $class .= ' active';
         } elseif ($item->type == 'alias') {
@@ -53,11 +51,17 @@ use Joomla\CMS\HTML\HTMLHelper;
             }
         }
 
+        $class = 'nav-item item-' . $item->id;
+
         if ($item->deeper) {
             if ($item->level > 1) {
-                $class .= ' deeper dropdown dropdown-submenu';
+                $class .= ' deeper dropdown';
             } else {
                 $class .= ' deeper dropdown';
+            }
+        } else {
+            if ($item->level > 2) {
+                $class = '';
             }
         }
 
@@ -80,14 +84,14 @@ use Joomla\CMS\HTML\HTMLHelper;
             } else {
                 echo '<li class="dropdown-divider"></li>';
             }
-        } elseif ($item->deeper) {
+        /*} elseif ($item->deeper) {
             if ($item->level > 1) {
                 require ModuleHelper::getLayoutPath('mod_menu', 'default_url');
             } else {
                 echo '<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">';
                 require ModuleHelper::getLayoutPath('mod_menu', 'default_url');
                 echo ' <b class="caret"></b></a>';
-            }
+            }*/
         } else {
             switch ($item->type) {
                 case 'separator':
@@ -95,7 +99,16 @@ use Joomla\CMS\HTML\HTMLHelper;
                 case 'component':
                     $attributes = [];
 
-                    $attributes['class'] = 'nav-link';
+                    if ($item->deeper && $item->level < 3) {
+                        $attributes['class'] = 'nav-link dropdown-toggle';
+                        $attributes['role']  =   'button'; 
+                        $attributes['data-bs-toggle']  = 'dropdown';
+                    } elseif ($item->level > 2) {
+                        $attributes['class'] = 'dropdown-item';
+                    } else {
+                        $attributes['class'] = 'nav-link';
+                    }
+
                     if ($item->id == $this->active_id) {
                         $attributes['class'] .= ' active';
                     }
@@ -140,12 +153,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 
         // The next item is deeper.
         if ($item->deeper) {
-            if ($item->level < 3) {
-                echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
+        if ($item->level < 3) {
+                echo '<ul class="dropdown-menu" style="left:0;top:40px;">';
             } elseif ($item->level == 3) {
-                echo '<ul class="dropdown-menu" role="menu">';
+                echo '<ul class="dropdown-menu">';
             } else {
-                echo '<ul class="dropdown-menu" role="menu" style="left:0;top:40px;">';
+                echo '<ul class="dropdown-menu" style="left:0;top:40px;">';
             }
         }
         // The next item is shallower.

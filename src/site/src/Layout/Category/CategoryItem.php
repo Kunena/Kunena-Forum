@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 
@@ -158,14 +159,14 @@ class CategoryItem extends KunenaLayout
             $subscribed = $category->getSubscribed($this->me->userid);
 
             if (!$subscribed) {
-                $url                  = "index.php?option=com_kunena&view=category&task=subscribe&catid={$category->id}{$token}";
+                $url                  = KunenaRoute::_('index.php?option=com_kunena&view=category&task=subscribe&catid=' . $category->id . $token);
                 $actions['subscribe'] = $this->subLayout('Widget/Button')
                     ->setProperties(
                         ['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
                          'icon' => KunenaIcons::email(), ]
                     );
             } else {
-                $url                    = "index.php?option=com_kunena&view=category&task=unsubscribe&catid={$category->id}{$token}";
+                $url                    = KunenaRoute::_('index.php?option=com_kunena&view=category&task=unsubscribe&catid=' . $category->id . $token);
                 $actions['unsubscribe'] = $this->subLayout('Widget/Button')
                     ->setProperties(
                         ['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',

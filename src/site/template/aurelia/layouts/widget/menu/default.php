@@ -40,30 +40,18 @@ use Joomla\CMS\HTML\HTMLHelper;
         }
 
         if (in_array($item->id, $this->path)) {
-            $class .= ' active';
+            $class = ' active';
         } elseif ($item->type == 'alias') {
             $aliasToId = $item->params->get('aliasoptions');
 
             if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path) - 1]) {
-                $class .= ' active';
+                $class = ' active';
             } elseif (in_array($aliasToId, $this->path)) {
-                $class .= ' alias-parent-active';
+                $class = ' alias-parent-active';
             }
         }
 
         $class = 'nav-item item-' . $item->id;
-
-        if ($item->deeper) {
-            if ($item->level > 1) {
-                $class .= ' deeper dropdown';
-            } else {
-                $class .= ' deeper dropdown';
-            }
-        } else {
-            if ($item->level > 2) {
-                $class = '';
-            }
-        }
 
         if ($item->parent) {
             $class .= ' parent';
@@ -99,7 +87,7 @@ use Joomla\CMS\HTML\HTMLHelper;
                 case 'component':
                     $attributes = [];
 
-                    if ($item->deeper && $item->level < 3) {
+                    if ($item->deeper) {
                         $attributes['class'] = 'nav-link dropdown-toggle';
                         $attributes['role']  =   'button'; 
                         $attributes['data-bs-toggle']  = 'dropdown';

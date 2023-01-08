@@ -707,7 +707,7 @@ class KunenaView extends HtmlView
             $title = Text::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
         }
 
-        return HTMLHelper::_('link', $category->getUri(), $content, $title, $class, '');
+        return HTMLHelper::_('kunenaforum.link', $category->getUri(), $content, $title, $class, '');
     }
 
     /**

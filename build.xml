@@ -5,61 +5,110 @@
 
 	@package	Kunena
 	@subpackage	com_kunena
-	@copyright	Copyright (C) 2008 - 2023 Kunena Team. All rights reserved.
+	@copyright	Copyright (C)
+2008 - 2023 Kunena Team. All rights reserved.
 				portions (C) 2007 MjazTools. All rights reserved.
-	@license	GNU General Public License <https://www.gnu.org/copyleft/gpl.html>
-	@link		https://www.kunena.org
+@license	GNU General Public License <https://www.gnu.org/copyleft/gpl.html>
+	@link
+https://www.kunena.org
 
-	The following parameters can be defined inside the PHPSTORM build task as Arguments. They
-	allow the build file to be platform independent as not path information resides within
+	The following parameters can be defined inside the PHPSTORM build task as
+Arguments. They
+	allow the build file to be platform independent as not path information resides
+within
 	any of the build files.
 
-	Parameters: (with default values - adjust the directories in PHPSTORM to your individual setup)
+	Parameters: (with default values - adjust the directories in
+PHPSTORM to your individual setup)
 	-Dproject_dir=..				(= workspace/kunena)
-	-Dpackage_dir=../../packages	(= workspace/packages)
-	-Dtmp_dir=tmp					(= workspace/kunena/build/tmp)
+-Dpackage_dir=../../packages	(= workspace/packages)
+	-Dtmp_dir=tmp					(=
+workspace/kunena/build/tmp)
 	-Dbuild_dir=package				(= workspace/kunena/build/package)
 -->
-<project name="kunena" basedir="" description="Phing Build Script for Kunena" default="dist">
+<project
+	name="kunena"
+	basedir=""
+	description="Phing Build Script for Kunena"
+	default="dist">
 
 	<!-- Setup of any global settings that will apply to the entire build script -->
 	<property file="build.properties" />
 
-	<condition property="project_dir" value="src/">
-		<not><isset property="project_dir" /></not>
+	<condition
+		property="project_dir"
+		value="src/">
+		<not>
+			<isset property="project_dir" />
+		</not>
 	</condition>
-	<condition property="tmp_dir" value="dist/tmp">
-		<not><isset property="tmp_dir" /></not>
+	<condition
+		property="tmp_dir"
+		value="dist/tmp">
+		<not>
+			<isset property="tmp_dir" />
+		</not>
 	</condition>
-	<condition property="build_dir" value="dist/package">
-		<not><isset property="build_dir" /></not>
+	<condition
+		property="build_dir"
+		value="dist/package">
+		<not>
+			<isset property="build_dir" />
+		</not>
 	</condition>
 	<!-- This directory will persist between builds to make some parts of build faster -->
-	<condition property="cache_dir" value="dist/cache">
-		<not><isset property="cache_dir" /></not>
+	<condition
+		property="cache_dir"
+		value="dist/cache">
+		<not>
+			<isset property="cache_dir" />
+		</not>
 	</condition>
-	<condition property="package_dir" value="dist/package">
-		<not><isset property="package_dir" /></not>
+	<condition
+		property="package_dir"
+		value="dist/package">
+		<not>
+			<isset property="package_dir" />
+		</not>
 	</condition>
-	<condition property="base.directory" value="dist">
-		<not><isset property="base.directory" /></not>
+	<condition
+		property="base.directory"
+		value="dist">
+		<not>
+			<isset property="base.directory" />
+		</not>
 	</condition>
 
-	<xmlproperty file="src/pkg_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+	<xmlproperty
+		file="src/pkg_kunena.xml"
+		collapseAttributes="true"
+		prefix="xml"
+		keepRoot="false" />
 	<tstamp>
-		<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
+		<format
+			property="str.datefmt"
+			pattern="${cfg.datefmt}"
+			locale="${cfg.dateloc}" />
 	</tstamp>
-	<condition property="version.date" value="${str.datefmt}">
+	<condition
+		property="version.date"
+		value="${str.datefmt}">
 		<istrue value="${cfg.adddate}" />
 	</condition>
-	<condition property="str.version" value="_${cfg.versionprefix}${xml.version}">
+	<condition
+		property="str.version"
+		value="_${cfg.versionprefix}${xml.version}">
 		<istrue value="${cfg.addversion}" />
 	</condition>
-	<condition property="str.date" value="_${str.datefmt}">
+	<condition
+		property="str.date"
+		value="_${str.datefmt}">
 		<istrue value="${cfg.adddate}" />
 	</condition>
 
-	<property name="str.fileversion" value="${str.version}${str.date}" />
+	<property
+		name="str.fileversion"
+		value="${str.version}${str.date}" />
 
 	<condition property="do.tar">
 		<istrue value="${cfg.tar}" />
@@ -77,21 +126,43 @@
 	<!-- Add version information to all xml files and forum.php -->
 	<filterchain id="filter">
 		<replacetokens>
-			<token key="kunenaversion" value="${xml.version}"/>
-			<token key="kunenaversiondate" value="${version.date}" />
-			<token key="kunenaversionname" value="${xml.versionname}" />
-			<token key="kunenaversionbuild" value="${xml.version}"/>
-			<token key="kunenachangelog" value="https://update.kunena.org/changelog/${xml.version}.xml"/>
+			<token
+				key="kunenaversion"
+				value="${xml.version}" />
+			<token
+				key="kunenaversiondate"
+				value="${version.date}" />
+			<token
+				key="kunenaversionname"
+				value="${xml.versionname}" />
+			<token
+				key="kunenaversionbuild"
+				value="${xml.version}" />
+			<token
+				key="kunenachangelog"
+				value="https://update.kunena.org/changelog/${xml.version}.xml" />
 		</replacetokens>
 	</filterchain>
 
-	<property name="kunena.admin" value="src/admin" />
-	<property name="kunena.libraries" value="src/libraries/kunena" />
-	<property name="kunena.media" value="src/media/kunena" />
-	<property name="kunena.plugins" value="src/plugins" />
-	<property name="kunena.site" value="src/site" />
+	<property
+		name="kunena.admin"
+		value="src/admin" />
+	<property
+		name="kunena.libraries"
+		value="src/libraries/kunena" />
+	<property
+		name="kunena.media"
+		value="src/media/kunena" />
+	<property
+		name="kunena.plugins"
+		value="src/plugins" />
+	<property
+		name="kunena.site"
+		value="src/site" />
 
-	<target name="dist" depends="init,mkdir,old,info,build,build-components,build-libraries,build-media,build-plugins,build-language,package,cleanup,postflight" />
+	<target
+		name="dist"
+		depends="init,mkdir,old,info,build,build-components,build-libraries,build-media,build-plugins,build-language,package,cleanup,postflight" />
 
 	<target name="init">
 		<echo message="Hello, welcome to ${phing.project.name} build tool!" />
@@ -119,7 +190,10 @@
 	<target name="old">
 		<echo message="Moving old items to a new directory..." />
 
-		<move todir="${package_dir}/archive" preservelastmodified="false" includeemptydirs="false">
+		<move
+			todir="${package_dir}/archive"
+			preservelastmodified="false"
+			includeemptydirs="false">
 			<fileset dir="${package_dir}">
 				<exclude name="archive/" />
 			</fileset>
@@ -141,377 +215,604 @@
 		<echo message="Date:            ${TODAY}" />
 	</target>
 
-	<!-- Initialize all project related files, at this point we are past any "location" setup work so its safe to proceed -->
+	<!-- Initialize all project related files, at this point we are past any "location" setup work
+	so its safe to proceed -->
 	<target name="build">
 		<echo message="Building Installer.." />
 		<!-- Move files needed by the installer -->
-		<copy file="src/pkg_kunena.xml" todir="${build_dir}/distribution" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="src/pkg_kunena.xml"
+			todir="${build_dir}/distribution"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
-		<copy file="src/script.php" todir="${build_dir}/distribution" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="src/script.php"
+			todir="${build_dir}/distribution"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
-		<copy file="COPYRIGHT.php" todir="${build_dir}/distribution" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="COPYRIGHT.php"
+			todir="${build_dir}/distribution"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
-		<copy file="README.md" tofile="${build_dir}/distribution/README.txt" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="README.md"
+			tofile="${build_dir}/distribution/README.txt"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
-		<copy file="LICENSE.txt" tofile="${build_dir}/distribution/LICENSE.txt" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="LICENSE.txt"
+			tofile="${build_dir}/distribution/LICENSE.txt"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
 
 		<!-- Language pack -->
-		<copy file="${kunena.admin}/language/all/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="${kunena.admin}/language/all/README.md"
+			tofile="${tmp_dir}/languages_extra/README.txt"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
-		<copy file="${kunena.admin}/language/all/pkg_kunena_languages.xml" tofile="${tmp_dir}/languages_extra/pkg_kunena_languages.xml" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="${kunena.admin}/language/all/pkg_kunena_languages.xml"
+			tofile="${tmp_dir}/languages_extra/pkg_kunena_languages.xml"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
-		<copy file="${kunena.admin}/language/all/install.script.php" tofile="${tmp_dir}/languages_extra/install.script.php" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="${kunena.admin}/language/all/install.script.php"
+			tofile="${tmp_dir}/languages_extra/install.script.php"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
 
 		<!-- Readme For Package Directory-->
-		<copy file="README.md" tofile="${package_dir}/README.txt" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="README.md"
+			tofile="${package_dir}/README.txt"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
 
 		<echo message="Building Installer..DONE!" />
 	</target>
 
-	<target name="build-components" depends="build">
+	<target
+		name="build-components"
+		depends="build">
 		<echo message="Building Components..." />
 
 		<copy todir="${tmp_dir}/packages/com_kunena">
 			<fileset dir="${kunena.admin}">
-				<include name="language/en-GB/*.ini"/>
+				<include name="language/en-GB/*.ini" />
 			</fileset>
 		</copy>
 
 		<copy todir="${tmp_dir}/packages/com_kunena/site">
 			<fileset dir="${kunena.site}">
-				<include name="language/en-GB/*.ini"/>
+				<include name="language/en-GB/*.ini" />
 			</fileset>
 		</copy>
 
 		<!-- Add version information to all xml files and forum.php -->
-		<copy todir="${tmp_dir}/packages/com_kunena" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/com_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.admin}">
-				<include name="**/*.xml"/>
-				<include name="api/**"/>
-				<include name="media/**"/>
-				<include name="services/**"/>
-				<include name="src/**"/>
-				<include name="sql/**"/>
-				<include name="tmpl/**"/>
-				<exclude name="language/**/*.xml"/>
+				<include name="**/*.xml" />
+				<include name="api/**" />
+				<include name="media/**" />
+				<include name="services/**" />
+				<include name="src/**" />
+				<include name="sql/**" />
+				<include name="tmpl/**" />
+				<exclude name="language/**/*.xml" />
 			</fileset>
 		</copy>
 
-		<copy todir="${tmp_dir}/packages/com_kunena/site" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/com_kunena/site"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.site}">
-				<include name="**/*.xml"/>
-				<include name="src/**"/>
-				<include name="template/**"/>
-				<exclude name="language/**/*.xml"/>
-				<exclude name="template/**/params.ini"/>
+				<include name="**/*.xml" />
+				<include name="src/**" />
+				<include name="template/**" />
+				<exclude name="language/**/*.xml" />
+				<exclude name="template/**/params.ini" />
 			</fileset>
 		</copy>
 
 		<echo message="Building Components...DONE!" />
 	</target>
 
-	<target name="build-libraries" depends="build">
+	<target
+		name="build-libraries"
+		depends="build">
 		<echo message="Building Libraries.." />
-		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
-			<fileset dir="${project_dir}/libraries/kunena"/>
+		<copy
+			todir="${tmp_dir}/packages/lib_kunena"
+			overwrite="true">
+			<fileset dir="${project_dir}/libraries/kunena" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/lib_kunena" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/lib_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.libraries}">
-				<include name="forum/forum.php"/>
-				<include name="**/*.xml"/>
+				<include name="forum/forum.php" />
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
 	</target>
 
-	<target name="build-media" depends="build">
+	<target
+		name="build-media"
+		depends="build">
 		<echo message="Building Media.." />
-		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true">
-			<fileset dir="${kunena.media}"/>
+		<copy
+			todir="${tmp_dir}/packages/kunena_media"
+			overwrite="true">
+			<fileset dir="${kunena.media}" />
 		</copy>
 		<!-- Add version information to all xml files and forum.php -->
-		<copy todir="${tmp_dir}/packages/kunena_media" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/kunena_media"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.media}">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
 		<echo message="Building Media...DONE!" />
 	</target>
 
-	<target name="build-plugins" depends="build">
+	<target
+		name="build-plugins"
+		depends="build">
 		<echo message="Building Plugins.." />
-		<copy todir="${tmp_dir}/packages/plg_finder_kunena" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_finder_kunena"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_finder_kunena"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_finder_kunena" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_altauserpoints" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_altauserpoints"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_altauserpoints"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_altauserpoints" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_community" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_community"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_community"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_community" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_comprofiler" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_comprofiler"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_comprofiler"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_comprofiler" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_easyblog" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_easyblog"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_easyblog"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_easyblog" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_easyprofile" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_easyprofile"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_easyprofile"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_easyprofile" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_easysocial" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_easysocial"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_easysocial"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_easysocial" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_finder" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_finder"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_finder"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_finder" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_gravatar" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_gravatar"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_gravatar"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_gravatar" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_kunena" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_kunena"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_kunena"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_kunena" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_joomla" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_kunena_joomla"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_joomla"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_joomla" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_system_kunena"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_privacy_kunena"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_privacy_kunena" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_quickicon_kunena"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_system_kunena"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_system_kunena" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_sampledata_kunena" overwrite="true">
-			<fileset dir="${kunena.plugins}/plg_sampledata_kunena"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_quickicon_kunena"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_quickicon_kunena" />
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_finder_kunena" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_sampledata_kunena"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_sampledata_kunena" />
+		</copy>
+		<copy
+			todir="${tmp_dir}/packages/plg_finder_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_finder_kunena">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_altauserpoints" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_altauserpoints"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_altauserpoints">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_community" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_community"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_community">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_comprofiler" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_comprofiler"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_comprofiler">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_easyblog" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_easyblog"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_easyblog">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_easyprofile" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_easyprofile"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_easyprofile">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_easysocial" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_easysocial"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_easysocial">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_finder" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_finder"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_finder">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_gravatar" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_gravatar"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_gravatar">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_joomla" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_joomla"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_joomla">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_kunena_kunena" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_kunena">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_system_kunena" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_privacy_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${project_dir}/plugins/plg_privacy_kunena">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+		<copy
+			todir="${tmp_dir}/packages/plg_system_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_system_kunena">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_quickicon_kunena" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_quickicon_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_quickicon_kunena">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/packages/plg_sampledata_kunena" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			todir="${tmp_dir}/packages/plg_sampledata_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_sampledata_kunena">
-				<include name="**/*.xml"/>
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
 		<echo message="Building Plugins..DONE!" />
 	</target>
 
 
-	<target name="build-language" depends="build">
+	<target
+		name="build-language"
+		depends="build">
 		<echo message="Building Language..." />
 
-		<property name="languages" value="en-GB, af-ZA, ar-AA, az-AZ, bg-BG, bs-BA, ca-ES, ckb-IQ, cs-CZ, cy-GB, da-DK, de-DE, el-GR, eo-XX, es-ES, et-EE, eu-ES, fa-IR, fi-FI, fr-FR, he-IL, hi-IN, hr-HR, hu-HU, id-ID, it-IT, ja-JP, km-KH,
+		<property
+			name="languages"
+			value="en-GB, af-ZA, ar-AA, az-AZ, bg-BG, bs-BA, ca-ES, ckb-IQ, cs-CZ, cy-GB, da-DK, de-DE, el-GR, eo-XX, es-ES, et-EE, eu-ES, fa-IR, fi-FI, fr-FR, he-IL, hi-IN, hr-HR, hu-HU, id-ID, it-IT, ja-JP, km-KH,
 		ko-KR, kz-KZ, lt-LT, lv-LV, mk-MK, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU, sk-SK, sl-SI, sq-AL, sr-RS, sr-YU, sv-SE, th-TH, tr-TR, ug-CN, uk-UA, ur-PK, vi-VN, zh-CN, zh-TW" />
-		<foreach list="${languages}" param="lang" target="language-process">
-			<!-- mapper is needed to return one part of the string, in this case part of directory name -->
-			<mapper type="glob" from="com_kunena_*.xml" to="*"/>
+		<foreach
+			list="${languages}"
+			param="lang"
+			target="language-process">
+			<!-- mapper is needed to return one part of the string, in this case part of directory
+			name -->
+			<mapper
+				type="glob"
+				from="com_kunena_*.xml"
+				to="*" />
 			<fileset dir="${kunena.admin}/language/all/manifests">
-				<include name="*.xml"/>
+				<include name="*.xml" />
 			</fileset>
 		</foreach>
 		<echo message="Building Language...DONE!" />
 	</target>
 
 	<target name="language-process">
-		<copy file="${kunena.admin}/language/all/manifests/com_kunena_${lang}.xml" todir="${tmp_dir}/languages/${lang}" overwrite="true">
-			<filterchain refid="filter"/>
+		<copy
+			file="${kunena.admin}/language/all/manifests/com_kunena_${lang}.xml"
+			todir="${tmp_dir}/languages/${lang}"
+			overwrite="true">
+			<filterchain refid="filter" />
 		</copy>
-		<copy todir="${tmp_dir}/languages/${lang}/admin" includeemptydirs="false" overwrite="true">
+		<copy
+			todir="${tmp_dir}/languages/${lang}/admin"
+			includeemptydirs="false"
+			overwrite="true">
 			<mapper type="flatten" />
 			<fileset dir="${kunena.admin}">
-				<include name="**/${lang}.*.ini"/>
+				<include name="**/${lang}.*.ini" />
 			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}/languages/${lang}/site" includeemptydirs="false" overwrite="true">
+		<copy
+			todir="${tmp_dir}/languages/${lang}/site"
+			includeemptydirs="false"
+			overwrite="true">
 			<mapper type="flatten" />
 			<fileset dir="${kunena.site}">
-				<include name="**/${lang}.*.ini"/>
+				<include name="**/${lang}.*.ini" />
 			</fileset>
 		</copy>
 
 		<mkdir dir="${tmp_dir}/languages_extra/language" />
 		<!-- Process all prepared packages -->
 		<phingcall target="archive">
-			<property name="destination.file" value="${tmp_dir}/languages_extra/language/com_kunena_${lang}_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/languages/${lang}" />
+			<property
+				name="destination.file"
+				value="${tmp_dir}/languages_extra/language/com_kunena_${lang}_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/languages/${lang}" />
 		</phingcall>
 	</target>
 
-	<target name="package" depends="build">
+	<target
+		name="package"
+		depends="build">
 		<mkdir dir="${build_dir}/distribution/packages" />
 		<!-- Process all prepared packages -->
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/com_kunena_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/com_kunena" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/com_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/com_kunena" />
 		</phingcall>
 
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/lib_kunena_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/lib_kunena" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/lib_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/lib_kunena" />
 		</phingcall>
 
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/kunena_media_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/kunena_media" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/kunena_media_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/kunena_media" />
 		</phingcall>
 
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_finder_kunena_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_finder_kunena" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_finder_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_finder_kunena" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_altauserpoints_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_altauserpoints" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_altauserpoints_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_altauserpoints" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_community_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_community" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_community_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_community" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_comprofiler_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_comprofiler" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_comprofiler_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_comprofiler" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_easyblog_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_easyblog" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_easyblog_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_easyblog" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_easyprofile_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_easyprofile" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_easyprofile_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_easyprofile" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_easysocial_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_easysocial" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_easysocial_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_easysocial" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_finder_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_finder" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_finder_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_finder" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_gravatar_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_gravatar" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_gravatar_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_gravatar" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_joomla_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_joomla" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_joomla_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_joomla" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_kunena_kunena_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_kunena_kunena" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_kunena" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_quickicon_kunena_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_quickicon_kunena" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_quickicon_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_quickicon_kunena" />
 		</phingcall>
 
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_system_kunena_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_system_kunena" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_privacy_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_privacy_kunena" />
 		</phingcall>
 		<phingcall target="archive">
-			<property name="destination.file" value="dist/package/distribution/packages/plg_sampledata_kunena_v${xml.version}" />
-			<property name="base.directory" value="${tmp_dir}/packages/plg_sampledata_kunena" />
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_system_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_system_kunena" />
+		</phingcall>
+		<phingcall target="archive">
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_sampledata_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_sampledata_kunena" />
 		</phingcall>
 		<!-- Process all packages to zip -->
 
 		<!-- Zip the created Zips for packages -->
 		<phingcall target="archive">
-			<property name="destination.file" value="build/${cfg.prefix}${cfg.name}${str.fileversion}" />
-			<property name="base.directory" value="${build_dir}/distribution/" />
+			<property
+				name="destination.file"
+				value="build/${cfg.prefix}${cfg.name}${str.fileversion}" />
+			<property
+				name="base.directory"
+				value="${build_dir}/distribution/" />
 		</phingcall>
 
 		<!-- Process all packages for language pack -->
 		<phingcall target="archive">
-			<property name="destination.file" value="build/pkg_kunena_languages${str.fileversion}" />
-			<property name="base.directory" value="${tmp_dir}/languages_extra" />
+			<property
+				name="destination.file"
+				value="build/pkg_kunena_languages${str.fileversion}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/languages_extra" />
 		</phingcall>
 	</target>
 

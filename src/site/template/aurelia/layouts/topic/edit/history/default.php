@@ -29,7 +29,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
     <?php echo $this->escape($this->topic->subject) ?>
 </h3>
 
-<div id="history" class="collapse">
+<div id="history" class="collapse show">
     <p>
         <?php echo Text::_('COM_KUNENA_POST_TOPIC_HISTORY_MAX') . ' ' . $this->escape($this->config->historyLimit) . ' ' . Text::_('COM_KUNENA_POST_TOPIC_HISTORY_LAST') ?>
     </p>

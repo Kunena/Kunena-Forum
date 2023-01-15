@@ -89,23 +89,23 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
         $who                 .= Text::_('COM_KUNENA_WHO_ONLINE_NOW');
         $this->membersOnline = $who;
 
-        $onlineList = [];
-        $hiddenList = [];
+        $this->onlineList = [];
+        $this->hiddenList = [];
 
         foreach ($users as $userid => $usertime) {
             $user = KunenaUserHelper::get($userid);
 
             if (!$user->showOnline) {
                 if ($moderator) {
-                    $hiddenList[$user->getName()] = $user;
+                    $this->hiddenList[$user->getName()] = $user;
                 }
             } else {
-                $onlineList[$user->getName()] = $user;
+                $this->onlineList[$user->getName()] = $user;
             }
         }
 
-        ksort($onlineList);
-        ksort($hiddenList);
+        ksort($this->onlineList);
+        ksort($this->hiddenList);
 
         $profile        = KunenaFactory::getProfile();
         $this->usersUrl = $profile->getUserListURL();

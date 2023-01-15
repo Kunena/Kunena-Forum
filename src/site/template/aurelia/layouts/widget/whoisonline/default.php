@@ -80,6 +80,19 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
                                     <span><?php echo Text::_('COM_KUNENA_LEGEND'); ?>:</span>
                                     <span class="kwho-admin">
                                         <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
+                                    </span>
+                                    <span class="kwho-guest">
+                                        <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>
+                                    </span>
+                                    <span class="kwho-moderator">
+                                        <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_MODERATOR'); ?>
+                                    </span>
+                                    <span class="kwho-banned">
+                                        <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?>
+                                    </span>
+                                    <span class="kwho-user">
+                                        <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?>
+                                    </span>
                                     <span class="kwho-guest">
                                         <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>
                                     </span>

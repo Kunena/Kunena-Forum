@@ -39,19 +39,19 @@ use Joomla\CMS\HTML\HTMLHelper;
             $columninx++;
         }
 
+        $class = 'nav-item item-' . $item->id;
+
         if (in_array($item->id, $this->path)) {
-            $class = ' active';
+            $class .= ' active';
         } elseif ($item->type == 'alias') {
             $aliasToId = $item->params->get('aliasoptions');
 
             if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path) - 1]) {
-                $class = ' active';
+                $class .= ' active';
             } elseif (in_array($aliasToId, $this->path)) {
-                $class = ' alias-parent-active';
+                $class .= ' alias-parent-active';
             }
         }
-
-        $class = 'nav-item item-' . $item->id;
 
         if ($item->parent) {
             $class .= ' parent';
@@ -72,7 +72,7 @@ use Joomla\CMS\HTML\HTMLHelper;
             } else {
                 echo '<li class="dropdown-divider"></li>';
             }
-        /*} elseif ($item->deeper) {
+            /*} elseif ($item->deeper) {
             if ($item->level > 1) {
                 require ModuleHelper::getLayoutPath('mod_menu', 'default_url');
             } else {
@@ -89,7 +89,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
                     if ($item->deeper) {
                         $attributes['class'] = 'nav-link dropdown-toggle';
-                        $attributes['role']  =   'button'; 
+                        $attributes['role']  =   'button';
                         $attributes['data-bs-toggle']  = 'dropdown';
                     } elseif ($item->level > 2) {
                         $attributes['class'] = 'dropdown-item';
@@ -141,7 +141,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
         // The next item is deeper.
         if ($item->deeper) {
-        if ($item->level < 3) {
+            if ($item->level < 3) {
                 echo '<ul class="dropdown-menu" style="left:0;top:40px;">';
             } elseif ($item->level == 3) {
                 echo '<ul class="dropdown-menu">';

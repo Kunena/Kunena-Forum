@@ -211,7 +211,7 @@ $labels          = $this->ktemplate->params->get('labels');
                                    for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?> </label>
 
                             <div class="controls">
-                                <input type="text" size="7" name="targetid" value=""/>
+                                <input type="text" size="7" class="form-control" name="targetid" value=""/>
                             </div>
                         </div>
                         <div class="control-group" id="kmod_subject">

@@ -1521,9 +1521,7 @@ class KunenaTopic extends KunenaDatabaseObject
             throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
 
             return false;
-        }
-
-        if ($target instanceof KunenaTopic) {
+        } elseif ($target instanceof KunenaTopic) {
             // Move messages into another topic (original topic will always remain, either as real one or shadow)
 
             if ($target == $this) {
@@ -1550,9 +1548,7 @@ class KunenaTopic extends KunenaDatabaseObject
             if ($subjectall) {
                 $subject = $target->subject;
             }
-        }
-
-        if ($target instanceof KunenaCategory) {
+        } elseif($target instanceof KunenaCategory) {
             // Move messages into category
 
             if ($target->isSection()) {

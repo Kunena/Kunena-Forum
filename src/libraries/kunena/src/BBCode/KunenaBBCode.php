@@ -1540,6 +1540,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $title    = $default ? $default : Text::_('COM_KUNENA_BBCODE_SPOILER');
         $hidden   = ($document instanceof HtmlDocument);
 
+        if ($bbcode->parent->message instanceof KunenaMessage) {
+            $message_id = $bbcode->parent->message->id;
+        } else {
+            $message_id = $bbcode->parent->id;
+        }
+
         $layout = KunenaLayout::factory('BBCode/Spoiler');
 
         if ($layout->getPath()) {
@@ -1549,6 +1555,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 ->set('title', htmlspecialchars($title, ENT_COMPAT, 'UTF-8'))
                 ->set('hidden', $hidden)
                 ->set('content', $content)
+                ->set('message_id', $message_id)
                 ->set('params', $params);
         }
 

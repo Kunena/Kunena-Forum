@@ -28,11 +28,11 @@ Text::script('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND');
   <div class="kspoiler-title" style="display:inline-block;">
     <?php echo $this->title; ?>
   </div>
-  <a class="btn btn-primary" id="collapse-btn" data-bs-toggle="collapse" href="#collapseSpoiler" role="button" aria-expanded="false" aria-controls="collapseSpoiler">
+  <a class="btn btn-primary" id="collapse-btn<?php echo $this->message_id ?>" data-bs-toggle="collapse" href="#collapseSpoiler<?php echo $this->message_id ?>" role="button" aria-expanded="false" aria-controls="collapseSpoiler<?php echo $this->message_id ?>">
     <?php echo Text::_('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'); ?>
   </a>
 </p>
-<div class="collapse" id="collapseSpoiler">
+<div class="collapse" id="collapseSpoiler<?php echo $this->message_id ?>">
   <div class="card card-body">
     <?php echo $this->content; ?>
   </div>

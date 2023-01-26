@@ -10,17 +10,12 @@
 jQuery(document).ready(function ($) {
 
 	/* To hide or open spoiler on click */
-	var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
-	var collapseList = collapseElementList.map(function (collapseEl) {
-        collapseEl.addEventListener('shown.bs.collapse', function (mopt) {
-            var idString = collapseEl.id;
-            $('#collapse-btn'+idString.substr(15)).html(Joomla.Text._('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE'));
-        })
-        collapseEl.addEventListener('hidden.bs.collapse', function (mopt) {
-            var idString = collapseEl.id;
-            $('#collapse-btn'+idString.substr(15)).html(Joomla.Text._('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'));
-        })
-    })
+	$(document).on('click', '.kspoiler-expand', function (e) {
+		e.preventDefault()
+		const show = $(this.children[0]).val() === Joomla.Text._('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND');
+		$(this.children[0]).val(show ? Joomla.Text._('COM_KUNENA_LIB_BBCODE_SPOILER_HIDE') : Joomla.Text._('COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND'));
+		$(this).parent().children('.kspoiler-wrapper').toggle()
+	});
 
 	/* To allow to close or open the quick-reply modal box */
 	$('.openmodal').click(function () {

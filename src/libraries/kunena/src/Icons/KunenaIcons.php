@@ -211,7 +211,7 @@ class KunenaIcons
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa fa-star-fill" aria-hidden="true"></i>';
+            return '<i class="fa-solid fa-star" aria-hidden="true"></i>';
         }
 
         if ($topicicontype == 'image') {
@@ -1178,7 +1178,7 @@ class KunenaIcons
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa fa-cog" aria-hidden="true"></i>';
+            return '<i class="fa-solid fa-gears" aria-hidden="true"></i>';
         }
 
         return KunenaSvgIcons::loadsvg('gear');

@@ -410,6 +410,26 @@ class KunenaIcons
     }
 
     /**
+     * Return the thumbs-down icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function thumbsdown(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa-regular fa-thumbs-down" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('heart-fill');
+    }
+
+    /**
      * Return the secure icon
      *
      * @return  string

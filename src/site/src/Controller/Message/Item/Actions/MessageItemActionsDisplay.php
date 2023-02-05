@@ -230,7 +230,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                         'user',
                         'thankyou',
                         false,
-                        KunenaIcons::poll_add()
+                        KunenaIcons::thumbsup()
                     )
                 );
 
@@ -244,7 +244,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                         'user',
                         'thankyou',
                         true,
-                        KunenaIcons::poll_add()
+                        KunenaIcons::thumbsup()
                     )
                 );
             }
@@ -263,7 +263,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                         'user',
                         'unthankyou',
                         false,
-                        KunenaIcons::poll_rem()
+                        KunenaIcons::thumbsdown()
                     )
                 );
 
@@ -277,7 +277,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                         'user',
                         'unthankyou',
                         true,
-                        KunenaIcons::poll_rem()
+                        KunenaIcons::thumbsdown()
                     )
                 );
             }

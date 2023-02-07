@@ -48,7 +48,7 @@ if ($config->orderingSystem == 'mesid') {
 
 <small class="text-muted float-end">
     <?php if ($this->ipLink && !empty($this->message->ip)) :
-        ?>
+    ?>
         <?php echo KunenaIcons::ip(); ?>
         <span class="ip"> <?php echo $this->ipLink; ?> </span>
     <?php endif; ?>
@@ -56,18 +56,17 @@ if ($config->orderingSystem == 'mesid') {
     <?php echo $message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
     <?php
     if ($message->modified_time) :
-        ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
-    endif; ?>
-    <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>"
-       rel="canonical">#<?php echo $this->numLink; ?></a>
-    <span class="visible-xs"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+    ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
+            endif; ?>
+    <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
+    <span class="d-block d-sm-none"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
 </small>
 
 <div class="clear-fix"></div>
 
 <div class="horizontal-message">
     <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) :
-        ?> badger-moderator <?php
+                                        ?> badger-moderator <?php
                                         endif; ?> message-<?php echo $this->message->getState(); ?>">
         <div class="kmessage">
             <div class="mykmsg-header">
@@ -98,13 +97,14 @@ if ($config->orderingSystem == 'mesid') {
     <?php if ($this->config->reportMsg && $this->me->exists()) : ?>
         <div class="report pb-5">
             <?php echo KunenaLayout::factory('Widget/Button')
-                ->setProperties(['url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
-                                 'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
-                                 'modal' => 'modal', 'pullright' => 'pullright', ]); ?>
+                ->setProperties([
+                    'url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
+                    'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
+                    'modal' => 'modal', 'pullright' => 'pullright',
+                ]); ?>
         </div>
         <?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->userReport || !$this->config->userReport && $this->me->userid != $this->message->userid) : ?>
-            <div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
-                 aria-hidden="true" data-backdrop="false" style="display: none;">
+            <div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false" style="display: none;">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -172,7 +172,7 @@ if ($config->orderingSystem == 'mesid') {
             $datehover = 'data-bs-toggle="tooltip" title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormatHover') . '"';
             $dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormat') . ' ';
         }
-        ?>
+    ?>
         <div class="alert alert-info d-none d-sm-block" <?php echo $datehover ?>>
             <?php echo Text::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateshown, $message->getModifier()->getLink(null, null, '', '', null, $this->category->id)); ?>
             <?php if ($message->modified_reason) {

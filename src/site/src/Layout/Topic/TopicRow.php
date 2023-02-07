@@ -24,4 +24,13 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class TopicRow extends KunenaLayout
 {
+    public $topic;
+
+    public $position;
+
+    public $checkbox;
+
+    public $ktemplate;
+
+    public $cols;
 }

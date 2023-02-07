@@ -28,6 +28,32 @@ class TopicList extends KunenaLayout
 {
     public $output;
 
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $config;
+
+    public $me;
+
+    public $topics;
+
+    public $allowed;
+
+    public $cache;
+
+    public $catParams;
+
+    public $categorylist;
+
+    public $topic;
+
+    public $state;
+
+    public $embedded;
+
     /**
      * Method to return HTML select list for time filter
      *

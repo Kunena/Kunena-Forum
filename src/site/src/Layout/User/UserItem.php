@@ -59,6 +59,32 @@ class UserItem extends KunenaLayout
      */
     public $user;
 
+    public $output;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $tabs;
+
+    public $state;
+
+    public $candisplaymail;
+
+    public $ktemplate;
+
+    public $points;
+
+    public $medals;
+
+    public $private;
+
+    public $socials;
+
+    public $avatar;
+
+    public $banInfo;
+
     /**
      * Method to get tabs for user profile
      *

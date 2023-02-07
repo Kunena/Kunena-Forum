@@ -1091,6 +1091,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         ],
     ];
 
+    public $config;
+
+    public $templateParams;
+
+    public $me;
+
     /**
      * @since   Kunena 6.0
      * @throws  Exception

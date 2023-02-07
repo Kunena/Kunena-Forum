@@ -38,6 +38,12 @@ use Kunena\Forum\Site\Model\TopicsModel;
  */
 class TopicListingRecentDisplay extends ListDisplay
 {
+    public $state;
+
+    public $embedded;
+
+    public $actions;
+
     /**
      * Prepare recent topics list.
      *

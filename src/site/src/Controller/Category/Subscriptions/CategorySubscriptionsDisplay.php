@@ -59,6 +59,12 @@ class CategorySubscriptionsDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Category/List';
 
+    public $model;
+
+    public $state;
+
+    public $actions;
+
     /**
      * Prepare category subscriptions display.
      *

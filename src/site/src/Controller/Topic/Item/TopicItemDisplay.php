@@ -88,6 +88,24 @@ class TopicItemDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Topic/Item';
 
+    public $allowed;
+
+    public $cache;
+
+    public $catParams;
+
+    public $categorylist;
+
+    public $message;
+
+    public $messages;
+
+    public $threaded;
+
+    public $userTopic;
+
+    public $quickReply;
+
     /**
      * Prepare topic display.
      *

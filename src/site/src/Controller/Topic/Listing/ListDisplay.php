@@ -62,6 +62,16 @@ abstract class ListDisplay extends KunenaControllerDisplay
      */
     public $headerText;
 
+    public $allowed;
+
+    public $cache;
+
+    public $catParams;
+
+    public $categorylist;
+
+    public $topic;
+
     /**
      * @var     string
      * @since   Kunena 6.0

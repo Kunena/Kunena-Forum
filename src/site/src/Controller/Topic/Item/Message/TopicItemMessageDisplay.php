@@ -84,6 +84,24 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Topic/Item/Message';
 
+    public $location;
+
+    public $detail;
+
+    public $ktemplate;
+
+    public $candisplaymail;
+
+    public $captchaEnabled;
+
+    public $thankyou;
+
+    public $total_thankyou;
+
+    public $more_thankyou;
+
+    public $thankyou_delete;
+
     /**
      * Prepare displaying message.
      *

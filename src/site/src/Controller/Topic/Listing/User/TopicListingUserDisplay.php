@@ -38,6 +38,12 @@ use Kunena\Forum\Site\Model\TopicsModel;
  */
 class TopicListingUserDisplay extends ListDisplay
 {
+    public $state;
+
+    public $moreUri;
+
+    public $embedded;
+
     /**
      * Prepare user's topic list.
      *

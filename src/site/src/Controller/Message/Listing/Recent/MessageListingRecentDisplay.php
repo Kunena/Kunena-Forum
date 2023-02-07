@@ -45,6 +45,20 @@ class MessageListingRecentDisplay extends ListDisplay
      */
     public $messages;
 
+    public $model;
+
+    public $state;
+
+    public $moreUri;
+
+    public $embedded;
+
+    public $view;
+
+    public $messagemore;
+
+    public $actions;
+
     /**
      * @var     string
      * @since   Kunena 6.0

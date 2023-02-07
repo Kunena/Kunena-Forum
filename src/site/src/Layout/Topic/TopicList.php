@@ -26,6 +26,8 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  */
 class TopicList extends KunenaLayout
 {
+    public $output;
+
     /**
      * Method to return HTML select list for time filter
      *

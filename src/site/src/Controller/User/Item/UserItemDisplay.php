@@ -77,6 +77,24 @@ class UserItemDisplay extends KunenaControllerDisplay
      */
     protected $name = 'User/Item';
 
+    public $state;
+
+    public $candisplaymail;
+
+    public $ktemplate;
+
+    public $points;
+
+    public $medals;
+
+    public $private;
+
+    public $socials;
+
+    public $avatar;
+
+    public $banInfo;
+
     /**
      * Load user profile.
      *

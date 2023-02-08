@@ -32,6 +32,8 @@ class WidgetModule extends KunenaLayout
      */
     public $position = null;
 
+    public $cols;
+
     /**
      * Renders module position.
      *

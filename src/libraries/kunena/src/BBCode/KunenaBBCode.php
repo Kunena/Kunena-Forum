@@ -121,6 +121,8 @@ class KunenaBBCode extends BBCode
      */
     public $config;
 
+    public $context;
+
     /**
      * Use KunenaBbcode::getInstance() instead.
      *

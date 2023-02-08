@@ -28,6 +28,18 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class AnnouncementListing extends KunenaLayout
 {
+    public $output;
+
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $config;
+
+    public $announcements;
+
     /**
      * Method to get moderation action in announcements list
      *

@@ -79,6 +79,14 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Category/Index';
 
+    public $ktemplate;
+
+    public $templateParams;
+
+    public $allowed;
+
+    public $categorylist;
+
     /**
      * Prepare category index display.
      *

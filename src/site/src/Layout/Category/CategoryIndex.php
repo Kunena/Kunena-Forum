@@ -58,6 +58,30 @@ class CategoryIndex extends KunenaLayout
      */
     public $total;
 
+    public $output;
+
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $config;
+
+    public $me;
+
+    public $sections;
+
+    public $categories;
+
+    public $pending;
+
+    public $more;
+
+    public $templateParams;
+
+    public $allowed;
+
     /**
      * Method to return a KunenaPagination object
      *

@@ -106,6 +106,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
     public $quickReply;
 
+    public $image;
+ 
+    public $params;
+
     /**
      * Prepare topic display.
      *

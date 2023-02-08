@@ -64,6 +64,16 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Message/Item/Actions';
 
+    public $category;
+
+    public $message_closed;
+
+    public $quickReply;
+
+    public $url;
+
+    public $ipLink;
+
     /**
      * Prepare message actions display.
      *

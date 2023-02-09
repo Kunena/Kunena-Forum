@@ -32,6 +32,44 @@ class MessageList extends KunenaLayout
      */
     public $state;
 
+    public $output;
+
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $config;
+
+    public $me;
+
+    public $topics;
+
+    public $allowed;
+
+    public $cache;
+
+    public $catParams;
+
+    public $categorylist;
+
+    public $topic;
+
+    public $messages;
+
+    public $model;
+
+    public $moreUri;
+
+    public $embedded;
+
+    public $view;
+
+    public $messagemore;
+
+    public $actions;
+
     /**
      * Method to display the time filter
      *

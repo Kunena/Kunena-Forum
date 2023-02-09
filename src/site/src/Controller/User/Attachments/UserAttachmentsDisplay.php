@@ -66,6 +66,12 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
      */
     protected $name = 'User/Attachments';
 
+    public $template;
+
+    public $moreUri;
+
+    public $total;
+
     /**
      * Prepare user attachments list.
      *

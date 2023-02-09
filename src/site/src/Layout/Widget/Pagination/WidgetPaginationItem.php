@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Layout\Widget;
+namespace Kunena\Forum\Site\Layout\Widget\Pagination;
 
 defined('_JEXEC') or die;
 
@@ -21,7 +21,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  *
  * @since  K6.1
  */
-class WidgetBreadcrumb extends KunenaLayout
+class WidgetPaginationItem extends KunenaLayout
 {
-    public $breadcrumb;
+    public $item;
 }

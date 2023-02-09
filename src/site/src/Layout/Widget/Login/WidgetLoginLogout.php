@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Layout\Widget;
+namespace Kunena\Forum\Site\Layout\Widget\Login;
 
 defined('_JEXEC') or die;
 
@@ -21,19 +21,41 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  *
  * @since  K6.1
  */
-class WidgetWhoisonline extends KunenaLayout
+class WidgetLoginLogout extends KunenaLayout
 {
     public $output;
-
+    
     public $user;
-
+    
     public $headerText;
-
+    
     public $pagination;
-
+    
     public $config;
-
-    public $usersUrl;
-
-    public $membersOnline;
+    
+    public $me;
+    
+    public $my;
+    
+    public $registrationUrl;
+    
+    public $resetPasswordUrl;
+    
+    public $remindUsernameUrl;
+    
+    public $rememberMe;
+    
+    public $lastvisitDate;
+    
+    public $announcementsUrl;
+    
+    public $pm_link;
+    
+    public $inboxCount;
+    
+    public $inboxCountValue;
+    
+    public $profile_edit_url;
+    
+    public $plglogin;
 }

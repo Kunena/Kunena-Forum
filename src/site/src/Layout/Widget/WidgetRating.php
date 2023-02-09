@@ -19,7 +19,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 /**
  * KunenaLayoutTopicEditEditor
  *
- * @since  K6.0
+ * @since  K6.1
  */
 class WidgetRating extends KunenaLayout
 {

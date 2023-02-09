@@ -21,7 +21,13 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  *
  * @since  K6.1
  */
-class WidgetBreadcrumb extends KunenaLayout
+class WidgetLabel extends KunenaLayout
 {
-    public $breadcrumb;
+    public $label;
+    
+    public $description;
+    
+    public $state;
+    
+    public $link;
 }

@@ -97,7 +97,7 @@ $topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->mess
         </div>
 
         <div class="started">
-            <span class="ktopic-category"> <?php echo Text::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($this->topic->getCategory(), null, $this->topic->getCategory()->description, KunenaTemplate::getInstance()->tooltips())) ?></span>
+            <span class="ktopic-category"> <?php echo Text::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink($topic->getCategory(), null, $topic->getCategory()->description, KunenaTemplate::getInstance()->tooltips())) ?></span>
             <br />
             <?php echo Text::_('COM_KUNENA_TOPIC_STARTED_ON') ?>
             <?php if ($config->postDateFormat != 'none') :

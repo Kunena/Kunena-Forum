@@ -35,7 +35,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
     <div class="row">
         <div id="j-main-container" class="col-md-12" role="main">
             <?php if (!KunenaForum::versionSampleData()) :
-                ?>
+            ?>
                 <div class="row clearfix">
                     <div class="col-xl-3 col-md-3">
                         <div class="card proj-t-card bg-warning">
@@ -55,9 +55,10 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="sample-data__title me-2">
                                                     <span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
-                                                    <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?>                  </div>
+                                                    <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?>
+                                                </div>
                                                 <button type="button" class="btn btn-secondary btn-sm apply-sample-data" data-type="kunena" data-steps="1">
-                                                    <span class="icon-upload" aria-hidden="true"></span> <?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL'); ?>                     <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?></span>
+                                                    <span class="icon-upload" aria-hidden="true"></span> <?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL'); ?> <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?></span>
                                                 </button>
                                             </div>
                                             <p class="sample-data__desc small mt-1"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_SAMPLE_DATA') ?></p>
@@ -117,7 +118,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                 </div>
             <?php endif; ?>
             <?php if (!$this->KunenaMenusExists) : ?>
-            <div class="row clearfix">
+                <div class="row clearfix">
                     <div class="col-xl-3 col-md-3">
                         <div class="card proj-t-card bg-warning">
                             <div class="card-body">
@@ -136,7 +137,8 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="sample-data__title me-2">
                                                     <span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
-                                                    <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU') ?></div>
+                                                    <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU') ?>
+                                                </div>
                                                 <button type="button" class="btn btn-secondary btn-sm apply-sample-data" data-type="kunena" data-steps="1">
                                                     <span class="icon-upload" aria-hidden="true"></span> <a href="<?php echo Uri::base() ?>index.php?option=com_kunena&view=tools&layout=menu"><?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL') ?></a>
                                                     <span class="visually-hidden"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU') ?></span>
@@ -236,7 +238,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=categories'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=categories'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CATEGORIES') ?>
                                         </a>
                                     </h6>
@@ -248,12 +250,6 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                     <i class="fas fa-list-alt bg-cyan"></i>
                                 </div>
                             </div>
-                            <span class="pt-badge bg-cyan">
-                                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=categories&layout=create'); ?>">
-                                        <i class="fas fa-plus"
-                                           style="width: 12px;height: 12px;margin-top: -40px;font-size: 12px"></i>
-                                    </a>
-                                </span>
                         </div>
                     </div>
                 </div>
@@ -264,14 +260,14 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=users'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=users'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_USERS') ?>
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalCount(); ?></h3>
                                     <p class="mb-0"><?php $lastid = KunenaUserHelper::getLastId();
-                                        $user                     = KunenaUser::getInstance($lastid)->registerDate;
-                                        echo KunenaDate::getInstance($user)->toKunena('ago'); ?></p>
+                                                    $user                     = KunenaUser::getInstance($lastid)->registerDate;
+                                                    echo KunenaDate::getInstance($user)->toKunena('ago'); ?></p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-users bg-cyan"></i>
@@ -287,7 +283,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=attachments'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=attachments'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_FILES') ?>
                                         </a>
                                     </h6>
@@ -307,7 +303,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=smilies'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=smilies'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_EMOTICONS') ?>
                                         </a>
                                     </h6>
@@ -328,7 +324,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=config'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=config'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>
                                         </a>
                                     </h6>
@@ -349,7 +345,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=statistics'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=statistics'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_MENU_STATISTICS') ?>
                                         </a>
                                     </h6>
@@ -370,7 +366,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=templates'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=templates'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TEMPLATES') ?>
                                         </a>
                                     </h6>
@@ -391,7 +387,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=ranks'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=ranks'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_RANKS') ?>
                                         </a>
                                     </h6>
@@ -412,7 +408,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=plugins'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=plugins'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_PLUGINS') ?>
                                         </a>
                                     </h6>
@@ -433,7 +429,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=trash'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=trash'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>
                                         </a>
                                     </h6>
@@ -453,7 +449,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=logs'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=logs'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_LOG_MANAGER') ?>
                                         </a>
                                     </h6>
@@ -473,7 +469,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools'); ?>">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>
                                         </a>
                                     </h6>

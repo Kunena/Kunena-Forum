@@ -56,6 +56,16 @@ class SearchResultsDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Search/Results';
 
+    public $state;
+
+    public $message_ordering;
+
+    public $searchwords;
+
+    public $isModerator;
+
+    public $results;
+
     /**
      * Prepare search results display.
      *

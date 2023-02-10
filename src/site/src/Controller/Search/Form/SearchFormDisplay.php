@@ -44,6 +44,14 @@ class SearchFormDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Search/Form';
 
+    public $state;
+
+    public $me;
+
+    public $isModerator;
+
+    public $error;
+
     /**
      * Prepare search form display.
      *

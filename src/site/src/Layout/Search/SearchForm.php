@@ -32,6 +32,26 @@ class SearchForm extends KunenaLayout
      */
     public $state;
 
+    public $output;
+
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $config;
+
+    public $model;
+
+    public $me;
+
+    public $isModerator;
+
+    public $error;
+
+    public $ktemplate;
+
     /**
      * Method to display the list to choose between posts or titles
      *

@@ -36,12 +36,12 @@ $announcement = $this->announcement;
                 $announcement->displayField('title'),
                 null,
                 'follow'
-); ?>
+            ); ?>
         </div>
     </td>
 
     <?php if ($this->checkbox) :
-        ?>
+    ?>
         <td class="center">
             <?php if ($this->canPublish()) {
                 echo HTMLHelper::_('kunenagrid.published', $row, $announcement->published, '', true);
@@ -73,24 +73,23 @@ $announcement = $this->announcement;
                 );
             } ?>
         </td>
+        <td>
+            <?php if (KunenaConfig::getInstance()->username) :
+            ?>
+                <?php echo $announcement->getAuthor()->username; ?>
+            <?php else :
+            ?>
+                <?php echo $announcement->getAuthor()->name; ?>
+            <?php endif; ?>
+        </td>
     <?php endif; ?>
-
-    <td>
-        <?php if (KunenaConfig::getInstance()->username) :
-            ?>
-            <?php echo $announcement->getAuthor()->username; ?>
-        <?php else :
-            ?>
-            <?php echo $announcement->getAuthor()->name; ?>
-        <?php endif; ?>
-    </td>
 
     <td class="center d-none d-md-table-cell">
         <?php echo $announcement->displayField('id'); ?>
     </td>
 
     <?php if ($this->checkbox) :
-        ?>
+    ?>
         <td class="center">
             <?php echo HTMLHelper::_('kunenagrid.id', $row, $announcement->id); ?>
         </td>

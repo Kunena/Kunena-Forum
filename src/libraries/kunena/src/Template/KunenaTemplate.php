@@ -1782,7 +1782,7 @@ HTML;
     }
 
     /**
-     * Load fontawesome 6.x library which includes the compatiblity with v5 and v4
+     * Load fontawesome 6.x library which includes by itself for most icons the compatiblity with v5 and v4
      *
      * @since Kunena 5.2
      */
@@ -1791,7 +1791,7 @@ HTML;
         $fontawesome          = $this->params->get('fontawesome');
 
         if ($fontawesome) {
-            $this->addScript('https://use.fontawesome.com/releases/v6.2.1/js/all.js', [], ['defer' => true]);
+            $this->addScript('https://use.fontawesome.com/releases/v6.3.0/js/all.js', [], ['defer' => true]);
         }
     }
 

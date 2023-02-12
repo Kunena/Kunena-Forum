@@ -26,7 +26,7 @@ HTMLHelper::_('bootstrap.framework');
 
 $this->addScriptDeclaration(
     "// <![CDATA[
-kunena_url_ajax= '" . KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw") . "';
+kunena_url_ajax= '" . KunenaRoute::_("/index.php?option=com_kunena&view=category&type=raw&format=json&layout=raw") . "';
 // ]]>"
 );
 

@@ -105,6 +105,28 @@ class SearchResults extends KunenaLayout
      * @since   Kunena 6.0
      */
     public $messageHtml;
+    
+    public $output;
+    
+    public $user;
+    
+    public $headerText;
+    
+    public $pagination;
+    
+    public $config;
+    
+    public $model;
+    
+    public $total;
+    
+    public $state;
+    
+    public $message_ordering;
+    
+    public $isModerator;
+    
+    public $error;
 
     /**
      * Method to display the layout of search results

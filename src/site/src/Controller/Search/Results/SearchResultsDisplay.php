@@ -65,6 +65,8 @@ class SearchResultsDisplay extends KunenaControllerDisplay
     public $isModerator;
 
     public $results;
+    
+    public $error;
 
     /**
      * Prepare search results display.

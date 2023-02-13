@@ -15,15 +15,7 @@ namespace Kunena\Forum\Site\Layout\User\Item;
 
 \defined('_JEXEC') or die;
 
-use Exception;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use Kunena\Forum\Libraries\User\KunenaUser;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use stdClass;
 
 /**
  * KunenaLayoutUserItem
@@ -33,22 +25,22 @@ use stdClass;
 class UserItemSummary extends KunenaLayout
 {
     public $profile;
-    
+
     public $config;
-    
+
     public $candisplaymail;
-    
+
     public $me;
-    
+
     public $private;
-    
+
     public $points;
-    
+
     public $medals;
-    
+
     public $socials;
-    
+
     public $avatar;
-    
+
     public $banInfo;
 }

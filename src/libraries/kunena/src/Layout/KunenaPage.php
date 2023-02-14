@@ -32,6 +32,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
  */
 class KunenaPage extends KunenaLayout
 {
+    public $breadcrumb;
+
     /**
      * Returns layout class.
      *

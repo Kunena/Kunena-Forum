@@ -40,6 +40,52 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
     public $name = 'Statistics/General';
 
     public $lastUserId;
+    
+    public $memberCount;
+    
+    public $sectionCount;
+    
+    public $categoryCount;
+    
+    public $topicCount;
+    
+    public $messageCount;
+    
+    public $todayTopicCount;
+    
+    public $yesterdayTopicCount;
+    
+    public $todayReplyCount;
+    
+    public $yesterdayReplyCount;
+    
+    public $topTopics;
+    
+    public $topPosters;
+    
+    public $topProfiles;
+    
+    public $topPolls;
+    
+    public $topThanks;
+    
+    public $top;
+    
+    public $showGenStats;
+    
+    public $showPopUserStats;
+    
+    public $showPopSubjectStats;
+    
+    public $showPopPollStats;
+    
+    public $showPopThankYouStats;
+    
+    public $showStats;
+    
+    public $latestMemberLink;
+    
+    public $userlistUrl;
 
     /**
      * Prepare general statistics display.

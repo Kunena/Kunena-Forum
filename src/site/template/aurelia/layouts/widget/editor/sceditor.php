@@ -54,7 +54,7 @@ Text::script('COM_KUNENA_SCEDITOR_BUTTON_INSERT_POLL_LIFE_SPAN');
 // $this->getAllowedtoUseLinksImages();
 
 $this->doc->addScriptOptions('com_kunena.template_editor_buttons_configuration', $this->template->params->get('editorButtons'));
-$this->doc->addScriptOptions('com_kunena.root_path', Joomla\CMS\Uri\Uri::root(true));
+$this->doc->addScriptOptions('com_kunena.root_path', Uri::root(true));
 $this->doc->addScriptOptions('com_kunena.editor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));
 
 $this->wa->registerAndUseScript('sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js');

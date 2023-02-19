@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site\Layout\Announcement;
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Compat\Joomla\Layout\KunenaLayoutBase;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
@@ -43,7 +44,7 @@ class AnnouncementListing extends KunenaLayout
     /**
      * Method to get moderation action in announcements list
      *
-     * @see     KunenaCompatLayoutBase::getOptions()
+     * @see     KunenaLayoutBase::getOptions()
      *
      * @return  array
      *

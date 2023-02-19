@@ -188,8 +188,8 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
             $this->poll = $this->topic->getPoll();
         }
 
-        $privateMessage       = new KunenaPrivateMessage();
-        $privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
+        $this->privateMessage       = new KunenaPrivateMessage();
+        $this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
         $this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
         $this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;

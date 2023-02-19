@@ -150,8 +150,8 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
             ->where('author_id', '=', $this->message->userid)
             ->order('id')
             ->limit(1);
-        $privateMessage       = $finder->firstOrNew();
-        $privateMessage->body = $saved ? $saved['private'] : $privateMessage->body;
+        $this->privateMessage       = $finder->firstOrNew();
+        $this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
         $this->postAnonymous        = isset($saved['anonymous']) ? $saved['anonymous'] : !empty($this->category->postAnonymous);
         $this->subscriptionsChecked = false;

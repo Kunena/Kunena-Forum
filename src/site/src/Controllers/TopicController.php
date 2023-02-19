@@ -549,7 +549,7 @@ class TopicController extends KunenaController
             'poll_options'      => $this->app->input->post->get('polloptionsID', [], 'array'),
             'poll_time_to_live' => $this->app->input->getString('poll_time_to_live', 0),
             'subscribe'         => $this->app->input->getInt('subscribeMe', 0),
-            'private'           => (string) $this->app->input->getRaw('private'),
+            'private'           => (string) $this->app->input->getRaw('message_private'),
             'rating'            => 0,
             'params'            => '',
             'quote'             => 0,
@@ -1102,7 +1102,7 @@ class TopicController extends KunenaController
             return;
         }
 
-        $body      = (string) $this->input->getRaw('private');
+        $body      = (string) $this->input->getRaw('message_private');
         $attachIds = $this->input->get('attachment_private', [], 'array');
 
         if (!trim($body) && !$attachIds) {
@@ -1176,7 +1176,7 @@ class TopicController extends KunenaController
             'poll_options'      => $this->app->input->get('polloptionsID', [], 'post', 'array'),
             'poll_time_to_live' => $this->app->input->getString('poll_time_to_live', 0),
             'subscribe'         => $this->app->input->getInt('subscribeMe', 0),
-            'private'           => (string) $this->input->getRaw('private'),
+            'private'           => (string) $this->input->getRaw('private_message'),
             'params'            => '',
         ];
 

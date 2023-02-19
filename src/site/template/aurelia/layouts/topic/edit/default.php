@@ -369,7 +369,8 @@ Text::script('COM_KUNENA_POLL_TITLE');
                 ->set('allow_polls', $this->topic->getCategory()->allowPolls)
                 ->set('template', $this->ktemplate)
                 ->set('me', $this->me)
-                ->set('wa', $this->wa);
+                ->set('wa', $this->wa)
+                ->set('privateMessage', $this->privateMessage);
             ?>
         </div>
 

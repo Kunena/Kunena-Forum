@@ -369,5 +369,53 @@ jQuery(document).ready(function ($) {
                 protocol.items.splice(2, 4);
             }
         });
+
+        CKEDITOR.replace('message_private', {
+			customConfig: Joomla.getOptions('com_kunena.ckeditor_config'),
+			on: {
+				instanceReady: function (event) {
+					CKEDITOR.plugins.clipboard.preventDefaultDropOnElement(event.editor.document);
+
+					if (event.editor.getData().length > 0)
+					{
+						$('#form_submit_button').removeAttr("disabled");
+					}
+
+					event.editor.on("beforeCommandExec", function (event) {
+                        // Show the paste dialog for the paste buttons and right-click paste
+                        if (event.data.name == "paste") {
+                            event.editor._.forcePasteDialog = true;
+                        }
+
+                        // Don't show the paste dialog for Ctrl+Shift+V
+                        if (event.data.name == "pastetext" && event.data.commandData.from == "keystrokeHandler") {
+                            event.cancel();
+                        }
+                    })
+				},
+				change : function (event) {
+					if (event.editor.getData().length > 0)
+					{
+						$('#form_submit_button').removeAttr("disabled");
+					}
+
+					if (event.editor.getData().length == 0 && $('#form_submit_button').disabled === undefined)
+					{
+						$('#form_submit_button').prop("disabled", true);
+					}
+
+				},
+                mode: function (evt) {
+                    const cat = localStorage.getItem('copyKunenaeditor');
+
+                    if (cat) {
+                        evt.editor.setData(cat);
+                        localStorage.removeItem('copyKunenaeditor');
+                    }
+
+                    evt.editor.getCommand('polls').disable();
+                }
+            }
+        });
     }
 });

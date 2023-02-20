@@ -184,6 +184,11 @@
             <query mode="silenterror">UPDATE `#__kunena_announcement` SET publish_up = '1000-01-01 00:00:00' WHERE publish_up='0000-00-00 00:00:00';</query>
             <query mode="silenterror">UPDATE `#__kunena_announcement` SET publish_down = '1000-01-01 00:00:00' WHERE publish_down='0000-00-00 00:00:00';</query>
         </version>
+        <version version="6.0.9-DEV"
+                 versiondate="2023-02-20"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `klige_kunena_attachments` CHANGE `filetype` `filetype` VARCHAR(50);</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

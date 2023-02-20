@@ -9,7 +9,7 @@
 
 *Kunena* 6.0 requires
 
-    Joomla: version 4.1.3 or greater (>= 4.1.3 recommended)
+    Joomla: version 4.1.3 or greater (>= 4.2.8 recommended)
     PHP: version 7.4.1 or greater (>= 7.4.1 recommended)
     MySQL: version 5.7.8 or greater (>= 5.7.8 recommended)
 

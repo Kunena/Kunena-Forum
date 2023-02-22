@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments`
     `hash`          char(32)     NULL,
     `size`          int(11)      NULL,
     `folder`        varchar(191) NOT NULL,
-    `filetype`      varchar(20)  NOT NULL,
+    `filetype`      varchar(50)  NOT NULL,
     `filename`      varchar(190) NOT NULL,
     `filename_real` varchar(190) NOT NULL default ''
         COMMENT 'Filename for downloads',

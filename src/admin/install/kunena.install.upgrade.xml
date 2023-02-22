@@ -187,7 +187,7 @@
         <version version="6.0.9-DEV"
                  versiondate="2023-02-20"
                  versionname="Internal">
-            <query mode="silenterror">ALTER TABLE `klige_kunena_attachments` CHANGE `filetype` `filetype` VARCHAR(50);</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_attachments` CHANGE `filetype` `filetype` VARCHAR(50);</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

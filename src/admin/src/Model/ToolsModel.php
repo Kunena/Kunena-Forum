@@ -654,13 +654,13 @@ class ToolsModel extends AdminModel
 
                     if ($tmp) {
                         if (\in_array(substr($row->Type, 0, $tmp), $fieldTypes)) {
-                            if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation)) {
+                            if (!empty($row->Collation) && !preg_match('`utf8mb4`', $row->Collation)) {
                                 $collation .= $table . ' [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
                             }
                         }
                     } else {
                         if (\in_array($row->Type, $fieldTypes)) {
-                            if (!empty($row->Collation) && !preg_match('`utf8`', $row->Collation)) {
+                            if (!empty($row->Collation) && !preg_match('`utf8mb4`', $row->Collation)) {
                                 $collation .= $table . ' [color=#FF0000]have wrong collation of type ' . $row->Collation . ' [/color] on field ' . $row->Field . '  ';
                             }
                         }

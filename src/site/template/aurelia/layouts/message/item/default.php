@@ -75,6 +75,16 @@ $list = [];
                 echo (!$this->me->userid && $this->config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
             endif; ?>
         </div>
+        <div class="kmsg">
+            <div class="kmsgtext-hide">
+            <?php 
+            if (!empty($this->message->pm)) :
+            foreach($this->message->pm as $pm) {
+                echo $pm->displayField('body');
+            }
+            endif ?>
+            </div>
+        </div>
         <?php if ($signature) : ?>
             <div class="ksig">
                 <hr>

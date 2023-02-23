@@ -1083,14 +1083,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'allow'    => ['colortext' => '/^[\w\d.-_]*$/'],
             'content'  => BBCode::BBCODE_PROHIBIT,
         ],
-        'private'      => [
-            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
-            'method'        => 'DoPrivate',
-            'class'         => 'block',
-            'allow_in'      => ['listitem', 'block', 'columns'],
-            'content'       => BBCode::BBCODE_REQUIRED,
-            'plain_content' => [],
-        ],
     ];
 
     public $config;
@@ -3004,75 +2996,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             if ($url_parsed['host'] == 'soundcloud.com') {
                 return '<iframe allowtransparency="true" width="100%" height="350" style="border: 0" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
             }
-        }
-
-        return false;
-    }
-
-    /**
-     * Handle private bbcode tag in the message
-     *
-     * @param   mixed  $bbcode   bbcode
-     * @param   mixed  $action   action
-     * @param   mixed  $name     name
-     * @param   mixed  $default  default
-     * @param   mixed  $params   params
-     * @param   mixed  $content  content
-     *
-     * @return  boolean|string
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public function DoPrivate($bbcode, $action, $name, $default, $params, $content)
-    {
-        if ($action == BBCode::BBCODE_CHECK) {
-            return true;
-        }
-
-        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
-            return "[{$name}]{$content}";
-        }
-
-        // Display nothing in activity streams etc..
-        if (!empty($bbcode->parent->forceSecure)) {
-            return '';
-        }
-
-        // Display nothing in subscription mails
-        if (!empty($bbcode->context)) {
-            return '';
-        }
-
-        $message   = $this->getMessage();
-        $moderator = $this->me->userid && $this->me->isModerator($message ? $message->getCategory() : null);
-
-        if (isset($bbcode->parent->message->userid)) {
-            $message_userid = $bbcode->parent->message->userid;
-        } else {
-            $message_userid = $bbcode->parent->userid;
-        }
-
-        // Set variable to avoid issue where isn't a private message
-        if (!isset($bbcode->parent->pm)) {
-            $pm = '';
-        } else {
-            foreach ($bbcode->parent->pm as $privatemessage) {
-                $pm = $privatemessage->displayField('body');
-            }
-        }
-
-        if (($this->me->userid && $message_userid == $this->me->userid) || $moderator) {
-            $layout = KunenaLayout::factory('BBCode/Private');
-
-            if ($layout->getPath()) {
-                return (string) $layout
-                    ->set('me', $this->me)
-                    ->set('content', $pm)
-                    ->set('params', $params);
-            }
-        } else {
-            return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_SECURE_TEXT_GUESTS') . '</div>';
         }
 
         return false;

@@ -118,8 +118,8 @@ class KunenaAccessCommunity
         if ($this->groups === false) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->getQuery(true);
-            $query->select('id, CONCAT(\'c\', categoryid) AS parentid, name')
-                ->update($db->quoteName('#__community_groups'))
+            $query->select($db->quoteName('id').', CONCAT(\'c\', categoryid) AS parentid, '. $db->quoteName('name'))
+                ->from($db->quoteName('#__community_groups'))
                 ->order('categoryid, name');
             $db->setQuery($query);
 
@@ -187,7 +187,7 @@ class KunenaAccessCommunity
         if ($this->categories === false) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->getQuery(true);
-            $query->select($query->concatenate($db->quoteName(array('c', 'id'))) . ' AS id, '. $query->concatenate($db->quoteName(array('c', 'parent'))) .' AS parentid, '. $db->quoteName('name'))
+            $query->select('CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parentid, '. $db->quoteName('name'))
                 ->from($db->quoteName('#__community_groups_category'))
                 ->order('parent, name');
             $db->setQuery($query);

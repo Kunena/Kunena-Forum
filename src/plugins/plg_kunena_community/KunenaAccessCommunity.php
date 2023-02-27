@@ -188,7 +188,7 @@ class KunenaAccessCommunity
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->getQuery(true);
             $query->select('SELECT CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parentid, name')
-                ->update($db->quoteName('#__community_groups_category'))
+                ->from($db->quoteName('#__community_groups_category'))
                 ->order('parent, name');
             $db->setQuery($query);
 

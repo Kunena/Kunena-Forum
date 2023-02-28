@@ -123,7 +123,7 @@ class KunenaAccessCommunity
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->getQuery(true);
             $query->select('id, CONCAT(\'c\', categoryid) AS parentid, name')
-                ->update($db->quoteName('#__community_groups'))
+                ->from($db->quoteName('#__community_groups'))
                 ->order('categoryid, name');
             $db->setQuery($query);
 
@@ -191,8 +191,8 @@ class KunenaAccessCommunity
         if ($this->categories === false) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->getQuery(true);
-            $query->select('SELECT CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parentid, name')
-                ->update($db->quoteName('#__community_groups_category'))
+            $query->select('CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parentid, name')
+                ->from($db->quoteName('#__community_groups_category'))
                 ->order('parent, name');
             $db->setQuery($query);
 
@@ -229,12 +229,12 @@ class KunenaAccessCommunity
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true);
-        $query->select('g.memberid AS user_id, c.id AS category_id, ' . KunenaForum::ADMINISTRATOR . ' AS role')
+        $query->select($db->quoteName('g.memberid', 'user_id'), $db->quoteName('c.id', 'category_id') . ',' . KunenaForum::ADMINISTRATOR . ' AS role')
             ->from($db->quoteName('#__kunena_categories', 'c'))
-            ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON c.accesstype=\'jomsocial\' AND c.access = g.groupid')
-            ->where('c.published = 1')
-            ->andWhere('g.approved = 1')
-            ->andWhere('g.permissions = ' . $db->quote(COMMUNITY_GROUP_ADMIN));
+            ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . '= \'jomsocial\' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
+            ->where($db->quoteName('c.published') . ' = 1')
+            ->andWhere($db->quoteName('g.approved') . ' = 1')
+            ->andWhere($db->quoteName('g.permissions') . ' = ' . $db->quote(COMMUNITY_GROUP_ADMIN));
         $db->setQuery($query);
 
         try {
@@ -269,12 +269,12 @@ class KunenaAccessCommunity
         if (KunenaFactory::getUser($userid)->exists()) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->getQuery(true);
-            $query->select('c.id')
+            $query->select($db->quoteName('c.id'))
                 ->from($db->quoteName('#__kunena_categories', 'c'))
-                ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON c.accesstype = \'jomsocial\' AND c.access = g.groupid')
-                ->where('c.published = 1')
-                ->andWhere('g.approved = 1')
-                ->andWhere('g.memberid = ' . $db->quote((int) $userid));
+                ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = \'jomsocial\' AND ' . $db->quoteName('c.access') . ' = ' .$db->quoteName('g.groupid'))
+                ->where($db->quoteName('c.published') . ' = 1')
+                ->andWhere($db->quoteName('g.approved') . '= 1')
+                ->andWhere($db->quoteName('g.memberid') . ' = ' . $db->quote((int) $userid));
             $db->setQuery($query);
 
             try {
@@ -314,12 +314,12 @@ class KunenaAccessCommunity
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true);
-        $query->select('c.id')
+        $query->select($db->quoteName('c.id'))
             ->from($db->quoteName('#__kunena_categories', 'c'))
-            ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON c.accesstype = \'jomsocial\' AND c.access = g.groupid')
-            ->where('c.id = ' . $db->quote((int) $category->id))
-            ->andWhere(' g.approved = 1')
-            ->andWhere('g.memberid IN (' . $userlist . ')');
+            ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = ' . $db->quoteName('jomsocial') . ' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
+            ->where($db->quoteName('c.id') . ' = ' . $db->quote((int) $category->id))
+            ->andWhere($db->quoteName('g.approved') . '= 1')
+            ->andWhere($db->quoteName('g.memberid') . ' IN (' . $userlist . ')');
         $db->setQuery($query);
 
         try {

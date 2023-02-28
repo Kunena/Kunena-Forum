@@ -66,7 +66,7 @@ class KunenaLoginCommunity
      * @return string
      * @since   Kunena 6.0
      */
-    public function getRegistrationURL(): string
+    public function getRegistrationURL()
     {
         $usersConfig = ComponentHelper::getParams('com_users');
 

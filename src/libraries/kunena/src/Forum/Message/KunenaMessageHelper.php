@@ -199,7 +199,7 @@ abstract class KunenaMessageHelper
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('m.*', 't.message')))
+        $query->select('m.*', $db->quoteName('t.message'))
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
             ->where($db->quoteName('m.thread') . ' = ' . $db->quote($topic_id))

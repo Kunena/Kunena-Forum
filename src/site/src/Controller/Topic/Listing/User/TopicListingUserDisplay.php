@@ -142,7 +142,7 @@ class TopicListingUserDisplay extends ListDisplay
                 break;
         }
 
-        $Itemid = $this->input->getCmd('Itemid');
+        $Itemid = Factory::getApplication()->input->getCmd('Itemid');
         $view   = $this->input->getCmd('view');
         $layout = $this->input->getCmd('layout');
         $format = $this->input->getCmd('format');

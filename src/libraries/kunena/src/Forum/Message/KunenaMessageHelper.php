@@ -199,9 +199,9 @@ abstract class KunenaMessageHelper
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true);
-        $query->select('m.*', $db->quoteName('t.message'))
+        $query->select('m.*,t.message')
             ->from($db->quoteName('#__kunena_messages', 'm'))
-            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
+            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON '.  $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
             ->where($db->quoteName('m.thread') . ' = ' . $db->quote($topic_id))
             ->andWhere($db->quoteName('m.hold') . ' IN (' . $hold . ')')
             ->order($db->quoteName('m.time') . $ordering);

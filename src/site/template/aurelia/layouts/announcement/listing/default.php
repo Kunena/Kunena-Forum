@@ -107,7 +107,8 @@ HTMLHelper::_('behavior.core');
             echo $this->subLayout('Announcement/Listing/Row')
                 ->set('announcement', $announcement)
                 ->set('row', $row)
-                ->set('checkbox', !empty($options));
+                ->set('checkbox', !empty($options))
+                ->set('config', $this->config);
         }
         ?>
         </tbody>

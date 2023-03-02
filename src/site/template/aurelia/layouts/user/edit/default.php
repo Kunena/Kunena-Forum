@@ -21,6 +21,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Plugin\Kunena\Kunena\KunenaAvatarKunena;
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $bootstrap = $this->ktemplate->params->get('bootstrap');
@@ -58,7 +59,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 
             <?php foreach ($tabs as $name => $tab) :
                 ?>
-                <?php if ($name == 'avatar' && !$avatar instanceof \KunenaAvatarKunena) : ?>
+                <?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena) : ?>
                 <?php else : ?>
                 <li class="nav-item <?php echo $tab->active ? 'active' : ''; ?>">
                     <a <?php echo $tab->active ? ' class="nav-link active"' : ' class="nav-link"'; ?>
@@ -72,7 +73,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
 
             <?php foreach ($tabs as $name => $tab) :
                 ?>
-                <?php if ($name == 'avatar' && !$avatar instanceof \KunenaAvatarKunena) : ?>
+                <?php if ($name == 'avatar' && !$avatar instanceof KunenaAvatarKunena) : ?>
                 <?php else : ?>
                 <div class="tab-pane fade<?php echo $tab->active ? ' in active show' : ''; ?>"
                      id="edit<?php echo $name; ?>">

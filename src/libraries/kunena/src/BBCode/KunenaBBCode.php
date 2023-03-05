@@ -2707,10 +2707,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $layout = KunenaLayout::factory('BBCode/Terminal');
 
-        if ($layout->getPath()) {
-            return (string) $layout
+        // Check if value entered by user for the colortext params is right in hexadecimal
+        if (ctype_xdigit($params['colortext'])) {
+            if ($layout->getPath()) {
+                return (string) $layout
                 ->set('content', $content)
                 ->set('params', $params);
+            }
         }
 
         return false;

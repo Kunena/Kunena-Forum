@@ -519,7 +519,7 @@ class KunenaMessage extends KunenaDatabaseObject
                     continue;
                 }
 
-                if ($config->emailVisibleAddress != $emailTo->email) {
+                if ($config->emailVisibleAddress != $emailTo->email || (count($emailToList) == 1 && $emailTo->moderator)) {
                     $receivers[$emailTo->subscription][] = $emailTo->email;
                     $sentusers[]                         = $emailTo->id;
                 }

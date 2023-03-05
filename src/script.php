@@ -23,6 +23,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Table;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaInstallerException;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Kunena package installer script.

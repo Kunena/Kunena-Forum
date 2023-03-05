@@ -3,7 +3,7 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Template.Aurelia
+ * @package         Kunena.Template.System
  * @subpackage      Layout.Widget
  *
  * @copyright       Copyright (C) 2008 - 2023 Kunena Team. All rights reserved.

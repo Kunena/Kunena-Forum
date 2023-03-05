@@ -3,7 +3,7 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Template.Crypsis
+ * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.Email
  *
  * @copyright   (C) 2008 - 2023 Kunena Team. All rights reserved.

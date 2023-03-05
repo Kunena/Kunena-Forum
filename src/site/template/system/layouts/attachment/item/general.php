@@ -3,7 +3,7 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Template.Aurelia
+ * @package         Kunena.Template.System
  * @subpackage      BBCode
  *
  * @copyright       Copyright (C) 2008 - 2023 Kunena Team. All rights reserved.

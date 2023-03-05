@@ -1754,8 +1754,20 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return false;
         }
 
+        $config = KunenaFactory::getConfig();
+
+        if (!is_numeric($content)) {
+            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
+            
+            return false;
+        }
+
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
+            if (!is_numeric($config->ebayAffiliateId)) {
+                return false;
+            }
+
             return '<a target="_blank" rel="noopener noreferrer" href="http://www.ebay.com/itm/' . $content . '?lang=' . $this->config->ebayLanguageCode . '&campid=' . $this->config->ebayAffiliateId . '">www.ebay.com/itm/' . $content . '</a>';
         }
 
@@ -1776,12 +1788,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     {
         if (empty($this->config->ebayApiKey) || empty($this->config->ebayCertId)) {
             echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
-
-            return false;
-        }
-
-        if (!is_numeric($ItemID)) {
-            echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
 
             return false;
         }

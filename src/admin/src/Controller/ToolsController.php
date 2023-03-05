@@ -347,7 +347,7 @@ class ToolsController extends FormController
             try {
                 $db->execute();
             } catch (RuntimeException $e) {
-                Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+                $this->app->enqueueMessage($e->getMessage(), 'error');
 
                 return;
             }
@@ -365,7 +365,7 @@ class ToolsController extends FormController
             try {
                 $db->execute();
             } catch (RuntimeException $e) {
-                Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+                $this->app->enqueueMessage($e->getMessage(), 'error');
 
                 return;
             }
@@ -373,7 +373,7 @@ class ToolsController extends FormController
             $affectedRows += $db->getAffectedRows();
 
 
-            Factory::getApplication()->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $affectedRows), 'success');
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $affectedRows), 'success');
         }
 
         $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()), 'success');

@@ -1639,18 +1639,23 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return '';
         }
 
-        $message   = $this->getMessage();
-        $moderator = $this->me->userid && $this->me->isModerator($message ? $message->getCategory() : null);
+        $me        = KunenaUserHelper::getMyself();
 
         if ($bbcode->parent->message instanceof KunenaMessage) {
             $message_userid = $bbcode->parent->message->userid;
+            $KunenaForumMessage = $bbcode->parent->message;
         } elseif ($bbcode->parent instanceof KunenaMessage) {
             $message_userid = $bbcode->parent->userid;
+            $KunenaForumMessage = $bbcode->parent;
         } else {
             $message_userid = 0;
+            // Just create here empty KunenaForumMessage object just in case to avoid issue when calling it just after
+            $KunenaForumMessage = KunenaMessageHelper::get();
         }
 
-        if (($this->me->userid && $message_userid == $this->me->userid) || $moderator) {
+        $moderator = $me->userid && $me->isModerator($KunenaForumMessage->getCategory());
+
+        if (($me->userid && $message_userid == $me->userid) || $moderator) {
             $layout = KunenaLayout::factory('BBCode/Confidential');
 
             if ($layout->getPath()) {

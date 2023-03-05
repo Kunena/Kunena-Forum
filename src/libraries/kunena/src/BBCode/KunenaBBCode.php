@@ -2070,32 +2070,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             $type = 'css';
         }
 
-        $highlight = $this->config->highlightCode && empty($bbcode->parent->forceMinimal);
-
-        if ($highlight && !class_exists('GeSHi')) {
-            $paths = [
-                JPATH_ROOT . '/plugins/content/geshiall/geshi/geshi.php',
-                JPATH_ROOT . '/plugins/content/geshi/geshi/geshi.php',
-            ];
-
-            foreach ($paths as $path) {
-                if (!class_exists('GeSHi') && is_file($path)) {
-                    require_once $path;
-                }
-            }
-        }
-
-        if ($highlight && class_exists('GeSHi')) {
-            $geshi = new GeSHi($bbcode->UnHTMLEncode($content), $type);
-            $geshi->enable_keyword_links(false);
-            $code = $geshi->parse_code();
+        $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
+        if ($type) {
+            $code = '<pre xml:' . $type . '>' . $content . '</pre>';
         } else {
-            $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-            if ($type) {
-                $code = '<pre xml:' . $type . '>' . $content . '</pre>';
-            } else {
-                $code = '<pre>' . $content . '</pre>';
-            }
+            $code = '<pre>' . $content . '</pre>';
         }
 
         return '<div class="highlight">' . $code . '</div>';

@@ -115,6 +115,10 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             return false;
         }
 
+        if (file_exists(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss')) {
+            File::copy(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss', JPATH_SITE . '/tmp/custom.scss');
+        }
+
         return parent::preflight($type, $parent);
     }
 
@@ -472,6 +476,10 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             } else {
                 $date = new Date('now');
             }
+        }
+
+        if (file_exists(JPATH_SITE . '/tmp/custom.scss')) {
+            File::copy(JPATH_SITE . '/tmp/custom.scss', JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss');
         }
 
         return true;

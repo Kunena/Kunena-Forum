@@ -38,17 +38,17 @@ switch ($status) {
         break;
     case 3:
         $label = Text::_("COM_KUNENA_INVISIBLE");
-        $state = "default";
+        $state = "light text-dark";
         break;
     default:
         $label = Text::_("COM_KUNENA_OFFLINE");
-        $state = "default";
+        $state = "secondary";
         break;
 }
 
 if (!$user->showOnline) {
     $label = Text::_("COM_KUNENA_OFFLINE");
-    $state = "default";
+    $state = "secondary";
 }
 
 echo $this->subLayout('Widget/Label')

@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
 
 $row          = $this->row;
 $announcement = $this->announcement;
@@ -73,6 +72,7 @@ $announcement = $this->announcement;
                 );
             } ?>
         </td>
+        <td>
         <?php if ($this->config->username) :
             ?>
                 <?php echo $announcement->getAuthor()->username; ?>

@@ -46,35 +46,26 @@ if ($config->orderingSystem == 'mesid') {
 $list = [];
 ?>
 
-    <small class="text-muted float-end">
-        <?php if ($this->ipLink && !empty($this->message->ip)) : ?>
-            <?php echo KunenaIcons::ip(); ?>
-            <span class="ip"> <?php echo $this->ipLink; ?> </span>
-        <?php endif; ?>
-        <?php echo KunenaIcons::clock(); ?>
-        <?php echo $message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
-        <?php if ($message->modified_time) :
-            ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
-        endif; ?>
-        <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>"
-           rel="canonical">#<?php echo $this->numLink; ?></a>
-        <span class="visible-xs"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
-    </small>
+<small class="text-muted float-end">
+    <?php if ($this->ipLink && !empty($this->message->ip)) : ?>
+        <?php echo KunenaIcons::ip(); ?>
+        <span class="ip"> <?php echo $this->ipLink; ?> </span>
+    <?php endif; ?>
+    <?php echo KunenaIcons::clock(); ?>
+    <?php echo $message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
+    <?php if ($message->modified_time) :
+    ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
+                endif; ?>
+    <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
+    <span class="d-block d-sm-none"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+</small>
 
-    <div class="shadow-none p-4 mb-5 rounded">
-        <div class="mykmsg-header">
-            <?php
-            $title   = KunenaMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
-            $langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
-            echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($this->message->getTopic(), $this->message, $this->message->displayField('subject'), null, KunenaTemplate::getInstance()->tooltips() . ' topictitle')); ?>
-        </div>
-        <div class="kmsg">
-            <?php if (!$this->me->userid && !$isReply) :
-                echo $message->displayField('message');
-            else :
-                echo (!$this->me->userid && $this->config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
-            endif; ?>
-        </div>
+<div class="shadow-none p-4 mb-5 rounded">
+    <div class="mykmsg-header">
+        <?php
+        $title   = KunenaMessage::getInstance()->getsubstr($this->escape($message->subject), 0, $subjectlengthmessage);
+        $langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
+        echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($this->message->getTopic(), $this->message, $this->message->displayField('subject'), null, KunenaTemplate::getInstance()->tooltips() . ' topictitle')); ?>
         <div class="kmsg">
             <div class="kmsgtext-hide">
             <?php 
@@ -92,16 +83,31 @@ $list = [];
             </div>
         <?php endif ?>
     </div>
+    <div class="kmsg">
+        <?php if (!$this->me->userid && !$isReply) :
+            echo $message->displayField('message');
+        else :
+            echo (!$this->me->userid && $this->config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+        endif; ?>
+    </div>
+    <?php if ($signature) : ?>
+        <div class="ksig">
+            <hr>
+            <span class="ksignature"><?php echo $signature; ?></span>
+        </div>
+    <?php endif ?>
+</div>
 <?php if ($this->config->reportMsg && $this->me->exists()) : ?>
     <div class="report pb-5">
         <?php echo KunenaLayout::factory('Widget/Button')
-            ->setProperties(['url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
-                             'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
-                             'modal' => 'modal', 'pullright' => 'pullright', ]); ?>
+            ->setProperties([
+                'url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
+                'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
+                'modal' => 'modal', 'pullright' => 'pullright',
+            ]); ?>
     </div>
     <?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->userReport || !$this->config->userReport && $this->me->userid != $this->message->userid) : ?>
-        <div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog"
-             aria-hidden="true" data-backdrop="false" style="display: none;">
+        <div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false" style="display: none;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -169,7 +175,7 @@ endif; ?>
         $datehover = 'data-bs-toggle="tooltip" title="' . KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormatHover') . '"';
         $dateshown = KunenaDate::getInstance($message->modified_time)->toKunena('config_postDateFormat') . ' ';
     }
-    ?>
+?>
     <div class="alert alert-info d-none d-sm-block" <?php echo $datehover ?>>
         <?php echo Text::sprintf('COM_KUNENA_EDITING_LASTEDIT_ON_BY', $dateshown, $message->getModifier()->getLink(null, null, '', '', null, $this->category->id)); ?>
         <?php if ($message->modified_reason) {

@@ -47,7 +47,7 @@ $personalText = $user->getPersonalText();
     if ($avatar) :
     ?>
         <li>
-            <?php echo $user->getLink($avatar, null, '', '', null, 0, $config->avatarEdit); ?>
+            <?php echo $user->getLink($avatar, null, '', '', null, 0, $this->config->avatarEdit); ?>
             <?php
             if (isset($this->topic_starter) && $this->topic_starter) :
             ?>

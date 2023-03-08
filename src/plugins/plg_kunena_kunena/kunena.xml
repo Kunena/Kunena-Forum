@@ -15,8 +15,8 @@
     <scriptfile>script.php</scriptfile>
     <files>
         <filename plugin="kunena">kunena.php</filename>
-        <filename>avatar.php</filename>
-        <filename>profile.php</filename>
+        <filename>KunenaAvatarKunena.php</filename>
+        <filename>KunenaProfileKunena.php</filename>
         <folder>language</folder>
     </files>
     <config>

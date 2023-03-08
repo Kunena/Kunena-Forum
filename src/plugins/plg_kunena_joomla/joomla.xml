@@ -15,8 +15,8 @@
     <scriptfile>script.php</scriptfile>
     <files>
         <filename plugin="joomla">joomla.php</filename>
-        <filename>access.php</filename>
-        <filename>login.php</filename>
+        <filename>KunenaAccessJoomla.php</filename>
+        <filename>KunenaLoginJoomla.php</filename>
         <folder>language</folder>
     </files>
     <config>

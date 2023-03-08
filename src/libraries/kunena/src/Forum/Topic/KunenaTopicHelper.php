@@ -356,7 +356,7 @@ abstract class KunenaTopicHelper
         } else {
             $query = $db->getQuery(true);
             $query->select('COUNT(*)')
-                ->from($db->quoteName('#__kunena_user_topics', 'tt'))
+                ->from($db->quoteName('#__kunena_topics', 'tt'))
                 ->where($where);
         }
 

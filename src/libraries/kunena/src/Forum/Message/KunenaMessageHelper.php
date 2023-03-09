@@ -270,7 +270,8 @@ abstract class KunenaMessageHelper
         }
 
         $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('m.*', 't.message')))
+        $query->select('m.*')
+            ->select($db->quoteName('t.message'))
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
             ->order($orderby);

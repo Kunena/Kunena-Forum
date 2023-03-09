@@ -55,7 +55,7 @@ class DisplayController extends BaseController
 
         if ($view !== 'ranks') {
             $wa = $document->getWebAssetManager();
-            $wa->registerStyle('kunena_theme', Uri::base(true) . '/components/com_kunena/media/css/theme.min.css', [], [], []);
+            $wa->registerStyle('kunena_theme', Uri::base() . '/components/com_kunena/media/css/theme.min.css', [], [], []);
             $wa->useStyle('kunena_theme');
         }
 

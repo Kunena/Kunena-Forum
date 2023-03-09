@@ -14,8 +14,8 @@ defined('_JEXEC') or die;
 
 if ($this->topicicontype == 'fa') :
     ?>
-<li class="kwho-<?php echo $this->type ?>">
-    <i class="fas fa-circle"></i><i class="fas fa-circle" <?php echo $this->stylesecond ?>></i><i class="fas fa-circle" <?php echo $this->stylethird ?>></i><i class="fas fa-circle" <?php echo $this->stylefourth ?>></i><i class="fas fa-circle" <?php echo $this->stylelast ?>></i><?php echo $this->rank->rank_special ? '<i class="fas fa-circle"></i>' : '' ?>
+<li class="kwho-<?php echo $this->type ?> list-group-item">
+    <i class="fas fa-circle"></i><i class="fas fa-circle" <?php echo $this->stylesecond ?>></i><i class="fas fa-circle" <?php echo $this->stylethird ?>></i><i class="fas fa-circle" <?php echo $this->stylefourth ?>></i><i class="fas fa-circle" <?php echo $this->stylelast ?>></i><?php echo $this->rank->rankSpecial ? '<i class="fas fa-circle"></i>' : '' ?>
 </li>
 <?php else : ?>
 <li class="kwho-<?php echo $this->type ?>">

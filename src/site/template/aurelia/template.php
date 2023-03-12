@@ -125,6 +125,11 @@ class KunenaTemplateAurelia extends KunenaTemplate
         $this->addScript('assets/js/main.js');
         $this->addScript('assets/js/tooltips.js');
 
+        // Recompile here SCSS and create cache dir only if doesnt exist
+        if (file_exists(JPATH_SITE . 'media/kunena/cache/')) {
+            $this->createCacheDir();
+        }
+
         if ($bootstrap) {
             $this->addScript('assets/js/offcanvas.js');
         }

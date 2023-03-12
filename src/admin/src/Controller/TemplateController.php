@@ -722,16 +722,8 @@ class TemplateController extends FormController
         $file   = KPATH_SITE . '/template/' . $templatename . '/assets/scss/' . $filename;
         $return = File::write($file, $filecontent);
 
-        // Compile CSS from SCSS files.
         $ktemplate = KunenaFactory::getTemplate();
-        $ktemplate->compileScss('assets/scss/aurelia.scss', 'kunena.css');
-
-        $filenamescss = JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss';
-
-        if (file_exists($filenamescss) && 0 != fileSize($filenamescss)) {
-            $this->compileScss('assets/scss/custom.scss', 'kunena-custom.css');
-            $this->addStyleSheet('kunena-custom.css');
-        }
+        $ktemplate->createCacheDir();
 
         if ($return && $task == 'applyScss') {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');

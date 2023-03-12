@@ -864,6 +864,23 @@ HTML;
     }
 
     /**
+     * @since   Kunena 6.1
+     */
+    public function createCacheDir()
+    {
+        // Compile CSS from SCSS files.
+        $ktemplate = KunenaFactory::getTemplate();
+        $ktemplate->compileScss('assets/scss/aurelia.scss', 'kunena.css');
+        
+        $filenamescss = JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss';
+        
+        if (file_exists($filenamescss) && 0 != fileSize($filenamescss)) {
+            $this->compileScss('assets/scss/custom.scss', 'kunena-custom.css');
+            $this->addStyleSheet('kunena-custom.css');
+        }
+    }
+
+    /**
      * Set the Scss file into the document head
      *
      * @param   string  $filename  filename

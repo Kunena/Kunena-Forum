@@ -864,6 +864,8 @@ HTML;
     }
 
     /**
+     * Compile SCSS in case of the cache directory is not created or it's deleted
+     * 
      * @since   Kunena 6.1
      */
     public function createCacheDir()

@@ -1450,7 +1450,7 @@ class TopicController extends KunenaController
             return;
         }
 
-        $body      = (string) $this->input->getRaw('private');
+        $body      = (string) $this->input->getRaw('private_message');
         $attachIds = $this->input->get('attachment_private', [], 'array');
         $finder    = new KunenaFinder();
         $finder

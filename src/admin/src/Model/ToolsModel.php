@@ -689,7 +689,7 @@ class ToolsModel extends AdminModel
         $config = KunenaConfig::getInstance();
 
         if ($config) {
-            $params = $config->getFromRegistry();
+            $params = $config->getProperties();
 
             $kconfigSettings = '[table]';
             $kconfigSettings .= '[tr][th]Kunena config settings:[/th][/tr]';

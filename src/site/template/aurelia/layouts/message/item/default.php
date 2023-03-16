@@ -76,12 +76,6 @@ $list = [];
             endif ?>
             </div>
         </div>
-        <?php if ($signature) : ?>
-            <div class="ksig">
-                <hr>
-                <span class="ksignature"><?php echo $signature; ?></span>
-            </div>
-        <?php endif ?>
     </div>
     <div class="kmsg">
         <?php if (!$this->me->userid && !$isReply) :

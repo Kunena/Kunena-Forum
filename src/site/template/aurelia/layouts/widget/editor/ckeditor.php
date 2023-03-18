@@ -54,10 +54,10 @@ $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(Kunena
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#message-tab" type="button" role="tab" aria-controls="home" aria-selected="true">Message</button>
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#message-tab" type="button" role="tab" aria-controls="home" aria-selected="true"><?php echo Text::_('COM_KUNENA_MESSAGE_TAB_MESSAGE') ?></button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#message_private-tab" type="button" role="tab" aria-controls="profile" aria-selected="false">Private message</button>
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#message_private-tab" type="button" role="tab" aria-controls="profile" aria-selected="false"><?php echo Text::_('COM_KUNENA_MESSAGE_TAB_PRIVATE_MESSAGE') ?></button>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">

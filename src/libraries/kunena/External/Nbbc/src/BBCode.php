@@ -1939,8 +1939,8 @@ REGEX;
                         /**
                          * Hack by Kunena to check if value if empty for Php 8.1+ to avoid deprecated message
                          */
-                        //if (!empty($value))
-                        //{
+                        if (!empty($value))
+                        {
                             if (!preg_match($pattern, $value)) {
                                 if ($this->debug) {
                                     Debugger::debug("<b>DoTag:</b> parameter <tt>\"".htmlspecialchars($param)
@@ -1948,7 +1948,7 @@ REGEX;
                                 }
                                 return false;
                             }
-                        //}
+                        }
                     }
                     return true;
                 }

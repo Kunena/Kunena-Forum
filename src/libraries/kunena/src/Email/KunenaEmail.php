@@ -61,7 +61,7 @@ abstract class KunenaEmail
             $emailRecipientCount = 1;
         }
 
-        $emailRecipientPrivacy = $config->emailRecipientPrivacy, 'bcc');
+        $emailRecipientPrivacy = $config->get('emailRecipientPrivacy', 'bcc');
 
         // If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
         if (

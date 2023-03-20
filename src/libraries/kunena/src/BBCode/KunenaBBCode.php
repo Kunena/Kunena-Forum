@@ -1085,6 +1085,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'allow'    => ['colortext' => '/^[\w\d.-_]*$/'],
             'content'  => BBCode::BBCODE_PROHIBIT,
         ],
+        'private'      => [
+            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
+            'method'        => 'DoPrivate',
+            'class'         => 'block',
+            'allow_in'      => ['listitem', 'block', 'columns'],
+            'content'       => BBCode::BBCODE_REQUIRED,
+            'plain_content' => [],
+        ],
     ];
 
     public $config;
@@ -3005,5 +3013,45 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         return false;
+    }
+    
+    /**
+     * Handle private bbcode tag in the message
+     *
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.0
+     * @throws  Exception
+     */
+    public function DoPrivate($bbcode, $action, $name, $default, $params, $content)
+    {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+        
+        if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
+            return "[{$name}]{$content}";
+        }
+        
+        // Display nothing in activity streams etc..
+        if (!empty($bbcode->parent->forceSecure)) {
+            return '';
+        }
+        
+        // Display nothing in subscription mails
+        if (!empty($bbcode->context)) {
+            return '';
+        }
+
+        $moderator = $this->me->userid && $this->me->isModerator($message ? $message->getCategory() : null);
+
+        return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_SECURE_TEXT_GUESTS') . '</div>';
     }
 }

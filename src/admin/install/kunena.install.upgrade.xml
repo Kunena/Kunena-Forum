@@ -189,6 +189,11 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_attachments` CHANGE `filetype` `filetype` VARCHAR(50);</query>
         </version>
+        <version version="6.0.10-DEV"
+                 versiondate="2023-03-27"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_attachments` CHANGE `filetype` `filetype` VARCHAR(100);</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

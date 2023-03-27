@@ -250,7 +250,7 @@ jQuery(document).ready(function ($) {
                         if (data.length > 1) {
                             $('#modal_confirm_template_category').modal('show');
                         } else {
-                            CKEDITOR.instances.message.setData(data);
+                            CKEDITOR.instances.message.setData(data.data);
                         }
                     }
 

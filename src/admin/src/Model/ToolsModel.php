@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use RuntimeException;
+use SimpleXMLElement;
 use stdClass;
 
 /**
@@ -788,7 +789,10 @@ class ToolsModel extends AdminModel
             foreach ($xmlFiles as $file) {
                 // Is it a valid Joomla installation manifest file?
                 $manifest   = $installer->isManifest($file);
-                $version = $manifest ? (string) $manifest->version[0] : null;
+
+                if ($manifest instanceof SimpleXMLElement) {
+                    $version = (string) $manifest->version[0];
+                }
             }
         }
 

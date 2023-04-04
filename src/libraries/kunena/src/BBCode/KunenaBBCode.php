@@ -652,10 +652,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'allow_params' => false,
         ],
         'spoiler'      => [
-            'simple_start' => "<span class=\"bbcode_spoiler\">",
-            'simple_end'   => "</span>",
-            'class'        => 'inline',
-            'allow_in'     => ['listitem', 'block', 'columns', 'inline', 'link'],
+            'mode'        => BBCode::BBCODE_MODE_LIBRARY,
+            'method'      => 'DoSpoiler',
+            'class'       => 'block',
+            'allow_in'    => ['listitem', 'block', 'columns'],
+            'content'     => BBCode::BBCODE_REQUIRED,
+            'plain_start' => "\nSpoiler:\n<i>",
+            'plain_end'   => "</i>",
         ],
         'hide'         => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,

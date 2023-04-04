@@ -1556,12 +1556,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $layout = KunenaLayout::factory('BBCode/Spoiler');
 
         if ($layout->getPath()) {
-            $title   = preg_replace('#<script(.*?)>(.*?)</script(.*?)>#is', '', $title);
-            $title   = preg_replace('#<img(.*?)>#is', '', $title);
             $content = preg_replace('#<script(.*?)>(.*?)</script(.*?)>#is', '', $content);
 
             return (string) $layout
-                ->set('title', $title)
+                ->set('title', htmlspecialchars($title, ENT_COMPAT, 'UTF-8'))
                 ->set('hidden', $hidden)
                 ->set('content', $content)
                 ->set('params', $params);

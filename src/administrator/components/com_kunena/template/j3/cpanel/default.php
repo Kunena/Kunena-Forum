@@ -144,7 +144,7 @@ use Joomla\CMS\Language\Text;
 									Team</a></dd>
 							<hr class="hr-condensed">
 							<dt><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_COPYRIGHT') ?>:</dt>
-							<dd>&copy; 2008 - 2020 Kunena, All rights reserved.</dd>
+							<dd>&copy; 2008 - 2023 Kunena, All rights reserved.</dd>
 							<hr class="hr-condensed">
 							<dt><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LABEL_LICENSE') ?>:</dt>
 							<dd>GNU General Public License</dd>

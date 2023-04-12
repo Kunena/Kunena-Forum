@@ -192,7 +192,7 @@ abstract class KunenaForum
      */
     public static function installed(): bool
     {
-        return self::isDev();
+        return !is_file(JPATH_ADMINISTRATOR . '/components/com_kunena/install/install.php') || self::isDev();
     }
 
     /**

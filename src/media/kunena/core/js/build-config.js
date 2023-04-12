@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license/
  */
 
@@ -13,10 +13,10 @@
  * (1) https://ckeditor.com/cke4/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) https://ckeditor.com/cke4/builder/545bf83bc4be265ea7e1d6efe979d5b6
+ * (2) https://ckeditor.com/cke4/builder/c8cf0f8b7b43ac78cc857e1e4c2f0d78
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) https://ckeditor.com/cke4/builder/download/545bf83bc4be265ea7e1d6efe979d5b6
+ * (3) https://ckeditor.com/cke4/builder/download/c8cf0f8b7b43ac78cc857e1e4c2f0d78
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -79,7 +79,7 @@ var CKBUILDER_CONFIG = {
 		'justify' : 1,
 		'link' : 1,
 		'list' : 1,
-		'magicline' : 1,
+		'liststyle' : 1,
 		'maximize' : 1,
 		'removeformat' : 1,
 		'resize' : 1,
@@ -88,6 +88,7 @@ var CKBUILDER_CONFIG = {
 		'showborders' : 1,
 		'smiley' : 1,
 		'sourcearea' : 1,
+		'stylescombo' : 1,
 		'tab' : 1,
 		'toolbar' : 1,
 		'undo' : 1,

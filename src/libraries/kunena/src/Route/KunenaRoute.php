@@ -220,9 +220,13 @@ abstract class KunenaRoute
 
         if (!$uri || (\is_string($uri) && $uri[0] == '&')) {
             if (!isset($current[$uri])) {
-                $get = self::$current->getQuery(true);
+                $get = Uri::getInstance()->getQuery(true);
                 $uri = $current[$uri] = Uri::getInstance('index.php?' . http_build_query($get) . $uri);
-                self::setItemID($uri);
+                
+                if (Factory::getApplication()->isClient('administrator')) {
+                    self::setItemID($uri);
+                }
+
                 $uri->delVar('defaultmenu');
                 $uri->delVar('language');
             } else {

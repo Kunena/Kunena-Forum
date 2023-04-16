@@ -3,7 +3,7 @@
 <extension type="package" version="4.0" method="upgrade">
     <name>pkg_kunena</name>
     <packagename>kunena</packagename>
-    <version>6.0.10-DEV</version>
+    <version>6.0.11-DEV</version>
     <versionname>INTERNAL</versionname>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>

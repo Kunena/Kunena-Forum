@@ -1932,19 +1932,19 @@ class KunenaUser extends CMSObject
         $stylefourth = '';
         $stylelast   = '';
 
-        if ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK1') {
+        if ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK1') {
             $stylesecond = 'style="color:#e8f7ff;"';
             $stylethird  = 'style="color:#e8f7ff;"';
             $stylefourth = 'style="color:#e8f7ff;"';
             $stylelast   = 'style="color:#e8f7ff;"';
-        } elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK2') {
+        } elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK2') {
             $stylethird  = 'style="color:#e8f7ff;"';
             $stylefourth = 'style="color:#e8f7ff;"';
             $stylelast   = 'style="color:#e8f7ff;"';
-        } elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK3') {
+        } elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK3') {
             $stylefourth = 'style="color:#e8f7ff;"';
             $stylelast   = 'style="color:#e8f7ff;"';
-        } elseif ($rank->rank_title == 'COM_KUNENA_SAMPLEDATA_RANK4') {
+        } elseif ($rank->rankTitle == 'COM_KUNENA_SAMPLEDATA_RANK4') {
             $stylelast = 'style="color:#e8f7ff;"';
         } else {
             // Nothing to do here

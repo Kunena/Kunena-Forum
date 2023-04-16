@@ -307,6 +307,36 @@ class TopicController extends KunenaController
     }
 
     /**
+     * Load categorytemplate from the category with given catid
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    public function categorytemplate()
+    {
+        $catid    = $this->app->input->getInt('catid', 0);
+
+        $category = KunenaCategoryHelper::get($catid);
+
+        // Set the MIME type and header for JSON output.
+        header('Content-type: application/json');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+
+        while (@ob_end_clean()) {
+        }
+
+        echo new JsonResponse($category->topictemplate);
+
+        jexit();
+    }
+
+    /**
      * Load global rate for the topic
      *
      * @return  void

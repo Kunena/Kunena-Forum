@@ -1936,12 +1936,18 @@ REGEX;
                                 ."\"</tt>, value <tt>\"".htmlspecialchars($value)."\", against \""
                                 .htmlspecialchars($pattern)."\"</tt><br>\n");
                         }
-                        if (!preg_match($pattern, $value)) {
-                            if ($this->debug) {
-                                Debugger::debug("<b>DoTag:</b> parameter <tt>\"".htmlspecialchars($param)
-                                    ."\"</tt> failed 'allow' check.<br>\n");
+                        /**
+                         * Hack by Kunena to check if value if empty for Php 8.1+ to avoid deprecated message
+                         */
+                        if (!empty($value))
+                        {
+                            if (!preg_match($pattern, $value)) {
+                                if ($this->debug) {
+                                    Debugger::debug("<b>DoTag:</b> parameter <tt>\"".htmlspecialchars($param)
+                                        ."\"</tt> failed 'allow' check.<br>\n");
+                                }
+                                return false;
                             }
-                            return false;
                         }
                     }
                     return true;

@@ -614,6 +614,9 @@ class TopicsModel extends KunenaModel
                     if($this->config->latestCategory==0) {
                         $latestCategory = false;
                     }
+                    else {
+                        $latestCategory = explode(',', $this->config->latestCategory);
+                    }
 
                     $latestCategoryIn = $this->config->latestCategoryIn;
                 } elseif (count($klatestCategory) > 0) {

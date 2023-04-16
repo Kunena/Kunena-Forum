@@ -58,6 +58,7 @@ var CKBUILDER_CONFIG = {
 		'basicstyles' : 1,
 		'bbcode' : 1,
 		'bidi' : 1,
+		'blockimagepaste' : 1,
 		'blockquote' : 1,
 		'clipboard' : 1,
 		'colorbutton' : 1,

@@ -35,7 +35,8 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Joomla\Database\DatabaseQuery;
+use Kunena\Forum\Plugin\Kunena\Joomla\KunenaLoginJoomla;
+use Joomla\Registry\Registry;
 use RuntimeException;
 use StdClass;
 
@@ -900,7 +901,14 @@ class ToolsController extends FormController
             }
         }
 
-        $logged = $login->loginUser($username, $password);
+        $params = new Registry();
+        $Joomlalogin = new KunenaLoginJoomla($params);
+
+        try {
+            $logged  = $Joomlalogin ->loginUser($username, $password, false);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+        }
 
         $user = Factory::getUser(UserHelper::getUserId($username));
 

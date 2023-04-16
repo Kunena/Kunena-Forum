@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\UserFactoryInterface;
-use Joomla\CMS\User\UserHelper;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -36,7 +35,8 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Joomla\Database\DatabaseQuery;
+use Kunena\Forum\Plugin\Kunena\Joomla\KunenaLoginJoomla;
+use Joomla\Registry\Registry;
 use RuntimeException;
 use StdClass;
 
@@ -898,6 +898,15 @@ class ToolsController extends FormController
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_SECRETKEY_INVALID'), 'error');
                 $this->setRedirect(KunenaRoute::_($this->baseurl, false));
             }
+        }
+
+        $params = new Registry();
+        $login = new KunenaLoginJoomla($params);
+
+        try {
+            $logged  = $login->loginUser($username, $password, false);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
         }
 
         $logged = $login->loginUser($username, $password);

@@ -901,15 +901,13 @@ class ToolsController extends FormController
         }
 
         $params = new Registry();
-        $login = new KunenaLoginJoomla($params);
+        $Joomlalogin = new KunenaLoginJoomla($params);
 
         try {
-            $logged  = $login->loginUser($username, $password, false);
+            $logged  = $Joomlalogin->loginUser($username, $password, false);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
         }
-
-        $logged = $login->loginUser($username, $password);
 
         $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserByUsername($username);
 

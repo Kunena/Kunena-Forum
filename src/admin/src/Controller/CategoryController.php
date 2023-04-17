@@ -182,7 +182,7 @@ class CategoryController extends KunenaController
                 $success = $category->save();
             } catch (KunenaException $e) {
                 $this->app->enqueueMessage(
-                    Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id) . ' ' . $e->getMessage(),
+                    Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->name) . ' ' . $e->getMessage(),
                     'error'
                 );
             }

@@ -788,8 +788,9 @@ class TopicController extends KunenaController
 
         if (!$text) {
             if (trim($fields['private'])) {
-                // Allow empty message if private message part has been filled up.
-                $message->message = trim($message->message) ? $message->message : "[PRIVATE={$message->userid}]";
+                // Allow empty message if private message part has been filled up by setting a timestapm to avoid the identical message error.
+                $date = new Date();
+                $message->message = trim($message->message) ? $message->message : "[PRIVATE={$message->userid}{$date->getTimestamp()}]";
             } else {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'), 'error');
                 $this->setRedirectBack();

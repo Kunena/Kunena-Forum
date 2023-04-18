@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site\Controller\Topic\Form\History;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
@@ -24,7 +23,7 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -77,7 +76,7 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
         }
 
         if ($me->exists()) {
-            $pmFinder = new KunenaFinder();
+            $pmFinder = new KunenaPrivateMessageFinder();
             $pmFinder->filterByMessageIds(array_keys($messages))->order('id');
 
             if (!$me->isModerator($category)) {

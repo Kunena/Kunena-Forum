@@ -39,6 +39,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use RuntimeException;
 
 /**
@@ -795,7 +796,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         // Need to load private message (for now allow only one private message per KunenaAttachment).
         $map = Table::getInstance('KunenaPrivateAttachmentMap', 'Table');
         $map->load(['attachment_id' => $this->id]);
-        $finder  = new \Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder();
+        $finder  = new KunenaPrivateMessageFinder();
         $private = $finder->where('id', '=', $map->private_id)->firstOrNew();
 
         if (!$private->exists()) {

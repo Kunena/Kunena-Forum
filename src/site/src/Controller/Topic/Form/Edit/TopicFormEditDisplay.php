@@ -27,7 +27,7 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
-use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -143,7 +143,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
             $this->message->edit($saved);
         }
 
-        $finder = new KunenaFinder();
+        $finder = new KunenaPrivateMessageFinder();
         $finder
             ->filterByMessage($this->message)
             ->where('parent_id', '=', 0)

@@ -23,7 +23,6 @@ use Joomla\CMS\Http\Http;
 use Joomla\CMS\Http\Transport\StreamTransport;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailHelper;
-use Joomla\CMS\Mail\MailTemplate;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
@@ -49,7 +48,7 @@ use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
-use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -1483,7 +1482,7 @@ class TopicController extends KunenaController
 
         $body      = (string) $this->input->getRaw('message_private');
         $attachIds = $this->input->get('attachment_private', [], 'array');
-        $finder    = new KunenaFinder();
+        $finder    = new KunenaPrivateMessageFinder();
         $finder
             ->filterByMessage($message)
             ->where('parent_id', '=', 0)

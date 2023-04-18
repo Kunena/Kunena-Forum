@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\User\KunenaUser;
  *
  * @since   Kunena 6.0
  */
-class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
+class KunenaPrivateMessageFinder extends KunenaFinder
 {
     /**
      * @var     string
@@ -40,7 +40,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
      *
      * @since   Kunena 6.0
      */
-    public function filterByUser(KunenaUser $user): KunenaFinder
+    public function filterByUser(KunenaUser $user)
     {
         if (!$user->userid) {
             $this->skip = true;
@@ -59,7 +59,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
      *
      * @since   Kunena 6.0
      */
-    public function filterByMessage(KunenaMessage $message): KunenaFinder
+    public function filterByMessage(KunenaMessage $message)
     {
         if (!$message->id) {
             $this->skip = true;
@@ -78,7 +78,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
      *
      * @since   Kunena 6.0
      */
-    public function filterByMessageIds(array $ids): KunenaFinder
+    public function filterByMessageIds(array $ids)
     {
         if (empty($ids)) {
             $this->skip = true;

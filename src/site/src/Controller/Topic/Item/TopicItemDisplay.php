@@ -37,7 +37,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
-use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaFinder;
+use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
@@ -223,7 +223,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $doc = $this->app->getDocument();
 
         if ($this->me->exists()) {
-            $pmFinder = new KunenaFinder();
+            $pmFinder = new KunenaPrivateMessageFinder();
             $pmFinder->filterByMessageIds(array_keys($this->messages))->order('id');
 
             if (!$this->me->isModerator($this->category)) {

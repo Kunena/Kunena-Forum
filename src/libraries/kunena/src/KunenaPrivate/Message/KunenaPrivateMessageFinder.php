@@ -19,6 +19,7 @@ use Exception;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
 
 /**
  * Private message finder.
@@ -40,7 +41,7 @@ class KunenaPrivateMessageFinder extends KunenaFinder
      *
      * @since   Kunena 6.0
      */
-    public function filterByUser(KunenaUser $user)
+    public function filterByUser(KunenaUser $user): KunenaPrivateMessageFinder
     {
         if (!$user->userid) {
             $this->skip = true;
@@ -59,7 +60,7 @@ class KunenaPrivateMessageFinder extends KunenaFinder
      *
      * @since   Kunena 6.0
      */
-    public function filterByMessage(KunenaMessage $message)
+    public function filterByMessage(KunenaMessage $message): KunenaPrivateMessageFinder
     {
         if (!$message->id) {
             $this->skip = true;
@@ -78,7 +79,7 @@ class KunenaPrivateMessageFinder extends KunenaFinder
      *
      * @since   Kunena 6.0
      */
-    public function filterByMessageIds(array $ids)
+    public function filterByMessageIds(array $ids): KunenaPrivateMessageFinder
     {
         if (empty($ids)) {
             $this->skip = true;

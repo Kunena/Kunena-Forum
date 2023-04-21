@@ -215,9 +215,9 @@ class KunenaProfileEasySocial extends KunenaProfile
 
         if ($user->userid > 0) {
             if ($displayusername == 'username') {
-                return FD::user($user->userid)->username;
+                return \FD::user($user->userid)->username;
             } else {
-                return FD::user($user->userid)->name;
+                return \FD::user($user->userid)->name;
             }
         } else {
             return $visitorname;

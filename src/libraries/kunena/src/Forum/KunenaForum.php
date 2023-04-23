@@ -132,7 +132,7 @@ abstract class KunenaForum
      * <code>
      * // Check if Kunena Forum has been installed, online and compatible with your code
      *    if (class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && \Kunena\Forum\Libraries\Forum\KunenaForum::enabled() &&
-     *    \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible('6.0')) {
+     *    \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible('6.1')) {
      *        // Initialize the framework (new since 2.0.0)
      *        \Kunena\Forum\Libraries\Forum\KunenaForum::setup();
      *        // It's now safe to display something or to save Kunena objects
@@ -175,7 +175,7 @@ abstract class KunenaForum
      * <code>
      *    // Check if Kunena Forum has been installed and compatible with your code
      *    if (class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && \Kunena\Forum\Libraries\Forum\KunenaForum::installed() &&
-     * \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible('6.0')) {
+     * \Kunena\Forum\Libraries\Forum\KunenaForum::isCompatible('6.1')) {
      *        // Initialize the framework (new since 2.0.0)
      *        \Kunena\Forum\Libraries\Forum\KunenaForum::setup();
      *        // Start using the framework

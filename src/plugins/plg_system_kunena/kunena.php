@@ -61,7 +61,7 @@ class PlgSystemKunena extends CMSPlugin
         require_once $api;
 
         // Do not load if Kunena version is not supported or Kunena is not installed
-        if (!(KunenaForum::isCompatible('6.0') && KunenaForum::installed())) {
+        if (!(KunenaForum::isCompatible('6.1') && KunenaForum::installed())) {
             return;
         }
 

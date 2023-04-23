@@ -37,7 +37,7 @@ class plgKunenaEasyprofile extends CMSPlugin
     public function __construct(object &$subject, $config = [])
     {
         // Do not load if Kunena version is not supported or Kunena is offline
-        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.0') && KunenaForum::enabled())) {
+        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.1') && KunenaForum::enabled())) {
             return;
         }
 

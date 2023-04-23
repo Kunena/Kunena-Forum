@@ -472,7 +472,7 @@ class PlgFinderKunena extends Adapter
 
         // Build the necessary url, route, path and alias information.
         $item->url   = $this->getUrl($message->id, $this->extension, $this->layout);
-        $item->route = $item->url . '&Itemid=' . KunenaRoute::getItemId($item->url);
+        $item->route = $item->url;
         $item->alias = KunenaRoute::stringURLSafe($message->subject);
 
         // Set body context.

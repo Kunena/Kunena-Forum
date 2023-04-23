@@ -21,7 +21,7 @@ In addition we recommend the following PHP settings:
     memory_limit           >= 32M  (>= 64M recommended) - depends on other Joomla extensions used
     allow_url_fopen         = on
     upload_max_filesize    >= 12M
-    GD Library (>=2.0), fileinfo, DOM, Mbstring, JSON support installed and OpenSSL only to embedded tweets
+    GD Library (>=2.0), fileinfo, DOM, Mbstring, Exif functions, JSON support installed and OpenSSL only to embedded tweets
 
 *Kunena* requires the following Joomla settings:
 

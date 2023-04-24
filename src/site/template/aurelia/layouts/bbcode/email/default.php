@@ -24,7 +24,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 echo HTMLHelper::_(
     'email.cloak',
     $this->escape($this->email),
-    $this->mailto,
+    $this->isLink,
     $this->escape($this->text),
     $this->escape($this->email),
     $this->mailto

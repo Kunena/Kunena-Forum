@@ -1280,19 +1280,30 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         $email     = \is_string($default) ? $default : $bbcode->UnHTMLEncode($content);
+        $result = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+        if (!$result) return;
+
         $text      = \is_string($default) ? $bbcode->UnHTMLEncode($content) : $default;
         $text      = trim($text && $email != $text ? $text : '');
         $mailto    = $bbcode->IsValidEmail($email);
-        $textCloak = $bbcode->IsValidEmail($text);
+        $result = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+        if (is_string($result)) {
+            $isLink = true;
+        } else {
+            $isLink = false;
+            $mailto = $result;
+        }
 
         $layout = KunenaLayout::factory('BBCode/Email');
 
         if ($layout->getPath()) {
             return (string) $layout
                 ->set('email', $email)
+                ->set('isLink', $isLink)
                 ->set('mailto', $mailto)
-                ->set('text', $text)
-                ->set('textCloak', $textCloak);
+                ->set('text', $text);
         }
 
         if ($bbcode->canCloakEmail($params)) {

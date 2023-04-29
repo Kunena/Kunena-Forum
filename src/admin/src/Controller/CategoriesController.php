@@ -128,10 +128,17 @@ class CategoriesController extends KunenaController
                     $count++;
                     $name = $category->name;
                 } else {
-                    $this->app->enqueueMessage(
-                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
-                        'error'
-                    );
+                    if (!empty($category->getError())) {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
+                            'error'
+                            );
+                    } else {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
+                            'error'
+                            );
+                    }
                 }
             } else {
                 $this->app->enqueueMessage(
@@ -521,10 +528,17 @@ class CategoriesController extends KunenaController
                 $success = $category->save();
 
                 if (!$success) {
-                    $this->app->enqueueMessage(
-                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
-                        'error'
-                    );
+                    if (!empty($category->getError())) {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
+                            'error'
+                            );
+                    } else {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
+                            'error'
+                            );
+                    }
                 }
             } else {
                 $this->app->enqueueMessage(

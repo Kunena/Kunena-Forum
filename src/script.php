@@ -484,6 +484,14 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             File::copy(JPATH_SITE . '/tmp/custom.scss', JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss');
         }
 
+        // Delete the language folders except en-GB because they are present in /administrator/language
+        $languageFoldersToClean = Folder::folders(JPATH_ADMINISTRATOR . '/components/com_kunena/language');
+        foreach($languageFoldersToClean as $folder) {
+            if($folder != 'en-GB'){
+                Folder::delete(JPATH_ADMINISTRATOR . '/components/com_kunena/language' . $folder);
+            }
+        }
+
         return true;
     }
 

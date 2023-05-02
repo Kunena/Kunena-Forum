@@ -294,7 +294,7 @@ class KunenaBBCode extends \Nbbc\BBCode
 
                     if (isset($itemid)) {
                         // Convert ebay item to embedded widget
-                        return KunenaBBCodeLibrary::renderEbayLayout($itemid);
+                        return KunenaBBCodeLibrary::renderEbayLayout($itemid, $config);
                     }
 
                     return;
@@ -304,12 +304,12 @@ class KunenaBBCode extends \Nbbc\BBCode
 
                 if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw'])) {
                     // Convert ebay search to embedded widget
-                    KunenaBBCodeLibrary::renderEbayLayout($itemid);
+                    KunenaBBCodeLibrary::renderEbayLayout($itemid, $config);
                 }
 
                 if (strstr($params['host'], 'myworld.') && !empty($path[1])) {
                     // Convert seller listing to embedded widget
-                    KunenaBBCodeLibrary::renderEbayLayout($itemid);
+                    KunenaBBCodeLibrary::renderEbayLayout($itemid, $config);
                 }
             }
         }

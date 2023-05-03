@@ -488,7 +488,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         $languageFoldersToClean = Folder::folders(JPATH_ADMINISTRATOR . '/components/com_kunena/language');
         foreach($languageFoldersToClean as $folder) {
             if($folder != 'en-GB'){
-                Folder::delete(JPATH_ADMINISTRATOR . '/components/com_kunena/language' . $folder);
+                Folder::delete(JPATH_ADMINISTRATOR . '/components/com_kunena/language/' . $folder);
             }
         }
 

@@ -184,7 +184,7 @@ class HtmlView extends BaseHtmlView
         $this->pagination   = $this->get('AdminNavigation');
 
         // Get the toolbar object instance
-        $bar = Toolbar::getInstance();
+        $toolbar = Toolbar::getInstance();
 
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
         ToolbarHelper::spacer();
@@ -196,23 +196,25 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::unpublish('categories.unpublish');
         ToolbarHelper::divider();
 
-        HTMLHelper::_('bootstrap.renderModal', 'moderateModal');
+         $dropdown = $toolbar->dropdownButton('status-group')
+           ->text('JTOOLBAR_CHANGE_STATUS')
+           ->toggleSplit(false)
+           ->icon('icon-ellipsis-h')
+           ->buttonClass('btn btn-action')
+           ->listCheck(true);
 
-        $title = Text::_('COM_KUNENA_VIEW_CATEGORIES_CONFIRM_BEFORE_DELETE');
-        $dhtml = "<button data-bs-toggle=\"modal\" data-bs-target=\"#catconfirmdelete\" class=\"btn btn-small button-trash\">
-					<i class=\"icon-trash\" title=\"$title\"> </i>
-						$title</button>";
-        $bar->appendButton('Custom', $dhtml, 'confirmdelete');
+        $childBar = $dropdown->getChildToolbar();
+
+        $childBar->delete('categories.delete')->listCheck(true);
+
+        $childBar->popupButton('batch')
+           ->text('JTOOLBAR_BATCH')
+           ->selector('batchCategories')
+           ->listCheck(true);
 
         ToolbarHelper::spacer();
         $helpUrl = 'https://docs.kunena.org/en/setup/sections-categories';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-
-        $title = Text::_('JTOOLBAR_BATCH');
-        $dhtml = "<button data-toggle=\"modal\" data-bs-target=\"#collapseModal\" class=\"btn btn-small\">
-		<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
-		$title</button>";
-        $bar->appendButton('Custom', $dhtml, 'batch');
     }
 
     /**

@@ -329,21 +329,19 @@ class CategoriesModel extends KunenaModel
      * @throws  Exception
      * @since   Kunena 5.1
      */
-    public function getBatchCategories(): array
+    public function getBatchCategories(): string
     {
-        $categories        = $this->getAdminCategories();
-        $batchCategories   = [];
-        $batchCategories[] = HTMLHelper::_('select.option', 'select', Text::_('JSELECT'));
+        $categories         = $this->getAdminCategories();
+        $batch_categories   = array();
+        $batch_categories[] = HTMLHelper::_('select.option', 'select', Text::_('JSELECT'));
 
         foreach ($categories as $category) {
-            $batchCategories [] = HTMLHelper::_(
-                'select.option',
-                $category->id,
-                str_repeat('...', \count($category->indent) - 1) . ' ' . $category->name
-            );
+            $batch_categories [] = HTMLHelper::_('select.option', $category->id, str_repeat('...', count($category->indent) - 1) . ' ' . $category->name);
         }
 
-        return $batchCategories;
+        $list = HTMLHelper::_('select.genericlist', $batch_categories, 'batch_catid_target', 'class="form-select" size="1"', 'value', 'text', 'select');
+
+        return $list;
     }
 
     /**

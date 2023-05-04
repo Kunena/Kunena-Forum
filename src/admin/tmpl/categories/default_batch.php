@@ -17,15 +17,15 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="modal hide fade" id="collapseModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" role="presentation" class="close" data-bs-dismiss="modal">x</button>
-                <h3><?php echo Text::_('COM_KUNENA_BATCH_OPTIONS'); ?></h3>
-            </div>
-            <div class="modal-body span11">
-                <p><?php echo Text::_('COM_KUNENA_BATCH_TIP'); ?></p>
+<div class="modal" tabindex="-1" id="batchCategories">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><?php echo Text::_('COM_KUNENA_BATCH_OPTIONS'); ?></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><?php echo Text::_('COM_KUNENA_BATCH_TIP'); ?></p>
                 <div class="control-group">
                     <div class="controls">
                         <label id="batch-choose-action-lbl" for="batch-category-id">
@@ -44,18 +44,11 @@ use Joomla\CMS\Language\Text;
                         </fieldset>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline-primary" type="button"
-                        onclick="document.id('batch-category-id').value='';document.id('batch-access').value='';document.id('batch-language-id').value=''"
-                        data-bs-dismiss="modal">
-                    <?php echo Text::_('JCANCEL'); ?>
-                </button>
-                <button class="btn btn-outline-primary" type="submit"
-                        onclick="Joomla.submitbutton('categories.batchCategories');">
-                    <?php echo Text::_('COM_KUNENA_BATCH_PROCESS'); ?>
-                </button>
-            </div>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_('JCANCEL'); ?></button>
+        <button type="button" class="btn btn-primary"><?php echo Text::_('COM_KUNENA_BATCH_PROCESS'); ?></button>
+      </div>
     </div>
+  </div>
 </div>

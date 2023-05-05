@@ -20,6 +20,7 @@
             <filename>ko-KR.com_kunena.models.ini</filename>
             <filename>ko-KR.com_kunena.sys.ini</filename>
             <filename>ko-KR.com_kunena.views.ini</filename>
+            <filename>ko-KR.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/ko-KR">
             <filename>ko-KR.com_kunena.ini</filename>

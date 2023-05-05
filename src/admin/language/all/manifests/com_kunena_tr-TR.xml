@@ -20,6 +20,7 @@
             <filename>tr-TR.com_kunena.models.ini</filename>
             <filename>tr-TR.com_kunena.sys.ini</filename>
             <filename>tr-TR.com_kunena.views.ini</filename>
+            <filename>tr-TR.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/tr-TR">
             <filename>tr-TR.com_kunena.ini</filename>

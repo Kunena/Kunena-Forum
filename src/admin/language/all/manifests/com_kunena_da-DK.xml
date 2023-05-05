@@ -20,6 +20,7 @@
             <filename>da-DK.com_kunena.models.ini</filename>
             <filename>da-DK.com_kunena.sys.ini</filename>
             <filename>da-DK.com_kunena.views.ini</filename>
+            <filename>da-DK.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/da-DK">
             <filename>da-DK.com_kunena.ini</filename>

@@ -20,6 +20,7 @@
             <filename>ckb-IQ.com_kunena.models.ini</filename>
             <filename>ckb-IQ.com_kunena.sys.ini</filename>
             <filename>ckb-IQ.com_kunena.views.ini</filename>
+            <filename>ckb-IQ.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/ckb-IQ">
             <filename>ckb-IQ.com_kunena.ini</filename>

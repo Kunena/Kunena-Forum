@@ -20,6 +20,7 @@
             <filename>pt-BR.com_kunena.models.ini</filename>
             <filename>pt-BR.com_kunena.sys.ini</filename>
             <filename>pt-BR.com_kunena.views.ini</filename>
+            <filename>pt-BR.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/pt-BR">
             <filename>pt-BR.com_kunena.ini</filename>

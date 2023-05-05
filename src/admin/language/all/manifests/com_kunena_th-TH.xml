@@ -20,6 +20,7 @@
             <filename>th-TH.com_kunena.models.ini</filename>
             <filename>th-TH.com_kunena.sys.ini</filename>
             <filename>th-TH.com_kunena.views.ini</filename>
+            <filename>th-TH.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/th-TH">
             <filename>th-TH.com_kunena.ini</filename>

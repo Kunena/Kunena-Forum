@@ -20,6 +20,7 @@
             <filename>ur-PK.com_kunena.models.ini</filename>
             <filename>ur-PK.com_kunena.sys.ini</filename>
             <filename>ur-PK.com_kunena.views.ini</filename>
+            <filename>ur-PK.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/ur-PK">
             <filename>ur-PK.com_kunena.ini</filename>

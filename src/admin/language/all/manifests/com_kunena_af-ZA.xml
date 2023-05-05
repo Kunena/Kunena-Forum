@@ -20,6 +20,7 @@
             <filename>af-ZA.com_kunena.models.ini</filename>
             <filename>af-ZA.com_kunena.sys.ini</filename>
             <filename>af-ZA.com_kunena.views.ini</filename>
+            <filename>af-ZA.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/af-ZA">
             <filename>af-ZA.com_kunena.ini</filename>

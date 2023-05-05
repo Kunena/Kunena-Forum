@@ -20,6 +20,7 @@
             <filename>sq-AL.com_kunena.models.ini</filename>
             <filename>sq-AL.com_kunena.sys.ini</filename>
             <filename>sq-AL.com_kunena.views.ini</filename>
+            <filename>sq-AL.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/sq-AL">
             <filename>sq-AL.com_kunena.ini</filename>

@@ -20,6 +20,7 @@
             <filename>bg-BG.com_kunena.models.ini</filename>
             <filename>bg-BG.com_kunena.sys.ini</filename>
             <filename>bg-BG.com_kunena.views.ini</filename>
+            <filename>bg-BG.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/bg-BG">
             <filename>bg-BG.com_kunena.ini</filename>

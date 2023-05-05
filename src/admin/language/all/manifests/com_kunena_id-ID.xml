@@ -20,6 +20,7 @@
             <filename>id-ID.com_kunena.models.ini</filename>
             <filename>id-ID.com_kunena.sys.ini</filename>
             <filename>id-ID.com_kunena.views.ini</filename>
+            <filename>id-ID.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/id-ID">
             <filename>id-ID.com_kunena.ini</filename>

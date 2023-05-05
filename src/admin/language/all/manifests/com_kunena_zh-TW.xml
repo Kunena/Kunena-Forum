@@ -20,6 +20,7 @@
             <filename>zh-TW.com_kunena.models.ini</filename>
             <filename>zh-TW.com_kunena.sys.ini</filename>
             <filename>zh-TW.com_kunena.views.ini</filename>
+            <filename>zh-TW.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/zh-TW">
             <filename>zh-TW.com_kunena.ini</filename>

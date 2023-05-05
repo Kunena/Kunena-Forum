@@ -19,6 +19,7 @@
             <filename>de-DE.com_kunena.models.ini</filename>
             <filename>de-DE.com_kunena.sys.ini</filename>
             <filename>de-DE.com_kunena.views.ini</filename>
+            <filename>de-DE.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/de-DE">
             <filename>de-DE.com_kunena.ini</filename>

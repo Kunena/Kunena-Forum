@@ -20,6 +20,7 @@
             <filename>fa-IR.com_kunena.models.ini</filename>
             <filename>fa-IR.com_kunena.sys.ini</filename>
             <filename>fa-IR.com_kunena.views.ini</filename>
+            <filename>fa-IR.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/fa-IR">
             <filename>fa-IR.com_kunena.ini</filename>

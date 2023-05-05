@@ -20,6 +20,7 @@
             <filename>eu-ES.com_kunena.models.ini</filename>
             <filename>eu-ES.com_kunena.sys.ini</filename>
             <filename>eu-ES.com_kunena.views.ini</filename>
+            <filename>eu-ES.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/eu-ES">
             <filename>eu-ES.com_kunena.ini</filename>

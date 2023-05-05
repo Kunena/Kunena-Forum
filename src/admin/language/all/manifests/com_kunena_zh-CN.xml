@@ -20,6 +20,7 @@
             <filename>zh-CN.com_kunena.models.ini</filename>
             <filename>zh-CN.com_kunena.sys.ini</filename>
             <filename>zh-CN.com_kunena.views.ini</filename>
+            <filename>zh-CN.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/zh-CN">
             <filename>zh-CN.com_kunena.ini</filename>

@@ -19,6 +19,7 @@
             <filename>cy-GB.com_kunena.models.ini</filename>
             <filename>cy-GB.com_kunena.sys.ini</filename>
             <filename>cy-GB.com_kunena.views.ini</filename>
+            <filename>cy-GB.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/cy-GB">
             <filename>cy-GB.com_kunena.ini</filename>

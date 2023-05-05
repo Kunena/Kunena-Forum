@@ -20,6 +20,7 @@
             <filename>he-IL.com_kunena.models.ini</filename>
             <filename>he-IL.com_kunena.sys.ini</filename>
             <filename>he-IL.com_kunena.views.ini</filename>
+            <filename>he-IL.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/he-IL">
             <filename>he-IL.com_kunena.ini</filename>

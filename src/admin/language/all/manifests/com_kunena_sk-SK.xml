@@ -20,6 +20,7 @@
             <filename>sk-SK.com_kunena.models.ini</filename>
             <filename>sk-SK.com_kunena.sys.ini</filename>
             <filename>sk-SK.com_kunena.views.ini</filename>
+            <filename>sk-SK.com_kunena.install.ini</filename>
         </files>
         <files folder="site" target="language/sk-SK">
             <filename>sk-SK.com_kunena.ini</filename>

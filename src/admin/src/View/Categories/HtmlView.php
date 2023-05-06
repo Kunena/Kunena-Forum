@@ -90,10 +90,10 @@ class HtmlView extends BaseHtmlView
         $this->batchCategories = $this->get('BatchCategories');
 
         // Preprocess the list of items to find ordering divisions.
-        $ordering = [];
+        $this->ordering = [];
 
         foreach ($this->categories as $item) {
-            $ordering[$item->parentid][] = $item->id;
+            $this->ordering[$item->parentid][] = $item->id;
         }
 
         $this->sortFields          = $this->getSortFields();
@@ -121,11 +121,10 @@ class HtmlView extends BaseHtmlView
         $this->filter->Active      = $this->escape($this->state->get('filter.active'));
         $this->filter->Levels      = $this->escape($this->state->get('filter.levels'));
 
-        $this->list                  = new \stdClass();
-        $this->list->Ordering        = $this->escape($this->state->get('list.ordering'));
-        $this->list->Direction       = $this->escape($this->state->get('list.direction'));
-        $this->list->saveOrder       = ($this->list->Ordering == 'a.ordering' && $this->list->Direction == 'asc');
-        $this->list->saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=saveOrderajax&tmpl=component';
+        $this->listOrdering      = $this->escape($this->state->get('list.ordering'));
+        $this->listDirection     = $this->escape($this->state->get('list.direction'));
+        $this->saveOrder       = ($this->listOrdering == 'a.ordering' && $this->listDirection == 'asc');
+        $this->saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=saveOrderajax&tmpl=component';
 
         $this->addToolbar();
 

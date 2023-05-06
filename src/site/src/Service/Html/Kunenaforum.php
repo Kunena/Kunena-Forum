@@ -16,8 +16,10 @@ namespace Kunena\Forum\Site\Service\Html;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -290,5 +292,44 @@ class Kunenaforum
         }
 
         return implode("\n", $html);
+    }
+ 
+    /**
+     * Method to load the Sortable script and make table sortable
+     *
+     * @param   string   $tableId                 DOM id of the table
+     * @param   string   $formId                  DOM id of the form
+     * @param   string   $sortDir                 Sort direction
+     * @param   string   $saveOrderingUrl         Save ordering url, ajax-load after an item dropped
+     * @param   boolean  $proceedSaveOrderButton  Set whether a save order button is displayed
+     * @param   boolean  $nestedList              Set whether the list is a nested list
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.1
+     *
+     */
+    public static function sortablelist($tableId, $formId, $sortDir = 'asc', $saveOrderingUrl = null, $proceedSaveOrderButton = true, $nestedList = false): string
+    {
+        // Note: $i is required but has to be an optional argument in the function call due to argument order
+        if ($saveOrderingUrl === null) {
+            return false;
+        }
+
+        Factory::getDocument()->addScript(Uri::root() . 'media/kunena/core/js/jquery.ui.core.js');
+        Factory::getDocument()->addScript(Uri::root() . 'media/kunena/core/js/jquery.ui.sortable.js');
+        Factory::getDocument()->addScript(Uri::root() . 'media/kunena/core/js/sortablelist.js');
+
+        // Attach sortable to document
+        Factory::getDocument()->addScriptDeclaration(
+            "
+		jQuery(document).ready(function ($){
+			var sortableList = new $.JSortableList('#"
+            . $tableId . " tbody','" . $formId . "','" . $sortDir . "' , '" . $saveOrderingUrl . "','','" . $nestedList . "');
+		});
+	"
+            );
+
+        return true;
     }
 }

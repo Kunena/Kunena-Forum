@@ -464,6 +464,24 @@ class CategoriesModel extends KunenaModel
         $params = ComponentHelper::getParams('com_kunena');
         $this->setState('params', $params);
 
+        // Set list state in order to be able to re-order the categories.
+        $value = $this->getUserStateFromRequest($this->context . '.list.start', 'limitstart', 0, 'int');
+        $this->setState('list.start', $value);
+
+        $value = $this->getUserStateFromRequest($this->context . '.list.limit', 'limit', $this->app->get('list_limit'), 'int');
+        $this->setState('list.limit', $value);
+
+        $value = $this->getUserStateFromRequest($this->context . '.list.ordering', 'filter_order', 'ordering', 'cmd');
+        $this->setState('list.ordering', $value);
+
+        $value = $this->getUserStateFromRequest($this->context . '.list.direction', 'filter_order_Dir', 'asc', 'word');
+
+        if ($value != 'asc') {
+            $value = 'desc';
+        }
+
+        $this->setState('list.direction', $value);
+
         // List state information.
         parent::populateState($ordering, $direction);
     }

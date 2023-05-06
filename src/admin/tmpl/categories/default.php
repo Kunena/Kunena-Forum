@@ -13,27 +13,47 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\WebAsset\WebAssetManager;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
-
-/** @var WebAssetManager $wa */
-$wa = $this->document->getWebAssetManager();
-$wa->useScript('multiselect');
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 $saveOrder = ($listOrder == 'a.order' && strtolower($listDirn) == 'asc');
 
-if ($saveOrder && !empty($this->items)) {
-    $saveOrderingUrl = $this->list->saveOrderingUrl;
-    HTMLHelper::_('draggablelist.draggable');
+Factory::getDocument()->addScript(Uri::root() . 'media/kunena/core/js/multiselect-uncompressed.js');
+
+Factory::getDocument()->addScriptDeclaration(
+    "jQuery(document).ready(function() {
+				Joomla.JMultiSelect('adminForm');
+			});"
+    );
+
+if ($this->saveOrder)
+{
+    HTMLHelper::_('kunenaforum.sortablelist', 'categoryList', 'adminForm', $this->listDirection, $this->saveOrderingUrl, false, true);
 }
 
+$filterItem = $this->escape($this->state->get('item.id'));
+
+Factory::getDocument()->addScriptDeclaration(
+    "Joomla.orderTable = function () {
+		var table = document.getElementById(\"sortTable\");
+		var direction = document.getElementById(\"directionTable\");
+		var order = table.options[table.selectedIndex].value;
+		if (order != '" . $listOrder . "') {
+			dirn = 'asc';
+		} else {
+			dirn = direction.options[direction.selectedIndex].value;
+		}
+		Joomla.tableOrdering(order, dirn, '');
+	}"
+    );
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -46,8 +66,8 @@ if ($saveOrder && !empty($this->items)) {
                     <input type="hidden" name="task" value=""/>
                     <input type="hidden" name="catid" value="<?php echo $this->filter->Item; ?>"/>
                     <input type="hidden" name="boxchecked" value="0"/>
-                    <input type="hidden" name="filter_order" value="<?php echo $this->list->Ordering; ?>"/>
-                    <input type="hidden" name="filter_order_Dir" value="<?php echo $this->list->Direction; ?>"/>
+                    <input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>"/>
+                    <input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>"/>
                     <?php echo HTMLHelper::_('form.token'); ?>
 
                     <div id="filter-bar" class="btn-toolbar">
@@ -110,34 +130,34 @@ if ($saveOrder && !empty($this->items)) {
                                 <?php echo HTMLHelper::_('grid.checkall'); ?>
                             </th>
                             <th width="1%" class="nowrap center d-none d-md-block">
-                                <?php echo HTMLHelper::_('searchtools.sort', '', 'a.lft', $this->list->Direction, $this->list->Ordering, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-sort'); ?>
+                                
                             </th>
                             <th width="5%" class="nowrap center">
-                                <?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'p.published', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', 'asc', '', null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
                             </th>
                             <th width="1%" class="nowrap">
                                 <?php echo Text::_('COM_KUNENA_GO'); ?>
                             </th>
                             <th width="51%" class="nowrap">
-                                <?php echo HTMLHelper::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
                             </th>
                             <th width="20%" class="nowrap center d-none d-md-block">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
                             </th>
                             <th width="5%" class="nowrap center">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->listDirection, $this->listOrdering); ?>
                             </th>
                             <th width="5%" class="nowrap center">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->listDirection, $this->listOrdering); ?>
                             </th>
                             <th width="5%" class="center">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allowPolls', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allowPolls', $this->listDirection, $this->listOrdering); ?>
                             </th>
                             <th width="5%" class="nowrap center">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->listDirection, $this->listOrdering); ?>
                             </th>
                             <th width="1%" class="nowrap center d-none d-md-block">
-                                <?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->list->Direction, $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->listDirection, $this->listOrdering); ?>
                             </th>
                         </tr>
                         <tr>
@@ -242,31 +262,69 @@ if ($saveOrder && !empty($this->items)) {
 
                         if ($this->pagination->total >= 0) :
                             foreach ($this->categories as $item) :
+                                $orderkey = array_search($item->id, $this->ordering[$item->parentid]);
                                 $canEdit = $this->me->isAdmin($item);
                                 $canCheckin = $this->user->authorise('core.admin', 'com_checkIn') || $item->checked_out == $this->user->id || $item->checked_out == 0;
                                 $canEditOwn = $canEdit;
                                 $canChange  = $canEdit && $canCheckin;
+                                
+                                // Get the parents of item for sorting
+                                if ($item->level > 0)
+                                {
+                                    $parentsStr       = "";
+                                    $_currentParentId = $item->parentid;
+                                    $parentsStr       = " " . $_currentParentId;
+                                    
+                                    for ($i2 = 0; $i2 < $item->level; $i2++)
+                                    {
+                                        foreach ($this->ordering as $k => $v)
+                                        {
+                                            $v = implode("-", $v);
+                                            $v = "-" . $v . "-";
+                                            
+                                            if (strpos($v, "-" . $_currentParentId . "-") !== false)
+                                            {
+                                                $parentsStr       .= " " . $k;
+                                                $_currentParentId = $k;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    $parentsStr = "";
+                                }
                                 ?>
-                                <tr class="row<?php echo $i % 2; ?>" data-draggable-group="<?php echo $item->parentid; ?>" data-item-id="<?php echo $item->id ?>">
+                                <tr sortable-group-id="<?php echo $item->parentid; ?>" item-id="<?php echo $item->id ?>"
+							    parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
                                     <td class="text-center">
                                         <?php echo HTMLHelper::_('grid.id', $i, $item->id, false, 'cid', 'cb', $item->name); ?>
                                     </td>
-                                    <td class="text-center d-none d-md-table-cell">
-                                        <?php
-                                        $iconClass = '';
-                                        if (!$canChange) {
-                                            $iconClass = ' inactive';
-                                        } elseif (!$saveOrder) {
-                                            $iconClass = ' inactive" title="' . Text::_('JORDERINGDISABLED');
-                                        }
-                                        ?>
-                                        <span class="sortable-handler<?php echo $iconClass ?>">
-                                            <span class="icon-ellipsis-v"></span>
-                                        </span>
-                                        <?php if ($canChange && $saveOrder) : ?>
-                                            <input type="text" class="hidden" name="order[]" size="5" value="<?php echo $item->lft; ?>">
-                                        <?php endif; ?>
-                                    </td>
+                                    <td class="order nowrap center hidden-phone">
+									<?php if ($canChange)
+										:
+										$disableClassName = '';
+										$disabledLabel = '';
+
+										if (!$this->saveOrder)
+											:
+											$disabledLabel    = Text::_('JORDERINGDISABLED');
+											$disableClassName = 'inactive tip-top';
+										endif; ?>
+										<span class="sortable-handler hasTooltip <?php echo $disableClassName; ?>"
+										      title="<?php echo $disabledLabel; ?>">
+										<i class="icon-menu"></i>
+									</span>
+										<input type="text" style="display:none;" name="order[]" size="5"
+										       value="<?php echo $orderkey; ?>"/>
+									<?php else:
+										?>
+										<span class="sortable-handler inactive">
+										<i class="icon-menu"></i>
+									</span>
+									<?php endif; ?>
+								</td>
                                     <td class="center">
                                         <?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'category.'); ?>
                                     </td>

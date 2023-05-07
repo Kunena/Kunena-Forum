@@ -297,34 +297,33 @@ Factory::getDocument()->addScriptDeclaration(
                                 }
                                 ?>
                                 <tr sortable-group-id="<?php echo $item->parentid; ?>" item-id="<?php echo $item->id ?>"
-							    parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
+                                        parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
                                     <td class="text-center">
                                         <?php echo HTMLHelper::_('grid.id', $i, $item->id, false, 'cid', 'cb', $item->name); ?>
                                     </td>
                                     <td class="order nowrap center hidden-phone">
-									<?php if ($canChange)
-										:
-										$disableClassName = '';
-										$disabledLabel = '';
+                                    <?php if ($canChange)
+                                        :
+                                        $disableClassName = '';
+                                        $disabledLabel = '';
 
-										if (!$this->saveOrder)
-											:
-											$disabledLabel    = Text::_('JORDERINGDISABLED');
-											$disableClassName = 'inactive tip-top';
-										endif; ?>
-										<span class="sortable-handler hasTooltip <?php echo $disableClassName; ?>"
-										      title="<?php echo $disabledLabel; ?>">
-										<i class="icon-menu"></i>
-									</span>
-										<input type="text" style="display:none;" name="order[]" size="5"
-										       value="<?php echo $orderkey; ?>"/>
-									<?php else:
-										?>
-										<span class="sortable-handler inactive">
-										<i class="icon-menu"></i>
-									</span>
-									<?php endif; ?>
-								</td>
+                                        if (!$this->saveOrder)
+                                        :
+                                            $disabledLabel    = Text::_('JORDERINGDISABLED');
+                                            $disableClassName = 'inactive tip-top';
+                                        endif; ?>
+                                        <span class="sortable-handler<?php echo $disableClassName; ?>" title="<?php echo $disabledLabel; ?>">
+                                            <span class="icon-ellipsis-v"></span>
+                                        </span>
+                                        <input type="text" style="display:none;" name="order[]" size="5"
+                                              value="<?php echo $orderkey; ?>"/>
+                                    <?php else:
+                                    ?>
+                                        <span class="sortable-handler inactive">
+                                        <i class="icon-menu"></i>
+                                    </span>
+                                    <?php endif; ?>
+                                    </td>
                                     <td class="center">
                                         <?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'category.'); ?>
                                     </td>

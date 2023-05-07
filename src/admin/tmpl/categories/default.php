@@ -26,13 +26,16 @@ $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 $saveOrder = ($listOrder == 'a.order' && strtolower($listDirn) == 'asc');
 
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('jquery');
+
 Factory::getDocument()->addScript(Uri::root() . 'media/kunena/core/js/multiselect-uncompressed.js');
 
 Factory::getDocument()->addScriptDeclaration(
     "jQuery(document).ready(function() {
-				Joomla.JMultiSelect('adminForm');
-			});"
-    );
+        Joomla.JMultiSelect('adminForm');
+    });"
+);
 
 if ($this->saveOrder)
 {
@@ -43,17 +46,17 @@ $filterItem = $this->escape($this->state->get('item.id'));
 
 Factory::getDocument()->addScriptDeclaration(
     "Joomla.orderTable = function () {
-		var table = document.getElementById(\"sortTable\");
-		var direction = document.getElementById(\"directionTable\");
-		var order = table.options[table.selectedIndex].value;
-		if (order != '" . $listOrder . "') {
-			dirn = 'asc';
-		} else {
-			dirn = direction.options[direction.selectedIndex].value;
-		}
-		Joomla.tableOrdering(order, dirn, '');
-	}"
-    );
+        var table = document.getElementById(\"sortTable\");
+        var direction = document.getElementById(\"directionTable\");
+        var order = table.options[table.selectedIndex].value;
+        if (order != '" . $listOrder . "') {
+            dirn = 'asc';
+        } else {
+            dirn = direction.options[direction.selectedIndex].value;
+        }
+        Joomla.tableOrdering(order, dirn, '');
+    }"
+);
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -267,21 +270,21 @@ Factory::getDocument()->addScriptDeclaration(
                                 $canCheckin = $this->user->authorise('core.admin', 'com_checkIn') || $item->checked_out == $this->user->id || $item->checked_out == 0;
                                 $canEditOwn = $canEdit;
                                 $canChange  = $canEdit && $canCheckin;
-                                
+
                                 // Get the parents of item for sorting
                                 if ($item->level > 0)
                                 {
                                     $parentsStr       = "";
                                     $_currentParentId = $item->parentid;
                                     $parentsStr       = " " . $_currentParentId;
-                                    
+
                                     for ($i2 = 0; $i2 < $item->level; $i2++)
                                     {
                                         foreach ($this->ordering as $k => $v)
                                         {
                                             $v = implode("-", $v);
                                             $v = "-" . $v . "-";
-                                            
+
                                             if (strpos($v, "-" . $_currentParentId . "-") !== false)
                                             {
                                                 $parentsStr       .= " " . $k;

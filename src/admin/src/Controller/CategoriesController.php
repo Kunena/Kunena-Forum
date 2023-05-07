@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
+use Kunena\Forum\Administrator\Model\CategoriesModel;
 use RuntimeException;
 
 /**
@@ -557,25 +558,25 @@ class CategoriesController extends KunenaController
      * @throws  Exception
      * @since   Kunena 3.0
      */
-    public function saveOrderAjax(): void
+    public function saveorderajax(): void
     {
-        if (!Session::checkToken('post')) {
+       /*if (!Session::checkToken('post')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
-        }
+        }*/
 
         // Get the arrays from the Request
         $pks   = $this->input->post->get('cid', null, 'array');
         $order = $this->input->post->get('order', null, 'array');
 
         // Get the model
-        $model = $this->getModel('categories');
+        $model = new CategoriesModel();
 
         // Save the ordering
         $return = $model->saveOrder($pks, $order);
-
+die();
         if ($return) {
             echo "1";
         }

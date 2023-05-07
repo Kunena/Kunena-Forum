@@ -124,7 +124,7 @@ class HtmlView extends BaseHtmlView
         $this->listOrdering      = $this->escape($this->state->get('list.ordering'));
         $this->listDirection     = $this->escape($this->state->get('list.direction'));
         $this->saveOrder       = ($this->listOrdering == 'a.ordering' && $this->listDirection == 'asc');
-        $this->saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=saveOrderajax&tmpl=component';
+        $this->saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=categories.saveorderajax';
 
         $this->addToolbar();
 

@@ -16,8 +16,10 @@ namespace Kunena\Forum\Administrator\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -567,6 +569,9 @@ class CategoriesController extends KunenaController
             return;
         }*/
 
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new TableKunenaCategories($db);
+
         // Get the arrays from the Request
         $pks   = $this->input->post->get('cid', null, 'array');
         $order = $this->input->post->get('order', null, 'array');
@@ -575,8 +580,8 @@ class CategoriesController extends KunenaController
         $model = new CategoriesModel();
 
         // Save the ordering
-        $return = $model->saveOrder($pks, $order);
-die();
+        $return = $model->saveOrder($tableObject, $pks, $order);
+
         if ($return) {
             echo "1";
         }

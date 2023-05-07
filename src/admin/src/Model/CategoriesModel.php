@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Model\KunenaModel;
+use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use RuntimeException;
 
@@ -245,17 +246,19 @@ class CategoriesModel extends KunenaModel
     }
 
     /**
-     * @param   null  $pks    pks
-     * @param   null  $order  order
+     * Save the new order of categories choosed by user in the table TableKunenaCategories
+     * 
+     * @param   TableKunenaCategories $tableObject
+     * @param   null                  $pks    pks
+     * @param   null                  $order  order
      *
      * @return  boolean
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function saveOrder($pks = null, $order = null): bool
+    public function saveOrder(TableKunenaCategories $tableObject, $pks = null, $order = null): bool
     {
-        $table      = Table::getInstance('KunenaCategories', 'Table');
         $conditions = [];
 
         if (empty($pks)) {
@@ -264,19 +267,19 @@ class CategoriesModel extends KunenaModel
 
         // Update ordering values
         foreach ($pks as $i => $pk) {
-            $table->load((int) $pk);
+            $tableObject->load((int) $pk);
 
-            if ($table->ordering != $order[$i]) {
-                $table->ordering = $order[$i];
+            if ($tableObject->ordering != $order[$i]) {
+                $tableObject->ordering = $order[$i];
 
                 try {
-                    $table->store();
+                    $tableObject->store();
                 } catch (Exception $e) {
                     Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
                 }
 
                 // Remember to reOrder within position and client_id
-                $condition = $this->getReorderConditions($table);
+                $condition = $this->getReorderConditions($tableObject);
                 $found     = false;
 
                 foreach ($conditions as $cond) {
@@ -287,16 +290,16 @@ class CategoriesModel extends KunenaModel
                 }
 
                 if (!$found) {
-                    $key          = $table->getKeyName();
-                    $conditions[] = [$table->$key, $condition];
+                    $key          = $tableObject->getKeyName();
+                    $conditions[] = [$tableObject->$key, $condition];
                 }
             }
         }
 
         // Execute reOrder for each category.
         foreach ($conditions as $cond) {
-            $table->load($cond[0]);
-            $table->reOrder($cond[1]);
+            $tableObject->load($cond[0]);
+            $tableObject->reOrder($cond[1]);
         }
 
         // Clear the component's cache

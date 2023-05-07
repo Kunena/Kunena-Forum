@@ -127,13 +127,21 @@ class CategoriesController extends KunenaController
             } elseif (!$category->isCheckedOut($this->me->userid)) {
                 $category->set($variable, $value);
 
-                try {
-                    $category->save();
-                } catch (Exception $e) {
-                    $this->app->enqueueMessage(
-                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
-                        'error'
-                    );
+                if ($category->save()) {
+                    $count++;
+                    $name = $category->name;
+                } else {
+                    if (!empty($category->getError())) {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
+                            'error'
+                            );
+                    } else {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
+                            'error'
+                            );
+                    }
                 }
 
                 // At this point the category should be saved without errors
@@ -528,13 +536,18 @@ class CategoriesController extends KunenaController
             } elseif (!$category->isCheckedOut($this->me->userid)) {
                 $category->set('ordering', $order [$category->id]);
 
-                try {
-                    $category->save();
-                } catch (Exception $e) {
-                    $this->app->enqueueMessage(
-                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
-                        'error'
-                    );
+                if (!$success) {
+                    if (!empty($category->getError())) {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($category->getError())),
+                            'error'
+                            );
+                    } else {
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
+                            'error'
+                            );
+                    }
                 }
             } else {
                 $this->app->enqueueMessage(

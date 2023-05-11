@@ -974,6 +974,7 @@ class KunenaUser extends CMSObject
             $ktemplate     = KunenaFactory::getTemplate();
             $topicicontype = $ktemplate->params->get('topicicontype');
 
+            // When KunenaFactory::getConfig()->avatarType is true it means Icontype
             if (KunenaFactory::getConfig()->avatarType && $avatars->css) {
                 if ($sizex == 20) {
                     if ($topicicontype == 'fa') {

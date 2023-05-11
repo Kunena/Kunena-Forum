@@ -84,65 +84,66 @@ class KunenaAvatarKunena extends KunenaAvatar
         $avatar = $user->avatar;
         $config = KunenaFactory::getConfig();
 
-        if (empty($avatar)) {
-            return KURL_MEDIA . "core/svg/person.svg";
-        }
+        // When KunenaFactory::getConfig()->avatarType is true it means Icontype
+        if (!$config->avatarType) {
+            $path     = KPATH_MEDIA . "/avatars";
+            $origPath = "{$path}/{$avatar}";
 
-        $path     = KPATH_MEDIA . "/avatars";
-        $origPath = "{$path}/{$avatar}";
+            if (!is_file($origPath)) {
+                // If avatar does not exist use default image.
+                if ($sizex <= 90) {
+                    $avatar = KunenaConfig::getInstance()->defaultAvatarSmall;
+                } else {
+                    $avatar = KunenaConfig::getInstance()->defaultAvatar;
+                }
 
-        if (!is_file($origPath)) {
-            // If avatar does not exist use default image.
-            if ($sizex <= 90) {
-                $avatar = KunenaConfig::getInstance()->defaultAvatarSmall;
-            } else {
-                $avatar = KunenaConfig::getInstance()->defaultAvatar;
+                // Search from the template.
+                $template = KunenaFactory::getTemplate();
+                $origPath = JPATH_SITE . '/' . $template->getAvatarPath($avatar);
+                $avatar   = $template->name . '/' . $avatar;
             }
 
-            // Search from the template.
-            $template = KunenaFactory::getTemplate();
-            $origPath = JPATH_SITE . '/' . $template->getAvatarPath($avatar);
-            $avatar   = $template->name . '/' . $avatar;
-        }
+            $dir  = dirname($avatar);
+            $file = basename($avatar);
 
-        $dir  = dirname($avatar);
-        $file = basename($avatar);
-
-        if ($sizex == $sizey) {
-            $resized = "resized/size{$sizex}/{$dir}";
-        } else {
-            $resized = "resized/size{$sizex}x{$sizey}/{$dir}";
-        }
-
-        if ($user->timestamp) {
-            $timestamp = '?' . $user->timestamp;
-        } else {
-            $timestamp = '';
-        }
-
-        if (!is_file("{$path}/{$resized}/{$file}")) {
-            try {
-                KunenaImageHelper::version(
-                    $origPath,
-                    "{$path}/{$resized}",
-                    $file,
-                    $sizex,
-                    $sizey,
-                    intval($config->avatarQuality),
-                    KunenaImage::SCALE_INSIDE,
-                    intval($config->avatarCrop)
-                );
-            } catch (Exception $e) {
-                KunenaError::error($e->getMessage());
+            if ($sizex == $sizey) {
+                $resized = "resized/size{$sizex}/{$dir}";
+            } else {
+                $resized = "resized/size{$sizex}x{$sizey}/{$dir}";
             }
 
             if ($user->timestamp) {
                 $timestamp = '?' . $user->timestamp;
             } else {
-                $timestamp = '?' . round(microtime(true));
+                $timestamp = '';
             }
-        }
 
-        return KURL_MEDIA . "avatars/{$resized}/{$file}{$timestamp}";
+            if (!is_file("{$path}/{$resized}/{$file}")) {
+                try {
+                    KunenaImageHelper::version(
+                        $origPath,
+                        "{$path}/{$resized}",
+                        $file,
+                        $sizex,
+                        $sizey,
+                        intval($config->avatarQuality),
+                        KunenaImage::SCALE_INSIDE,
+                        intval($config->avatarCrop)
+                    );
+                } catch (Exception $e) {
+                    KunenaError::error($e->getMessage());
+                }
+
+                if ($user->timestamp) {
+                    $timestamp = '?' . $user->timestamp;
+                } else {
+                    $timestamp = '?' . round(microtime(true));
+                }
+            }
+
+            return KURL_MEDIA . "avatars/{$resized}/{$file}{$timestamp}";
+        } else {
+            return KURL_MEDIA . "core/svg/person.svg";
+        }
     }
 }

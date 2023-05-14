@@ -1232,7 +1232,7 @@ class UserController extends KunenaController
         if (!empty($kuser->avatar)) {
             $avatar->path = Uri::root() . 'media/kunena/avatars/' . $kuser->avatar;
         } else {
-            $avatar->path = Uri::root() . 'media/kunena/avatars/' . KunenaConfig::getInstance()->defaultAvatar;
+            $avatar->path = Uri::root() . 'media/kunena/avatars/' . $this->config->defaultAvatar;
         }
 
         header('Content-type: application/json');

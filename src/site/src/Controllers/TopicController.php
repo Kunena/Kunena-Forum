@@ -498,11 +498,10 @@ class TopicController extends KunenaController
                 // Resize image if needed.
                 if ($attachment->isImage()) {
                     $imageInfo = KunenaImage::getImageFileProperties($uploadFile);
-                    $config    = KunenaConfig::getInstance();
 
-                    if ($imageInfo->width > $config->imageWidth || $imageInfo->height > $config->imageHeight) {
+                    if ($imageInfo->width > $this->config->imageWidth || $imageInfo->height > $this->config->imageHeight) {
                         // Calculate quality for both JPG and PNG.
-                        $quality = $config->imageQuality;
+                        $quality = $this->config->imageQuality;
 
                         if ($quality < 1 || $quality > 100) {
                             $quality = 70;
@@ -513,7 +512,7 @@ class TopicController extends KunenaController
                         }
 
                         $image = new KunenaImage($uploadFile);
-                        $image = $image->resize($config->imageWidth, $config->imageHeight, false);
+                        $image = $image->resize($this->config->imageWidth, $this->config->imageHeight, false);
 
                         $options = ['quality' => $quality];
                         $image->toFile($uploadFile, $imageInfo->type, $options);
@@ -1282,7 +1281,7 @@ class TopicController extends KunenaController
         }
 
         // Check if we are editing first post and update topic if we are!
-        if ($topic->first_post_id == $message->id || KunenaConfig::getInstance()->allowChangeSubject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator()) {
+        if ($topic->first_post_id == $message->id || $this->config->allowChangeSubject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator()) {
             $topic->subject = $fields['subject'];
         }
 

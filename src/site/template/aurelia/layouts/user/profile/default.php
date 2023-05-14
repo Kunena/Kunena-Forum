@@ -113,7 +113,7 @@ if ($user->userid > 1) :
                     </li>
                 <?php endif; ?>
 
-                <?php if ($show && isset($user->thankyou) && $config->showThankYou) :
+                <?php if ($show && isset($user->thankyou) && $this->config->showThankYou) :
                     ?>
                     <li>
                         <?php echo Text::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') . ' ' . (int) $user->thankyou; ?>

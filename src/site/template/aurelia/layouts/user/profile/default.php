@@ -100,6 +100,12 @@ if ($user->userid > 1) :
         <span class="heading btn btn-outline-primary border btn-xs hasTooltip" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_USER_PROFILE_TOOLTIP_LABEL_MORE') ?>"><?php echo KunenaIcons::arrowdown(); ?><?php echo Text::_('COM_KUNENA_USER_PROFILE_BUTTON_LABEL_MORE') ?></span>
         <div class="content" style="display:none;">
             <ul>
+                <?php if ($user->posts >= 1) :
+                ?>
+                    <li>
+                        <?php echo Text::_('COM_KUNENA_POSTS') . ' ' . (int) $user->posts; ?>
+                    </li>
+                <?php endif; ?>
                 <?php if ($canseekarma && $this->config->showKarma) :
                     ?>
                     <li>

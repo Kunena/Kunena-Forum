@@ -1527,7 +1527,7 @@ class KunenaUser extends CMSObject
         if ($this->userid) {
             $me = KunenaUserHelper::getMyself();
 
-            if ($this->_config->showKarma && $me->userid && $me->userid != $this->userid) {
+            if ($this->_config->showKarma && $me->userid) {
                 return true;
             }
         }

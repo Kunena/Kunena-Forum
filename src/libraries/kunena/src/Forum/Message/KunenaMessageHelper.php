@@ -323,12 +323,12 @@ abstract class KunenaMessageHelper
             }
         }
 
-        if (empty($catlist)) {
-            return [0, []];
+        if (count($catlist) > 0) {
+            $allowed = implode(',', array_keys($catlist));
+            $query->where($db->quoteName('m.catid') . ' IN (' . $allowed . ')');
+        } else {
+            $catlist = '';
         }
-
-        $allowed = implode(',', array_keys($catlist));
-        $query->where($db->quoteName('m.catid') . ' IN (' . $allowed . ')');
 
         $query->where($hold);
 

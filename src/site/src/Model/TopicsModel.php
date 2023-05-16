@@ -647,7 +647,7 @@ class TopicsModel extends KunenaModel
                     $latestCategory   = $this->config->rssExcludedCategories;
                     $latestCategoryIn = 0;
                 } else {
-                    $latestCategory   = 332;//$this->config->rssIncludedCategories;
+                    $latestCategory   = $this->config->rssIncludedCategories;
                     $latestCategoryIn = 1;
                 }
             }

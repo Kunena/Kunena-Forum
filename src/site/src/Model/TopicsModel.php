@@ -97,8 +97,18 @@ class TopicsModel extends KunenaModel
         $start = $this->getState('list.start');
         $limit = $this->getState('list.limit');
 
-        // Time will be calculated inside KunenaForumMessageHelper::getLatestMessages()
-        $time = $this->getState('list.time');
+        // Time will be calculated inside KunenaForumMessageHelper::getLatestMessages() else if we are displaying RSS it should follow setting rssTimeLimit
+        if (Factory::getApplication()->getDocument()->getType() != 'feed') {
+            $time = $this->getState('list.time');
+        } else {
+            if($this->config->rssTimeLimit == '1 week') {
+                $time = '168';
+            } elseif ($this->config->rssTimeLimit == '1 month'){
+                $time = '720;';
+            } else {
+                $time = '8760';
+            }
+        }
 
         $params              = [];
         $params['mode']      = $this->getState('list.mode');
@@ -637,7 +647,7 @@ class TopicsModel extends KunenaModel
                     $latestCategory   = $this->config->rssExcludedCategories;
                     $latestCategoryIn = 0;
                 } else {
-                    $latestCategory   = $this->config->rssIncludedCategories;
+                    $latestCategory   = 332;//$this->config->rssIncludedCategories;
                     $latestCategoryIn = 1;
                 }
             }

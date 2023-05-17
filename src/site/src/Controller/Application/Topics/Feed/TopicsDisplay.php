@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Document\Feed\FeedImage;
 use Joomla\CMS\Document\Feed\FeedItem;
@@ -61,6 +62,7 @@ class TopicsDisplay extends KunenaControllerDisplay
         $this->document = Factory::getApplication()->getDocument();
         $this->topicsModel = new TopicsModel();
         $mode = $this->getInput()->getWord('mode', 'topics');
+        $this->me        = KunenaUserHelper::getMyself();
 
         if (!$this->config->enableRss) {
             throw new Exception(Text::_('COM_KUNENA_RSS_DISABLED'), 500);
@@ -193,6 +195,7 @@ class TopicsDisplay extends KunenaControllerDisplay
     {
         $this->layout   = 'posts';
         $this->messages = $this->topicsModel->getMessages();
+        $this->topics   = $this->topicsModel->getTopics();
 
         // TODO: if start != 0, add information from it into description
         $this->document->setGenerator($this->config->boardTitle);

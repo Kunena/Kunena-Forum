@@ -664,6 +664,30 @@ class KunenaIcons
 
         return KunenaSvgIcons::loadsvg('images');
     }
+    
+    /**
+     * Return the minus icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
+    public static function minus($text = null): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+        
+        if ($topicicontype == 'fa') {
+            if ($text != null) {
+                return '<i class="fa fa-minus" aria-hidden="true" title="' . $text . '"></i>';
+            } else {
+                return '<i class="fa fa-minus" aria-hidden="true"></i>';
+            }
+        }
+        
+        return KunenaSvgIcons::loadsvg('minus');
+    }
 
     /**
      * Return the plus icon
@@ -673,13 +697,17 @@ class KunenaIcons
      * @throws  Exception
      * @since   Kunena 5.0
      */
-    public static function plus(): string
+    public static function plus($text = null): string
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa fa-plus" aria-hidden="true"></i>';
+            if ($text != null) {
+                return '<i class="fa fa-plus" aria-hidden="true" title="' . $text . '"></i>';
+            } else {
+                return '<i class="fa fa-plus" aria-hidden="true"></i>';
+            }
         }
 
         return KunenaSvgIcons::loadsvg('plus');

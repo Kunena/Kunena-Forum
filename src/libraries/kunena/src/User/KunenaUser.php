@@ -2064,7 +2064,7 @@ class KunenaUser extends CMSObject
                 return '<span data-bs-toggle="tooltip" data-placement="right" title="' . Text::_('COM_KUNENA_VIEW_PMS') . '" >' . $pms->showIcon($this->userid) . '</span>';
                 break;
             case 'email':
-                return '<span data-bs-toggle="tooltip" data-placement="right" title="' . $this->email . '">' . KunenaIcons::email() . '</span>';
+                return '<a href="mailo:' . $this->email . '" data-bs-toggle="tooltip" data-placement="right" title="' . $this->email . '">' . KunenaIcons::email() . '</a>';
                 break;
             case 'profile':
                 if (!$this->userid) {

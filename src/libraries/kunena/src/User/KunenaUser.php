@@ -2029,7 +2029,7 @@ class KunenaUser extends CMSObject
                     return false;
                 }
 
-                return '<span class="kicon-profile kicon-profile-birthdate" data-bs-toggle="tooltip" data-placement="right" title="' . Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_BIRTHDATE', $this->birthdate) . '"></span>';
+                return '<span data-bs-toggle="tooltip" data-placement="right" title="' . Text::sprintf('COM_KUNENA_MYPROFILE_BIRTHDATE_BIRTHDATE', $this->birthdate) . '" >' . KunenaIcons::birthdate() . '</span>';
 
                 break;
             case 'location':

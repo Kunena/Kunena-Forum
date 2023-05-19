@@ -125,6 +125,26 @@ class KunenaIcons
      * @throws  Exception
      * @since   Kunena 5.0
      */
+    public static function birthdate(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa-solid fa-cake-candles" aria-hidden="true"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('birthday-cake');
+    }
+
+    /**
+     * Return the chevron right icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 5.0
+     */
     public static function chevronright(): string
     {
         $ktemplate     = KunenaFactory::getTemplate();

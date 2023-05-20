@@ -168,7 +168,7 @@ class KunenaBBCode extends BBCode
         Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
 
         // Load Kunena Library Language file as this method can also be used outside Kunena (e.g. EasySocial)
-        Factory::getLanguage()->load('com_kunena.libraries', JPATH_ADMINISTRATOR . '/components/com_kunena');
+        Factory::getApplication()->getLanguage()->load('com_kunena.libraries', JPATH_ADMINISTRATOR . '/components/com_kunena');
     }
 
     /**

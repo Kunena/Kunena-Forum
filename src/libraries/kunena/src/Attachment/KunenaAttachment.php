@@ -24,8 +24,8 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
+use Kunena\Forum\Libraries\Tables\TableKunenaPrivateAttachmentMap;
 use RuntimeException;
 
 /**
@@ -794,7 +795,9 @@ class KunenaAttachment extends KunenaDatabaseObject
         }
 
         // Need to load private message (for now allow only one private message per KunenaAttachment).
-        $map = Table::getInstance('KunenaPrivateAttachmentMap', 'Table');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $map = new TableKunenaPrivateAttachmentMap($db);
+
         $map->load(['attachment_id' => $this->id]);
         $finder  = new KunenaPrivateMessageFinder();
         $private = $finder->where('id', '=', $map->private_id)->firstOrNew();

@@ -20,10 +20,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Tables\KunenaUserCategories;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Category\CategoryUser
@@ -99,8 +101,11 @@ class KunenaCategoryUser extends CMSObject
             $tabletype ['prefix'] = $prefix;
         }
 
-        // Create the user table object
-        return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
+        // Create the KunenaUserCategories table object
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new KunenaUserCategories($db);
+
+        return $tableObject;
     }
 
     /**

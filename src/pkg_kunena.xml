@@ -35,7 +35,7 @@
     <changelogurl>@kunenachangelog@</changelogurl>
 
     <updateservers>
-        <server type="collection" priority="1" name="Kunena 6.1 Update Site">https://update.kunena.org/6.1/list.xml
+        <server type="collection" priority="1" name="Kunena 6.1 Update Site">https://update.kunena.org/6.2/list.xml
         </server>
     </updateservers>
 

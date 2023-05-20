@@ -17,9 +17,10 @@ namespace Kunena\Forum\Libraries\Session;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
+use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
 use RuntimeException;
 
 /**
@@ -153,8 +154,11 @@ class KunenaSession extends CMSObject
             $tabletype['prefix'] = $prefix;
         }
 
-        // Create the user table object
-        return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
+        // Create the KunenaSessions table object
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new TableKunenaCategories($db);
+
+        return $tableObject;
     }
 
     /**

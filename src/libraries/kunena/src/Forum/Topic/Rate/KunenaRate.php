@@ -21,11 +21,13 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\Tables\TableKunenaRate;
 use RuntimeException;
 
 /**
@@ -142,8 +144,11 @@ class KunenaRate extends CMSObject
             $tabletype ['prefix'] = $prefix;
         }
 
-        // Create the user table object
-        return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
+        // Create the TableKunenaRate table object
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new TableKunenaRate($db);
+
+        return $tableObject;
     }
 
     /**

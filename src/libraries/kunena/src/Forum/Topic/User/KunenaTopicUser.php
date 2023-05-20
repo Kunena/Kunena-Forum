@@ -20,12 +20,14 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Tables\KunenaUserTopics;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicUser
@@ -104,8 +106,11 @@ class KunenaTopicUser extends CMSObject
             $tabletype ['prefix'] = $prefix;
         }
 
-        // Create the user table object
-        return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
+        // Create the KunenaUserTopics table object
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new KunenaUserTopics($db);
+
+        return $tableObject;
     }
 
     /**

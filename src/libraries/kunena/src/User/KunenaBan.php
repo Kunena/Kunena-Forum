@@ -20,15 +20,16 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject as parentAlias;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Tables\KunenaUserBans;
 use stdClass;
 
 /**
@@ -196,7 +197,10 @@ class KunenaBan extends parentAlias
         }
 
         // Create the user table object
-        return Table::getInstance($tabletype['prefix'], $tabletype['name']);
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new KunenaUserBans($db);
+
+        return $tableObject;
     }
 
     /**

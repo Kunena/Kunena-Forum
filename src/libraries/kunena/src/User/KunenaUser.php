@@ -31,6 +31,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\User\User;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
@@ -45,6 +46,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\Tables\KunenaUsers;
 use stdClass;
 
 /**
@@ -661,7 +663,10 @@ class KunenaUser extends CMSObject
         }
 
         // Create the user table object
-        return Table::getInstance($tabletype['prefix'], $tabletype['name']);
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new KunenaUsers($db);
+
+        return $tableObject;
     }
 
     /**

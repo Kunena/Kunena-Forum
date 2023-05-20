@@ -20,8 +20,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Tables\KunenaUserRead;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\User\Read\Read
@@ -95,8 +97,11 @@ class KunenaRead extends CMSObject
             $tabletype ['prefix'] = $prefix;
         }
 
-        // Create the user table object
-        return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
+        // Create the KunenaUserRead table object
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new KunenaUserRead($db);
+
+        return $tableObject;
     }
 
     /**

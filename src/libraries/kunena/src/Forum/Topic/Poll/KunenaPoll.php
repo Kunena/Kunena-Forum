@@ -22,11 +22,13 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Tables\TableKunenaPolls;
 use StdClass;
 
 /**
@@ -165,8 +167,11 @@ class KunenaPoll extends CMSObject
             $tabletype ['prefix'] = $prefix;
         }
 
-        // Create the user table object
-        return Table::getInstance($tabletype ['prefix'], $tabletype ['name']);
+        // Create the TableKunenaPolls table object
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableObject = new TableKunenaPolls($db);
+
+        return $tableObject;
     }
 
     /**

@@ -76,7 +76,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                     </div>
                 </div>
             <?php endif; ?>
-            <?php if (!Factory::getApplication()->getTag() != "en-GB" && !$this->getLanguagePack()) : ?>
+            <?php if (!Factory::getApplication()->getLanguage()->getTag() != "en-GB" && !$this->getLanguagePack()) : ?>
                 <div class="row clearfix">
                     <div class="col-xl-3 col-md-3">
                         <div class="card proj-t-card bg-warning">

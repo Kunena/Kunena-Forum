@@ -113,7 +113,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property string  $rssType
  * @property string  $rssTimeLimit
  * @property integer $rssLimit
- * @property string  $rssIncludedCategories
+ * @property array   $rssIncludedCategories
  * @property string  $rssExcludedCategories
  * @property string  $rssSpecification
  * @property boolean $rssAllowHtml
@@ -757,16 +757,16 @@ class KunenaConfig extends CMSObject
     public $rssLimit = 100;
 
     /**
-     * @var    string  RSS included categories
+     * @var    array  RSS included categories
      * @since  Kunena 1.0.6
      */
-    public $rssIncludedCategories = '';
+    public $rssIncludedCategories = 0;
 
     /**
      * @var    string  RSS excluded categories
      * @since  Kunena 1.0.6
      */
-    public $rssExcludedCategories = '';
+    public $rssExcludedCategories = 0;
 
     /**
      * @var    string  RSS specification

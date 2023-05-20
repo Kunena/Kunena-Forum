@@ -1714,22 +1714,14 @@ $wa->useScript('multiselect');
                                                         echo 'class="changed"';
                                                         endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES') ?></td>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_rssIncludedCategories"
-                                                                   value="<?php echo $this->escape($this->config->rssIncludedCategories) ?>"/>
-                                                        </td>
+                                                        <td><?php echo $this->lists ['rssIncludedCategories'] ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC') ?></td>
                                                     </tr>
                                                     <tr <?php if ($this->config->rssExcludedCategories != '') :
                                                         echo 'class="changed"';
                                                         endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES') ?></td>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                   name="cfg_rssExcludedCategories"
-                                                                   value="<?php echo $this->escape($this->config->rssExcludedCategories) ?>"/>
-                                                        </td>
+                                                        <td><?php echo $this->lists ['rssExcludedCategories'] ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC') ?></td>
                                                     </tr>
                                                     <tr <?php if ($this->config->rssAllowHtml != 1) :

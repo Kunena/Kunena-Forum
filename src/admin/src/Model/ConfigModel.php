@@ -1852,6 +1852,14 @@ class ConfigModel extends AdminModel
         $lists ['disableRe'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disableRe', 'class="inputbox form-control" size="1"', 'value', 'text', $config->disableRe);
         $lists ['profiler']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_profiler', 'class="inputbox form-control" size="1"', 'value', 'text', $config->profiler);
 
+        $optionsShowHide         = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_CONFIG_RSSINCLUDEDCATEGORIES_SHOW_ALL'))];
+        $params                  = array('sections' => false, 'action' => 'read');
+        $lists['rssIncludedCategories'] = HTMLHelper::_('kunenaforum.categorylist', 'cfg_rssIncludedCategories[]', 0, $optionsShowHide, $params, 'class="form-select" multiple="multiple"', 'value', 'text', explode(',', $config->rssIncludedCategories), 'rssIncludedCategories');
+
+        $optionsShowHide         = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_CONFIG_RSSEXCLUDEDCATEGORIES_NOT_EXCLUDE'))];
+        $params                  = array('sections' => false, 'action' => 'read');
+        $lists['rssExcludedCategories'] = HTMLHelper::_('kunenaforum.categorylist', 'cfg_rssExcludedCategories[]', 0, $optionsShowHide, $params, 'class="form-select" multiple="multiple"', 'value', 'text', explode(',', $config->rssExcludedCategories), 'rssExcludedCategories');
+        
         return $lists;
     }
 }

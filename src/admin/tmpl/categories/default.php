@@ -328,7 +328,7 @@ Factory::getDocument()->addScriptDeclaration(
                                     <?php endif; ?>
                                     </td>
                                     <td class="center">
-                                        <?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'category.'); ?>
+                                        <?php echo HTMLHelper::_('kunenagrid.published', $item->published, $i, 'category.'); ?>
                                     </td>
                                     <td class="center">
                                         <?php if (!$this->filter->Item || ($this->filter->Item != $item->id && $item->parentid)) :

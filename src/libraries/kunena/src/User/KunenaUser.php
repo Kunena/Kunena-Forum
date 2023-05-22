@@ -2018,7 +2018,7 @@ class KunenaUser extends CMSObject
 
                 $title = Text::sprintf('COM_KUNENA_MYPROFILE_GENDER_GENDER', Text::_('COM_KUNENA_MYPROFILE_GENDER_' . $gender));
 
-                return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" data-bs-toggle="tooltip" data-placement="right" title="' . $title . '"></span>';
+                return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" data-bs-toggle="tooltip" data-placement="right" title="' . $title . '">' . KunenaIcons::$gender() . '</span>';
                 break;
             case 'birthdate':
                 if (!$this->birthdate || $this->birthdate == '0001-01-01') {

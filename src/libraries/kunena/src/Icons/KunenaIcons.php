@@ -655,10 +655,50 @@ class KunenaIcons
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa fa-pencil-alt" aria-hidden="true"></i>';
+            return '<i class="fa-solid fa-person"></i>';
         }
 
         return KunenaSvgIcons::loadsvg('pencil');
+    }
+
+    /**
+     * Return the female icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.1
+     */
+    public static function female(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+
+        if ($topicicontype == 'fa') {
+            return '<i class="fa-solid fa-venus"></i>';
+        }
+
+        return KunenaSvgIcons::loadsvg('female');
+    }
+
+    /**
+     * Return the male icon
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 6.1
+     */
+    public static function male(): string
+    {
+        $ktemplate     = KunenaFactory::getTemplate();
+        $topicicontype = $ktemplate->params->get('topicicontype');
+        
+        if ($topicicontype == 'fa') {
+            return '<i class="fa-solid fa-mars"></i>';
+        }
+        
+        return KunenaSvgIcons::loadsvg('male');
     }
 
     /**
@@ -684,7 +724,7 @@ class KunenaIcons
 
         return KunenaSvgIcons::loadsvg('images');
     }
-    
+
     /**
      * Return the minus icon
      *

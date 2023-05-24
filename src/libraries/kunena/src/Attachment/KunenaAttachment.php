@@ -955,7 +955,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         // Hash, size and MIME are set during saving, so let's deal with all other variables.
         $this->userid = \is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
         $this->folder = \is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
-        $this->protected = is_null($this->protected) ? (bool) KunenaConfig::getInstance()->attachmentProtection : $this->protected;
+        $this->protected = KunenaConfig::getInstance()->attachmentProtection ? 1 : 0;
 
         if (!$this->filename_real) {
             $this->filename_real = $this->filename;

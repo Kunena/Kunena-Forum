@@ -34,6 +34,9 @@ In addition we recommend the following PHP settings:
 
 If you are looking for examples on how *Kunena* works or can be installed, we recommend you checkout our team site at https://www.kunena.org
 
+## TRANSLATIONS
+
+Kunena is on Transifex - Help us to translate : https://app.transifex.com/Kunena-Forum/kunena-forum-6-x
 
 ## INSTALLATION
 

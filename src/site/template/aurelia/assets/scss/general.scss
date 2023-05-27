@@ -1391,3 +1391,7 @@ a .rounded,
     word-wrap: break-word;
     white-space: pre-line !important;
 }
+
+.form-select, .custom-select {
+  background: none !important /* Joomla template hack */;
+}

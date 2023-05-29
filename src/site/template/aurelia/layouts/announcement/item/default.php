@@ -13,6 +13,7 @@
 
 defined('_JEXEC') or die();
 
+$actions      = $this->getActions();
 ?>
 <h3>
     <?php echo $this->announcement->displayField('title'); ?>
@@ -25,10 +26,10 @@ defined('_JEXEC') or die();
     <?php endif; ?>
 </h3>
 
-<?php if (!empty($this->actions)) :
+<?php if (!empty($actions)) :
     ?>
     <div>
-        <?php echo implode(' ', $this->actions); ?>
+        <?php echo implode(' ', $actions); ?>
     </div>
     <br>
 <?php endif; ?>

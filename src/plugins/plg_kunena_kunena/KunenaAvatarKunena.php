@@ -84,8 +84,7 @@ class KunenaAvatarKunena extends KunenaAvatar
         $avatar = $user->avatar;
         $config = KunenaFactory::getConfig();
 
-        // When KunenaFactory::getConfig()->avatarType is true it means Icontype
-        if (!$config->avatarType) {
+        if (!empty($avatar)) {
             $path     = KPATH_MEDIA . "/avatars";
             $origPath = "{$path}/{$avatar}";
 
@@ -143,7 +142,13 @@ class KunenaAvatarKunena extends KunenaAvatar
 
             return KURL_MEDIA . "avatars/{$resized}/{$file}{$timestamp}";
         } else {
-            return KURL_MEDIA . "core/svg/person.svg";
+            // When KunenaFactory::getConfig()->avatarType is true it means Icontype
+            if ($config->avatarType)
+            {
+                return KURL_MEDIA . "core/svg/person.svg";
+            } else {
+                return KURL_MEDIA . 'avatars/' . $config->defaultAvatar;
+            }
         }
     }
 }

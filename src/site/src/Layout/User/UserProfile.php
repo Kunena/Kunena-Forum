@@ -4,41 +4,35 @@
  * Kunena Component
  *
  * @package         Kunena.Site
- * @subpackage      Layout.Credits
+ * @subpackage      Layout.User
  *
  * @copyright       Copyright (C) 2008 - 2023 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Layout\Credits;
+namespace Kunena\Forum\Site\Layout\User;
 
 \defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /**
- * KunenaLayoutMiscDisplay
+ * KunenaLayoutUserItem
  *
- * @since   Kunena 6.1
+ * @since   Kunena 6.2
  */
-class Credits extends KunenaLayout
+class UserProfile extends KunenaLayout
 {
-    public $output;
-
     public $user;
 
-    public $headerText;
-
-    public $pagination;
+    public $candisplaymail;
 
     public $config;
 
-    public $logo;
+    public $ktemplate;
 
-    public $intro;
+    public $topic_starter;
 
-    public $memberList;
-
-    public $thanks;
+    public $category_id;
 }

@@ -4,41 +4,29 @@
  * Kunena Component
  *
  * @package         Kunena.Site
- * @subpackage      Layout.Credits
+ * @subpackage      Layout.Bbcode
  *
  * @copyright       Copyright (C) 2008 - 2023 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Layout\Credits;
+namespace Kunena\Forum\Site\Layout\Bbcode;
 
 \defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /**
- * KunenaLayoutMiscDisplay
+ * BbcodeUrl
  *
- * @since   Kunena 6.1
+ * @since   Kunena 6.2
  */
-class Credits extends KunenaLayout
+class BbcodeUrl extends KunenaLayout
 {
-    public $output;
+    public $url;
 
-    public $user;
+    public $target;
 
-    public $headerText;
-
-    public $pagination;
-
-    public $config;
-
-    public $logo;
-
-    public $intro;
-
-    public $memberList;
-
-    public $thanks;
+    public $internal;
 }

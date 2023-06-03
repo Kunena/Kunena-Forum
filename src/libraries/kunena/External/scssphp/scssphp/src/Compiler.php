@@ -3513,7 +3513,7 @@ EOL;
 
                 if (
                     \is_callable([$this, $fn]) ||
-                    (($fn = "op{ucLType}${ucRType}") &&
+                    (($fn = "op{ucLType}{ucRType}") &&
                         \is_callable([$this, $fn]) &&
                         $passOp = true) ||
                     (($fn = "op{ucOpName}") &&

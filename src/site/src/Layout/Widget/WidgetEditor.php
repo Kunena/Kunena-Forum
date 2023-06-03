@@ -11,12 +11,15 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Site\Layout\Widget;
+
 defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Exception;
 
 /**
  * KunenaLayoutTopicEditEditor
@@ -25,6 +28,20 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  */
 class WidgetEditor extends KunenaLayout
 {
+    public $privateMessage;
+
+    public $wa;
+
+    public $template;
+
+    public $allow_polls;
+
+    public $doc;
+
+    public $config;
+
+    public $message;
+
     /**
      * Check if user is able to have images and links buttons in the editor
      *

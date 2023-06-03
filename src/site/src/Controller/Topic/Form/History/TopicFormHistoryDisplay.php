@@ -41,6 +41,18 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Topic/Edit/History';
 
+    public $topic;
+
+    public $history;
+
+    public $replycount;
+
+    public $historycount;
+
+    public $attachments;
+
+    public $inline_attachments;
+
     /**
      * Prepare reply history display.
      *

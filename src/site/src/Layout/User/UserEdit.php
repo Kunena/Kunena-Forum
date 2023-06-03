@@ -38,6 +38,18 @@ class UserEdit extends KunenaLayout
      */
     public $profile;
 
+    public $output;
+
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $config;
+
+    public $ktemplate;
+
     /**
      * Method to get tabs for edit profile
      *

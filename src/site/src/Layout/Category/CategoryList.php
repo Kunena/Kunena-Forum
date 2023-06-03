@@ -15,17 +15,7 @@ namespace Kunena\Forum\Site\Layout\Category;
 
 \defined('_JEXEC') or die;
 
-use Exception;
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Session\Session;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use Kunena\Forum\Libraries\Pagination\KunenaPagination;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Template\KunenaTemplate;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * KunenaLayoutCategoryIndex

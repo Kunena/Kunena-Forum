@@ -38,6 +38,22 @@ use Kunena\Forum\Site\Model\TopicsModel;
  */
 class TopicListingUnreadDisplay extends ListDisplay
 {
+    public $model;
+
+    public $state;
+
+    public $moreUri;
+
+    public $access;
+
+    public $params;
+
+    public $embedded;
+
+    public $mesIds;
+
+    public $actions;
+
     /**
      * Prepare topic list for moderators.
      *

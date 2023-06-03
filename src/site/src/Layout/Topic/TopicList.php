@@ -62,6 +62,14 @@ class TopicList extends KunenaLayout
 
     public $page;
 
+    public $model;
+
+    public $access;
+
+    public $params;
+
+    public $mesIds;
+
     /**
      * Method to return HTML select list for time filter
      *

@@ -43,6 +43,46 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Topic/Edit';
 
+    public $wa;
+
+    public $doc;
+
+    public $UserCanPostImage;
+
+    public $selectcatlist;
+
+    public $editorType;
+
+    public $modified_reason;
+
+    public $canSubscribe;
+
+    public $subscriptionsChecked;
+
+    public $postAnonymous;
+
+    public $privateMessage;
+
+    public $allowedExtensions;
+
+    public $attachments;
+
+    public $action;
+
+    public $topicIcons;
+
+    public $category;
+
+    public $topic;
+
+    public $message;
+
+    public $ktemplate;
+
+    public $me;
+
+    public $catid;
+
     /**
      * Prepare topic edit form.
      *

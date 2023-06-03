@@ -77,4 +77,10 @@ class TopicEdit extends KunenaLayout
     public $user;
 
     public $output;
+
+    public $modified_reason;
+
+    public $attachments;
+
+    public $catid;
 }

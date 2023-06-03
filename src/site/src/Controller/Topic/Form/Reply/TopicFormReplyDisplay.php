@@ -50,6 +50,42 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Topic/Edit';
 
+    public $me;
+
+    public $ktemplate;
+
+    public $wa;
+
+    public $doc;
+
+    public $UserCanPostImage;
+
+    public $selectcatlist;
+
+    public $editorType;
+
+    public $canSubscribe;
+
+    public $subscriptionsChecked;
+
+    public $postAnonymous;
+
+    public $allowedExtensions;
+
+    public $privateMessage;
+
+    public $action;
+
+    public $message;
+
+    public $topicIcons;
+
+    public $captchaEnabled;
+
+    public $category;
+
+    public $topic;
+
     /**
      * Prepare topic reply form.
      *

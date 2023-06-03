@@ -37,6 +37,28 @@ class TopicEditHistory extends KunenaLayout
      */
     public $numLink;
 
+    public $output;
+
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $topic;
+
+    public $history;
+
+    public $replycount;
+
+    public $historycount;
+
+    public $attachments;
+
+    public $inline_attachments;
+
+    public $message;
+
     /**
      * Method to get the anchor link with number
      *

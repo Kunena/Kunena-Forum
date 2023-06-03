@@ -20,7 +20,7 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
-use Kunena\Forum\Libraries\Tables\TableKunenaCategories;
+use Kunena\Forum\Libraries\Tables\KunenaSessions;
 use RuntimeException;
 
 /**
@@ -156,7 +156,7 @@ class KunenaSession extends CMSObject
 
         // Create the KunenaSessions table object
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $tableObject = new TableKunenaCategories($db);
+        $tableObject = new KunenaSessions($db);
 
         return $tableObject;
     }

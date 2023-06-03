@@ -52,6 +52,7 @@ if ($this->topic->ordering) {
 if ($this->topic->locked) {
     $txt .= ' topic-locked';
 }
+
 ?>
 <div class="kunena-topic-item <?php echo $txt; ?>">
     <?php if ($this->category->headerdesc) : ?>

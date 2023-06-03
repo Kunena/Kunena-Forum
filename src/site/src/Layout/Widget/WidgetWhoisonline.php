@@ -36,4 +36,8 @@ class WidgetWhoisonline extends KunenaLayout
     public $usersUrl;
 
     public $membersOnline;
+
+    public $hiddenList;
+
+    public $onlineList;
 }

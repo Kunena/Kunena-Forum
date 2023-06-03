@@ -38,6 +38,10 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 
     public $membersOnline;
 
+    public $onlineList;
+
+    public $hiddenList;
+
     /**
      * @var     string
      * @since   Kunena 6.0

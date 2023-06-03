@@ -18,19 +18,21 @@ namespace Kunena\Forum\Site\Layout\Widget;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /**
- * KunenaLayoutWidgetMenu
+ * WidgetAnnouncement
  *
- * @since   Kunena 6.1
+ * @since   Kunena 6.2
  */
-class WidgetModal extends KunenaLayout
+class WidgetAnnouncement extends KunenaLayout
 {
-    public $name;
+    public $announcement;
 
-    public $label;
+    public $config;
 
-    public $description;
+    public $pagination;
 
-    public $id;
+    public $headerText;
 
-    public $form;
+    public $user;
+
+    public $output;
 }

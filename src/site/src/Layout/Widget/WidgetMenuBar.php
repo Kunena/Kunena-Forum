@@ -4,7 +4,7 @@
  * Kunena Component
  *
  * @package         Kunena.Site
- * @subpackage      Controllers.Misc
+ * @subpackage      Layout.widget
  *
  * @copyright       Copyright (C) 2008 - 2023 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL

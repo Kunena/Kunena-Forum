@@ -44,6 +44,10 @@ class TopicListingUserDisplay extends ListDisplay
 
     public $embedded;
 
+    public $page;
+
+    public $actions;
+
     /**
      * Prepare user's topic list.
      *

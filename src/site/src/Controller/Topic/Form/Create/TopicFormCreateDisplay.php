@@ -44,6 +44,46 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
     public $captchaHtml = null;
     public $headerText;
     public $subscribed;
+
+    public $wa;
+
+    public $doc;
+
+    public $UserCanPostImage;
+
+    public $editorType;
+
+    public $canSubscribe;
+
+    public $subscriptionsChecked;
+
+    public $postAnonymous;
+
+    public $privateMessage;
+
+    public $poll;
+
+    public $allowedExtensions;
+
+    public $action;
+    
+    public $selectcatlist;
+    
+    public $selected;
+    
+    public $captchaEnabled;
+    
+    public $topicIcons;
+    
+    public $message;
+    
+    public $topic;
+    
+    public $category;
+    
+    public $ktemplate;
+    
+    public $me;
     /**
      * @var     string
      * @since   Kunena 6.0

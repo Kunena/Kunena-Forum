@@ -33,6 +33,16 @@ class AnnouncementEdit extends KunenaLayout
      */
     public $announcement;
 
+    public $output;
+
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $config;
+
     /**
      * Method to create an input in function of name given
      *

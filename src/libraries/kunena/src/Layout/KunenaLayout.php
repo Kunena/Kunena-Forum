@@ -121,6 +121,14 @@ class KunenaLayout extends KunenaBase
      */
     protected $legacy;
 
+    public $breadcrumb;
+
+    public $content;
+
+    public $input;
+
+    public $me;
+
     /**
      * Append HTML after the layout content.
      *

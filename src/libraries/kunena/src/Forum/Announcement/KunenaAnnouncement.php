@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\Forum\Announcement;
 use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
@@ -370,7 +371,8 @@ class KunenaAnnouncement extends KunenaDatabaseObject
      */
     protected function saveInternal()
     {
-        $cache = Factory::getCache('com_kunena', 'output');
+        $options = ['defaultgroup' => 'com_kunena'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         $cache->remove('announcement', 'global');
 
         return true;

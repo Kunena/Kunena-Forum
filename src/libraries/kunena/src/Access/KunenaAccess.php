@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Access;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -125,7 +126,8 @@ class KunenaAccess
 
         if (KunenaConfig::getInstance()->get('cache_adm')) {
             // Load administrators and moderators from cache
-            $cache = Factory::getCache('com_kunena', 'output');
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
             $data  = $cache->get(self::$cacheKey, 'com_kunena');
 
             if ($data) {
@@ -187,7 +189,8 @@ class KunenaAccess
         // FIXME: enable caching after fixing the issues
         if (KunenaConfig::getInstance()->get('cache_adm')) {
             // Store new data into cache
-            $cache = Factory::getCache('com_kunena', 'output');
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
             $cache->store(
                 serialize(
                     [

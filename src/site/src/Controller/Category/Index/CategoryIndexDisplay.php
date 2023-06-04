@@ -147,7 +147,8 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
         $this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
 
         /*
-        $cache   = Factory::getCache('com_kunena', 'output');
+        $options = ['defaultgroup' => 'com_kunena'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))
         {

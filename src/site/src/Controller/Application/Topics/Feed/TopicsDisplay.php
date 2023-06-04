@@ -24,6 +24,7 @@ use Kunena\Forum\Site\Model\TopicsModel;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Document\Feed\FeedImage;
 use Joomla\CMS\Document\Feed\FeedItem;
@@ -69,7 +70,8 @@ class TopicsDisplay extends KunenaControllerDisplay
         }
 
         KunenaParser::$relative = false;
-        $cache            = Factory::getCache('com_kunena_rss', 'output');
+        $options = ['defaultgroup' => 'com_kunena_rss'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if (!$this->config->cache) {
             $cache->setCaching(0);

@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\Menu;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -39,7 +40,7 @@ abstract class KunenaMenuHelper
      */
     public static function cleanCache(): void
     {
-        $cache = Factory::getCache();
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
         $cache->clean('mod_menu');
     }
 
@@ -92,7 +93,8 @@ abstract class KunenaMenuHelper
         $levels = $user->getAuthorisedViewLevels();
         asort($levels);
         $key   = 'menuinternalItems' . $params . implode(',', $levels) . '.' . $base->id;
-        $cache = Factory::getCache('mod_menu', '');
+        $options = ['defaultgroup' => 'mod_menu'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('', $options);
 
         if ($cache->contains($key)) {
             $items = $cache->get($key);

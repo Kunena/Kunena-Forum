@@ -20,6 +20,7 @@ namespace Kunena\Forum\Libraries\Config;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -1649,7 +1650,8 @@ class KunenaConfig extends CMSObject
         static $instance = null;
 
         if (!$instance) {
-            $cache    = Factory::getCache('com_kunena', 'output');
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
             $instance = $cache->get('configuration', 'com_kunena');
 
             if (!$instance) {

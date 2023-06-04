@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Forum;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
@@ -258,7 +259,8 @@ abstract class KunenaForum
         KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
 
         // Setup output caching.
-        $cache = Factory::getCache('com_kunena', 'output');
+        $options = ['defaultgroup' => 'com_kunena'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if (!$config->cache) {
             $cache->setCaching(0);

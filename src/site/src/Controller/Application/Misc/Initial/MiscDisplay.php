@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site\Controller\Application\Misc\Initial;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -158,7 +159,8 @@ class MiscDisplay extends Display
         } else {
             $this->body = function () use ($body) {
 
-                $cache = Factory::getCache('com_kunena', 'callback');
+                $options = ['defaultgroup' => 'com_kunena'];
+                $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
                 $cache->setLifeTime(180);
 
                 return $cache->get(['Kunena\Forum\Libraries\Html\KunenaParser', 'parseBBCode'], [$body]);

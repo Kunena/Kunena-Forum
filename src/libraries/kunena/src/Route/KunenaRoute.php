@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\Route;
 use Exception;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Cache\CacheController;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
@@ -372,7 +373,7 @@ abstract class KunenaRoute
 
             if (KunenaConfig::getInstance()->get('cache_mid')) {
                 // FIXME: Experimental caching.
-                $cache        = self::getCache();
+                $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
                 self::$search = unserialize($cache->get('search', "com_kunena.route.v1.{$language}.{$user->userid}"));
             }
 
@@ -428,7 +429,10 @@ abstract class KunenaRoute
      */
     protected static function getCache(): CacheController
     {
-        return Factory::getCache('mod_menu', 'output');
+        $options = ['defaultgroup' => 'mod_menu'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+
+        return $cache;
     }
 
     /**

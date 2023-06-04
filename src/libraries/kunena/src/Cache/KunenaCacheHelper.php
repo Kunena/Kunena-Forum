@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Cache;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Filesystem\Folder;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
@@ -59,7 +60,7 @@ abstract class KunenaCacheHelper
      */
     public static function clearKunena(): void
     {
-        $cache = Factory::getCache();
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
         $cache->clean('com_kunena');
     }
 
@@ -72,7 +73,7 @@ abstract class KunenaCacheHelper
      */
     public static function clearSystem(): void
     {
-        $cache = Factory::getCache();
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
         $cache->clean('_system');
     }
 
@@ -195,7 +196,7 @@ abstract class KunenaCacheHelper
      */
     public static function clearCategories(): void
     {
-        $cache = Factory::getCache();
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
         $cache->remove('categories', 'com_kunena');
     }
 }

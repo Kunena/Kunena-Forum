@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Module;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
@@ -90,7 +91,8 @@ abstract class KunenaModule
 
         // Use caching also for registered users if enabled.
         if ($this->params->get('owncache', 0)) {
-            $cache = Factory::getCache('com_kunena', 'output');
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
             $me = Factory::getApplication()->getIdentity();
             $cache->setLifeTime($this->params->get('cacheTime', 180));

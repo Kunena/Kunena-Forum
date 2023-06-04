@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site\Controller\Topic\Item;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -144,7 +145,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $this->me = KunenaUserHelper::getMyself();
 
         $this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-        $this->cache   = Factory::getCache('com_kunena', 'output');
+        $options = ['defaultgroup' => 'com_kunena'];
+        $this->cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         /*
         if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template'))

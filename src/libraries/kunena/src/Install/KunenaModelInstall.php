@@ -18,6 +18,7 @@ use Exception;
 use Joomla\Archive\Archive;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Cache\CacheController;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
@@ -508,7 +509,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         }
 
         /** @var Cache|CacheController $cache */
-        $cache = Factory::getCache();
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
         $cache->clean('mod_menu');
     }
 
@@ -2661,7 +2662,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         // Clean cache, just in case
         KunenaMenuHelper::cleanCache();
 
-        $cache = Factory::getCache();
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
         $cache->clean('com_kunena');
 
         /*

@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site\View\Common;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -151,7 +152,8 @@ class HtmlView extends KunenaView
                 return;
             }
 
-            $cache    = Factory::getCache('com_kunena', 'output');
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
             $annCache = $cache->get('announcement', 'global');
 
             if (!$annCache) {
@@ -193,7 +195,8 @@ class HtmlView extends KunenaView
         }
 
         $allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));
-        $cache   = Factory::getCache('com_kunena', 'output');
+        $options = ['defaultgroup' => 'com_kunena'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if ($cache->start("{$this->ktemplate->name}.common.jump.{$allowed}", 'com_kunena.template')) {
             return;
@@ -316,7 +319,8 @@ class HtmlView extends KunenaView
         }
 
         $moderator = \intval($this->me->isModerator()) + \intval($this->me->isAdmin());
-        $cache     = Factory::getCache('com_kunena', 'output');
+        $options = ['defaultgroup' => 'com_kunena'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) {
             return;
@@ -404,7 +408,8 @@ class HtmlView extends KunenaView
             return;
         }
 
-        $cache = Factory::getCache('com_kunena', 'output');
+        $options = ['defaultgroup' => 'com_kunena'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
 
         if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) {
             return;
@@ -639,7 +644,8 @@ class HtmlView extends KunenaView
         }
 
         $my         = $this->app->getIdentity();
-        $cache      = Factory::getCache('com_kunena', 'output');
+        $options = ['defaultgroup' => 'com_kunena'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         $cachekey   = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
         $cachegroup = 'com_kunena.template';
 

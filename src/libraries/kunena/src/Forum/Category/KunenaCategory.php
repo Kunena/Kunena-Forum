@@ -1615,7 +1615,8 @@ class KunenaCategory extends KunenaDatabaseObject
         $this->setProperties($table->getProperties());
         $this->params = $params;
 
-        // $cache = Factory::getCache('com_kunena', 'output');
+        //$options = ['defaultgroup' => 'com_kunena'];
+        //$cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         // $cache->clean('categories');
 
         return $result;

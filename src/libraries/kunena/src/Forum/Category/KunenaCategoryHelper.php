@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Forum\Category;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Language\Transliterate;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -70,7 +71,8 @@ abstract class KunenaCategoryHelper
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         if (KunenaFactory::getConfig()->get('cache_cat')) {
-            $cache = Factory::getCache('com_kunena', 'callback');
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
             $cache->setLifeTime(180);
             self::$_instances = $cache->call(['CategoryHelper', 'loadCategories']);
         } else {

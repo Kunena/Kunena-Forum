@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site\View\Search;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
@@ -284,7 +285,8 @@ class HtmlView extends KunenaView
 
             // TODO: add context (options, template) to caching
             $this->cache = true;
-            $cache       = Factory::getCache('com_kunena', 'output');
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
             $cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$message->id}";
             $cachegroup  = 'com_kunena.posts';
 
@@ -351,7 +353,8 @@ class HtmlView extends KunenaView
 
             // TODO: add context (options, template) to caching
             $this->cache = true;
-            $cache       = Factory::getCache('com_kunena', 'output');
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
             $cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
             $cachegroup  = 'com_kunena.topics';
 

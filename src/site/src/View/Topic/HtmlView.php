@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site\View\Topic;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -613,7 +614,8 @@ class HtmlView extends KunenaView
             }
 
             // TODO: add context (options) to caching
-            $this->cache      = Factory::getCache('com_kunena', 'output');
+            $options = ['defaultgroup' => 'com_kunena'];
+            $this->cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
             $this->cachekey   = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
             $this->cachegroup = 'com_kunena.messages';
 
@@ -953,10 +955,8 @@ class HtmlView extends KunenaView
         }
 
         // TODO: add context (options, template) to caching
-        $this->cache      = Factory::getCache(
-            'com_kunena',
-            'output'
-        );
+        $options = ['defaultgroup' => 'com_kunena'];
+        $this->cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         $this->cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
         $this->cachegroup = 'com_kunena.messages';
 

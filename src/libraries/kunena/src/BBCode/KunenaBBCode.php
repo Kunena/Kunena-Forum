@@ -16,10 +16,9 @@ namespace Kunena\Forum\Libraries\BBCode;
 \defined('_JEXEC') or die();
 
 use Exception;
-use GeSHi;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Http\Http;
@@ -1857,7 +1856,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      */
     public static function getEbayItemFromCache(int $ItemID): string
     {
-        $cache = Factory::getCache('Kunena_ebay_request');
+        $options = ['defaultgroup' => 'Kunena_ebay_request'];
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         $cache->setCaching(true);
 
         if ($this->config->cacheTime == 0) {

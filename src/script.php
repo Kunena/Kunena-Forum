@@ -13,6 +13,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
@@ -377,7 +378,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         $this->fixUpdateSite();
 
         // Clear Joomla system cache.
-        $cache = Factory::getCache();
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
         $cache->clean('_system');
 
         // Remove all compiled files from APC cache.

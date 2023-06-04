@@ -282,7 +282,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         $this->headerText = KunenaParser::parseText($this->topic->displayField('subject'));
 
-        $data                           = new Registry();
+        $data                           = new \stdClass();
         $data->{'@context'}             = "https://schema.org";
         $data->{'@type'}                = "DiscussionForumPosting";
         $data->{'id'}                   = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
@@ -296,33 +296,33 @@ class TopicItemDisplay extends KunenaControllerDisplay
         }
 
         $data->{'author'}               = [];
-        $tmp                            = new Registry();
+        $tmp                            = new \stdClass();
         $tmp->{'@type'}                 = "Person";
         $tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
         $data->{'author'}               = $tmp;
         $data->interactionStatistic     = [];
-        $tmp2                           = new Registry();
+        $tmp2                           = new \stdClass();
         $tmp2->{'@type'}                = "InteractionCounter";
         $tmp2->{'interactionType'}      = "InteractionCounter";
         $tmp2->{'userInteractionCount'} = $this->topic->getReplies();
         $data->interactionStatistic     = $tmp2;
-        $tmp3                           = new Registry();
+        $tmp3                           = new \stdClass();
         $tmp3->{'@type'}                = "ImageObject";
         $tmp3->{'url'}                  = $this->docImage();
-        $tmp4                           = new Registry();
+        $tmp4                           = new \stdClass();
         $tmp4->{'@type'}                = "Organization";
         $tmp4->{'name'}                 = $this->config->boardTitle;
         $tmp4->{'logo'}                 = $tmp3;
         $data->publisher                = (array) $tmp4;
         $data->mainEntityOfPage         = [];
-        $tmp5                           = new Registry();
+        $tmp5                           = new \stdClass();
         $tmp5->{'@type'}                = "WebPage";
         $tmp5->{'name'}                 = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
         $data->mainEntityOfPage         = $tmp5;
 
         if ($this->category->allowRatings && $this->config->ratingEnabled && KunenaRateHelper::getCount($this->topic->id) > 0) {
             $data->aggregateRating  = [];
-            $tmp3                   = new Registry();
+            $tmp3                   = new \stdClass();
             $tmp3->{'@type'}        = "AggregateRating";
             $tmp3->{'itemReviewed'} = $this->headerText;
             $tmp3->{'ratingValue'}  = KunenaRateHelper::getSelected($this->topic->id) > 0 ? KunenaRateHelper::getSelected($this->topic->id) : 5;

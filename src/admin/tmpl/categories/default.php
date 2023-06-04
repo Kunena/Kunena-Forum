@@ -29,9 +29,9 @@ $saveOrder = ($listOrder == 'a.order' && strtolower($listDirn) == 'asc');
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('jquery');
 
-Factory::getDocument()->addScript(Uri::root() . 'media/kunena/core/js/multiselect-uncompressed.js');
+$this->document->addScript(Uri::root() . 'media/kunena/core/js/multiselect-uncompressed.js');
 
-Factory::getDocument()->addScriptDeclaration(
+$this->document->addScriptDeclaration(
     "jQuery(document).ready(function() {
         Joomla.JMultiSelect('adminForm');
     });"
@@ -44,7 +44,7 @@ if ($this->saveOrder)
 
 $filterItem = $this->escape($this->state->get('item.id'));
 
-Factory::getDocument()->addScriptDeclaration(
+$this->document->addScriptDeclaration(
     "Joomla.orderTable = function () {
         var table = document.getElementById(\"sortTable\");
         var direction = document.getElementById(\"directionTable\");

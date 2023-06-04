@@ -20,10 +20,11 @@ use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Table\Extension;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaInstallerException;
 use Joomla\CMS\Filesystem\File;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Kunena package installer script.
@@ -682,7 +683,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      */
     public function enablePlugin($group, $element)
     {
-        $plugin = Table::getInstance('extension');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $plugin = new Extension($db);
 
         if (!$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element])) {
             return false;

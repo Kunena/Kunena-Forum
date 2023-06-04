@@ -20,6 +20,8 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Table\Menu;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use StdClass;
@@ -255,7 +257,8 @@ abstract class KunenaMenuFix
 
         foreach (self::$legacy as $itemid) {
             $item = self::$items[$itemid];
-            $table = Table::getInstance('menu');
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $table = new Menu($db);
             $table->load($item->id);
             $data = [
                 'link'   => $item->link,
@@ -286,7 +289,8 @@ abstract class KunenaMenuFix
             return false;
         }
 
-        $table  = Table::getInstance('menu');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $table = new Menu($db);
         $result = $table->delete($itemid);
         KunenaMenuHelper::cleanCache();
 

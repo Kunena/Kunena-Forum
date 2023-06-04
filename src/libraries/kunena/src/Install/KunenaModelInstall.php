@@ -29,9 +29,12 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Table\Extension;
+use Joomla\CMS\Table\MenuType;
+use Joomla\CMS\Table\Menu;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -492,7 +495,8 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     public function deleteMenu(): void
     {
-        $table = Table::getInstance('MenuType');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $table = new MenuType($db);
         $table->load(['menutype' => 'kunenamenu']);
 
         if ($table->id) {
@@ -785,7 +789,8 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     public function loadPlugin(array $group, string $element)
     {
-        $plugin = Table::getInstance('extension');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $plugin = new Extension($db);
         $plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element]);
 
         return $plugin;
@@ -1824,7 +1829,8 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     public function enablePlugin(string $group, string $element): bool
     {
-        $plugin = Table::getInstance('extension');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $plugin = new Extension($db);
 
         if (!$plugin->load(['type' => 'plugin', 'folder' => $group, 'element' => $element])) {
             return false;
@@ -2754,7 +2760,8 @@ class KunenaModelInstall extends BaseDatabaseModel
             throw new KunenaInstallerException($e->getMessage(), $e->getCode());
         }
 
-        $table = Table::getInstance('MenuType');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $table = new MenuType($db);
         $data  = [
             'menutype'    => 'kunenamenu',
             'title'       => Text::_('COM_KUNENA_MENU_TITLE'),
@@ -2770,7 +2777,8 @@ class KunenaModelInstall extends BaseDatabaseModel
             throw new KunenaInstallerException($table->getError());
         }
 
-        $table = Table::getInstance('menu');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $table = new Menu($db);
         $table->load(['menutype' => 'kunenamenu', 'link' => $menu ['link']]);
         $paramdata = ['menu-anchor_title'     => '',
                       'menu-anchor_css'       => '',
@@ -2846,7 +2854,8 @@ class KunenaModelInstall extends BaseDatabaseModel
             foreach ($submenu as $menuitem) {
                 $params = clone $gparams;
                 $params->loadArray($menuitem['params']);
-                $table = Table::getInstance('menu');
+                $db = Factory::getContainer()->get(DatabaseInterface::class);
+                $table = new Menu($db);
                 $table->load(['menutype' => 'kunenamenu', 'link' => $menuitem ['link'], 'language' => $langCode]);
                 $data = [
                     'menutype'     => 'kunenamenu',
@@ -2889,7 +2898,8 @@ class KunenaModelInstall extends BaseDatabaseModel
                 return true;
             }
 
-            $table = Table::getInstance('menu');
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $table = new Menu($db);
             $table->load(['menutype' => $defaultmenu->menutype, 'type' => 'alias', 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'language' => $langCode]);
 
             if (!$table->id) {

@@ -14,7 +14,9 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Joomla\CMS\Table\Extension;
 
 /**
  * Class pkg_kunena_languagesInstallerScript
@@ -99,7 +101,8 @@ class pkg_kunena_languagesInstallerScript
         }
 
         // Remove old K1.7 style language pack.
-        $table = Joomla\CMS\Table\Table::getInstance('extension');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $table = new Extension($db);
         $id    = $table->find(['type' => 'file', 'element' => "kunena_language_pack"]);
 
         if ($id) {
@@ -118,7 +121,8 @@ class pkg_kunena_languagesInstallerScript
      */
     public function uninstallLanguage($tag, $name)
     {
-        $table = Joomla\CMS\Table\Table::getInstance('extension');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $table = new Extension($db);
         $id    = $table->find(['type' => 'file', 'element' => "com_kunena_{$tag}"]);
 
         if (!$id) {

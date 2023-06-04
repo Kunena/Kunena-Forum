@@ -21,7 +21,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Table\MenuType;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 
 /**
@@ -51,7 +52,8 @@ abstract class KunenaMenuHelper
      */
     public static function KunenaMenusExists()
     {
-        $table = Table::getInstance('MenuType');
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $table = new MenuType($db);
         $data  = [
             'menutype'    => 'kunenamenu',
             'title'       => Text::_('COM_KUNENA_MENU_TITLE'),

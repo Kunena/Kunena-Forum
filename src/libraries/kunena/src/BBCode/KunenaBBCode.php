@@ -2838,7 +2838,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $consumer_key    = trim($this->config->twitterConsumerKey);
         $consumer_secret = trim($this->config->twitterConsumerSecret);
 
-        if (File::exists(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json')) {
+        if (is_file(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json')) {
             $tweet_data = file_get_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');
 
             if ($tweet_data !== false) {

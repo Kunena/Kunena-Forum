@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\Controller\Category\Index;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -386,7 +385,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
         $robots = $this->app->get('robots');
         $image  = null;
 
-        if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader)) {
+        if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {
             $image = Uri::base() . $this->config->emailHeader;
             $this->setMetaData('og:image', $image, 'property');
         }

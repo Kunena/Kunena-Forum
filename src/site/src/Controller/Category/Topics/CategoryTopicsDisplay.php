@@ -16,8 +16,6 @@ namespace Kunena\Forum\Site\Controller\Category\Topics;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
@@ -237,7 +235,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         $doc       = $this->app->getDocument();
         $robots    = $this->app->get('robots');
 
-        if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader)) {
+        if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {
             $image = Uri::base() . $this->config->emailHeader;
             $this->setMetaData('og:image', $image, 'property');
         }

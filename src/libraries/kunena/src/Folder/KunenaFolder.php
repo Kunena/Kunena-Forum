@@ -38,7 +38,7 @@ class KunenaFolder
     public static function createIndex(string $folder): void
     {
         // Make sure we have an index.html file in the current folder
-        if (!File::exists($folder . '/index.html')) {
+        if (!is_file($folder . '/index.html')) {
             $lang = Factory::getApplication()->getLanguage();
             $contents = '<html lang="' . str_replace('_', '-', $lang->getLocale()[2]) . '"><body></body></html>';
             File::write($folder . '/index.html', $contents);

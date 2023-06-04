@@ -68,7 +68,7 @@ class KunenaUploadHelper
         if (isset($file['name'])) {
             $filepath = Path::clean($uploadfolder . '/' . strtolower($file['name']));
 
-            if (File::exists($filepath)) {
+            if (is_file($filepath)) {
                 if ($format == 'json') {
                     header('HTTP/1.0 409 Conflict');
                     jexit('Error. File already exists');

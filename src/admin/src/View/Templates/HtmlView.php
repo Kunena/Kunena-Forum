@@ -169,7 +169,7 @@ class HtmlView extends BaseHtmlView
 
         $templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
-        if (!File::exists($templateFile) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/config/')) {
+        if (!is_file($templateFile) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/config/')) {
             $ourFileHandle = fopen($templateFile, 'w');
 
             if ($ourFileHandle) {

@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\Controller\Topic\Item;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -486,10 +485,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
      */
     protected function docImage()
     {
-        if (File::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar)) {
+        if (is_file(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar)) {
             $image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->topic->getAuthor()->id)->avatar;
         } elseif ($this->topic->getAuthor()->avatar == null) {
-            if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader)) {
+            if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {
                 $image = Uri::base() . $this->config->emailHeader;
             } else {
                 $image = Uri::base() . '/media/kunena/email/hero-wide.png';
@@ -568,7 +567,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $attach = $item;
 
             if ($attach) {
-                if (File::exists(JPATH_SITE . '/' . $attach->folder . '/' . $attach->filename)) {
+                if (is_file(JPATH_SITE . '/' . $attach->folder . '/' . $attach->filename)) {
                     if ($attach->image) {
                         if ($this->config->attachmentProtection) {
                             $url      = $attach->path;

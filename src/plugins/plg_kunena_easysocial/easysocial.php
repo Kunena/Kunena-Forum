@@ -18,7 +18,6 @@
 
 defined('_JEXEC') or die('Unauthorized Access');
 
-use Joomla\CMS\Filesystem\File;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaAvatarEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaProfileEasySocial;
@@ -28,7 +27,7 @@ use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaActivityEasySocial;
 
 $file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
 
-if (!File::exists($file)) {
+if (!is_file($file)) {
     return;
 }
 

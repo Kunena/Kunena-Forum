@@ -18,7 +18,6 @@ namespace Kunena\Forum\Site\Controller\Topic\Listing\Recent;
 use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
@@ -326,7 +325,7 @@ class TopicListingRecentDisplay extends ListDisplay
 
         $this->setMetaData('og:url', Uri::current(), 'property');
 
-        if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader)) {
+        if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {
             $image = Uri::base() . $this->config->emailHeader;
             $this->setMetaData('og:image', $image, 'property');
             $this->setMetaData('twitter:image', $image, 'property');

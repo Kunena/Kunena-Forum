@@ -93,7 +93,7 @@ class InstallController extends FormController
                 Folder::delete(JPATH_ROOT . '/plugins/kunena');
             }
 
-            if (File::exists(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml')) {
+            if (is_file(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml')) {
                 File::delete(JPATH_ADMINISTRATOR . '/manifests/packages/pkg_kunena.xml');
             }
 

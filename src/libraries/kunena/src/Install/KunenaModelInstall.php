@@ -1761,7 +1761,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
         if (Folder::exists($path)) {
             foreach (Folder::files($path, '.', false, true, $ignore) as $file) {
-                if (File::exists($file)) {
+                if (is_file($file)) {
                     File::delete($file);
                 }
             }
@@ -2331,7 +2331,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             $file = $newfile = '';
 
             foreach ($dirs as $dir) {
-                if (!File::exists(JPATH_ROOT . "/$dir/$avatar")) {
+                if (!is_file(JPATH_ROOT . "/$dir/$avatar")) {
                     continue;
                 }
 
@@ -2352,7 +2352,7 @@ class KunenaModelInstall extends BaseDatabaseModel
                     $newfile  = "users/avatar{$userid}.{$ext}";
                     $destpath = (KUNENA_INSTALLER_MEDIAPATH . "/avatars/{$newfile}");
 
-                    if (File::exists($destpath)) {
+                    if (is_file($destpath)) {
                         $success = true;
                     } else {
                         @chmod($file, 0644);
@@ -2540,11 +2540,11 @@ class KunenaModelInstall extends BaseDatabaseModel
 
             $file = '';
 
-            if (File::exists(JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}")) {
+            if (is_file(JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}")) {
                 $file = JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}";
             } else {
                 foreach ($dirs as $dir) {
-                    if (File::exists(JPATH_ROOT . "/{$dir}/{$lastpath}/{$attachment->filename}")) {
+                    if (is_file(JPATH_ROOT . "/{$dir}/{$lastpath}/{$attachment->filename}")) {
                         $file = JPATH_ROOT . "/{$dir}/{$lastpath}/{$attachment->filename}";
                         break;
                     }
@@ -2558,7 +2558,7 @@ class KunenaModelInstall extends BaseDatabaseModel
                 $file     = Path::clean($file, '/');
                 $destfile = "{$destpath}/{$lastpath}/{$attachment->filename}";
 
-                if (File::exists($destfile)) {
+                if (is_file($destfile)) {
                     $success = true;
                 } else {
                     @chmod($file, 0644);

@@ -17,14 +17,12 @@ namespace Kunena\Forum\Site\Controller\User\item;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -204,10 +202,10 @@ class UserItemDisplay extends KunenaControllerDisplay
         $this->setMetaData('og:url', Uri::current(), 'property');
         $this->setMetaData('og:type', 'profile', 'property');
 
-        if (File::exists(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar)) {
+        if (is_file(JPATH_SITE . '/media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar)) {
             $image = Uri::root() . 'media/kunena/avatars/' . KunenaFactory::getUser($this->profile->id)->avatar;
         } elseif ($this->profile->avatar == null || $this->config->avatarType && KunenaFactory::getUser($this->profile->id)->avatar == null) {
-            if (File::exists(JPATH_SITE . '/' . $this->config->emailHeader)) {
+            if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {
                 $image = Uri::base() . $this->config->emailHeader;
             }
         } else {

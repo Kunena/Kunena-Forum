@@ -76,6 +76,14 @@ class UserEditAvatarDisplay extends UserEditDisplay
      */
     protected $imageFilter = '(\.gif|\.png|\.jpg|\.jpeg)$';
 
+    public $avatar;
+
+    public $galleryUri;
+
+    public $doc;
+
+    public $wa;
+
     /**
      * Prepare avatar form.
      *

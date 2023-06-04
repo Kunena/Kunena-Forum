@@ -40,6 +40,16 @@ class AnnouncementItem extends KunenaLayout
      */
     public $announcement;
 
+    public $output;
+
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $config;
+
     /**
      * Method to get moderation actions for announcements
      *

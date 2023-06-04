@@ -63,7 +63,7 @@ if ($this->topic->locked) {
     <?php endif; ?>
 
     <h1>
-        <?php  echo KunenaTemplate::getInstance()->getTopicIcon($this->topic); ?>
+        <?php echo KunenaTemplate::getInstance()->getTopicIcon($this->topic); ?>
         <?php
         if ($this->ktemplate->params->get('labels') != 0) {
             echo $this->subLayout('Widget/Label')->set('topic', $this->topic)->setLayout('default');
@@ -85,7 +85,7 @@ if ($this->topic->locked) {
             ->set('display', true); ?>
     </div>
     <h2 class="float-end">
-        <?php  echo $this->subLayout('Widget/Search')
+        <?php echo $this->subLayout('Widget/Search')
             ->set('id', $this->topic->id)
             ->set('title', Text::_('COM_KUNENA_SEARCH_TOPIC'))
             ->setLayout('topic'); ?>

@@ -35,6 +35,12 @@ class UserEditProfileDisplay extends UserEditDisplay
      */
     protected $name = 'User/Edit/Profile';
 
+    public $genders;
+
+    public $social;
+
+    public $birthdate;
+
     /**
      * Prepare profile form items.
      *

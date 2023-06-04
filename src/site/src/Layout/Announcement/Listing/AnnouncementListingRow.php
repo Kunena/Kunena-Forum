@@ -32,6 +32,12 @@ class AnnouncementListingRow extends KunenaLayout
      */
     public $announcement;
 
+    public $row;
+
+    public $checkbox;
+
+    public $config;
+
     /**
      * Method to check if the user can publish an announcement
      *

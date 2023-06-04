@@ -50,6 +50,34 @@ class TopicModerate extends KunenaLayout
      */
     public $category;
 
+    public $output;
+
+    public $user;
+
+    public $headerText;
+
+    public $pagination;
+
+    public $config;
+
+    public $uri;
+
+    public $title;
+
+    public $topicIcons;
+
+    public $userLink;
+
+    public $catid;
+
+    public $banHistory;
+
+    public $replies;
+
+    public $banInfo;
+
+    public $ktemplate;
+
     /**
      * Method to get the options of the topic
      *

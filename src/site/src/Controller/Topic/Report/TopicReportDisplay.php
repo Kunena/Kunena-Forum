@@ -56,6 +56,8 @@ class TopicReportDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Topic/Report';
 
+    public $category;
+
     /**
      * Prepare report message form.
      *

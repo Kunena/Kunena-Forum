@@ -79,6 +79,18 @@ class TopicModerateDisplay extends KunenaControllerDisplay
      */
     protected $name = 'Topic/Moderate';
 
+    public $catid;
+
+    public $category;
+
+    public $banHistory;
+
+    public $me;
+
+    public $replies;
+
+    public $banInfo;
+
     /**
      * Prepare topic moderate display.
      *

@@ -70,6 +70,14 @@ use stdClass;
  */
 class TopicController extends KunenaController
 {
+    public $catid;
+
+    public $return;
+
+    public $id;
+
+    public $mesid;
+
     /**
      * @param   array  $config  config
      *

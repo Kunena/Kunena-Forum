@@ -19,6 +19,7 @@ use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
+use Joomla\String\StringHelper;
 
 HTMLHelper::_('bootstrap.framework');
 
@@ -138,10 +139,16 @@ jQuery(function($) {
                                                     </label>
                                                 </div>
                                                 <div>
-                                                    <?php echo Text::sprintf(
+                                                    <?php 
+                                                    if (!empty($this->user->signature)){
+                                                        $valueSignature = (intval($this->config->maxSig) - StringHelper::strlen($this->user->signature));
+                                                    } else {
+                                                        $valueSignature = '';
+                                                    }
+                                                    echo Text::sprintf(
                                                         'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
                                                         intval($this->config->maxSig),
-                                                        '<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . (intval($this->config->maxSig) - Joomla\String\StringHelper::strlen($this->user->signature)) . '" />'
+                                                        '<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . $valueSignature . '" />'
 ); ?>
                                                 </div>
                                             </fieldset>
@@ -176,7 +183,7 @@ jQuery(function($) {
                                                                 <div class="input-append date">
                                                                     <input type="text" name="birthdate"
                                                                            data-date-format="mm/dd/yyyy"
-                                                                           value="<?php echo $this->user->birthdate == '1000-01-01' ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
+                                                                           value="<?php echo $this->user->birthdate == '1000-01-01' || empty($this->user->birthdate)  ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
                                                                 </div>
                                                             </div>
                                                         </td>

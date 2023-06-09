@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Plugin\Kunena\Gravatar\KunenaAvatarGravatar;
 
 /**
  * Class plgKunenaGravatar
@@ -56,6 +57,8 @@ class PlgKunenaGravatar extends CMSPlugin
         if (!$this->params->get('avatar', 1)) {
             return;
         }
+        
+        require_once KPATH_FRAMEWORK . '/External/Emberlabs/Gravatar.php';
 
         return new KunenaAvatarGravatar($this->params);
     }

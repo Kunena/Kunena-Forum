@@ -29,7 +29,6 @@ $signature            = $this->profile->getSignature();
 $attachments          = $message->getAttachments();
 $attachs              = $message->getNbAttachments();
 $topicStarter         = $this->topic->first_post_userid == $this->message->userid;
-$config               = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 $displayAttachments   = false;
 
@@ -40,7 +39,7 @@ foreach ($attachments as $attachment) {
     }
 }
 
-if ($config->orderingSystem == 'mesid') {
+if ($this->config->orderingSystem == 'mesid') {
     $this->numLink = $this->location;
 } else {
     $this->numLink = $message->replynum;
@@ -65,7 +64,13 @@ if ($config->orderingSystem == 'mesid') {
 <div class="clear-fix"></div>
 <div class="horizontal-message">
     <div class="profile-horizontal-top">
-        <?php echo $this->subLayout('User/Profile')->set('user', $this->profile)->setLayout('horizontal')->set('topic_starter', $topicStarter)->set('category_id', $this->category->id); ?>
+        <?php echo $this->subLayout('User/Profile')
+        ->set('user', $this->profile)
+        ->setLayout('horizontal')
+        ->set('topic_starter', $topicStarter)
+        ->set('category_id', $this->category->id)
+        ->set('ktemplate', $this->ktemplate)
+        ->set('config', $this->config); ?>
     </div>
     <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) :
                                         ?> badger-moderator <?php

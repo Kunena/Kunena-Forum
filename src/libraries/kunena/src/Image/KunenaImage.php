@@ -33,27 +33,22 @@ class KunenaImage extends Image
     /**
      * Correct Image Orientation
      *
-     * @param   string  $filename  filename
-     *
      * @return  void
      *
      * @since   Kunena 5.0
      */
-    public static function correctImageOrientation($filename)
+    public function correctImageOrientation()
     {
-        $img = new Image();
-
-        try {
-            $img->loadFile($filename);
-        } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), 500);
+        // Make sure the resource handle is valid.
+        if (!$this->isLoaded()) {
+            throw new \LogicException('No valid image was loaded.');
         }
 
         $angle  = 0;
         $flip   = 0;
 
         if(function_exists('exif_read_data')) {
-            $exif = exif_read_data($filename);
+            $exif = exif_read_data($this->getPath());
     
             if ($exif && isset($exif['Orientation'])) {
                 $orientation = $exif['Orientation'];
@@ -104,14 +99,14 @@ class KunenaImage extends Image
             }
     
             if ($angle > 0) {
-                $img->rotate($angle, -1, false);
+                $this->rotate($angle, -1, false);
             }
     
             if ($flip != 0) {
                 if ($flip == 1) {
-                    $img->flip(IMG_FLIP_HORIZONTAL, false);
+                    $this->flip(IMG_FLIP_HORIZONTAL, false);
                 } else {
-                    $img->flip(IMG_FLIP_VERTICAL, false);
+                    $this->flip(IMG_FLIP_VERTICAL, false);
                 }
             }
         } else {

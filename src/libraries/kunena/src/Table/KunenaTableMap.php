@@ -69,6 +69,20 @@ class KunenaTableMap
      */
     protected $_locked = false;
 
+    public $message_id;
+
+    public $user_id;
+
+    public $private_id;
+
+    public $read_at;
+
+    public $replied_at;
+
+    public $deleted_at;
+
+    public $attachment_id;
+
     /**
      * Object constructor to set table and key fields.  In most cases this will
      * be overridden by child classes to explicitly set the table and key fields

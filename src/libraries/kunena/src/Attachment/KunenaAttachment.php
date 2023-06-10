@@ -296,6 +296,10 @@ class KunenaAttachment extends KunenaDatabaseObject
      */
     protected function deleteFile(): void
     {
+        if (empty($this->folder)) {
+            return;
+        }
+
         if (self::$_directory != substr($this->folder, 0, \strlen(self::$_directory))) {
             return;
         }

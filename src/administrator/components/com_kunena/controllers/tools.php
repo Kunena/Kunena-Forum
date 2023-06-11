@@ -338,27 +338,6 @@ class KunenaAdminControllerTools extends KunenaController
 			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()));
 		}
 
-		if ($userdellife)
-		{
-			$db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned='1000-01-01 00:00:00'");
-			$db->execute();
-
-			$db->setQuery("DELETE a FROM #__users AS a WHERE block='1'");
-
-			try
-			{
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				$this->app->enqueueMessage($e->getMessage());
-
-				return;
-			}
-
-			$this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()));
-		}
-
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 

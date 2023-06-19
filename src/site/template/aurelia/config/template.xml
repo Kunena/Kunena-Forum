@@ -11,5 +11,5 @@
     <license>GNU/GPL</license>
     <description>COM_KUNENA_TEMPLATE_AURELIA_DESC</description>
     <thumbnail>template_thumbnail.png</thumbnail>
-    <targetversion version="6.[0]" />
+    <targetversion version="6.1" />
 </kinstall>

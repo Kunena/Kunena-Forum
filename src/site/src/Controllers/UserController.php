@@ -37,6 +37,7 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Message\Karma\KunenaKarmaHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Path\KunenaPath;
@@ -197,6 +198,7 @@ class UserController extends KunenaController
         $userid = $this->app->input->getInt('userid', 0);
 
         $target = KunenaFactory::getUser($userid);
+        $karma = KunenaKarmaHelper::get($userid);
 
         if (!$this->config->showKarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_KARMA'), 'error');
@@ -207,11 +209,14 @@ class UserController extends KunenaController
 
         $now = Factory::getDate()->toUnix();
 
-        if ($this->me->karma_time !== 0) {
-            if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay) {
+        // If the karma already exist check the time with the last karma given
+        if ($karma->target_userid) {
+            $lastKarmaTime = $karma->getLastTimeKarma();
+
+            if (!$this->me->isModerator() && $now - $lastKarmaTime < $karma_delay) {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'warning');
                 $this->setRedirectBack();
-
+                
                 return;
             }
         }
@@ -242,8 +247,21 @@ class UserController extends KunenaController
 
         $target->karma += $karmaDelta;
 
+        // Save the user with the plus or minus karma given, in #__kunena_user remove karma_time
         try {
             $target->save();
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            
+            return;
+        }
+
+        $karma->userid = KunenaUserHelper::getMyself()->userid;
+        $karma->target_userid = $userid;
+
+        try {
+            $karma->save();
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();

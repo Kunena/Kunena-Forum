@@ -105,6 +105,18 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `#__kunena_karma`
+(
+    `id`     int(11) NOT NULL default '0',
+    `userid` int(11) NOT NULL,
+    `target_userid` int(11) NOT NULL,
+    `time` int(11) NOT NULL,
+    PRIMARY KEY (id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `#__kunena_configuration`
 (
     `id`     int(11) NOT NULL default '0',

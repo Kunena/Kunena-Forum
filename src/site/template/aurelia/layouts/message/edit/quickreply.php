@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -178,7 +177,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             </div>
                         <?php endif; ?>
                         <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>"
-                           href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
+                           href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
                            role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor"
                            rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
                         <br/>
@@ -324,7 +323,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             </div>
                         <?php endif; ?>
                         <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>"
-                           href="<?php echo Route::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
+                           href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
                            role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor"
                            rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
                         <br/>

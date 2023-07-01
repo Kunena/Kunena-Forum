@@ -15,6 +15,7 @@ defined('_JEXEC') or die('');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Component\Finder\Administrator\Indexer\Adapter;
 use Joomla\Component\Finder\Administrator\Indexer\Indexer;
@@ -617,7 +618,7 @@ class PlgFinderKunena extends Adapter
     protected function getAccessLevel($catid)
     {
         $category = KunenaCategoryHelper::get($catid);
-        $user     = $this->getApplication()->getIdentity();
+        $user =Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById(0);
 
         $accesslevels = (array) $user->getAuthorisedViewLevels();
         $groups_r     = (array) \Joomla\CMS\Access\Access::getGroupsByUser($user->id, true);

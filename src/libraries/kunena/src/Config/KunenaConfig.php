@@ -1631,6 +1631,12 @@ class KunenaConfig extends CMSObject
     public $pickup_category;
 
     /**
+     * @var    boolean  enabling private message buildin into Kunena
+     * @since  Kunena 6.1.0
+     */
+    public $privateMessage = 1;
+
+    /**
      * @since   Kunena 6.0
      */
     public function __construct()

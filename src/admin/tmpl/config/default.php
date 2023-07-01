@@ -772,6 +772,13 @@ $wa->useScript('multiselect');
                                                         <td align="left"
                                                             valign="top"><?php echo Text::_('COM_KUNENA_A_SIGNATURE_DESC') ?></td>
                                                     </tr>
+                                                    <tr <?php if ($this->config->privateMessage != 1) :
+                                                        echo 'class="changed"';
+                                                        endif; ?>>
+                                                        <td><?php echo Text::_('COM_KUNENA_ADMIN_PRIVATEMESSAGE') ?></td>
+                                                        <td><?php echo $this->lists ['privateMessage'] ?></td>
+                                                        <td><?php echo Text::_('COM_KUNENA_ADMIN_PRIVATEMESSAGE_DESC') ?></td>
+                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </fieldset>

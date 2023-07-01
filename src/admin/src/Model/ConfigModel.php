@@ -1852,6 +1852,9 @@ class ConfigModel extends AdminModel
         $lists ['disableRe'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_disableRe', 'class="inputbox form-control" size="1"', 'value', 'text', $config->disableRe);
         $lists ['profiler']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_profiler', 'class="inputbox form-control" size="1"', 'value', 'text', $config->profiler);
 
+        // K6.1
+        $lists ['privateMessage'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_privateMessage', 'class="inputbox form-control" size="1"', 'value', 'text', $config->privateMessage);
+
         return $lists;
     }
 }

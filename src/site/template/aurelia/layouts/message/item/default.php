@@ -46,18 +46,20 @@ if ($config->orderingSystem == 'mesid') {
 $list = [];
 ?>
 
-<small class="text-muted float-end">
+<small class="float-end">
     <?php if ($this->ipLink && !empty($this->message->ip)) : ?>
         <?php echo KunenaIcons::ip(); ?>
         <span class="ip"> <?php echo $this->ipLink; ?> </span>
     <?php endif; ?>
-    <?php echo KunenaIcons::clock(); ?>
-    <?php echo $message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
-    <?php if ($message->modified_time) :
-    ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
-                endif; ?>
-    <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
-    <span class="d-block d-sm-none"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+    <span class="text-muted">
+        <?php echo KunenaIcons::clock(); ?>
+        <?php echo $message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
+        <?php if ($message->modified_time) :
+        ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
+                    endif; ?>
+        <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
+        <span class="d-block d-sm-none"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
+    </span>
 </small>
 
 <div class="shadow-none p-4 mb-5 rounded">

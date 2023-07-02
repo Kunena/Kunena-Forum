@@ -1798,6 +1798,8 @@ HTML;
 
             return $display[0];
         }
+
+        return '';
     }
 
     /**

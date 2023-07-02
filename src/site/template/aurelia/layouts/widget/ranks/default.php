@@ -19,6 +19,6 @@ if ($this->topicicontype == 'fa') :
 </li>
 <?php else : ?>
 <li class="kwho-<?php echo $this->type ?>">
-    <span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" <?php echo $this->stylesecond ?>></span><span class="glyphicon glyphicon-one-fine-dot" <?php echo $this->stylethird ?>></span><span class="glyphicon glyphicon-one-fine-dot" <?php echo $this->stylefourth ?>></span><span class="glyphicon glyphicon-one-fine-dot" <?php echo $this->stylelast ?>></span><?php echo $this->rank->rank_special ? '<span class="glyphicon glyphicon-one-fine-dot"></span>' : '' ?>
+    <span class="glyphicon glyphicon-one-fine-dot"></span><span class="glyphicon glyphicon-one-fine-dot" <?php echo $this->stylesecond ?>></span><span class="glyphicon glyphicon-one-fine-dot" <?php echo $this->stylethird ?>></span><span class="glyphicon glyphicon-one-fine-dot" <?php echo $this->stylefourth ?>></span><span class="glyphicon glyphicon-one-fine-dot" <?php echo $this->stylelast ?>></span><?php echo $this->rank->rankSpecial ? '<span class="glyphicon glyphicon-one-fine-dot"></span>' : '' ?>
 </li>
 <?php endif; ?>

@@ -74,7 +74,12 @@ class UserEditDisplay extends KunenaControllerDisplay
 
         $userid = $this->input->getInt('userid');
 
-        $this->user    = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
+        if ($userid > 0) {
+            $this->user    = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
+        } else {
+            $this->user = KunenaUserHelper::getMyself();
+        }
+
         $this->profile = KunenaUserHelper::get($userid);
         $this->profile->tryAuthorise('edit');
 

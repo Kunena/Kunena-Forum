@@ -496,7 +496,7 @@ class TopicsController extends KunenaController
             return;
         }
 
-        $ids = array_keys($this->app->input->get('topics', [], 'post', 'array'));
+        $ids = array_keys($this->app->input->get('posts', [], 'post', 'array'));
         $ids = ArrayHelper::toInteger($ids);
 
         $success  = 0;

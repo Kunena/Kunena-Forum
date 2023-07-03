@@ -582,9 +582,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
             }
         }
 
-        $first = KunenaParser::stripBBCode($this->topic->first_post_message, 160);
-
-        if (!$first) {
+        if (!empty($this->topic->first_post_message)) {
+            $first = KunenaParser::stripBBCode($this->topic->first_post_message, 160);
             $first = $this->topic->subject;
         }
 

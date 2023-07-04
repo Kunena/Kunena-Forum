@@ -582,12 +582,12 @@ class TopicItemDisplay extends KunenaControllerDisplay
             }
         }
 
+        $multispaces_replaced = '';
         if (!empty($this->topic->first_post_message)) {
-            $first = KunenaParser::stripBBCode($this->topic->first_post_message, 160);
-            $first = $this->topic->subject;
+            $firstPostMessage = KunenaParser::stripBBCode($this->topic->first_post_message, 160);
+            $firstPostMessage = $this->topic->subject;
+            $multispaces_replaced = preg_replace('/\s+/', ' ', $firstPostMessage);
         }
-
-        $multispaces_replaced = preg_replace('/\s+/', ' ', $first);
 
         $this->setMetaData('og:description', $multispaces_replaced, 'property');
         $this->setMetaData('og:image', $image, 'property');

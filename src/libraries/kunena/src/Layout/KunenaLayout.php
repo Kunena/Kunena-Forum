@@ -325,23 +325,29 @@ class KunenaLayout extends KunenaBase
         }
 
         if ($title === null) {
+            if (!empty($topic->first_post_message)) {
+                $titleFirstPostCleaned = KunenaParser::stripBBCode($topic->first_post_message, 200, false);
+            }
+
             if ($action instanceof KunenaMessage) {
-                $title = KunenaParser::stripBBCode($topic->first_post_message, 200, false);
+                $title = $titleFirstPostCleaned;
             } else {
                 switch ($action) {
                     case 'first':
-                        $title = KunenaParser::stripBBCode($topic->first_post_message, 200, false);
+                        $title = $titleFirstPostCleaned;
                         break;
                     case 'unread':
                     case 'last':
                         if (!KunenaUserHelper::getMyself()->userid && KunenaConfig::getInstance()->teaser) {
-                            $title = KunenaParser::stripBBCode($topic->first_post_message, 200, false);
+                            $title = $titleFirstPostCleaned;
                         } else {
-                            $title = KunenaParser::stripBBCode($topic->last_post_message, 200, false);
+                            if (!empty($topic->first_post_message)) {
+                                $title = KunenaParser::stripBBCode($topic->last_post_message, 200, false);
+                            }
                         }
                         break;
                     default:
-                        $title = KunenaParser::stripBBCode($topic->first_post_message, 200, false);
+                        $title = $titleFirstPostCleaned;
                 }
             }
 

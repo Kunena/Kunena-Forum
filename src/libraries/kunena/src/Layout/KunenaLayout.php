@@ -325,6 +325,7 @@ class KunenaLayout extends KunenaBase
         }
 
         if ($title === null) {
+            $titleFirstPostCleaned = '';
             if (!empty($topic->first_post_message)) {
                 $titleFirstPostCleaned = KunenaParser::stripBBCode($topic->first_post_message, 200, false);
             }

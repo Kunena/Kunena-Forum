@@ -4,7 +4,7 @@
     <name>pkg_kunena</name>
     <packagename>kunena</packagename>
     <version>6.1.2</version>
-    <versionname>Lavizzara</versionname>
+    <versionname>INTERNAL</versionname>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
     <authorEmail>kunena@kunena.org</authorEmail>

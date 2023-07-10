@@ -97,6 +97,20 @@ class KunenaBase extends KunenaLayoutBase
      */
     protected $debug;
 
+    public $output;
+    public $user;
+    public $headerText;
+    public $pagination;
+    public $config;
+    public $category;
+    public $topic;
+    public $poll;
+    public $uri;
+    public $usercount;
+    public $userhasvoted;
+    public $show;
+    public $show_title;
+
     /**
      * Method to instantiate the layout.
      *

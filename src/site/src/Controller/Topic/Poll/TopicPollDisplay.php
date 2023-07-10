@@ -64,6 +64,10 @@ class TopicPollDisplay extends KunenaControllerDisplay
      */
     public $uri;
 
+    public $usercount;
+    public $userhasvoted;
+    public $show_title;
+
     /**
      * Prepare poll display.
      *

@@ -1457,6 +1457,7 @@ class KunenaMessage extends KunenaDatabaseObject
             $query->select('MAX(time)')
                 ->from($this->_db->quoteName('#__kunena_messages'))
                 ->where($this->_db->quoteName('ip') . ' = ' . $this->_db->quote($this->ip));
+            $this->_db->setQuery($query);
 
             try {
                 $lastPostTime = $this->_db->loadResult();

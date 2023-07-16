@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaController;
@@ -268,7 +269,7 @@ class UsersController extends KunenaController
                 continue;
             }
 
-            $instance = User::getInstance($user->userid);
+            $instance = Factory::getContainer(UserFactoryInterface::class)->get()->loadUserById($user->userid);
 
             if ($instance->authorise('core.admin')) {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'), 'error');

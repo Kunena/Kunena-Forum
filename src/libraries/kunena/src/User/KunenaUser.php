@@ -30,6 +30,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -48,6 +49,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Tables\KunenaUsers;
 use stdClass;
+use Joomla\CMS\User\UserFactoryAwareInterface;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUser
@@ -1117,7 +1119,7 @@ class KunenaUser extends CMSObject
             $timezone = Factory::getApplication()->get('offset', null);
 
             if ($this->userid) {
-                $user     = User::getInstance($this->userid);
+                $user = Factory::getContainer(UserFactoryInterface::class)->get()->loadUserById($this->userid);
                 $timezone = $user->getParam('timezone', $timezone);
             }
 

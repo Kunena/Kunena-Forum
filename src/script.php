@@ -61,6 +61,22 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             '5.7' => '5.7.8',
             '0'   => '5.7.8', // Preferred version
         ],
+        'mariaDB' => [
+            '11.0' => '11.0',
+            '10.11' => '10.11',
+            '10.10' => '10.10',
+            '10.9' => '10.9',
+            '10.8' => '10.8',
+            '10.7' => '10.7',
+            '10.6' => '10.6',
+            '10.5' => '10.5',
+            '10.4' => '10.4',
+            '10.3' => '10.3',
+            '10.2' => '10.2',
+            '10.1' => '10.1',
+            '10.0' => '10.0',
+            '0' => '10.8.6' // Preferred version
+        ],
         'Joomla!' => [
             '4.4' => '4.4-dev',
             '4.3' => '4.3.1',
@@ -138,7 +154,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         $db   = Factory::getDbo();
         $pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
         $pass &= $this->checkVersion('Joomla!', JVERSION);
-        $pass &= $this->checkVersion('MySQL', $db->getVersion());
+        $pass &= $this->checkDbVersion($db->getVersion());
         $pass &= $this->checkDbo($db->name, ['mysql', 'mysqli', 'pdomysql']);
         $pass &= $this->checkPhpExtensions($this->extensions);
         $pass &= $this->checkKunena($version);
@@ -192,6 +208,20 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         );
 
         return false;
+    }
+
+    /**
+     * Check MariaDB and MySQL versions
+     *
+     * @since Kunena 6.2
+     */
+    protected function checkDbVersion( $version )
+    {
+        if ( preg_match( '/(?:.*-)?(\d+\.\d+\.\d+)-MariaDB.*/', $version, $matches ) ) {
+            return $this->checkVersion( 'mariaDB', $matches[1] );
+        }
+
+        return $this->checkVersion('MySQL', $version);
     }
 
     /**

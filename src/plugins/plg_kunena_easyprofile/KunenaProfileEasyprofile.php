@@ -107,7 +107,7 @@ class KunenaProfileEasyprofile extends KunenaProfile
      *
      * @since   Kunena 5.0
      */
-    public function getProfileURL(int $userid, string $task = '', bool $xhtml = true, string $avatarTab = '')
+    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = '')
     {
         // Make sure that user profile exist.
         if (!$userid || JsnHelper::getUser($userid) === null) {

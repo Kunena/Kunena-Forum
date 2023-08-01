@@ -1637,6 +1637,8 @@ class KunenaConfig extends CMSObject
      */
     public $privateMessage = 1;
 
+    public $datePickerFormat = 'mm/dd/yyyy';
+
     /**
      * @since   Kunena 6.0
      */

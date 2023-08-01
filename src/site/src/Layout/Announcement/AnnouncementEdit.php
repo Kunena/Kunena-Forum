@@ -66,11 +66,11 @@ class AnnouncementEdit extends KunenaLayout
             case 'description':
                 return '<textarea name="description" ' . $attributes . '>' . $this->escape($this->announcement->description) . '</textarea>';
             case 'created':
-                return '<input type="text" class="span12" name="created" data-date-format="yyyy-mm-dd" value="' . $this->escape($this->announcement->created) . '">' . $attributes;
+                return '<input type="text" class="span12" name="created" data-date-format="' . $this->config->datePickerFormat . '" value="' . $this->escape($this->announcement->created) . '">' . $attributes;
             case 'publish_up':
-                return '<input type="text" class="span12" name="publish_up" data-date-format="yyyy-mm-dd" value="' . $this->escape($this->announcement->publish_up) . '">' . $attributes;
+                return '<input type="text" class="span12" name="publish_up" data-date-format="' . $this->config->datePickerFormat . '" value="' . $this->escape($this->announcement->publish_up) . '">' . $attributes;
             case 'publish_down':
-                return '<input type="text" class="span12" name="publish_down" data-date-format="yyyy-mm-dd" value="' . $this->escape($this->announcement->publish_down) . '">' . $attributes;
+                return '<input type="text" class="span12" name="publish_down" data-date-format="' . $this->config->datePickerFormat . '" value="' . $this->escape($this->announcement->publish_down) . '">' . $attributes;
             case 'showdate':
                 $options   = [];
                 $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_NO'));

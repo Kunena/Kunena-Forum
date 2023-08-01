@@ -245,7 +245,7 @@ class SearchForm extends KunenaLayout
     {
         switch ($name) {
             case 'searchatdate':
-                return '<input type="text" class="form-select" name="searchatdate" data-date-format="yyy-dd-mm" placeholder="yyy-dd-mm" value="' . $this->state->get('query.searchatdate') . '">' . $attributes;
+                return '<input type="text" class="form-select" name="searchatdate" data-date-format="' . $this->config->datePickerFormat . '" placeholder="' . $this->config->datePickerFormat . '" value="' . $this->state->get('query.searchatdate') . '">' . $attributes;
         }
 
         return '';

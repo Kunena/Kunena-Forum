@@ -583,6 +583,17 @@ $wa->useScript('multiselect');
                                                         <td><?php echo $this->lists ['display_filename_attachment'] ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_DISPLAY_FILENAME_ATTACHMENT_DESC') ?></td>
                                                     </tr>
+                                                    <tr <?php if ($this->config->datePickerFormat) :
+                                                        echo 'class="changed"';
+                                                        endif; ?>>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_DISPLAY_DATE_PICKER_FORMAT') ?></td>
+                                                        <td>
+                                                            <input type="text" class="form-control ksm-field"
+                                                                   name="cfg_datePickerFormat"
+                                                                   value="<?php echo $this->escape($this->config->datePickerFormat) ?>"/>
+                                                        </td>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_DISPLAY_DATE_PICKER_FORMAT_DESC') ?></td>
+                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </fieldset>

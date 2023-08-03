@@ -872,9 +872,9 @@ HTML;
     {
         // Compile CSS from SCSS files.
         $ktemplate = KunenaFactory::getTemplate();
-        $ktemplate->compileScss('assets/scss/{$this->name}.scss', 'kunena.css');
+        $ktemplate->compileScss("assets/scss/{$this->name}.scss", 'kunena.css');
         
-        $filenamescss = JPATH_SITE . '/components/com_kunena/template/{$this->name}/assets/scss/custom.scss';
+        $filenamescss = JPATH_SITE . "/components/com_kunena/template/{$this->name}/assets/scss/custom.scss";
         
         if (file_exists($filenamescss) && 0 != fileSize($filenamescss)) {
             $this->compileScss('assets/scss/custom.scss', 'kunena-custom.css');

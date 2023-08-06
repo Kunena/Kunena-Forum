@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
-$filterItem = $this->escape($this->state->get('item.id'));
+$filterItem = $this->escape($this->state->get('item.id')); 
 ?>
 
 <script type="text/javascript">
@@ -89,14 +89,6 @@ $filterItem = $this->escape($this->state->get('item.id'));
                             <select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
                                 <option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
                                 <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
-                            </select>
-                        </div>
-                        <div class="btn-group pull-right">
-                            <label for="sortTable" class="element-invisible"><?php echo 'Filter users by:'; ?></label>
-                            <select name="filter_usertypes" id="filter_usertypes" class="input-medium filter"
-                                    onchange="Joomla.orderTable()">
-                                <option value=""><?php echo 'All'; ?></option>
-                                <?php echo HTMLHelper::_('select.options', $this->filter->UserFields, 'value', 'text', $this->filter->Usertypes); ?>
                             </select>
                         </div>
                         <div class="clearfix"></div>

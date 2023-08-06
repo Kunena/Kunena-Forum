@@ -417,6 +417,9 @@ class LogsModel extends ListModel
         $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.usertypes', 'filter_usertypes', '', 'string');
         $this->setState('filter.usertypes', $value);
 
+        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.userfields', 'filter_userfields', '', 'string');
+        $this->setState('filter.userfields', $value);
+
         $this->setState('filter.active', !empty($filterActive));
 
         $group = [];

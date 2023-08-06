@@ -79,7 +79,7 @@ $wa->useScript('multiselect');
                                 <select name="directionTable" id="directionTable" class="input-medium"
                                         onchange="orderTable()">
                                     <option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-                                    <?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
                                 </select>
                             </div>
                             <div class="btn-group pull-right">
@@ -88,7 +88,7 @@ $wa->useScript('multiselect');
                                 <select name="sortTable" id="sortTable" class="input-medium"
                                         onchange="orderTable()">
                                     <option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-                                    <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
                                 </select>
                             </div>
                             <div class="clearfix"></div>

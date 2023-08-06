@@ -100,6 +100,7 @@ class HtmlView extends BaseHtmlView
         $this->filter->TimeStop        = $this->escape($this->state->get('filter.time_stop'));
         $this->filter->Operation       = $this->escape($this->state->get('filter.operation'));
         $this->filter->Usertypes       = $this->escape($this->state->get('filter.usertypes'));
+        $this->filter->UserFields      = $this->escape($this->state->get('filter.userfields'));
 
         $this->list            = new \stdClass();
         $this->list->Ordering  = $this->escape($this->state->get('list.ordering'));

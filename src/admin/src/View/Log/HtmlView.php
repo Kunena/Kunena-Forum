@@ -11,7 +11,7 @@
  * @link          https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Administrator\View\Logs;
+namespace Kunena\Forum\Administrator\View\Log;
 
 \defined('_JEXEC') or die();
 
@@ -24,46 +24,18 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use ReflectionClass;
 
 /**
- * Logs view for Kunena backend
+ * Log view for Kunena backend
  *
- * @since 5.0
+ * @since 6.1
  */
 class HtmlView extends BaseHtmlView
 {
     /**
      * @var  void
      *
-     * @since   Kunena 6.0
+     * @since   Kunena 6.1
      */
     protected $group;
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    public function displayClean(): void
-    {
-        $this->setToolBarClean();
-        $this->display();
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function setToolbarClean(): void
-    {
-        // Set the title bar text
-        ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
-        ToolbarHelper::spacer();
-        ToolbarHelper::custom('logs.clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
-        ToolbarHelper::spacer();
-        ToolbarHelper::cancel();
-    }
 
     /**
      * @param   null  $tpl  tpl
@@ -209,15 +181,16 @@ class HtmlView extends BaseHtmlView
      *
      * @return  void
      *
-     * @since   Kunena 6.0
+     * @since   Kunena 6.1
      */
     protected function addToolbar(): void
     {
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
-
         ToolbarHelper::spacer();
-        ToolbarHelper::custom('logs.cleanEntries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES', false);
+        ToolbarHelper::custom('log.clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
+        ToolbarHelper::spacer();
+        ToolbarHelper::cancel();
     }
 
     /**

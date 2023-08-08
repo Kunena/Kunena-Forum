@@ -273,11 +273,12 @@ class TopicController extends KunenaController
         }
 
         $attach_id = $this->input->getInt('file_id', 0);
+        $userid = $this->input->getInt('userid', 0);
         $success   = [];
         $instance  = KunenaAttachmentHelper::get($attach_id);
 
         if (
-            KunenaUserHelper::getMyself()->userid == $instance->userid || KunenaUserHelper::getMyself()->isAdmin()
+            KunenaUserHelper::getMyself()->userid == $userid || KunenaUserHelper::getMyself()->isAdmin()
             || KunenaUserHelper::getMyself()->isModerator()
         ) {
             $editor_text = $this->app->input->get->get('editor_text', '', 'raw');

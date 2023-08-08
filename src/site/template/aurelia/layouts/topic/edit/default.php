@@ -71,7 +71,7 @@ $this->doc->addScriptOptions(
 );
 $this->doc->addScriptOptions(
     'com_kunena.kunena_upload_files_rem',
-    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&' .
+    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&userid=' . KunenaUserHelper::getMyself()->userid . '&' .
         Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(

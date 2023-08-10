@@ -16,7 +16,6 @@ namespace Kunena\Forum\Libraries\BBCode;
 \defined('_JEXEC') or die();
 
 use Exception;
-use GeSHi;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -302,7 +301,7 @@ class KunenaBBCode extends BBCode
 
                     if (isset($itemid)) {
                         // Convert ebay item to embedded widget
-                        return KunenaBBCodeLibrary::renderEbayLayout($itemid, $config);
+                        return KunenaBBCodeLibrary::renderEbayLayout($itemid);
                     }
 
                     return;
@@ -312,12 +311,12 @@ class KunenaBBCode extends BBCode
 
                 if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw'])) {
                     // Convert ebay search to embedded widget
-                    KunenaBBCodeLibrary::renderEbayLayout($itemid, $config);
+                    KunenaBBCodeLibrary::renderEbayLayout($itemid);
                 }
 
                 if (strstr($params['host'], 'myworld.') && !empty($path[1])) {
                     // Convert seller listing to embedded widget
-                    KunenaBBCodeLibrary::renderEbayLayout($itemid, $config);
+                    KunenaBBCodeLibrary::renderEbayLayout($itemid);
                 }
             }
         }
@@ -1819,7 +1818,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      */
     public static function renderEbayLayout(int $ItemID)
     {
-        if (empty($this->config->ebayApiKey) || empty($this->config->ebayCertId)) {
+        // Because the method renderEbayLayout is called in static way need to keep the call of config class here
+        $config = KunenaFactory::getConfig();
+
+        if (empty($config->ebayApiKey) || empty($config->ebayCertId)) {
             echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_NO_EBAY_APP_ID') . '</b>';
 
             return false;

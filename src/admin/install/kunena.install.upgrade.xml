@@ -194,10 +194,10 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_attachments` CHANGE `filetype` `filetype` VARCHAR(100);</query>
         </version>
-        <version version="6.1.0-BETA2-DEV"
-                 versiondate="2023-04-05"
+        <version version="6.1.3.1"
+                 versiondate="2023-08-12"
                  versionname="Internal">
-            <query mode="silenterror">ALTER TABLE `#__kunena_private_user_map` CHANGE `read_at` `read_at` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00', CHANGE `replied_at` `replied_at` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00', CHANGE `deleted_at` `deleted_at` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_private_user_map` CHANGE `read_at` `read_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, CHANGE `replied_at` `replied_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, CHANGE `deleted_at` `deleted_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;</query>
         </version>
         <version version="6.2.0-DEV"
                  versiondate="2023-06-22"

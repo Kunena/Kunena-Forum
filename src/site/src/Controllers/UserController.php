@@ -984,13 +984,15 @@ class UserController extends KunenaController
         }
 
         // Get the return url from the request and validate that it is internal.
-        $return = base64_decode($this->app->input->getBase64('return'));
+        if (!empty($this->app->input->getBase64('return'))) {
+            $return = base64_decode($this->app->input->getBase64('return'));
 
-        if ($return && Uri::isInternal($return)) {
-            // Redirect the user.
-            $this->setRedirect(Route::_($return, false));
+            if ($return && Uri::isInternal($return)) {
+                // Redirect the user.
+                $this->setRedirect(Route::_($return, false));
 
-            return;
+                return;
+            }
         }
 
         $this->setRedirectBack();

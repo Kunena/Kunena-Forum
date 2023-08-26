@@ -594,6 +594,13 @@ class TopicController extends KunenaController
             return;
         }
 
+        if (!$this->catid) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
         if (!$this->id) {
             // Create topic
             $category = KunenaCategoryHelper::get($this->catid);
@@ -808,13 +815,6 @@ class TopicController extends KunenaController
             return;
         }
 
-        if (!$this->catid) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'error');
-            $this->setRedirectBack();
-
-            return;
-        }
-
         // Activity integration
         $activity = KunenaFactory::getActivityIntegration();
 
@@ -896,7 +896,6 @@ class TopicController extends KunenaController
         $message->sendNotification();
 
         // Now try adding any new subscriptions if asked for by the poster
-
         $usertopic = $topic->getUserTopic();
 
         if ($fields['subscribe'] && !$usertopic->subscribed) {

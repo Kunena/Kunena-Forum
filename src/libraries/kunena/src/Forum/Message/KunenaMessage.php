@@ -439,6 +439,7 @@ class KunenaMessage extends KunenaDatabaseObject
     public function sendNotification($url = null, $approved = false)
     {
         $config = KunenaFactory::getConfig();
+        $db        = Factory::getDbo();
 
         if (!$config->sendEmails) {
             return false;
@@ -548,10 +549,45 @@ class KunenaMessage extends KunenaDatabaseObject
                 KunenaEmail::send($mail, $receivers[0]);
             }
 
+            // Store the mails data for all subscribers in mail queue
+            $columns = array('subject', 'message_id', 'sent_to', 'message_url');
+
+            $values = array($subject, $this->id, $receivers[1], $url);
+
+            $query     = $db->getQuery(true)
+                ->insert($db->quoteName('#__mails_queue'))
+                ->columns($db->quoteName($columns))
+                ->values(implode(',', $values));
+
+            $db->setQuery($query);
+
+            try {
+                $db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+
+            // Store the mails data for all moderators in mail queue
+            $columns = array('subject', 'message_id', 'sent_to', 'message_url');
+
+            $values = array($subject, $this->id, $receivers[0], $url);
+
+            $query     = $db->getQuery(true)
+                ->insert($db->quoteName('#__mails_queue'))
+                ->columns($db->quoteName($columns))
+                ->values(implode(',', $values));
+
+            $db->setQuery($query);
+
+            try {
+                $db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+
             // Update subscriptions.
             if ($once && $sentusers) {
                 $sentusers = implode(',', $sentusers);
-                $db        = Factory::getDbo();
                 $query     = $db->getQuery(true)
                     ->update('#__kunena_user_topics')
                     ->set('subscribed=2')

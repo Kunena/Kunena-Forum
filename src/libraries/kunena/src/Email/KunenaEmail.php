@@ -20,7 +20,6 @@ use Exception;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Mail\MailHelper;
-use Joomla\CMS\Mail\MailTemplate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**

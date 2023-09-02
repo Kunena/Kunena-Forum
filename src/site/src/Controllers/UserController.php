@@ -23,6 +23,7 @@ use Joomla\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
@@ -33,6 +34,7 @@ use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -758,6 +760,13 @@ class UserController extends KunenaController
 
                 KunenaUserHelper::recountBanned();
             }
+
+            // Create email to notify the user which has been banned.
+            $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
+            $mail = Factory::getMailer();
+            $mail->setSubject(Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE'));
+            $mail->setSender([$this->config->getEmail(), $mailnamesender]);
+            KunenaEmail::send($mail, $user->email);
 
             $this->app->enqueueMessage($message, 'success');
         }

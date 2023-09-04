@@ -739,6 +739,14 @@ workspace/kunena/build/tmp)
 		<phingcall target="archive">
 			<property
 				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_uddeim_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_uddeim" />
+		</phingcall>
+		<phingcall target="archive">
+			<property
+				name="destination.file"
 				value="dist/package/distribution/packages/plg_kunena_finder_v${xml.version}" />
 			<property
 				name="base.directory"

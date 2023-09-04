@@ -1360,7 +1360,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if (!$bbcode->IsValidURL($url, false, true)) {
             if (KunenaFactory::getConfig()->autoEmbedYoutube) {
-                echo 'nnbnb';return $content;
+                return $content;
             } else {
                 return htmlspecialchars($params['_tag'], ENT_COMPAT, 'UTF-8') . $content . htmlspecialchars($params['_endtag'], ENT_COMPAT, 'UTF-8');
             }

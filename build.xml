@@ -469,6 +469,14 @@ workspace/kunena/build/tmp)
 			</fileset>
 		</copy>
 		<copy
+			todir="${tmp_dir}/packages/plg_kunena_uddeim"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${project_dir}/plugins/plg_kunena_uddeim">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+		<copy
 			todir="${tmp_dir}/packages/plg_kunena_community"
 			overwrite="true">
 			<filterchain refid="filter" />

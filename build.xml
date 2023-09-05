@@ -388,6 +388,11 @@ workspace/kunena/build/tmp)
 			<fileset dir="${kunena.plugins}/plg_kunena_altauserpoints" />
 		</copy>
 		<copy
+			todir="${tmp_dir}/packages/plg_kunena_uddeim"
+			overwrite="true">
+			<fileset dir="${kunena.plugins}/plg_kunena_uddeim" />
+		</copy>
+		<copy
 			todir="${tmp_dir}/packages/plg_kunena_community"
 			overwrite="true">
 			<fileset dir="${kunena.plugins}/plg_kunena_community" />

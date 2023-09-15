@@ -1119,7 +1119,7 @@ class KunenaUser extends CMSObject
             $timezone = Factory::getApplication()->get('offset', null);
 
             if ($this->userid) {
-                $user = Factory::getContainer(UserFactoryInterface::class)->get()->loadUserById($this->userid);
+                $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->userid);
                 $timezone = $user->getParam('timezone', $timezone);
             }
 

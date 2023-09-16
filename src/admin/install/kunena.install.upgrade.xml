@@ -199,6 +199,11 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_private_user_map` CHANGE `read_at` `read_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, CHANGE `replied_at` `replied_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, CHANGE `deleted_at` `deleted_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;</query>
         </version>
+        <version version="6.1.4"
+                 versiondate="2023-09-16"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE `icon` `icon` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

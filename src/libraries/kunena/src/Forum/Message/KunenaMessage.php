@@ -552,10 +552,10 @@ class KunenaMessage extends KunenaDatabaseObject
             // Store the mails data for all subscribers in mail queue
             $columns = array('subject', 'message_id', 'sent_to', 'message_url');
 
-            $values = array($subject, $this->id, $receivers[1], $url);
+            $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[1])), $db->quote($url));
 
             $query     = $db->getQuery(true)
-                ->insert($db->quoteName('#__mails_queue'))
+                ->insert($db->quoteName('#__kunena_mails_queue'))
                 ->columns($db->quoteName($columns))
                 ->values(implode(',', $values));
 
@@ -570,10 +570,10 @@ class KunenaMessage extends KunenaDatabaseObject
             // Store the mails data for all moderators in mail queue
             $columns = array('subject', 'message_id', 'sent_to', 'message_url');
 
-            $values = array($subject, $this->id, $receivers[0], $url);
+            $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[0])), $db->quote($url));
 
             $query     = $db->getQuery(true)
-                ->insert($db->quoteName('#__mails_queue'))
+                ->insert($db->quoteName('#__kunena_mails_queue'))
                 ->columns($db->quoteName($columns))
                 ->values(implode(',', $values));
 

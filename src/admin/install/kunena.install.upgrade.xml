@@ -229,7 +229,7 @@
     `sent_to`        varchar(200) NOT NULL,
     `message_url`    varchar(150) NOT NULL,
     `is_sent`        int(11)      NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4

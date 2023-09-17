@@ -60,6 +60,8 @@ use stdClass;
  */
 class UserController extends KunenaController
 {
+    public $user;
+
     /**
      * @param   bool  $cachable   catchable
      * @param   bool  $urlparams  urlparams

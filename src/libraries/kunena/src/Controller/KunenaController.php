@@ -250,8 +250,12 @@ class KunenaController extends BaseController
 
             // The following code gets only called for successful tasks.
             if (!$this->redirect) {
+                $return = '';
+
                 // If controller didn't set a new redirect, try if request has return url in it.
-                $return = base64_decode($app->input->getBase64('return'));
+                if (!empty($app->input->getBase64('return'))) {
+                    $return = base64_decode($app->input->getBase64('return'));
+                }
 
                 // Only allow internal urls to be used.
                 if ($return && Uri::isInternal($return)) {

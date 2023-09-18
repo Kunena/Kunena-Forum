@@ -501,8 +501,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         }
 
         // Check and set correct collation on all Kunena tables
-        $listKunenaTables = ['#__kunena_aliases', '#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_configuration', '#__kunena_karma',
-         '#__kunena_topics', '#__kunena_messages', '#__kunena_messages_text', '#__kunena_mails_queue', '#__kunena_polls', '#__kunena_polls_options', '#__kunena_polls_users', '#__kunena_private',
+        $listKunenaTables = ['#__kunena_aliases', '#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_configuration', 
+         '#__kunena_topics', '#__kunena_messages', '#__kunena_messages_text', '#__kunena_polls', '#__kunena_polls_options', '#__kunena_polls_users', '#__kunena_private',
          '#__kunena_private_attachment_map', '#__kunena_private_post_map', '#__kunena_private_user_map', '#__kunena_ranks', '#__kunena_rate', '#__kunena_sessions', '#__kunena_smileys',
          '#__kunena_thankyou', '#__kunena_user_categories', '#__kunena_user_read', '#__kunena_user_topics', '#__kunena_users', '#__kunena_users_banned', '#__kunena_logs', '#__kunena_version'];
         

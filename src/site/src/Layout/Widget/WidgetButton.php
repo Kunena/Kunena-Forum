@@ -45,4 +45,6 @@ class WidgetButton extends KunenaLayout
     public $pullright;
 
     public $modal;
+
+    public $success;
 }

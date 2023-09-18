@@ -75,6 +75,10 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
      */
     public $me;
 
+    public $topicActions;
+
+    public $actionMove;
+
     /**
      * @var     string
      * @since   Kunena 6.0

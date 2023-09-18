@@ -79,6 +79,12 @@ class CategoryItem extends KunenaLayout
      */
     public $me;
 
+    public $topics;
+
+    public $topicActions;
+
+    public $actionMove;
+
     /**
      * Method to display categories Index sublayout
      *

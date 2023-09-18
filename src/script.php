@@ -534,6 +534,38 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             }
         }
 
+        // Check and set correct collation on all Kunena tables
+        $listKunenaTables = ['#__kunena_aliases', '#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_configuration', '#__kunena_karma',
+         '#__kunena_topics', '#__kunena_messages', '#__kunena_messages_text', '#__kunena_mails_queue', '#__kunena_polls', '#__kunena_polls_options', '#__kunena_polls_users', '#__kunena_private',
+         '#__kunena_private_attachment_map', '#__kunena_private_post_map', '#__kunena_private_user_map', '#__kunena_ranks', '#__kunena_rate', '#__kunena_sessions', '#__kunena_smileys',
+         '#__kunena_thankyou', '#__kunena_user_categories', '#__kunena_user_read', '#__kunena_user_topics', '#__kunena_users', '#__kunena_users_banned', '#__kunena_logs', '#__kunena_version'];
+        
+        // Get collations from all Kunena tables
+        $listKunenaTables = [$db->getPrefix().'kunena_aliases', $db->getPrefix().'kunena_announcement', $db->getPrefix().'kunena_attachments', $db->getPrefix().'kunena_categories', $db->getPrefix().'kunena_configuration',
+         $db->getPrefix().'kunena_karma', $db->getPrefix().'kunena_topics', $db->getPrefix().'kunena_messages', $db->getPrefix().'kunena_messages_text', $db->getPrefix().'kunena_mails_queue', 
+         $db->getPrefix().'kunena_polls', $db->getPrefix().'kunena_polls_options', $db->getPrefix().'kunena_polls_users', $db->getPrefix().'kunena_private', $db->getPrefix().'kunena_private_attachment_map',
+         $db->getPrefix().'kunena_private_post_map', $db->getPrefix().'kunena_private_user_map', $db->getPrefix().'kunena_ranks', $db->getPrefix().'kunena_rate', $db->getPrefix().'kunena_sessions', $db->getPrefix().'kunena_smileys', 
+         $db->getPrefix().'kunena_thankyou', $db->getPrefix().'kunena_user_categories', $db->getPrefix().'kunena_user_read', $db->getPrefix().'kunena_user_topics', $db->getPrefix().'kunena_users', $db->getPrefix().'kunena_users_banned', 
+         $db->getPrefix().'kunena_logs', $db->getPrefix().'kunena_version'];
+        
+        // Get collations from all Kunena tables
+        foreach ($listKunenaTables as $kunenatable) {
+            $query = 'SHOW FULL COLUMNS FROM '.$db->quoteName($kunenatable);
+            $db->setQuery($query);
+
+            $tableColumns = $db->loadobjectList();
+
+            // Check column and set to ut8_mb4 when needed
+            foreach ($tableColumns as $column) {
+               if ($column->Collation == 'utf8_general_ci' || $column->Collation == 'utf8mb3_general_ci' || $column->Collation == 'utf8_unicode_ci') {
+                 $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' ' . $column->Type . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
+                 $db->setQuery($query);
+
+                 $db->execute();
+               }
+            }
+        }
+
         return true;
     }
 

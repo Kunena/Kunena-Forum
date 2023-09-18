@@ -1862,7 +1862,9 @@ class ConfigModel extends AdminModel
         $optionsShowHide         = [HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_CONFIG_RSSEXCLUDEDCATEGORIES_NOT_EXCLUDE'))];
         $params                  = array('sections' => false, 'action' => 'read');
         $lists['rssExcludedCategories'] = HTMLHelper::_('kunenaforum.categorylist', 'cfg_rssExcludedCategories[]', 0, $optionsShowHide, $params, 'class="form-select" multiple="multiple"', 'value', 'text', explode(',', $config->rssExcludedCategories), 'rssExcludedCategories');
-        
+
+        $lists ['sendMailUserBanned'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sendMailUserBanned', 'class="inputbox form-control" size="1"', 'value', 'text', $config->sendMailUserBanned);
+
         return $lists;
     }
 }

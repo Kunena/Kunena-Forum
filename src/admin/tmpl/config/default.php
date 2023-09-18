@@ -917,6 +917,13 @@ $wa->useScript('multiselect');
                                                         <td><?php echo $this->lists ['utmSource'] ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_A_USE_UTM_SOURCE_DESC') ?></td>
                                                     </tr>
+                                                    <tr <?php if ($this->config->sendMailUserBanned != 0) :
+                                                        echo 'class="changed"';
+                                                        endif; ?>>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_SEND_MAIL_TO_USER_WHEN_BANNED') ?></td>
+                                                        <td><?php echo $this->lists ['sendMailUserBanned'] ?></td>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_SEND_MAIL_TO_USER_WHEN_BANNED_DESC') ?></td>
+                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </fieldset>

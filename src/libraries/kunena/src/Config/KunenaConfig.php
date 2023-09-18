@@ -1637,7 +1637,16 @@ class KunenaConfig extends CMSObject
      */
     public $privateMessage = 1;
 
+    /**
+     * @since  Kunena 6.2.0
+     */
     public $datePickerFormat = 'mm/dd/yyyy';
+
+    /**
+     * @var    boolean  enable the send mail to user when he is banned
+     * @since  Kunena 6.2.0
+     */
+    public $sendMailUserBanned = 0;
 
     /**
      * @since   Kunena 6.0

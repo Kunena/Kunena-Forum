@@ -763,12 +763,14 @@ class UserController extends KunenaController
                 KunenaUserHelper::recountBanned();
             }
 
-            // Create email to notify the user which has been banned.
-            $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
-            $mail = Factory::getMailer();
-            $mail->setSubject(Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE'));
-            $mail->setSender([$this->config->getEmail(), $mailnamesender]);
-            KunenaEmail::send($mail, $user->email);
+            if ($this->config->sendMailUserBanned) {
+                // Create email to notify the user which has been banned.
+                $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
+                $mail = Factory::getMailer();
+                $mail->setSubject(Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE'));
+                $mail->setSender([$this->config->getEmail(), $mailnamesender]);
+                KunenaEmail::send($mail, $user->email);
+            }
 
             $this->app->enqueueMessage($message, 'success');
         }

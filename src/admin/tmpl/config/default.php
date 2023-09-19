@@ -871,7 +871,7 @@ $wa->useScript('multiselect');
                                                         echo 'class="changed"';
                                                         endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT') ?></td>
-                                                        <td><?php echo HTMLHelper::_('select.integerlist', 0, 100, 5, 'cfg_emailRecipientCount', null, $this->escape($this->config->emailRecipientCount)) ?></td>
+                                                        <td><?php echo HTMLHelper::_('select.integerlist', 0, 100, 5, 'cfg_emailRecipientCount', 'class="inputbox form-control" size="1"', $this->escape($this->config->emailRecipientCount)) ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT_DESC') ?></td>
                                                     </tr>
                                                     <tr <?php if ($this->config->emailRecipientPrivacy != 'bcc') :

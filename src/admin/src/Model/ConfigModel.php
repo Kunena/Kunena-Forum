@@ -1841,10 +1841,10 @@ class ConfigModel extends AdminModel
         $lists ['autoEmbedInstagram'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_autoEmbedInstagram', 'class="inputbox form-control"size="1"', 'value', 'text', $config->autoEmbedInstagram);
 
         // K 5.1.19
-        $lists ['display_filename_attachment'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_display_filename_attachment', 'class="inputbox" size="1"', 'value', 'text', $config->display_filename_attachment);
+        $lists ['display_filename_attachment'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_display_filename_attachment', 'class="inputbox form-control" size="1"', 'value', 'text', $config->display_filename_attachment);
 
         // K5.2.0
-        $lists ['new_users_prevent_post_url_images'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_new_users_prevent_post_url_images', 'class="inputbox" size="1"', 'value', 'text', $config->new_users_prevent_post_url_images);
+        $lists ['new_users_prevent_post_url_images'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_new_users_prevent_post_url_images', 'class="inputbox form-control" size="1"', 'value', 'text', $config->new_users_prevent_post_url_images);
 
         // K6.0
         $lists ['utmSource'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_utmSource', 'class="inputbox form-control" size="1"', 'value', 'text', $config->utmSource);

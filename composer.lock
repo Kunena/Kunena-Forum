@@ -1115,16 +1115,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kunena/Codestyle.git",
-                "reference": "77d668a81fe933605e2f3203c86c536d4a5638d4"
+                "reference": "7df9688fc4161521f4042bb443bfebba34215eb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kunena/Codestyle/zipball/77d668a81fe933605e2f3203c86c536d4a5638d4",
-                "reference": "77d668a81fe933605e2f3203c86c536d4a5638d4",
+                "url": "https://api.github.com/repos/Kunena/Codestyle/zipball/7df9688fc4161521f4042bb443bfebba34215eb5",
+                "reference": "7df9688fc4161521f4042bb443bfebba34215eb5",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4.0"
+                "php": ">=8.1.0"
             },
             "default-branch": true,
             "type": "phpcodesniffer-standard",
@@ -1137,7 +1137,7 @@
                 "issues": "https://github.com/Kunena/Codestyle/issues",
                 "source": "https://github.com/Kunena/Codestyle/tree/master"
             },
-            "time": "2023-09-20T13:14:49+00:00"
+            "time": "2023-09-20T14:32:49+00:00"
         },
         {
             "name": "myclabs/deep-copy",

@@ -924,6 +924,16 @@ $wa->useScript('multiselect');
                                                         <td><?php echo $this->lists ['sendMailUserBanned'] ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_SEND_MAIL_TO_USER_WHEN_BANNED_DESC') ?></td>
                                                     </tr>
+                                                    <tr <?php if ($this->config->mailBodyUserBanned != 0) :
+                                                        echo 'class="changed"';
+                                                        endif; ?>>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED') ?></td>
+                                                        <td><input type="text" class="form-control"
+                                                                   name="cfg_mailBodyUserBanned"
+                                                                   value="<?php echo $this->escape($this->config->mailBodyUserBanned) ?>"/>
+                                                        </td>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED_DESC') ?></td>
+                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </fieldset>

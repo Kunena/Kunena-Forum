@@ -1490,7 +1490,7 @@ class KunenaIcons
         }
 
         if ($topicicontype == 'image') {
-            return 'kicon-report';
+            return '';
         }
 
         return KunenaSvgIcons::loadsvg('alert-octagon');

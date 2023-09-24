@@ -226,19 +226,7 @@
                  versiondate="2023-08-27"
                  versionname="Internal">
             <query mode="silenterror">
-            CREATE TABLE IF NOT EXISTS `#__kunena_mails_queue`
-(
-    `id`             int(11)      NOT NULL auto_increment,
-    `subject`        varchar(150) NOT NULL,
-    `message_id`     int(11)      NULL,
-    `sent_to`        varchar(200) NOT NULL,
-    `message_url`    varchar(150) NOT NULL,
-    `is_sent`        int(11)      NULL,
-    PRIMARY KEY (id)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARSET = utf8mb4
-    DEFAULT COLLATE = utf8mb4_unicode_ci;
+            DROP TABLE IF EXISTS `#__kunena_mails_queue`;
             </query>
         </version>
         <version version="@kunenaversion@"

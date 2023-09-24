@@ -22,6 +22,7 @@ use Joomla\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Database\DatabaseDriver;
@@ -550,39 +551,41 @@ class KunenaMessage extends KunenaDatabaseObject
             }
 
             // Store the mails data for all subscribers in mail queue
-            $columns = array('subject', 'message_id', 'sent_to', 'message_url');
+            if (PluginHelper::isEnabled('kunena', 'plg_kunena_mails_queue')) {
+                $columns = array('subject', 'message_id', 'sent_to', 'message_url');
 
-            $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[1])), $db->quote($url));
+                $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[1])), $db->quote($url));
 
-            $query     = $db->getQuery(true)
-                ->insert($db->quoteName('#__kunena_mails_queue'))
-                ->columns($db->quoteName($columns))
-                ->values(implode(',', $values));
+                $query     = $db->getQuery(true)
+                    ->insert($db->quoteName('#__kunena_mails_queue'))
+                    ->columns($db->quoteName($columns))
+                    ->values(implode(',', $values));
 
-            $db->setQuery($query);
+                $db->setQuery($query);
 
-            try {
-                $db->execute();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-            }
+                try {
+                    $db->execute();
+                } catch (ExecutionFailureException $e) {
+                    KunenaError::displayDatabaseError($e);
+                }
 
-            // Store the mails data for all moderators in mail queue
-            $columns = array('subject', 'message_id', 'sent_to', 'message_url');
+                // Store the mails data for all moderators in mail queue
+                $columns = array('subject', 'message_id', 'sent_to', 'message_url');
 
-            $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[0])), $db->quote($url));
+                $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[0])), $db->quote($url));
 
-            $query     = $db->getQuery(true)
-                ->insert($db->quoteName('#__kunena_mails_queue'))
-                ->columns($db->quoteName($columns))
-                ->values(implode(',', $values));
+                $query     = $db->getQuery(true)
+                    ->insert($db->quoteName('#__kunena_mails_queue'))
+                    ->columns($db->quoteName($columns))
+                    ->values(implode(',', $values));
 
-            $db->setQuery($query);
+                $db->setQuery($query);
 
-            try {
-                $db->execute();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
+                try {
+                    $db->execute();
+                } catch (ExecutionFailureException $e) {
+                    KunenaError::displayDatabaseError($e);
+                }
             }
 
             // Update subscriptions.

@@ -15,6 +15,8 @@ namespace Kunena\Forum\Site\Layout\Widget\Login;
 defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Joomla\CMS\HTML\HTMLHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**
  * KunenaLayoutTopicEditEditor
@@ -58,4 +60,31 @@ class WidgetLoginLogin extends KunenaLayout
     public $profile_edit_url;
     
     public $plglogin;
+
+    /**
+    * Load Joomla! module into Kunena login form to have the authentification by Webauthn
+    *
+    * @since  K6.2
+    */
+    public fonction loadModuleWebauthn() {
+        $moduleId = KunenaFactory::getTemplate()->params->get('displayDropdownMenu');
+
+        if ($check_module->id == 0 && $check_module->module != "mod_login") {
+            $module = ModuleHelper::getModule('mod_login');
+
+            if (!isset($module->id)) {
+                $moduleId = null;
+                $error = "<b>Error</b> display login menu failed - no login module found";  
+            }
+        } else {
+            $moduleId = $module->id;
+        }
+
+        if (! PluginHelper::isEnabled('content', 'loadmodule')) {
+            $moduleId = null;
+            $error = "<b>Error</b> display login menu failed - loadmodule content plugin is disabled";
+        }
+
+        echo HTMLHelper::_('content.prepare', "'{loadmoduleid " .  $moduleId . "}'" );
+    }
 }

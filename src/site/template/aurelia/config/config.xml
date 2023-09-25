@@ -154,6 +154,9 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+        <field name="moduleIdWebauthn" type="text" default="0"
+               label="COM_KUNENA_TEMPLATE_MODULE_ID_WEBAUTHN"
+               description="COM_KUNENA_TEMPLATE_MODULE_ID_WEBAUTHN_DESC"/>
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_COLORS">

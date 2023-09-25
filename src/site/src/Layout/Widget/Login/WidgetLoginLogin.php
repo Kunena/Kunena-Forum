@@ -70,25 +70,28 @@ class WidgetLoginLogin extends KunenaLayout
     * @since  K6.2
     */
     public function loadModuleWebauthn() {
-        $moduleId = KunenaFactory::getTemplate()->params->get('displayDropdownMenu');
-        $checkModule = ModuleHelper::getModuleById($moduleId);
+        $moduleId = KunenaFactory::getTemplate()->params->get('moduleIdWebauthn');
 
-        if ($checkModule->id == 0 && $checkModule->module != "mod_login") {
-            $module = ModuleHelper::getModule('mod_login');
+        if ($moduleId > 0) {
+            $checkModule = ModuleHelper::getModuleById($moduleId);
 
-            if (!isset($module->id)) {
-                $moduleId = null;
-                Factory::getApplication()->enqueueMessage('<b>Error</b> display login menu failed - no login module found', 'error');  
-            } else {
-                $moduleId = $module->id;
+            if ($checkModule->id == 0 && $checkModule->module != "mod_login") {
+                $module = ModuleHelper::getModule('mod_login');
 
-                echo HTMLHelper::_('content.prepare', "'{loadmoduleid " .  $moduleId . "}'" );
+                if (!isset($module->id)) {
+                    $moduleId = null;
+                    Factory::getApplication()->enqueueMessage('<b>Error</b> display login menu failed - no login module found', 'error');  
+                } else {
+                    $moduleId = $module->id;
+
+                    echo HTMLHelper::_('content.prepare', "'{loadmoduleid " .  $moduleId . "}'" );
+                }
             }
-        }
 
-        if (!PluginHelper::isEnabled('content', 'loadmodule')) {
-            $moduleId = null;
-            Factory::getApplication()->enqueueMessage('<b>Error</b> display login menu failed - loadmodule content plugin is disabled', 'error');
+            if (!PluginHelper::isEnabled('content', 'loadmodule')) {
+                $moduleId = null;
+                Factory::getApplication()->enqueueMessage('<b>Error</b> display login menu failed - loadmodule content plugin is disabled', 'error');
+            }
         }
     }
 }

@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
         </button>
 
         <div class="dropdown-menu dropdown-menu-end" id="kdesktop-userdropdown">
+            <?php echo $this->loadModuleWebauthn(); ?>
             <form id="kdesktop-loginform" action="<?php echo KunenaRoute::current('index.php?option=com_kunena'); ?>" method="post">
                 <input type="hidden" name="view" value="user"/>
                 <input type="hidden" name="task" value="login"/>

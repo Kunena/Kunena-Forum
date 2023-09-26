@@ -33,10 +33,10 @@ use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaProfileComprofiler;
 class PlgKunenaComprofiler extends CMSPlugin
 {
     /**
-     * @var     string  CB version 2.8.1 works with Php 8.1 and with Joomla! 4.2
+     * @var     string  CB version 2.8.2 works with Php 8.1 and with Joomla! 4.2
      * @since   Kunena 6.0
      */
-    public $minCBVersion = '2.8.1';
+    public $minCBVersion = '2.8.2';
 
     /**
      * plgKunenaComprofiler constructor.

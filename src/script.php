@@ -536,7 +536,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
         // Get collations from all Kunena tables
         $listKunenaTables = [$db->getPrefix().'kunena_aliases', $db->getPrefix().'kunena_announcement', $db->getPrefix().'kunena_attachments', $db->getPrefix().'kunena_categories', $db->getPrefix().'kunena_configuration',
-         $db->getPrefix().'kunena_karma', $db->getPrefix().'kunena_topics', $db->getPrefix().'kunena_messages', $db->getPrefix().'kunena_messages_text', $db->getPrefix().'kunena_polls', $db->getPrefix().'kunena_polls_options',
+         $db->getPrefix().'kunena_topics', $db->getPrefix().'kunena_messages', $db->getPrefix().'kunena_messages_text', $db->getPrefix().'kunena_polls', $db->getPrefix().'kunena_polls_options',
          $db->getPrefix().'kunena_polls_users', $db->getPrefix().'kunena_private', $db->getPrefix().'kunena_private_attachment_map', $db->getPrefix().'kunena_private_post_map', $db->getPrefix().'kunena_private_user_map', 
          $db->getPrefix().'kunena_ranks', $db->getPrefix().'kunena_rate', $db->getPrefix().'kunena_sessions', $db->getPrefix().'kunena_smileys', $db->getPrefix().'kunena_thankyou', $db->getPrefix().'kunena_user_categories', 
          $db->getPrefix().'kunena_user_read', $db->getPrefix().'kunena_user_topics', $db->getPrefix().'kunena_users', $db->getPrefix().'kunena_users_banned', $db->getPrefix().'kunena_logs', $db->getPrefix().'kunena_version'];

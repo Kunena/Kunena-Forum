@@ -307,6 +307,7 @@ workspace/kunena/build/tmp)
 			<fileset dir="${kunena.admin}">
 				<include name="**/*.xml" />
 				<include name="api/**" />
+				<include name="install/**" />
 				<include name="media/**" />
 				<include name="services/**" />
 				<include name="src/**" />

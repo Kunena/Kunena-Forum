@@ -424,9 +424,9 @@ function kunena_5215_2021_07_24_configuration($parent) {
 
 	unset($config->maxpersotext);
 
-	$config->orderingSystem = $config->ordering_systems;
+	$config->orderingSystem = $config->ordering_system;
 
-	unset($config->ordering_systems);
+	unset($config->ordering_system);
 
 	$config->postDateFormat = $config->post_dateformat;
 
@@ -680,10 +680,6 @@ function kunena_5215_2021_07_24_configuration($parent) {
 
 	unset($config->ebay_api_key);
 
-	$config->ebayCertId = $config->ebay_cert_id;
-
-	unset($config->ebay_cert_id);
-
 	$config->twitterConsumerKey = $config->twitter_consumer_key;
 
 	unset($config->twitter_consumer_key);
@@ -854,5 +850,5 @@ function kunena_5215_2021_07_24_configuration($parent) {
 	    $config->save();
 	}
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_520_UPDATE_CONFIGURATION'), 'success' => true);
+	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_5215_UPDATE_CONFIGURATION'), 'success' => true);
 }

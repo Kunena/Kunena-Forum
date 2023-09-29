@@ -2180,7 +2180,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         switch ($nodeName) {
             case 'phpfile':
                 $filename = $action['name'];
-                $include  = KUNENA_INSTALLER_PATH . "/sql/updates/php/{$filename}.php";
+                $include  = JPATH_ADMINISTRATOR . "/components/com_kunena/install/sql/updates/php/{$filename}.php";
                 $function = 'kunena_' . strtr($filename, ['.' => '', '-' => '_']);
 
                 if (is_file($include)) {

@@ -44,11 +44,6 @@
                  versionname="Internal">
             <phpfile name="5.2.0-2020-08-20_updaterankstitle"/>
         </version>
-        <version version="5.2.4-DEV"
-                 versiondate="2020-03-24"
-                 versionname="Internal">
-            <phpfile name="5.2.0-2021-03-24_configuration"/>
-        </version>
         <version version="5.2.5-DEV"
                  versiondate="2020-04-18"
                  versionname="Internal">
@@ -59,6 +54,11 @@
                  versionname="Internal">
             <query mode="silenterror">UPDATE `#__kunena_users_banned` SET `expiration` = '9999-12-31 23:59:59' WHERE expiration = '0000-00-00 00:00:00';</query>
             <query mode="silenterror">UPDATE `#__kunena_users` SET `banned` = '9999-12-31 23:59:59' WHERE banned = '0000-00-00 00:00:00';</query>
+        </version>
+                <version version="5.2.15-DEV"
+                 versiondate="2021-07-24"
+                 versionname="Internal">
+            <phpfile name="5.2.15-2021-07-24_configuration"/>
         </version>
     	<version version="6.0.0-BETA3-DEV"
                  versiondate="2021-09-13"

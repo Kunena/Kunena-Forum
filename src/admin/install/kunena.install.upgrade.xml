@@ -229,6 +229,13 @@
             DROP TABLE IF EXISTS `#__kunena_mails_queue`;
             </query>
         </version>
+        <version version="6.2.0-BETA3-DEV"
+                 versiondate="2023-09-30"
+                 versionname="Internal">
+            <query mode="silenterror">
+            ALTER TABLE `#__kunena_rate` MODIFY COLUMN `time` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';
+            </query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

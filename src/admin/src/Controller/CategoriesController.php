@@ -397,7 +397,7 @@ class CategoriesController extends KunenaController
      * @throws  null
      * @since   Kunena 3.0
      */
-    public function remove()
+    public function delete()
     {
         KunenaFactory::loadLanguage('com_kunena', 'admin');
 

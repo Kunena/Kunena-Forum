@@ -235,6 +235,10 @@
             <query mode="silenterror">
             ALTER TABLE `#__kunena_rate` MODIFY COLUMN `time` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';
             </query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `created` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `publish_up` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `publish_down` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_polls_users` MODIFY COLUMN `lasttime` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

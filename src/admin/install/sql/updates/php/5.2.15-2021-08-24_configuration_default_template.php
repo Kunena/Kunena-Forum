@@ -24,12 +24,12 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  * @throws  Exception
  * @since   Kunena 6.0
  */
-function kunena_600_2019_05_18_configuration($parent)
+function kunena_5215_2021_08_24_configuration_default_template($parent)
 {
     $config = KunenaFactory::getConfig();
 
     if (isset($config->template)) {
-        if ($config->template == 'crypsis' || $config->template == 'crypsisb4') {
+        if ($config->template == 'crypsis' || $config->template == 'crypsisb3' || $config->template == 'crypsisb4' || $config->template == 'blue_eagle5') {
             $config->set('template', 'aurelia');
         }
     }
@@ -37,5 +37,5 @@ function kunena_600_2019_05_18_configuration($parent)
     // Save configuration
     $config->save();
 
-    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_600_CONFIGURATION'), 'success' => true];
+    return ['action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_5215_SET_AURELIA_AS_DEFAULT_IN_CONFIGURATION'), 'success' => true];
 }

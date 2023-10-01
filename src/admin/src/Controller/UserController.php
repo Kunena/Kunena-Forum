@@ -132,6 +132,8 @@ class UserController extends FormController
                 $date = Factory::getDate($birthdate);
 
                 $birthdate = $date->format('Y-m-d');
+            } else {
+                $birthdate = '0001-01-01';
             }
 
             $user->birthdate = $birthdate;

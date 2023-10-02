@@ -52,7 +52,7 @@ class plgKunenaEasyprofile extends CMSPlugin
 
         parent::__construct($subject, $config);
 
-        $this->loadLanguage('plg_kunena_easyprofile.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easyprofile.sys', KPATH_ADMIN);
+        $this->loadLanguage('plg_kunena_easyprofile.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easyprofile.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
     }
 
     /**

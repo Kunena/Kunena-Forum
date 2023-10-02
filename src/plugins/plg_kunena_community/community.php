@@ -59,7 +59,7 @@ class PlgKunenaCommunity extends CMSPlugin
 
         parent::__construct($subject, $config);
 
-        $this->loadLanguage('plg_kunena_community.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_community.sys', KPATH_ADMIN);
+        $this->loadLanguage('plg_kunena_community.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_community.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
     }
 
     /**

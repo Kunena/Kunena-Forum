@@ -62,7 +62,7 @@ class PlgKunenaEasySocial extends EasySocialPlugins
 
         parent::__construct($subject, $config);
 
-        $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easysocial.sys', KPATH_ADMIN);
+        $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
         return true;
     }

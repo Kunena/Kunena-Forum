@@ -217,7 +217,7 @@ $wa->useScript('multiselect');
                                         <td><?php echo $this->escape($row->getCategory()->name); ?></td>
                                         <td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
                                         <td><?php echo $this->escape($row->ip); ?></td>
-                                        <td><?php echo Factory::getDate($row->time)->format('%Y-%m-%d %H:%M:%S', $row->time); ?></td>
+                                        <td><?php echo Factory::getDate($row->time)->format('Y-m-d h:m:s', $row->time); ?></td>
                                     </tr>
                                     <?php
                                 endforeach;

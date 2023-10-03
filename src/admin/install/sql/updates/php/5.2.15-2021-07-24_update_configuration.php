@@ -21,7 +21,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  * @throws Exception
  * @since Kunena 5.2.4
  */
-function kunena_5215_2021_07_24_configuration($parent) {
+function kunena_5215_2021_07_24_update_configuration($parent) {
 	$config = KunenaFactory::getConfig();
 
 	$config->boardTitle = $config->board_title;

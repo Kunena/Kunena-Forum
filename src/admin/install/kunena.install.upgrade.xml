@@ -58,7 +58,12 @@
                 <version version="5.2.15-DEV"
                  versiondate="2021-07-24"
                  versionname="Internal">
-            <phpfile name="5.2.15-2021-07-24_configuration"/>
+            <phpfile name="5.2.15-2021-07-24_update_configuration"/>
+        </version>
+        <version version="5.2.15-DEV"
+                 versiondate="2021-08-24"
+                 versionname="Internal">
+            <phpfile name="5.2.15-2021-08-24_configuration_default_template"/>
         </version>
     	<version version="6.0.0-BETA3-DEV"
                  versiondate="2021-09-13"

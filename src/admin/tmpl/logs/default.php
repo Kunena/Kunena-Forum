@@ -24,6 +24,8 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 $filterItem = $this->escape($this->state->get('item.id')); 
+
+HTMLHelper::_('jquery.framework');
 ?>
 
 <script type="text/javascript">
@@ -297,45 +299,38 @@ $filterItem = $this->escape($this->state->get('item.id'));
                                     <?php endif; ?>
                                 </tr>
 
-                                <div class="modal fade" id="kerror<?php echo $item->id; ?>_form" tabindex="-1"
-                                     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title"
-                                                    id="exampleModalLabel"><?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
+                                <!-- Modal -->
+                                <div class="modal fade" id="kerror<?php echo $item->id; ?>_form" tabindex="-1" 
+                                  aria-labelledby="kerror<?php echo $item->id; ?>_form" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="kerror<?php echo $item->id; ?>_formLabel">
+                                            <?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
                                                         <span class="icon-warning" aria-hidden="true"></span>
                                                                            <?php else : ?>
                                                         <span class="icon-edit" aria-hidden="true"></span>
                                                                            <?php endif; ?>
                                                     Kunena <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
 
-                                                    ID:<?php echo $item->id; ?></h5>
-                                                <button type="button" class="close" data-bs-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div>
-                                                    <textarea style="margin-top: -3000px"
-                                                              id="report_final<?php echo $item->id; ?>"
+                                                    ID:<?php echo $item->id; ?>
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <textarea id="report_final<?php echo $item->id; ?>"
                                                               for="report_final<?php echo $item->id; ?>"><?php echo KunenaParser::plainBBCode((string) $item->data); ?></textarea>
                                                     <pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="#" id="link_sel_all<?php echo $item->id; ?>"
-                                                   name="link_sel_all<?php echo $item->id; ?>" type="button"
-                                                   class="btn btn-small btn-outline-primary"><i
-                                                            class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
-                                                </a>
-                                                <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
-                                            </div>
-                                        </div>
+                                      </div>              
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
+                                        <button type="button" id="link_sel_all<?php echo $item->id; ?>" class="btn btn-primary"><i
+                                                            class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></button> 
+                                      </div>
                                     </div>
+                                  </div>
                                 </div>
+                                <!-- End of modal -->
                                 <?php
                                 $i++;
                             endforeach;

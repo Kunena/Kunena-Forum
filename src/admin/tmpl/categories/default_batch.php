@@ -17,11 +17,11 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="modal" tabindex="-1" id="batchCategories">
+<div class="modal fade" id="batchCategories" tabindex="-1" aria-labelledby="batchCategories" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title"><?php echo Text::_('COM_KUNENA_BATCH_OPTIONS'); ?></h5>
+        <h1 class="modal-title fs-5" id="batchCategoriesLabel"><?php echo Text::_('COM_KUNENA_BATCH_OPTIONS'); ?></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

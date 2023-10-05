@@ -3,8 +3,8 @@
 <extension type="package" version="4.0" method="upgrade">
     <name>pkg_kunena</name>
     <packagename>kunena</packagename>
-    <version>6.1.4</version>
-    <versionname>Constantinovca</versionname>
+    <version>6.1.5-DEV</version>
+    <versionname>INTERNAL</versionname>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
     <authorEmail>kunena@kunena.org</authorEmail>

@@ -440,7 +440,7 @@ class KunenaMessage extends KunenaDatabaseObject
     public function sendNotification($url = null, $approved = false)
     {
         $config = KunenaFactory::getConfig();
-        $db        = Factory::getDbo();
+        $db        = Factory::getContainer()->get('DatabaseDriver');
 
         if (!$config->sendEmails) {
             return false;

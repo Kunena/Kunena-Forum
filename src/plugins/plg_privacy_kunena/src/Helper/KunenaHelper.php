@@ -41,7 +41,7 @@ abstract class KunenaHelper
      */
     public static function getUserItems(string $table, string $field, int $userid, bool $single = false): array
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName($table))
@@ -100,7 +100,7 @@ abstract class KunenaHelper
      */
     public static function anomynizeUserData(string $table, string $field, int $userid, string $setField, string $setValue): bool
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true)
             ->update($db->quoteName($table))
             ->where($db->quoteName($field) . ' = :userid')
@@ -125,7 +125,7 @@ abstract class KunenaHelper
      */
     public static function deleteUserData(string $table, string $field, int $userid): bool
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true)
             ->delete($db->quoteName($table))
             ->where($db->quoteName($field) . ' = :userid')

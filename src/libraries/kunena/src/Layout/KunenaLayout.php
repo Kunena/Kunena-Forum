@@ -129,6 +129,10 @@ class KunenaLayout extends KunenaBase
 
     public $me;
 
+    public $header;
+
+    public $message;
+
     /**
      * Append HTML after the layout content.
      *

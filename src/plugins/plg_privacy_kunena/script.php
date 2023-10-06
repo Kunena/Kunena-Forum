@@ -23,7 +23,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
  *
  * @since Kunena
  */
-class plgKunenaKunenaInstallerScript extends InstallerScript
+class plgPrivacyKunenaInstallerScript extends InstallerScript
 {
     /**
      * The extension name. This should be set in the installer script.
@@ -39,7 +39,7 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
      * @var    string
      * @since  5.4.0
      */
-    protected $minimumPhp = '7.2.5';
+    protected $minimumPhp = '7.4.1';
 
     /**
      * Minimum Joomla! version required to install the extension
@@ -47,7 +47,7 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
      * @var    string
      * @since  6.0.0
      */
-    protected $minimumJoomla = '4.0.0-dev';
+    protected $minimumJoomla = '4.3.4';
 
     /**
      * List of required PHP extensions.

@@ -31,6 +31,7 @@
         <filename type="plugin" group="system" id="kunena">plg_system_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="quickicon" id="kunena">plg_quickicon_kunena_v@kunenaversion@.zip</filename>
         <filename type="plugin" group="sampledata" id="kunena">plg_sampledata_kunena_v@kunenaversion@.zip</filename>
+        <filename type="plugin" group="privacy" id="kunena">plg_privacy_kunena_v@kunenaversion@.zip</filename>
     </files>
 
     <changelogurl>@kunenachangelog@</changelogurl>
@@ -66,11 +67,13 @@
             <lang>plg_kunena_easyprofile</lang>
             <lang>plg_kunena_easysocial</lang>
             <lang>plg_kunena_gravatar</lang>
+            <lang>plg_kunena_uddeim</lang>
             <lang>plg_kunena_joomla</lang>
             <lang>plg_kunena_kunena</lang>
             <lang>plg_system_kunena</lang>
             <lang>plg_quickicon_kunena</lang>
             <lang>plg_sampledata_kunena</lang>
+            <lang>plg_privacy_kunena</lang>
         </langfiles>
         <extraprefixes>
             <prefix>kunena</prefix>

@@ -184,13 +184,13 @@ source_lang = en-GB
 minimum_perc = 0
 
 [o:Kunena-Forum:p:kunena-forum-6-x:r:src-plugins-plg-kunena-privacy-language-en-gb-en-gb-plg-kunena-privacy-sys-ini--k6-0]
-file_filter = src/plugins/plg_kunena_privacy/language/<lang>/<lang>.plg_kunena_privacy.sys.ini
-source_file = src/plugins/plg_kunena_privacy/language/en-GB/en-GB.plg_kunena_privacy.sys.ini
+file_filter = src/plugins/plg_privacy_kunena/language/<lang>/<lang>.plg_kunena_privacy.sys.ini
+source_file = src/plugins/plg_privacy_kunena/language/en-GB/en-GB.plg_kunena_privacy.sys.ini
 source_lang = en-GB
 minimum_perc = 0
 
 [o:Kunena-Forum:p:kunena-forum-6-x:r:src-plugins-plg-kunena-privacy-language-en-gb-en-gb-plg-kunena-privacy-ini--k6-0]
-file_filter = src/plugins/plg_kunena_privacy/language/<lang>/<lang>.plg_kunena_privacy.ini
-source_file = src/plugins/plg_kunena_privacy/language/en-GB/en-GB.plg_kunena_privacy.ini
+file_filter = src/plugins/plg_privacy_kunena/language/<lang>/<lang>.plg_kunena_privacy.ini
+source_file = src/plugins/plg_privacy_kunena/language/en-GB/en-GB.plg_kunena_privacy.ini
 source_lang = en-GB
 minimum_perc = 0

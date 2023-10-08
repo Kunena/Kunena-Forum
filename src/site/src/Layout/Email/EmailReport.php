@@ -22,15 +22,11 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
  *
  * @since   Kunena 6.2
  */
-class EmailSubscription extends KunenaLayout
+class EmailReport extends KunenaLayout
 {
     public $mail;
 
-    public $message;
-
-    public $messageUrl;
-
-    public $once;
+    public $title;
 
     public $messageLink;
 }

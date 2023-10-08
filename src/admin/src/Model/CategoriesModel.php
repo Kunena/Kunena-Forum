@@ -483,10 +483,10 @@ class CategoriesModel extends KunenaModel
             $value = 'desc';
         }
 
-        $value = $this->getUserStateFromRequest($this->context . '.list.search', 'filter_search', 'search', 'cmd');
-        $this->setState('filter.search', $value);
-
         $this->setState('list.direction', $value);
+
+        $value = $this->getUserStateFromRequest($this->context . '.list.search', 'filter_search', '', 'cmd');
+        $this->setState('filter.search', $value);
 
         // List state information.
         parent::populateState($ordering, $direction);

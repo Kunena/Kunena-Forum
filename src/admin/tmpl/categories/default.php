@@ -104,7 +104,7 @@ $this->document->addScriptDeclaration(
                             <select name="directionTable" id="directionTable" class="form-select input-medium"
                                     onchange="Joomla.orderTable()">
                                 <option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-                                <?php echo HTMLHelper::_('select.options', $this->getSortDirectionFields(), 'value', 'text', $this->list->Direction); ?>
+                                <?php echo HTMLHelper::_('select.options', $this->getSortDirectionFields(), 'value', 'text', $this->listDirection); ?>
                             </select>
                         </div>
                         <div class="btn-group pull-right">
@@ -112,7 +112,7 @@ $this->document->addScriptDeclaration(
                                    class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
                             <select name="sortTable" id="sortTable" class="form-select input-medium" onchange="Joomla.orderTable()">
                                 <option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-                                <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
+                                <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
                             </select>
                         </div>
                         <!-- TODO: not implemented

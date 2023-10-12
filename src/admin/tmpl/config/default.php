@@ -157,7 +157,7 @@ $wa->useScript('multiselect');
                                                         endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_EMAIL_SENDER_NAME') ?></td>
                                                         <td>
-                                                            <input type="text" name="cfg_email_sender_name"
+                                                            <input type="text" class="form-control" name="cfg_email_sender_name"
                                                                    value="<?php echo $this->escape($this->config->email_sender_name) ?>"/>
                                                         </td>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_EMAIL_SENDER_NAME_DESC') ?></td>
@@ -1094,7 +1094,7 @@ $wa->useScript('multiselect');
                                                         endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_MINIMAL_NUMBER_OF_USER_POSTS_TO_ADD_URL_IMAGE') ?></td>
                                                         <td>
-                                                            <input type="text"
+                                                            <input type="text" class="form-control"
                                                                    name="cfg_minimal_user_posts_add_url_image"
                                                                    value="<?php echo $this->escape($this->config->minimal_user_posts_add_url_image) ?>"/>
                                                         </td>
@@ -1659,7 +1659,7 @@ $wa->useScript('multiselect');
                                                         endif; ?>>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_LABEL') ?></td>
                                                         <td>
-                                                            <input type="text" name="cfg_ebayCertId"
+                                                            <input type="text" class="form-control" name="cfg_ebayCertId"
                                                                value="<?php echo $this->escape($this->config->ebayCertId) ?>"/>
                                                         </td>
                                                         <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_DESC') ?></td>

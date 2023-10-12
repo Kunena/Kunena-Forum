@@ -26,7 +26,6 @@ class PlgKunenaUddeIM extends CMSPlugin
 	 * @param   array  $config  config
 	 *
 	 * @throws Exception
-	 * @deprecated  6.0
 	 * @since Kunena
 	 */
 	public function __construct(&$subject, $config)

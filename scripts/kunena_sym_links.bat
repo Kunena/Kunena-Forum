@@ -48,6 +48,8 @@ IF exist %GitTarget%\plugins\kunena\easysocial ( rmdir /S/q %GitTarget%\plugins\
 IF exist %GitTarget%\plugins\kunena\finder ( rmdir /S/q %GitTarget%\plugins\kunena\finder )
 IF exist %GitTarget%\plugins\finder\kunena ( rmdir /S/q %GitTarget%\plugins\finder\kunena )
 IF exist %GitTarget%\plugins\kunena\gravatar ( rmdir /S/q %GitTarget%\plugins\kunena\gravatar )
+IF exist %GitTarget%\plugins\kunena\uddeim ( rmdir /S/q %GitTarget%\plugins\kunena\uddeim )
+IF exist %GitTarget%\plugins\privacy\kunena ( rmdir /S/q %GitTarget%\plugins\privacy\kunena )
 IF exist %GitTarget%\plugins\kunena\joomla ( rmdir /S/q %GitTarget%\plugins\kunena\joomla )
 IF exist %GitTarget%\plugins\kunena\kunena ( rmdir /S/q %GitTarget%\plugins\kunena\kunena )
 IF exist %GitTarget%\plugins\sampledata\kunena ( rmdir /S/q %GitTarget%\plugins\sampledata\kunena )
@@ -113,6 +115,8 @@ IF exist %GitTarget%\plugins\kunena\easysocial ( rmdir /S/q %GitTarget%\plugins\
 IF exist %GitTarget%\plugins\kunena\finder ( rmdir /S/q %GitTarget%\plugins\kunena\finder )
 IF exist %GitTarget%\plugins\finder\kunena ( rmdir /S/q %GitTarget%\plugins\finder\kunena )
 IF exist %GitTarget%\plugins\kunena\gravatar ( rmdir /S/q %GitTarget%\plugins\kunena\gravatar )
+IF exist %GitTarget%\plugins\kunena\uddeim ( rmdir /S/q %GitTarget%\plugins\kunena\uddeim )
+IF exist %GitTarget%\plugins\privacy\kunena ( rmdir /S/q %GitTarget%\plugins\privacy\kunena )
 IF exist %GitTarget%\plugins\kunena\joomla ( rmdir /S/q %GitTarget%\plugins\kunena\joomla )
 IF exist %GitTarget%\plugins\kunena\kunena ( rmdir /S/q %GitTarget%\plugins\kunena\kunena )
 IF exist %GitTarget%\plugins\sampledata\kunena ( rmdir /S/q %GitTarget%\plugins\sampledata\kunena )
@@ -132,9 +136,11 @@ mklink /d %GitTarget%\plugins\kunena\easysocial %GitSource%\src\plugins\plg_kune
 mklink /d %GitTarget%\plugins\kunena\finder %GitSource%\src\plugins\plg_kunena_finder
 mklink /d %GitTarget%\plugins\finder\kunena %GitSource%\src\plugins\plg_finder_kunena
 mklink /d %GitTarget%\plugins\kunena\gravatar %GitSource%\src\plugins\plg_kunena_gravatar
+mklink /d %GitTarget%\plugins\kunena\uddeim %GitSource%\src\plugins\plg_kunena_uddeim
 mklink /d %GitTarget%\plugins\kunena\joomla %GitSource%\src\plugins\plg_kunena_joomla
 mklink /d %GitTarget%\plugins\kunena\kunena %GitSource%\src\plugins\plg_kunena_kunena
 mklink /d %GitTarget%\plugins\sampledata\kunena %GitSource%\src\plugins\plg_sampledata_kunena
+mklink /d %GitTarget%\plugins\privacy\kunena %GitSource%\src\plugins\plg_privacy_kunena
 mklink /d %GitTarget%\media\kunena %GitSource%\src\media\kunena
 pause
 goto:eof

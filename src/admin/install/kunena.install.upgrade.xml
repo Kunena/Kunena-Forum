@@ -245,6 +245,15 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_announcement` MODIFY COLUMN `publish_down` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_polls_users` MODIFY COLUMN `lasttime` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
         </version>
+        <version version="6.2.0-RC1-DEV"
+                 versiondate="2023-10-14"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_aliases` CHANGE `alias` `alias` VARCHAR(250);</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_attachments` CHANGE `folder` `folder` VARCHAR(250), CHANGE `filename` `filename` VARCHAR(250), CHANGE `filename_real` `filename_real` VARCHAR(250), CHANGE `caption` `caption` VARCHAR(250);</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE `alias` `alias` VARCHAR(250),CHANGE `iconset` `iconset` VARCHAR(250);</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE `rankTitle` `rankTitle` VARCHAR(250),CHANGE `rankImage` `rankImage` VARCHAR(250);</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE `status_text` `status_text` VARCHAR(250),CHANGE `avatar` `avatar` VARCHAR(250);</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

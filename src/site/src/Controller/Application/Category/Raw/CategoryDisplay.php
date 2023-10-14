@@ -17,10 +17,8 @@ namespace Kunena\Forum\Site\Controller\Application\Category\Raw;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
 

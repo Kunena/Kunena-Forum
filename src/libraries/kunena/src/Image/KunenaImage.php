@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Image;
 
 use Exception;
 use Joomla\CMS\Image\Image;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use RuntimeException;
 
 \define('MIME_GIF', 'image/gif');

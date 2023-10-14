@@ -16,17 +16,9 @@ namespace Kunena\Forum\Site\Layout\User;
 \defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Input\Input;
-use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use stdClass;
 
 /**
  * KunenaLayoutUserItem

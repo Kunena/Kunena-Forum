@@ -1800,7 +1800,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 return false;
             }
 
-            return '<a target="_blank" rel="noopener noreferrer" href="http://www.ebay.com/itm/' . $content . '?lang=' . $this->config->ebayLanguageCode . '&campid=' . $this->config->ebayAffiliateId . '">www.ebay.com/itm/' . $content . '</a>';
+            return '<a target="_blank" rel="noopener noreferrer" href="https://www.ebay.com/itm/' . $content . '?lang=' . $this->config->ebayLanguageCode . '&campid=' . $this->config->ebayAffiliateId . '">www.ebay.com/itm/' . $content . '</a>';
         }
 
         return self::renderEbayLayout($content);
@@ -2248,31 +2248,31 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $vid_providers = [
 
-            'bofunk' => ['flash', 446, 370, 0, 0, 'http://www.bofunk.com/e/%vcode%', '', ''],
+            'bofunk' => ['flash', 446, 370, 0, 0, 'https://www.bofunk.com/e/%vcode%', '', ''],
 
-            'break' => ['flash', 464, 392, 0, 0, 'http://embed.break.com/%vcode%', '', ''],
+            'break' => ['flash', 464, 392, 0, 0, 'https://embed.break.com/%vcode%', '', ''],
 
             'clipfish' => ['flash', 464, 380, 0, 0, 'https://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', ''],
 
-            'dailymotion' => ['flash', 464, 380, 0, 0, 'http://www.dailymotion.com/swf/video/%vcode%?autoPlay=0', '\/([\w]*)_', [[6, 'wmode', 'transparent']]],
+            'dailymotion' => ['flash', 464, 380, 0, 0, 'https://www.dailymotion.com/swf/video/%vcode%?autoPlay=0', '\/([\w]*)_', [[6, 'wmode', 'transparent']]],
 
-            'metacafe' => ['flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', [[6, 'wmode', 'transparent']]],
+            'metacafe' => ['flash', 400, 345, 0, 0, 'https://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', [[6, 'wmode', 'transparent']]],
 
             'myspace' => ['iframe', 430, 346, 0, 0, 'https://media.myspace.com/play/video/%vcode%', '', [[6, 'wmode', 'transparent']]],
 
             'rutube' => ['flash', 400, 353, 0, 0, 'https://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)'],
 
-            'sapo' => ['flash', 400, 322, 0, 0, 'http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/%vcode%/mov/1', 'videos\.sapo\.pt\/([\w]*)', [[6, 'wmode', 'transparent']]],
+            'sapo' => ['flash', 400, 322, 0, 0, 'https://rd3.videos.sapo.pt/play?file=https://rd3.videos.sapo.pt/%vcode%/mov/1', 'videos\.sapo\.pt\/([\w]*)', [[6, 'wmode', 'transparent']]],
 
-            'veoh' => ['flash', 540, 438, 0, 0, 'http://www.veoh.com/videodetails2.swf?player=videodetailsembedded&type=v&permalinkId=%vcode%', '\/videos\/([\w-]*)', ''],
+            'veoh' => ['flash', 540, 438, 0, 0, 'https://www.veoh.com/videodetails2.swf?player=videodetailsembedded&type=v&permalinkId=%vcode%', '\/videos\/([\w-]*)', ''],
 
-            'videojug' => ['flash', 400, 345, 0, 0, 'http://www.videojug.com/film/player?id=%vcode%', '', ''],
+            'videojug' => ['flash', 400, 345, 0, 0, 'https://www.videojug.com/film/player?id=%vcode%', '', ''],
 
             'vimeo' => ['iframe', 400, 321, 0, 0, 'https://player.vimeo.com/video/%vcode%?color=ff0179', '\.com\/(\d*)', ''],
 
             'youtube' => ['iframe', 425, 355, 0, 0, 'https://www.youtube-nocookie.com/embed/%vcode%', '\/watch\?v=([\w\-]*)', [[6, 'wmode', 'transparent']]],
 
-            'youku' => ['flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)', [[6, 'wmode', 'transparent']]],
+            'youku' => ['flash', 425, 355, 0, 0, 'https://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)', [[6, 'wmode', 'transparent']]],
 
             // Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
             //              '_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )

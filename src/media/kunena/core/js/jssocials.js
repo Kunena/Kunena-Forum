@@ -512,7 +512,7 @@
 		line: {
 			label: "LINE",
 			logo: "far fa-comment",
-			shareUrl: "http://line.me/R/msg/text/?{text} {url}",
+			shareUrl: "https://line.me/R/msg/text/?{text} {url}",
 			countUrl: ""
 		},
 

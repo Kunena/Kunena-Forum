@@ -1168,20 +1168,22 @@ class UserController extends KunenaController
     {
         $user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
 
-        if (preg_match('|^users/|', $user->avatar)) {
-            // Delete old uploaded avatars:
-            if (is_dir(KPATH_MEDIA . '/avatars/resized')) {
-                $deletelist = Folder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
+        if (!empty($user->avatar)) {
+            if (preg_match('|^users/|', $user->avatar)) {
+                // Delete old uploaded avatars:
+                if (is_dir(KPATH_MEDIA . '/avatars/resized')) {
+                    $deletelist = Folder::folders(KPATH_MEDIA . '/avatars/resized', '.', false, true);
 
-                foreach ($deletelist as $delete) {
-                    if (is_file($delete . '/' . $user->avatar)) {
-                        File::delete($delete . '/' . $user->avatar);
+                    foreach ($deletelist as $delete) {
+                        if (is_file($delete . '/' . $user->avatar)) {
+                            File::delete($delete . '/' . $user->avatar);
+                        }
                     }
                 }
-            }
 
-            if (is_file(KPATH_MEDIA . '/avatars/' . $user->avatar)) {
-                File::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
+                if (is_file(KPATH_MEDIA . '/avatars/' . $user->avatar)) {
+                    File::delete(KPATH_MEDIA . '/avatars/' . $user->avatar);
+                }
             }
         }
     }

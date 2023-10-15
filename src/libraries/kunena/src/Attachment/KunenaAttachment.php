@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\Attachment;
 use Exception;
 use finfo;
 use InvalidArgumentException;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
@@ -581,7 +581,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         $url = KunenaRoute::_("index.php?option=com_kunena&view=attachment&id={$this->id}{$thumb}{$download}&format=raw", $escape);
 
-        if (CMSApplication::getInstance('site')->get('sef_suffix')) {
+        if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
             $url = preg_replace('/.html/', '', $url);
         }
 

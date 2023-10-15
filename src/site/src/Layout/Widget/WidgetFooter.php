@@ -16,7 +16,7 @@ namespace Kunena\Forum\Site\Layout\Widget;
 \defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
@@ -64,7 +64,7 @@ class WidgetFooter extends KunenaLayout
 
             $itemid = KunenaRoute::fixMissingItemID();
 
-            if (CMSApplication::getInstance('site')->get('sef_suffix')) {
+            if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
                 $url = KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}") . '?format=feed&type=rss';
             } else {
                 $url = KunenaRoute::_("index.php?option=com_kunena&view=topics&format=feed&type=rss&layout=feed&{$rssType}&Itemid={$itemid}", true);

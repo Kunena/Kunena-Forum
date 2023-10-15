@@ -16,7 +16,8 @@ namespace Kunena\Forum\Site\Layout\Category;
 \defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -203,7 +204,7 @@ class CategoryIndex extends KunenaLayout
         if (KunenaConfig::getInstance()->enableRss) {
             $params = '&catid=' . (int) $catid;
 
-            if (CMSApplication::getInstance('site')->get('sef_suffix')) {
+            if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
                 return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=feed{$params}") . '?format=feed&type=rss';
             }
 

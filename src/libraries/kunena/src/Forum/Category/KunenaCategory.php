@@ -17,8 +17,8 @@ namespace Kunena\Forum\Libraries\Forum\Category;
 
 use Exception;
 use InvalidArgumentException;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
@@ -813,7 +813,7 @@ class KunenaCategory extends KunenaDatabaseObject
         if (KunenaFactory::getConfig()->enableRss) {
             $params = '&catid=' . (int) $this->id;
 
-            if (CMSApplication::getInstance('site')->get('sef_suffix')) {
+            if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
                 return KunenaRoute::_("/index.php?option=com_kunena&view=rss{$params}") . '?format=feed&type=rss';
             } else {
                 return KunenaRoute::_("index.php?option=com_kunena&view=rss{$params}?format=feed&type=rss", $xhtml);

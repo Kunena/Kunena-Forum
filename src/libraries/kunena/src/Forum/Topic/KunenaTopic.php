@@ -19,7 +19,7 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 use InvalidArgumentException;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -2043,7 +2043,7 @@ class KunenaTopic extends KunenaDatabaseObject
         $votes  = $poll->getMyVotes($user);
 
         if (!$config->pollAllowVoteOne && $votes) {
-            $time_zone   = CMSApplication::getInstance('site')->get('offset');
+            $time_zone   = Factory::getContainer()->get(SiteApplication::class)->get('offset');
             $objTimeZone = new DateTimeZone($time_zone);
 
             // Check the time between two votes

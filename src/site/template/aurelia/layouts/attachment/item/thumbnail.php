@@ -15,7 +15,8 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Application\SiteApplication;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
@@ -28,7 +29,7 @@ $config = KunenaConfig::getInstance();
 $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox="gallery"' : '';
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbHeight . 'px;"';
 
-if (CMSApplication::getInstance('site')->get('sef_suffix') && $config->attachmentProtection) {
+if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix') && $config->attachmentProtection) {
     $name = preg_replace('/.html/', '', $attachment->getUrl(false, false, true));
 } else {
     $name = $attachment->getUrl(false, false, true);

@@ -86,7 +86,13 @@ class CategoryManageDisplay extends KunenaControllerDisplay
      */
     protected $state = null;
 
-    /**
+	/**
+	 * @var array
+	 * @since version
+	 */
+	public $lists;
+
+	/**
      * Prepare category display.
      *
      * @return  false|KunenaExceptionAuthorise

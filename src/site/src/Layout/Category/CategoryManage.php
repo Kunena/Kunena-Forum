@@ -37,6 +37,18 @@ class CategoryManage extends KunenaLayout
      */
     public $state;
 
+	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
+	public $topics;
+
+	/**
+	 * @var     object
+	 * @since   Kunena 6.0
+	 */
+	public $lists;
+
     /**
      * Method to return a KunenaPagination object
      *

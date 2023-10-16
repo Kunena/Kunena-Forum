@@ -1699,9 +1699,11 @@ class KunenaUser extends CMSObject
                     $rank->rankImage   = 'rankadmin.gif';
 
                     foreach (self::$_ranks as $cur) {
-                        if ($cur->rankSpecial == 1 && strstr($cur->rankImage, 'admin')) {
-                            $rank = $cur;
-                            break;
+                        if (!empty($cur->rankImage)) {
+                            if ($cur->rankSpecial == 1 && strstr($cur->rankImage, 'admin')) {
+                                $rank = $cur;
+                                break;
+                            }
                         }
                     }
                     break;

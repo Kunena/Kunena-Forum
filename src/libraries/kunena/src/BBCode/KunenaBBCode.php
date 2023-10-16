@@ -1135,14 +1135,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     /**
      * Query from eBay API the JSON stream of item id given to render
      *
-     * @param   int  $ItemID  The eBay ID of object to query
+     * @param   int          $ItemID  The eBay ID of object to query
+     * @param   KunenaConfig $config  Kunena configuration object
      *
      * @return  string
      *
      * @since   Kunena 6.0
      * @throws Exception
      */
-    public static function getEbayItem(int $ItemID): string
+    public static function getEbayItem(int $ItemID, KunenaConfig $config): stdClass
     {
         $options = new Registry();
 
@@ -1154,38 +1155,35 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
 
         $headersOauth = ['Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Basic ' . base64_encode($this->config->ebayApiKey . ':' . $this->config->ebayCertId), ];
+            'Authorization' => 'Basic ' . base64_encode($config->ebayApiKey . ':' . $config->ebayCertId), ];
 
         $responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
 
         if ($responseOauth->code == '200') {
             $resp = json_decode($responseOauth->body);
-
             $token = $resp->access_token;
 
             $headers = ['X-EBAY-API-IAF-TOKEN' => $token, 'X-EBAY-API-CALL-NAME' => 'GetSingleItem', 'X-EBAY-API-VERSION' => 1157];
 
             $response = $http->get('https://open.api.ebay.com/shopping?callname=GetSingleItem&siteid=0&responseencoding=JSON&ItemID='
-                . $ItemID . '&trackingid=' . $this->config->ebayAffiliateId . '&trackingpartnercode=9', $headers, '10');
+                . $ItemID . '&trackingid=' . $config->ebayAffiliateId . '&trackingpartnercode=9', $headers, '10');
 
             if ($response->code == '200') {
                 $responseItem = json_decode($response->body);
 
-                if ($responseItem->Ack == 'Success') {
+                if ($responseItem->Ack == 'Success') { 
                     return $responseItem->Item;
                 } else {
                     $errors = $responseItem->Errors;
 
-                    return $errors[0]->LongMessage;
+                    throw new Exception('Render ebay item ' . $errors[0]->LongMessage);
                 }
             }
         } else {
             $respOauthError = json_decode($responseOauth->body);
 
-            return $respOauthError->error_description;
+            throw new Exception($respOauthError->error_description);
         }
-
-        return '';
     }
 
     /**
@@ -1830,7 +1828,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $layout = KunenaLayout::factory('BBCode/eBay');
 
         if ($layout->getPath()) {
-            $ebay = self::getEbayItemFromCache($ItemID);
+            $ebay = self::getEbayItemFromCache($ItemID, $config);
 
             if (\is_object($ebay)) {
                 return (string) $layout
@@ -1854,26 +1852,31 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     /**
      * Load eBay object item from cache
      *
-     * @param   int  $ItemID  The eBay ID of object to query
+     * @param   int  $ItemID  The eBay ID of object to query.
+     * @param   KunenaConfig $config  Kunena configuration object
      *
      * @return  string
      *
      * @since   Kunena 6.0
      * @throws Exception
      */
-    public static function getEbayItemFromCache(int $ItemID): string
+    public static function getEbayItemFromCache(int $ItemID, KunenaConfig $config): stdClass
     {
         $options = ['defaultgroup' => 'Kunena_ebay_request'];
         $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         $cache->setCaching(true);
 
-        if ($this->config->cacheTime == 0) {
-            $this->config->cacheTime = 60;
+        if ($config->cacheTime == 0) {
+            $config->cacheTime = 60;
         }
 
-        $cache->setLifeTime($this->config->cacheTime);
+        $cache->setLifeTime($config->cacheTime);
 
-        return $cache->call(['KunenaBbcodeLibrary', 'getEbayItem'], $ItemID);
+        /**
+         * TOOD : fix method call() give an error
+         */
+        //return $cache->call(['KunenaBbcodeLibrary', 'getEbayItem'], $ItemID);
+        return KunenaBbcodeLibrary::getEbayItem($ItemID, $config);
     }
 
     /**

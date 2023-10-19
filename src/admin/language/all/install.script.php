@@ -59,7 +59,7 @@ class pkg_kunena_languagesInstallerScript
 
         // Do not install if Kunena doesn't exist.
         if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.2')) {
-            $app->enqueueMessage(sprintf('Kunena %s has not been installed, aborting!', '6.0'), 'notice');
+            $app->enqueueMessage(sprintf('Kunena %s has not been installed, aborting!', '6.2'), 'notice');
 
             return false;
         }

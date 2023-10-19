@@ -313,10 +313,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_private_user_map`
 CREATE TABLE IF NOT EXISTS `#__kunena_ranks`
 (
     `rankId`      mediumint UNSIGNED NOT NULL AUTO_INCREMENT,
-    `rankTitle`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+    `rankTitle`   varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
     `rankMin`     mediumint UNSIGNED NOT NULL DEFAULT '0',
     `rankSpecial` tinyint UNSIGNED NOT NULL DEFAULT '0',
-    `rankImage`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `rankImage`   varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     PRIMARY KEY (rankId)
 )
     ENGINE = InnoDB

@@ -1740,7 +1740,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $document = Factory::getApplication()->getDocument();
 
         // Display only link in activity streams etc..
-        if (!empty($bbcode->parent->forceMinimal) || !($document instanceof HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Maps')) {
+        if (!empty($bbcode->parent->forceMinimal) || !($document instanceof HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Map')) {
             $url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
 
             return '<a href="' . $url . '" rel="nofollow noopener noreferrer" target="_blank">' . $content . '</a>';
@@ -1780,7 +1780,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return true;
         }
 
-        if (KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('ebay')) {
+        if (KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Ebay')) {
             return false;
         }
 

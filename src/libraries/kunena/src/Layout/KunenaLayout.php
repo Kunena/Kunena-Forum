@@ -148,6 +148,12 @@ class KunenaLayout extends KunenaBase
     public $internal;
 
     /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $ktemplate;
+
+    /**
      * Content to be appended after the main output.
      *
      * @var     array

@@ -130,6 +130,24 @@ class KunenaLayout extends KunenaBase
     public $hiddenList;
 
     /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $target;
+
+    /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $url;
+
+    /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $internal;
+
+    /**
      * Content to be appended after the main output.
      *
      * @var     array

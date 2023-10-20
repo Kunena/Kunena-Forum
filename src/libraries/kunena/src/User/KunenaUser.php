@@ -737,7 +737,7 @@ class KunenaUser extends CMSObject
         switch ($action) {
             case 'read':
                 if (!isset($this->registerDate) || (!$user->exists() && !$config->pubProfile)) {
-                    $exception = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), $user->exists() ? 403 : 404);
+                    $exception = new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 403 );
                 }
                 break;
             case 'edit':
@@ -764,7 +764,7 @@ class KunenaUser extends CMSObject
 
         // Throw or return the exception.
         if ($throw && $exception) {
-            throw new $exception();
+             throw $exception;
         }
 
         return $exception;

@@ -106,6 +106,54 @@ class KunenaLayout extends KunenaBase
     public $userkarma_title;
 
     /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $usersUrl;
+
+    /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $membersOnline;
+
+    /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $onlineList;
+
+    /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $hiddenList;
+
+    /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $target;
+
+    /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $url;
+
+    /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $internal;
+
+    /**
+     * @var mixed|string|void
+     * @since version
+     */
+    public $ktemplate;
+
+    /**
      * Content to be appended after the main output.
      *
      * @var     array

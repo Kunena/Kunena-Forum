@@ -23,6 +23,7 @@ use Joomla\CMS\Http\Http;
 use Joomla\CMS\Http\Transport\StreamTransport;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
@@ -2371,7 +2372,7 @@ class TopicController extends KunenaController
 
                 $msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);
 
-                $mail = Factory::getMailer();
+                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
                 $mail->setSender([$this->config->getEmail(), $mailnamesender]);
                 $mail->setSubject($mailsubject);
                 $mail->addReplyTo($this->me->email, $this->me->username);

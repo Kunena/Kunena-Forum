@@ -24,6 +24,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
@@ -766,7 +767,7 @@ class UserController extends KunenaController
             if ($this->config->sendMailUserBanned) {
                 // Create email to notify the user which has been banned.
                 $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
-                $mail = Factory::getMailer();
+                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
                 $mail->setSubject(Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE'));
                 $mail->setSender([$this->config->getEmail(), $mailnamesender]);
                 $mail->Body($this->config->mailBodyUserBanned);

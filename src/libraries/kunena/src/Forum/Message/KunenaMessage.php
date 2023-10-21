@@ -22,6 +22,7 @@ use Joomla\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\UserHelper;
@@ -534,7 +535,7 @@ class KunenaMessage extends KunenaDatabaseObject
             $subject     = $this->subject ? $this->subject : $topic->subject;
 
             // Create email.
-            $mail = Factory::getMailer();
+            $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
             $mail->setSubject($mailsubject);
             $mail->setSender([$config->getEmail(), $mailnamesender]);
 

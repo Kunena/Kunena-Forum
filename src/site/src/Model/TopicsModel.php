@@ -321,7 +321,7 @@ class TopicsModel extends KunenaModel
         $limit      = $this->getState('list.limit');
         $time       = $this->getState('list.time');
 
-        if (Factory::getDocument()->getType() != 'feed') {
+        if (Factory::getApplication()->getDocument()->getType() != 'feed') {
             if ($time < 0) {
                 $time = 0;
             } elseif ($time == 0) {

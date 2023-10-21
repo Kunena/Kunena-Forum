@@ -316,12 +316,12 @@ class Kunenaforum
             return false;
         }
 
-        Factory::getDocument()->addScript(Uri::root() . 'media/kunena/core/js/jquery.ui.core.js');
-        Factory::getDocument()->addScript(Uri::root() . 'media/kunena/core/js/jquery.ui.sortable.js');
-        Factory::getDocument()->addScript(Uri::root() . 'media/kunena/core/js/sortablelist.js');
+        Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/core/js/jquery.ui.core.js');
+        Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/core/js/jquery.ui.sortable.js');
+        Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/core/js/sortablelist.js');
 
         // Attach sortable to document
-        Factory::getDocument()->addScriptDeclaration(
+        Factory::getApplication()->getDocument()->addScriptDeclaration(
             "
 		jQuery(document).ready(function ($){
 			var sortableList = new $.JSortableList('#"

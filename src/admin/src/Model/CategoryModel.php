@@ -61,8 +61,8 @@ class CategoryModel extends CategoriesModel
                 $query = $db->getQuery(true)
                     ->select('a.id, a.name')
                     ->from("{$db->quoteName('#__kunena_categories')} AS a")
-                    ->where("parentid={$db->quote('0')}")
-                    ->where("id!={$db->quote($category->id)}")
+                    ->where($db->quoteName('parentid') . '=' . $db->quote('0'))
+                    ->where($db->quoteName('id') . '!=' . $db->quote($category->id))
                     ->order('ordering');
 
                 $db->setQuery($query);

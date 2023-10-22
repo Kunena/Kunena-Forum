@@ -19,7 +19,6 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -29,6 +28,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentTopicControllerListUserDisplay
@@ -151,7 +151,7 @@ class TopicListingUserDisplay extends ListDisplay
         $format = $this->input->getCmd('format');
 
         if (!$Itemid && $format != 'feed') {
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
 
             if ($this->config->profileId) {
                 $itemidfix = $this->config->profileId;

@@ -16,13 +16,13 @@ namespace Kunena\Forum\Site\Controller\Credits\Display;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -83,7 +83,7 @@ class CreditsDisplay extends KunenaControllerDisplay
 
         if (!$Itemid && $this->config->sefRedirect) {
             $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=credits&Itemid={$itemid}", false));
             $controller->redirect();
         }

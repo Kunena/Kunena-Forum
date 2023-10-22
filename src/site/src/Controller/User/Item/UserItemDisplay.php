@@ -18,7 +18,6 @@ namespace Kunena\Forum\Site\Controller\User\item;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
@@ -31,6 +30,7 @@ use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentUserControllerItemDisplay
@@ -149,7 +149,7 @@ class UserItemDisplay extends KunenaControllerDisplay
         $format = $this->input->getCmd('format');
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
 
             if ($this->config->profileId) {
                 $itemidfix = $this->config->profileId;

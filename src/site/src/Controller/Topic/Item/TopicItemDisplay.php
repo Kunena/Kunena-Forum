@@ -20,7 +20,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -44,6 +43,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use stdClass;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentTopicControllerItemDisplay
@@ -133,7 +133,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
             $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}&Itemid={$itemid}", false));
             $controller->redirect();
         }

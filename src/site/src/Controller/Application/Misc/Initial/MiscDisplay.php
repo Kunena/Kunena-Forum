@@ -19,11 +19,11 @@ use Exception;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\Application\Display;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -135,7 +135,7 @@ class MiscDisplay extends Display
                 $itemidfix = KunenaRoute::fixMissingItemID();
             }
 
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=misc&Itemid={$itemidfix}", false));
             $controller->redirect();
         }

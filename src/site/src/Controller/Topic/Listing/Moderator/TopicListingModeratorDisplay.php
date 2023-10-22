@@ -18,7 +18,6 @@ namespace Kunena\Forum\Site\Controller\Topic\Listing\Moderator;
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
@@ -27,6 +26,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentTopicControllerListDisplay
@@ -72,7 +72,7 @@ class TopicListingModeratorDisplay extends ListDisplay
                 $itemidfix = KunenaRoute::fixMissingItemID();
             }
 
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=moderator&Itemid={$itemidfix}", false));
             $controller->redirect();
         }

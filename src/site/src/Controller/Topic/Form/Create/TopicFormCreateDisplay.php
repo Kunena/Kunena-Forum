@@ -17,10 +17,8 @@ namespace Kunena\Forum\Site\Controller\Topic\Form\Create;
 
 use Exception;
 use Joomla\CMS\Document\HtmlDocument;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
@@ -29,6 +27,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentTopicControllerFormCreateDisplay
@@ -122,7 +121,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
                 $itemidfix = KunenaRoute::fixMissingItemID();
             }
 
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
 
             if ($catid) {
                 $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$catid}&Itemid={$itemidfix}", false));

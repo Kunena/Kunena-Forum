@@ -17,10 +17,11 @@ namespace Kunena\Forum\Site\Controller\Announcement\Edit;
 
 use Exception;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Joomla\CMS\Factory;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentAnnouncementControllerEditDisplay
@@ -63,7 +64,8 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
 
         if (!$Itemid && $this->config->sefRedirect) {
             $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
+            $controller = Factory::getApplication()->bootComponent('com_kunena')->getMVCFactory()->createController('kunena');
 
             if ($id) {
                 $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=edit&id={$id}&Itemid={$itemid}", false));

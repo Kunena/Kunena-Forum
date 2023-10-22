@@ -17,9 +17,7 @@ namespace Kunena\Forum\Site\Controller\User\Listing;
 
 use Exception;
 use Joomla\CMS\Access\Access;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
@@ -27,6 +25,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentUserControllerListDisplay
@@ -103,7 +102,7 @@ class UserListingDisplay extends KunenaControllerDisplay
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
             $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&layout=list&Itemid={$itemid}", false));
             $controller->redirect();
         }

@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\Controller\Statistics\General;
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -25,6 +24,7 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentStatisticsControllerGeneralDisplay
@@ -104,7 +104,7 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
 
         if (!$Itemid && $this->config->sefRedirect) {
             $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=statistics&Itemid={$itemid}", false));
             $controller->redirect();
         }

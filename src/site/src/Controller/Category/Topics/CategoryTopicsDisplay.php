@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\Controller\Category\Topics;
 
 use Exception;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -31,6 +30,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -109,7 +109,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
             $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
             $controller->redirect();
         }
@@ -158,7 +158,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 
         if ($limitstart > 1 && !$this->topics) {
             $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
             $controller->redirect();
         }

@@ -16,14 +16,13 @@ namespace Kunena\Forum\Site\Controller\Search\Form;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\SearchModel;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentSearchControllerFormDisplay
@@ -84,7 +83,7 @@ class SearchFormDisplay extends KunenaControllerDisplay
                 $itemidfix = KunenaRoute::fixMissingItemID();
             }
 
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
             $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=search&Itemid={$itemidfix}", false));
             $controller->redirect();
         }

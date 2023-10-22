@@ -19,7 +19,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
@@ -34,6 +33,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Controller\KunenaController;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -111,7 +111,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
         $this->layout = $this->input->getInt('layout');
 
         if (!$Itemid && $this->config->sefRedirect) {
-            $controller = BaseController::getInstance("kunena");
+            $controller = new KunenaController();
 
             if ($this->config->indexId) {
                 $itemidfix = $this->config->indexId;

@@ -11,7 +11,7 @@
 
     Joomla: version 4.4.0 or greater (>= 4.4.0 recommended)
     PHP: version 7.4.1 or greater (>= 7.4.1 recommended)
-    MySQL: version 5.7.30 or greater (>= 5.7.30 recommended)
+    MySQL: version 5.7.23 or greater (>= 8.0 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
 

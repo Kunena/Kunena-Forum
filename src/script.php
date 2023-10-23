@@ -59,8 +59,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         'MySQL'   => [
             '8.1' => '8.1.0',
             '8.0' => '8.0.0',
-            '5.7' => '5.7.30',
-            '0'   => '5.7.30', // Preferred version
+            '5.7' => '5.7.23',
+            '0'   => '8.0.0', // Preferred version
         ],
         'mariaDB' => [
             '11.0' => '11.0',

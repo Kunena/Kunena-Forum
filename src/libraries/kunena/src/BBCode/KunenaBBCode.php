@@ -2974,7 +2974,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                     }
                 }
 
-                if (!Folder::exists(JPATH_CACHE . '/kunena_tweet')) {
+                if (!is_dir(JPATH_CACHE . '/kunena_tweet')) {
                     Folder::create(JPATH_CACHE . '/kunena_tweet');
                 }
 

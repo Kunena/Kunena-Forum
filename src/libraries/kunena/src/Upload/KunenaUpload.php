@@ -142,7 +142,7 @@ class KunenaUpload
             $folder = $this->getFolder();
 
             // Create target directory if it does not exist.
-            if (!Folder::exists($folder) && !Folder::create($folder)) {
+            if (!is_dir($folder) && !Folder::create($folder)) {
                 throw new RuntimeException(Text::_('Failed to create upload directory.'), 500);
             }
 

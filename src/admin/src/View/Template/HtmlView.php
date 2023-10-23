@@ -50,8 +50,8 @@ class HtmlView extends BaseHtmlView
 
             $file = KPATH_MEDIA . '/core/css/custom.css';
 
-            if (!file_exists($file) && Folder::exists(KPATH_MEDIA . '/core/css/')) {
-                if (!Folder::exists(KPATH_MEDIA . '/core/css/')) {
+            if (!file_exists($file) && is_dir(KPATH_MEDIA . '/core/css/')) {
+                if (!is_dir(KPATH_MEDIA . '/core/css/')) {
                     Folder::create(KPATH_MEDIA . '/core/css/');
                 }
 
@@ -70,7 +70,7 @@ class HtmlView extends BaseHtmlView
 
             $file = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/custom.scss';
 
-            if (!file_exists($file) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/')) {
+            if (!file_exists($file) && is_dir(KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/')) {
                 $fp = fopen($file, "w");
                 fwrite($fp, "");
                 fclose($fp);
@@ -113,7 +113,7 @@ class HtmlView extends BaseHtmlView
 
             $this->templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
-            if (!file_exists($this->templateFile) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/config/')) {
+            if (!file_exists($this->templateFile) && is_dir(KPATH_SITE . '/template/' . $this->templatename . '/config/')) {
                 $ourFileHandle = fopen($this->templateFile, 'w');
 
                 if ($ourFileHandle) {

@@ -84,11 +84,11 @@ class InstallController extends FormController
             $component = ComponentHelper::getComponent('com_kunena');
             $installer->uninstall('component', $component->id);
 
-            if (Folder::exists(KPATH_MEDIA)) {
+            if (is_dir(KPATH_MEDIA)) {
                 Folder::delete(KPATH_MEDIA);
             }
 
-            if (Folder::exists(JPATH_ROOT . '/plugins/kunena')) {
+            if (is_dir(JPATH_ROOT . '/plugins/kunena')) {
                 Folder::delete(JPATH_ROOT . '/plugins/kunena');
             }
 

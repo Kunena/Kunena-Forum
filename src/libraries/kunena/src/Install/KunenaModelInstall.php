@@ -684,7 +684,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         if (is_file($file)) {
             $success = true;
 
-            if (!Folder::exists($dest)) {
+            if (!is_dir($dest)) {
                 $success = Folder::create($dest);
             }
 
@@ -1760,7 +1760,7 @@ class KunenaModelInstall extends BaseDatabaseModel
     {
         $ignore = array_merge($ignore, ['.git', '.svn', 'CVS', '.DS_Store', '__MACOSX']);
 
-        if (Folder::exists($path)) {
+        if (is_dir($path)) {
             foreach (Folder::files($path, '.', false, true, $ignore) as $file) {
                 if (is_file($file)) {
                     File::delete($file);
@@ -1783,9 +1783,9 @@ class KunenaModelInstall extends BaseDatabaseModel
     {
         $ignore = array_merge($ignore, ['.git', '.svn', 'CVS', '.DS_Store', '__MACOSX']);
 
-        if (Folder::exists($path)) {
+        if (is_dir($path)) {
             foreach (Folder::folders($path, '.', false, true, $ignore) as $folder) {
-                if (Folder::exists($folder)) {
+                if (is_dir($folder)) {
                     Folder::delete($folder);
                 }
             }
@@ -2268,7 +2268,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         $srcpath = JPATH_ROOT . '/images/fbfiles/category_images';
         $dstpath = KUNENA_INSTALLER_MEDIAPATH . '/category_images';
 
-        if (Folder::exists($srcpath)) {
+        if (is_dir($srcpath)) {
             if (!Folder::delete($dstpath) || !Folder::copy($srcpath, $dstpath)) {
                 $this->addStatus("Could not copy category images from $srcpath to $dstpath", true);
             } else {
@@ -2439,7 +2439,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         $srcpath = JPATH_ROOT . '/images/fbfiles/avatars/gallery';
         $dstpath = KUNENA_INSTALLER_MEDIAPATH . '/avatars/gallery';
 
-        if (Folder::exists($srcpath)) {
+        if (is_dir($srcpath)) {
             if (!Folder::delete($dstpath) || !Folder::copy($srcpath, $dstpath)) {
                 $this->addStatus("Could not copy avatar galleries from $srcpath to $dstpath", true);
             } else {
@@ -2494,7 +2494,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
         $destpath = KUNENA_INSTALLER_MEDIAPATH . '/attachments/legacy';
 
-        if (!Folder::exists($destpath . '/images')) {
+        if (!is_dir($destpath . '/images')) {
             if (!Folder::create($destpath . '/images')) {
                 $this->addStatus("Could not create directory for legacy attachments in {$destpath}/images", true);
 
@@ -2502,7 +2502,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             }
         }
 
-        if (!Folder::exists($destpath . '/files')) {
+        if (!is_dir($destpath . '/files')) {
             if (!Folder::create($destpath . '/files')) {
                 $this->addStatus("Could not create directory for legacy attachments in {$destpath}/files", true);
 

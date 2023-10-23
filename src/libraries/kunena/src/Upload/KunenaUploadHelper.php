@@ -61,7 +61,7 @@ class KunenaUploadHelper
             return false;
         }
 
-        if (!Folder::exists($uploadfolder)) {
+        if (!is_dir($uploadfolder)) {
             return false;
         }
 

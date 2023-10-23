@@ -48,7 +48,7 @@ class KunenaImageHelper
     public static function version($file, $folder, $filename, $maxWidth = 800, $maxHeight = 800, $quality = 70, $scale = KunenaImage::SCALE_INSIDE, $crop = 0)
     {
         // Create target directory if it does not exist.
-        if (!Folder::exists($folder) && !Folder::create($folder)) {
+        if (!is_dir($folder) && !Folder::create($folder)) {
             return false;
         }
 

@@ -846,7 +846,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         $uploadBasePath = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/';
 
-        if (!Folder::exists($uploadBasePath)) {
+        if (!is_dir($uploadBasePath)) {
             mkdir(JPATH_ROOT . '/media/kunena/attachments/' . $this->userid . '/');
         }
 
@@ -980,7 +980,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         }
 
         // Create target directory if it does not exist.
-        if (!Folder::exists(JPATH_ROOT . "/{$this->folder}") && !Folder::create(JPATH_ROOT . "/{$this->folder}")) {
+        if (!is_dir(JPATH_ROOT . "/{$this->folder}") && !Folder::create(JPATH_ROOT . "/{$this->folder}")) {
             throw new RuntimeException(Text::_('Failed to create KunenaAttachment directory.'));
         }
 

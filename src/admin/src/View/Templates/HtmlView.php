@@ -16,8 +16,6 @@ namespace Kunena\Forum\Administrator\View\Templates;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -169,7 +167,7 @@ class HtmlView extends BaseHtmlView
 
         $templateFile = KPATH_SITE . '/template/' . $this->templatename . '/config/params.ini';
 
-        if (!is_file($templateFile) && Folder::exists(KPATH_SITE . '/template/' . $this->templatename . '/config/')) {
+        if (!is_file($templateFile) && is_dir(KPATH_SITE . '/template/' . $this->templatename . '/config/')) {
             $ourFileHandle = fopen($templateFile, 'w');
 
             if ($ourFileHandle) {

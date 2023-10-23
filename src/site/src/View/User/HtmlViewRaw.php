@@ -14,7 +14,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\View\KunenaView;
 

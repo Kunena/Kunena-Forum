@@ -13,7 +13,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Joomla\CMS\Table\Extension;

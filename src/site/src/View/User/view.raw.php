@@ -17,7 +17,7 @@ namespace Kunena\Forum\Site\View\User;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\View\KunenaView;
 use stdClass;

@@ -16,7 +16,7 @@ namespace Kunena\Forum\Libraries\Template;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;

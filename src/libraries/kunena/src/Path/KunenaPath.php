@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\Path;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Path;
 
 /**
  * Class KunenaPath

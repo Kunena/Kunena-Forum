@@ -17,7 +17,7 @@ namespace Kunena\Forum\Libraries\Upload;
 
 use Joomla\CMS\Client\ClientHelper;
 use Joomla\Filesystem\File;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Path;
 
 /**
  * Kunena Upload Backend Helper Class

@@ -102,7 +102,7 @@ abstract class KunenaControllerBase implements Serializable
      */
     protected function loadInput(): Input
     {
-        return $this->app->input;
+        return $this->app->getInput();
     }
 
     /**

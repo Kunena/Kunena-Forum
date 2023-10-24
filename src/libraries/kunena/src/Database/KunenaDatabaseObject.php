@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 
 /**
@@ -166,7 +167,15 @@ abstract class KunenaDatabaseObject extends CMSObject
      */
     protected function getTable()
     {
-        $table = Table::getInstance($this->_table, 'Kunena\Forum\Libraries\Tables\Table');
+       $className = 'Kunena\Forum\Libraries\Tables\\' . $this->_table;
+       $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+       if (class_exists($className)) {
+           $table = new $className($db);
+       } else {
+           $className = 'Kunena\Forum\Libraries\Tables\Table' . $this->_table;
+           $table = new $className($db);
+       }
 
         return $table;
     }

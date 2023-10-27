@@ -1364,6 +1364,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             }
         }
 
+        $target = '';
         if (isset($params['target'])) {
             $target = $bbcode->url_target;
             $class  = $params['class'];

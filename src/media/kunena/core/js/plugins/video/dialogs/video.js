@@ -69,12 +69,19 @@ CKEDITOR.dialog.add( 'videoDialog', function( editor ) {
 			var width = '';
 			var height = '';
 			var videoprovider = '';
+			var content = '';
 
 			if(dialog.getValueOf( 'tab-basic', 'videourl' ).length != 0)
 			{
 				videourl = dialog.getValueOf( 'tab-basic', 'videourl' );
+				urlembded = videourl.replace('watch?v=', 'embed/');
+				content += '<iframe width="560" height="315" src="' + urlembded + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
 
 				editor.insertHtml( '[video]' + videourl + '[/video]' );
+
+				var element = CKEDITOR.dom.element.createFromHtml(content);
+				var instance = this.getParentEditor();
+				instance.insertElement(element);
 			}
 			else
 			{

@@ -73,15 +73,19 @@ CKEDITOR.dialog.add( 'videoDialog', function( editor ) {
 
 			if(dialog.getValueOf( 'tab-basic', 'videourl' ).length != 0)
 			{
-				videourl = dialog.getValueOf( 'tab-basic', 'videourl' );
-				urlembded = videourl.replace('watch?v=', 'embed/');
-				content += '<iframe width="560" height="315" src="' + urlembded + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                videourl = dialog.getValueOf( 'tab-basic', 'videourl' ); 
 
-				editor.insertHtml( '[video]' + videourl + '[/video]' );
+                editor.insertHtml( '[video]' + videourl + '[/video]' );
 
-				var element = CKEDITOR.dom.element.createFromHtml(content);
-				var instance = this.getParentEditor();
-				instance.insertElement(element);
+                // Insert Youtube embded video of the CKeditor by checking before if it's right a youtube url
+                resRegex = videourl.match(/(youtu.*be.*)\/(watch\?v=|embed\/|v|shorts|)/gm);
+                if(resRegex !== null) {
+                    urlembded = videourl.replace('watch?v=', 'embed/');
+                    content += '<iframe width="560" height="315" src="' + urlembded + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                    var element = CKEDITOR.dom.element.createFromHtml(content);
+                    var instance = this.getParentEditor();
+                    instance.insertElement(element);
+                }
 			}
 			else
 			{

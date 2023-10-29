@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+    <layout title="COM_KUNENA_MENU_USER_EDIT">
+        <message>COM_KUNENA_MENU_USER_EDIT_DESC</message>
+    </layout>
+</metadata>

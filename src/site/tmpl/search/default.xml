@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+    <layout title="COM_KUNENA_MENU_SEARCH_DEFAULT">
+        <message>COM_KUNENA_MENU_SEARCH_DEFAULT_DESC</message>
+    </layout>
+</metadata>

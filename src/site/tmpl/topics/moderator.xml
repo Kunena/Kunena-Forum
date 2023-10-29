@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+    <layout title="COM_KUNENA_MENU_TOPICS_MODERATOR">
+        <message>COM_KUNENA_MENU_TOPICS_MODERATOR_DESC</message>
+    </layout>
+
+    <fields name="params">
+        <fieldset name="basic"
+                  label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
+            <field name="topics_catselection"
+                   type="radio"
+                   default="0"
+                   label="COM_KUNENA_COM_A_LATESTCATEGORY_IN"
+                   description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
+                <option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
+                <option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
+            </field>
+            <field name="topics_categories"
+                   type="kunenacategorylist"
+                   default=""
+                   label="COM_KUNENA_COM_A_LATESTCATEGORY"
+                   description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"
+                   multiple="true"
+                   size="10">
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

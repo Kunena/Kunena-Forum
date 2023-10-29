@@ -264,6 +264,7 @@
             <query mode="silenterror">
             ALTER TABLE `#__kunena_users` DROP `friendfeed`;
             </query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `bsky_app` varchar(75) NULL AFTER `reddit`;</query>
         </version>
     </upgrade>
 </comupgrade>

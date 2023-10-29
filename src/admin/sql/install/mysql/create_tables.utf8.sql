@@ -471,6 +471,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `blogspot`         varchar(75)  NULL,
     `youtube`          varchar(75)  NULL,
     `reddit`           varchar(75)  NULL,
+    `bsky_app`         varchar(75)  NULL,
     `flickr`           varchar(75)  NULL,
     `apple`            varchar(75)  NULL,
     `qzone`            varchar(75)  NULL,

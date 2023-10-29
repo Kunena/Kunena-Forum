@@ -505,6 +505,14 @@ class KunenaUsers extends KunenaTable
     public $reddit = null;
 
     /**
+     * BlueSky social network
+     *
+     * @var     string
+     * @since   Kunena 6.3
+     */
+    public $bsky_app = null;
+
+    /**
      * Indicates that columns fully support the NULL value in the database
      *
      * @var    boolean

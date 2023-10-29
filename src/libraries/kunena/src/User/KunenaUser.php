@@ -499,6 +499,14 @@ class KunenaUser extends CMSObject
      * @since   Kunena 6.0
      */
     public $reddit;
+    
+    /**
+     * For bluesky social network
+     *
+     * @var     string
+     * @since   Kunena 6.3
+     */
+    public $bsky_app;
 
     /**
      * @var     integer
@@ -2226,6 +2234,7 @@ class KunenaUser extends CMSObject
             'ok'               => ['url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'],
             'pinterest'        => ['url' => 'https://pinterest.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_PINTEREST'), 'nourl' => '0'],
             'reddit'           => ['url' => 'https://www.reddit.com/user/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_REDDIT'), 'nourl' => '0'],
+            'bsky_app'         => ['url' => 'hhttps://bsky.app/profile/##VALUE##.bsky.social', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLUESKY_SOCIAL'), 'nourl' => '0'],
         ];
     }
 
@@ -2360,6 +2369,8 @@ class KunenaUser extends CMSObject
                 return $this->pinterest;
             case 'reddit':
                 return $this->reddit;
+            case 'bsky_app':
+                return $this->bsky_app;
             case 'timestamp':
                 return $this->timestamp;
             default:

@@ -2205,7 +2205,7 @@ class KunenaUser extends CMSObject
     public function socialButtons()
     {
         return [
-            'twitter'          => ['url' => 'https://twitter.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TWITTER'), 'nourl' => '0'],
+            'twitter'          => ['url' => 'https://twitter.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_X_SOCIAL'), 'nourl' => '0'],
             'facebook'         => ['url' => 'https://www.facebook.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'],
             'myspace'          => ['url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'],
             'linkedin'         => ['url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'],

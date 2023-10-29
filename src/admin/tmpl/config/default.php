@@ -1667,24 +1667,24 @@ $wa->useScript('multiselect');
                                                     <tr <?php if ($this->config->twitterConsumerKey != '') :
                                                         echo 'class="changed"';
                                                         endif; ?>>
-                                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_LABEL') ?></td>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_KEY_LABEL') ?></td>
                                                         <td>
                                                             <input type="text" class="form-control"
                                                                    name="cfg_twitterConsumerKey"
                                                                    value="<?php echo $this->escape($this->config->twitterConsumerKey) ?>"/>
                                                         </td>
-                                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_KEY_DESC') ?></td>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_KEY_DESC') ?></td>
                                                     </tr>
                                                     <tr <?php if ($this->config->twitterConsumerSecret != '') :
                                                         echo 'class="changed"';
                                                         endif; ?>>
-                                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_LABEL') ?></td>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_LABEL') ?></td>
                                                         <td>
                                                             <input type="text" class="form-control"
                                                                    name="cfg_twitterConsumerSecret"
                                                                    value="<?php echo $this->escape($this->config->twitterConsumerSecret) ?>"/>
                                                         </td>
-                                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_TWITTER_API_CONSUMER_SECRET_DESC') ?></td>
+                                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_DESC') ?></td>
                                                     </tr>
                                                     <tr <?php if ($this->config->googleMapApiKey != '') :
                                                         echo 'class="changed"';

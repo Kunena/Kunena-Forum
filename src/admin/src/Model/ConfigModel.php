@@ -1081,13 +1081,13 @@ class ConfigModel extends AdminModel
     public $ebayApiKey = '';
 
     /**
-     * @var     string  Define twitter API consumer key
+     * @var     string  Define X API consumer key
      * @since   Kunena 4.0.0
      */
     public $twitterConsumerKey = '';
 
     /**
-     * @var     string  Define twitter API consumer secret
+     * @var     string  Define X API consumer secret
      * @since   Kunena 4.0.0
      */
     public $twitterConsumerSecret = '';

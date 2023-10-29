@@ -2880,13 +2880,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 $this->token = json_decode($response->body)->access_token;
             } else {
                 $tweet        = new stdClass();
-                $tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_TWITTER_COULD_NOT_GET_TOKEN');
+                $tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_X_SOCIAL_COULD_NOT_GET_TOKEN');
 
                 return $tweet;
             }
         } elseif (empty($consumer_key) || empty($consumer_secret)) {
             $tweet        = new stdClass();
-            $tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_TWITTER_CONSUMMER_KEY_SECRET_INVALID');
+            $tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_X_SOCIAL_CONSUMMER_KEY_SECRET_INVALID');
 
             return $tweet;
         }
@@ -2985,7 +2985,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 return $tweet_data;
             } else {
                 $tweet        = new stdClass();
-                $tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_TWITTER_INVALID_TWEET_ID');
+                $tweet->error = Text::_('COM_KUNENA_LIB_BBCODE_X_SOCIAL_INVALID_TWEET_ID');
 
                 return $tweet;
             }

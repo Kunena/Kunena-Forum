@@ -265,7 +265,7 @@ class KunenaUsers extends KunenaTable
     public $skype = null;
 
     /**
-     * TWITTER ID
+     * X (previously Twitter) ID
      *
      * @var     string
      * @since   Kunena

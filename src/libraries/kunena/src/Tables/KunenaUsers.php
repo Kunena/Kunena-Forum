@@ -313,14 +313,6 @@ class KunenaUsers extends KunenaTable
     public $linkedin = null;
 
     /**
-     * FRIENDFEED ID
-     *
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $friendfeed = null;
-
-    /**
      * $DIGG ID
      *
      * @var     string

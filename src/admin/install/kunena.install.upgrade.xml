@@ -258,5 +258,12 @@
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">
         </version>
+        <version version="6.3.0-DEV"
+                 versiondate="2023-10-29"
+                 versionname="Internal">
+            <query mode="silenterror">
+            ALTER TABLE `#__kunena_users` DROP `friendfeed`;
+            </query>
+        </version>
     </upgrade>
 </comupgrade>

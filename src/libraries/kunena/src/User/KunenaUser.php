@@ -96,7 +96,6 @@ use Joomla\CMS\User\UserFactoryAwareInterface;
  * @property    string  $myspace
  * @property    string  $linkedin
  * @property    string  $linkedin_company
- * @property    string  $friendfeed
  * @property    string  $digg
  * @property    string  $blogspot
  * @property    string  $flickr
@@ -380,12 +379,6 @@ class KunenaUser extends CMSObject
      * @since   Kunena 6.0
      */
     public $linkedin_company;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $friendfeed;
 
     /**
      * @var     string
@@ -2209,7 +2202,6 @@ class KunenaUser extends CMSObject
             'myspace'          => ['url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'],
             'linkedin'         => ['url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'],
             'linkedin_company' => ['url' => 'https://www.linkedin.com/company/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY'), 'nourl' => '0'],
-            'friendfeed'       => ['url' => 'https://friendfeed.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FRIENDFEED'), 'nourl' => '0'],
             'digg'             => ['url' => 'https://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'],
             'skype'            => ['url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'],
             'yim'              => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'],
@@ -2330,8 +2322,6 @@ class KunenaUser extends CMSObject
                 return $this->linkedin;
             case 'linkedin_company':
                 return $this->linkedin_company;
-            case 'friendfeed':
-                return $this->friendfeed;
             case 'digg':
                 return $this->digg;
             case 'blogspot':

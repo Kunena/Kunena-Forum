@@ -982,9 +982,6 @@
         <field name="location"
                type="varchar(50)"
                null="1"/>
-        <field name="friendfeed"
-               type="varchar(50)"
-               null="1"/>
         <field name="bebo"
                type="varchar(50)"
                null="1"/>

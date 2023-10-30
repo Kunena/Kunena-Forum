@@ -10,15 +10,15 @@
  * @link http://scssphp.github.io/scssphp
  */
 
-namespace ScssPhp\ScssPhp\Node;
+namespace KunenaScssPhp\ScssPhp\Node;
 
-use ScssPhp\ScssPhp\Base\Range;
-use ScssPhp\ScssPhp\Compiler;
-use ScssPhp\ScssPhp\Exception\RangeException;
-use ScssPhp\ScssPhp\Exception\SassScriptException;
-use ScssPhp\ScssPhp\Node;
-use ScssPhp\ScssPhp\Type;
-use ScssPhp\ScssPhp\Util;
+use KunenaScssPhp\ScssPhp\Base\Range;
+use KunenaScssPhp\ScssPhp\Compiler;
+use KunenaScssPhp\ScssPhp\Exception\RangeException;
+use KunenaScssPhp\ScssPhp\Exception\SassScriptException;
+use KunenaScssPhp\ScssPhp\Node;
+use KunenaScssPhp\ScssPhp\Type;
+use KunenaScssPhp\ScssPhp\Util;
 
 /**
  * Dimension + optional units

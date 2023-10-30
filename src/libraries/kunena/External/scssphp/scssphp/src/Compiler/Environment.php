@@ -10,7 +10,7 @@
  * @link http://scssphp.github.io/scssphp
  */
 
-namespace ScssPhp\ScssPhp\Compiler;
+namespace KunenaScssPhp\ScssPhp\Compiler;
 
 /**
  * Compiler environment

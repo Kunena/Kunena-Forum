@@ -10,7 +10,7 @@
  * @link http://scssphp.github.io/scssphp
  */
 
-namespace ScssPhp\ScssPhp\Logger;
+namespace KunenaScssPhp\ScssPhp\Logger;
 
 /**
  * Interface implemented by loggers for warnings and debug messages.

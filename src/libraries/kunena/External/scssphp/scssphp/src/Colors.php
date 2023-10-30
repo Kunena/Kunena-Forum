@@ -10,7 +10,7 @@
  * @link http://scssphp.github.io/scssphp
  */
 
-namespace ScssPhp\ScssPhp;
+namespace KunenaScssPhp\ScssPhp;
 
 /**
  * CSS Colors

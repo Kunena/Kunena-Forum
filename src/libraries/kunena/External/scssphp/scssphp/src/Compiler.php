@@ -10,9 +10,9 @@
  * @link http://scssphp.github.io/scssphp
  */
 
-namespace ScssPhp\ScssPhp;
+namespace KunenaScssPhp\ScssPhp;
 
-use ScssPhp\ScssPhp\Base\Range;
+use KunenaScssPhp\ScssPhp\Base\Range;
 use ScssPhp\ScssPhp\Block\AtRootBlock;
 use ScssPhp\ScssPhp\Block\CallableBlock;
 use ScssPhp\ScssPhp\Block\DirectiveBlock;
@@ -21,23 +21,23 @@ use ScssPhp\ScssPhp\Block\ElseBlock;
 use ScssPhp\ScssPhp\Block\ElseifBlock;
 use ScssPhp\ScssPhp\Block\ForBlock;
 use ScssPhp\ScssPhp\Block\IfBlock;
-use ScssPhp\ScssPhp\Block\MediaBlock;
+use KunenaScssPhp\ScssPhp\Block\MediaBlock;
 use ScssPhp\ScssPhp\Block\NestedPropertyBlock;
 use ScssPhp\ScssPhp\Block\WhileBlock;
 use ScssPhp\ScssPhp\Compiler\CachedResult;
-use ScssPhp\ScssPhp\Compiler\Environment;
+use KunenaScssPhp\ScssPhp\Compiler\Environment;
 use ScssPhp\ScssPhp\Exception\CompilerException;
 use ScssPhp\ScssPhp\Exception\ParserException;
 use ScssPhp\ScssPhp\Exception\SassException;
 use ScssPhp\ScssPhp\Exception\SassScriptException;
-use ScssPhp\ScssPhp\Formatter\Compressed;
+use KunenaScssPhp\ScssPhp\Formatter\Compressed;
 use ScssPhp\ScssPhp\Formatter\Expanded;
-use ScssPhp\ScssPhp\Formatter\OutputBlock;
-use ScssPhp\ScssPhp\Logger\LoggerInterface;
-use ScssPhp\ScssPhp\Logger\StreamLogger;
-use ScssPhp\ScssPhp\Node\Number;
+use KunenaScssPhp\ScssPhp\Formatter\OutputBlock;
+use KunenaScssPhp\ScssPhp\Logger\LoggerInterface;
+use KunenaScssPhp\ScssPhp\Logger\StreamLogger;
+use KunenaScssPhp\ScssPhp\Node\Number;
 use ScssPhp\ScssPhp\SourceMap\SourceMapGenerator;
-use ScssPhp\ScssPhp\Util\Path;
+use KunenaScssPhp\ScssPhp\Util\Path;
 
 /**
  * The scss compiler and parser.

@@ -18,11 +18,11 @@ namespace Kunena\Forum\Site;
 // [url="www.kunena.org" target="_blank"]Kunena.org[/url]
 
 // Display URL.
+$rel = '';
+$target = '';
 if (!$this->internal) {
     $rel = 'rel="nofollow noopener noreferrer"';
     $target = ' target="' . $this->escape($this->target) . '"';
-} else {
-    $rel = '';
 }
 ?>
 <a href="<?php echo $this->escape($this->url); ?>"

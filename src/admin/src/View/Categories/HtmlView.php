@@ -204,7 +204,9 @@ class HtmlView extends BaseHtmlView
 
         $childBar = $dropdown->getChildToolbar();
 
-        $childBar->delete('categories.delete')->listCheck(true);
+        $childBar->delete('categories.delete', 'COM_KUNENA_CATEGORY_TOOLBAR_DELETE_CATEGORY')
+           ->message('COM_KUNENA_CATEGORIES_CONFIRM_DELETE_BODY_MODAL')
+           ->listCheck(true);
 
         $childBar->popupButton('batch')
            ->text('JTOOLBAR_BATCH')

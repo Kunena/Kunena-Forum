@@ -250,8 +250,6 @@ $this->document->addScriptDeclaration(
                                 <?php echo $this->pagination->getListFooter(); ?>
                                 <?php // Load the batch processing form. ?>
                                 <?php echo $this->loadTemplate('batch'); ?>
-                                <?php // Load the modal to confirm delete. ?>
-                                <?php echo $this->loadTemplate('confirmdelete'); ?>
                             </td>
                         </tr>
                         </tfoot>

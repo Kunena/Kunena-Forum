@@ -442,11 +442,10 @@ class KunenaStatistics
     public function loadTopTopics($limit = 0): array
     {
         $limit           = $limit ? $limit : $this->_config->popSubjectCount;
-        $this->topTopics = [];
 
         if ($this->topTopics < $limit) {
             $params = ['orderby' => 'posts DESC'];
-            list($this->topTopics) = KunenaTopicHelper::getLatestTopics(false, 0, $limit, $params);
+            list($total, $this->topTopics) = KunenaTopicHelper::getLatestTopics(false, 0, $limit, $params);
 
             $top = reset($this->topTopics);
 

@@ -19,7 +19,8 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 
@@ -89,7 +90,7 @@ class HtmlView extends BaseHtmlView
         $this->category = $this->get('AdminCategory');
 
         // Get the toolbar object instance
-        $this->bar = Toolbar::getInstance();
+        $this->bar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar('toolbar');
 
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
         ToolbarHelper::spacer();

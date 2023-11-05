@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -183,7 +183,7 @@ class HtmlView extends BaseHtmlView
         $this->pagination   = $this->get('AdminNavigation');
 
         // Get the toolbar object instance
-        $toolbar = Toolbar::getInstance();
+        $toolbar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar('toolbar');
 
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
         ToolbarHelper::spacer();

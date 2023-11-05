@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
@@ -58,7 +59,7 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar(): void
     {
         // Get the toolbar object instance
-        $this->bar = Toolbar::getInstance();
+        $this->bar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar('toolbar');
 
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_ICONS_MANAGER'));

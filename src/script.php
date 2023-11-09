@@ -537,26 +537,30 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
         // Get collations from all Kunena tables
         $listKunenaTables = [$db->getPrefix().'kunena_aliases', $db->getPrefix().'kunena_announcement', $db->getPrefix().'kunena_attachments', $db->getPrefix().'kunena_categories', $db->getPrefix().'kunena_configuration',
-         $db->getPrefix().'kunena_topics', $db->getPrefix().'kunena_messages', $db->getPrefix().'kunena_messages_text', $db->getPrefix().'kunena_polls', $db->getPrefix().'kunena_polls_options',
+         $db->getPrefix().'kunena_karma', $db->getPrefix().'kunena_topics', $db->getPrefix().'kunena_messages', $db->getPrefix().'kunena_messages_text', $db->getPrefix().'kunena_polls', $db->getPrefix().'kunena_polls_options',
          $db->getPrefix().'kunena_polls_users', $db->getPrefix().'kunena_private', $db->getPrefix().'kunena_private_attachment_map', $db->getPrefix().'kunena_private_post_map', $db->getPrefix().'kunena_private_user_map', 
          $db->getPrefix().'kunena_ranks', $db->getPrefix().'kunena_rate', $db->getPrefix().'kunena_sessions', $db->getPrefix().'kunena_smileys', $db->getPrefix().'kunena_thankyou', $db->getPrefix().'kunena_user_categories', 
          $db->getPrefix().'kunena_user_read', $db->getPrefix().'kunena_user_topics', $db->getPrefix().'kunena_users', $db->getPrefix().'kunena_users_banned', $db->getPrefix().'kunena_logs', $db->getPrefix().'kunena_version'];
 
         // Get collations from all Kunena tables
         foreach ($listKunenaTables as $kunenatable) {
-            $query = 'SHOW FULL COLUMNS FROM '.$db->quoteName($kunenatable);
-            $db->setQuery($query);
-
-            $tableColumns = $db->loadobjectList();
-
-            // Check column and set to ut8_mb4 when needed
-            foreach ($tableColumns as $column) {
-               if ($column->Collation == 'utf8_general_ci' || $column->Collation == 'utf8mb3_general_ci' || $column->Collation == 'utf8_unicode_ci') {
-                 $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' ' . $column->Type . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
-                 $db->setQuery($query);
-
-                 $db->execute();
-               }
+            // Fisrt check if the table exist
+            $db->setQuery("SHOW TABLES LIKE {$db->quote($kunenatable)}");
+            if ($db->loadResult() == $kunenatable) {
+                $query = 'SHOW FULL COLUMNS FROM '.$db->quoteName($kunenatable);
+                $db->setQuery($query);
+    
+                $tableColumns = $db->loadobjectList();
+    
+                // Check column and set to ut8_mb4 when needed
+                foreach ($tableColumns as $column) {
+                   if ($column->Collation == 'utf8_general_ci' || $column->Collation == 'utf8mb3_general_ci' || $column->Collation == 'utf8_unicode_ci') {
+                     $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' ' . $column->Type . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
+                     $db->setQuery($query);
+    
+                     $db->execute();
+                   }
+                }
             }
         }
 

@@ -1400,7 +1400,7 @@ class KunenaMessage extends KunenaDatabaseObject
             $this->name = $author->getName();
         }
 
-        if (isset($this->email)) {
+        if (!empty($this->email)) {
             // Check email address
             $this->email = trim($this->email);
 

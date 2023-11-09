@@ -82,6 +82,8 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
     public $me;
 
     public $catid;
+    
+    public $poll;
 
     /**
      * Prepare topic edit form.

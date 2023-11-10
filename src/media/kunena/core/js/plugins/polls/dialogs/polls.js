@@ -81,11 +81,13 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 						label: Joomla.Text._('COM_KUNENA_POLL_REMOVE_POLL_OPTION'),
 						title: Joomla.Text._('COM_KUNENA_POLL_REMOVE_POLL_OPTION'),
 						onClick: function() {
+							if (options > 0) {
 							// this = CKEDITOR.ui.dialog.button
 							jQuery('#field_option' + options).remove();
 							jQuery('#labeloption' + options).remove();
 							options--;
-							
+							}
+
 							// TODO : show button hide if it was hidden
 						}
 					},

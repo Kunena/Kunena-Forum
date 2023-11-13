@@ -554,7 +554,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
     
                 // Check column and set to ut8_mb4 when needed
                 foreach ($tableColumns as $column) {
-                   if ($column->Collation == 'utf8_general_ci' || $column->Collation == 'utf8mb3_general_ci' || $column->Collation == 'utf8_unicode_ci') {
+                    if ($column->Collation == 'utf8_general_ci' || $column->Collation == 'utf8mb3_general_ci' || $column->Collation == 'utf8_unicode_ci' || $column->Collation == 'utf8mb3_unicode_cis') {
                      $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' ' . $column->Type . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
                      $db->setQuery($query);
     

@@ -13,7 +13,7 @@
                    type="textarea"
                    rows="10"
                    cols="40"
-                   filter="JComponentHelper::filterText"
+                   filter="\Joomla\CMS\Component\ComponentHelper::filterText"
                    label="COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY"
                    description="COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_DESC"/>
             <field name="body_format"

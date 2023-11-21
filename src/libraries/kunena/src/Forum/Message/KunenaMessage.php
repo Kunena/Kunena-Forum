@@ -874,7 +874,7 @@ class KunenaMessage extends KunenaDatabaseObject
         $attachments = $this->getAttachments();
 
         foreach ($attachments as $attachment) {
-            $file = Uri::root() . $attachment->filename;
+            $file = JPATH_SITE . '/media/kunena/attachments/' . $attachment->userid . '/' . $attachment->filename;
             File::delete($file);
 
             if (!$attachment->delete()) {

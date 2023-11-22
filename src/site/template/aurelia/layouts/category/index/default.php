@@ -120,7 +120,7 @@ foreach ($this->sections as $section) :
                                             <span id="kcatcount"><?php echo KunenaCategory::getInstance()->totalCount($category->getTopics()); ?></span>
                                             <span>
                                                 <?php if (($new = $category->getNewCount()) > 0) : ?>
-                                                    <sup class="knewchar"> (<?php echo $new . Text::_('COM_KUNENA_A_GEN_NEWCHAR') ?>
+                                                    <sup class="knewchar"> (<?php echo $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') ?>
                                                         )</sup>
                                                 <?php endif; ?>
                                                 <?php if ($category->locked) : ?>

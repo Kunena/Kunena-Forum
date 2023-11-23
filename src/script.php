@@ -50,6 +50,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      */
     protected $versions = [
         'PHP'     => [
+            '8.3' => '8.3.0',
             '8.2' => '8.2.0',
             '8.1' => '8.1.0',
             '8.0' => '8.0.0',

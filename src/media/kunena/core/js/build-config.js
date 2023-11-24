@@ -13,10 +13,10 @@
  * (1) https://ckeditor.com/cke4/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) https://ckeditor.com/cke4/builder/bc3383a0c5d0dee3fefe54b3177cf295
+ * (2) https://ckeditor.com/cke4/builder/0a4ff67c053deb70e572ce6ea5476968
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) https://ckeditor.com/cke4/builder/download/bc3383a0c5d0dee3fefe54b3177cf295
+ * (3) https://ckeditor.com/cke4/builder/download/0a4ff67c053deb70e572ce6ea5476968
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -25,7 +25,7 @@
  */
 
 var CKBUILDER_CONFIG = {
-	skin: 'moonocolor',
+	skin: 'moono-lisa',
 	preset: 'full',
 	ignore: [
 		'.DS_Store',
@@ -43,6 +43,7 @@ var CKBUILDER_CONFIG = {
 		'.travis.yml',
 		'bender-err.log',
 		'bender-out.log',
+		'bender-runner.config.json',
 		'bender.ci.js',
 		'bender.js',
 		'dev',
@@ -58,7 +59,6 @@ var CKBUILDER_CONFIG = {
 		'basicstyles' : 1,
 		'bbcode' : 1,
 		'bidi' : 1,
-		'blockimagepaste' : 1,
 		'blockquote' : 1,
 		'clipboard' : 1,
 		'colorbutton' : 1,
@@ -81,8 +81,10 @@ var CKBUILDER_CONFIG = {
 		'justify' : 1,
 		'link' : 1,
 		'list' : 1,
+		'liststyle' : 1,
 		'magicline' : 1,
 		'maximize' : 1,
+		'mentions' : 1,
 		'removeformat' : 1,
 		'resize' : 1,
 		'scayt' : 1,
@@ -90,6 +92,7 @@ var CKBUILDER_CONFIG = {
 		'showborders' : 1,
 		'smiley' : 1,
 		'sourcearea' : 1,
+		'stylescombo' : 1,
 		'tab' : 1,
 		'toolbar' : 1,
 		'undo' : 1,

@@ -1354,4 +1354,40 @@ class UserController extends KunenaController
         $this->app->enqueueMessage(Text::_('COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED'), 'error');
         $this->setRedirectBack();
     }
+
+    /**
+     * Get the list of users to mentions in the topic by the given topicid
+     * 
+     * @since   Kunena 6.3
+     */
+    public function getusersmentions() {
+        $id = $this->input->getInt('topicid', 0);
+
+        header('Content-type: application/json');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+        
+        $obj = new stdClass();
+        $obj->id = 1;
+        $obj->avatar = 'm_1';
+        $obj->fullname = 'Charles Flores';
+        $obj->username = 'cflores';
+        
+        $myarray = [$obj
+        
+        ];
+        
+        $response = json_encode($myarray);
+        
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
+        
+        echo json_encode($response);
+        
+        jexit();
+    }
 }

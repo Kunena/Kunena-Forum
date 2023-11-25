@@ -310,6 +310,7 @@ jQuery(document).ready(function ($) {
                             event.cancel();
                         }
                     })
+                    
 				},
 				change : function (event) {
 					if (event.editor.getData().length > 0)
@@ -351,8 +352,31 @@ jQuery(document).ready(function ($) {
                         }
                     }
                 }
-            }
+            },
+            mentions: [ {
+      feed: dataFeed,
+      itemTemplate:
+        '<li data-id="{id}">' +
+        '<strong class="username">{username}</strong>' +
+        '<span class="fullname">{fullname}</span>' +
+        '</li>',
+      outputTemplate:
+        '<a href="mailto:{username}@example.com">@{username}</a><span>&nbsp;</span>',
+      minChars: 1
+    }
+  ]
         });
+
+// Get the data for the mentions list
+function dataFeed(opts, callback) {
+    $.getJSON( '/index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' + Joomla.getOptions('com_kunena.topicid.mentions') )
+    .done(function( json ) {
+        callback(JSON.parse(json));
+    })
+    .fail(function( jqxhr, textStatus, error ) {
+        console.log( 'Request Failed: ' + err );
+    });
+}
 
         CKEDITOR.on('dialogDefinition', function (ev) {
             const dialogName = ev.data.name;

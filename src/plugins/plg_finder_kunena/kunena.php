@@ -473,7 +473,7 @@ class PlgFinderKunena extends Adapter
         $item->title = $message->subject;
 
         // Build the necessary url, route, path and alias information.
-        $item->url   = $this->getUrl($message->id, $this->extension, $this->layout);
+        $item->url   = $message->getUrl();
         $item->route = $item->url;
         $item->alias = KunenaRoute::stringURLSafe($message->subject);
 
@@ -499,25 +499,6 @@ class PlgFinderKunena extends Adapter
         $item->layout = $this->layout;
 
         return $item;
-    }
-
-    /**
-     * Method to get the URL for the item. The URL is how we look up the link
-     * in the Finder index.
-     *
-     * @param   mixed   $id         The id of the item.
-     * @param   mixed   $extension  Unused.
-     * @param   string  $view       View name.
-     *
-     * @return    string        The URL of the item.
-     * @since Kunena
-     * @throws Exception
-     */
-    protected function getUrl($id, $extension, $view)
-    {
-        $item = KunenaMessageHelper::get($id);
-
-        return "index.php?option=com_kunena&view={$view}&catid={$item->catid}&id={$item->thread}&mesid={$item->id}";
     }
 
     /**

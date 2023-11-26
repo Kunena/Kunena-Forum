@@ -1363,11 +1363,26 @@ class UserController extends KunenaController
      */
     public function getusersmentions() {
         $id = $this->input->getInt('topicid', 0);
-        $topicId = [0 => $id];
 
-        $userIdsList = KunenaTopicUserHelper::getUserIds($topicId);
+        $userListMentions = [];
 
-        $usersList = KunenaUserHelper::loadUsers($userIdsList);
+        if ($id > 0) {
+            $topicId = [0 => $id];
+
+            $userIdsList = KunenaTopicUserHelper::getUserIds($topicId);
+
+            $usersList = KunenaUserHelper::loadUsers($userIdsList);
+
+            foreach ($usersList as $key => $user) {
+                $obj = new stdClass();
+                $obj->id = $key;
+                //$obj->avatar = 'm_1';
+                $obj->fullname = $user->name;
+                $obj->username = $user->username;
+
+                $userListMentions[] = $obj;
+            }
+        }
 
         header('Content-type: application/json');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -1375,18 +1390,6 @@ class UserController extends KunenaController
         header("Cache-Control: no-store, no-cache, must-revalidate");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
-
-        $userListMentions = [];
-
-        foreach ($usersList as $key => $user) {
-            $obj = new stdClass();
-            $obj->id = $key;
-            //$obj->avatar = 'm_1';
-            $obj->fullname = $user->name;
-            $obj->username = $user->username;
-
-            $userListMentions[] = $obj;
-        }
 
         $response = json_encode($userListMentions);
 

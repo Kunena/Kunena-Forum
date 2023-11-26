@@ -217,7 +217,7 @@ abstract class KunenaTopicUserHelper
         $db->setQuery($query);
 
         try {
-            $results = (array) $db->loadRowList();
+            $results = $db->loadObjectList();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
         }
@@ -225,8 +225,8 @@ abstract class KunenaTopicUserHelper
         $list = [];
 
         if (!empty($results)) {
-            foreach ($results as $result) {
-                $list[$result->topic_id][$result->user_id] = $result->{$value};
+            foreach ($results as $key => $result) {
+                $list[$key] = $result->user_id;
             }
         }
 

@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Karma\KunenaKarmaHelper;
+use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Path\KunenaPath;
@@ -1362,6 +1363,11 @@ class UserController extends KunenaController
      */
     public function getusersmentions() {
         $id = $this->input->getInt('topicid', 0);
+        $topicId = [0 => $id];
+
+        $userIdsList = KunenaTopicUserHelper::getUserIds($topicId);
+
+        $usersList = KunenaUserHelper::loadUsers($userIdsList);
 
         header('Content-type: application/json');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -1369,25 +1375,27 @@ class UserController extends KunenaController
         header("Cache-Control: no-store, no-cache, must-revalidate");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
-        
-        $obj = new stdClass();
-        $obj->id = 1;
-        $obj->avatar = 'm_1';
-        $obj->fullname = 'Charles Flores';
-        $obj->username = 'cflores';
-        
-        $myarray = [$obj
-        
-        ];
-        
-        $response = json_encode($myarray);
-        
+
+        $userListMentions = [];
+
+        foreach ($usersList as $key => $user) {
+            $obj = new stdClass();
+            $obj->id = $key;
+            //$obj->avatar = 'm_1';
+            $obj->fullname = $user->name;
+            $obj->username = $user->username;
+
+            $userListMentions[] = $obj;
+        }
+
+        $response = json_encode($userListMentions);
+
         if (ob_get_length()) {
             ob_end_clean();
         }
-        
+
         echo json_encode($response);
-        
+
         jexit();
     }
 }

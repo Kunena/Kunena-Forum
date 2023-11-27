@@ -1395,3 +1395,5 @@ a .rounded,
 .form-select, .custom-select {
   background: none !important /* Joomla template hack */;
 }
+
+.table th, .table td { background-color: inherit; }

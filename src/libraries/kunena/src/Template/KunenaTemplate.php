@@ -1812,7 +1812,7 @@ HTML;
         $fontawesome          = $this->params->get('fontawesome');
 
         if ($fontawesome) {
-            $this->addScript('https://use.fontawesome.com/releases/v6.4.2/js/all.js', [], ['defer' => true]);
+            $this->addScript('https://use.fontawesome.com/releases/v6.5.1/js/all.js', [], ['defer' => true]);
         }
     }
 

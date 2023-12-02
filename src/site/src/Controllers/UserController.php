@@ -315,7 +315,7 @@ class UserController extends KunenaController
 
         if (!$moderator) {
             if ($userid != $my->id) {
-                throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
+                throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_NOT_MODERATOR_RIGHT'), 403);
             }
         }
 

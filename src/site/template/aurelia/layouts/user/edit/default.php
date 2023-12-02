@@ -51,7 +51,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
       enctype="multipart/form-data" name="kuserform"
       class="form-validate" id="kuserform">
     <input type="hidden" name="task" value="save"/>
-    <input type="hidden" name="userid" value="<?php echo (int) $this->user->id; ?>"/>
+    <input type="hidden" name="userid" value="<?php echo (int) $this->profile->userid; ?>"/>
     <?php echo HTMLHelper::_('form.token'); ?>
 
     <div class="tabs">

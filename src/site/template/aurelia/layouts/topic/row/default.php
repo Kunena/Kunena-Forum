@@ -46,6 +46,12 @@ if ($this->topic->moved_id > 0) {
     $txt .= ' ' . 'moved';
 }
 
+// Display in grey topics which in unpublished category
+if ($this->topic->getCategory()->published == 0) {
+    $txt = '-grey';
+    $category->class_sfx = '';
+}
+
 if (!empty($this->spacing)) : ?>
     <tr class="kcontenttablespacer">
         <th scope="row">&nbsp;</th>

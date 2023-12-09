@@ -355,7 +355,7 @@ jQuery(function ($) {
             const filecoutntmp = Object.keys(data['files']).length + fileCount;
 
             if (filecoutntmp > Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) {
-                $('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.Text._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
+                $('<div class="alert alert-danger alert-dismissible fade show" id="alert_max_file" role="alert">  ' + Joomla.Text._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>').insertBefore($('#files'));
 
                 $('#form_submit_button').prop('disabled', false);
 
@@ -373,7 +373,7 @@ jQuery(function ($) {
             const filecoutntmp = Object.keys(data['files']).length + fileCount;
 
             if (filecoutntmp > Joomla.getOptions('com_kunena.kunena_upload_files_maxfiles')) {
-                $('<div class="alert alert-danger" id="alert_max_file"><button class="close" type="button" data-dismiss="alert">×</button>' + Joomla.Text._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '</div>').insertBefore($('#files'));
+                $('<div class="alert alert-danger alert-dismissible fade show" id="alert_max_file" role="alert">  ' + Joomla.Text._('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES') + '  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>').insertBefore($('#files'));
 
                 $('#form_submit_button').prop('disabled', false);
 

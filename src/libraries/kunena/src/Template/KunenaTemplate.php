@@ -18,11 +18,12 @@ namespace Kunena\Forum\Libraries\Template;
 use Exception;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Event\Event;
+use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -447,13 +448,13 @@ class KunenaTemplate
             }
 
             if (class_exists($classname)) {
-                self::$_instances [$name] = new $classname($templatename);
+                self::$_instances[$name] = new $classname($templatename);
             } else {
-                self::$_instances [$name] = new KunenaTemplate($templatename);
+                self::$_instances[$name] = new KunenaTemplate($templatename);
             }
         }
 
-        return self::$_instances [$name];
+        return self::$_instances[$name];
     }
 
     /**
@@ -543,8 +544,8 @@ class KunenaTemplate
 
         foreach (array_reverse($this->default) as $template) {
             $lang->load('kunena_tmpl_' . $template, JPATH_SITE)
-            || $lang->load('kunena_tmpl_' . $template, KPATH_SITE)
-            || $lang->load('kunena_tmpl_' . $template, KPATH_SITE . '/template/' . $template);
+                || $lang->load('kunena_tmpl_' . $template, KPATH_SITE)
+                || $lang->load('kunena_tmpl_' . $template, KPATH_SITE . '/template/' . $template);
         }
     }
 
@@ -583,8 +584,10 @@ class KunenaTemplate
     public function getButton(string $link, string $name, string $scope, string $type, $id = null): string
     {
         $types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
-        $names = ['unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-                  'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit', ];
+        $names = [
+            'unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
+            'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',
+        ];
 
         $text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
         $title = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -873,9 +876,9 @@ HTML;
         // Compile CSS from SCSS files.
         $ktemplate = KunenaFactory::getTemplate();
         $ktemplate->compileScss("assets/scss/{$this->name}.scss", 'kunena.css');
-        
+
         $filenamescss = JPATH_SITE . "/components/com_kunena/template/{$this->name}/assets/scss/custom.scss";
-        
+
         if (file_exists($filenamescss) && 0 != fileSize($filenamescss)) {
             $this->compileScss('assets/scss/custom.scss', 'kunena-custom.css');
             $this->addStyleSheet('kunena-custom.css');
@@ -1781,22 +1784,41 @@ HTML;
      *
      * @throws \Exception
      * @since   Kunena 6.0
+     * @deprecated  Kunena 6.3 Use getCaptcha() instead
      */
     public function recaptcha(bool $topic_ids = false): string
     {
-        if (PluginHelper::isEnabled('captcha')) {
-            PluginHelper::importPlugin('captcha');
+        return $this->getCaptcha();
+    }
 
-            if ($topic_ids) {
-                PluginHelper::importPlugin('captcha');
-                Factory::getApplication()->triggerEvent('onInit', ['dynamic_recaptcha_' . $topic_ids]);
-                $display = Factory::getApplication()->triggerEvent('onDisplay', [null, 'dynamic_recaptcha_' . $topic_ids, 'controls g-recaptcha']);
-            } else {
-                Factory::getApplication()->triggerEvent('onInit', ['dynamic_recaptcha_1']);
-                $display = Factory::getApplication()->triggerEvent('onDisplay', [null, 'dynamic_recaptcha_1', 'controls g-recaptcha']);
+    /**
+     * Function to get the Global Configured Captcha
+     * 
+     * @return string
+     *
+     * @throws \Exception
+     * @since   Kunena 6.3
+     */
+    public function getCaptcha(): string
+    {
+        $app     = Factory::getApplication();
+        $captcha = $app->get('captcha', '0');
+
+        if ($captcha && PluginHelper::isEnabled('captcha', $captcha)) {
+            PluginHelper::importPlugin('captcha', $captcha);
+            // $captchaInitEvent    = new Event('onInit', ['kunena_captcha_' . (int) $topic_ids]);
+            // $captchaDisplayEvent = new Event('onDisplay', [null, 'kunena_captcha_' . $topic_ids, 'required']);
+            $captchaInitEvent    = new Event('onInit', []);
+            $captchaDisplayEvent = new Event('onDisplay', []);
+
+            $app->getDispatcher()->dispatch('onInit', $captchaInitEvent);
+            $app->getDispatcher()->dispatch('onDisplay', $captchaDisplayEvent);
+
+            $result = $captchaDisplayEvent->getArgument('result') ?: [];
+
+            if (is_array($result) && count($result) >= 1) {
+                return $result[0];
             }
-
-            return $display[0];
         }
 
         return '';

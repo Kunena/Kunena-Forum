@@ -29,6 +29,7 @@ use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Event\Event;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
@@ -641,24 +642,17 @@ class TopicController extends KunenaController
         }
 
         if ($this->me->canDoCaptcha()) {
-            if (PluginHelper::isEnabled('captcha')) {
-                $plugin = PluginHelper::getPlugin('captcha');
-                $params = new Registry($plugin[0]->params);
+            $app     = Factory::getApplication();
+            $captcha = $app->get('captcha', '0');
 
-                $captcha_pubkey  = $params->get('public_key');
-                $captcha_privkey = $params->get('private_key');
+            if ($captcha && PluginHelper::isEnabled('captcha', $captcha)) {
+                $captchaCheckEvent = new Event('onCheckAnswer', []);
+                $app->getDispatcher()->dispatch('onCheckAnswer', $captchaCheckEvent);
 
-                if (!empty($captcha_pubkey) && !empty($captcha_privkey)) {
-                    PluginHelper::importPlugin('captcha');
+                $result = $captchaCheckEvent->getArgument('result') ?: [];
 
-                    $captcha_response = $this->app->input->getString('g-recaptcha-response');
-
-                    if (!empty($captcha_response)) {
-                        // For ReCaptcha API 2.0
-                        $res = $this->app->triggerEvent('onCheckAnswer', [$this->app->input->getString('g-recaptcha-response')]);
-                    }
-
-                    if (!$res[0]) {
+                if (is_array($result) && count($result) >= 1) {
+                    if (!$result[0]) {
                         $this->setRedirectBack();
 
                         return;

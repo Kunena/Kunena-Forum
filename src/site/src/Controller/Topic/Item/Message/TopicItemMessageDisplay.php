@@ -102,6 +102,8 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 
     public $thankyou_delete;
 
+    public $captchaDisplay;
+
     /**
      * Prepare displaying message.
      *
@@ -137,7 +139,7 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
         $this->captchaEnabled = false;
 
         if ($this->message->isAuthorised('reply') && $this->me->canDoCaptcha() && $this->config->quickReply) {
-            $this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+            $this->captchaDisplay = KunenaTemplate::getInstance()->getCaptcha();
             $this->captchaEnabled = true;
         } else {
             $this->captchaEnabled = false;
@@ -185,8 +187,8 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
                 $this->reportMessageLink = HTMLHelper::_(
                     'link',
                     'index.php?option=com_kunena&view=topic&layout=report&catid='
-                    . \intval($this->category->id) . '&id=' . \intval($this->message->thread)
-                    . '&mesid=' . \intval($this->message->id),
+                        . \intval($this->category->id) . '&id=' . \intval($this->message->thread)
+                        . '&mesid=' . \intval($this->message->id),
                     Text::_('COM_KUNENA_REPORT'),
                     Text::_('COM_KUNENA_REPORT')
                 );

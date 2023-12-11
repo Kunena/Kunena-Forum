@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\Controller\Topic\Form\Reply;
 
 use Exception;
 use Joomla\CMS\Document\HtmlDocument;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
@@ -86,6 +85,8 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
     public $topic;
 
+    public $captchaDisplay;
+
     /**
      * Prepare topic reply form.
      *
@@ -141,7 +142,7 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
         $this->category = $this->topic->getCategory();
 
         if ($parent->isAuthorised('reply') && $this->me->canDoCaptcha()) {
-            $this->captchaDisplay = KunenaTemplate::getInstance()->recaptcha();
+            $this->captchaDisplay = KunenaTemplate::getInstance()->getCaptcha();
             $this->captchaEnabled = true;
         } else {
             $this->captchaEnabled = false;

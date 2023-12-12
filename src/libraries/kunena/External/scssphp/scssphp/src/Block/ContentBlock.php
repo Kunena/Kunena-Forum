@@ -12,9 +12,9 @@
 
 namespace ScssPhp\ScssPhp\Block;
 
-use ScssPhp\ScssPhp\Block;
-use ScssPhp\ScssPhp\Compiler\Environment;
-use ScssPhp\ScssPhp\Type;
+use KunenaScssPhp\ScssPhp\Block;
+use KunenaScssPhp\ScssPhp\Compiler\Environment;
+use KunenaScssPhp\ScssPhp\Type;
 
 /**
  * @internal

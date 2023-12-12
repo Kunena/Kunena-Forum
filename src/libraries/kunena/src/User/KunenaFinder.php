@@ -115,6 +115,8 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
      */
     public function filterByName(string $search): KunenaFinder
     {
+        $search = '%' . $search . '%'; 
+
         if ($search) {
             if ($this->config->username) {
                 $this->query->where($this->db->quoteName('a.username') . ' LIKE ' . $this->db->quote($search));

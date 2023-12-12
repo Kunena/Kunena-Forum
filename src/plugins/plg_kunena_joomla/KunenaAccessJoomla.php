@@ -177,7 +177,7 @@ class KunenaAccessJoomla
                         'access.usergroup',
                         'params-joomla-level[access_post][]',
                         $category->params->get('access_post', [2, 6, 8]),
-                        'multiple="multiple" class="inputbox form-control form-select" size="10"',
+                        'multiple="multiple" class="inputbox form-select" size="10"',
                         false
                     ),
                 ];
@@ -188,7 +188,7 @@ class KunenaAccessJoomla
                         'access.usergroup',
                         'params-joomla-level[access_reply][]',
                         $category->params->get('access_reply', [2, 6, 8]),
-                        'multiple="multiple" class="inputbox form-control form-select" size="10"',
+                        'multiple="multiple" class="inputbox form-select" size="10"',
                         false
                     ),
                 ];

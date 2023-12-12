@@ -13,7 +13,7 @@
 namespace ScssPhp\ScssPhp\Formatter;
 
 use ScssPhp\ScssPhp\Formatter;
-use ScssPhp\ScssPhp\Type;
+use KunenaScssPhp\ScssPhp\Type;
 
 /**
  * Nested formatter

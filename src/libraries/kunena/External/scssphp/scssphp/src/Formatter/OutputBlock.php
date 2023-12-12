@@ -10,7 +10,7 @@
  * @link http://scssphp.github.io/scssphp
  */
 
-namespace ScssPhp\ScssPhp\Formatter;
+namespace KunenaScssPhp\ScssPhp\Formatter;
 
 /**
  * Output block

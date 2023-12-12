@@ -111,6 +111,7 @@ class KunenaBase extends KunenaLayoutBase
     public $show;
     public $show_title;
     public $captchaDisplay;
+    public $body;
 
     /**
      * Method to instantiate the layout.

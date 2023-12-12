@@ -12,8 +12,8 @@
 
 namespace ScssPhp\ScssPhp\Block;
 
-use ScssPhp\ScssPhp\Block;
-use ScssPhp\ScssPhp\Compiler\Environment;
+use KunenaScssPhp\ScssPhp\Block;
+use KunenaScssPhp\ScssPhp\Compiler\Environment;
 
 /**
  * @internal

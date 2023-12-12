@@ -34,8 +34,8 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use ScssPhp\ScssPhp\Compiler;
-use ScssPhp\ScssPhp\OutputStyle;
+use KunenaScssPhp\ScssPhp\Compiler;
+use KunenaScssPhp\ScssPhp\OutputStyle;
 use SimpleXMLElement;
 use StdClass;
 

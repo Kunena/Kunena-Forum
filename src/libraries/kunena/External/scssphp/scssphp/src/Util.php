@@ -10,11 +10,11 @@
  * @link http://scssphp.github.io/scssphp
  */
 
-namespace ScssPhp\ScssPhp;
+namespace KunenaScssPhp\ScssPhp;
 
-use ScssPhp\ScssPhp\Base\Range;
-use ScssPhp\ScssPhp\Exception\RangeException;
-use ScssPhp\ScssPhp\Node\Number;
+use KunenaScssPhp\ScssPhp\Base\Range;
+use KunenaScssPhp\ScssPhp\Exception\RangeException;
+use KunenaScssPhp\ScssPhp\Node\Number;
 
 /**
  * Utility functions

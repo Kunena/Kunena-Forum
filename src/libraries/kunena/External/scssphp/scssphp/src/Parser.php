@@ -10,7 +10,7 @@
  * @link http://scssphp.github.io/scssphp
  */
 
-namespace ScssPhp\ScssPhp;
+namespace KunenaScssPhp\ScssPhp;
 
 use ScssPhp\ScssPhp\Block\AtRootBlock;
 use ScssPhp\ScssPhp\Block\CallableBlock;
@@ -21,11 +21,11 @@ use ScssPhp\ScssPhp\Block\ElseBlock;
 use ScssPhp\ScssPhp\Block\ElseifBlock;
 use ScssPhp\ScssPhp\Block\ForBlock;
 use ScssPhp\ScssPhp\Block\IfBlock;
-use ScssPhp\ScssPhp\Block\MediaBlock;
+use KunenaScssPhp\ScssPhp\Block\MediaBlock;
 use ScssPhp\ScssPhp\Block\NestedPropertyBlock;
 use ScssPhp\ScssPhp\Block\WhileBlock;
 use ScssPhp\ScssPhp\Exception\ParserException;
-use ScssPhp\ScssPhp\Logger\LoggerInterface;
+use KunenaScssPhp\ScssPhp\Logger\LoggerInterface;
 use ScssPhp\ScssPhp\Logger\QuietLogger;
 
 /**

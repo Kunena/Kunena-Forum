@@ -1,6 +1,6 @@
 <?php
 
-namespace ScssPhp\ScssPhp;
+namespace KunenaScssPhp\ScssPhp;
 
 final class OutputStyle
 {

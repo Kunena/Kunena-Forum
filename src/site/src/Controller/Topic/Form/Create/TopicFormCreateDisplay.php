@@ -83,6 +83,9 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
     public $ktemplate;
 
     public $me;
+
+    public $captchaDisplay;
+
     /**
      * @var     string
      * @since   Kunena 6.0

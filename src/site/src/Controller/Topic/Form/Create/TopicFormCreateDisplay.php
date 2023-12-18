@@ -65,24 +65,27 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
     public $allowedExtensions;
 
     public $action;
-    
+
     public $selectcatlist;
-    
+
     public $selected;
-    
+
     public $captchaEnabled;
-    
+
     public $topicIcons;
-    
+
     public $message;
-    
+
     public $topic;
-    
+
     public $category;
-    
+
     public $ktemplate;
-    
+
     public $me;
+
+    public $captchaDisplay;
+
     /**
      * @var     string
      * @since   Kunena 6.0
@@ -172,7 +175,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
         }
 
         if ($this->topic->isAuthorised('create') && $this->me->canDoCaptcha()) {
-            $this->captchaDisplay = $this->ktemplate->recaptcha();
+            $this->captchaDisplay = $this->ktemplate->getCaptcha();
             $this->captchaEnabled = true;
         } else {
             $this->captchaEnabled = false;

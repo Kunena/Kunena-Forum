@@ -110,6 +110,7 @@ class KunenaBase extends KunenaLayoutBase
     public $userhasvoted;
     public $show;
     public $show_title;
+    public $captchaDisplay;
     public $body;
 
     /**

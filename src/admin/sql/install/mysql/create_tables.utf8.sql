@@ -444,7 +444,6 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `avatar`           varchar(191) NULL,
     `timestamp`        int(11)      NULL     default '0',
     `karma`            int(11)      NULL     default '0',
-    `karma_time`       int(11)      NULL     default '0',
     `group_id`         int(4)       NULL     default '1',
     `uhits`            int(11)      NULL     default '0',
     `personalText`     tinytext     NULL,

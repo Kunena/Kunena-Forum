@@ -139,12 +139,6 @@ class KunenaUsers extends KunenaTable
     public $karma = null;
 
     /**
-     * @var     null
-     * @since   Kunena 6.0
-     */
-    public $karma_time = null;
-
-    /**
      * Kunena Group ID
      *
      * @var     integer

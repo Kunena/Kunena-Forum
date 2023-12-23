@@ -956,10 +956,6 @@
                type="int(11)"
                null="1"
                default="0"/>
-        <field name="karma_time"
-               type="int(11)"
-               null="1"
-               default="0"/>
         <field name="group_id"
                type="int(4)"
                null="1"

@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
 
 CREATE TABLE IF NOT EXISTS `#__kunena_karma`
 (
-    `id`     int(11) NOT NULL default '0',
+    `id`     int(11) NOT NULL AUTO_INCREMENT,
     `userid` int(11) NOT NULL,
     `target_userid` int(11) NOT NULL,
     `time` int(11) NOT NULL,

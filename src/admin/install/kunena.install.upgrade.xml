@@ -254,6 +254,11 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_ranks` CHANGE `rankTitle` `rankTitle` VARCHAR(250),CHANGE `rankImage` `rankImage` VARCHAR(250);</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` CHANGE `status_text` `status_text` VARCHAR(250),CHANGE `avatar` `avatar` VARCHAR(250);</query>
         </version>
+        <version version="6.2.3-DEV"
+                 versiondate="2023-12-23"
+                 versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_karma` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

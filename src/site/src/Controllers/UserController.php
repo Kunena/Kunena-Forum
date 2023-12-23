@@ -240,15 +240,6 @@ class UserController extends KunenaController
             }
         }
 
-        $this->me->karma_time = $now;
-
-        if ($this->me->userid != $target->userid && !$this->me->save()) {
-            $this->app->enqueueMessage($this->me->getError(), 'error');
-            $this->setRedirectBack();
-
-            return;
-        }
-
         $target->karma += $karmaDelta;
 
         // Save the user with the plus or minus karma given, in #__kunena_user remove karma_time

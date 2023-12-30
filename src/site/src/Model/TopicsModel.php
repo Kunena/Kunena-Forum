@@ -615,7 +615,7 @@ class TopicsModel extends KunenaModel
                 $latestCategory   = $params->get('topics_categories', []);
                 $latestCategoryIn = $params->get('topics_catselection', '');
 
-                if (count($klatestCategory) ==1) {
+                if (count($klatestCategory) == 1) {
                     if ($klatestCategory[0] == '-1') {
                         $klatestCategory = [];
                     }
@@ -627,7 +627,7 @@ class TopicsModel extends KunenaModel
                  * From Kunena 6.1 in Kunena menus the default value of topics_catselection for option "Use Global" should be set to 2 instead of empty
                  */
                 if ((empty($latestCategoryIn) || $latestCategoryIn==2) || count($klatestCategory) == 0) {
-                    if($this->config->latestCategory==0) {
+                    if($this->config->latestCategory == 0) {
                         $latestCategory = false;
                     }
                     else {

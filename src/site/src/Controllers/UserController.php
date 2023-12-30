@@ -949,7 +949,7 @@ class UserController extends KunenaController
 
         $username  = $input->$method->get('username', '', 'USERNAME');
         $password  = $input->$method->get('password', '', 'RAW');
-        $remember  = $this->input->getBool('remember', false);
+        $remember  = $this->input->getBool('rememberme', false);
         $secretkey = $input->$method->get('secretkey', '', 'RAW');
 
         $login = KunenaLogin::getInstance();

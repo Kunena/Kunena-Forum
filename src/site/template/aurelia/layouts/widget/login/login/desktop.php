@@ -79,7 +79,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                     <div class="form-group row center" id="kform-login-remember">
                         <div class="controls">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="klogin-desktop-remember"
+                                <input type="checkbox" class="custom-control-input" name="rememberme"
                                        id="klogin-desktop-remember"
                                        value="1"/>
                                 <label class="custom-control-label"

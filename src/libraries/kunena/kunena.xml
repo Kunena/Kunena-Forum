@@ -8,7 +8,7 @@
     <author>Kunena Team</author>	
     <authorEmail>kunena@kunena.org</authorEmail>	
     <authorUrl>https://www.kunena.org</authorUrl>	
-    <copyright>(C) 2008 - 2023 Kunena Team. All rights reserved.</copyright>
+    <copyright>(C) 2008 - 2024 Kunena Team. All rights reserved.</copyright>
     <license>GNU/GPLv3 or later</license>	
     <description>Kunena Framework.</description>	
     <namespace path="src">Kunena\Forum\Libraries</namespace>	

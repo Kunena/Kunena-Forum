@@ -7,7 +7,7 @@
  * @subpackage      Forum.Menu
  *
  * @copyright   (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @copyright       Copyright (C) 2008 - 2023 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2024 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/

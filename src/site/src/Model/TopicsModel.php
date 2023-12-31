@@ -615,10 +615,14 @@ class TopicsModel extends KunenaModel
                 $latestCategory   = $params->get('topics_categories', []);
                 $latestCategoryIn = $params->get('topics_catselection', '');
 
-                if (count($klatestCategory) == 1) {
-                    if ($klatestCategory[0] == '-1') {
-                        $klatestCategory = [];
+                if (is_array($klatestCategory)) {
+                    if (count($klatestCategory) == 1) {
+                        if ($klatestCategory[0] == '-1') {
+                            $klatestCategory = [];
+                        }
                     }
+                } else {
+                    $klatestCategory = [];
                 }
 
                 /*

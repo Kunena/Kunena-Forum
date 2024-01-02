@@ -26,7 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
 					}
 				} else {
 					// Initialize Tooltips
-					new bootstrap.Tooltip(tooltipTriggerEl)
+					if (bootstrap.length) {
+						new bootstrap.Tooltip(tooltipTriggerEl)
+					}
 				}
 			}
 		});

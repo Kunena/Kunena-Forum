@@ -61,12 +61,6 @@ $this->wa->registerAndUseScript('sceditor', 'components/com_kunena/template/aure
 
 // Echo $this->subLayout('Widget/Datepicker');
 
-// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-/*
- $this->addScript('jquery.caret.js');
- $this->addScript('jquery.atwho.js');
- $this->addStyleSheet('jquery.atwho.css');*/
-
 $topictemplate = !$this->config->pickup_category;
 $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));
 ?>

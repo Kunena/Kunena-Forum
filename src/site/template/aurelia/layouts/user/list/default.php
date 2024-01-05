@@ -25,11 +25,6 @@ $config = $this->config;
 
 $cols = 1;
 
-// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addScript('jquery.caret.js');
-$this->addScript('jquery.atwho.js');
-$this->addStyleSheet('jquery.atwho.css');
-$this->addScript('assets/js/search.js');
 ?>
 <h1>
     <?php echo Text::_('COM_KUNENA_MEMBERS'); ?>

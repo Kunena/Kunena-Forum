@@ -39,11 +39,6 @@ $config = isset($this->config) ? $this->config : KunenaFactory::getConfig();
 
 $me = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
 
-// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addStyleSheet('jquery.atwho.css');
-$this->addScript('jquery.caret.js');
-$this->addScript('jquery.atwho.js');
-
 $this->addScriptOptions('com_kunena.kunena_topicicontype', '');
 
 $this->addScript('assets/js/quickreply.js');

@@ -33,11 +33,6 @@ Text::script('COM_KUNENA_SOCIAL_PINTEREST_LABEL');
 Text::script('COM_KUNENA_SOCIAL_WHATSAPP_LABEL');
 Text::script('COM_KUNENA_SOCIAL_REDDIT_LABEL');
 
-// Load caret.js always before atwho.js script and use it for autocomplete, emojiis...
-$this->addStyleSheet('jquery.atwho.css');
-$this->addScript('jquery.caret.js');
-$this->addScript('jquery.atwho.js');
-
 $this->addScript('assets/js/topic.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();

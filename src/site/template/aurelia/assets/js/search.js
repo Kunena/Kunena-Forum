@@ -13,29 +13,6 @@ jQuery(document).ready(function ($) {
 	if ($('#kurl_users').length > 0) {
 		const users_url = $('#kurl_users').val();
 
-		$('#kusersearch').atwho({
-			at: "",
-			displayTpl: '<li data-value="${name}"><img alt="" src="${photo}" width="20px" /> ${name} <small>(${name})</small></li>',
-			limit: 5,
-			callbacks: {
-				remoteFilter: function (query, callback) {
-					$.ajax({
-						url: users_url,
-						data: {
-							search: query
-						}
-					})
-						.done(function (data) {
-							callback(data);
-						})
-						.fail(function () {
-							//TODO: handle the error of ajax request
-						});
-				}
-			}
-		});
-	}
-
 	/* Hide search form when there are search results found */
 	if ($('#kunena_search_results').is(':visible')) {
 		$('#search').collapse("hide");

@@ -44,43 +44,7 @@ jQuery(document).ready(function ($) {
         } else if (qreply.length > 0) {
             item = '.qreply';
         }
-
-        if (item != undefined) {
-            /*$(item).atwho({
-                at: ":",
-                displayTpl: "<li data-value='${key}'>${name} <img src='${url}' height='20' width='20' /></li>",
-                insertTpl: '${name}',
-                callbacks: {
-                    remoteFilter: function (query, callback) {
-                        if (query.length > 0) {
-                            $.ajax({
-                                url: $("#kurl_emojis").val(),
-                                data: {
-                                    search: query
-                                }
-                            })
-                                .done(function (data) {
-                                    callback(data.emojis);
-                                })
-                                .fail(function () {
-                                    //TODO: handle the error of ajax request
-                                });
-                        }
-                    }
-                }
-            });*/
-        }
     }
-
-    /*if (item !== undefined) {
-        const users_url = $('#kurl_users').val();
-        $(item).atwho({
-            at: "@",
-            data: users_url,
-            limit: 5
-        });
-    }*/
-
 
     /* Store form data into localstorage every 1 second */
     if ($.fn.sisyphus !== undefined) {

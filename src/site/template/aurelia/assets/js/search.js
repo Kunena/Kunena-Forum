@@ -8,11 +8,6 @@
  **/
 
 jQuery(document).ready(function ($) {
-
-	/* Provide autocomplete user list in search form and in user list */
-	if ($('#kurl_users').length > 0) {
-		const users_url = $('#kurl_users').val();
-
 	/* Hide search form when there are search results found */
 	if ($('#kunena_search_results').is(':visible')) {
 		$('#search').collapse("hide");

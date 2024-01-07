@@ -35,6 +35,7 @@ if ($bootstrap) {
 
 echo $this->subLayout('Widget/Datepicker');
 
+this->addScript('assets/js/search.js');
 // Load tribute script and css to have autocomplte on user field
 $this->addScript('tribute.js');
 $this->addStyleSheet('tribute.css');

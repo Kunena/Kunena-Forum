@@ -1392,4 +1392,28 @@ class UserController extends KunenaController
 
         jexit();
     }
+
+    /**
+     * Get the list of users by autocomplete in the search form
+     *
+     * @since   Kunena 6.3
+     */
+    public function getusersmentionssearch() {
+        header('Content-type: application/json');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+
+        $response = [];
+
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
+
+        echo json_encode($response);
+
+        jexit();
+    }
 }

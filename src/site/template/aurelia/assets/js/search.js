@@ -8,10 +8,33 @@
  **/
 
 jQuery(document).ready(function ($) {
-
     /* Provide autocomplete user list in search form and in user list */
+    function remoteSearch(text, cb) {
+        var URL = '/index.php?option=com_kunena&view=user&task=usersmentionssearch&format=json';
+        xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                cb(data);
+            } else if (xhr.status === 403) {
+                cb([]);
+            }
+        }
+    };
+        xhr.open("GET", URL + "?q=" + text, true);
+        xhr.send();
+    }
+
     var tribute = new Tribute({
-        collection: []
+        collection: [],
+        //..other config options
+        // function retrieving an array of objects
+        values: function (text, cb) {
+            remoteSearch(text, users => cb(users));
+        },
+        lookup: 'name',
+        fillAttr: 'name'
     });
 
     tribute.attach(document.getElementById("kusersearch"));

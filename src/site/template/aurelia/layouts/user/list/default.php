@@ -25,7 +25,7 @@ $config = $this->config;
 
 $cols = 1;
 
-his->addScript('assets/js/search.js');
+$this->addScript('assets/js/search.js');
 ?>
 <h1>
     <?php echo Text::_('COM_KUNENA_MEMBERS'); ?>

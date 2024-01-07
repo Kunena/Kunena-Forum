@@ -14,6 +14,8 @@ jQuery(document).ready(function ($) {
         collection: []
     });
 
+    tribute.attach(document.getElementById("kusersearch"));
+
 	/* Hide search form when there are search results found */
 	if ($('#kunena_search_results').is(':visible')) {
 		$('#search').collapse("hide");

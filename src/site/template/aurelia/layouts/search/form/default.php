@@ -35,7 +35,7 @@ if ($bootstrap) {
 
 echo $this->subLayout('Widget/Datepicker');
 
-this->addScript('assets/js/search.js');
+$this->addScript('assets/js/search.js');
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search'); ?>" method="post" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">

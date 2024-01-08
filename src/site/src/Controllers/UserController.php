@@ -1399,6 +1399,15 @@ class UserController extends KunenaController
      * @since   Kunena 6.3
      */
     public function getusersmentionssearch() {
+        $user = $this->input->getString('usersearch', null);
+
+        /*$db     = Factory::getContainer()->get('DatabaseDriver');
+        $query  = $db->getQuery(true);
+        $query->select('*')
+            ->from($db->quoteName('#__users'))
+            ->where($db->quoteName('username') . ' LIKE %' . $user . '%');
+        $db->setQuery($query);*/
+
         header('Content-type: application/json');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");

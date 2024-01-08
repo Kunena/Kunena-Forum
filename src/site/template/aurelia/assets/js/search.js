@@ -10,7 +10,7 @@
 jQuery(document).ready(function ($) {
     /* Provide autocomplete user list in search form and in user list */
     function remoteSearch(text, cb) {
-        var URL = '/index.php?option=com_kunena&view=user&task=usersmentionssearch&format=json';
+        var URL = '/index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json';
         xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
@@ -22,7 +22,7 @@ jQuery(document).ready(function ($) {
             }
         }
     };
-        xhr.open("GET", URL + "?q=" + text, true);
+        xhr.open("GET", URL + "&usersearch=" + text, true);
         xhr.send();
     }
 

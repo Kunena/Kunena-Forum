@@ -384,7 +384,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                         <input class="form-control" name="modified_reason"
                                maxlength="200"
                                type="text"
-                               value="<?php echo $this->modified_reason; ?>" data-bs-toggle="tooltip" title="reason"
+                               value="<?php echo $this->modified_reason; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"
                                placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
                     </div>
                 </div>

@@ -1401,12 +1401,13 @@ class UserController extends KunenaController
     public function getusersmentionssearch() {
         $user = $this->input->getString('usersearch', null);
 
-        /*$db     = Factory::getContainer()->get('DatabaseDriver');
+        $db     = Factory::getContainer()->get('DatabaseDriver');
         $query  = $db->getQuery(true);
-        $query->select('*')
+        $query->select($db->quoteName(array('name', 'username')))
             ->from($db->quoteName('#__users'))
-            ->where($db->quoteName('username') . ' LIKE %' . $user . '%');
-        $db->setQuery($query);*/
+            ->where($db->quoteName('username') . ' LIKE \'%' . $user . '%\'');
+        $db->setQuery($query);
+        $row = $db->loadObjectList();
 
         header('Content-type: application/json');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -1415,13 +1416,13 @@ class UserController extends KunenaController
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
 
-        $response = [];
+        //$response = [];
 
         if (ob_get_length()) {
             ob_end_clean();
         }
 
-        echo json_encode($response);
+        echo json_encode($row);
 
         jexit();
     }

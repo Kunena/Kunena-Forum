@@ -116,8 +116,11 @@ class pkg_kunena_languagesInstallerScript
     }
 
     /**
-     * method to run after an install/update/uninstall method
+     * Method to run after an install/update/uninstall method
+     * 
      * @return void
+     * 
+     * @since   Kunena 6.2
      */
     public function postflight($type, $parent)
     {

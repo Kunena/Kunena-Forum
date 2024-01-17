@@ -28,6 +28,7 @@ $this->doc->addScriptOptions('com_kunena.ckeditor_skiname', $this->template->par
 
 $user = Factory::getApplication()->getIdentity();
 $language = $user->getParam('language', 'default');
+$this->doc->addScriptOptions('com_kunena.ckeditor_defaultlanguage', substr($language, 0, 2));
 
 HTMLHelper::_('bootstrap.tab');
 

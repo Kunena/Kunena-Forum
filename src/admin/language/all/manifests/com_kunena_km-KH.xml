@@ -28,6 +28,7 @@
             <filename>km-KH.com_kunena.templates.ini</filename>
             <filename>km-KH.com_kunena.views.ini</filename>
             <filename>km-KH.kunena_tmpl_aurelia.ini</filename>
+            <filename>km-KH.kunena_ckeditor.js</filename>
         </files>
     </fileset>
 </extension>

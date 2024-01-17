@@ -27,6 +27,7 @@
             <filename>cy-GB.com_kunena.templates.ini</filename>
             <filename>cy-GB.com_kunena.views.ini</filename>
             <filename>cy-GB.kunena_tmpl_aurelia.ini</filename>
+            <filename>cy-GB.kunena_ckeditor.js</filename>
         </files>
     </fileset>
 </extension>

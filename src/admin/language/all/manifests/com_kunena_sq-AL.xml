@@ -28,6 +28,7 @@
             <filename>sq-AL.com_kunena.templates.ini</filename>
             <filename>sq-AL.com_kunena.views.ini</filename>
             <filename>sq-AL.kunena_tmpl_aurelia.ini</filename>
+            <filename>sq-AL.kunena_ckeditor.js</filename>
         </files>
     </fileset>
 </extension>

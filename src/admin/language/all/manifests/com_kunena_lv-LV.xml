@@ -28,6 +28,7 @@
             <filename>lv-LV.com_kunena.templates.ini</filename>
             <filename>lv-LV.com_kunena.views.ini</filename>
             <filename>lv-LV.kunena_tmpl_aurelia.ini</filename>
+            <filename>lv-LV.kunena_ckeditor.js</filename>
         </files>
     </fileset>
 </extension>

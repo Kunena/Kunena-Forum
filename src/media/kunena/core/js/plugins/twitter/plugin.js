@@ -8,7 +8,7 @@
  **/
 
 CKEDITOR.plugins.add( 'twitter', {
-	icons: 'twitter',
+	icons: 'x_logo',
 	init: function( editor ) {
 		editor.addCommand( 'insertTwitter', {
 			exec: function( editor ) {

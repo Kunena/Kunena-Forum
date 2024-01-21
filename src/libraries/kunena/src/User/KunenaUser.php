@@ -89,7 +89,7 @@ use Joomla\CMS\User\UserFactoryAwareInterface;
  * @property    string  $yim
  * @property    string  $microsoft
  * @property    string  $skype
- * @property    string  $twitter
+ * @property    string  $x_social
  * @property    string  $facebook
  * @property    string  $google
  * @property    string  $github
@@ -342,7 +342,7 @@ class KunenaUser extends CMSObject
      * @var     string
      * @since   Kunena 6.0
      */
-    public $twitter;
+    public $x_social;
 
     /**
      * @var     string
@@ -2205,7 +2205,7 @@ class KunenaUser extends CMSObject
     public function socialButtons()
     {
         return [
-            'twitter'          => ['url' => 'https://twitter.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_X_SOCIAL'), 'nourl' => '0'],
+            'x_social'          => ['url' => 'https://twitter.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_X_SOCIAL'), 'nourl' => '0'],
             'facebook'         => ['url' => 'https://www.facebook.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'],
             'myspace'          => ['url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'],
             'linkedin'         => ['url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'],
@@ -2317,8 +2317,8 @@ class KunenaUser extends CMSObject
                 return $this->microsoft;
             case 'skype':
                 return $this->skype;
-            case 'twitter':
-                return $this->twitter;
+            case 'x_social':
+                return $this->x_social;
             case 'facebook':
                 return $this->facebook;
             case 'google':

@@ -457,7 +457,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `vk`               varchar(75)  NULL,
     `microsoft`        varchar(75)  NULL,
     `skype`            varchar(75)  NULL,
-    `twitter`          varchar(75)  NULL,
+    `x_social`         varchar(75)  NULL,
     `facebook`         varchar(75)  NULL,
     `google`           varchar(75)  NULL,
     `github`           varchar(75)  NULL,

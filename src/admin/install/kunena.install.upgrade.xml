@@ -259,10 +259,6 @@
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_karma` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;</query>
         </version>
-        <version version="@kunenaversion@"
-                 versiondate="@kunenaversiondate@"
-                 versionname="@kunenaversionname@">
-        </version>
         <version version="6.3.0-DEV"
                  versiondate="2023-10-29"
                  versionname="Internal">
@@ -270,6 +266,17 @@
             ALTER TABLE `#__kunena_users` DROP `friendfeed`;
             </query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `bsky_app` varchar(75) NULL AFTER `reddit`;</query>
+        </version>
+        <version version="6.3.0-DEV"
+                 versiondate="2024-01-21"
+                 versionname="Internal">
+            <query mode="silenterror">
+            ALTER TABLE `#__kunena_users` CHANGE `twitter` `x_social` VARCHAR(75) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL; 
+            </query>
+        </version>
+        <version version="@kunenaversion@"
+                 versiondate="@kunenaversiondate@"
+                 versionname="@kunenaversionname@">
         </version>
     </upgrade>
 </comupgrade>

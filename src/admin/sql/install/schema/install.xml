@@ -999,7 +999,7 @@
         <field name="skype"
                type="varchar(50)"
                null="1"/>
-        <field name="twitter"
+        <field name="x_social"
                type="varchar(50)"
                null="1"/>
         <field name="facebook"

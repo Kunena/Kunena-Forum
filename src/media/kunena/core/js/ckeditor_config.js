@@ -8,8 +8,14 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'nl';
 	// config.uiColor = '#AADC6E';
 	// config.skin = 'moono-lisa';
-	if (Joomla.getOptions('com_kunena.ckeditor_defaultlanguage') != 'default') {
-		config.defaultLanguage = '' + Joomla.getOptions('com_kunena.ckeditor_defaultlanguage') + '';
+	if (Joomla.getOptions('com_kunena.ckeditor_userdefaultlanguage') != 'default') {
+		config.defaultLanguage = '' + Joomla.getOptions('com_kunena.ckeditor_userdefaultlanguage') + '';
+	} else {
+		var joomlaLanguage = Joomla.getOptions('com_kunena.ckeditor_joomladefaultlanguage');
+
+		if (joomlaLanguage != 'en') {
+			config.defaultLanguage = '' + joomlaLanguage + '';
+		}
 	}
 
 	config.smiley_descriptions="";

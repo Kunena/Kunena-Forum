@@ -27,8 +27,15 @@ $this->doc->addScriptOptions('com_kunena.ckeditor_subfolder', Uri::root(true));
 $this->doc->addScriptOptions('com_kunena.ckeditor_skiname', $this->template->params->get('nameskinckeditor'));
 
 $user = Factory::getApplication()->getIdentity();
-$language = $user->getParam('language', 'default');
-$this->doc->addScriptOptions('com_kunena.ckeditor_defaultlanguage', substr($language, 0, 2));
+$userLanguage = $user->getParam('language', 'default');
+$joomlaLanguage = Factory::getApplication()->getLanguage()->getTag();
+if ($userLanguage != 'default') {
+    $this->doc->addScriptOptions('com_kunena.ckeditor_userdefaultlanguage', substr($userLanguage, 0, 2));
+} else {
+    $this->doc->addScriptOptions('com_kunena.ckeditor_userdefaultlanguage', 'default');
+}
+
+$this->doc->addScriptOptions('com_kunena.ckeditor_joomladefaultlanguage', substr($joomlaLanguage, 0, 2));
 
 HTMLHelper::_('bootstrap.tab');
 

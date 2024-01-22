@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension type="file" version="2.5" method="upgrade">
+    <name>Kunena Language - Belarusian</name>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <build>@kunenaversionbuild@</build>
+    <author>Kunena Team</author>
+    <authorEmail>translations@kunena.org</authorEmail>
+    <authorUrl>https://www.transifex.com/projects/p/Kunena/team/be-BY/</authorUrl>
+    <copyright>(C) 2008 - 2024 Kunena Team. All rights reserved.</copyright>
+    <license>GNU/GPL</license>
+    <description>Belarusian language file for Kunena Forum Component</description>
+
+    <fileset>
+        <files folder="site" target="language/be-BY">
+            <filename>be-BY.kunena_ckeditor.js</filename>
+        </files>
+    </fileset>
+</extension>

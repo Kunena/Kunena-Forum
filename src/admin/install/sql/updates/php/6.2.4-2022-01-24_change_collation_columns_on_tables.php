@@ -13,7 +13,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**
  * Convert columns in Kunena tables to collation in utf8mb4
@@ -26,8 +25,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  */
 function kunena_624_2022_01_24_change_collation_columns_on_tables($parent)
 {
-    $config = KunenaFactory::getConfig();
-    
     // Change to varchar 250 the columns which are in varchar 255 because it blocks then the conversion to utf8mb4
     $listKunenaTables = [$db->getPrefix().'kunena_aliases', $db->getPrefix().'kunena_announcement', $db->getPrefix().'kunena_attachments', $db->getPrefix().'kunena_categories', $db->getPrefix().'kunena_configuration',
          $db->getPrefix().'kunena_karma', $db->getPrefix().'kunena_topics', $db->getPrefix().'kunena_messages', $db->getPrefix().'kunena_messages_text', $db->getPrefix().'kunena_polls', $db->getPrefix().'kunena_polls_options',
@@ -63,6 +60,7 @@ function kunena_624_2022_01_24_change_collation_columns_on_tables($parent)
                    }
                 }
             }
+        }
 
     return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_624_CHANGE_COLLATION_ON_COLUMNS_TO_UTF8MB4'), 'success' => true);    
 }

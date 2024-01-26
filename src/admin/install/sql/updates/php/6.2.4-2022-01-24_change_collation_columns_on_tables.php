@@ -49,7 +49,7 @@ function kunena_624_2022_01_24_change_collation_columns_on_tables($parent)
                 // Check column and set to ut8_mb4 when needed
                 foreach ($tableColumns as $column) {
                     if ($column->Collation == 'utf8_general_ci' || $column->Collation == 'utf8mb3_general_ci' || $column->Collation == 'utf8_unicode_ci' || $column->Collation == 'utf8mb3_unicode_ci') {
-                        if ($column->Ttype == 'VARCHAR(255)') {
+                        if ($column->Type == 'VARCHAR(255)') {
                         
                         $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' ' . $column->Type . ' VARCHAR(250);';
                      $db->setQuery($query);

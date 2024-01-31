@@ -36,6 +36,12 @@ use Joomla\CMS\Document\Feed\FeedItem;
  */
 class TopicsDisplay extends KunenaControllerDisplay
 {
+    public $topicsModel;
+
+    public $me;
+
+    public $topics;
+
     /**
      * Return true if layout exists.
      *

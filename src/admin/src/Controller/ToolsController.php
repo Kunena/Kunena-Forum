@@ -442,7 +442,7 @@ class ToolsController extends FormController
         }
 
         $token    = Session::getFormToken() . '=1';
-        $redirect = KunenaRoute::_("{$this->baseurl}&task=doRecount&i={$state->reload}&{$token}", false);
+        $redirect = KunenaRoute::_("{$this->baseurl}&task=tools.doRecount&i={$state->reload}&{$token}", false);
         $this->setResponse(
             [
                 'success' => true,

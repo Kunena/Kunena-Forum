@@ -33,7 +33,7 @@ use Joomla\CMS\Language\Text;
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_('JCANCEL'); ?></button>
-        <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('users.subscribeuserstocategories');">><?php echo Text::_('JSUBMIT'); ?></button>
+        <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('users.subscribeuserstocategories');"><?php echo Text::_('JSUBMIT'); ?></button>
       </div>
     </div>
   </div>

@@ -227,9 +227,9 @@ class TrashController extends FormController
          }
 
          if ($type == 'messages') {
-             $this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
+             $this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&view=trashs' . "&layout=messages", false));
          } else {
-             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+             $this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&view=trashs', false));
          }
 
          return;

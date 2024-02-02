@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Administrator\View\Trash;
+namespace Kunena\Forum\Administrator\View\Trashs;
 
 \defined('_JEXEC') or die();
 
@@ -132,10 +132,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->purgeItems    = $this->get('PurgeItems');
-        $this->md5Calculated = $this->get('Md5');
-
-        /*$this->state              = $this->get('State');
+        $this->state              = $this->get('State');
         $this->trashInternalItems = $this->get('Trashitems');
         $this->setLayout($this->state->get('layout'));
         $this->pagination      = $this->get('Navigation');
@@ -157,7 +154,7 @@ class HtmlView extends BaseHtmlView
 
         $this->list            = new \stdClass();
         $this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
-        $this->list->Direction = $this->escape($this->state->get('list.direction'));*/
+        $this->list->Direction = $this->escape($this->state->get('list.direction'));
 
         $this->addToolbar();
 
@@ -216,11 +213,11 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar(): void
     {
         // Set the title bar text
-        ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
+        ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TRASH_MANAGER'), 'trash');
         ToolbarHelper::spacer();
-        ToolbarHelper::custom('trash.dopurge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
-        ToolbarHelper::spacer();
-        ToolbarHelper::cancel();
+        ToolbarHelper::custom('trash.restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
+        ToolbarHelper::divider();
+        ToolbarHelper::custom('trash.purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
         ToolbarHelper::spacer();
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/trashbin';

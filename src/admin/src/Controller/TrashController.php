@@ -72,66 +72,18 @@ class TrashController extends FormController
             return;
         }
 
-        $cid = $this->input->get('cid', [], 'array');
-        $cid = ArrayHelper::toInteger($cid, []);
+        $cid = $this->app->input->get('cid', array(), 'post', 'array');
+        $cid = ArrayHelper::toInteger($cid);
 
-        $type = $this->input->getCmd('type', 'topics');
+        $type = $this->app->input->getCmd('type', 'topics', 'post');
 
-        if (empty($cid)) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-            return;
+        if (!empty($cid))
+        {
+            $this->app->setUserState('com_kunena.purge', $cid);
+            $this->app->setUserState('com_kunena.type', $type);
         }
 
-        if ($type == 'topics') {
-            $topics = KunenaTopicHelper::getTopics($cid, 'none');
-
-            foreach ($topics as $topic) {
-                $success = $topic->delete();
-
-                if (!$success) {
-                    $this->app->enqueueMessage($topic->getError(), 'error');
-                }
-            }
-
-            if ($success) {
-                KunenaTopicHelper::recount($cid);
-                KunenaCategoryHelper::recount($topic->getCategory()->id);
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
-            }
-        } elseif ($type == 'messages') {
-            $messages = KunenaMessageHelper::getMessages($cid, 'none');
-
-            foreach ($messages as $message) {
-                $success = $message->delete();
-                $target  = KunenaMessageHelper::get($message->id);
-                $topic   = KunenaTopicHelper::get($target->getTopic());
-
-                if ($topic->attachments > 0) {
-                    $topic->attachments = $topic->attachments - 1;
-                    $topic->save(false);
-                }
-
-                if (!$success) {
-                    $this->app->enqueueMessage($message->getError(), 'error');
-                }
-            }
-
-            if ($success) {
-                KunenaTopicHelper::recount($cid);
-                KunenaCategoryHelper::recount($topic->getCategory()->id);
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
-            }
-        }
-
-        if ($type == 'messages') {
-            $this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
-        } else {
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-        }
-
-        return;
+        $this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=purge", false));
     }
 
     /**
@@ -208,6 +160,79 @@ class TrashController extends FormController
         KunenaCategoryHelper::recount();
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+    }
+
+    /**
+     * Method to perform the purge of topics or messages selected in the trashbin
+     *
+     * @param   null  $key  key
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.3
+     */
+    public function dopurge() {
+         $cid = $this->app->getUserState('com_kunena.purge');
+         $cid = ArrayHelper::toInteger($cid, []);
+
+         $type = $this->app->getUserState('com_kunena.type');
+
+         if (empty($cid)) {
+             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');
+             $this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&view=trashs', false));
+
+             return;
+         }
+
+         if ($type == 'topics') {
+             $topics = KunenaTopicHelper::getTopics($cid, 'none');
+
+             foreach ($topics as $topic) {
+                 $success = $topic->delete();
+
+                 if (!$success) {
+                     $this->app->enqueueMessage($topic->getError(), 'error');
+                 }
+             }
+
+             if ($success) {
+                 KunenaTopicHelper::recount($cid);
+                 KunenaCategoryHelper::recount($topic->getCategory()->id);
+                 $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
+             }
+         } elseif ($type == 'messages') {
+             $messages = KunenaMessageHelper::getMessages($cid, 'none');
+
+             foreach ($messages as $message) {
+                 $success = $message->delete();
+                 $target  = KunenaMessageHelper::get($message->id);
+                 $topic   = KunenaTopicHelper::get($target->getTopic());
+
+                 if ($topic->attachments > 0) {
+                     $topic->attachments = $topic->attachments - 1;
+                     $topic->save(false);
+                 }
+
+                 if (!$success) {
+                     $this->app->enqueueMessage($message->getError(), 'error');
+                 }
+             }
+
+             if ($success) {
+                 KunenaTopicHelper::recount($cid);
+                 KunenaCategoryHelper::recount($topic->getCategory()->id);
+                 $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
+             }
+         }
+
+         if ($type == 'messages') {
+             $this->setRedirect(KunenaRoute::_($this->baseurl . "&layout=messages", false));
+         } else {
+             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+         }
+
+         return;
     }
 
     /**

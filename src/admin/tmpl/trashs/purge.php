@@ -21,8 +21,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** @var WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
-/*$wa->useScript('multiselect')
-        ->useScript('formbehavior.chosen');*/
+$wa->useScript('multiselect')
+        ->useScript('formbehavior.chosen');
 
 $count = count($this->purgeItems);
 ?>

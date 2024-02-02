@@ -29,9 +29,9 @@ use Kunena\Forum\Libraries\Model\KunenaModel;
 /**
  * Trash Model for Kunena
  *
- * @since   Kunena 6.3
+ * @since   Kunena 2.0
  */
-class TrashModel extends KunenaModel
+class TrashsModel extends KunenaModel
 {
     /**
      * @var     boolean

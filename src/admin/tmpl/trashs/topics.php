@@ -29,7 +29,7 @@ $wa->useScript('multiselect');
     <div class="row">
         <div id="j-main-container" class="col-md-12" role="main">
             <div class="card card-block bg-faded p-2">
-                <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>"
+                <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trashs') ?>"
                       method="post" id="adminForm"
                       name="adminForm">
                     <input type="hidden" name="type" value="<?php echo $this->escape($this->state->get('layout')) ?>"/>
@@ -44,7 +44,7 @@ $wa->useScript('multiselect');
                     <?php echo HTMLHelper::_('form.token'); ?>
 
                     <fieldset>
-                        <legend><?php echo Text::_('COM_KUNENA_TRASH_VIEW') . ' ' . Text::_('COM_KUNENA_TRASH_MESSAGES') ?>
+                        <legend><?php echo Text::_('COM_KUNENA_TRASH_VIEW') . ' ' . Text::_('COM_KUNENA_TRASH_TOPICS') ?>
                             <span
                                     class="pull-right"><?php echo $this->viewOptionsList; ?></span></legend>
 
@@ -62,7 +62,7 @@ $wa->useScript('multiselect');
                                         title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
                                             class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>
                                 </button>
-                                <button class="btn btn-outline-danger tip" type="button"
+                                <button class="btn btn-outline-primary tip" type="button"
                                         title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
                                         onclick="document.id('filter_search').value='';this.form.submit();"><i
                                             class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
@@ -79,7 +79,7 @@ $wa->useScript('multiselect');
                                 <select name="directionTable" id="directionTable" class="input-medium"
                                         onchange="orderTable()">
                                     <option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-                                    <?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection); ?>
                                 </select>
                             </div>
                             <div class="btn-group pull-right">
@@ -88,7 +88,7 @@ $wa->useScript('multiselect');
                                 <select name="sortTable" id="sortTable" class="input-medium"
                                         onchange="orderTable()">
                                     <option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-                                    <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
+                                    <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering); ?>
                                 </select>
                             </div>
                             <div class="clearfix"></div>
@@ -98,9 +98,7 @@ $wa->useScript('multiselect');
                             <thead>
                             <tr>
                                 <th width="1%" class="nowrap center">
-                                    <input type="checkbox" name="checkall-toggle" value=""
-                                           title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>"
-                                           onclick="Joomla.checkAll(this);"/>
+                                    <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)"/>
                                 </th>
                                 <th width="1%" class="nowrap">
                                     <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
@@ -108,16 +106,13 @@ $wa->useScript('multiselect');
                                 <th>
                                     <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                                 </th>
-                                <th width="15%" class="nowrap">
-                                    <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_MENU_TOPIC', 'topic', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
-                                </th>
                                 <th>
                                     <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'category', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                                 </th>
                                 <th width="10%" class="nowrap">
                                     <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'author', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                                 </th>
-                                <th width="15%" class="nowrap">
+                                <th width="10%" class="nowrap">
                                     <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                                 </th>
                                 <th width="10%" class="nowrap">
@@ -140,16 +135,6 @@ $wa->useScript('multiselect');
                                            title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
                                 </td>
                                 <td class="d-none d-md-table-cell">
-                                    <label for="filter_topic"
-                                           class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-                                    <input class="input-block-level input-filter form-control" type="text"
-                                           name="filter_topic"
-                                           id="filter_topic"
-                                           placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"
-                                           value="<?php echo $this->filterTopic; ?>"
-                                           title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"/>
-                                </td>
-                                <td class="d-none d-md-table-cell">
                                     <label for="filter_category"
                                            class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
                                     <input class="input-block-level input-filter form-control" type="text"
@@ -157,16 +142,6 @@ $wa->useScript('multiselect');
                                            id="filter_category"
                                            placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
                                            value="<?php echo $this->filterCategory; ?>"
-                                           title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
-                                </td>
-                                <td class="nowrap">
-                                    <label for="filter_ip"
-                                           class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-                                    <input class="input-block-level input-filter form-control" type="text"
-                                           name="filter_ip"
-                                           id="filter_ip"
-                                           placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-                                           value="<?php echo $this->filterIp; ?>"
                                            title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
                                 </td>
                                 <td class="nowrap">
@@ -196,7 +171,6 @@ $wa->useScript('multiselect');
                                 </td>
                             </tr>
                             </tfoot>
-                            <tbody>
                             <?php
                             $i      = 0;
                             $itemid = KunenaRoute::fixMissingItemID();
@@ -205,19 +179,15 @@ $wa->useScript('multiselect');
                                 foreach ($this->trashInternalItems as $id => $row) :
                                     ?>
                                     <tr>
-                                        <td><?php echo HTMLHelper::_('grid.id', $i++, intval($row->id)) ?></td>
-                                        <td><?php echo intval($row->id); ?></td>
-                                        <td>
-                                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&mesid=' . $row->id . '&Itemid=' . $itemid . '#' . $row->id); ?>"
-                                               target="_blank"><?php echo $this->escape($row->subject); ?></a></td>
+                                        <td><?php echo HTMLHelper::_('grid.id', $i++, intval($row->getTopic()->id)) ?></td>
+                                        <td><?php echo intval($row->getTopic()->id); ?></td>
                                         <td>
                                             <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&catid=' . $row->getTopic()->category_id . '&id=' . $row->getTopic()->id . '&Itemid=' . $itemid); ?>"
-                                               target="_blank"><?php echo $this->escape($row->getTopic()->subject); ?></a>
-                                        </td>
+                                               target="_blank"><?php echo $this->escape($row->subject); ?></a></td>
                                         <td><?php echo $this->escape($row->getCategory()->name); ?></td>
                                         <td><?php echo $this->escape($row->getAuthor()->getName()); ?></td>
-                                        <td><?php echo $this->escape($row->ip); ?></td>
-                                        <td><?php echo Factory::getDate($row->time)->format('Y-m-d h:m:s', $row->time); ?></td>
+                                        <td><?php echo $row->ip; ?></td>
+                                        <td><?php echo Factory::getDate($row->time)->format('Y-m-d h:m:s'); ?></td>
                                     </tr>
                                     <?php
                                 endforeach;
@@ -238,7 +208,6 @@ $wa->useScript('multiselect');
                                     </td>
                                 </tr>
                             <?php endif; ?>
-                            </tbody>
                         </table>
                     </fieldset>
                 </form>

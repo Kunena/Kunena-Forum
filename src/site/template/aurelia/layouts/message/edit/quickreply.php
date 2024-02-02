@@ -52,7 +52,7 @@ $quick    = $template->params->get('quick');
 $editor   = $template->params->get('editor');
 
 if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
-    $this->captchaDisplay = $template->getCaptcha();
+    $this->captchaDisplay = $template->recaptcha($message->id);
     $this->captchaEnabled = true;
 }
 ?>
@@ -69,10 +69,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                     <button type="button" class="btn-close kreply-cancel" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
+                <div class="card-body">
                     <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic'); ?>" method="post" enctype="multipart/form-data" name="postform" id="postform-<?php echo $message->id; ?>" class="form-horizontal">
                         <input type="hidden" name="task" value="post" />
-                        <input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
                         <input type="hidden" name="parentid" value="<?php echo $message->displayField('id'); ?>" />
+                        <input type="hidden" name="catid" value="<?php echo $category->displayField('id'); ?>" />
                         <?php
                         if (!$config->allowChangeSubject || $me->isModerator()) :
                         ?>
@@ -123,14 +124,6 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                 echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
                             } ?>
                         </div>
-                        <?php if (!empty($this->captchaEnabled)) :
-                        ?>
-                            <div class="form-group">
-                                <div class="control-group">
-                                    <?php echo $this->captchaDisplay; ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
 
                         <?php if ($topic->isAuthorised('subscribe')) :
                         ?>
@@ -158,14 +151,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>"
-                           href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
-                           role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor"
-                           rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
-                        <br/>
+                        <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>" role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor" rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
+                        <br />
 
                         <?php if (!empty($this->captchaEnabled)) :
-                            ?>
+                        ?>
                             <div class="control-group">
                                 <?php echo $this->captchaDisplay; ?>
                             </div>
@@ -173,10 +163,8 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
 
                         <div class="k-footer">
                             <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
-                            <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit"
-                                   value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
-                                   data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
-                                    ?>"/>
+                            <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit" value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
+                                                                                                                                                                                                        ?>" />
                             <?php // TODO: remove data on cancel.
                             ?>
                             <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
@@ -252,7 +240,6 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                     echo '<textarea class="qreply form-control qrlocalstorage' . $message->displayField("id") . '" id="editor" name="message" rows="6" cols="60" placeholder="' . Text::_('COM_KUNENA_ENTER_MESSAGE') . '"></textarea>';
                                 } ?>
                             </div>
-                        <?php endif; ?>
 
                             <?php if ($topic->isAuthorised('subscribe')) :
                             ?>
@@ -279,39 +266,27 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                         </label>
                                     </div>
                                 </div>
+                            <?php endif; ?>
+                            <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>" role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor" rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
+                            <br />
+                        </div>
+                        <?php if (!empty($this->captchaEnabled)) :
+                        ?>
+                            <div class="control-group">
+                                <?php echo $this->captchaDisplay; ?>
                             </div>
                         <?php endif; ?>
-                        <a id="qrlocalstorage<?php echo $message->displayField('id'); ?>"
-                           href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=reply&catid=' . $message->catid . '&id=' . $message->thread . '&mesid=' . $message->id . '&Itemid=' . KunenaRoute::getItemID()) ?>"
-                           role="button" class="btn btn-outline-primary border btn-small btn-link float-end gotoeditor"
-                           rel="nofollow"><?php echo Text::_('COM_KUNENA_GO_TO_EDITOR'); ?></a>
-                        <br/>
-                    </div>
-                    <?php if (!empty($this->captchaEnabled)) :
-                        ?>
-                        <div class="control-group">
-                            <?php echo $this->captchaDisplay; ?>
+                        <div class="card-footer">
+                            <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
+                            <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit" value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
+                                                                                                                                                                                                        ?>" />
+                            <?php // TODO: remove data on cancel.
+                            ?>
+                            <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
                         </div>
-                    <?php endif; ?>
-                    <div class="card-footer">
-                        <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
-                        <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit"
-                               value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>"
-                               data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
-                                ?>"/>
-                        <?php // TODO: remove data on cancel.
-                        ?>
-                        <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel"
-                               value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>"
-                               data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>"
-                               data-bs-dismiss="modal" aria-hidden="true"/>
-                    </div>
-                    <input type="hidden" id="kurl_emojis" name="kurl_emojis"
-                           value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>"/>
-                    <input type="hidden" id="kemojis_allowed" name="kemojis_allowed"
-                           value="<?php echo $config->disableEmoticons ?>"/>
-                        </form>
-                    </div>
+                        <input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
+                        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disableEmoticons ?>" />
+                    </form>
                 </div>
             </div>
         </div>

@@ -536,6 +536,25 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             }
         }
 
+        // If categories exist don't show sampledata message
+        $query = $db->getQuery(true);
+        $query->select('COUNT(*)')->from('#__kunena_categories');
+        $db->setQuery($query);
+
+        $categoriesPresent = $db->loadResult();
+
+        if ($categoriesPresent > 0) {
+            $query = $db->getQuery(true);
+            $query->update($db->quoteName('#__kunena_version'))->set('sampleData = 1');
+            $db->setQuery($query);
+
+            try {
+                $db->execute();
+            } catch (Exception $e) {
+                throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+            }
+        }
+
         // Get collations from all Kunena tables
         $listKunenaTables = [$db->getPrefix().'kunena_aliases', $db->getPrefix().'kunena_announcement', $db->getPrefix().'kunena_attachments', $db->getPrefix().'kunena_categories', $db->getPrefix().'kunena_configuration',
          $db->getPrefix().'kunena_karma', $db->getPrefix().'kunena_topics', $db->getPrefix().'kunena_messages', $db->getPrefix().'kunena_messages_text', $db->getPrefix().'kunena_polls', $db->getPrefix().'kunena_polls_options',

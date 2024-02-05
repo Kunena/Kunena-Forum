@@ -41,7 +41,7 @@
                    description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
                 <option value="">COM_KUNENA_A_USE_GLOBAL</option>
                 <option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
-                <option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
+                <option value="2">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
             </field>
             <field name="topics_deletedtopics"
                    type="radio"

@@ -624,13 +624,14 @@ class TopicsModel extends KunenaModel
                 } else {
                     $klatestCategory = [];
                 }
-
+/*
                 /*
                  * Check if topics_catselection is set on "Use Global"=empty, "Show Categories"=1 or "Hide Categories"=0 then if selected "Show Categories" or "Hide Categories",
                  * get the list of categories from the menu item with topics_categories.
                  * From Kunena 6.1 in Kunena menus the default value of topics_catselection for option "Use Global" should be set to 2 instead of empty
                  */
-                if ((empty($latestCategoryIn) || $latestCategoryIn==2) || count($klatestCategory) == 0) {
+               
+                if (empty($latestCategoryIn) && count($klatestCategory) == 0) {
                     if($this->config->latestCategory == 0) {
                         $latestCategory = false;
                     }
@@ -638,7 +639,12 @@ class TopicsModel extends KunenaModel
                         $latestCategory = explode(',', $this->config->latestCategory);
                     }
 
-                    $latestCategoryIn = $this->config->latestCategoryIn;
+                    $latestCategoryIn = $this->config->latestCategoryIn; 
+                } elseif ($latestCategoryIn > 0 && count($klatestCategory) == 0) {
+                    // When Hide Categories setting is selected
+                    if ($latestCategoryIn==2) {
+                        $latestCategoryIn = false;
+                    }
                 } elseif (count($klatestCategory) > 0) {
                     $latestCategory = $klatestCategory;
                 } else {

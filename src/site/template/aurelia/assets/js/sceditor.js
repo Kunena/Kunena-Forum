@@ -625,10 +625,10 @@ jQuery(document).ready(function ($) {
 					'<input type="text" id="polltitle" />' +
 					'</div>' +
 					'<div>' +
-					'<button type="button" class="btn btn-primary btn-sm" name="addpolloption">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_BUTTON_ADD_POLL_OPTION') + '</button> ' +
+					'<button type="button" class="btn btn-primary btn-sm addpolloption" name="addpolloption">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_BUTTON_ADD_POLL_OPTION') + '</button> ' +
 					'</div>' +
 					'<div>' +
-					'<button type="button" class="btn btn-primary btn-sm" name="removepolloption">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_BUTTON_REMOVE_POLL_OPTION') + '</button> ' +
+					'<button type="button" class="btn btn-primary btn-sm removepolloption" name="removepolloption">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_BUTTON_REMOVE_POLL_OPTION') + '</button> ' +
 					'</div>' +
 					'<div>' +
 					'<label for="polllifespan">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_POLL_LIFE_SPAN') + '</label> ' +
@@ -637,6 +637,14 @@ jQuery(document).ready(function ($) {
 					'<div><input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" /></div>' +
 					'</div>'
 				);
+
+				$content.find('.addpolloption').on('click', function (e) {
+					console.log('gfgddf');
+				});
+
+				$content.find('.removepolloption').on('click', function (e) {
+					console.log('gfgddf');
+				});
 	
 				$content.find('.button').on('click', function (e) {
 					var polltitle = $content.find('#polltitle').val();

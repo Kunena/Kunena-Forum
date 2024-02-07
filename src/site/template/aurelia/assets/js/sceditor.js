@@ -630,6 +630,8 @@ jQuery(document).ready(function ($) {
 					'<div>' +
 					'<button type="button" class="btn btn-primary btn-sm removepolloption" name="removepolloption">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_BUTTON_REMOVE_POLL_OPTION') + '</button> ' +
 					'</div>' +
+					'<div id="poll_options">' +
+					'</div>' +
 					'<div>' +
 					'<label for="polllifespan">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_POLL_LIFE_SPAN') + '</label> ' +
 					'<input type="text" id="polllifespan" />' +
@@ -638,12 +640,24 @@ jQuery(document).ready(function ($) {
 					'</div>'
 				);
 
+				var poll_number_option = 0;
+                
 				$content.find('.addpolloption').on('click', function (e) {
-					console.log('gfgddf');
+					poll_number_option++;
+
+                    			var poll_option_label = '<label for="poll_option" id="poll_option_label'+poll_number_option+'" >Poll option '+poll_number_option+'</label>';
+					var poll_option = '<input type="text" id="poll_option'+poll_number_option+'" />';
+                    
+                    			jQuery('#poll_options').append( poll_option_label );
+                    			jQuery('#poll_options').append( poll_option );
 				});
 
 				$content.find('.removepolloption').on('click', function (e) {
-					console.log('gfgddf');
+					if (poll_number_option > 0) {
+                        			jQuery('#poll_option'+poll_number_option).remove();
+                        			jQuery('#poll_option_label'+poll_number_option).remove();
+                        			poll_number_option--;
+                    			}
 				});
 	
 				$content.find('.button').on('click', function (e) {

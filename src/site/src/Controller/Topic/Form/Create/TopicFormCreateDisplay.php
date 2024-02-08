@@ -234,13 +234,13 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
         $this->privateMessage->body = $saved ? $saved['private'] : $this->privateMessage->body;
 
         $this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
-        
+
         if ($this->me->canSubscribe == -1) {
             $this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
         } else {
             $this->subscriptionsChecked = $this->me->canSubscribe;
         }
-        
+
         $this->app->setUserState('com_kunena.postfields', null);
 
         $this->canSubscribe = $this->canSubscribe();

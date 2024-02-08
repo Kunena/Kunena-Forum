@@ -181,7 +181,13 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
         $this->allowedExtensions = KunenaAttachmentHelper::getExtensions($this->category);
 
         $this->postAnonymous        = $saved ? $saved['anonymous'] : !empty($this->category->postAnonymous);
-        $this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
+
+        if ($this->me->canSubscribe == -1) {
+            $this->subscriptionsChecked = $saved ? $saved['subscribe'] : $this->config->subscriptionsChecked == 1;
+        } else {
+            $this->subscriptionsChecked = $this->me->canSubscribe;
+        }
+
         $this->app->setUserState('com_kunena.postfields', null);
 
         $this->canSubscribe = $this->canSubscribe();

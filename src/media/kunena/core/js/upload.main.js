@@ -21,7 +21,11 @@ jQuery(function ($) {
 
     // Insert bbcode in message
     function insertInMessage(attachid, filename, button) {
-        CKEDITOR.instances.message.insertText(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+            CKEDITOR.instances.message.insertText(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+        } else {
+            sceditor.instance(document.getElementById('message')).insert(' [attachment=' + attachid + ']' + filename + '[/attachment]');
+        }
 
         if (button !== undefined) {
             button.removeClass('btn-primary');

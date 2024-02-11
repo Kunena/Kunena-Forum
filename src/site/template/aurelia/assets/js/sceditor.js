@@ -630,7 +630,7 @@ jQuery(document).ready(function ($) {
 					'<div>' +
 					'<button type="button" class="btn btn-primary btn-sm removepolloption" name="removepolloption">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_BUTTON_REMOVE_POLL_OPTION') + '</button> ' +
 					'</div>' +
-					'<div id="poll_options">' +
+					'<div id="sceditor_poll_options">' +
 					'</div>' +
 					'<div>' +
 					'<label for="polllifespan">' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_POLL_LIFE_SPAN') + '</label> ' +
@@ -641,35 +641,43 @@ jQuery(document).ready(function ($) {
 				);
 
 				var poll_number_option = 0;
-                
-				$content.find('.addpolloption').on('click', function (e) {
-					poll_number_option++;
 
-                    			var poll_option_label = '<label for="poll_option" id="poll_option_label'+poll_number_option+'" >Poll option '+poll_number_option+'</label>';
-					var poll_option = '<input type="text" id="poll_option'+poll_number_option+'" />';
-                    
-                    			jQuery('#poll_options').append( poll_option_label );
-                    			jQuery('#poll_options').append( poll_option );
+				$content.find('.addpolloption').on('click', function (e) {
+                    poll_number_option++;
+
+                    var poll_option_label = '<label for="poll_option" id="poll_option_label'+poll_number_option+'" >Poll option '+poll_number_option+'</label>';
+                    var poll_option = '<input type="text" id="poll_option'+poll_number_option+'" />';
+
+                    jQuery('#sceditor_poll_options').append( poll_option_label );
+                    jQuery('#sceditor_poll_options').append( poll_option );
 				});
 
 				$content.find('.removepolloption').on('click', function (e) {
-					if (poll_number_option > 0) {
-                        			jQuery('#poll_option'+poll_number_option).remove();
-                        			jQuery('#poll_option_label'+poll_number_option).remove();
-                        			poll_number_option--;
-                    			}
-				});
-	
+                    if (poll_number_option > 0) {
+                        jQuery('#poll_option'+poll_number_option).remove();
+                        jQuery('#poll_option_label'+poll_number_option).remove();
+                        poll_number_option--;
+                    }
+                });
+
 				$content.find('.button').on('click', function (e) {
-					var polltitle = $content.find('#polltitle').val();
-	
-					if (polltitle)
-						editor.insert('[tweet]' + tweet_id + '[/tweet]');
-	
-					editor.closeDropDown(true);
-					e.preventDefault();
+                    var poll_title = '<input type="hidden" name="poll_title" value="' + $content.find('#polltitle').val() + '">';
+                    var poll_lifespan = '<input type="hidden" name="poll_time_to_live" value="' + $content.find('#polllifespan').val() + '">';
+
+                    if (poll_number_option > 0) {
+                        jQuery('#poll_options').append( poll_title );
+                        jQuery('#poll_options').append( poll_lifespan );
+
+                        for (var i = 1; i <= poll_number_option; i++) {
+                            jQuery('#poll_options').append( '<input type="hidden" name="polloptionsID[' + i + ']" value="' + $content.find('#poll_option' + i).val() + '">' );
+                        }
+
+                    }
+
+                    editor.closeDropDown(true);
+                    e.preventDefault();
 				});
-	
+
 				editor.createDropDown(caller, 'insertpoll', $content.get(0));
 			},
 			exec: function (caller) {

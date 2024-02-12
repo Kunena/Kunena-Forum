@@ -340,14 +340,19 @@ Text::script('COM_KUNENA_POLL_TITLE');
         <?php endif; ?>
     </div>
 
-    <?php if ($this->message->exists() && $this->config->editMarkup) : ?>
-        <h2>
-            <?php echo Text::_('COM_KUNENA_EDITING_REASON') ?>
-        </h2>
-        <div class="shadow-lg pl-5 pt-3 pb-1 mb-5 rounded">
-            <div class="form-group row" id="modified-reason">
-                <div class="col-md-10">
-                    <input class="form-control" name="modified_reason" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>" data-bs-toggle="tooltip" title="reason" placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>" />
+        <?php if ($this->message->exists() && $this->config->editMarkup) : ?>
+            <h2>
+                <?php echo Text::_('COM_KUNENA_EDITING_REASON') ?>
+            </h2>
+            <div class="shadow-lg pl-5 pt-3 pb-1 mb-5 rounded">
+                <div class="form-group row" id="modified-reason">
+                    <div class="col-md-10">
+                        <input class="form-control" name="modified_reason"
+                               maxlength="200"
+                               type="text"
+                               value="<?php echo $this->modified_reason; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"
+                               placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
+                    </div>
                 </div>
             </div>
         </div>

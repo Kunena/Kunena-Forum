@@ -27,6 +27,7 @@
             <filename>sl-SI.com_kunena.templates.ini</filename>
             <filename>sl-SI.com_kunena.views.ini</filename>
             <filename>sl-SI.kunena_tmpl_aurelia.ini</filename>
+            <filename>sl-SI.kunena_ckeditor.js</filename>
         </files>
     </fileset>
 </extension>

@@ -8,7 +8,9 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'nl';
 	// config.uiColor = '#AADC6E';
 	// config.skin = 'moono-lisa';
-
+	if (Joomla.getOptions('com_kunena.ckeditor_defaultlanguage') != 'default') {
+		config.defaultLanguage = '' + Joomla.getOptions('com_kunena.ckeditor_defaultlanguage') + '';
+	}
 
 	config.smiley_descriptions="";
 

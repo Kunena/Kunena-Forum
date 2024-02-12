@@ -28,6 +28,7 @@
             <filename>fa-IR.com_kunena.templates.ini</filename>
             <filename>fa-IR.com_kunena.views.ini</filename>
             <filename>fa-IR.kunena_tmpl_aurelia.ini</filename>
+            <filename>fa-IR.kunena_ckeditor.js</filename>
         </files>
     </fileset>
 </extension>

@@ -83,47 +83,38 @@ class AttachmentsModel extends ListModel
     * @since   Kunena 1.6
     *
     */
-    protected function populateState($ordering = null, $direction = null)
+    protected function populateState($ordering = 'filename', $direction = 'asc')
     {
-        $this->context = 'com_kunena.admin.attachments';
-
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
         $layout = $app->input->get('layout');
+        $this->context = 'com_kunena.admin.attachments';
 
         if ($layout) {
             $this->context .= '.' . $layout;
         }
 
-        $filterActive = '';
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+        $this->setState('filter.search', $search);
 
-        // List state information
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
-        $this->setState('filter.search', $value);
+        $filename = $this->getUserStateFromRequest($this->context . '.filter.filename', 'filter_filename', '');
+        $this->setState('filter.filename', $filename);
 
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.title', 'filterTitle', '', 'string');
-        $this->setState('filter.title', $value);
+        $filetype = $this->getUserStateFromRequest($this->context . '.filter.filetype', 'filter_filetype', '');
+        $this->setState('filter.filetype', $filetype);
 
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.type', 'filterType', '', 'string');
-        $this->setState('filter.type', $value);
+        $size = $this->getUserStateFromRequest($this->context . '.filter.size', 'filter_size', '');
+        $this->setState('filter.size', $size);
 
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.size', 'filter_size', '', 'string');
-        $this->setState('filter.size', $value);
+        $username = $this->getUserStateFromRequest($this->context . '.filter.username', 'filter_username', '');
+        $this->setState('filter.username', $username);
 
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.dims', 'filter_dims', '', 'string');
-        $this->setState('filter.dims', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.username', 'filter_username', '', 'string');
-        $this->setState('filter.username', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.post', 'filter_post', '', 'string');
-        $this->setState('filter.post', $value);
-
-        $this->setState('filter.active', !empty($filterActive));
+        $post = $this->getUserStateFromRequest($this->context . '.filter.post', 'filter_post', '');
+        $this->setState('filter.post', $post);
 
         // List state information.
-        parent::populateState('filename', 'asc');
+        parent::populateState($ordering, $direction);
     }
 
     /**
@@ -136,10 +127,10 @@ class AttachmentsModel extends ListModel
     protected function getStoreId($id = ''): string
     {
         // Compile the store id.
-        $id .= ':' . $this->getState('filter.title');
-        $id .= ':' . $this->getState('filter.type');
+        $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.filename');
+        $id .= ':' . $this->getState('filter.filetype');
         $id .= ':' . $this->getState('filter.size');
-        $id .= ':' . $this->getState('filter.dims');
         $id .= ':' . $this->getState('filter.username');
         $id .= ':' . $this->getState('filter.post');
 
@@ -201,20 +192,30 @@ class AttachmentsModel extends ListModel
         $query->select('m.name AS user_title');
         $query->join('LEFT', '#__kunena_messages AS m ON m.id = a.mesid');
 
-        // $query->join('LEFT', '#__kunena_messages AS u ON u.userid = a.userid');
+        // Filter by search.
+        $search = $this->getState('filter.search');
 
-        $filter = $this->getState('filter.title');
-
-        if (!empty($filter)) {
-            $title = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(a.filename LIKE ' . $title . ' OR a.filename_real LIKE ' . $title . ')');
+        if (!empty($search)) {
+            if (stripos($search, 'id:') === 0) {
+                $query->where('a.id = ' . (int) substr($search, 3));
+            } else {
+                $search = $db->quote('%' . $db->escape($search, true) . '%');
+                $query->where('(a.filename LIKE ' . $search . ' OR a.filename_real LIKE ' . $search . ' OR a.filetype LIKE ' . $search . ' OR m.name LIKE ' . $search . ' OR m.subject LIKE ' . $search . ' OR a.id LIKE ' . $search . ')');
+            }
         }
 
-        $filter = $this->getState('filter.type');
+        $filter = $this->getState('filter.filename');
 
         if (!empty($filter)) {
-            $type = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(a.filetype LIKE ' . $type . ')');
+            $filename = $db->quote('%' . $db->escape($filter, true) . '%');
+            $query->where('(a.filename LIKE ' . $filename . ' OR a.filename_real LIKE ' . $filename . ')');
+        }
+
+        $filter = $this->getState('filter.filetype');
+
+        if (!empty($filter)) {
+            $filetype = $db->quote('%' . $db->escape($filter, true) . '%');
+            $query->where('(a.filetype LIKE ' . $filetype . ')');
         }
 
         // TODO: support < > and ranges
@@ -243,10 +244,10 @@ class AttachmentsModel extends ListModel
         $direction = strtoupper($this->state->get('list.direction'));
 
         switch ($this->state->get('list.ordering')) {
-            case 'title':
+            case 'filename':
                 $query->order('a.filename ' . $direction);
                 break;
-            case 'type':
+            case 'filetype':
                 $query->order('a.filetype ' . $direction);
                 break;
             case 'size':
@@ -261,15 +262,6 @@ class AttachmentsModel extends ListModel
             default:
                 $query->order('a.id ' . $direction);
         }
-
-        $filter = $this->getState('filter.search');
-
-        if (!empty($filter)) {
-            $post = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(a.filename LIKE ' . $post . ')');
-        }
-
-        $db->setQuery($query);
 
         return $query;
     }

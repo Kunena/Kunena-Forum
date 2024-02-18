@@ -156,6 +156,9 @@ $language->load('com_users');
                 <input type="hidden" name="task" value="">
                 <input type="hidden" name="boxchecked" value="0">
                 <?php echo HTMLHelper::_('form.token'); ?>
+            </div>
+        </div>
+    </div>
 </form>
 <div class="pull-right small">
     <?php echo KunenaVersion::getLongVersionHTML(); ?>

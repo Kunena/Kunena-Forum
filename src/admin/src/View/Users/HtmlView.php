@@ -16,7 +16,6 @@ namespace Kunena\Forum\Administrator\View\Users;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
@@ -78,7 +77,13 @@ class HtmlView extends BaseHtmlView
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_USER_MANAGER'), 'users');
         ToolbarHelper::editList('users.edit');
-        ToolbarHelper::custom('users.logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
+
+        $toolbar->standardButton(
+            'cancel',
+            'COM_KUNENA_LOGOUT',
+            'users.logout'
+        )
+            ->listCheck(true);
 
         /** @var  DropdownButton $dropdown */
         $dropdown = $toolbar->dropdownButton('status-group')

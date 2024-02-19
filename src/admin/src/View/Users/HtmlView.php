@@ -124,4 +124,99 @@ class HtmlView extends BaseHtmlView
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }
+
+    /**
+     * Returns an array of locked filter options.
+     *
+     * @return  array    The HTML code for the select tag
+     *
+     * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
+     */
+    public function signatureOptions(): array
+    {
+        // Build the active state filter options.
+        $options   = [];
+        $options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_YES'));
+        $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_NO'));
+
+        return $options;
+    }
+
+    /**
+     * Returns an array of standard published state filter options.
+     *
+     * @return  array    The HTML code for the select tag
+     *
+     * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
+     */
+    public function blockOptions(): array
+    {
+        // Build the active state filter options.
+        $options   = [];
+        $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
+        $options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
+
+        return $options;
+    }
+
+    /**
+     * Returns an array of type filter options.
+     *
+     * @return  array    The HTML code for the select tag
+     *
+     * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
+     */
+    public function bannedOptions(): array
+    {
+        // Build the active state filter options.
+        $options   = [];
+        $options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_ON'));
+        $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_OFF'));
+
+        return $options;
+    }
+
+    /**
+     * Returns an array of standard published state filter options.
+     *
+     * @return  array   The HTML code for the select tag
+     *
+     * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
+     */
+    public function moderatorOptions(): array
+    {
+        // Build the active state filter options.
+        $options   = [];
+        $options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_YES'));
+        $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_NO'));
+
+        return $options;
+    }
+
+    /**
+     * Returns an array ranks filter options.
+     *
+     * @return  array    The HTML code for the select tag
+     *
+     * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
+     */
+    public function ranksOptions(): array
+    {
+        // Build the active state filter options.
+        $options   = [];
+        $options[] = HTMLHelper::_('select.option', 'Administrator', Text::_('Administrator'));
+        $options[] = HTMLHelper::_('select.option', 'New Member', Text::_('New Member'));
+
+        return $options;
+    }
 }

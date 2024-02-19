@@ -37,11 +37,11 @@ class RanksModel extends ListModel
     {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'rankId', 'a.`rankId`',
-                'rankTitle', 'a.`rankTitle`',
-                'rankMin', 'a.`rankMin`',
-                'rankSpecial', 'a.`rankSpecial`',
-                'rankImage', 'a.`rankImage`',
+                'rankId',
+                'rankTitle',
+                'rankMin',
+                'rankSpecial',
+                'rankImage',
             ];
         }
 
@@ -61,7 +61,7 @@ class RanksModel extends ListModel
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    protected function populateState($ordering = 'a.rankId', $direction = 'asc')
+    protected function populateState($ordering = 'rankId', $direction = 'asc')
     {
         // For some reason kunena sets option to com_m instead of com_kunena.
         // That is why the workaround to set the context manually
@@ -143,27 +143,13 @@ class RanksModel extends ListModel
         }
 
         // Add the list ordering clause.
-        $orderCol  = $this->state->get('list.ordering', 'a.id');
+        $orderCol  = $this->state->get('list.ordering', 'rankId');
         $orderDirn = $this->state->get('list.direction', 'ASC');
 
         if ($orderCol && $orderDirn) {
             $query->order($db->escape($orderCol . ' ' . $orderDirn));
         }
 
-        $db->setQuery($query);
-
         return $query;
-    }
-
-    /**
-     * Get an array of data items
-     *
-     * @return mixed Array of data items on success, false on failure.
-     */
-    public function getItems()
-    {
-        $items = parent::getItems();
-
-        return $items;
     }
 }

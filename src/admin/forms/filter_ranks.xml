@@ -4,44 +4,49 @@
 		<field
 			name="search"
 			type="text"
-			label="Search"
-			hint="Filter" />
-                        <field
+			inputmode="search"
+			label="COM_USERS_SEARCH_USERS"
+			description=""
+			hint="JSEARCH_FILTER" />
+		<field
 			name="rankSpecial"
 			type="list"
-			label="Special"
-                        onchange="this.form.submit();">
-			<option value="">Select Special</option>
-                        <option value="1">JYES</option>
-                        <option value="0">JNO</option>
-                </field>
-                <field
+			label="COM_KUNENA_RANKS_SPECIAL"
+			class="js-select-submit-on-change"
+			default=""
+			validate="options">
+			<option value="">COM_KUNENA_FILTER_SELECT_SPECIAL</option>
+			<option value="1">COM_KUNENA_FIELD_LABEL_YES</option>
+			<option value="0">COM_KUNENA_FIELD_LABEL_NO</option>
+		</field>
+		<field
 			name="rankMin"
 			type="number"
-                        min="0"
-                        max="99999"
-                        default=""
-			label="Minimum Post Count"
-                        onchange="this.form.submit();"/>
+			min="0"
+			max="99999"
+			default=""
+			label="COM_KUNENA_RANKSMIN"
+			hint="COM_KUNENA_FILTER_SELECT_RANKSMIN"
+			class="js-select-submit-on-change" />
 	</fields>
 
 	<fields name="list">
 		<field
 			name="fullordering"
 			type="list"
-			label="COM_CONTENT_LIST_FULL_ORDERING"
-			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
-			onchange="this.form.submit();"
-			default="a.id DESC">
+			label="JGLOBAL_SORT_BY"
+			class="js-select-submit-on-change"
+			default="rankId ASC"
+			validate="options">
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="a.`rankId` ASC">ID Ascending</option>
-			<option value="a.`rankId` DESC">ID Descending</option>
-			<option value="a.`rankTitle` ASC">Title Ascending</option>
-			<option value="a.`rankTitle` DESC">Title Descending</option>
-			<option value="a.`rankSpecial` ASC">Special Ascending</option>
-			<option value="a.`rankSpecial` DESC">Special Descending</option>
-			<option value="a.`rankMin` ASC">Min Ascending</option>
-			<option value="a.`rankMin` DESC">Min Descending</option>
+			<option value="rankId ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="rankId DESC">JGRID_HEADING_ID_DESC</option>
+			<option value="rankTitle ASC">COM_KUNENA_FILTER_FIELD_RANKTITLE_ASC</option>
+			<option value="rankTitle DESC">COM_KUNENA_FILTER_FIELD_RANKTITLE_DESC</option>
+			<option value="rankSpecial ASC">COM_KUNENA_FILTER_FIELD_RANKSPECIAL_ASC</option>
+			<option value="rankSpecial DESC">COM_KUNENA_FILTER_FIELD_RANKSPECIAL_DESC</option>
+			<option value="rankMin ASC">COM_KUNENA_FILTER_FIELD_RANKSMIN_ASC</option>
+			<option value="rankMin DESC">COM_KUNENA_FILTER_FIELD_RANKSMIN_DESC</option>
 		</field>
 		<field
 			name="limit"

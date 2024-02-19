@@ -15,7 +15,7 @@
 			type="list"
 			label="JGLOBAL_SORT_BY"
 			class="js-select-submit-on-change"
-			default="username ASC"
+			default="filename ASC"
 			validate="options">
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="filename ASC">COM_KUNENA_FILTER_FIELD_FILENAME_ASC</option>

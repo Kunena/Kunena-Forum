@@ -160,6 +160,6 @@ $language->load('com_users');
         </div>
     </div>
 </form>
-<div class="pull-right small">
+<div class="text-center small">
     <?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

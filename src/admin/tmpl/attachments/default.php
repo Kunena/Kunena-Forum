@@ -112,6 +112,6 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         </div>
     </div>
 </form>
-<div class="pull-right small">
+<div class="text-center small">
     <?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

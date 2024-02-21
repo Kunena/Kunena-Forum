@@ -74,7 +74,7 @@ $language->load('com_users');
                                 <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $listDirn, $listOrder); ?>
                             </th>
                             <th scope="col" class="w-1 text-center d-none d-lg-table-cell">
-                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_ANN_ID', 'id', $listDirn, $listOrder); ?>
+                                <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>
                             </th>
                         </tr>
                     </thead>
@@ -160,6 +160,6 @@ $language->load('com_users');
         </div>
     </div>
 </form>
-<div class="text-center small">
+<div class="mt-3 text-center small">
     <?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

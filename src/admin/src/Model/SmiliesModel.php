@@ -74,10 +74,8 @@ class SmiliesModel extends ListModel
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    protected function populateState($ordering = null, $direction = null)
+    protected function populateState($ordering = 'id', $direction = 'asc')
     {
-        $this->context = 'com_kunena.admin.smilies';
-
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
@@ -88,21 +86,11 @@ class SmiliesModel extends ListModel
             $this->context .= '.' . $layout;
         }
 
-        $filterActive = '';
-
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
-        $this->setState('filter.search', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.code', 'filter_code', '', 'string');
-        $this->setState('filter.code', $value !== '' ? $value : null);
-
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.location', 'filter_location', '', 'string');
-        $this->setState('filter.location', $value !== '' ? $value : null);
-
-        $this->setState('filter.active', !empty($filterActive));
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+        $this->setState('filter.search', $search);
 
         // List state information.
-        parent::populateState('id', 'asc');
+        parent::populateState($ordering, $direction);
     }
 
     /**
@@ -115,8 +103,7 @@ class SmiliesModel extends ListModel
     protected function getStoreId($id = ''): string
     {
         // Compile the store id.
-        $id .= ':' . $this->getState('filter.code');
-        $id .= ':' . $this->getState('filter.url');
+        $id .= ':' . $this->getState('filter.search');
 
         return parent::getStoreId($id);
     }
@@ -139,6 +126,18 @@ class SmiliesModel extends ListModel
         );
 
         $query->from($db->quoteName('#__kunena_smileys', 'a'));
+
+        // Filter by search.
+        $search = $this->getState('filter.search');
+
+        if (!empty($search)) {
+            if (stripos($search, 'id:') === 0) {
+                $query->where('a.id = ' . (int) substr($search, 3));
+            } else {
+                $search = $db->quote('%' . $db->escape($search, true) . '%');
+                $query->where('(a.location LIKE ' . $search . ' OR a.greylocation LIKE ' . $search . ' OR a.emoticonbar LIKE ' . $search . ' OR a.code LIKE ' . $search . ' OR a.id LIKE ' . $search . ')');
+            }
+        }
 
         $filter = $this->getState('filter.code');
 
@@ -173,8 +172,6 @@ class SmiliesModel extends ListModel
             default:
                 $query->order('a.id ' . $direction);
         }
-
-        $db->setQuery($query);
 
         return $query;
     }

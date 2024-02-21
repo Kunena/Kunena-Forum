@@ -16,9 +16,9 @@ namespace Kunena\Forum\Administrator\View\Smilies;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
@@ -62,19 +62,8 @@ class HtmlView extends BaseHtmlView
         $this->state      = $this->get('State');
         $this->pagination = $this->get('Pagination');
         $this->ktemplate  = KunenaTemplate::getInstance();
-
-        $this->sortFields          = $this->getSortFields();
-        $this->sortDirectionFields = $this->getSortDirectionFields();
-
-        $this->filter           = new \stdClass();
-        $this->filter->Search   = $this->escape($this->state->get('filter.search'));
-        $this->filter->Code     = $this->escape($this->state->get('filter.code'));
-        $this->filter->Active   = $this->escape($this->state->get('filter.active'));
-        $this->filter->Location = $this->escape($this->state->get('filter.location'));
-
-        $this->list            = new \stdClass();
-        $this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
-        $this->list->Direction = $this->escape($this->state->get('list.direction'));
+        $this->filterForm    = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
 
         $this->addToolbar();
 
@@ -86,29 +75,15 @@ class HtmlView extends BaseHtmlView
      *
      * @since   Kunena 6.0
      */
-    protected function getSortFields(): array
-    {
-        $sortFields   = [];
-        $sortFields[] = HTMLHelper::_('select.option', 'code', Text::_('COM_KUNENA_EMOTICONS_CODE'));
-        $sortFields[] = HTMLHelper::_('select.option', 'location', Text::_('COM_KUNENA_EMOTICONS_URL'));
-        $sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
+    // protected function getSortFields(): array
+    // {
+    //     $sortFields   = [];
+    //     $sortFields[] = HTMLHelper::_('select.option', 'code', Text::_('COM_KUNENA_EMOTICONS_CODE'));
+    //     $sortFields[] = HTMLHelper::_('select.option', 'location', Text::_('COM_KUNENA_EMOTICONS_URL'));
+    //     $sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
 
-        return $sortFields;
-    }
-
-    /**
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getSortDirectionFields(): array
-    {
-        $sortDirection   = [];
-        $sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
-        $sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
-
-        return $sortDirection;
-    }
+    //     return $sortFields;
+    // }
 
     /**
      * Add the page title and toolbar.
@@ -119,16 +94,16 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
-        $this->filterActive = $this->escape($this->state->get('filter.active'));
-        $this->pagination   = $this->get('Pagination');
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
 
+        // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
-        ToolbarHelper::spacer();
-        ToolbarHelper::addNew('smilies.add', 'COM_KUNENA_NEW_SMILIE');
+
+        $toolbar->addNew('smilies.add', 'COM_KUNENA_NEW_SMILIE');
         ToolbarHelper::editList('smilies.edit');
-        ToolbarHelper::divider();
         ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'smilies.remove');
-        ToolbarHelper::spacer();
+
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }

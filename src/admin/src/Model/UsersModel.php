@@ -102,22 +102,8 @@ class UsersModel extends ListModel
             return $this->cache[$store];
         }
 
-        // Load the list items.
-        $query = $this->_getListQuery();
-
-        try {
-            $items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
-        } catch (RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-
-            return false;
-        }
-
-        $ids = [];
-
-        foreach ($items as $item) {
-            $ids[] = $item->id;
-        }
+        $items = parent::getItems();
+        $ids   = array_column($items, 'id');
 
         $instances = KunenaUserHelper::loadUsers($ids);
 
@@ -149,7 +135,7 @@ class UsersModel extends ListModel
         $id .= ':' . $this->getState('filter.ip');
         $id .= ':' . $this->getState('filter.rank');
         $id .= ':' . $this->getState('filter.signature');
-        $id .= ':' . $this->getState('filter.block');
+        $id .= ':' . $this->getState('filter.enabled');
         $id .= ':' . $this->getState('filter.banned');
         $id .= ':' . $this->getState('filter.moderator');
 
@@ -173,7 +159,7 @@ class UsersModel extends ListModel
             $options[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
         }
 
-        return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $options, ['action' => 'admin'], 'class="input-block-level" multiple="multiple" size="5"', 'value', 'text', 0);
+        return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $options, ['action' => 'admin'], 'class="input-block-level w-100" multiple="multiple" size="5"', 'value', 'text', 0);
     }
 
     /**
@@ -189,10 +175,8 @@ class UsersModel extends ListModel
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    protected function populateState($ordering = null, $direction = null)
+    protected function populateState($ordering = 'username', $direction = 'asc')
     {
-        $this->context = 'com_kunena.admin.users';
-
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
@@ -203,39 +187,26 @@ class UsersModel extends ListModel
             $this->context .= '.' . $layout;
         }
 
-        $filterActive = '';
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+        $this->setState('filter.search', $search);
 
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
-        $this->setState('filter.search', $value);
+        $rank = $this->getUserStateFromRequest($this->context . '.filter.rank', 'filter_rank', '');
+        $this->setState('filter.rank', $rank);
 
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.username', 'filter_username', '', 'string');
-        $this->setState('filter.username', $value);
+        $signature = $this->getUserStateFromRequest($this->context . '.filter.signature', 'filter_signature', '');
+        $this->setState('filter.signature', $signature);
 
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.email', 'filter_email', '', 'string');
-        $this->setState('filter.email', $value);
+        $enabled = $this->getUserStateFromRequest($this->context . '.filter.enabled', 'filter_enabled', '');
+        $this->setState('filter.enabled', $enabled);
 
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.ip', 'filter_ip', '', 'string');
-        $this->setState('filter.ip', $value);
+        $banned = $this->getUserStateFromRequest($this->context . '.filter.banned', 'filter_banned', '');
+        $this->setState('filter.banned', $banned);
 
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.rank', 'filter_rank', '', 'string');
-        $this->setState('filter.rank', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.signature', 'filter_signature', '', 'string');
-        $this->setState('filter.signature', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.block', 'filter_block', '', 'string');
-        $this->setState('filter.block', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.banned', 'filter_banned', '', 'string');
-        $this->setState('filter.banned', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest($this->context . '.filter.moderator', 'filter_moderator', '', 'string');
-        $this->setState('filter.moderator', $value);
-
-        $this->setState('filter.active', !empty($filterActive));
+        $moderator = $this->getUserStateFromRequest($this->context . '.filter.moderator', 'filter_moderator', '');
+        $this->setState('filter.moderator', $moderator);
 
         // List state information.
-        parent::populateState('username', 'asc');
+        parent::populateState($ordering, $direction);
     }
 
     /**
@@ -275,14 +246,6 @@ class UsersModel extends ListModel
             }
         }
 
-        // Filter by username or name.
-        $username = $this->getState('filter.username');
-
-        if (!empty($username)) {
-            $username = $db->quote('%' . $db->escape($username, true) . '%');
-            $query->where('a.username LIKE ' . $username . ' OR a.name LIKE ' . $username);
-        }
-
         // Filter by rank.
         $rank = $this->getState('filter.rank');
 
@@ -291,26 +254,10 @@ class UsersModel extends ListModel
             $query->where('ku.rank LIKE ' . $rank);
         }
 
-        // Filter by email.
-        $email = $this->getState('filter.email');
-
-        if (!empty($email)) {
-            $email = $db->quote('%' . $db->escape($email, true) . '%');
-            $query->where('a.email LIKE ' . $email);
-        }
-
-        // Filter by IP.
-        $ip = $this->getState('filter.ip');
-
-        if (!empty($ip)) {
-            $ip = $db->quote('%' . $db->escape($ip, true) . '%');
-            $query->where('ku.ip LIKE ' . $ip);
-        }
-
         // Filter by signature.
         $filter = $this->getState('filter.signature');
 
-        if ($filter !== '' && !empty($search)) {
+        if ($filter !== '') {
             if ($filter) {
                 $query->where("ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL");
             } else {
@@ -318,8 +265,8 @@ class UsersModel extends ListModel
             }
         }
 
-        // Filter by block state.
-        $filter = $this->getState('filter.block');
+        // Filter by enabled state.
+        $filter = $this->getState('filter.enabled');
 
         if ($filter !== '') {
             $query->where('a.block=' . (int) $filter);
@@ -381,8 +328,6 @@ class UsersModel extends ListModel
             default:
                 $query->order('a.username ' . $direction);
         }
-
-        $db->setQuery($query);
 
         return $query;
     }

@@ -20,18 +20,19 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
-HTMLHelper::_('behavior.multiselect');
+/** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('table.columns')
+    ->useScript('multiselect');
 
 $app       = Factory::getApplication();
-$user      = $app->getIdentity();
+$user      = $this->getCurrentUser();
 $userId    = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
-
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_kunena&view=ranks'); ?>" method="post" name="adminForm" id="adminForm">
-
     <div class="row">
         <div class="col-md-12">
             <div id="j-main-container" class="j-main-container">
@@ -48,75 +49,59 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                     <table class="table itemList" id="rankList">
                         <thead>
                             <tr>
-                                <th scope="col" class="w-1 text-center">
+                                <td scope="col" class="w-1 text-center">
                                     <?php echo HTMLHelper::_('grid.checkall'); ?>
-                                 </th>
-                                <th width="10%">
+                                </td>
+                                <th scope="col" class="w-5">
                                     <?php echo Text::_('COM_KUNENA_RANKSIMAGE'); ?>
                                 </th>
-                                <th width="58%">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'a.`rankTitle`', $listDirn, $listOrder); ?>
+                                <th scope="col" class="w-10">
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'rankTitle', $listDirn, $listOrder); ?>
                                 </th>
-                                <th width="10%" class="nowrap center">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKS_SPECIAL', 'a.`rankSpecial`', $listDirn, $listOrder); ?>
+                                <th scope="col" class="w-10">
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKS_SPECIAL', 'rankSpecial', $listDirn, $listOrder); ?>
                                 </th>
-                                <th width="10%" class="nowrap center">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKSMIN', 'a.`rankMin`', $listDirn, $listOrder); ?>
+                                <th scope="col" class="w-10">
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKSMIN', 'rankMin', $listDirn, $listOrder); ?>
                                 </th>
-                                <th width="1%" class="nowrap center hidden-phone">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.`rankId`', $listDirn, $listOrder); ?>
+                                <th scope="col" class="w-1">
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'rankId', $listDirn, $listOrder); ?>
                                 </th>
                             </tr>
-
                         </thead>
                         <tbody>
                             <?php foreach ($this->items as $i => $item) : ?>
                                 <?php
-                                // $item->max_ordering = 0;
-                                $ordering   = ($listOrder == 'a.`ordering`');
-                                $canCreate  = $user->authorise('core.create', 'com_kunena');
-                                $canEdit    = $user->authorise('core.edit', 'com_kunena');
-                                $canCheckin = $user->authorise('core.manage', 'com_checkin') || ($item->checked_out == $userId) || ($item->checked_out == 0);
-                                $canChange  = $user->authorise('core.edit.state', 'com_kunena') && $canCheckin;
-                                $link       = Route::_('index.php?option=com_kunena&task=file.edit&id=' . (int) $item->rankId);
-
+                                $canEdit = $user->authorise('core.edit', 'com_kunena');
                                 ?>
-                                <tr data-draggable-group="0" item-id="<?php echo $item->rankId; ?>">
+                                <tr>
                                     <td class="text-center">
                                         <?php echo HTMLHelper::_('grid.id', $i, $item->rankId, false, 'cid', 'cb', $item->rankTitle); ?>
                                     </td>
                                     <td>
-                                        <?php if (isset($item->checked_out) && $item->checked_out) : ?>
-                                            <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'ranks.', $canCheckin); ?>
-                                        <?php endif; ?>
                                         <?php if ($canEdit) : ?>
                                             <a href="<?php echo Route::_('index.php?option=com_kunena&view=rank&layout=edit&id=' . $item->rankId); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->rankTitle); ?>">
-                                            <img loading=lazy src="<?php echo $this->escape($this->ktemplate->getRankPath($item->rankImage, true)) ?>"
-                                                alt="<?php echo $this->escape($item->rankImage); ?>"/></a>
+                                                <img loading=lazy src="<?php echo $this->escape($this->ktemplate->getRankPath($item->rankImage, true)) ?>" alt="<?php echo $this->escape($item->rankImage); ?>" /></a>
                                         <?php else : ?>
-                                            <img loading=lazy src="<?php echo $this->escape($this->ktemplate->getRankPath($item->rankImage, true)) ?>"
-                                                alt="<?php echo $this->escape($item->rankImage); ?>"/>
+                                            <img loading=lazy src="<?php echo $this->escape($this->ktemplate->getRankPath($item->rankImage, true)) ?>" alt="<?php echo $this->escape($item->rankImage); ?>" />
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <?php if (isset($item->checked_out) && $item->checked_out) : ?>
-                                            <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'ranks.', $canCheckin); ?>
-                                        <?php endif; ?>
                                         <?php if ($canEdit) : ?>
                                             <a href="<?php echo Route::_('index.php?option=com_kunena&view=rank&layout=edit&id=' . $item->rankId); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->rankTitle); ?>">
-                                            <?php echo Text::_($item->rankTitle); ?></a>
+                                                <?php echo Text::_($item->rankTitle); ?></a>
                                         <?php else : ?>
                                             <?php echo Text::_($item->rankTitle); ?>
                                         <?php endif; ?>
                                     </td>
 
-                                    <td class="nowrap center">
+                                    <td class="d-none d-md-table-cell">
                                         <?php echo $item->rankSpecial == 1 ? Text::_('COM_KUNENA_YES') : Text::_('COM_KUNENA_NO'); ?>
                                     </td>
-                                    <td class="nowrap center">
+                                    <td class="d-none d-md-table-cell">
                                         <?php echo $this->escape($item->rankMin); ?>
                                     </td>
-                                    <td class="nowrap center">
+                                    <td class="d-none d-md-table-cell">
                                         <?php echo $this->escape($item->rankId); ?>
                                     </td>
                                 </tr>
@@ -125,6 +110,8 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                     </table>
                 <?php endif; ?>
 
+                <?php // load the pagination. 
+                ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 
                 <input type="hidden" name="task" value="" />
@@ -134,6 +121,6 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         </div>
     </div>
 </form>
-<div class="pull-right small">
+<div class="text-center small">
     <?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

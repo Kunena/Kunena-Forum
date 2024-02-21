@@ -16,25 +16,18 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="modal fade" id="subscribecatsusersModal" tabindex="-1" aria-labelledby="subscribecatsusersModal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="subscribecatsusersModalLabel"><?php echo Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_MODAL_TITLE'); ?></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
+<div class="p-3">
+    <div class="row">
         <p><?php echo Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_TIP'); ?></p>
-                    <div class="control-group">
-                        <div class="controls">
-                            <?php echo $this->modCatList; ?>
-                        </div>
-                    </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_('JCANCEL'); ?></button>
-        <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('users.subscribeuserstocategories');"><?php echo Text::_('JSUBMIT'); ?></button>
-      </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->modCatList; ?>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+<div class="btn-toolbar p-3">
+    <joomla-toolbar-button task="users.subscribeuserstocategories" class="ms-auto">
+        <button type="button" class="btn btn-success"><?php echo Text::_('JSUBMIT'); ?></button>
+    </joomla-toolbar-button>
 </div>

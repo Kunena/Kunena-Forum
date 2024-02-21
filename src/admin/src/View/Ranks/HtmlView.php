@@ -20,6 +20,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
@@ -54,6 +55,8 @@ class HtmlView extends BaseHtmlView
      * @return  array  The HTML code for the select tag
      *
      * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
      */
     public static function specialOptions(): array
     {
@@ -104,14 +107,15 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
+
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
 
-        ToolbarHelper::spacer();
-        ToolbarHelper::addNew('rank.add', 'COM_KUNENA_NEW_RANK');
+        $toolbar->addNew('rank.add', 'COM_KUNENA_NEW_RANK');
         ToolbarHelper::editList('ranks.edit');
-        ToolbarHelper::divider();
         ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'ranks.remove');
-        ToolbarHelper::spacer();
+
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }

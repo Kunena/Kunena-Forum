@@ -6,58 +6,51 @@
 			type="text"
 			inputmode="search"
 			label="COM_USERS_SEARCH_USERS"
-			description="COM_USERS_SEARCH_IN_NAME"
-			hint="JSEARCH_FILTER"
-		/>
+			description=""
+			hint="JSEARCH_FILTER" />
 		<field
-			name="state"
-			type="userstate"
-			label="JSTATUS"
-			onchange="this.form.submit();"
-			>
-			<option value="">COM_USERS_FILTER_STATE</option>
-		</field>
-		<field
-			name="mfa"
+			name="signature"
 			type="list"
-			label="COM_USERS_HEADING_MFA"
-			onchange="this.form.submit();"
-			>
-			<option value="">COM_USERS_FILTER_MFA</option>
-			<option value="1">JENABLED</option>
-			<option value="0">JDISABLED</option>
+			label="COM_KUNENA_GEN_SIGNATURE"
+			class="js-select-submit-on-change"
+			default=""
+			validate="options">
+			<option value="">COM_KUNENA_FILTER_SELECT_SIGNATURE</option>
+			<option value="1">COM_KUNENA_FIELD_LABEL_YES</option>
+			<option value="0">COM_KUNENA_FIELD_LABEL_NO</option>
 		</field>
 		<field
-			name="active"
-			type="useractive"
-			label="COM_USERS_HEADING_ACTIVATED"
-			onchange="this.form.submit();"
-			>
-			<option value="">COM_USERS_FILTER_ACTIVE</option>
+			name="enabled"
+			type="list"
+			label="COM_KUNENA_USRL_ENABLED"
+			class="js-select-submit-on-change"
+			default=""
+			validate="options">
+			<option value="">COM_KUNENA_FILTER_SELECT_ENABLED</option>
+			<option value="0">COM_KUNENA_FIELD_LABEL_ON</option>
+			<option value="1">COM_KUNENA_FIELD_LABEL_OFF</option>
 		</field>
 		<field
-			name="group_id"
-			type="usergrouplist"
-			label="COM_USERS_HEADING_GROUPS"
-			onchange="this.form.submit();"
-			>
-			<option value="">COM_USERS_FILTER_USERGROUP</option>
+			name="banned"
+			type="list"
+			label="COM_KUNENA_USRL_BANNED"
+			class="js-select-submit-on-change"
+			default=""
+			validate="options">
+			<option value="">COM_KUNENA_FILTER_SELECT_BANNED</option>
+			<option value="1">COM_KUNENA_FIELD_LABEL_ON</option>
+			<option value="0">COM_KUNENA_FIELD_LABEL_OFF</option>
 		</field>
 		<field
-			name="lastvisitrange"
-			type="lastvisitdaterange"
-			label="COM_USERS_HEADING_LAST_VISIT_DATE"
-			onchange="this.form.submit();"
-			>
-			<option value="">COM_USERS_OPTION_FILTER_LAST_VISIT_DATE</option>
-		</field>
-		<field
-			name="range"
-			type="registrationdaterange"
-			label="COM_USERS_HEADING_REGISTRATION_DATE"
-			onchange="this.form.submit();"
-			>
-			<option value="">COM_USERS_OPTION_FILTER_DATE</option>
+			name="moderator"
+			type="list"
+			label="COM_KUNENA_VIEW_MODERATOR"
+			class="js-select-submit-on-change"
+			default=""
+			validate="options">
+			<option value="">COM_KUNENA_FILTER_SELECT_MODERATOR</option>
+			<option value="1">COM_KUNENA_FIELD_LABEL_YES</option>
+			<option value="0">COM_KUNENA_FIELD_LABEL_NO</option>
 		</field>
 	</fields>
 	<fields name="list">
@@ -65,34 +58,34 @@
 			name="fullordering"
 			type="list"
 			label="JGLOBAL_SORT_BY"
-			onchange="this.form.submit();"
-			default="a.name ASC"
-			validate="options"
-			>
+			class="js-select-submit-on-change"
+			default="username ASC"
+			validate="options">
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="a.name ASC">JGLOBAL_NAME_ASC</option>
-			<option value="a.name DESC">JGLOBAL_NAME_DESC</option>
-			<option value="a.username ASC">COM_USERS_HEADING_USERNAME_ASC</option>
-			<option value="a.username DESC">COM_USERS_HEADING_USERNAME_DESC</option>
-			<option value="a.block ASC">COM_USERS_HEADING_ENABLED_ASC</option>
-			<option value="a.block DESC">COM_USERS_HEADING_ENABLED_DESC</option>
-			<option value="a.activation ASC">COM_USERS_HEADING_ACTIVATED_ASC</option>
-			<option value="a.activation DESC">COM_USERS_HEADING_ACTIVATED_DESC</option>
-			<option value="a.email ASC">COM_USERS_HEADING_EMAIL_ASC</option>
-			<option value="a.email DESC">COM_USERS_HEADING_EMAIL_DESC</option>
-			<option value="a.lastvisitDate ASC">COM_USERS_HEADING_LAST_VISIT_DATE_ASC</option>
-			<option value="a.lastvisitDate DESC">COM_USERS_HEADING_LAST_VISIT_DATE_DESC</option>
-			<option value="a.registerDate ASC">COM_USERS_HEADING_REGISTRATION_DATE_ASC</option>
-			<option value="a.registerDate DESC">COM_USERS_HEADING_REGISTRATION_DATE_DESC</option>
-			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
-			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+			<option value="username ASC">COM_KUNENA_FILTER_FIELD_USERNAME_ASC</option>
+			<option value="username DESC">COM_KUNENA_FILTER_FIELD_USERNAME_DESC</option>
+			<option value="email ASC">COM_KUNENA_FILTER_FIELD_EMAIL_ASC</option>
+			<option value="email DESC">COM_KUNENA_FILTER_FIELD_EMAIL_DESC</option>
+			<option value="ip ASC">COM_KUNENA_FILTER_FIELD_IP_ASC</option>
+			<option value="ip DESC">COM_KUNENA_FILTER_FIELD_IP_DESC</option>
+			<option value="rank ASC">COM_KUNENA_FILTER_FIELD_RANK_ASC</option>
+			<option value="rank DESC">COM_KUNENA_FILTER_FIELD_RANK_DESC</option>
+			<option value="signature ASC">COM_KUNENA_FILTER_FIELD_SIGNATURE_ASC</option>
+			<option value="signature DESC">COM_KUNENA_FILTER_FIELD_SIGNATURE_DESC</option>
+			<option value="enabled ASC">COM_KUNENA_FILTER_FIELD_ENABLED_ASC</option>
+			<option value="enabled DESC">COM_KUNENA_FILTER_FIELD_ENABLED_DESC</option>
+			<option value="banned ASC">COM_KUNENA_FILTER_FIELD_BANNED_ASC</option>
+			<option value="banned DESC">COM_KUNENA_FILTER_FIELD_BANNED_DESC</option>
+			<option value="moderator ASC">COM_KUNENA_FILTER_FIELD_MODERATOR_ASC</option>
+			<option value="moderator DESC">COM_KUNENA_FILTER_FIELD_MODERATOR_DESC</option>
+			<option value="id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="id DESC">JGRID_HEADING_ID_DESC</option>
 		</field>
 		<field
 			name="limit"
 			type="limitbox"
 			label="JGLOBAL_LIST_LIMIT"
 			default="25"
-			onchange="this.form.submit();"
-		/>
+			class="js-select-submit-on-change" />
 	</fields>
 </form>

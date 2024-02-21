@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			inputmode="search"
+			label="COM_USERS_SEARCH_USERS"
+			description=""
+			hint="JSEARCH_FILTER" />
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			class="js-select-submit-on-change"
+			default="filename ASC"
+			validate="options">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="filename ASC">COM_KUNENA_FILTER_FIELD_FILENAME_ASC</option>
+			<option value="filename DESC">COM_KUNENA_FILTER_FIELD_FILENAME_DESC</option>
+			<option value="filetype ASC">COM_KUNENA_FILTER_FIELD_FILETYPE_ASC</option>
+			<option value="filetype DESC">COM_KUNENA_FILTER_FIELD_FILETYPE_DESC</option>
+			<option value="size ASC">COM_KUNENA_FILTER_FIELD_FILESIZE_ASC</option>
+			<option value="size DESC">COM_KUNENA_FILTER_FIELD_FILESIZE_DESC</option>
+			<option value="username ASC">COM_KUNENA_FILTER_FIELD_USERNAME_ASC</option>
+			<option value="username DESC">COM_KUNENA_FILTER_FIELD_USERNAME_DESC</option>
+			<option value="post ASC">COM_KUNENA_FILTER_FIELD_POST_ASC</option>
+			<option value="post DESC">COM_KUNENA_FILTER_FIELD_POST_DESC</option>
+			<option value="id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			class="js-select-submit-on-change" />
+	</fields>
+</form>

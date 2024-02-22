@@ -16,11 +16,13 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
@@ -73,77 +75,6 @@ class HtmlView extends BaseHtmlView
      */
     protected $state;
 
-    /**
-     * An array of items
-     *
-     * @var  array
-     * @since  4.0.0
-     */
-    protected $listOrdering;
-
-    /**
-     * An array of items
-     *
-     * @var  array
-     * @since  4.0.0
-     */
-    protected $listDirection;
-
-    /**
-     * An array of items
-     *
-     * @var  array
-     * @since  4.0.0
-     */
-    protected $filterElement;
-
-    /**
-     * An array of items
-     *
-     * @var  array
-     * @since  4.0.0
-     */
-    protected $filterEnabled;
-
-    /**
-     * An array of items
-     *
-     * @var  array
-     * @since  4.0.0
-     */
-    protected $filterSearch;
-
-    /**
-     * An array of items
-     *
-     * @var  array
-     * @since  4.0.0
-     */
-    protected $total;
-
-    /**
-     * An array of items
-     *
-     * @var  array
-     * @since  4.0.0
-     */
-    protected $limit;
-
-    /**
-     * An array of items
-     *
-     * @var  array
-     * @since  4.0.0
-     */
-    protected $filterName;
-
-    /**
-     * An array of items
-     *
-     * @var  array
-     * @since  4.0.0
-     */
-    protected $filterAccess;
 
     /**
      * Display the view
@@ -158,10 +89,11 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $model            = $this->getModel();
-        $this->items      = $this->get('Items');
-        $this->state      = $this->get('state');
-        $this->pagination = $this->get('Pagination');
+        $this->items         = $this->get('Items');
+        $this->state         = $this->get('state');
+        $this->pagination    = $this->get('Pagination');
+        $this->filterForm    = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
 
         $lang = Factory::getApplication()->getLanguage();
 
@@ -169,30 +101,13 @@ class HtmlView extends BaseHtmlView
             $source    = JPATH_PLUGINS . '/' . $item->folder . '/' . $item->element;
             $extension = 'plg_' . $item->folder . '_' . $item->element;
             $lang->load($extension . '.sys', JPATH_ADMINISTRATOR, null, false, false)
-            || $lang->load($extension . '.sys', $source, null, false, false)
-            || $lang->load($extension . '.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-            || $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false);
+                || $lang->load($extension . '.sys', $source, null, false, false)
+                || $lang->load($extension . '.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
+                || $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false);
             $item->name = Text::_($item->name);
         }
 
-        $this->sortFields          = $this->getSortFields();
-        $this->sortDirectionFields = $this->getSortDirectionFields();
-
         $this->user = Factory::getApplication()->getIdentity();
-
-        $this->filterForm = $model->getFilterForm();
-
-        $this->filter          = new \stdClass();
-        $this->filter->Search  = $this->escape($this->state->get('filter.search'));
-        $this->filter->Enabled = $this->escape($this->state->get('filter.enabled'));
-        $this->filter->Name    = $this->escape($this->state->get('filter.name'));
-        $this->filter->Element = $this->escape($this->state->get('filter.element'));
-        $this->filter->Access  = $this->escape($this->state->get('filter.access'));
-        $this->filter->Active  = $this->escape($this->state->get('filter.active'));
-
-        $this->list            = new \stdClass();
-        $this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
-        $this->list->Direction = $this->escape($this->state->get('list.direction'));
 
         // Check for errors.
         if (\count($errors = $this->get('Errors'))) {
@@ -205,41 +120,6 @@ class HtmlView extends BaseHtmlView
     }
 
     /**
-     * Returns an array of fields the table can be sorted by
-     *
-     * @return  array  Array containing the field name to sort by as the key and display text as value
-     *
-     * @since   3.0
-     */
-    protected function getSortFields(): array
-    {
-        $sortFields   = [];
-        $sortFields[] = HTMLHelper::_('select.option', 'enable', Text::_('JSTATUS'));
-        $sortFields[] = HTMLHelper::_('select.option', 'name', Text::_('COM_PLUGINS_NAME_HEADING'));
-        $sortFields[] = HTMLHelper::_('select.option', 'element', Text::_('COM_PLUGINS_ELEMENT_HEADING'));
-        $sortFields[] = HTMLHelper::_('select.option', 'access', Text::_('JGRID_HEADING_ACCESS'));
-        $sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('JGRID_HEADING_ID'));
-
-        return $sortFields;
-    }
-
-    /**
-     * Returns an array of fields the table can be sorted by
-     *
-     * @return  array  Array containing the field name to sort by as the key and display text as value
-     *
-     * @since   3.0
-     */
-    protected function getSortDirectionFields(): array
-    {
-        $sortDirection   = [];
-        $sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
-        $sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
-
-        return $sortDirection;
-    }
-
-    /**
      * Add the page title and toolbar.
      *
      * @return  void The HTML code for the select tag
@@ -248,15 +128,23 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
+
+        // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_PLUGIN_MANAGER'), 'puzzle');
-        ToolbarHelper::spacer();
-        ToolbarHelper::publish('plugins.publish', 'JTOOLBAR_ENABLE', true);
-        ToolbarHelper::unpublish('plugins.unpublish', 'JTOOLBAR_DISABLE', true);
-        ToolbarHelper::divider();
-        ToolbarHelper::checkIn('plugins.checkIn');
-        ToolbarHelper::spacer();
-        ToolbarHelper::custom('plugins.resync', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
-        ToolbarHelper::spacer();
+
+        $canDo   = ContentHelper::getActions('com_plugins');
+        $toolbar = Toolbar::getInstance();
+
+        ToolbarHelper::title(Text::_('COM_PLUGINS_MANAGER_PLUGINS'), 'plug plugin');
+
+        if ($canDo->get('core.edit.state')) {
+            $toolbar->publish('plugins.publish', 'JTOOLBAR_ENABLE')->listCheck(true);
+            $toolbar->unpublish('plugins.unpublish', 'JTOOLBAR_DISABLE')->listCheck(true);
+            $toolbar->checkin('plugins.checkin');
+        }
+
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/plugins';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }
@@ -267,6 +155,8 @@ class HtmlView extends BaseHtmlView
      * @return  array    The HTML code for the select tag
      *
      * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
      */
     public function publishedOptions(): array
     {

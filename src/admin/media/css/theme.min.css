@@ -2994,6 +2994,10 @@ a:active {
 	border-radius: 50%
 }
 
+.table tr.changed > * {
+	background-color: #ffb514;
+}
+
 .latest-update-card .card-block {
 	padding-top: 0
 }
@@ -4156,7 +4160,7 @@ a:active {
 	border-top: 1px solid #ededed
 }
 
-.table thead {
+/* .table thead {
 	background-color: #f6f8fb
 }
 
@@ -4168,7 +4172,7 @@ a:active {
 
 .table tbody td {
 	vertical-align: middle
-}
+} */
 
 .table tbody td .table-user-thumb {
 	width: 30px;

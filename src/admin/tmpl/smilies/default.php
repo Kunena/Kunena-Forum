@@ -67,11 +67,11 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 <td class="text-center">
                                     <?php echo HTMLHelper::_('grid.id', $i, intval($row->id)) ?>
                                 </td>
-                                <td class="d-none d-md-table-cell center">
+                                <th class="d-none d-md-table-cell center">
                                     <a href="<?php echo Route::_('index.php?option=com_kunena&view=smiley&layout=edit&id=' . (int) $row->id); ?>">
                                         <img loading=lazy src="<?php echo $this->escape($this->ktemplate->getSmileyPath($row->location, true)); ?>" alt="<?php echo $this->escape($row->location); ?>" />
                                     </a>
-                                </td>
+                                    </td>
                                 <td>
                                     <?php echo $this->escape($row->code); ?>
                                 </td>

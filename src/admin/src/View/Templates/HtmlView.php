@@ -18,6 +18,7 @@ namespace Kunena\Forum\Administrator\View\Templates;
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
@@ -95,10 +96,14 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarAdd(): void
     {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
+
+        // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-        ToolbarHelper::spacer();
-        ToolbarHelper::back();
-        ToolbarHelper::spacer();
+
+        $toolbar->back();
+
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }
@@ -131,19 +136,19 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
+
+        // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-        ToolbarHelper::spacer();
-        ToolbarHelper::addNew('template.addnew', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
+
+        $toolbar->addNew('template.addnew', 'COM_KUNENA_TEMPLATES_NEW_TEMPLATE');
         ToolbarHelper::custom('template.edit', 'edit', 'edit', 'COM_KUNENA_EDIT');
-        ToolbarHelper::divider();
         ToolbarHelper::custom('template.publish', 'star', 'star', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
-        ToolbarHelper::divider();
         ToolbarHelper::custom('template.uninstall', 'remove', 'remove', 'COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL');
-        ToolbarHelper::spacer();
         ToolbarHelper::custom('template.chooseCss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
-        ToolbarHelper::divider();
         ToolbarHelper::custom('template.chooseScss', 'edit', 'edit', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITSCSS');
-        ToolbarHelper::divider();
+
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/add-template';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }
@@ -185,16 +190,17 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarEdit(): void
     {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
+
+        // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-        ToolbarHelper::spacer();
-        ToolbarHelper::apply('apply');
-        ToolbarHelper::spacer();
-        ToolbarHelper::save('save');
-        ToolbarHelper::spacer();
+
+        $toolbar->apply('apply');
+        $toolbar->save('save');
         ToolbarHelper::custom('restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE_TEMPLATE_SETTINGS', false);
-        ToolbarHelper::spacer();
-        ToolbarHelper::cancel();
-        ToolbarHelper::spacer();
+        $toolbar->cancel();
+
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/templates/edit-template-settings';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }
@@ -223,14 +229,14 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarEditCss(): void
     {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
+
+        // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
-        ToolbarHelper::spacer();
-        ToolbarHelper::apply('applyCss');
-        ToolbarHelper::spacer();
-        ToolbarHelper::save('saveCss');
-        ToolbarHelper::spacer();
-        ToolbarHelper::spacer();
-        ToolbarHelper::cancel();
-        ToolbarHelper::spacer();
+
+        $toolsbar->apply('applyCss');
+        $toolsbar->save('saveCss');
+        $toolsbar->cancel();
     }
 }

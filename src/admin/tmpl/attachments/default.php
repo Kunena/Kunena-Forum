@@ -79,7 +79,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 <td class="text-center">
                                     <?php echo HTMLHelper::_('grid.id', $i, intval($attachment->id)) ?>
                                 </td>
-                                <td>
+                                <th>
                                     <div class="d-flex">
                                         <div class="image me-2 align-self-center">
                                             <?php echo $attachment->getLayout()->render('thumbnail'); ?>
@@ -88,7 +88,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                             <small><?php echo $attachment->getFilename(); ?></small>
                                         </div>
                                     </div>
-                                </td>
+                                </th>
                                 <td><?php echo $this->escape($attachment->filetype); ?></td>
                                 <td><?php echo number_format(intval($attachment->size) / 1024, 0, '', ',') . ' ' . Text::_('COM_KUNENA_A_FILESIZE_KB'); ?></td>
                                 <td><?php echo $attachment->width > 0 ? $attachment->width . ' x ' . $attachment->height : '' ?></td>

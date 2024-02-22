@@ -92,7 +92,7 @@ $language->load('com_users');
                                 <td class="text-center">
                                     <?php echo HTMLHelper::_('grid.id', $i, intval($user->userid)) ?>
                                 </td>
-                                <td>
+                                <th>
                                     <div class="editlinktip d-flex kwho-<?php echo $user->getType(0, true); ?>" title="<?php echo $this->escape($user->username); ?> ">
                                         <div class="avatar me-2 align-self-center">
                                             <?php echo $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb'); ?>
@@ -108,7 +108,7 @@ $language->load('com_users');
                                             </div>
                                         </div>
                                     </div>
-                                </td>
+                                </th>
                                 <td>
                                     <a href="<?php echo Route::_('index.php?option=com_kunena&view=user&layout=edit&userid=' . (int) $user->userid); ?>" title="<?php echo Text::sprintf('COM_USERS_EDIT_USER', $this->escape($user->name)); ?>">
                                         <?php echo $this->escape($user->email); ?></a>

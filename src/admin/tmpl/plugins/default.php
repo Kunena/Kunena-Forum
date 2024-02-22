@@ -10,251 +10,151 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Session\Session;
-use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
-/** @var WebAssetManager $wa */
+/** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
-$wa->useScript('multiselect');
-
-$saveOrder = $this->list->Ordering == 'ordering';
-
-if ($saveOrder) {
-    $saveOrderingUrl = 'index.php?option=com_plugins&task=plugins.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
-    HTMLHelper::_('draggablelist.draggable');
-}
+$wa->useScript('table.columns')
+    ->useScript('multiselect');
+$app       = Factory::getApplication();
+$user      = $this->getCurrentUser();
+$userId    = $user->get('id');
+$listOrder = $this->escape($this->state->get('list.ordering'));
+$listDirn  = $this->escape($this->state->get('list.direction'));
 ?>
-<div id="kunena" class="container-fluid">
+<form action="index.php?option=com_kunena&view=plugins" method="post" name="adminForm" id="adminForm">
     <div class="row">
-        <div id="j-main-container" class="col-md-12" role="main">
-            <div class="card card-block bg-faded p-2">
-                <form action="index.php?option=com_kunena&view=plugins" method="post" name="adminForm" id="adminForm">
-                    <?php echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]); ?>
-                    <input type="hidden" name="task" value=""/>
-                    <input type="hidden" name="boxchecked" value="0"/>
-                    <input type="hidden" name="filter_order" value="<?php echo $this->list->Ordering; ?>"/>
-                    <input type="hidden" name="filter_order_Dir" value="<?php echo $this->list->Direction; ?>"/>
-                    <?php echo HTMLHelper::_('form.token'); ?>
+        <div class="col-md-12">
+            <div id="j-main-container" class="j-main-container">
+                <?php
+                // Search tools bar
+                echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
+                ?>
 
-                    <div id="filter-bar" class="btn-toolbar">
-                        <div class="filter-search btn-group pull-left">
-                            <label for="filter_search"
-                                   class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-                            <input type="text" name="filter_search" id="filter_search" class="filter form-control"
-                                   placeholder="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"
-                                   value="<?php echo $this->filter->Search; ?>"
-                                   title="<?php echo Text::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>"/>
-                        </div>
-                        <div class="btn-group pull-left">
-                            <button class="btn btn-outline-primary tip" type="submit"
-                                    title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
-                                        class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
-                            </button>
-                            <button class="btn btn-outline-primary tip" type="button"
-                                    title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
-                                    onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
-                                        class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
-                            </button>
-                        </div>
-                        <div class="btn-group pull-right d-none d-md-block">
-                            <label for="limit"
-                                   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-                            <?php echo $this->pagination->getLimitBox(); ?>
-                        </div>
-                        <div class="btn-group pull-right d-none d-md-block">
-                            <label for="directionTable"
-                                   class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
-                            <select name="directionTable" id="directionTable" class="input-medium"
-                                    onchange="Joomla.orderTable()">
-                                <option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-                                <?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
-                            </select>
-                        </div>
-                        <div class="btn-group pull-right">
-                            <label for="sortTable"
-                                   class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
-                            <select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
-                                <option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-                                <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
-                            </select>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <table class="table table-striped" id="articleList">
-                        <thead>
+                <table class="table itemList" id="pluginList">
+                    <thead>
                         <tr>
-                            <th width="1%" class="d-none d-md-table-cell">
-                                <input type="checkbox" name="checkall-toggle" value=""
-                                       title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>"
-                                       onclick="Joomla.checkAll(this)"/>
+                            <td class="w-1 text-center">
+                                <?php echo HTMLHelper::_('grid.checkall'); ?>
+                            </td>
+                            <th scope="col" class="w-1 text-center">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'enabled', $listDirn, $listOrder); ?>
                             </th>
-                            <th width="1%" class="nowrap center">
-                                <?php echo HTMLHelper::_('grid.sort', 'JSTATUS', 'enabled', $this->list->Direction, $this->list->Ordering); ?>
+                            <th scope="col" class="title">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_PLUGINS_NAME_HEADING', 'name', $listDirn, $listOrder); ?>
                             </th>
-                            <th class="title">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_NAME_HEADING', 'name', $this->list->Direction, $this->list->Ordering); ?>
+                            <th scope="col" class="w-10 d-none d-md-table-cell">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_PLUGINS_FOLDER_HEADING', 'folder', $listDirn, $listOrder); ?>
                             </th>
-                            <th width="15%" class="nowrap d-none d-md-table-cell">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_PLUGINS_ELEMENT_HEADING', 'element', $this->list->Direction, $this->list->Ordering); ?>
+                            <th scope="col" class="w-10 d-none d-md-table-cell">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_PLUGINS_ELEMENT_HEADING', 'element', $listDirn, $listOrder); ?>
                             </th>
-                            <th width="10%" class="d-none d-md-table-cell center">
-                                <?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access', $this->list->Direction, $this->list->Ordering); ?>
+                            <th scope="col" class="w-10 d-none d-md-table-cell">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'access', $listDirn, $listOrder); ?>
                             </th>
-                            <th width="1%" class="nowrap center d-none d-md-table-cell">
-                                <?php echo HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'extension_id', $this->list->Direction, $this->list->Ordering); ?>
+                            <th scope="col" class="w-5 d-none d-md-table-cell">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'extension_id', $listDirn, $listOrder); ?>
                             </th>
                         </tr>
-                        <tr>
-                            <td class="d-none d-md-table-cell">
-                            </td>
-                            <td class="nowrap center">
-                                <label for="filter_enabled"
-                                       class="element-invisible"><?php echo Text::_('All'); ?></label>
-                                <select name="filter_enabled" id="filter_enabled"
-                                        class="select-filter filter form-control"
-                                        onchange="Joomla.orderTable()">
-                                    <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-                                    <?php echo HTMLHelper::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filter->Enabled, true); ?>
-                                </select>
-                            </td>
-                            <td class="nowrap">
-                                <label for="filter_name"
-                                       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-                                <input class="input-block-level input-filter filter form-control" type="text"
-                                       name="filter_name"
-                                       id="filter_name"
-                                       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-                                       value="<?php echo $this->filter->Name; ?>"
-                                       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
-                            </td>
-                            <td class="nowrap center">
-                                <label for="filter_element"
-                                       class="element-invisible"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_SEARCHIN'); ?></label>
-                                <input class="input-block-level input-filter filter form-control" type="text"
-                                       name="filter_element"
-                                       id="filter_element"
-                                       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-                                       value="<?php echo $this->filter->Element; ?>"
-                                       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
-                            </td>
-                            <td class="nowrap center">
-                                <label for="filterAccess"
-                                       class="element-invisible"><?php echo Text::_('All'); ?></label>
-                                <select name="filterAccess" id="filterAccess"
-                                        class="select-filter filter form-control"
-                                        onchange="Joomla.orderTable()">
-                                    <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-                                    <?php echo HTMLHelper::_('select.options', HTMLHelper::_('access.assetgroups'), 'value', 'text', $this->filter->Access, true); ?>
-                                </select>
-                            </td>
-                            <td class="nowrap center d-none d-md-table-cell">
-                            </td>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <td colspan="10">
-                                <?php echo $this->pagination->getListFooter(); ?>
-                            </td>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        <?php
-                        $i                  = 0;
-                        $k                  = 0;
-                        if ($this->pagination->total > 0) :
-                            foreach ($this->items as $i => $item) :
-                                $canEdit = $this->user->authorise('core.edit', 'com_plugins');
-                                $canCheckin = $this->user->authorise('core.manage', 'com_checkIn') || $item->checked_out == $this->user->get('id') || $item->checked_out == 0;
-                                $canChange  = $this->user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
-                                ?>
-                                <tr>
-                                    <td class="center d-none d-md-table-cell">
-                                        <?php echo HTMLHelper::_('grid.id', $i, $item->extension_id); ?>
-                                    </td>
-                                    <td class="center">
-                                        <?php echo HTMLHelper::_('jgrid.published', $item->enabled, $i, '', $canChange); ?>
-                                    </td>
-                                    <td>
-                                        <?php if ($item->checked_out) : ?>
-                                            <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, '', $canCheckin); ?>
-                                        <?php endif; ?>
-                                        <?php if ($canEdit) : ?>
-                                            <a href="#plugin<?php echo $item->extension_id; ?>Modal"
-                                               data-bs-toggle="modal"
-                                               id="title-><?php echo $item->extension_id; ?>">
-                                                <?php echo Text::_($item->name); ?>
-                                            </a>
-                                            <?php echo HTMLHelper::_(
-                                                'bootstrap.renderModal',
-                                                'plugin' . $item->extension_id . 'Modal',
-                                                [
-                                                    'url'         => Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal'),
-                                                    'title'       => Text::_($item->name),
-                                                    'height'      => '400',
-                                                    'width'       => '800px',
-                                                    'bodyHeight'  => '70',
-                                                    'modalWidth'  => '80',
-                                                    'closeButton' => false,
-                                                    'backdrop'    => 'static',
-                                                    'keyboard'    => false,
-                                                    'footer'      => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"'
-                                                        . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#closeBtn\'})">'
-                                                        . Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
-                                                        . '<button type="button" class="btn btn-primary" data-bs-dismiss="modal"'
-                                                        . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#saveBtn\'})">'
-                                                        . Text::_('JSAVE') . '</button>'
-                                                        . '<button type="button" class="btn btn-success"'
-                                                        . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#applyBtn\'})">'
-                                                        . Text::_('JAPPLY') . '</button>',
-                                                ]
-                                            ); ?>
-                                        <?php else : ?>
-                                            <?php echo $item->name; ?>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td class="nowrap small d-none d-md-table-cell">
-                                        <?php echo $this->escape($item->element); ?>
-                                    </td>
-                                    <td class="small d-none d-md-table-cell center">
-                                        <?php echo $this->escape($item->access_level); ?>
-                                    </td>
-                                    <td class="center d-none d-md-table-cell">
-                                        <?php echo (int) $item->extension_id; ?>
-                                    </td>
-                                </tr>
-                                <?php
-                                $i++;
-                                $k = 1 - $k;
-                            endforeach;
-                        else : ?>
-                            <tr>
-                                <td colspan="10">
-                                    <div class="card card-block bg-faded p-2 center filter-state">
-                                        <span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
-                                            <?php if ($this->filter->Active || $this->pagination->total > 0) : ?>
-                                                <button class="btn btn-outline-primary" type="button"
-                                                        onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-                                            <?php endif; ?>
-                                        </span>
-                                    </div>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->items as $i => $item) :
+                            $link = Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal');
+                            $linkModal = HTMLHelper::_(
+                                'link',
+                                '#plugin' . $item->extension_id . 'Modal',
+                                $item->name,
+                                'data-bs-toggle="modal" id="title-' . $item->extension_id . '"'
+                            );
+
+                            if (!empty($item->note)) {
+                                $linkModal .= "<div class=\"small\">" . Text::sprintf('JGLOBAL_LIST_NOTE', $this->escape($item->note)) . "</div>";
+                            }
+
+                            $canEdit    = $user->authorise('core.edit', 'com_plugins');
+                            $canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || is_null($item->checked_out);
+                            $canChange  = $user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
+                        ?>
+                            <tr class="row<?php echo $i % 2; ?>" data-dragable-group="<?php echo $item->folder; ?>">
+                                <td class="text-center">
+                                    <?php echo HTMLHelper::_('grid.id', $i, $item->extension_id, false, 'cid', 'cb', $item->name); ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo HTMLHelper::_('jgrid.published', $item->enabled, $i, 'plugins.', $canChange); ?>
+                                </td>
+                                <th scope="row">
+                                    <?php if ($item->checked_out) : ?>
+                                        <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'plugins.', $canCheckin); ?>
+                                    <?php endif; ?>
+                                    <?php if ($canEdit) : ?>
+                                        <?php echo $linkModal; ?>
+                                        <?php echo HTMLHelper::_(
+                                            'bootstrap.renderModal',
+                                            'plugin' . $item->extension_id . 'Modal',
+                                            array(
+                                                'url'         => $link,
+                                                'title'       => Text::_($item->name),
+                                                'height'      => '400px',
+                                                'width'       => '800px',
+                                                'bodyHeight'  => '70',
+                                                'modalWidth'  => '80',
+                                                'closeButton' => false,
+                                                'backdrop'    => 'static',
+                                                'keyboard'    => false,
+                                                'footer'      => '<button type="button" class="btn btn-primary"'
+                                                    . ' onclick="toggleInlineHelp({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\'})">'
+                                                    . Text::_('JINLINEHELP') . '</button>'
+                                                    . '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"'
+                                                    . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#closeBtn\'})">'
+                                                    . Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
+                                                    . '<button type="button" class="btn btn-primary" data-bs-dismiss="modal"'
+                                                    . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#saveBtn\'})">'
+                                                    . Text::_('JSAVE') . '</button>'
+                                                    . '<button type="button" class="btn btn-success"'
+                                                    . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#applyBtn\'})">'
+                                                    . Text::_('JAPPLY') . '</button>',
+                                            )
+                                        ); ?>
+
+                                    <?php else : ?>
+                                        <?php echo $item->name; ?>
+                                    <?php endif; ?>
+                                </th>
+                                <td class="small d-none d-md-table-cell">
+                                    <?php echo $this->escape($item->folder); ?>
+                                </td>
+                                <td class="small d-none d-md-table-cell">
+                                    <?php echo $this->escape($item->element); ?>
+                                </td>
+                                <td class="small d-none d-md-table-cell">
+                                    <?php echo $this->escape($item->access_level); ?>
+                                </td>
+                                <td class="d-none d-md-table-cell">
+                                    <?php echo (int) $item->extension_id; ?>
                                 </td>
                             </tr>
-                        <?php endif; ?>
-                        </tbody>
-                    </table>
-                </form>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+
+                <?php // load the pagination. 
+                ?>
+                <?php echo $this->pagination->getListFooter(); ?>
+
+                <input type="hidden" name="task" value="" />
+                <input type="hidden" name="boxchecked" value="0" />
+                <?php echo HTMLHelper::_('form.token'); ?>
             </div>
         </div>
     </div>
-    <div class="pull-right small">
-        <?php echo KunenaVersion::getLongVersionHTML(); ?>
-    </div>
+</form>
+<div class="mt-3 text-center small">
+    <?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>
 <script>
     Array.from(document.querySelectorAll('.modal')).forEach(modalEl => {
@@ -264,4 +164,32 @@ if ($saveOrder) {
             }, 1000);
         });
     });
+    toggleInlineHelp = options => {
+        const iframe = document.querySelector(`${options.iframeSelector} iframe`);
+        if (iframe) {
+            [].slice.call(iframe.contentWindow.document.querySelectorAll(`div.hide-aware-inline-help`)).forEach(elDiv => {
+                // Toggle the visibility of the node by toggling the 'd-none' Bootstrap class.
+                elDiv.classList.toggle('d-none'); // The ID of the description whose visibility is toggled.
+
+                const myId = elDiv.id; // The ID of the control described by this node (same ID, minus the '-desc' suffix).
+
+                const controlId = myId ? myId.substr(0, myId.length - 5) : null; // Get the control described by this node.
+
+                const elControl = controlId ? document.getElementById(controlId) : null; // Is this node hidden?
+
+                const isHidden = elDiv.classList.contains('d-none'); // If we do not have a control we will exit early
+
+                if (!controlId || !elControl) {
+                    return;
+                } // Unset the aria-describedby attribute in the control when the description is hidden and vice–versa.
+
+
+                if (isHidden && elControl.hasAttribute('aria-describedby')) {
+                    elControl.removeAttribute('aria-describedby');
+                } else if (!isHidden) {
+                    elControl.setAttribute('aria-describedby', myId);
+                }
+            });
+        }
+    };
 </script>

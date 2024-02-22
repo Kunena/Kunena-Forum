@@ -70,24 +70,21 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
-        $bar = Toolbar::getInstance('toolbar');
+        $toolbar = Toolbar::getInstance('toolbar');
 
-        ToolbarHelper::spacer();
-        ToolbarHelper::apply('config.apply');
-        ToolbarHelper::save('config.save');
-        ToolbarHelper::divider();
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CONFIGURATION'), 'wrench');
+        $toolbar->apply('config.apply');
+        $toolbar->save('config.save');
 
-        HTMLHelper::_('bootstrap.renderModal', 'settingModal');
+        $toolbar->popupButton('batch', 'COM_KUNENA_RESET_CONFIG')
+            ->popupType('inline')
+            ->textHeader(Text::_('COM_KUNENA_RESET_CONFIG'))
+            ->url('#joomla-dialog-setting')
+            ->modalWidth('800px')
+            ->modalHeight('fit-content')
+            ->listCheck(false);
+        $toolbar->cancel('config.cancel', 'JTOOLBAR_CANCEL');
 
-        $title = Text::_('COM_KUNENA_RESET_CONFIG');
-        $dhtml = "<button data-bs-toggle=\"modal\" data-bs-target=\"#settingModal\" class=\"btn btn-small\">
-					<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
-					$title</button>";
-        $bar->appendButton('Custom', $dhtml, 'restore');
-        ToolbarHelper::back('JTOOLBAR_CANCEL', 'index.php?option=com_kunena');
-
-        ToolbarHelper::spacer();
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/configuration';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }

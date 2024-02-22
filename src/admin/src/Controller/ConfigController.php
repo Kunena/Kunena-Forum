@@ -165,4 +165,20 @@ class ConfigController extends FormController
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false), Text::_('COM_KUNENA_CONFIG_DEFAULT'));
     }
+
+    /**
+     * Method to cancel an edit.
+     *
+     * @param   string  $key  The name of the primary key of the URL variable.
+     *
+     * @return  boolean  True if access level checks pass, false otherwise.
+     *
+     * @since   Kunena 6.3.0-BETA3
+     */
+    public function cancel($key = null)
+    {
+        $this->setRedirect(KunenaRoute::_($this->kunenabaseurl, false));
+
+        return true;
+    }
 }

@@ -8811,3 +8811,13 @@ select.form-control {
 .kwho-banned {
 	color: #A39D49;
 }
+.wrapword {
+	white-space: pre-wrap;
+	/* Modern browsers */
+	word-wrap: break-word;
+	/* Additional support for older browsers */
+}
+
+p.select_to_clipboard {
+	cursor: pointer;
+}

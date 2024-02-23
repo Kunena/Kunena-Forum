@@ -19,8 +19,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
-use Kunena\Forum\Libraries\Collection\KunenaCollection;
-use Kunena\Forum\Libraries\Log\KunenaLogFinder;
 
 /**
  * Logs Model for Kunena

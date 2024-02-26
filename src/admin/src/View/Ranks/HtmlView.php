@@ -44,12 +44,6 @@ class HtmlView extends BaseHtmlView
     protected $state;
 
     /**
-     * @var mixed
-     * @since version
-     */
-    protected $filterActive;
-
-    /**
      * Returns an array of standard published state filter options.
      *
      * @return  array  The HTML code for the select tag

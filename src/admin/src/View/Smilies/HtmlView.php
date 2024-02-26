@@ -41,11 +41,6 @@ class HtmlView extends BaseHtmlView
      */
     protected $state;
 
-    /**
-     * @var mixed
-     * @since version
-     */
-    protected $filterActive;
 
     /**
      * @param   null  $tpl  tpl

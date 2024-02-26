@@ -52,16 +52,17 @@ class Kunenaforum
      */
     public static function categorylist($name, $parent, $options = [], $params = [], $attribs = null, $key = 'value', $text = 'text', $selected = [], $idtag = false, $translate = false)
     {
-        $preselect   = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
-        $unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
-        $sections    = isset($params['sections']) ? (bool) $params['sections'] : 0;
-        $ordering    = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
-        $direction   = isset($params['direction']) && $params['direction'] == 'desc' ? -1 : 1;
-        $action      = isset($params['action']) ? (string) $params['action'] : 'read';
-        $levels      = isset($params['levels']) ? (int) $params['levels'] : 10;
-        $topleveltxt = isset($params['toplevel']) ? $params['toplevel'] : false;
-        $catid       = isset($params['catid']) ? (int) $params['catid'] : 0;
-        $hide_lonely = isset($params['hide_lonely']) ? (bool) $params['hide_lonely'] : 0;
+        $preselect     = isset($params['preselect']) ? (bool) ($params['preselect'] && $params['preselect'] != 'false') : true;
+        $unpublished   = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
+        $sections      = isset($params['sections']) ? (bool) $params['sections'] : 0;
+        $ordering      = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
+        $direction     = isset($params['direction']) && $params['direction'] == 'desc' ? -1 : 1;
+        $action        = isset($params['action']) ? (string) $params['action'] : 'read';
+        $levels        = isset($params['levels']) ? (int) $params['levels'] : 10;
+        $topleveltxt   = isset($params['toplevel']) ? $params['toplevel'] : false;
+        $catid         = isset($params['catid']) ? (int) $params['catid'] : 0;
+        $hide_lonely   = isset($params['hide_lonely']) ? (bool) $params['hide_lonely'] : 0;
+        $returnOptions = isset($params['return_options']) ? (bool) $params['return_options'] : 0;
 
         $params                = [];
         $params['ordering']    = $ordering;
@@ -130,9 +131,9 @@ class Kunenaforum
         }
 
         if ($topleveltxt) {
-            $me         = KunenaUserHelper::getMyself();
-            $disabled   = ($action == 'admin' && !$me->isAdmin());
-            $options [] = HTMLHelper::_('select.option', '0', Text::_($topleveltxt), 'value', 'text', $disabled);
+            $me        = KunenaUserHelper::getMyself();
+            $disabled  = ($action == 'admin' && !$me->isAdmin());
+            $options[] = HTMLHelper::_('select.option', '0', Text::_($topleveltxt), 'value', 'text', $disabled);
 
             if ($preselect && empty($selected) && !$disabled) {
                 $selected[] = 0;
@@ -150,7 +151,7 @@ class Kunenaforum
                 $selected[] = $category->id;
             }
 
-            $options [] = HTMLHelper::_('select.option', $category->id, str_repeat('- ', $category->level + $toplevel) . ' ' . $category->name, 'value', 'text', $disabled);
+            $options[] = HTMLHelper::_('select.option', $category->id, str_repeat('- ', $category->level + $toplevel) . ' ' . $category->name, 'value', 'text', $disabled);
         }
 
         $disabled = false;
@@ -160,10 +161,14 @@ class Kunenaforum
                 $selected[] = $category->id;
             }
 
-            $options [] = HTMLHelper::_('select.option', $category->id, '+ ' . $category->getParent()->name . ' / ' . $category->name, 'value', 'text', $disabled);
+            $options[] = HTMLHelper::_('select.option', $category->id, '+ ' . $category->getParent()->name . ' / ' . $category->name, 'value', 'text', $disabled);
         }
 
         reset($options);
+
+        if ($returnOptions) {
+            return $options;
+        }
 
         if (\is_array($attribs)) {
             $attribs = ArrayHelper::toString($attribs);
@@ -293,7 +298,7 @@ class Kunenaforum
 
         return implode("\n", $html);
     }
- 
+
     /**
      * Method to load the Sortable script and make table sortable
      *
@@ -325,10 +330,10 @@ class Kunenaforum
             "
 		jQuery(document).ready(function ($){
 			var sortableList = new $.JSortableList('#"
-            . $tableId . " tbody','" . $formId . "','" . $sortDir . "' , '" . $saveOrderingUrl . "','','" . $nestedList . "');
+                . $tableId . " tbody','" . $formId . "','" . $sortDir . "' , '" . $saveOrderingUrl . "','','" . $nestedList . "');
 		});
 	"
-            );
+        );
 
         return true;
     }

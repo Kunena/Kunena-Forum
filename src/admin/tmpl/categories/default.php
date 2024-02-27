@@ -31,7 +31,6 @@ $wa->useScript('table.columns')
 $app    = Factory::getApplication();
 $user   = $this->getCurrentUser();
 $userId = $user->get('id');
-// $filteredItem    = $this->escape($this->state->get('item.id'));
 $listOrder       = $this->escape($this->state->get('list.ordering'));
 $listDirn        = $this->escape($this->state->get('list.direction'));
 $saveOrder       = ($listOrder == 'ordering' && strtolower($listDirn) == 'asc');
@@ -40,20 +39,6 @@ $saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=categories.
 if ($saveOrder) {
     HTMLHelper::_('kunenaforum.sortablelist', 'categoryList', 'adminForm', $listDirn, $saveOrderingUrl, false, true);
 }
-
-// $this->document->addScriptDeclaration(
-//     "Joomla.orderTable = function () {
-//         var table = document.getElementById(\"sortTable\");
-//         var direction = document.getElementById(\"directionTable\");
-//         var order = table.options[table.selectedIndex].value;
-//         if (order != '" . $listOrder . "') {
-//             dirn = 'asc';
-//         } else {
-//             dirn = direction.options[direction.selectedIndex].value;
-//         }
-//         Joomla.tableOrdering(order, dirn, '');
-//     }"
-// );
 ?>
 
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>" method="post" name="adminForm" id="adminForm">
@@ -235,8 +220,6 @@ if ($saveOrder) {
                 <template id="joomla-dialog-batch"><?php echo $this->loadTemplate('batch'); ?></template>
 
                 <input type="hidden" name="task" value="" />
-                <!--   <input type = "hidden" name = "catid" value = "<?php //echo $filteredItem; 
-                                                                        ?>" /> -->
                 <input type="hidden" name="boxchecked" value="0" />
                 <?php echo HTMLHelper::_('form.token'); ?>
             </div>

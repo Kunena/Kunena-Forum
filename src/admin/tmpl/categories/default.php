@@ -7,8 +7,8 @@
  * @subpackage      Categories
  *
  * @copyright       Copyright (C) 2008 - 2024 Kunena Team. All rights reserved.
- * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link            https://www.kunena.org
+ * @license         https: //www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https: //www.kunena.org
  **/
 
 defined('_JEXEC') or die();
@@ -28,9 +28,9 @@ $wa->useScript('table.columns')
     ->useScript('multiselect')
     ->useScript('jquery');
 
-$app             = Factory::getApplication();
-$user            = $this->getCurrentUser();
-$userId          = $user->get('id');
+$app    = Factory::getApplication();
+$user   = $this->getCurrentUser();
+$userId = $user->get('id');
 // $filteredItem    = $this->escape($this->state->get('item.id'));
 $listOrder       = $this->escape($this->state->get('list.ordering'));
 $listDirn        = $this->escape($this->state->get('list.direction'));
@@ -103,16 +103,21 @@ if ($saveOrder) {
                             ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="true" <?php
                                                                                                                                                                     endif; ?>>
                         <?php
-                        $img_no             = '<i class="icon-cancel"></i>';
-                        $img_yes            = '<i class="icon-checkmark"></i>';
-                        $i                  = 0;
+                        $i       = 0;
+                        $img_no  = '<span class="icon-unpublish" aria-hidden="true"></span>';
+                        $img_yes = '<span class="icon-publish" aria-hidden="true"></span>';
 
                         foreach ($this->categories as $item) :
-                            $orderkey = array_search($item->id, $this->ordering[$item->parentid]);
-                            $canEdit = $this->me->isAdmin($item);
-                            $canCheckin = $this->user->authorise('core.admin', 'com_checkIn') || $item->checked_out == $this->user->id || $item->checked_out == 0;
-                            $canEditOwn = $canEdit;
-                            $canChange  = $canEdit && $canCheckin;
+                            $orderkey               = array_search($item->id, $this->ordering[$item->parentid]);
+                            $canEdit                = $this->me->isAdmin($item);
+                            $canCheckin             = $this->user->authorise('core.admin', 'com_checkIn') || $item->checked_out == $this->user->id || $item->checked_out == 0;
+                            $canEditOwn             = $canEdit;
+                            $canChange              = $canEdit && $canCheckin;
+                            $categoryPublishTask    = $item->published ? 'categories.unpublish' : 'categories.publish';
+                            $categoryLockedTask     = $item->locked ? 'categories.unlock' : 'categories.lock';
+                            $categoryReviewTask     = $item->review ? 'categories.unreview' : 'categories.review';
+                            $categoryAllowpollsTask = $item->allowPolls ? 'categories.denypolls' : 'categories.allowpolls';
+                            $categoryAnonymousTask  = $item->allowAnonymous ? 'categories.denyanonymous' : 'categories.allowanonymous';
 
                             // Get the parents of item for sorting
                             if ($item->level > 0) {
@@ -127,7 +132,7 @@ if ($saveOrder) {
 
                                         if (strpos($v, "-" . $_currentParentId . "-") !== false) {
                                             $parentsStr       .= " " . $k;
-                                            $_currentParentId = $k;
+                                            $_currentParentId  = $k;
                                             break;
                                         }
                                     }
@@ -143,7 +148,7 @@ if ($saveOrder) {
                                 <td class="order text-center">
                                     <?php if ($canChange) :
                                         $disableClassName = '';
-                                        $disabledLabel = '';
+                                        $disabledLabel    = '';
 
                                         if (!$saveOrder) :
                                             $disabledLabel    = Text::_('JORDERINGDISABLED');
@@ -160,8 +165,9 @@ if ($saveOrder) {
                                         </span>
                                     <?php endif; ?>
                                     </th>
-                                <td class="center">
-                                    <?php echo HTMLHelper::_('kunenagrid.published', $i, $item->published, 'category.');; ?>
+                                <td class="text-center">
+                                    <a href="#" class="js-grid-item-action tbody-icon <?php echo $item->published ? 'active' : ''; ?>" data-item-id="cb<?php echo $i; ?>" data-item-task="<?php echo $categoryPublishTask ?>" data-item-form-id="" aria-labelledby="cbpublish<?php echo $i; ?>-desc"><?php echo $item->published ? $img_yes : $img_no; ?></a>
+                                    <div role="tooltip" id="cbpublish<?php echo $i; ?>-desc"><?php echo $item->published ? Text::_('COM_KUNENA_TASK_UNPUBLISH_CATEGORY') : Text::_('COM_KUNENA_TASK_PUBLISH_CATEGORY'); ?></div>
                                 </td>
                                 <th class="has-context">
                                     <div class="break-word">
@@ -188,32 +194,28 @@ if ($saveOrder) {
                                         <?php echo Text::sprintf('(Access: %s)', $this->escape($item->accesstype)); ?>
                                     </small>
                                 </td>
-                                <td class="center d-none d-md-table-cell">
-                                    <a class="btn btn-micro <?php echo $item->locked ? 'active' : ''; ?>" href="javascript: void(0);" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->locked ? 'un' : '') . 'lock'; ?>')">
-                                        <?php echo $item->locked == 1 ? $img_yes : $img_no; ?>
-                                    </a>
+                                <td class="text-center">
+                                    <a href="#" class="js-grid-item-action tbody-icon <?php echo $item->locked ? 'active' : ''; ?>" data-item-id="cb<?php echo $i; ?>" data-item-task="<?php echo $categoryLockedTask ?>" data-item-form-id="" aria-labelledby="cblocked<?php echo $i; ?>-desc"><?php echo $item->locked ? $img_yes : $img_no; ?></a>
+                                    <div role="tooltip" id="cblocked<?php echo $i; ?>-desc"><?php echo $item->locked ? Text::_('COM_KUNENA_TASK_UNLOCK_CATEGORY') : Text::_('COM_KUNENA_TASK_LOCK_CATEGORY'); ?></div>
                                 </td>
                                 <?php if ($item->isSection()) :
                                 ?>
-                                    <td class="center d-none d-md-table-cell" colspan="3">
+                                    <td class="text-center d-none d-md-table-cell" colspan="3">
                                         <?php echo Text::_('COM_KUNENA_SECTION'); ?>
                                     </td>
                                 <?php else :
                                 ?>
-                                    <td class="center d-none d-md-table-cell">
-                                        <a class="btn btn-micro <?php echo $item->review ? 'active' : ''; ?>" href="javascript: void(0);" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un' : '') . 'review'; ?>')">
-                                            <?php echo $item->review == 1 ? $img_yes : $img_no; ?>
-                                        </a>
+                                    <td class="text-center">
+                                        <a href="#" class="js-grid-item-action tbody-icon <?php echo $item->review ? 'active' : ''; ?>" data-item-id="cb<?php echo $i; ?>" data-item-task="<?php echo $categoryReviewTask ?>" data-item-form-id="" aria-labelledby="cbreview<?php echo $i; ?>-desc"><?php echo $item->review ? $img_yes : $img_no; ?></a>
+                                        <div role="tooltip" id="cbreview<?php echo $i; ?>-desc"><?php echo $item->review ? Text::_('COM_KUNENA_TASK_UNREVIEW_CATEGORY') : Text::_('COM_KUNENA_TASK_REVIEW_CATEGORY'); ?></div>
                                     </td>
-                                    <td class="center d-none d-md-table-cell">
-                                        <a class="btn btn-micro <?php echo $item->allowPolls ? 'active' : ''; ?>" href="javascript: void(0);" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allowPolls ? 'deny' : 'allow') . '_polls'; ?>')">
-                                            <?php echo $item->allowPolls == 1 ? $img_yes : $img_no; ?>
-                                        </a>
+                                    <td class="text-center">
+                                        <a href="#" class="js-grid-item-action tbody-icon <?php echo $item->allowPolls ? 'active' : ''; ?>" data-item-id="cb<?php echo $i; ?>" data-item-task="<?php echo $categoryAllowpollsTask ?>" data-item-form-id="" aria-labelledby="cballowpolls<?php echo $i; ?>-desc"><?php echo $item->allowPolls ? $img_yes : $img_no; ?></a>
+                                        <div role="tooltip" id="cballowpolls<?php echo $i; ?>-desc"><?php echo $item->allowPolls ? Text::_('COM_KUNENA_TASK_DENYPOLLS_CATEGORY') : Text::_('COM_KUNENA_TASK_ALLOWPOLLS_CATEGORY'); ?></div>
                                     </td>
-                                    <td class="center d-none d-md-table-cell">
-                                        <a class="btn btn-micro <?php echo $item->allowAnonymous ? 'active' : ''; ?>" href="javascript: void(0);" onclick="return Joomla.listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allowAnonymous ? 'deny' : 'allow') . '_anonymous'; ?>')">
-                                            <?php echo $item->allowAnonymous == 1 ? $img_yes : $img_no; ?>
-                                        </a>
+                                    <td class="text-center">
+                                        <a href="#" class="js-grid-item-action tbody-icon <?php echo $item->allowAnonymous ? 'active' : ''; ?>" data-item-id="cb<?php echo $i; ?>" data-item-task="<?php echo $categoryAnonymousTask ?>" data-item-form-id="" aria-labelledby="cbanonymous<?php echo $i; ?>-desc"><?php echo $item->allowAnonymous ? $img_yes : $img_no; ?></a>
+                                        <div role="tooltip" id="cbreview<?php echo $i; ?>-desc"><?php echo $item->allowAnonymous ? Text::_('COM_KUNENA_TASK_DENYANONYMOUS_CATEGORY') : Text::_('COM_KUNENA_TASK_ALLOWANONYMOUS_CATEGORY'); ?></div>
                                     </td>
                                 <?php endif; ?>
 
@@ -226,15 +228,15 @@ if ($saveOrder) {
                         endforeach; ?>
                     </tbody>
                 </table>
-                <?php // load the pagination. 
+                <?php  // load the pagination. 
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 
                 <template id="joomla-dialog-batch"><?php echo $this->loadTemplate('batch'); ?></template>
 
                 <input type="hidden" name="task" value="" />
-                <!-- <input type="hidden" name="catid" value="<?php //echo $filteredItem; 
-                                                                ?>" /> -->
+                <!--   <input type = "hidden" name = "catid" value = "<?php //echo $filteredItem; 
+                                                                        ?>" /> -->
                 <input type="hidden" name="boxchecked" value="0" />
                 <?php echo HTMLHelper::_('form.token'); ?>
             </div>

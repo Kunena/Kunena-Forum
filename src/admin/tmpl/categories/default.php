@@ -25,8 +25,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 /** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('table.columns')
-    ->useScript('multiselect')
-    ->useScript('jquery');
+    ->useScript('multiselect');
 
 $app    = Factory::getApplication();
 $user   = $this->getCurrentUser();
@@ -34,10 +33,10 @@ $userId = $user->get('id');
 $listOrder       = $this->escape($this->state->get('list.ordering'));
 $listDirn        = $this->escape($this->state->get('list.direction'));
 $saveOrder       = ($listOrder == 'ordering' && strtolower($listDirn) == 'asc');
-$saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=categories.saveorderajax';
 
-if ($saveOrder) {
-    HTMLHelper::_('kunenaforum.sortablelist', 'categoryList', 'adminForm', $listDirn, $saveOrderingUrl, false, true);
+if ($saveOrder && !empty($this->categories)) {
+    $saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=categories.saveorderajax';
+    HTMLHelper::_('draggablelist.draggable');
 }
 ?>
 
@@ -84,15 +83,12 @@ if ($saveOrder) {
                             </th>
                         </tr>
                     </thead>
-                    <tbody <?php if ($saveOrder) :
-                            ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="true" <?php
-                                                                                                                                                                    endif; ?>>
+                    <tbody <?php if ($saveOrder) : ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="false" <?php endif; ?>>
                         <?php
-                        $i       = 0;
                         $img_no  = '<span class="icon-unpublish" aria-hidden="true"></span>';
                         $img_yes = '<span class="icon-publish" aria-hidden="true"></span>';
 
-                        foreach ($this->categories as $item) :
+                        foreach ($this->categories as $i => $item) :
                             $orderkey               = array_search($item->id, $this->ordering[$item->parentid]);
                             $canEdit                = $this->me->isAdmin($item);
                             $canCheckin             = $this->user->authorise('core.admin', 'com_checkIn') || $item->checked_out == $this->user->id || $item->checked_out == 0;
@@ -106,55 +102,49 @@ if ($saveOrder) {
 
                             // Get the parents of item for sorting
                             if ($item->level > 0) {
-                                $parentsStr       = "";
+                                $parentsStr = '';
                                 $_currentParentId = $item->parentid;
-                                $parentsStr       = " " . $_currentParentId;
-
+                                $parentsStr = ' ' . $_currentParentId;
                                 for ($i2 = 0; $i2 < $item->level; $i2++) {
                                     foreach ($this->ordering as $k => $v) {
-                                        $v = implode("-", $v);
-                                        $v = "-" . $v . "-";
-
-                                        if (strpos($v, "-" . $_currentParentId . "-") !== false) {
-                                            $parentsStr       .= " " . $k;
-                                            $_currentParentId  = $k;
+                                        $v = implode('-', $v);
+                                        $v = '-' . $v . '-';
+                                        if (strpos($v, '-' . $_currentParentId . '-') !== false) {
+                                            $parentsStr .= ' ' . $k;
+                                            $_currentParentId = $k;
                                             break;
                                         }
                                     }
                                 }
                             } else {
-                                $parentsStr = "";
+                                $parentsStr = '';
                             }
                         ?>
-                            <tr sortable-group-id="<?php echo $item->parentid; ?>" item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
+                            <tr class="row<?php echo $i % 2; ?>" data-draggable-group="<?php echo $item->parentid; ?>" data-item-id="<?php echo $item->id ?>" data-parents="<?php echo $parentsStr ?>" data-level="<?php echo $item->level ?>">
                                 <td class="text-center">
                                     <?php echo HTMLHelper::_('grid.id', $i, $item->id, false, 'cid', 'cb', $item->name); ?>
                                 </td>
-                                <td class="order text-center">
-                                    <?php if ($canChange) :
-                                        $disableClassName = '';
-                                        $disabledLabel    = '';
-
-                                        if (!$saveOrder) :
-                                            $disabledLabel    = Text::_('JORDERINGDISABLED');
-                                            $disableClassName = 'inactive tip-top';
-                                        endif; ?>
-                                        <span class="sortable-handler<?php echo $disableClassName; ?>" title="<?php echo $disabledLabel; ?>">
-                                            <span class="icon-ellipsis-v"></span>
-                                        </span>
-                                        <input type="text" style="display:none;" name="order[]" size="5" value="<?php echo $orderkey; ?>" />
-                                    <?php else :
+                                <td class="text-center d-none d-md-table-cell">
+                                    <?php
+                                    $iconClass = '';
+                                    if (!$canChange) {
+                                        $iconClass = ' inactive';
+                                    } elseif (!$saveOrder) {
+                                        $iconClass = ' inactive" title="' . Text::_('JORDERINGDISABLED');
+                                    }
                                     ?>
-                                        <span class="sortable-handler inactive">
-                                            <i class="icon-menu"></i>
-                                        </span>
+                                    <span class="sortable-handler<?php echo $iconClass ?>">
+                                        <span class="icon-ellipsis-v"></span>
+                                    </span>
+                                    <?php if ($canChange && $saveOrder) : ?>
+                                        <input type="text" class="hidden" name="order[]" size="5" value="<?php echo $orderkey; ?>">
                                     <?php endif; ?>
-                                    </th>
+                                </td>
                                 <td class="text-center">
                                     <a href="#" class="js-grid-item-action tbody-icon <?php echo $item->published ? 'active' : ''; ?>" data-item-id="cb<?php echo $i; ?>" data-item-task="<?php echo $categoryPublishTask ?>" data-item-form-id="" aria-labelledby="cbpublish<?php echo $i; ?>-desc"><?php echo $item->published ? $img_yes : $img_no; ?></a>
                                     <div role="tooltip" id="cbpublish<?php echo $i; ?>-desc"><?php echo $item->published ? Text::_('COM_KUNENA_TASK_UNPUBLISH_CATEGORY') : Text::_('COM_KUNENA_TASK_PUBLISH_CATEGORY'); ?></div>
                                 </td>
-                                <th class="has-context">
+                                <th class="">
                                     <div class="break-word">
                                         <?php
                                         echo str_repeat('<span class="gi">&mdash;</span>', $item->level);
@@ -173,7 +163,7 @@ if ($saveOrder) {
                                         </div>
                                     </div>
                                 </th>
-                                <td class="center d-none d-md-table-cell">
+                                <td class="">
                                     <span><?php echo $item->accessname; ?></span>
                                     <small>
                                         <?php echo Text::sprintf('(Access: %s)', $this->escape($item->accesstype)); ?>
@@ -185,7 +175,7 @@ if ($saveOrder) {
                                 </td>
                                 <?php if ($item->isSection()) :
                                 ?>
-                                    <td class="text-center d-none d-md-table-cell" colspan="3">
+                                    <td class="text-center " colspan="3">
                                         <?php echo Text::_('COM_KUNENA_SECTION'); ?>
                                     </td>
                                 <?php else :
@@ -203,14 +193,11 @@ if ($saveOrder) {
                                         <div role="tooltip" id="cbreview<?php echo $i; ?>-desc"><?php echo $item->allowAnonymous ? Text::_('COM_KUNENA_TASK_DENYANONYMOUS_CATEGORY') : Text::_('COM_KUNENA_TASK_ALLOWANONYMOUS_CATEGORY'); ?></div>
                                     </td>
                                 <?php endif; ?>
-
-                                <td class="center d-none d-md-table-cell">
+                                <td class="d-none d-md-table-cell">
                                     <?php echo (int) $item->id; ?>
                                 </td>
                             </tr>
-                        <?php
-                            $i++;
-                        endforeach; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
                 <?php  // load the pagination. 

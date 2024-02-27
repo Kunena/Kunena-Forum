@@ -15,10 +15,23 @@
             class="js-select-submit-on-change"
             default=""
             sections="1"
-            levels="1"
+            unpublished="1"
+            levels="3"
             return_options="true"
             validate="options">
             <option value="">COM_KUNENA_FILTER_SELECT_CATEGORY</option>
+        </field>
+        <field
+            name="levels"
+            type="list"
+            label="COM_KUNENA_FILTER_SELECT_CATEGORYLEVEL"
+            class="js-select-submit-on-change"
+            default="">
+            <option value="">COM_KUNENA_FILTER_SELECT_CATEGORYLEVEL</option>
+            <option value="0">COM_KUNENA_FIELD_LABEL_ALLLEVELS</option>
+            <option value="1">COM_KUNENA_FIELD_LABEL_SECTIONLEVELS</option>
+            <option value="2">COM_KUNENA_FIELD_LABEL_CATEGORIESLEVELS</option>
+            <option value="3">COM_KUNENA_FIELD_LABEL_SUBCATEGORIESLEVELS</option>
         </field>
         <field
             name="published"

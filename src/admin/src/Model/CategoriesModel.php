@@ -122,7 +122,7 @@ class CategoriesModel extends KunenaModel
                 'review', 'p.review',
                 'allowPolls', 'p.allowPolls',
                 'anonymous', 'p.anonymous',
-                'category',
+                'category', 'levels',
             ];
         }
 
@@ -444,19 +444,19 @@ class CategoriesModel extends KunenaModel
                 'action'           => 'none',
             ];
 
-            //$catid      = $this->getState('item.id', 0);
             $catid      = $this->getState('filter.category', '') === '' ? $this->getState('item.id', 0) : $this->getState('filter.category', '');
             $categories = [];
             $orphans    = [];
+            $levels     = $this->getState('filter.levels', '')   === '' ? 0 : $this->getState('filter.levels');
 
             if ($catid) {
-                $categories   = KunenaCategoryHelper::getParents($catid, $this->getState('filter.levels') - 1, ['unpublished' => 1, 'action' => 'none']);
+                $categories   = KunenaCategoryHelper::getParents($catid, $levels - 1, ['unpublished' => 1, 'action' => 'none']);
                 $categories[] = KunenaCategoryHelper::get($catid);
             } else {
-                $orphans = KunenaCategoryHelper::getOrphaned($this->getState('filter.levels') - 1, $params);
+                $orphans = KunenaCategoryHelper::getOrphaned($levels - 1, $params);
             }
 
-            $categories = array_merge($categories, KunenaCategoryHelper::getChildren($catid, $this->getState('filter.levels') - 1, $params));
+            $categories = array_merge($categories, KunenaCategoryHelper::getChildren($catid, $levels - 1, $params));
             $categories = array_merge($orphans, $categories);
 
             $categories = KunenaCategoryHelper::getIndentation($categories);
@@ -575,6 +575,9 @@ class CategoriesModel extends KunenaModel
 
         $anonymous = $this->getUserStateFromRequest($this->context . '.filter.anonymous', 'anonymous');
         $this->setState('filter.anonymous', $anonymous);
+
+        $levels = $this->getUserStateFromRequest($this->context . '.filter.level', 'level');
+        $this->setState('filter.levels', $levels);
 
         // List state information.
         $this->populateStateListModel($ordering, $direction);

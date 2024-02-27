@@ -27,8 +27,8 @@
 			default=""
 			validate="options">
 			<option value="">COM_KUNENA_FILTER_SELECT_ENABLED</option>
-			<option value="0">COM_KUNENA_FIELD_LABEL_ON</option>
-			<option value="1">COM_KUNENA_FIELD_LABEL_OFF</option>
+			<option value="0">COM_KUNENA_FIELD_LABEL_YES</option>
+			<option value="1">COM_KUNENA_FIELD_LABEL_NO</option>
 		</field>
 		<field
 			name="banned"
@@ -38,8 +38,8 @@
 			default=""
 			validate="options">
 			<option value="">COM_KUNENA_FILTER_SELECT_BANNED</option>
-			<option value="1">COM_KUNENA_FIELD_LABEL_ON</option>
-			<option value="0">COM_KUNENA_FIELD_LABEL_OFF</option>
+			<option value="1">COM_KUNENA_FIELD_LABEL_YES</option>
+			<option value="0">COM_KUNENA_FIELD_LABEL_NO</option>
 		</field>
 		<field
 			name="moderator"

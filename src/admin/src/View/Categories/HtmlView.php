@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -115,18 +115,15 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar(): void
     {
         // Get the toolbar object instance
-        $toolbar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar('toolbar');
+        $toolbar = Toolbar::getInstance();
 
+        // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
-        ToolbarHelper::spacer();
-        ToolbarHelper::addNew('categories.add', 'COM_KUNENA_NEW_CATEGORY');
 
-        ToolbarHelper::editList('categories.edit');
-        ToolbarHelper::divider();
-        ToolbarHelper::publish('categories.publish');
-        ToolbarHelper::unpublish('categories.unpublish');
-        ToolbarHelper::divider();
+        $toolbar->addNew('categories.add', 'COM_KUNENA_NEW_CATEGORY');
+        $toolbar->edit('categories.edit')->listCheck(true);
 
+        /** @var  DropdownButton $dropdown */
         $dropdown = $toolbar->dropdownButton('status-group')
             ->text('JTOOLBAR_CHANGE_STATUS')
             ->toggleSplit(false)
@@ -135,17 +132,19 @@ class HtmlView extends BaseHtmlView
             ->listCheck(true);
 
         $childBar = $dropdown->getChildToolbar();
-
+        $childBar->publish('categories.publish')->listCheck(true);
+        $childBar->unpublish('categories.unpublish')->listCheck(true);
         $childBar->delete('categories.delete', 'COM_KUNENA_CATEGORY_TOOLBAR_DELETE_CATEGORY')
             ->message('COM_KUNENA_CATEGORIES_CONFIRM_DELETE_BODY_MODAL')
             ->listCheck(true);
-
-        $childBar->popupButton('batch')
-            ->text('JTOOLBAR_BATCH')
-            ->selector('batchCategories')
+        $childBar->popupButton('batch', 'JTOOLBAR_BATCH')
+            ->popupType('inline')
+            ->textHeader(Text::_('JTOOLBAR_BATCH'))
+            ->url('#joomla-dialog-batch')
+            ->modalWidth('800px')
+            ->modalHeight('fit-content')
             ->listCheck(true);
 
-        ToolbarHelper::spacer();
         $helpUrl = 'https://docs.kunena.org/en/setup/sections-categories';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }

@@ -282,7 +282,6 @@ class UsersModel extends ListModel
             $nullDate = $db->quote('1000-01-01 00:00:00');
 
             if ($filter) {
-                // $query->where("(ku.banned={$nullDate} OR ku.banned={$db->quote('1000-01-01 00:00:00')} OR ku.banned>{$db->quote($now->toSql())})");
                 $query->where("ku.banned>{$nullDate}");
             } else {
                 $query->where("(ku.banned IS NULL OR (ku.banned>={$nullDate} AND ku.banned<{$db->quote($now->toSql())}))");

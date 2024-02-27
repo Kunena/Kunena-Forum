@@ -259,9 +259,9 @@ class UsersModel extends ListModel
 
         if ($filter !== '') {
             if ($filter) {
-                $query->where("ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL");
+                $query->where("(ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL)");
             } else {
-                $query->where("ku.signature={$db->quote('')} OR ku.signature IS NULL");
+                $query->where("(ku.signature={$db->quote('')} OR ku.signature IS NULL)");
             }
         }
 
@@ -277,12 +277,14 @@ class UsersModel extends ListModel
 
         if ($filter !== '') {
             $now      = new Date();
-            $nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
+            // $DB nulldate = 0000-00-00 00:00:00 but Kunena uses 1000-01-01 00:00:00 as nulldate
+            // $nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
+            $nullDate = $db->quote('1000-01-01 00:00:00');
 
             if ($filter) {
-                $query->where("ku.banned={$nullDate} OR ku.banned>{$db->quote($now->toSql())}");
+                $query->where("ku.banned>{$nullDate}");
             } else {
-                $query->where("ku.banned IS NULL OR (ku.banned>{$nullDate} AND ku.banned<{$db->quote($now->toSql())})");
+                $query->where("(ku.banned IS NULL OR (ku.banned>={$nullDate} AND ku.banned<{$db->quote($now->toSql())}))");
             }
         }
 

@@ -131,14 +131,15 @@ class CategoriesController extends KunenaController
                     $category->save();
                 } catch (Exception $e) {
                     if (!empty($e->getMessage())) {
-                    $this->app->enqueueMessage(
-                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
-                        'error');
+                        $this->app->enqueueMessage(
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
+                            'error'
+                        );
                     } else {
                         $this->app->enqueueMessage(
                             Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
                             'error'
-                            );
+                        );
                     }
                 }
 
@@ -225,8 +226,9 @@ class CategoriesController extends KunenaController
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
-    public function allowAnonymous(): void
+    public function allowanonymous(): void
     {
+        // Function renamed from allowAnonymous in Kunena 6.3.0-BETA3 as this name collides with table
         $cid = $this->input->get('cid', [], 'array');
         $cid = ArrayHelper::toInteger($cid);
 
@@ -243,8 +245,9 @@ class CategoriesController extends KunenaController
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
-    public function denyAnonymous(): void
+    public function denyanonymous(): void
     {
+        // Function renamed from denyAnonymous in Kunena 6.3.0-BETA3 as this name collides with table
         $cid = $this->input->get('cid', [], 'array');
         $cid = ArrayHelper::toInteger($cid);
 
@@ -261,8 +264,9 @@ class CategoriesController extends KunenaController
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
-    public function allowPolls(): void
+    public function allowpolls(): void
     {
+        // Function renamed from allowPolls in Kunena 6.3.0-BETA3 as this name collides with table
         $cid = $this->input->get('cid', [], 'array');
         $cid = ArrayHelper::toInteger($cid);
 
@@ -279,8 +283,9 @@ class CategoriesController extends KunenaController
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
-    public function denyPolls(): void
+    public function denypolls(): void
     {
+        // Function renamed from denyPolls in Kunena 6.3.0-BETA3 as this name collides with table
         $cid = $this->input->get('cid', [], 'array');
         $cid = ArrayHelper::toInteger($cid);
 
@@ -525,14 +530,14 @@ class CategoriesController extends KunenaController
         $categories = KunenaCategoryHelper::getCategories($cid);
 
         foreach ($categories as $category) {
-            if (!isset($order [$category->id]) || $category->get('ordering') == $order [$category->id]) {
+            if (!isset($order[$category->id]) || $category->get('ordering') == $order[$category->id]) {
                 continue;
             }
 
             if (!$category->getParent()->tryAuthorise('admin')) {
                 $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->getParent()->name)), 'error');
             } elseif (!$category->isCheckedOut($this->me->userid)) {
-                $category->set('ordering', $order [$category->id]);
+                $category->set('ordering', $order[$category->id]);
 
                 try {
                     $category->save();
@@ -541,12 +546,12 @@ class CategoriesController extends KunenaController
                         $this->app->enqueueMessage(
                             Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
                             'error'
-                            );
+                        );
                     } else {
                         $this->app->enqueueMessage(
                             Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
                             'error'
-                            );
+                        );
                     }
                 }
             } else {
@@ -575,7 +580,7 @@ class CategoriesController extends KunenaController
      */
     public function saveorderajax(): void
     {
-       /*if (!Session::checkToken('post')) {
+        /*if (!Session::checkToken('post')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 

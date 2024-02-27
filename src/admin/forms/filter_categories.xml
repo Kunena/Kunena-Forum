@@ -35,10 +35,12 @@
             name="access"
             type="accesslevel"
             label="JGRID_HEADING_ACCESS"
-            multiple="true"
-            layout="joomla.form.field.list-fancy-select"
+            default=""
             hint="JOPTION_SELECT_ACCESS"
-            class="js-select-submit-on-change" />
+            class="js-select-submit-on-change"
+            validate="options">
+            <option value="">JOPTION_SELECT_ACCESS</option>
+        </field>
         <field
             name="locked"
             type="list"

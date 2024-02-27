@@ -59,9 +59,7 @@ class HtmlView extends BaseHtmlView
     {
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
-        ToolbarHelper::spacer();
         ToolbarHelper::custom('logs.clean', 'delete.png', 'delete_f2.png', 'COM_KUNENA_CLEAN_LOGS_ENTRIES', false);
-        ToolbarHelper::spacer();
         ToolbarHelper::cancel();
     }
 
@@ -76,35 +74,12 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->state      = $this->get('state');
-        $this->group      = $this->state->get('group');
-        $this->items      = $this->get('items');
-        $this->pagination = $this->get('Pagination');
-
-        $this->filterUserFields    = $this->getFilterUserFields();
-        $this->sortFields          = $this->getSortFields();
-        $this->sortDirectionFields = $this->getSortDirectionFields();
-
-        $this->filter                  = new \stdClass();
-        $this->filter->TypeFields      = $this->getFilterTypeFields();
-        $this->filter->OperationFields = $this->getFilterOperationFields();
-        $this->filter->Search          = $this->escape($this->state->get('filter.search'));
-        $this->filter->Type            = $this->escape($this->state->get('filter.type'));
-        $this->filter->User            = $this->escape($this->state->get('filter.user'));
-        $this->filter->Category        = $this->escape($this->state->get('filter.category'));
-        $this->filter->Topic           = $this->escape($this->state->get('filter.topic'));
-        $this->filter->Active          = $this->escape($this->state->get('filter.active'));
-        $this->filter->TargetUser      = $this->escape($this->state->get('filter.target_user'));
-        $this->filter->Ip              = $this->escape($this->state->get('filter.ip'));
-        $this->filter->TimeStart       = $this->escape($this->state->get('filter.time_start'));
-        $this->filter->TimeStop        = $this->escape($this->state->get('filter.time_stop'));
-        $this->filter->Operation       = $this->escape($this->state->get('filter.operation'));
-        $this->filter->Usertypes       = $this->escape($this->state->get('filter.usertypes'));
-        $this->filter->UserFields      = $this->escape($this->state->get('filter.userfields'));
-
-        $this->list            = new \stdClass();
-        $this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
-        $this->list->Direction = $this->escape($this->state->get('list.direction'));
+        $this->state         = $this->get('state');
+        $this->group         = $this->state->get('group');
+        $this->items         = $this->get('items');
+        $this->pagination    = $this->get('Pagination');
+        $this->filterForm    = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
 
         $document = Factory::getApplication()->getDocument();
         $document->setTitle(Text::_('Forum Logs'));
@@ -118,58 +93,8 @@ class HtmlView extends BaseHtmlView
      * @return  array
      *
      * @since   Kunena 6.0
-     */
-    protected function getFilterUserFields(): array
-    {
-        $filterFields   = [];
-        $filterFields[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_LOG_GUESTS_FILTER_USERTYPE_LABEL'));
-        $filterFields[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_LOG_REGISTERED_FILTER_USERTYPE_LABEL'));
-        $filterFields[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_LOG_REGULAR_FILTER_USERTYPE_LABEL'));
-        $filterFields[] = HTMLHelper::_('select.option', 3, Text::_('COM_KUNENA_LOG_MODERATORS_FILTER_USERTYPE_LABEL'));
-        $filterFields[] = HTMLHelper::_('select.option', 4, Text::_('COM_KUNENA_LOG_ADMINISTRATORS_FILTER_USERTYPE_LABEL'));
-        $filterFields[] = HTMLHelper::_('select.option', 5, Text::_('COM_KUNENA_LOG_MOD_AND_ADMIN_FILTER_USERTYPE_LABEL'));
-
-        return $filterFields;
-    }
-
-    /**
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getSortFields(): array
-    {
-        $sortFields = [];
-
-        $sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('COM_KUNENA_LOG_ID_SORT_FIELD_LABEL'));
-        $sortFields[] = HTMLHelper::_('select.option', 'type', Text::_('COM_KUNENA_LOG_TYPE_SORT_FIELD_LABEL'));
-        $sortFields[] = HTMLHelper::_('select.option', 'user', Text::_('COM_KUNENA_LOG_USER_SORT_FIELD_LABEL'));
-        $sortFields[] = HTMLHelper::_('select.option', 'category', Text::_('COM_KUNENA_LOG_CATEGORY_SORT_FIELD_LABEL'));
-        $sortFields[] = HTMLHelper::_('select.option', 'topic', Text::_('COM_KUNENA_LOG_TOPIC_SORT_FIELD_LABEL'));
-        $sortFields[] = HTMLHelper::_('select.option', 'target_user', Text::_('COM_KUNENA_LOG_TARGET_USER_SORT_FIELD_LABEL'));
-        $sortFields[] = HTMLHelper::_('select.option', 'time', Text::_('COM_KUNENA_LOG_TIME_SORT_FIELD_LABEL'));
-
-        return $sortFields;
-    }
-
-    /**
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getSortDirectionFields(): array
-    {
-        $sortDirection   = [];
-        $sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
-        $sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
-
-        return $sortDirection;
-    }
-
-    /**
-     * @return  array
-     *
-     * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
      */
     protected function getFilterTypeFields(): array
     {
@@ -186,6 +111,8 @@ class HtmlView extends BaseHtmlView
      * @return  array
      *
      * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
      */
     protected function getFilterOperationFields(): array
     {
@@ -216,9 +143,10 @@ class HtmlView extends BaseHtmlView
     {
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
-
-        ToolbarHelper::spacer();
         ToolbarHelper::custom('logs.cleanEntries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES', false);
+
+        $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';
+        ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }
 
     /**
@@ -227,6 +155,8 @@ class HtmlView extends BaseHtmlView
      * @return string
      *
      * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
      */
     public function getType(int $id): string
     {
@@ -241,6 +171,8 @@ class HtmlView extends BaseHtmlView
      * @return  string
      *
      * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
      */
     public function getGroupCheckbox(string $name): string
     {

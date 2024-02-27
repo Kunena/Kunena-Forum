@@ -13,352 +13,198 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
-use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
-$filterItem = $this->escape($this->state->get('item.id')); 
+/** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('table.columns')
+    ->useScript('multiselect')
+    ->useScript('jquery');
+$inlineScript = <<<INLINESCRIPT
+let showExtraData = document.querySelectorAll('.show-extradata');
+let extraData = document.querySelectorAll('.extradata');
+let selectToClipboard = document.querySelectorAll('.select_to_clipboard');
 
-HTMLHelper::_('jquery.framework');
+if (extraData) {
+	extraData.forEach((data) => {
+		data.style.display = 'none';
+	});
+}
+
+if (showExtraData) {
+	showExtraData.forEach((extraData) => {
+		extraData.addEventListener("click", function() {
+			event.preventDefault();
+			if (this.nextElementSibling.style.display == 'none') {
+				this.nextElementSibling.style.display = 'block';
+			} else {
+				this.nextElementSibling.style.display = 'none'
+			}
+		});
+	});
+};
+
+if (selectToClipboard) {
+    selectToClipboard.forEach(element => element.addEventListener("click", () => copySelectedText(element)));
+};
+
+function copySelectedText(element) {
+  // Get the text content of the clicked element
+  const text = element.textContent;
+
+  // Create a temporary element to hold the text
+  const tempElement = document.createElement("textarea");
+  tempElement.value = text;
+  tempElement.style.position = "absolute";
+  tempElement.style.left = "-9999px";
+  document.body.appendChild(tempElement);
+
+  // Select the text in the temporary element
+  tempElement.select();
+
+  // Copy the selected text to the clipboard
+  const result = document.execCommand("copy");
+
+  // Remove the temporary element
+  document.body.removeChild(tempElement);
+
+  // Optionally show a confirmation message
+  if (result) {
+    console.log("Text copied to clipboard!");
+  } else {
+    console.log("Text could not be copied. Please try again.");
+  }
+};           
+INLINESCRIPT;
+$wa->addInlineScript($inlineScript, [], ['type' => 'module']);
+
+$app       = Factory::getApplication();
+$user      = $this->getCurrentUser();
+$userId    = $user->get('id');
+$listOrder = $this->escape($this->state->get('list.ordering'));
+$listDirn  = $this->escape($this->state->get('list.direction'));
 ?>
-
-<script type="text/javascript">
-    Joomla.orderTable = function () {
-        table = document.getElementById("sortTable");
-        direction = document.getElementById("directionTable");
-        order = table.options[table.selectedIndex].value;
-        if (order !== '<?php echo $this->list->Ordering; ?>') {
-            dirn = 'asc';
-        } else {
-            dirn = direction.options[direction.selectedIndex].value;
-        }
-        Joomla.tableOrdering(order, dirn, '');
-    }
-</script>
-
-<div id="kunena" class="container-fluid">
+<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=logs'); ?>" method="post" name="adminForm" id="adminForm">
     <div class="row">
-        <div id="j-main-container" class="col-md-12" role="main">
-            <div class="card card-block bg-faded p-2">
-                <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=logs'); ?>"
-                      method="post" name="adminForm"
-                      id="adminForm">
-                    <input type="hidden" name="task" value=""/>
-                    <input type="hidden" name="boxchecked" value="1"/>
-                    <input type="hidden" name="filter_order" value="<?php echo $this->list->Ordering; ?>"/>
-                    <input type="hidden" name="filter_order_Dir" value="<?php echo $this->list->Direction; ?>"/>
-                    <?php echo HTMLHelper::_('form.token'); ?>
-
-                    <div id="filter-bar" class="btn-toolbar">
-                        <div class="btn-group pull-left">
-                            <?php echo HTMLHelper::calendar($this->filter->TimeStart, 'filter_time_start', 'filter_time_start', '%Y-%m-%d', ['class' => 'filter btn-wrapper', 'placeholder' => Text::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE')]); ?>
-                            <?php echo HTMLHelper::calendar($this->filter->TimeStop, 'filter_time_stop', 'filter_time_stop', '%Y-%m-%d', ['class' => 'filter wrapper', 'placeholder' => Text::_('COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_END_DATE')]); ?>
-                        </div>
-                        <div class="btn-group pull-left">
-                            <button class="btn btn-outline-primary tip" type="submit"
-                                    title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?>"><i
-                                        class="icon-search"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>
-                            </button>
-                            <button class="btn btn-outline-primary tip" type="button"
-                                    title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>"
-                                    onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i
-                                        class="icon-remove"></i> <?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?>
-                            </button>
-                        </div>
-                        <div class="btn-group pull-right d-none d-md-block">
-                            <label for="limit"
-                                   class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
-                            <?php echo $this->pagination->getLimitBox(); ?>
-                        </div>
-                        <div class="btn-group pull-right d-none d-md-block">
-                            <label for="directionTable"
-                                   class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
-                            <select name="directionTable" id="directionTable" class="input-medium"
-                                    onchange="Joomla.orderTable()">
-                                <option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
-                                <?php echo HTMLHelper::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->list->Direction); ?>
-                            </select>
-                        </div>
-                        <div class="btn-group pull-right">
-                            <label for="sortTable"
-                                   class="element-invisible"><?php echo Text::_('JGLOBAL_SORT_BY'); ?></label>
-                            <select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
-                                <option value=""><?php echo Text::_('JGLOBAL_SORT_BY'); ?></option>
-                                <?php echo HTMLHelper::_('select.options', $this->sortFields, 'value', 'text', $this->list->Ordering); ?>
-                            </select>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <table class="table table-striped" id="logList">
-                        <thead>
+        <div class="col-md-12">
+            <div id="j-main-container" class="j-main-container">
+                <?php
+                // Search tools bar
+                echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
+                ?>
+                <table class="table itemList" id="logList">
+                    <thead>
                         <tr>
-                            <th class="nowrap center" width="1%">
-                                <?php echo !$this->group ? HTMLHelper::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->list->Direction, $this->list->Ordering) : 'Count'; ?>
+                            <th scope="col" class="w-1 text-center">
+                                <?php echo !$this->group ? HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder) : 'Count'; ?>
                             </th>
-                            <th class="nowrap center" width="1%" style="width: 130px;">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TIME_SORT_LABEL', 'time', $this->list->Direction, $this->list->Ordering); ?>
+                            <th scope="col" class="w-5">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_LOG_TIME_SORT_LABEL', 'time', $listDirn, $listOrder); ?>
                             </th>
-                            <th class="nowrap" width="1%">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TYPE_SORT_LABEL', 'type', $this->list->Direction, $this->list->Ordering); ?>
-                                <?php echo $this->getGroupCheckbox('type'); ?>
+                            <th scope="col" class="w-5">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_LOG_TYPE_SORT_LABEL', 'type', $listDirn, $listOrder); ?>
                             </th>
-                            <th class="nowrap center">
-                                Operation
-                                <?php echo $this->getGroupCheckbox('operation'); ?>
+                            <th scope="col" class="w-5">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_LOG_OPERATION_SORT_LABEL', 'operation', $listDirn, $listOrder); ?>
                             </th>
-                            <th class="nowrap">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_USER_SORT_LABEL', 'user', $this->list->Direction, $this->list->Ordering); ?>
-                                <?php echo $this->getGroupCheckbox('user'); ?>
+                            <th scope="col" class="w-10">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_LOG_USER_SORT_LABEL', 'user', $listDirn, $listOrder); ?>
                             </th>
-                            <th class="nowrap">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_CATEGORY_SORT_LABEL', 'category', $this->list->Direction, $this->list->Ordering); ?>
-                                <?php echo $this->getGroupCheckbox('category'); ?>
+                            <th scope="col" class="w-10">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_LOG_CATEGORY_SORT_LABEL', 'category', $listDirn, $listOrder); ?>
                             </th>
-                            <th class="nowrap">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TOPIC_SORT_LABEL', 'topic', $this->list->Direction, $this->list->Ordering); ?>
-                                <?php echo $this->getGroupCheckbox('topic'); ?>
+                            <th scope="col" class="w-10">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_LOG_TOPIC_SORT_LABEL', 'topic', $listDirn, $listOrder); ?>
                             </th>
-                            <th class="nowrap">
-                                <?php echo HTMLHelper::_('grid.sort', 'COM_KUNENA_LOG_TARGET_USER_SORT_LABEL', 'target_user', $this->list->Direction, $this->list->Ordering); ?>
-                                <?php echo $this->getGroupCheckbox('target_user'); ?>
+                            <th scope="col" class="w-10">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_LOG_TARGET_USER_SORT_LABEL', 'target_user', $listDirn, $listOrder); ?>
                             </th>
-                            <th class="nowrap center">
-                                IP
-                                <?php echo $this->getGroupCheckbox('ip'); ?>
+                            <th scope="col" class="w-10">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_GEN_IP', 'ip', $listDirn, $listOrder); ?>
                             </th>
-                            <?php if (!$this->group) :
-                                ?>
-                                <th class="nowrap center">
+                            <?php if (!$this->group) : ?>
+                                <th scope="col" class="w-10">
                                     <?php echo Text::_('COM_KUNENA_LOG_MANAGER') ?>
                                 </th>
                             <?php endif; ?>
                         </tr>
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                <label for="filterType" class="element-invisible"><?php echo 'Type'; ?></label>
-                                <select name="filterType" id="filterType" class="select-filter filter form-control"
-                                        onchange="Joomla.orderTable()">
-                                    <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-                                    <?php echo HTMLHelper::_('select.options', $this->filter->TypeFields, 'value', 'text', $this->filter->Type); ?>
-                                </select>
-                            </td>
-                            <td>
-                                <label for="filter_operation" class="element-invisible"><?php echo 'Type'; ?></label>
-                                <select name="filter_operation" id="filter_operation" class="filter form-control"
-                                        onchange="Joomla.orderTable()">
-                                    <option value=""><?php echo Text::_('COM_KUNENA_FIELD_LABEL_ALL'); ?></option>
-                                    <?php echo HTMLHelper::_('select.options', $this->filter->OperationFields, 'value', 'text', $this->filter->Operation); ?>
-                                </select>
-                            </td>
-                            <td>
-                                <label for="filter_user"
-                                       class="element-invisible"><?php echo Text::_('COM_KUNENA_LOG_USER_FILTER_LABEL'); ?></label>
-                                <input class="input-block-level input-filter filter form-control" type="text"
-                                       name="filter_user"
-                                       id="filter_user"
-                                       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-                                       value="<?php echo $this->filter->User; ?>"
-                                       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
-                            </td>
-                            <td>
-                                <label for="filter_category"
-                                       class="element-invisible"><?php echo Text::_('COM_KUNENA_LOG_CATEGORY_FILTER_LABEL'); ?></label>
-                                <input class="input-block-level input-filter filter form-control" type="text"
-                                       name="filter_category"
-                                       id="filter_category"
-                                       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-                                       value="<?php echo $this->filter->Category; ?>"
-                                       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
-                            </td>
-                            <td>
-                                <label for="filter_topic"
-                                       class="element-invisible"><?php echo Text::_('COM_KUNENA_LOG_TOPIC_FILTER_LABEL'); ?></label>
-                                <input class="input-block-level input-filter filter form-control" type="text"
-                                       name="filter_topic"
-                                       id="filter_topic"
-                                       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-                                       value="<?php echo $this->filter->Topic; ?>"
-                                       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
-                            </td>
-                            <td>
-                                <label for="filter_target_user"
-                                       class="element-invisible"><?php echo Text::_('COM_KUNENA_LOG_TARGET_USER_FILTER_LABEL'); ?></label>
-                                <input class="input-block-level input-filter filter form-control" type="text"
-                                       name="filter_target_user"
-                                       id="filter_target_user"
-                                       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-                                       value="<?php echo $this->filter->TargetUser; ?>"
-                                       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
-                            </td>
-                            <td>
-                                <label for="filter_ip"
-                                       class="element-invisible"><?php echo Text::_('COM_KUNENA_LOG_IP_FILTER_LABEL'); ?></label>
-                                <input class="input-block-level input-filter filter form-control" type="text"
-                                       name="filter_ip"
-                                       id="filter_ip"
-                                       placeholder="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"
-                                       value="<?php echo $this->filter->Ip; ?>"
-                                       title="<?php echo Text::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT') ?>"/>
-                            </td>
-                            <?php if (!$this->group) :
-                                ?>
-                                <td>
-                                </td>
-                            <?php endif; ?>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <td colspan="10">
-                                <?php echo $this->pagination->getListFooter(); ?>
-                            </td>
-                        </tr>
-                        </tfoot>
-                        <tbody>
+                    </thead>
+                    <tbody>
                         <?php
-                        $i                = 0;
-
-                        if ($this->pagination->total > 0) :
-                            foreach ($this->items as $item) :
-                                $date = new KunenaDate($item->time);
-                                $user     = KunenaUserHelper::get($item->user_id);
-                                $category = KunenaCategoryHelper::get($item->category_id);
-                                $topic    = KunenaTopicHelper::get($item->topic_id);
-                                $target   = KunenaUserHelper::get($item->target_user);
-
-                                // TODO : move this part of javascript outside of foreach
-                                $this->document->addScriptDeclaration("jQuery( document ).ready(function() {
-										jQuery('#link_sel_all" . $item->id . "').click(function() {
-											jQuery('#report_final" . $item->id . "').select();
-											try {
-												var successful = document.execCommand('copy');
-												var msg = successful ? 'successful' : 'unsuccessful';
-												console.log('Copying text command was ' + msg);
-											}
-											catch (err)
-											{
-												console.log('Oops, unable to copy');
-											}
-										});
-									});");
-                                ?>
-                                <tr>
-                                    <td class="center">
-                                        <?php echo !$this->group ? $this->escape($item->id) : (int) $item->count; ?>
-                                    </td>
-                                    <td class="center">
-                                        <?php echo $date->toSql(); ?>
-                                    </td>
-                                    <td class="center">
-                                        <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType((int) $item->type)) : ''; ?>
-                                    </td>
-                                    <td class="center">
-                                        <?php echo !$this->group || isset($this->group['operation']) ? Text::_("COM_KUNENA_{$item->operation}") : ''; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo !$this->group || isset($this->group['user']) ? ($user->userid ? $this->escape($user->username) . ' <small>(' . $this->escape($item->user_id) . ')</small>' . '<br />' . $this->escape($user->name) : '') : ''; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo !$this->group || isset($this->group['category']) ? ($category->exists() ? $category->displayField('name') . ' <small>(' . $this->escape($item->category_id) . ')</small>' : '') : ''; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo !$this->group || isset($this->group['topic']) ? ($topic->exists() ? $topic->displayField('subject') . ' <small>(' . $this->escape($item->topic_id) . ')</small>' : '') : ''; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo !$this->group || isset($this->group['target_user']) ? ($target->userid ? $this->escape($target->username) . ' <small>(' . $this->escape($item->target_user) . ')</small>' . '<br />' . $this->escape($target->name) : '') : ''; ?>
-                                    </td>
-                                    <td class="center">
-                                        <?php echo !$this->group || isset($this->group['ip']) ? $this->escape($item->ip) : ''; ?>
-                                    </td>
-                                    <?php if (!$this->group) : ?>
-                                        <td>
-                                            <a href="#kerror<?php echo $item->id; ?>_form" role="button"
-                                               class="btn openmodal"
-                                               data-bs-toggle="modal"
-                                               data-bs-target="#kerror<?php echo $item->id; ?>_form"
-                                               rel="nofollow">
-                                                <?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
-                                                    <span class="icon-warning" aria-hidden="true"></span>
-                                                <?php else : ?>
-                                                    <span class="icon-edit" aria-hidden="true"></span>
-                                                <?php endif; ?>
-                                                <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
-                                            </a>
-                                        </td>
-                                    <?php endif; ?>
-                                </tr>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="kerror<?php echo $item->id; ?>_form" tabindex="-1" 
-                                  aria-labelledby="kerror<?php echo $item->id; ?>_form" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="kerror<?php echo $item->id; ?>_formLabel">
-                                            <?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
-                                                        <span class="icon-warning" aria-hidden="true"></span>
-                                                                           <?php else : ?>
-                                                        <span class="icon-edit" aria-hidden="true"></span>
-                                                                           <?php endif; ?>
-                                                    Kunena <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
-
-                                                    ID:<?php echo $item->id; ?>
-                                        </h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <textarea id="report_final<?php echo $item->id; ?>"
-                                                              for="report_final<?php echo $item->id; ?>"><?php echo KunenaParser::plainBBCode((string) $item->data); ?></textarea>
-                                                    <pre><?php echo json_encode(json_decode($item->data), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></pre>
-                                      </div>              
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_('COM_KUNENA_EDITOR_MODAL_CLOSE_LABEL') ?></button>
-                                        <button type="button" id="link_sel_all<?php echo $item->id; ?>" class="btn btn-primary"><i
-                                                            class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></button> 
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!-- End of modal -->
-                                <?php
-                                $i++;
-                            endforeach;
-                        else :
-                            ?>
+                        $i = 0;
+                        foreach ($this->items as $item) :
+                            $date = new KunenaDate($item->time);
+                        ?>
                             <tr>
-                                <td colspan="10">
-                                    <div class="card card-block bg-faded p-2 center filter-state">
-                                <span><?php echo Text::_('COM_KUNENA_FILTERACTIVE'); ?>
-                                    <?php
-                                    if ($this->filter->Active) :
-                                        ?>
-                                        <button class="btn btn-outline-primary" type="button"
-                                                onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo Text::_('COM_KUNENA_FIELD_LABEL_FILTERCLEAR'); ?></button>
-                                    <?php endif; ?>
-                                </span>
-                                    </div>
+                                <th class="w-1 text-center">
+                                    <?php echo !$this->group ? $this->escape($item->id) : (int) $item->count; ?>
+                                </th>
+                                <td>
+                                    <?php echo $date->toSql(); ?>
                                 </td>
+                                <td>
+                                    <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType((int) $item->type)) : ''; ?>
+                                </td>
+                                <td>
+                                    <?php echo !$this->group || isset($this->group['operation']) ? Text::_("COM_KUNENA_{$item->operation}") : ''; ?>
+                                </td>
+                                <td>
+                                    <?php echo !$this->group || isset($this->group['user']) ? $this->escape($item->user_username) . ' <small>(' . $this->escape($item->user_id) . ')</small>' . '<br />' . $this->escape($item->user_name) : ''; ?>
+                                </td>
+                                <td>
+                                    <?php echo !$this->group || isset($this->group['category']) ? $item->category_name . ' <small>(' . $this->escape($item->category_id) . ')</small>' : ''; ?>
+                                </td>
+                                <td>
+                                    <?php echo !$this->group || isset($this->group['topic']) ? $item->topic_subject . ' <small>(' . $this->escape($item->topic_id) . ')</small>' : ''; ?>
+                                </td>
+                                <td>
+                                    <?php echo !$this->group || isset($this->group['target_user']) ? $this->escape($item->targetuser_username) . ' <small>(' . $this->escape($item->target_user) . ')</small>' . '<br />' . $this->escape($item->targetuser_name) : ''; ?>
+                                </td>
+                                <td>
+                                    <?php echo !$this->group || isset($this->group['ip']) ? $this->escape($item->ip) : ''; ?>
+                                </td>
+                                <?php if (!$this->group) : ?>
+                                    <td>
+                                        <?php if (isset($item->extra_data) && !empty($item->extra_data)) : ?>
+                                        <?php endif; ?>
+                                        <a class="show-extradata" href="#">
+                                            <?php if ($this->escape($this->getType($item->type)) != 'ACT') : ?>
+                                                <span class="icon-warning" aria-hidden="true"></span>
+                                            <?php else : ?>
+                                                <span class="icon-edit" aria-hidden="true"></span>
+                                            <?php endif; ?>
+                                            <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType($item->type)) : ''; ?>
+                                        </a>
+                                        <div style="display:none;" class="extradata">
+                                            <?php echo '<p class="mt-2 select_to_clipboard wrapword">' . KunenaParser::plainBBCode((string) $item->data) . '</p>'; ?>
+                                        </div>
+                                    </td>
+                                <?php endif; ?>
                             </tr>
-                        <?php endif; ?>
-                        </tbody>
-                    </table>
-                </form>
-                <div class="clearfix"></div>
+                        <?php
+                            $i++;
+                        endforeach; ?>
+                    </tbody>
+                </table>
+
+                <?php // load the pagination. 
+                ?>
+                <?php echo $this->pagination->getListFooter(); ?>
+                <input type="hidden" name="task" value="" />
+                <input type="hidden" name="boxchecked" value="1" />
+                <?php echo HTMLHelper::_('form.token'); ?>
+
             </div>
         </div>
     </div>
-    <div class="pull-right small">
-        <?php echo KunenaVersion::getLongVersionHTML(); ?>
-    </div>
+</form>
+<div class="mt-3 text-center small">
+    <?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

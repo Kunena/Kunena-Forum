@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Kunena\Forum\Administrator\Field">
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			inputmode="search"
+			label="COM_USERS_SEARCH_USERS"
+			description=""
+			hint="JSEARCH_FILTER" />
+		<field
+			name="time_start"
+			type="calendar"
+			label="COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE"
+			class="js-select-submit-on-change"
+			hint="COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_START_DATE"
+			default="" />
+		<field
+			name="time_stop"
+			type="calendar"
+			label="COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_STOP_DATE"
+			class="js-select-submit-on-change"
+			hint="COM_KUNENA_LOG_CALENDAR_PLACEHOLDER_STOP_DATE"
+			default="" />
+		<field
+			name="type"
+			type="list"
+			label="COM_KUNENA_LOG_TYPE_SORT_LABEL"
+			class="js-select-submit-on-change"
+			default=""
+			validate="options">
+			<option value="">COM_KUNENA_FILTER_SELECT_TYPE</option>
+			<option value="1">MOD</option>
+			<option value="2">ACT</option>
+			<option value="3">ERR</option>
+			<option value="4">REP</option>
+		</field>
+		<field
+			name="operation"
+			type="kunenaoperationlist"
+			default=""
+			class="js-select-submit-on-change" />
+		<field
+			name="user"
+			type="user"
+			label="COM_KUNENA_LOG_USER_SORT_LABEL"
+			hint="COM_KUNENA_FILTER_SELECT_USER"
+			class="js-select-submit-on-change"
+			default="" />
+		<field
+			name="category"
+			type="sql"
+			sql_select="a.category_id, c.id, c.name"
+			sql_from="#__kunena_logs AS a"
+			sql_join="#__kunena_categories AS c ON a.category_id = c.id"
+			sql_where="c.name != ''"
+			sql_group="a.category_id"
+			sql_order="c.name ASC"
+			key_field="id"
+			value_field="name"
+			default=""
+			class="js-select-submit-on-change">
+			<option value="">COM_KUNENA_FILTER_SELECT_CATEGORY</option>
+		</field>
+		<field
+			name="topic"
+			type="sql"
+			sql_select="a.topic_id, t.id, t.subject"
+			sql_from="#__kunena_logs AS a"
+			sql_join="#__kunena_topics AS t ON a.topic_id = t.id"
+			sql_where="t.subject != ''"
+			sql_group="a.topic_id"
+			sql_order="t.subject ASC"
+			key_field="id"
+			value_field="subject"
+			default=""
+			class="js-select-submit-on-change">
+			<option value="">COM_KUNENA_FILTER_SELECT_TOPIC</option>
+		</field>
+		<field
+			name="target_user"
+			type="user"
+			label="COM_KUNENA_LOG_TARGET_USER_SORT_LABEL"
+			class="js-select-submit-on-change"
+			default=""
+			validate="options">
+			<option value="">COM_KUNENA_FILTER_SELECT_TARGETUSER</option>
+		</field>
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			class="js-select-submit-on-change"
+			default="username ASC"
+			validate="options">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="time ASC">COM_KUNENA_FILTER_FIELD_TIME_ASC</option>
+			<option value="time DESC">COM_KUNENA_FILTER_FIELD_TIME_DESC</option>
+			<option value="type ASC">COM_KUNENA_FILTER_FIELD_TYPE_ASC</option>
+			<option value="type DESC">COM_KUNENA_FILTER_FIELD_TYPE_DESC</option>
+			<option value="operation ASC">COM_KUNENA_FILTER_FIELD_OPERATION_ASC</option>
+			<option value="operation DESC">COM_KUNENA_FILTER_FIELD_OPERATION_DESC</option>
+			<option value="user ASC">COM_KUNENA_FILTER_FIELD_USER_ASC</option>
+			<option value="user DESC">COM_KUNENA_FILTER_FIELD_USER_DESC</option>
+			<option value="category ASC">COM_KUNENA_FILTER_FIELD_CATEGORY_ASC</option>
+			<option value="category DESC">COM_KUNENA_FILTER_FIELD_CATEGORY_DESC</option>
+			<option value="topic ASC">COM_KUNENA_FILTER_FIELD_TOPIC_ASC</option>
+			<option value="topic DESC">COM_KUNENA_FILTER_FIELD_TOPIC_DESC</option>
+			<option value="ip ASC">COM_KUNENA_FILTER_FIELD_IP_ASC</option>
+			<option value="ip DESC">COM_KUNENA_FILTER_FIELD_IP_DESC</option>
+			<option value="target_user ASC">COM_KUNENA_FILTER_FIELD_TARGETUSER_ASC</option>
+			<option value="target_user DESC">COM_KUNENA_FILTER_FIELD_TARGETUSER_DESC</option>
+			<option value="id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			class="js-select-submit-on-change" />
+	</fields>
+</form>

@@ -13,6 +13,7 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -58,7 +59,7 @@ $this->doc->addScriptOptions('com_kunena.root_path', Uri::root(true));
 $this->doc->addScriptOptions('com_kunena.editor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));
 
 $this->wa->registerAndUseScript('sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js');
-
+HTMLHelper::_('bootstrap.tab');
 // Echo $this->subLayout('Widget/Datepicker');
 
 $topictemplate = !$this->config->pickup_category;
@@ -74,6 +75,18 @@ $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(Kunena
     }
 </script>
 
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#message-tab" type="button" role="tab" aria-controls="home" aria-selected="true"><?php echo Text::_('COM_KUNENA_MESSAGE_TAB_MESSAGE') ?></button>
+  </li>
+  <?php if ($this->config->privateMessage): ?>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#message_private-tab" type="button" role="tab" aria-controls="profile" aria-selected="false"><?php echo Text::_('COM_KUNENA_MESSAGE_TAB_PRIVATE_MESSAGE') ?></button>
+  </li>
+  <?php endif; ?>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="message-tab" role="tabpanel" aria-labelledby="home-tab">
 <textarea class="span12" name="message" id="message" rows="12" tabindex="7"
           placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate) {
                 echo $this->message->getCategory()->topictemplate;
@@ -83,6 +96,19 @@ $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(Kunena
                            echo $this->escape($this->message->message);
                        } ?>
 </textarea>
+</div>
+  <div class="tab-pane fade" id="message_private-tab" role="tabpanel" aria-labelledby="profile-tab">
+<textarea class="span12" name="message_private" id="message_private" rows="12" tabindex="7"
+          placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate) {
+                echo $this->message->getCategory()->topictemplate;
+                       }
+
+                       if (!empty($this->message->message)) {
+                           echo $this->escape($this->message->message);
+                       } ?>
+</textarea>
+</div>
+</div>
 
 <input type="hidden" name="nb_options_allowed" id="nb_options_allowed"
        value="<?php echo $this->config->pollNbOptions; ?>"/>

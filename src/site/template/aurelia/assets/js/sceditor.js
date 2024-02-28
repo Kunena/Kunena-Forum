@@ -690,6 +690,7 @@ jQuery(document).ready(function ($) {
 		});
 
 		var textarea = document.getElementById('message');
+		var textarea_private = document.getElementById('message_private');
 		var toolbar_buttons = '';
 		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 		{
@@ -743,6 +744,45 @@ jQuery(document).ready(function ($) {
 			}
 
 			if (sceditor.instance(textarea).val().length == 0 && $('#form_submit_button').disabled === undefined)
+			{
+				$('#form_submit_button').prop("disabled", true);
+			}
+		});
+
+		sceditor.create(textarea_private, {
+			format: 'bbcode',
+			toolbar: toolbar_buttons,
+			style: Joomla.getOptions('com_kunena.sceditor_style_path'),
+			emoticonsRoot: Joomla.getOptions('com_kunena.root_path')+'/media/kunena/emoticons/',
+			/*emoticons: {
+				// Emoticons to be included in the dropdown
+				dropdown: list_emoticons,
+				// Emoticons to be included in the more section
+				more: {
+					':alien:': 'emoticons/alien.png',
+					':blink:': 'emoticons/blink.png'
+				},
+				// Emoticons that are not shown in the dropdown but will still
+				// be converted. Can be used for things like aliases
+				hidden: {
+					':aliasforalien:': 'emoticons/alien.png',
+					':aliasforblink:': 'emoticons/blink.png'
+				}
+			}*/
+		});
+
+		if (sceditor.instance(textarea_private).val().length > 0)
+		{
+			$('#form_submit_button').removeAttr("disabled");
+		}
+
+		sceditor.instance(textarea_private).bind('valuechanged', function(e) {
+			if (sceditor.instance(textarea_private).val().length > 0)
+			{
+				$('#form_submit_button').removeAttr("disabled");
+			}
+
+			if (sceditor.instance(textarea_private).val().length == 0 && $('#form_submit_button').disabled === undefined)
 			{
 				$('#form_submit_button').prop("disabled", true);
 			}

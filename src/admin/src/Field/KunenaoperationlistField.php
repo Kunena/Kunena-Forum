@@ -65,8 +65,8 @@ class KunenaoperationlistField extends ListField
         foreach ($constants as $key => $value) {
             if (strpos($key, 'LOG_') === 0) {
                 $operationOptions[] = (object) [
-                    'text'  => $key,
-                    'value' => Text::_("COM_KUNENA_{$value}"),
+                    'value'  => $key,
+                    'text' => Text::_("COM_KUNENA_{$value}"),
                 ];
             }
         }

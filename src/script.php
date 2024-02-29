@@ -162,7 +162,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             // Site folders
             $deleteFolders[] = '/components/com_kunena/language';
             $deleteFolders[] = '/components/com_kunena/src';
-            $deleteFolders[] = '/components/com_kunena/template/aurelia';
             $deleteFolders[] = '/components/com_kunena/template/system';
             $deleteFolders[] = '/components/com_kunena/tmpl';
             // Library folders

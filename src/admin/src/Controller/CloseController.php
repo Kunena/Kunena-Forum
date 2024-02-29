@@ -22,6 +22,8 @@ use Joomla\CMS\MVC\Controller\FormController;
  * Kunena Cpanel Controller
  *
  * @since   Kunena 2.0
+ * 
+ * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
  */
 class CloseController extends FormController
 {

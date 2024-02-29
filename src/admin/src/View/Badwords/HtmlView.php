@@ -26,6 +26,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  * Bad Words view for Kunena backend
  *
  * @since 5.1
+ * 
+ * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
  */
 class HtmlView extends BaseHtmlView
 {

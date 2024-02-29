@@ -30,6 +30,8 @@ use stdClass;
  * Statistics Model for Kunena
  *
  * @since 5.0
+ * 
+ * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
  */
 class StatisticsModel extends ListModel
 {

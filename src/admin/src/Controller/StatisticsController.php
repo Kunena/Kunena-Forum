@@ -21,6 +21,8 @@ use Joomla\CMS\MVC\Controller\FormController;
  * Kunena Backend Statistics Controller
  *
  * @since   Kunena 5.0
+ * 
+ * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
  */
 class StatisticsController extends FormController
 {

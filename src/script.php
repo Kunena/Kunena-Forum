@@ -16,7 +16,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
@@ -24,7 +24,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Extension;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaInstallerException;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Filesystem\File;
 use Joomla\Database\DatabaseInterface;
 
 /**
@@ -143,6 +143,38 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             File::copy(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss', JPATH_SITE . '/tmp/custom.scss');
         }
 
+        $installedManifest = $this->getItemArray('manifest_cache', '#__extensions', 'element', $parent->getName());
+        $installedRelease  = isset($installedManifest['version']) ? $installedManifest['version'] : false;
+
+        if (version_compare($installedRelease, '6.3.0', '<') && version_compare($installedRelease, '6.0.0', '>=')) {
+            // Set and delete the following folders
+            $deleteFolders   = [];
+            // Administrator folders
+            $deleteFolders[] = '/administrator/components/com_kunena/api';
+            $deleteFolders[] = '/administrator/components/com_kunena/forms';
+            $deleteFolders[] = '/administrator/components/com_kunena/install';
+            $deleteFolders[] = '/administrator/components/com_kunena/language';
+            $deleteFolders[] = '/administrator/components/com_kunena/media';
+            $deleteFolders[] = '/administrator/components/com_kunena/services';
+            $deleteFolders[] = '/administrator/components/com_kunena/sql';
+            $deleteFolders[] = '/administrator/components/com_kunena/src';
+            $deleteFolders[] = '/administrator/components/com_kunena/tmpl';
+            // Site folders
+            $deleteFolders[] = '/components/com_kunena/language';
+            $deleteFolders[] = '/components/com_kunena/src';
+            $deleteFolders[] = '/components/com_kunena/template/aurelia';
+            $deleteFolders[] = '/components/com_kunena/template/system';
+            $deleteFolders[] = '/components/com_kunena/tmpl';
+            // Library folders
+            $deleteFolders[] = '/libraries/kunena/Src';
+
+            foreach ($deleteFolders as $folder) {
+                if (Folder::exists(JPATH_ROOT . $folder) && !Folder::delete(JPATH_ROOT . $folder)) {
+                    echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $folder) . '<br>';
+                }
+            }
+        }
+
         return parent::preflight($type, $parent);
     }
 
@@ -219,10 +251,10 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      *
      * @since Kunena 6.2
      */
-    protected function checkDbVersion( $version )
+    protected function checkDbVersion($version)
     {
-        if ( preg_match( '/(?:.*-)?(\d+\.\d+\.\d+)-MariaDB.*/', $version, $matches ) ) {
-            return $this->checkVersion( 'mariaDB', $matches[1] );
+        if (preg_match('/(?:.*-)?(\d+\.\d+\.\d+)-MariaDB.*/', $version, $matches)) {
+            return $this->checkVersion('mariaDB', $matches[1]);
         }
 
         return $this->checkVersion('MySQL', $version);
@@ -520,22 +552,6 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             File::copy(JPATH_SITE . '/tmp/custom.scss', JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss');
         }
 
-        // Delete the language folders except en-GB because they are present in /administrator/omponents/com_kunena/language
-        $languageFoldersToClean = Folder::folders(JPATH_ADMINISTRATOR . '/components/com_kunena/language');
-        foreach($languageFoldersToClean as $folder) {
-            if($folder != 'en-GB'){
-                Folder::delete(JPATH_ADMINISTRATOR . '/components/com_kunena/language/' . $folder);
-            }
-        }
-
-        // Delete the language folders except en-GB because they are present in /components/com_kunena/language
-        $languageFoldersToClean = Folder::folders(JPATH_SITE . '/components/com_kunena/language');
-        foreach($languageFoldersToClean as $folder) {
-            if($folder != 'en-GB'){
-                Folder::delete(JPATH_SITE . '/components/com_kunena/language/' . $folder);
-            }
-        }
-
         return true;
     }
 
@@ -674,22 +690,22 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             $query->insert($db->quoteName('#__mail_templates'))
                 ->columns(
                     [
-                    $db->quoteName('template_id'),
-                    $db->quoteName('extension'),
-                    $db->quoteName('language'),
-                    $db->quoteName('subject'),
-                    $db->quoteName('body'),
-                    $db->quoteName('htmlbody'),
-                    $db->quoteName('attachments'),
-                    $db->quoteName('params'),
+                        $db->quoteName('template_id'),
+                        $db->quoteName('extension'),
+                        $db->quoteName('language'),
+                        $db->quoteName('subject'),
+                        $db->quoteName('body'),
+                        $db->quoteName('htmlbody'),
+                        $db->quoteName('attachments'),
+                        $db->quoteName('params'),
                     ]
                 )
                 ->values(implode(', ', $values))
                 ->values(implode(', ', $values2))
                 ->values(implode(', ', $values3));
-                $db->setQuery($query);
+            $db->setQuery($query);
 
-                $db->execute();
+            $db->execute();
         }
 
         // Notice $parent->getParent() returns JInstaller object

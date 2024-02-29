@@ -9,6 +9,8 @@
  * @copyright     Copyright (C) 2008 - 2024 Kunena Team. All rights reserved.
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
+ * 
+ * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
  **/
 
 namespace Kunena\Forum\Administrator\View\Statistics;

@@ -34,7 +34,7 @@ $listOrder       = $this->escape($this->state->get('list.ordering'));
 $listDirn        = $this->escape($this->state->get('list.direction'));
 $saveOrder       = ($listOrder == 'ordering' && strtolower($listDirn) == 'asc');
 
-if ($saveOrder && !empty($this->categories)) {
+if ($saveOrder) {
     $saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=categories.saveorderajax';
     HTMLHelper::_('draggablelist.draggable');
 }

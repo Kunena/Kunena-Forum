@@ -53,6 +53,10 @@ class KunenacategorylistField extends ListField
             return '';
         }
 
+        if ($this->element['return_options'] && $this->element['return_options'] == 'true') {
+            return parent::getInput();
+        }
+
         Factory::getApplication()->bootComponent('com_kunena');
         KunenaFactory::loadLanguage('com_kunena');
 
@@ -94,6 +98,11 @@ class KunenacategorylistField extends ListField
     {
         // Initialize variables.
         $options = [];
+
+        if ($this->element['return_options'] && $this->element['return_options'] == 'true') {
+            $options = parent::getOptions();
+            return HTMLHelper::_('kunenaforum.categorylist', $this->name, 0, $options, $this->element, '', 'value', 'text', $this->value);
+        }
 
         foreach ($this->element->children() as $option) {
             // Only add <option /> elements.

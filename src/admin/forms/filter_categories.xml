@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Kunena\Forum\Administrator\Field">
+    <fields name="filter">
+        <field
+            name="search"
+            type="text"
+            inputmode="search"
+            label="COM_USERS_SEARCH_USERS"
+            description=""
+            hint="JSEARCH_FILTER" />
+        <field
+            name="category"
+            type="kunenacategorylist"
+            label="COM_KUNENA_GEN_CATEGORY"
+            class="js-select-submit-on-change"
+            default=""
+            sections="1"
+            unpublished="1"
+            levels="3"
+            return_options="true"
+            validate="options">
+            <option value="">COM_KUNENA_FILTER_SELECT_CATEGORY</option>
+        </field>
+        <field
+            name="levels"
+            type="list"
+            label="COM_KUNENA_FILTER_SELECT_CATEGORYLEVEL"
+            class="js-select-submit-on-change"
+            default="">
+            <option value="">COM_KUNENA_FILTER_SELECT_CATEGORYLEVEL</option>
+            <option value="0">COM_KUNENA_FIELD_LABEL_ALLLEVELS</option>
+            <option value="1">COM_KUNENA_FIELD_LABEL_SECTIONLEVELS</option>
+            <option value="2">COM_KUNENA_FIELD_LABEL_CATEGORIESLEVELS</option>
+            <option value="3">COM_KUNENA_FIELD_LABEL_SUBCATEGORIESLEVELS</option>
+        </field>
+        <field
+            name="published"
+            type="list"
+            label="COM_KUNENA_CATEGORIES_LABEL_ENABLED"
+            class="js-select-submit-on-change"
+            default=""
+            validate="options">
+            <option value="">COM_KUNENA_FILTER_SELECT_ENABLED</option>
+            <option value="1">COM_KUNENA_PUBLISHED</option>
+            <option value="0">COM_KUNENA_UNPUBLISHED</option>
+        </field>
+        <field
+            name="access"
+            type="accesslevel"
+            label="JGRID_HEADING_ACCESS"
+            default=""
+            hint="JOPTION_SELECT_ACCESS"
+            class="js-select-submit-on-change"
+            validate="options">
+            <option value="">JOPTION_SELECT_ACCESS</option>
+        </field>
+        <field
+            name="locked"
+            type="list"
+            label="COM_KUNENA_LOCKED"
+            class="js-select-submit-on-change"
+            default=""
+            validate="options">
+            <option value="">COM_KUNENA_FILTER_SELECT_LOCKED</option>
+            <option value="1">COM_KUNENA_FIELD_LABEL_YES</option>
+            <option value="0">COM_KUNENA_FIELD_LABEL_NO</option>
+        </field>
+        <field
+            name="review"
+            type="list"
+            label="COM_KUNENA_REVIEW"
+            class="js-select-submit-on-change"
+            default=""
+            validate="options">
+            <option value="">COM_KUNENA_FILTER_SELECT_REVIEW</option>
+            <option value="1">COM_KUNENA_FIELD_LABEL_YES</option>
+            <option value="0">COM_KUNENA_FIELD_LABEL_NO</option>
+        </field>
+        <field
+            name="allowPolls"
+            type="list"
+            label="COM_KUNENA_CATEGORIES_LABEL_POLL"
+            class="js-select-submit-on-change"
+            default=""
+            validate="options">
+            <option value="">COM_KUNENA_FILTER_SELECT_ALLOWPOLLS</option>
+            <option value="1">COM_KUNENA_FIELD_LABEL_YES</option>
+            <option value="0">COM_KUNENA_FIELD_LABEL_NO</option>
+        </field>
+        <field
+            name="anonymous"
+            type="list"
+            label="COM_KUNENA_CATEGORY_ANONYMOUS"
+            class="js-select-submit-on-change"
+            default=""
+            validate="options">
+            <option value="">COM_KUNENA_FILTER_SELECT_ANONYMOUS</option>
+            <option value="1">COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO</option>
+            <option value="0">COM_KUNENA_CATEGORY_ANONYMOUS_X_REG</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field
+            name="fullordering"
+            type="list"
+            label="JGLOBAL_SORT_BY"
+            class="js-select-submit-on-change"
+            default="username ASC"
+            validate="options">
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="ordering ASC">COM_KUNENA_FILTER_FIELD_ORDERING_ASC</option>
+            <option value="ordering DESC">COM_KUNENA_FILTER_FIELD_ORDERING_DESC</option>
+            <option value="p.published ASC">COM_KUNENA_FILTER_FIELD_ENABLED_ASC</option>
+            <option value="p.published DESC">COM_KUNENA_FILTER_FIELD_ENABLED_DESC</option>
+            <option value="p.title ASC">COM_KUNENA_FILTER_FIELD_TITLE_ASC</option>
+            <option value="p.title DESC">COM_KUNENA_FILTER_FIELD_TITLE_DESC</option>
+            <option value="p.access ASC">COM_KUNENA_FILTER_FIELD_ACCESS_ASC</option>
+            <option value="p.access DESC">COM_KUNENA_FILTER_FIELD_ACCESS_DESC</option>
+            <option value="p.locked ASC">COM_KUNENA_FILTER_FIELD_LOCKED_ASC</option>
+            <option value="p.locked DESC">COM_KUNENA_FILTER_FIELD_LOCKED_DESC</option>
+            <option value="p.review ASC">COM_KUNENA_FILTER_FIELD_REVIEW_ASC</option>
+            <option value="p.review DESC">COM_KUNENA_FILTER_FIELD_REVIEW_DESC</option>
+            <option value="p.allowPolls ASC">COM_KUNENA_FILTER_FIELD_ALLOWPOLLS_ASC</option>
+            <option value="p.allowPolls DESC">COM_KUNENA_FILTER_FIELD_ALLOWPOLLS_DESC</option>
+            <option value="p.anonymous ASC">COM_KUNENA_FILTER_FIELD_ANONYMOUS_ASC</option>
+            <option value="p.anonymous DESC">COM_KUNENA_FILTER_FIELD_ANONYMOUS_DESC</option>
+            <option value="p.id ASC">JGRID_HEADING_ID_ASC</option>
+            <option value="p.id DESC">JGRID_HEADING_ID_DESC</option>
+        </field>
+        <field
+            name="limit"
+            type="limitbox"
+            label="JGLOBAL_LIST_LIMIT"
+            default="25"
+            class="js-select-submit-on-change" />
+    </fields>
+</form>

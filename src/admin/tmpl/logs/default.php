@@ -197,10 +197,12 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                 <?php // load the pagination. 
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
+
+                <template id="joomla-dialog-clean"><?php echo $this->loadTemplate('clean'); ?></template>
+
                 <input type="hidden" name="task" value="" />
                 <input type="hidden" name="boxchecked" value="1" />
                 <?php echo HTMLHelper::_('form.token'); ?>
-
             </div>
         </div>
     </div>

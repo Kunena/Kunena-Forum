@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><!DOCTYPE extension>
-<extension type="component" version="4.0" method="upgrade">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension
+    type="component"
+    version="4.0"
+    method="upgrade">
     <name>com_kunena</name>
     <version>@kunenaversion@</version>
     <versionname>@kunenaversionname@</versionname>
@@ -14,7 +18,9 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <install>
         <sql>
-            <file driver="mysql" charset="utf8">sql/install/mysql/create_tables.utf8.sql</file>
+            <file
+                driver="mysql"
+                charset="utf8">sql/install/mysql/create_tables.utf8.sql</file>
         </sql>
     </install>
     <files folder="site">
@@ -25,7 +31,9 @@
         <filename>jomsocial_rule.xml</filename>
     </files>
     <administration>
-        <menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA
+        <menu
+            view="cpanel"
+            img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA
         </menu>
         <submenu>
             <menu view="cpanel">COM_KUNENA_DASHBOARD</menu>
@@ -38,7 +46,6 @@
             <menu view="config">COM_KUNENA_CONFIGURATION</menu>
             <menu view="plugins">COM_KUNENA_PLUGIN_MANAGER</menu>
             <menu view="logs">COM_KUNENA_LOG_MANAGER</menu>
-            <menu view="statistics">COM_KUNENA_MENU_STATISTICS</menu>
             <menu view="tools">COM_KUNENA_FORUM_TOOLS</menu>
             <menu view="trashs">COM_KUNENA_TRASH_MANAGER</menu>
         </submenu>

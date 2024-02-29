@@ -9,6 +9,8 @@
  * @copyright     Copyright (C) 2008 - 2024 Kunena Team. All rights reserved.
  * @license       https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          https://www.kunena.org
+ * 
+ * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
  **/
 
 defined('_JEXEC') or die();
@@ -29,19 +31,19 @@ $wa->useScript('multiselect')
             <div class="card card-block bg-faded p-2">
                 <div id="dashboard-icons" class="btn-group">
                     <a class="btn btn-outline-primary" href="#">
-                        <i class="icon-big icon-user"></i><br/>
+                        <i class="icon-big icon-user"></i><br />
                         <span><?php echo Text::_('Subscription') ?></span>
                     </a>
                     <a class="btn btn-outline-primary" href="#">
-                        <i class="icon-big icon-shield"></i><br/>
+                        <i class="icon-big icon-shield"></i><br />
                         <span><?php echo Text::_('Moderator') ?></span>
                     </a>
                     <a class="btn btn-outline-primary" href="#">
-                        <i class="icon-big icon-checkmark"></i><br/>
+                        <i class="icon-big icon-checkmark"></i><br />
                         <span><?php echo Text::_('Approved') ?></span>
                     </a>
                     <a class="btn btn-outline-primary" href="#">
-                        <i class="icon-big icon-notification-circle"></i><br/>
+                        <i class="icon-big icon-notification-circle"></i><br />
                         <span><?php echo Text::_('Report') ?></span>
                     </a>
                 </div>

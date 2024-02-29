@@ -22,6 +22,8 @@ use Joomla\CMS\MVC\Model\AdminModel;
  * Labels Model for Kunena
  *
  * @since 5.1
+ * 
+ * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
  */
 class LabelsModel extends AdminModel
 {

@@ -22,6 +22,8 @@ use Joomla\CMS\MVC\Controller\FormController;
  * Kunena Backend Email Controller
  *
  * @since   Kunena 5.1
+ * 
+ * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
  */
 class EmailController extends FormController
 {

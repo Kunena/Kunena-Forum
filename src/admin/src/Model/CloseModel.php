@@ -21,6 +21,8 @@ use Joomla\CMS\MVC\Model\AdminModel;
  * Close Model for Kunena
  *
  * @since   Kunena 2.0.3
+ * 
+ * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
  */
 class CloseModel extends AdminModel
 {

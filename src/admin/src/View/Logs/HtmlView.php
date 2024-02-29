@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use ReflectionClass;
 
@@ -141,9 +142,17 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
+
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
-        ToolbarHelper::custom('logs.cleanEntries', 'trash.png', 'trash_f2.png', 'COM_KUNENA_LOG_CLEAN_ENTRIES', false);
+        $toolbar->popupButton('cleanentries', 'COM_KUNENA_LOG_CLEAN_ENTRIES')
+            ->popupType('inline')
+            ->textHeader(Text::_('COM_KUNENA_LOG_CLEAN_ENTRIES'))
+            ->url('#joomla-dialog-clean')
+            ->modalWidth('800px')
+            ->modalHeight('fit-content');
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

@@ -16,10 +16,11 @@ namespace Kunena\Forum\Administrator\View\Trashs;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
@@ -93,33 +94,33 @@ class HtmlView extends BaseHtmlView
      *
      * @throws  Exception
      */
-    public function displayPurge(): void
-    {
-        $this->purgeItems    = $this->get('PurgeItems');
-        $this->md5Calculated = $this->get('Md5');
+    // public function displayPurge(): void
+    // {
+    //     $this->purgeItems    = $this->get('PurgeItems');
+    //     $this->md5Calculated = $this->get('Md5');
 
-        $this->setToolBarPurge();
-        $this->display();
-    }
+    //     $this->setToolBarPurge();
+    //     $this->display();
+    // }
 
     /**
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    protected function setToolBarPurge(): void
-    {
-        // Set the title bar text
-        ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
-        ToolbarHelper::spacer();
-        ToolbarHelper::custom('trash.purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
-        ToolbarHelper::spacer();
-        ToolbarHelper::cancel();
-        ToolbarHelper::spacer();
+    // protected function setToolBarPurge(): void
+    // {
+    //     // Set the title bar text
+    //     ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
+    //     ToolbarHelper::spacer();
+    //     ToolbarHelper::custom('trash.purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
+    //     ToolbarHelper::spacer();
+    //     ToolbarHelper::cancel();
+    //     ToolbarHelper::spacer();
 
-        $helpUrl = 'https://docs.kunena.org/en/manual/backend/trashbin';
-        ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-    }
+    //     $helpUrl = 'https://docs.kunena.org/en/manual/backend/trashbin';
+    //     ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+    // }
 
     /**
      * @param   null  $tpl  tpl
@@ -132,75 +133,18 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->state              = $this->get('State');
-        $this->trashInternalItems = $this->get('Trashitems');
-        $this->setLayout($this->state->get('layout'));
-        $this->pagination      = $this->get('Navigation');
-        $this->viewOptionsList = $this->get('ViewOptions');
+        $this->state         = $this->get('State');
+        $this->items         = $this->get('Items');
+        $this->filterForm    = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
+        $this->pagination    = $this->get('Pagination');
 
-        $this->sortFields          = $this->getSortFields();
-        $this->sortDirectionFields = $this->getSortDirectionFields();
-
-        $this->filter             = new \stdClass();
-        $this->filter->Search     = $this->escape($this->state->get('list.search'));
-        $this->filter->Title      = $this->escape($this->state->get('filter.title'));
-        $this->filter->Category   = $this->escape($this->state->get('filter.category'));
-        $this->filter->Topic      = $this->escape($this->state->get('filter.topic'));
-        $this->filter->Active     = $this->escape($this->state->get('filter.active'));
-        $this->filter->TargetUser = $this->escape($this->state->get('filter.target_user'));
-        $this->filter->Ip         = $this->escape($this->state->get('filter.ip'));
-        $this->filter->Author     = $this->escape($this->state->get('filter.author'));
-        $this->filter->Date       = $this->escape($this->state->get('filter.date'));
-
-        $this->list            = new \stdClass();
-        $this->list->Ordering  = $this->escape($this->state->get('list.ordering'));
-        $this->list->Direction = $this->escape($this->state->get('list.direction'));
+        $layout = $this->getLayout() == 'default' ? 'messages' : $this->getLayout();
+        $this->setLayout($layout);
 
         $this->addToolbar();
 
         return parent::display($tpl);
-    }
-
-    /**
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getSortFields(): array
-    {
-        $sortFields = [];
-
-        if ($this->state->get('layout') == 'topics') {
-            $sortFields[] = HTMLHelper::_('select.option', 'title', Text::_('COM_KUNENA_TRASH_TITLE'));
-            $sortFields[] = HTMLHelper::_('select.option', 'category', Text::_('COM_KUNENA_TRASH_CATEGORY'));
-            $sortFields[] = HTMLHelper::_('select.option', 'author', Text::_('COM_KUNENA_TRASH_AUTHOR'));
-            $sortFields[] = HTMLHelper::_('select.option', 'time', Text::_('COM_KUNENA_TRASH_DATE'));
-        } else {
-            $sortFields[] = HTMLHelper::_('select.option', 'title', Text::_('COM_KUNENA_TRASH_TITLE'));
-            $sortFields[] = HTMLHelper::_('select.option', 'topic', Text::_('COM_KUNENA_MENU_TOPIC'));
-            $sortFields[] = HTMLHelper::_('select.option', 'category', Text::_('COM_KUNENA_TRASH_CATEGORY'));
-            $sortFields[] = HTMLHelper::_('select.option', 'ip', Text::_('COM_KUNENA_TRASH_IP'));
-            $sortFields[] = HTMLHelper::_('select.option', 'author', Text::_('COM_KUNENA_TRASH_AUTHOR'));
-            $sortFields[] = HTMLHelper::_('select.option', 'time', Text::_('COM_KUNENA_TRASH_DATE'));
-        }
-
-        $sortFields[] = HTMLHelper::_('select.option', 'id', Text::_('JGRID_HEADING_ID'));
-
-        return $sortFields;
-    }
-
-    /**
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    protected function getSortDirectionFields(): array
-    {
-        $sortDirection   = [];
-        $sortDirection[] = HTMLHelper::_('select.option', 'asc', Text::_('JGLOBAL_ORDER_ASCENDING'));
-        $sortDirection[] = HTMLHelper::_('select.option', 'desc', Text::_('JGLOBAL_ORDER_DESCENDING'));
-
-        return $sortDirection;
     }
 
     /**
@@ -212,13 +156,35 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
+
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TRASH_MANAGER'), 'trash');
-        ToolbarHelper::spacer();
-        ToolbarHelper::custom('trash.restore', 'checkin.png', 'checkin_f2.png', 'COM_KUNENA_TRASH_RESTORE');
-        ToolbarHelper::divider();
-        ToolbarHelper::custom('trash.purge', 'trash.png', 'trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
-        ToolbarHelper::spacer();
+
+        $toggleLayout = $this->getLayout() == 'messages' ? 'topics' : 'messages';
+        $buttonText   = $toggleLayout == 'messages' ? 'COM_KUNENA_TRASH_DISPLAYMESSAGES' : 'COM_KUNENA_TRASH_DISPLAYTOPICS';
+        $link         = Route::_('index.php?option=com_kunena&view=trashs&layout=' . $toggleLayout, false);
+        $toolbar->link(Text::_($buttonText), $link)
+            ->icon('icon-refresh');
+
+        /** @var  DropdownButton $dropdown */
+        $dropdown = $toolbar->dropdownButton('status-group')
+            ->text('JTOOLBAR_CHANGE_STATUS')
+            ->toggleSplit(false)
+            ->icon('icon-ellipsis-h')
+            ->buttonClass('btn btn-action')
+            ->listCheck(true);
+
+        $childBar = $dropdown->getChildToolbar();
+        $childBar->confirmButton('trash', 'COM_KUNENA_TRASH_PURGE', 'trashs.purge')
+            ->message('COM_KUNENA_PERM_DELETE_ITEMS')
+            ->icon('icon-trash')
+            ->listCheck(true);
+        $childBar->confirmButton('restore', 'COM_KUNENA_TRASH_RESTORE', 'trashs.restore')
+            ->message('COM_KUNENA_TRASH_RESTORE_ITEMS')
+            ->icon('icon-checkin')
+            ->listCheck(true);
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/trashbin';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

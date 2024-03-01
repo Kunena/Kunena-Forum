@@ -88,41 +88,6 @@ class HtmlView extends BaseHtmlView
     protected $state;
 
     /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     *
-     * @throws  Exception
-     */
-    // public function displayPurge(): void
-    // {
-    //     $this->purgeItems    = $this->get('PurgeItems');
-    //     $this->md5Calculated = $this->get('Md5');
-
-    //     $this->setToolBarPurge();
-    //     $this->display();
-    // }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    // protected function setToolBarPurge(): void
-    // {
-    //     // Set the title bar text
-    //     ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
-    //     ToolbarHelper::spacer();
-    //     ToolbarHelper::custom('trash.purge', 'delete.png', 'delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY', false);
-    //     ToolbarHelper::spacer();
-    //     ToolbarHelper::cancel();
-    //     ToolbarHelper::spacer();
-
-    //     $helpUrl = 'https://docs.kunena.org/en/manual/backend/trashbin';
-    //     ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-    // }
-
-    /**
      * @param   null  $tpl  tpl
      *
      * @return  void

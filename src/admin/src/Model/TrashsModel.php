@@ -17,21 +17,16 @@ namespace Kunena\Forum\Administrator\Model;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Pagination\Pagination;
-use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\Model\KunenaModel;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Database\QueryInterface;
 
 /**
  * Trash Model for Kunena
  *
  * @since   Kunena 2.0
  */
-class TrashsModel extends KunenaModel
+class TrashsModel extends ListModel
 {
     /**
      * @var     boolean
@@ -52,6 +47,61 @@ class TrashsModel extends KunenaModel
     protected $internalObject = false;
 
     /**
+     * Constructor
+     *
+     * @param   array                $config   An array of configuration options (name, state, dbo, table_path, ignore_request).
+     * @param   MVCFactoryInterface  $factory  The factory.
+     *
+     * @since   Kunena 6.3.0-BETA3
+     * @throws  Exception
+     */
+    public function __construct($config = [], MVCFactoryInterface $factory = null)
+    {
+        parent::__construct($config, $factory);
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = [
+                'id',
+                'title',
+                'topic',
+                'category',
+                'author',
+                'ip',
+                'time',
+            ];
+        }
+
+        parent::__construct($config, $factory);
+    }
+
+    /**
+     * Method to get a store id based on model configuration state.
+     *
+     * This is necessary because the model is used by the component and
+     * different modules that might need different sets of data or different
+     * ordering requirements.
+     *
+     * @param   string  $id  A prefix for the store id.
+     *
+     * @return  string  A store id.
+     *
+     * @since   Kunena 6.0
+     */
+    protected function getStoreId($id = ''): string
+    {
+        // Compile the store id.
+        $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.title');
+        $id .= ':' . $this->getState('filter.topic');
+        $id .= ':' . $this->getState('filter.category');
+        $id .= ':' . $this->getState('filter.author');
+        $id .= ':' . $this->getState('filter.ip');
+        $id .= ':' . $this->getState('filter.time');
+        $id .= ':' . $this->context;
+
+        return parent::getStoreId($id);
+    }
+
+    /**
      * @param   array    $data      data
      * @param   boolean  $loadData  load data
      *
@@ -65,398 +115,118 @@ class TrashsModel extends KunenaModel
     }
 
     /**
-     * Method to get all deleted messages or topics in function of user selection.
-     *
-     * @return  array
-     *
-     * @throws  null
-     * @throws  Exception
-     * @since   Kunena 1.6
-     */
-    public function getTrashItems()
-    {
-        if ($this->state->get('layout') == 'topics') {
-            // Get topics
-            return $this->internalGetTopics();
-        }
-
-        // Get messages
-        return $this->internalGetMessages();
-    }
-
-    /**
-     * Method to get all deleted topics.
-     *
-     * @return  array
-     *
-     * @throws  Exception
-     * @throws  null
-     * @since   Kunena 1.6
-     */
-    protected function internalGetTopics(): array
-    {
-        $finder = new KunenaMessageFinder();
-        $finder->filterByHold([2, 3]);
-
-        $direction = strtoupper($this->getState('list.direction'));
-
-        switch ($this->getState('list.ordering')) {
-            case 'title':
-                $finder->order('subject', $direction);
-                break;
-
-            /*
-            case 'category':
-                $query->order('c.name ' . $direction);
-            case 'author':
-                $query->order('m.name ' . $direction);
-                break; */
-            case 'time':
-                $finder->order('time', $direction);
-                break;
-            default:
-                $finder->order('id', $direction);
-                $this->setState('list.ordering', 'id');
-        }
-
-        $filter = $this->getState('filter.title');
-
-        /*
-        if (!empty($filter))
-        {
-        $like = $db->quote('%' . $db->escape($filter, true) . '%');
-        $query->where('(a.subject LIKE ' . $like . ')');
-        }
-
-        $filter = $this->getState('filter.category');
-
-        if (!empty($filter))
-        {
-        $like = $db->quote('%' . $db->escape($filter, true) . '%');
-        $query->where('(c.name LIKE ' . $like . ')');
-
-        }
-
-        $filter = $this->getState('filter.author');
-
-        if (!empty($filter))
-        {
-        $like = $db->quote('%' . $db->escape($filter, true) . '%');
-        $query->where('(m.name LIKE ' . $like . ')');
-
-        } */
-
-        $filter = $this->getState('filter.time');
-
-        if (!empty($filter)) {
-            $finder->filterByTime($filter);
-        }
-
-        $search = $this->getState('list.search');
-
-        if (!empty($search)) {
-            $finder->where('a.subject', 'LIKE', '%' . $search . '%');
-        }
-
-        $finder->where('a.parent', '=', 0);
-
-        $total = $finder->count();
-
-        $this->setState('list.total', $total);
-
-        if ($this->getState('list.limit') && $total < $this->getState('list.start')) {
-            $this->setState('list.start', \intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
-        }
-
-        return $finder
-            ->start($this->getState('list.start'))
-            ->limit($this->getState('list.limit'))
-            ->find();
-    }
-
-    /**
-     * Method to get all deleted messages.
-     *
-     * @return  array
-     *
-     * @throws  Exception
-     * @throws  null
-     * @since   Kunena 1.6
-     */
-    protected function internalGetMessages(): array
-    {
-        $db   = $this->getDatabase();
-        $join = [];
-
-        $query = $db->getQuery(true)
-            ->select('a.id')
-            ->from($db->quoteName('#__kunena_messages', 'a'));
-        $query->where('a.hold >= 2');
-
-        $filter = $this->getState('filter.title');
-
-        if (!empty($filter)) {
-            $like = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(a.subject LIKE ' . $like . ')');
-        }
-
-        $filter = $this->getState('filter.topic');
-
-        if (!empty($filter)) {
-            $like = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(tt.subject LIKE ' . $like . ')');
-            $join['tt'] = true;
-        }
-
-        $filter = $this->getState('filter.category');
-
-        if (!empty($filter)) {
-            $like = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(c.name LIKE ' . $like . ')');
-            $join['c'] = true;
-        }
-
-        $filter = $this->getState('filter.ip');
-
-        if (!empty($filter)) {
-            $like = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(a.ip LIKE ' . $like . ')');
-        }
-
-        $filter = $this->getState('filter.author');
-
-        if (!empty($filter)) {
-            $like = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(a.name LIKE ' . $like . ')');
-        }
-
-        $filter = $this->getState('filter.time');
-
-        if (!empty($filter)) {
-            $like = $db->quote('%' . $db->escape($filter, true) . '%');
-            $query->where('(a.time LIKE ' . $like . ')');
-        }
-
-        $search = $this->getState('list.search');
-
-        if (!empty($search)) {
-            $like = $db->quote('%' . $db->escape($search, true) . '%');
-            $query->where('( a.subject LIKE ' . $like . ' OR a.name LIKE ' . $like . ' OR a.id LIKE ' . $like . ' )');
-        }
-
-        // Add the list ordering clause.
-        $direction = strtoupper($this->getState('list.direction'));
-
-        switch ($this->getState('list.ordering')) {
-            case 'title':
-                $query->order('a.subject ' . $direction);
-                break;
-            case 'topic':
-                $query->order('tt.subject ' . $direction);
-                $join['tt'] = true;
-                break;
-            case 'category':
-                $query->order('c.name ' . $direction);
-                $join['c'] = true;
-                break;
-            case 'ip':
-                $query->order('a.ip ' . $direction);
-                break;
-            case 'author':
-                $query->order('a.name ' . $direction);
-                break;
-            case 'time':
-                $query->order('a.time ' . $direction);
-                break;
-            default:
-                $query->order('a.id ' . $direction);
-                $this->setState('list.ordering', 'id');
-        }
-
-        if (isset($join['tt'])) {
-            $query->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON tt.id=a.thread');
-        }
-
-        if (isset($join['c'])) {
-            $query->innerJoin($db->quoteName('#__kunena_categories', 'c') . ' ON c.id=a.catid');
-        }
-
-        // TODO: add authorization.
-
-        $cquery = clone $query;
-        $cquery->clear('SELECT')->clear('order')->select('COUNT(*)');
-        $db->setQuery($cquery);
-
-        try {
-            $total = (int) $db->loadResult();
-            $this->setState('list.total', $total);
-        } catch (ExecutionFailureException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-
-            return [];
-        }
-
-        if (!$total) {
-            return [];
-        }
-
-        // If out of range, use last page
-        if ($this->getState('list.limit') && $total < $this->getState('list.start')) {
-            $this->setState('list.start', \intval($total / $this->getState('list.limit')) * $this->getState('list.limit'));
-        }
-
-        $query->setLimit($this->getState('list.limit'), $this->getState('list.start'));
-
-        $db->setQuery($query);
-        $ids = $db->loadColumn();
-
-        return KunenaMessageHelper::getMessages($ids, 'none');
-    }
-
-    /**
-     * Method to get select options to choose between topics and messages.
-     *
-     * @return  string
-     *
-     * @since   Kunena 1.6
-     */
-    public function getViewOptions(): string
-    {
-        $viewOptions   = [];
-        $viewOptions[] = HTMLHelper::_('select.option', 'topics', Text::_('COM_KUNENA_TRASH_TOPICS'));
-        $viewOptions[] = HTMLHelper::_('select.option', 'messages', Text::_('COM_KUNENA_TRASH_MESSAGES'));
-
-        return HTMLHelper::_(
-            'select.genericlist',
-            $viewOptions,
-            'layout',
-            'class="inputbox form-control" size="1" onchange="this.form.submit()"',
-            'value',
-            'text',
-            $this->getState('layout')
-        );
-    }
-
-    /**
-     * Method to get details on selected items.
-     *
-     * @return  array
-     *
-     * @throws  Exception
-     * @throws  null
-     * @since   Kunena 1.6
-     */
-    public function getPurgeItems(): array
-    {
-        $ids  = (array) $this->app->getUserState('com_kunena.purge');
-        $type = (string) $this->app->getUserState('com_kunena.type');
-
-        $items = [];
-
-        if ($type == 'topics') {
-            $items = KunenaTopicHelper::getTopics($ids, 'none');
-        } elseif ($type == 'messages') {
-            $items = KunenaMessageHelper::getMessages($ids, 'none');
-        }
-
-        return $items;
-    }
-
-    /**
-     * Method to hash data's.
-     *
-     * @return  string Hashed value.
-     *
-     * @since   Kunena 1.6
-     */
-    public function getMd5(): string
-    {
-        $ids = (array) $this->app->getUserState('com_kunena.purge');
-
-        return md5(serialize($ids));
-    }
-
-    /**
-     * @return  Pagination
-     *
-     * @since   Kunena 6.0
-     */
-    public function getNavigation(): Pagination
-    {
-        return new Pagination(
-            $this->getState('list.total'),
-            $this->getState('list.start'),
-            $this->getState('list.limit')
-        );
-    }
-
-    /**
      * Method to auto-populate the model state.
      *
      * Note. Calling getState in this method will result in recursion.
      *
+     * @param   null  $ordering   ordering
+     * @param   null  $direction  direction
+     *
      * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 6.0
+     */
+    protected function populateState($ordering = 'id', $direction = 'asc')
+    {
+        $app = Factory::getApplication();
+
+        // Adjust the context to support modal layouts.
+        $layout        = $app->input->get('layout', 'messages');
+        $this->context = 'com_kunena.admin.trashs';
+
+        if ($layout) {
+            $this->context .= '.' . $layout;
+        }
+
+        // Set the filtername to get the correct filter layout on the view
+        $this->filterFormName = 'filter_trashs_' . $layout;
+
+        $this->context .= '.' . $layout;
+        // $this->setState('com_kunena.admin.trashs.layout', $layout);
+
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+        $this->setState('filter.search', $search);
+
+        // List state information.
+        parent::populateState($ordering, $direction);
+    }
+
+    /**
+     * Build an SQL query to load the list data.
+     *
+     * @return  QueryInterface
      *
      * @since   Kunena 6.0
      */
-    protected function populateState(): void
+    protected function getListQuery(): QueryInterface
     {
-        $context = 'com_kunena.admin.trash';
+        // Create a new query object.
+        $db    = $this->getDatabase();
+        $query = $db->getQuery(true);
 
-        $layout = $this->getUserStateFromRequest("com_kunena.admin.trash.layout", 'layout', 'messages', 'cmd');
+        $app    = Factory::getApplication();
+        $layout = $app->input->get('layout', 'messages');
 
-        // Set default view on messages
-        if ($layout != 'messages') {
-            $layout = 'topics';
+        if ($layout == 'messages') {
+            // Select the required fields from the table.
+            $query->select(
+                $this->getState(
+                    'list.select',
+                    'km.id AS id, km.subject AS title, kt.subject AS topic, kc.name AS category, u.name AS author, km.ip AS ip, km.time AS time,
+                    km.catid AS category_id, km.thread AS topic_id'
+                )
+            );
+            $query->from($db->quoteName('#__kunena_messages', 'km'));
+
+            // Join over the users for the linked user.
+            $query->join('LEFT', $db->quoteName('#__users', 'u') . ' ON km.userid = u.id');
+
+            // Join over the topics.
+            $query->join('LEFT', $db->quoteName('#__kunena_topics', 'kt') . ' ON km.thread = kt.id');
+
+            // Join over the category.
+            $query->join('LEFT', $db->quoteName('#__kunena_categories', 'kc') . ' ON km.catid = kc.id');
+
+            // Only deleted messages
+            $query->where($db->quoteName('km.hold') . ' IN (2,3)');
+        } else {
+            // Select the required fields from the table.
+            $query->select(
+                $this->getState(
+                    'list.select',
+                    'kt.id AS id, kt.subject AS title, kc.name AS category, u.name AS author, km.ip AS ip, kt.first_post_time AS time,
+                    kt.category_id AS category_id, kt.id AS topic_id'
+                )
+            );
+            $query->from($db->quoteName('#__kunena_topics', 'kt'));
+
+            // Join over the users for the linked user.
+            $query->join('LEFT', $db->quoteName('#__users', 'u') . ' ON kt.first_post_userid = u.id');
+
+            // Join over the messages.
+            $query->join('LEFT', $db->quoteName('#__kunena_messages', 'km') . ' ON kt.first_post_id = km.id');
+
+            // Join over the category.
+            $query->join('LEFT', $db->quoteName('#__kunena_categories', 'kc') . ' ON kt.category_id = kc.id');
+
+            // Only deleted messages
+            $query->where($db->quoteName('kt.hold') . ' IN (2,3)');
         }
 
-        $this->setState('layout', $layout);
+        // Filter by search.
+        $search = $this->getState('filter.search');
 
-        if ($layout) {
-            $context .= '.' . $layout;
+        if (!empty($search)) {
+            $search = $db->quote('%' . $db->escape($search, true) . '%');
+            $query->where('(km.subject LIKE ' . $search . ' OR kt.subject LIKE ' . $search . ' OR kc.name LIKE ' . $search . ' OR u.name LIKE ' . $search . ' OR km.ip LIKE ' . $search . ')');
         }
 
-        // List state information
-        $value = $this->getUserStateFromRequest("com_kunena.admin.trash.list.limit", 'limit', $this->app->get('list_limit'), 'int');
-        $this->setState('list.limit', $value);
+        // Add the list ordering clause.
+        $direction = strtoupper($this->getState('list.direction'));
+        $ordering  = strtoupper($this->getState('list.ordering'));
+        $query->order($ordering . ' ' . $direction);
 
-        $value = $this->getUserStateFromRequest("com_kunena.admin.trash.list.start", 'limitstart', 0, 'int');
-        $this->setState('list.start', $value);
-
-        $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.ordering', 'filter_order', 'id', 'cmd');
-        $this->setState('list.ordering', $value);
-
-        $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.direction', 'filter_order_Dir', 'asc', 'word');
-
-        if ($value != 'asc') {
-            $value = 'desc';
-        }
-
-        $this->setState('list.direction', $value);
-
-        $filterActive = '';
-
-        $filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.search', 'filter_search', '', 'string');
-        $this->setState('list.search', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filterTitle', 'filterTitle', '', 'string');
-        $this->setState('filter.title', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_topic', 'filter_topic', '', 'string');
-        $this->setState('filter.topic', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_category', 'filter_category', '', 'string');
-        $this->setState('filter.category', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_ip', 'filter_ip', '', 'string');
-        $this->setState('filter.ip', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_author', 'filter_author', '', 'string');
-        $this->setState('filter.author', $value);
-
-        $filterActive .= $value = $this->getUserStateFromRequest('com_kunena.admin.trash.list.filter_date', 'filter_time', '', 'string');
-        $this->setState('filter.time', $value);
-
-        $this->setState('filter.active', !empty($filterActive));
+        return $query;
     }
 }

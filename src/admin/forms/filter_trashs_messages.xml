@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			inputmode="search"
+			label="COM_USERS_SEARCH_USERS"
+			description=""
+			hint="JSEARCH_FILTER" />
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			class="js-select-submit-on-change"
+			default="id ASC"
+			validate="options">
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="title ASC">COM_KUNENA_FILTER_FIELD_TITLE_ASC</option>
+			<option value="title DESC">COM_KUNENA_FILTER_FIELD_TITLE_DESC</option>
+			<option value="topic ASC">COM_KUNENA_FILTER_FIELD_TOPIC_ASC</option>
+			<option value="topic DESC">COM_KUNENA_FILTER_FIELD_TOPIC_DESC</option>
+			<option value="category ASC">COM_KUNENA_FILTER_FIELD_CATEGORY_ASC</option>
+			<option value="category DESC">COM_KUNENA_FILTER_FIELD_CATEGORY_DESC</option>
+			<option value="author ASC">COM_KUNENA_FILTER_FIELD_AUTHOR_ASC</option>
+			<option value="author DESC">COM_KUNENA_FILTER_FIELD_AUTHOR_DESC</option>
+			<option value="ip ASC">COM_KUNENA_FILTER_FIELD_IP_ASC</option>
+			<option value="ip DESC">COM_KUNENA_FILTER_FIELD_IP_DESC</option>
+			<option value="time ASC">COM_KUNENA_FILTER_FIELD_DATE_ASC</option>
+			<option value="time DESC">COM_KUNENA_FILTER_FIELD_DATE_DESC</option>
+			<option value="id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			class="js-select-submit-on-change" />
+	</fields>
+</form>

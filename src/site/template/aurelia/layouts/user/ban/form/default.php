@@ -171,7 +171,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
         </tr>
         <tr>
             <td>
-                <label for="ban-delposts">
+                <label for="ban-delpostsperm">
                     <?php echo Text::_('COM_KUNENA_MODERATE_DELETE_PERM_ALL_POSTS'); ?>
                 </label>
             </td>

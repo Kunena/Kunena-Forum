@@ -180,6 +180,29 @@ class TopicController extends KunenaController
     }
 
     /**
+     * Set private on the attachment object.
+     *
+     * @return void
+     * @throws Exception
+     * @since Kunena 6.3
+     */
+    public function setprivate()
+    {
+        $attachs_id = $this->input->getString('files_id', '');
+        $attachs_id = json_decode($attachs_id);
+
+        if ($attachs_id === null) {
+            throw new RuntimeException(Text::_('Bad Request'), 400);
+        }
+
+        foreach ($attachs_id as $id) {
+            $attachment = KunenaAttachmentHelper::get($id);
+            $attachment->protected = KunenaAttachment::PROTECTION_PRIVATE;
+            $attachment->save();
+        }
+    }
+
+    /**
      * Set inline to 0 or 1 on the attachment object.
      *
      * @return void

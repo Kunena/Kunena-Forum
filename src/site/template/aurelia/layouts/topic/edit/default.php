@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Input\Input;
+use Joomla\CMS\Input;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -70,6 +70,10 @@ $this->doc->addScriptOptions(
     KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinline&format=json&' . Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
+    'com_kunena.kunena_upload_files_set_private',
+    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setprivate&format=json&' . Session::getFormToken() . '=1', false)
+    );
+$this->doc->addScriptOptions(
     'com_kunena.kunena_upload_files_rem',
     KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&userid=' . KunenaUserHelper::getMyself()->userid . '&' .
         Session::getFormToken() . '=1', false)
@@ -95,6 +99,7 @@ $this->doc->addScriptOptions('com_kunena.topicid.mentions', $this->topic->id);
 // Load scripts to handle fileupload process
 Text::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
 Text::script('COM_KUNENA_EDITOR_INSERT');
+Text::script('COM_KUNENA_EDITOR_INSERT_PRIVATE');
 Text::script('COM_KUNENA_EDITOR_IN_MESSAGE');
 Text::script('COM_KUNENA_GEN_REMOVE_FILE');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES');

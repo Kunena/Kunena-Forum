@@ -228,6 +228,42 @@ jQuery(function ($) {
         filesedit = null;
     });
 
+    const setPrivateButton = $('<button>')
+        .addClass("btn btn-primary")
+        .html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + Joomla.Text._('COM_KUNENA_EDITOR_INSERT_PRIVATE'))
+        .on('click', function (e) {
+            // Make sure the button click doesn't submit the form:
+            e.preventDefault();
+            e.stopPropagation();
+
+        const $this = $(this),
+        data = $this.data();
+
+        let file_id = 0;
+        let filename = null;
+        if (data.result !== undefined) {
+            file_id = data.result.data.id;
+            filename = data.result.data.filename;
+        } else {
+            file_id = data.id;
+            filename = data.name;
+        }
+
+        const files_id = [];
+        files_id.push(file_id);
+
+        $.ajax({
+            url: Joomla.getOptions('com_kunena.kunena_upload_files_set_private') + '&files_id=' + JSON.stringify(files_id),
+            type: 'POST'
+        })
+        .done(function (data) {
+
+        })
+        .fail(function () {
+            //TODO: handle the error of ajax request
+        });
+    });
+
     const insertButton = $('<button>')
         .addClass("btn btn-primary")
         .html(Joomla.getOptions('com_kunena.icons.upload') + ' ' + Joomla.Text._('COM_KUNENA_EDITOR_INSERT'))
@@ -462,6 +498,8 @@ jQuery(function ($) {
             if (data.context.find('button').hasClass('btn-danger')) {
                 data.context.find('button.btn-danger').remove();
             }
+
+            data.context.append(setPrivateButton.clone(true).data(data));
 
             data.context.append(removeButton.clone(true).data(data));
         } else if (data.result.message) {

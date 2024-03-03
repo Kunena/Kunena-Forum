@@ -98,17 +98,25 @@ jQuery(document).ready(function ($) {
             }
 
             if (pollcategoriesid[catid] !== undefined) {
-                CKEDITOR.instances.message.getCommand('polls').enable();
+                if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+                    CKEDITOR.instances.message.getCommand('polls').enable();
+                }
 
             } else {
-                CKEDITOR.instances.message.getCommand('polls').disable();
+				if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+                    CKEDITOR.instances.message.getCommand('polls').disable();
+                }
 
             }
         } else if (pollexist.length > 0) {
-            CKEDITOR.instances.message.getCommand('polls').enable();
+			if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+                CKEDITOR.instances.message.getCommand('polls').enable();
+            }
 
         } else {
-            CKEDITOR.instances.message.getCommand('polls').disable();
+			if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+                CKEDITOR.instances.message.getCommand('polls').disable();
+            }
 
         }
 
@@ -202,22 +210,23 @@ jQuery(document).ready(function ($) {
                 data: {catid: catid}
             })
                 .done(function (data) {
-                    const editor_text = CKEDITOR.instances.message.getData();
+                    if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+                        const editor_text = CKEDITOR.instances.message.getData();
 
-                    if (editor_text.length > 1) {
                         if (editor_text.length > 1) {
-                            $('#modal_confirm_template_category').modal('show');
+                            if (editor_text.length > 1) {
+                                $('#modal_confirm_template_category').modal('show');
+                            } else {
+                                CKEDITOR.instances.message.setData(category_template_text);
+                            }
                         } else {
-                            CKEDITOR.instances.message.setData(category_template_text);
-                        }
-                    } else {
-                        if (data.length > 1) {
-                            $('#modal_confirm_template_category').modal('show');
-                        } else {
-                            CKEDITOR.instances.message.setData(data.data);
+                            if (data.length > 1) {
+                                $('#modal_confirm_template_category').modal('show');
+                            } else {
+                                CKEDITOR.instances.message.setData(data.data);
+                            }
                         }
                     }
-
                 })
                 .fail(function () {
                     //TODO: handle the error of ajax request

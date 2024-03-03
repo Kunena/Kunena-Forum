@@ -423,6 +423,7 @@ jQuery(function ($) {
 
             $('#remove-all').show();
             $('#insert-all').show();
+            $('#set-secure-all').show();
 
             $('#kattach_form').show();
 
@@ -443,6 +444,7 @@ jQuery(function ($) {
 
             $('#remove-all').show();
             $('#insert-all').show();
+            $('#set-secure-all').show();
 
             const filecoutntmp = Object.keys(data['files']).length + fileCount;
 

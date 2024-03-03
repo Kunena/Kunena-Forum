@@ -397,7 +397,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                             <?php echo KunenaIcons::cancel(); ?>
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
                         </button>
-                        <button id="set-secure-all" class="btn btn-outline-primary" type="submit">
+                        <button id="set-secure-all" class="btn btn-outline-primary" type="submit" style="display:none;">
                             <?php echo KunenaIcons::secure(); ?>
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_SET_SECURE_ALL_BUTTON') ?></span>
                         </button>

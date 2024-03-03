@@ -148,14 +148,14 @@ jQuery(document).ready(function ($) {
                 $.each(data, function (index, value) {
                     if (value.type !== 'system') {
                         if (value.id === 0) {
-                            const input = $('<input>', {
+                            var input = $('<input>', {
                                 type: 'radio',
                                 id: 'radio' + value.id,
                                 name: 'topic_emoticon',
                                 value: value.id
                             }).prop('checked', true);
                         } else {
-                            const input = $('<input>', {
+                            var input = $('<input>', {
                                 type: 'radio',
                                 id: 'radio' + value.id,
                                 name: 'topic_emoticon',
@@ -165,17 +165,8 @@ jQuery(document).ready(function ($) {
 
                         const span_object = $('<span>', {'class': 'kiconsel'}).append(input);
 
-                        if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'B2') {
-                            const label = $('<label>', {
-                                'class': 'radio inline',
-                                'for': 'radio' + value.id
-                            }).append($('<span>', {
-                                'class': 'icon icon-topic icon-' + value.b2,
-                                'border': '0',
-                                'al': ''
-                            }));
-                        } else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'fa') {
-                            const label = $('<label>', {
+                        if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'fa') {
+                            var label = $('<label>', {
                                 'class': 'radio inline',
                                 'for': 'radio' + value.id
                             }).append($('<i>', {
@@ -184,7 +175,7 @@ jQuery(document).ready(function ($) {
                                 'al': ''
                             }));
                         } else {
-                            const label = $('<label>', {
+                            var label = $('<label>', {
                                 'class': 'radio inline',
                                 'for': 'radio' + value.id
                             }).append($('<img alt="">', {'src': value.path, 'border': '0', 'al': ''}));

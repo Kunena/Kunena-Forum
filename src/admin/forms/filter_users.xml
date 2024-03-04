@@ -68,8 +68,6 @@
 			<option value="email DESC">COM_KUNENA_FILTER_FIELD_EMAIL_DESC</option>
 			<option value="ip ASC">COM_KUNENA_FILTER_FIELD_IP_ASC</option>
 			<option value="ip DESC">COM_KUNENA_FILTER_FIELD_IP_DESC</option>
-			<option value="rank ASC">COM_KUNENA_FILTER_FIELD_RANK_ASC</option>
-			<option value="rank DESC">COM_KUNENA_FILTER_FIELD_RANK_DESC</option>
 			<option value="signature ASC">COM_KUNENA_FILTER_FIELD_SIGNATURE_ASC</option>
 			<option value="signature DESC">COM_KUNENA_FILTER_FIELD_SIGNATURE_DESC</option>
 			<option value="enabled ASC">COM_KUNENA_FILTER_FIELD_ENABLED_ASC</option>

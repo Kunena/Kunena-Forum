@@ -2528,7 +2528,9 @@ class TopicController extends KunenaController
     }
 
     /**
-     * @return  void
+     * Returns the topic icons set corresponding at the category selected 
+     *
+     @return  void
      *
      * @throws  Exception
      * @throws  null

@@ -59,7 +59,7 @@ $language->load('com_users');
                                 <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_GEN_IP', 'ip', $listDirn, $listOrder); ?>
                             </th>
                             <th scope="col" class="w-10 d-none d-md-table-cell">
-                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_A_RANKS', 'rank', $listDirn, $listOrder); ?>
+                                <?php echo Text::_('COM_KUNENA_A_RANKS'); ?>
                             </th>
                             <th scope="col" class="w-5 d-none d-md-table-cell">
                                 <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $listDirn, $listOrder); ?>

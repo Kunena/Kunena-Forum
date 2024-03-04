@@ -24,7 +24,6 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use RuntimeException;
 
 /**
  * Users Model for Kunena
@@ -223,10 +222,11 @@ class UsersModel extends ListModel
         $query = $db->getQuery(true);
 
         // Select the required fields from the table.
+        // We construct a composedBanned here to we can correctly sort of banned status
         $query->select(
             $this->getState(
                 'list.select',
-                'a.id'
+                'a.id, CASE WHEN a.block = 1 THEN "9999-12-31 23:59:59" ELSE ku.banned END AS composedBanned'
             )
         );
         $query->from($db->quoteName('#__users', 'a'));
@@ -277,18 +277,18 @@ class UsersModel extends ListModel
 
         if ($filter !== '') {
             $now      = new Date();
-            // $DB nulldate = 0000-00-00 00:00:00 but Kunena uses 1000-01-01 00:00:00 as nulldate
-            // $nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
             $nullDate = $db->quote('1000-01-01 00:00:00');
 
+            // We create a composedBanned here to be able to filter on this composed field
+            $composedBannedCondition = 'CASE WHEN a.block = 1 THEN "9999-12-31 23:59:59" ELSE ku.banned END';
+
             if ($filter) {
-                $query->where("ku.banned>{$nullDate}");
+                $query->where("$composedBannedCondition > {$nullDate}");
             } else {
-                $query->where("(ku.banned IS NULL OR (ku.banned>={$nullDate} AND ku.banned<{$db->quote($now->toSql())}))");
+                $query->where("( $composedBannedCondition IS NULL OR ( $composedBannedCondition >={$nullDate} AND $composedBannedCondition < {$db->quote($now->toSql())}))");
             }
         }
 
-        // Filter by moderator state.
         $filter = $this->getState('filter.moderator');
 
         if ($filter !== '') {
@@ -318,7 +318,7 @@ class UsersModel extends ListModel
                 $query->order('a.block ' . $direction);
                 break;
             case 'banned':
-                $query->order('ku.banned ' . $direction);
+                $query->order('composedBanned ' . $direction);
                 break;
             case 'moderator':
                 $query->order('ku.moderator ' . $direction);

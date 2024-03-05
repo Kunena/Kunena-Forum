@@ -19,7 +19,9 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 
 /**
@@ -35,27 +37,41 @@ class HtmlView extends BaseHtmlView
      */
     public $config;
 
+
     /**
-     * @internal param null $tpl
+     * DisplayDefault
      *
      * @param   null  $tpl  tpl
      *
      * @return  void
      *
-     * @since    Kunena 6.0
+     * @since   Kunena 6.0
      *
      * @throws Exception
      */
-    public function displayDefault($tpl = null)
+    public function display($tpl = null)
     {
-        ToolbarHelper::title(Text::_('COM_KUNENA'), 'kunena.png');
+        $this->kunenaStats = KunenaStatistics::getInstance();
+        $this->kunenaStats->loadAll(true);
 
-        $document = Factory::getApplication()->getDocument();
-        $document->setTitle(Text::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->boardTitle);
-
-        $kunenaStats = KunenaStatistics::getInstance();
-        $kunenaStats->loadAll(true);
+        $this->addToolbar();
 
         return parent::display($tpl);
+    }
+
+    /**
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    protected function addToolbar(): void
+    {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance();
+
+        // Set the title bar text
+        ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), 'stats');
     }
 }

@@ -44,6 +44,7 @@
             <menu view="ranks">COM_KUNENA_RANK_MANAGER</menu>
             <menu view="templates">COM_KUNENA_TEMPLATE_MANAGER</menu>
             <menu view="config">COM_KUNENA_CONFIGURATION</menu>
+            <menu view="stats">COM_KUNENA_MENU_STATISTICS</menu>
             <menu view="plugins">COM_KUNENA_PLUGIN_MANAGER</menu>
             <menu view="logs">COM_KUNENA_LOG_MANAGER</menu>
             <menu view="tools">COM_KUNENA_FORUM_TOOLS</menu>

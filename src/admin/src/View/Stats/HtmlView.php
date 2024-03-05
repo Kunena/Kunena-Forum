@@ -16,12 +16,10 @@ namespace Kunena\Forum\Administrator\View\Stats;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 
 /**
@@ -37,6 +35,11 @@ class HtmlView extends BaseHtmlView
      */
     public $config;
 
+    /**
+     * @var KunenaStatistics
+     * @since Kunena 6.3.0-BETA3
+     */
+    public $kunenaStats;
 
     /**
      * DisplayDefault

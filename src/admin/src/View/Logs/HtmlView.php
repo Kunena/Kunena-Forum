@@ -148,11 +148,14 @@ class HtmlView extends BaseHtmlView
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_LOG_MANAGER'), 'users');
         $toolbar->popupButton('cleanentries', 'COM_KUNENA_LOG_CLEAN_ENTRIES')
-            ->popupType('inline')
-            ->textHeader(Text::_('COM_KUNENA_LOG_CLEAN_ENTRIES'))
-            ->url('#joomla-dialog-clean')
-            ->modalWidth('800px')
-            ->modalHeight('fit-content');
+            ->selector('joomla-dialog-clean')
+            ->listCheck(false);
+        // $toolbar->popupButton('cleanentries', 'COM_KUNENA_LOG_CLEAN_ENTRIES')
+        //     ->popupType('inline')
+        //     ->textHeader(Text::_('COM_KUNENA_LOG_CLEAN_ENTRIES'))
+        //     ->url('#joomla-dialog-clean')
+        //     ->modalWidth('800px')
+        //     ->modalHeight('fit-content');
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

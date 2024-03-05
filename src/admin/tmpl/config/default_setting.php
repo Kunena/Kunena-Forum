@@ -25,7 +25,10 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
         </div>
     </div>
     <div class="btn-toolbar p-3">
-        <button type="submit" class="btn btn-success ms-auto" onclick="document.getElementById('settingFormModal').submit();"><?php echo Text::_('JSUBMIT'); ?></button>
+        <button type="button" class="btn btn-danger ms-auto" data-bs-dismiss="modal">
+            <?php echo Text::_('JCANCEL'); ?>
+        </button>
+        <button type="submit" class="btn btn-success" onclick="document.getElementById('settingFormModal').submit();"><?php echo Text::_('JSUBMIT'); ?></button>
     </div>
     <input type="hidden" name="task" value="config.setDefault" />
     <?php echo HTMLHelper::_('form.token') ?>

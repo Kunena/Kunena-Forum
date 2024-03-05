@@ -150,8 +150,22 @@ $language->load('com_users');
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 
-                <template id="joomla-dialog-subscribecatsusers"><?php echo $this->loadTemplate('subscribecatsusers'); ?></template>
-                <template id="joomla-dialog-moderators"><?php echo $this->loadTemplate('moderators'); ?></template>
+                <?php echo HTMLHelper::_(
+                    'bootstrap.renderModal',
+                    'joomla-dialog-subscribecatsusers',
+                    [
+                        'title'  => Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_MODAL_TITLE'),
+                    ],
+                    $this->loadTemplate('subscribecatsusers')
+                ); ?>
+                <?php echo HTMLHelper::_(
+                    'bootstrap.renderModal',
+                    'joomla-dialog-moderators',
+                    [
+                        'title'  => Text::_('COM_KUNENA_BATCH_USERS_OPTIONS'),
+                    ],
+                    $this->loadTemplate('moderators')
+                ); ?>
 
                 <input type="hidden" name="task" value="">
                 <input type="hidden" name="boxchecked" value="0">

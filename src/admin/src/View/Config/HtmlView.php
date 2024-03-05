@@ -77,11 +77,7 @@ class HtmlView extends BaseHtmlView
         $toolbar->save('config.save');
 
         $toolbar->popupButton('batch', 'COM_KUNENA_RESET_CONFIG')
-            ->popupType('inline')
-            ->textHeader(Text::_('COM_KUNENA_RESET_CONFIG'))
-            ->url('#joomla-dialog-setting')
-            ->modalWidth('800px')
-            ->modalHeight('fit-content')
+            ->selector('joomla-dialog-setting')
             ->listCheck(false);
         $toolbar->cancel('config.cancel', 'JTOOLBAR_CANCEL');
 

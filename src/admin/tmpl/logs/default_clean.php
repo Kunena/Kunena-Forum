@@ -13,10 +13,7 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Version\KunenaVersion;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>
 <div class="p-3">
@@ -38,7 +35,10 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
     </div>
 </div>
 <div class="btn-toolbar p-3">
-    <joomla-toolbar-button task="logs.clean" class="ms-auto">
-        <button type="button" class="btn btn-success"><?php echo Text::_('JSUBMIT'); ?></button>
-    </joomla-toolbar-button>
+    <button type="button" class="btn btn-danger ms-auto" data-bs-dismiss="modal">
+        <?php echo Text::_('JCANCEL'); ?>
+    </button>
+    <button type="submit" id='batch-submit-button-id' class="btn btn-success" data-submit-task='logs.clean'>
+        <?php echo Text::_('JSUBMIT'); ?>
+    </button>
 </div>

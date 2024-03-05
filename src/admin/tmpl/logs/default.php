@@ -198,7 +198,14 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 
-                <template id="joomla-dialog-clean"><?php echo $this->loadTemplate('clean'); ?></template>
+                <?php echo HTMLHelper::_(
+                    'bootstrap.renderModal',
+                    'joomla-dialog-clean',
+                    [
+                        'title'  => Text::_('COM_KUNENA_LOG_CLEAN_ENTRIES'),
+                    ],
+                    $this->loadTemplate('clean')
+                ); ?>
 
                 <input type="hidden" name="task" value="" />
                 <input type="hidden" name="boxchecked" value="1" />

@@ -138,11 +138,7 @@ class HtmlView extends BaseHtmlView
             ->message('COM_KUNENA_CATEGORIES_CONFIRM_DELETE_BODY_MODAL')
             ->listCheck(true);
         $childBar->popupButton('batch', 'JTOOLBAR_BATCH')
-            ->popupType('inline')
-            ->textHeader(Text::_('JTOOLBAR_BATCH'))
-            ->url('#joomla-dialog-batch')
-            ->modalWidth('800px')
-            ->modalHeight('fit-content')
+            ->selector('joomla-dialog-batch')
             ->listCheck(true);
 
         $helpUrl = 'https://docs.kunena.org/en/setup/sections-categories';

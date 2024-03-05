@@ -2085,7 +2085,14 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
             </form>
             <?php // Load the setting confirmation box form. 
             ?>
-            <template id="joomla-dialog-setting"><?php echo $this->loadTemplate('setting'); ?></template>
+            <?php echo HTMLHelper::_(
+                'bootstrap.renderModal',
+                'joomla-dialog-setting',
+                [
+                    'title'  => Text::_('COM_KUNENA_CONFIG_MODAL_TITLE'),
+                ],
+                $this->loadTemplate('setting')
+            ); ?>
         </div>
     </div>
 </div>

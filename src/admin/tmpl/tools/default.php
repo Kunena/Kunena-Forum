@@ -28,23 +28,23 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                 <h1>TOOLS</h1>
                 <div class="col-xl-3 col-md-6">
                     <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=report'); ?>">
-                    <div class="card proj-t-card comp-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="mb-25">
-                                        <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM'); ?>
-                                    </h6>
-                                    <h3 class="fw-700 text-cyan">
-                                        <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?>
-                                    </h3>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-wrench bg-cyan"></i>
+                        <div class="card proj-t-card comp-card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="mb-25">
+                                            <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM'); ?>
+                                        </h6>
+                                        <h3 class="fw-700 text-cyan">
+                                            <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?>
+                                        </h3>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-wrench bg-cyan"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </a>
                 </div>
 
@@ -228,7 +228,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                 </div>
 
                 <?php if (KunenaForum::isDev()) :
-                    ?>
+                ?>
                     <div class="col-xl-3 col-md-6">
                         <a href="<?php echo Route::_('index.php?option=com_kunena&view=install'); ?>">
                             <div class="card proj-t-card comp-card">
@@ -251,9 +251,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                         </a>
                     </div>
                 <?php endif; ?>
+            </div>
         </div>
     </div>
-    <div class="pull-right small">
-        <?php echo KunenaVersion::getLongVersionHTML(); ?>
-    </div>
+</div>
+<div class="mt-3 text-center small">
+    <?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

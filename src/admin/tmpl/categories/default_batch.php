@@ -41,7 +41,10 @@ use Joomla\CMS\Language\Text;
     </div>
 </div>
 <div class="btn-toolbar p-3">
-    <joomla-toolbar-button task="categories.batchCategories" class="ms-auto">
-        <button type="button" class="btn btn-success"><?php echo Text::_('COM_KUNENA_BATCH_PROCESS'); ?></button>
-    </joomla-toolbar-button>
+    <button type="button" class="btn btn-danger ms-auto" data-bs-dismiss="modal">
+        <?php echo Text::_('JCANCEL'); ?>
+    </button>
+    <button type="submit" id='batch-submit-button-id' class="btn btn-success" data-submit-task='categories.batchCategories'>
+        <?php echo Text::_('COM_KUNENA_BATCH_PROCESS'); ?>
+    </button>
 </div>

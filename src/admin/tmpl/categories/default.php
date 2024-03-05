@@ -204,7 +204,14 @@ if ($saveOrder) {
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 
-                <template id="joomla-dialog-batch"><?php echo $this->loadTemplate('batch'); ?></template>
+                <?php echo HTMLHelper::_(
+                    'bootstrap.renderModal',
+                    'joomla-dialog-batch',
+                    [
+                        'title'  => Text::_('COM_KUNENA_BATCH_OPTIONS'),
+                    ],
+                    $this->loadTemplate('batch')
+                ); ?>
 
                 <input type="hidden" name="task" value="" />
                 <input type="hidden" name="boxchecked" value="0" />

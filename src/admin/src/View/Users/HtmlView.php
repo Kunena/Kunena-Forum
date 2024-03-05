@@ -106,20 +106,26 @@ class HtmlView extends BaseHtmlView
             ->listCheck(true);
 
         $childBar->popupButton('batch', 'COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS')
-            ->popupType('inline')
-            ->textHeader(Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS'))
-            ->url('#joomla-dialog-moderators')
-            ->modalWidth('800px')
-            ->modalHeight('fit-content')
+            ->selector('joomla-dialog-moderators')
             ->listCheck(true);
+        // $childBar->popupButton('batch', 'COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS')
+        //     ->popupType('inline')
+        //     ->textHeader(Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_ASSIGN_MODERATORS'))
+        //     ->url('#joomla-dialog-moderators')
+        //     ->modalWidth('800px')
+        //     ->modalHeight('fit-content')
+        //     ->listCheck(true);
 
         $childBar->popupButton('batch', 'COM_KUNENA_VIEW_USERS_TOOLBAR_SUBSCRIBE_USERS_CATEGORIES')
-            ->popupType('inline')
-            ->textHeader(Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_SUBSCRIBE_USERS_CATEGORIES'))
-            ->url('#joomla-dialog-subscribecatsusers')
-            ->modalWidth('800px')
-            ->modalHeight('fit-content')
+            ->selector('joomla-dialog-subscribecatsusers')
             ->listCheck(true);
+        //    $childBar->popupButton('batch', 'COM_KUNENA_VIEW_USERS_TOOLBAR_SUBSCRIBE_USERS_CATEGORIES')
+        //         ->popupType('inline')
+        //         ->textHeader(Text::_('COM_KUNENA_VIEW_USERS_TOOLBAR_SUBSCRIBE_USERS_CATEGORIES'))
+        //         ->url('#joomla-dialog-subscribecatsusers')
+        //         ->modalWidth('800px')
+        //         ->modalHeight('fit-content')
+        //         ->listCheck(true);
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

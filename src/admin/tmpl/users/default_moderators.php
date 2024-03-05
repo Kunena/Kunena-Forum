@@ -27,7 +27,10 @@ use Joomla\CMS\Language\Text;
     </div>
 </div>
 <div class="btn-toolbar p-3">
-    <joomla-toolbar-button task="users.batchmoderators" class="ms-auto">
-        <button type="button" class="btn btn-success"><?php echo Text::_('JSUBMIT'); ?></button>
-    </joomla-toolbar-button>
+    <button type="button" class="btn btn-danger ms-auto" data-bs-dismiss="modal">
+        <?php echo Text::_('JCANCEL'); ?>
+    </button>
+    <button type="submit" id='batch-submit-button-id' class="btn btn-success" data-submit-task='users.batchmoderators'>
+        <?php echo Text::_('JSUBMIT'); ?>
+    </button>
 </div>

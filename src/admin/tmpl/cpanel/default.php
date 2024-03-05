@@ -339,14 +339,16 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6">
+                <!-- <div class="col-xl-3 col-md-6">
                     <div class="card proj-t-card comp-card">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=statistics'); ?>" class="stretched-link">
-                                            <?php echo Text::_('COM_KUNENA_MENU_STATISTICS') ?>
+                                        <a href="<?php // echo Route::_('index.php?option=com_kunena&view=statistics'); 
+                                                    ?>" class="stretched-link">
+                                            <?php // echo Text::_('COM_KUNENA_MENU_STATISTICS') 
+                                            ?>
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan">&nbsp;</h3>
@@ -358,7 +360,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-xl-3 col-md-6">
                     <div class="card proj-t-card comp-card">

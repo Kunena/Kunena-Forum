@@ -830,7 +830,7 @@ class KunenaMessage extends KunenaDatabaseObject
             $exception = $attachment->tryAuthorise('delete', null, false);
 
             if ($exception) {
-                $this->setError($exception->getMessage());
+                throw new Exception($exception->getMessage());
                 continue;
             }
 

@@ -754,8 +754,9 @@ class CategoriesController extends KunenaController
      * @since   Kunena 5.1.0
      * @throws \Exception
      */
-    public function batchCategories(): bool
+    public function batchcategories(): bool
     {
+        // Function renamed from batchCategories in Kunena 6.3.0-BETA3 as this name collides with view / model
         if (!Session::checkToken('post')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
 

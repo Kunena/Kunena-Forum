@@ -198,9 +198,10 @@ class CategoryController extends CategoriesController
         $categories = KunenaCategoryHelper::getCategories($catids);
 
         foreach ($categories as $category) {
-            if (!$category->isAuthorised('read')) {
-                $this->app->enqueueMessage($category->getError(), 'error');
-                continue;
+            try {
+                $category->isAuthorised('read');
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
             }
 
             if ($this->me->exists()) {

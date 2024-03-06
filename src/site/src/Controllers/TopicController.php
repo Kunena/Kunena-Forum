@@ -2347,12 +2347,12 @@ class TopicController extends KunenaController
             $log     = KunenaLog::LOG_TOPIC_REPORT;
         }
 
-        if (!$target->isAuthorised('read')) {
+        try {
+            $target->isAuthorised('read');
+        } catch (Exception $e) {
             // Deny access if user cannot read target
-            $this->app->enqueueMessage($target->getError(), 'error');
+            $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
-
-            return;
         }
 
         $reason = $this->app->input->getString('reason');

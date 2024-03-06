@@ -275,14 +275,18 @@ class UserController extends FormController
                 foreach ($messages as $message) {
                     $topic = $message->getTopic();
 
-                    if (!$message->isAuthorised('move')) {
-                        $error = $message->getError();
-                    } else {
-                        $target = KunenaCategoryHelper::get($catid);
+                    try {
+                        $message->isAuthorised('move');
+                    } catch (Exception $e) {
+                        $this->app->enqueueMessage($e->getMessage(), 'error');
+                    }
 
-                        if (!$topic->move($target, false, false, '', false)) {
-                            $error = $topic->getError();
-                        }
+                    $target = KunenaCategoryHelper::get($catid);
+
+                    try {
+                        $topic->move($target, false, false, '', false);
+                    } catch (Exception $e) {
+                        $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
                 }
             }
@@ -293,11 +297,7 @@ class UserController extends FormController
             return;
         }
 
-        if ($error) {
-            $this->app->enqueueMessage($error, 'error');
-        } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_MOVED_DONE'), 'success');
-        }
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_MOVED_DONE'), 'success');
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }

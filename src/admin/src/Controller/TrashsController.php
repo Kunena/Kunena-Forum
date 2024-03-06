@@ -98,41 +98,43 @@ class TrashsController extends AdminController
             $topics = KunenaTopicHelper::getTopics($cid, 'none');
 
             foreach ($topics as $topic) {
-                $success = $topic->delete();
-
-                if (!$success) {
-                    $this->app->enqueueMessage($topic->getError(), 'error');
+                try {
+                    $topic->delete();
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
 
-            if ($success) {
-                KunenaTopicHelper::recount($cid);
-                KunenaCategoryHelper::recount($topic->getCategory()->id);
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
-            }
+            KunenaTopicHelper::recount($cid);
+            KunenaCategoryHelper::recount($topic->getCategory()->id);
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
         } elseif ($type == 'messages') {
             $messages = KunenaMessageHelper::getMessages($cid, 'none');
 
             foreach ($messages as $message) {
-                $success = $message->delete();
+                try {
+                    $message->delete();
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
+                }
+
                 $target  = KunenaMessageHelper::get($message->id);
                 $topic   = KunenaTopicHelper::get($target->getTopic());
 
                 if ($topic->attachments > 0) {
                     $topic->attachments = $topic->attachments - 1;
-                    $topic->save(false);
-                }
 
-                if (!$success) {
-                    $this->app->enqueueMessage($message->getError(), 'error');
+                    try {
+                        $topic->save(false);
+                    } catch (Exception $e) {
+                        $this->app->enqueueMessage($e->getMessage(), 'error');
+                    }
                 }
             }
 
-            if ($success) {
-                KunenaTopicHelper::recount($cid);
-                KunenaCategoryHelper::recount($topic->getCategory()->id);
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
-            }
+            KunenaTopicHelper::recount($cid);
+            KunenaCategoryHelper::recount($topic->getCategory()->id);
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
         }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -174,11 +176,13 @@ class TrashsController extends AdminController
             $messages = KunenaMessageHelper::getMessages($cid, 'none');
 
             foreach ($messages as $target) {
-                if ($target->publish()) {
-                    $nbItems++;
-                } else {
-                    $this->app->enqueueMessage($target->getError(), 'error');
+                try {
+                    $target->publish();
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
+
+                $nbItems++;
             }
         } elseif ($type == 'topics') {
             $topics = KunenaTopicHelper::getTopics($cid, 'none');
@@ -190,11 +194,13 @@ class TrashsController extends AdminController
                     $status = KunenaForum::PUBLISHED;
                 }
 
-                if ($target->publish($status)) {
-                    $nbItems++;
-                } else {
-                    $this->app->enqueueMessage($target->getError(), 'error');
+                try {
+                    $target->publish($status);
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
+
+                $nbItems++;
             }
         } else {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_NO_MESSAGES_SELECTED'), 'notice');

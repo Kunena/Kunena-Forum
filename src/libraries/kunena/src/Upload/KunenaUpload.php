@@ -535,7 +535,7 @@ class KunenaUpload
     /**
      * Upload file by passing it by HTML input
      *
-     * @param   array   $fileInput    The file object returned by Joomla\CMS\Input\Input
+     * @param   array   $fileInput    The file object returned by Joomla\Input\Input
      * @param   string  $destination  The path of destination of file uploaded
      * @param   string  $type         The type of file uploaded: attachment or avatar
      *

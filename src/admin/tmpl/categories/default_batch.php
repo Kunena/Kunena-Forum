@@ -44,7 +44,7 @@ use Joomla\CMS\Language\Text;
     <button type="button" class="btn btn-danger ms-auto" data-bs-dismiss="modal">
         <?php echo Text::_('JCANCEL'); ?>
     </button>
-    <button type="submit" id='batch-submit-button-id' class="btn btn-success" data-submit-task='categories.batchCategories'>
+    <button type="submit" id='batch-submit-button-id' class="btn btn-success" onclick="Joomla.submitbutton('categories.batchcategories');return false;">
         <?php echo Text::_('COM_KUNENA_BATCH_PROCESS'); ?>
     </button>
 </div>

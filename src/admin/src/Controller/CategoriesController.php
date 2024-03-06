@@ -764,7 +764,7 @@ class CategoriesController extends KunenaController
         }
 
         $cid       = $this->input->get('cid', '', 'array');
-        $catParent = $this->input->getInt('batchCatidTarget', 0);
+        $catParent = $this->input->getInt('batch_catid_target', 0);
         $task      = $this->input->getString('move_copy');
 
         if ($catParent == 0 || empty($cid)) {

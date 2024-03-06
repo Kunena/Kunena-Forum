@@ -30,7 +30,7 @@ use Joomla\CMS\Language\Text;
     <button type="button" class="btn btn-danger ms-auto" data-bs-dismiss="modal">
         <?php echo Text::_('JCANCEL'); ?>
     </button>
-    <button type="submit" id='batch-submit-button-id' class="btn btn-success" data-submit-task='users.subscribeuserstocategories'>
+    <button type="submit" id='batch-submit-button-id' class="btn btn-success" onclick="Joomla.submitbutton('users.subscribeuserstocategories');return false;">
         <?php echo Text::_('JSUBMIT'); ?>
     </button>
 </div>

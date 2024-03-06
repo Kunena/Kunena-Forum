@@ -38,7 +38,7 @@ use Joomla\CMS\Language\Text;
     <button type="button" class="btn btn-danger ms-auto" data-bs-dismiss="modal">
         <?php echo Text::_('JCANCEL'); ?>
     </button>
-    <button type="submit" id='batch-submit-button-id' class="btn btn-success" data-submit-task='logs.clean'>
+    <button type="submit" id='batch-submit-button-id' class="btn btn-success" onclick="Joomla.submitbutton('logs.clean');return false;">
         <?php echo Text::_('JSUBMIT'); ?>
     </button>
 </div>

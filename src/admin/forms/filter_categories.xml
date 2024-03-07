@@ -49,8 +49,8 @@
             type="accesslevel"
             label="JGRID_HEADING_ACCESS"
             default=""
-            hint="JOPTION_SELECT_ACCESS"
             class="js-select-submit-on-change"
+            filter="UINT"
             validate="options">
             <option value="">JOPTION_SELECT_ACCESS</option>
         </field>
@@ -95,8 +95,8 @@
             default=""
             validate="options">
             <option value="">COM_KUNENA_FILTER_SELECT_ANONYMOUS</option>
-            <option value="1">COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO</option>
-            <option value="0">COM_KUNENA_CATEGORY_ANONYMOUS_X_REG</option>
+            <option value="1">COM_KUNENA_FIELD_LABEL_YES</option>
+            <option value="0">COM_KUNENA_FIELD_LABEL_NO</option>
         </field>
     </fields>
     <fields name="list">

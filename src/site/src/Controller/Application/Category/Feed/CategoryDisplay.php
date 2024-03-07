@@ -72,7 +72,9 @@ class CategoryDisplay extends KunenaControllerDisplay
 
         $this->category = KunenaCategoryHelper::get($catid);
 
-        if (!$this->category->isAuthorised('read')) {
+        try {
+            $this->category->isAuthorised('read');
+        } catch (Exception $e) {
             throw new KunenaException($this->category->getError(), 404);
         }
 

@@ -62,17 +62,19 @@ class CategoryDisplay extends KunenaControllerDisplay
         if ($this->me->exists()) {
             $category = $model->getCategory();
 
-            if (!$category->isAuthorised('read')) {
-                $response['error'] = $category->getError();
-            } else {
-                $topics = $model->getTopics();
+            try {
+                $category->isAuthorised('read');
+            } catch (Exception $response) {
+                // TODO: how to throw or show the exception ?
+            }
 
-                foreach ($topics as $topic) {
-                    $item                    = new \StdClass();
-                    $item->id                = $topic->id;
-                    $item->subject           = $topic->subject;
-                    $response['topiclist'][] = $item;
-                }
+            $topics = $model->getTopics();
+
+            foreach ($topics as $topic) {
+                $item                    = new \StdClass();
+                $item->id                = $topic->id;
+                $item->subject           = $topic->subject;
+                $response['topiclist'][] = $item;
             }
         }
 

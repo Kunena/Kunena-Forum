@@ -834,11 +834,13 @@ class KunenaMessage extends KunenaDatabaseObject
                 continue;
             }
 
-            if (!$attachment->delete()) {
-                throw new Exception($attachment->getError());
-            } else {
-                $this->getTopic()->attachments--;
+            try {
+                $attachment->delete();
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
             }
+
+            $this->getTopic()->attachments--;
 
             $this->message = preg_replace('/\[attachment\=' . $attachment->id . '\].*?\[\/attachment\]/u', '', $this->message);
             $this->message = preg_replace('/\[attachment\]' . $attachment->filename . '\[\/attachment\]/u', '', $this->message);
@@ -878,8 +880,10 @@ class KunenaMessage extends KunenaDatabaseObject
             $file = JPATH_SITE . '/media/kunena/attachments/' . $attachment->userid . '/' . $attachment->filename;
             File::delete($file);
 
-            if (!$attachment->delete()) {
-                throw new Exception($attachment->getError());
+            try {
+                $attachment->delete();
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage());
             }
         }
 

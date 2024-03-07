@@ -176,21 +176,23 @@ class PluginsController extends AdminController
             }
 
             // Publish the items.
-            if (!$model->publish($cids_exist, $value)) {
-                Log::add($model->getError(), Log::WARNING, 'jerror');
-            } else {
-                if ($value == 1) {
-                    $ntext = $this->textPrefix . '_N_ITEMS_PUBLISHED';
-                } elseif ($value == 0) {
-                    $ntext = $this->textPrefix . '_N_ITEMS_UNPUBLISHED';
-                } elseif ($value == 2) {
-                    $ntext = $this->textPrefix . '_N_ITEMS_ARCHIVED';
-                } else {
-                    $ntext = $this->textPrefix . '_N_ITEMS_TRASHED';
-                }
-
-                $this->setMessage(Text::plural($ntext, \count($cid)));
+            try {
+                $model->publish($cids_exist, $value);
+            } catch (Exception $e) {
+                Log::add($e->getMessage(), Log::WARNING, 'jerror');
             }
+
+            if ($value == 1) {
+                $ntext = $this->textPrefix . '_N_ITEMS_PUBLISHED';
+            } elseif ($value == 0) {
+                $ntext = $this->textPrefix . '_N_ITEMS_UNPUBLISHED';
+            } elseif ($value == 2) {
+                $ntext = $this->textPrefix . '_N_ITEMS_ARCHIVED';
+            } else {
+                $ntext = $this->textPrefix . '_N_ITEMS_TRASHED';
+            }
+
+            $this->setMessage(Text::plural($ntext, \count($cid)));
         }
 
         $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList . $extensionURL, false));

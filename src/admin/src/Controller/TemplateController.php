@@ -50,6 +50,8 @@ class TemplateController extends FormController
      */
     public $config = null;
 
+    public $baseurlTemplate;
+
     /**
      * @var     array
      * @since   Kunena 2.0
@@ -350,19 +352,19 @@ class TemplateController extends FormController
             $editorButtons[] = 'subscript';
         }
 
-        if ($params['Right']) {
+        if ($params['JustifyRight']) {
             $editorButtons[] = 'right';
         }
 
-        if ($params['Left']) {
+        if ($params['JustifyLeft']) {
             $editorButtons[] = 'left';
         }
 
-        if (!$params['Justify']) {
+        if (!$params['JustifyBlock']) {
             $editorButtons[] = 'justify';
         }
 
-        if (!$params['Center']) {
+        if (!$params['JustifyCenter']) {
             $editorButtons[] = 'center';
         }
 
@@ -406,12 +408,8 @@ class TemplateController extends FormController
             $editorButtons[] = 'Map';
         }
 
-        if ($params['Font']) {
-            $editorButtons[] = 'font';
-        }
-
-        if ($params['Size']) {
-            $editorButtons[] = 'Size';
+        if ($params['FontSize']) {
+            $editorButtons[] = 'font,size';
         }
 
         if ($params['TextColor']) {
@@ -430,12 +428,8 @@ class TemplateController extends FormController
             $editorButtons[] = 'Video';
         }
 
-        if ($params['Link']) {
-            $editorButtons[] = 'link';
-        }
-
-        if ($params['Unlink']) {
-            $editorButtons[] = 'unlink';
+        if ($params['Link_Unlink']) {
+            $editorButtons[] = 'link,unlink';
         }
 
         if (!$params['BulletedList']) {

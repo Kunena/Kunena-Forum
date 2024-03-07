@@ -692,6 +692,7 @@ jQuery(document).ready(function ($) {
 		var textarea = document.getElementById('message');
 		var textarea_private = document.getElementById('message_private');
 		var toolbar_buttons = '';
+		console.log(Joomla.getOptions('com_kunena.template_editor_buttons_configuration'));
 		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 		{
 			// TODO: need to change the values(bold, italic) from template parameters to be handled here

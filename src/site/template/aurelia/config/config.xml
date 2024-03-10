@@ -197,6 +197,11 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+         <field name="Emoticon" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS"
+               description="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
         <field name="Superscript" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_SUPERSCRIPT"
                description="COM_KUNENA_TEMPLATE_DISPLAY_SUPERSCRIPT_DESC">
             <option value="0">COM_KUNENA_NO</option>

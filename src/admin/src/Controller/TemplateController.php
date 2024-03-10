@@ -328,8 +328,36 @@ class TemplateController extends FormController
     {
         $editorButtons = [];
 
+        if ($params['Cut']) {
+            $editorButtons[] = 'cut';
+        }
+
+        if ($params['Copy']) {
+            $editorButtons[] = 'copy';
+        }
+
+        if ($params['Paste']) {
+            $editorButtons[] = 'paste';
+        }
+
         if ($params['Bold']) {
             $editorButtons[] = 'bold';
+        }
+
+        if ($params['Emoticon']) {
+            $editorButtons[] = 'emoticon';
+        }
+
+        if ($params['Source']) {
+            $editorButtons[] = 'source';
+        }
+
+        if ($params['Table']) {
+            $editorButtons[] = 'table';
+        }
+
+        if ($params['Quote']) {
+            $editorButtons[] = 'quote';
         }
 
         if ($params['Italic']) {
@@ -360,11 +388,11 @@ class TemplateController extends FormController
             $editorButtons[] = 'left';
         }
 
-        if (!$params['JustifyBlock']) {
+        if ($params['JustifyBlock']) {
             $editorButtons[] = 'justify';
         }
 
-        if (!$params['JustifyCenter']) {
+        if ($params['JustifyCenter']) {
             $editorButtons[] = 'center';
         }
 
@@ -388,23 +416,23 @@ class TemplateController extends FormController
             $editorButtons[] = 'Smiley';
         }
 
-        if (!$params['Ebay']) {
+        if ($params['Ebay']) {
             $editorButtons[] = 'Ebay';
         }
 
-        if (!$params['Twitter']) {
+        if ($params['Twitter']) {
             $editorButtons[] = 'Twitter';
         }
 
-        if (!$params['Instagram']) {
+        if ($params['Instagram']) {
             $editorButtons[] = 'Instagram';
         }
 
-        if (!$params['Soundcloud']) {
+        if ($params['Soundcloud']) {
             $editorButtons[] = 'Soundcloud';
         }
 
-        if (!$params['Map']) {
+        if ($params['Map']) {
             $editorButtons[] = 'Map';
         }
 
@@ -416,15 +444,11 @@ class TemplateController extends FormController
             $editorButtons[] = 'color';
         }
 
-        if (!$params['Maximize']) {
-            $editorButtons[] = 'Maximize';
-        }
-
-        if (!$params['Image']) {
+        if ($params['Image']) {
             $editorButtons[] = 'Image';
         }
 
-        if (!$params['Video']) {
+        if ($params['Video']) {
             $editorButtons[] = 'Video';
         }
 
@@ -432,11 +456,11 @@ class TemplateController extends FormController
             $editorButtons[] = 'link,unlink';
         }
 
-        if (!$params['BulletedList']) {
+        if ($params['BulletedList']) {
             $editorButtons[] = 'bulletedList';
         }
 
-        if (!$params['NumberedList']) {
+        if ($params['NumberedList']) {
             $editorButtons[] = 'orderedlist';
         }
 
@@ -444,7 +468,7 @@ class TemplateController extends FormController
             $editorButtons[] = 'Blockquote';
         }
 
-        if (!$params['Code']) {
+        if ($params['Code']) {
             $editorButtons[] = 'Code';
         }
 

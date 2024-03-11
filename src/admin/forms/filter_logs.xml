@@ -42,11 +42,19 @@
 			class="js-select-submit-on-change" />
 		<field
 			name="user"
-			type="user"
-			label="COM_KUNENA_LOG_USER_SORT_LABEL"
-			hint="COM_KUNENA_FILTER_SELECT_USER"
-			class="js-select-submit-on-change"
-			default="" />
+			type="sql"
+			sql_select="a.user_id, u.id, u.name"
+			sql_from="#__kunena_logs AS a"
+			sql_join="#__users AS u ON a.user_id = u.id"
+			sql_where="u.name != ''"
+			sql_group="a.user_id"
+			sql_order="u.name ASC"
+			key_field="id"
+			value_field="name"
+			default=""
+			class="js-select-submit-on-change">
+			<option value="">COM_KUNENA_FILTER_SELECT_USER</option>
+		</field>
 		<field
 			name="category"
 			type="sql"
@@ -79,11 +87,17 @@
 		</field>
 		<field
 			name="target_user"
-			type="user"
-			label="COM_KUNENA_LOG_TARGET_USER_SORT_LABEL"
-			class="js-select-submit-on-change"
+			type="sql"
+			sql_select="a.target_user, u.id, u.name"
+			sql_from="#__kunena_logs AS a"
+			sql_join="#__users AS u ON a.target_user = u.id"
+			sql_where="u.name != ''"
+			sql_group="a.target_user"
+			sql_order="u.name ASC"
+			key_field="id"
+			value_field="name"
 			default=""
-			validate="options">
+			class="js-select-submit-on-change">
 			<option value="">COM_KUNENA_FILTER_SELECT_TARGETUSER</option>
 		</field>
 	</fields>

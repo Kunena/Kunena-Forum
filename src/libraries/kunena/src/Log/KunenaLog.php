@@ -249,7 +249,7 @@ class KunenaLog
     /**
      * @since   Kunena 5.1.16
      */
-    const LOG_TOPIC_NOTIFY = 'LOG_TOPIC_NOTIFY';
+    //const LOG_TOPIC_NOTIFY = 'LOG_TOPIC_NOTIFY';
 
     /**
      * @return  void

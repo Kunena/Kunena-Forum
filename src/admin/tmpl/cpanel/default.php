@@ -431,7 +431,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=trash'); ?>" class="stretched-link">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=trashs'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>
                                         </a>
                                     </h6>

@@ -147,7 +147,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                     <?php echo !$this->group ? $this->escape($item->id) : (int) $item->count; ?>
                                 </th>
                                 <td>
-                                    <?php echo $date->toSql(); ?>
+                                    <?php echo HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC6')); ?>
                                 </td>
                                 <td>
                                     <?php echo !$this->group || isset($this->group['type']) ? $this->escape($this->getType((int) $item->type)) : ''; ?>

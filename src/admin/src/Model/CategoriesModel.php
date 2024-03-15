@@ -441,7 +441,7 @@ class CategoriesModel extends KunenaModel
                 'filterAllowPolls' => $this->getState('filter.allowPolls', '') === '' ? null : $this->getState('filter.allowPolls', ''),
                 'filterReview'     => $this->getState('filter.review', '') === '' ? null : $this->getState('filter.review', ''),
                 'filterAnonymous'  => $this->getState('filter.anonymous', '') === '' ? null : $this->getState('filter.anonymous', ''),
-                'action'           => 'none',
+                'action'           => 'admin',
             ];
 
             $catid      = $this->getState('filter.category', '') === '' ? $this->getState('item.id', 0) : $this->getState('filter.category', '');

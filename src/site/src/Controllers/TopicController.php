@@ -669,6 +669,7 @@ class TopicController extends KunenaController
             $captcha = $app->get('captcha', '0');
 
             if ($captcha && PluginHelper::isEnabled('captcha', $captcha)) {
+                PluginHelper::importPlugin('captcha', $captcha);
                 $captchaCheckEvent = new Event('onCheckAnswer', []);
                 $app->getDispatcher()->dispatch('onCheckAnswer', $captchaCheckEvent);
 

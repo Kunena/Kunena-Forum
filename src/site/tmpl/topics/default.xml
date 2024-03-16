@@ -28,10 +28,10 @@
                   label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL" addfieldprefix="Kunena\Forum\Administrator\Field">
             <field name="topics_catselection"
                    type="radio"
-                   default=""
+                   default="-1"
                    label="COM_KUNENA_COM_A_LATESTCATEGORY_IN"
                    description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
-                <option value="">COM_KUNENA_A_USE_GLOBAL</option>
+                <option value="-1">COM_KUNENA_A_USE_GLOBAL</option>
                 <option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
                 <option value="2">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
             </field>
@@ -45,12 +45,11 @@
             </field>
             <field name="topics_categories"
                    type="kunenacategorylist"
-                   default=""
+                   default="0"
                    label="COM_KUNENA_COM_A_LATESTCATEGORY"
                    description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"
                    multiple="true"
                    size="10">
-                <option value="">COM_KUNENA_A_USE_GLOBAL</option>
                 <option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
             </field>
             <field name="topics_time"

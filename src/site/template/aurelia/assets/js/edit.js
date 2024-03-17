@@ -146,7 +146,7 @@ jQuery(document).ready(function ($) {
 
                 $('#iconset_inject').append(div_object);
 
-                $.each(data, function (index, value) { console.log(value);
+                $.each(data, function (index, value) {
                     if (value.type !== 'system') {
                         if (value.id === 0) {
                             var input = $('<input>', {

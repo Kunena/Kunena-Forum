@@ -140,12 +140,13 @@ jQuery(document).ready(function ($) {
         })
             .done(function (data) {
                 $('#iconset_topic_list').remove();
+                $('#iconset_topicList').remove();
 
                 const div_object = $('<div>', {'id': 'iconset_topic_list'});
 
                 $('#iconset_inject').append(div_object);
 
-                $.each(data, function (index, value) {
+                $.each(data, function (index, value) { console.log(value);
                     if (value.type !== 'system') {
                         if (value.id === 0) {
                             var input = $('<input>', {
@@ -174,11 +175,16 @@ jQuery(document).ready(function ($) {
                                 'border': '0',
                                 'al': ''
                             }));
+                        } else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'svg') {
+                            var label = $('<label>', {
+                                'class': 'radio inline',
+                                'for': 'radio' + value.id
+                            }).append($(value.svg));
                         } else {
                             var label = $('<label>', {
                                 'class': 'radio inline',
                                 'for': 'radio' + value.id
-                            }).append($('<img alt="">', {'src': value.path, 'border': '0', 'al': ''}));
+                            }).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
                         }
 
                         span_object.append(label);

@@ -47,6 +47,7 @@ use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
@@ -2585,6 +2586,7 @@ class TopicController extends KunenaController
                     $icon->published = (int) $attributes->published;
                     $icon->title     = (string) $attributes->title;
                     $icon->fa        = (string) $attributes->fa;
+                    $icon->svg       = (string) KunenaSvgIcons::loadsvg($attributes->svg);
                     $icon->filename  = (string) $attributes->src;
                     $icon->width     = (int) $attributes->width ? (int) $attributes->width : $width;
                     $icon->height    = (int) $attributes->height ? (int) $attributes->height : $height;

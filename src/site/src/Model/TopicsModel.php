@@ -632,7 +632,7 @@ class TopicsModel extends KunenaModel
                  * get the list of categories from the menu item with topics_categories.
                  * From Kunena 6.1 in Kunena menus the default value of topics_catselection for option "Use Global" should be set to 2 instead of empty
                  */
-                if (($latestCategoryIn == -1 && !$klatestContext) || ($klatestCategorySel == -1 && $klatestContext)) { echo 'first';
+                if (($latestCategoryIn == -1 && !$klatestContext) || ($klatestCategorySel == -1 && $klatestContext)) {
                     if($this->config->latestCategory == 0) {
                         $latestCategory = false;
                     }

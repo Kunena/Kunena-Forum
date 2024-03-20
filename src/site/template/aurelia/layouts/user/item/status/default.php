@@ -34,7 +34,7 @@ switch ($status) {
         break;
     case 2:
         $label = Text::_("COM_KUNENA_BUSY");
-        $state = "important";
+        $state = "danger";
         break;
     case 3:
         $label = Text::_("COM_KUNENA_INVISIBLE");

@@ -643,11 +643,11 @@ class TopicsModel extends KunenaModel
                     $latestCategoryIn = $this->config->latestCategoryIn;
                 } elseif ($klatestCategorySel && $klatestContext) {
                     // Check if it selected show all, else show only the category(ies) selected in the list are showed
-                    if (count($klatestCategory) == 1) {
-                        if ($klatestCategory[0] == 0) {
-                            $klatestCategory = false;
-                        } else {
-                            $latestCategory = $klatestCategory;;
+                    if (is_array($latestCategory)) {
+                        if (count($latestCategory) == 1) {
+                            if ($latestCategory[0] == 0) {
+                                $latestCategory = false;
+                            }
                         }
                     }
 

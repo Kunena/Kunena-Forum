@@ -18,8 +18,6 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
-$this->addScript('assets/js/search.js');
-
 $childforums = (int) (!isset($this->childforums) || $this->childforums);
 ?>
 <div class="kunena-search search">

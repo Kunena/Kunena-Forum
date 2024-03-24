@@ -473,7 +473,8 @@ class PlgFinderKunena extends Adapter
         $item->title = $message->subject;
 
         // Build the necessary url, route, path and alias information.
-        $item->url   = $message->getUrl();
+        $itemid = KunenaRoute::fixMissingItemID();
+        $item->url   = $message->getUrl($message->catid, 'last', $itemid);
         $item->route = $item->url;
         $item->alias = KunenaRoute::stringURLSafe($message->subject);
 
@@ -500,6 +501,26 @@ class PlgFinderKunena extends Adapter
 
         return $item;
     }
+    
+    /*protected function getUrl($id, $extension, $view)
+    {
+        
+    }
+    
+    protected function getPostLink($uri) {
+        if (!empty($uri)) {
+            if (\is_string($uri) && $uri[0] == '/') {
+                $link = $uri;
+            } else {
+                $link = KunenaRoute::_($uri);
+            }
+        } else {
+            $link = KunenaRoute::_($uri);
+        }
+        
+        return $link;
+    }*/
+
 
     /**
      * Method to translate the native content states into states that the

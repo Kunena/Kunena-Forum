@@ -335,9 +335,9 @@ class KunenaMessage extends KunenaDatabaseObject
      * @throws Exception
      * @since   Kunena 6.0
      */
-    public function getUrl($category = null, $xhtml = true): string
+    public function getUrl($category = null, $xhtml = true, $itemid = 0): string
     {
-        return $this->getTopic()->getUrl($category, $xhtml, $this);
+        return $this->getTopic()->getUrl($category, $xhtml, $this, $itemid);
     }
 
     /**

@@ -914,10 +914,12 @@ class KunenaTopic extends KunenaDatabaseObject
      * @throws \Exception
      * @since   Kunena 6.0
      */
-    public function getUri($category = null, $action = null): Uri
+    public function getUri($category = null, $action = null, $Itemid = 0): Uri
     {
         $category = $category ? KunenaCategoryHelper::get($category) : $this->getCategory();
+        if ($Itemid == 0) {            
         $Itemid   = KunenaRoute::getCategoryItemid($category);
+        }
 
         if ($action instanceof KunenaMessage) {
             $message = $action;
@@ -1193,13 +1195,14 @@ class KunenaTopic extends KunenaDatabaseObject
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getUrl($category = null, $xhtml = true, $action = null)
+    public function getUrl($category = null, $xhtml = true, $action = null, $itemid = 0)
     {
         return KunenaRoute::getTopicUrl(
             $this,
             $xhtml,
             $action,
-            $category ? KunenaCategoryHelper::get($category) : $this->getCategory()
+            $category ? KunenaCategoryHelper::get($category) : $this->getCategory(),
+            $itemid
         );
     }
 

@@ -1064,13 +1064,13 @@ abstract class KunenaRoute
      * @since   Kunena 6.0
      * @throws Exception
      */
-    public static function getTopicUrl(KunenaTopic $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null)
+    public static function getTopicUrl(KunenaTopic $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null, $Itemid = 0)
     {
         if (!$category) {
             $category = $topic->getCategory();
         }
 
-        return self::_($topic->getUri($category, $action), $xhtml);
+        return self::_($topic->getUri($category, $action, $Itemid), $xhtml);
     }
 
     /**

@@ -329,6 +329,7 @@ class KunenaMessage extends KunenaDatabaseObject
     /**
      * @param   null|KunenaCategory  $category  Fake category if needed. Used for aliases.
      * @param   bool                 $xhtml     xhtml
+     * @param   int                  $itemid    itemid
      *
      * @return string
      *

@@ -908,6 +908,7 @@ class KunenaTopic extends KunenaDatabaseObject
     /**
      * @param   mixed  $category  category
      * @param   null   $action    action
+     * @param   int    $itemid   itemid
      *
      * @return \Joomla\CMS\Uri\Uri
      *
@@ -917,8 +918,8 @@ class KunenaTopic extends KunenaDatabaseObject
     public function getUri($category = null, $action = null, $Itemid = 0): Uri
     {
         $category = $category ? KunenaCategoryHelper::get($category) : $this->getCategory();
-        if ($Itemid == 0) {            
-        $Itemid   = KunenaRoute::getCategoryItemid($category);
+        if ($Itemid == 0) {
+            $Itemid   = KunenaRoute::getCategoryItemid($category);
         }
 
         if ($action instanceof KunenaMessage) {
@@ -1188,6 +1189,7 @@ class KunenaTopic extends KunenaDatabaseObject
      * @param   mixed        $category  category
      * @param   bool         $xhtml     xhtml
      * @param   null|string  $action    action
+     * @param   int          $itemid    itemid
      *
      * @return  boolean
      *

@@ -1058,6 +1058,7 @@ abstract class KunenaRoute
      * @param   bool                 $xhtml     xhtml
      * @param   null                 $action    actions
      * @param   KunenaCategory|null  $category  category
+     * @param   int                  $itemid    itemid
      *
      * @return  boolean
      *

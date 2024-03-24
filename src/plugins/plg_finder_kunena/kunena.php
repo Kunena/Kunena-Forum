@@ -501,26 +501,6 @@ class PlgFinderKunena extends Adapter
 
         return $item;
     }
-    
-    /*protected function getUrl($id, $extension, $view)
-    {
-        
-    }
-    
-    protected function getPostLink($uri) {
-        if (!empty($uri)) {
-            if (\is_string($uri) && $uri[0] == '/') {
-                $link = $uri;
-            } else {
-                $link = KunenaRoute::_($uri);
-            }
-        } else {
-            $link = KunenaRoute::_($uri);
-        }
-        
-        return $link;
-    }*/
-
 
     /**
      * Method to translate the native content states into states that the

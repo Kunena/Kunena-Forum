@@ -371,16 +371,17 @@ jQuery(function ($) {
             }
 
             $('#alert_max_file').remove();
-            const editor_text = CKEDITOR.instances.message.getData();
+            if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+                const editor_text = CKEDITOR.instances.message.getData();
 
-            const file_query_id = [];
-            file_query_id.push(file_id);
+                const file_query_id = [];
+                file_query_id.push(file_id);
 
-            // Ajax Request to delete the file from filesystem
-            $.ajax({
-                url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + JSON.stringify(file_query_id) + '&editor_text=' + editor_text,
+                // Ajax Request to delete the file from filesystem
+                $.ajax({
+                    url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + JSON.stringify(file_query_id) + '&editor_text=' + editor_text,
                 type: 'POST'
-            })
+                })
                 .done(function (data) {
                     $this.parent().remove();
 
@@ -391,6 +392,7 @@ jQuery(function ($) {
                 .fail(function () {
                     //TODO: handle the error of ajax request
                 });
+            }
         });
 
     $('#fileupload').fileupload({

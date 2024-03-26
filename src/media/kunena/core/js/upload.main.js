@@ -109,7 +109,12 @@ jQuery(function ($) {
         $('#remove-all').hide();
         $('#insert-all').hide();
 
-        const editor_text = CKEDITOR.instances.message.getData();
+        var editor_text = null;
+        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+            editor_text = CKEDITOR.instances.message.getData();
+        } else {
+            editor_text = sceditor.instance(document.getElementById('message')).val();
+        }
 
         // Removing items in edit if they are present
         if ($.isEmptyObject(filesedit) === false) {
@@ -135,7 +140,11 @@ jQuery(function ($) {
                     $('#files').empty();
 
                     if (data.text_prepared !== false) {
-                        CKEDITOR.instances.message.setData(data.text_prepared);
+                        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+                            CKEDITOR.instances.message.setData(data.text_prepared);
+                        } else {
+                            sceditor.instance(document.getElementById('message')).insert(data.text_prepared);
+                        }
                     }
                 })
                 .fail(function () {
@@ -175,7 +184,11 @@ jQuery(function ($) {
                     $('#files').empty();
 
                     if (data.text_prepared !== false) {
-                        CKEDITOR.instances.message.setData(data.text_prepared);
+                        if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+                            CKEDITOR.instances.message.setData(data.text_prepared);
+                        } else {
+                            sceditor.instance(document.getElementById('message')).insert(data.text_prepared);
+                        }
                     }
                 })
                 .fail(function () {
@@ -371,28 +384,34 @@ jQuery(function ($) {
             }
 
             $('#alert_max_file').remove();
+            var editor_text = null;
             if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
-                const editor_text = CKEDITOR.instances.message.getData();
+                editor_text = CKEDITOR.instances.message.getData();
+            } else {
+                editor_text = sceditor.instance(document.getElementById('message')).val();
+            }
 
+            if (editor_text.length > 0) {
                 const file_query_id = [];
                 file_query_id.push(file_id);
 
                 // Ajax Request to delete the file from filesystem
                 $.ajax({
-                    url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + JSON.stringify(file_query_id) + '&editor_text=' + editor_text,
+	                url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + JSON.stringify(file_query_id) + '&editor_text=' + editor_text,
                 type: 'POST'
                 })
-                .done(function (data) {
-                    $this.parent().remove();
+	              .done(function (data) {
+	                    $this.parent().remove();
 
-                    if (data.text_prepared !== false) {
-                        CKEDITOR.instances.message.setData(data.text_prepared);
-                    }
-                })
-                .fail(function () {
-                    //TODO: handle the error of ajax request
-                });
-            }
+	                    if (data.text_prepared !== false) {
+	                        //CKEDITOR.instances.message.setData(data.text_prepared);
+	                        sceditor.instance(document.getElementById('message')).insert(data.text_prepared);
+	                    }
+	                })
+	                .fail(function () {
+	                    //TODO: handle the error of ajax request
+	                });
+	            }
         });
 
     $('#fileupload').fileupload({

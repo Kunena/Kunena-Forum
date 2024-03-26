@@ -706,31 +706,31 @@ jQuery(document).ready(function ($) {
 		var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
 		var obj = jQuery.parseJSON( emoticons );
 		var list_emoticons = [];
-	
+
 		jQuery.each(obj, function( index, value ) {
 			list_emoticons.push(value);
 		});
-	
+
 		sceditor.create(textarea, {
 			format: 'bbcode',
 			toolbar: toolbar_buttons,
 			style: Joomla.getOptions('com_kunena.sceditor_style_path'),
 			emoticonsRoot: Joomla.getOptions('com_kunena.root_path')+'/media/kunena/emoticons/',
-			/*emoticons: {
+			emoticons: {
 				// Emoticons to be included in the dropdown
-				dropdown: list_emoticons,
+				dropdown: obj,
 				// Emoticons to be included in the more section
-				more: {
+				/*more: {
 					':alien:': 'emoticons/alien.png',
 					':blink:': 'emoticons/blink.png'
-				},
+				},*/
 				// Emoticons that are not shown in the dropdown but will still
 				// be converted. Can be used for things like aliases
-				hidden: {
+				/*hidden: {
 					':aliasforalien:': 'emoticons/alien.png',
 					':aliasforblink:': 'emoticons/blink.png'
-				}
-			}*/
+				}*/
+			}
 		});
 
 		if (sceditor.instance(textarea).val().length > 0)
@@ -755,21 +755,21 @@ jQuery(document).ready(function ($) {
 			toolbar: toolbar_buttons,
 			style: Joomla.getOptions('com_kunena.sceditor_style_path'),
 			emoticonsRoot: Joomla.getOptions('com_kunena.root_path')+'/media/kunena/emoticons/',
-			/*emoticons: {
+			emoticons: {
 				// Emoticons to be included in the dropdown
-				dropdown: list_emoticons,
+				dropdown: obj,
 				// Emoticons to be included in the more section
-				more: {
+				/*more: {
 					':alien:': 'emoticons/alien.png',
 					':blink:': 'emoticons/blink.png'
-				},
+				},*/
 				// Emoticons that are not shown in the dropdown but will still
 				// be converted. Can be used for things like aliases
-				hidden: {
+				/*hidden: {
 					':aliasforalien:': 'emoticons/alien.png',
 					':aliasforblink:': 'emoticons/blink.png'
-				}
-			}*/
+				}*/
+			}
 		});
 
 		if (sceditor.instance(textarea_private).val().length > 0)

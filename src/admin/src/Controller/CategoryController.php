@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
@@ -471,5 +472,35 @@ class CategoryController extends KunenaController
         if ($count > 1) {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count), 'success');
         }
+    }
+
+    /**
+     * Check if the alias given is already in use in the categories
+     * 
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     */
+    public function ChkAliases(): void
+    {
+        $alias = $this->app->input->get('alias', null, 'string');
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->getQuery(true);
+        $query->select('id')
+            ->from($db->quoteName('#__kunena_categories'))
+            ->where('alias = ' . $db->quote($alias));
+        $db->setQuery($query);
+        $result = (int) $db->loadResult();
+
+        if ($result) {
+            $response['msg'] = 0;
+        } else {
+            $response['msg'] = 1;
+        }
+
+        echo json_encode($response);
+
+        jexit();
     }
 }

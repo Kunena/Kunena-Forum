@@ -19,8 +19,8 @@ jQuery(document).ready(function ($) {
 	input_alias.on('input', function () {
 		$.ajax({
 			dataType: "json",
-			url: "index.php?option=com_kunena&view=categories&format=raw&layout=chkAliases&alias=" + input_alias.val()
-		}).done(function (response) {
+			url: "index.php?option=com_kunena&view=category&task=category.chkaliases&alias=" + input_alias.val() +"&format=json"
+		}).done(function (response) { console.log(response);
 			if (!response.msg) {
 				input_alias.addClass("inputbox invalid-border");
 

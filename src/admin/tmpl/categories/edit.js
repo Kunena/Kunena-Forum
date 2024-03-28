@@ -20,7 +20,7 @@ jQuery(document).ready(function ($) {
 		$.ajax({
 			dataType: "json",
 			url: "index.php?option=com_kunena&view=category&task=category.chkaliases&alias=" + input_alias.val() +"&format=json"
-		}).done(function (response) { console.log(response);
+		}).done(function (response) {
 			if (!response.msg) {
 				input_alias.addClass("inputbox invalid-border");
 

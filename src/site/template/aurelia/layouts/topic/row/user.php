@@ -51,6 +51,10 @@ if ($this->topic->hold == 1) {
     }
 }
 
+if ($this->topic->getCategory()->published == 0) {
+    $txt .= '-grey';
+}
+
 if ($this->topic->moved_id > 0) {
     $txt .= ' ' . 'moved';
 }

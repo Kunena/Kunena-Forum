@@ -653,12 +653,14 @@ class TopicsModel extends KunenaModel
 
                     $latestCategory = $klatestCategory;
                 } elseif ($latestCategoryIn && !$klatestContext) {
-                     // Check if it selected show all, else show only the category(ies) selected in the list are showed
-                    if (count($latestCategory) == 1) {
-                        if ($latestCategory[0] == 0) {
-                            $latestCategory = false;
-                        } else {
-                            $latestCategory = $latestCategory;
+                    // Check if it selected show all, else show only the category(ies) selected in the list are showed
+                    if (is_array($latestCategory)) {
+                        if (count($latestCategory) == 1) {
+                            if ($latestCategory[0] == 0) {
+                                $latestCategory = false;
+                            } else {
+                                $latestCategory = $latestCategory;
+                            }
                         }
                     }
 

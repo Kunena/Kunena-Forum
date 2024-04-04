@@ -118,7 +118,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                 <?php echo $id + 1; ?>
                             </div>
                             <div class="w-50">
-                                <?php echo $item->link; ?>:
+                                <?php echo property_exists($item, 'subject') ? $item->subject : (property_exists($item, 'username') ? $item->username : $item->link); ?>:
                             </div>
                             <div class="w-40">
                                 <div class="progress">

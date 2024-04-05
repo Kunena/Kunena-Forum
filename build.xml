@@ -6,7 +6,7 @@
 	@package	Kunena
 	@subpackage	com_kunena
 	@copyright	Copyright (C)
-2008 - 2024 Kunena Team. All rights reserved.
+2008 - @currentyear@ Kunena Team. All rights reserved.
 				portions (C) 2007 MjazTools. All rights reserved.
 @license	GNU General Public License <https://www.gnu.org/copyleft/gpl.html>
 	@link
@@ -89,6 +89,10 @@ workspace/kunena/build/tmp)
 			property="str.datefmt"
 			pattern="${cfg.datefmt}"
 			locale="${cfg.dateloc}" />
+		<format
+			property="str.currentyear"
+			pattern="yyyy"
+			locale="${cfg.dateloc}" />
 	</tstamp>
 	<condition
 		property="version.date"
@@ -132,6 +136,9 @@ workspace/kunena/build/tmp)
 			<token
 				key="kunenaversiondate"
 				value="${version.date}" />
+			<token
+				key="currentyear"
+				value="${str.currentyear}" />
 			<token
 				key="kunenaversionname"
 				value="${xml.versionname}" />
@@ -381,81 +388,97 @@ workspace/kunena/build/tmp)
 		<copy
 			todir="${tmp_dir}/packages/plg_finder_kunena"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_finder_kunena" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_altauserpoints"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_altauserpoints" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_uddeim"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_uddeim" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_community"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_community" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_comprofiler"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_comprofiler" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_easyblog"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_easyblog" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_easyprofile"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_easyprofile" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_easysocial"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_easysocial" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_finder"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_finder" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_gravatar"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_gravatar" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_kunena"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_kunena" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_kunena_joomla"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_kunena_joomla" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_privacy_kunena"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_privacy_kunena" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_system_kunena"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_system_kunena" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_quickicon_kunena"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_quickicon_kunena" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/plg_sampledata_kunena"
 			overwrite="true">
+			<filterchain refid="filter" />
 			<fileset dir="${kunena.plugins}/plg_sampledata_kunena" />
 		</copy>
 		<copy

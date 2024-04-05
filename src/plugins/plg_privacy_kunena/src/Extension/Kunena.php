@@ -6,7 +6,7 @@
  * @package         Kunena.Plugins
  * @subpackage      Privacy
  *
- * @copyright       Copyright (C) 2023 - 2023 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2023 - @currentyear@ Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/

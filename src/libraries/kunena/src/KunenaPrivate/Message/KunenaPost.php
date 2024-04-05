@@ -6,7 +6,7 @@
  * @package       Kunena.Framework
  * @subpackage    Private
  *
- * @Copyright (C) 2008 - 2024 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link          http://www.kunena.org
  **/

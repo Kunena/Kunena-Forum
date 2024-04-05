@@ -6,7 +6,7 @@
 	@package	Kunena
 	@subpackage	com_kunena
 	@copyright	Copyright (C)
-2008 - 2024 Kunena Team. All rights reserved.
+2008 - @currentyear@ Kunena Team. All rights reserved.
 				portions (C) 2007 MjazTools. All rights reserved.
 @license	GNU General Public License <https://www.gnu.org/copyleft/gpl.html>
 	@link
@@ -89,6 +89,10 @@ workspace/kunena/build/tmp)
 			property="str.datefmt"
 			pattern="${cfg.datefmt}"
 			locale="${cfg.dateloc}" />
+		<format
+			property="str.currentyear"
+			pattern="yyyy"
+			locale="${cfg.dateloc}" />
 	</tstamp>
 	<condition
 		property="version.date"
@@ -132,6 +136,9 @@ workspace/kunena/build/tmp)
 			<token
 				key="kunenaversiondate"
 				value="${version.date}" />
+			<token
+				key="currentyear"
+				value="${str.currentyear}" />
 			<token
 				key="kunenaversionname"
 				value="${xml.versionname}" />

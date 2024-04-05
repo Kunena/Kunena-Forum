@@ -6,7 +6,7 @@
  * @package           Kunena.Administrator.Template
  * @subpackage        Users
  *
- * @copyright     (C) 2008 - 2024 Kunena Team. All rights reserved.
+ * @copyright     (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
  * @license           https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link              https://www.kunena.org
  **/

@@ -107,7 +107,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
     public $quickReply;
 
     public $image;
- 
+
     public $params;
 
     /**
@@ -286,7 +286,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $data                           = new \stdClass();
         $data->{'@context'}             = "https://schema.org";
         $data->{'@type'}                = "DiscussionForumPosting";
-        $data->{'id'}                   = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
+        $data->{'url'}                  = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getPermaUrl();
         $data->{'discussionUrl'}        = $this->topic->getPermaUrl();
         $data->{'headline'}             = $this->headerText;
         $data->{'image'}                = $this->docImage();
@@ -300,6 +300,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $tmp                            = new \stdClass();
         $tmp->{'@type'}                 = "Person";
         $tmp->{'name'}                  = $this->topic->getLastPostAuthor()->username;
+        $tmp->{'url'}                   = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->topic->getLastPostAuthor()->getURL();
         $data->{'author'}               = $tmp;
         $data->interactionStatistic     = [];
         $tmp2                           = new \stdClass();

@@ -23,7 +23,7 @@ $wa->useScript('table.columns')
     ->useScript('multiselect');
 $app       = Factory::getApplication();
 $user      = $this->getCurrentUser();
-$userId    = $user->get('id');
+$userId    = $user->id;
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 ?>
@@ -77,7 +77,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             }
 
                             $canEdit    = $user->authorise('core.edit', 'com_plugins');
-                            $canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || is_null($item->checked_out);
+                            $canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->id || is_null($item->checked_out);
                             $canChange  = $user->authorise('core.edit.state', 'com_plugins') && $canCheckin;
                         ?>
                             <tr class="row<?php echo $i % 2; ?>" data-dragable-group="<?php echo $item->folder; ?>">

@@ -314,7 +314,7 @@ class KunenaUpload
 
         $user    = Factory::getApplication()->getIdentity();
         $session = Factory::getSession();
-        $token   = Factory::getApplication()->get('secret') . $user->get('id', 0) . $session->getToken();
+        $token   = Factory::getApplication()->get('secret') . $user->id . $session->getToken();
         list($name, $ext) = $this->splitFilename($filename);
 
         return md5("{$name}.{$token}.{$ext}");

@@ -3,8 +3,8 @@
 <extension type="package" version="4.0" method="upgrade">
     <name>pkg_kunena</name>
     <packagename>kunena</packagename>
-    <version>6.2.6-dev</version>
-    <versionname>INTERNAL</versionname>
+    <version>6.2.6</version>
+    <versionname>Satarma</versionname>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
     <authorEmail>kunena@kunena.org</authorEmail>

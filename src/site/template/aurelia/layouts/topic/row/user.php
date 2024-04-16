@@ -31,10 +31,6 @@ $category        = $this->topic->getCategory();
 $config          = KunenaConfig::getInstance();
 $txt             = '';
 
-if ($this->topic->ordering) {
-    $txt .= '-stickymsg';
-}
-
 if ($this->topic->getCategory()->class_sfx) {
     if ($this->topic->ordering) {
         $txt .= '-stickymsg';

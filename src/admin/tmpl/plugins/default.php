@@ -80,7 +80,7 @@ $joomlaVersion = new Version();
                             } else {
                                 $popupOptions = [
                                     'popupType'  => 'iframe',
-                                    'textHeader' => Text::sprintf('COM_OCHSUBSCRIPTIONS_CPANEL_MANAGER_PLUGIN', $item->name),
+                                    'textHeader' => Text::sprintf('COM_KUNENA_PLUGINS_MANAGER_PLUGIN', $item->name),
                                     'src'        => $link,
                                 ];
                                 $linkModal = HTMLHelper::_(

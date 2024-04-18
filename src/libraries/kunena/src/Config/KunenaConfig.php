@@ -1719,7 +1719,6 @@ class KunenaConfig extends CMSObject
         // Perform custom validation of config data before we let anybody access it.
         $this->check();
 
-        PluginHelper::importPlugin('kunena');
         $plugins = [];
         Factory::getApplication()->triggerEvent('onKunenaGetConfiguration', ['kunena.configuration', &$plugins]);
         $this->plugins = [];

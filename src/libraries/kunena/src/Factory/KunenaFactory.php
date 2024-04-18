@@ -212,7 +212,7 @@ abstract class KunenaFactory
         } else {
             $client  = 'admin';
             $lookup1 = JPATH_ADMINISTRATOR;
-            $lookup2 = KPATH_ADMIN;
+            $lookup2 = JPATH_ADMINISTRATOR . '/components/com_kunena';
         }
 
         if (empty($loaded["{$client}/{$file}"])) {

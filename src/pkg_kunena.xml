@@ -3,8 +3,8 @@
 <extension type="package" version="4.0" method="upgrade">
     <name>pkg_kunena</name>
     <packagename>kunena</packagename>
-    <version>6.3.0-RC2-DEV</version>
-    <versionname>INTERNAL</versionname>
+    <version>6.3.0</version>
+    <versionname>Roncegno</versionname>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
     <authorEmail>kunena@kunena.org</authorEmail>

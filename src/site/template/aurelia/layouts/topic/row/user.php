@@ -31,12 +31,8 @@ $category        = $this->topic->getCategory();
 $config          = KunenaConfig::getInstance();
 $txt             = '';
 
-if ($this->topic->getCategory()->class_sfx) {
-    if ($this->topic->ordering) {
-        $txt .= '-stickymsg';
-    }
-
-    $txt .= $this->escape($this->topic->getCategory()->class_sfx);
+if ($this->topic->ordering) {
+    $txt = $this->topic->getCategory()->class_sfx ? $txt . '' : $txt . '-stickymsg';
 }
 
 if ($this->topic->hold == 1) {
@@ -47,12 +43,14 @@ if ($this->topic->hold == 1) {
     }
 }
 
-if ($this->topic->getCategory()->published == 0) {
-    $txt .= '-grey';
-}
-
 if ($this->topic->moved_id > 0) {
     $txt .= ' ' . 'moved';
+}
+
+// Display in grey topics which in unpublished category
+if ($this->topic->getCategory()->published == 0) {
+    $txt = '-grey';
+    $category->class_sfx = '';
 }
 
 if (!empty($this->spacing)) : ?>

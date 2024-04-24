@@ -146,7 +146,9 @@ class TemplatesController extends KunenaController
                                     File::move($dest . $template->directory . '/assets/css/custom.css', $tmpKunena . $template->sourcedir . '/assets/css/custom.css');
                                 }
 
-                                Folder::delete($dest . $template->directory);
+                                if (is_dir($dest . $template->directory)) {
+                                    Folder::delete($dest . $template->directory);
+                                }
 
                                 $success = Folder::move($tmpKunena . $template->sourcedir, $dest . $template->directory);
 

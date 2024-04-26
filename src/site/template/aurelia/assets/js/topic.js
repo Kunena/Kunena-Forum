@@ -89,7 +89,7 @@ jQuery(document).ready(function ($) {
 				},
 				{
 					share: "twitter",
-					label: Joomla.Text._('COM_KUNENA_SOCIAL_TWITTER_LABEL')
+					label: Joomla.Text._('COM_KUNENA_SOCIAL_X_SOCIAL_LABEL')
 				},
 				{
 					share: "facebook",

@@ -344,7 +344,7 @@ class PlgFinderKunena extends Adapter
         }
 
         // Check if Kunena has been installed.
-        if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.2') || !KunenaForum::installed()) {
+        if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.3') || !KunenaForum::installed()) {
             return false;
         }
 

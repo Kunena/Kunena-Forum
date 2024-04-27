@@ -329,10 +329,12 @@ class KunenaLayout extends KunenaBase
         if ($title === null) {
             $title = Text::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $category->name);
 
-            if (strpos($class, 'hasTooltip') !== false) {
-                // Tooltips will decode HTML and we don't want the HTML to be parsed
-                $filter = InputFilter::getInstance();
-                $title  = $filter->clean($title, 'string');
+            if (isset($class)) {
+                if (strpos($class, 'hasTooltip') !== false) {
+                    // Tooltips will decode HTML and we don't want the HTML to be parsed
+                    $filter = InputFilter::getInstance();
+                    $title  = $filter->clean($title, 'string');
+                }
             }
         }
 

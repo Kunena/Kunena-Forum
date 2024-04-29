@@ -122,31 +122,48 @@ $list = [];
     <?php endif; ?>
 <?php endif; ?>
 <?php if (!empty($attachments) && $displayAttachments && $attachs->readable) : ?>
-    <div class="card pb-3 pd-3 mb-3">
-        <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
-        <div class="card-body kattach">
-            <ul class="thumbnails" style="list-style:none;">
-                <?php foreach ($attachments as $attachment) :
+        <div class="card pb-3 pd-3 mb-3">
+            <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
+            <div class="card-body kattach">
+                <ul class="thumbnails" style="list-style:none;">
+                    <?php foreach ($attachments as $attachment) :
+                    if ($attachment->protected == 0 && !$this->me->isModerator($this->topic->getCategory())) : 
                     if (!$attachment->inline) : ?>
-                        <?php if ($attachment->isAudio()) :
-                            echo $attachment->getLayout()->render('audio'); ?>
-                        <?php elseif ($attachment->isVideo()) :
-                            echo $attachment->getLayout()->render('video'); ?>
-                        <?php else : ?>
-                            <li class="col-md-3 text-center">
-                                <div class="thumbnail">
-                                    <?php echo $attachment->getLayout()->render('thumbnail'); ?>
-                                    <?php echo $attachment->getLayout()->render('textlink'); ?>
-                                </div>
-                            </li>
+                            <?php if ($attachment->isAudio()) :
+                                echo $attachment->getLayout()->render('audio'); ?>
+                            <?php elseif ($attachment->isVideo()) :
+                                echo $attachment->getLayout()->render('video'); ?>
+                            <?php else : ?>
+                                <li class="col-md-3 text-center">
+                                    <div class="thumbnail">
+                                        <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                        <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                    </div>
+                                </li>
+                            <?php endif; ?>                            
+                         <?php endif; ?>
+                         <?php elseif ($attachment->protected > 0 && $this->me->isModerator($this->topic->getCategory())) : ?>
+                         <?php  if (!$attachment->inline) : ?>
+                            <?php if ($attachment->isAudio()) :
+                                echo $attachment->getLayout()->render('audio'); ?>
+                            <?php elseif ($attachment->isVideo()) :
+                                echo $attachment->getLayout()->render('video'); ?>
+                            <?php else : ?>
+                                <li class="col-md-3 text-center">
+                                    <div class="thumbnail">
+                                        <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                        <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                    </div>
+                                </li>
+                            <?php endif; ?>                            
+                         <?php endif; ?>
                         <?php endif; ?>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </ul>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-<?php elseif ($attachs->total > 0 && !$this->me->exists()) :
+        <div class="clearfix"></div>
+    <?php elseif ($attachs->total > 0 && !$this->me->exists()) :
     if ($attachs->image > 0 && !$this->config->showImgForGuest) {
         if ($attachs->image > 1) {
             echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');

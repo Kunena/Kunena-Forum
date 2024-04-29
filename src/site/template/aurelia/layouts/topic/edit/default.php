@@ -357,7 +357,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                                type="text"
                                value="<?php echo $this->modified_reason; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"
                                placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
-                    </div>
+                   
                 </div>
             </div>
         </div>

@@ -892,29 +892,37 @@ class TopicController extends KunenaController
         $poll_options = $fields['poll_options'];
 
         if (!empty($poll_options) && !empty($poll_title)) {
-            if ($topic->isAuthorised('poll.create', null, false)) {
-                $poll        = $topic->getPoll();
-                $poll->title = $poll_title;
-
-                if (!empty($fields['poll_time_to_live'])) {
-                    $polltimetolive       = new Date($fields['poll_time_to_live']);
-                    $poll->polltimetolive = $polltimetolive->toSql();
-                }
-
-                $poll->setOptions($poll_options);
-
-                try {
-                    $poll->save();
-                } catch (Exception $e) {
-                    $this->app->enqueueMessage($e->getMessage(), 'error');
-                }
-
-                $topic->poll_id = $poll->id;
-                $topic->save();
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
-            } else {
-                $this->app->enqueueMessage($topic->getError(), 'error');
+            try {
+                $topic->isAuthorised('poll.create', null, false);
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
             }
+            
+            $poll        = $topic->getPoll();
+            $poll->title = $poll_title;
+
+            if (!empty($fields['poll_time_to_live'])) {
+                $polltimetolive       = new Date($fields['poll_time_to_live']);
+                $poll->polltimetolive = $polltimetolive->toSql();
+            }
+
+            $poll->setOptions($poll_options);
+
+            try {
+                $poll->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+            }
+
+            $topic->poll_id = $poll->id;
+            
+            try {
+                $topic->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+            }
+            
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');            
         }
 
         // Post Private message

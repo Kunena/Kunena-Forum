@@ -182,9 +182,8 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
         }
 
         if (!$this->topic->category_id) {
-            throw new KunenaExceptionAuthorise(Text::sprintf(
-                'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS',
-                $this->topic->getError()
+            throw new KunenaExceptionAuthorise(Text::_(
+                'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS'            
             ), $this->me->exists() ? 403 : 401);
         }
 

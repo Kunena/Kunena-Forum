@@ -1265,8 +1265,7 @@ class HtmlView extends KunenaView
         list($this->topic, $this->message) = $this->category->newTopic($saved);
 
         if (!$this->topic->category_id) {
-            $msg = Text::sprintf('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError());
-            $this->app->enqueueMessage($msg, 'error');
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS'), 'error');
 
             return false;
         }

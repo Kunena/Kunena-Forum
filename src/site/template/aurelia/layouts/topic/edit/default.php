@@ -99,7 +99,7 @@ $this->doc->addScriptOptions('com_kunena.topicid.mentions', $this->topic->id);
 // Load scripts to handle fileupload process
 Text::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');
 Text::script('COM_KUNENA_EDITOR_INSERT');
-Text::script('COM_KUNENA_EDITOR_INSERT_PRIVATE');
+Text::script('COM_KUNENA_EDITOR_INSERT_PRIVATE_ATTACHMENT');
 Text::script('COM_KUNENA_EDITOR_IN_MESSAGE');
 Text::script('COM_KUNENA_GEN_REMOVE_FILE');
 Text::script('COM_KUNENA_UPLOADED_LABEL_ERROR_REACHED_MAX_NUMBER_FILES');

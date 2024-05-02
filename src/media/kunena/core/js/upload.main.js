@@ -273,7 +273,7 @@ jQuery(function ($) {
 
     const setPrivateButton = $('<button>')
         .addClass("btn btn-primary")
-        .html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + Joomla.Text._('COM_KUNENA_EDITOR_INSERT_PRIVATE'))
+        .html(Joomla.getOptions('com_kunena.icons.secure') + ' ' + Joomla.Text._('COM_KUNENA_EDITOR_INSERT_PRIVATE_ATTACHMENT'))
         .on('click', function (e) {
             // Make sure the button click doesn't submit the form:
             e.preventDefault();

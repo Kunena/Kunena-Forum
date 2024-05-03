@@ -410,7 +410,7 @@ class UserController extends KunenaController
             }
 
             if (\strlen($post_password) < $params->get('minimum_length')) {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM'), 'error');
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM', $params->get('minimum_length')), 'error');
 
                 return false;
             }

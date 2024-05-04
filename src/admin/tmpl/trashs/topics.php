@@ -15,6 +15,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
@@ -81,7 +82,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 <td><?php echo $this->escape($row->category); ?></td>
                                 <td><?php echo $this->escape($row->author); ?></td>
                                 <td><?php echo $this->escape($row->ip); ?></td>
-                                <td><?php echo Factory::getDate($row->time)->format('Y-m-d h:m:s', $row->time); ?></td>
+                                <td><?php echo HTMLHelper::date($row->time, Text::_('DATE_FORMAT_LC6')); ?></td>
                             </tr>
                         <?php
                         endforeach; ?>

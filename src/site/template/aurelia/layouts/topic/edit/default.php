@@ -63,6 +63,7 @@ if ($this->ktemplate->params->get('formRecover')) {
 $this->doc->addScriptOptions('com_kunena.editor_type', $this->editorType);
 $this->doc->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
 $this->doc->addScriptOptions('com_kunena.allowEditPoll', $this->config->allowEditPoll);
+$this->doc->addScriptOptions('com_kunena.privateMessage', $this->config->privateMessage);
 $this->doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
 $this->doc->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
 $this->doc->addScriptOptions(
@@ -397,10 +398,12 @@ Text::script('COM_KUNENA_POLL_TITLE');
                             <?php echo KunenaIcons::cancel(); ?>
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
                         </button>
+                        <?php if ($this->config->privateMessage) : ?>
                         <button id="set-secure-all" class="btn btn-outline-primary" type="submit" style="display:none;">
                             <?php echo KunenaIcons::secure(); ?>
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_SET_SECURE_ALL_BUTTON') ?></span>
                         </button>
+                        <?php endif; ?>
                         <div class="clearfix"></div>
                         <br />
                         <div id="progress" class="progress" style="display: none;">

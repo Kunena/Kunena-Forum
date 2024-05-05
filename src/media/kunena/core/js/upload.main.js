@@ -444,7 +444,10 @@ jQuery(function ($) {
 
             $('#remove-all').show();
             $('#insert-all').show();
-            $('#set-secure-all').show();
+            
+            if (Joomla.getOptions('com_kunena.privateMessage') == 1) {
+                $('#set-secure-all').show();
+            }
 
             $('#kattach_form').show();
 
@@ -465,7 +468,10 @@ jQuery(function ($) {
 
             $('#remove-all').show();
             $('#insert-all').show();
-            $('#set-secure-all').show();
+            
+            if (Joomla.getOptions('com_kunena.privateMessage') == 1) {
+                $('#set-secure-all').show();
+            }
 
             const filecoutntmp = Object.keys(data['files']).length + fileCount;
 
@@ -552,7 +558,9 @@ jQuery(function ($) {
                 data.context.find('button.btn-danger').remove();
             }
 
-            data.context.append(setPrivateButton.clone(true).data(data));
+			if (Joomla.getOptions('com_kunena.privateMessage') == 1) {
+                data.context.append(setPrivateButton.clone(true).data(data));
+            }
 
             data.context.append(removeButton.clone(true).data(data));
         } else if (data.result.message) {

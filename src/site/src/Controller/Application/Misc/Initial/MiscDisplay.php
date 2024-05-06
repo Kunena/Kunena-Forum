@@ -20,6 +20,7 @@ use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Controller\Application\Display;
+use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -152,19 +153,13 @@ class MiscDisplay extends Display
         if ($format == 'html') {
             $this->body = trim($body);
         } elseif ($format == 'text') {
-            $this->body = function () use ($body) {
-
-                return htmlspecialchars($body, ENT_COMPAT, 'UTF-8');
-            };
+            $this->body = htmlspecialchars($body, ENT_COMPAT, 'UTF-8');            
         } else {
-            $this->body = function () use ($body) {
-
-                $options = ['defaultgroup' => 'com_kunena'];
-                $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
-                $cache->setLifeTime(180);
-
-                return $cache->get(['Kunena\Forum\Libraries\Html\KunenaParser', 'parseBBCode'], [$body]);
-            };
+            $options = ['defaultgroup' => 'com_kunena'];
+            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
+            $cache->setLifeTime(180);
+            
+            $this->body = $cache->get(['Kunena\Forum\Libraries\Html\KunenaParser', 'parseBBCode'], [$body]);                
         }
     }
 }

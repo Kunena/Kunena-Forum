@@ -122,6 +122,7 @@ class KunenaProfileEasySocial extends KunenaProfile
      */
     public function getTopHits(int $limit = 0): array
     {
+        return [];
     }
 
     /**

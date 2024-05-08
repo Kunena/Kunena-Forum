@@ -127,7 +127,6 @@ $list = [];
             <div class="card-body kattach">
                 <ul class="thumbnails" style="list-style:none;">
                     <?php foreach ($attachments as $attachment) :
-                    if ($attachment->protected == 0 && !$this->me->isModerator($this->topic->getCategory())) : 
                     if (!$attachment->inline) : ?>
                             <?php if ($attachment->isAudio()) :
                                 echo $attachment->getLayout()->render('audio'); ?>
@@ -142,22 +141,6 @@ $list = [];
                                 </li>
                             <?php endif; ?>                            
                          <?php endif; ?>
-                         <?php elseif ($attachment->protected > 0 && $this->me->isModerator($this->topic->getCategory())) : ?>
-                         <?php  if (!$attachment->inline) : ?>
-                            <?php if ($attachment->isAudio()) :
-                                echo $attachment->getLayout()->render('audio'); ?>
-                            <?php elseif ($attachment->isVideo()) :
-                                echo $attachment->getLayout()->render('video'); ?>
-                            <?php else : ?>
-                                <li class="col-md-3 text-center">
-                                    <div class="thumbnail">
-                                        <?php echo $attachment->getLayout()->render('thumbnail'); ?>
-                                        <?php echo $attachment->getLayout()->render('textlink'); ?>
-                                    </div>
-                                </li>
-                            <?php endif; ?>                            
-                         <?php endif; ?>
-                        <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>
             </div>

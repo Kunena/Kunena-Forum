@@ -16,7 +16,7 @@ namespace Kunena\Forum\Libraries\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Application\BaseApplication;
+use Joomla\Application\AbstractApplication;
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Factory;
 use Joomla\Input\Input;
@@ -35,7 +35,7 @@ abstract class KunenaControllerBase implements Serializable
     /**
      * The application object.
      *
-     * @var     BaseApplication
+     * @var     AbstractApplication
      * @since   Kunena 6.0
      */
     protected $app;
@@ -174,7 +174,7 @@ abstract class KunenaControllerBase implements Serializable
     /**
      * Get the application object.
      *
-     * @return  BaseApplication  The application object.
+     * @return  AbstractApplication  The application object.
      *
      * @since   Kunena 6.0
      */

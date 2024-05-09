@@ -9,9 +9,9 @@
 
 *Kunena* 6.4 requires
 
-    Joomla: version 4.4.4 or greater (>= 5.1.0 recommended)
-    PHP: version 7.4.1 or greater (>= 7.4.1 recommended)
-    MySQL: version 5.7.23 or greater (>= 8.0 recommended)
+    Joomla: version 5.0.3 or greater (>= 5.1.0 recommended)
+    PHP: version 8.1.0 or greater (>= 8.1.0 recommended)
+    MySQL: version 8.0.13 or greater (>= 8.0.13 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
 
@@ -26,7 +26,7 @@ In addition we recommend the following PHP settings:
 *Kunena* requires the following Joomla settings:
 
     * Bootstrap 5 compatible template
-    * Upgraded to latest versions all extensions that claim to integrate with Kunena 6.3
+    * Upgraded to latest versions all extensions that claim to integrate with Kunena 6.4
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard
 
 

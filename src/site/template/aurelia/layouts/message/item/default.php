@@ -121,7 +121,7 @@ $list = [];
         <div class="clearfix"></div>
     <?php endif; ?>
 <?php endif; ?>
-<?php if (!empty($attachments) && $displayAttachments && $attachs->readable) : ?>
+<?php if (!empty($attachments) && $displayAttachments && $attachs->readable && $attachs->totalNonProtected > 0) : ?>
         <div class="card pb-3 pd-3 mb-3">
             <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
             <div class="card-body kattach">
@@ -140,29 +140,67 @@ $list = [];
                                     </div>
                                 </li>
                             <?php endif; ?>                            
+                         <?php elseif ($attachment->protected > 0): ?>
+                         		<?php if ($attachment->isAudio()) :
+                                echo $attachment->getLayout()->render('audio'); ?>
+                            <?php elseif ($attachment->isVideo()) :
+                                echo $attachment->getLayout()->render('video'); ?>
+                            <?php else : ?>
+                                <li class="col-md-3 text-center">
+                                    <div class="thumbnail">
+                                        <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                        <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                    </div>
+                                </li>
+                             <?php endif; ?>   
                          <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>
             </div>
         </div>
         <div class="clearfix"></div>
-    <?php elseif ($attachs->total > 0 && !$this->me->exists()) :
-    if ($attachs->image > 0 && !$this->config->showImgForGuest) {
-        if ($attachs->image > 1) {
-            echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
-        } else {
-            echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+    <?php elseif ($attachs->totalNonProtected > 0 && !$this->me->exists()) :
+        if ($attachs->image > 0 && !$this->config->showImgForGuest) {
+            if ($attachs->image > 1) {
+                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+            } else {
+                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+            }
         }
-    }
 
-    if ($attachs->file > 0 && !$this->config->showFileForGuest) {
-        if ($attachs->file > 1) {
-            echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
-        } else {
-            echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
-        }
-    }
-endif; ?>
+        if ($attachs->file > 0 && !$this->config->showFileForGuest) {
+            if ($attachs->file > 1) {
+                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+            } else {
+                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+            }
+        } ?>
+    <?php elseif ($attachs->totalProtected > 0 && $this->config->privateMessage && $this->me->isModerator($this->topic->getCategory())) : ?>
+    	<div class="card pb-3 pd-3 mb-3">
+    <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
+            <div class="card-body kattach">
+                <ul class="thumbnails" style="list-style:none;">
+                    <?php foreach ($attachments as $attachment) :
+                     if ($attachment->protected > 0) : ?>
+                            <?php if ($attachment->isAudio()) :
+                                echo $attachment->getLayout()->render('audio'); ?>
+                            <?php elseif ($attachment->isVideo()) :
+                                echo $attachment->getLayout()->render('video'); ?>
+                            <?php else : ?>
+                                <li class="col-md-3 text-center">
+                                    <div class="thumbnail">
+                                        <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                        <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                    </div>
+                                </li>
+                            <?php endif; ?>                            
+                         <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    <?php endif; ?>
 
 <?php if ($message->modified_by && $this->config->editMarkup) :
     $dateshown = $datehover = '';

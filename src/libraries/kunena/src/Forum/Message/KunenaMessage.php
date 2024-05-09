@@ -1335,8 +1335,9 @@ class KunenaMessage extends KunenaDatabaseObject
         $attachs->inline   = 0;
         $attachs->image    = 0;
         $attachs->file     = 0;
-        $attachs->total    = 0;
+        $attachs->totalNonProtected    = 0;
         $attachs->readable = 0;
+        $attachs->totalProtected = 0;
 
         foreach ($attachments as $attach) {
             if ($attach->inline) {
@@ -1348,13 +1349,19 @@ class KunenaMessage extends KunenaDatabaseObject
             } else {
                 $attachs->file = $attachs->file + 1;
             }
-
-            $attachs->total = $attachs->total + 1;
+            
+            if ($attach->protected == 0) {
+                $attachs->totalNonProtected = $attachs->totalNonProtected + 1;
+            }
 
             if ($attach->isAuthorised('read')) {
                 if (!$attach->inline) {
                     $attachs->readable = $attachs->readable + 1;
                 }
+            }
+            
+            if ($attach->protected > 0) {
+                $attachs->totalProtected = $attachs->totalProtected + 1;
             }
         }
 

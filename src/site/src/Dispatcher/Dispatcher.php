@@ -168,7 +168,7 @@ class Dispatcher extends ComponentDispatcher
     protected function checkIfInstalled()
     {
         // Display offline message if Kunena hasn't been fully installed.
-        if (!KunenaForum::isCompatible('6.3') || !KunenaForum::installed()) {
+        if (!KunenaForum::isCompatible('6.4') || !KunenaForum::installed()) {
             $lang = Factory::getApplication()->getLanguage();
             $lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
             $lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');

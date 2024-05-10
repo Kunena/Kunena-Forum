@@ -79,7 +79,7 @@ class TopicsController extends KunenaController
         } else {
             $messages = KunenaMessageHelper::getMessagesByTopics($ids);
 
-            foreach ($topics as $topic) {
+            foreach ($topics as $topic) { 
                 if ($topic->isAuthorised('permdelete') && $topic->delete()) {
                     // Activity integration
                     $activity = KunenaFactory::getActivityIntegration();
@@ -356,30 +356,32 @@ class TopicsController extends KunenaController
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'notice');
                 $this->setRedirectBack();
             }
-
-            if (!$target->isAuthorised('read')) {
-                $this->app->enqueueMessage($target->getError(), 'error');
-            } else {
-                if ($topics) {
-                    foreach ($topics as $topic) {
-                        if ($topic->isAuthorised('move') && $topic->move($target)) {
-                            $message = Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
-                        } else {
-                            $this->app->enqueueMessage($topic->getError(), 'error');
-                        }
-                    }
-                } else {
-                    foreach ($messages as $message) {
-                        $topic = $message->getTopic();
-
-                        if ($message->isAuthorised('move') && $topic->move($target, $message->id)) {
-                            $message = Text::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
-                        } else {
-                            $this->app->enqueueMessage($message->getError(), 'error');
-                        }
+            
+            try {
+                $target->isAuthorised('read');
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+            }
+            
+            if ($topics) {
+                foreach ($topics as $topic) {
+                    if ($topic->isAuthorised('move') && $topic->move($target)) {
+                        $message = Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
+                    } else {
+                        $this->app->enqueueMessage($topic->getError(), 'error');
                     }
                 }
-            }
+            } else {
+                foreach ($messages as $message) {
+                    $topic = $message->getTopic();
+
+                    if ($message->isAuthorised('move') && $topic->move($target, $message->id)) {
+                        $message = Text::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
+                    } else {
+                        $this->app->enqueueMessage($message->getError(), 'error');
+                    }
+                }
+            }            
         }
 
         if (!empty($message)) {

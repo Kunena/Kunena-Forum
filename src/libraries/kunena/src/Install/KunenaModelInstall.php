@@ -501,10 +501,10 @@ class KunenaModelInstall extends BaseDatabaseModel
         $table->load(['menutype' => 'kunenamenu']);
 
         if ($table->id) {
-            $success = $table->delete();
-
-            if (!$success) {
-                Factory::getApplication()->enqueueMessage($table->getError(), 'error');
+            try {
+               $table->delete();
+            } catch (Exception $e) {
+                Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
             }
         }
 
@@ -2773,9 +2773,11 @@ class KunenaModelInstall extends BaseDatabaseModel
             // Menu already exists, do nothing
             return true;
         }
-
-        if (!$table->store()) {
-            throw new KunenaInstallerException($table->getError());
+        
+        try {
+            $table->store();
+        } catch (Exception $e) {
+            throw new KunenaInstallerException($e->getMessage(), $e->getCode());
         }
 
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -2934,9 +2936,11 @@ class KunenaModelInstall extends BaseDatabaseModel
                 'params' => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
                 ];
             }
-
-            if (!$table->bind($data)) {
-                throw new KunenaInstallerException($table->getError());
+            
+            try {
+                $table->bind($data);
+            } catch (Exception $e) {
+                throw new KunenaInstallerException($e->getMessage(), $e->getCode());
             }
 
             if (!$table->check() || !$table->store()) {

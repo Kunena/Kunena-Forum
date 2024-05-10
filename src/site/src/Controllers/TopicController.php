@@ -1586,12 +1586,11 @@ class TopicController extends KunenaController
         }
 
         $message = KunenaMessageHelper::get($this->mesid);
-
-        if (!$message->isAuthorised($type)) {
-            $this->app->enqueueMessage($message->getError(), 'error');
-            $this->setRedirectBack();
-
-            return;
+   
+        try {
+            $message->isAuthorised($type);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
         }
 
         $category            = KunenaCategoryHelper::get($this->catid);
@@ -1719,7 +1718,7 @@ class TopicController extends KunenaController
             try {
                 $topic->subscribe(0);
             } catch (Exception $e) {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC') . ' ' . $topic->getError(), 'error');
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC') . ' ' . $e->getMessage(), 'error');
                 $this->setRedirectBack();
             }
 
@@ -2270,11 +2269,11 @@ class TopicController extends KunenaController
             } else {
                 $ids = false;
             }
-
-            $targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
-
-            if (!$targetobject) {
-                $error = $topic->getError();
+            
+            try {
+                $targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
             }
 
             if ($this->config->logModeration) {
@@ -2480,24 +2479,25 @@ class TopicController extends KunenaController
 
         if (!$topic->isAuthorised('poll.vote')) {
             $this->app->enqueueMessage($topic->getError(), 'error');
-        } elseif (!$poll->getMyVotes()) {
-            // Give a new vote
-            $success = $poll->vote($vote);
-
-            if (!$success) {
-                $this->app->enqueueMessage($poll->getError(), 'error');
-            } else {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'), 'success');
+        } elseif (!$poll->getMyVotes()) {            
+            try {
+                // Give a new vote
+                $poll->vote($vote);
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
             }
-        } elseif (!$this->config->pollAllowVoteOne) {
-            // Change existing vote
-            $success = $poll->vote($vote, true);
-
-            if (!$success) {
-                $this->app->enqueueMessage($poll->getError(), 'error');
-            } else {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS'), 'success');
+            
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'), 'success');            
+        } elseif (!$this->config->pollAllowVoteOne) {  
+            try {
+                // Change existing vote
+                $poll->vote($vote, true);
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
             }
+
+
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS'), 'success');
         }
 
         $this->setRedirect($topic->getUrl($this->return, false));

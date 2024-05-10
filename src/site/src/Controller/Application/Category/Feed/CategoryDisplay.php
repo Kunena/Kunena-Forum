@@ -75,7 +75,7 @@ class CategoryDisplay extends KunenaControllerDisplay
         try {
             $this->category->isAuthorised('read');
         } catch (Exception $e) {
-            throw new KunenaException($this->category->getError(), 404);
+            throw new KunenaException($e->getMessage(), 404);
         }
 
         $this->topics = $model->getTopics();

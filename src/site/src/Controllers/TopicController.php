@@ -195,8 +195,18 @@ class TopicController extends KunenaController
         if ($attachs_id === null) {
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
+        
+        $attach_ids_final = [];
+        
+        foreach ($attachs_id as $attach) {
+            if (\is_array($attach)) {
+                $attach_ids_final[] = $attach['0'];
+            } else {
+                $attach_ids_final[] = $attach;
+            }
+        }
 
-        foreach ($attachs_id as $id) {
+        foreach ($attach_ids_final as $id) {
             $attachment = KunenaAttachmentHelper::get($id);
             $attachment->protected = KunenaAttachment::PROTECTION_PRIVATE;
             $attachment->save();

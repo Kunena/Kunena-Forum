@@ -315,7 +315,7 @@ class TopicController extends KunenaController
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
 
-        $attach_id = $this->input->getInt('file_id', 0);
+        $attach_id = $this->input->getInt('files_id_delete', 0);
         $userid = $this->input->getInt('userid', 0);
         $success   = [];
         $instance  = KunenaAttachmentHelper::get($attach_id);

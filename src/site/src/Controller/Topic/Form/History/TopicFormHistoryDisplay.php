@@ -81,6 +81,7 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
         $this->historycount = \count($this->history);
         KunenaAttachmentHelper::getByMessage($this->history);
         $userlist = [];
+        $messages = [];
 
         foreach ($this->history as $message) {
             $messages[$message->id]           = $message;

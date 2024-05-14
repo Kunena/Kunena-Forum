@@ -929,7 +929,7 @@ class KunenaConfig extends CMSObject
      * @var    string  Image types
      * @since  Kunena 1.6.0
      */
-    public $imageTypes = 'jpg,jpeg,gif,png';
+    public $imageTypes = 'jpg,jpeg,gif,png,webp,avif';
 
     /**
      * @var    boolean  Check MIM types
@@ -941,7 +941,7 @@ class KunenaConfig extends CMSObject
      * @var    string  Image MIME types
      * @since  Kunena 1.6.0
      */
-    public $imageMimeTypes = 'image/jpeg,image/jpg,image/gif,image/png';
+    public $imageMimeTypes = 'image/jpeg,image/jpg,image/gif,image/png,image/webp,image/avif';
 
     /**
      * @var    integer  Image quality

@@ -99,7 +99,7 @@ abstract class KunenaCategoryHelper
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_categories'))
             ->order([$db->quoteName('ordering'), $db->quoteName('name')]);
@@ -254,7 +254,7 @@ abstract class KunenaCategoryHelper
     {
         $user  = KunenaUserHelper::get($user);
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select($db->quoteName('category_id'))
             ->from($db->quoteName('#__kunena_user_categories'))
             ->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
@@ -399,7 +399,7 @@ abstract class KunenaCategoryHelper
         }
 
         // Get total count
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('COUNT(DISTINCT c.id)')
             ->from($db->quoteName('#__kunena_categories', 'c'))
             ->innerJoin($db->quoteName('#__kunena_user_categories', 'u') . ' ON u.category_id = c.id')
@@ -427,7 +427,7 @@ abstract class KunenaCategoryHelper
             $limitstart = \intval($total / $limit) * $limit;
         }
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('c.id')
             ->from($db->quoteName('#__kunena_categories', 'c'))
             ->innerJoin($db->quoteName('#__kunena_user_categories', 'u') . ' ON u.category_id = c.id')
@@ -489,7 +489,7 @@ abstract class KunenaCategoryHelper
 
         $catlist = implode(',', array_keys($catlist));
         $db      = Factory::getContainer()->get('DatabaseDriver');
-        $query   = $db->getQuery(true);
+        $query   = $db->createQuery();
 
         $query->select(array($db->quoteName('t.category_id'), 'COUNT(*) AS new'))
             ->from($db->quoteName('#__kunena_topics', 't'))
@@ -868,7 +868,7 @@ abstract class KunenaCategoryHelper
         $rows = $db->getAffectedRows();
 
         // Update categories which have no published topics
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $fields = array(
             $db->quoteName('c.numTopics') . ' = 0',
             $db->quoteName('c.numPosts') . ' = 0',
@@ -956,7 +956,7 @@ abstract class KunenaCategoryHelper
     public static function getAlias($categoryId, $alias): bool
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_categories'))
             ->where($db->quoteName('id') . ' = ' . $db->quote($categoryId))

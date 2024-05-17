@@ -204,7 +204,7 @@ abstract class KunenaTopicHelper
 
         $idlist = implode(',', $ids);
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_topics'))
             ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
@@ -348,13 +348,13 @@ abstract class KunenaTopicHelper
 
         // Get total count
         if ($whereuser) {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('COUNT(*)')
                 ->from($db->quoteName('#__kunena_user_topics', 'ut'))
                 ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id'))
                 ->where($where);
         } else {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('COUNT(*)')
                 ->from($db->quoteName('#__kunena_topics', 'tt'))
                 ->where($where);
@@ -383,14 +383,14 @@ abstract class KunenaTopicHelper
 
         // Get items
         if ($whereuser) {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
                 ->from($db->quoteName('#__kunena_user_topics', 'ut'))
                 ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id'))
                 ->where($where)
                 ->order($orderby);
         } else {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
                 ->from($db->quoteName('#__kunena_topics', 'tt'))
                 ->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id') . ' AND ' . $db->quoteName('ut.user_id') . ' = ' . $db->quote($user->userid))
@@ -579,7 +579,7 @@ abstract class KunenaTopicHelper
         }
 
         // Mark all empty topics as deleted
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_topics', 'tt'))
             ->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id') . ' AND ' . $db->quoteName('tt.hold') . ' = ' . $db->quoteName('m.hold'))
             ->set($db->quoteName('tt.hold') . ' = 4')
@@ -708,7 +708,7 @@ abstract class KunenaTopicHelper
             $idstr = implode(",", $ids);
 
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select($db->quoteName('m.thread') . ' AS ' . $db->quoteName('id') . ', MIN(' . $db->quoteName('m.id') . ') AS ' . $db->quoteName('lastread') . ', SUM(1) AS ' . $db->quoteName('unread'))
                 ->from($db->quoteName('#__kunena_messages', 'm'))
                 ->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('m.thread') . ' AND ' . $db->quoteName('user_id') . ' = ' . $db->quote($user->userid))

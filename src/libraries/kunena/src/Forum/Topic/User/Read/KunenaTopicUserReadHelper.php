@@ -149,7 +149,7 @@ abstract class KunenaTopicUserReadHelper
 
         $idlist = implode(',', $ids);
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_user_read'))
             ->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
@@ -190,7 +190,7 @@ abstract class KunenaTopicUserReadHelper
     {
         // Update database
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_user_read'))
             ->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
             ->set($db->quoteName('category_id') . ' = ' . $db->quote($new->category_id))
@@ -288,7 +288,7 @@ abstract class KunenaTopicUserReadHelper
 
         $idlist = implode(',', array_keys(self::$_topics [$id]));
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_user_read'))
             ->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
@@ -324,7 +324,7 @@ abstract class KunenaTopicUserReadHelper
     public static function recount(): bool
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__user_read', 'ur'))
             ->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('ur.topic_id'))
             ->set($db->quoteName('ur.category_id') . ' = ' . $db->quoteName('t.category_id'));
@@ -355,7 +355,7 @@ abstract class KunenaTopicUserReadHelper
         // Purge items that are older than x days (defaulting to a year)
         $db        = Factory::getContainer()->get('DatabaseDriver');
         $timestamp = Factory::getDate()->toUnix() - 60 * 60 * 24 * $days;
-        $query     = $db->getQuery(true);
+        $query     = $db->createQuery();
         $query->delete($db->quoteName('#__kunena_user_read'))
             ->where($db->quoteName('time') . ' < ' . $db->quote($timestamp));
         $db->setQuery($query);

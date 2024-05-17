@@ -170,7 +170,7 @@ class KunenaKarma extends CMSObject
     public function save()
     {
         $time  = Factory::getDate();
-        $query = $this->_db->getQuery(true);
+        $query = $this->_db->createQuery();
         $values = [
             $this->_db->quote($this->userid),
             $this->_db->quote($this->target_userid),
@@ -208,7 +208,7 @@ class KunenaKarma extends CMSObject
      */
     public function getLastTimeKarma()
     {
-        $query = $this->_db->getQuery(true);
+        $query = $this->_db->createQuery();
         $query->select('MAX(time)')
             ->from($this->_db->quoteName('#__kunena_karma'))
             ->where($this->_db->quoteName('target_userid') . ' = ' . $this->_db->quote($this->target_userid));

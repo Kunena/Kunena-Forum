@@ -126,7 +126,7 @@ class KunenaMessageThankyou extends CMSObject
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $time  = Factory::getDate();
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->insert($db->quoteName('#__kunena_thankyou'))
         ->set($db->quoteName('postid') . ' = ' . $db->quote($this->id) . ', ' . $db->quoteName('userid') . ' = ' . $db->quote($user->userid) . ',' . $db->quoteName('targetuserid') . ' = ' . $db->quote($message->userid) . ',' . $db->quoteName('time') . ' = ' . $db->quote($time->toSql()));
         $db->setQuery($query);
@@ -170,7 +170,7 @@ class KunenaMessageThankyou extends CMSObject
     protected function internalSavethankyou(KunenaMessage $message): bool
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_users'))
             ->set($db->quoteName('thankyou') . ' = thankyou+1')
             ->where($db->quoteName('userid') . ' = ' . $db->quote($message->userid));
@@ -224,14 +224,14 @@ class KunenaMessageThankyou extends CMSObject
         }
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->delete($db->quoteName('#__kunena_thankyou'))
             ->where($db->quoteName('postid') . ' = ' . $db->quote($this->id))
             ->andWhere($db->quoteName('userid') . ' = ' . $db->quote($user->userid));
         $db->setQuery($query);
         $db->execute();
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_users'))
             ->set($db->quoteName('thankyou') . ' = thankyou-1')
             ->where($db->quoteName('userid') . ' = ' . $db->quote($message->userid));

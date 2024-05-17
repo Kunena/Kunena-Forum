@@ -213,7 +213,7 @@ class KunenaRate extends CMSObject
         }
 
         $time  = Factory::getDate();
-        $query = $this->_db->getQuery(true);
+        $query = $this->_db->createQuery();
         $values = [
             $this->_db->quote($this->topic_id),
             $this->_db->quote($user->userid),
@@ -261,7 +261,7 @@ class KunenaRate extends CMSObject
      */
     public function getUsers($start = 0, $limit = 0): void
     {
-        $query = $this->_db->getQuery(true);
+        $query = $this->_db->createQuery();
         $query->select('*')
             ->from($this->_db->quoteName('#__kunena_rate'))
             ->where($this->_db->quoteName('topic_id') . ' = ' . $this->_db->quote($this->topic_id));

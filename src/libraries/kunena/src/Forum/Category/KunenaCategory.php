@@ -896,7 +896,7 @@ class KunenaCategory extends KunenaDatabaseObject
     {
         if (!isset($this->_aliases)) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('*')
                 ->from($db->quoteName('#__kunena_aliases'))
                 ->where($db->quoteName('type') . ' = ' . $db->quote('catid'))
@@ -924,7 +924,7 @@ class KunenaCategory extends KunenaDatabaseObject
         }
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->delete()
             ->from($db->quoteName('#__kunena_aliases'))
             ->where($db->quoteName('type') . ' = ' . $db->quote('catid'))
@@ -1416,7 +1416,7 @@ class KunenaCategory extends KunenaDatabaseObject
         $where = isset($params['where']) ? (string) $params['where'] : '';
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select($db->quoteName('id'))
             ->from($db->quoteName('#__kunena_topics', 'tt'))
             ->where($db->quoteName('tt.category_id') . ' = ' . $this->id . ' ' . $where)
@@ -1465,7 +1465,7 @@ class KunenaCategory extends KunenaDatabaseObject
         $where = isset($params['where']) ? (string) $params['where'] : '';
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select($db->quoteName('id'))
             ->from($db->quoteName('#__kunena_topics', 'tt'))
             ->where($db->quoteName('tt.category_id') . ' = ' . $this->id . ' AND ' . $db->quoteName('tt.hold') . ' !=2 ' . $where)
@@ -1682,7 +1682,7 @@ class KunenaCategory extends KunenaDatabaseObject
         } elseif ($this->last_topic_id == $topic->id) {
             // If last topic/post got moved or deleted, we need to find last post
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('*')
                 ->from($db->quoteName('#__kunena_topics'))
                 ->where($db->quoteName('category_id') . ' = ' . $db->quote($this->id))

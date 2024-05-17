@@ -236,7 +236,7 @@ abstract class KunenaUserHelper
 
             $db = Factory::getContainer()->get('DatabaseDriver');
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('u.name, u.username, u.email, u.block AS blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid')
                 ->from($db->quoteName('#__users', 'u'))
                 ->leftJoin($db->quoteName('#__kunena_users') . ' AS ' . $db->quoteName('ku') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))
@@ -313,7 +313,7 @@ abstract class KunenaUserHelper
                 $where = '1';
             }
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('COUNT(*), MAX(id)')
                 ->from($db->quoteName('#__users'))
                 ->where($where);
@@ -340,7 +340,7 @@ abstract class KunenaUserHelper
     {
         $total = 0;
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('COUNT(*)')
             ->from($db->quoteName('#__kunena_ranks'));
         $db->setQuery($query);
@@ -368,7 +368,7 @@ abstract class KunenaUserHelper
 
         if (self::$_topposters < $limit) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select($db->quoteName(['u.id', 'ku.posts'], [null, 'count']));
             $query->from($db->quoteName(['#__kunena_users'], ['ku']));
             $query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
@@ -420,7 +420,7 @@ abstract class KunenaUserHelper
 
         // Find users and their groups.
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName('m.*'))
             ->from($db->quoteName('#__usergroups', 'ug1'))
             ->innerJoin($db->quoteName('#__usergroups', 'ug2') . ' ON ' . $db->quoteName('ug2.lft') . $recurs . $db->quoteName('ug1.lft') . ' AND ' . $db->quoteName('ug1.rgt') . $recurs . $db->quoteName('ug2.rgt'))
@@ -474,7 +474,7 @@ abstract class KunenaUserHelper
             $app    = Factory::getApplication();
             $config = KunenaFactory::getConfig();
             $db     = Factory::getContainer()->get('DatabaseDriver');
-            $query  = $db->getQuery(true);
+            $query  = $db->createQuery();
             $query->select('COUNT(*)')
                 ->from($db->quoteName('#__session'))
                 ->where($db->quoteName('client_id') . ' = 0')
@@ -520,7 +520,7 @@ abstract class KunenaUserHelper
             $app    = Factory::getApplication();
             $config = KunenaFactory::getConfig();
             $db     = Factory::getContainer()->get('DatabaseDriver');
-            $query  = $db->getQuery(true);
+            $query  = $db->createQuery();
             $query->select('userid, MAX(time) AS time')
                 ->from($db->quoteName('#__session'))
                 ->where($db->quoteName('client_id') . ' = 0')
@@ -615,7 +615,7 @@ abstract class KunenaUserHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         /*
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->insert($db->quoteName('#__kunena_users') . ' (userid, posts)')
             ->select("user_id AS userid, SUM(posts) AS posts")
             ->from($db->quoteName('#__kunena_user_topics'))
@@ -682,7 +682,7 @@ abstract class KunenaUserHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         // If user has no user_topics, set posts into 0
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_users', 'u'))
             ->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('u.userid'))
             ->set($db->quoteName('u.posts') . ' = 0')

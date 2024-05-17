@@ -1628,7 +1628,7 @@ class KunenaUser extends CMSObject
 
         // First run? Initialize ranks.
         if (self::$_ranks === null) {
-            $query = $this->_db->getQuery(true);
+            $query = $this->_db->createQuery();
             $query->select('*');
             $query->from($this->_db->quoteName('#__kunena_ranks'));
             $this->_db->setQuery($query);
@@ -1903,7 +1903,7 @@ class KunenaUser extends CMSObject
         $groupid_list = implode(',', $groups);
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName('title'))
             ->from($db->quoteName('#__usergroups'))
             ->where($db->quoteName('id') . ' = ' . $db->quote((int) $groupid_list));

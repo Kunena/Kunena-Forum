@@ -352,7 +352,7 @@ abstract class KunenaForum
             self::$version_name = (string) $manifest->versionname;
         } else {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('version')->from('#__kunena_version')->order('id');
             $query->setLimit(1);
             $db->setQuery($query);
@@ -366,7 +366,7 @@ abstract class KunenaForum
         self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('sampleData')->from('#__kunena_version')->order('id DESC');
         $query->setLimit(1);
         $db->setQuery($query);

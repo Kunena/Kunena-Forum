@@ -79,7 +79,7 @@ abstract class KunenaRateHelper
     public static function getSelected(int $id): float
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('(SUM(' . $db->quoteName('rate') . ')/COUNT(' . $db->quoteName('rate') . ')) AS ' . $db->quoteName('selected'))
             ->from($db->quoteName('#__kunena_rate'))
             ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
@@ -100,7 +100,7 @@ abstract class KunenaRateHelper
     public static function getCount(int $id): float
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('(COUNT(' . $db->quoteName('rate') . ')) AS ' . $db->quoteName('selected'))
             ->from($db->quoteName('#__kunena_rate'))
             ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
@@ -122,7 +122,7 @@ abstract class KunenaRateHelper
     public static function getRate(int $id, int $userid): float
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select($db->quoteName('rate'))
             ->from($db->quoteName('#__kunena_rate'))
             ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id))

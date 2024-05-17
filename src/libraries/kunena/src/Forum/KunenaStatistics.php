@@ -233,7 +233,7 @@ class KunenaStatistics
         $smilies = null;
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query
             ->select('COUNT(*)')
             ->from($db->quoteName('#__kunena_smileys'));
@@ -364,7 +364,7 @@ class KunenaStatistics
             $todaystart     = strtotime(date('Y-m-d'));
             $yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
 
-            $query = $this->_db->getQuery(true);
+            $query = $this->_db->createQuery();
             $query->select(
                 'SUM(' . $this->_db->quoteName('time') . ' >= ' .
                     $this->_db->quote($todaystart) . ' AND ' . $this->_db->quoteName('parent') . ' = 0) AS ' .
@@ -484,7 +484,7 @@ class KunenaStatistics
 
         if ($this->topPolls < $limit) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query
                 ->select(
                     $this->_db->quoteName('poll.threadid', 'id') . ', SUM(' .
@@ -654,7 +654,7 @@ class KunenaStatistics
         $limit = $limit ? $limit : $this->_config->popThanksCount;
 
         if ($this->topThanks < $limit) {
-            $query = $this->_db->getQuery(true);
+            $query = $this->_db->createQuery();
             $query
                 ->select(
                     [

@@ -106,7 +106,7 @@ abstract class KunenaMessageThankyouHelper
         $idlist = implode(',', $ids);
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_thankyou'))
             ->where($db->quoteName('postid') . ' IN (' . $idlist . ')');
@@ -156,7 +156,7 @@ abstract class KunenaMessageThankyouHelper
             $where [] = $db->quoteName('time') . ' <= UNIX_TIMESTAMP({' . $db->quote(\intval($endtime)) . ')';
         }
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('COUNT(*)')
             ->from($db->quoteName('#__kunena_thankyou'));
 
@@ -197,7 +197,7 @@ abstract class KunenaMessageThankyouHelper
         }
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select(array($db->quoteName('s.userid'), 'COUNT(' . $db->quoteName('s.' . $field) . ') AS countid', $db->quoteName('u.username')))
             ->from($db->quoteName('#__kunena_thankyou', 's'))
             ->innerJoin($db->quoteName('#__users', 'u'))
@@ -233,7 +233,7 @@ abstract class KunenaMessageThankyouHelper
         $db         = Factory::getContainer()->get('DatabaseDriver');
         $categories = KunenaCategoryHelper::getCategories();
         $catlist    = implode(',', array_keys($categories));
-        $query      = $db->getQuery(true);
+        $query      = $db->createQuery();
         $query->select(array($db->quoteName('s.postid'), 'COUNT(*) AS countid', $db->quoteName('m.catid'), $db->quoteName('m.thread'), $db->quoteName('m.id'), $db->quoteName('m.subject')))
             ->from($db->quoteName('#__kunena_thankyou', 's'))
             ->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON ' . $db->quoteName('s.postid') . ' = ' . $db->quoteName('m.id'))
@@ -280,7 +280,7 @@ abstract class KunenaMessageThankyouHelper
 
         $categories = KunenaCategoryHelper::getCategories();
         $catlist    = implode(',', array_keys($categories));
-        $query      = $db->getQuery(true);
+        $query      = $db->createQuery();
         $query->select($db->quoteName(array('m.catid', 'm.thread', 'm.id')))
             ->from($db->quoteName('#__kunena_thankyou', 't'))
             ->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.postid'))
@@ -315,7 +315,7 @@ abstract class KunenaMessageThankyouHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         // Users who have no thank yous, set thankyou count to 0
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_users', 'u'))
             ->leftJoin($db->quoteName('#__kunena_thankyou', 't') . ' ON ' . $db->quoteName('t.targetuserid') . ' = ' . $db->quoteName('u.userid'))
             ->set($db->quoteName('u.thankyou') . ' = 0')
@@ -347,8 +347,8 @@ abstract class KunenaMessageThankyouHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         // Update user thankyou count
-        $query    = $db->getQuery(true);
-        $subquery = $db->getQuery(true);
+        $query    = $db->createQuery();
+        $subquery = $db->createQuery();
 
         $subquery->select('targetuserid AS userid, COUNT(*) AS thankyou')
             ->from($db->quoteName('#__kunena_thankyou'))

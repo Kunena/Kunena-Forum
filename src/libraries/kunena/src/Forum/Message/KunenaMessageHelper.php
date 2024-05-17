@@ -109,7 +109,7 @@ abstract class KunenaMessageHelper
 
         $idlist = implode(',', $ids);
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select('m.*, t.message')
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')
@@ -198,7 +198,7 @@ abstract class KunenaMessageHelper
     protected static function loadMessagesByTopic(int $topic_id, $start = 0, $limit = 0, $ordering = 'ASC', $hold = 0, $orderbyid = false): array
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('m.*,t.message')
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON '.  $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
@@ -269,7 +269,7 @@ abstract class KunenaMessageHelper
             }
         }
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('m.*')
             ->select($db->quoteName('t.message'))
             ->from($db->quoteName('#__kunena_messages', 'm'))
@@ -523,7 +523,7 @@ abstract class KunenaMessageHelper
 
         $idlist = implode(',', $ids);
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select(
             'm.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
 				SUM(mm.time<m.time) AS before_count,
@@ -592,7 +592,7 @@ abstract class KunenaMessageHelper
         }
 
         // Update catid in all messages
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('m.thread'))
             ->set($db->quoteName('m.catid') . ' = ' . $db->quoteName('tt.category_id'))
@@ -628,7 +628,7 @@ abstract class KunenaMessageHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         $idlist = implode(',', $ids);
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select(array('m.*', 't.message'))
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
@@ -664,7 +664,7 @@ abstract class KunenaMessageHelper
 
         $db = Factory::getContainer()->get('DatabaseDriver');
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select($db->quoteName('ip'))
             ->from($db->quoteName('#__kunena_messages'))
             ->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
@@ -715,7 +715,7 @@ abstract class KunenaMessageHelper
 
         $db = Factory::getContainer()->get('DatabaseDriver');
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select($db->quoteName('thread'))
             ->from($db->quoteName('#__kunena_messages'))
             ->where($db->quoteName('userid') . ' IN (' . $userlist . ')')

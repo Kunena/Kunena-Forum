@@ -148,7 +148,7 @@ abstract class KunenaTopicUserHelper
 
         $idlist = implode(',', $ids);
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_user_topics'))
             ->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
@@ -206,7 +206,7 @@ abstract class KunenaTopicUserHelper
         $idlist = implode(',', $ids);
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('topic_id, user_id')
             ->from($db->quoteName('#__kunena_user_topics'))
             ->where($db->quoteName('topic_id') . ' IN (' . $idlist . ')')
@@ -246,7 +246,7 @@ abstract class KunenaTopicUserHelper
     {
         // Update database
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_user_topics'))
             ->set($db->quoteName('topic_id') . ' = ' . $db->quote($new->id))
             ->set($db->quoteName('category_id') . ' = ' . $db->quote($new->category_id))
@@ -345,7 +345,7 @@ abstract class KunenaTopicUserHelper
 
         $idlist = implode(',', array_keys(self::$_topics [$id]));
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_user_topics'))
             ->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
@@ -415,8 +415,8 @@ abstract class KunenaTopicUserHelper
         }
 
         // Create missing user topics and update post count and last post if there are posts by that user
-        $subQuery = $db->getQuery(true);
-        $query    = $db->getQuery(true);
+        $subQuery = $db->createQuery();
+        $query    = $db->createQuery();
 
         // Create the base subQuery select statement.
         $subQuery->select('m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`')
@@ -442,7 +442,7 @@ abstract class KunenaTopicUserHelper
         $rows = $db->getAffectedRows();
 
         // Find user topics where last post doesn't exist and reset values in it
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_user_topics', 'ut'))
             ->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('ut.last_post_id') . ' = ' . $db->quoteName('m.id') . ' AND ' . $db->quoteName('m.hold') . ' = 0')
             ->set($db->quoteName('posts') . ' = 0')

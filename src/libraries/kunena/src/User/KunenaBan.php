@@ -396,7 +396,7 @@ class KunenaBan extends parentAlias
         $db  = Factory::getContainer()->get('DatabaseDriver');
         $now = new Date();
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select(['b.*'])
             ->from($db->quoteName('#__kunena_users_banned', 'b'))
             ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('b.userid'))
@@ -442,7 +442,7 @@ class KunenaBan extends parentAlias
         $c  = __CLASS__;
         $db = Factory::getContainer()->get('DatabaseDriver');
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_users_banned'))
             ->where($db->quoteName('userid') . ' = ' . $db->quote($userid))

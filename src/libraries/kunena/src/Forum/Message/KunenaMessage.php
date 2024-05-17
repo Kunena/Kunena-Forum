@@ -558,7 +558,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
                 $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[1])), $db->quote($url));
 
-                $query     = $db->getQuery(true)
+                $query     = $db->createQuery()
                     ->insert($db->quoteName('#__kunena_mails_queue'))
                     ->columns($db->quoteName($columns))
                     ->values(implode(',', $values));
@@ -576,7 +576,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
                 $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[0])), $db->quote($url));
 
-                $query     = $db->getQuery(true)
+                $query     = $db->createQuery()
                     ->insert($db->quoteName('#__kunena_mails_queue'))
                     ->columns($db->quoteName($columns))
                     ->values(implode(',', $values));
@@ -593,7 +593,7 @@ class KunenaMessage extends KunenaDatabaseObject
             // Update subscriptions.
             if ($once && $sentusers) {
                 $sentusers = implode(',', $sentusers);
-                $query     = $db->getQuery(true)
+                $query     = $db->createQuery()
                     ->update('#__kunena_user_topics')
                     ->set('subscribed=2')
                     ->where("topic_id={$this->thread}")
@@ -1469,7 +1469,7 @@ class KunenaMessage extends KunenaDatabaseObject
         $config = KunenaFactory::getConfig();
 
         if ($config->floodProtection && !$this->getCategory()->isAuthorised('moderate') && !$this->exists()) {
-            $query = $this->_db->getQuery(true);
+            $query = $this->_db->createQuery();
             $query->select('MAX(time)')
                 ->from($this->_db->quoteName('#__kunena_messages'))
                 ->where($this->_db->quoteName('ip') . ' = ' . $this->_db->quote($this->ip));
@@ -1493,7 +1493,7 @@ class KunenaMessage extends KunenaDatabaseObject
         if (!$this->exists() && !$this->getCategory()->isAuthorised('moderate')) {
             // Ignore identical messages (posted within 5 minutes)
             $duplicatetimewindow = Factory::getDate()->toUnix() - 5 * 60;
-            $query               = $this->_db->getQuery(true);
+            $query               = $this->_db->createQuery();
             $query->select('m.id')
                 ->from($this->_db->quoteName('#__kunena_messages', 'm'))
                 ->innerJoin($this->_db->quoteName('#__kunena_messages_text', 't') . ' ON m.id = t.mesid')

@@ -248,7 +248,7 @@ class KunenaTopicUser extends CMSObject
                 $this->last_post_id = $message->id;
             }
         } elseif (!$message || (($message->hold || $message->thread != $this->topic_id) && $this->last_post_id == $message->id)) {
-            $query = $this->_db->getQuery(true);
+            $query = $this->_db->createQuery();
             $query->select('COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner')
                 ->from($this->_db->quoteName('#__kunena_messages'))
                 ->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($this->user_id))

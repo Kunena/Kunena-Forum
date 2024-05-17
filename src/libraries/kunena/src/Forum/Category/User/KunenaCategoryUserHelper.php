@@ -143,7 +143,7 @@ abstract class KunenaCategoryUserHelper
 
         $idlist = implode(',', $ids);
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_user_categories'))
             ->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
@@ -201,7 +201,7 @@ abstract class KunenaCategoryUserHelper
 
         if ($updateList) {
             $idlist = implode(',', $updateList);
-            $query  = $db->getQuery(true);
+            $query  = $db->createQuery();
             $query
                 ->update($db->quoteName('#__kunena_user_categories'))
                 ->set('allreadtime = ' . $db->quote($time))
@@ -217,7 +217,7 @@ abstract class KunenaCategoryUserHelper
         }
 
         if ($insertList) {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query
                 ->insert($db->quoteName('#__kunena_user_categories'))
                 ->columns('user_id, category_id, allreadtime, params')

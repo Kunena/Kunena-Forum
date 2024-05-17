@@ -2787,7 +2787,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"https://twitter.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
+            return "<a href=\"https://x.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
         }
 
         return $this->renderTweet($tweetid);

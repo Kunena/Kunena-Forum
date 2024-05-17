@@ -124,7 +124,7 @@ abstract class KunenaAnnouncementHelper
         $nowDate = $db->quote(Factory::getDate()->toSql());
 
         if ($filter) {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select('*')
                 ->from($db->quoteName('#__kunena_announcement'))
                 ->where($db->quoteName('published') . ' = 1')
@@ -132,7 +132,7 @@ abstract class KunenaAnnouncementHelper
                 ->Where('(' . $db->quoteName('publish_down') . ' =' . $db->quote('1000-01-01 00:00:00') . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate . ')')
                 ->order($db->quoteName('id') . ' DESC');
         } else {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select('*')
                 ->from($db->quoteName('#__kunena_announcement'))
                 ->order($db->quoteName('id') . ' DESC');
@@ -183,7 +183,7 @@ abstract class KunenaAnnouncementHelper
         $nowDate  = $db->quote(Factory::getDate()->toSql());
 
         if ($filter) {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select('COUNT(*)')
                 ->from($db->quoteName('#__kunena_announcement'))
                 ->where($db->quoteName('published') . ' = 1')
@@ -191,7 +191,7 @@ abstract class KunenaAnnouncementHelper
                 ->andWhere($db->quoteName('publish_down') . ' = ' . $nullDate . ' OR ' . $db->quoteName('publish_down') . ' >= ' . $nowDate)
                 ->order('id DESC');
         } else {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select('COUNT(*)')
                 ->from($db->quoteName('#__kunena_announcement'))
                 ->order($db->quoteName('id') . ' DESC');

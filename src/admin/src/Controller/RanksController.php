@@ -113,7 +113,7 @@ class RanksController extends AdminController
         $cids = implode(',', $cid);
 
         if ($cids) {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->delete()
                 ->from("{$db->quoteName('#__kunena_ranks')}")
                 ->where("rankId IN ($cids)");

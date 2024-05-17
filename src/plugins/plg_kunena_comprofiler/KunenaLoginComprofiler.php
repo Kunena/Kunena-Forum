@@ -103,7 +103,7 @@ class KunenaLoginComprofiler
     public function getRememberMe()
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('params')
             ->from($db->quoteName('#__extensions'))
             ->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.userid')

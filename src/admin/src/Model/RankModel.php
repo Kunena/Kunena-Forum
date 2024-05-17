@@ -98,7 +98,7 @@ class RankModel extends AdminModel
         $id = $this->getState($this->getName() . '.id');
 
         if ($id) {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('*')
                 ->from($db->quoteName('#__kunena_ranks'))
                 ->where('rankId=' . $db->quote($id));

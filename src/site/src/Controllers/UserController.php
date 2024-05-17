@@ -868,7 +868,7 @@ class UserController extends KunenaController
         $spammer = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
 
         // TODO: remove this query by getting the ip of user by an another way
-        $query = $this->db->getQuery(true);
+        $query = $this->db->createQuery();
         $query
             ->select($this->db->quoteName(['ip']))
             ->from($this->db->quoteName('#__kunena_messages'))
@@ -1402,7 +1402,7 @@ class UserController extends KunenaController
         $user = $this->input->getString('usersearch', null);
 
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select($db->quoteName(array('name', 'username')))
             ->from($db->quoteName('#__users'))
             ->where($db->quoteName('username') . ' LIKE \'%' . $user . '%\'');

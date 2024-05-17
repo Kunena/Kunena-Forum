@@ -43,7 +43,7 @@ class HtmlView extends BaseHtmlView
         $alias = $this->app->input->get('alias', null, 'string');
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('id')
             ->from($db->quoteName('#__kunena_categories'))
             ->where('alias = ' . $db->quote($alias));
@@ -69,7 +69,7 @@ class HtmlView extends BaseHtmlView
         $alias = $this->app->input->get('alias', null, 'string');
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->delete('*')
             ->from($db->quoteName('#__kunena_aliases'))
             ->where('alias = ' . $db->quote($alias));

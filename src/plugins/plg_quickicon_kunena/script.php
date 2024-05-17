@@ -106,7 +106,7 @@ class plgQuickiconKunenaInstallerScript extends InstallerScript
     {
         // Create a new db object.
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         $query
             ->update($db->quoteName('#__extensions'))

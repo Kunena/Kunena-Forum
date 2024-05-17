@@ -107,7 +107,7 @@ abstract class KunenaAttachmentHelper
 
         $idlist = implode(',', $ids);
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_attachments'))
             ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
@@ -224,7 +224,7 @@ abstract class KunenaAttachmentHelper
 
         $idlist = implode(',', $ids);
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->getQuery(true);
+        $query  = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_attachments'))
             ->where($db->quoteName('mesid') . ' IN (' . $idlist . ')');
@@ -516,7 +516,7 @@ abstract class KunenaAttachmentHelper
     {
         // Find up to 50 orphan attachments and delete them
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('a.*')
             ->from($db->quoteName('#__kunena_attachments', 'a'))
             ->leftJoin($db->quoteName('#__kunena_messages', 'm') . ' ON a.mesid = m.id')
@@ -543,7 +543,7 @@ abstract class KunenaAttachmentHelper
 
         $ids = implode(',', array_keys($results));
         unset($results);
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from($db->quoteName('#__kunena_attachments'))
             ->where($db->quoteName('id') . 'IN (' . $ids . ')');
         $db->setQuery($query);
@@ -614,7 +614,7 @@ abstract class KunenaAttachmentHelper
         }
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_attachments'))
             ->where($db->quoteName('userid') . ' = ' . $db->quote($user->userid . $filetype . $orderby));
@@ -656,7 +656,7 @@ abstract class KunenaAttachmentHelper
         $attachments = null;
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query
             ->select('COUNT(*)')
             ->from($db->quoteName('#__kunena_attachments'));

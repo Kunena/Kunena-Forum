@@ -163,7 +163,7 @@ class TrashsModel extends ListModel
     {
         // Create a new query object.
         $db    = $this->getDatabase();
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         $app    = Factory::getApplication();
         $layout = $app->input->get('layout', 'messages');

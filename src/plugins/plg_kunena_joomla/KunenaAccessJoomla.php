@@ -124,7 +124,7 @@ class KunenaAccessJoomla
         if (!isset($groups[$accesstype])) {
             // Cache all group names.
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('id, title');
 
             if ($accesstype == 'joomla.group') {
@@ -372,7 +372,7 @@ class KunenaAccessJoomla
         $inUsers = implode(',', $inUsers);
 
         // First find the users contained in the group
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('DISTINCT(user_id)')
             ->from($db->quoteName('#__usergroups', 'ug1'))
             ->innerJoin($db->quoteName('#__usergroups', 'ug2') . ' ON ug2.lft ' . $rec . ' ug1.lft AND ug1.rgt ' . $rec . ' ug2.rgt')
@@ -522,7 +522,7 @@ class KunenaAccessJoomla
             $db = Factory::getContainer()->get('DatabaseDriver');
 
             // Build the base query.
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('id, rules');
             $query->from($db->quoteName('#__viewlevels'));
 

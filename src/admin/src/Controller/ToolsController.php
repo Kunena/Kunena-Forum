@@ -237,7 +237,7 @@ class ToolsController extends FormController
         }
 
         if ($userAdd) {
-            $db->getQuery(true);
+            $db->createQuery();
 
             // TODO: need to find a way to make this query working with DatabaseQuery
             $db->setQuery(
@@ -260,7 +260,7 @@ class ToolsController extends FormController
         }
 
         if ($userDel) {
-            $db->getQuery(true);
+            $db->createQuery();
 
             // TODO: need to find a way to make this query working with DatabaseQuery
             $db->setQuery(
@@ -284,7 +284,7 @@ class ToolsController extends FormController
         if ($userDelLife) {
             $now = Factory::getDate();
 
-            $db->getQuery(true);
+            $db->createQuery();
 
             // TODO: need to find a way to make this query working with DatabaseQuery
             $db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned > " . $db->quote($now->toSql()));
@@ -297,7 +297,7 @@ class ToolsController extends FormController
                 return;
             }
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->delete($db->quoteName('#__users'))
                 ->where('block=\'1\'');
 
@@ -317,7 +317,7 @@ class ToolsController extends FormController
         if ($userRename) {
             $queryName = KunenaConfig::getInstance()->username ? "username" : "name";
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_messages', 'm'))
                 ->innerJoin($db->quoteName('#__users', 'u'))
                 ->set($db->quoteName('m.name') . ' = ' . $db->quoteName('u.' . $queryName))
@@ -335,7 +335,7 @@ class ToolsController extends FormController
 
             $affectedRows = $db->getAffectedRows();
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_topics', 't'))
                 ->innerJoin($db->quoteName('#__users', 'u'))
                 ->set($db->quoteName('t.first_post_guest_name') . ' = ' . $db->quoteName('u.' . $queryName))
@@ -353,7 +353,7 @@ class ToolsController extends FormController
 
             $affectedRows += $db->getAffectedRows();
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_topics', 't'))
                 ->innerJoin($db->quoteName('#__users', 'u'))
                 ->set($db->quoteName('t.last_post_guest_name') . ' = ' . $db->quoteName('u.' . $queryName))
@@ -420,7 +420,7 @@ class ToolsController extends FormController
             $state->reload  = 0;
 
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('MAX(thread)')->from('#__kunena_messages');
             $db->setQuery($query);
 
@@ -743,7 +743,7 @@ class ToolsController extends FormController
         if ($reString != null) {
             $db = Factory::getContainer()->get('DatabaseDriver');
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_messages'))
                 ->set("subject=TRIM(TRIM(LEADING {$db->quote($reString)} FROM subject))")
                 ->where("subject LIKE {$db->quote($reString . '%')}");
@@ -803,10 +803,10 @@ class ToolsController extends FormController
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         if (!empty($where)) {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_messages'))->set('ip=NULL')->where($where);
         } else {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_messages'))->set('ip=NULL');
         }
 
@@ -826,7 +826,7 @@ class ToolsController extends FormController
 
         if ($deleteIpUsers) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_users'))
                 ->set('ip=NULL');
             $db->setQuery($query);

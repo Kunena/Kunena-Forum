@@ -366,7 +366,7 @@ class PlgFinderKunena extends Adapter
         Log::add('FinderIndexerAdapter::getContentCount', Log::INFO);
 
         // Get the list query.
-        $sql = $this->db->getQuery(true);
+        $sql = $this->db->createQuery();
         $sql->select('MAX(id)')->from('#__kunena_messages');
 
         // Get the total number of content items to index.
@@ -426,7 +426,7 @@ class PlgFinderKunena extends Adapter
         Log::add("FinderIndexerAdapter::getItems({$offset}, {$limit})", Log::INFO);
 
         // Get the list query.
-        $sql = $this->db->getQuery(true);
+        $sql = $this->db->createQuery();
         $sql->select('id')->from('#__kunena_messages')->where('id>' . $this->db->quote($offset));
 
         // Get the content items to index.
@@ -542,7 +542,7 @@ class PlgFinderKunena extends Adapter
 
         if (!$messages[$cat_id]) {
             $db    = $this->getDatabase();
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('m.id');
             $query->from('#__kunena_messages as m');
             $query->join('INNER', '#__kunena_categories as c on m.catid = c.id');
@@ -570,7 +570,7 @@ class PlgFinderKunena extends Adapter
 
         if (!$messages[$topic_id]) {
             $db    = $this->getDatabase();
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('m.*, t.message');
             $query->from('#__kunena_messages AS m');
             $query->join('INNER', '#__kunena_messages_text as t ON m.id = t.mesid');

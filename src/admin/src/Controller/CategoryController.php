@@ -486,8 +486,8 @@ class CategoryController extends KunenaController
         $alias = $this->app->input->get('alias', null, 'string');
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
-        $query->select('id')
+        $query = $db->createQuery()
+            ->select('id')
             ->from($db->quoteName('#__kunena_categories'))
             ->where('alias = ' . $db->quote($alias));
         $db->setQuery($query);

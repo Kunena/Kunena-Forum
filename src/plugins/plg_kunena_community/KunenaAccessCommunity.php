@@ -121,7 +121,7 @@ class KunenaAccessCommunity
     {
         if ($this->groups === false) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('id, CONCAT(\'c\', categoryid) AS parentid, name')
                 ->from($db->quoteName('#__community_groups'))
                 ->order('categoryid, name');
@@ -190,7 +190,7 @@ class KunenaAccessCommunity
     {
         if ($this->categories === false) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parentid, name')
                 ->from($db->quoteName('#__community_groups_category'))
                 ->order('parent, name');
@@ -228,7 +228,7 @@ class KunenaAccessCommunity
     public function loadCategoryRoles(array $categories = null): array
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select($db->quoteName('g.memberid', 'user_id'), $db->quoteName('c.id', 'category_id') . ',' . KunenaForum::ADMINISTRATOR . ' AS role')
             ->from($db->quoteName('#__kunena_categories', 'c'))
             ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . '= \'jomsocial\' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
@@ -268,7 +268,7 @@ class KunenaAccessCommunity
 
         if (KunenaFactory::getUser($userid)->exists()) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select($db->quoteName('c.id'))
                 ->from($db->quoteName('#__kunena_categories', 'c'))
                 ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = \'jomsocial\' AND ' . $db->quoteName('c.access') . ' = ' .$db->quoteName('g.groupid'))
@@ -313,7 +313,7 @@ class KunenaAccessCommunity
         $userlist = implode(',', $userids);
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select($db->quoteName('c.id'))
             ->from($db->quoteName('#__kunena_categories', 'c'))
             ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = ' . $db->quoteName('jomsocial') . ' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))

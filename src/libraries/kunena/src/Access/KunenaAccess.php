@@ -174,7 +174,7 @@ class KunenaAccess
 
         // Load native category moderators and administrators
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName(['user_id', 'category_id', 'role']))
             ->from($db->quoteName('#__kunena_user_categories'))
             ->where($db->quoteName('role') . ' IN (1,2)');
@@ -828,7 +828,7 @@ jQuery(document).ready(function ($) {
         }
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('u.id, u.name, u.username, u.email')
             ->from('#__users AS u')
             ->where("u.block=0");
@@ -911,7 +911,7 @@ jQuery(document).ready(function ($) {
 
         if ($type & self::TOPIC_SUBSCRIPTION) {
             // Get topic subscriptions
-            $querytopic = $db->getQuery(true)
+            $querytopic = $db->createQuery()
                 ->select($db->quoteName('user_id'))
                 ->from($db->quoteName('#__kunena_user_topics', 'ut'))
                 ->leftJoin($db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))
@@ -927,7 +927,7 @@ jQuery(document).ready(function ($) {
 
         if ($type & self::CATEGORY_SUBSCRIPTION) {
             // Get category subscriptions
-            $querycat = $db->getQuery(true)
+            $querycat = $db->createQuery()
                 ->select($db->quoteName('user_id'))
                 ->from($db->quoteName('#__kunena_user_categories', 'ut'))
                 ->leftJoin($db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('ut.user_id') . ' = ' . $db->quoteName('ku.userid'))

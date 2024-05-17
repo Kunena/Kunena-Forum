@@ -102,7 +102,7 @@ class TopicsController extends KunenaController
                     unset($instance);
                 }
 
-                $query = $this->db->getQuery(true)->select(['a.id'])
+                $query = $this->db->createQuery()->select(['a.id'])
                     ->from($this->db->quoteName('#__kunena_attachments', 'a'))
                     ->leftJoin($this->db->quoteName('#__kunena_messages', 'm') . ' ON ' . $this->db->quoteName('a.mesid') . '=' . $this->db->quoteName('m.id'))
                     ->where($this->db->quoteName('m.id') . ' IS NULL');
@@ -118,7 +118,7 @@ class TopicsController extends KunenaController
 
                 $ids = implode(',', array_keys($list));
 
-                $query = $this->db->getQuery(true)->delete($this->db->quoteName('#__kunena_attachments'))->where('id IN (' . $ids . ')');
+                $query = $this->db->createQuery()->delete($this->db->quoteName('#__kunena_attachments'))->where('id IN (' . $ids . ')');
                 $this->db->setQuery($query);
 
                 try {

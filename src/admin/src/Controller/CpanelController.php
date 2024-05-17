@@ -68,7 +68,7 @@ class CpanelController extends FormController
             $updateSite = 'https://update.kunena.org/%';
             $db         = Factory::getContainer()->get('DatabaseDriver');
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select('*')
                 ->from($db->quoteName('#__updates'))
                 ->where($db->quoteName('extension_id') . ' > 0')
@@ -89,7 +89,7 @@ class CpanelController extends FormController
                     }
                 }
             } else {
-                $query = $db->getQuery(true)
+                $query = $db->createQuery()
                     ->select('update_site_id')
                     ->from($db->quoteName('#__update_sites'))
                     ->where($db->quoteName('enabled') . ' = 0')
@@ -154,7 +154,7 @@ class CpanelController extends FormController
         $timestamp = $this->app->getUserState('pkg_kunena.updateCheck', 0);
 
         if ($timestamp < $now) {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update($db->quoteName('#__update_sites'))
                 ->set($db->quoteName('enabled') . ' = 1')
                 ->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'));

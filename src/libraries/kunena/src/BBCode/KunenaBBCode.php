@@ -1115,7 +1115,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if (!$this->config->disableEmoticons) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select([$db->quoteName('code'), $db->quoteName('location')])
                 ->from($db->quoteName('#__kunena_smileys'));
             $db->setQuery($query);
@@ -1907,7 +1907,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $site   = Factory::getApplication('site');
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('a.*, u.name AS author, cc.title AS category,
 			0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access')
             ->from($db->quoteName('#__content', 'a'))

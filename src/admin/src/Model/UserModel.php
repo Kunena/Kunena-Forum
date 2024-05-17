@@ -59,7 +59,7 @@ class UserModel extends KunenaModel
         $db     = $this->getDatabase();
         $userid = $this->getState($this->getName() . '.id');
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select($db->quoteName('topic_id') . ' AS thread')
             ->from($db->quoteName('#__kunena_user_topics'))
             ->where($db->quoteName('user_id') . ' = ' . $userid . ' AND ' . $db->quoteName('subscribed') . '=1');
@@ -110,7 +110,7 @@ class UserModel extends KunenaModel
         $db     = $this->getDatabase();
         $userid = $this->getState($this->getName() . '.id');
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('ip')
             ->from($db->quoteName('#__kunena_messages'))
             ->where($db->quoteName('userid') . ' = ' . $userid)
@@ -129,7 +129,7 @@ class UserModel extends KunenaModel
 
         if ($ipList) {
             $ipList = "'{$ipList}'";
-            $query  = $db->getQuery(true);
+            $query  = $db->createQuery();
             $query->select('m.ip,m.userid,u.username,COUNT(*) as mescnt')
                 ->from($db->quoteName('#__kunena_messages', 'm'))
                 ->innerJoin($db->quoteName('#__users', 'u') . ' ON m.userid = u.id')
@@ -210,7 +210,7 @@ class UserModel extends KunenaModel
         $user = $this->getUser();
 
         // Grab all special ranks
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_ranks'))
             ->where('rankSpecial = \'1\'');
@@ -261,7 +261,7 @@ class UserModel extends KunenaModel
         }
 
         $userids = implode(',', $userids);
-        $query   = $db->getQuery(true);
+        $query   = $db->createQuery();
         $query->select('id,username')
             ->from($db->quoteName('#__users'))
             ->where('id IN(' . $userids . ')');

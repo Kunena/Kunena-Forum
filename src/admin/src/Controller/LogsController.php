@@ -73,7 +73,7 @@ class LogsController extends FormController
         $timestamp = new Date('now -' . $days . ' days');
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->delete('#__kunena_logs')
             ->where('time < ' . $timestamp->toUnix());
 

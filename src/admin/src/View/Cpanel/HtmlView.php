@@ -168,7 +168,7 @@ class HtmlView extends BaseHtmlView
     {
         $lang = false;
         $db = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select('*')
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('type') . ' = ' . $db->quote('package'))

@@ -183,7 +183,7 @@ class KunenaProfileComprofiler extends KunenaProfile
     public function getTopHits($limit = 0): array
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('cu.user_id AS id, cu.hits AS count');
         $query->from($db->quoteName('#__comprofiler', 'cu'));
         $query->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.user_id');

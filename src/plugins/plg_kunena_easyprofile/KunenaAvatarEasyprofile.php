@@ -82,7 +82,7 @@ class KunenaAvatarEasyprofile extends KunenaAvatar
             $avatar = Uri::root(true) . '/components/com_jsn/assets/img/default.jpg';
         } else {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select($db->quoteName('params'))
                 ->from('#__jsn_fields')
                 ->where('alias = \'avatar\'');

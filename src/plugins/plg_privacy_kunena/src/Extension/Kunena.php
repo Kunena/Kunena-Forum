@@ -297,7 +297,7 @@ class Kunena extends PrivacyPlugin
         $redacted = [];
         $excluded = [];
 
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select(['m.*', 't.message'])
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->join('LEFT', $db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
@@ -331,7 +331,7 @@ class Kunena extends PrivacyPlugin
         $redacted = [];
         $excluded = [];
 
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select(['u.*', 'p.title'])
             ->from($db->quoteName('#__kunena_polls_users', 'u'))
             ->join('LEFT', $db->quoteName('#__kunena_polls', 'p') . ' ON ' . $db->quoteName('u.pollid') . ' = ' . $db->quoteName('p.id'))

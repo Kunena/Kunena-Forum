@@ -87,7 +87,7 @@ abstract class KunenaFinder
         }
 
         $this->db    = Factory::getContainer()->get('DatabaseDriver');
-        $this->query = $this->db->getQuery(true);
+        $this->query = $this->db->createQuery();
         $this->query->from($this->db->quoteName($this->table, 'a'));
     }
 

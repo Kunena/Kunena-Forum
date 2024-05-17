@@ -182,7 +182,7 @@ class CategoryModel extends CategoriesModel
             if ($this->me->userid && \count($modcats)) {
                 $catlist = implode(',', $modcats);
                 $db      = $this->getDatabase();
-                $query   = $db->getQuery(true);
+                $query   = $db->createQuery();
                 $query->select('catid, COUNT(*) AS count')
                     ->from($db->quoteName('#__kunena_messages'))
                     ->where('catid IN (' . $catlist . ') AND hold=1');

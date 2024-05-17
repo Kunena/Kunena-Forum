@@ -98,7 +98,7 @@ class RankController extends AdminController
         $rankid      = $this->app->input->getInt('rankid', 0);
 
         if (!$rankid) {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             // Insert columns.
             $columns = array('rankTitle', 'rankImage', 'rankSpecial', 'rankMin');
@@ -122,7 +122,7 @@ class RankController extends AdminController
                 return;
             }
         } else {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update("{$db->quoteName('#__kunena_ranks')}")
                 ->set("rankTitle={$db->quote($rankTitle)}")
                 ->set("rankImage={$db->quote($rankImage)}")

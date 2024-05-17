@@ -540,7 +540,7 @@ class ToolsModel extends AdminModel
         $db = $this->getDatabase();
 
         // Get Joomla! frontend assigned template
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('template')
             ->from($db->quoteName('#__template_styles'))
             ->where('client_id = 0 AND home = 1');

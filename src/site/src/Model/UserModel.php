@@ -45,7 +45,7 @@ class UserModel extends KunenaModel
         if ($total === false) {
             $db    = $this->getDatabase();
             $where = $this->getQueryWhere();
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('COUNT(*)')->from($db->quoteName('#__users', 'u')->where("{$where}"));
 
             try {
@@ -72,7 +72,7 @@ class UserModel extends KunenaModel
         // Hide super admins from the list
         if (KunenaFactory::getConfig()->superAdminUserlist) {
             $db    = $this->getDatabase();
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select($db->quoteName('user_id'))->from($db->quoteName('#__user_usergroup_map'))->where($db->quoteName('group_id') . ' = 8');
             $db->setQuery($query);
             $superadmins = (array) $db->loadColumn();
@@ -148,7 +148,7 @@ class UserModel extends KunenaModel
             $db     = $this->getDatabase();
             $where  = $this->getQueryWhere();
             $search = $this->getQuerySearch();
-            $query  = $db->getQuery(true);
+            $query  = $db->createQuery();
 
             $query->select($db->quoteName('u.id'))
                 ->from($db->quoteName('#__users', 'u'))
@@ -187,7 +187,7 @@ class UserModel extends KunenaModel
             $where  = $this->getQueryWhere();
             $search = $this->getQuerySearch();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('COUNT(*)')
                 ->from($db->quoteName('#__users', 'u'))
                 ->join('left', $db->quoteName('#__kunena_users', 'ku') . ' ON (' . $db->quoteName('ku.userid') . ' = ' . $db->quoteName('u.id') . ')')

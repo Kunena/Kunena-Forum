@@ -98,7 +98,7 @@ class SmileyModel extends AdminModel
         $id = $this->getState($this->getName() . '.id');
 
         if ($id) {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('*')
                 ->from($db->quoteName('#__kunena_smileys'))
                 ->where('id = ' . $db->quote($id));

@@ -265,7 +265,7 @@ class CategoriesModel extends KunenaModel
                 // New category is by default child of the first section -- this will help new users to do it right
                 $db = $this->getDatabase();
 
-                $query = $db->getQuery(true)
+                $query = $db->createQuery()
                     ->select('a.id, a.name')
                     ->from("{$db->quoteName('#__kunena_categories')} AS a")
                     ->where("parentid={$db->quote('0')}")

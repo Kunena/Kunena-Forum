@@ -143,7 +143,7 @@ class SmiliesController extends FormController
         }
 
         if (!$smileyId) {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->insert("{$db->quoteName('#__kunena_smileys')}")
                 ->set("code={$db->quote($smileyCode)}")
                 ->set("location={$db->quote($smileyLocation)}")
@@ -159,7 +159,7 @@ class SmiliesController extends FormController
                 return;
             }
         } else {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update("{$db->quoteName('#__kunena_smileys')}")
                 ->set("code={$db->quote($smileyCode)}")
                 ->set("location={$db->quote($smileyLocation)}")
@@ -239,7 +239,7 @@ class SmiliesController extends FormController
         $cids = implode(',', $cid);
 
         if ($cids) {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->delete()->from("{$db->quoteName('#__kunena_smileys')}")
                 ->where("id IN ($cids)");
 

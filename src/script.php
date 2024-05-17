@@ -346,7 +346,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         }
 
         $installed = $db->setQuery(
-            $db->getQuery(true)
+            $db->createQuery()
                 ->select('version')
                 ->from('#__kunena_version')->order('id DESC')
                 ->setLimit(1)
@@ -491,7 +491,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             $state = $installed;
         }
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         $values = [
             $db->quote($version),
@@ -530,7 +530,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             $date     = (string) $manifest->creationDate;
         } else {
             $db    = Factory::getDbo();
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('version')->from('#__kunena_version')->order('id');
             $query->setLimit(1);
             $db->setQuery($query);
@@ -561,14 +561,14 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         $db = Factory::getDbo();
 
         // Find all update sites.
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName('update_site_id'))->from($db->quoteName('#__update_sites'))
             ->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'))
             ->order($db->quoteName('update_site_id') . ' ASC');
         $db->setQuery($query);
         $list = (array) $db->loadColumn();
 
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->set($db->quoteName('name') . '=' . $db->quote('Kunena 6.1 Update Site'))
             ->set($db->quoteName('type') . '=' . $db->quote('collection'))
             ->set($db->quoteName('location') . '=' . $db->quote('https://update.kunena.org/6.1/list.xml'))
@@ -592,7 +592,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             $ids = implode(',', $list);
 
             // Remove old update sites.
-            $query = $db->getQuery(true)->delete($db->quoteName('#__update_sites'))->where($db->quoteName('update_site_id') . 'IN (' . $ids . ')');
+            $query = $db->createQuery()->delete($db->quoteName('#__update_sites'))->where($db->quoteName('update_site_id') . 'IN (' . $ids . ')');
             $db->setQuery($query);
             $db->execute();
         }
@@ -602,12 +602,12 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         $ids    = implode(',', $list);
 
         // Remove old updates.
-        $query = $db->getQuery(true)->delete($db->quoteName('#__updates'))->where($db->quoteName('update_site_id') . 'IN (' . $ids . ')');
+        $query = $db->createQuery()->delete($db->quoteName('#__updates'))->where($db->quoteName('update_site_id') . 'IN (' . $ids . ')');
         $db->setQuery($query);
         $db->execute();
 
         // Remove old update extension bindings.
-        $query = $db->getQuery(true)->delete($db->quoteName('#__update_sites_extensions'))->where($db->quoteName('update_site_id') . 'IN (' . $ids . ')');
+        $query = $db->createQuery()->delete($db->quoteName('#__update_sites_extensions'))->where($db->quoteName('update_site_id') . 'IN (' . $ids . ')');
         $db->setQuery($query);
         $db->execute();
     }
@@ -637,7 +637,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
     {
         $db = Factory::getDbo();
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         // Check first if one of the template items is already in he database
         $query->select($db->quoteName(array('template_id')))
@@ -648,7 +648,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         $templateExist = $db->loadResult();
 
         if (!$templateExist) {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $values = [
                 $db->quote('com_kunena.reply'),

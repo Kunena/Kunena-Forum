@@ -777,8 +777,8 @@ class CategoriesController extends KunenaController
         if ($task == 'move') {
             foreach ($cid as $cat) {
                 if ($catParent != $cat) {
-                    $query = $this->db->getQuery(true);
-                    $query->update($this->db->quoteName('#__kunena_categories'))
+                    $query = $this->db->createQuery()
+                        ->update($this->db->quoteName('#__kunena_categories'))
                         ->set($this->db->quoteName('parentid') . " = " . $this->db->quote(\intval($catParent)))
                         ->where($this->db->quoteName('id') . " = " . $this->db->quote($cat));
                     $this->db->setQuery($query);

@@ -700,7 +700,7 @@ class TopicController extends KunenaController
             $timelimit = Factory::getDate()->toUnix() - $this->config->floodProtection;
             $ip        = KunenaUserHelper::getUserIp();
 
-            $query = $this->db->getQuery(true);
+            $query = $this->db->createQuery();
             $query->select('COUNT(*)')
                 ->from($this->db->quoteName('#__kunena_messages'))
                 ->where('ip=' . $this->db->quote($ip) . ' AND time > ' . $this->db->quote($timelimit));

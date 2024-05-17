@@ -750,7 +750,7 @@ class UsersController extends KunenaController
 
         if (!empty($cid)) {
             foreach ($cid as $userid) {
-                $query = $this->db->getQuery(true);
+                $query = $this->db->createQuery();
                 $query->update($this->db->quoteName('#__kunena_user_categories'))
                     ->set($this->db->quoteName('subscribed') . ' = 0')
                     ->where($this->db->quoteName('user_id') . ' = ' . $userid);
@@ -793,7 +793,7 @@ class UsersController extends KunenaController
 
         if (!empty($cid)) {
             foreach ($cid as $userid) {
-                $query = $this->db->getQuery(true);
+                $query = $this->db->createQuery();
                 $query->update($this->db->quoteName('#__kunena_user_topics'))
                     ->set($this->db->quoteName('subscribed') . ' = 0')
                     ->where($this->db->quoteName('user_id') . ' = ' . $userid);

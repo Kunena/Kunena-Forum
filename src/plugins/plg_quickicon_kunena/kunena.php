@@ -67,7 +67,7 @@ class PlgQuickiconKunena extends CMSPlugin
             $updateSite = 'https://update.kunena.org/%';
             $db         = Factory::getContainer()->get('DatabaseDriver');
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select('*')
                 ->from($db->qn('#__updates'))
                 ->where($db->qn('extension_id') . ' > 0')
@@ -88,7 +88,7 @@ class PlgQuickiconKunena extends CMSPlugin
                     }
                 }
             } else {
-                $query = $db->getQuery(true)
+                $query = $db->createQuery()
                     ->select('update_site_id')
                     ->from($db->qn('#__update_sites'))
                     ->where($db->qn('enabled') . ' = 0')

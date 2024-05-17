@@ -81,7 +81,7 @@ class KunenaProfileCommunity extends KunenaProfile
     public function getTopHits(int $limit = 0): array
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('cu.userid AS id, cu.view AS count')
             ->from($db->quoteName('#__community_users', 'cu'))
             ->innerJoin($db->quoteName('#__users', 'u') . ' ON u.id = cu.userid')

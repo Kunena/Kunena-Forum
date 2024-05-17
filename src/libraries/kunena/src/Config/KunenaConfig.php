@@ -1699,7 +1699,7 @@ class KunenaConfig extends CMSObject
     public function load(): void
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_configuration'))
             ->where($db->quoteName('id') . ' = 1');

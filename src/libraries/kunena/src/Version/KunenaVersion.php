@@ -147,7 +147,7 @@ class KunenaVersion
         $db->setQuery($query);
 
         if ($db->loadResult()) {
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query
                 ->select('*')
                 ->from($db->quoteName($db->getPrefix() . $prefix . 'version'))

@@ -27,7 +27,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
 {
     $db = Factory::getContainer()->get('DatabaseDriver');
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(
@@ -48,7 +48,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
         throw new Exception($e->getMessage(), $e->getCode());
     }
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(
@@ -69,7 +69,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
         throw new Exception($e->getMessage(), $e->getCode());
     }
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(
@@ -90,7 +90,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
         throw new Exception($e->getMessage(), $e->getCode());
     }
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(
@@ -111,7 +111,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
         throw new Exception($e->getMessage(), $e->getCode());
     }
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(
@@ -132,7 +132,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
         throw new Exception($e->getMessage(), $e->getCode());
     }
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(
@@ -153,7 +153,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
         throw new Exception($e->getMessage(), $e->getCode());
     }
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(
@@ -174,7 +174,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
         throw new Exception($e->getMessage(), $e->getCode());
     }
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(
@@ -195,7 +195,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
         throw new Exception($e->getMessage(), $e->getCode());
     }
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(
@@ -216,7 +216,7 @@ function kunena_520_2020_08_20_updaterankstitle($parent)
         throw new Exception($e->getMessage(), $e->getCode());
     }
 
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
 
     // Fields to update.
     $fields = array(

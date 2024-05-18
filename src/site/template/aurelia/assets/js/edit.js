@@ -328,7 +328,6 @@ jQuery(document).ready(function ($) {
       itemTemplate:
         '<li data-id="{id}">' +
         '<strong class="username">{username}</strong>' +
-        '<span class="fullname">{fullname}</span>' +
         '</li>',
       outputTemplate:
         '<a href="mailto:{username}@example.com">@{username}</a><span>&nbsp;</span>',

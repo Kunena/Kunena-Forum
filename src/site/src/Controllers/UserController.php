@@ -1368,8 +1368,11 @@ class UserController extends KunenaController
                 $obj = new stdClass();
                 $obj->id = $key;
                 //$obj->avatar = 'm_1';
-                $obj->fullname = $user->name;
-                $obj->username = $user->username;
+                if ( $this->config->username ) {                
+                    $obj->username = $user->username;
+                } else {
+                    $obj->username = $user->name;
+                }
 
                 $userListMentions[] = $obj;
             }

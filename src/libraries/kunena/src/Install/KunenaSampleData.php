@@ -179,7 +179,7 @@ class KunenaSampleData
             throw new KunenaException($e->getMessage(), $e->getCode());
         }
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_version'))->set('sampleData = 1')->setLimit(1);
         $db->setQuery($query);
 

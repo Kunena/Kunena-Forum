@@ -61,7 +61,7 @@ abstract class KunenaParser
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
         $grayscale == true ? $column = "greylocation" : $column = "location";
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select([$db->quoteName('code'), $db->quoteName($column, 'file')])
             ->from($db->quoteName('#__kunena_smileys'));
 

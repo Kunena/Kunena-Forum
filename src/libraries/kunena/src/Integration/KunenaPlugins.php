@@ -39,7 +39,7 @@ class KunenaPlugins
     public static function getTotalPlugins()
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('COUNT(*)')
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))

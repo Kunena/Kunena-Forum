@@ -162,7 +162,7 @@ class KunenaUserBans extends KunenaTable
             $where = '';
         }
 
-        $query = $this->_db->getQuery(true);
+        $query = $this->_db->createQuery();
         $query->select('*')
             ->from($this->_db->quoteName($this->_tbl))
             ->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($userid) . ' ' . $where)
@@ -244,7 +244,7 @@ class KunenaUserBans extends KunenaTable
             $where = '';
         }
 
-        $query = $this->_db->getQuery(true);
+        $query = $this->_db->createQuery();
         $query->select('*')
             ->from($this->_db->quoteName($this->_tbl))
             ->where($this->_db->quoteName('ip') . ' = ' . $this->_db->quote($ip) . ' ' . $where)

@@ -247,7 +247,7 @@ abstract class KunenaTableObject
         $k = static::$tbl;
 
         // Initialise the query.
-        $query = static::$db->getQuery(true)
+        $query = static::$db->createQuery()
             ->select('*')
             ->from(static::$db->quoteName($k));
 
@@ -607,7 +607,7 @@ abstract class KunenaTableObject
     {
         $db = static::$db;
 
-        return $db->getQuery(true)
+        return $db->createQuery()
             ->select($db->quoteName('a.*'))
             ->from($db->quoteName(static::$tbl, 'a'));
     }
@@ -624,7 +624,7 @@ abstract class KunenaTableObject
     public static function &loadInstances(QueryInterface $query): array
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
-        $db->setQuery($query);
+        $db->createQuery();
         $items = (array) $db->loadObjectList('id', \get_called_class());
 
         if (\is_array(static::$instances)) {
@@ -831,7 +831,7 @@ abstract class KunenaTableObject
         $k = static::$tbl;
 
         // Delete the row by given keys/fields.
-        $query = static::$db->getQuery(true)
+        $query = static::$db->createQuery()
             ->delete()
             ->from(static::$db->quoteName($k));
 
@@ -882,7 +882,7 @@ abstract class KunenaTableObject
         $time = Factory::getDate()->toSql();
 
         // Check the row out by primary key.
-        $query = static::$db->getQuery(true)
+        $query = static::$db->createQuery()
             ->update(static::$tbl)
             ->set(static::$db->quoteName('checked_out') . ' = ' . static::$db->quote((int) $userId))
             ->set(static::$db->quoteName('checked_out_time') . ' = ' . static::$db->quote($time))
@@ -923,7 +923,7 @@ abstract class KunenaTableObject
         }
 
         // Check the row in by primary key.
-        $query    = static::$db->getQuery(true);
+        $query    = static::$db->createQuery();
         $nullDate = static::$db->getNullDate() ? static::$db->quote(static::$db->getNullDate()) : 'NULL';
         $query->update(static::$tbl)
             ->set(static::$db->quoteName('checked_out') . ' = 0')
@@ -969,7 +969,7 @@ abstract class KunenaTableObject
         }
 
         // Check the row in by primary key.
-        $query = static::$db->getQuery(true)
+        $query = static::$db->createQuery()
             ->update(static::$tbl)
             ->set(static::$db->quoteName('hits') . ' = (' . static::$db->quoteName('hits') . ' + 1)')
             ->where(static::$db->quoteName($k) . ' = ' . static::$db->quote($pk));

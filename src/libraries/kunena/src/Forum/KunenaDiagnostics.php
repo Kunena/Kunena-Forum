@@ -326,7 +326,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find orphaned categories
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_categories AS a")->leftJoin("#__kunena_categories AS c ON a.parentid=c.id")->where("a.parentid>0 AND c.id IS NULL");
 
         return $query;
@@ -357,7 +357,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find categories with missing alias
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_categories AS a")->leftJoin("#__kunena_aliases AS c ON a.alias=c.alias")->where("c.alias IS NULL");
 
         return $query;
@@ -373,7 +373,7 @@ abstract class KunenaDiagnostics
     protected static function notice_categoryWrongAlias(): string
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_categories', 'a'))
             ->leftJoin($db->quoteName('#__kunena_aliases', 'c') . ' ON a.alias=c.alias')
@@ -417,7 +417,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find categories with wrong alias
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_categories AS a")->innerJoin("#__kunena_aliases AS c ON a.alias=c.alias")->where("c.type!='catid' OR c.item!=a.id");
 
         return $query;
@@ -458,7 +458,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find orphaned aliases
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_aliases AS a")->leftJoin("#__kunena_categories AS c ON a.item=c.id")->where("a.type='catid' AND c.id IS NULL");
 
         return $query;
@@ -499,7 +499,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find broken messages (orphan message text)
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_messages_text AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
 
         return $query;
@@ -540,7 +540,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find broken messages (message is missing body)
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_messages AS a")->leftJoin("#__kunena_messages_text AS t ON t.mesid=a.id")->where("t.mesid IS NULL");
 
         return $query;
@@ -597,7 +597,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find topics which are located in section, not in category
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_topics AS a")->innerJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.parentid=0");
 
         return $query;
@@ -638,7 +638,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find topics which do not have existing category
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_topics AS a")->leftJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("c.id IS NULL");
 
         return $query;
@@ -663,7 +663,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find topics without messages
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_topics AS a")->leftJoin("#__kunena_messages AS m ON m.thread=a.id")->where("a.moved_id=0 AND m.id IS NULL");
 
         return $query;
@@ -704,7 +704,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find topics which have missing poll
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_topics AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.poll_id")->where("a.moved_id=0 AND a.poll_id>0 AND p.id IS NULL");
 
         return $query;
@@ -745,7 +745,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find polls which have wrong topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_topics AS a")->innerJoin("#__kunena_polls AS p ON p.id=a.poll_id")->leftJoin("#__kunena_topics AS t ON p.threadid=t.id")->where("a.moved_id=0 AND a.poll_id>0 AND p.threadid!=a.id");
 
         return $query;
@@ -786,7 +786,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find moved topics pointing to non-existent topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_topics AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.moved_id")->where("a.moved_id>0 AND t.id IS NULL");
 
         return $query;
@@ -826,7 +826,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find topics without messages
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_topics AS a")->innerJoin("#__kunena_messages AS m ON m.thread=a.id")->leftJoin("#__kunena_messages_text AS t ON m.id=t.mesid")->where("a.moved_id>0");
 
         return $query;
@@ -865,7 +865,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find messages which have wrong category id
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_messages AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.thread")->leftJoin("#__kunena_messages_text AS mt ON a.id=mt.mesid")->where("t.category_id!=a.catid");
 
         return $query;
@@ -906,7 +906,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find messages which do not belong in any existing topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_messages AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.thread")->leftJoin("#__kunena_messages_text AS mt ON a.id=mt.mesid")->where("t.id IS NULL");
 
         return $query;
@@ -947,7 +947,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find attachments which do not belong in any existing message
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_attachments AS a")->leftJoin("#__kunena_messages AS m ON a.mesid=m.id")->where("m.id IS NULL");
 
         return $query;
@@ -988,7 +988,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find polls which do not belong in any existing topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_polls AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.threadid")->where("t.id IS NULL");
 
         return $query;
@@ -1029,7 +1029,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find polls which do not belong in any existing topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_polls AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.threadid")->leftJoin("#__kunena_topics AS tt ON tt.poll_id=a.id")->where("t.poll_id!=a.id");
 
         return $query;
@@ -1070,7 +1070,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find poll options which do not belong in any existing poll
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_polls_options AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
 
         return $query;
@@ -1111,7 +1111,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find poll users which do not belong in any existing poll
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_polls_users AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
 
         return $query;
@@ -1152,7 +1152,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find thankyous which do not belong in any existing message
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_thankyou AS a")->leftJoin("#__kunena_messages AS m ON m.id=a.postid")->where("m.id IS NULL");
 
         return $query;
@@ -1193,7 +1193,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find user categories which do not belong in any existing category
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_user_categories AS a")->leftJoin("#__kunena_categories AS c ON c.id=a.category_id")->where("a.category_id>0 AND c.id IS NULL");
 
         return $query;
@@ -1234,7 +1234,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find user read which do not belong in any existing topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_user_read AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
 
         return $query;
@@ -1275,7 +1275,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find user read which wrong category information
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_user_read AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
 
         return $query;
@@ -1316,7 +1316,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find user topics which do not belong in any existing topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_user_topics AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("t.id IS NULL");
 
         return $query;
@@ -1357,7 +1357,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find user topic which wrong category information
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_user_topics AS a")->innerJoin("#__kunena_topics AS t ON t.id=a.topic_id")->where("a.category_id!=t.category_id");
 
         return $query;
@@ -1397,7 +1397,7 @@ abstract class KunenaDiagnostics
     protected static function query_ratingOrphaned(): QueryInterface
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         // Query to find orphaned ratings
         $query->from("#__kunena_rate AS r")->leftJoin("#__kunena_topics AS t ON t.id=r.topic_id")->where("t.id IS NULL");
@@ -1440,7 +1440,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find user read which do not belong in any existing topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_categories")->where("channels IS NULL OR 'none'");
 
         return $query;
@@ -1471,7 +1471,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find user read which do not belong in any existing topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_topics AS t")->leftJoin("#__kunena_user_topics AS j ON j.topic_id=t.id")->where("t.first_post_userid > 0");
 
         return $query;
@@ -1522,7 +1522,7 @@ abstract class KunenaDiagnostics
     {
         // Query to find user read which do not belong in any existing topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->from("#__kunena_users")->where("avatar=''");
 
         return $query;
@@ -1552,7 +1552,7 @@ abstract class KunenaDiagnostics
     //  {
     //      // Query to find user read which do not belong in any existing topic
     //      $db    = Factory::getContainer()->get('DatabaseDriver');
-    //      $query = $db->getQuery(true);
+    //      $query = $db->createQuery();
     //      $query->from("#__kunena_users");
     //
     //      return $query;

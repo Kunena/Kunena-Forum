@@ -79,7 +79,7 @@ class KunenaInstaller
 
         // Get installed version.
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('version')
             ->from($db->quoteName('#__kunena_version'))
             ->where($db->quoteName('state') . "=''")

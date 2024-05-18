@@ -461,7 +461,7 @@ class KunenaTableMap
                     $values[] = (int) $id . ',' . (int) $var;
                 }
 
-                $query = $this->_db->getQuery(true)
+                $query = $this->_db->createQuery()
                     ->insert($this->_db->quoteName($this->_tbl))
                     ->columns([$this->_db->quoteName($this->_tbl_key), $this->_db->quoteName($this->_tbl_mapped)])
                     ->values($values);
@@ -471,7 +471,7 @@ class KunenaTableMap
 
             // Remove all deleted items.
             if ($deleted) {
-                $query = $this->_db->getQuery(true)
+                $query = $this->_db->createQuery()
                     ->delete($this->_db->quoteName($this->_tbl))
                     ->where($this->_db->quoteName($this->_tbl_key) . ' = ' . $this->_db->quote((int) $id))
                     ->andWhere($this->_db->quoteName($this->_tbl_mapped) . ' IN (' . implode(',', $deleted) . ')');
@@ -531,7 +531,7 @@ class KunenaTableMap
         }
 
         // Initialise the query.
-        $query = $this->_db->getQuery(true)
+        $query = $this->_db->createQuery()
             ->select($this->_db->quoteName($this->_tbl_mapped))
             ->from($this->_db->quoteName($this->_tbl));
 
@@ -608,7 +608,7 @@ class KunenaTableMap
         }
 
         // Delete the row by primary key.
-        $query = $this->_db->getQuery(true)
+        $query = $this->_db->createQuery()
             ->delete()
             ->from($this->_tbl);
 

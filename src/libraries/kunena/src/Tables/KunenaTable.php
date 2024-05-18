@@ -91,7 +91,7 @@ abstract class KunenaTable extends Table
         }
 
         // Initialise the query.
-        $query  = $this->_db->getQuery(true)
+        $query  = $this->_db->createQuery()
             ->select('*')
             ->from($this->_tbl);
         $fields = array_keys($this->getProperties());
@@ -320,7 +320,7 @@ abstract class KunenaTable extends Table
             $this->_db->transactionStart();
 
             // Create the base insert statement.
-            $query = $this->_db->getQuery(true)
+            $query = $this->_db->createQuery()
                 ->insert($this->_db->quoteName($this->_tbl))
                 ->columns($fields)
                 ->values(implode(',', $values));
@@ -399,7 +399,7 @@ abstract class KunenaTable extends Table
             $this->_db->transactionStart();
 
             // Delete the row by primary key.
-            $query = $this->_db->getQuery(true)
+            $query = $this->_db->createQuery()
                 ->delete($this->_db->quoteName($this->_tbl));
 
             foreach ($pk as $key => $value) {

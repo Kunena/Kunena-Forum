@@ -202,7 +202,7 @@ class TableKunenaMessages extends KunenaTable
         }
 
         // Load the user data.
-        $query = $this->_db->getQuery(true)
+        $query = $this->_db->createQuery()
             ->select(['m.*', 't.message'])
             ->from($this->_db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin(
@@ -308,7 +308,7 @@ class TableKunenaMessages extends KunenaTable
         }
 
         $this->message = $message;
-        $query         = $this->_db->getQuery(true);
+        $query         = $this->_db->createQuery();
 
         if ($update) {
             $query->update($this->_db->quoteName('#__kunena_messages_text'))

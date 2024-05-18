@@ -848,7 +848,7 @@ abstract class KunenaRoute
 
         $app   = Factory::getApplication();
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_aliases'))
             ->where($db->quoteName('alias') . ' LIKE ' . $db->quote($alias . '%'));

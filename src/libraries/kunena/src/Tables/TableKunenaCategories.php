@@ -285,7 +285,7 @@ class TableKunenaCategories extends KunenaTable
         }
 
         // Load the data.
-        $query = $this->_db->getQuery(true)
+        $query = $this->_db->createQuery()
             ->select('*')
             ->from($this->_db->quoteName('#__kunena_categories'))
             ->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($this->$k));
@@ -390,7 +390,7 @@ class TableKunenaCategories extends KunenaTable
     {
         // FIXME: when we have category cache, replace this code
         if ($id > 0) {
-            $query = $this->_db->getQuery(true)
+            $query = $this->_db->createQuery()
                 ->select(['id', 'parentid'])
                 ->from($this->_db->quoteName('#__kunena_categories'));
             $this->_db->setQuery($query);
@@ -441,7 +441,7 @@ class TableKunenaCategories extends KunenaTable
     public function reOrder($where = ''): bool
     {
         if (!$where) {
-            $query = $this->_db->getQuery(true)
+            $query = $this->_db->createQuery()
                 ->select($this->_db->quoteName('parentid'))
                 ->from($this->_db->quoteName('#__kunena_categories'))
                 ->group($this->_db->quoteName('parentid'));

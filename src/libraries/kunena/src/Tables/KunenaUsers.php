@@ -558,7 +558,7 @@ class KunenaUsers extends KunenaTable
 
         // Load the user data.
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*')
             ->from($db->quoteName('#__users', 'u'))
             ->leftJoin($db->quoteName($this->_tbl, 'ku') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))

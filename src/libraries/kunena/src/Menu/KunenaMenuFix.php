@@ -116,7 +116,7 @@ abstract class KunenaMenuFix
         // Initialise variables.
         $db = Factory::getContainer()->get('DatabaseDriver');
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level, m.language');
         $query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id');
         $query->select('e.element AS component, m.published')

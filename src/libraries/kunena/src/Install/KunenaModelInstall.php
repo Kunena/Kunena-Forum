@@ -450,7 +450,7 @@ class KunenaModelInstall extends BaseDatabaseModel
     public function uninstallPlugin(string $folder, string $name): void
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('extension_id')
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('type') . ' =' . $db->quote('plugin') . ' AND ' . $db->quoteName('folder') . '=' . $db->quote($folder) . ' AND ' . $db->quoteName('element') . '=' . $db->quote($name));
@@ -474,7 +474,7 @@ class KunenaModelInstall extends BaseDatabaseModel
     public function uninstallModule(string $name): void
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('extension_id')
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('type') . '=' . $db->quote('module') . ' AND' . $db->quoteName('element') . '=' . $db->quote($name));
@@ -542,7 +542,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     private function uninstallMediaLibraryQuery(string $type, string $element): int
     {
-        $query = $this->db->getQuery(true);
+        $query = $this->db->createQuery();
         $query->select($this->db->quoteName('extension_id'));
         $query->from($this->db->quoteName('#__extensions'));
         $query->where($this->db->quoteName('type') . ' = ' . $this->db->quote($type));
@@ -836,7 +836,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         $this->setVersion($version);
 
         // Always enable the System - Kunena plugin
-        $query = $this->db->getQuery(true);
+        $query = $this->db->createQuery();
         $query->clear()
             ->update($this->db->quoteName('#__extensions'))
             ->set($this->db->quoteName('enabled') . ' = 1')
@@ -984,7 +984,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     public function cleanMailTemplates()
     {
-        $query = $this->db->getQuery(true);
+        $query = $this->db->createQuery();
 
         $conditions = array(
             $this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.reply'),
@@ -1001,7 +1001,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             throw new KunenaInstallerException($e->getMessage(), $e->getCode());
         }
 
-        $query = $this->db->getQuery(true);
+        $query = $this->db->createQuery();
 
         $conditions = array(
             $this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.replymoderator'),
@@ -1018,7 +1018,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             throw new KunenaInstallerException($e->getMessage(), $e->getCode());
         }
 
-        $query = $this->db->getQuery(true);
+        $query = $this->db->createQuery();
 
         $conditions = array(
             $this->db->quoteName('template_id') . ' = ' . $this->db->quote('com_kunena.report'),
@@ -1502,7 +1502,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         $this->tables ['kunena_'] [$newtable] = $newtable;
 
         // And copy data into it
-        $sql = $this->db->getQuery(true);
+        $sql = $this->db->createQuery();
         $sql->insert($this->db->quoteName($this->db->getPrefix() . $newtable) . ' ' . $this->selectWithStripslashes($this->db->getPrefix() . $oldtable));
         $this->db->setQuery($sql);
 
@@ -1552,7 +1552,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     protected function insertVersionData(int $version, int $versiondate, int $versionname, $state = ''): void
     {
-        $query = $this->db->getQuery(true);
+        $query = $this->db->createQuery();
 
         // Insert columns.
         $columns = ['version', 'versiondate', 'installdate', 'versionname', 'build', 'state'];
@@ -2476,7 +2476,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             'media/kunena/attachments/legacy',
         ];
 
-        $query = $this->db->getQuery(true);
+        $query = $this->db->createQuery();
         $query->select('COUNT(*)')
             ->from($this->db->quoteName('#__kunena_attachments'))
             ->where('id > ' . $this->db->quote($stats->current) . ' AND hash IS NULL');
@@ -2510,7 +2510,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             }
         }
 
-        $query = $this->db->getQuery(true);
+        $query = $this->db->createQuery();
         $query->select('COUNT(*)')
             ->from($this->db->quoteName('#__kunena_attachments'))
             ->where('id > ' . $this->db->quote($stats->current) . ' AND hash IS NULL');
@@ -2582,7 +2582,7 @@ class KunenaModelInstall extends BaseDatabaseModel
                 $stat  = stat($destfile);
                 $size  = (int) $stat['size'];
                 $hash  = md5_file($destfile);
-                $query = $this->db->getQuery(true);
+                $query = $this->db->createQuery();
                 $query->update($this->db->quoteName('#__kunena_attachments'))
                     ->set(
                         'folder=\'media/kunena/attachments/legacy/' . $lastpath . '\', size=' .
@@ -2687,7 +2687,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             $date     = (string) $manifest->creationDate;
         } else {
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('version')->from('#__kunena_version')->order('id');
             $query->setLimit(1);
             $db->setQuery($query);
@@ -2748,7 +2748,7 @@ class KunenaModelInstall extends BaseDatabaseModel
 
         // First fix all broken menu items
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->update($db->quoteName('#__menu'))
             ->set($db->quoteName('component_id') . ' = ' . $component_id)
             ->where("link LIKE '%option=com_kunena%'")
@@ -2970,7 +2970,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         if ($state === null) {
             // First run
             $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('MAX(id)')->from('#__kunena_messages');
             $db->setQuery($query);
 

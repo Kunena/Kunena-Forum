@@ -213,7 +213,7 @@ class TableKunenaTopics extends KunenaTable
         }
 
         // Load the user data.
-        $query = $this->_db->getQuery(true)
+        $query = $this->_db->createQuery()
             ->select('*')
             ->from($this->_db->quoteName('#__kunena_topics'))
             ->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($this->$k));

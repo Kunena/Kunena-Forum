@@ -89,13 +89,16 @@ $this->doc->addScriptOptions(
     KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' .
         Session::getFormToken() . '=1', false)
 );
+$this->doc->addScriptOptions(
+    'com_kunena.kunena_url_topic_get_mentions',
+    KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' . $this->topic->id)
+    );
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
 $this->doc->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());
 $this->doc->addScriptOptions('com_kunena.icons.trash', KunenaIcons::delete());
 $this->doc->addScriptOptions('com_kunena.icons.attach', KunenaIcons::attach());
 $this->doc->addScriptOptions('com_kunena.icons.secure', KunenaIcons::secure());
-$this->doc->addScriptOptions('com_kunena.topicid.mentions', $this->topic->id);
 
 // Load scripts to handle fileupload process
 Text::script('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON');

@@ -339,7 +339,7 @@ jQuery(document).ready(function ($) {
 
 // Get the data for the mentions list
 function dataFeed(opts, callback) {
-    $.getJSON( '/index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' + Joomla.getOptions('com_kunena.topicid.mentions') )
+    $.getJSON( Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions'))
     .done(function( json ) {
         callback(JSON.parse(json));
     })

@@ -257,11 +257,6 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="Smiley" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS"
-               description="COM_KUNENA_TEMPLATE_DISPLAY_EMOTICONS_DESC">
-            <option value="0">COM_KUNENA_NO</option>
-            <option value="1">COM_KUNENA_YES</option>
-        </field>
         <field name="Confidential" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_CONFIDENTIAL"
                description="COM_KUNENA_TEMPLATE_DISPLAY_CONFIDENTIAL_DESC">
             <option value="0">COM_KUNENA_NO</option>

@@ -2226,7 +2226,7 @@ class KunenaUser extends CMSObject
             'ok'               => ['url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'],
             'pinterest'        => ['url' => 'https://pinterest.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_PINTEREST'), 'nourl' => '0'],
             'reddit'           => ['url' => 'https://www.reddit.com/user/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_REDDIT'), 'nourl' => '0'],
-            'bsky_app'         => ['url' => 'https://bsky.app/profile/##VALUE##.bsky.social', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLUESKY_APP'), 'nourl' => '0'],
+            'bluesky_app'         => ['url' => 'https://bsky.app/profile/##VALUE##.bsky.social', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLUESKY_APP'), 'nourl' => '0'],
         ];
     }
 

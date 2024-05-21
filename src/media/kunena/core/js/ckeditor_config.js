@@ -55,7 +55,7 @@ CKEDITOR.editorConfig = function( config ) {
 		}
 	}
 
-	config.extraPlugins = 'ebay,twitter,instagram,map,soundcloud,video,confidential,hidetext,spoiler,code,polls,blockimagepaste';
+	config.extraPlugins = 'ebay,x,instagram,map,soundcloud,video,confidential,hidetext,spoiler,code,polls,blockimagepaste';
 	var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
 	var obj = jQuery.parseJSON( emoticons );
 	var list_emoticons = [];

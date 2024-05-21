@@ -7,8 +7,8 @@
  * @link https://www.kunena.org
  **/
 
-CKEDITOR.plugins.add( 'twitter', {
-	icons: 'x_logo',
+CKEDITOR.plugins.add( 'x', {
+	icons: 'x',
 	init: function( editor ) {
 		editor.addCommand( 'insertTwitter', {
 			exec: function( editor ) {
@@ -16,7 +16,7 @@ CKEDITOR.plugins.add( 'twitter', {
 				editor.insertHtml( '[tweet]' + selectedtext + '[/tweet]' );
 			}
 		});
-		editor.ui.addButton( 'Twitter', {
+		editor.ui.addButton( 'X', {
 			label: Joomla.Text._('COM_KUNENA_EDITOR_TWEET'),
 			command: 'insertTwitter',
 			toolbar: 'social'

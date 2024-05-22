@@ -821,7 +821,7 @@ class KunenaBan extends parentAlias
 
         // Set the id for the \Kunena\Forum\Libraries\User\Ban object in case we created a new ban.
         if ($result && $isnew) {
-            $this->load($table->get('id'));
+            $this->load($table->id);
             self::storeInstance($this);
         }
 

@@ -269,7 +269,7 @@ class KunenaSession extends CMSObject
 
         // Set the id for the Joomla\CMS\User\User object in case we created a new user.
         if (empty($this->userid)) {
-            $this->userid = $table->get('userid');
+            $this->userid = $table->userid;
         }
 
         // Read indication has moved outside of the session table -- let's update it too.

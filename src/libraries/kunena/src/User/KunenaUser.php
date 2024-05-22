@@ -1267,9 +1267,9 @@ class KunenaUser extends CMSObject
 
         // Set the id for the \Kunena\Forum\Libraries\User\KunenaUser object in case we created a new user.
         if ($result && $isnew) {
-            $this->load($table->get('userid'));
+            $this->load($table->userid);
 
-            // Self::$_instances [$table->get ( 'id' )] = $this;
+            // Self::$_instances [$table->id] = $this;
         }
 
         return $result;

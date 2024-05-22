@@ -70,7 +70,7 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
-        $toolbar = Toolbar::getInstance('toolbar');
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CONFIGURATION'), 'wrench');
         $toolbar->apply('config.apply');

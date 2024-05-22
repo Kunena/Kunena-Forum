@@ -65,7 +65,7 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar(): void
     {
         // Get the toolbar object instance
-        $this->bar = Toolbar::getInstance('toolbar');
+        $this->bar = $this->getDocument()->getToolbar();
 
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_BADWORDS_MANAGER'));

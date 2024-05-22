@@ -66,7 +66,7 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar(): void
     {
         // Get the toolbar object instance
-        $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');

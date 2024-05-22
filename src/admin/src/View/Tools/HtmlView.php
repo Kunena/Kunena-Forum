@@ -238,7 +238,7 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::spacer();
 
         // Get the toolbar object instance
-        $bar = Toolbar::getInstance('toolbar');
+        $bar = $this->getDocument()->getToolbar();
 
         if (!empty($this->legacy)) {
             ToolbarHelper::custom('tools.fixLegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);

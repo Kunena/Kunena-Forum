@@ -102,7 +102,7 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar(): void
     {
         // Get the toolbar object instance
-        $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_RANK_MANAGER'), 'star-2');
 

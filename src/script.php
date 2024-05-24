@@ -184,7 +184,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      */
     public function checkRequirements($version)
     {
-        $db   = Factory::getDbo();
+        $db   = Factory::getContainer()->get(DatabaseInterface::class);
         $pass = $this->checkVersion('PHP', $this->getCleanPhpVersion());
         $pass &= $this->checkVersion('Joomla!', JVERSION);
         $pass &= $this->checkDbVersion($db->getVersion());
@@ -328,7 +328,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
     protected function checkKunena($version)
     {
         $app = Factory::getApplication();
-        $db  = Factory::getDbo();
+        $db  = Factory::getContainer()->get(DatabaseInterface::class);
 
         // Do not install over Git repository (K1.6+).
         if (class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev()) {
@@ -449,7 +449,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             @apc_clear_cache();
         }
 
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $table = $db->getPrefix() . 'kunena_version';
 
@@ -530,7 +530,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             $version  = (string) $manifest->version;
             $date     = (string) $manifest->creationDate;
         } else {
-            $db    = Factory::getDbo();
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->createQuery();
             $query->select('version')->from('#__kunena_version')->order('id');
             $query->setLimit(1);
@@ -559,7 +559,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      */
     protected function fixUpdateSite()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         // Find all update sites.
         $query = $db->createQuery()
@@ -636,7 +636,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      */
     public function install($parent)
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $query = $db->createQuery();
 

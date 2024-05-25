@@ -450,7 +450,6 @@ CREATE TABLE IF NOT EXISTS `#__kunena_users`
     `gender`           tinyint(4)   NOT NULL default '0',
     `birthdate`        date         NULL     DEFAULT NULL,
     `location`         varchar(50)  NULL,
-    `icq`              varchar(75)  NULL,
     `bebo`             varchar(75)  NULL,
     `digg`             varchar(75)  NULL,
     `telegram`         varchar(75)  NULL,

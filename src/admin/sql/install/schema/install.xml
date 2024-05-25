@@ -984,9 +984,6 @@
         <field name="digg"
                type="varchar(50)"
                null="1"/>
-        <field name="icq"
-               type="varchar(50)"
-               null="1"/>
         <field name="telegram"
                type="varchar(50)"
                null="1"/>

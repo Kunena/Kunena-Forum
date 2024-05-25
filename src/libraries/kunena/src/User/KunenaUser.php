@@ -85,7 +85,6 @@ use Joomla\CMS\User\UserFactoryAwareInterface;
  * @property    int     $showOnline
  * @property    int     $canSubscribe
  * @property    int     $userListtime
- * @property    string  $icq
  * @property    string  $yim
  * @property    string  $microsoft
  * @property    string  $skype
@@ -313,12 +312,6 @@ class KunenaUser extends CMSObject
      * @since   Kunena 6.0
      */
     public $userListtime;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $icq;
 
     /**
      * @var     string
@@ -2216,7 +2209,6 @@ class KunenaUser extends CMSObject
             'google'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1'],
             'github'           => ['url' => 'https://www.github.com/+##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'],
             'microsoft'        => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'],
-            'icq'              => ['url' => 'https://icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title' => Text::_('COM_KUNENA_MYPROFILE_ICQ'), 'nourl' => '0'],
             'blogspot'         => ['url' => 'https://##VALUE##.blogspot.com/', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'],
             'flickr'           => ['url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0'],
             'bebo'             => ['url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0'],
@@ -2309,8 +2301,6 @@ class KunenaUser extends CMSObject
                 return $this->canSubscribe;
             case 'userListtime':
                 return $this->userListtime;
-            case 'icq':
-                return $this->icq;
             case 'yim':
                 return $this->yim;
             case 'microsoft':

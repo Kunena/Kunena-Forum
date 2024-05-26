@@ -239,10 +239,13 @@ class TopicsController extends KunenaController
             $this->setRedirectBack();
         } else {
             foreach ($topics as $topic) {
-                if ($topic->isAuthorised('undelete') && $topic->publish(KunenaForum::PUBLISHED)) {
+                try {
+                    $topic->isAuthorised('undelete');
+                    $topic->publish(KunenaForum::PUBLISHED);
+                    
                     $message = Text::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
-                } else {
-                    $this->app->enqueueMessage($topic->getError(), 'error');
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
         }
@@ -294,11 +297,14 @@ class TopicsController extends KunenaController
             $this->setRedirectBack();
         } else {
             foreach ($topics as $topic) {
-                if ($topic->isAuthorised('approve') && $topic->publish(KunenaForum::PUBLISHED)) {
+                try {
+                    $topic->isAuthorised('approve');
+                    $topic->publish(KunenaForum::PUBLISHED);
+                    
                     $message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
                     $topic->sendNotification();
-                } else {
-                    $this->app->enqueueMessage($topic->getError(), 'error');
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
         }
@@ -371,20 +377,24 @@ class TopicsController extends KunenaController
             
             if ($topics) {
                 foreach ($topics as $topic) {
-                    if ($topic->isAuthorised('move') && $topic->move($target)) {
+                    try {
+                        $topic->isAuthorised('move');
+                        $topic->move($target);
+                        
                         $message = Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
-                    } else {
-                        $this->app->enqueueMessage($topic->getError(), 'error');
+                    } catch (Exception $e) {
+                        $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
                 }
             } else {
                 foreach ($messages as $message) {
                     $topic = $message->getTopic();
 
-                    if ($message->isAuthorised('move') && $topic->move($target, $message->id)) {
-                        $message = Text::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
-                    } else {
-                        $this->app->enqueueMessage($message->getError(), 'error');
+                    try {
+                        $message->isAuthorised('move');
+                        $topic->move($target, $message->id);
+                    } catch (Exception $e) {
+                        $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
                 }
             }            
@@ -514,11 +524,14 @@ class TopicsController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
         } else {
             foreach ($messages as $message) {
-                if ($message->isAuthorised('approve') && $message->publish(KunenaForum::PUBLISHED)) {
+                try {
+                    $message->isAuthorised('approve');
+                    $message->publish(KunenaForum::PUBLISHED);
+                    
                     $message->sendNotification();
                     $success++;
-                } else {
-                    $this->app->enqueueMessage($message->getError(), 'error');
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
         }
@@ -556,10 +569,13 @@ class TopicsController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
         } else {
             foreach ($messages as $message) {
-                if ($message->isAuthorised('delete') && $message->publish(KunenaForum::DELETED)) {
+                try {
+                    $message->isAuthorised('delete');
+                    $message->publish(KunenaForum::DELETED);
+                    
                     $success++;
-                } else {
-                    $this->app->enqueueMessage($message->getError(), 'error');
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
         }
@@ -597,10 +613,13 @@ class TopicsController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
         } else {
             foreach ($messages as $message) {
-                if ($message->isAuthorised('undelete') && $message->publish(KunenaForum::PUBLISHED)) {
+                try {
+                    $message->isAuthorised('undelete');
+                    $message->publish(KunenaForum::PUBLISHED);
+                    
                     $success++;
-                } else {
-                    $this->app->enqueueMessage($message->getError(), 'error');
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
         }
@@ -638,11 +657,14 @@ class TopicsController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_MESSAGES_SELECTED'), 'notice');
         } else {
             foreach ($messages as $message) {
-                if ($message->isAuthorised('permdelete') && $message->delete()) {
+                try {
+                    $message->isAuthorised('permdelete');
+                    $message->delete();
+                    
                     $success++;
-                } else {
-                    $this->app->enqueueMessage($message->getError(), 'error');
-                }
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
+                }   
             }
         }
 

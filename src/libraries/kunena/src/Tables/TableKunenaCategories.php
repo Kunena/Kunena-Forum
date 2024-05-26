@@ -407,7 +407,7 @@ class TableKunenaCategories extends KunenaTable
 
             while ($id) {
                 if (\in_array($id, $recurse)) {
-                    $this->setError(\get_class($this) . Text::_('COM_KUNENA_RECURSION'));
+                    throw new Exception(\get_class($this) . Text::_('COM_KUNENA_RECURSION'));
 
                     return 0;
                 }
@@ -415,7 +415,7 @@ class TableKunenaCategories extends KunenaTable
                 $recurse[] = $id;
 
                 if (!isset($list[$id])) {
-                    $this->setError(\get_class($this) . Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
+                    throw new Exception(\get_class($this) . Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID'));
 
                     return 0;
                 }

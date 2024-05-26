@@ -80,14 +80,17 @@ class TopicsController extends KunenaController
             $messages = KunenaMessageHelper::getMessagesByTopics($ids);
 
             foreach ($topics as $topic) { 
-                if ($topic->isAuthorised('permdelete') && $topic->delete()) {
+                try {
+                    $topic->isAuthorised('permdelete');
+                    $topic->delete();
+                    
                     // Activity integration
                     $activity = KunenaFactory::getActivityIntegration();
                     $activity->onAfterDeleteTopic($topic);
                     $message = Text::_('COM_KUNENA_BULKMSG_DELETED');
                     KunenaCategoryHelper::recount($topic->getCategory()->id);
-                } else {
-                    $this->app->enqueueMessage($topic->getError(), 'error');
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
 
@@ -178,10 +181,13 @@ class TopicsController extends KunenaController
             $this->setRedirectBack();
         } else {
             foreach ($topics as $topic) {
-                if ($topic->isAuthorised('delete') && $topic->publish(KunenaForum::TOPIC_DELETED)) {
+                try {
+                    $topic->isAuthorised('delete');
+                    $topic->publish(KunenaForum::TOPIC_DELETED);
+                    
                     $message = Text::_('COM_KUNENA_BULKMSG_DELETED');
-                } else {
-                    $this->app->enqueueMessage($topic->getError(), 'error');
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
         }

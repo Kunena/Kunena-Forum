@@ -882,11 +882,6 @@ class TopicController extends KunenaController
         // Message has been sent, we can now clear saved form
         $this->app->setUserState('com_kunena.postfields', null);
 
-        // Display possible warnings (upload failed etc)
-        foreach ($message->getErrors() as $warning) {
-            $this->app->enqueueMessage($warning, 'error');
-        }
-
         // Create Poll
         $poll_title   = $fields['poll_title'];
         $poll_options = $fields['poll_options'];
@@ -926,22 +921,28 @@ class TopicController extends KunenaController
         }
 
         // Post Private message
-        $this->postPrivate($message);
+        try {
+            $this->postPrivate($message);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+        }
 
         $message->sendNotification();
 
         // Now try adding any new subscriptions if asked for by the poster
-        $usertopic = $topic->getUserTopic();
+        $usertopic = $topic->getUserTopic(); 
 
         if ($fields['subscribe'] && !$usertopic->subscribed) {
-            if ($topic->subscribe(1)) {
+            try {
+                $topic->subscribe(1);
+                
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'), 'success');
-
+                
                 // Activity integration
                 $activity = KunenaFactory::getActivityIntegration();
                 $activity->onAfterSubscribe($topic, 1);
-            } else {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC') . ' ' . $topic->getError(), 'error');
+            } catch (Exception $e) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC') . ' ' . $e->getMessage(), 'error');
             }
         }
 
@@ -1404,11 +1405,6 @@ class TopicController extends KunenaController
             );
         }
 
-        // Display possible warnings (upload failed etc)
-        foreach ($message->getErrors() as $warning) {
-            $this->app->enqueueMessage($warning, 'error');
-        }
-
         $subscribe = $this->app->input->getInt('subscribeMe');
         $usertopic = $topic->getUserTopic();
 
@@ -1682,15 +1678,18 @@ class TopicController extends KunenaController
         }
 
         $topic = KunenaTopicHelper::get($this->id);
-
-        if ($topic->isAuthorised('read') && $topic->subscribe(1)) {
+        
+        try {
+            $topic->isAuthorised('read');
+            $topic->subscribe(1);
+            
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'), 'success');
-
+            
             // Activity integration
             $activity = KunenaFactory::getActivityIntegration();
             $activity->onAfterSubscribe($topic, 1);
-        } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC') . ' ' . $topic->getError(), 'error');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC') . ' ' . $e->getMessage(), 'error');
         }
 
         $this->setRedirectBack();
@@ -1750,16 +1749,19 @@ class TopicController extends KunenaController
 
         $topic = KunenaTopicHelper::get($this->id);
 
-        if ($topic->isAuthorised('read') && $topic->favorite(1)) {
+        try {
+            $topic->isAuthorised('read');
+            $topic->favorite(1);
+            
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_FAVORITED_TOPIC'), 'success');
-
+            
             // Activity integration
             $activity = KunenaFactory::getActivityIntegration();
             $activity->onAfterFavorite($topic, 1);
-        } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_FAVORITED_TOPIC') . ' ' . $topic->getError(), 'error');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_FAVORITED_TOPIC') . ' ' . $e->getMessage(), 'error');
         }
-
+        
         $this->setRedirectBack();
     }
 
@@ -1781,14 +1783,17 @@ class TopicController extends KunenaController
 
         $topic = KunenaTopicHelper::get($this->id);
 
-        if ($topic->isAuthorised('read') && $topic->favorite(0)) {
+        try {
+            $topic->isAuthorised('read');
+            $topic->favorite(0);
+            
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNFAVORITED_TOPIC'), 'success');
-
+            
             // Activity integration
             $activity = KunenaFactory::getActivityIntegration();
             $activity->onAfterFavorite($topic, 0);
-        } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC') . ' ' . $topic->getError(), 'error');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC') . ' ' . $e->getMessage(), 'error');
         }
 
         $this->setRedirectBack();

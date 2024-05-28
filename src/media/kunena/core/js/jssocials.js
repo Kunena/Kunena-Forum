@@ -442,7 +442,7 @@
 		twitter: {
 			label: "Tweet",
 			logo: "fa-brands fa-square-x-twitter",
-			shareUrl: "https://twitter.com/share?url={url}&text={text}&via={via}&hashtags={hashtags}",
+			shareUrl: "https://x.com/share?url={url}&text={text}&via={via}&hashtags={hashtags}",
 			countUrl: ""
 		},
 

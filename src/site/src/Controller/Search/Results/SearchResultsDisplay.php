@@ -116,8 +116,6 @@ class SearchResultsDisplay extends KunenaControllerDisplay
             $this->state->get('list.start'),
             $this->state->get('list.limit')
         );
-
-        $this->error = $this->model->getError();
     }
 
     /**

@@ -57,7 +57,7 @@ class TopicEditEditor extends KunenaLayout
         $bbcodes = [
             "spoiler",
             "maps",
-            "twitter",
+            "X_Social",
             "link",
             "picture",
             "hide",

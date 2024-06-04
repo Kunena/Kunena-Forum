@@ -282,7 +282,7 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
-        <field name="Twitter" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_X_SOCIAL"
+        <field name="X_Social" type="list" default="1" label="COM_KUNENA_TEMPLATE_DISPLAY_X_SOCIAL"
                description="COM_KUNENA_TEMPLATE_DISPLAY_X_SOCIAL_DESC">
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>

@@ -3,7 +3,7 @@
 /**
  * Kunena Component
  *
- * @package         Kunena.Template.System
+ * @package         Kunena.Template.Aurelia
  * @subpackage      Layout.BBCode
  *
  * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
@@ -11,11 +11,10 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site;
-
-\defined('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 
 // [tweet]112233445566[/tweet]
@@ -23,21 +22,21 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
 // Display individual tweet.
 ?>
 
-<div id="kunena_twitter_widget"
+<div id="kunena_x_widget"
      style="background: none repeat scroll 0 0 #fff;    border-radius: 5px;    padding: 8px 8px 0;"
      class="root ltr twitter-tweet not-touch var-narrow" lang="en" data-scribe="page:tweet"
      data-iframe-title="Embedded Tweet" data-dt-pm="PM"
      data-dt-am="AM" data-dt-full="%{hours12}:%{minutes} %{amPm} - %{day} %{month} %{year}"
      data-dt-months="Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec" dir="ltr" data-twitter-event-id="4">
     <blockquote class="tweet subject expanded h-entry" data-scribe="section:subject"
-                cite="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>"
+                cite="https://x.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>"
                 data-tweet-id="<?php echo $this->tweetid ?>">
         <div class="header">
             <div class="h-card p-author with-verification" data-scribe="component:author">
                 <a class="u-url profile" data-scribe="element:user_link"
                    aria-label="<?php echo $this->user_name ?> (screen name: <?php echo $this->user_screen_name ?>)"
-                   href="https://twitter.com/<?php echo $this->user_screen_name ?>">
-                    <img loading=lazy class="u-photo avatar" data-scribe="element:avatar"
+                   href="https://x.com/<?php echo $this->user_screen_name ?>">
+                    <img class="u-photo avatar" data-scribe="element:avatar"
                          data-src-2x="<?php echo $this->user_profile_url_big ?>"
                          src="<?php echo $this->user_profile_url_normal ?>" alt="<?php echo $this->user_name ?>">
                     <span class="full-name">
@@ -45,8 +44,8 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
                           data-scribe="element:name"><?php echo $this->user_name ?></span>
                         <?php if ($this->verified) :
                             ?>
-                            <span class="verified" data-scribe="element:verified_badge" aria-label="Verified Account"
-                                  data-bs-toggle="tooltip" title="Verified Account">
+                            <span class="verified" data-scribe="element:verified_badge" aria-label="<?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_VERIFIED_ACCOUNT_TITLE'); ?>"
+                                  data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_VERIFIED_ACCOUNT_TITLE'); ?>">
                             <b>✔</b>
                         </span>
                         <?php endif; ?>
@@ -63,9 +62,9 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
                 <div class="dateline collapsible-container">
                     <a class="u-url customisable-highlight long-permalink" data-scribe="element:full_timestamp"
                        data-datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>"
-                       href="https://twitter.com/<?php echo $this->user_name ?>/status/<?php echo $this->tweetid ?>">
+                       href="https://x.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
                         <time class="dt-updated"
-                              data-bs-toggle="tooltip" title="Time posted: <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
+                              data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_TIME_POSTED_TITLE'); ?>: <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('ago'); ?>"
                               datetime="<?php echo Factory::getDate($this->tweet_created_at)->toISO8601(); ?>">
                             <?php echo KunenaDate::getInstance($this->tweet_created_at)->toKunena('datetime'); ?>
                         </time>
@@ -76,41 +75,41 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
             <span class="stats-narrow customisable-border">
                 <span class="stats" data-scribe="component:stats">
                     <a data-scribe="element:retweet_count" data-bs-toggle="tooltip" title="View Tweet on Twitter"
-                       href="https://twitter.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
+                       href="https://x.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
                         <span class="stats-retweets">
                             <strong><?php echo $this->retweet_count; ?></strong>
-                            Retweets
+                            <?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_RETWEETS'); ?>
                         </span>
                     </a>
                     <a data-scribe="element:favorite_count" data-bs-toggle="tooltip" title="View Tweet on Twitter"
-                       href="https://twitter.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
+                       href="https://x.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
                         <span class="stats-favorites">
                             <strong><?php echo $this->favorite_count; ?></strong>
-                            favorites
+                            <?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_FAVORITES'); ?>
                         </span>
                     </a>
                 </span>
             </span>
                 <ul class="tweet-actions" data-scribe="component:actions" aria-label="Tweet actions" role="menu">
                     <li>
-                        <a class="reply-action web-intent" data-scribe="element:reply" data-bs-toggle="tooltip" title="Reply"
-                           href="https://twitter.com/intent/tweet?in_reply_to=<?php echo $this->tweetid ?>">
-                            <i class="ic-reply ic-mask"></i>
-                            <b>Reply</b>
+                        <a class="reply-action web-intent" data-scribe="element:reply" title="<?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_REPLY'); ?>"
+                           href="https://x.com/intent/tweet?in_reply_to=<?php echo $this->tweetid ?>">
+                            <i class="large-kicon glyphicon glyphicon-undo "></i>
+                            <b><?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_REPLY'); ?></b>
                         </a>
                     </li>
                     <li>
-                        <a class="retweet-action web-intent" data-scribe="element:retweet" data-bs-toggle="tooltip" title="Retweet"
-                           href="https://twitter.com/intent/retweet?tweet_id=<?php echo $this->tweetid ?>">
-                            <i class="ic-retweet ic-mask"></i>
-                            <b>Retweet</b>
+                        <a class="retweet-action web-intent" data-scribe="element:retweet" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_RETWEET'); ?>"
+                           href="https://x.com/intent/retweet?tweet_id=<?php echo $this->tweetid ?>">
+                            <i class="large-kicon glyphicon glyphicon-loop"></i>
+                            <b><?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_RETWEET'); ?></b>
                         </a>
                     </li>
                     <li>
-                        <a class="favorite-action web-intent" data-scribe="element:favorite" title="Favorite"
-                           href="https://twitter.com/intent/favorite?tweet_id=<?php echo $this->tweetid ?>">
-                            <i class="ic-fav ic-mask"></i>
-                            <b>Favorite</b>
+                        <a class="favorite-action web-intent" data-scribe="element:favorite" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_FAVORITE'); ?>"
+                           href="https://x.com/intent/favorite?tweet_id=<?php echo $this->tweetid ?>">
+                            <i class="large-kicon glyphicon glyphicon-star"></i>
+                            <b><?php echo Text::_('COM_KUNENA_WIDGET_X_SOCIAL_FAVORITE'); ?></b>
                         </a>
                     </li>
                 </ul>

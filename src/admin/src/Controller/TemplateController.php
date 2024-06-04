@@ -256,8 +256,8 @@ class TemplateController extends FormController
             $editorButtons[] = 'Ebay';
         }
 
-        if (!$params['Twitter']) {
-            $editorButtons[] = 'Twitter';
+        if (!$params['X_Social']) {
+            $editorButtons[] = 'X_Social';
         }
 
         if (!$params['Instagram']) {
@@ -420,8 +420,8 @@ class TemplateController extends FormController
             $editorButtons[] = 'Ebay';
         }
 
-        if ($params['Twitter']) {
-            $editorButtons[] = 'Twitter';
+        if ($params['X_Social']) {
+            $editorButtons[] = 'X_Social';
         }
 
         if ($params['Instagram']) {

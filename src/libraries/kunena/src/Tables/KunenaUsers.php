@@ -256,7 +256,7 @@ class KunenaUsers extends KunenaTable
      * @var     string
      * @since   Kunena
      **/
-    public $twitter = null;
+    public $x_social = null;
 
     /**
      * FACEBOOK ID

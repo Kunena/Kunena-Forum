@@ -2807,7 +2807,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     {
         $tweet = $this->getTweet($tweetid);
 
-        $layout = KunenaLayout::factory('BBCode/twitter');
+        $layout = KunenaLayout::factory('BBCode/x');
 
         if ($tweet->error === false) {
             if ($layout->getPath()) {

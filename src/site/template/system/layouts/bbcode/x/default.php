@@ -75,14 +75,14 @@ use Kunena\Forum\Libraries\Date\KunenaDate;
             <div class="footer customisable-border" data-scribe="component:footer">
             <span class="stats-narrow customisable-border">
                 <span class="stats" data-scribe="component:stats">
-                    <a data-scribe="element:retweet_count" data-bs-toggle="tooltip" title="View Tweet on Twitter"
+                    <a data-scribe="element:retweet_count" data-bs-toggle="tooltip" title="View Tweet on X"
                        href="https://x.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
                         <span class="stats-retweets">
                             <strong><?php echo $this->retweet_count; ?></strong>
                             Retweets
                         </span>
                     </a>
-                    <a data-scribe="element:favorite_count" data-bs-toggle="tooltip" title="View Tweet on Twitter"
+                    <a data-scribe="element:favorite_count" data-bs-toggle="tooltip" title="View Tweet on X"
                        href="https://x.com/<?php echo $this->user_screen_name ?>/status/<?php echo $this->tweetid ?>">
                         <span class="stats-favorites">
                             <strong><?php echo $this->favorite_count; ?></strong>

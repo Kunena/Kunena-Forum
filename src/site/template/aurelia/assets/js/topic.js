@@ -78,38 +78,6 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	if ($.fn.jsSocials !== undefined) {
-		$("#share").jsSocials({
-			showCount: true,
-			showLabel: true,
-			shares: [
-				{
-					share: "email",
-					label: Joomla.Text._('COM_KUNENA_SOCIAL_EMAIL_LABEL')
-				},
-				{
-					share: "twitter",
-					label: Joomla.Text._('COM_KUNENA_SOCIAL_X_SOCIAL_LABEL')
-				},
-				{
-					share: "facebook",
-					label: Joomla.Text._('COM_KUNENA_SOCIAL_FACEBOOK_LABEL')
-				},
-				{
-					share: "linkedin",
-					label: Joomla.Text._('COM_KUNENA_SOCIAL_LINKEDIN_LABEL')
-				}, {
-					share: "pinterest",
-					label: Joomla.Text._('COM_KUNENA_SOCIAL_PINTEREST_LABEL')
-				},
-				{
-					share: "whatsapp",
-					label: Joomla.Text._('COM_KUNENA_SOCIAL_WHATSAPP_LABEL')
-				}]
-		});
-		$('.jssocials-share-whatsapp').addClass('visible-xs-block');
-	}
-
 	$('#kmod_categories').change(function () {
 		$.getJSON(
 			kunena_url_ajax, {catid: $(this).val()}

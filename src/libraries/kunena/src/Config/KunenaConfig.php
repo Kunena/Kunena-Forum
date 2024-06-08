@@ -226,7 +226,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property boolean $userStatus
  * @property boolean $signature
  * @property boolean $personal
- * @property boolean $social
  * @property boolean $plainEmail
  * @property boolean $moderatorPermDelete
  * @property string  $avatarTypes
@@ -1416,12 +1415,6 @@ class KunenaConfig extends CMSObject
      * @since  Kunena 5.1.0
      */
     public $personal = 1;
-
-    /**
-     * @var    boolean Allow user social
-     * @since  Kunena 5.1.0
-     */
-    public $social = 1;
 
     /**
      * @var    boolean

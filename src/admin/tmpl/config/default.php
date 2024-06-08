@@ -668,13 +668,6 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td><?php echo $this->lists['personal'] ?></td>
                                         <td><?php echo Text::_('COM_KUNENA_A_PERSONAL_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->social != 1) :
-                                            echo 'class="changed"';
-                                        endif; ?>>
-                                        <td><?php echo Text::_('COM_KUNENA_A_SOCIAL') ?></td>
-                                        <td><?php echo $this->lists['social'] ?></td>
-                                        <td><?php echo Text::_('COM_KUNENA_A_SOCIAL_DESC') ?></td>
-                                    </tr>
                                     <tr <?php if ($this->config->maxSig != 300) :
                                             echo 'class="changed"';
                                         endif; ?>>

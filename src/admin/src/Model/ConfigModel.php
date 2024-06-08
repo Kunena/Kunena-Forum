@@ -1803,7 +1803,6 @@ class ConfigModel extends AdminModel
         // K5.1
         $lists ['signature'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_signature', 'class="inputbox form-select"size="1"', 'value', 'text', $config->signature);
         $lists ['personal']  = HTMLHelper::_('select.genericlist', $yesno, 'cfg_personal', 'class="inputbox form-select"size="1"', 'value', 'text', $config->personal);
-        $lists ['social']    = HTMLHelper::_('select.genericlist', $yesno, 'cfg_social', 'class="inputbox form-select"size="1"', 'value', 'text', $config->social);
 
         $lists ['plainEmail']   = HTMLHelper::_('select.genericlist', $yesno, 'cfg_plainEmail', 'class="inputbox form-select"size="1"', 'value', 'text', $config->plainEmail);
         $lists ['smartLinking'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_smartLinking', 'class="inputbox form-select"size="1"', 'value', 'text', $config->smartLinking);

@@ -431,7 +431,7 @@ class BBCodeLibrary {
      * @param string $default The default value passed to the tag in the form: `[tag=default]`.
      * @param array $params All of the parameters passed to the tag.
      * @param string $content The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
-     * @return string Returns the full HTML url.
+     * @return bool|string Returns the full HTML url or **true** if {@link $action} is **BBCode::BBCODE_CHECK**.
      */
     public function doURL(BBCode $bbcode, $action, $name, $default, $params, $content) {
         // We can't check this with BBCODE_CHECK because we may have no URL
@@ -482,7 +482,7 @@ class BBCodeLibrary {
      * @param string $default The default value passed to the tag in the form: `[tag=default]`.
      * @param array $params All of the parameters passed to the tag.
      * @param string $content The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
-     * @return string Returns the email link HTML.
+     * @return bool|string Returns the email link or **true** if {@link $action} is **BBCode::BBCODE_CHECK**.
      */
     public function doEmail(BBCode $bbcode, $action, $name, $default, $params, $content) {
         // We can't check this with BBCODE_CHECK because we may have no URL
@@ -607,7 +607,7 @@ class BBCodeLibrary {
      * @param string $default The default value passed to the tag in the form: `[tag=default]`.
      * @param array $params All of the parameters passed to the tag.
      * @param string $content The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
-     * @return string Returns a link to the wiki.
+     * @return bool|string Returns a link to the wiki or boolean result if {@link $action} is **BBCode::BBCODE_CHECK**.
      */
     public function doWiki(BBCode $bbcode, $action, $name, $default, $params, $content) {
         $name = $bbcode->wikify($default);
@@ -636,7 +636,7 @@ class BBCodeLibrary {
      * @param string $default The default value passed to the tag in the form: `[tag=default]`.
      * @param array $params All of the parameters passed to the tag.
      * @param string $content The content of the tag. Only available when {@link $action} is **BBCODE_OUTPUT**.
-     * @return string Returns the image tag.
+     * @return bool|string Returns the image tag or **true** if {@link $action} is **BBCode::BBCODE_CHECK**.
      */
     public function doImage(BBCode $bbcode, $action, $name, $default, $params, $content) {
         // We can't validate this until we have its content.

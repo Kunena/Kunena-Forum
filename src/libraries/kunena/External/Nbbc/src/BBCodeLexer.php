@@ -162,6 +162,14 @@ class BBCodeLexer {
 
         $this->input = preg_split($this->pat_main, $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 
+        if ($this->input === false) {
+            $errorMessage = "Error lexing BBCode contents.";
+            if (function_exists('preg_last_error_msg'))  {
+                $errorMessage .= " " . preg_last_error_msg();
+            }
+            throw new BBCodeException($errorMessage);
+        }
+
         // Patterns for matching specific types of tokens during lexing.
         $this->pat_comment = "/^ {$b} (?: -- | ' ) /Dx";
         $this->pat_comment2 = "/^ {$b}!-- (?: [^-] | -[^-] | --[^{$e}] )* --{$e} $/Dx";

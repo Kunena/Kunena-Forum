@@ -43,9 +43,9 @@ License:    MIT license; http://www.opensource.org/licenses/mit-license.php
 
 NBBC
 ----
-Copyright:  2008-2009, the Phantom Inker.  All rights reserved.
-            Portions Copyright (c) 2004-2008 AddedBytes.com
-License:    BSD license; http://www.opensource.org/licenses/bsd-license.php
+Copyright:  Copyright (C) 2008-10, Sean Werkema. All rights reserved.
+            2016 Vanilla Forums Inc. (changes only)
+License:    BSDv2 license; http://www.opensource.org/licenses/bsd-license.php
 
 mediaboxAdvanced
 ----------------

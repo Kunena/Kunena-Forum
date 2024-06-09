@@ -28,7 +28,7 @@ $this->doc->addScriptOptions('com_kunena.ckeditor_skiname', $this->template->par
 
 $user = Factory::getApplication()->getIdentity();
 $userLanguage = $user->getParam('language', 'default');
-$joomlaLanguage = Factory::getApplication()->getLanguage()->getTag();
+$joomlaLanguage = Factory::getApplication()->getLanguage()->getDefault();
 if ($userLanguage != 'default') {
     $this->doc->addScriptOptions('com_kunena.ckeditor_userdefaultlanguage', substr($userLanguage, 0, 2));
 } else {

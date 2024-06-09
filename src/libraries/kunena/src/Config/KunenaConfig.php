@@ -207,8 +207,8 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property boolean $ebayLanguage
  * @property string  $ebayApiKey
  * @property string  $ebayCertId
- * @property string  $twitterConsumerKey
- * @property string  $twitterConsumerSecret
+ * @property string  $blueskyappHandleOfApp
+ * @property string  $blueskyappPasswordOfApp
  * @property boolean $allowChangeSubject
  * @property integer $maxLinks
  * @property boolean $readOnly
@@ -1315,16 +1315,16 @@ class KunenaConfig extends CMSObject
     public $ebayCertId = '';
 
     /**
-     * @var     string  Define X API consumer key
-     * @since   Kunena 4.0.0
+     * @var     string  Define BlueSkyApp APP handle to use API
+     * @since   Kunena 6.4.0
      */
-    public $twitterConsumerKey = '';
+    public $blueskyappHandleOfApp = '';
 
     /**
-     * @var     string  Define X API consumer secret
-     * @since   Kunena 4.0.0
+     * @var     string  Define BlueSkyApp APP password to use API
+     * @since   Kunena 6.4.0
      */
-    public $twitterConsumerSecret = '';
+    public $blueskyappPasswordOfApp = '';
 
     /**
      * @var     boolean  Allow to define if the user can change the subject of topic on replies

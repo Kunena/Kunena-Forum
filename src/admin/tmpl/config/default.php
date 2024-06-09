@@ -1544,23 +1544,23 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         </td>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->twitterConsumerKey != '') :
+                                    <tr <?php if ($this->config->blueskyappHandleOfApp != '') :
                                             echo 'class="changed"';
                                         endif; ?>>
-                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_KEY_LABEL') ?></td>
+                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_BLUESKYAPP_HANDLE_OF_APP_LABEL') ?></td>
                                         <td>
-                                            <input type="text" class="form-control" name="cfg_twitterConsumerKey" value="<?php echo $this->escape($this->config->twitterConsumerKey) ?>" />
+                                            <input type="text" class="form-control" name="cfg_blueskyappHandleOfApp" value="<?php echo $this->escape($this->config->blueskyappHandleOfApp) ?>" />
                                         </td>
-                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_KEY_DESC') ?></td>
+                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_BLUESKYAPP_HANDLE_OF_APP_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->twitterConsumerSecret != '') :
+                                    <tr <?php if ($this->config->blueskyappPasswordOfApp != '') :
                                             echo 'class="changed"';
                                         endif; ?>>
-                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_LABEL') ?></td>
+                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_BLUESKYAPP_PASSWORD_OF_APP_LABEL') ?></td>
                                         <td>
-                                            <input type="text" class="form-control" name="cfg_twitterConsumerSecret" value="<?php echo $this->escape($this->config->twitterConsumerSecret) ?>" />
+                                            <input type="text" class="form-control" name="cfg_blueskyappPasswordOfApp" value="<?php echo $this->escape($this->config->blueskyappPasswordOfApp) ?>" />
                                         </td>
-                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_DESC') ?></td>
+                                        <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_BLUESKYAPP_PASSWORD_OF_APP_DESC') ?></td>
                                     </tr>
                                     <tr <?php if ($this->config->googleMapApiKey != '') :
                                             echo 'class="changed"';

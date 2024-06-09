@@ -321,11 +321,11 @@ class KunenaBBCode extends BBCode
             }
         }
 
-        if (isset($params['host']) && strstr($params['host'], 'twitter.')) {
+        if (isset($params['host']) && strstr($params['host'], 'bsky.')) {
             $path = explode('/', $params['path']);
 
             if (isset($path[3])) {
-                return $this->defaults->renderTweet($path[3]);
+                // TODO : add render for bluesky
             }
         }
 

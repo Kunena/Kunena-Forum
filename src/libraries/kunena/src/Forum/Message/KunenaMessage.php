@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\Forum\Message;
 use Exception;
 use InvalidArgumentException;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Mail\MailHelper;

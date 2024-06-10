@@ -17,7 +17,7 @@ namespace Kunena\Forum\Administrator\View\Template;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;

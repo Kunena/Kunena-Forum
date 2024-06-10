@@ -18,7 +18,7 @@ use Joomla\CMS\Language\LanguageHelper;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Joomla\CMS\Table\Extension;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Class pkg_kunena_languagesInstallerScript

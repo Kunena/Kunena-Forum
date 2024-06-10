@@ -17,8 +17,8 @@ namespace Kunena\Forum\Administrator\Controller;
 
 use Exception;
 use Joomla\Archive\Archive;
-use Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;

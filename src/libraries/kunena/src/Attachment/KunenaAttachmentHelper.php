@@ -17,7 +17,7 @@ namespace Kunena\Forum\Libraries\Attachment;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Filesystem\File;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;

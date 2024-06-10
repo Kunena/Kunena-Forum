@@ -16,7 +16,7 @@ namespace Kunena\Forum\Libraries\Upload;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Client\ClientHelper;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Filesystem\File;
 use Joomla\Filesystem\Path;
 
 /**

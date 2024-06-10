@@ -16,7 +16,7 @@ namespace Kunena\Forum\Libraries\Folder;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\File;
+use Joomla\CMS\Filesystem\File;
 
 /**
  * Class KunenaFolder

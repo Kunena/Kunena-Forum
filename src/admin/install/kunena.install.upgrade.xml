@@ -263,7 +263,7 @@
             </query>
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `bsky_app` varchar(75) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `reddit`;</query>
         </version>
-        <version version="6.3.2-DEV"
+        <version version="6.3.3-DEV"
                  versiondate="2024-06-21"
                  versionname="Internal">
             <query mode="silenterror">

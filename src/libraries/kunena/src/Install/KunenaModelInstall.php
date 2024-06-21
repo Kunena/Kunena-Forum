@@ -412,6 +412,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         $this->uninstallPlugin('finder', 'kunena');
         $this->uninstallPlugin('quickicon', 'kunena');
         $this->uninstallPlugin('content', 'kunena');
+        $this->uninstallPlugin('privacy', 'kunena');
 
         // Uninstall menu module.
         $this->uninstallModule('mod_kunenamenu');

@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\Controller;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
@@ -23,6 +24,7 @@ use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 
 /**
@@ -87,6 +89,26 @@ class InstallController extends FormController
             // Cleaning remaining kunena directoy under manifests
             if (is_dir(JPATH_ADMINISTRATOR . '\manifests\packages\kunena')) {
                 Folder::delete(JPATH_ADMINISTRATOR . '\manifests\packages\kunena');
+            }
+            
+            // Remove remaining entry in updates site table
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->getQuery(true)
+                ->select('*')
+                ->from($db->quoteName('#__update_sites'))
+                ->where($db->quoteName('location') . ' LIKE ' . $db->quote('%update.kunena.org/%'));
+            $db->setQuery($query);
+            $kunenaUpdateSite = $db->loadObject();
+            
+            if (!empty($kunenaUpdateSite)) {
+                // Remove old update sites.
+                $query = $db->getQuery(true)->delete($db->quoteName('#__update_sites'))->where($db->quoteName('update_site_id') . ' = ' . $db->quote($kunenaUpdateSite->update_site_id));
+                $db->setQuery($query);
+                $db->execute();
+                
+                $query = $db->getQuery(true)->delete($db->quoteName('#__update_sites_extensions'))->where($db->quoteName('update_site_id') . ' = ' . $db->quote($kunenaUpdateSite->update_site_id));
+                $db->setQuery($query);
+                $db->execute();
             }
             
             if (is_dir(KPATH_MEDIA)) {

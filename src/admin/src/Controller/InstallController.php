@@ -84,6 +84,11 @@ class InstallController extends FormController
             $component = ComponentHelper::getComponent('com_kunena');
             $installer->uninstall('component', $component->id);
 
+            // Cleaning remaining kunena directoy under manifests
+            if (is_dir(JPATH_ADMINISTRATOR . '\administrator\manifests\packages\kunena')) {
+                Folder::delete(JPATH_ADMINISTRATOR . '\administrator\manifests\packages\kunena');
+            }
+            
             if (is_dir(KPATH_MEDIA)) {
                 Folder::delete(KPATH_MEDIA);
             }

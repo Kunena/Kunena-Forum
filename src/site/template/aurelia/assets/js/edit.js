@@ -332,7 +332,7 @@ jQuery(document).ready(function ($) {
         '<strong class="username">{username}</strong>' +
         '</li>',
       outputTemplate:
-        '<a href="mailto:{username}@example.com">@{username}</a><span>&nbsp;</span>',
+        '[mention userid={userid}]{username}[/mention]',
       minChars: 1
     }
   ]

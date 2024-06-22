@@ -1095,6 +1095,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             'content'       => BBCode::BBCODE_REQUIRED,
             'plain_content' => [],
         ],
+        'mention'      => [
+            'mode'          => BBCode::BBCODE_MODE_LIBRARY,
+            'method'        => 'DoMention',
+            'class'         => 'block',
+            'allow_in'      => ['listitem', 'block', 'columns'],
+            'content'       => BBCode::BBCODE_REQUIRED,
+            'plain_content' => [],
+        ],
     ];
 
     public $config;
@@ -3075,5 +3083,31 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $moderator = $this->me->userid && $this->me->isModerator($message ? $message->getCategory() : null);
 
         return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_SECURE_TEXT_GUESTS') . '</div>';
+    }
+    
+    /**
+     * Handle mention bbcode tag in the message
+     *
+     * @param   mixed  $bbcode   bbcode
+     * @param   mixed  $action   action
+     * @param   mixed  $name     name
+     * @param   mixed  $default  default
+     * @param   mixed  $params   params
+     * @param   mixed  $content  content
+     *
+     * @return  boolean|string
+     *
+     * @since   Kunena 6.3
+     * @throws  Exception
+     */
+    public function DoMention($bbcode, $action, $name, $default, $params, $content) {
+        if ($action == BBCode::BBCODE_CHECK) {
+            return true;
+        }
+
+        $user = KunenaUserHelper::get($params['userid']);
+        $urlUserProfile = $user->getURL();
+
+        return '<a href="' . $urlUserProfile . '" data-bs-toggle="tooltip" title="' . $content . '">@' . $content . '</a>';
     }
 }

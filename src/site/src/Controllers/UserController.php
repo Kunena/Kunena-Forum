@@ -1367,6 +1367,7 @@ class UserController extends KunenaController
             foreach ($usersList as $key => $user) {
                 $obj = new stdClass();
                 $obj->id = $key;
+                $obj->userid = $user->userid;
                 $obj->avatar = $user->getAvatarURL();
                 if ( $this->config->username ) {                
                     $obj->username = $user->username;

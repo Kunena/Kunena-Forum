@@ -418,7 +418,7 @@ class Kunena extends PrivacyPlugin
         foreach ($items as $item) {
             $data = KunenaHelper::processUserData($item, $excluded, $redacted);
 
-            $domain->addItem($this->createItemFromArray($data, $data['id']));
+            $domain->addItem($this->createItemFromArray($data, $data['postid']));
         }
 
         return $domain;

@@ -19,6 +19,7 @@ use Joomla\CMS\Document\Feed\FeedItem;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\UserFactoryInterface;
+use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\View\KunenaView;
@@ -48,9 +49,11 @@ class KunenaViewCategory extends KunenaView
         KunenaParser::$relative = false;
 
         $this->category = $this->get('Category');
-
-        if (!$this->category->isAuthorised('read')) {
-            throw new KunenaException($this->category->getError(), 404);
+        
+        try {
+            $this->category->isAuthorised('read');
+        } catch (Exception $e) {
+            throw new KunenaException($e->getMessage(), 404);
         }
 
         $this->topics = $this->get('Topics');

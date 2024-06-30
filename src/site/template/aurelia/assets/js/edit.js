@@ -395,7 +395,7 @@ function dataFeed(opts, callback) {
 						$('#form_submit_button').removeAttr("disabled");
 					}
 
-					if (event.editor.getData().length == 0 && $('#form_submit_button').disabled === undefined)
+					if (CKEDITOR.instances.message.getData().length == 0 && event.editor.getData().length == 0 && $('#form_submit_button').disabled === undefined)
 					{
 						$('#form_submit_button').prop("disabled", true);
 					}

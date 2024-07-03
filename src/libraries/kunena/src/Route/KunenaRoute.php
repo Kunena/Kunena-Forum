@@ -755,58 +755,6 @@ abstract class KunenaRoute
     }
 
     /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public static function cacheLoad(): void
-    {
-        if (!KunenaConfig::getInstance()->get('cache_url')) {
-            return;
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        $user  = KunenaUserHelper::getMyself();
-        $cache = self::getCache();
-
-        // TODO: can use viewlevels instead of userid
-        $data = $cache->get($user->userid, 'com_kunena.route.v1');
-
-        if ($data !== false) {
-            list(self::$subtree, self::$uris) = unserialize($data);
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     * @throws  Exception
-     */
-    public static function cacheStore(): void
-    {
-        if (!KunenaConfig::getInstance()->get('cache_url')) {
-            return;
-        }
-
-        if (!self::$urisSave) {
-            return;
-        }
-
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        $user  = KunenaUserHelper::getMyself();
-        $data  = [self::$subtree, self::$uris];
-        $cache = self::getCache();
-
-        // TODO: can use viewlevels instead of userid
-        $cache->store(serialize($data), $user->userid, 'com_kunena.route.v1');
-        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-    }
-
-    /**
      * @param   string  $string   string
      * @param   null    $default  default
      *

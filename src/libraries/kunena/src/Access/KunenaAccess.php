@@ -124,21 +124,6 @@ class KunenaAccess
             }
         }
 
-        if (KunenaConfig::getInstance()->get('cache_adm')) {
-            // Load administrators and moderators from cache
-            $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
-            $data  = $cache->get(self::$cacheKey, 'com_kunena');
-
-            if ($data) {
-                $data                     = unserialize($data);
-                $this->adminsByCatid      = (array) $data['ac'];
-                $this->adminsByUserid     = (array) $data['au'];
-                $this->moderatorsByCatid  = (array) $data['mc'];
-                $this->moderatorsByUserid = (array) $data['mu'];
-            }
-        }
-
         // If values were not cached (or users permissions have been changed), force reload
         if (!isset($this->adminsByCatid)) {
             $this->clearCache();
@@ -184,25 +169,6 @@ class KunenaAccess
             $this->storeRoles((array) $db->loadObjectList());
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
-        }
-
-        // FIXME: enable caching after fixing the issues
-        if (KunenaConfig::getInstance()->get('cache_adm')) {
-            // Store new data into cache
-            $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
-            $cache->store(
-                serialize(
-                    [
-                        'ac' => $this->adminsByCatid,
-                        'au' => $this->adminsByUserid,
-                        'mc' => $this->moderatorsByCatid,
-                        'mu' => $this->moderatorsByUserid,
-                    ]
-                ),
-                self::$cacheKey,
-                'com_kunena'
-            );
         }
     }
 

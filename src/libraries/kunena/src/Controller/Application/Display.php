@@ -342,9 +342,7 @@ class Display extends KunenaControllerDisplay
         Factory::getApplication()->setHeader('Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true);
         Factory::getApplication()->sendHeaders();
 
-        if ($this->config->get('credits', 1)) {
-            $this->output->appendAfter($this->poweredBy());
-        }
+        $this->output->appendAfter($this->poweredBy());
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . \get_class($this) . '::' . __FUNCTION__ . '()') : null;
     }

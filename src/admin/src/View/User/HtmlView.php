@@ -68,12 +68,6 @@ class HtmlView extends BaseHtmlView
      * @var mixed
      * @since version
      */
-    protected $social;
-
-    /**
-     * @var mixed
-     * @since version
-     */
     protected $selectMod;
 
     /**
@@ -263,8 +257,6 @@ class HtmlView extends BaseHtmlView
         $this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="inputbox form-control" size="2"', 'value', 'text', $this->user->ordering);
         $this->modCats     = $this->get('listmodcats');
         $this->selectRank  = $this->get('listuserranks');
-        $this->social      = $this->user->socialButtons();
-        $this->social      = ArrayHelper::toObject($this->social);
 
         $this->config = KunenaConfig::getInstance();
 

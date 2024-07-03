@@ -209,10 +209,6 @@ if ($this->config->showUserStats) {
             <?php endif; ?>
         </div>
     </div>
-
-    <div class="col-md-9">
-        <?php echo $this->subLayout('User/Item/Social')->set('profile', $this->profile)->set('socials', $this->socials); ?>
-    </div>
 </div>
 
 <br/>

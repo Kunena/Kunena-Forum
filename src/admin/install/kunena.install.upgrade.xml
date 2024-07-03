@@ -274,7 +274,37 @@
                  versiondate="2024-05-25"
                  versionname="Internal">
             <query mode="silenterror">
-            ALTER TABLE `#__kunena_users` DROP `icq`; 
+            ALTER TABLE `#__kunena_users` 
+                DROP IF EXISTS `icq`, 
+                DROP IF EXISTS `x_social`, 
+                DROP IF EXISTS `facebook`,
+                DROP IF EXISTS `myspace`,
+                DROP IF EXISTS `linkedin`,
+                DROP IF EXISTS `linkedin_company`,
+                DROP IF EXISTS `digg`,
+                DROP IF EXISTS `skype`,
+                DROP IF EXISTS `yim`,
+                DROP IF EXISTS `google`,
+                DROP IF EXISTS `github`,
+                DROP IF EXISTS `microsoft`,
+                DROP IF EXISTS `blogspot`,
+                DROP IF EXISTS `flickr`,
+                DROP IF EXISTS `bebo`,
+                DROP IF EXISTS `instagram`,
+                DROP IF EXISTS `qqsocial`,
+                DROP IF EXISTS `qzone`,
+                DROP IF EXISTS `weibo`,
+                DROP IF EXISTS `wechat`,
+                DROP IF EXISTS `vk`,
+                DROP IF EXISTS `telegram`,
+                DROP IF EXISTS `apple`,
+                DROP IF EXISTS `vimeo`,
+                DROP IF EXISTS `whatsapp`,
+                DROP IF EXISTS `youtube`,
+                DROP IF EXISTS `ok`,
+                DROP IF EXISTS `pinterest`,
+                DROP IF EXISTS `reddit`,
+                DROP IF EXISTS `bluesky_app`;
             </query>
         </version>
         <version version="@kunenaversion@"

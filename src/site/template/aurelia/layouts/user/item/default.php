@@ -54,7 +54,6 @@ echo $this->subLayout('User/Item/Summary')
     ->set('private', $this->private)
     ->set('points', $this->points)
     ->set('medals', $this->medals)
-    ->set('socials', $this->socials)
     ->set('avatar', $this->avatar)
     ->set('banInfo', $this->banInfo);
 ?>

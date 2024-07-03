@@ -70,14 +70,7 @@ abstract class KunenaCategoryHelper
     {
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-        if (KunenaFactory::getConfig()->get('cache_cat')) {
-            $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
-            $cache->setLifeTime(180);
-            self::$_instances = $cache->call(['CategoryHelper', 'loadCategories']);
-        } else {
-            self::$_instances = self::loadCategories();
-        }
+        self::$_instances = self::loadCategories();
 
         if (\is_null(self::$_tree)) {
             self::buildTree(self::$_instances);

@@ -196,7 +196,6 @@ class UserItemDisplay extends KunenaControllerDisplay
         }
 
         $menu_item = $this->app->getMenu()->getActive();
-        $robots    = $this->config->get('robots');
         $image     = '';
 
         $this->setMetaData('og:url', Uri::current(), 'property');
@@ -214,21 +213,12 @@ class UserItemDisplay extends KunenaControllerDisplay
 
         $this->setMetaData('og:image', $image, 'property');
 
-        if ($robots == 'noindex, follow') {
-            $this->setMetaData('robots', 'noindex, follow');
-        } elseif ($robots == 'index, nofollow') {
-            $this->setMetaData('robots', 'index, nofollow');
-        } elseif ($robots == 'noindex, nofollow') {
-            $this->setMetaData('robots', 'noindex, nofollow');
-        } else {
-            $this->setMetaData('robots', 'index, follow');
-        }
+        $this->setMetaData('robots', 'index, follow');
 
         if ($menu_item) {
             $params             = $menu_item->getParams();
             $params_title       = $params->get('page_title');
             $params_description = $params->get('menu-meta_description');
-            $params_robots      = $params->get('robots');
 
             if (!empty($params_title)) {
                 $title = $params->get('page_title');
@@ -255,9 +245,9 @@ class UserItemDisplay extends KunenaControllerDisplay
                 $this->setDescription($description);
             }
 
+            $params_robots = $params->get('robots');
             if (!empty($params_robots)) {
-                $robots = $params->get('robots');
-                $this->setMetaData('robots', $robots);
+                $this->setMetaData('robots', $params_robots);
             }
         }
     }

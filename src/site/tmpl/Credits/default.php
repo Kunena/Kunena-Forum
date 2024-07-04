@@ -83,9 +83,7 @@ $task    = $input->getCmd('task', 'display');
 
 // Get HMVC controller and if exists, execute it.
 KunenaControllerApplication::getInstance($view, $subview, $task, $input, $app);
-KunenaRoute::cacheLoad();
 $contents = (new KunenaControllerApplication())->execute();
-KunenaRoute::cacheStore();
 
 // Import plugins and event listeners.
 PluginHelper::importPlugin('kunena');

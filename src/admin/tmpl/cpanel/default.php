@@ -435,7 +435,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TRASH') ?>
                                         </a>
                                     </h6>
-                                    <h3 class="fw-700 text-cyan">12</h3>
+                                    <h3 class="fw-700 text-cyan"><?php echo $this->messagesTopicsInTrashBin; ?></h3>
                                     <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
                                 </div>
                                 <div class="col-auto">
@@ -455,7 +455,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                             <?php echo Text::_('COM_KUNENA_LOG_MANAGER') ?>
                                         </a>
                                     </h6>
-                                    <h3 class="fw-700 text-cyan">12</h3>
+                                    <h3 class="fw-700 text-cyan"><?php echo $this->numberOfLogs; ?></h3>
                                     <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
                                 </div>
                                 <div class="col-auto">
@@ -475,7 +475,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>
                                         </a>
                                     </h6>
-                                    <h3 class="fw-700 text-cyan">12</h3>
+                                    <h3 class="fw-700 text-cyan">9</h3>
                                     <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
                                 </div>
                                 <div class="col-auto">

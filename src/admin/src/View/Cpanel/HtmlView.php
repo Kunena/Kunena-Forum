@@ -22,7 +22,10 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
+use Kunena\Forum\Libraries\Log\KunenaLogFinder;
 use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 
 /**
@@ -66,7 +69,22 @@ class HtmlView extends BaseHtmlView
         $this->KunenaMenusExists = KunenaMenuHelper::KunenaMenusExists();
 
         $this->upgradeDatabase();
+        
+        $logFinder = new KunenaLogFinder();        
+        $this->numberOfLogs = $logFinder->count();
 
+        // Get the number of messages in trashbin
+        $messageFinder = new KunenaMessageFinder;
+        $messageFinder->filterByHold([3]);
+        $messagesTrashedCount = $messageFinder->count();
+        
+        // Get the number of topics in trashbin
+        $topicFinder = new KunenaTopicFinder;
+        $topicFinder->filterByHold([3]);
+        $topicTrashedCount = $topicFinder->count();
+        
+        $this->messagesTopicsInTrashBin = $messagesTrashedCount + $topicTrashedCount;
+        
         return parent::display($tpl);
     }
 

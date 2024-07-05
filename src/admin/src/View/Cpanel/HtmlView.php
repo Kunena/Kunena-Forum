@@ -21,12 +21,16 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Log\KunenaLogFinder;
 use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
+use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * About view for Kunena cpanel
@@ -72,6 +76,13 @@ class HtmlView extends BaseHtmlView
         
         $logFinder = new KunenaLogFinder();        
         $this->numberOfLogs = $logFinder->count();
+        
+        $count = KunenaStatistics::getInstance()->loadCategoryCount();
+        $this->categoriesCount = $count['sections'] . ' / ' . $count['categories'];
+        
+        $lastid = KunenaUserHelper::getLastId();
+        $user                     = KunenaUser::getInstance($lastid)->registerDate;
+        $this->lastUserRegisteredDate = KunenaDate::getInstance($user)->toKunena('ago');
 
         // Get the number of messages in trashbin
         $messageFinder = new KunenaMessageFinder;

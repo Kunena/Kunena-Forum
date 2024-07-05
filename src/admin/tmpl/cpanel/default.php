@@ -18,17 +18,14 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
-use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Integration\KunenaPlugins;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
-use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
-$count = KunenaStatistics::getInstance()->loadCategoryCount();
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -243,7 +240,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan">
-                                        <?php echo $count['sections'] . ' / ' . $count['categories']; ?>
+                                        <?php echo $this->categoriesCount; ?>
                                     </h3>
                                 </div>
                                 <div class="col-auto">
@@ -265,9 +262,7 @@ $count = KunenaStatistics::getInstance()->loadCategoryCount();
                                         </a>
                                     </h6>
                                     <h3 class="fw-700 text-cyan"><?php echo KunenaUserHelper::getTotalCount(); ?></h3>
-                                    <p class="mb-0"><?php $lastid = KunenaUserHelper::getLastId();
-                                                    $user                     = KunenaUser::getInstance($lastid)->registerDate;
-                                                    echo KunenaDate::getInstance($user)->toKunena('ago'); ?></p>
+                                    <p class="mb-0"><?php echo $this->lastUserRegisteredDate; ?></p>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-users bg-cyan"></i>

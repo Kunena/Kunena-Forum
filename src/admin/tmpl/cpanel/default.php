@@ -189,7 +189,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                 </div>
                                 <div class="col pl-0">
                                     <h6 class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_VERSION_CHECK'); ?></h6>
-                                    <h6 class="mb-0 text-cyan"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK'); ?> Today</h6>
+                                    <h6 class="mb-0 text-cyan"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK'); ?> <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK_TODAY'); ?></h6>
                                 </div>
                             </div>
                             <div class="row align-items-center">

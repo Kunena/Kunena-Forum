@@ -18,13 +18,14 @@ namespace Kunena\Forum\Libraries\User;
 use Exception;
 use Joomla\CMS\Date\Date;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUserFinder
  *
  * @since   Kunena 6.0
  */
-class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
+class KunenaUserFinder extends KunenaFinder
 {
     /**
      * @var     string

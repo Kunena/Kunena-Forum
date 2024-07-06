@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\User\KunenaFinder;
+use Kunena\Forum\Libraries\User\KunenaUserFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
 use Kunena\Forum\Libraries\Controller\KunenaController;
@@ -114,7 +114,7 @@ class UserListingDisplay extends KunenaControllerDisplay
             $filter = [];
         }
 
-        $finder = new KunenaFinder();
+        $finder = new KunenaUserFinder();
         $finder
             ->filterByConfiguration($filter)
             ->filterByName((string) $this->state->get('list.search'));

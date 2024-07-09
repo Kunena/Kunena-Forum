@@ -123,20 +123,12 @@ $wa->useScript('multiselect');
                                                     <table class="table table-bordered table-striped">
                                                         <?php foreach ($this->form->getFieldset($fieldset->name) as $field) :
                                                             ?>
-                                                            <?php if ($field->hidden) :
-                                                                ?>
-                                                            <tr style="display: none">
-                                                                <td class="paramlist_key"><?php echo $field->label; ?></td>
-                                                                <td class="paramlist_value"><?php echo $field->input; ?></td>
-                                                            </tr>
-                                                            <?php else :
-                                                                ?>
-                                                            <tr>
-                                                                <td width="40%"
-                                                                    class="paramlist_key"><?php echo $field->label; ?></td>
-                                                                <td class="paramlist_value"><?php echo $field->input; ?></td>
-                                                            </tr>
-                                                            <?php endif; ?>
+                                                             <?php if ($field->hidden) : ?> 
+                                                                 <tr style="display: none"> <td class="paramlist_key"><?php echo $field->label; ?></td> 
+                                                                 <td class="paramlist_value"><?php echo $field->input; ?></td> <td class="paramlist_key"><?php echo $field->description; ?></td> 
+                                                                 </tr> <?php else : ?> <tr> <td width="40%" class="paramlist_key"><?php echo $field->label; ?></td> 
+                                                                 <td class="paramlist_value"><?php echo $field->input; ?></td> <td class="paramlist_key"><?php echo Text::_($field->description); ?></td> </tr> 
+                                                             <?php endif; ?>
                                                         <?php endforeach; ?>
                                                     </table>
                                                 </div>

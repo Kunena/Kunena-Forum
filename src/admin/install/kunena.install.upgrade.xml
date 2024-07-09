@@ -269,6 +269,9 @@
             <query mode="silenterror">
             ALTER TABLE `#__kunena_users` CHANGE `twitter` `x_social` VARCHAR(75) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL; 
             </query>
+            <query mode="silenterror">
+            ALTER TABLE `#__kunena_users` DROP `icq`; 
+            </query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

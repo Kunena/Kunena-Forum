@@ -227,14 +227,6 @@ class KunenaUsers extends KunenaTable
     public $showOnline = null;
 
     /**
-     * ICQ ID
-     *
-     * @var     string
-     * @since   Kunena
-     **/
-    public $icq = null;
-
-    /**
      * YIM ID
      *
      * @var     string

@@ -253,7 +253,7 @@ class HtmlView extends BaseHtmlView
             $this->settings[] = $item;
         }
 
-        $this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="inputbox form-control" size="2"', 'value', 'text', $this->user->ordering);
+        $this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="inputbox form-control" size="1"', 'value', 'text', $this->user->ordering);
         $this->modCats     = $this->get('listmodcats');
         $this->selectRank  = $this->get('listuserranks');
 

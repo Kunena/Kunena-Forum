@@ -165,7 +165,7 @@ class HtmlView extends BaseHtmlView
             'select.genericlist',
             $options,
             'hidemail',
-            'class="kinputbox form-control" size="1"',
+            'class="form-select" size="1"',
             'value',
             'text',
             $this->escape($this->user->hideEmail),
@@ -183,7 +183,7 @@ class HtmlView extends BaseHtmlView
             'select.genericlist',
             $options,
             'showonline',
-            'class="kinputbox form-control" size="1"',
+            'class="form-select" size="1"',
             'value',
             'text',
             $this->escape($this->user->showOnline),
@@ -202,7 +202,7 @@ class HtmlView extends BaseHtmlView
             'select.genericlist',
             $options,
             'cansubscribe',
-            'class="kinputbox form-control" size="1"',
+            'class="form-select" size="1"',
             'value',
             'text',
             $this->escape($this->user->canSubscribe),
@@ -229,7 +229,7 @@ class HtmlView extends BaseHtmlView
             'select.genericlist',
             $options,
             'userlisttime',
-            'class="kinputbox form-control" size="1"',
+            'class="form-select" size="1"',
             'value',
             'text',
             $this->escape($this->user->userListtime),
@@ -251,7 +251,7 @@ class HtmlView extends BaseHtmlView
                 'select.genericlist',
                 $options,
                 'social',
-                'class="kinputbox form-control" size="1"',
+                'class="form-select" size="1"',
                 'value',
                 'text',
                 $this->escape($this->user->socialshare),
@@ -260,7 +260,7 @@ class HtmlView extends BaseHtmlView
             $this->settings[] = $item;
         }
 
-        $this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="inputbox form-control" size="1"', 'value', 'text', $this->user->ordering);
+        $this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="form-select" size="1"', 'value', 'text', $this->user->ordering);
         $this->modCats     = $this->get('listmodcats');
         $this->selectRank  = $this->get('listuserranks');
         $this->social      = $this->user->socialButtons();

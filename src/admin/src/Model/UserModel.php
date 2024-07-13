@@ -6,7 +6,7 @@
  * @package         Kunena.Administrator
  * @subpackage      Models
  *
- * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2024 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -231,7 +231,7 @@ class UserModel extends KunenaModel
         }
 
         // Build special ranks select list
-        return HTMLHelper::_('select.genericlist', $yesnoRank, 'newRank', 'class="inputbox form-control" size="1"', 'value', 'text', $user->rank);
+        return HTMLHelper::_('select.genericlist', $yesnoRank, 'newRank', 'class="form-select" size="1"', 'value', 'text', $user->rank);
     }
 
     /**

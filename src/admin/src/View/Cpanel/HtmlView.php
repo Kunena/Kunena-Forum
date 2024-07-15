@@ -86,14 +86,14 @@ class HtmlView extends BaseHtmlView
 
         // Get the number of messages in trashbin
         $messageFinder = new KunenaMessageFinder;
-        $messageFinder->filterByHold([3]);
+        $messageFinder->filterByHold([2,3]);
         $messagesTrashedCount = $messageFinder->count();
         
         // Get the number of topics in trashbin
         $topicFinder = new KunenaTopicFinder;
-        $topicFinder->filterByHold([3]);
+        $topicFinder->filterByHold([2,3]);
         $topicTrashedCount = $topicFinder->count();
-        
+
         $this->messagesTopicsInTrashBin = $messagesTrashedCount + $topicTrashedCount;
         
         return parent::display($tpl);

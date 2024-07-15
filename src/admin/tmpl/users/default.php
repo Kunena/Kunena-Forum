@@ -18,6 +18,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
@@ -34,6 +35,8 @@ $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 $language  = $app->getLanguage();
 $language->load('com_users');
+
+$this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tmpl\users\batchmoderators.js');
 ?>
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users'); ?>" method="post" id="adminForm" name="adminForm">
     <div class="row">

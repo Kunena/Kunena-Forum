@@ -20,7 +20,7 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\User\User;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
+use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\User\KunenaUser;

@@ -11,7 +11,7 @@
  * @link          https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Libraries\Database\Object;
+namespace Kunena\Forum\Libraries\Database\Finder;
 
 \defined('_JEXEC') or die;
 

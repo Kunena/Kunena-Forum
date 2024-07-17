@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\User;
 use Exception;
 use Joomla\CMS\Date\Date;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
+use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUserFinder

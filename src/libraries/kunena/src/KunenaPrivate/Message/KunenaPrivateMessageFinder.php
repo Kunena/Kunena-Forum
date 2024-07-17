@@ -19,7 +19,7 @@ use Exception;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Kunena\Forum\Libraries\Database\Object\KunenaFinder;
+use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
 
 /**
  * Private message finder.

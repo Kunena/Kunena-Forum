@@ -25,7 +25,7 @@ use RuntimeException;
  *
  * @since   Kunena 5.0
  */
-class KunenaFinder extends \Kunena\Forum\Libraries\Database\Object\KunenaFinder
+class KunenaFinder extends \Kunena\Forum\Libraries\Database\Finder\KunenaFinder
 {
     /**
      * @var     string

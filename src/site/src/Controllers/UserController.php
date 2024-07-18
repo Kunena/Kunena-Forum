@@ -890,8 +890,7 @@ class UserController extends KunenaController
             try {
                 $result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
             } catch (Exception $e) {
-                // Is this empty by design?
-                $this->app->enqueueMessage();
+                $this->app->enqueueMessage($e->getMessage(), 'error');
 
                 return false;
             }

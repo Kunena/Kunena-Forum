@@ -710,7 +710,7 @@ jQuery(document).ready(function ($) {
 		jQuery.each(obj, function( index, value ) {
 			list_emoticons.push(value);
 		});
-console.log(toolbar_buttons);
+
 		sceditor.create(textarea, {
 			format: 'bbcode',
 			toolbar: toolbar_buttons,

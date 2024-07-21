@@ -313,8 +313,8 @@ jQuery(document).ready(function ($) {
 			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_INSTAGRAM'),
 		});
 	
-		// Add bbcode twitter
-		sceditor.formats.bbcode.set('twitter', {
+		// Add bbcode X
+		sceditor.formats.bbcode.set('x_social', {
 			format: function (element, content) {
 				if (jQuery(element).data('sceditor-emoticon'))
 					return content;
@@ -361,14 +361,14 @@ jQuery(document).ready(function ($) {
 			}
 		})
 	
-		sceditor.command.set('twitter', {
+		sceditor.command.set('x_social', {
 			_dropDown: function (editor, caller) {
 				var $content;
 	
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_TWITTER_ID') + '</label> ' +
+					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_X_SOCIAL') + '</label> ' +
 					'<input type="text" id="tweet_id" size="10" />' +
 					'</div>' +
 					'<div>' +
@@ -387,15 +387,15 @@ jQuery(document).ready(function ($) {
 					e.preventDefault();
 				});
 	
-				editor.createDropDown(caller, 'insertmap', $content.get(0));
+				editor.createDropDown(caller, 'inserttweet', $content.get(0));
 			},
 			exec: function (caller) {
-				sceditor.command.get('twitter')._dropDown(this, caller);
+				sceditor.command.get('x_social')._dropDown(this, caller);
 			},
 			txtExec: function (caller) {
-				sceditor.command.get('twitter')._dropDown(this, caller);
+				sceditor.command.get('x_social')._dropDown(this, caller);
 			},
-			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_TWITTER'),
+			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_X_SOCIAL'),
 		});
 	
 		// Add bbcode maps
@@ -696,11 +696,11 @@ jQuery(document).ready(function ($) {
 		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 		{
 			// TODO: need to change the values(bold, italic) from template parameters to be handled here
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,smiley,video,map,twitter,instagram,ebay,soundcloud,poll|source';
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,smiley,video,map,x_social,instagram,ebay,soundcloud,poll|source';
 		}
 		else
 		{
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,smiley,video,map,twitter,instagram,ebay,soundcloud,poll|source';
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,smiley,video,map,x_social,instagram,ebay,soundcloud,poll|source';
 		}
 	
 		var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');

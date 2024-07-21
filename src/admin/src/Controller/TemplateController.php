@@ -409,7 +409,7 @@ class TemplateController extends FormController
         }
 
         if (!$params['Smiley']) {
-            $editorButtons[] = 'Smiley';
+            $editorButtons[] = 'Emoticon';
         }
 
         if ($params['Ebay']) {

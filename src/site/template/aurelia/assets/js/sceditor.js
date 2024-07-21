@@ -696,11 +696,11 @@ jQuery(document).ready(function ($) {
 		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 		{
 			// TODO: need to change the values(bold, italic) from template parameters to be handled here
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,twitter,instagram,ebay,soundcloud,poll|source';
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,smiley,video,map,twitter,instagram,ebay,soundcloud,poll|source';
 		}
 		else
 		{
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,twitter,instagram,ebay,soundcloud,poll|source';
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,smiley,video,map,twitter,instagram,ebay,soundcloud,poll|source';
 		}
 	
 		var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');

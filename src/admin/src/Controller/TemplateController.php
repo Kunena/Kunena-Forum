@@ -344,10 +344,6 @@ class TemplateController extends FormController
             $editorButtons[] = 'bold';
         }
 
-        if ($params['Emoticon']) {
-            $editorButtons[] = 'emoticon';
-        }
-
         if ($params['Source']) {
             $editorButtons[] = 'source';
         }

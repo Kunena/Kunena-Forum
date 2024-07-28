@@ -269,7 +269,7 @@ class UsersController extends KunenaController
                 continue;
             }
 
-            $instance = Factory::getContainer(UserFactoryInterface::class)->get()->loadUserById($user->userid);
+            $instance = Factory::getContainer(UserFactoryInterface::class)->get(UserFactoryInterface::class)->loadUserById($user->userid);
 
             if ($instance->authorise('core.admin')) {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'), 'error');

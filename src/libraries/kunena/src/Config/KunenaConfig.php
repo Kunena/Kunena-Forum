@@ -207,8 +207,8 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property boolean $ebayLanguage
  * @property string  $ebayApiKey
  * @property string  $ebayCertId
- * @property string  $twitterConsumerKey
- * @property string  $twitterConsumerSecret
+ * @property string  $XConsumerKey
+ * @property string  $XConsumerSecret
  * @property boolean $allowChangeSubject
  * @property integer $maxLinks
  * @property boolean $readOnly
@@ -1319,13 +1319,13 @@ class KunenaConfig extends CMSObject
      * @var     string  Define X API consumer key
      * @since   Kunena 4.0.0
      */
-    public $twitterConsumerKey = '';
+    public $XConsumerKey = '';
 
     /**
      * @var     string  Define X API consumer secret
      * @since   Kunena 4.0.0
      */
-    public $twitterConsumerSecret = '';
+    public $XConsumerSecret = '';
 
     /**
      * @var     boolean  Allow to define if the user can change the subject of topic on replies

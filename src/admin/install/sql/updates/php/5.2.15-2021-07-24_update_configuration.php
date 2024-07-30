@@ -680,14 +680,6 @@ function kunena_5215_2021_07_24_update_configuration($parent) {
 
 	unset($config->ebay_api_key);
 
-	$config->twitterConsumerKey = $config->twitter_consumer_key;
-
-	unset($config->twitter_consumer_key);
-
-	$config->twitterConsumerSecret = $config->twitter_consumer_secret;
-
-	unset($config->twitter_consumer_secret);
-
 	$config->allowChangeSubject = $config->allow_change_subject;
 
 	unset($config->allow_change_subject);

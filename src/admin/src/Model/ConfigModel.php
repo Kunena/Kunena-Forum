@@ -1084,13 +1084,13 @@ class ConfigModel extends AdminModel
      * @var     string  Define X API consumer key
      * @since   Kunena 4.0.0
      */
-    public $twitterConsumerKey = '';
+    public $XConsumerKey = '';
 
     /**
      * @var     string  Define X API consumer secret
      * @since   Kunena 4.0.0
      */
-    public $twitterConsumerSecret = '';
+    public $XConsumerSecret = '';
 
     /**
      * @var     boolean  Allow to define if the user can change the subject of topic on replies

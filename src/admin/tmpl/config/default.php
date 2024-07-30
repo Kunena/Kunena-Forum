@@ -1551,21 +1551,21 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         </td>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->twitterConsumerKey != '') :
+                                    <tr <?php if ($this->config->XConsumerKey != '') :
                                             echo 'class="changed"';
                                         endif; ?>>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_KEY_LABEL') ?></td>
                                         <td>
-                                            <input type="text" class="form-control" name="cfg_twitterConsumerKey" value="<?php echo $this->escape($this->config->twitterConsumerKey) ?>" />
+                                            <input type="text" class="form-control" name="cfg_XConsumerKey" value="<?php echo $this->escape($this->config->XConsumerKey) ?>" />
                                         </td>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_KEY_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->twitterConsumerSecret != '') :
+                                    <tr <?php if ($this->config->XConsumerSecret != '') :
                                             echo 'class="changed"';
                                         endif; ?>>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_LABEL') ?></td>
                                         <td>
-                                            <input type="text" class="form-control" name="cfg_twitterConsumerSecret" value="<?php echo $this->escape($this->config->twitterConsumerSecret) ?>" />
+                                            <input type="text" class="form-control" name="cfg_XConsumerSecret" value="<?php echo $this->escape($this->config->XConsumerSecret) ?>" />
                                         </td>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_DESC') ?></td>
                                     </tr>

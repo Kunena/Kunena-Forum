@@ -273,6 +273,11 @@
             ALTER TABLE `#__kunena_users` DROP `icq`; 
             </query>
         </version>
+        <version version="6.3.4-DEV"
+                 versiondate="2024-08-01"
+                 versionname="Internal">
+            <phpfile name="6.3.4-2024-08-01_update_configuration_to_x"/>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

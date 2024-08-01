@@ -319,6 +319,11 @@
             ALTER TABLE `#__kunena_users` ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`;  
             </query>
         </version>
+        <version version="6.3.4-DEV"
+                 versiondate="2024-08-01"
+                 versionname="Internal">
+            <phpfile name="6.3.4-2024-08-01_update_configuration_to_x"/>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

@@ -1126,7 +1126,7 @@ class TopicController extends KunenaController
             }
         }
 
-        preg_match_all('/<div id=\"kunena_twitter_widget\"(.*?)>(.*?)<\/div>/s', $text, $x_social_matches);
+        preg_match_all('/<div id=\"kunena_x_widget\"(.*?)>(.*?)<\/div>/s', $text, $x_social_matches);
 
         foreach ($x_social_matches as $match) {
             if (!empty($match)) {

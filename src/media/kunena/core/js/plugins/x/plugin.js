@@ -10,7 +10,7 @@
 CKEDITOR.plugins.add( 'x', {
 	icons: 'x_social',
 	init: function( editor ) {
-		editor.addCommand( 'insertTwitter', {
+		editor.addCommand( 'insertX', {
 			exec: function( editor ) {
 				var selectedtext = editor.getSelection().getSelectedText();
 				editor.insertHtml( '[tweet]' + selectedtext + '[/tweet]' );
@@ -18,7 +18,7 @@ CKEDITOR.plugins.add( 'x', {
 		});
 		editor.ui.addButton( 'X_Social', {
 			label: Joomla.Text._('COM_KUNENA_EDITOR_TWEET'),
-			command: 'insertTwitter',
+			command: 'insertX',
 			toolbar: 'social'
 		});
 	}

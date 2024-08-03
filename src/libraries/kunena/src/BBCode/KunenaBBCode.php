@@ -2783,7 +2783,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return '';
         }
 
-        if (KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Twitter')) {
+        if (KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('X_Social')) {
             return false;
         }
 
@@ -2946,13 +2946,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
                 if (!empty($tweet_data->entities->user_mentions)) {
                     foreach ($tweet_data->entities->user_mentions as $mention) {
-                        $tweet_data->text = str_replace('@' . $mention->screen_name, '<a href="https://twitter.com/' . $mention->screen_name . '" target="_blank" rel="nofollow noopener noreferrer">@' . $mention->screen_name . '</a>', $tweet_data->text);
+                        $tweet_data->text = str_replace('@' . $mention->screen_name, '<a href="https://x.com/' . $mention->screen_name . '" target="_blank" rel="nofollow noopener noreferrer">@' . $mention->screen_name . '</a>', $tweet_data->text);
                     }
                 }
 
                 if (!empty($tweet_data->entities->hashtags)) {
                     foreach ($tweet_data->entities->hashtags as $hashtag) {
-                        $tweet_data->text = str_replace('#' . $hashtag->text, '<a href="https://twitter.com/hashtag/' . $hashtag->text . '?src=hash" target="_blank" rel="nofollow noopener noreferrer">#' . $hashtag->text . '</a>', $tweet_data->text);
+                        $tweet_data->text = str_replace('#' . $hashtag->text, '<a href="https://x.com/hashtag/' . $hashtag->text . '?src=hash" target="_blank" rel="nofollow noopener noreferrer">#' . $hashtag->text . '</a>', $tweet_data->text);
                     }
                 }
 

@@ -933,6 +933,16 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         return false;
     }
+    
+    public function isMyOwnPrivateAttachment() {
+        if ($this->protected == 32) {
+            $me       = KunenaUserHelper::getMyself();
+        
+            if ($this->userid == $me->userid) {
+                return true;
+            }
+        }
+    }
 
     /**
      * Set KunenaAttachment file.

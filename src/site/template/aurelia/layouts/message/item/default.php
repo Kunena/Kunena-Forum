@@ -123,30 +123,16 @@ $list = [];
 <?php endif; ?>
 
 <?php if (!empty($attachments)) : 
-		//  Display the error message when the user is a guest and he isn't allowed to see the attachments
-		if ($attachs->totalProtected > 0 && !$this->me->exists()) :  
-		    if (!$this->config->showImgForGuest && $attachs->image > 0 ) {
-				if ($attachs->image > 1) {
-                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
-                } else {
-                    echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
-                }
-			} else {
-				if ($attachs->file > 1) {
-                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
-                } else {
-                    echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
-                }
-			} 
-		else : ?> 	
-			<?php if ($attachs->inline == 0) : ?>
+    if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest ) || $this->me->exists()) : ?> 	
+			<?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>
 			<div class="card pb-3 pd-3 mb-3">
             	<div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
             		<div class="card-body kattach">
                 		<ul class="thumbnails" style="list-style:none;">
              <?php endif; ?>   		
-						<?php foreach ($attachments as $attachment) :
-	                       if (!$attachment->inline) : ?>
+						<?php foreach ($attachments as $attachment) :	
+
+						if (!$attachment->protected) : ?>
                             <?php if ($attachment->isAudio()) :
                                 echo $attachment->getLayout()->render('audio'); ?>
                             <?php elseif ($attachment->isVideo()) :
@@ -159,7 +145,7 @@ $list = [];
                                     </div>
                                 </li>
                             <?php endif; ?>                            
-                         <?php elseif ($attachment->protected > 0): ?>
+                         <?php elseif ($attachment->protected == 1): ?>
                          		<?php if ($attachment->isAudio()) :
                                 echo $attachment->getLayout()->render('audio'); ?>
                             <?php elseif ($attachment->isVideo()) :
@@ -172,16 +158,38 @@ $list = [];
                                     </div>
                                 </li>
                              <?php endif; ?>
-                        <?php elseif ($this->config->privateMessage && $this->me->isModerator($this->topic->getCategory())) : ?>        
+                        <?php elseif ($attachment->protected == 32 && $this->config->privateMessage && ($this->me->isModerator($this->topic->getCategory()) || $attachment->isMyOwnPrivateAttachment())) : ?>  
+                              <li class="col-md-3 text-center">
+                                    <div class="thumbnail">
+                                        <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                        <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                    </div>
+                                </li>
                         <?php endif;
+
 						endforeach; ?>
-						<?php if ($attachs->inline == 0) : ?>
+						<?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>
 						</ul>
             		</div>
             	</div>
 			<div class="clearfix"></div>
 			<?php endif; ?>
-	    <?php  endif; ?> 
+	    <?php  else : 
+	    //  Display the error message when the user is a guest and he isn't allowed to see the attachments
+	    if (!$this->config->showImgForGuest && $attachs->image > 0 ) { 
+				if ($attachs->image > 1) {
+                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
+                } else {
+                    echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
+                }
+	    } else { 
+				if ($attachs->file > 1) {
+                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
+                } else {
+                    echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
+                }
+			} 
+		endif; ?>
 <?php endif; ?>
 
 

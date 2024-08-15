@@ -1337,7 +1337,7 @@ class KunenaMessage extends KunenaDatabaseObject
         $attachs->file     = 0;
         $attachs->totalNonProtected    = 0;
         $attachs->readable = 0;
-        $attachs->totalProtected = 0;
+        $attachs->totalPrivate = 0;
 
         foreach ($attachments as $attach) {
             if ($attach->inline) {
@@ -1360,8 +1360,8 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
             }
             
-            if ($attach->protected > 0) {
-                $attachs->totalProtected = $attachs->totalProtected + 1;
+            if ($attach->protected == 32) {
+                $attachs->totalPrivate = $attachs->totalPrivate + 1;
             }
         }
 

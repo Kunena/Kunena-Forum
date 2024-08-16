@@ -934,6 +934,12 @@ class KunenaAttachment extends KunenaDatabaseObject
         return false;
     }
     
+    /**
+     * Say if the attachment belong to the user
+     * 
+     * @return boolean
+     * @since   Kunena 6.3
+     */
     public function isMyOwnPrivateAttachment() {
         if ($this->protected == 32) {
             $me       = KunenaUserHelper::getMyself();

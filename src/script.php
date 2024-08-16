@@ -65,7 +65,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             '0'   => '8.0.13', // Preferred version
         ],
         'mariaDB' => [
-            '11.4' => '11.4',
+            '11.5' => '11.5.2',
+            '11.4' => '11.4.2',
             '11.3' => '11.3',
             '11.2' => '11.2',
             '11.1' => '11.1',

@@ -1834,7 +1834,7 @@ HTML;
         $fontawesome          = $this->params->get('fontawesome');
 
         if ($fontawesome) {
-            $this->addScript('https://use.fontawesome.com/releases/v6.5.2/js/all.js', [], ['defer' => true]);
+            $this->addScript('https://use.fontawesome.com/releases/v6.6.0/js/all.js', [], ['defer' => true]);
         }
     }
 

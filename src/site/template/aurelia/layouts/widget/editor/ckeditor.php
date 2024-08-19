@@ -30,7 +30,7 @@ $user = Factory::getApplication()->getIdentity();
 $userLanguage = $user->getParam('language', 'default');
 $joomlaLanguage = Factory::getApplication()->getLanguage()->getLocale();
 
-if ($userLanguage != 'default' && $userLanguage != 'active') { echo 'first';
+if ($userLanguage != 'default' && $userLanguage != 'active') {
     $this->doc->addScriptOptions('com_kunena.ckeditor_userdefaultlanguage', substr($userLanguage, 0, 2));
 } else {
     $this->doc->addScriptOptions('com_kunena.ckeditor_userdefaultlanguage', 'default');

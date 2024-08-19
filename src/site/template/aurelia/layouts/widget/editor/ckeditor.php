@@ -29,13 +29,14 @@ $this->doc->addScriptOptions('com_kunena.ckeditor_skiname', $this->template->par
 $user = Factory::getApplication()->getIdentity();
 $userLanguage = $user->getParam('language', 'default');
 $joomlaLanguage = Factory::getApplication()->getLanguage()->getLocale();
-if ($userLanguage != 'default' && $userLanguage != 'active') {
+
+if ($userLanguage != 'default' && $userLanguage != 'active') { echo 'first';
     $this->doc->addScriptOptions('com_kunena.ckeditor_userdefaultlanguage', substr($userLanguage, 0, 2));
 } else {
     $this->doc->addScriptOptions('com_kunena.ckeditor_userdefaultlanguage', 'default');
 }
 
-$this->doc->addScriptOptions('com_kunena.ckeditor_joomladefaultlanguage', substr($joomlaLanguage[3], 0, 2));
+$this->doc->addScriptOptions('com_kunena.ckeditor_joomladefaultlanguage', substr($joomlaLanguage[2], 0, 2));
 
 HTMLHelper::_('bootstrap.tab');
 

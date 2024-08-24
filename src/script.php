@@ -491,6 +491,64 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
         if ($upgrade == 1) {
             $sampleData = 1;
+        } else {
+            // In case of a clean install the ranks and smileys needs to be inserted in the table to avoid else emoticons/ranks not appears                       
+            $queries  = [];
+            
+            $query = "INSERT INTO `#__kunena_ranks`
+    		(`rankId`, `rankTitle`, `rankMin`, `rankSpecial`, `rankImage`) VALUES
+    		(1, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK1')}, 0, 0, 'rank1.gif'),
+    		(2, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK2')}, 20, 0, 'rank2.gif'),
+    		(3, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK3')}, 40, 0, 'rank3.gif'),
+    		(4, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK4')}, 80, 0, 'rank4.gif'),
+    		(5, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK5')}, 160, 0, 'rank5.gif'),
+    		(6, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK6')}, 320, 0, 'rank6.gif'),
+    		(7, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN')}, 0, 1, 'rankadmin.gif'),
+    		(8, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR')}, 0, 1, 'rankmod.gif'),
+    		(9, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER')}, 0, 1, 'rankspammer.gif'),
+    		(10, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED')}, 0, 1, 'rankbanned.gif');";
+            
+            $queries[] = ['kunena_ranks', $query];
+            
+            $query = "INSERT INTO `#__kunena_smileys`
+    		(`id`,`code`,`location`,`greylocation`,`emoticonbar`) VALUES
+    		(1, 'B)', '1.png', 'cool-grey.png', 1),
+    		(2, '8)', '2.png', 'cool-grey.png', 1),
+    		(3, '8-)', '3.png', 'cool-grey.png', 1),
+    		(4, ':-(', '4.png', 'sad-grey.png', 1),
+    		(5, ':(', '5.png', 'sad-grey.png', 1),
+    		(6, ':sad:', '6.png', 'sad-grey.png', 1),
+    		(7, ':cry:', '7.png', 'sad-grey.png', 1),
+    		(8, ':)', '8.png', 'smile-grey.png', 1),
+    		(9, ':-)', '9.png', 'smile-grey.png', 1),
+    		(10, ':cheer:', '10.png', 'cheerful-grey.png', 1),
+    		(11, ';)', '11.png', 'wink-grey.png', 1),
+    		(12, ';-)', '12.png', 'wink-grey.png', 1),
+    		(13, ':wink:', '13.png', 'wink-grey.png', 1),
+    		(14, ';-)', '14.png', 'wink-grey.png', 1),
+    		(15, ':P', '15.png', 'tongue-grey.png', 1),
+    		(16, ':p', '16.png', 'tongue-grey.png', 1),
+    		(17, ':-p', '17.png', 'tongue-grey.png', 1),
+    		(18, ':-P', '18.png', 'tongue-grey.png', 1),
+    		(19, ':razz:', '19.png', 'tongue-grey.png', 1),
+    		(20, ':angry:', '20.png', 'angry-grey.png', 1),
+    		(21, ':mad:', '21.png', 'angry-grey.png', 1),
+    		(22, ':unsure:', '22.png', 'unsure-grey.png', 1),
+    		(23, ':o', '23.png', 'shocked-grey.png', 1);";
+            
+            $queries[] = ['kunena_smileys', $query];
+            
+            foreach ($queries as $query) {
+                // Only insert sample/default data if table is empty
+                $db->setQuery("SELECT * FROM " . $db->quoteName($db->getPrefix() . $query[0]), 0, 1);
+                $filled = $db->loadObject();
+                
+                if (!$filled) {
+                    $db->setQuery($query[1]);                    
+                    
+                    $db->execute();
+                }
+            }
         }
 
         if ($installed != 'NONE') {

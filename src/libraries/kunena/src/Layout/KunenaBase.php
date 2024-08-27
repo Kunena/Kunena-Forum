@@ -130,7 +130,7 @@ class KunenaBase extends KunenaLayoutBase
         // Setup dependencies.
         $this->_name        = $name;
         $this->includePaths = isset($paths) ? $paths : $this->loadPaths();
-        $this->debug        = JDEBUG || KunenaConfig::getInstance()->get('debug');
+        $this->debug        = JDEBUG || KunenaConfig::getInstance()->debug;
     }
 
     /**

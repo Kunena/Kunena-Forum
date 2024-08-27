@@ -220,9 +220,7 @@ abstract class KunenaFactory
 
             $english = false;
 
-            if (
-                self::getConfig()->get('fallbackEnglish')
-            ) {
+            if (KunenaConfig::getInstance()->fallbackEnglish) {
                 $lang->load($file, $lookup2, 'en-GB', true, false);
                 $english = true;
             }

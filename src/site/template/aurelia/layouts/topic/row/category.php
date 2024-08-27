@@ -24,11 +24,11 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 $topic           = $this->topic;
 $category        = $topic->getCategory();
 $userTopic       = $topic->getUserTopic();
-$topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messagesPerPage, 3);
+$config          = KunenaConfig::getInstance();
+$topicPages      = $topic->getPagination(null, $config->messagesPerPage, 3);
 $author          = $topic->getLastPostAuthor();
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
-$config          = KunenaConfig::getInstance();
 $txt             = '';
 
 if ($this->topic->ordering) {

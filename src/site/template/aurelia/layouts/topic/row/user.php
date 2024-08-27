@@ -22,13 +22,13 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 $topic           = $this->topic;
-$topicPages      = $topic->getPagination(null, KunenaConfig::getInstance()->messagesPerPage, 3);
+$config          = KunenaConfig::getInstance();
+$topicPages      = $topic->getPagination(null, $config->messagesPerPage, 3);
 $userTopic       = $topic->getUserTopic();
 $author          = $topic->getLastPostAuthor();
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $category        = $this->topic->getCategory();
-$config          = KunenaConfig::getInstance();
 $txt             = '';
 
 if ($this->topic->ordering) {

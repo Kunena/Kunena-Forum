@@ -37,8 +37,6 @@ class UserEditProfileDisplay extends UserEditDisplay
 
     public $genders;
 
-    public $social;
-
     public $birthdate;
 
     /**
@@ -65,15 +63,6 @@ class UserEditProfileDisplay extends UserEditDisplay
         $this->genders[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
         $this->genders[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
         $this->genders[] = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
-
-        $config = KunenaConfig::getInstance();
-
-        if ($config->social) {
-            $this->social = $this->profile->socialButtons();
-            $this->social = ArrayHelper::toObject($this->social);
-        } else {
-            $this->social = null;
-        }
 
         $this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE');
     }

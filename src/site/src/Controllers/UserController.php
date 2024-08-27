@@ -606,10 +606,6 @@ class UserController extends KunenaController
             $birthdate = $now->format('Y-m-d');
         }
 
-        foreach ($user->socialButtons() as $key => $social) {
-            $user->$key = str_replace(' ', '', trim($input->$method->get($key, '', 'string')));
-        }
-
         $user->birthdate = $birthdate;
         $user->location  = trim($input->$method->get('location', '', 'string'));
         $user->gender    = $input->$method->get('gender', 0, 'int');
@@ -791,10 +787,6 @@ class UserController extends KunenaController
             $user->birthdate    = $birthdate;
             $user->location     = '';
             $user->gender       = 0;
-
-            foreach ($user->socialButtons() as $social) {
-                $user->$social = '';
-            }
 
             $user->websitename = '';
             $user->websiteurl  = '';

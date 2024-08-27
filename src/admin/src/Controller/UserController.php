@@ -136,10 +136,9 @@ class UserController extends FormController
                 $birthdate = '0001-01-01';
             }
 
-            $user->birthdate = $birthdate;
-            $user->location  = trim($this->app->input->getString('location'));
-            $user->gender    = $this->app->input->getInt('gender', '');
-            $this->cleanSocial($user, $this->app);
+            $user->birthdate    = $birthdate;
+            $user->location     = trim($this->app->input->getString('location'));
+            $user->gender       = $this->app->input->getInt('gender', '');
             $user->websitename  = $this->app->input->getString('websitename');
             $user->websiteurl   = $this->app->input->getString('websiteurl');
             $user->hideEmail    = $this->app->input->getInt('hidemail');
@@ -178,23 +177,6 @@ class UserController extends FormController
 
                 $this->setRedirect(KunenaRoute::_("administrator/index.php?option=com_kunena&view=user&layout=edit&userid={$uid}", false));
             }
-        }
-    }
-
-    /**
-     * Clean social items
-     *
-     * @param   KunenaUser      $user  user
-     * @param   CMSApplication  $app   app
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function cleanSocial(KunenaUser $user, CMSApplication $app): void
-    {
-        foreach ($user->socialButtons() as $key => $social) {
-            $user->$key = str_replace(' ', '', trim($app->input->getString($key, '')));
         }
     }
 

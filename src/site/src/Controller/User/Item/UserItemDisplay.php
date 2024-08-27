@@ -87,8 +87,6 @@ class UserItemDisplay extends KunenaControllerDisplay
 
     public $private;
 
-    public $socials;
-
     public $avatar;
 
     public $banInfo;
@@ -131,8 +129,6 @@ class UserItemDisplay extends KunenaControllerDisplay
         $this->points        = $activityIntegration->getUserPoints($this->profile->userid);
         $this->medals        = $activityIntegration->getUserMedals($this->profile->userid);
         $this->private       = KunenaFactory::getPrivateMessaging();
-        $socials             = $this->profile->socialButtons();
-        $this->socials       = ArrayHelper::toObject($socials);
 
         $this->avatar  = $this->profile->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'post');
         $this->banInfo = $this->config->showBannedReason

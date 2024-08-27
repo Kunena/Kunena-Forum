@@ -257,31 +257,6 @@ jQuery(function($) {
                                                             </span>
                                                         </td>
                                                     </tr>
-
-                                                    <?php if ($this->config->social) : ?>
-                                                        <?php foreach ($this->social as $key => $social) : ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <label for="social-<?php echo $key; ?>">
-                                                                        <?php echo Text::_('COM_KUNENA_MYPROFILE_' . $key); ?>
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <?php if ($key != 'qq') : ?>
-                                                                    <span class="hasTooltip"
-                                                                          title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")
-                                                                              . '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
-                                                                    <?php endif; ?>
-                                                                        <input id="social-<?php echo $key; ?>"
-                                                                               type="text" class="inputbox form-control"
-                                                                               name="<?php echo $key ?>"
-                                                                               value="<?php echo $this->escape($this->user->$key); ?>"/>
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                        <?php endforeach; ?>
-                                                    <?php endif; ?>
-
                                                     </tbody>
                                                 </table>
                                             </fieldset>

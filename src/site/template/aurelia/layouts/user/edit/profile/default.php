@@ -128,30 +128,6 @@ $this->addScript('assets/js/profile.js');
         </td>
     </tr>
 
-    <?php if ($this->config->social) :
-        ?>
-        <?php foreach ($this->social as $key => $social) :
-            ?>
-            <tr>
-                <td>
-                    <label for="social-<?php echo $key; ?>">
-                        <?php echo Text::_('COM_KUNENA_MYPROFILE_' . $key); ?>
-                    </label>
-                </td>
-                <td>
-                    <?php if ($social != 'qqsocial') :
-                        ?>
-                    <span class="hasTooltip" data-bs-toggle="tooltip" title="<?php echo Text::_("COM_KUNENA_MYPROFILE_{$key}")
-                        . '::' . Text::_("COM_KUNENA_MYPROFILE_{$key}_DESC"); ?>">
-                    <?php endif; ?>
-                        <input id="social-<?php echo $key; ?>" type="text" name="<?php echo $key ?>"
-                               value="<?php echo $this->escape($this->profile->$key); ?>"/>
-                </span>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    <?php endif; ?>
-
     <?php if ($this->config->signature) :
         ?>
         <tr>

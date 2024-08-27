@@ -85,33 +85,7 @@ use Joomla\CMS\User\UserFactoryAwareInterface;
  * @property    int     $showOnline
  * @property    int     $canSubscribe
  * @property    int     $userListtime
- * @property    string  $yim
- * @property    string  $microsoft
- * @property    string  $skype
- * @property    string  $x_social
- * @property    string  $facebook
- * @property    string  $google
- * @property    string  $github
- * @property    string  $myspace
- * @property    string  $linkedin
- * @property    string  $linkedin_company
- * @property    string  $digg
- * @property    string  $blogspot
- * @property    string  $flickr
- * @property    string  $bebo
  * @property    int     $thankyou
- * @property    string  $instagram
- * @property    string  $qqsocial
- * @property    string  $qzone
- * @property    string  $weibo
- * @property    string  $wechat
- * @property    string  $apple
- * @property    string  $vk
- * @property    string  $telegram
- * @property    string  $vimeo
- * @property    string  $whatsapp
- * @property    string  $youtube
- * @property    string  $ok
  * @property    int     $socialshare
  * @property    string  $pinterest
  * @property    string  $reddit
@@ -314,192 +288,16 @@ class KunenaUser extends CMSObject
     public $userListtime;
 
     /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $yim;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $microsoft;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $skype;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $x_social;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $facebook;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $google;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $github;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $myspace;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $linkedin;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $linkedin_company;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $digg;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $blogspot;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $flickr;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $bebo;
-
-    /**
      * @var     integer
      * @since   Kunena 6.0
      */
     public $thankyou;
 
     /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $instagram;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $qqsocial;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $qzone;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $weibo;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $wechat;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $apple;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $vk;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $telegram;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $vimeo;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $whatsapp;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $youtube;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $ok;
-
-    /**
      * @var     integer
      * @since   Kunena 6.0
      */
     public $socialshare;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $pinterest;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $reddit;
-
-    /**
-     * For bluesky social network
-     *
-     * @var     string
-     * @since   Kunena 6.3
-     */
-    public $bsky_app;
 
     /**
      * @var     integer
@@ -2147,90 +1945,6 @@ class KunenaUser extends CMSObject
     }
 
     /**
-     * Prepare social buttons for the template
-     *
-     * @param   string  $name  name
-     * @param   bool    $gray  gray
-     *
-     * @return  string
-     *
-     * @throws Exception
-     * @since   Kunena 5.0
-     */
-    public function socialButtonsTemplate(string $name, $gray = false)
-    {
-        $social = $this->socialButtons();
-
-        if (!isset($social[$name])) {
-            return false;
-        }
-
-        $title = $social[$name]['title'];
-        $value = $this->escape($this->$name);
-        $url   = strtr($social[$name]['url'], ['##VALUE##' => $value]);
-
-        // TODO : move this part in a template
-
-        if ($social[$name]['nourl'] == '0') {
-            if (!empty($this->$name)) {
-                return '<a href="' . $this->escape($url) . '" ' . KunenaTemplate::getInstance()->tooltips(true) . ' target="_blank" data-bs-toggle="tooltip" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
-            }
-        } else {
-            if (!empty($this->$name)) {
-                return '<span class="kicon-profile kicon-profile-' . $name . ' ' . KunenaTemplate::getInstance()->tooltips() . '" data-bs-toggle="tooltip" title="' . $title . ': ' . $value . '"></span>';
-            }
-        }
-
-        if ($gray) {
-            return '<span class="kicon-profile kicon-profile-' . $name . '-off"></span>';
-        }
-
-        return '';
-    }
-
-    /**
-     * Get list of social buttons
-     *
-     * @return  array
-     *
-     * @since   Kunena 6.0
-     */
-    public function socialButtons()
-    {
-        return [
-            'x_social'          => ['url' => 'https://x.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_X_SOCIAL'), 'nourl' => '0'],
-            'facebook'         => ['url' => 'https://www.facebook.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FACEBOOK'), 'nourl' => '0'],
-            'myspace'          => ['url' => 'https://www.myspace.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MYSPACE'), 'nourl' => '0'],
-            'linkedin'         => ['url' => 'https://www.linkedin.com/in/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN'), 'nourl' => '0'],
-            'linkedin_company' => ['url' => 'https://www.linkedin.com/company/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY'), 'nourl' => '0'],
-            'digg'             => ['url' => 'https://www.digg.com/users/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_DIGG'), 'nourl' => '0'],
-            'skype'            => ['url' => 'skype:##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_SKYPE'), 'nourl' => '0'],
-            'yim'              => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YIM'), 'nourl' => '1'],
-            'google'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GOOGLE'), 'nourl' => '1'],
-            'github'           => ['url' => 'https://www.github.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_GITHUB'), 'nourl' => '0'],
-            'microsoft'        => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_MICROSOFT'), 'nourl' => '1'],
-            'blogspot'         => ['url' => 'https://##VALUE##.blogspot.com/', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLOGSPOT'), 'nourl' => '0'],
-            'flickr'           => ['url' => 'https://www.flickr.com/photos/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_FLICKR'), 'nourl' => '0'],
-            'bebo'             => ['url' => 'https://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_BEBO'), 'nourl' => '0'],
-            'instagram'        => ['url' => 'https://www.instagram.com/##VALUE##/', 'title' => Text::_('COM_KUNENA_MYPROFILE_INSTAGRAM'), 'nourl' => '0'],
-            'qqsocial'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QQSOCIAL'), 'nourl' => '1'],
-            'qzone'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_QZONE'), 'nourl' => '1'],
-            'weibo'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WEIBO'), 'nourl' => '1'],
-            'wechat'           => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WECHAT'), 'nourl' => '1'],
-            'vk'               => ['url' => 'https://vk.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VK'), 'nourl' => '0'],
-            'telegram'         => ['url' => 'https://t.me/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_TELEGRAM'), 'nourl' => '0'],
-            'apple'            => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_APPLE'), 'nourl' => '1'],
-            'vimeo'            => ['url' => 'https://vimeo.com/user##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_VIMEO'), 'nourl' => '1'],
-            'whatsapp'         => ['url' => '##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_WHATSAPP'), 'nourl' => '1'],
-            'youtube'          => ['url' => 'https://www.youtube-nocookie.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_YOUTUBE'), 'nourl' => '0'],
-            'ok'               => ['url' => 'https://ok.ru/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_OK'), 'nourl' => '0'],
-            'pinterest'        => ['url' => 'https://pinterest.com/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_PINTEREST'), 'nourl' => '0'],
-            'reddit'           => ['url' => 'https://www.reddit.com/user/##VALUE##', 'title' => Text::_('COM_KUNENA_MYPROFILE_REDDIT'), 'nourl' => '0'],
-            'bluesky_app'         => ['url' => 'https://bsky.app/profile/##VALUE##.bsky.social', 'title' => Text::_('COM_KUNENA_MYPROFILE_BLUESKY_APP'), 'nourl' => '0'],
-        ];
-    }
-
-    /**
      * @param   string  $name  name
      *
      * @return  integer|string|void
@@ -2301,66 +2015,8 @@ class KunenaUser extends CMSObject
                 return $this->canSubscribe;
             case 'userListtime':
                 return $this->userListtime;
-            case 'yim':
-                return $this->yim;
-            case 'microsoft':
-                return $this->microsoft;
-            case 'skype':
-                return $this->skype;
-            case 'x_social':
-                return $this->x_social;
-            case 'facebook':
-                return $this->facebook;
-            case 'google':
-                return $this->google;
-            case 'github':
-                return $this->github;
-            case 'myspace':
-                return $this->myspace;
-            case 'linkedin':
-                return $this->linkedin;
-            case 'linkedin_company':
-                return $this->linkedin_company;
-            case 'digg':
-                return $this->digg;
-            case 'blogspot':
-                return $this->blogspot;
-            case 'flickr':
-                return $this->flickr;
-            case 'bebo':
-                return $this->bebo;
             case 'thankyou':
                 return $this->thankyou;
-            case 'instagram':
-                return $this->instagram;
-            case 'qqsocial':
-                return $this->qqsocial;
-            case 'qzone':
-                return $this->qzone;
-            case 'weibo':
-                return $this->weibo;
-            case 'wechat':
-                return $this->wechat;
-            case 'apple':
-                return $this->apple;
-            case 'vk':
-                return $this->vk;
-            case 'telegram':
-                return $this->telegram;
-            case 'vimeo':
-                return $this->vimeo;
-            case 'whatsapp':
-                return $this->whatsapp;
-            case 'youtube':
-                return $this->youtube;
-            case 'ok':
-                return $this->ok;
-            case 'pinterest':
-                return $this->pinterest;
-            case 'reddit':
-                return $this->reddit;
-            case 'bsky_app':
-                return $this->bsky_app;
             case 'timestamp':
                 return $this->timestamp;
             default:

@@ -93,7 +93,7 @@ class ConfigController extends FormController
             return;
         }
 
-        $properties = KunenaConfig::getInstance()->getProperties();
+        $kconfig    = KunenaConfig::getInstance();
         $postConfig = $this->input->post->getArray();
 
         foreach ($postConfig as $postsetting => $postvalue) {
@@ -119,15 +119,12 @@ class ConfigController extends FormController
                     $postvalue = preg_replace("/\s+/", "", $postvalue);
                 }
 
-                // No matter what got posted, we only store config parameters defined
-                // in the config class. Anything else posted gets ignored.
-                if (\array_key_exists($postname, $properties)) {
-                    KunenaConfig::getInstance()->set($postname, $postvalue);
-                }
+
+                $kconfig->set($postname, $postvalue);
             }
         }
 
-        KunenaConfig::getInstance()->save();
+        $kconfig->save();
 
         KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 

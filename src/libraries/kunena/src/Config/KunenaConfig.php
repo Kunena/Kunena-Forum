@@ -21,8 +21,6 @@ namespace Kunena\Forum\Libraries\Config;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
-use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
@@ -256,7 +254,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  *
  * @since   Kunena 6.0
  */
-class KunenaConfig extends CMSObject
+class KunenaConfig
 {
     /**
      * @var    integer  ID
@@ -1648,14 +1646,6 @@ class KunenaConfig extends CMSObject
     public $mailBodyUserBanned = '';
 
     /**
-     * @since   Kunena 6.0
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * @return  KunenaConfig|mixed
      *
      * @throws  Exception
@@ -1667,7 +1657,9 @@ class KunenaConfig extends CMSObject
 
         if (!$instance) {
             $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+            $cache = Factory::getContainer()
+                ->get(CacheControllerFactoryInterface::class)
+                ->createCacheController('output', $options);
             $instance = $cache->get('configuration', 'com_kunena');
 
             if (!$instance) {
@@ -1760,7 +1752,7 @@ class KunenaConfig extends CMSObject
         $this->check();
 
         // Get current configuration
-        $params = $this->getProperties();
+        $params = get_object_vars($this);
         unset($params['id']);
 
         $db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
@@ -1783,7 +1775,7 @@ class KunenaConfig extends CMSObject
     public function reset(): void
     {
         $instance = new KunenaConfig();
-        $this->bind($instance->getProperties());
+        $this->bind(get_object_vars($instance));
     }
 
     /**
@@ -1813,5 +1805,53 @@ class KunenaConfig extends CMSObject
         $email = $this->get('email');
 
         return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
+    }
+
+    /**
+     * Modifies existing property of the class object
+     *
+     * @param   string  $property  The name of the property.
+     * @param   mixed   $value     The value of the property to set.
+     *
+     * @return  bool  true on success
+     *
+     * @since   Kunena 6.4
+     *
+     */
+    public function set($property, $value): bool
+    {
+        // type checking?
+        if (property_exists('KunenaConfig', $property)) {
+            if (strcmp(gettype($this->$property), gettype($value)) == 0) {
+                $this->$property = $value;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Set the object properties based on a named array/hash.
+     *
+     * @param   mixed  $properties  Either an associative array or another object.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 6.4
+     *
+     */
+    public function setProperties($properties)
+    {
+        if (\is_array($properties) || \is_object($properties)) {
+            foreach ((array) $properties as $k => $v) {
+                // Use the set function which might be overridden.
+                $this->set($k, $v);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

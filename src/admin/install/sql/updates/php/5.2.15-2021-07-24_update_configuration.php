@@ -10,8 +10,12 @@
  **/
 defined('_JEXEC') or die();
 
+use Exception;
+use Joomla\CMS\Factory;
+use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Error\KunenaError;
 
 // Kunena 5.2.0: Convert all configuration options to the news ones in K6.0
 /**
@@ -23,6 +27,32 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
  */
 function kunena_5215_2021_07_24_update_configuration($parent) {
 	$config = KunenaConfig::getInstance();
+
+    //KunenaConfig does only automatically load parameters which are
+    //available as member variables. To load the old values and convert
+    //we need to load them manually and add them dynamically
+    $db    = Factory::getContainer()->get('DatabaseDriver');
+    $query = $db->createQuery();
+    $query->select('*')
+        ->from($db->quoteName('#__kunena_configuration'))
+        ->where($db->quoteName('id') . ' = 1');
+    $db->setQuery($query);
+
+    try {
+        $config = $db->loadAssoc();
+    } catch (ExecutionFailureException $e) {
+        KunenaError::displayDatabaseError($e);
+    }
+
+    if ($config) {
+        $params = json_decode($config['params']);
+        if (\is_array($params) || \is_object($params)) {
+            foreach ((array) $params as $k => $v) {
+                // Use the set function which might be overridden.
+                $config->$property = $value;
+            }
+        }
+    }
 
 	$config->boardTitle = $config->board_title;
 

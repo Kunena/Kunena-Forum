@@ -165,9 +165,21 @@ class CategoryController extends KunenaController
             if (!$me->isAdmin()) {
                 $access = ['accesstype', 'access', 'pubAccess', 'pubRecurse', 'adminAccess', 'adminRecurse', 'channels', 'class_sfx', 'params'];
 
+                $data = [
+                    'accesstype' => $parent->accesstype,
+                    'access' => $parent->access, 
+                    'pubAccess' => $parent->pubAccess, 
+                    'pubRecurse' => $parent->pubRecurse, 
+                    'adminAccess' => $parent->adminAccess, 
+                    'adminRecurse' => $parent->adminRecurse, 
+                    'channels' => $parent->channels, 
+                    'class_sfx' => $parent->class_sfx, 
+                    'params' => $parent->params
+                ];
+
                 if (!$category->exists() || $parent->id != $category->parentid) {
                     // If category didn't exist or is moved, copy access and class_sfx from parent
-                    $category->bind($parent->getProperties(), $access, true);
+                    $category->bind($data, $access, true);
                 }
 
                 $ignore = array_merge($ignore, $access);

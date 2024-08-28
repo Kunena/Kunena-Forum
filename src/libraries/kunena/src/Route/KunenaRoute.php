@@ -371,12 +371,6 @@ abstract class KunenaRoute
             $language     = strtolower(Factory::getApplication()->getDocument()->getLanguage());
             self::$search = false;
 
-            if (KunenaConfig::getInstance()->get('cache_mid')) {
-                // FIXME: Experimental caching.
-                $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController();
-                self::$search = unserialize($cache->get('search', "com_kunena.route.v1.{$language}.{$user->userid}"));
-            }
-
             if (self::$search === false) {
                 self::$search         = [];
                 self::$search['home'] = [];

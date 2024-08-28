@@ -54,6 +54,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  * @property int     $parentid
  * @property string  $name
  * @property string  $alias
+ * @property string  $icon
  * @property int     $icon_id
  * @property int     $locked
  * @property string  $accesstype
@@ -73,6 +74,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  * @property int     $hits
  * @property string  $description
  * @property string  $headerdesc
+ * @property string  $topictemplate
  * @property string  $class_sfx
  * @property int     $allowPolls
  * @property string  $topicOrdering
@@ -83,8 +85,6 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  * @property int     $last_post_id
  * @property int     $last_post_time
  * @property string  $params
- * @property string  $topictemplate
- * @property string  $sectionheaderdesc
  * @property int     $allowRatings
  *
  * @since   Kunena 6.0
@@ -227,6 +227,12 @@ class KunenaCategory extends KunenaDatabaseObject
     public $icon;
 
     /**
+     * @var     int
+     * @since   Kunena 6.0
+     */
+    public $icon_id;
+
+    /**
      * @var     string
      * @since   Kunena 6.0
      */
@@ -359,12 +365,6 @@ class KunenaCategory extends KunenaDatabaseObject
     protected $_table = 'KunenaCategories';
 
     /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    protected $sectionheaderdesc;
-
-    /**
      * @var     integer
      * @since   Kunena 6.0
      */
@@ -403,12 +403,6 @@ class KunenaCategory extends KunenaDatabaseObject
         }
 
         $this->_alias = $this->get('alias', '');
-
-        if (!empty($this->description)) {
-            $this->sectionheaderdesc = $this->description;
-        } else {
-            $this->sectionheaderdesc = '';
-        }
     }
 
     /**
@@ -636,6 +630,57 @@ class KunenaCategory extends KunenaDatabaseObject
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return $this->_channels[$action];
+    }
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     * 
+     * @return array    Assocative array with the propertie values of table
+     * 
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties() : array
+    {
+        $properties = [
+            'id' => $this->id,
+            'parentid' => $this->parentid,
+            'name' => $this->name,
+            'alias' => $this->alias,
+            'icon' => $this->icon,
+            'icon_id' => $this->icon_id,
+            'locked' => $this->locked,
+            'accesstype' => $this->accesstype,
+            'access' => $this->access,
+            'pubAccess' => $this->pubAccess,
+            'pubRecurse' => $this->pubRecurse,
+            'adminAccess' => $this->adminAccess,
+            'adminRecurse' => $this->adminRecurse,
+            'ordering' => $this->ordering,
+            'published' => $this->published,
+            'channels' => $this->channels,
+            'checked_out' => $this->checked_out,
+            'checked_out_time' => $this->checked_out_time,
+            'review' => $this->review,
+            'allowAnonymous' => $this->allowAnonymous,
+            'postAnonymous' => $this->postAnonymous,
+            'hits' => $this->hits,
+            'description' => $this->description,
+            'headerdesc' => $this->headerdesc,
+            'topictemplate' => $this->topictemplate,
+            'class_sfx' => $this->class_sfx,
+            'allowPolls' => $this->allowPolls,
+            'topicOrdering' => $this->topicOrdering,
+            'iconset' => $this->iconset,
+            'numTopics' => $this->numTopics,
+            'numPosts' => $this->numPosts,
+            'last_topic_id' => $this->last_topic_id,
+            'last_post_id' => $this->last_post_id,
+            'last_post_time' => $this->last_post_time,
+            'params' => $this->params,
+            'allowRatings' => $this->allowRatings
+        ];
+
+        return $properties;
     }
 
     /**
@@ -1579,7 +1624,7 @@ class KunenaCategory extends KunenaDatabaseObject
 
         // Create the user table object
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+        $table->bind($this->getTableProperties());
         $table->exists($this->_exists);
         $result = $table->checkout($who);
 
@@ -1606,7 +1651,7 @@ class KunenaCategory extends KunenaDatabaseObject
 
         // Create the user table object
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+        $table->bind($this->getTableProperties());
         $table->exists($this->_exists);
         $result = $table->checkIn();
 
@@ -1639,7 +1684,7 @@ class KunenaCategory extends KunenaDatabaseObject
 
         // Create the user table object
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+        $table->bind($this->getTableProperties());
         $table->exists($this->_exists);
 
         return $table->isCheckedOut($userid);
@@ -1813,7 +1858,7 @@ class KunenaCategory extends KunenaDatabaseObject
     {
         // Reorder categories
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+        $table->bind($this->getTableProperties());
         $table->exists($this->_exists);
 
         // Update alias

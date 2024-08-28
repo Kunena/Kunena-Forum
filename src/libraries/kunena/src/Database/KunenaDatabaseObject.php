@@ -218,7 +218,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 
         // Initialize table object.
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+        $table->bind($this->getTableProperties());
         $table->exists($this->_exists);
         $isNew = !$this->_exists;
 
@@ -310,7 +310,7 @@ abstract class KunenaDatabaseObject extends CMSObject
 
         // Initialize table object.
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+        $table->bind($this->getTableProperties());
         $table->exists($this->_exists);
 
         // Include the Kunena plugins for the on save events.
@@ -357,5 +357,21 @@ abstract class KunenaDatabaseObject extends CMSObject
         }
 
         return $return;
+    }
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     * 
+     * @return array    Assocative array with the propertie values of table
+     * 
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties() : array
+    {
+        $properties = [
+            'id' => $this->id,
+        ];
+
+        return $properties;
     }
 }

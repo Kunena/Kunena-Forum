@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Forum\Category\User;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
@@ -30,15 +29,15 @@ use Kunena\Forum\Libraries\Tables\KunenaUserCategories;
 /**
  * Class \Kunena\Forum\Libraries\Forum\Category\CategoryUser
  *
- * @property int    $role
- * @property string $allreadtime
- * @property int    $subscribed
- * @property string $params
  * @property int    $user_id
  * @property int    $category_id
+ * @property int    $role
+ * @property int    $allreadtime
+ * @property int    $subscribed
+ * @property string $params
  * @since   Kunena 6.0
  */
-class KunenaCategoryUser extends CMSObject
+class KunenaCategoryUser
 {
     /**
      * @var     boolean
@@ -51,6 +50,42 @@ class KunenaCategoryUser extends CMSObject
      * @since   Kunena 6.0
      */
     protected $_db = null;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.0
+     */
+    public int $user_id = 0;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.0
+     */
+    public int $category_id = 0;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.0
+     */
+    public int $role = 0;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.0
+     */
+    public int $allreadtime = 0;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.0
+     */
+    public int $subscribed = 0;
+
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public string $params = '';
 
     /**
      * @param   mixed  $user      user
@@ -71,7 +106,7 @@ class KunenaCategoryUser extends CMSObject
         $table = $this->getTable();
 
         // Lets bind the data
-        $this->setProperties($table->getProperties());
+        $this->bind($table->getProperties());
         $this->_exists     = false;
         $this->category_id = $category;
         $this->user_id     = KunenaUserHelper::get($user)->userid;
@@ -145,7 +180,11 @@ class KunenaCategoryUser extends CMSObject
     public function bind(array $data, $ignore = []): void
     {
         $data = array_diff_key($data, array_flip($ignore));
-        $this->setProperties($data);
+
+        foreach ((array) $data as $property => $value) {
+            if (!is_null($value))
+                $this->$property = $value;
+        }
     }
 
     /**
@@ -162,7 +201,18 @@ class KunenaCategoryUser extends CMSObject
     {
         // Create the categories table object
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+
+        $data = [
+            'role'        => $this->role,
+            'allreadtime' => $this->allreadtime,
+            'subscribed'  => $this->subscribed,
+            'params'      => $this->params,
+            'user_id'     => $this->user_id,
+            'category_id' => $this->category_id
+        ];
+
+
+        $table->bind($data);
         $table->exists($this->_exists);
 
         // Check and store the object.
@@ -227,7 +277,7 @@ class KunenaCategoryUser extends CMSObject
         $this->_exists = $table->load(['user_id' => $user->userid, 'category_id' => $categoryId]);
 
         // Assuming all is well at this point lets bind the data
-        $this->setProperties($table->getProperties());
+        $this->bind($table->getProperties());
 
         return $this->_exists;
     }

@@ -11,7 +11,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 
 // Kunena 5.2.0: Convert all configuration options to the news ones in K6.0
 /**
@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  * @since Kunena 5.2.4
  */
 function kunena_5215_2021_07_24_update_configuration($parent) {
-	$config = KunenaFactory::getConfig();
+	$config = KunenaConfig::getInstance();
 
 	$config->boardTitle = $config->board_title;
 

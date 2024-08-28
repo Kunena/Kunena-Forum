@@ -133,9 +133,8 @@ class CategoryItem extends KunenaLayout
         // Is user allowed to post new topic?
         $url             = $category->getNewTopicUrl();
         $this->ktemplate = KunenaFactory::getTemplate();
-        $config          = KunenaConfig::getInstance();
 
-        if ($config->readOnly) {
+        if (KunenaConfig::getInstance()->readOnly) {
             return false;
         }
 

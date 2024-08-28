@@ -744,7 +744,7 @@ class KunenaUser extends CMSObject
         static $default;
 
         if (\is_null($default)) {
-            $default = KunenaFactory::getConfig()->get('defaultSort') == 'desc' ? 'desc' : 'asc';
+            $default = KunenaConfig::getInstance()->defaultSort == 'desc' ? 'desc' : 'asc';
         }
 
         if ($this->exists()) {

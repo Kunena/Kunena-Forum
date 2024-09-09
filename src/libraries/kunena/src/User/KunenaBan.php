@@ -19,7 +19,6 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject as parentAlias;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Database\DatabaseDriver;
@@ -35,24 +34,101 @@ use stdClass;
 /**
  * Class \Kunena\Forum\Libraries\User\Ban
  *
- * @property    integer $created_time
- * @property    integer $created_by
- * @property    integer $modified_by
- * @property    integer $userid
- * @property    integer $id
- * @property    array   $comments
+ * @property    int $id
+ * @property    int $userid
  * @property    string  $ip
- * @property    string  $reason_public
+ * @property    int $blocked
+ * @property    string $expiration
+ * @property    int $created_by
+ * @property    string $created_time
  * @property    string  $reason_private
- * @property    integer $modified_time
- * @property    integer $blocked
- * @property    string  $comment
- * @property    integer $expiration
- *
+ * @property    string  $reason_public
+ * @property    int $modified_by
+ * @property    string $modified_time 
+ * @property    array   $comments 
+ * @property    array  $params
  * @since   Kunena 6.0
  */
-class KunenaBan extends parentAlias
+class KunenaBan
 {
+    /**
+     * @var int
+     * @since   Kunena 6.0
+     */
+    public int $id = 0;
+
+    /**
+     * @var int
+     * @since   Kunena 6.0
+     */
+    public int $userid = 0;
+
+    /**
+     * @var string
+     * @since   Kunena 6.0
+     */
+    public string $ip = '';
+
+    /**
+     * @var int
+     * @since   Kunena 6.0
+     */
+    public int $blocked = 0;
+
+    /**
+     * @var string
+     * @since   Kunena 6.0
+     */
+    public string $expiration = '';
+
+    /**
+     * @var int
+     * @since   Kunena 6.0
+     */
+    public int $created_by = 0;
+
+    /**
+     * @var string
+     * @since   Kunena 6.0
+     */
+    public string $created_time = '';
+
+    /**
+     * @var string
+     * @since   Kunena 6.0
+     */
+    public string $reason_private = '';
+
+    /**
+     * @var string
+     * @since   Kunena 6.0
+     */
+    public string $reason_public = '';
+
+    /**
+     * @var int
+     * @since   Kunena 6.0
+     */
+    public int $modified_by = 0;
+
+    /**
+     * @var string
+     * @since   Kunena 6.0
+     */
+    public string $modified_time = '';
+
+    /**
+     * @var array
+     * @since   Kunena 6.0
+     */
+    public array $comments = [];
+
+    /**
+     * @var array
+     * @since   Kunena 6.0
+     */
+    public array $params = [];
+
     /**
      * @return  void
      *
@@ -211,10 +287,14 @@ class KunenaBan extends parentAlias
      * @since   Kunena 6.0
      */
     protected function bind($data): void
-    {
-        $this->setProperties($data);
-        $this->comments = !empty($this->comments) ? json_decode((string) $this->comments) : [];
-        $this->params   = !empty($this->params) ? json_decode($this->params) : [];
+    {        
+        foreach ((array) $data as $property => $value) {
+            if (!is_null($value) && !in_array($property, ['comments', 'params']))
+                $this->$property = $value;
+        }
+        
+        $this->comments = !empty($data['comments']) ? json_decode((string) $data['comments']) : [];
+        $this->params   = !empty($data['params']) ? json_decode($data['params']) : [];
     }
 
     /**
@@ -276,7 +356,7 @@ class KunenaBan extends parentAlias
     }
 
     /**
-     * @param   integer  $userid  userid
+     * @param   int  $userid  userid
      *
      * @return  void
      *
@@ -426,7 +506,7 @@ class KunenaBan extends parentAlias
     }
 
     /**
-     * @param   integer  $userid  userid
+     * @param   int  $userid  userid
      *
      * @return  array
      *
@@ -642,7 +722,7 @@ class KunenaBan extends parentAlias
     public function ban($userid = null, $ip = null, $banlevel = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = ''): void
     {
         $this->userid  = \intval($userid) > 0 ? (int) $userid : null;
-        $this->ip      = $ip ? (string) $ip : null;
+        $this->ip      = $ip ? (string) $ip : '';
         $this->blocked = (int) $banlevel;
         $this->setExpiration($expiration);
         $this->reason_private = (string) $reason_private;
@@ -761,7 +841,24 @@ class KunenaBan extends parentAlias
 
         // Create the user table object
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+
+        $data = [
+            'id'             => $this->id,
+            'userid'         => $this->userid,
+            'ip'             => $this->ip,
+            'blocked'        => $this->blocked,
+            'expiration'     => $this->expiration ?: null,
+            'created_by'     => $this->created_by,
+            'created_time'   => $this->created_time,
+            'reason_private' => $this->reason_private,
+            'reason_public'  => $this->reason_public,
+            'modified_by'    => $this->modified_by,
+            'modified_time'  => $this->modified_time ?: null,
+            'comments'       => json_encode($this->comments),
+            'params'         => json_encode($this->params)
+        ];
+
+        $table->bind($data);
 
         // Check and store the object.
         try {

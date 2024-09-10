@@ -127,9 +127,9 @@ $list = [];
 			<?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>
 			<div class="card pb-3 pd-3 mb-3">
             	<div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
-            		<div class="card-body kattach">
-                		<ul class="thumbnails" style="list-style:none;">
-             <?php endif; ?>   		
+            		<div class="card-body kattach">                		
+             <?php endif; ?>
+            			<ul class="thumbnails" style="list-style:none;">   		
 						<?php foreach ($attachments as $attachment) :	
 
 						if (!$attachment->protected) : ?>
@@ -168,8 +168,8 @@ $list = [];
                         <?php endif;
 
 						endforeach; ?>
-						<?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>
 						</ul>
+						<?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>						
             		</div>
             	</div>
 			<div class="clearfix"></div>

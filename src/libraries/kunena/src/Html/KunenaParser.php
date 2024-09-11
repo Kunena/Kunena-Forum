@@ -48,7 +48,7 @@ abstract class KunenaParser
     public static $relative = true;
 
     /**
-     * @param   bool  $grayscale    grayscale
+     * @param   bool  $grayscale    grayscale deprecated parameter since K6.4
      * @param   bool  $emoticonbar  emoticonbar
      * @param   bool  $addPath      addPath
      *
@@ -60,9 +60,9 @@ abstract class KunenaParser
     public static function getEmoticons($grayscale = false, $emoticonbar = false, $addPath = true): array
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
-        $grayscale == true ? $column = "greylocation" : $column = "location";
+
         $query = $db->createQuery()
-            ->select([$db->quoteName('code'), $db->quoteName($column, 'file')])
+            ->select([$db->quoteName('code'), $db->quoteName('location', 'file')])
             ->from($db->quoteName('#__kunena_smileys'));
 
         if ($emoticonbar == true) {

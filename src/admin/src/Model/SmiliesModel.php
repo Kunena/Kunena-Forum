@@ -40,7 +40,6 @@ class SmiliesModel extends ListModel
                 'id',
                 'code',
                 'location',
-                'greylocation',
                 'emoticonbar',
             ];
         }
@@ -121,7 +120,7 @@ class SmiliesModel extends ListModel
         $query->select(
             $this->getState(
                 'list.select',
-                'a.id, a.code, a.location, a.greylocation, a.emoticonbar'
+                'a.id, a.code, a.location, a.emoticonbar'
             )
         );
 
@@ -135,7 +134,7 @@ class SmiliesModel extends ListModel
                 $query->where('a.id = ' . (int) substr($search, 3));
             } else {
                 $search = $db->quote('%' . $db->escape($search, true) . '%');
-                $query->where('(a.location LIKE ' . $search . ' OR a.greylocation LIKE ' . $search . ' OR a.emoticonbar LIKE ' . $search . ' OR a.code LIKE ' . $search . ' OR a.id LIKE ' . $search . ')');
+                $query->where('(a.location LIKE ' . $search . ' OR ' . $search . ' OR a.emoticonbar LIKE ' . $search . ' OR a.code LIKE ' . $search . ' OR a.id LIKE ' . $search . ')');
             }
         }
 
@@ -162,9 +161,6 @@ class SmiliesModel extends ListModel
                 break;
             case 'location':
                 $query->order('a.location ' . $direction);
-                break;
-            case 'greylocation':
-                $query->order('a.greylocation ' . $direction);
                 break;
             case 'emoticonbar':
                 $query->order('a.emoticonbar ' . $direction);

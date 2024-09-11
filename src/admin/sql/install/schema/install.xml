@@ -765,10 +765,6 @@
                type="varchar(50)"
                null="0"
                default=""/>
-        <field name="greylocation"
-               type="varchar(60)"
-               null="0"
-               default=""/>
         <field name="emoticonbar"
                type="tinyint(4)"
                null="0"

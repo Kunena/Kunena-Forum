@@ -62,30 +62,30 @@ class KunenaSampleData
         $queries[] = ['kunena_ranks', $query];
 
         $query = "INSERT INTO `#__kunena_smileys`
-		(`id`,`code`,`location`,`greylocation`,`emoticonbar`) VALUES
-		(1, 'B)', '1.png', 'cool-grey.png', 1),
-		(2, '8)', '2.png', 'cool-grey.png', 1),
-		(3, '8-)', '3.png', 'cool-grey.png', 1),
-		(4, ':-(', '4.png', 'sad-grey.png', 1),
-		(5, ':(', '5.png', 'sad-grey.png', 1),
-		(6, ':sad:', '6.png', 'sad-grey.png', 1),
-		(7, ':cry:', '7.png', 'sad-grey.png', 1),
-		(8, ':)', '8.png', 'smile-grey.png', 1),
-		(9, ':-)', '9.png', 'smile-grey.png', 1),
-		(10, ':cheer:', '10.png', 'cheerful-grey.png', 1),
-		(11, ';)', '11.png', 'wink-grey.png', 1),
-		(12, ';-)', '12.png', 'wink-grey.png', 1),
-		(13, ':wink:', '13.png', 'wink-grey.png', 1),
-		(14, ';-)', '14.png', 'wink-grey.png', 1),
-		(15, ':P', '15.png', 'tongue-grey.png', 1),
-		(16, ':p', '16.png', 'tongue-grey.png', 1),
-		(17, ':-p', '17.png', 'tongue-grey.png', 1),
-		(18, ':-P', '18.png', 'tongue-grey.png', 1),
-		(19, ':razz:', '19.png', 'tongue-grey.png', 1),
-		(20, ':angry:', '20.png', 'angry-grey.png', 1),
-		(21, ':mad:', '21.png', 'angry-grey.png', 1),
-		(22, ':unsure:', '22.png', 'unsure-grey.png', 1),
-		(23, ':o', '23.png', 'shocked-grey.png', 1);";
+		(`id`,`code`,`location`,`emoticonbar`) VALUES
+		(1, 'B)', '1.png', 1),
+		(2, '8)', '2.png', 1),
+		(3, '8-)', '3.png', 1),
+		(4, ':-(', '4.png', 1),
+		(5, ':(', '5.png', 1),
+		(6, ':sad:', '6.png', 1),
+		(7, ':cry:', '7.png', 1),
+		(8, ':)', '8.png', 1),
+		(9, ':-)', '9.png', 1),
+		(10, ':cheer:', '10.png', 1),
+		(11, ';)', '11.png', 1),
+		(12, ';-)', '12.png', 1),
+		(13, ':wink:', '13.png', 1),
+		(14, ';-)', '14.png', 1),
+		(15, ':P', '15.png', 1),
+		(16, ':p', '16.png', 1),
+		(17, ':-p', '17.png', 1),
+		(18, ':-P', '18.png', 1),
+		(19, ':razz:', '19.png', 1),
+		(20, ':angry:', '20.png', 1),
+		(21, ':mad:', '21.png', 1),
+		(22, ':unsure:', '22.png', 1),
+		(23, ':o', '23.png', 1);";
 
         $queries[] = ['kunena_smileys', $query];
 

@@ -355,7 +355,6 @@ CREATE TABLE IF NOT EXISTS `#__kunena_smileys`
     `id`           int(4)      NOT NULL auto_increment,
     `code`         varchar(12) NOT NULL default '',
     `location`     varchar(50) NOT NULL default '',
-    `greylocation` varchar(60) NOT NULL default '',
     `emoticonbar`  tinyint(4)  NOT NULL default '0',
     PRIMARY KEY (id)
 )

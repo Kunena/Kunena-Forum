@@ -307,6 +307,11 @@
                 DROP IF EXISTS `bluesky_app`;
             </query>
         </version>
+	<version version="6.4.0-DEV"
+                 versiondate="2024-09-11"
+                 versionname="Internal">            
+            <query mode="silenterror">ALTER TABLE `#__kunena_smileys` DROP `greylocation`;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

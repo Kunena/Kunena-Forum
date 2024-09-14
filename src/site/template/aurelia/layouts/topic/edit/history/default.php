@@ -68,12 +68,13 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
                     if (!empty($attachments)) :
                         ?>
-                        <div class="kattach col-md-12">
-                            <h4><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></h4>
+                  <div class="card pb-3 pd-3 mb-3">
+                         
+            	      <div class="card-body kattach">        
                             <ul class="thumbnails">
                                 <?php foreach ($attachments as $attachment) :
                                     ?>
-                                    <li class="col-md-4">
+                                  <li class="col-md-3 text-center">
                                         <div class="thumbnail">
                                             <?php echo $attachment->getLayout()->render('thumbnail'); ?>
                                             <?php echo $attachment->getLayout()->render('textlink'); ?>
@@ -81,7 +82,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
-                        </div>
+                        </div></div>
                     <?php endif; ?>
                 </div>
             </div>

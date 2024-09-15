@@ -244,10 +244,8 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
         $this->editorType = $this->ktemplate->params->get('editorType');
 
         $this->UserCanPostImage = true;
-
-        if ($this->config->new_users_prevent_post_url_images && $this->me->posts < $this->config->minimal_user_posts_add_url_image) {
-            $this->UserCanPostImage = false;
-        }
+        
+        $this->UserCanPostImage = $this->me->checkUserAllowedLinksImages();
 
         /** @var HtmlDocument $doc */
         $this->doc = $this->app->getDocument();

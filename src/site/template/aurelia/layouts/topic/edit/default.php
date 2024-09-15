@@ -368,7 +368,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
         </div>
     <?php endif; ?>
 
-    <?php if ($this->allowedExtensions && $this->UserCanPostImage) : ?>
+    <?php if ($this->allowedExtensions && !$this->UserCanPostImage) : ?>
         <h2>
             <?php echo Text::_('COM_KUNENA_EDITOR_ATTACHMENTS'); ?>
         </h2>

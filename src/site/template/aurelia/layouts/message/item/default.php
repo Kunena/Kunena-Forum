@@ -130,33 +130,37 @@ $list = [];
             	      <div class="card-body kattach">          		
              <?php endif; ?>	
             			<ul class="thumbnails" style="list-style:none;">   		
-						<?php foreach ($attachments as $attachment) :	
+						<?php foreach ($attachments as $attachment) : 	
 
 						if (!$attachment->protected) : ?>
                             <?php if ($attachment->isAudio()) :
                                 echo $attachment->getLayout()->render('audio'); ?>
                             <?php elseif ($attachment->isVideo()) :
                                 echo $attachment->getLayout()->render('video'); ?>
-                            <?php else : ?>
+                            <?php else : 
+                                if (!$attachment->inline) : ?>
                                 <li class="col-md-3 text-center">
                                     <div class="thumbnail">
                                         <?php echo $attachment->getLayout()->render('thumbnail'); ?>
                                         <?php echo $attachment->getLayout()->render('textlink'); ?>
                                     </div>
                                 </li>
+                                <?php endif; ?>
                             <?php endif; ?>                            
                          <?php elseif ($attachment->protected == 1): ?>
                          		<?php if ($attachment->isAudio()) :
                                 echo $attachment->getLayout()->render('audio'); ?>
                             <?php elseif ($attachment->isVideo()) :
                                 echo $attachment->getLayout()->render('video'); ?>
-                            <?php else : ?>
+                            <?php else :  
+                                if (!$attachment->inline) : ?>
                                 <li class="col-md-3 text-center">
                                     <div class="thumbnail">
                                         <?php echo $attachment->getLayout()->render('thumbnail'); ?>
                                         <?php echo $attachment->getLayout()->render('textlink'); ?>
                                     </div>
                                 </li>
+                                <?php endif; ?>
                              <?php endif; ?>
                         <?php elseif ($attachment->protected == 32 && $this->config->privateMessage && ($this->me->isModerator($this->topic->getCategory()) || $attachment->isMyOwnPrivateAttachment())) : ?>  
                               <li class="col-md-3 text-center">

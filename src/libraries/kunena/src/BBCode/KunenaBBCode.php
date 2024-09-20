@@ -2465,7 +2465,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if (!empty($default)) {
             $attachment = KunenaAttachmentHelper::get($default);
             unset($attachments [$attachment->id]);
-        } elseif (empty($content)) {
+        } elseif (empty($content) && !empty($attachments)) {
             $attachment = array_shift($attachments);
         } elseif (!empty($attachments)) {
             foreach ($attachments as $att) {
@@ -2475,6 +2475,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                     break;
                 }
             }
+        } else {
+            return '';
         }
 
         // Display tag in activity streams etc..

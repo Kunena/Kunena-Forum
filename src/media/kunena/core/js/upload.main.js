@@ -404,8 +404,11 @@ jQuery(function ($) {
 	                    $this.parent().remove();
 
 	                    if (data.text_prepared !== false) {
-	                        //CKEDITOR.instances.message.setData(data.text_prepared);
-	                        sceditor.instance(document.getElementById('message')).insert(data.text_prepared);
+ 	                          if (Joomla.getOptions('com_kunena.ckeditor_config') !== undefined) {
+							        CKEDITOR.instances.message.setData(data.text_prepared);
+							  } else {
+							        sceditor.instance(document.getElementById('message')).insert(data.text_prepared);
+							  }
 	                    }
 	                })
 	                .fail(function () {

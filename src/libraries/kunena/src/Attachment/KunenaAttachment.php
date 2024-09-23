@@ -1034,11 +1034,11 @@ class KunenaAttachment extends KunenaDatabaseObject
      *
      * @param   string|null  $editor_text  editor text
      *
-     * @return bool
+     * @return string
      *
      * @since   Kunena 6.0
      */
-    public function removeBBCodeInMessage(string $editor_text = null): bool
+    public function removeBBCodeInMessage(string $editor_text = null): string
     {
         if (!$this->inline) {
             return false;

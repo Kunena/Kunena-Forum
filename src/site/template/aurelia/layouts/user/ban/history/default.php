@@ -120,9 +120,9 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
                         <td>
                             <strong>
                                 <?php echo Text::sprintf(
-                                    'COM_KUNENA_BAN_COMMENT_BY',
-                                    KunenaFactory::getUser((int) $comment->userid)->getLink()
-                                );
+                    	'COM_KUNENA_BAN_COMMENT_BY',
+                    	KunenaFactory::getUser((int) $comment->userid)->getLink()
+                    );
                                 ?>
                             </strong>
                         </td>

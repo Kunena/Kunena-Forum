@@ -27,21 +27,21 @@ use Joomla\Database\DatabaseInterface;
  */
 function kunena_624_2022_01_24_change_collation_columns_on_tables($parent)
 {
-    $db = Factory::getContainer()->get(DatabaseInterface::class);;
+    $db = Factory::getContainer()->get(DatabaseInterface::class);
 
     // Change to varchar 250 the columns which are in varchar 255 because it blocks then the conversion to utf8mb4
-    $listKunenaTables = [$db->getPrefix().'kunena_aliases', $db->getPrefix().'kunena_announcement', $db->getPrefix().'kunena_attachments', $db->getPrefix().'kunena_categories', $db->getPrefix().'kunena_configuration',
-         $db->getPrefix().'kunena_karma', $db->getPrefix().'kunena_topics', $db->getPrefix().'kunena_messages', $db->getPrefix().'kunena_messages_text', $db->getPrefix().'kunena_polls', $db->getPrefix().'kunena_polls_options',
-         $db->getPrefix().'kunena_polls_users', $db->getPrefix().'kunena_private', $db->getPrefix().'kunena_private_attachment_map', $db->getPrefix().'kunena_private_post_map', $db->getPrefix().'kunena_private_user_map', 
-         $db->getPrefix().'kunena_ranks', $db->getPrefix().'kunena_rate', $db->getPrefix().'kunena_sessions', $db->getPrefix().'kunena_smileys', $db->getPrefix().'kunena_thankyou', $db->getPrefix().'kunena_user_categories', 
-         $db->getPrefix().'kunena_user_read', $db->getPrefix().'kunena_user_topics', $db->getPrefix().'kunena_users', $db->getPrefix().'kunena_users_banned', $db->getPrefix().'kunena_logs', $db->getPrefix().'kunena_version'];
+    $listKunenaTables = [$db->getPrefix() . 'kunena_aliases', $db->getPrefix() . 'kunena_announcement', $db->getPrefix() . 'kunena_attachments', $db->getPrefix() . 'kunena_categories', $db->getPrefix() . 'kunena_configuration',
+         $db->getPrefix() . 'kunena_karma', $db->getPrefix() . 'kunena_topics', $db->getPrefix() . 'kunena_messages', $db->getPrefix() . 'kunena_messages_text', $db->getPrefix() . 'kunena_polls', $db->getPrefix() . 'kunena_polls_options',
+         $db->getPrefix() . 'kunena_polls_users', $db->getPrefix() . 'kunena_private', $db->getPrefix() . 'kunena_private_attachment_map', $db->getPrefix() . 'kunena_private_post_map', $db->getPrefix() . 'kunena_private_user_map',
+         $db->getPrefix() . 'kunena_ranks', $db->getPrefix() . 'kunena_rate', $db->getPrefix() . 'kunena_sessions', $db->getPrefix() . 'kunena_smileys', $db->getPrefix() . 'kunena_thankyou', $db->getPrefix() . 'kunena_user_categories',
+         $db->getPrefix() . 'kunena_user_read', $db->getPrefix() . 'kunena_user_topics', $db->getPrefix() . 'kunena_users', $db->getPrefix() . 'kunena_users_banned', $db->getPrefix() . 'kunena_logs', $db->getPrefix() . 'kunena_version'];
 
         // Get collations from all Kunena tables et convert the column when needed
         foreach ($listKunenaTables as $kunenatable) {
             // Fisrt check if the table exist
             $db->setQuery("SHOW TABLES LIKE {$db->quote($kunenatable)}");
             if ($db->loadResult() == $kunenatable) {
-                $query = 'SHOW FULL COLUMNS FROM '.$db->quoteName($kunenatable);
+                $query = 'SHOW FULL COLUMNS FROM ' . $db->quoteName($kunenatable);
                 $db->setQuery($query);
 
                 $tableColumns = $db->loadobjectList();
@@ -63,5 +63,5 @@ function kunena_624_2022_01_24_change_collation_columns_on_tables($parent)
             }
         }
 
-    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_624_CHANGE_COLLATION_ON_COLUMNS_TO_UTF8MB4'), 'success' => true);    
+    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_624_CHANGE_COLLATION_ON_COLUMNS_TO_UTF8MB4'), 'success' => true);
 }

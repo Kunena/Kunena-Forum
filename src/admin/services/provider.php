@@ -46,8 +46,8 @@ return new class implements ServiceProviderInterface {
         $container->registerServiceProvider(new ComponentDispatcherFactory('\\Kunena\\Forum'));
         $container->registerServiceProvider(new RouterFactory('\\Kunena\\Forum'));
         $container->set(
-            ComponentInterface::class,
-            function (Container $container) {
+        	ComponentInterface::class,
+        	function (Container $container) {
                 $component = new ForumComponent($container->get(ComponentDispatcherFactoryInterface::class));
 
                 $component->setRegistry($container->get(Registry::class));

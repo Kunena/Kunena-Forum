@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Community;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -271,7 +271,7 @@ class KunenaAccessCommunity
             $query = $db->createQuery();
             $query->select($db->quoteName('c.id'))
                 ->from($db->quoteName('#__kunena_categories', 'c'))
-                ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = \'jomsocial\' AND ' . $db->quoteName('c.access') . ' = ' .$db->quoteName('g.groupid'))
+                ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = \'jomsocial\' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
                 ->where($db->quoteName('c.published') . ' = 1')
                 ->andWhere($db->quoteName('g.approved') . '= 1')
                 ->andWhere($db->quoteName('g.memberid') . ' = ' . $db->quote((int) $userid));

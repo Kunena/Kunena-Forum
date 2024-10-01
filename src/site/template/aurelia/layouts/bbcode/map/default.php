@@ -60,7 +60,7 @@ if (!empty($this->config->googleMapApiKey)) {
     $contentString = Text::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE', true);
 
     $this->addScriptDeclaration(
-        "
+    	"
 	// <![CDATA[
 		var geocoder;
 		var {$mapid};

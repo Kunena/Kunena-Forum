@@ -246,7 +246,7 @@ class ToolsModel extends AdminModel
         $catParams['unpublished'] = 1;
         $catParams['action']      = 'admin';
 
-        return HTMLHelper::_('kunenaforum.categorylist', 'prune_forum[]', 0, null, $catParams, 'class="inputbox form-control form-select" multiple="multiple"', 'value', 'text',0, 'PruneSelectCats');
+        return HTMLHelper::_('kunenaforum.categorylist', 'prune_forum[]', 0, null, $catParams, 'class="inputbox form-control form-select" multiple="multiple"', 'value', 'text', 0, 'PruneSelectCats');
     }
 
     /**
@@ -406,9 +406,9 @@ class ToolsModel extends AdminModel
             $this->htaccess = 'Missing';
         }
 
-        $this->maxExecTime       = ini_get('max_execution_time');
-        $this->maxExecMem        = ini_get('memory_limit');
-        $this->fileUploads       = ini_get('upload_max_fileSize');
+        $this->maxExecTime       = \ini_get('max_execution_time');
+        $this->maxExecMem        = \ini_get('memory_limit');
+        $this->fileUploads       = \ini_get('upload_max_fileSize');
         $this->kunenaVersionInfo = KunenaVersion::getVersionHTML();
 
         // Get Kunena default template

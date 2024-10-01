@@ -198,7 +198,7 @@ class Colors
             return $rgba;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -216,11 +216,11 @@ class Colors
         static $reverseColorTable = null;
 
         if (! is_numeric($r) || ! is_numeric($g) || ! is_numeric($b) || ! is_numeric($a)) {
-            return null;
+            return;
         }
 
         if ($a < 1) {
-            return null;
+            return;
         }
 
         if (\is_null($reverseColorTable)) {
@@ -242,6 +242,6 @@ class Colors
             return $reverseColorTable[\intval($r)][\intval($g)][\intval($b)];
         }
 
-        return null;
+        return;
     }
 }

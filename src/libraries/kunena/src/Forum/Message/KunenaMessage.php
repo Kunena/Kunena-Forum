@@ -490,12 +490,12 @@ class KunenaMessage extends KunenaDatabaseObject
 
         // Get all subscribers, moderators and admins who should get the email.
         $emailToList = KunenaAccess::getInstance()->getSubscribers(
-            $this->catid,
-            $this->thread,
-            $mailsubs,
-            $mailmods,
-            $mailadmins,
-            KunenaUserHelper::getMyself()->userid
+        	$this->catid,
+        	$this->thread,
+        	$mailsubs,
+        	$mailmods,
+        	$mailadmins,
+        	KunenaUserHelper::getMyself()->userid
         );
 
         if ($emailToList) {
@@ -522,7 +522,8 @@ class KunenaMessage extends KunenaDatabaseObject
 
                 if (
                     $config->emailVisibleAddress != $emailTo->email ||
-                    (count($emailToList) == 1 &&
+                    (
+                    	\count($emailToList) == 1 &&
                         ($emailTo->moderator || $emailTo->subscription)
                     )
                 ) {
@@ -1349,7 +1350,7 @@ class KunenaMessage extends KunenaDatabaseObject
             } else {
                 $attachs->file = $attachs->file + 1;
             }
-            
+
             if ($attach->protected == 0) {
                 $attachs->totalNonProtected = $attachs->totalNonProtected + 1;
             }
@@ -1359,7 +1360,7 @@ class KunenaMessage extends KunenaDatabaseObject
                     $attachs->readable = $attachs->readable + 1;
                 }
             }
-            
+
             if ($attach->protected > 0) {
                 $attachs->totalProtected = $attachs->totalProtected + 1;
             }
@@ -1541,13 +1542,13 @@ class KunenaMessage extends KunenaDatabaseObject
         } else {
             $title2 = substr($string, $start, $length);
             $title  = preg_replace(
-                '/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
+            	'/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
                     '|[\x00-\x7F][\x80-\xBF]+' .
                     '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
                     '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
                     '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
-                '',
-                $title2
+            	'',
+            	$title2
             );
         }
 

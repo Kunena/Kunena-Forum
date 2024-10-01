@@ -6,34 +6,34 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit6b7e8d3091d7c0760780d4fb1aa23391
 {
-    public static $prefixLengthsPsr4 = array (
-        'S' => 
-        array (
+    public static $prefixLengthsPsr4 = array(
+        'S' =>
+        array(
             'KunenaScssPhp\\ScssPhp\\' => 16,
         ),
-        'K' => 
-        array (
+        'K' =>
+        array(
             'Kunena\\Tests\\' => 13,
             'Kunena\\Forum\\' => 13,
         ),
     );
 
-    public static $prefixDirsPsr4 = array (
-        'KunenaScssPhp\\ScssPhp\\' => 
-        array (
+    public static $prefixDirsPsr4 = array(
+        'KunenaScssPhp\\ScssPhp\\' =>
+        array(
             0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
         ),
-        'Kunena\\Tests\\' => 
-        array (
+        'Kunena\\Tests\\' =>
+        array(
             0 => __DIR__ . '/../../../../..' . '/tests',
         ),
-        'Kunena\\Forum\\' => 
-        array (
+        'Kunena\\Forum\\' =>
+        array(
             0 => __DIR__ . '/../../../../..' . '/src/libraries/kunena',
         ),
     );
 
-    public static $classMap = array (
+    public static $classMap = array(
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'KunenaScssPhp\\ScssPhp\\Base\\Range' => __DIR__ . '/..' . '/scssphp/scssphp/src/Base/Range.php',
         'KunenaScssPhp\\ScssPhp\\Block' => __DIR__ . '/..' . '/scssphp/scssphp/src/Block.php',

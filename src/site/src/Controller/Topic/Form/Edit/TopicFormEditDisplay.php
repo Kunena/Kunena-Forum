@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\Controller\Topic\Form\Edit;
 
 use Exception;
 use Joomla\CMS\Document\HtmlDocument;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
@@ -82,7 +81,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
     public $me;
 
     public $catid;
-    
+
     public $poll;
 
     /**

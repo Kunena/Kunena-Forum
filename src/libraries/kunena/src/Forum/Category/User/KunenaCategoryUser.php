@@ -182,7 +182,7 @@ class KunenaCategoryUser
         $data = array_diff_key($data, array_flip($ignore));
 
         foreach ((array) $data as $property => $value) {
-            if (!is_null($value))
+            if (!\is_null($value))
                 $this->$property = $value;
         }
     }
@@ -208,9 +208,8 @@ class KunenaCategoryUser
             'subscribed'  => $this->subscribed,
             'params'      => $this->params,
             'user_id'     => $this->user_id,
-            'category_id' => $this->category_id
+            'category_id' => $this->category_id,
         ];
-
 
         $table->bind($data);
         $table->exists($this->_exists);

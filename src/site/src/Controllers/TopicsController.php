@@ -79,11 +79,11 @@ class TopicsController extends KunenaController
         } else {
             $messages = KunenaMessageHelper::getMessagesByTopics($ids);
 
-            foreach ($topics as $topic) { 
+            foreach ($topics as $topic) {
                 try {
                     $topic->isAuthorised('permdelete');
                     $topic->delete();
-                    
+
                     // Activity integration
                     $activity = KunenaFactory::getActivityIntegration();
                     $activity->onAfterDeleteTopic($topic);
@@ -138,12 +138,12 @@ class TopicsController extends KunenaController
             if ($this->config->logModeration) {
                 foreach ($topics as $topic) {
                     KunenaLog::log(
-                        KunenaLog::TYPE_MODERATION,
-                        KunenaLog::LOG_TOPIC_DESTROY,
-                        ['topic_ids' => $ids],
-                        $topic->getCategory(),
-                        $topic,
-                        null
+                    	KunenaLog::TYPE_MODERATION,
+                    	KunenaLog::LOG_TOPIC_DESTROY,
+                    	['topic_ids' => $ids],
+                    	$topic->getCategory(),
+                    	$topic,
+                    	null
                     );
                 }
             }
@@ -184,7 +184,7 @@ class TopicsController extends KunenaController
                 try {
                     $topic->isAuthorised('delete');
                     $topic->publish(KunenaForum::TOPIC_DELETED);
-                    
+
                     $message = Text::_('COM_KUNENA_BULKMSG_DELETED');
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -196,12 +196,12 @@ class TopicsController extends KunenaController
             if ($this->config->logModeration) {
                 foreach ($topics as $topic) {
                     KunenaLog::log(
-                        KunenaLog::TYPE_MODERATION,
-                        KunenaLog::LOG_TOPIC_DELETE,
-                        ['topic_ids' => $ids],
-                        $topic->getCategory(),
-                        $topic,
-                        null
+                    	KunenaLog::TYPE_MODERATION,
+                    	KunenaLog::LOG_TOPIC_DELETE,
+                    	['topic_ids' => $ids],
+                    	$topic->getCategory(),
+                    	$topic,
+                    	null
                     );
                 }
             }
@@ -242,7 +242,7 @@ class TopicsController extends KunenaController
                 try {
                     $topic->isAuthorised('undelete');
                     $topic->publish(KunenaForum::PUBLISHED);
-                    
+
                     $message = Text::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -254,12 +254,12 @@ class TopicsController extends KunenaController
             if ($this->config->logModeration) {
                 foreach ($topics as $topic) {
                     KunenaLog::log(
-                        KunenaLog::TYPE_MODERATION,
-                        KunenaLog::LOG_TOPIC_UNDELETE,
-                        ['topic_ids' => $ids],
-                        $topic->getCategory(),
-                        $topic,
-                        null
+                    	KunenaLog::TYPE_MODERATION,
+                    	KunenaLog::LOG_TOPIC_UNDELETE,
+                    	['topic_ids' => $ids],
+                    	$topic->getCategory(),
+                    	$topic,
+                    	null
                     );
                 }
             }
@@ -300,7 +300,7 @@ class TopicsController extends KunenaController
                 try {
                     $topic->isAuthorised('approve');
                     $topic->publish(KunenaForum::PUBLISHED);
-                    
+
                     $message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
                     $topic->sendNotification();
                 } catch (Exception $e) {
@@ -313,12 +313,12 @@ class TopicsController extends KunenaController
             if ($this->config->logModeration) {
                 foreach ($topics as $topic) {
                     KunenaLog::log(
-                        KunenaLog::TYPE_MODERATION,
-                        KunenaLog::LOG_TOPIC_APPROVE,
-                        ['topic_ids' => $ids],
-                        $topic->getCategory(),
-                        $topic,
-                        null
+                    	KunenaLog::TYPE_MODERATION,
+                    	KunenaLog::LOG_TOPIC_APPROVE,
+                    	['topic_ids' => $ids],
+                    	$topic->getCategory(),
+                    	$topic,
+                    	null
                     );
                 }
             }
@@ -368,19 +368,19 @@ class TopicsController extends KunenaController
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'notice');
                 $this->setRedirectBack();
             }
-            
+
             try {
                 $target->isAuthorised('read');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
-            
+
             if ($topics) {
                 foreach ($topics as $topic) {
                     try {
                         $topic->isAuthorised('move');
                         $topic->move($target);
-                        
+
                         $message = Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -397,22 +397,22 @@ class TopicsController extends KunenaController
                         $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
                 }
-            }            
+            }
         }
 
         if (!empty($message)) {
             if ($this->config->logModeration) {
                 foreach ($topics as $topic) {
                     KunenaLog::log(
-                        KunenaLog::TYPE_MODERATION,
-                        KunenaLog::LOG_TOPIC_MODERATE,
-                        [
+                    	KunenaLog::TYPE_MODERATION,
+                    	KunenaLog::LOG_TOPIC_MODERATE,
+                    	[
                             'move'   => ['id' => $topic->id, 'mode' => 'topic'],
                             'target' => ['category_id' => $target->id],
                         ],
-                        $topic->getCategory(),
-                        $topic,
-                        null
+                    	$topic->getCategory(),
+                    	$topic,
+                    	null
                     );
                 }
             }
@@ -448,12 +448,12 @@ class TopicsController extends KunenaController
             if ($this->config->logModeration) {
                 foreach ($topics as $topic) {
                     KunenaLog::log(
-                        $this->me->userid == $topic->getAuthor()->userid ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
-                        KunenaLog::LOG_TOPIC_UNFAVORITE,
-                        ['topic_ids' => $ids],
-                        $topic->getCategory(),
-                        $topic,
-                        null
+                    	$this->me->userid == $topic->getAuthor()->userid ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
+                    	KunenaLog::LOG_TOPIC_UNFAVORITE,
+                    	['topic_ids' => $ids],
+                    	$topic->getCategory(),
+                    	$topic,
+                    	null
                     );
                 }
             }
@@ -527,7 +527,7 @@ class TopicsController extends KunenaController
                 try {
                     $message->isAuthorised('approve');
                     $message->publish(KunenaForum::PUBLISHED);
-                    
+
                     $message->sendNotification();
                     $success++;
                 } catch (Exception $e) {
@@ -572,7 +572,7 @@ class TopicsController extends KunenaController
                 try {
                     $message->isAuthorised('delete');
                     $message->publish(KunenaForum::DELETED);
-                    
+
                     $success++;
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -616,7 +616,7 @@ class TopicsController extends KunenaController
                 try {
                     $message->isAuthorised('undelete');
                     $message->publish(KunenaForum::PUBLISHED);
-                    
+
                     $success++;
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -660,11 +660,11 @@ class TopicsController extends KunenaController
                 try {
                     $message->isAuthorised('permdelete');
                     $message->delete();
-                    
+
                     $success++;
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
-                }   
+                }
             }
         }
 

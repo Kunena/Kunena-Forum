@@ -18,8 +18,8 @@ use Joomla\CMS\Language\Text;
 $content = $this->execute('Search/Form');
 
 $this->addBreadcrumb(
-    Text::_('COM_KUNENA_MENU_SEARCH'),
-    'index.php?option=com_kunena&view=search'
+	Text::_('COM_KUNENA_MENU_SEARCH'),
+	'index.php?option=com_kunena&view=search'
 );
 
 echo $content;

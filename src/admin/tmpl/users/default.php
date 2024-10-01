@@ -141,30 +141,30 @@ $language->load('com_users');
                                     <?php echo (int) $this->escape($user->userid); ?>
                                 </td>
                             </tr>
-                            <?php $i++;; ?>
+                            <?php $i++; ?>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
 
-                <?php // load the pagination. 
+                <?php // load the pagination.
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 
                 <?php echo HTMLHelper::_(
-                    'bootstrap.renderModal',
-                    'joomla-dialog-subscribecatsusers',
-                    [
+                	'bootstrap.renderModal',
+                	'joomla-dialog-subscribecatsusers',
+                	[
                         'title'  => Text::_('COM_KUNENA_BATCH_SUBSCIRBE_USERS_CATEGORIES_MODAL_TITLE'),
                     ],
-                    $this->loadTemplate('subscribecatsusers')
+                	$this->loadTemplate('subscribecatsusers')
                 ); ?>
                 <?php echo HTMLHelper::_(
-                    'bootstrap.renderModal',
-                    'joomla-dialog-moderators',
-                    [
+                	'bootstrap.renderModal',
+                	'joomla-dialog-moderators',
+                	[
                         'title'  => Text::_('COM_KUNENA_BATCH_USERS_OPTIONS'),
                     ],
-                    $this->loadTemplate('moderators')
+                	$this->loadTemplate('moderators')
                 ); ?>
 
                 <input type="hidden" name="task" value="">

@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Kunena;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -102,7 +102,7 @@ class KunenaAvatarKunena extends KunenaAvatar
                 $avatar   = $template->name . '/' . $avatar;
             }
 
-            $dir  = dirname($avatar);
+            $dir  = \dirname($avatar);
             $file = basename($avatar);
 
             if ($sizex == $sizey) {
@@ -120,14 +120,14 @@ class KunenaAvatarKunena extends KunenaAvatar
             if (!is_file("{$path}/{$resized}/{$file}")) {
                 try {
                     KunenaImageHelper::version(
-                        $origPath,
-                        "{$path}/{$resized}",
-                        $file,
-                        $sizex,
-                        $sizey,
-                        intval($config->avatarQuality),
-                        KunenaImage::SCALE_INSIDE,
-                        intval($config->avatarCrop)
+                    	$origPath,
+                    	"{$path}/{$resized}",
+                    	$file,
+                    	$sizex,
+                    	$sizey,
+                    	\intval($config->avatarQuality),
+                    	KunenaImage::SCALE_INSIDE,
+                    	\intval($config->avatarCrop)
                     );
                 } catch (Exception $e) {
                     KunenaError::error($e->getMessage());

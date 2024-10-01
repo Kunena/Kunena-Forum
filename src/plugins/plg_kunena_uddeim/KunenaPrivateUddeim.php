@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Uddeim;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;

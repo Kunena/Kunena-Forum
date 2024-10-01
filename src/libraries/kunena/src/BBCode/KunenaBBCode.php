@@ -1171,7 +1171,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             if ($response->code == '200') {
                 $responseItem = json_decode($response->body);
 
-                if ($responseItem->Ack == 'Success') { 
+                if ($responseItem->Ack == 'Success') {
                     return $responseItem->Item;
                 } else {
                     $errors = $responseItem->Errors;
@@ -1286,7 +1286,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $mailto    = $bbcode->IsValidEmail($email);
         $result = filter_var($email, FILTER_VALIDATE_EMAIL);
 
-        if (is_string($result)) {
+        if (\is_string($result)) {
             $isLink = true;
         } else {
             $isLink = false;
@@ -1788,7 +1788,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if (!is_numeric($content)) {
             echo '<b>' . Text::_('COM_KUNENA_LIB_BBCODE_EBAY_ERROR_WRONG_ITEM_ID') . '</b>';
-            
+
             return false;
         }
 
@@ -2681,16 +2681,16 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $matches = array();
         $altText = null;
         preg_match('/[img(\s*(?!alt)([\w\-\.]+\s*\/?]/', $params['_tag'], $matches);
-        if (count($matches) > 0) {
+        if (\count($matches) > 0) {
             $altText = rtrim($matches[0], "]");
-        };
+        }
 
         $layout = KunenaLayout::factory('BBCode/Image')
             ->set('title', Text::_('COM_KUNENA_FILEATTACH'))
             ->set('url', null)
             ->set('filename', null)
             ->set('size', isset($params['size']) ? $params['size'] : 0)
-            ->set('alt', count($matches) > 0 ? $altText : 0)
+            ->set('alt', \count($matches) > 0 ? $altText : 0)
             ->set('canLink', $bbcode->autoLink_disable == 0);
 
         if (Factory::getApplication()->getIdentity()->id == 0 && $this->config->showImgForGuest == 0) {
@@ -3036,7 +3036,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         return false;
     }
-    
+
     /**
      * Handle private bbcode tag in the message
      *
@@ -3057,16 +3057,16 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if ($action == BBCode::BBCODE_CHECK) {
             return true;
         }
-        
+
         if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
             return "[{$name}]{$content}";
         }
-        
+
         // Display nothing in activity streams etc..
         if (!empty($bbcode->parent->forceSecure)) {
             return '';
         }
-        
+
         // Display nothing in subscription mails
         if (!empty($bbcode->context)) {
             return '';

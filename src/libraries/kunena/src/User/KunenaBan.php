@@ -287,12 +287,12 @@ class KunenaBan
      * @since   Kunena 6.0
      */
     protected function bind($data): void
-    {        
+    {
         foreach ((array) $data as $property => $value) {
-            if (!is_null($value) && !in_array($property, ['comments', 'params']))
+            if (!\is_null($value) && !\in_array($property, ['comments', 'params']))
                 $this->$property = $value;
         }
-        
+
         $this->comments = !empty($data['comments']) ? json_decode((string) $data['comments']) : [];
         $this->params   = !empty($data['params']) ? json_decode($data['params']) : [];
     }
@@ -855,7 +855,7 @@ class KunenaBan
             'modified_by'    => $this->modified_by,
             'modified_time'  => $this->modified_time ?: null,
             'comments'       => json_encode($this->comments),
-            'params'         => json_encode($this->params)
+            'params'         => json_encode($this->params),
         ];
 
         $table->bind($data);

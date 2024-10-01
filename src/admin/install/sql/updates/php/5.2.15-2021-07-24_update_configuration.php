@@ -46,7 +46,7 @@ function kunena_5215_2021_07_24_update_configuration($parent) {
 
     if ($config) {
         $params = json_decode($config['params']);
-        if (\is_array($params) || \is_object($params)) {
+        if (is_array($params) || is_object($params)) {
             foreach ((array) $params as $k => $v) {
                 // Use the set function which might be overridden.
                 $config->$property = $value;

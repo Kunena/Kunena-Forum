@@ -79,9 +79,9 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::editList('users.edit');
 
         $toolbar->standardButton(
-            'cancel',
-            'COM_KUNENA_LOGOUT',
-            'users.logout'
+        	'cancel',
+        	'COM_KUNENA_LOGOUT',
+        	'users.logout'
         )
             ->listCheck(true);
 

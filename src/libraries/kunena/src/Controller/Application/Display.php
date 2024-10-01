@@ -153,10 +153,10 @@ class Display extends KunenaControllerDisplay
                     $this->content = KunenaLayout::factory('Widget/Custom')
                         ->set('header', Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'))
                         ->set(
-                            'body',
-                            Text::sprintf(
-                                'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
-                                KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
+                        	'body',
+                        	Text::sprintf(
+                            	'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
+                            	KunenaDate::getInstance($bannedtime->getExpirationDate())->toKunena('date_today')
                             )
                         );
                     $this->document->setMetaData('robots', 'noindex, follow');
@@ -264,11 +264,11 @@ class Display extends KunenaControllerDisplay
 
             if (!$banned->isLifetime()) {
                 $this->app->enqueueMessage(
-                    Text::sprintf(
-                        'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
-                        KunenaDate::getInstance($banned->expiration)->toKunena('date_today')
+                	Text::sprintf(
+                    	'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY',
+                    	KunenaDate::getInstance($banned->expiration)->toKunena('date_today')
                     ),
-                    'error'
+                	'error'
                 );
             } else {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS'), 'error');
@@ -360,13 +360,13 @@ class Display extends KunenaControllerDisplay
         $templateLink = (string) $this->template->params->get('templatebyLink');
         $credits      = '<div style="text-align:center;">';
         $credits      .= HTMLHelper::_(
-            'kunenaforum.link',
-            'index.php?option=com_kunena&view=credits',
-            Text::_('COM_KUNENA_POWEREDBY'),
-            '',
-            '',
-            '',
-            ['style' => 'display: inline !important; visibility: visible !important; text-decoration: none !important;']
+        	'kunenaforum.link',
+        	'index.php?option=com_kunena&view=credits',
+        	Text::_('COM_KUNENA_POWEREDBY'),
+        	'',
+        	'',
+        	'',
+        	['style' => 'display: inline !important; visibility: visible !important; text-decoration: none !important;']
         );
         $credits      .= ' <a href="https://www.kunena.org"
 			target="_blank" rel="noopener noreferrer" style="display: inline !important; visibility: visible !important; text-decoration: none !important;">'

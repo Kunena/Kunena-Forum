@@ -16,7 +16,6 @@ namespace Kunena\Forum\Libraries\Forum\Message\Karma;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 
 /**
  * Kunena Forum Topic Karma Helper Class

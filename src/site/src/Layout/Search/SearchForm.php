@@ -182,11 +182,11 @@ class SearchForm extends KunenaLayout
             && $this->config->messagesPerPageSearch != 15 && $this->config->messagesPerPageSearch != 20
         ) {
             $options[] = HTMLHelper::_(
-                'select.option',
-                $this->config->messagesPerPageSearch,
-                Text::sprintf(
-                    'COM_KUNENA_SEARCH_LIMIT',
-                    $this->config->messagesPerPageSearch
+            	'select.option',
+            	$this->config->messagesPerPageSearch,
+            	Text::sprintf(
+                	'COM_KUNENA_SEARCH_LIMIT',
+                	$this->config->messagesPerPageSearch
                 )
             );
         }
@@ -218,16 +218,16 @@ class SearchForm extends KunenaLayout
         $catParams = ['sections' => true];
 
         echo HTMLHelper::_(
-            'kunenaforum.categorylist',
-            'catids[]',
-            0,
-            $options,
-            $catParams,
-            $attributes,
-            'value',
-            'text',
-            $this->state->get('query.catids'),
-            $id
+        	'kunenaforum.categorylist',
+        	'catids[]',
+        	0,
+        	$options,
+        	$catParams,
+        	$attributes,
+        	'value',
+        	'text',
+        	$this->state->get('query.catids'),
+        	$id
         );
     }
 

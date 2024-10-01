@@ -33,7 +33,7 @@ if (empty($this->message->modified_time)) {
 $msg2 = Text::_('COM_KUNENA_POST_EMAIL_MOD2');
 $more = ($this->once ?
     Text::_(
-        $this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
+    	$this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
             'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE'
     ) . "\n" : '');
 

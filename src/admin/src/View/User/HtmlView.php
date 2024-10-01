@@ -20,7 +20,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
@@ -156,14 +155,14 @@ class HtmlView extends BaseHtmlView
         $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
         $options[]        = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_A_ONLY_REGISTERED'));
         $item->field      = HTMLHelper::_(
-            'select.genericlist',
-            $options,
-            'hidemail',
-            'class="kinputbox form-control" size="1"',
-            'value',
-            'text',
-            $this->escape($this->user->hideEmail),
-            'khidemail'
+        	'select.genericlist',
+        	$options,
+        	'hidemail',
+        	'class="kinputbox form-control" size="1"',
+        	'value',
+        	'text',
+        	$this->escape($this->user->hideEmail),
+        	'khidemail'
         );
         $this->settings[] = $item;
 
@@ -174,14 +173,14 @@ class HtmlView extends BaseHtmlView
         $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
         $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
         $item->field      = HTMLHelper::_(
-            'select.genericlist',
-            $options,
-            'showonline',
-            'class="kinputbox form-control" size="1"',
-            'value',
-            'text',
-            $this->escape($this->user->showOnline),
-            'kshowonline'
+        	'select.genericlist',
+        	$options,
+        	'showonline',
+        	'class="kinputbox form-control" size="1"',
+        	'value',
+        	'text',
+        	$this->escape($this->user->showOnline),
+        	'kshowonline'
         );
         $this->settings[] = $item;
 
@@ -193,14 +192,14 @@ class HtmlView extends BaseHtmlView
         $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
         $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
         $item->field      = HTMLHelper::_(
-            'select.genericlist',
-            $options,
-            'cansubscribe',
-            'class="kinputbox form-control" size="1"',
-            'value',
-            'text',
-            $this->escape($this->user->canSubscribe),
-            'kcansubscribe'
+        	'select.genericlist',
+        	$options,
+        	'cansubscribe',
+        	'class="kinputbox form-control" size="1"',
+        	'value',
+        	'text',
+        	$this->escape($this->user->canSubscribe),
+        	'kcansubscribe'
         );
         $this->settings[] = $item;
 
@@ -220,14 +219,14 @@ class HtmlView extends BaseHtmlView
         $options[]        = HTMLHelper::_('select.option', 720, Text::_('COM_KUNENA_SHOW_MONTH'));
         $options[]        = HTMLHelper::_('select.option', 8760, Text::_('COM_KUNENA_SHOW_YEAR'));
         $item->field      = HTMLHelper::_(
-            'select.genericlist',
-            $options,
-            'userlisttime',
-            'class="kinputbox form-control" size="1"',
-            'value',
-            'text',
-            $this->escape($this->user->userListtime),
-            'kuserlisttime'
+        	'select.genericlist',
+        	$options,
+        	'userlisttime',
+        	'class="kinputbox form-control" size="1"',
+        	'value',
+        	'text',
+        	$this->escape($this->user->userListtime),
+        	'kuserlisttime'
         );
         $this->settings[] = $item;
 
@@ -242,14 +241,14 @@ class HtmlView extends BaseHtmlView
             $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
             $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
             $item->field      = HTMLHelper::_(
-                'select.genericlist',
-                $options,
-                'social',
-                'class="kinputbox form-control" size="1"',
-                'value',
-                'text',
-                $this->escape($this->user->socialshare),
-                'ksocialshare'
+            	'select.genericlist',
+            	$options,
+            	'social',
+            	'class="kinputbox form-control" size="1"',
+            	'value',
+            	'text',
+            	$this->escape($this->user->socialshare),
+            	'ksocialshare'
             );
             $this->settings[] = $item;
         }

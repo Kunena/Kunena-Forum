@@ -693,11 +693,11 @@ class KunenaIcons
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
-        
+
         if ($topicicontype == 'fa') {
             return '<i class="fa-solid fa-mars"></i>';
         }
-        
+
         return KunenaSvgIcons::loadsvg('male');
     }
 
@@ -737,7 +737,7 @@ class KunenaIcons
     {
         $ktemplate     = KunenaFactory::getTemplate();
         $topicicontype = $ktemplate->params->get('topicicontype');
-        
+
         if ($topicicontype == 'fa') {
             if ($text != null) {
                 return '<i class="fa fa-minus" aria-hidden="true" title="' . $text . '"></i>';
@@ -745,7 +745,7 @@ class KunenaIcons
                 return '<i class="fa fa-minus" aria-hidden="true"></i>';
             }
         }
-        
+
         return KunenaSvgIcons::loadsvg('minus');
     }
 

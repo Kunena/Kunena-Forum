@@ -25,8 +25,8 @@ $parents[] = $content->category;
 
 foreach ($parents as $parent) {
     $this->addBreadcrumb(
-        $parent->displayField('name'),
-        $parent->getUri()
+    	$parent->displayField('name'),
+    	$parent->getUri()
     );
 }
 

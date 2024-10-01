@@ -46,49 +46,49 @@ class KunenaImage extends Image
         $angle  = 0;
         $flip   = 0;
 
-        if(function_exists('exif_read_data')) {
+        if(\function_exists('exif_read_data')) {
             $exif = exif_read_data($this->getPath());
-    
+
             if ($exif && isset($exif['Orientation'])) {
                 $orientation = $exif['Orientation'];
-    
+
                 if ($orientation != 1) {
                     switch ($orientation) {
                         case 1: // Nothing
                             $angle  = 0;
                             $flip   = 0;
                             break;
-    
+
                         case 2: // Horizontal flip
                             $angle  = 0;
                             $flip   = 1;
                             break;
-    
+
                         case 3: // 180 rotate left
                             $angle  = 180;
                             $flip   = 0;
                             break;
-    
+
                         case 4: // Vertical flip
                             $angle  = 0;
                             $flip   = 2;
                             break;
-    
+
                         case 5: // Vertical flip + 90 rotate
                             $angle  = 90;
                             $flip   = 2;
                             break;
-    
+
                         case 6: // 270 rotate left
                             $angle  = 270;
                             $flip   = 0;
                             break;
-    
+
                         case 7: // Horizontal flip + 90 rotate
                             $angle  = 90;
                             $flip   = 1;
                             break;
-    
+
                         case 8: // 90 rotate left
                             $angle  = 90;
                             $flip   = 0;
@@ -96,11 +96,11 @@ class KunenaImage extends Image
                     }
                 }
             }
-    
+
             if ($angle > 0) {
                 $this->rotate($angle, -1, false);
             }
-    
+
             if ($flip != 0) {
                 if ($flip == 1) {
                     $this->flip(IMG_FLIP_HORIZONTAL, false);
@@ -206,21 +206,21 @@ class KunenaImage extends Image
             imagefill($handle, 0, 0, $color);
 
             imagecopyresized(
-                $handle,
-                $this->handle,
-                $offset->x,
-                $offset->y,
-                0,
-                0,
-                $dimensions->width,
-                $dimensions->height,
-                $this->getWidth(),
-                $this->getHeight()
+            	$handle,
+            	$this->handle,
+            	$offset->x,
+            	$offset->y,
+            	0,
+            	0,
+            	$dimensions->width,
+            	$dimensions->height,
+            	$this->getWidth(),
+            	$this->getHeight()
             );
         } else {
             \call_user_func_array(
-                $resizemethod,
-                array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
+            	$resizemethod,
+            	array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
                 $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight(), )
             );
         }

@@ -20,8 +20,8 @@ use Joomla\CMS\Language\Text;
 $content = $this->execute('Credits');
 
 $this->addBreadcrumb(
-    Text::_('COM_KUNENA_VIEW_CREDITS_DEFAULT'),
-    'index.php?option=com_kunena&view=credits'
+	Text::_('COM_KUNENA_VIEW_CREDITS_DEFAULT'),
+	'index.php?option=com_kunena&view=credits'
 );
 
 echo $content;

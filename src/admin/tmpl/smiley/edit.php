@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 $iconPath = json_encode(Uri::root(true) . '/');
 $this->document->addScriptDeclaration(
-    "function update_smiley(newimage) {
+	"function update_smiley(newimage) {
 	document.smiley_image.src = {$iconPath} + newimage;
 }"
 );

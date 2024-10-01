@@ -18,8 +18,8 @@ $content = $this->execute('Topic/Listing/Recent')
     ->setLayout('recent');
 
 $this->addBreadcrumb(
-    $content->headerText,
-    'index.php?option=com_kunena&view=topics&layout=default'
+	$content->headerText,
+	'index.php?option=com_kunena&view=topics&layout=default'
 );
 
 echo $content;

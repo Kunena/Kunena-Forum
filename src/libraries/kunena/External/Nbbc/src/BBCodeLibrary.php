@@ -70,7 +70,6 @@ namespace Nbbc;
  * ```
  */
 class BBCodeLibrary {
-
     /**
      * @var array Standard library of smiley definitions.
      */
@@ -440,7 +439,7 @@ class BBCodeLibrary {
             return true;
         }
 
-        $url = is_string($default)
+        $url = \is_string($default)
             ? $default
             : $bbcode->unHTMLEncode(strip_tags($content));
 
@@ -450,13 +449,13 @@ class BBCodeLibrary {
             }
 
             if ($bbcode->getURLTargetable() !== false && isset($params['target'])) {
-                $target = ' target="'.htmlspecialchars($params['target'], ENT_QUOTES).'"';
+                $target = ' target="' . htmlspecialchars($params['target'], ENT_QUOTES) . '"';
             } else {
                 $target = '';
             }
 
             if ($bbcode->getURLTarget() !== false && empty($target)) {
-                $target = ' target="'.htmlspecialchars($bbcode->getURLTarget(), ENT_QUOTES).'"';
+                $target = ' target="' . htmlspecialchars($bbcode->getURLTarget(), ENT_QUOTES) . '"';
             }
 
             // If $detect_urls is on, it's possble the $content is already
@@ -465,10 +464,9 @@ class BBCodeLibrary {
 
             return $bbcode->fillTemplate($bbcode->getURLTemplate(), array("url" => $url, "target" => $target, "content" => $content));
         } else {
-            return htmlspecialchars($params['_tag'], ENT_QUOTES).$content.htmlspecialchars($params['_endtag'], ENT_QUOTES);
+            return htmlspecialchars($params['_tag'], ENT_QUOTES) . $content . htmlspecialchars($params['_endtag'], ENT_QUOTES);
         }
     }
-
 
     /**
      * Format an [email] tag by producing an <a href="mailto:...">...</a> element.
@@ -491,17 +489,16 @@ class BBCodeLibrary {
             return true;
         }
 
-        $email = is_string($default)
+        $email = \is_string($default)
             ? $default
             : $bbcode->unHTMLEncode(strip_tags($content));
 
         if ($bbcode->isValidEmail($email)) {
             return $bbcode->fillTemplate($bbcode->getEmailTemplate(), array("email" => $email, "content" => $content));
         } else {
-            return htmlspecialchars($params['_tag'], ENT_QUOTES).$content.htmlspecialchars($params['_endtag'], ENT_QUOTES);
+            return htmlspecialchars($params['_tag'], ENT_QUOTES) . $content . htmlspecialchars($params['_endtag'], ENT_QUOTES);
         }
     }
-
 
     /**
      * Format a [size] tag by producing a <span> with a style with a different font-size.
@@ -541,7 +538,7 @@ class BBCodeLibrary {
                 $size = '2.5em';
                 break;
             default:
-                $size = (int)$default;
+                $size = (int) $default;
                 if ($size < 11 || $size > 48) {
                     $size = '1.0em';
                 } else {
@@ -549,7 +546,8 @@ class BBCodeLibrary {
                 }
                 break;
         }
-        return '<span style="font-size:'.$size.'">'.$content.'</span>';
+
+        return '<span style="font-size:' . $size . '">' . $content . '</span>';
     }
 
     /**
@@ -583,20 +581,20 @@ class BBCodeLibrary {
         foreach ($fonts as $font) {
             $font = trim($font);
             if (isset($special_fonts[$font])) {
-                if (strlen($result) > 0) {
+                if (\strlen($result) > 0) {
                     $result .= ",";
                 }
                 $result .= $special_fonts[$font];
-            } else if (strlen($font) > 0) {
-                if (strlen($result) > 0) {
+            } elseif (\strlen($font) > 0) {
+                if (\strlen($result) > 0) {
                     $result .= ",";
                 }
                 $result .= "'$font'";
             }
         }
+
         return "<span style=\"font-family:$result\">$content</span>";
     }
-
 
     /**
      * Format a [wiki] tag by producing an <a>...</a> element.
@@ -613,19 +611,19 @@ class BBCodeLibrary {
         $name = $bbcode->wikify($default);
 
         if ($action == BBCode::BBCODE_CHECK) {
-            return strlen($name) > 0;
+            return \strlen($name) > 0;
         }
 
-        if (isset($params['title']) && strlen(trim($params['title']))) {
+        if (isset($params['title']) && \strlen(trim($params['title']))) {
             $title = trim($params['title']);
         } else {
             $title = trim($default);
         }
 
         $wikiURL = $bbcode->getWikiURL();
+
         return $bbcode->fillTemplate($bbcode->getWikiURLTemplate(), array("wikiURL" => $wikiURL, "name" => $name, "title" => $title));
     }
-
 
     /**
      * Format an [img] tag.  The URL only allows http, https, and ftp protocols for safety.
@@ -651,27 +649,26 @@ class BBCodeLibrary {
 
         $urlParts = parse_url($content);
 
-
-        if (is_array($urlParts)) {
+        if (\is_array($urlParts)) {
             if (!empty($urlParts['path']) &&
                 empty($urlParts['scheme']) &&
                 !preg_match('`^\.{0,2}/`', $urlParts['path']) &&
-                in_array(pathinfo($urlParts['path'], PATHINFO_EXTENSION), $this->imageExtensions)
+                \in_array(pathinfo($urlParts['path'], PATHINFO_EXTENSION), $this->imageExtensions)
             ) {
 
                 $localImgURL = $bbcode->getLocalImgURL();
 
                 return "<img src=\""
-                .htmlspecialchars((empty($localImgURL) ? '' : $localImgURL.'/').ltrim($urlParts['path'], '/'), ENT_QUOTES).'" alt="'
-                .htmlspecialchars(basename($content), ENT_QUOTES).'" class="bbcode_img" />';
+                . htmlspecialchars((empty($localImgURL) ? '' : $localImgURL . '/') . ltrim($urlParts['path'], '/'), ENT_QUOTES) . '" alt="'
+                . htmlspecialchars(basename($content), ENT_QUOTES) . '" class="bbcode_img" />';
             } elseif ($bbcode->isValidURL($content, false)) {
                 // Remote URL, or at least we don't know where it is.
-                return '<img src="'.htmlspecialchars($content, ENT_QUOTES).'" alt="'
-                .htmlspecialchars(basename($content), ENT_QUOTES).'" class="bbcode_img" />';
+                return '<img src="' . htmlspecialchars($content, ENT_QUOTES) . '" alt="'
+                . htmlspecialchars(basename($content), ENT_QUOTES) . '" class="bbcode_img" />';
             }
         }
 
-        return htmlspecialchars($params['_tag'], ENT_QUOTES).htmlspecialchars($content, ENT_QUOTES).htmlspecialchars($params['_endtag'], ENT_QUOTES);
+        return htmlspecialchars($params['_tag'], ENT_QUOTES) . htmlspecialchars($content, ENT_QUOTES) . htmlspecialchars($params['_endtag'], ENT_QUOTES);
     }
 
     /**
@@ -730,21 +727,21 @@ class BBCodeLibrary {
         }
 
         if (isset($params['name'])) {
-            $title = htmlspecialchars(trim($params['name']), ENT_QUOTES)." wrote";
+            $title = htmlspecialchars(trim($params['name']), ENT_QUOTES) . " wrote";
             if (isset($params['date'])) {
-                $title .= " on ".htmlspecialchars(trim($params['date']), ENT_QUOTES);
+                $title .= " on " . htmlspecialchars(trim($params['date']), ENT_QUOTES);
             }
             $title .= ":";
             if (isset($params['url'])) {
                 $url = trim($params['url']);
                 if ($bbcode->isValidURL($url)) {
-                    $title = "<a href=\"".htmlspecialchars($params['url'], ENT_QUOTES)."\">".$title."</a>";
+                    $title = "<a href=\"" . htmlspecialchars($params['url'], ENT_QUOTES) . "\">" . $title . "</a>";
                 }
             }
-        } elseif (!is_string($default)) {
+        } elseif (!\is_string($default)) {
             $title = "Quote:";
         } else {
-            $title = htmlspecialchars(trim($default), ENT_QUOTES)." wrote:";
+            $title = htmlspecialchars(trim($default), ENT_QUOTES) . " wrote:";
         }
 
         return $bbcode->fillTemplate($bbcode->getQuoteTemplate(), array("title" => $title, "content" => $content));
@@ -808,7 +805,7 @@ class BBCodeLibrary {
         $default = trim($default);
 
         if ($action == BBCode::BBCODE_CHECK) {
-            if (!is_string($default) || strlen($default) == 0) {
+            if (!\is_string($default) || \strlen($default) == 0) {
                 return true;
             } elseif (isset($listStyles[$default])) {
                 return true;
@@ -820,7 +817,7 @@ class BBCodeLibrary {
         }
 
         // Choose a list element (<ul> or <ol>) and a style.
-        if (!is_string($default) || strlen($default) == 0) {
+        if (!\is_string($default) || \strlen($default) == 0) {
             $elem = 'ul';
             $type = '';
         } elseif ($default == '1') {
@@ -841,7 +838,7 @@ class BBCodeLibrary {
         }
 
         // Generate the HTML for it.
-        if (strlen($type)) {
+        if (\strlen($type)) {
             return "\n<$elem class=\"bbcode_list\" style=\"list-style-type:$type\">\n$content</$elem>\n";
         } else {
             return "\n<$elem class=\"bbcode_list\">\n$content</$elem>\n";

@@ -86,9 +86,9 @@ class AnnouncementListingDisplay extends KunenaControllerDisplay
         $moderator           = KunenaUserHelper::getMyself()->isModerator();
         $this->pagination    = new KunenaPagination(KunenaAnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
         $this->announcements = KunenaAnnouncementHelper::getAnnouncements(
-            $this->pagination->limitstart,
-            $this->pagination->limit,
-            !$moderator
+        	$this->pagination->limitstart,
+        	$this->pagination->limit,
+        	!$moderator
         );
     }
 

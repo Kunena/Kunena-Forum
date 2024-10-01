@@ -410,7 +410,7 @@ class CategoriesModel extends KunenaModel
         $batch_categories[] = HTMLHelper::_('select.option', 'select', Text::_('JSELECT'));
 
         foreach ($categories as $category) {
-            $batch_categories[] = HTMLHelper::_('select.option', $category->id, str_repeat('...', count($category->indent) - 1) . ' ' . $category->name);
+            $batch_categories[] = HTMLHelper::_('select.option', $category->id, str_repeat('...', \count($category->indent) - 1) . ' ' . $category->name);
         }
 
         $list = HTMLHelper::_('select.genericlist', $batch_categories, 'batch_catid_target', 'class="form-select" size="1"', 'value', 'text', 'select');
@@ -631,7 +631,7 @@ class CategoriesModel extends KunenaModel
         }
 
         if (empty($this->filterFormName)) {
-            return null;
+            return;
         }
 
         try {
@@ -640,7 +640,7 @@ class CategoriesModel extends KunenaModel
         } catch (\RuntimeException $e) {
         }
 
-        return null;
+        return;
     }
 
     /**

@@ -18,7 +18,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Easysocial;
 
-defined('_JEXEC') or die('Unauthorized Access');
+\defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;

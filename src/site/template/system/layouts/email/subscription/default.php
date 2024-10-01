@@ -28,7 +28,7 @@ $msg1 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1') 
 $msg2 = $this->message->parent ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2') : Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
 $more = ($this->once ?
     Text::_(
-        $this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
+    	$this->message->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' :
             'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE'
     ) . "\n" : '');
 

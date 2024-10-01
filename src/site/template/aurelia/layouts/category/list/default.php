@@ -37,15 +37,15 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
                         <div class="input-append float-end">
                             <div class="input-group-btn">
                                 <?php echo HTMLHelper::_(
-                                    'select.genericlist',
-                                    $this->actions,
-                                    'task',
-                                    'size="1"',
-                                    'value',
-                                    'text',
-                                    0,
-                                    'kchecktask'
-                                ); ?>
+	'select.genericlist',
+	$this->actions,
+	'task',
+	'size="1"',
+	'value',
+	'text',
+	0,
+	'kchecktask'
+); ?>
                                 <input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
                                        value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
                             </div>

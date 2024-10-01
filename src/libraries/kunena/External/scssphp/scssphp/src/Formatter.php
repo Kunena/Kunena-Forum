@@ -165,7 +165,7 @@ abstract class Formatter
      */
     protected function blockSelectors(OutputBlock $block)
     {
-        assert(! empty($block->selectors));
+        \assert(! empty($block->selectors));
 
         $inner = $this->indentStr();
 
@@ -332,12 +332,12 @@ abstract class Formatter
                 // a non-existent column as we are at the end of the line
                 if ($line !== '') {
                     $this->sourceMapGenerator->addMapping(
-                        $this->currentLine,
-                        $this->currentColumn,
-                        $this->currentBlock->sourceLine,
+                    	$this->currentLine,
+                    	$this->currentColumn,
+                    	$this->currentBlock->sourceLine,
                         //columns from parser are off by one
                         $this->currentBlock->sourceColumn > 0 ? $this->currentBlock->sourceColumn - 1 : 0,
-                        $this->currentBlock->sourceName
+                    	$this->currentBlock->sourceName
                     );
                 }
 
@@ -347,12 +347,12 @@ abstract class Formatter
 
             if ($lastLine !== '') {
                 $this->sourceMapGenerator->addMapping(
-                    $this->currentLine,
-                    $this->currentColumn,
-                    $this->currentBlock->sourceLine,
+                	$this->currentLine,
+                	$this->currentColumn,
+                	$this->currentBlock->sourceLine,
                     //columns from parser are off by one
                     $this->currentBlock->sourceColumn > 0 ? $this->currentBlock->sourceColumn - 1 : 0,
-                    $this->currentBlock->sourceName
+                	$this->currentBlock->sourceName
                 );
             }
 

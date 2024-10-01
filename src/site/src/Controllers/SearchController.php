@@ -45,13 +45,13 @@ class SearchController extends KunenaController
     {
         $model = $this->getModel('Search', 'Kunena\Forum\Site\\');
         $this->setRedirect(
-            $model->getSearchURL(
-                'search',
-                $model->getState('searchwords'),
-                $model->getState('list.start'),
-                $model->getState('list.limit'),
-                $model->getUrlParams(),
-                false
+        	$model->getSearchURL(
+            	'search',
+            	$model->getState('searchwords'),
+            	$model->getState('list.start'),
+            	$model->getState('list.limit'),
+            	$model->getUrlParams(),
+            	false
             )
         );
     }

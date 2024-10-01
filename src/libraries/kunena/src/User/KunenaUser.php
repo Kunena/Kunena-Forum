@@ -49,7 +49,6 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Tables\KunenaUsers;
 use stdClass;
-use Joomla\CMS\User\UserFactoryAwareInterface;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUser
@@ -1124,7 +1123,7 @@ class KunenaUser extends CMSObject
             } elseif ($this->isMyself()) {
                 $count     = $private->getUnreadCount($this->userid);
                 $this->_pm = $private->getInboxLink(
-                    $count
+                	$count
                         ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
                         : Text::_('COM_KUNENA_PMS_INBOX')
                 );

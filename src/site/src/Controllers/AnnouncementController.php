@@ -219,9 +219,9 @@ class AnnouncementController extends KunenaController
             if ($announcement->isAuthorised('delete') || $announcement->delete()) {
                 if ($this->config->logModeration) {
                     KunenaLog::log(
-                        KunenaLog::TYPE_MODERATION,
-                        KunenaLog::LOG_ANNOUNCEMENT_DELETE,
-                        ['id' => $announcement->id]
+                    	KunenaLog::TYPE_MODERATION,
+                    	KunenaLog::LOG_ANNOUNCEMENT_DELETE,
+                    	['id' => $announcement->id]
                     );
                 }
 
@@ -297,10 +297,10 @@ class AnnouncementController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-                KunenaLog::TYPE_MODERATION,
-                $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT :
+            	KunenaLog::TYPE_MODERATION,
+            	$id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT :
                 KunenaLog::LOG_ANNOUNCEMENT_CREATE,
-                ['id' => $announcement->id]
+            	['id' => $announcement->id]
             );
         }
 

@@ -20,8 +20,8 @@ use Joomla\CMS\Language\Text;
 $content = $this->execute('Category/Subscriptions');
 
 $this->addBreadcrumb(
-    Text::_('COM_KUNENA_VIEW_CATEGORIES_USER'),
-    'index.php?option=com_kunena&view=category&layout=user'
+	Text::_('COM_KUNENA_VIEW_CATEGORIES_USER'),
+	'index.php?option=com_kunena&view=category&layout=user'
 );
 
 echo $content;

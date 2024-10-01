@@ -116,7 +116,7 @@ class KunenaUserFinder extends KunenaFinder
      */
     public function filterByName(string $search): KunenaFinder
     {
-        $search = '%' . $search . '%'; 
+        $search = '%' . $search . '%';
 
         if ($search) {
             if ($this->config->username) {

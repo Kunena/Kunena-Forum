@@ -559,9 +559,9 @@ class KunenaView extends HtmlView
         // Change the template folder if alternative layout is in different template
         if (isset($layoutTemplate) && $layoutTemplate !== '_' && $layoutTemplate != $template->template) {
             $this->_path['template'] = str_replace(
-                JPATH_THEMES . DIRECTORY_SEPARATOR . $template->template,
-                JPATH_THEMES . DIRECTORY_SEPARATOR . $layoutTemplate,
-                $this->_path['template']
+            	JPATH_THEMES . DIRECTORY_SEPARATOR . $template->template,
+            	JPATH_THEMES . DIRECTORY_SEPARATOR . $layoutTemplate,
+            	$this->_path['template']
             );
         }
 

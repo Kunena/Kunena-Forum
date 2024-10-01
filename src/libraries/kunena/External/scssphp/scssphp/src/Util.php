@@ -43,7 +43,7 @@ class Util
         $val = $value[1];
         $grace = new Range(-0.00001, 0.00001);
 
-        if (! \is_numeric($val)) {
+        if (! is_numeric($val)) {
             throw new RangeException("$name {$val} is not a number.");
         }
 
@@ -155,7 +155,7 @@ class Util
                 }
             }
 
-            return (string)iconv_substr($string, $start, $length, 'UTF-8');
+            return (string) iconv_substr($string, $start, $length, 'UTF-8');
         }
 
         throw new \LogicException('Either mbstring (recommended) or iconv is necessary to use Scssphp.');

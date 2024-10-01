@@ -223,9 +223,9 @@ class PluginsController extends AdminController
             // Reorder failed.
             $message = Text::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
             $this->setRedirect(
-                Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
-                $message,
-                'error'
+            	Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
+            	$message,
+            	'error'
             );
 
             return false;
@@ -283,9 +283,9 @@ class PluginsController extends AdminController
             // Reorder failed
             $message = Text::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
             $this->setRedirect(
-                Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
-                $message,
-                'error'
+            	Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
+            	$message,
+            	'error'
             );
 
             return false;
@@ -321,9 +321,9 @@ class PluginsController extends AdminController
             // Checkin failed.
             $message = Text::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
             $this->setRedirect(
-                Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
-                $message,
-                'error'
+            	Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false),
+            	$message,
+            	'error'
             );
 
             return false;

@@ -41,7 +41,6 @@ class HtmlView extends BaseHtmlView
      */
     protected $state;
 
-
     /**
      * @param   null  $tpl  tpl
      *

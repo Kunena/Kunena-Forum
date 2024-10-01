@@ -185,12 +185,12 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
         if ($this->config->reportMsg && $this->me->exists()) {
             if ($this->config->userReport && $this->me->userid == $this->message->userid && !$this->me->isModerator()) {
                 $this->reportMessageLink = HTMLHelper::_(
-                    'link',
-                    'index.php?option=com_kunena&view=topic&layout=report&catid='
+                	'link',
+                	'index.php?option=com_kunena&view=topic&layout=report&catid='
                         . \intval($this->category->id) . '&id=' . \intval($this->message->thread)
                         . '&mesid=' . \intval($this->message->id),
-                    Text::_('COM_KUNENA_REPORT'),
-                    Text::_('COM_KUNENA_REPORT')
+                	Text::_('COM_KUNENA_REPORT'),
+                	Text::_('COM_KUNENA_REPORT')
                 );
             }
         }

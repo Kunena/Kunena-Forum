@@ -771,16 +771,16 @@ abstract class KunenaUserHelper
                 $log = KunenaLog::LOG_USER_REPORT_STOPFORUMSPAM;
 
                 KunenaLog::log(
-                    KunenaLog::TYPE_ACTION,
-                    $log,
-                    [
+                	KunenaLog::TYPE_ACTION,
+                	$log,
+                	[
                         'user_ip_reported'  => $data['ip'],
                         'username_reported' => $data['username'],
                         'email_reported'    => $data['email'],
                     ],
-                    null,
-                    null,
-                    null
+                	null,
+                	null,
+                	null
                 );
             }
 

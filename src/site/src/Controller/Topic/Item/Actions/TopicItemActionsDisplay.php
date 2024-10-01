@@ -91,62 +91,62 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 
         if ($this->topic->isAuthorised('reply')) {
             $this->topicButtons->set(
-                'reply',
-                $this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, KunenaIcons::undo())
+            	'reply',
+            	$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, $button, KunenaIcons::undo())
             );
 
             // Dropdown Item version
             $this->topicButtons->set(
-                'reply_dropdown',
-                $this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, true, KunenaIcons::undo())
+            	'reply_dropdown',
+            	$this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication', false, true, KunenaIcons::undo())
             );
         }
 
         if ($userTopic->subscribed) {
             // User can always remove existing subscription.
             $this->topicButtons->set(
-                'subscribe',
-                $this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, KunenaIcons::emailOpen())
+            	'subscribe',
+            	$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, $button, KunenaIcons::emailOpen())
             );
             // Dropdown Item version
             $this->topicButtons->set(
-                'subscribe_dropdown',
-                $this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, true, KunenaIcons::emailOpen())
+            	'subscribe_dropdown',
+            	$this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user', false, true, KunenaIcons::emailOpen())
             );
         } elseif ($this->topic->isAuthorised('subscribe')) {
             // Add subscribe topic button.
             $this->topicButtons->set(
-                'subscribe',
-                $this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, KunenaIcons::email())
+            	'subscribe',
+            	$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, $button, KunenaIcons::email())
             );
             // Dropdown Item version
             $this->topicButtons->set(
-                'subscribe_dropdown',
-                $this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, true, KunenaIcons::email())
+            	'subscribe_dropdown',
+            	$this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, true, KunenaIcons::email())
             );
         }
 
         if ($userTopic->favorite) {
             // User can always remove existing favorite.
             $this->topicButtons->set(
-                'favorite',
-                $this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, KunenaIcons::star())
+            	'favorite',
+            	$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, $button, KunenaIcons::star())
             );
             // Dropdown Item version
             $this->topicButtons->set(
-                'favorite_dropdown',
-                $this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, true, KunenaIcons::star())
+            	'favorite_dropdown',
+            	$this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user', false, true, KunenaIcons::star())
             );
         } elseif ($this->topic->isAuthorised('favorite')) {
             // Add favorite topic button.
             $this->topicButtons->set(
-                'favorite',
-                $this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, KunenaIcons::starOpen())
+            	'favorite',
+            	$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, $button, KunenaIcons::starOpen())
             );
             // Dropdown Item version
             $this->topicButtons->set(
-                'favorite_dropdown',
-                $this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, true, KunenaIcons::starOpen())
+            	'favorite_dropdown',
+            	$this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user', false, true, KunenaIcons::starOpen())
             );
         }
 
@@ -156,86 +156,86 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
             $lock   = $this->topic->locked ? 'unlock' : 'lock';
 
             $this->topicButtons->set(
-                'sticky',
-                $this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation', false, $button, KunenaIcons::sticky())
+            	'sticky',
+            	$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation', false, $button, KunenaIcons::sticky())
             );
 
             // Dropdown Item version
             $this->topicButtons->set(
-                'sticky_dropdown',
-                $this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation', false, true, KunenaIcons::sticky())
+            	'sticky_dropdown',
+            	$this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation', false, true, KunenaIcons::sticky())
             );
 
             $this->topicButtons->set(
-                'lock',
-                $this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, $button, KunenaIcons::lock())
-            );
-
-            // Dropdown Item version
-            $this->topicButtons->set(
-                'lock_dropdown',
-                $this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, true, KunenaIcons::lock())
-            );
-
-            $this->topicButtons->set(
-                'moderate',
-                $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation', false, $button, KunenaIcons::shield())
+            	'lock',
+            	$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, $button, KunenaIcons::lock())
             );
 
             // Dropdown Item version
             $this->topicButtons->set(
-                'moderate_dropdown',
-                $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation', false, true, KunenaIcons::shield())
+            	'lock_dropdown',
+            	$this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation', false, true, KunenaIcons::lock())
+            );
+
+            $this->topicButtons->set(
+            	'moderate',
+            	$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation', false, $button, KunenaIcons::shield())
+            );
+
+            // Dropdown Item version
+            $this->topicButtons->set(
+            	'moderate_dropdown',
+            	$this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation', false, true, KunenaIcons::shield())
             );
 
             if ($this->topic->hold == 1) {
                 $this->topicButtons->set(
-                    'approve',
-                    $this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation', false, $button, KunenaIcons::poll_add())
+                	'approve',
+                	$this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation', false, $button, KunenaIcons::poll_add())
                 );
 
                 // Dropdown Item version
                 $this->topicButtons->set(
-                    'approve_dropdown',
-                    $this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation', false, true, KunenaIcons::poll_add())
+                	'approve_dropdown',
+                	$this->getButton(sprintf($task, 'approve'), 'moderate', 'topic', 'moderation', false, true, KunenaIcons::poll_add())
                 );
             }
 
             if ($this->topic->hold == 1 || $this->topic->hold == 0) {
                 $this->topicButtons->set(
-                    'delete',
-                    $this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, $button, KunenaIcons::delete())
+                	'delete',
+                	$this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, $button, KunenaIcons::delete())
                 );
 
                 // Dropdown Item version
                 $this->topicButtons->set(
-                    'delete_dropdown',
-                    $this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, true, KunenaIcons::delete())
+                	'delete_dropdown',
+                	$this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation', false, true, KunenaIcons::delete())
                 );
             } elseif ($this->topic->hold == 2 || $this->topic->hold == 3) {
                 if ($this->topic->isAuthorised('permdelete')) {
                     $this->topicButtons->set(
-                        'permdelete',
-                        $this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'topic', 'moderation', false, $button)
+                    	'permdelete',
+                    	$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'topic', 'moderation', false, $button)
                     );
 
                     // Dropdown Item version
                     $this->topicButtons->set(
-                        'permdelete_dropdown',
-                        $this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'topic', 'moderation', false, true)
+                    	'permdelete_dropdown',
+                    	$this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'topic', 'moderation', false, true)
                     );
                 }
 
                 if ($this->topic->isAuthorised('undelete')) {
                     $this->topicButtons->set(
-                        'undelete',
-                        $this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation', false, $button)
+                    	'undelete',
+                    	$this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation', false, $button)
                     );
 
                     // Dropdown Item version
                     $this->topicButtons->set(
-                        'undelete_dropdown',
-                        $this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation', false, true)
+                    	'undelete_dropdown',
+                    	$this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation', false, true)
                     );
                 }
             }
@@ -247,22 +247,22 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 
             if ($this->layout != 'default') {
                 $this->topicButtons->set(
-                    'flat',
-                    $this->getButton(sprintf($url, 'flat'), 'flat', 'layout', 'user', false, $button)
+                	'flat',
+                	$this->getButton(sprintf($url, 'flat'), 'flat', 'layout', 'user', false, $button)
                 );
             }
 
             if ($this->layout != 'threaded') {
                 $this->topicButtons->set(
-                    'threaded',
-                    $this->getButton(sprintf($url, 'threaded'), 'threaded', 'layout', 'user', false, $button)
+                	'threaded',
+                	$this->getButton(sprintf($url, 'threaded'), 'threaded', 'layout', 'user', false, $button)
                 );
             }
 
             if ($this->layout != 'indented') {
                 $this->topicButtons->set(
-                    'indented',
-                    $this->getButton(sprintf($url, 'indented'), 'indented', 'layout', 'user', false, $button)
+                	'indented',
+                	$this->getButton(sprintf($url, 'indented'), 'indented', 'layout', 'user', false, $button)
                 );
             }
         }
@@ -293,7 +293,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
     {
         return KunenaLayout::factory('Widget/Button')
             ->setProperties(
-                ['url'   => $url, 'name' => $name,
+            	['url'   => $url, 'name' => $name,
                  'scope' => $scope, 'type' => $type, 'primary' => $primary, 'normal' => $normal, 'icon' => $icon, ]
             );
     }

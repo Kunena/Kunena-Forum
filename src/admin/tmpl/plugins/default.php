@@ -72,10 +72,10 @@ $joomlaVersion = new Version();
                             $link = Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal', false);
                             if (version_compare($joomlaVersion->getShortVersion(), '5.1', '<')) {
                                 $linkModal = HTMLHelper::_(
-                                    'link',
-                                    '#plugin' . $item->extension_id . 'Modal',
-                                    $item->name,
-                                    'data-bs-toggle="modal" id="title-' . $item->extension_id . '"'
+                                	'link',
+                                	'#plugin' . $item->extension_id . 'Modal',
+                                	$item->name,
+                                	'data-bs-toggle="modal" id="title-' . $item->extension_id . '"'
                                 );
                             } else {
                                 $popupOptions = [
@@ -84,10 +84,10 @@ $joomlaVersion = new Version();
                                     'src'        => $link,
                                 ];
                                 $linkModal = HTMLHelper::_(
-                                    'link',
-                                    '#',
-                                    $item->name,
-                                    [
+                                	'link',
+                                	'#',
+                                	$item->name,
+                                	[
                                         'class'                 => 'alert-link',
                                         'data-joomla-dialog'    => $this->escape(json_encode($popupOptions, JSON_UNESCAPED_SLASHES)),
                                         'data-checkin-url'      => Route::_('index.php?option=com_plugins&task=plugins.checkin&format=json&cid[]=' . $item->extension_id),
@@ -115,9 +115,9 @@ $joomlaVersion = new Version();
                                         <?php echo $linkModal; ?>
                                         <?php if (version_compare($joomlaVersion->getShortVersion(), '5.1', '<')) : ?>
                                             <?php echo HTMLHelper::_(
-                                                'bootstrap.renderModal',
-                                                'plugin' . $item->extension_id . 'Modal',
-                                                array(
+                        	'bootstrap.renderModal',
+                        	'plugin' . $item->extension_id . 'Modal',
+                        	array(
                                                     'url'         => $link,
                                                     'title'       => Text::_($item->name),
                                                     'height'      => '400px',
@@ -140,7 +140,7 @@ $joomlaVersion = new Version();
                                                         . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#plugin' . $item->extension_id . 'Modal\', buttonSelector: \'#applyBtn\'})">'
                                                         . Text::_('JAPPLY') . '</button>',
                                                 )
-                                            ); ?>
+                        ); ?>
                                         <?php endif; ?>
                                     <?php else : ?>
                                         <?php echo $item->name; ?>
@@ -163,7 +163,7 @@ $joomlaVersion = new Version();
                     </tbody>
                 </table>
 
-                <?php // load the pagination. 
+                <?php // load the pagination.
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 

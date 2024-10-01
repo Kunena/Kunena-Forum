@@ -30,7 +30,7 @@ if (!$attachment->isVideo()) {
 <p><?php echo $attachment->getShortName(); ?> <a href="<?php echo $location; ?>" data-bs-toggle="tooltip" title="Download" download> <i
                 class="icon icon-download"></i></a></p>
 <div class="clearfix"></div>
-<?php 
+<?php
 } else {
 ?>
 <video width="100%" src="<?php echo $location; ?>" controls>
@@ -39,6 +39,6 @@ if (!$attachment->isVideo()) {
 <p><?php echo $attachment->getShortName(); ?> <a href="<?php echo $location; ?>" data-bs-toggle="tooltip" title="Download" download> <i
                 class="icon icon-download"></i></a></p>
 <div class="clearfix"></div>
-<?php 
-} 
+<?php
+}
 ?>

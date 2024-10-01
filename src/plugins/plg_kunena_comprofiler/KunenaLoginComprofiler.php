@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use CBLib\Registry\Registry;
 use Joomla\CMS\Component\ComponentHelper;

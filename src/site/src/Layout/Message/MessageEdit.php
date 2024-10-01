@@ -15,8 +15,6 @@ namespace Kunena\Forum\Site\Layout\Message;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
 /**
@@ -27,6 +25,6 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 class MessageEdit extends KunenaLayout
 {
     public $message;
-    
+
     public $captchaEnabled;
 }

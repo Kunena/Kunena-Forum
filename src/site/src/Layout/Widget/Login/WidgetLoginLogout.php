@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Layout\Widget\Login;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
@@ -24,38 +24,38 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 class WidgetLoginLogout extends KunenaLayout
 {
     public $output;
-    
+
     public $user;
-    
+
     public $headerText;
-    
+
     public $pagination;
-    
+
     public $config;
-    
+
     public $me;
-    
+
     public $my;
-    
+
     public $registrationUrl;
-    
+
     public $resetPasswordUrl;
-    
+
     public $remindUsernameUrl;
-    
+
     public $rememberMe;
-    
+
     public $lastvisitDate;
-    
+
     public $announcementsUrl;
-    
+
     public $pm_link;
-    
+
     public $inboxCount;
-    
+
     public $inboxCountValue;
-    
+
     public $profile_edit_url;
-    
+
     public $plglogin;
 }

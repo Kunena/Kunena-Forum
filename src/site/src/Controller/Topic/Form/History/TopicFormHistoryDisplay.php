@@ -71,10 +71,10 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
         $this->topic   = KunenaTopicHelper::get($id);
         $category      = $this->topic->getCategory();
         $this->history = KunenaMessageHelper::getMessagesByTopic(
-            $this->topic,
-            0,
-            (int) $this->config->historyLimit,
-            'DESC'
+        	$this->topic,
+        	0,
+        	(int) $this->config->historyLimit,
+        	'DESC'
         );
 
         $this->replycount   = $this->topic->getReplies();

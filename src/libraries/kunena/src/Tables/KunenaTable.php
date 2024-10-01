@@ -48,8 +48,8 @@ abstract class KunenaTable extends Table
     {
         // Pre-processing by observers
         $event = AbstractEvent::create(
-            'onTableBeforeLoad',
-            [
+        	'onTableBeforeLoad',
+        	[
                 'subject' => $this,
                 'keys'    => $keys,
                 'reset'   => $reset,
@@ -120,8 +120,8 @@ abstract class KunenaTable extends Table
 
         // Post-processing by observers
         $event = AbstractEvent::create(
-            'onTableAfterLoad',
-            [
+        	'onTableAfterLoad',
+        	[
                 'subject' => $this,
                 'result'  => &$result,
                 'row'     => $row,

@@ -72,9 +72,9 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FILE_MANAGER'), 'folder-open');
 
         $toolbar->standardButton(
-            'delete',
-            'COM_KUNENA_GEN_DELETE',
-            'attachments.delete'
+        	'delete',
+        	'COM_KUNENA_GEN_DELETE',
+        	'attachments.delete'
         )
             ->listCheck(true);
 

@@ -18,7 +18,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Easysocial;
 
-defined('_JEXEC') or die('Unauthorized Access');
+\defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
@@ -164,7 +164,7 @@ class KunenaProfileEasySocial extends KunenaProfile
             $birthday = \FD::date($data['date']);
         }
 
-        if (!is_null($birthday)) {
+        if (!\is_null($birthday)) {
             $view->profile->birthdate = $birthday->format('Y-m-d');
         }
     }

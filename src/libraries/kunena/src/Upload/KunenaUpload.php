@@ -359,8 +359,8 @@ class KunenaUpload
         $this->filename = null;
 
         throw new RuntimeException(
-            Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
-            400
+        	Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
+        	400
         );
     }
 
@@ -434,11 +434,11 @@ class KunenaUpload
         }
 
         return (int) max(
-            0,
-            min(
-                $this->toBytes(ini_get('upload_max_filesize')),
-                $this->toBytes(ini_get('post_max_size')),
-                $this->toBytes(ini_get('memory_limit'))
+        	0,
+        	min(
+            	$this->toBytes(\ini_get('upload_max_filesize')),
+            	$this->toBytes(\ini_get('post_max_size')),
+            	$this->toBytes(\ini_get('memory_limit'))
             )
         );
     }
@@ -479,11 +479,11 @@ class KunenaUpload
         }
 
         return (int) max(
-            0,
-            min(
-                $this->toBytes(ini_get('upload_max_filesize')),
-                $this->toBytes(ini_get('post_max_size')),
-                $this->toBytes(ini_get('memory_limit'))
+        	0,
+        	min(
+            	$this->toBytes(\ini_get('upload_max_filesize')),
+            	$this->toBytes(\ini_get('post_max_size')),
+            	$this->toBytes(\ini_get('memory_limit'))
             )
         );
     }
@@ -507,11 +507,11 @@ class KunenaUpload
         }
 
         return (int) max(
-            0,
-            min(
-                $this->toBytes(ini_get('upload_max_filesize')),
-                $this->toBytes(ini_get('post_max_size')),
-                $this->toBytes(ini_get('memory_limit'))
+        	0,
+        	min(
+            	$this->toBytes(\ini_get('upload_max_filesize')),
+            	$this->toBytes(\ini_get('post_max_size')),
+            	$this->toBytes(\ini_get('memory_limit'))
             )
         );
     }
@@ -601,8 +601,8 @@ class KunenaUpload
 
                 if (!$name) {
                     throw new RuntimeException(
-                        Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
-                        400
+                    	Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
+                    	400
                     );
                 }
             }
@@ -669,11 +669,11 @@ class KunenaUpload
         }
 
         return (int) max(
-            0,
-            min(
-                $this->toBytes(ini_get('upload_max_fileSize')),
-                $this->toBytes(ini_get('post_max_size')),
-                $this->toBytes(ini_get('memory_limit'))
+        	0,
+        	min(
+            	$this->toBytes(\ini_get('upload_max_fileSize')),
+            	$this->toBytes(\ini_get('post_max_size')),
+            	$this->toBytes(\ini_get('memory_limit'))
             )
         );
     }

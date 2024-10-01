@@ -224,9 +224,9 @@ class UsersModel extends ListModel
         // Select the required fields from the table.
         // We construct a composedBanned here to we can correctly sort of banned status
         $query->select(
-            $this->getState(
-                'list.select',
-                'a.id, CASE WHEN a.block = 1 THEN "9999-12-31 23:59:59" ELSE ku.banned END AS composedBanned'
+        	$this->getState(
+            	'list.select',
+            	'a.id, CASE WHEN a.block = 1 THEN "9999-12-31 23:59:59" ELSE ku.banned END AS composedBanned'
             )
         );
         $query->from($db->quoteName('#__users', 'a'));

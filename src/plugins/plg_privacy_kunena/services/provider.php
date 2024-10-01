@@ -35,13 +35,13 @@ return new class implements ServiceProviderInterface
     public function register(Container $container)
     {
         $container->set(
-            PluginInterface::class,
-            function (Container $container) {
+        	PluginInterface::class,
+        	function (Container $container) {
                 $subject = $container->get(DispatcherInterface::class);
                 $config  = (array) PluginHelper::getPlugin('privacy', 'kunena');
                 $plugin = new Kunena(
-                    $subject,
-                    $config
+                	$subject,
+                	$config
                 );
                 $plugin->setApplication(Factory::getApplication());
 

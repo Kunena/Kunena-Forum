@@ -60,14 +60,14 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
                 // Build the html select list
                 echo HTMLHelper::_(
-                    'select.genericlist',
-                    $block,
-                    'banlevel',
-                    '',
-                    'value',
-                    'text',
-                    $this->escape($this->banInfo->blocked),
-                    'ban-level'
+                	'select.genericlist',
+                	$block,
+                	'banlevel',
+                	'',
+                	'value',
+                	'text',
+                	$this->escape($this->banInfo->blocked),
+                	'ban-level'
                 );
                 ?>
             </td>
@@ -79,11 +79,11 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
             </td>
             <td>
                 <?php echo HTMLHelper::_(
-                    'calendar',
-                    $this->escape($this->banInfo->expiration),
-                    'expiration',
-                    'ban-expiration',
-                    '%Y-%m-%d %H:%M:%S'
+                	'calendar',
+                	$this->escape($this->banInfo->expiration),
+                	'expiration',
+                	'ban-expiration',
+                	'%Y-%m-%d %H:%M:%S'
                 ); ?>
             </td>
         </tr>

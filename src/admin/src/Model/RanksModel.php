@@ -113,9 +113,9 @@ class RanksModel extends ListModel
         $query = $db->createQuery();
 
         $query->select(
-            $this->getState(
-                'list.select',
-                'a.rankId, a.rankTitle, a.rankMin, a.rankSpecial, a.rankImage'
+        	$this->getState(
+            	'list.select',
+            	'a.rankId, a.rankTitle, a.rankMin, a.rankSpecial, a.rankImage'
             )
         );
 

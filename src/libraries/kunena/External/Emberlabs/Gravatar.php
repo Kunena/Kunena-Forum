@@ -1,6 +1,5 @@
 <?php
 /**
- *
  *===================================================================
  *
  *  GravatarLib - Gravatar PHP 5.3 OOP Library
@@ -16,7 +15,6 @@
  *
  * This source file is subject to the MIT license that is bundled
  * with this package in the file LICENSE.
- *
  */
 
 namespace Pedrollo\GravatarLib;
@@ -87,9 +85,9 @@ class Gravatar
 	public function setAvatarSize($size)
 	{
 		// Wipe out the param cache.
-		$this->param_cache = NULL;
+		$this->param_cache = null;
 
-		if(!is_int($size) && !ctype_digit($size))
+		if(!\is_int($size) && !ctype_digit($size))
 		{
 			throw new InvalidArgumentException('Avatar size specified must be an integer');
 		}
@@ -131,7 +129,7 @@ class Gravatar
 		}
 
 		// Wipe out the param cache.
-		$this->param_cache = NULL;
+		$this->param_cache = null;
 
 		// Check $image against recognized gravatar "defaults", and if it doesn't match any of those we need to see if it is a valid URL.
 		$_image = strtolower($image);
@@ -174,7 +172,7 @@ class Gravatar
 	public function setMaxRating($rating)
 	{
 		// Wipe out the param cache.
-		$this->param_cache = NULL;
+		$this->param_cache = null;
 
 		$rating = strtolower($rating);
 		$valid_ratings = array('g' => 1, 'pg' => 1, 'r' => 1, 'x' => 1);
@@ -252,7 +250,7 @@ class Gravatar
 		}
 
 		// Check to see if the param_cache property has been populated yet
-		if($this->param_cache === NULL)
+		if($this->param_cache === null)
 		{
 			// Time to figure out our request params
 			$params = array();

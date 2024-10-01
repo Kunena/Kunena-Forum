@@ -109,11 +109,11 @@ class HomeDisplay extends KunenaControllerDisplay
 
         // Get HMVC controller for the current page.
         $controller = KunenaControllerApplication::getInstance(
-            $this->input->getCmd('view'),
-            $this->input->getCmd('layout', 'default'),
-            $this->input->getCmd('task', 'display'),
-            $this->input,
-            $this->app
+        	$this->input->getCmd('view'),
+        	$this->input->getCmd('layout', 'default'),
+        	$this->input->getCmd('task', 'display'),
+        	$this->input,
+        	$this->app
         );
 
         if (!$controller) {

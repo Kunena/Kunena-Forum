@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Community;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;

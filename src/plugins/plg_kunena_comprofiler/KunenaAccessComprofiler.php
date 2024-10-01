@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -281,7 +281,7 @@ class KunenaAccessComprofiler
         $params  = [$userid, &$allowed];
         KunenaIntegrationComprofiler::trigger('getAllowedForumsRead', $params);
 
-        if (is_string($allowed)) {
+        if (\is_string($allowed)) {
             $allowed = explode(',', $allowed);
         }
 

@@ -96,12 +96,12 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 <td><?php echo $this->escape($message->subject); ?></td>
                                 <td><?php echo intval($attachment->id); ?></td>
                             </tr>
-                            <?php $i++;; ?>
+                            <?php $i++; ?>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
 
-                <?php // load the pagination. 
+                <?php // load the pagination.
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 

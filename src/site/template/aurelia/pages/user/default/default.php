@@ -18,8 +18,8 @@ namespace Kunena\Forum\Site;
 $content = $this->execute('User/Item');
 
 $this->addBreadcrumb(
-    $content->headerText,
-    'index.php?option=com_kunena&view=user&userid=' . $content->user->id
+	$content->headerText,
+	'index.php?option=com_kunena&view=user&userid=' . $content->user->id
 );
 
 echo $content;

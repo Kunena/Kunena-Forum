@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site\Controller\Widget\Login;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;

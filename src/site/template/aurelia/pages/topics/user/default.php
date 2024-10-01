@@ -19,8 +19,8 @@ $content = $this->execute('Topic/Listing/User')
     ->setLayout('user');
 
 $this->addBreadcrumb(
-    $content->headerText,
-    'index.php?option=com_kunena&view=topics&layout=user'
+	$content->headerText,
+	'index.php?option=com_kunena&view=topics&layout=user'
 );
 
 echo $content;

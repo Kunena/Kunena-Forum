@@ -88,7 +88,7 @@ class MessageListingRecentDisplay extends ListDisplay
 
         if ($this->embedded) {
             $this->moreUri = new Uri(
-                'index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
+            	'index.php?option=com_kunena&view=topics&layout=posts&mode=' . $this->state->get('list.mode')
                 . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
             );
             $this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));

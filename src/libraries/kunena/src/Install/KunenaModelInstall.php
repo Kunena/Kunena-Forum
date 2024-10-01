@@ -170,9 +170,9 @@ class KunenaModelInstall extends BaseDatabaseModel
             ignore_user_abort(true);
         }
 
-        $this->setState('default_max_time', @ini_get('max_execution_time'));
+        $this->setState('default_max_time', @\ini_get('max_execution_time'));
         @set_time_limit(300);
-        $this->setState('max_time', @ini_get('max_execution_time'));
+        $this->setState('max_time', @\ini_get('max_execution_time'));
 
         // TODO: move to migration
         $this->_versiontablearray = [['prefix' => 'kunena_', 'table' => 'kunena_version'], ['prefix' => 'fb_', 'table' => 'fb_version']];
@@ -2585,7 +2585,7 @@ class KunenaModelInstall extends BaseDatabaseModel
                 $query = $this->db->createQuery();
                 $query->update($this->db->quoteName('#__kunena_attachments'))
                     ->set(
-                        'folder=\'media/kunena/attachments/legacy/' . $lastpath . '\', size=' .
+                    	'folder=\'media/kunena/attachments/legacy/' . $lastpath . '\', size=' .
                         $this->db->quote($size) . ', hash=' . $this->db->quote($hash) . ', filetype=' . $this->db->quote($attachment->filetype)
                     )
                     ->where('id=' . $this->db->quote($attachment->id));
@@ -2773,7 +2773,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             // Menu already exists, do nothing
             return true;
         }
-        
+
         try {
             $table->store();
         } catch (Exception $e) {
@@ -2936,7 +2936,7 @@ class KunenaModelInstall extends BaseDatabaseModel
                 'params' => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
                 ];
             }
-            
+
             try {
                 $table->bind($data);
             } catch (Exception $e) {

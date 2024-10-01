@@ -222,7 +222,7 @@ class UserController extends KunenaController
             if (!$this->me->isModerator() && $now - $lastKarmaTime < $karma_delay) {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'warning');
                 $this->setRedirectBack();
-                
+
                 return;
             }
         }
@@ -250,7 +250,7 @@ class UserController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
-            
+
             return;
         }
 
@@ -359,14 +359,14 @@ class UserController extends KunenaController
             $log = KunenaLog::LOG_USER_EDIT;
 
             KunenaLog::log(
-                KunenaLog::TYPE_ACTION,
-                $log,
-                [
+            	KunenaLog::TYPE_ACTION,
+            	$log,
+            	[
                     'edited_by_moderator' => $edited_by_moderator,
                 ],
-                null,
-                null,
-                $this->user
+            	null,
+            	null,
+            	$this->user
             );
         }
 
@@ -450,8 +450,8 @@ class UserController extends KunenaController
 
             if (\strlen($valueTrim) != $valueLength) {
                 $this->app->enqueueMessage(
-                    Text::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
-                    'error'
+                	Text::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
+                	'error'
                 );
 
                 $validPassword = false;
@@ -463,8 +463,8 @@ class UserController extends KunenaController
 
                 if ($nInts < $minimumIntegers) {
                     $this->app->enqueueMessage(
-                        Text::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
-                        'error'
+                    	Text::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
+                    	'error'
                     );
 
                     $validPassword = false;
@@ -477,8 +477,8 @@ class UserController extends KunenaController
 
                 if ($nsymbols < $minimumSymbols) {
                     $this->app->enqueueMessage(
-                        Text::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
-                        'error'
+                    	Text::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
+                    	'error'
                     );
 
                     $validPassword = false;
@@ -491,8 +491,8 @@ class UserController extends KunenaController
 
                 if ($nUppercase < $minimumUppercase) {
                     $this->app->enqueueMessage(
-                        Text::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
-                        'error'
+                    	Text::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
+                    	'error'
                     );
 
                     $validPassword = false;
@@ -503,8 +503,8 @@ class UserController extends KunenaController
             if (!empty($minimumLength)) {
                 if (\strlen((string) $value) < $minimumLength) {
                     $this->app->enqueueMessage(
-                        Text::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
-                        'error'
+                    	Text::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
+                    	'error'
                     );
 
                     $validPassword = false;
@@ -730,9 +730,9 @@ class UserController extends KunenaController
         if ($success) {
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    KunenaLog::TYPE_MODERATION,
-                    $log,
-                    [
+                	KunenaLog::TYPE_MODERATION,
+                	$log,
+                	[
                         'expiration'     => $delban ? 'NOW' : $expiration,
                         'reason_private' => $reason_private,
                         'reason_public'  => $reason_public,
@@ -744,9 +744,9 @@ class UserController extends KunenaController
                             'deletePosts'    => (bool) $banDelPosts,
                         ],
                     ],
-                    null,
-                    null,
-                    $user
+                	null,
+                	null,
+                	$user
                 );
 
                 KunenaUserHelper::recountBanned();
@@ -1360,7 +1360,7 @@ class UserController extends KunenaController
                 $obj = new stdClass();
                 $obj->id = $key;
                 $obj->avatar = $user->getAvatarURL();
-                if ( $this->config->username ) {                
+                if ($this->config->username) {
                     $obj->username = $user->username;
                 } else {
                     $obj->username = $user->name;

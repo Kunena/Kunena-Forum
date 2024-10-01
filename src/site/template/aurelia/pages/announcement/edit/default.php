@@ -21,12 +21,12 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 $content = $this->execute('Announcement/Edit');
 
 $this->addBreadcrumb(
-    Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
-    'index.php?option=com_kunena&view=announcement&layout=list'
+	Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
+	'index.php?option=com_kunena&view=announcement&layout=list'
 );
 $this->addBreadcrumb(
-    Text::_('COM_KUNENA_EDIT'),
-    KunenaRoute::normalize()
+	Text::_('COM_KUNENA_EDIT'),
+	KunenaRoute::normalize()
 );
 
 echo $content;

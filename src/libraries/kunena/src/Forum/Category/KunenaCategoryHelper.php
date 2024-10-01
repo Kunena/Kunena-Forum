@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Forum\Category;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Language\Transliterate;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -486,7 +485,7 @@ abstract class KunenaCategoryHelper
 
         $query->select(array($db->quoteName('t.category_id'), 'COUNT(*) AS new'))
             ->from($db->quoteName('#__kunena_topics', 't'))
-            ->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON ' .  $db->quoteName('uc.category_id') . ' = ' . $db->quoteName('t.category_id') . ' AND ' . $db->quoteName('uc.user_id') . ' = ' . $db->quote($user->userid))
+            ->leftJoin($db->quoteName('#__kunena_user_categories', 'uc') . ' ON ' . $db->quoteName('uc.category_id') . ' = ' . $db->quoteName('t.category_id') . ' AND ' . $db->quoteName('uc.user_id') . ' = ' . $db->quote($user->userid))
             ->leftJoin($db->quoteName('#__kunena_user_read', 'ur') . ' ON ' . $db->quoteName('ur.topic_id') . ' = ' . $db->quoteName('t.id') . ' AND ' . $db->quoteName('ur.user_id') . ' = ' . $db->quote($user->userid))
             ->where($db->quoteName('t.category_id') . ' IN (' . $catlist . ')')
             ->where($db->quoteName('t.hold') . ' = 0')

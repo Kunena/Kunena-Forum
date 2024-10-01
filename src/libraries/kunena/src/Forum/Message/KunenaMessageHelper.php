@@ -201,7 +201,7 @@ abstract class KunenaMessageHelper
         $query = $db->createQuery();
         $query->select('m.*,t.message')
             ->from($db->quoteName('#__kunena_messages', 'm'))
-            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON '.  $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
+            ->innerJoin($db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
             ->where($db->quoteName('m.thread') . ' = ' . $db->quote($topic_id))
             ->andWhere($db->quoteName('m.hold') . ' IN (' . $hold . ')')
             ->order($db->quoteName('m.time') . $ordering);
@@ -291,7 +291,7 @@ abstract class KunenaMessageHelper
                 break;
             case 'mythanks':
                 $userfield = 'th.userid';
-                $query->innerJoin($db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $db->quoteName('m.id') . ' = ' .  $db->quoteName('th.postid'));
+                $query->innerJoin($db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('th.postid'));
                 break;
             case 'thankyou':
                 $userfield = 'th.targetuserid';
@@ -323,7 +323,7 @@ abstract class KunenaMessageHelper
             }
         }
 
-        if (count($catlist) > 0) {
+        if (\count($catlist) > 0) {
             $allowed = implode(',', array_keys($catlist));
             $query->where($db->quoteName('m.catid') . ' IN (' . $allowed . ')');
         } else {
@@ -525,7 +525,7 @@ abstract class KunenaMessageHelper
         $db     = Factory::getContainer()->get('DatabaseDriver');
         $query  = $db->createQuery();
         $query->select(
-            'm.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
+        	'm.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
 				SUM(mm.time<m.time) AS before_count,
 				SUM(mm.time>m.time) AS after_count'
         )

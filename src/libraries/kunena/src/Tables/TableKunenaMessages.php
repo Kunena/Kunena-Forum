@@ -206,7 +206,7 @@ class TableKunenaMessages extends KunenaTable
             ->select(['m.*', 't.message'])
             ->from($this->_db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin(
-                $this->_db->quoteName('#__kunena_messages_text', 't') .
+            	$this->_db->quoteName('#__kunena_messages_text', 't') .
                 ' ON ' . $this->_db->quoteName('m.id') . ' = ' . $this->_db->quoteName('t.mesid')
             )
             ->where($this->_db->quoteName('m.id') . ' = ' . (int) $this->$k);
@@ -317,7 +317,7 @@ class TableKunenaMessages extends KunenaTable
         } else {
             $query->insert($this->_db->quoteName('#__kunena_messages_text'))
                 ->columns(
-                    [
+                	[
                         $this->_db->quoteName('mesid'),
                         $this->_db->quoteName('message'),
                     ]

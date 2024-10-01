@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
+
 ?>
 
 <div class="row">
@@ -1252,11 +1253,11 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td>
                                             <?php
                                             echo Text::sprintf(
-                                                'COM_KUNENA_A_IMGSIZE_DESC',
-                                                ini_get('post_max_size'),
-                                                ini_get('upload_max_fileSize'),
-                                                function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
-                                            )
+                                        	'COM_KUNENA_A_IMGSIZE_DESC',
+                                        	ini_get('post_max_size'),
+                                        	ini_get('upload_max_fileSize'),
+                                        	function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
+                                        )
                                             ?>
                                         </td>
                                     </tr>
@@ -1363,11 +1364,11 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td>
                                             <?php
                                             echo Text::sprintf(
-                                                'COM_KUNENA_A_FILESIZE_DESC',
-                                                ini_get('post_max_size'),
-                                                ini_get('upload_max_fileSize'),
-                                                function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
-                                            )
+                                        	'COM_KUNENA_A_FILESIZE_DESC',
+                                        	ini_get('post_max_size'),
+                                        	ini_get('upload_max_fileSize'),
+                                        	function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
+                                        )
                                             ?>
                                         </td>
                                     </tr>
@@ -2076,15 +2077,15 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                 <input type="hidden" name="task" value="" />
                 <?php echo HTMLHelper::_('form.token') ?>
             </form>
-            <?php // Load the setting confirmation box form. 
+            <?php // Load the setting confirmation box form.
             ?>
             <?php echo HTMLHelper::_(
-                'bootstrap.renderModal',
-                'joomla-dialog-setting',
-                [
+            	'bootstrap.renderModal',
+            	'joomla-dialog-setting',
+            	[
                     'title'  => Text::_('COM_KUNENA_CONFIG_MODAL_TITLE'),
                 ],
-                $this->loadTemplate('setting')
+            	$this->loadTemplate('setting')
             ); ?>
         </div>
     </div>

@@ -57,7 +57,7 @@ class PlgKunenaGravatar extends CMSPlugin
         if (!$this->params->get('avatar', 1)) {
             return;
         }
-        
+
         require_once KPATH_FRAMEWORK . '/External/Emberlabs/Gravatar.php';
 
         return new KunenaAvatarGravatar($this->params);

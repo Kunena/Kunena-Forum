@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site\Controller\Application\Ajax\Initial;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;

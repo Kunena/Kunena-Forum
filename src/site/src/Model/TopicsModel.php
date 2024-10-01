@@ -617,8 +617,8 @@ class TopicsModel extends KunenaModel
                 $latestCategory   = $params->get('topics_categories', []);
                 $latestCategoryIn = $params->get('topics_catselection', -1);
 
-                if (is_array($klatestCategory)) {
-                    if (count($klatestCategory) == 1) {
+                if (\is_array($klatestCategory)) {
+                    if (\count($klatestCategory) == 1) {
                         if ($klatestCategory[0] == '-1') {
                             $klatestCategory = [];
                         }
@@ -643,8 +643,8 @@ class TopicsModel extends KunenaModel
                     $latestCategoryIn = $this->config->latestCategoryIn;
                 } elseif ($klatestCategorySel && $klatestContext) {
                     // Check if it selected show all, else show only the category(ies) selected in the list are showed
-                    if (is_array($latestCategory)) {
-                        if (count($latestCategory) == 1) {
+                    if (\is_array($latestCategory)) {
+                        if (\count($latestCategory) == 1) {
                             if ($latestCategory[0] == 0) {
                                 $latestCategory = false;
                             }
@@ -654,8 +654,8 @@ class TopicsModel extends KunenaModel
                     $latestCategory = $klatestCategory;
                 } elseif ($latestCategoryIn && !$klatestContext) {
                     // Check if it selected show all, else show only the category(ies) selected in the list are showed
-                    if (is_array($latestCategory)) {
-                        if (count($latestCategory) == 1) {
+                    if (\is_array($latestCategory)) {
+                        if (\count($latestCategory) == 1) {
                             if ($latestCategory[0] == 0) {
                                 $latestCategory = false;
                             } else {
@@ -695,10 +695,10 @@ class TopicsModel extends KunenaModel
             // Selection time from user state / menu item / url parameter / configuration.
             if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2) {
                 $value = $this->getUserStateFromRequest(
-                    "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time",
-                    'sel',
-                    $params->get('topics_time', $this->config->showListTime),
-                    'int'
+                	"com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time",
+                	'sel',
+                	$params->get('topics_time', $this->config->showListTime),
+                	'int'
                 );
                 $this->setState('list.time', (int) $value);
             }

@@ -29,7 +29,7 @@ class TopicItem extends KunenaLayout
     public $params;
 
     public $image;
- 
+
     public $quickReply;
 
     public $userTopic;

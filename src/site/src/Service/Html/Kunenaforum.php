@@ -312,7 +312,6 @@ class Kunenaforum
      * @return  string
      *
      * @since   Kunena 6.1
-     *
      */
     public static function sortablelist($tableId, $formId, $sortDir = 'asc', $saveOrderingUrl = null, $proceedSaveOrderButton = true, $nestedList = false): string
     {
@@ -327,7 +326,7 @@ class Kunenaforum
 
         // Attach sortable to document
         Factory::getApplication()->getDocument()->addScriptDeclaration(
-            "
+        	"
 		jQuery(document).ready(function ($){
 			var sortableList = new $.JSortableList('#"
                 . $tableId . " tbody','" . $formId . "','" . $sortDir . "' , '" . $saveOrderingUrl . "','','" . $nestedList . "');

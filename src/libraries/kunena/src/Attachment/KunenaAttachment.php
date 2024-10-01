@@ -972,10 +972,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 
             // Find available filename.
             $this->filename = KunenaAttachmentHelper::getAvailableFilename(
-                $this->folder,
-                $basename,
-                $extension,
-                $this->protected
+            	$this->folder,
+            	$basename,
+            	$extension,
+            	$this->protected
             );
         }
 

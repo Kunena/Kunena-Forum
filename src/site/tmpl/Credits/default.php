@@ -26,7 +26,6 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 use stdClass;
 
 // Display offline message if Kunena hasn't been fully installed.
@@ -117,11 +116,11 @@ if (KUNENA_PROFILER) {
 
     foreach ($kunena_profiler->getAll() as $item) {
         echo sprintf(
-            "Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>",
-            $item->name,
-            $item->getInternalTime(),
-            $item->getTotalTime(),
-            $item->calls
+        	"Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>",
+        	$item->name,
+        	$item->getInternalTime(),
+        	$item->getTotalTime(),
+        	$item->calls
         );
     }
 

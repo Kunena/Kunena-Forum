@@ -223,7 +223,7 @@ class KunenaRate extends CMSObject
 
         $query->insert($this->_db->quoteName('#__kunena_rate'))
             ->columns(
-                [
+            	[
                     $this->_db->quoteName('topic_id'),
                     $this->_db->quoteName('userid'),
                     $this->_db->quoteName('rate'),

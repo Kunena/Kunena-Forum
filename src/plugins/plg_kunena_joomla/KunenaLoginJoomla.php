@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Joomla;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -88,7 +88,7 @@ class KunenaLoginJoomla
     {
         $error = Factory::getApplication()->logout();
 
-        return is_bool($error) ? '' : $error;
+        return \is_bool($error) ? '' : $error;
     }
 
     /**

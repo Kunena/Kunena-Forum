@@ -22,10 +22,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 // Display email address (cloak it).
 echo HTMLHelper::_(
-    'email.cloak',
-    $this->escape($this->email),
-    $this->isLink,
-    $this->escape($this->text),
-    $this->escape($this->email),
-    $this->mailto
+	'email.cloak',
+	$this->escape($this->email),
+	$this->isLink,
+	$this->escape($this->text),
+	$this->escape($this->email),
+	$this->mailto
 );

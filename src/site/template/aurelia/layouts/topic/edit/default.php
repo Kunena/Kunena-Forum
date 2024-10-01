@@ -67,32 +67,32 @@ $this->doc->addScriptOptions('com_kunena.privateMessage', $this->config->private
 $this->doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
 $this->doc->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
 $this->doc->addScriptOptions(
-    'com_kunena.kunena_upload_files_set_inline',
-    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinline&format=json&' . Session::getFormToken() . '=1', false)
+	'com_kunena.kunena_upload_files_set_inline',
+	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinline&format=json&' . Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
-    'com_kunena.kunena_upload_files_set_private',
-    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setprivate&format=json&' . Session::getFormToken() . '=1', false)
-    );
+	'com_kunena.kunena_upload_files_set_private',
+	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setprivate&format=json&' . Session::getFormToken() . '=1', false)
+);
 $this->doc->addScriptOptions(
-    'com_kunena.kunena_upload_files_rem',
-    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&userid=' . KunenaUserHelper::getMyself()->userid . '&' .
+	'com_kunena.kunena_upload_files_rem',
+	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&userid=' . KunenaUserHelper::getMyself()->userid . '&' .
         Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
-    'com_kunena.kunena_upload_files_rem_inline',
-    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' .
+	'com_kunena.kunena_upload_files_rem_inline',
+	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' .
         Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
-    'com_kunena.kunena_upload_files_preload',
-    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' .
+	'com_kunena.kunena_upload_files_preload',
+	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' .
         Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
-    'com_kunena.kunena_url_topic_get_mentions',
-    KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' . $this->topic->id)
-    );
+	'com_kunena.kunena_url_topic_get_mentions',
+	KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' . $this->topic->id)
+);
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
 $this->doc->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());

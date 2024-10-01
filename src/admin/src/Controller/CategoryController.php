@@ -167,14 +167,14 @@ class CategoryController extends KunenaController
 
                 $data = [
                     'accesstype' => $parent->accesstype,
-                    'access' => $parent->access, 
-                    'pubAccess' => $parent->pubAccess, 
-                    'pubRecurse' => $parent->pubRecurse, 
-                    'adminAccess' => $parent->adminAccess, 
-                    'adminRecurse' => $parent->adminRecurse, 
-                    'channels' => $parent->channels, 
-                    'class_sfx' => $parent->class_sfx, 
-                    'params' => $parent->params
+                    'access' => $parent->access,
+                    'pubAccess' => $parent->pubAccess,
+                    'pubRecurse' => $parent->pubRecurse,
+                    'adminAccess' => $parent->adminAccess,
+                    'adminRecurse' => $parent->adminRecurse,
+                    'channels' => $parent->channels,
+                    'class_sfx' => $parent->class_sfx,
+                    'params' => $parent->params,
                 ];
 
                 if (!$category->exists() || $parent->id != $category->parentid) {
@@ -196,13 +196,13 @@ class CategoryController extends KunenaController
             } catch (KunenaException $e) {
                 if (!empty($e->getMessage())) {
                     $this->app->enqueueMessage(
-                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $e->getMessage()),
-                        'error'
+                    	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $e->getMessage()),
+                    	'error'
                     );
                 } else {
                     $this->app->enqueueMessage(
-                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
-                        'error'
+                    	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
+                    	'error'
                     );
                 }
             }
@@ -214,7 +214,7 @@ class CategoryController extends KunenaController
 
                 $aliases = $this->app->input->post->getArray(['aliases' => []]);
 
-                if ($aliases_all && count($aliases['aliases']) > 1) {
+                if ($aliases_all && \count($aliases['aliases']) > 1) {
                     $aliases = array_diff($aliases_all, $aliases['aliases']);
 
                     foreach ($aliases_all as $alias) {
@@ -244,12 +244,12 @@ class CategoryController extends KunenaController
 
                 if ($category->tryAuthorise('admin', null, false) && $category->removeModerator($user)) {
                     $this->app->enqueueMessage(
-                        Text::sprintf(
-                            'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED',
-                            $this->escape($user->getName()),
-                            $this->escape($category->name)
+                    	Text::sprintf(
+                        	'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED',
+                        	$this->escape($user->getName()),
+                        	$this->escape($category->name)
                         ),
-                        'success'
+                    	'success'
                     );
                 }
             }
@@ -452,27 +452,27 @@ class CategoryController extends KunenaController
 
             if (!$category->isAuthorised('admin')) {
                 $this->app->enqueueMessage(
-                    Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
-                    'notice'
+                	Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
+                	'notice'
                 );
             } elseif (!$category->isCheckedOut($this->me->userid)) {
                 $category->set($variable, $value);
-                
+
                 try {
                     $category->save();
                 } catch (Exception $e) {
                     $this->app->enqueueMessage(
-                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
-                        'error'
-                        );
+                    	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
+                    	'error'
+                    );
                 }
 
                 $count++;
                 $name = $category->name;
             } else {
                 $this->app->enqueueMessage(
-                    Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
-                    'notice'
+                	Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
+                	'notice'
                 );
             }
         }

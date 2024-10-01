@@ -70,7 +70,7 @@ class TopicListingUserDisplay extends ListDisplay
 
         if ($this->embedded) {
             $this->moreUri = new Uri(
-                'index.php?option=com_kunena&view=topics&layout=user&mode=' .
+            	'index.php?option=com_kunena&view=topics&layout=user&mode=' .
                 $this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
             );
 
@@ -184,7 +184,7 @@ class TopicListingUserDisplay extends ListDisplay
             $controller->redirect();
         }
 
-        if (is_array($categoryIds) && count($categoryIds) > 0) {
+        if (\is_array($categoryIds) && \count($categoryIds) > 0) {
             $categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
             $finder->filterByCategories($categories);
         }

@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site\Controller\Message\Item\Actions;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
@@ -121,85 +120,85 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
             $this->quickReply = $this->config->quickReply;
 
             $this->messageButtons->set(
-                'reply',
-                $this->getButton(
-                    sprintf($layout, 'reply'),
-                    'reply',
-                    'message',
-                    'communication',
-                    'reply',
-                    $button,
-                    KunenaIcons::pencil()
+            	'reply',
+            	$this->getButton(
+                	sprintf($layout, 'reply'),
+                	'reply',
+                	'message',
+                	'communication',
+                	'reply',
+                	$button,
+                	KunenaIcons::pencil()
                 )
             );
 
             // Dropdown Item version
             $this->messageButtons->set(
-                'reply_dropdown',
-                $this->getButton(
-                    sprintf($layout, 'reply'),
-                    'reply',
-                    'message',
-                    'communication',
-                    'reply',
-                    true,
-                    KunenaIcons::pencil()
+            	'reply_dropdown',
+            	$this->getButton(
+                	sprintf($layout, 'reply'),
+                	'reply',
+                	'message',
+                	'communication',
+                	'reply',
+                	true,
+                	KunenaIcons::pencil()
                 )
             );
 
             if ($me->exists() && $this->config->quickReply) {
                 $this->messageButtons->set(
-                    'quickReply',
-                    $this->getButton(
-                        sprintf($layout, 'reply'),
-                        'quickReply',
-                        'message',
-                        'communication',
-                        "kreply{$mesid}",
-                        $button,
-                        KunenaIcons::pencil()
+                	'quickReply',
+                	$this->getButton(
+                    	sprintf($layout, 'reply'),
+                    	'quickReply',
+                    	'message',
+                    	'communication',
+                    	"kreply{$mesid}",
+                    	$button,
+                    	KunenaIcons::pencil()
                     )
                 );
 
                 // Dropdown Item version
                 $this->messageButtons->set(
-                    'quickReply_dropdown',
-                    $this->getButton(
-                        sprintf($layout, 'reply'),
-                        'quickReply',
-                        'message',
-                        'communication',
-                        "kreply{$mesid}",
-                        true,
-                        KunenaIcons::pencil()
+                	'quickReply_dropdown',
+                	$this->getButton(
+                    	sprintf($layout, 'reply'),
+                    	'quickReply',
+                    	'message',
+                    	'communication',
+                    	"kreply{$mesid}",
+                    	true,
+                    	KunenaIcons::pencil()
                     )
                 );
             }
 
             $this->messageButtons->set(
-                'quote',
-                $this->getButton(
-                    sprintf($layout, 'reply&quote=1'),
-                    'quote',
-                    'message',
-                    'communication',
-                    'quote',
-                    $button,
-                    KunenaIcons::quote()
+            	'quote',
+            	$this->getButton(
+                	sprintf($layout, 'reply&quote=1'),
+                	'quote',
+                	'message',
+                	'communication',
+                	'quote',
+                	$button,
+                	KunenaIcons::quote()
                 )
             );
 
             // Dropdown Item version
             $this->messageButtons->set(
-                'quote_dropdown',
-                $this->getButton(
-                    sprintf($layout, 'reply&quote=1'),
-                    'quote',
-                    'message',
-                    'communication',
-                    'quote',
-                    true,
-                    KunenaIcons::quote()
+            	'quote_dropdown',
+            	$this->getButton(
+                	sprintf($layout, 'reply&quote=1'),
+                	'quote',
+                	'message',
+                	'communication',
+                	'quote',
+                	true,
+                	KunenaIcons::quote()
                 )
             );
         } elseif (!$me->isModerator($this->topic->getCategory())) {
@@ -232,29 +231,29 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
         if (isset($this->message->thankyou)) {
             if ($this->message->isAuthorised('thankyou') && !\array_key_exists($me->userid, $this->message->thankyou)) {
                 $this->messageButtons->set(
-                    'thankyou',
-                    $this->getButton(
-                        sprintf($task, 'thankyou'),
-                        'thankyou',
-                        'message',
-                        'user',
-                        'thankyou',
-                        false,
-                        KunenaIcons::thumbsup()
+                	'thankyou',
+                	$this->getButton(
+                    	sprintf($task, 'thankyou'),
+                    	'thankyou',
+                    	'message',
+                    	'user',
+                    	'thankyou',
+                    	false,
+                    	KunenaIcons::thumbsup()
                     )
                 );
 
                 // Dropdown Item version
                 $this->messageButtons->set(
-                    'thankyou_dropdown',
-                    $this->getButton(
-                        sprintf($task, 'thankyou'),
-                        'thankyou',
-                        'message',
-                        'user',
-                        'thankyou',
-                        true,
-                        KunenaIcons::thumbsup()
+                	'thankyou_dropdown',
+                	$this->getButton(
+                    	sprintf($task, 'thankyou'),
+                    	'thankyou',
+                    	'message',
+                    	'user',
+                    	'thankyou',
+                    	true,
+                    	KunenaIcons::thumbsup()
                     )
                 );
             }
@@ -265,29 +264,29 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
         if ($this->config->showThankYou) {
             if ($this->message->isAuthorised('unthankyou') && \array_key_exists($me->userid, $this->message->thankyou)) {
                 $this->messageButtons->set(
-                    'unthankyou',
-                    $this->getButton(
-                        sprintf($task, 'unthankyou&userid=' . $me->userid),
-                        'unthankyou',
-                        'message',
-                        'user',
-                        'unthankyou',
-                        false,
-                        KunenaIcons::thumbsdown()
+                	'unthankyou',
+                	$this->getButton(
+                    	sprintf($task, 'unthankyou&userid=' . $me->userid),
+                    	'unthankyou',
+                    	'message',
+                    	'user',
+                    	'unthankyou',
+                    	false,
+                    	KunenaIcons::thumbsdown()
                     )
                 );
 
                 // Dropdown Item version
                 $this->messageButtons->set(
-                    'unthankyou_dropdown',
-                    $this->getButton(
-                        sprintf($task, 'unthankyou&userid=' . $me->userid),
-                        'unthankyou',
-                        'message',
-                        'user',
-                        'unthankyou',
-                        true,
-                        KunenaIcons::thumbsdown()
+                	'unthankyou_dropdown',
+                	$this->getButton(
+                    	sprintf($task, 'unthankyou&userid=' . $me->userid),
+                    	'unthankyou',
+                    	'message',
+                    	'user',
+                    	'unthankyou',
+                    	true,
+                    	KunenaIcons::thumbsdown()
                     )
                 );
             }
@@ -300,29 +299,29 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                 || !$this->config->userReport && $me->userid != $this->message->userid
             ) {
                 $this->messageButtons->set(
-                    'report',
-                    $this->getButton(
-                        sprintf($layout, '#report' . $mesid . ''),
-                        'report',
-                        'message',
-                        'user',
-                        'btn_report',
-                        $button,
-                        KunenaIcons::report()
+                	'report',
+                	$this->getButton(
+                    	sprintf($layout, '#report' . $mesid . ''),
+                    	'report',
+                    	'message',
+                    	'user',
+                    	'btn_report',
+                    	$button,
+                    	KunenaIcons::report()
                     )
                 );
 
                 // Dropdown Item version
                 $this->messageButtons->set(
-                    'report_dropdown',
-                    $this->getButton(
-                        sprintf($layout, '#report' . $mesid . ''),
-                        'report',
-                        'message',
-                        'user',
-                        'btn_report',
-                        true,
-                        KunenaIcons::report()
+                	'report_dropdown',
+                	$this->getButton(
+                    	sprintf($layout, '#report' . $mesid . ''),
+                    	'report',
+                    	'message',
+                    	'user',
+                    	'btn_report',
+                    	true,
+                    	KunenaIcons::report()
                     )
                 );
             }
@@ -336,58 +335,58 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
             }
 
             $this->messageButtons->set(
-                'edit',
-                $this->getButton(
-                    sprintf($layout, 'edit'),
-                    'edit',
-                    'message',
-                    'moderation',
-                    'edit',
-                    $button,
-                    KunenaIcons::edit()
+            	'edit',
+            	$this->getButton(
+                	sprintf($layout, 'edit'),
+                	'edit',
+                	'message',
+                	'moderation',
+                	'edit',
+                	$button,
+                	KunenaIcons::edit()
                 )
             );
 
             // Dropdown Item version
             $this->messageButtons->set(
-                'edit_dropdown',
-                $this->getButton(
-                    sprintf($layout, 'edit'),
-                    'edit',
-                    'message',
-                    'moderation',
-                    'edit',
-                    true,
-                    KunenaIcons::edit()
+            	'edit_dropdown',
+            	$this->getButton(
+                	sprintf($layout, 'edit'),
+                	'edit',
+                	'message',
+                	'moderation',
+                	'edit',
+                	true,
+                	KunenaIcons::edit()
                 )
             );
         }
 
         if ($this->message->isAuthorised('move')) {
             $this->messageButtons->set(
-                'moderate',
-                $this->getButton(
-                    sprintf($layout, 'moderate'),
-                    'moderate',
-                    'message',
-                    'moderation',
-                    'edit',
-                    $button,
-                    KunenaIcons::shield()
+            	'moderate',
+            	$this->getButton(
+                	sprintf($layout, 'moderate'),
+                	'moderate',
+                	'message',
+                	'moderation',
+                	'edit',
+                	$button,
+                	KunenaIcons::shield()
                 )
             );
 
             // Dropdown Item version
             $this->messageButtons->set(
-                'moderate_dropdown',
-                $this->getButton(
-                    sprintf($layout, 'moderate'),
-                    'moderate',
-                    'message',
-                    'moderation',
-                    'edit',
-                    true,
-                    KunenaIcons::shield()
+            	'moderate_dropdown',
+            	$this->getButton(
+                	sprintf($layout, 'moderate'),
+                	'moderate',
+                	'message',
+                	'moderation',
+                	'edit',
+                	true,
+                	KunenaIcons::shield()
                 )
             );
         }
@@ -395,142 +394,142 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
         if ($this->message->hold == 1) {
             if ($this->message->isAuthorised('approve')) {
                 $this->messageButtons->set(
-                    'publish',
-                    $this->getButton(
-                        sprintf($task, 'approve'),
-                        'approve',
-                        'message',
-                        'moderation',
-                        'approve',
-                        $button,
-                        KunenaIcons::check()
+                	'publish',
+                	$this->getButton(
+                    	sprintf($task, 'approve'),
+                    	'approve',
+                    	'message',
+                    	'moderation',
+                    	'approve',
+                    	$button,
+                    	KunenaIcons::check()
                     )
                 );
 
                 // Dropdown Item version
                 $this->messageButtons->set(
-                    'publish_dropdown',
-                    $this->getButton(
-                        sprintf($task, 'approve'),
-                        'approve',
-                        'message',
-                        'moderation',
-                        'approve',
-                        true,
-                        KunenaIcons::check()
+                	'publish_dropdown',
+                	$this->getButton(
+                    	sprintf($task, 'approve'),
+                    	'approve',
+                    	'message',
+                    	'moderation',
+                    	'approve',
+                    	true,
+                    	KunenaIcons::check()
                     )
                 );
             }
 
             $this->messageButtons->set(
-                'delete',
-                $this->getButton(
-                    sprintf($task, 'delete'),
-                    'delete',
-                    'message',
-                    'moderation',
-                    'delete',
-                    $button,
-                    KunenaIcons::delete()
+            	'delete',
+            	$this->getButton(
+                	sprintf($task, 'delete'),
+                	'delete',
+                	'message',
+                	'moderation',
+                	'delete',
+                	$button,
+                	KunenaIcons::delete()
                 )
             );
 
             // Dropdown Item version
             $this->messageButtons->set(
-                'delete_dropdown',
-                $this->getButton(
-                    sprintf($task, 'delete'),
-                    'delete',
-                    'message',
-                    'moderation',
-                    'delete',
-                    true,
-                    KunenaIcons::delete()
+            	'delete_dropdown',
+            	$this->getButton(
+                	sprintf($task, 'delete'),
+                	'delete',
+                	'message',
+                	'moderation',
+                	'delete',
+                	true,
+                	KunenaIcons::delete()
                 )
             );
         } elseif ($this->message->hold == 2 || $this->message->hold == 3) {
             if ($this->message->isAuthorised('undelete')) {
                 $this->messageButtons->set(
-                    'undelete',
-                    $this->getButton(
-                        sprintf($task, 'undelete'),
-                        'undelete',
-                        'message',
-                        'moderation',
-                        'undelete',
-                        $button,
-                        KunenaIcons::back()
+                	'undelete',
+                	$this->getButton(
+                    	sprintf($task, 'undelete'),
+                    	'undelete',
+                    	'message',
+                    	'moderation',
+                    	'undelete',
+                    	$button,
+                    	KunenaIcons::back()
                     )
                 );
 
                 // Dropdown Item version
                 $this->messageButtons->set(
-                    'undelete_dropdown',
-                    $this->getButton(
-                        sprintf($task, 'undelete'),
-                        'undelete',
-                        'message',
-                        'moderation',
-                        'undelete',
-                        true,
-                        KunenaIcons::back()
+                	'undelete_dropdown',
+                	$this->getButton(
+                    	sprintf($task, 'undelete'),
+                    	'undelete',
+                    	'message',
+                    	'moderation',
+                    	'undelete',
+                    	true,
+                    	KunenaIcons::back()
                     )
                 );
             }
 
             if ($this->message->getTopic()->isAuthorised('permdelete')) {
                 $this->messageButtons->set(
-                    'permdelete',
-                    $this->getButton(
-                        sprintf($task, 'permdelete'),
-                        'permdelete',
-                        'message',
-                        'moderation',
-                        'permdelete',
-                        $button,
-                        KunenaIcons::delete()
+                	'permdelete',
+                	$this->getButton(
+                    	sprintf($task, 'permdelete'),
+                    	'permdelete',
+                    	'message',
+                    	'moderation',
+                    	'permdelete',
+                    	$button,
+                    	KunenaIcons::delete()
                     )
                 );
 
                 // Dropdown Item version
                 $this->messageButtons->set(
-                    'permdelete_dropdown',
-                    $this->getButton(
-                        sprintf($task, 'permdelete'),
-                        'permdelete',
-                        'message',
-                        'moderation',
-                        'permdelete',
-                        true,
-                        KunenaIcons::delete()
+                	'permdelete_dropdown',
+                	$this->getButton(
+                    	sprintf($task, 'permdelete'),
+                    	'permdelete',
+                    	'message',
+                    	'moderation',
+                    	'permdelete',
+                    	true,
+                    	KunenaIcons::delete()
                     )
                 );
             }
         } elseif ($this->message->isAuthorised('delete')) {
             $this->messageButtons->set(
-                'delete',
-                $this->getButton(
-                    sprintf($task, 'delete'),
-                    'delete',
-                    'message',
-                    'moderation',
-                    'delete',
-                    $button,
-                    KunenaIcons::delete()
+            	'delete',
+            	$this->getButton(
+                	sprintf($task, 'delete'),
+                	'delete',
+                	'message',
+                	'moderation',
+                	'delete',
+                	$button,
+                	KunenaIcons::delete()
                 )
             );
 
             // Dropdown Item version
             $this->messageButtons->set(
-                'delete_dropdown',
-                $this->getButton(
-                    sprintf($task, 'delete'),
-                    'delete',
-                    'message',
-                    'moderation',
-                    'delete',
-                    true,
-                    KunenaIcons::delete()
+            	'delete_dropdown',
+            	$this->getButton(
+                	sprintf($task, 'delete'),
+                	'delete',
+                	'message',
+                	'moderation',
+                	'delete',
+                	true,
+                	KunenaIcons::delete()
                 )
             );
         }
@@ -575,7 +574,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
     {
         return KunenaLayout::factory('Widget/Button')
             ->setProperties(
-                ['url'  => $url, 'name' => $name, 'scope' => $scope,
+            	['url'  => $url, 'name' => $name, 'scope' => $scope,
                  'type' => $type, 'id' => 'btn_' . $id, 'normal' => $normal, 'icon' => $icon, ]
             );
     }

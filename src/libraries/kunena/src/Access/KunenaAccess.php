@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Access;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -270,7 +269,7 @@ class KunenaAccess
         if (!$enabled) {
             $enabled = true;
             Factory::getApplication()->getDocument()->addScriptDeclaration(
-                "function kShowAccessType(htmlclass, el) {
+            	"function kShowAccessType(htmlclass, el) {
 	var selectedvalue = el.find(\":selected\").val();
 
 	name = selectedvalue.replace(/[^\\w\\d]+/, '-');

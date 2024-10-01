@@ -200,8 +200,8 @@ class Parser
     public function throwParseError($msg = 'parse error')
     {
         @trigger_error(
-            'The method "throwParseError" is deprecated. Use "parseError" and throw the exception in the caller instead',
-            E_USER_DEPRECATED
+        	'The method "throwParseError" is deprecated. Use "parseError" and throw the exception in the caller instead',
+        	E_USER_DEPRECATED
         );
 
         throw $this->parseError($msg);
@@ -285,7 +285,7 @@ class Parser
         $this->popBlock();
 
         while ($this->parseChunk()) {
-            ;
+
         }
 
         if ($this->count !== \strlen($this->buffer)) {
@@ -368,7 +368,7 @@ class Parser
 
         $this->restoreEncoding();
 
-        if ($shouldValidate && $this->count !== strlen($buffer)) {
+        if ($shouldValidate && $this->count !== \strlen($buffer)) {
             throw $this->parseError("`" . substr($buffer, $this->count) . "` is not a valid Selector in `$buffer`");
         }
 
@@ -520,7 +520,7 @@ class Parser
                     $mixinName,
                     isset($argValues) ? $argValues : null,
                     null,
-                    isset($argUsing) ? $argUsing : null
+                    isset($argUsing) ? $argUsing : null,
                 ];
 
                 if (! empty($hasBlock)) {
@@ -563,6 +563,7 @@ class Parser
                 if ($this->cssOnly) {
                     $this->assertPlainCssValid([Type::T_IMPORT, $importPath], $s);
                     $this->append([Type::T_COMMENT, rtrim(substr($this->buffer, $s, $this->count - $s))]);
+
                     return true;
                 }
 
@@ -581,6 +582,7 @@ class Parser
                 if ($this->cssOnly) {
                     $this->assertPlainCssValid([Type::T_IMPORT, $importPath], $s);
                     $this->append([Type::T_COMMENT, rtrim(substr($this->buffer, $s, $this->count - $s))]);
+
                     return true;
                 }
 
@@ -797,7 +799,7 @@ class Parser
 
             if (isset($last) && $last[0] === Type::T_IF) {
                 list(, $if) = $last;
-                assert($if instanceof IfBlock);
+                \assert($if instanceof IfBlock);
 
                 if ($this->literal('@else', 5)) {
                     if ($this->matchChar('{', false)) {
@@ -865,7 +867,7 @@ class Parser
                 $this->mixedKeyword($dirName) &&
                 $this->directiveValue($dirValue, '{')
             ) {
-                if (count($dirName) === 1 && is_string(reset($dirName))) {
+                if (\count($dirName) === 1 && \is_string(reset($dirName))) {
                     $dirName = reset($dirName);
                 } else {
                     $dirName = [Type::T_STRING, '', $dirName];
@@ -895,8 +897,8 @@ class Parser
                 ! $this->isKnownGenericDirective($dirName) &&
                 ($this->end(false) || ($this->directiveValue($dirValue, '') && $this->end(false)))
             ) {
-                if (\count($dirName) === 1 && \is_string(\reset($dirName))) {
-                    $dirName = \reset($dirName);
+                if (\count($dirName) === 1 && \is_string(reset($dirName))) {
+                    $dirName = reset($dirName);
                 } else {
                     $dirName = [Type::T_STRING, '', $dirName];
                 }
@@ -905,9 +907,9 @@ class Parser
                     $this->env->type &&
                     ! \in_array($this->env->type, [Type::T_DIRECTIVE, Type::T_MEDIA])
                 ) {
-                    $plain = \trim(\substr($this->buffer, $s, $this->count - $s));
+                    $plain = trim(substr($this->buffer, $s, $this->count - $s));
                     throw $this->parseError(
-                        "Unknown directive `{$plain}` not allowed in `" . $this->env->type . "` block"
+                    	"Unknown directive `{$plain}` not allowed in `" . $this->env->type . "` block"
                     );
                 }
                 // blockless directives with a blank line after keeps their blank lines after
@@ -933,14 +935,14 @@ class Parser
         $inCssSelector = null;
         if ($this->cssOnly) {
             $inCssSelector = (! empty($this->env->parent) &&
-                ! in_array($this->env->type, [Type::T_DIRECTIVE, Type::T_MEDIA]));
+                ! \in_array($this->env->type, [Type::T_DIRECTIVE, Type::T_MEDIA]));
         }
         // custom properties : right part is static
-        if (($this->customProperty($name) ) && $this->matchChar(':', false)) {
+        if (($this->customProperty($name)) && $this->matchChar(':', false)) {
             $start = $this->count;
 
             // but can be complex and finish with ; or }
-            foreach ([';','}'] as $ending) {
+            foreach ([';', '}'] as $ending) {
                 if (
                     $this->openString($ending, $stringValue, '(', ')', false) &&
                     $this->end()
@@ -1081,7 +1083,7 @@ class Parser
 
             if ($block instanceof ContentBlock) {
                 $include = $block->child;
-                assert(\is_array($include));
+                \assert(\is_array($include));
                 unset($block->child);
                 $include[3] = $block;
                 $this->append($include, $s);
@@ -1293,7 +1295,7 @@ class Parser
     protected function isPlainCssValidElement($parsed, $allowExpression = false)
     {
         // keep string as is
-        if (is_string($parsed)) {
+        if (\is_string($parsed)) {
             return $parsed;
         }
 
@@ -1339,6 +1341,7 @@ class Parser
                 if (isset($parsed[2])) {
                     return false;
                 }
+
                 return $parsed;
 
             case Type::T_DIRECTIVE:
@@ -1359,6 +1362,7 @@ class Parser
                 if ($parsed[1] === false) {
                     return false;
                 }
+
                 return $parsed;
 
             case Type::T_STRING:
@@ -1370,6 +1374,7 @@ class Parser
                         }
                     }
                 }
+
                 return $parsed;
 
             case Type::T_LIST:
@@ -1382,6 +1387,7 @@ class Parser
                         return false;
                     }
                 }
+
                 return $parsed;
 
             case Type::T_ASSIGN:
@@ -1393,10 +1399,11 @@ class Parser
                         }
                     }
                 }
+
                 return $parsed;
 
             case Type::T_EXPRESSION:
-                list( ,$op, $lhs, $rhs, $inParens, $whiteBefore, $whiteAfter) = $parsed;
+                list(, $op, $lhs, $rhs, $inParens, $whiteBefore, $whiteAfter) = $parsed;
                 if (! $allowExpression &&  ! \in_array($op, ['and', 'or', '/'])) {
                     return false;
                 }
@@ -1416,8 +1423,8 @@ class Parser
                         $lhs,
                         ($whiteBefore ? ' ' : '') . $op . ($whiteAfter ? ' ' : ''),
                         $rhs,
-                        $this->inParens ? ')' : ''
-                    ]
+                        $this->inParens ? ')' : '',
+                    ],
                 ];
 
             case Type::T_CUSTOM_PROPERTY:
@@ -1426,6 +1433,7 @@ class Parser
                 if (! $parsed[2]) {
                     return false;
                 }
+
                 return $parsed;
 
             case Type::T_FUNCTION:
@@ -1435,6 +1443,7 @@ class Parser
                         return false;
                     }
                 }
+
                 return $parsed;
 
             case Type::T_FUNCTION_CALL:
@@ -1453,6 +1462,7 @@ class Parser
                     $argsList[2][] = $arg;
                 }
                 $parsed[2] = $argsList;
+
                 return $parsed;
         }
 
@@ -1493,7 +1503,7 @@ class Parser
         $m = [
             $match . $token,
             $match,
-            $token
+            $token,
         ];
         $this->count = $end + \strlen($token);
 
@@ -1925,7 +1935,6 @@ class Parser
         return false;
     }
 
-
     /**
      * Parse media expression
      *
@@ -2063,6 +2072,7 @@ class Parser
         ) {
             return true;
         }
+
         return false;
     }
 
@@ -2097,6 +2107,7 @@ class Parser
             $ss = $this->count;
             if (!$endChar && $this->end()) {
                 $this->seek($ss);
+
                 return true;
             }
         }
@@ -2232,13 +2243,13 @@ class Parser
                     $last_char = substr($word, -1);
 
                     if (
-                        strlen($word) > 1 &&
-                        in_array($last_char, [ "'", '"']) &&
+                        \strlen($word) > 1 &&
+                        \in_array($last_char, [ "'", '"']) &&
                         substr($word, -2, 1) !== '\\'
                     ) {
                         // if there is a non escaped opening quote in the keyword, this seems unlikely a mistake
                         $word = str_replace('\\' . $last_char, '\\\\', $word);
-                        if (strpos($word, $last_char) < strlen($word) - 1) {
+                        if (strpos($word, $last_char) < \strlen($word) - 1) {
                             continue;
                         }
 
@@ -2498,9 +2509,9 @@ class Parser
             $this->match('data:([a-z]+)\/([a-z0-9.+-]+);base64,', $m, false)
         ) {
             $len = strspn(
-                $this->buffer,
-                'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyxz0123456789+/=',
-                $this->count
+            	$this->buffer,
+            	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyxz0123456789+/=',
+            	$this->count
             );
 
             $this->count += $len;
@@ -2567,6 +2578,7 @@ class Parser
 
             if ($follow_white) {
                 $out = [Type::T_KEYWORD, $char];
+
                 return  true;
             }
 
@@ -2658,12 +2670,12 @@ class Parser
             $this->match('\?+|([0-9A-F]+(\?+|(-[0-9A-F]+))?)', $m, false)
         ) {
             $unicode = explode('-', $m[0]);
-            if (strlen(reset($unicode)) <= 6 && strlen(end($unicode)) <= 6) {
+            if (\strlen(reset($unicode)) <= 6 && \strlen(end($unicode)) <= 6) {
                 $out = [Type::T_KEYWORD, 'U+' . $m[0]];
 
                 return true;
             }
-            $this->count -= strlen($m[0]) + 2;
+            $this->count -= \strlen($m[0]) + 2;
         }
 
         if ($this->keyword($keyword, false)) {
@@ -2744,7 +2756,7 @@ class Parser
 
             if ($this->matchChar(')')) {
                 $out = [Type::T_STRING, '', [
-                    'progid:', $fn, '(', $args, ')'
+                    'progid:', $fn, '(', $args, ')',
                 ]];
 
                 return true;
@@ -2972,7 +2984,7 @@ class Parser
         $s = $this->count;
 
         if ($this->match('(#([0-9a-f]+)\b)', $m)) {
-            if (\in_array(\strlen($m[2]), [3,4,6,8])) {
+            if (\in_array(\strlen($m[2]), [3, 4, 6, 8])) {
                 $out = [Type::T_KEYWORD, $m[0]];
 
                 return true;
@@ -3053,7 +3065,7 @@ class Parser
                     $content[] = '#{'; // ignore it
                 }
             } elseif ($m[2] === "\r") {
-                $content[] = chr(10);
+                $content[] = \chr(10);
                 // TODO : warning
                 # DEPRECATION WARNING on line x, column y of zzz:
                 # Unescaped multiline strings are deprecated and will be removed in a future version of Sass.
@@ -3135,8 +3147,9 @@ class Parser
         }
 
         if ($this->match('.', $m, false)) {
-            if ($inKeywords && in_array($m[0], ["'",'"','@','&',' ','\\',':','/','%'])) {
+            if ($inKeywords && \in_array($m[0], ["'", '"', '@', '&', ' ', '\\', ':', '/', '%'])) {
                 $this->seek($s);
+
                 return false;
             }
             $out = $m[0];
@@ -3301,7 +3314,7 @@ class Parser
                 if ($lookWhite) {
                     $left = ($s > 0 && preg_match('/\s/', $this->buffer[$s - 1])) ? ' ' : '';
                     $right = (
-                        ! empty($this->buffer[$this->count]) &&
+                    	! empty($this->buffer[$this->count]) &&
                         preg_match('/\s/', $this->buffer[$this->count])
                     ) ? ' ' : '';
                 } else {
@@ -3464,7 +3477,7 @@ class Parser
             }
 
             while ($this->matchChar(',', true)) {
-                ; // ignore extra
+                 // ignore extra
             }
         }
 
@@ -3550,31 +3563,35 @@ class Parser
         $s_escape = $this->count;
         if ($this->match('\\\\', $m)) {
             $out = '\\' . $m[0];
+
             return true;
         }
 
         if ($this->matchEscapeCharacter($escapedout, true)) {
-            if (strlen($escapedout) === 1) {
+            if (\strlen($escapedout) === 1) {
                 if (!preg_match(",\w,", $escapedout)) {
                     $out = '\\' . $escapedout;
+
                     return true;
-                } elseif (! $keepEscapedNumber || ! \is_numeric($escapedout)) {
+                } elseif (! $keepEscapedNumber || ! is_numeric($escapedout)) {
                     $out = $escapedout;
+
                     return true;
                 }
             }
             $escape_sequence = rtrim(substr($this->buffer, $s_escape, $this->count - $s_escape));
-            if (strlen($escape_sequence) < 6) {
+            if (\strlen($escape_sequence) < 6) {
                 $escape_sequence .= ' ';
             }
             $out = '\\' . strtolower($escape_sequence);
+
             return true;
         }
         if ($this->match('\\S', $m)) {
             $out = '\\' . $m[0];
+
             return true;
         }
-
 
         return false;
     }
@@ -3850,11 +3867,11 @@ class Parser
     {
         $s = $this->count;
         $match = $this->match(
-            $this->utf8
+        	$this->utf8
                 ? '(([\pL\w\x{00A0}-\x{10FFFF}_\-\*!"\']|\\\\[a-f0-9]{6} ?|\\\\[a-f0-9]{1,5}(?![a-f0-9]) ?|[\\\\].)([\pL\w\x{00A0}-\x{10FFFF}\-_"\']|\\\\[a-f0-9]{6} ?|\\\\[a-f0-9]{1,5}(?![a-f0-9]) ?|[\\\\].)*)'
                 : '(([\w_\-\*!"\']|\\\\[a-f0-9]{6} ?|\\\\[a-f0-9]{1,5}(?![a-f0-9]) ?|[\\\\].)([\w\-_"\']|\\\\[a-f0-9]{6} ?|\\\\[a-f0-9]{1,5}(?![a-f0-9]) ?|[\\\\].)*)',
-            $m,
-            false
+        	$m,
+        	false
         );
 
         if ($match) {
@@ -3874,7 +3891,7 @@ class Parser
                         && $char === '\\'
                         && !$previousEscape
                         && (
-                            $inSelector ?
+                        	$inSelector ?
                                 $this->matchEscapeCharacterInSelector($out)
                                 :
                                 $this->matchEscapeCharacter($out, true)
@@ -3894,7 +3911,7 @@ class Parser
                 $word = implode('', $escapedWord);
             }
 
-            if (is_null($eatWhitespace) ? $this->eatWhiteDefault : $eatWhitespace) {
+            if (\is_null($eatWhitespace) ? $this->eatWhiteDefault : $eatWhitespace) {
                 $this->whitespace();
             }
 
@@ -3936,10 +3953,10 @@ class Parser
     protected function placeholder(&$placeholder)
     {
         $match = $this->match(
-            $this->utf8
+        	$this->utf8
                 ? '([\pL\w\-_]+)'
                 : '([\w\-_]+)',
-            $m
+        	$m
         );
 
         if ($match) {
@@ -4155,7 +4172,7 @@ class Parser
      */
     private function saveEncoding()
     {
-        if (\PHP_VERSION_ID < 80000 && \extension_loaded('mbstring') && (2 & (int) ini_get('mbstring.func_overload')) > 0) {
+        if (\PHP_VERSION_ID < 80000 && \extension_loaded('mbstring') && (2 & (int) \ini_get('mbstring.func_overload')) > 0) {
             $this->encoding = mb_internal_encoding();
 
             mb_internal_encoding('iso-8859-1');

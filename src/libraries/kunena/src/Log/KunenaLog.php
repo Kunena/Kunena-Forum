@@ -406,12 +406,12 @@ class KunenaLog
      * @throws Exception
      */
     public static function log(
-        int $type,
-        string $operation,
-        $data,
-        KunenaCategory $category = null,
-        KunenaTopic $topic = null,
-        KunenaUser $user = null
+    	int $type,
+    	string $operation,
+    	$data,
+    	KunenaCategory $category = null,
+    	KunenaTopic $topic = null,
+    	KunenaUser $user = null
     ): void {
         static::$entries[] = new KunenaEntry($type, $operation, $data, $category, $topic, $user);
     }

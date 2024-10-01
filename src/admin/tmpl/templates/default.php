@@ -158,7 +158,7 @@ $userId    = $user->id;
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php // load the pagination. 
+                <?php // load the pagination.
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 

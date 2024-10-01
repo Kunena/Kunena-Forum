@@ -47,8 +47,8 @@ class MessageItemActions extends KunenaLayout
     public $pagination;
 
     public $headerText;
-    
+
     public $user;
-    
+
     public $output;
 }

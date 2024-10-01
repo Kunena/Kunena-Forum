@@ -81,7 +81,7 @@ class HtmlView extends BaseHtmlView
         $this->ktemplate     = KunenaTemplate::getInstance();
 
         // Check for errors.
-        if (count($errors = $this->get('Errors'))) {
+        if (\count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));
         }
 

@@ -12,7 +12,7 @@
 
 namespace Kunena\Forum\Site\Layout\Widget\Login;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Joomla\CMS\Factory;
@@ -29,39 +29,39 @@ use Joomla\CMS\Helper\ModuleHelper;
 class WidgetLoginLogin extends KunenaLayout
 {
     public $output;
-    
+
     public $user;
-    
+
     public $headerText;
-    
+
     public $pagination;
-    
+
     public $config;
-    
+
     public $me;
-    
+
     public $my;
-    
+
     public $registrationUrl;
-    
+
     public $resetPasswordUrl;
-    
+
     public $remindUsernameUrl;
-    
+
     public $rememberMe;
-    
+
     public $lastvisitDate;
-    
+
     public $announcementsUrl;
-    
+
     public $pm_link;
-    
+
     public $inboxCount;
-    
+
     public $inboxCountValue;
-    
+
     public $profile_edit_url;
-    
+
     public $plglogin;
 
     /**
@@ -80,11 +80,11 @@ class WidgetLoginLogin extends KunenaLayout
 
                 if (!isset($module->id)) {
                     $moduleId = null;
-                    Factory::getApplication()->enqueueMessage('<b>Error</b> display login menu failed - no login module found', 'error');  
+                    Factory::getApplication()->enqueueMessage('<b>Error</b> display login menu failed - no login module found', 'error');
                 } else {
                     $moduleId = $module->id;
 
-                    echo HTMLHelper::_('content.prepare', "'{loadmoduleid " .  $moduleId . "}'" );
+                    echo HTMLHelper::_('content.prepare', "'{loadmoduleid " . $moduleId . "}'");
                 }
             }
 

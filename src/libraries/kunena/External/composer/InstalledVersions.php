@@ -1,96 +1,54 @@
 <?php
 
-
-
-
-
-
-
-
-
-
-
 namespace Composer;
 
 use Composer\Semver\VersionParser;
 
-
-
-
-
-
 class InstalledVersions
 {
-private static $installed = array (
-  'root' => 
-  array (
+private static $installed = array(
+  'root' =>
+  array(
     'pretty_version' => 'dev-6.0-install5',
     'version' => 'dev-6.0-install5',
-    'aliases' => 
-    array (
+    'aliases' =>
+    array(
     ),
     'reference' => '4c37ef7cfe1932f20553babbcf96c7a2b9136595',
     'name' => 'kunena/kunena-forum',
   ),
-  'versions' => 
-  array (
-    'kunena/kunena-forum' => 
-    array (
+  'versions' =>
+  array(
+    'kunena/kunena-forum' =>
+    array(
       'pretty_version' => 'dev-6.0-install5',
       'version' => 'dev-6.0-install5',
-      'aliases' => 
-      array (
+      'aliases' =>
+      array(
       ),
       'reference' => '4c37ef7cfe1932f20553babbcf96c7a2b9136595',
     ),
-    'scssphp/scssphp' => 
-    array (
+    'scssphp/scssphp' =>
+    array(
       'pretty_version' => 'v1.8.1',
       'version' => '1.8.1.0',
-      'aliases' => 
-      array (
+      'aliases' =>
+      array(
       ),
       'reference' => '5e37759a63caf54392a4b709358a39ac7425a69f',
     ),
   ),
 );
 
-
-
-
-
-
-
 public static function getInstalledPackages()
 {
 return array_keys(self::$installed['versions']);
 }
 
-
-
-
-
-
-
-
-
 public static function isInstalled($packageName)
 {
 return isset(self::$installed['versions'][$packageName]);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 public static function satisfies(VersionParser $parser, $packageName, $constraint)
 {
@@ -99,15 +57,6 @@ $provided = $parser->parseConstraints(self::getVersionRanges($packageName));
 
 return $provided->matches($constraint);
 }
-
-
-
-
-
-
-
-
-
 
 public static function getVersionRanges($packageName)
 {
@@ -119,22 +68,18 @@ $ranges = array();
 if (isset(self::$installed['versions'][$packageName]['pretty_version'])) {
 $ranges[] = self::$installed['versions'][$packageName]['pretty_version'];
 }
-if (array_key_exists('aliases', self::$installed['versions'][$packageName])) {
+if (\array_key_exists('aliases', self::$installed['versions'][$packageName])) {
 $ranges = array_merge($ranges, self::$installed['versions'][$packageName]['aliases']);
 }
-if (array_key_exists('replaced', self::$installed['versions'][$packageName])) {
+if (\array_key_exists('replaced', self::$installed['versions'][$packageName])) {
 $ranges = array_merge($ranges, self::$installed['versions'][$packageName]['replaced']);
 }
-if (array_key_exists('provided', self::$installed['versions'][$packageName])) {
+if (\array_key_exists('provided', self::$installed['versions'][$packageName])) {
 $ranges = array_merge($ranges, self::$installed['versions'][$packageName]['provided']);
 }
 
 return implode(' || ', $ranges);
 }
-
-
-
-
 
 public static function getVersion($packageName)
 {
@@ -143,15 +88,11 @@ throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed
 }
 
 if (!isset(self::$installed['versions'][$packageName]['version'])) {
-return null;
+return;
 }
 
 return self::$installed['versions'][$packageName]['version'];
 }
-
-
-
-
 
 public static function getPrettyVersion($packageName)
 {
@@ -160,15 +101,11 @@ throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed
 }
 
 if (!isset(self::$installed['versions'][$packageName]['pretty_version'])) {
-return null;
+return;
 }
 
 return self::$installed['versions'][$packageName]['pretty_version'];
 }
-
-
-
-
 
 public static function getReference($packageName)
 {
@@ -177,49 +114,21 @@ throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed
 }
 
 if (!isset(self::$installed['versions'][$packageName]['reference'])) {
-return null;
+return;
 }
 
 return self::$installed['versions'][$packageName]['reference'];
 }
-
-
-
-
 
 public static function getRootPackage()
 {
 return self::$installed['root'];
 }
 
-
-
-
-
-
-
 public static function getRawData()
 {
 return self::$installed;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 public static function reload($data)
 {

@@ -491,23 +491,23 @@ class KunenaPagination
         // Build the select list.
         if ($app->isClient('administrator')) {
             $html = HTMLHelper::_(
-                'select.genericlist',
-                $limits,
-                $this->prefix . 'limit',
-                'class="inputbox input-mini form-control" size="1" onchange="Joomla.submitform();"',
-                'value',
-                'text',
-                $selected
+            	'select.genericlist',
+            	$limits,
+            	$this->prefix . 'limit',
+            	'class="inputbox input-mini form-control" size="1" onchange="Joomla.submitform();"',
+            	'value',
+            	'text',
+            	$selected
             );
         } else {
             $html = HTMLHelper::_(
-                'select.genericlist',
-                $limits,
-                $this->prefix . 'limit',
-                'class="inputbox input-mini form-control" size="1" onchange="this.form.submit()"',
-                'value',
-                'text',
-                $selected
+            	'select.genericlist',
+            	$limits,
+            	$this->prefix . 'limit',
+            	'class="inputbox input-mini form-control" size="1" onchange="this.form.submit()"',
+            	'value',
+            	'text',
+            	$selected
             );
         }
 

@@ -81,9 +81,9 @@ class CategoryDisplay extends KunenaControllerDisplay
         // Set the MIME type and header for JSON output.
         $document->setMimeEncoding('application/json');
         Factory::getApplication()->setHeader(
-            'Content-Disposition',
-            'attachment; filename=categorydisplayraw.json'
-            );
+        	'Content-Disposition',
+        	'attachment; filename=categorydisplayraw.json'
+        );
         Factory::getApplication()->sendHeaders();
 
         echo json_encode($response);

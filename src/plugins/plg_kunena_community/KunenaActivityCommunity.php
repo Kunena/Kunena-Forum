@@ -14,7 +14,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Community;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -70,9 +70,9 @@ class KunenaActivityCommunity extends KunenaActivity
         $act->actor   = $message->userid;
         $act->target  = 0;
         $act->title   = Text::_(
-            '{actor} ' . Text::sprintf(
-                'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
-                ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>'
+        	'{actor} ' . Text::sprintf(
+            	'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
+            	' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>'
             )
         );
         $act->content = $this->buildContent($message);
@@ -94,7 +94,7 @@ class KunenaActivityCommunity extends KunenaActivity
         \CFactory::load('libraries', 'activities');
         $table = \CActivityStream::add($act);
 
-        if (is_object($table)) {
+        if (\is_object($table)) {
             $table->like_id = $table->id;
             $table->store();
         }
@@ -177,12 +177,12 @@ class KunenaActivityCommunity extends KunenaActivity
         // Get users who have subscribed to the topic, excluding current user.
         $acl         = KunenaAccess::getInstance();
         $subscribers = $acl->getSubscribers(
-            $message->catid,
-            $message->thread,
-            KunenaAccess::TOPIC_SUBSCRIPTION,
-            false,
-            false,
-            [$message->userid]
+        	$message->catid,
+        	$message->thread,
+        	KunenaAccess::TOPIC_SUBSCRIPTION,
+        	false,
+        	false,
+        	[$message->userid]
         );
 
         foreach ($subscribers as $userid) {
@@ -229,7 +229,7 @@ class KunenaActivityCommunity extends KunenaActivity
         \CFactory::load('libraries', 'activities');
         $table = \CActivityStream::add($act);
 
-        if (is_object($table)) {
+        if (\is_object($table)) {
             $table->like_id = $table->id;
             $table->store();
         }
@@ -264,13 +264,13 @@ class KunenaActivityCommunity extends KunenaActivity
 
         // Finally, send notifications
         \CNotificationLibrary::add(
-            'kunena_thankyou',
-            $actor->id,
-            $target->id,
-            Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT'),
-            Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT'),
-            '',
-            $params
+        	'kunena_thankyou',
+        	$actor->id,
+        	$target->id,
+        	Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT'),
+        	Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT'),
+        	'',
+        	$params
         );
 
         $act          = new \stdClass();
@@ -278,13 +278,13 @@ class KunenaActivityCommunity extends KunenaActivity
         $act->actor   = $actor->id;
         $act->target  = $target->id;
         $act->title   = Text::sprintf(
-            'PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_WALL',
-            $params->get('actor_url'),
-            $params->get('actor'),
-            $params->get('recipientUrl'),
-            $params->get('recipientName'),
-            $params->get('url'),
-            $params->get('title')
+        	'PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_WALL',
+        	$params->get('actor_url'),
+        	$params->get('actor'),
+        	$params->get('recipientUrl'),
+        	$params->get('recipientName'),
+        	$params->get('url'),
+        	$params->get('title')
         );
         $act->content = null;
         $act->app     = 'kunena.message.thankyou';
@@ -305,7 +305,7 @@ class KunenaActivityCommunity extends KunenaActivity
         \CFactory::load('libraries', 'activities');
         $table = \CActivityStream::add($act);
 
-        if (is_object($table)) {
+        if (\is_object($table)) {
             $table->like_id = $table->id;
             $table->store();
         }

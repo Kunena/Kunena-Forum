@@ -62,7 +62,7 @@ final class ValueConverter
             return $value;
         }
 
-        if (is_array($value) && isset($value[0]) && \in_array($value[0], [Type::T_NULL, Type::T_COLOR, Type::T_KEYWORD, Type::T_LIST, Type::T_MAP, Type::T_STRING])) {
+        if (\is_array($value) && isset($value[0]) && \in_array($value[0], [Type::T_NULL, Type::T_COLOR, Type::T_KEYWORD, Type::T_LIST, Type::T_MAP, Type::T_STRING])) {
             return $value;
         }
 
@@ -90,6 +90,6 @@ final class ValueConverter
             return [Type::T_STRING, '"', [$value]];
         }
 
-        throw new \InvalidArgumentException(sprintf('Cannot convert the value of type "%s" to a Sass value.', gettype($value)));
+        throw new \InvalidArgumentException(sprintf('Cannot convert the value of type "%s" to a Sass value.', \gettype($value)));
     }
 }

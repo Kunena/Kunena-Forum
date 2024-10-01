@@ -19,9 +19,9 @@ if ($this->message->id == $this->selected) {
     $link = $this->message->displayField('subject');
 } else {
     $link = $this->getTopicLink(
-        $this->message->getTopic(),
-        $this->message,
-        $this->message->displayField('subject')
+    	$this->message->getTopic(),
+    	$this->message,
+    	$this->message->displayField('subject')
     );
 }
 ?>

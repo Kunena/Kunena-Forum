@@ -36,11 +36,11 @@ $tabs = $this->getTabs();
     <?php if ($this->profile->isAuthorised('edit')) :
         ?>
         <?php echo $this->profile->getLink(
-            KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_EDIT'),
-            Text::_('COM_KUNENA_EDIT'),
-            'nofollow',
-            'edit',
-            'btn'
+        	KunenaIcons::edit() . ' ' . Text::_('COM_KUNENA_EDIT'),
+        	Text::_('COM_KUNENA_EDIT'),
+        	'nofollow',
+        	'edit',
+        	'btn'
         ); ?>
     <?php endif; ?>
 </h2>

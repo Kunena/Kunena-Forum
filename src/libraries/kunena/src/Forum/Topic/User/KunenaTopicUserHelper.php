@@ -426,7 +426,7 @@ abstract class KunenaTopicUserHelper
 
         // Create the base insert statement.
         $query->insert(
-            $db->quoteName('#__kunena_user_topics') . ' (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`) ' . $subQuery . '
+        	$db->quoteName('#__kunena_user_topics') . ' (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`) ' . $subQuery . '
 			ON DUPLICATE KEY UPDATE `category_id` = VALUES(`category_id`), `posts` = VALUES(`posts`), `last_post_id` = VALUES(`last_post_id`)'
         );
         $db->setQuery($query);

@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 HTMLHelper::_('bootstrap.framework');
 
 $this->addScriptDeclaration(
-    "// <![CDATA[
+	"// <![CDATA[
 kunena_url_ajax= '" . KunenaRoute::_("/index.php?option=com_kunena&view=category&type=raw&format=json&layout=raw") . "';
 // ]]>"
 );
@@ -196,14 +196,14 @@ $labels          = $this->ktemplate->params->get('labels');
                                    for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_DEST_TOPIC'); ?> </label>
 
                             <div class="controls" id="modtopicslist"> <?php echo HTMLHelper::_(
-                                'select.genericlist',
-                                $this->getTopicOptions(),
-                                'targettopic',
-                                'class="form-select"',
-                                'value',
-                                'text',
-                                0,
-                                'kmod_topics'
+                            	'select.genericlist',
+                            	$this->getTopicOptions(),
+                            	'targettopic',
+                            	'class="form-select"',
+                            	'value',
+                            	'text',
+                            	0,
+                            	'kmod_topics'
                             ); ?> </div>
                         </div>
                         <div class="control-group" id="kmod_targetid" style="display: none;">

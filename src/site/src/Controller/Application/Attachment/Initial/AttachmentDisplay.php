@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site\Controller\Application\Attachment\Initial;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;

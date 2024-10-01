@@ -75,7 +75,6 @@ class HtmlView extends BaseHtmlView
      */
     protected $state;
 
-
     /**
      * Display the view
      *

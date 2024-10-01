@@ -19,8 +19,8 @@ use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 $this->addBreadcrumb(
-    Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
-    KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=listing")
+	Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'),
+	KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=listing")
 );
 
 echo $this->subRequest('Announcement/Listing');

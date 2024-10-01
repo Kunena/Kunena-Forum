@@ -109,7 +109,7 @@ class Number extends Node implements \ArrayAccess
      */
     public function __construct($dimension, $numeratorUnits, array $denominatorUnits = [])
     {
-        if (is_string($numeratorUnits)) {
+        if (\is_string($numeratorUnits)) {
             $numeratorUnits = $numeratorUnits ? [$numeratorUnits] : [];
         } elseif (isset($numeratorUnits['numerator_units'], $numeratorUnits['denominator_units'])) {
             // TODO get rid of this once `$number[2]` is not used anymore
@@ -315,9 +315,9 @@ class Number extends Node implements \ArrayAccess
         }
 
         throw new SassScriptException(sprintf(
-            'Incompatible units %s and %s.',
-            self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
-            self::getUnitString($other->numeratorUnits, $other->denominatorUnits)
+        	'Incompatible units %s and %s.',
+        	self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
+        	self::getUnitString($other->numeratorUnits, $other->denominatorUnits)
         ));
     }
 
@@ -357,6 +357,7 @@ class Number extends Node implements \ArrayAccess
 
         try {
             $this->greaterThan($other);
+
             return true;
         } catch (SassScriptException $e) {
             return false;
@@ -524,7 +525,7 @@ class Number extends Node implements \ArrayAccess
 
         try {
             return $this->coerceUnits($other, function ($num1, $num2) {
-                return round($num1,self::PRECISION) == round($num2, self::PRECISION);
+                return round($num1, self::PRECISION) == round($num2, self::PRECISION);
             });
         } catch (SassScriptException $e) {
             return false;
@@ -655,9 +656,9 @@ class Number extends Node implements \ArrayAccess
             }
 
             throw new SassScriptException(sprintf(
-                'Incompatible units %s and %s.',
-                self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
-                self::getUnitString($numeratorUnits, $denominatorUnits)
+            	'Incompatible units %s and %s.',
+            	self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
+            	self::getUnitString($numeratorUnits, $denominatorUnits)
             ));
         }
 
@@ -677,17 +678,17 @@ class Number extends Node implements \ArrayAccess
             }
 
             throw new SassScriptException(sprintf(
-                'Incompatible units %s and %s.',
-                self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
-                self::getUnitString($numeratorUnits, $denominatorUnits)
+            	'Incompatible units %s and %s.',
+            	self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
+            	self::getUnitString($numeratorUnits, $denominatorUnits)
             ));
         }
 
         if (\count($oldNumerators) || \count($oldDenominators)) {
             throw new SassScriptException(sprintf(
-                'Incompatible units %s and %s.',
-                self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
-                self::getUnitString($numeratorUnits, $denominatorUnits)
+            	'Incompatible units %s and %s.',
+            	self::getUnitString($this->numeratorUnits, $this->denominatorUnits),
+            	self::getUnitString($numeratorUnits, $denominatorUnits)
             ));
         }
 
@@ -771,7 +772,7 @@ class Number extends Node implements \ArrayAccess
             }
         }
 
-        return null;
+        return;
     }
 
     /**

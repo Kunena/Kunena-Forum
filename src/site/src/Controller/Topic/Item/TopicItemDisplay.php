@@ -160,14 +160,14 @@ class TopicItemDisplay extends KunenaControllerDisplay
         // Todo: fix params
         $this->catParams    = ['sections' => 1, 'catid' => 0];
         $this->categorylist = HTMLHelper::_(
-            'kunenaforum.categorylist',
-            'catid',
-            0,
-            $options,
-            $this->catParams,
-            'class="form-select" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_FORUM_TOP') . '" size="1" onchange = "this.form.submit()"',
-            'value',
-            'text'
+        	'kunenaforum.categorylist',
+        	'catid',
+        	0,
+        	$options,
+        	$this->catParams,
+        	'class="form-select" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_FORUM_TOP') . '" size="1" onchange = "this.form.submit()"',
+        	'value',
+        	'text'
         );
 
         // Load topic and message.

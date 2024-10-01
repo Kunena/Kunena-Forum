@@ -74,12 +74,12 @@ class TopicModel extends KunenaModel
             $layout         = $this->getState('layout');
             $threaded       = ($layout == 'indented' || $layout == 'threaded');
             $this->messages = KunenaMessageHelper::getMessagesByTopic(
-                $this->getState('item.id'),
-                $this->getState('list.start'),
-                $this->getState('list.limit'),
-                $this->getState('list.direction'),
-                $this->getState('hold'),
-                $threaded
+            	$this->getState('item.id'),
+            	$this->getState('list.start'),
+            	$this->getState('list.limit'),
+            	$this->getState('list.direction'),
+            	$this->getState('hold'),
+            	$threaded
             );
 
             // Get thankyous for all messages in the page

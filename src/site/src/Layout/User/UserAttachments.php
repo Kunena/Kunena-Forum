@@ -15,7 +15,6 @@ namespace Kunena\Forum\Site\Layout\User;
 
 \defined('_JEXEC') or die;
 
-use Exception;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;

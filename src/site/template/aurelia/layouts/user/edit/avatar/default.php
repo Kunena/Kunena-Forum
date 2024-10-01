@@ -94,15 +94,15 @@ $this->doc->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
                     ?>
                     <div>
                         <?php echo HTMLHelper::_(
-                            'select.genericlist',
-                            $this->galleryOptions,
-                            'gallery',
-                            '',
-                            'value',
-                            'text',
-                            $this->gallery,
-                            'avatar_gallery_select'
-                        ); ?>
+                    	'select.genericlist',
+                    	$this->galleryOptions,
+                    	'gallery',
+                    	'',
+                    	'value',
+                    	'text',
+                    	$this->gallery,
+                    	'avatar_gallery_select'
+                    ); ?>
                     </div>
                 <?php endif; ?>
 

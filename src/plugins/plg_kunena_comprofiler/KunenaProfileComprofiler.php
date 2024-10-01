@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -162,10 +162,10 @@ class KunenaProfileComprofiler extends KunenaProfile
         $_PLUGINS->loadPluginGroup('user');
 
         return implode(
-            ' ',
-            $_PLUGINS->trigger(
-                'forumSideProfile',
-                ['kunena', $view, $view->profile->userid,
+        	' ',
+        	$_PLUGINS->trigger(
+            	'forumSideProfile',
+            	['kunena', $view, $view->profile->userid,
                     ['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params], ]
             )
         );

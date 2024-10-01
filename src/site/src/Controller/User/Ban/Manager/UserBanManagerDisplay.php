@@ -61,9 +61,9 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
      * @since   Kunena 6.0
      */
     protected $name = 'User/Ban/Manager';
-    
+
     public $moreUri;
-    
+
     public $embedded;
 
     /**

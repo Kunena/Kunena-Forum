@@ -49,12 +49,12 @@ class KunenaEntry
      * @throws Exception
      */
     public function __construct(
-        $type,
-        $operation,
-        $data,
-        KunenaCategory $category = null,
-        KunenaTopic $topic = null,
-        KunenaUser $user = null
+    	$type,
+    	$operation,
+    	$data,
+    	KunenaCategory $category = null,
+    	KunenaTopic $topic = null,
+    	KunenaUser $user = null
     ) {
         $now = new Date();
 

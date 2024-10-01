@@ -13,7 +13,6 @@
 namespace KunenaScssPhp\ScssPhp;
 
 use Exception;
-use KunenaScssPhp\ScssPhp\Version;
 
 /**
  * The scss cache manager.
@@ -141,7 +140,7 @@ class Cache
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -186,7 +185,7 @@ class Cache
           'scssphpVersion' => Version::VERSION,
           'operation' => $operation,
           'what' => $what,
-          'options' => $options
+          'options' => $options,
         ];
 
         $t = self::$prefix

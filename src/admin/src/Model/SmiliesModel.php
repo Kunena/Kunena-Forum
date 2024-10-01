@@ -118,9 +118,9 @@ class SmiliesModel extends ListModel
         $query = $db->createQuery();
 
         $query->select(
-            $this->getState(
-                'list.select',
-                'a.id, a.code, a.location, a.emoticonbar'
+        	$this->getState(
+            	'list.select',
+            	'a.id, a.code, a.location, a.emoticonbar'
             )
         );
 

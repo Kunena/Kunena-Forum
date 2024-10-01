@@ -195,9 +195,9 @@ class TopicController extends KunenaController
         if ($attachs_id === null) {
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
-        
+
         $attach_ids_final = [];
-        
+
         foreach ($attachs_id as $attach) {
             if (\is_array($attach)) {
                 $attach_ids_final[] = $attach['0'];
@@ -524,7 +524,7 @@ class TopicController extends KunenaController
                 list($basename, $extension) = $upload->splitFilename();
                 $attachment = new KunenaAttachment();
                 $attachment->bind(
-                    [
+                	[
                         'mesid'         => 0,
                         'userid'        => (int) $me->userid,
                         'protected'     => null,
@@ -686,7 +686,7 @@ class TopicController extends KunenaController
 
                 $result = $captchaCheckEvent->getArgument('result') ?: [];
 
-                if (is_array($result) && count($result) >= 1) {
+                if (\is_array($result) && \count($result) >= 1) {
                     if (!$result[0]) {
                         $this->setRedirectBack();
 
@@ -881,11 +881,11 @@ class TopicController extends KunenaController
 
         if ($this->me->isModerator($category) && $this->config->logModeration) {
             KunenaLog::log(
-                KunenaLog::TYPE_ACTION,
-                $isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
-                ['mesid' => $message->id, 'parentid' => $this->id],
-                $category,
-                $topic
+            	KunenaLog::TYPE_ACTION,
+            	$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
+            	['mesid' => $message->id, 'parentid' => $this->id],
+            	$category,
+            	$topic
             );
         }
 
@@ -902,7 +902,7 @@ class TopicController extends KunenaController
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
-            
+
             $poll        = $topic->getPoll();
             $poll->title = $poll_title;
 
@@ -920,14 +920,14 @@ class TopicController extends KunenaController
             }
 
             $topic->poll_id = $poll->id;
-            
+
             try {
                 $topic->save();
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
-            
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');            
+
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
         }
 
         // Post Private message
@@ -940,14 +940,14 @@ class TopicController extends KunenaController
         $message->sendNotification();
 
         // Now try adding any new subscriptions if asked for by the poster
-        $usertopic = $topic->getUserTopic(); 
+        $usertopic = $topic->getUserTopic();
 
         if ($fields['subscribe'] && !$usertopic->subscribed) {
             try {
                 $topic->subscribe(1);
-                
+
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'), 'success');
-                
+
                 // Activity integration
                 $activity = KunenaFactory::getActivityIntegration();
                 $activity->onAfterSubscribe($topic, 1);
@@ -1218,12 +1218,12 @@ class TopicController extends KunenaController
         }
 
         KunenaLog::log(
-            KunenaLog::TYPE_ACTION,
-            KunenaLog::LOG_PRIVATE_POST_CREATE,
-            ['id' => $private->id, 'mesid' => $message->id],
-            $message->getCategory(),
-            $message->getTopic(),
-            $pAuthor
+        	KunenaLog::TYPE_ACTION,
+        	KunenaLog::LOG_PRIVATE_POST_CREATE,
+        	['id' => $private->id, 'mesid' => $message->id],
+        	$message->getCategory(),
+        	$message->getTopic(),
+        	$pAuthor
         );
     }
 
@@ -1406,12 +1406,12 @@ class TopicController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-                $isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
-                KunenaLog::LOG_POST_EDIT,
-                ['mesid' => $message->id, 'reason' => $fields['modified_reason']],
-                $topic->getCategory(),
-                $topic,
-                !$isMine ? $message->getAuthor() : null
+            	$isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
+            	KunenaLog::LOG_POST_EDIT,
+            	['mesid' => $message->id, 'reason' => $fields['modified_reason']],
+            	$topic->getCategory(),
+            	$topic,
+            	!$isMine ? $message->getAuthor() : null
             );
         }
 
@@ -1443,8 +1443,8 @@ class TopicController extends KunenaController
                     $poll->polltimetolive = $polltimetolive->toSql();
                 }
 
-                $poll->setOptions($poll_options);                
-                
+                $poll->setOptions($poll_options);
+
                 if (!$topic->poll_id) {
                     // Create a new poll
                     try {
@@ -1452,13 +1452,13 @@ class TopicController extends KunenaController
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
-                    
+
                     try {
                         $poll->save();
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
-                    
+
                     $topic->poll_id = $poll->id;
                     $topic->save();
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
@@ -1471,13 +1471,13 @@ class TopicController extends KunenaController
                         } catch (Exception $e) {
                             $this->app->enqueueMessage($e->getMessage(), 'error');
                         }
-                        
+
                         try {
                             $poll->save();
                         } catch (Exception $e) {
                             $this->app->enqueueMessage($e->getMessage(), 'error');
                         }
-                        
+
                         $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_EDITED'), 'success');
                     }
                 }
@@ -1488,7 +1488,7 @@ class TopicController extends KunenaController
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
-                
+
                 try {
                     $poll->delete();
                 } catch (Exception $e) {
@@ -1610,7 +1610,7 @@ class TopicController extends KunenaController
         }
 
         $message = KunenaMessageHelper::get($this->mesid);
-   
+
         try {
             $message->isAuthorised($type);
         } catch (Exception $e) {
@@ -1635,12 +1635,12 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    KunenaLog::TYPE_ACTION,
-                    KunenaLog::LOG_POST_THANKYOU,
-                    ['mesid' => $message->id],
-                    $category,
-                    $message->getTopic(),
-                    $message->getAuthor()
+                	KunenaLog::TYPE_ACTION,
+                	KunenaLog::LOG_POST_THANKYOU,
+                	['mesid' => $message->id],
+                	$category,
+                	$message->getTopic(),
+                	$message->getAuthor()
                 );
             }
 
@@ -1661,12 +1661,12 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    KunenaLog::TYPE_MODERATION,
-                    KunenaLog::LOG_POST_UNTHANKYOU,
-                    ['mesid' => $message->id, 'userid' => $userid],
-                    $category,
-                    $message->getTopic(),
-                    $message->getAuthor()
+                	KunenaLog::TYPE_MODERATION,
+                	KunenaLog::LOG_POST_UNTHANKYOU,
+                	['mesid' => $message->id, 'userid' => $userid],
+                	$category,
+                	$message->getTopic(),
+                	$message->getAuthor()
                 );
             }
 
@@ -1706,13 +1706,13 @@ class TopicController extends KunenaController
         }
 
         $topic = KunenaTopicHelper::get($this->id);
-        
+
         try {
             $topic->isAuthorised('read');
             $topic->subscribe(1);
-            
+
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'), 'success');
-            
+
             // Activity integration
             $activity = KunenaFactory::getActivityIntegration();
             $activity->onAfterSubscribe($topic, 1);
@@ -1780,16 +1780,16 @@ class TopicController extends KunenaController
         try {
             $topic->isAuthorised('read');
             $topic->favorite(1);
-            
+
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_FAVORITED_TOPIC'), 'success');
-            
+
             // Activity integration
             $activity = KunenaFactory::getActivityIntegration();
             $activity->onAfterFavorite($topic, 1);
         } catch (Exception $e) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_FAVORITED_TOPIC') . ' ' . $e->getMessage(), 'error');
         }
-        
+
         $this->setRedirectBack();
     }
 
@@ -1814,9 +1814,9 @@ class TopicController extends KunenaController
         try {
             $topic->isAuthorised('read');
             $topic->favorite(0);
-            
+
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNFAVORITED_TOPIC'), 'success');
-            
+
             // Activity integration
             $activity = KunenaFactory::getActivityIntegration();
             $activity->onAfterFavorite($topic, 0);
@@ -1844,29 +1844,29 @@ class TopicController extends KunenaController
         }
 
         $topic = KunenaTopicHelper::get($this->id);
-        
+
         try {
             $topic->isAuthorised('sticky');
             $topic->sticky(1);
-            
+
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_SET'), 'success');
-            
+
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    KunenaLog::TYPE_MODERATION,
-                    KunenaLog::LOG_TOPIC_STICKY,
-                    [],
-                    $topic->getCategory(),
-                    $topic
-                    );
+                	KunenaLog::TYPE_MODERATION,
+                	KunenaLog::LOG_TOPIC_STICKY,
+                	[],
+                	$topic->getCategory(),
+                	$topic
+                );
             }
-            
+
             // Activity integration
             $activity = KunenaFactory::getActivityIntegration();
             $activity->onAfterSticky($topic, 1);
         } catch (Exception $e) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_NOT_SET') . $e->getMessage(), 'error');
-        }        
+        }
 
         $this->setRedirectBack();
     }
@@ -1888,23 +1888,23 @@ class TopicController extends KunenaController
         }
 
         $topic = KunenaTopicHelper::get($this->id);
-        
+
         try {
             $topic->isAuthorised('sticky');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
-        } 
+        }
 
         if ($topic->sticky(0)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_UNSET'), 'success');
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    KunenaLog::TYPE_MODERATION,
-                    KunenaLog::LOG_TOPIC_UNSTICKY,
-                    [],
-                    $topic->getCategory(),
-                    $topic
+                	KunenaLog::TYPE_MODERATION,
+                	KunenaLog::LOG_TOPIC_UNSTICKY,
+                	[],
+                	$topic->getCategory(),
+                	$topic
                 );
             }
 
@@ -1935,7 +1935,7 @@ class TopicController extends KunenaController
         }
 
         $topic = KunenaTopicHelper::get($this->id);
-        
+
         try {
             $topic->isAuthorised('lock');
         } catch (Exception $e) {
@@ -1947,11 +1947,11 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    KunenaLog::TYPE_MODERATION,
-                    KunenaLog::LOG_TOPIC_LOCK,
-                    [],
-                    $topic->getCategory(),
-                    $topic
+                	KunenaLog::TYPE_MODERATION,
+                	KunenaLog::LOG_TOPIC_LOCK,
+                	[],
+                	$topic->getCategory(),
+                	$topic
                 );
             }
 
@@ -1982,7 +1982,7 @@ class TopicController extends KunenaController
         }
 
         $topic = KunenaTopicHelper::get($this->id);
-        
+
         try {
             $topic->isAuthorised('lock');
         } catch (Exception $e) {
@@ -1994,11 +1994,11 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    KunenaLog::TYPE_MODERATION,
-                    KunenaLog::LOG_TOPIC_UNLOCK,
-                    [],
-                    $topic->getCategory(),
-                    $topic
+                	KunenaLog::TYPE_MODERATION,
+                	KunenaLog::LOG_TOPIC_UNLOCK,
+                	[],
+                	$topic->getCategory(),
+                	$topic
                 );
             }
 
@@ -2048,17 +2048,17 @@ class TopicController extends KunenaController
         try {
             $target->isAuthorised('delete');
             $target->publish($hold);
-            
+
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    $this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-                    $log,
-                    isset($message) ? ['mesid' => $message->id] : [],
-                    $category,
-                    $topic
-                    );
+                	$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+                	$log,
+                	isset($message) ? ['mesid' => $message->id] : [],
+                	$category,
+                	$topic
+                );
             }
-            
+
             $this->app->enqueueMessage($msg, 'success');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -2106,21 +2106,21 @@ class TopicController extends KunenaController
         }
 
         $category = $topic->getCategory();
-        
+
         try {
             $target->isAuthorised('undelete');
             $target->publish(KunenaForum::PUBLISHED);
-            
+
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    $this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-                    $log,
-                    isset($message) ? ['mesid' => $message->id] : [],
-                    $category,
-                    $topic
-                    );
+                	$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+                	$log,
+                	isset($message) ? ['mesid' => $message->id] : [],
+                	$category,
+                	$topic
+                );
             }
-            
+
             $this->app->enqueueMessage($msg, 'success');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -2166,17 +2166,17 @@ class TopicController extends KunenaController
         try {
             $topic->isAuthorised('permdelete');
             $target->delete();
-            
+
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                    $this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-                    $log,
-                    isset($message) ? ['mesid' => $message->id] : [],
-                    $category,
-                    $topic
-                    );
+                	$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+                	$log,
+                	isset($message) ? ['mesid' => $message->id] : [],
+                	$category,
+                	$topic
+                );
             }
-            
+
             if ($topic->exists()) {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'), 'success');
                 $url = $topic->getUrl($this->return, false);
@@ -2186,7 +2186,7 @@ class TopicController extends KunenaController
             }
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
-        } 
+        }
 
         if (isset($url)) {
             $this->setRedirect($url);
@@ -2226,7 +2226,7 @@ class TopicController extends KunenaController
 
         $topic    = $message->getTopic();
         $category = $topic->getCategory();
-        
+
         try {
             $target->isAuthorised('approve');
             $target->publish(KunenaForum::PUBLISHED);
@@ -2236,12 +2236,12 @@ class TopicController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-                $this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-                $log,
-                ['mesid' => $message->id],
-                $category,
-                $topic,
-                $message->getAuthor()
+            	$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+            	$log,
+            	['mesid' => $message->id],
+            	$category,
+            	$topic,
+            	$message->getAuthor()
             );
         }
 
@@ -2255,7 +2255,6 @@ class TopicController extends KunenaController
         if (!$modifiedByAuthor) {
             $target->sendNotification(null, true);
         }
-
 
         $this->setRedirect($target->getUrl($this->return, false));
     }
@@ -2301,19 +2300,19 @@ class TopicController extends KunenaController
 
         $error        = null;
         $targetobject = null;
-        
+
         try {
             $object->isAuthorised('move');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
         }
-        
+
         try {
             $target->isAuthorised('read');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
         }
-        
+
         $changesubject  = $this->app->input->getBool('changesubject', false);
         $subject        = $this->app->input->getString('subject', '');
         $shadow         = $this->app->input->getBool('shadow', false);
@@ -2335,7 +2334,7 @@ class TopicController extends KunenaController
         } else {
             $ids = false;
         }
-            
+
         try {
             $targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
         } catch (Exception $e) {
@@ -2344,19 +2343,18 @@ class TopicController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-                KunenaLog::TYPE_MODERATION,
-                $messageId ? KunenaLog::LOG_POST_MODERATE : KunenaLog::LOG_TOPIC_MODERATE,
-                [
+            	KunenaLog::TYPE_MODERATION,
+            	$messageId ? KunenaLog::LOG_POST_MODERATE : KunenaLog::LOG_TOPIC_MODERATE,
+            	[
                         'move'    => ['id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'],
                         'target'  => ['category_id' => $targetCategory, 'topic_id' => $targetTopic],
                         'options' => ['emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow],
                 ],
-                $topic->getCategory(),
-                $topic,
-                $message->getAuthor()
+            	$topic->getCategory(),
+            	$topic,
+            	$message->getAuthor()
             );
         }
-       
 
         if ($error) {
             $this->app->enqueueMessage($error, 'error');
@@ -2499,16 +2497,16 @@ class TopicController extends KunenaController
 
                 if ($this->config->logModeration) {
                     KunenaLog::log(
-                        KunenaLog::TYPE_REPORT,
-                        $log,
-                        [
+                    	KunenaLog::TYPE_REPORT,
+                    	$log,
+                    	[
                             'mesid'   => $message->id,
                             'reason'  => $reason,
                             'message' => $text,
                         ],
-                        $topic->getCategory(),
-                        $topic,
-                        $message->getAuthor()
+                    	$topic->getCategory(),
+                    	$topic,
+                    	$message->getAuthor()
                     );
                 }
 
@@ -2542,30 +2540,29 @@ class TopicController extends KunenaController
 
         $topic = KunenaTopicHelper::get($id);
         $poll  = $topic->getPoll();
-        
+
         try {
             $topic->isAuthorised('poll.vote');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
         }
 
-        if (!$poll->getMyVotes()) {            
+        if (!$poll->getMyVotes()) {
             try {
                 // Give a new vote
                 $poll->vote($vote);
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
-            
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'), 'success');            
-        } elseif (!$this->config->pollAllowVoteOne) {  
+
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'), 'success');
+        } elseif (!$this->config->pollAllowVoteOne) {
             try {
                 // Change existing vote
                 $poll->vote($vote, true);
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
-
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS'), 'success');
         }
@@ -2594,12 +2591,12 @@ class TopicController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-                KunenaLog::TYPE_MODERATION,
-                KunenaLog::LOG_POLL_MODERATE,
-                [],
-                $topic->getCategory(),
-                $topic,
-                null
+            	KunenaLog::TYPE_MODERATION,
+            	KunenaLog::LOG_POLL_MODERATE,
+            	[],
+            	$topic->getCategory(),
+            	$topic,
+            	null
             );
         }
 

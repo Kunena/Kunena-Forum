@@ -152,13 +152,13 @@ class MiscDisplay extends Display
         if ($format == 'html') {
             $this->body = trim($body);
         } elseif ($format == 'text') {
-            $this->body = htmlspecialchars($body, ENT_COMPAT, 'UTF-8');            
+            $this->body = htmlspecialchars($body, ENT_COMPAT, 'UTF-8');
         } else {
             $options = ['defaultgroup' => 'com_kunena'];
             $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
             $cache->setLifeTime(180);
-            
-            $this->body = $cache->get(['Kunena\Forum\Libraries\Html\KunenaParser', 'parseBBCode'], [$body]);                
+
+            $this->body = $cache->get(['Kunena\Forum\Libraries\Html\KunenaParser', 'parseBBCode'], [$body]);
         }
     }
 }

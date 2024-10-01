@@ -119,7 +119,6 @@ class ConfigController extends FormController
                     $postvalue = preg_replace("/\s+/", "", $postvalue);
                 }
 
-
                 $kconfig->set($postname, $postvalue);
             }
         }

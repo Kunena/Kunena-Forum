@@ -180,9 +180,9 @@ class AttachmentsModel extends ListModel
         $query = $db->createQuery();
 
         $query->select(
-            $this->getState(
-                'list.select',
-                'a.id'
+        	$this->getState(
+            	'list.select',
+            	'a.id'
             )
         );
 

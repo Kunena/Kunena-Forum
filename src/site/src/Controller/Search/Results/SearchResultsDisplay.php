@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site\Controller\Search\Results;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -65,7 +64,7 @@ class SearchResultsDisplay extends KunenaControllerDisplay
     public $isModerator;
 
     public $results;
-    
+
     public $error;
 
     /**
@@ -112,9 +111,9 @@ class SearchResultsDisplay extends KunenaControllerDisplay
         }
 
         $this->pagination = new KunenaPagination(
-            $this->total,
-            $this->state->get('list.start'),
-            $this->state->get('list.limit')
+        	$this->total,
+        	$this->state->get('list.start'),
+        	$this->state->get('list.limit')
         );
     }
 

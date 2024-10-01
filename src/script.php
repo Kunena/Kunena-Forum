@@ -79,7 +79,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             '10.6' => '10.6',
             '10.5' => '10.5',
             '10.4' => '10.4',
-            '0' => '10.8.6' // Preferred version
+            '0' => '10.8.6', // Preferred version
         ],
         'Joomla!' => [
             '5.2' => '5.2.0-beta3',
@@ -231,16 +231,16 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
         $recommended = end($this->versions[$name]);
         $app->enqueueMessage(
-            sprintf(
-                "%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.",
-                $name,
-                $version,
-                $name,
-                $minor,
-                $name,
-                $recommended
+        	sprintf(
+            	"%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.",
+            	$name,
+            	$version,
+            	$name,
+            	$minor,
+            	$name,
+            	$recommended
             ),
-            'notice'
+        	'notice'
         );
 
         return false;
@@ -350,7 +350,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         }
 
         $installed = $db->setQuery(
-            $db->createQuery()
+        	$db->createQuery()
                 ->select('version')
                 ->from('#__kunena_version')->order('id DESC')
                 ->setLimit(1)
@@ -509,7 +509,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
         $query->insert($db->quoteName('#__kunena_version'))
             ->columns(
-                [
+            	[
                     $db->quoteName('version'),
                     $db->quoteName('build'),
                     $db->quoteName('versiondate'),
@@ -689,7 +689,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
             $query->insert($db->quoteName('#__mail_templates'))
                 ->columns(
-                    [
+                	[
                         $db->quoteName('template_id'),
                         $db->quoteName('extension'),
                         $db->quoteName('language'),

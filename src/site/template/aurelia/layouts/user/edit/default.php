@@ -39,11 +39,11 @@ $avatar        = KunenaFactory::getAvatarIntegration();
     <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName())); ?>
 
     <?php echo $this->profile->getLink(
-        KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
-        Text::_('COM_KUNENA_BACK'),
-        'nofollow',
-        '',
-        'btn btn-outline-primary border float-end'
+	KunenaIcons::back() . ' ' . Text::_('COM_KUNENA_BACK'),
+	Text::_('COM_KUNENA_BACK'),
+	'nofollow',
+	'',
+	'btn btn-outline-primary border float-end'
 ); ?>
 </h2>
 

@@ -20,8 +20,8 @@ use Joomla\CMS\Language\Text;
 $content = $this->execute('Category/Index');
 
 $this->addBreadcrumb(
-    Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT'),
-    'index.php?option=com_kunena&view=category&layout=list'
+	Text::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT'),
+	'index.php?option=com_kunena&view=category&layout=list'
 );
 
 echo $content;

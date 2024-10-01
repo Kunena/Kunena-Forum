@@ -25,26 +25,26 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 class MessageItemBottom extends KunenaLayout
 {
     public $thankyou_delete;
-    
+
     public $more_thankyou;
-    
+
     public $numLink;
-    
+
     public $total_thankyou;
-    
+
     public $thankyou;
-    
+
     public $captchaEnabled;
-    
+
     public $candisplaymail;
-    
+
     public $detail;
-    
+
     public $location;
-    
+
     public $ipLink;
-    
+
     public $reportMessageLink;
-    
+
     public $profile;
 }

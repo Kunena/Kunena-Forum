@@ -60,7 +60,7 @@ class ClassLoader
     public function getPrefixes()
     {
         if (!empty($this->prefixesPsr0)) {
-            return call_user_func_array('array_merge', array_values($this->prefixesPsr0));
+            return \call_user_func_array('array_merge', array_values($this->prefixesPsr0));
         }
 
         return array();
@@ -111,13 +111,13 @@ class ClassLoader
         if (!$prefix) {
             if ($prepend) {
                 $this->fallbackDirsPsr0 = array_merge(
-                    (array) $paths,
-                    $this->fallbackDirsPsr0
+                	(array) $paths,
+                	$this->fallbackDirsPsr0
                 );
             } else {
                 $this->fallbackDirsPsr0 = array_merge(
-                    $this->fallbackDirsPsr0,
-                    (array) $paths
+                	$this->fallbackDirsPsr0,
+                	(array) $paths
                 );
             }
 
@@ -132,13 +132,13 @@ class ClassLoader
         }
         if ($prepend) {
             $this->prefixesPsr0[$first][$prefix] = array_merge(
-                (array) $paths,
-                $this->prefixesPsr0[$first][$prefix]
+            	(array) $paths,
+            	$this->prefixesPsr0[$first][$prefix]
             );
         } else {
             $this->prefixesPsr0[$first][$prefix] = array_merge(
-                $this->prefixesPsr0[$first][$prefix],
-                (array) $paths
+            	$this->prefixesPsr0[$first][$prefix],
+            	(array) $paths
             );
         }
     }
@@ -159,18 +159,18 @@ class ClassLoader
             // Register directories for the root namespace.
             if ($prepend) {
                 $this->fallbackDirsPsr4 = array_merge(
-                    (array) $paths,
-                    $this->fallbackDirsPsr4
+                	(array) $paths,
+                	$this->fallbackDirsPsr4
                 );
             } else {
                 $this->fallbackDirsPsr4 = array_merge(
-                    $this->fallbackDirsPsr4,
-                    (array) $paths
+                	$this->fallbackDirsPsr4,
+                	(array) $paths
                 );
             }
         } elseif (!isset($this->prefixDirsPsr4[$prefix])) {
             // Register directories for a new namespace.
-            $length = strlen($prefix);
+            $length = \strlen($prefix);
             if ('\\' !== $prefix[$length - 1]) {
                 throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
             }
@@ -179,14 +179,14 @@ class ClassLoader
         } elseif ($prepend) {
             // Prepend directories for an already registered namespace.
             $this->prefixDirsPsr4[$prefix] = array_merge(
-                (array) $paths,
-                $this->prefixDirsPsr4[$prefix]
+            	(array) $paths,
+            	$this->prefixDirsPsr4[$prefix]
             );
         } else {
             // Append directories for an already registered namespace.
             $this->prefixDirsPsr4[$prefix] = array_merge(
-                $this->prefixDirsPsr4[$prefix],
-                (array) $paths
+            	$this->prefixDirsPsr4[$prefix],
+            	(array) $paths
             );
         }
     }
@@ -221,7 +221,7 @@ class ClassLoader
         if (!$prefix) {
             $this->fallbackDirsPsr4 = (array) $paths;
         } else {
-            $length = strlen($prefix);
+            $length = \strlen($prefix);
             if ('\\' !== $prefix[$length - 1]) {
                 throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
             }
@@ -279,7 +279,7 @@ class ClassLoader
      */
     public function setApcuPrefix($apcuPrefix)
     {
-        $this->apcuPrefix = function_exists('apcu_fetch') && filter_var(ini_get('apc.enabled'), FILTER_VALIDATE_BOOLEAN) ? $apcuPrefix : null;
+        $this->apcuPrefix = \function_exists('apcu_fetch') && filter_var(\ini_get('apc.enabled'), FILTER_VALIDATE_BOOLEAN) ? $apcuPrefix : null;
     }
 
     /**
@@ -342,7 +342,7 @@ class ClassLoader
             return false;
         }
         if (null !== $this->apcuPrefix) {
-            $file = apcu_fetch($this->apcuPrefix.$class, $hit);
+            $file = apcu_fetch($this->apcuPrefix . $class, $hit);
             if ($hit) {
                 return $file;
             }
@@ -351,12 +351,12 @@ class ClassLoader
         $file = $this->findFileWithExtension($class, '.php');
 
         // Search for Hack files if we are running on HHVM
-        if (false === $file && defined('HHVM_VERSION')) {
+        if (false === $file && \defined('HHVM_VERSION')) {
             $file = $this->findFileWithExtension($class, '.hh');
         }
 
         if (null !== $this->apcuPrefix) {
-            apcu_add($this->apcuPrefix.$class, $file);
+            apcu_add($this->apcuPrefix . $class, $file);
         }
 
         if (false === $file) {

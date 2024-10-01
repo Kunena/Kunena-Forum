@@ -49,7 +49,7 @@ class KunenaViewCategory extends KunenaView
         KunenaParser::$relative = false;
 
         $this->category = $this->get('Category');
-        
+
         try {
             $this->category->isAuthorised('read');
         } catch (Exception $e) {

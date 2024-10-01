@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site\Model;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\Exception\ExecutionFailureException;

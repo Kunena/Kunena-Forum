@@ -194,17 +194,17 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                     </tbody>
                 </table>
 
-                <?php // load the pagination. 
+                <?php // load the pagination.
                 ?>
                 <?php echo $this->pagination->getListFooter(); ?>
 
                 <?php echo HTMLHelper::_(
-                    'bootstrap.renderModal',
-                    'joomla-dialog-clean',
-                    [
+                	'bootstrap.renderModal',
+                	'joomla-dialog-clean',
+                	[
                         'title'  => Text::_('COM_KUNENA_LOG_CLEAN_ENTRIES'),
                     ],
-                    $this->loadTemplate('clean')
+                	$this->loadTemplate('clean')
                 ); ?>
 
                 <input type="hidden" name="task" value="" />

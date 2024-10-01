@@ -51,8 +51,8 @@ class MiscController extends KunenaController
     public function template()
     {
         $name = $this->input->getString(
-            'name',
-            $this->input->cookie->getString('kunena_template', '')
+        	'name',
+        	$this->input->cookie->getString('kunena_template', '')
         );
 
         if ($name) {

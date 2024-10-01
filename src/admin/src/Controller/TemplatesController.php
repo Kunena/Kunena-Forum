@@ -84,8 +84,8 @@ class TemplatesController extends KunenaController
 
         if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name']) || !empty($file['error'])) {
             $this->app->enqueueMessage(
-                Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $this->escape($file['name'])),
-                'error'
+            	Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $this->escape($file['name'])),
+            	'error'
             );
             $result = false;
         } else {
@@ -97,8 +97,8 @@ class TemplatesController extends KunenaController
                     $archive->extract($dest . $file ['name'], $tmpKunena);
                 } catch (Exception $e) {
                     $this->app->enqueueMessage(
-                        Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
-                        'error'
+                    	Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $this->escape($file['name'])),
+                    	'error'
                     );
                     $result = false;
                 }

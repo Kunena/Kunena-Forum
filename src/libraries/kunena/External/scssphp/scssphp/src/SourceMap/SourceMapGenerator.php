@@ -59,7 +59,7 @@ class SourceMapGenerator
         'sourceMapRootpath' => '',
 
         // base path for filename normalization
-        'sourceMapBasepath' => ''
+        'sourceMapBasepath' => '',
     ];
 
     /**
@@ -129,7 +129,7 @@ class SourceMapGenerator
             'generated_column' => $generatedColumn,
             'original_line'    => $originalLine,
             'original_column'  => $originalColumn,
-            'source_file'      => $sourceFile
+            'source_file'      => $sourceFile,
         ];
 
         $this->sources[$sourceFile] = $sourceFile;
@@ -154,7 +154,7 @@ class SourceMapGenerator
         if (! is_dir($dir)) {
             // FIXME: create the dir automatically?
             throw new CompilerException(
-                sprintf('The directory "%s" does not exist. Cannot save the source map.', $dir)
+            	sprintf('The directory "%s" does not exist. Cannot save the source map.', $dir)
             );
         }
 
@@ -234,7 +234,7 @@ class SourceMapGenerator
     protected function getSourcesContent()
     {
         if (empty($this->sources)) {
-            return null;
+            return;
         }
 
         $content = [];
@@ -262,7 +262,7 @@ class SourceMapGenerator
         $prefixLines = substr_count($prefix, "\n");
         $lastPrefixNewLine = strrpos($prefix, "\n");
         $lastPrefixLineStart = false === $lastPrefixNewLine ? 0 : $lastPrefixNewLine + 1;
-        $prefixColumn = strlen($prefix) - $lastPrefixLineStart;
+        $prefixColumn = \strlen($prefix) - $lastPrefixLineStart;
 
         $this->sourceKeys = array_flip(array_keys($this->sources));
 

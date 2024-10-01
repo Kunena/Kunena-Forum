@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\Controller\Credits\Display;
 
 use Exception;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -115,11 +114,11 @@ class CreditsDisplay extends KunenaControllerDisplay
                 'title' => Text::_('COM_KUNENA_CREDITS_FOUNDER'), ],
         ];
         $this->thanks     = Text::sprintf(
-            'COM_KUNENA_CREDITS_THANKS_TO',
-            'https://www.kunena.org/team#special_thanks',
-            'https://www.transifex.com/projects/p/Kunena',
-            'https://www.kunena.org',
-            'https://github.com/Kunena/Kunena-Forum/graphs/contributors'
+        	'COM_KUNENA_CREDITS_THANKS_TO',
+        	'https://www.kunena.org/team#special_thanks',
+        	'https://www.transifex.com/projects/p/Kunena',
+        	'https://www.kunena.org',
+        	'https://github.com/Kunena/Kunena-Forum/graphs/contributors'
         );
     }
 

@@ -28,7 +28,7 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('multiselect');
 
 $this->document->addScriptDeclaration(
-    ' var max_count = ' . (int) $this->config->maxSig . '
+	' var max_count = ' . (int) $this->config->maxSig . '
 jQuery(function($) {
 	jQuery(\'#user-signature\').keypress(function (e) {
 		var len = jQuery(this).val().length;
@@ -139,17 +139,17 @@ jQuery(function($) {
                                                     </label>
                                                 </div>
                                                 <div>
-                                                    <?php 
+                                                    <?php
                                                     if (!empty($this->user->signature)){
                                                         $valueSignature = (intval($this->config->maxSig) - StringHelper::strlen($this->user->signature));
                                                     } else {
                                                         $valueSignature = '';
                                                     }
                                                     echo Text::sprintf(
-                                                        'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
-                                                        intval($this->config->maxSig),
-                                                        '<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . $valueSignature . '" />'
-); ?>
+                                                    	'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
+                                                    	intval($this->config->maxSig),
+                                                    	'<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . $valueSignature . '" />'
+                                                    ); ?>
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -214,14 +214,14 @@ jQuery(function($) {
                                                             $gender[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
                                                             // Build the html select list
                                                             echo HTMLHelper::_(
-                                                                'select.genericlist',
-                                                                $gender,
-                                                                'gender',
-                                                                'class="inputbox form-control" size="1"',
-                                                                'value',
-                                                                'text',
-                                                                $this->escape($this->user->gender),
-                                                                'gender'
+                                                            	'select.genericlist',
+                                                            	$gender,
+                                                            	'gender',
+                                                            	'class="inputbox form-control" size="1"',
+                                                            	'value',
+                                                            	'text',
+                                                            	$this->escape($this->user->gender),
+                                                            	'gender'
                                                             );
                                                             ?>
                                                         </td>

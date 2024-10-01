@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 $iconPath = json_encode(Uri::root(true) . '/');
 $this->document->addScriptDeclaration(
-    "function update_rank(newimage) {
+	"function update_rank(newimage) {
 	document.rankImage.src = {$iconPath} + newimage;
 }"
 );

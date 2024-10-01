@@ -61,14 +61,14 @@ class UserEditSettingsDisplay extends UserEditDisplay
         $options[]        = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_USER_ORDER_ASC'));
         $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_USER_ORDER_DESC'));
         $item->field      = HTMLHelper::_(
-            'select.genericlist',
-            $options,
-            'messageordering',
-            'class="kinputbox form-select" size="1"',
-            'value',
-            'text',
-            $this->escape($this->profile->ordering),
-            'kmessageordering'
+        	'select.genericlist',
+        	$options,
+        	'messageordering',
+        	'class="kinputbox form-select" size="1"',
+        	'value',
+        	'text',
+        	$this->escape($this->profile->ordering),
+        	'kmessageordering'
         );
         $this->settings[] = $item;
 
@@ -80,14 +80,14 @@ class UserEditSettingsDisplay extends UserEditDisplay
         $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
         $options[]        = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_A_ONLY_REGISTERED'));
         $item->field      = HTMLHelper::_(
-            'select.genericlist',
-            $options,
-            'hidemail',
-            'class="kinputbox form-select" size="1"',
-            'value',
-            'text',
-            $this->escape($this->profile->hideEmail),
-            'khidemail'
+        	'select.genericlist',
+        	$options,
+        	'hidemail',
+        	'class="kinputbox form-select" size="1"',
+        	'value',
+        	'text',
+        	$this->escape($this->profile->hideEmail),
+        	'khidemail'
         );
         $this->settings[] = $item;
 
@@ -98,14 +98,14 @@ class UserEditSettingsDisplay extends UserEditDisplay
         $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
         $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
         $item->field      = HTMLHelper::_(
-            'select.genericlist',
-            $options,
-            'showonline',
-            'class="kinputbox form-select" size="1"',
-            'value',
-            'text',
-            $this->escape($this->profile->showOnline),
-            'kshowonline'
+        	'select.genericlist',
+        	$options,
+        	'showonline',
+        	'class="kinputbox form-select" size="1"',
+        	'value',
+        	'text',
+        	$this->escape($this->profile->showOnline),
+        	'kshowonline'
         );
         $this->settings[] = $item;
 
@@ -117,14 +117,14 @@ class UserEditSettingsDisplay extends UserEditDisplay
         $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
         $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
         $item->field      = HTMLHelper::_(
-            'select.genericlist',
-            $options,
-            'cansubscribe',
-            'class="kinputbox form-select" size="1"',
-            'value',
-            'text',
-            $this->escape($this->profile->canSubscribe),
-            'kcansubscribe'
+        	'select.genericlist',
+        	$options,
+        	'cansubscribe',
+        	'class="kinputbox form-select" size="1"',
+        	'value',
+        	'text',
+        	$this->escape($this->profile->canSubscribe),
+        	'kcansubscribe'
         );
         $this->settings[] = $item;
 
@@ -144,14 +144,14 @@ class UserEditSettingsDisplay extends UserEditDisplay
         $options[]        = HTMLHelper::_('select.option', 720, Text::_('COM_KUNENA_SHOW_MONTH'));
         $options[]        = HTMLHelper::_('select.option', 8760, Text::_('COM_KUNENA_SHOW_YEAR'));
         $item->field      = HTMLHelper::_(
-            'select.genericlist',
-            $options,
-            'userlisttime',
-            'class="kinputbox form-select" size="1"',
-            'value',
-            'text',
-            $this->escape($this->profile->userListtime),
-            'kuserlisttime'
+        	'select.genericlist',
+        	$options,
+        	'userlisttime',
+        	'class="kinputbox form-select" size="1"',
+        	'value',
+        	'text',
+        	$this->escape($this->profile->userListtime),
+        	'kuserlisttime'
         );
         $this->settings[] = $item;
 
@@ -166,14 +166,14 @@ class UserEditSettingsDisplay extends UserEditDisplay
             $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
             $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
             $item->field      = HTMLHelper::_(
-                'select.genericlist',
-                $options,
-                'socialshare',
-                'class="kinputbox form-select" size="1"',
-                'value',
-                'text',
-                $this->escape($this->profile->socialshare),
-                'ksocialshare'
+            	'select.genericlist',
+            	$options,
+            	'socialshare',
+            	'class="kinputbox form-select" size="1"',
+            	'value',
+            	'text',
+            	$this->escape($this->profile->socialshare),
+            	'ksocialshare'
             );
             $this->settings[] = $item;
         }

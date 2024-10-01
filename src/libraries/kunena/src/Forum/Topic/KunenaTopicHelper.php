@@ -299,7 +299,7 @@ abstract class KunenaTopicHelper
             $catlist += $category->getChannels();
         }
 
-        if (count($catlist) > 0) {
+        if (\count($catlist) > 0) {
             $catlist = implode(',', array_keys($catlist));
 
             if ($exclude) {

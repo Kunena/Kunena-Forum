@@ -677,7 +677,7 @@ class KunenaCategory extends KunenaDatabaseObject
             'last_post_id' => $this->last_post_id,
             'last_post_time' => $this->last_post_time,
             'params' => $this->params,
-            'allowRatings' => $this->allowRatings
+            'allowRatings' => $this->allowRatings,
         ];
 
         return $properties;
@@ -1832,7 +1832,7 @@ class KunenaCategory extends KunenaDatabaseObject
         // Do we need to reduce the number of significant digits?
         if ($number >= 10000) {
             // Round the number to n significant digits
-            $number = round($number, -1 * intval((log10($number) + 1)) + $precision);
+            $number = round($number, -1 * \intval((log10($number) + 1)) + $precision);
         }
 
         if ($number < 10000) {

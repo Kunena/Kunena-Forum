@@ -33,11 +33,11 @@ $selected = $this->pagination->limit == $this->pagination->total ? 0 : $this->pa
 
 // Build the select list.
 echo HTMLHelper::_(
-    'select.genericlist',
-    $limits,
-    $this->pagination->prefix . 'limit',
-    'class="inputbox input-mini form-control" size="1" onchange="Joomla.submitform();"',
-    'value',
-    'text',
-    $selected
+	'select.genericlist',
+	$limits,
+	$this->pagination->prefix . 'limit',
+	'class="inputbox input-mini form-control" size="1" onchange="Joomla.submitform();"',
+	'value',
+	'text',
+	$selected
 );

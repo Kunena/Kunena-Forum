@@ -319,7 +319,7 @@ class KunenaTemplate
             if ($this->config->activeMenuItem) {
                 $id = htmlspecialchars($this->config->activeMenuItem, ENT_COMPAT, 'UTF-8');
                 $this->addScriptDeclaration(
-                    "
+                	"
 					document.addEventListener('DOMContentLoaded', () => {
 						let activeMenuItem = document.querySelector('" . $id . "');
 						if (activeMenuItem) {
@@ -335,7 +335,7 @@ class KunenaTemplate
                 if ($items) {
                     $id = htmlspecialchars('.item-' . $items[0]->id, ENT_COMPAT, 'UTF-8');
                     $this->addScriptDeclaration(
-                        "
+                    	"
 						document.addEventListener('DOMContentLoaded', () => {
 							let activeMenuItem = document.querySelector('" . $id . "');
 							if (activeMenuItem) {
@@ -478,9 +478,9 @@ class KunenaTemplate
         if (!strstr($xml, '<config>')) {
             // Update old template files to new format.
             $xml = preg_replace(
-                ['|<params|', '|</params>|', '|<param\s+|', '|</param>|'],
-                ['<config', '</config>', '<field ', '</field>'],
-                $xml
+            	['|<params|', '|</params>|', '|<param\s+|', '|</param>|'],
+            	['<config', '</config>', '<field ', '</field>'],
+            	$xml
             );
         }
 
@@ -511,7 +511,7 @@ class KunenaTemplate
 
         if ($isForumActive) {
             $this->addScriptDeclaration(
-                '
+            	'
 				document.addEventListener("DOMContentLoaded", () => {
 					let currentMenuItem = document.querySelector(".current");
 					let parentMenuItem = document.querySelector(".alias-parent-active");
@@ -1816,7 +1816,7 @@ HTML;
 
             $result = $captchaDisplayEvent->getArgument('result') ?: [];
 
-            if (is_array($result) && count($result) >= 1) {
+            if (\is_array($result) && \count($result) >= 1) {
                 return $result[0];
             }
         }

@@ -21,7 +21,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
-use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -232,11 +231,11 @@ class UserItemDisplay extends KunenaControllerDisplay
                 $this->setDescription($description);
             } else {
                 $description = Text::sprintf(
-                    'COM_KUNENA_META_PROFILE',
-                    $this->profile->getName(),
-                    $this->config->boardTitle,
-                    $this->profile->getName(),
-                    $this->config->boardTitle
+                	'COM_KUNENA_META_PROFILE',
+                	$this->profile->getName(),
+                	$this->config->boardTitle,
+                	$this->profile->getName(),
+                	$this->config->boardTitle
                 );
                 $this->setDescription($description);
             }

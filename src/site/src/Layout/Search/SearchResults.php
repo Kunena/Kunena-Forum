@@ -105,27 +105,27 @@ class SearchResults extends KunenaLayout
      * @since   Kunena 6.0
      */
     public $messageHtml;
-    
+
     public $output;
-    
+
     public $user;
-    
+
     public $headerText;
-    
+
     public $pagination;
-    
+
     public $config;
-    
+
     public $model;
-    
+
     public $total;
-    
+
     public $state;
-    
+
     public $message_ordering;
-    
+
     public $isModerator;
-    
+
     public $error;
 
     /**
@@ -165,9 +165,9 @@ class SearchResults extends KunenaLayout
                 }
 
                 $ressubject = preg_replace(
-                    "/" . preg_quote($searchword, '/') . "/iu",
-                    '<span  class="searchword" >' . $searchword . '</span>',
-                    $ressubject
+                	"/" . preg_quote($searchword, '/') . "/iu",
+                	'<span  class="searchword" >' . $searchword . '</span>',
+                	$ressubject
                 );
 
                 // FIXME: enable highlighting, but only after we can be sure that we do not break html

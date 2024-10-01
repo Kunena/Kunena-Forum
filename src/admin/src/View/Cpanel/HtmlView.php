@@ -56,8 +56,8 @@ class HtmlView extends BaseHtmlView
             Text::script('MOD_SAMPLEDATA_INVALID_RESPONSE');
 
             Factory::getApplication()->getDocument()->addScriptOptions(
-                'sample-data',
-                [
+            	'sample-data',
+            	[
                     'icon' => Uri::root(true) . '/media/system/images/ajax-loader.gif',
                 ]
             );

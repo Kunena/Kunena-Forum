@@ -67,15 +67,15 @@ class Compressed extends Formatter
      */
     protected function blockSelectors(OutputBlock $block)
     {
-        assert(! empty($block->selectors));
+        \assert(! empty($block->selectors));
 
         $inner = $this->indentStr();
 
         $this->write(
-            $inner
+        	$inner
             . implode(
-                $this->tagSeparator,
-                str_replace([' > ', ' + ', ' ~ '], ['>', '+', '~'], $block->selectors)
+            	$this->tagSeparator,
+            	str_replace([' > ', ' + ', ' ~ '], ['>', '+', '~'], $block->selectors)
             )
             . $this->open . $this->break
         );

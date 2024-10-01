@@ -86,8 +86,8 @@ EOF;
 
             if (!method_exists(Display::class, 'poweredBy')) {
                 Factory::getApplication()->enqueueMessage(
-                    'Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
-                    'notice'
+                	'Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
+                	'notice'
                 );
             }
         }
@@ -197,9 +197,9 @@ EOF;
         // Old version detected: emulate failed installation
         $app = Factory::getApplication();
         $app->enqueueMessage(sprintf(
-            'Sorry, it is not possible to downgrade Kunena %s to version %s.',
-            KunenaForum::version(),
-            $manifest->version
+        	'Sorry, it is not possible to downgrade Kunena %s to version %s.',
+        	KunenaForum::version(),
+        	$manifest->version
         ), 'warning');
         $app->enqueueMessage(Text::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
         $app->enqueueMessage(Text::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', Text::_('COM_INSTALLER_TYPE_TYPE_' . strtoupper($type))), 'error');

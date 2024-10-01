@@ -25,7 +25,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\StringHelper;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -223,7 +222,7 @@ abstract class KunenaRoute
             if (!isset($current[$uri])) {
                 $get = Uri::getInstance()->getQuery(true);
                 $uri = $current[$uri] = Uri::getInstance('index.php?' . http_build_query($get) . $uri);
-                
+
                 if (Factory::getApplication()->isClient('administrator')) {
                     self::setItemID($uri);
                 }

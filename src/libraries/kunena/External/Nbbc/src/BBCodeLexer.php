@@ -130,41 +130,41 @@ class BBCodeLexer {
             // Match tags, as long as they do not start with [-- or [' or [!-- or [rem or [[.
             // Tags may contain "quoted" or 'quoted' sections that may contain [ or ] characters.
             // Tags may not contain newlines.
-            ."{$b}"
-            ."(?! -- | ' | !-- | {$b}{$b} )"
-            ."(?: [^\\n\\r{$b}{$e}] | \\\" [^\\\"\\n\\r]* \\\" | \\' [^\\'\\n\\r]* \\' )*"
-            ."{$e}"
+            . "{$b}"
+            . "(?! -- | ' | !-- | {$b}{$b} )"
+            . "(?: [^\\n\\r{$b}{$e}] | \\\" [^\\\"\\n\\r]* \\\" | \\' [^\\'\\n\\r]* \\' )*"
+            . "{$e}"
 
             // Match wiki-links, which are of the form [[...]] or [[...|...]].  Unlike
             // tags, wiki-links treat " and ' marks as normal input characters; but they
             // still may not contain newlines.
-            ."| {$b}{$b} (?: [^{$e}\\r\\n] | {$e}[^{$e}\\r\\n] ){1,256} {$e}{$e}"
+            . "| {$b}{$b} (?: [^{$e}\\r\\n] | {$e}[^{$e}\\r\\n] ){1,256} {$e}{$e}"
 
             // Match single-line comments, which start with [-- or [' or [rem .
-            ."| {$b} (?: -- | ' ) (?: [^{$e}\\n\\r]* ) {$e}"
+            . "| {$b} (?: -- | ' ) (?: [^{$e}\\n\\r]* ) {$e}"
 
             // Match multi-line comments, which start with [!-- and end with --] and contain
             // no --] in between.
-            ."| {$b}!-- (?: [^-] | -[^-] | --[^{$e}] )* --{$e}"
+            . "| {$b}!-- (?: [^-] | -[^-] | --[^{$e}] )* --{$e}"
 
             // Match five or more hyphens as a special token, which gets returned as a [rule] tag.
-            ."| -----+"
+            . "| -----+"
 
             // Match newlines, in all four possible forms.
-            ."| \\x0D\\x0A | \\x0A\\x0D | \\x0D | \\x0A"
+            . "| \\x0D\\x0A | \\x0A\\x0D | \\x0D | \\x0A"
 
             // Match whitespace, but only if it butts up against a newline, rule, or
             // bracket on at least one end.
-            ."| [\\x00-\\x09\\x0B-\\x0C\\x0E-\\x20]+(?=[\\x0D\\x0A{$b}]|-----|$)"
-            ."| (?<=[\\x0D\\x0A{$e}]|-----|^)[\\x00-\\x09\\x0B-\\x0C\\x0E-\\x20]+"
+            . "| [\\x00-\\x09\\x0B-\\x0C\\x0E-\\x20]+(?=[\\x0D\\x0A{$b}]|-----|$)"
+            . "| (?<=[\\x0D\\x0A{$e}]|-----|^)[\\x00-\\x09\\x0B-\\x0C\\x0E-\\x20]+"
 
-            ." )/Dx";
+            . " )/Dx";
 
         $this->input = preg_split($this->pat_main, $string, -1, PREG_SPLIT_DELIM_CAPTURE);
 
         if ($this->input === false) {
             $errorMessage = "Error lexing BBCode contents.";
-            if (function_exists('preg_last_error_msg'))  {
+            if (\function_exists('preg_last_error_msg'))  {
                 $errorMessage .= " " . preg_last_error_msg();
             }
             throw new BBCodeException($errorMessage);
@@ -202,14 +202,14 @@ class BBCodeLexer {
         $state = self::BBCODE_LEXSTATE_TEXT;
 
         // Loop until we find a valid (nonempty) token.
-        while ($ptr < count($this->input)) {
+        while ($ptr < \count($this->input)) {
             $text = $this->input[$ptr++];
 
             if ($state == self::BBCODE_LEXSTATE_TEXT) {
                 $state = self::BBCODE_LEXSTATE_TAG;
-                $length += strlen($text);
+                $length += \strlen($text);
             } else {
-                switch (ord(substr($this->text, 0, 1))) {
+                switch (\ord(substr($this->text, 0, 1))) {
                     case 10:
                     case 13:
                         $state = self::BBCODE_LEXSTATE_TEXT;
@@ -217,7 +217,7 @@ class BBCodeLexer {
                         break;
                     default:
                         $state = self::BBCODE_LEXSTATE_TEXT;
-                        $length += strlen($text);
+                        $length += \strlen($text);
                         break;
                     case 40:
                     case 60:
@@ -255,6 +255,7 @@ class BBCodeLexer {
         // Handle ungets; if the last token has been "ungotten", just return it again.
         if ($this->unget) {
             $this->unget = false;
+
             return $this->token;
         }
 
@@ -262,9 +263,10 @@ class BBCodeLexer {
         while (true) {
 
             // Did we run out of tokens in the input?
-            if ($this->ptr >= count($this->input)) {
+            if ($this->ptr >= \count($this->input)) {
                 $this->text = "";
                 $this->tag = false;
+
                 return $this->token = BBCode::BBCODE_EOI;
             }
 
@@ -281,7 +283,7 @@ class BBCodeLexer {
                 } else {
                     // This must be either whitespace, a newline, or a tag.
                     $this->state = self::BBCODE_LEXSTATE_TEXT;
-                    switch (ord(substr($this->text, 0, 1))) {
+                    switch (\ord(substr($this->text, 0, 1))) {
                         case 10:
                         case 13:
                             // Newline.
@@ -302,35 +304,37 @@ class BBCodeLexer {
                     }
                 }
 
-                if (strlen($this->text) > 0) {
+                if (\strlen($this->text) > 0) {
                     return $this->token = $token_type;
                 }
             } elseif ($this->state == self::BBCODE_LEXSTATE_TEXT) {
                 // Next up is plain text, but only return it if it's nonempty.
                 $this->state = self::BBCODE_LEXSTATE_TAG;
                 $this->tag = false;
-                if (strlen($this->text) > 0) {
+                if (\strlen($this->text) > 0) {
                     return $this->token = BBCode::BBCODE_TEXT;
                 }
             } else {
                 // This must be either whitespace, a newline, or a tag.
-                switch (ord(substr($this->text, 0, 1))) {
+                switch (\ord(substr($this->text, 0, 1))) {
                     case 10:
                     case 13:
                         // Newline.
                         $this->tag = false;
                         $this->state = self::BBCODE_LEXSTATE_TEXT;
+
                         return $this->token = BBCode::BBCODE_NL;
                     case 45:
                         // A rule made of hyphens; return it as a [rule] tag.
                         if (preg_match("/^-----/", $this->text)) {
                             $this->tag = ['_name' => 'rule', '_endtag' => false, '_default' => ''];
                             $this->state = self::BBCODE_LEXSTATE_TEXT;
+
                             return $this->token = BBCode::BBCODE_TAG;
                         } else {
                             $this->tag = false;
                             $this->state = self::BBCODE_LEXSTATE_TEXT;
-                            if (strlen($this->text) > 0) {
+                            if (\strlen($this->text) > 0) {
                                 return $this->token = BBCode::BBCODE_TEXT;
                             }
                             break;
@@ -340,6 +344,7 @@ class BBCodeLexer {
                         // Whitespace.
                         $this->tag = false;
                         $this->state = self::BBCODE_LEXSTATE_TEXT;
+
                         return $this->token = BBCode::BBCODE_WS;
                     case 40:
                     case 60:
@@ -367,12 +372,14 @@ class BBCodeLexer {
                             $this->tag = ['_name' => 'wiki', '_endtag' => false,
                                 '_default' => $matches[1], 'title' => $matches[2]];
                             $this->state = self::BBCODE_LEXSTATE_TEXT;
+
                             return $this->token = BBCode::BBCODE_TAG;
                         }
 
                         // Not a comment, so parse it like a tag.
                         $this->tag = $this->decodeTag($this->text);
                         $this->state = self::BBCODE_LEXSTATE_TEXT;
+
                         return $this->token = ($this->tag['_end'] ? BBCode::BBCODE_ENDTAG : BBCode::BBCODE_TAG);
                 }
             }
@@ -400,6 +407,7 @@ class BBCodeLexer {
         if ($this->token !== BBCode::BBCODE_EOI) {
             $this->unget = true;
         }
+
         return $result;
     }
 
@@ -419,7 +427,7 @@ class BBCodeLexer {
             'input' => $this->input,
             'ptr' => $this->ptr,
             'unget' => $this->unget,
-            'verbatim' => $this->verbatim
+            'verbatim' => $this->verbatim,
         ];
     }
 
@@ -429,13 +437,13 @@ class BBCodeLexer {
      * @param array $state The previous lexer state.
      */
     public function restoreState($state) {
-        if (!is_array($state)) {
+        if (!\is_array($state)) {
             return;
         }
 
         $state += [
             'token' => null, 'text' => null, 'tag' => null, 'state' => null, 'input' => null, 'ptr' => null,
-            'unget' => null, 'verbatim' => null
+            'unget' => null, 'verbatim' => null,
         ];
 
         $this->token = $state['token'];
@@ -455,7 +463,7 @@ class BBCodeLexer {
      * @return string Returns the string stripped of quotes.
      */
     protected function stripQuotes($string) {
-        if (strlen($string) > 1) {
+        if (\strlen($string) > 1) {
             $first = substr($string, 0, 1);
             $last = substr($string, -1);
 
@@ -463,6 +471,7 @@ class BBCodeLexer {
                 return substr($string, 1, -1);
             }
         }
+
         return $string;
     }
 
@@ -482,7 +491,7 @@ class BBCodeLexer {
      * @return string Returns the tokenized piece of the tag.
      */
     protected function classifyPiece($ptr, $pieces) {
-        if ($ptr >= count($pieces)) {
+        if ($ptr >= \count($pieces)) {
             return -1; // EOI.
         }
         $piece = $pieces[$ptr];
@@ -505,31 +514,31 @@ class BBCodeLexer {
      */
     protected function decodeTag($tag) {
 
-        Debugger::debug("<b>Lexer::InternalDecodeTag:</b> input: ".htmlspecialchars($tag)."<br />\n");
+        Debugger::debug("<b>Lexer::InternalDecodeTag:</b> input: " . htmlspecialchars($tag) . "<br />\n");
 
         // Create the initial result object.
         $result = ['_tag' => $tag, '_endtag' => '', '_name' => '', '_hasend' => false, '_end' => false, '_default' => false];
 
         // Strip off the [brackets] around the tag, leaving just its content.
-        $tag = substr($tag, 1, strlen($tag) - 2);
+        $tag = substr($tag, 1, \strlen($tag) - 2);
 
         // The starting bracket *must* be followed by a non-whitespace character.
-        $ch = ord(substr($tag, 0, 1));
+        $ch = \ord(substr($tag, 0, 1));
         if ($ch >= 0 && $ch <= 32) {
             return $result;
         }
 
         // Break it apart into words, quoted text, whitespace, and equal signs.
         $pieces = preg_split(
-            "/(\\\"[^\\\"]+\\\"|\\'[^\\']+\\'|=|[\\x00-\\x20]+)/",
-            $tag,
-            -1,
-            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+        	"/(\\\"[^\\\"]+\\\"|\\'[^\\']+\\'|=|[\\x00-\\x20]+)/",
+        	$tag,
+        	-1,
+        	PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
         );
         $ptr = 0;
 
         // Handle malformed (empty) tags correctly.
-        if (count($pieces) < 1) {
+        if (\count($pieces) < 1) {
             return $result;
         }
 
@@ -698,7 +707,7 @@ class BBCodeLexer {
 
         // In debugging modes, output the tag as we collected it.
         Debugger::debug("<b>Lexer::InternalDecodeTag:</b> output: ");
-        Debugger::debug(htmlspecialchars(print_r($result, true))."<br />\n");
+        Debugger::debug(htmlspecialchars(print_r($result, true)) . "<br />\n");
 
         // Save the resulting parameters, and return the whole shebang.
         return $result;

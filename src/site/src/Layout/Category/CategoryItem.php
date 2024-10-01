@@ -141,7 +141,7 @@ class CategoryItem extends KunenaLayout
         if ($category->isAuthorised('topic.create')) {
             $actions['create'] = $this->subLayout('Widget/Button')
                 ->setProperties(
-                    ['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
+                	['url'  => $url, 'name' => 'create', 'scope' => 'topic', 'type' => 'communication', 'success' => true,
                      'icon' => KunenaIcons::pencil(), ]
                 );
         }
@@ -153,7 +153,7 @@ class CategoryItem extends KunenaLayout
             if ($this->me->exists()) {
                 $actions['markread'] = $this->subLayout('Widget/Button')
                     ->setProperties(
-                        ['url'  => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
+                    	['url'  => $url, 'name' => 'markread', 'scope' => 'category', 'type' => 'user',
                                      'icon' => KunenaIcons::bookmark(), ]
                     );
             }
@@ -167,14 +167,14 @@ class CategoryItem extends KunenaLayout
                 $url                  = KunenaRoute::_('index.php?option=com_kunena&view=category&task=subscribe&catid=' . $category->id . $token);
                 $actions['subscribe'] = $this->subLayout('Widget/Button')
                     ->setProperties(
-                        ['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
+                    	['url'  => $url, 'name' => 'subscribe', 'scope' => 'category', 'type' => 'user',
                          'icon' => KunenaIcons::email(), ]
                     );
             } else {
                 $url                    = KunenaRoute::_('index.php?option=com_kunena&view=category&task=unsubscribe&catid=' . $category->id . $token);
                 $actions['unsubscribe'] = $this->subLayout('Widget/Button')
                     ->setProperties(
-                        ['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
+                    	['url'  => $url, 'name' => 'unsubscribe', 'scope' => 'category', 'type' => 'user',
                          'icon' => KunenaIcons::emailOpen(), ]
                     );
             }

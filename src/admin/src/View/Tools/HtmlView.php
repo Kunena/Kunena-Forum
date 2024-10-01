@@ -160,11 +160,11 @@ class HtmlView extends BaseHtmlView
                 $topicSubscribers            = $acl->loadSubscribers($topic, KunenaAccess::TOPIC_SUBSCRIPTION);
                 $this->topicSubscribersUsers = KunenaUserHelper::loadUsers($topicSubscribers);
                 $this->catTopicSubscribers   = $acl->getSubscribers(
-                    $topic->getCategory()->id,
-                    $id,
-                    KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION,
-                    1,
-                    1
+                	$topic->getCategory()->id,
+                	$id,
+                	KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION,
+                	1,
+                	1
                 );
             }
 

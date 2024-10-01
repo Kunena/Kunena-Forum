@@ -490,7 +490,7 @@ class Compiler
 
         if (!\is_null($path) && is_file($path)) {
             $path = realpath($path) ?: $path;
-            $this->currentDirectory = dirname($path);
+            $this->currentDirectory = \dirname($path);
             $this->rootDirectory = $this->currentDirectory;
         } else {
             $this->currentDirectory = null;
@@ -534,7 +534,7 @@ class Compiler
 
             $prefix = '';
 
-            if ($this->charset && strlen($out) !== Util::mbStrlen($out)) {
+            if ($this->charset && \strlen($out) !== Util::mbStrlen($out)) {
                 $prefix = '@charset "UTF-8";' . "\n";
                 $out = $prefix . $out;
             }
@@ -943,10 +943,10 @@ class Compiler
                     $mergedBefore = $this->mergeDirectRelationships($afterBefore, $nonBreakableBefore);
 
                     $result = array_merge(
-                        $before,
-                        $mergedBefore,
-                        $replacement,
-                        $after
+                    	$before,
+                    	$mergedBefore,
+                    	$replacement,
+                    	$after
                     );
 
                     if ($result === $selector) {
@@ -972,13 +972,13 @@ class Compiler
                         list($betweenSharedParts, $nonBreakabl2) = $this->extractRelationshipFromFragment($afterBefore);
 
                         $result2 = array_merge(
-                            $preSharedParts,
-                            $betweenSharedParts,
-                            $postSharedParts,
-                            $nonBreakabl2,
-                            $nonBreakableBefore,
-                            $replacement,
-                            $after
+                        	$preSharedParts,
+                        	$betweenSharedParts,
+                        	$postSharedParts,
+                        	$nonBreakabl2,
+                        	$nonBreakableBefore,
+                        	$replacement,
+                        	$after
                         );
 
                         $this->pushOrMergeExtentedSelector($out, $result2);
@@ -1074,7 +1074,7 @@ class Compiler
         $single = [];
 
         // simple usual cases, no need to do the whole trick
-        if (\in_array($rawSingle, [['>'],['+'],['~']])) {
+        if (\in_array($rawSingle, [['>'], ['+'], ['~']])) {
             return false;
         }
 
@@ -1141,7 +1141,7 @@ class Compiler
         }
 
         foreach ($counts as $idx => $count) {
-            list($target, $origin, /* $block */) = $this->extends[$idx];
+            list($target, $origin/* $block */) = $this->extends[$idx];
 
             $origin = $this->glueFunctionSelectors($origin);
 
@@ -1240,7 +1240,7 @@ class Compiler
         }
 
         foreach ([array_reverse($base), array_reverse($other)] as $single) {
-            $rang = count($single);
+            $rang = \count($single);
 
             foreach ($single as $part) {
                 if (preg_match('/^[\[:]/', $part)) {
@@ -1281,7 +1281,7 @@ class Compiler
      */
     protected function compileMedia(Block $media)
     {
-        assert($media instanceof MediaBlock);
+        \assert($media instanceof MediaBlock);
         $this->pushEnv($media);
 
         $mediaQueries = $this->compileMediaQuery($this->multiplyMedia($this->env));
@@ -1409,7 +1409,7 @@ class Compiler
      */
     protected function compileDirectiveName($directiveName)
     {
-        if (is_string($directiveName)) {
+        if (\is_string($directiveName)) {
             return $directiveName;
         }
 
@@ -1425,7 +1425,7 @@ class Compiler
      */
     protected function compileAtRoot(Block $block)
     {
-        assert($block instanceof AtRootBlock);
+        \assert($block instanceof AtRootBlock);
         $env     = $this->pushEnv($block);
         $envs    = $this->compactEnv($env);
         list($with, $without) = $this->compileWith(isset($block->with) ? $block->with : null);
@@ -1448,7 +1448,7 @@ class Compiler
         }
 
         $selfParent = $block->selfParent;
-        assert($selfParent !== null, 'at-root blocks must have a selfParent set.');
+        \assert($selfParent !== null, 'at-root blocks must have a selfParent set.');
 
         if (
             ! $selfParent->selectors &&
@@ -1697,7 +1697,7 @@ class Compiler
             }
 
             if ($block->type === Type::T_DIRECTIVE) {
-                assert($block instanceof DirectiveBlock || $block instanceof OutputBlock);
+                \assert($block instanceof DirectiveBlock || $block instanceof OutputBlock);
                 if (isset($block->name)) {
                     return $this->testWithWithout($this->compileDirectiveName($block->name), $with, $without);
                 } elseif (isset($block->selectors) && preg_match(',@(\w+),ims', json_encode($block->selectors), $m)) {
@@ -1747,7 +1747,6 @@ class Compiler
         return (isset($with[$what]) || isset($with['all'])) ? true : false;
     }
 
-
     /**
      * Compile keyframe block
      *
@@ -1788,7 +1787,7 @@ class Compiler
      */
     protected function compileNestedPropertiesBlock(Block $block, OutputBlock $out)
     {
-        assert($block instanceof NestedPropertyBlock);
+        \assert($block instanceof NestedPropertyBlock);
         $prefix = $this->compileValue($block->prefix) . '-';
 
         $nested = $this->makeOutputBlock($block->type);
@@ -1807,7 +1806,7 @@ class Compiler
                     break;
 
                 case Type::T_NESTED_PROPERTY:
-                    assert($child[1] instanceof NestedPropertyBlock);
+                    \assert($child[1] instanceof NestedPropertyBlock);
                     array_unshift($child[1]->prefix[2], $prefix);
                     break;
             }
@@ -1917,7 +1916,6 @@ class Compiler
 
         $this->popEnv();
     }
-
 
     /**
      * Compile the value of a comment that can have interpolation
@@ -2061,8 +2059,8 @@ class Compiler
                 $compound = '';
 
                 array_walk_recursive(
-                    $node,
-                    function ($value, $key) use (&$compound) {
+                	$node,
+                	function ($value, $key) use (&$compound) {
                         $compound .= $value;
                     }
                 );
@@ -2095,8 +2093,8 @@ class Compiler
                 $compound = '';
 
                 array_walk_recursive(
-                    $node,
-                    function ($value, $key) use (&$compound) {
+                	$node,
+                	function ($value, $key) use (&$compound) {
                         $compound .= $value;
                     }
                 );
@@ -2199,10 +2197,10 @@ class Compiler
         }
 
         return implode(
-            ' ',
-            array_map(
-                [$this, 'compileSelectorPart'],
-                $selector
+        	' ',
+        	array_map(
+            	[$this, 'compileSelectorPart'],
+            	$selector
             )
         );
     }
@@ -2270,7 +2268,7 @@ class Compiler
           'n' => $name,
           Parser::SOURCE_INDEX => $this->sourceIndex,
           Parser::SOURCE_LINE => $this->sourceLine,
-          Parser::SOURCE_COLUMN => $this->sourceColumn
+          Parser::SOURCE_COLUMN => $this->sourceColumn,
         ];
 
         // infinite calling loop
@@ -2316,7 +2314,7 @@ class Compiler
 
         $this->popCallStack();
 
-        return null;
+        return;
     }
 
     /**
@@ -2355,7 +2353,6 @@ class Compiler
 
         $this->popCallStack();
     }
-
 
     /**
      * evaluate media query : compile internal value keeping the structure unchanged
@@ -2457,7 +2454,7 @@ class Compiler
 
                         // combining not and anything else than media type is too risky and should be avoided
                         if (! $mediaTypeOnly) {
-                            if (\in_array(Type::T_NOT, $newType) || ($type && \in_array(Type::T_NOT, $type) )) {
+                            if (\in_array(Type::T_NOT, $newType) || ($type && \in_array(Type::T_NOT, $type))) {
                                 if ($type) {
                                     array_unshift($parts, implode(' ', array_filter($type)));
                                 }
@@ -2626,7 +2623,7 @@ class Compiler
 
         if (($m1 === Type::T_NOT) ^ ($m2 === Type::T_NOT)) {
             if ($t1 === $t2) {
-                return null;
+                return;
             }
 
             return [
@@ -2638,14 +2635,14 @@ class Compiler
         if ($m1 === Type::T_NOT && $m2 === Type::T_NOT) {
             // CSS has no way of representing "neither screen nor print"
             if ($t1 !== $t2) {
-                return null;
+                return;
             }
 
             return [Type::T_NOT, $t1];
         }
 
         if ($t1 !== $t2) {
-            return null;
+            return;
         }
 
         // t1 == t2, neither m1 nor m2 are "not"
@@ -2921,8 +2918,8 @@ class Compiler
                 $compiledValue = $this->compileValue($value);
 
                 $line = $this->formatter->customProperty(
-                    $compiledName,
-                    $compiledValue
+                	$compiledName,
+                	$compiledValue
                 );
 
                 $this->appendOutputLine($out, Type::T_ASSIGN, $line);
@@ -3045,8 +3042,8 @@ class Compiler
                 // ignore empty value
                 if (\strlen($compiledValue)) {
                     $line = $this->formatter->property(
-                        $compiledName,
-                        $compiledValue
+                    	$compiledName,
+                    	$compiledValue
                     );
                     $this->appendOutputLine($out, Type::T_ASSIGN, $line);
                 }
@@ -3065,7 +3062,7 @@ class Compiler
             case Type::T_MIXIN:
             case Type::T_FUNCTION:
                 list(, $block) = $child;
-                assert($block instanceof CallableBlock);
+                \assert($block instanceof CallableBlock);
                 // the block need to be able to go up to it's parent env to resolve vars
                 $block->parentEnv = $this->getStoreEnv();
                 $this->set(static::$namespaces[$block->type] . $block->name, $block, true);
@@ -3116,7 +3113,7 @@ EOL;
 
             case Type::T_IF:
                 list(, $if) = $child;
-                assert($if instanceof IfBlock);
+                \assert($if instanceof IfBlock);
 
                 if ($this->isTruthy($this->reduce($if->cond, true))) {
                     return $this->compileChildren($if->children, $out);
@@ -3134,7 +3131,7 @@ EOL;
 
             case Type::T_EACH:
                 list(, $each) = $child;
-                assert($each instanceof EachBlock);
+                \assert($each instanceof EachBlock);
 
                 $list = $this->coerceList($this->reduce($each->list), ',', true);
 
@@ -3144,7 +3141,7 @@ EOL;
                     if (\count($each->vars) === 1) {
                         $this->set($each->vars[0], $item, true);
                     } else {
-                        list(,, $values) = $this->coerceList($item);
+                        list(, , $values) = $this->coerceList($item);
 
                         foreach ($each->vars as $i => $var) {
                             $this->set($var, isset($values[$i]) ? $values[$i] : static::$null, true);
@@ -3169,7 +3166,7 @@ EOL;
 
             case Type::T_WHILE:
                 list(, $while) = $child;
-                assert($while instanceof WhileBlock);
+                \assert($while instanceof WhileBlock);
 
                 while ($this->isTruthy($this->reduce($while->cond, true))) {
                     $ret = $this->compileChildren($while->children, $out);
@@ -3182,7 +3179,7 @@ EOL;
 
             case Type::T_FOR:
                 list(, $for) = $child;
-                assert($for instanceof ForBlock);
+                \assert($for instanceof ForBlock);
 
                 $startNumber = $this->assertNumber($this->reduce($for->start, true));
                 $endNumber = $this->assertNumber($this->reduce($for->end, true));
@@ -3243,7 +3240,7 @@ EOL;
                     throw $this->error("Undefined mixin $name");
                 }
 
-                assert($mixin instanceof CallableBlock);
+                \assert($mixin instanceof CallableBlock);
 
                 $callingScope = $this->getStoreEnv();
 
@@ -3638,7 +3635,7 @@ EOL;
     protected function fncall($functionReference, $argValues)
     {
         // a string means this is a static hard reference coming from the parsing
-        if (is_string($functionReference)) {
+        if (\is_string($functionReference)) {
             $name = $functionReference;
 
             $functionReference = $this->getFunctionReference($name);
@@ -3653,7 +3650,7 @@ EOL;
             $listArgs = [];
 
             foreach ((array) $argValues as $arg) {
-                if (empty($arg[0]) || count($argValues) === 1) {
+                if (empty($arg[0]) || \count($argValues) === 1) {
                     $listArgs[] = $this->reduce($this->stringifyFncallArgs($arg[1]));
                 }
             }
@@ -3665,7 +3662,6 @@ EOL;
             return static::$defaultValue;
         }
 
-
         switch ($functionReference[1]) {
             // SCSS @function
             case 'scss':
@@ -3674,14 +3670,14 @@ EOL;
             // native PHP functions
             case 'user':
             case 'native':
-                list(,,$name, $fn, $prototype) = $functionReference;
+                list(, , $name, $fn, $prototype) = $functionReference;
 
                 // special cases of css valid functions min/max
                 $name = strtolower($name);
-                if (\in_array($name, ['min', 'max']) && count($argValues) >= 1) {
+                if (\in_array($name, ['min', 'max']) && \count($argValues) >= 1) {
                     $cssFunction = $this->cssValidArg(
-                        [Type::T_FUNCTION_CALL, $name, $argValues],
-                        ['min', 'max', 'calc', 'env', 'var']
+                    	[Type::T_FUNCTION_CALL, $name, $argValues],
+                    	['min', 'max', 'calc', 'env', 'var']
                     );
                     if ($cssFunction !== false) {
                         return $cssFunction;
@@ -3729,6 +3725,7 @@ EOL;
                         }
                     }
                 }
+
                 return $arg;
 
             case Type::T_FUNCTION_CALL:
@@ -3755,6 +3752,7 @@ EOL;
                 if (!$inFunction or !\in_array($inFunction, ['calc', 'env', 'var'])) {
                     return false;
                 }
+
                 return $this->stringifyFncallArgs($arg);
 
             case Type::T_LIST:
@@ -3769,8 +3767,10 @@ EOL;
                         }
                     }
                     $arg[0] = Type::T_STRING;
+
                     return $arg;
                 }
+
                 return false;
 
             case Type::T_EXPRESSION:
@@ -3782,6 +3782,7 @@ EOL;
                 if ($arg[2] === false || $arg[3] === false) {
                     return false;
                 }
+
                 return $this->expToString($arg, true);
 
             case Type::T_VARIABLE:
@@ -3790,7 +3791,6 @@ EOL;
                 return false;
         }
     }
-
 
     /**
      * Reformat fncall arguments to proper css function output
@@ -3824,7 +3824,7 @@ EOL;
             case Type::T_FUNCTION_CALL:
                 $name = strtolower($arg[1]);
 
-                if (in_array($name, ['max', 'min', 'calc'])) {
+                if (\in_array($name, ['max', 'min', 'calc'])) {
                     $args = $arg[2];
                     $arg = $this->fncall([Type::T_FUNCTION, $name, [Type::T_LIST, ',', []]], $args);
                 }
@@ -3888,7 +3888,7 @@ EOL;
 
                 if ($actualLibName !== $libName || strtolower($normalizedName) !== $normalizedName) {
                     $kebabCaseName = preg_replace('~(?<=\\w)([A-Z])~', '-$1', substr($actualLibName, 3));
-                    assert($kebabCaseName !== null);
+                    \assert($kebabCaseName !== null);
                     $originalName = strtolower($kebabCaseName);
                     $warning = "Calling built-in functions with a non-standard name is deprecated since Scssphp 1.8.0 and will not work anymore in 2.0 (they will be treated as CSS function calls instead).\nUse \"$originalName\" instead of \"$name\".";
                     @trigger_error($warning, E_USER_DEPRECATED);
@@ -3922,7 +3922,6 @@ EOL;
 
         return static::$null;
     }
-
 
     /**
      * Normalize name
@@ -3969,7 +3968,7 @@ EOL;
                     unset($value['enclosing']);
                 }
 
-                if ($value[1] === '' && count($value[2]) > 1) {
+                if ($value[1] === '' && \count($value[2]) > 1) {
                     $value[1] = ' ';
                 }
 
@@ -4081,7 +4080,7 @@ EOL;
             return $strRight;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -4101,7 +4100,7 @@ EOL;
 
         if (! $shouldEval) {
             if (! $truthy) {
-                return null;
+                return;
             }
         }
 
@@ -4129,7 +4128,7 @@ EOL;
 
         if (! $shouldEval) {
             if (! $truthy) {
-                return null;
+                return;
             }
         }
 
@@ -4237,9 +4236,9 @@ EOL;
         $value = $right->getDimension();
 
         return $this->opColorColor(
-            $op,
-            $left,
-            [Type::T_COLOR, $value, $value, $value]
+        	$op,
+        	$left,
+        	[Type::T_COLOR, $value, $value, $value]
         );
     }
 
@@ -4265,9 +4264,9 @@ EOL;
         $value = $left->getDimension();
 
         return $this->opColorColor(
-            $op,
-            [Type::T_COLOR, $value, $value, $value],
-            $right
+        	$op,
+        	[Type::T_COLOR, $value, $value, $value],
+        	$right
         );
     }
 
@@ -4421,27 +4420,27 @@ EOL;
         if (empty($replacement[$inKeyword])) {
             for ($i = 0; $i < 32; $i++) {
                 if ($i !== 9 || $inKeyword) {
-                    $replacement[$inKeyword][chr($i)] = '\\' . dechex($i) . ($inKeyword ? ' ' : chr(0));
+                    $replacement[$inKeyword][\chr($i)] = '\\' . dechex($i) . ($inKeyword ? ' ' : \chr(0));
                 }
             }
         }
         $string = str_replace(array_keys($replacement[$inKeyword]), array_values($replacement[$inKeyword]), $string);
         // chr(0) is not a possible char from the input, so any chr(0) comes from our escaping replacement
-        if (strpos($string, chr(0)) !== false) {
-            if (substr($string, -1) === chr(0)) {
+        if (strpos($string, \chr(0)) !== false) {
+            if (substr($string, -1) === \chr(0)) {
                 $string = substr($string, 0, -1);
             }
             $string = str_replace(
-                [chr(0) . '\\',chr(0) . ' '],
-                [ '\\', ' '],
-                $string
+            	[\chr(0) . '\\', \chr(0) . ' '],
+            	[ '\\', ' '],
+            	$string
             );
-            if (strpos($string, chr(0)) !== false) {
-                $parts = explode(chr(0), $string);
+            if (strpos($string, \chr(0)) !== false) {
+                $parts = explode(\chr(0), $string);
                 $string = array_shift($parts);
-                while (count($parts)) {
+                while (\count($parts)) {
                     $next = array_shift($parts);
-                    if (strpos("0123456789abcdefABCDEF" . chr(9), $next[0]) !== false) {
+                    if (strpos("0123456789abcdefABCDEF" . \chr(9), $next[0]) !== false) {
                         $string .= " ";
                     }
                     $string .= $next;
@@ -4656,7 +4655,7 @@ EOL;
             case Type::T_INTERPOLATED:
                 // node created by extractInterpolation
                 list(, $interpolate, $left, $right) = $value;
-                list(,, $whiteLeft, $whiteRight) = $interpolate;
+                list(, , $whiteLeft, $whiteRight) = $interpolate;
 
                 $delim = $left[1];
 
@@ -4989,7 +4988,7 @@ EOL;
             return $this->multiplyMedia($env->parent, $childQueries);
         }
 
-        assert($env->block instanceof MediaBlock);
+        \assert($env->block instanceof MediaBlock);
 
         $parentQueries = isset($env->block->queryList)
             ? $env->block->queryList
@@ -5012,9 +5011,9 @@ EOL;
             foreach ($parentQueries as $parentQuery) {
                 foreach ($originalQueries as $childQuery) {
                     $childQueries[] = array_merge(
-                        $parentQuery,
-                        [[Type::T_MEDIA_TYPE, [Type::T_KEYWORD, 'all']]],
-                        $childQuery
+                    	$parentQuery,
+                    	[[Type::T_MEDIA_TYPE, [Type::T_KEYWORD, 'all']]],
+                    	$childQuery
                     );
                 }
             }
@@ -5291,7 +5290,7 @@ EOL;
         }
 
         // found nothing
-        return null;
+        return;
     }
 
     /**
@@ -5441,6 +5440,7 @@ EOL;
     public function getParsedFiles()
     {
         @trigger_error('The method "getParsedFiles" of the Compiler is deprecated. Use the "getIncludedFiles" method on the CompilationResult instance returned by compileString() instead. Be careful that the signature of the method is different.', E_USER_DEPRECATED);
+
         return $this->parsedFiles;
     }
 
@@ -5710,7 +5710,7 @@ EOL;
         }
 
         $currentDirectory = $this->currentDirectory;
-        $this->currentDirectory = dirname($path);
+        $this->currentDirectory = \dirname($path);
 
         $this->compileChildrenNoReturn($tree->children, $out);
         $this->currentDirectory = $currentDirectory;
@@ -5774,13 +5774,13 @@ EOL;
 
                     if (! \is_null($file)) {
                         if (\is_array($dir)) {
-                            $callableDescription = (\is_object($dir[0]) ? \get_class($dir[0]) : $dir[0]).'::'.$dir[1];
+                            $callableDescription = (\is_object($dir[0]) ? \get_class($dir[0]) : $dir[0]) . '::' . $dir[1];
                         } elseif ($dir instanceof \Closure) {
                             $r = new \ReflectionFunction($dir);
                             if (false !== strpos($r->name, '{closure}')) {
                                 $callableDescription = sprintf('closure{%s:%s}', $r->getFileName(), $r->getStartLine());
                             } elseif ($class = $r->getClosureScopeClass()) {
-                                $callableDescription = $class->name.'::'.$r->name;
+                                $callableDescription = $class->name . '::' . $r->name;
                             } else {
                                 $callableDescription = $r->name;
                             }
@@ -5795,7 +5795,8 @@ EOL;
                     }
                 }
             }
-            return null;
+
+            return;
         }
 
         if (!\is_null($currentDir)) {
@@ -5869,7 +5870,7 @@ EOL;
     private function checkImportPathConflicts(array $paths)
     {
         if (\count($paths) === 0) {
-            return null;
+            return;
         }
 
         if (\count($paths) === 1) {
@@ -5893,15 +5894,15 @@ EOL;
     private function tryImportPathWithExtensions($path)
     {
         $result = array_merge(
-            $this->tryImportPath($path.'.sass'),
-            $this->tryImportPath($path.'.scss')
+        	$this->tryImportPath($path . '.sass'),
+        	$this->tryImportPath($path . '.scss')
         );
 
         if ($result) {
             return $result;
         }
 
-        return $this->tryImportPath($path.'.css');
+        return $this->tryImportPath($path . '.css');
     }
 
     /**
@@ -5911,7 +5912,7 @@ EOL;
      */
     private function tryImportPath($path)
     {
-        $partial = dirname($path).'/_'.basename($path);
+        $partial = \dirname($path) . '/_' . basename($path);
 
         $candidates = [];
 
@@ -5934,10 +5935,10 @@ EOL;
     private function tryImportPathAsDirectory($path)
     {
         if (!is_dir($path)) {
-            return null;
+            return;
         }
 
-        return $this->checkImportPathConflicts($this->tryImportPathWithExtensions($path.'/index'));
+        return $this->checkImportPathConflicts($this->tryImportPathWithExtensions($path . '/index'));
     }
 
     /**
@@ -5952,7 +5953,7 @@ EOL;
         }
 
         $normalizedPath = $path;
-        $normalizedRootDirectory = $this->rootDirectory.'/';
+        $normalizedRootDirectory = $this->rootDirectory . '/';
 
         if (\DIRECTORY_SEPARATOR === '\\') {
             $normalizedRootDirectory = str_replace('\\', '/', $normalizedRootDirectory);
@@ -6038,11 +6039,11 @@ EOL;
     public function throwError($msg)
     {
         @trigger_error(
-            'The method "throwError" is deprecated. Use "error" and throw the exception in the caller instead',
-            E_USER_DEPRECATED
+        	'The method "throwError" is deprecated. Use "error" and throw the exception in the caller instead',
+        	E_USER_DEPRECATED
         );
 
-        throw $this->error(...func_get_args());
+        throw $this->error(...\func_get_args());
     }
 
     /**
@@ -6108,23 +6109,23 @@ EOL;
 
         if ($nbActual > $nbExpected) {
             return $this->error(
-                'Error: Only %d arguments allowed in %s(), but %d were passed.',
-                $nbExpected,
-                $functionName,
-                $nbActual
+            	'Error: Only %d arguments allowed in %s(), but %d were passed.',
+            	$nbExpected,
+            	$functionName,
+            	$nbActual
             );
         } else {
             $missing = [];
 
-            while (count($ExpectedArgs) && count($ExpectedArgs) > $nbActual) {
+            while (\count($ExpectedArgs) && \count($ExpectedArgs) > $nbActual) {
                 array_unshift($missing, array_pop($ExpectedArgs));
             }
 
             return $this->error(
-                'Error: %s() argument%s %s missing.',
-                $functionName,
-                count($missing) > 1 ? 's' : '',
-                implode(', ', $missing)
+            	'Error: %s() argument%s %s missing.',
+            	$functionName,
+            	\count($missing) > 1 ? 's' : '',
+            	implode(', ', $missing)
             );
         }
     }
@@ -6243,11 +6244,11 @@ EOL;
      */
     protected function callNativeFunction($name, $function, $prototype, $args)
     {
-        $libName = (is_array($function) ? end($function) : null);
+        $libName = (\is_array($function) ? end($function) : null);
         $sorted_kwargs = $this->sortNativeFunctionArgs($libName, $prototype, $args);
 
         if (\is_null($sorted_kwargs)) {
-            return null;
+            return;
         }
         @list($sorted, $kwargs) = $sorted_kwargs;
 
@@ -6262,7 +6263,7 @@ EOL;
         $returnValue = \call_user_func($function, $sorted, $kwargs);
 
         if (! isset($returnValue)) {
-            return null;
+            return;
         }
 
         if (\is_array($returnValue) || $returnValue instanceof Number) {
@@ -6284,6 +6285,7 @@ EOL;
     protected function getBuiltinFunction($name)
     {
         $libName = self::normalizeNativeFunctionName($name);
+
         return [$this, $libName];
     }
 
@@ -6300,12 +6302,13 @@ EOL;
     {
         $name = str_replace("-", "_", $name);
         $libName = 'lib' . preg_replace_callback(
-            '/_(.)/',
-            function ($m) {
+        	'/_(.)/',
+        	function ($m) {
                 return ucfirst($m[1]);
             },
-            ucfirst($name)
+        	ucfirst($name)
         );
+
         return $libName;
     }
 
@@ -6340,7 +6343,7 @@ EOL;
             $keyArgs = [];
             $posArgs = [];
 
-            if (\is_array($args) && \count($args) && \end($args) === static::$null) {
+            if (\is_array($args) && \count($args) && end($args) === static::$null) {
                 array_pop($args);
             }
 
@@ -6375,7 +6378,7 @@ EOL;
         }
 
         $parsedPrototypes = array_map([$this, 'parseFunctionPrototype'], $prototypes);
-        assert(!empty($parsedPrototypes));
+        \assert(!empty($parsedPrototypes));
         $matchedPrototype = $this->selectFunctionPrototype($parsedPrototypes, \count($positionalArgs), $names);
 
         $this->verifyPrototype($matchedPrototype, \count($positionalArgs), $names, $hasSplat);
@@ -6541,7 +6544,7 @@ EOL;
         $nameUsed = 0;
 
         foreach ($prototype['arguments'] as $i => $argument) {
-            list ($name, $originalName, $default) = $argument;
+            list($name, $originalName, $default) = $argument;
 
             if ($i < $positional) {
                 if (isset($names[$name])) {
@@ -6588,7 +6591,7 @@ EOL;
         $nameUsed = 0;
 
         foreach ($prototype['arguments'] as $i => $argument) {
-            list ($name, $originalName, $default) = $argument;
+            list($name, $originalName, $default) = $argument;
 
             if ($i < $positional) {
                 if (isset($names[$name])) {
@@ -6607,12 +6610,12 @@ EOL;
 
         if ($positional > \count($prototype['arguments'])) {
             $message = sprintf(
-                'Only %d %sargument%s allowed, but %d %s passed.',
-                \count($prototype['arguments']),
-                empty($names) ? '' : 'positional ',
-                \count($prototype['arguments']) === 1 ? '' : 's',
-                $positional,
-                $positional === 1 ? 'was' : 'were'
+            	'Only %d %sargument%s allowed, but %d %s passed.',
+            	\count($prototype['arguments']),
+            	empty($names) ? '' : 'positional ',
+            	\count($prototype['arguments']) === 1 ? '' : 's',
+            	$positional,
+            	$positional === 1 ? 'was' : 'were'
             );
             if (!$hasSplat) {
                 throw new SassScriptException($message);
@@ -6627,10 +6630,10 @@ EOL;
             $unknownNames = array_values(array_diff($names, array_column($prototype['arguments'], 0)));
             $lastName = array_pop($unknownNames);
             $message = sprintf(
-                'No argument%s named $%s%s.',
-                $unknownNames ? 's' : '',
-                $unknownNames ? implode(', $', $unknownNames) . ' or $' : '',
-                $lastName
+            	'No argument%s named $%s%s.',
+            	$unknownNames ? 's' : '',
+            	$unknownNames ? implode(', $', $unknownNames) . ' or $' : '',
+            	$lastName
             );
             throw new SassScriptException($message);
         }
@@ -6673,7 +6676,7 @@ EOL;
             if (!empty($arg[0])) {
                 $hasKeywordArgument = true;
 
-                assert(\is_string($arg[0][1]));
+                \assert(\is_string($arg[0][1]));
                 $name = str_replace('_', '-', $arg[0][1]);
 
                 if (isset($keywordArgs[$name])) {
@@ -6698,7 +6701,7 @@ EOL;
 
                     if (isset($val[3]) && \is_array($val[3])) {
                         foreach ($val[3] as $name => $item) {
-                            assert(\is_string($name));
+                            \assert(\is_string($name));
 
                             $normalizedName = str_replace('_', '-', $name);
 
@@ -6829,7 +6832,7 @@ EOL;
         }
 
         if ($prototype['rest_argument'] !== null) {
-            assert($originalRestArgumentName !== null);
+            \assert($originalRestArgumentName !== null);
             $name = $originalRestArgumentName;
             $val = $vars[$prototype['rest_argument']];
 
@@ -6850,7 +6853,7 @@ EOL;
             if (isset($vars[$normalizedName])) {
                 continue;
             }
-            assert($default !== null);
+            \assert($default !== null);
 
             if ($storeInEnv) {
                 $this->set($name, $this->reduce($default, true), true);
@@ -6913,9 +6916,9 @@ EOL;
 
         if ($prototype['rest_argument'] !== null) {
             $name = $prototype['rest_argument'];
-            $rest = array_values(array_slice($positionalArgs, \count($prototype['arguments'])));
+            $rest = array_values(\array_slice($positionalArgs, \count($prototype['arguments'])));
 
-            $val = [Type::T_LIST, \is_null($splatSeparator) ? ',' : $splatSeparator , $rest, $restNamed];
+            $val = [Type::T_LIST, \is_null($splatSeparator) ? ',' : $splatSeparator, $rest, $restNamed];
 
             $output[$name] = $val;
         }
@@ -6972,7 +6975,7 @@ EOL;
     private function tryMap($item)
     {
         if ($item instanceof Number) {
-            return null;
+            return;
         }
 
         if ($item[0] === Type::T_MAP) {
@@ -6986,7 +6989,7 @@ EOL;
             return static::$emptyMap;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -7043,7 +7046,7 @@ EOL;
                 $list[] = [
                     Type::T_LIST,
                     ' ',
-                    [$key, $value]
+                    [$key, $value],
                 ];
             }
 
@@ -7080,7 +7083,7 @@ EOL;
     protected function coerceColor($value, $inRGBFunction = false)
     {
         if ($value instanceof Number) {
-            return null;
+            return;
         }
 
         switch ($value[0]) {
@@ -7090,7 +7093,7 @@ EOL;
                         $cv = $this->compileRGBAValue($value[$i]);
 
                         if (! is_numeric($cv)) {
-                            return null;
+                            return;
                         }
 
                         $value[$i] = $cv;
@@ -7101,7 +7104,7 @@ EOL;
                             $cv = $this->compileRGBAValue($value[4], true);
 
                             if (! is_numeric($cv)) {
-                                return null;
+                                return;
                             }
 
                             $value[4] = $cv;
@@ -7121,11 +7124,11 @@ EOL;
                     }
                 }
 
-                return null;
+                return;
 
             case Type::T_KEYWORD:
                 if (! \is_string($value[1])) {
-                    return null;
+                    return;
                 }
 
                 $name = strtolower($value[1]);
@@ -7184,10 +7187,10 @@ EOL;
                         : [Type::T_COLOR, $rgba[0], $rgba[1], $rgba[2]];
                 }
 
-                return null;
+                return;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -7454,7 +7457,7 @@ EOL;
             throw SassScriptException::forArgument("$value is not an integer.", $varName);
         }
 
-        return intval($value);
+        return \intval($value);
     }
 
     /**
@@ -7472,9 +7475,9 @@ EOL;
             $args[] = $last[2];
             $args[] = $last[3];
         }
+
         return $args;
     }
-
 
     /**
      * Make sure a color's components don't go out of bounds
@@ -7674,7 +7677,6 @@ EOL;
         return [Type::T_HWB, fmod($h, 360), $min / 255 * 100, 100 - $max / 255 *100];
     }
 
-
     // Built in functions
 
     protected static $libCall = ['function', 'args...'];
@@ -7682,7 +7684,7 @@ EOL;
     {
         $functionReference = $args[0];
 
-        if (in_array($functionReference[0], [Type::T_STRING, Type::T_KEYWORD])) {
+        if (\in_array($functionReference[0], [Type::T_STRING, Type::T_KEYWORD])) {
             $name = $this->compileStringContent($this->coerceString($functionReference));
             $warning = "Passing a string to call() is deprecated and will be illegal\n"
                 . "in Sass 4.0. Use call(function-reference($name)) instead.";
@@ -7694,28 +7696,27 @@ EOL;
             return static::$null;
         }
 
-        if (! in_array($functionReference[0], [Type::T_FUNCTION_REFERENCE, Type::T_FUNCTION])) {
+        if (! \in_array($functionReference[0], [Type::T_FUNCTION_REFERENCE, Type::T_FUNCTION])) {
             throw $this->error('Function reference expected, got ' . $functionReference[0]);
         }
 
         $callArgs = [
-            [null, $args[1], true]
+            [null, $args[1], true],
         ];
 
         return $this->reduce([Type::T_FUNCTION_CALL, $functionReference, $callArgs]);
     }
 
-
     protected static $libGetFunction = [
         ['name'],
-        ['name', 'css']
+        ['name', 'css'],
     ];
     protected function libGetFunction($args)
     {
         $name = $this->compileStringContent($this->assertString(array_shift($args), 'name'));
         $isCss = false;
 
-        if (count($args)) {
+        if (\count($args)) {
             $isCss = array_shift($args);
             $isCss = (($isCss === static::$true) ? true : false);
         }
@@ -7770,6 +7771,7 @@ EOL;
                     return new Number($key, '');
                 }
             }
+
             return static::$null;
         }
 
@@ -7882,7 +7884,7 @@ EOL;
          */
         $getParam = function ($name, $max, $checkPercent = false, $assertPercent = false) use (&$kwargs, $scale, $change) {
             if (!isset($kwargs[$name])) {
-                return null;
+                return;
             }
 
             $number = $this->assertNumber($kwargs[$name], $name);
@@ -7927,10 +7929,10 @@ EOL;
             $unknownNames = array_keys($kwargs);
             $lastName = array_pop($unknownNames);
             $message = sprintf(
-                'No argument%s named $%s%s.',
-                $unknownNames ? 's' : '',
-                $unknownNames ? implode(', $', $unknownNames) . ' or $' : '',
-                $lastName
+            	'No argument%s named $%s%s.',
+            	$unknownNames ? 's' : '',
+            	$unknownNames ? implode(', $', $unknownNames) . ' or $' : '',
+            	$lastName
             );
             throw new SassScriptException($message);
         }
@@ -8018,7 +8020,7 @@ EOL;
     protected static $libChangeColor = ['color', 'kwargs...'];
     protected function libChangeColor($args)
     {
-        return $this->alterColor($args,'change', function ($base, $alter, $max) {
+        return $this->alterColor($args, 'change', function ($base, $alter, $max) {
             if ($alter === null) {
                 return $base;
             }
@@ -8103,7 +8105,7 @@ EOL;
         }
 
         // this might be the IE function, so return value unchanged
-        return null;
+        return;
     }
 
     protected static $libOpacity = ['color'];
@@ -8112,7 +8114,7 @@ EOL;
         $value = $args[0];
 
         if ($value instanceof Number) {
-            return null;
+            return;
         }
 
         return $this->libAlpha($args);
@@ -8121,7 +8123,7 @@ EOL;
     // mix two colors
     protected static $libMix = [
         ['color1', 'color2', 'weight:50%'],
-        ['color-1', 'color-2', 'weight:50%']
+        ['color-1', 'color-2', 'weight:50%'],
         ];
     protected function libMix($args)
     {
@@ -8175,8 +8177,8 @@ EOL;
         if (\count($args) === 2) {
             // if var() is used as an argument, return as a css function
             foreach ($args as $arg) {
-                if ($arg[0] === Type::T_FUNCTION && in_array($arg[1], ['var'])) {
-                    return null;
+                if ($arg[0] === Type::T_FUNCTION && \in_array($arg[1], ['var'])) {
+                    return;
                 }
             }
 
@@ -8184,26 +8186,26 @@ EOL;
         }
 
         foreach ($kwargs as $k => $arg) {
-            if (in_array($arg[0], [Type::T_FUNCTION_CALL, Type::T_FUNCTION]) && in_array($arg[1], ['min', 'max'])) {
-                return null;
+            if (\in_array($arg[0], [Type::T_FUNCTION_CALL, Type::T_FUNCTION]) && \in_array($arg[1], ['min', 'max'])) {
+                return;
             }
         }
 
         foreach ($args_to_check as $k => $arg) {
-            if (in_array($arg[0], [Type::T_FUNCTION_CALL, Type::T_FUNCTION]) && in_array($arg[1], ['min', 'max'])) {
-                if (count($kwargs) > 1 || ($k >= 2 && count($args) === 4)) {
-                    return null;
+            if (\in_array($arg[0], [Type::T_FUNCTION_CALL, Type::T_FUNCTION]) && \in_array($arg[1], ['min', 'max'])) {
+                if (\count($kwargs) > 1 || ($k >= 2 && \count($args) === 4)) {
+                    return;
                 }
 
                 $args[$k] = $this->stringifyFncallArgs($arg);
             }
 
             if (
-                $k >= 2 && count($args) === 4 &&
-                in_array($arg[0], [Type::T_FUNCTION_CALL, Type::T_FUNCTION]) &&
-                in_array($arg[1], ['calc','env'])
+                $k >= 2 && \count($args) === 4 &&
+                \in_array($arg[0], [Type::T_FUNCTION_CALL, Type::T_FUNCTION]) &&
+                \in_array($arg[1], ['calc', 'env'])
             ) {
-                return null;
+                return;
             }
         }
 
@@ -8461,10 +8463,10 @@ EOL;
     {
         $value = $args[0];
 
-        if (count($args) === 1) {
+        if (\count($args) === 1) {
             $this->assertNumber($args[0], 'amount');
 
-            return null;
+            return;
         }
 
         $color = $this->assertColor($args[0], 'color');
@@ -8488,7 +8490,7 @@ EOL;
         $value = $args[0];
 
         if ($value instanceof Number) {
-            return null;
+            return;
         }
 
         return $this->adjustHsl($this->assertColor($value, 'color'), 2, -100);
@@ -8512,7 +8514,7 @@ EOL;
                 throw new SassScriptException('Only one argument may be passed to the plain-CSS invert() function.');
             }
 
-            return null;
+            return;
         }
 
         $color = $this->assertColor($value, 'color');
@@ -8794,7 +8796,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             return $map[2][$index];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -8815,7 +8817,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             }
         }
 
-        return null;
+        return;
     }
 
     protected static $libMapKeys = ['map'];
@@ -8856,7 +8858,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         }
 
         for ($i = \count($map[1]) - 1; $i >= 0; $i--) {
-            if (in_array($this->compileStringContent($this->coerceString($map[1][$i])), $keys)) {
+            if (\in_array($this->compileStringContent($this->coerceString($map[1][$i])), $keys)) {
                 array_splice($map[1], $i, 1);
                 array_splice($map[2], $i, 1);
             }
@@ -8910,7 +8912,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
     protected static $libMapMerge = [
         ['map1', 'map2'],
         ['map-1', 'map-2'],
-        ['map1', 'args...']
+        ['map1', 'args...'],
     ];
     protected function libMapMerge($args)
     {
@@ -9122,9 +9124,9 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
                 break;
 
             case 'auto':
-                if ($list1[1] !== '' || count($list1[2]) > 1 || !empty($list1['enclosing']) && $list1['enclosing'] !== 'parent') {
+                if ($list1[1] !== '' || \count($list1[2]) > 1 || !empty($list1['enclosing']) && $list1['enclosing'] !== 'parent') {
                     $separator = $list1[1] ?: ' ';
-                } elseif ($list2[1] !== '' || count($list2[2]) > 1 || !empty($list2['enclosing']) && $list2['enclosing'] !== 'parent') {
+                } elseif ($list2[1] !== '' || \count($list2[2]) > 1 || !empty($list2['enclosing']) && $list2['enclosing'] !== 'parent') {
                     $separator = $list2[1] ?: ' ';
                 } else {
                     $separator = ' ';
@@ -9302,7 +9304,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
 
     protected static $libComparable = [
         ['number1', 'number2'],
-        ['number-1', 'number-2']
+        ['number-1', 'number-2'],
     ];
     protected function libComparable($args)
     {
@@ -9356,7 +9358,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         $string[2] = [
             Util::mbSubstr($stringContent, 0, $index),
             $insertContent,
-            Util::mbSubstr($stringContent, $index)
+            Util::mbSubstr($stringContent, $index),
         ];
 
         return $string;
@@ -9442,13 +9444,13 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
     protected function stringTransformAsciiOnly($stringContent, $filter)
     {
         $mblength = Util::mbStrlen($stringContent);
-        if ($mblength === strlen($stringContent)) {
+        if ($mblength === \strlen($stringContent)) {
             return $filter($stringContent);
         }
         $filteredString = "";
         for ($i = 0; $i < $mblength; $i++) {
             $char = Util::mbSubstr($stringContent, $i, 1);
-            if (strlen($char) > 1) {
+            if (\strlen($char) > 1) {
                 $filteredString .= $char;
             } else {
                 $filteredString .= $filter($char);
@@ -9465,7 +9467,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         $name = $this->compileStringContent($string);
 
         return $this->toBool(
-            \array_key_exists($name, $this->registeredFeatures) ? $this->registeredFeatures[$name] : false
+        	\array_key_exists($name, $this->registeredFeatures) ? $this->registeredFeatures[$name] : false
         );
     }
 
@@ -9548,6 +9550,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
         }
 
         $max = mt_getrandmax();
+
         return new Number(mt_rand(0, $max - 1) / $max, '');
     }
 
@@ -9644,7 +9647,6 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             throw SassScriptException::forArgument("$var_value is not a valid selector: it must be a string, a list of strings, or a list of lists of strings", $varname);
         }
 
-
         if ($arg[0] === Type::T_STRING) {
             $arg[1] = '';
         }
@@ -9659,7 +9661,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             if (! $allowParent) {
                 foreach ($gluedSelector as $selector) {
                     foreach ($selector as $s) {
-                        if (in_array(static::$selfSelector, $s)) {
+                        if (\in_array(static::$selfSelector, $s)) {
                             throw SassScriptException::forArgument("Parent selectors aren't allowed here.", $varname);
                         }
                     }
@@ -9686,11 +9688,13 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
                     return false;
                 }
             }
+
             return true;
         }
-        if (!in_array($arg[0], [Type::T_STRING, Type::T_KEYWORD])) {
+        if (!\in_array($arg[0], [Type::T_STRING, Type::T_KEYWORD])) {
             return false;
         }
+
         return true;
     }
 
@@ -9738,21 +9742,23 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             throw $this->error('Invalid sub selector for isSuperSelector()');
         }
 
-        if (count($sub) > 1) {
+        if (\count($sub) > 1) {
             foreach ($sub as $s) {
                 if (! $this->isSuperSelector($super, [$s])) {
                     return false;
                 }
             }
+
             return true;
         }
 
-        if (count($super) > 1) {
+        if (\count($super) > 1) {
             foreach ($super as $s) {
                 if ($this->isSuperSelector([$s], $sub)) {
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -9766,8 +9772,8 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
             $compound = '';
 
             array_walk_recursive(
-                $node,
-                function ($value, $key) use (&$compound) {
+            	$node,
+            	function ($value, $key) use (&$compound) {
                     $compound .= $value;
                 }
             );
@@ -9896,7 +9902,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
 
     protected static $libSelectorExtend = [
         ['selector', 'extendee', 'extender'],
-        ['selectors', 'extendee', 'extender']
+        ['selectors', 'extendee', 'extender'],
     ];
     protected function libSelectorExtend($args)
     {
@@ -9917,7 +9923,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
 
     protected static $libSelectorReplace = [
         ['selector', 'original', 'replacement'],
-        ['selectors', 'original', 'replacement']
+        ['selectors', 'original', 'replacement'],
     ];
     protected function libSelectorReplace($args)
     {
@@ -10021,7 +10027,7 @@ will be an error in future versions of Sass.\n         on line $line of $fname";
 
     protected static $libSelectorParse = [
         ['selector'],
-        ['selectors']
+        ['selectors'],
     ];
     protected function libSelectorParse($args)
     {

@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use CBLib\Application\Application;
 use CBLib\Language\CBTxt;
@@ -73,7 +73,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
             $linkItem = '<span class="pm" alt="' . Text::_('COM_KUNENA_VIEW_PMS') . '" />';
 
             foreach ($resultArray as $res) {
-                if (is_array($res)) {
+                if (\is_array($res)) {
                     $html .= '<a href="' . cbSef($res["url"]) . '" title="' . CBTxt::T($res["tooltip"]) . '">' . $linkItem . '</a> ';
                 }
             }

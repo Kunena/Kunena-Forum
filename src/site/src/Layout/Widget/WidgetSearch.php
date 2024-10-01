@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Site\Layout\Widget;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 
@@ -25,10 +25,10 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 class WidgetSearch extends KunenaLayout
 {
     public $catid;
-    
+
     public $state;
-    
+
     public $id;
-    
+
     public $title;
 }

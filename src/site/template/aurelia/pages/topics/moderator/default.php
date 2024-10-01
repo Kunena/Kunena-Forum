@@ -19,8 +19,8 @@ $content = $this->execute('Topic/Listing/Moderator')
     ->setLayout('moderator');
 
 $this->addBreadcrumb(
-    $content->headerText,
-    'index.php?option=com_kunena&view=topics&layout=moderator'
+	$content->headerText,
+	'index.php?option=com_kunena&view=topics&layout=moderator'
 );
 
 echo $content;

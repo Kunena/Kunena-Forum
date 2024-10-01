@@ -128,16 +128,16 @@ class TopicModerate extends KunenaLayout
         $params  = ['sections' => 0, 'catid' => 0];
 
         return HTMLHelper::_(
-            'kunenaforum.categorylist',
-            'targetcategory',
-            0,
-            $options,
-            $params,
-            'class="inputbox kmove_selectbox form-select"',
-            'value',
-            'text',
-            $this->category->id,
-            'kmod_categories'
+        	'kunenaforum.categorylist',
+        	'targetcategory',
+        	0,
+        	$options,
+        	$params,
+        	'class="inputbox kmove_selectbox form-select"',
+        	'value',
+        	'text',
+        	$this->category->id,
+        	'kmod_categories'
         );
     }
 }

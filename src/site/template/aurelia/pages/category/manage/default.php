@@ -26,14 +26,14 @@ $parents[] = $content->category;
 
 foreach ($parents as $parent) {
     $this->addBreadcrumb(
-        $parent->displayField('name'),
-        $parent->getUri()
+    	$parent->displayField('name'),
+    	$parent->getUri()
     );
 }
 
 $this->addBreadcrumb(
-    Text::_('COM_KUNENA_EDIT'),
-    $parent->getUri()
+	Text::_('COM_KUNENA_EDIT'),
+	$parent->getUri()
 );
 
 echo $content;

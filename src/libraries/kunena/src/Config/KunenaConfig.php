@@ -1802,7 +1802,7 @@ class KunenaConfig
      */
     public function getEmail(): string
     {
-        $email = $this->get('email');
+        $email = $this->email;
 
         return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
     }

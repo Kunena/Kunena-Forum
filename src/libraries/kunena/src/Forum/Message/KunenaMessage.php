@@ -74,7 +74,6 @@ use StdClass;
  * @property int    $modified_by
  * @property string $modified_time
  * @property string $modified_reason
- * @property string $params
  * @property string $message
  * @since   Kunena 6.0
  */
@@ -1267,9 +1266,9 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
-     * @param   int     $tmpid    tmpid
-     * @param   string  $postvar  postvar
-     * @param   null    $catid    catid
+     * @param   int         $tmpid    tmpid
+     * @param   string      $postvar  postvar
+     * @param   int|null    $catid    catid
      *
      * @return  boolean
      *
@@ -1766,7 +1765,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @param   KunenaUser  $user  user
      *
-     * @return  KunenaExceptionAuthorise|NULL
+     * @return  KunenaExceptionAuthorise|bool
      *
      * @throws  Exception
      * @since   Kunena 6.0

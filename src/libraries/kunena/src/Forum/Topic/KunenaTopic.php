@@ -904,9 +904,9 @@ class KunenaTopic extends KunenaDatabaseObject
     }
 
     /**
-     * @param   mixed  $category  category
-     * @param   null   $action    action
-     * @param   int    $itemid   itemid
+     * @param   mixed                $category  category
+     * @param   KunenaMessage|null   $action    action
+     * @param   int                  $itemid    itemid
      *
      * @return \Joomla\CMS\Uri\Uri
      *
@@ -969,9 +969,9 @@ class KunenaTopic extends KunenaDatabaseObject
     }
 
     /**
-     * @param   int    $mesid      mesid
-     * @param   null   $direction  direction
-     * @param   mixed  $hold       hold
+     * @param   int             $mesid      mesid
+     * @param   string|null     $direction  direction
+     * @param   mixed           $hold       hold
      *
      * @return  integer
      *
@@ -1429,7 +1429,7 @@ class KunenaTopic extends KunenaDatabaseObject
     /**
      * Method to load a \Kunena\Forum\Libraries\Forum\Topic\Topic object by id.
      *
-     * @param   null  $id  The topic id to be loaded.
+     * @param   int|null  $id  The topic id to be loaded.
      *
      * @return  boolean  True on success.
      *
@@ -1450,12 +1450,12 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @param   object  $target        Target \Kunena\Forum\Libraries\Forum\Category\Category or
      *                                 \Kunena\Forum\Libraries\Forum\Topic\Topic
-     * @param   mixed   $ids           false, array of message Ids or Joomla\CMS\Date\Date
-     * @param   bool    $shadow        Leave visible shadow topic.
-     * @param   string  $subject       New subject
-     * @param   bool    $subjectall    Change subject from every message
-     * @param   null    $topic_iconid  Define a new topic icon
-     * @param   int     $keep_poll     Define if you want keep the poll to the original topic or to the split topic
+     * @param   mixed       $ids           false, array of message Ids or Joomla\CMS\Date\Date
+     * @param   bool        $shadow        Leave visible shadow topic.
+     * @param   string      $subject       New subject
+     * @param   bool        $subjectall    Change subject from every message
+     * @param   int|null    $topic_iconid  Define a new topic icon
+     * @param   int         $keep_poll     Define if you want keep the poll to the original topic or to the split topic
      *
      * @return  boolean|KunenaCategory|KunenaTopic    Target \Kunena\Forum\Libraries\Forum\Category\Category or
      *                                    \Kunena\Forum\Libraries\Forum\Topic\Topic or false on failure
@@ -2096,7 +2096,7 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @param   KunenaUser  $user  user
      *
-     * @return  KunenaExceptionAuthorise|void
+     * @return  KunenaExceptionAuthorise|bool
      *
      * @throws  Exception
      * @since   Kunena 6.0

@@ -29,7 +29,6 @@ use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
-use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
@@ -53,24 +52,19 @@ use stdClass;
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUser
  *
- * @property    int     $id
  * @property    int     $userid
  * @property    int     $status
  * @property    string  $status_text
- * @property    string  $name
- * @property    string  $username
- * @property    string  $email
- * @property    int     $blocked
- * @property    string  $registerDate
- * @property    string  $lastvisitDate
+ * @property    int     $view
  * @property    string  $signature
  * @property    int     $moderator
  * @property    int     $banned
  * @property    int     $ordering
  * @property    int     $posts
  * @property    string  $avatar
+ * @property    int     $timestamp
  * @property    int     $karma
- * @property    int     $karma_time
+ * @property    int     $group_id
  * @property    int     $uhits
  * @property    string  $personalText
  * @property    int     $gender
@@ -79,17 +73,19 @@ use stdClass;
  * @property    string  $websitename
  * @property    string  $websiteurl
  * @property    int     $rank
- * @property    int     $view
  * @property    int     $hideEmail
  * @property    int     $showOnline
  * @property    int     $canSubscribe
  * @property    int     $userListtime
  * @property    int     $thankyou
  * @property    int     $socialshare
- * @property    string  $pinterest
- * @property    string  $reddit
- * @property    int     $timestamp
- * @property    boolean $showEmail
+ * From Joomla users table
+ * @property    string  $name
+ * @property    string  $username
+ * @property    string  $email
+ * @property    int     $blocked
+ * @property    string  $registerDate
+ * @property    string  $lastvisitDate
  * @since   Kunena 6.0
  */
 class KunenaUser extends CMSObject
@@ -101,28 +97,10 @@ class KunenaUser extends CMSObject
     protected static $_ranks = null;
 
     /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $registerDate;
-
-    /**
-     * @var     integer
-     * @since   Kunena 6.0
-     */
-    public $id;
-
-    /**
      * @var     integer
      * @since   Kunena 6.0
      */
     public $userid;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $username;
 
     /**
      * @var     string
@@ -137,28 +115,10 @@ class KunenaUser extends CMSObject
     public $status_text;
 
     /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $name;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $email;
-
-    /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $blocked;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $lastvisitDate;
+    public $view;
 
     /**
      * @var     string
@@ -170,31 +130,19 @@ class KunenaUser extends CMSObject
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $banned;
-
-    /**
-     * @var     integer
-     * @since   Kunena 6.0
-     */
     public $moderator;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $ordering;
+    public $banned;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $rank;
-
-    /**
-     * @var     string
-     * @since   Kunena 6.0
-     */
-    public $websiteurl;
+    public $ordering;
 
     /**
      * @var     integer
@@ -212,13 +160,19 @@ class KunenaUser extends CMSObject
      * @var     integer
      * @since   Kunena 6.0
      */
+    public $timestamp;
+
+    /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
     public $karma;
 
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $karma_time;
+    public $group_id;
 
     /**
      * @var     integer
@@ -257,10 +211,16 @@ class KunenaUser extends CMSObject
     public $websitename;
 
     /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $websiteurl;
+
+    /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $view;
+    public $rank;
 
     /**
      * @var     integer
@@ -299,10 +259,46 @@ class KunenaUser extends CMSObject
     public $socialshare;
 
     /**
+     * From Joomla user table
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $name;
+
+    /**
+     * From Joomla user table
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $username;
+
+    /**
+     * From Joomla user table
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $email;
+
+    /**
+     * From Joomla user table
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $timestamp;
+    public $blocked;
+
+    /**
+     * From Joomla user table
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $registerDate;
+
+    /**
+     * From Joomla user table
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $lastvisitDate;
 
     /**
      * @var     null
@@ -1986,8 +1982,6 @@ class KunenaUser extends CMSObject
                 return $this->avatar;
             case 'karma':
                 return $this->karma;
-            case 'karma_time':
-                return $this->karma_time;
             case 'uhits':
                 return $this->uhits;
             case 'personalText':

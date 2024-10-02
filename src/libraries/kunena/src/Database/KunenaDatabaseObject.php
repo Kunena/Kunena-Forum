@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Database;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseInterface;
@@ -28,7 +27,7 @@ use Kunena\Forum\Libraries\Exception\KunenaException;
  *
  * @since   Kunena 6.0
  */
-abstract class KunenaDatabaseObject extends CMSObject
+abstract class KunenaDatabaseObject
 {
     /**
      * @var     null
@@ -90,7 +89,7 @@ abstract class KunenaDatabaseObject extends CMSObject
             $this->load();
         }
 
-        parent::__construct($properties);
+        $this->bind($properties);
     }
 
     /**
@@ -119,6 +118,20 @@ abstract class KunenaDatabaseObject extends CMSObject
         $this->setProperties($src);
 
         return true;
+    }
+
+    public function setProperties($properties)
+    {
+        if (\is_array($properties) || \is_object($properties)) {
+            foreach ((array) $properties as $k => $v) {
+                // Use the set function which might be overridden.
+                $this->$k = $v;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

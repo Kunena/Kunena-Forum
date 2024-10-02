@@ -217,7 +217,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      * @var     string
      * @since   Kunena 6.0
      */
-    public $comment;
+    public $comment; //ToDo does comment exist anymore?
 
     /**
      * @var     boolean
@@ -373,6 +373,33 @@ class KunenaAttachment extends KunenaDatabaseObject
         }
 
         throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
+    }
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     * 
+     * @return array    Assocative array with the propertie values of table
+     * 
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties(): array
+    {
+        $properties = [
+            'id'            => $this->id,
+            'mesid'         => $this->mesid,
+            'userid'        => $this->userid,
+            'protected'     => $this->protected,
+            'hash'          => $this->hash,
+            'size'          => $this->size,
+            'folder'        => $this->folder,
+            'filetype'      => $this->filetype,
+            'filename'      => $this->filename,
+            'filename_real' => $this->filename_real,
+            'caption'       => $this->caption,
+            'inline'        => $this->inline
+        ];
+
+        return $properties;
     }
 
     /**

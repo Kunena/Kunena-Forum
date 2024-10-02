@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Table\KunenaTableMap;
 /**
  * Private message.
  *
- * @property int      $parentid
+ * @property int      $parent_id
  * @property int      $author_id
  * @property int      $created_at
  * @property int      $attachments
@@ -66,8 +66,7 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
     /**
      * KunenaPrivateMessage constructor.
      *
-     * @param   null  $properties  properties
-     *
+     * @param   array|null  $properties  properties
      *
      * @since   Kunena 6.0
      *

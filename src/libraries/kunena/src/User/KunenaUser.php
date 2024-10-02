@@ -25,7 +25,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
@@ -88,7 +87,7 @@ use stdClass;
  * @property    string  $lastvisitDate
  * @since   Kunena 6.0
  */
-class KunenaUser extends CMSObject
+class KunenaUser
 {
     /**
      * @var     null
@@ -418,7 +417,7 @@ class KunenaUser extends CMSObject
             }
 
             // Assuming all is well at this point lets bind the data
-            $this->setProperties($table->getProperties());
+            $this->bind($table->getProperties());
 
             // Set showOnline if user doesn't exists (if we will save the user)
             if (!$this->_exists) {
@@ -663,7 +662,10 @@ class KunenaUser extends CMSObject
     public function bind($data, array $ignore = []): void
     {
         $data = array_diff_key($data, array_flip($ignore));
-        $this->setProperties($data);
+
+        foreach((array)$data as $property => $value) {
+                $this->$property = $value;
+        }
     }
 
     /**
@@ -1022,8 +1024,38 @@ class KunenaUser extends CMSObject
     {
         // Create the user table object
         $table  = $this->getTable();
-        $ignore = ['name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate'];
-        $table->bind($this->getProperties(), $ignore);
+
+        $properties = [
+            'userid'       => $this->userid,
+            'status'       => $this->status,
+            'status_text'  => $this->status_text,
+            'view'         => $this->view,
+            'signature'    => $this->signature,
+            'moderator'    => $this->moderator,
+            'banned'       => $this->banned,
+            'ordering'     => $this->ordering,
+            'posts'        => $this->posts,
+            'avatar'       => $this->avatar,
+            'timestamp'    => $this->timestamp,
+            'karma'        => $this->karma,
+            'group_id'     => $this->group_id,
+            'uhits'        => $this->uhits,
+            'personalText' => $this->personalText,
+            'gender'       => $this->gender,
+            'birthdate'    => $this->birthdate,
+            'location'     => $this->location,
+            'websitename'  => $this->websitename,
+            'websiteurl'   => $this->websiteurl,
+            'rank'         => $this->rank,
+            'hideEmail'    => $this->hideEmail,
+            'showOnline'   => $this->showOnline,
+            'canSubscribe' => $this->canSubscribe,
+            'userListtime' => $this->userListtime,
+            'thankyou'     => $this->thankyou,
+            'socialshare'  => $this->socialshare,
+        ];
+
+        $table->bind($properties);
         $table->exists($this->_exists);
 
         // Check and store the object.

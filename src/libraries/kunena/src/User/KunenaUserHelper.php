@@ -251,7 +251,7 @@ abstract class KunenaUserHelper
 
             foreach ($results as $user) {
                 $instance = new KunenaUser(false);
-                $instance->setProperties($user);
+                $instance->bind($user);
                 $instance->exists(isset($user['posts']));
                 self::$_instances[$instance->userid] = $instance;
             }

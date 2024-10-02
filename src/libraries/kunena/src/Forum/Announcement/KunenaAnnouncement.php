@@ -460,4 +460,30 @@ class KunenaAnnouncement extends KunenaDatabaseObject
 
         return null;
     }
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     * 
+     * @return array    Assocative array with the propertie values of table
+     * 
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties(): array
+    {
+        $properties = [
+            'id'           => $this->id,
+            'title'        => $this->title,
+            'created_by'   => $this->created_by,
+            'sdescription' => $this->sdescription,
+            'description'  => $this->description,
+            'created'      => $this->created,
+            'published'    => $this->published,
+            'publish_up'   => $this->publish_up,
+            'publish_down' => $this->publish_down,
+            'ordering'     => $this->ordering,
+            'showdate'     => $this->showdate
+        ];
+
+        return $properties;
+    }
 }

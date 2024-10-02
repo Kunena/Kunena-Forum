@@ -221,4 +221,27 @@ class KunenaPrivateMessage extends KunenaDatabaseObject
             $this->_users->setKey($this->id)->save();
         }
     }
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     * 
+     * @return array    Assocative array with the propertie values of table
+     * 
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties(): array
+    {
+        $properties = [
+            'id'          => $this->id,
+            'parent_id'   => $this->parent_id,
+            'author_id'   => $this->author_id,
+            'created_at'  => $this->created_at,
+            'attachments' => $this->attachments,
+            'subject'     => $this->subject,
+            'body'        => $this->body,
+            'params'      => $this->params
+        ];
+
+        return $properties;
+    }
 }

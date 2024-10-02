@@ -2133,4 +2133,44 @@ class KunenaTopic extends KunenaDatabaseObject
 
         return;
     }
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     * 
+     * @return array    Assocative array with the propertie values of table
+     * 
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties(): array
+    {
+        $properties = [
+            'id'                    => $this->id,
+            'category_id'           => $this->category_id,
+            'subject'               => $this->subject,
+            'icon_id'               => $this->icon_id,
+            'label_id'              => $this->label_id,
+            'locked'                => $this->locked,
+            'hold'                  => $this->hold,
+            'ordering'              => $this->ordering,
+            'posts'                 => $this->posts,
+            'hits'                  => $this->hits,
+            'attachments'           => $this->attachments,
+            'poll_id'               => $this->poll_id,
+            'moved_id'              => $this->moved_id,
+            'first_post_id'         => $this->first_post_id,
+            'first_post_time'       => $this->first_post_time,
+            'first_post_userid'     => $this->first_post_userid,
+            'first_post_message'    => $this->first_post_message,
+            'first_post_guest_name' => $this->first_post_guest_name,
+            'last_post_id'          => $this->last_post_id,
+            'last_post_time'        => $this->last_post_time,
+            'last_post_userid'      => $this->last_post_userid,
+            'last_post_message'     => $this->last_post_message,
+            'last_post_guest_name'  => $this->last_post_guest_name,
+            'rating'                => $this->rating,
+            'params'                => $this->params,
+        ];
+
+        return $properties;
+    }
 }

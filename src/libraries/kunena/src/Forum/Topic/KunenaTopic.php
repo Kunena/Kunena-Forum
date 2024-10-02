@@ -581,8 +581,6 @@ class KunenaTopic extends KunenaDatabaseObject
         if (!$this->exists()) {
             if (!$exists) {
                 throw new Exception(Text::_('COM_KUNENA_LIB_TOPIC_NOT_EXISTS'));
-
-                return false;
             }
 
             $this->id = $message->id;
@@ -1524,30 +1522,22 @@ class KunenaTopic extends KunenaDatabaseObject
         // Find out where we are moving the messages
         if (!$target || !$target->exists()) {
             throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
-
-            return false;
         } elseif ($target instanceof KunenaTopic) {
             // Move messages into another topic (original topic will always remain, either as real one or shadow)
 
             if ($target == $this) {
                 // We cannot move topic into itself
                 throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $this->id, $this->id));
-
-                return false;
             }
 
             if ($this->moved_id) {
                 // Moved topic cannot be merged with another topic -- it has no posts to be moved
                 throw new Exception(Text::sprintf('COM_KUNENA_MODERATION_ERROR_ALREADY_SHADOW', $this->id));
-
-                return false;
             }
 
             if ($this->poll_id && $target->poll_id) {
                 // We cannot currently have 2 polls in one topic -- fail
                 throw new Exception(Text::_('COM_KUNENA_MODERATION_CANNOT_MOVE_TOPIC_WITH_POLL_INTO_ANOTHER_WITH_POLL'));
-
-                return false;
             }
 
             if ($subjectall) {
@@ -1559,8 +1549,6 @@ class KunenaTopic extends KunenaDatabaseObject
             if ($target->isSection()) {
                 // Section cannot have any topics
                 throw new Exception(Text::_('COM_KUNENA_MODERATION_ERROR_NOT_MOVE_SECTION'));
-
-                return false;
             }
 
             // Save category information for later use
@@ -1605,8 +1593,6 @@ class KunenaTopic extends KunenaDatabaseObject
             $target->category_id = $categoryTarget->id;
         } else {
             throw new Exception(Text::_('COM_KUNENA_MODERATION_ERROR_WRONG_TARGET'));
-
-            return false;
         }
 
         // For now on we assume that at least one message will be moved (=authorization check was called on topic/message)

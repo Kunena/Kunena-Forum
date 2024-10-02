@@ -1420,13 +1420,9 @@ class KunenaMessage extends KunenaDatabaseObject
             // Email address must be valid
             if (!MailHelper::isEmailAddress($this->email)) {
                 throw new Exception(Text::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_INVALID'));
-
-                return false;
             }
         } elseif (!KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askEmail) {
             throw new Exception(Text::_('COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY'));
-
-            return false;
         }
 
         // Do not allow no posting date or dates from the future
@@ -1453,8 +1449,6 @@ class KunenaMessage extends KunenaDatabaseObject
 
         if ($this->hold < 0 || $this->hold > 3) {
             throw new Exception(Text::_('COM_KUNENA_LIB_MESSAGE_ERROR_HOLD_INVALID'));
-
-            return false;
         }
 
         if ($this->modified_by !== null) {
@@ -1486,8 +1480,6 @@ class KunenaMessage extends KunenaDatabaseObject
 
             if ($lastPostTime + $config->floodProtection > Factory::getDate()->toUnix()) {
                 throw new Exception(Text::sprintf('COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int) $config->floodProtection));
-
-                return false;
             }
         }
 
@@ -1514,8 +1506,6 @@ class KunenaMessage extends KunenaDatabaseObject
 
             if ($id) {
                 throw new Exception(Text::_('COM_KUNENA_POST_DUPLICATE_IGNORED'));
-
-                return false;
             }
         }
 

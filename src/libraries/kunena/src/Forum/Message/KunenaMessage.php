@@ -1880,4 +1880,39 @@ class KunenaMessage extends KunenaDatabaseObject
 
         return;
     }
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     * 
+     * @return array    Assocative array with the propertie values of table
+     * 
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties(): array
+    {
+        $properties = [
+            'id'              => $this->id,
+            'parent'          => $this->parent,
+            'thread'          => $this->thread,
+            'catid'           => $this->catid,
+            'name'            => $this->name,
+            'userid'          => $this->userid,
+            'email'           => $this->email,
+            'subject'         => $this->subject,
+            'time'            => $this->time,
+            'ip'              => $this->ip,
+            'topic_emoticon'  => $this->topic_emoticon,
+            'locked'          => $this->locked,
+            'hold'            => $this->hold,
+            'ordering'        => $this->ordering,
+            'hits'            => $this->hits,
+            'moved'           => $this->moved,
+            'modified_by'     => $this->modified_by,
+            'modified_time'   => $this->modified_time,
+            'modified_reason' => $this->modified_reason,
+            'message'         => $this->message
+        ];
+
+        return $properties;
+    }
 }

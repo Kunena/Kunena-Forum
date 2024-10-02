@@ -34,4 +34,24 @@ class KunenaUser extends KunenaDatabaseObject
      * @since   Kunena 6.0
      */
     protected $_table = 'KunenaPrivateUserMap';
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     * 
+     * @return array    Assocative array with the propertie values of table
+     * 
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties(): array
+    {
+        $properties = [
+            'private_id' => $this->private_id,
+            'user_id'    => $this->user_id,
+            'read_at'    => $this->read_at,
+            'replied_at' => $this->replied_at,
+            'deleted_at' => $this->deleted_at
+        ];
+
+        return $properties;
+    }
 }

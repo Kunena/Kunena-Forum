@@ -402,7 +402,7 @@ class KunenaCategory extends KunenaDatabaseObject
             $this->_name = \get_class($this);
         }
 
-        $this->_alias = $this->get('alias', '');
+        $this->_alias = $this->alias ?? '';
     }
 
     /**
@@ -639,45 +639,45 @@ class KunenaCategory extends KunenaDatabaseObject
      * 
      * @since   Kunena 6.4
      */
-    protected function getTableProperties() : array
+    protected function getTableProperties(): array
     {
         $properties = [
-            'id' => $this->id,
-            'parentid' => $this->parentid,
-            'name' => $this->name,
-            'alias' => $this->alias,
-            'icon' => $this->icon,
-            'icon_id' => $this->icon_id,
-            'locked' => $this->locked,
-            'accesstype' => $this->accesstype,
-            'access' => $this->access,
-            'pubAccess' => $this->pubAccess,
-            'pubRecurse' => $this->pubRecurse,
-            'adminAccess' => $this->adminAccess,
-            'adminRecurse' => $this->adminRecurse,
-            'ordering' => $this->ordering,
-            'published' => $this->published,
-            'channels' => $this->channels,
-            'checked_out' => $this->checked_out,
+            'id'               => $this->id,
+            'parentid'         => $this->parentid,
+            'name'             => $this->name,
+            'alias'            => $this->alias,
+            'icon'             => $this->icon,
+            'icon_id'          => $this->icon_id,
+            'locked'           => $this->locked,
+            'accesstype'       => $this->accesstype,
+            'access'           => $this->access,
+            'pubAccess'        => $this->pubAccess,
+            'pubRecurse'       => $this->pubRecurse,
+            'adminAccess'      => $this->adminAccess,
+            'adminRecurse'     => $this->adminRecurse,
+            'ordering'         => $this->ordering,
+            'published'        => $this->published,
+            'channels'         => $this->channels,
+            'checked_out'      => $this->checked_out,
             'checked_out_time' => $this->checked_out_time,
-            'review' => $this->review,
-            'allowAnonymous' => $this->allowAnonymous,
-            'postAnonymous' => $this->postAnonymous,
-            'hits' => $this->hits,
-            'description' => $this->description,
-            'headerdesc' => $this->headerdesc,
-            'topictemplate' => $this->topictemplate,
-            'class_sfx' => $this->class_sfx,
-            'allowPolls' => $this->allowPolls,
-            'topicOrdering' => $this->topicOrdering,
-            'iconset' => $this->iconset,
-            'numTopics' => $this->numTopics,
-            'numPosts' => $this->numPosts,
-            'last_topic_id' => $this->last_topic_id,
-            'last_post_id' => $this->last_post_id,
-            'last_post_time' => $this->last_post_time,
-            'params' => $this->params,
-            'allowRatings' => $this->allowRatings,
+            'review'           => $this->review,
+            'allowAnonymous'   => $this->allowAnonymous,
+            'postAnonymous'    => $this->postAnonymous,
+            'hits'             => $this->hits,
+            'description'      => $this->description,
+            'headerdesc'       => $this->headerdesc,
+            'topictemplate'    => $this->topictemplate,
+            'class_sfx'        => $this->class_sfx,
+            'allowPolls'       => $this->allowPolls,
+            'topicOrdering'    => $this->topicOrdering,
+            'iconset'          => $this->iconset,
+            'numTopics'        => $this->numTopics,
+            'numPosts'         => $this->numPosts,
+            'last_topic_id'    => $this->last_topic_id,
+            'last_post_id'     => $this->last_post_id,
+            'last_post_time'   => $this->last_post_time,
+            'params'           => $this->params,
+            'allowRatings'     => $this->allowRatings
         ];
 
         return $properties;
@@ -1354,7 +1354,7 @@ class KunenaCategory extends KunenaDatabaseObject
         $exists = parent::load($id);
 
         if (!$this->_saving) {
-            $this->_alias = $this->get('alias');
+            $this->_alias = $this->alias;
         }
 
         $registry = new Registry();
@@ -1862,7 +1862,7 @@ class KunenaCategory extends KunenaDatabaseObject
         $table->exists($this->_exists);
 
         // Update alias
-        $success = $this->addAlias($this->get('alias'));
+        $success = $this->addAlias($this->alias);
 
         if ($success) {
             $this->_alias = $this->alias;

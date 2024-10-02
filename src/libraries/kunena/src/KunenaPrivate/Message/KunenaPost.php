@@ -31,4 +31,21 @@ class KunenaPost extends KunenaDatabaseObject
      * @since   Kunena 6.0
      */
     protected $_table = 'KunenaPrivatePostMap';
+
+    /**
+     * Get the table relevant properties. Override for your specific Object
+     * 
+     * @return array    Assocative array with the propertie values of table
+     * 
+     * @since   Kunena 6.4
+     */
+    protected function getTableProperties(): array
+    {
+        $properties = [
+            'private_id' => $this->private_id,
+            'message_id' => $this->message_id
+        ];
+
+        return $properties;
+    }
 }

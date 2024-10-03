@@ -946,9 +946,9 @@ class KunenaTopic extends KunenaDatabaseObject
     }
 
     /**
-     * @param   mixed                $category  category
-     * @param   KunenaMessage|null   $action    action
-     * @param   int                  $itemid    itemid
+     * @param   mixed                       $category  category
+     * @param   KunenaMessage|string|null   $action    action
+     * @param   int                         $itemid    itemid
      *
      * @return \Joomla\CMS\Uri\Uri
      *
@@ -1226,10 +1226,10 @@ class KunenaTopic extends KunenaDatabaseObject
     }
 
     /**
-     * @param   mixed        $category  category
-     * @param   bool         $xhtml     xhtml
-     * @param   null|string  $action    action
-     * @param   int          $itemid    itemid
+     * @param   mixed               $category  category
+     * @param   bool                $xhtml     xhtml
+     * @param   KunenaMessage|null  $action    action
+     * @param   int                 $itemid    itemid
      *
      * @return  boolean
      *

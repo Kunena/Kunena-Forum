@@ -329,7 +329,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      *
      * @param   string  $property  property
      *
-     * @return  integer
+     * @return  mixed
      *
      * @since   Kunena 4.0
      */
@@ -810,12 +810,12 @@ class KunenaAttachment extends KunenaDatabaseObject
      * @param   string      $action  action
      * @param   KunenaUser  $user    user
      *
-     * @return  KunenaExceptionAuthorise|NULL
+     * @return  KunenaExceptionAuthorise|null|bool
      *
      * @throws Exception
      * @since   Kunena 6.0
      */
-    protected function authorisePrivate(string $action, KunenaUser $user): ?KunenaExceptionAuthorise
+    protected function authorisePrivate(string $action, KunenaUser $user): KunenaExceptionAuthorise|bool|null
     {
         if (!$user->exists()) {
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 401);
@@ -966,11 +966,11 @@ class KunenaAttachment extends KunenaDatabaseObject
      *
      * Copies the KunenaAttachment into proper location and makes sure that all the unset fields get properly assigned.
      *
-     * @param   string  $source     Absolute path to the upcoming KunenaAttachment.
-     * @param   null    $basename   Filename without extension.
-     * @param   null    $extension  File extension.
-     * @param   bool    $unlink     Whether to delete the original file or not.
-     * @param   bool    $overwrite  If not allowed, throw exception if the file exists.
+     * @param   string          $source     Absolute path to the upcoming KunenaAttachment.
+     * @param   string|null     $basename   Filename without extension.
+     * @param   string|null     $extension  File extension.
+     * @param   bool            $unlink     Whether to delete the original file or not.
+     * @param   bool            $overwrite  If not allowed, throw exception if the file exists.
      *
      * @return  boolean
      *
@@ -1045,11 +1045,11 @@ class KunenaAttachment extends KunenaDatabaseObject
      *
      * @param   string|null  $editor_text  editor text
      *
-     * @return bool
+     * @return  mixed
      *
      * @since   Kunena 6.0
      */
-    public function removeBBCodeInMessage(string $editor_text = null): bool
+    public function removeBBCodeInMessage(string $editor_text = null): mixed
     {
         if (!$this->inline) {
             return false;
@@ -1068,7 +1068,7 @@ class KunenaAttachment extends KunenaDatabaseObject
     /**
      * @param   KunenaUser  $user  user
      *
-     * @return  boolean|KunenaExceptionAuthorise
+     * @return  KunenaExceptionAuthorise|void
      *
      * @since   Kunena 4.0
      */
@@ -1085,7 +1085,7 @@ class KunenaAttachment extends KunenaDatabaseObject
     /**
      * @param   KunenaUser  $user  user
      *
-     * @return  boolean|KunenaExceptionAuthorise
+     * @return  KunenaExceptionAuthorise|void
      *
      * @throws  Exception
      * @since   Kunena 4.0
@@ -1115,7 +1115,7 @@ class KunenaAttachment extends KunenaDatabaseObject
     /**
      * @param   KunenaUser  $user  user
      *
-     * @return  boolean|KunenaExceptionAuthorise
+     * @return  KunenaExceptionAuthorise|void
      *
      * @throws  Exception
      * @since   Kunena 4.0

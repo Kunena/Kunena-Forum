@@ -246,7 +246,7 @@ class KunenaMessage extends KunenaDatabaseObject
             return false;
         }
 
-        $allreadtime = KunenaCategoryUserHelper::get($this->getCategory(), $user)->allreadtime;
+        $allreadtime = KunenaCategoryUserHelper::get($this->getCategory()->id, $user)->allreadtime;
 
         if ($allreadtime && $this->time < $allreadtime) {
             return false;
@@ -752,8 +752,6 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
 
                 throw new Exception(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
-
-                return false;
             }
 
             $table = $this->getTable();
@@ -832,7 +830,6 @@ class KunenaMessage extends KunenaDatabaseObject
 
             if ($exception) {
                 throw new Exception($exception->getMessage());
-                continue;
             }
 
             try {
@@ -1034,17 +1031,6 @@ class KunenaMessage extends KunenaDatabaseObject
     public function getUserTopic($user = null)
     {
         return $this->getTopic()->getUserTopic($user);
-    }
-
-    /**
-     * @return  KunenaMessageThankyouHelper
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     */
-    public function getThankyou(): KunenaMessageThankyouHelper
-    {
-        return KunenaMessageThankyouHelper::get($this->id);
     }
 
     /**
@@ -1728,7 +1714,7 @@ class KunenaMessage extends KunenaDatabaseObject
     /**
      * @param   KunenaUser  $user  user
      *
-     * @return  KunenaExceptionAuthorise
+     * @return  KunenaExceptionAuthorise|void
      *
      * @throws  Exception
      * @since   Kunena 6.0
@@ -1765,7 +1751,7 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @param   KunenaUser  $user  user
      *
-     * @return  KunenaExceptionAuthorise|bool
+     * @return  KunenaExceptionAuthorise|bool|void
      *
      * @throws  Exception
      * @since   Kunena 6.0

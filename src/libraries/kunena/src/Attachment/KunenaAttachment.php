@@ -776,7 +776,7 @@ class KunenaAttachment extends KunenaDatabaseObject
                         break;
                     }
                 } catch (Exception $e) {
-                    new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401, $e->getMessage());
+                    new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), $user->userid ? 403 : 401, $e);
                 }
             }
         }

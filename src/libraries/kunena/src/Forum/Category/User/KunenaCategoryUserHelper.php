@@ -60,7 +60,7 @@ abstract class KunenaCategoryUserHelper
         $user     = KunenaUserHelper::get($user);
 
         if ($category === null) {
-            return new KunenaCategoryUser(null, $user);
+            return new KunenaCategoryUser(0, $user);
         }
 
         if ($reload || empty(self::$_instances [$user->userid][$category])) {
@@ -171,8 +171,8 @@ abstract class KunenaCategoryUserHelper
     }
 
     /**
-     * @param   array  $ids   ids
-     * @param   null   $user  users
+     * @param   array             $ids   ids
+     * @param   int|string|null   $user  users
      *
      * @return  void
      *

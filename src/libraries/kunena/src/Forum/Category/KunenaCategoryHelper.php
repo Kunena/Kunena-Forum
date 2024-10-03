@@ -136,8 +136,8 @@ abstract class KunenaCategoryHelper
     /**
      * Returns the global Category object, only creating it if it doesn't already exist.
      *
-     * @param   int   $identifier  The category to load - Can be only an integer.
-     * @param   bool  $reload      Reload category from the database.
+     * @param   KunenaCategory|int|null   $identifier  The category to load - Can be only an integer.
+     * @param   bool                      $reload      Reload category from the database.
      *
      * @return  KunenaCategory  The Category object.
      *

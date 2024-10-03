@@ -159,8 +159,6 @@ class KunenaKarma extends CMSObject
      *
      * @param   KunenaUser  $user  user
      *
-     * @return  JsonResponse
-     *
      * @throws Exception
      * @since    Kunena 2.0
      *

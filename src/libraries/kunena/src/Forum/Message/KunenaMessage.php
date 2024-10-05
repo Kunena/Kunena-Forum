@@ -1575,7 +1575,7 @@ class KunenaMessage extends KunenaDatabaseObject
             ->set('once', $once);
 
         try {
-            $msg = trim($layout->render($subscription ? 'default' : 'moderator'));
+            $msg = trim($layout->render($subscription ? ['default'] : ['moderator']));
         } catch (Exception $e) {
             // TODO: throw exception here
         }

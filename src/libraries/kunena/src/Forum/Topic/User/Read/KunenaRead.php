@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Forum\Topic\User\Read;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
@@ -35,7 +34,7 @@ use Kunena\Forum\Libraries\Tables\KunenaUserRead;
  * @property int $user_id
  * @since   Kunena
  */
-class KunenaRead extends CMSObject
+class KunenaRead
 {
     /**
      * @var     boolean
@@ -48,6 +47,36 @@ class KunenaRead extends CMSObject
      * @since   Kunena 6.0
      */
     protected $_db = null;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.4
+     */
+    public $user_id = null;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.4
+     */
+    public $topic_id = null;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.4
+     */
+    public $catrgorie_id = null;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.4
+     */
+    public $message_id = null;
+
+    /**
+     * @var     int
+     * @since   Kunena 6.4
+     */
+    public $time = null;
 
     /**
      * @param   mixed  $user   user
@@ -70,7 +99,7 @@ class KunenaRead extends CMSObject
         $table = $this->getTable();
 
         // Lets bind the data
-        $this->setProperties($table->getProperties());
+        $this->bind($table->getProperties());
         $this->_exists     = false;
         $this->topic_id    = $topic->exists() ? $topic->id : null;
         $this->category_id = $topic->exists() ? $topic->category_id : null;
@@ -141,7 +170,9 @@ class KunenaRead extends CMSObject
     public function bind(array $data, array $ignore = []): void
     {
         $data = array_diff_key($data, array_flip($ignore));
-        $this->setProperties($data);
+        foreach ((array) $data as $property => $value) {
+            $this->$property = $value;
+        }
     }
 
     /**
@@ -190,7 +221,7 @@ class KunenaRead extends CMSObject
         }
 
         // Assuming all is well at this point lets bind the data
-        $this->setProperties($table->getProperties());
+        $this->bind($table->getProperties());
 
         return $this->_exists;
     }
@@ -209,7 +240,16 @@ class KunenaRead extends CMSObject
     {
         // Create the topics table object
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+
+        $properties = [
+            'user_id'     => $this->user_id,
+            'topic_id'    => $this->topic_id,
+            'category_id' => $this->category_id,
+            'message_id'  => $this->message_id,
+            'time'        => $this->time
+        ];
+
+        $table->bind($properties);
         $table->exists($this->_exists);
 
         // Check and store the object.

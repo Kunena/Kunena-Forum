@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Forum\Topic\User;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
@@ -44,7 +43,7 @@ use Kunena\Forum\Libraries\Tables\KunenaUserTopics;
  *
  * @since   Kunena 6.0
  */
-class KunenaTopicUser extends CMSObject
+class KunenaTopicUser
 {
     /**
      * @var     boolean
@@ -79,7 +78,7 @@ class KunenaTopicUser extends CMSObject
         $table = $this->getTable();
 
         // Lets bind the data
-        $this->setProperties($table->getProperties());
+        $this->bind($table->getProperties());
         $this->_exists     = false;
         $this->topic_id    = $topic->id;
         $this->category_id = $topic->category_id;
@@ -174,7 +173,7 @@ class KunenaTopicUser extends CMSObject
         }
 
         // Assuming all is well at this point lets bind the data
-        $this->setProperties($table->getProperties());
+        $this->bind($table->getProperties());
 
         return $this->_exists;
     }
@@ -297,7 +296,9 @@ class KunenaTopicUser extends CMSObject
     public function bind(array $data, array $ignore = []): void
     {
         $data = array_diff_key($data, array_flip($ignore));
-        $this->setProperties($data);
+        foreach ((array) $data as $property => $value) {
+            $this->$property = $value;
+        }
     }
 
     /**
@@ -314,7 +315,20 @@ class KunenaTopicUser extends CMSObject
     {
         // Create the topics table object
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+
+        $properties = [
+            'user_id'      => $this->user_id,
+            'topic_id'     => $this->topic_id,
+            'category_id'  => $this->category_id,
+            'posts'        => $this->posts,
+            'last_post_id' => $this->last_post_id,
+            'owner'        => $this->owner,
+            'favorite'     => $this->favorite,
+            'subscribed'   => $this->subscribed,
+            'params'       => $this->params
+        ];
+
+        $table->bind($properties);
         $table->exists($this->_exists);
 
         // Check and store the object.

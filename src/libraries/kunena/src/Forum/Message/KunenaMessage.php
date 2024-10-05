@@ -755,7 +755,7 @@ class KunenaMessage extends KunenaDatabaseObject
             }
 
             $table = $this->getTable();
-            $table->bind($this->getProperties());
+            $table->bind($this->getTableProperties());
             $table->exists(true);
 
             try {

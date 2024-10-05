@@ -614,6 +614,8 @@ class KunenaPoll extends CMSObject
             return true;
         }
 
+        $success = true;
+
         // Create the table object
         $table = $this->getTable();
 
@@ -636,10 +638,11 @@ class KunenaPoll extends CMSObject
             $db->execute();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
+            $success = false;
         }
 
         // Delete votes
-        $query = $db->getQuery();
+        $query = $db->createQuery();
         $query->delete($db->quoteName('#__kunena_polls_users'))
             ->where($db->quoteName('pollid') . ' = ' . $db->quote($this->id));
         $db->setQuery($query);
@@ -648,6 +651,7 @@ class KunenaPoll extends CMSObject
             $db->execute();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
+            $success = false;
         }
 
         // Remove poll from the topic

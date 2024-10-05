@@ -364,24 +364,18 @@ class KunenaPoll extends CMSObject
     {
         if (!$this->exists()) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));
-
-            return false;
         }
 
         $options = $this->getOptions();
 
         if (!isset($options[$option])) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_DOES_NOT_EXIST'));
-
-            return false;
         }
 
         $user = KunenaFactory::getUser($user);
 
         if (!$user->exists()) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_NOT_EXIST'));
-
-            return false;
         }
 
         $lastVoteId = $this->getLastVoteId($user);
@@ -446,8 +440,6 @@ class KunenaPoll extends CMSObject
                 KunenaError::displayDatabaseError($e);
 
                 throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
-
-                return false;
             }
         } else {
             // Already voted
@@ -473,8 +465,6 @@ class KunenaPoll extends CMSObject
                 KunenaError::displayDatabaseError($e);
 
                 throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
-
-                return false;
             }
         }
 
@@ -588,8 +578,6 @@ class KunenaPoll extends CMSObject
             KunenaError::displayDatabaseError($e);
 
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_SAVE_FAIL'));
-
-            return false;
         }
 
         return true;
@@ -697,22 +685,18 @@ class KunenaPoll extends CMSObject
     /**
      * Method to save the \Kunena\Forum\Libraries\Forum\Topic\TopicPoll object to the database.
      *
-     * @param   bool  $updateOnly  Save the object only if not a new poll.
-     *
      * @return  boolean  True on success.
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function save($updateOnly = false): bool
+    public function save(): bool
     {
         // Are we creating a new poll
         $isnew = !$this->_exists;
 
         if ($isnew && empty($this->newOptions)) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_SAVE_ERROR_NEW_AND_NO_OPTIONS'));
-
-            return false;
         }
 
         // Create the topics table object

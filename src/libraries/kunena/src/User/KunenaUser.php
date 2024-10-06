@@ -298,6 +298,204 @@ class KunenaUser
      * @since   Kunena 6.0
      */
     public $lastvisitDate;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $typeAlias;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $odnoklassniki;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $bebo;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $digg;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $telegram;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $vk;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $microsoft;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $skype;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $x_social;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $facebook;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $google;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $github;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $myspace;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $linkedin;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $linkedin_company;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $delicious;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $instagram;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $qqsocial;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $blogspot;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $youtube;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $reddit;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $bsky_app;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $flickr;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $apple;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $qzone;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $vimeo;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $whatsapp;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $weibo;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $wechat;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $yim;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $pinterest;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $ok;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $ip;
 
     /**
      * @var     null

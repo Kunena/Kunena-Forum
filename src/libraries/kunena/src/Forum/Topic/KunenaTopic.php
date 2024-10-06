@@ -161,6 +161,48 @@ class KunenaTopic extends KunenaDatabaseObject
      * @since   Kunena 6.0
      */
     public $category_id = 0;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $subject;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $icon_id;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $label_id;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $locked;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $ordering;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $hits;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $attachments;
 
     /**
      * @var     string

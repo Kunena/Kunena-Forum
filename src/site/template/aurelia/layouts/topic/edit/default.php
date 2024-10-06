@@ -48,7 +48,8 @@ $this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.c
 if ($this->config->pollEnabled) {
     Text::script('COM_KUNENA_POLL_OPTION_NAME');
     Text::script('COM_KUNENA_EDITOR_HELPLINE_OPTION');
-    $this->wa->registerAndUseScript('poll', 'media/kunena/core/js/poll.js');
+    $this->wa->registerAndUseScript('poll', 'media/kunena/core/js/poll.js')
+        ->registerAndUseScript('bootstrap.datepicker', 'media/kunena/core/js/bootstrap.datepicker.js');
 }
 
 $this->k       = 0;

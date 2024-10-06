@@ -19,7 +19,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
@@ -40,7 +39,7 @@ use StdClass;
  * @property string $title
  * @since   Kunena 6.0
  */
-class KunenaPoll extends CMSObject
+class KunenaPoll
 {
     public $id;
 
@@ -115,8 +114,6 @@ class KunenaPoll extends CMSObject
         // Always load the topic -- if poll does not exist: fill empty data
         $this->_db = Factory::getContainer()->get('DatabaseDriver');
         $this->load($identifier);
-
-        parent::__construct($identifier);
     }
 
     /**
@@ -142,7 +139,7 @@ class KunenaPoll extends CMSObject
         $this->_exists = $table->load($id);
 
         // Assuming all is well at this point lets bind the data
-        $this->setProperties($table->getProperties());
+        $this->bind($table->getProperties());
 
         return $this->_exists;
     }
@@ -597,7 +594,9 @@ class KunenaPoll extends CMSObject
             $data = array_intersect_key($data, array_flip($allow));
         }
 
-        $this->setProperties($data);
+        foreach ((array) $data as $property => $value) {
+            $this->$property = $value;
+        }
     }
 
     /**
@@ -705,7 +704,14 @@ class KunenaPoll extends CMSObject
 
         // Create the topics table object
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+
+        $properties = [
+            'title'          => $this->title,
+            'threadid'       => $this->threadid,
+            'polltimetolive' => $this->polltimetolive
+        ];
+
+        $table->bind($properties);
         $table->exists($this->_exists);
 
         // Store the topic data in the database

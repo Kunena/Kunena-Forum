@@ -11,7 +11,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 	var options = null;
 	var nboptionsmax = jQuery('#nb_options_allowed').val();
 
-	function createNewOptionField(optionText, optionId) {
+	function createNewOptionField(optionText, optionId, isNew) {
 		options++;
 		var paragraph = new CKEDITOR.dom.element( 'p' );
 		paragraph.setStyle( 'margin-top', '5px' );
@@ -39,9 +39,12 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 		var inputField = new CKEDITOR.dom.element( 'input' );
 		inputField.addClass( 'kunenackeditorpolloption' );
 		inputField.addClass( 'cke_dialog_ui_input_text' );
-        if (optionId !== undefined) {
+        if (optionId !== undefined && (isNew === undefined || !isNew)) {
             inputField.setAttribute('id', 'field_option' + optionId);
             inputField.setAttribute('name', 'polloptionsID[' + optionId + ']');
+        } else if (optionId && isNew) {
+            inputField.setAttribute('id', 'field_option' + optionId);
+            inputField.setAttribute('name', 'polloptionsID[new' + optionId + ']');
         } else {
             inputField.setAttribute('id', 'field_option' + options);
             inputField.setAttribute('name', 'polloptionsID[new' + options + ']');
@@ -89,10 +92,11 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 								createNewOptionField();
 							}
 							else {
-								// TODO :  Hide button add
-								
 								console.log('max options reach ');
 							}
+                            if (options >= nboptionsmax) {
+                                this.disable();
+                            }
 						}
 					},
 					{
@@ -104,17 +108,43 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
                             jQuery('.polloptioncheck:checked').each(function () {
                                 var optionName = jQuery(this).attr('name');
                                 var optionNew = optionName.match(/\[(new)\d+\]/);
+                                var optionId;
                                 if (optionNew) {
-                                    var optionId = optionName.match(/\[new(\d+)\]/)[1];
+                                    optionId = optionName.match(/\[new(\d+)\]/)[1];
                                 } else {
-                                    var optionId = optionName.match(/\[(\d+)\]/)[1];
+                                    optionId = optionName.match(/\[(\d+)\]/)[1];
                                 }
                                 jQuery('#field_option' + optionId).closest('p').remove();
+                                if (options > 0) {
+                                    options--;
+                                }
                             });
-                            if (options > 0) {
-                                options--;
+                            if (options < nboptionsmax) {
+                                var button = this._.dialog.getContentElement('tab-basic', 'polladdoption');
+                                button.enable();
                             }
-							// TODO : show button hide if it was hidden
+                            counter = 0;
+                            jQuery('#dynamicContent p').each(function () {
+                                counter++;
+                                var childInput = jQuery(this).children('.kunenackeditorpolloption').first();
+                                var childlabel = jQuery(this).children('label').first();
+                                childlabel.text(Joomla.Text._('COM_KUNENA_POLL_OPTION_NAME') + ' ' + counter + ' ');
+                                childlabel.attr('id', 'labeloption' + counter);
+                                var optionName = childInput.attr('name');
+                                var optionNew = optionName.match(/\[(new)\d+\]/);
+                                if (optionNew) {
+                                    var optionId = optionName.match(/\[new(\d+)\]/)[1];
+                                    if (optionId != counter) {
+                                        var polloptioncheck = jQuery(this).children('.polloptioncheck').first();
+                                        polloptioncheck.attr('id', 'polloptioncheck' + counter);
+                                        polloptioncheck.attr('name', 'polloptioncheck[' + counter + ']');
+                                        childInput.attr('id', 'field_option' + counter);
+                                        childInput.attr('name', 'polloptionsID[new' + counter + ']');
+                                    }
+                                } else {
+
+                                }
+                            });
 						}
 					},
 					{
@@ -130,7 +160,9 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 							// Apply the datepicker to the input control
 							jQuery(theInput.selector).datepicker({
 								showButtonPanel: true,
-								dateFormat: "yy-mm-dd"
+								format: "yyyy-mm-dd",
+                                todayHighlight: true,
+                                autoclose: true
 							});
 						},
 					},
@@ -150,6 +182,7 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 			}
 		],
 		onOk: function() {
+            jQuery( '#poll_options' ).empty();
 			var inputTitlePoll = new CKEDITOR.dom.element( 'input' );
 			inputTitlePoll.setAttribute('type', 'hidden');
 			inputTitlePoll.setAttribute('name', 'poll_title' );
@@ -162,36 +195,77 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 			inputPollTTL.setAttribute('value', this.getValueOf( 'tab-basic', 'polllifespan' ) );
 			CKEDITOR.document.getById( 'poll_options' ).append( inputPollTTL );
 
-			jQuery('.kunenackeditorpolloption').each(function(index) {
-				index++
+            jQuery('.kunenackeditorpolloption').each(function (index) {
+                index++
                 var optionName = jQuery(this).attr('name');
                 var optionNew = optionName.match(/\[(new)\d+\]/);
-                if (optionNew){
+                if (optionNew) {
                     var optionId = optionName.match(/\[new(\d+)\]/)[1];
                 } else {
                     var optionId = optionName.match(/\[(\d+)\]/)[1];
                 }
-				var inputPollOption = new CKEDITOR.dom.element( 'input' );
-				inputPollOption.setAttribute('type', 'hidden');
+                var inputPollOption = new CKEDITOR.dom.element('input');
+                inputPollOption.setAttribute('type', 'hidden');
                 if (optionNew) {
                     inputPollOption.setAttribute('name', 'polloptionsID[' + optionNew[1] + optionId + ']');
                 } else {
                     inputPollOption.setAttribute('name', 'polloptionsID[' + optionId + ']');
                 }
-				inputPollOption.setAttribute('value', jQuery('#field_option'+optionId).val() );
-				CKEDITOR.document.getById( 'poll_options' ).append(  inputPollOption );
-			});
+                inputPollOption.setAttribute('value', jQuery('#field_option' + optionId).val());
+                CKEDITOR.document.getById('poll_options').append(inputPollOption);
+            });
 		},
+        onCancel: function () {
+            jQuery('#dynamicContent').empty();
+            options = 0;
+        },
 		onShow: function() {
 			if (jQuery('#poll_exist_edit') !== undefined) {
 				this.setValueOf( 'tab-basic', 'polltitle', jQuery('#ckeditor_dialog_polltitle').val() );
 				this.setValueOf( 'tab-basic', 'polllifespan', jQuery('#ckeditor_dialog_polltimetolive').val() );
+                
+                var polloptions = jQuery('#poll_options input[name*="polloptionsID"]');
+                var polloptionsset = jQuery('#poll_options').children().length > 0;
+                var polloptionsIDs = [];
+                var polloptionsNewIDs = [];
+                if (polloptions) {
+                    polloptions.each(function () {
+                        var optionName = jQuery(this).attr('name');
+                        var optionId = optionName.match(/\[(\d+)\]$/);
+                        if (optionId) {
+                            polloptionsIDs.push(optionId[1]);
+                        }
+                        var optionNewId = optionName.match(/\[new(\d+)\]$/);
+                        if (optionNewId) {
+                            polloptionsNewIDs.push(optionNewId[1]);
+                        }
+                    });
+                }
 
                 jQuery('.ckeditor_dialog_polloption').each(function () {
                     var optionName = jQuery(this).attr('name');
                     var optionId = optionName.match(/\d+$/);
-                    createNewOptionField(jQuery(this).val(), optionId);
+                    if (jQuery('#field_option' + optionId).length === 0) {
+                        if (!polloptionsset
+                            || (polloptionsset && polloptionsIDs.length > 0 && polloptionsIDs.includes(optionId[0]))
+                        ) {
+                            createNewOptionField(jQuery(this).val(), optionId);
+                        }
+                    }
                 });
+                jQuery('#poll_options input[name*="polloptionsID[new"]').each(function () {
+                    var optionName = jQuery(this).attr('name');
+                    var optionId = optionName.match(/\[new(\d+)\]$/);
+
+                    if (optionId && jQuery('#field_option' + optionId[1]).length === 0) {
+                        createNewOptionField(jQuery(this).val(), optionId[1], true);
+                    }
+                });
+
+                if (options >= nboptionsmax) {
+                    var button = this.getContentElement('tab-basic', 'polladdoption');
+                    button.disable();
+                }
 			}
 		}
 	};

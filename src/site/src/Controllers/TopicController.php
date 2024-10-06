@@ -1249,7 +1249,7 @@ class TopicController extends KunenaController
             'icon_id'           => $this->app->input->getInt('topic_emoticon', $topic->icon_id),
             'anonymous'         => $this->app->input->getInt('anonymous', 0),
             'poll_title'        => $this->app->input->getString('poll_title', null),
-            'poll_options'      => $this->app->input->get('polloptionsID', [], 'post', 'array'),
+            'poll_options'      => $this->app->input->get('polloptionsID', [], 'array'),
             'poll_time_to_live' => $this->app->input->getString('poll_time_to_live', 0),
             'subscribe'         => $this->app->input->getInt('subscribeMe', 0),
             'private'           => (string) $this->input->getRaw('private_message'),

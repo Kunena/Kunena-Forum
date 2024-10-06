@@ -41,12 +41,12 @@ function delete-ExistingKunenaAddonsDir {
     Write-Host "Delete existing directories for Kunena-Addons before to proceed"
     
     $pathKunenalatest = $joomlaInstallDir + "\modules\mod_kunenalatest"
-    if (Test-Path -Path ) {
+    if (Test-Path -Path $pathKunenalatest) {
         Remove-Item -LiteralPath $pathKunenalatest -Force -Recurse
     }
 
     $pathKunenalogin = $joomlaInstallDir + "\modules\mod_kunenalogin"
-    if (Test-Path -Path ) {
+    if (Test-Path -Path $pathKunenalogin) {
         Remove-Item -LiteralPath $pathKunenalogin -Force -Recurse
     }
 
@@ -56,7 +56,7 @@ function delete-ExistingKunenaAddonsDir {
     }
 
     $pathKunenastats = $joomlaInstallDir + "\modules\mod_kunenastats"
-    if (Test-Path -Path ) {
+    if (Test-Path -Path $pathKunenastats) {
         Remove-Item -LiteralPath $pathKunenastats -Force -Recurse
     }
     

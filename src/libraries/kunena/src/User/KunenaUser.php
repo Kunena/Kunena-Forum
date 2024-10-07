@@ -2429,6 +2429,7 @@ class KunenaUser extends CMSObject
      * @return boolean
      * @throws Exception
      * @since Kunena 5.2.0
+     * @deprecated Kunena 6.3.0
      */
     public function checkUserAllowedLinksImages()
     {

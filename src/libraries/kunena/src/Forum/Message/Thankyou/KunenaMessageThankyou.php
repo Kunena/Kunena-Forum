@@ -36,7 +36,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
  * @property int    $userid
  * @since   Kunena 6.0
  */
-class KunenaMessageThankyou extends CMSObject
+class KunenaMessageThankyou
 {
     /**
      * @var     integer
@@ -60,8 +60,6 @@ class KunenaMessageThankyou extends CMSObject
     public function __construct(int $id)
     {
         $this->id = (int) $id;
-
-        parent::__construct($id);
     }
 
     /**

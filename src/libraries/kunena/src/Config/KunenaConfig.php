@@ -1819,16 +1819,9 @@ class KunenaConfig
      */
     public function set($property, $value): bool
     {
-        // type checking?
-        if (property_exists('KunenaConfig', $property)) {
-            if (strcmp(\gettype($this->$property), \gettype($value)) == 0) {
-                $this->$property = $value;
+        $this->$property = $value;
 
-                return true;
-            }
-        }
-
-        return false;
+        return true;
     }
 
     /**

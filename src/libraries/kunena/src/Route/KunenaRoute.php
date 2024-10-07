@@ -995,18 +995,18 @@ abstract class KunenaRoute
     }
 
     /**
-     * @param   KunenaTopic                 $topic     topic
-     * @param   bool                        $xhtml     xhtml
-     * @param   KunenaMessage|string|null   $action    actions
-     * @param   KunenaCategory|null         $category  category
-     * @param   int                         $itemid    itemid
+     * @param   KunenaTopic           $topic     topic
+     * @param   bool                  $xhtml     xhtml
+     * @param   ?KunenaMessage|string $action    actions
+     * @param   ?KunenaCategory       $category  category
+     * @param   int                   $itemid    itemid
      *
      * @return  boolean
      *
      * @since   Kunena 6.0
      * @throws Exception
      */
-    public static function getTopicUrl(KunenaTopic $topic, bool $xhtml = true, $action = null, KunenaCategory $category = null, $Itemid = 0)
+    public static function getTopicUrl(KunenaTopic $topic, bool $xhtml = true, $action = null, ?KunenaCategory $category = null, $Itemid = 0)
     {
         if (!$category) {
             $category = $topic->getCategory();
@@ -1018,15 +1018,15 @@ abstract class KunenaRoute
     /**
      * @param   KunenaMessage        $message   message
      * @param   bool                 $xhtml     xhtml
-     * @param   KunenaTopic          $topic     topic
-     * @param   KunenaCategory       $category  category
+     * @param   ?KunenaTopic         $topic     topic
+     * @param   ?KunenaCategory      $category  category
      *
      * @return  boolean
      *
      * @since   Kunena 6.0
      * @throws Exception
      */
-    public static function getMessageUrl(KunenaMessage $message, $xhtml = true, ?KunenaTopic $topic, ?KunenaCategory $category)
+    public static function getMessageUrl(KunenaMessage $message, $xhtml = true, ?KunenaTopic $topic = null, ?KunenaCategory $category = null)
     {
         // FIXME: not yet fully implemented...
         if (!$category) {

@@ -16,7 +16,6 @@ namespace Kunena\Forum\Libraries\Session;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
@@ -28,13 +27,19 @@ use RuntimeException;
  *
  * @since   Kunena 6.0
  */
-class KunenaSession extends CMSObject
+class KunenaSession
 {
     /**
-     * @var     mixed
-     * @since   Kunena 6.0
+     * @var integer
+     * @since Kunena 6.0
      */
-    private static $_instance;
+    public $userid;
+
+    /**
+     * @var string
+     * @since Kunena 6.4
+     */
+    public $allowed;
 
     /**
      * @var     integer|string
@@ -46,15 +51,20 @@ class KunenaSession extends CMSObject
      * @var     integer|string
      * @since   Kunena 6.0
      */
-    public $currvisit;
+    public $readtopics;
 
     /**
      * @var     integer|string
      * @since   Kunena 6.0
      */
-    public $readtopics;
+    public $currvisit;
 
-    public $userid;
+
+    /**
+     * @var     mixed
+     * @since   Kunena 6.0
+     */
+    private static $_instance;
 
     /**
      * @var     boolean
@@ -98,8 +108,20 @@ class KunenaSession extends CMSObject
             $userCategory      = KunenaCategoryUserHelper::get(0, (int) $identifier);
             $this->allreadtime = $userCategory->allreadtime ? $userCategory->allreadtime : $this->lasttime;
         }
+    }
 
-        parent::__construct($identifier);
+    /**
+     * Bind the data
+     * @param array $properties
+     * @return bool
+     */
+    public function bind(array $properties)
+    {
+        foreach ((array) $properties as $k => $v) {
+            $this->$k = $v;
+        }
+
+        return true;
     }
 
     /**
@@ -123,7 +145,7 @@ class KunenaSession extends CMSObject
         }
 
         // Assuming all is well at this point lets bind the data
-        $this->setProperties($table->getProperties());
+        $this->bind($table->getProperties());
         $this->userid = $userid;
 
         return true;
@@ -163,7 +185,7 @@ class KunenaSession extends CMSObject
 
     /**
      * @param   bool  $update  update
-     * @param   null  $userid  userid
+     * @param   int|null  $userid  userid
      *
      * @return  KunenaSession
      * @throws  Exception
@@ -240,7 +262,16 @@ class KunenaSession extends CMSObject
 
         // Create the user table object
         $table = $this->getTable();
-        $table->bind($this->getProperties());
+
+        $properties = [
+            'userid'     => $this->userid,
+            'allowed'    => $this->allowed,
+            'lasttime'   => $this->lasttime,
+            'readtopics' => $this->readtopics,
+            'currvisit'  => $this->currvisit
+        ];
+
+        $table->bind($properties);
         $table->exists($this->_exists);
 
         // Check and store the object.

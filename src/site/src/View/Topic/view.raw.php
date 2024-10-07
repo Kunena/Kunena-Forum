@@ -243,7 +243,7 @@ class raw extends KunenaView
 
         if ($user->exists() || $this->config->ratingEnabled) {
             $rate           = KunenaRateHelper::get($topicid);
-            $rate->stars    = $starid;
+            $rate->rate     = $starid;
             $rate->topic_id = $topicid;
 
             $response = $rate->save($this->me);

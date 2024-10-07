@@ -46,7 +46,7 @@ class KunenaRate
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $stars = 0;
+    public $rate = 0;
 
     /**
      * @var     null
@@ -59,12 +59,6 @@ class KunenaRate
      * @since   Kunena 6.0
      */
     public $time = null;
-
-    /**
-     * @var     integer
-     * @since   Kunena 6.0
-     */
-    public $rate;
 
     /**
      * @var     boolean
@@ -228,7 +222,7 @@ class KunenaRate
         $values = [
             $this->_db->quote($this->topic_id),
             $this->_db->quote($user->userid),
-            $this->_db->quote($this->stars),
+            $this->_db->quote($this->rate),
             $this->_db->quote($time->toSQL()),
         ];
 

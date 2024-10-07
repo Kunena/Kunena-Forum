@@ -50,6 +50,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      */
     protected $versions = [
         'PHP'     => [
+            '8.4' => '8.4.0',
             '8.3' => '8.3.0',
             '8.2' => '8.2.0',
             '8.1' => '8.1.0',
@@ -82,7 +83,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             '0' => '10.8.6', // Preferred version
         ],
         'Joomla!' => [
-            '5.2' => '5.2.0-beta3',
+            '5.2' => '5.2.0-rc3',
             '5.1' => '5.1.4',
             '5.0' => '5.0.3',
             '0' => '5.1.4',  // Preferred version

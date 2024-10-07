@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Forum\Message\Karma;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
@@ -32,7 +31,7 @@ use Kunena\Forum\Libraries\Tables\TableKunenaKarma;
  *
  * @since 6.2
  */
-class KunenaKarma extends CMSObject
+class KunenaKarma
 {
     /**
      * @var     null
@@ -81,8 +80,20 @@ class KunenaKarma extends CMSObject
         // Always load the topic -- if rate does not exist: fill empty data
         $this->_db = Factory::getContainer()->get('DatabaseDriver');
         $this->load($identifier);
+    }
 
-        parent::__construct($identifier);
+    /**
+     * Bind the data
+     * @param array $properties
+     * @return bool
+     */
+    public function bind(array $properties)
+    {
+        foreach ((array) $properties as $k => $v) {
+            $this->$k = $v;
+        }
+
+        return true;
     }
 
     /**
@@ -104,7 +115,7 @@ class KunenaKarma extends CMSObject
         $this->_exists = $table->load($id);
 
         // Assuming all is well at this point lets bind the data
-        $this->setProperties($table->getProperties());
+        $this->bind($table->getProperties());
 
         return $this->_exists;
     }

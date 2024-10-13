@@ -3,15 +3,11 @@
 /**
  * Kunena Component
  *
- * @package        Kunena.Framework
+ * @package         Kunena.Framework
  *
- * @copyright      Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @copyright      Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
- * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link           https://www.kunena.org
- *
- * Based on FireBoard Component
- * @link           http://www.bestofjoomla.com
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 
 namespace Kunena\Forum\Libraries\Config;

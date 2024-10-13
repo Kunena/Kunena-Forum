@@ -307,10 +307,17 @@
                 DROP IF EXISTS `bluesky_app`;
             </query>
         </version>
-	<version version="6.4.0-DEV"
+		<version version="6.4.0-DEV"
                  versiondate="2024-09-11"
                  versionname="Internal">            
             <query mode="silenterror">ALTER TABLE `#__kunena_smileys` DROP `greylocation`;</query>
+        </version>
+        <version version="6.4.0-DEV"
+                 versiondate="2024-10-12"
+                 versionname="Internal">
+            <query mode="silenterror">
+            ALTER TABLE `#__kunena_users` ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`;  
+            </query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

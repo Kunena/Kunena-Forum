@@ -17,8 +17,8 @@ namespace Kunena\Forum\Administrator\Controller;
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;

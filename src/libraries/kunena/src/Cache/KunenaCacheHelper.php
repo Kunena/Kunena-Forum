@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\Cache;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Menu\KunenaMenuHelper;
 

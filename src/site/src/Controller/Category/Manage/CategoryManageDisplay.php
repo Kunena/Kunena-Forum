@@ -16,7 +16,7 @@ namespace Kunena\Forum\Site\Controller\Category\Manage;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;

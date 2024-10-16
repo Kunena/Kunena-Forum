@@ -16,8 +16,8 @@ namespace Kunena\Forum\Libraries\Image;
 \defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Kunena\Forum\Libraries\Folder\KunenaFolder;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 

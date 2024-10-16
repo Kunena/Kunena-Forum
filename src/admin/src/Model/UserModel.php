@@ -231,7 +231,7 @@ class UserModel extends KunenaModel
         }
 
         // Build special ranks select list
-        return HTMLHelper::_('select.genericlist', $yesnoRank, 'newRank', 'class="inputbox form-control" size="1"', 'value', 'text', $user->rank);
+        return HTMLHelper::_('select.genericlist', $yesnoRank, 'newRank', 'class="form-select" size="1"', 'value', 'text', $user->rank);
     }
 
     /**

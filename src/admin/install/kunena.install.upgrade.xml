@@ -270,6 +270,11 @@
             ALTER TABLE `#__kunena_users` CHANGE `twitter` `x_social` VARCHAR(75) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL; 
             </query>
         </version>
+                <version version="6.3.4-DEV"
+                 versiondate="2024-08-01"
+                 versionname="Internal">
+            <phpfile name="6.3.4-2024-08-01_update_configuration_to_x"/>
+        </version>
         <version version="6.4.0-DEV"
                  versiondate="2024-05-25"
                  versionname="Internal">
@@ -318,11 +323,6 @@
             <query mode="silenterror">
             ALTER TABLE `#__kunena_users` ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`;  
             </query>
-        </version>
-        <version version="6.3.4-DEV"
-                 versiondate="2024-08-01"
-                 versionname="Internal">
-            <phpfile name="6.3.4-2024-08-01_update_configuration_to_x"/>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

@@ -1315,6 +1315,11 @@ class KunenaConfig
      * @since   Kunena 6.4.0
      */
     public $blueskyappHandleOfApp = '';
+    
+    /**
+     * @var     string  Define X API consumer key
+     * @since   Kunena 6.3.0
+     */
     public $XConsumerKey = '';
 
     /**
@@ -1322,6 +1327,11 @@ class KunenaConfig
      * @since   Kunena 6.4.0
      */
     public $blueskyappPasswordOfApp = '';
+    
+    /**
+     * @var     string  Define X API consumer secret
+     * @since   Kunena 6.3.0
+     */
     public $XConsumerSecret = '';
 
     /**

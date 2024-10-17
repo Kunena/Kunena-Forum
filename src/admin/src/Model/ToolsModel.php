@@ -700,6 +700,7 @@ class ToolsModel extends AdminModel
                     !\is_array($value) && $key != 'id' && $key != 'boardTitle' && $key != 'email' && $key != 'offlineMessage'
                     && $key != 'emailVisibleAddress' && $key != 'stopForumSpamKey' && $key != 'ebayAffiliateId'
                     && $key != 'ebayApiKey' && $key != 'blueskyappHandleOfApp' && $key != 'blueskyappPasswordOfApp'
+                    && $key != 'XConsumerKey' && $key != 'XConsumerSecret'
                     && $key != 'googleMapApiKey'
                 ) {
                     $kconfigSettings .= '[tr][td]' . $key . '[/td][td]' . $value . '[/td][/tr]';

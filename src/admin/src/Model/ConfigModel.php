@@ -1083,16 +1083,26 @@ class ConfigModel extends AdminModel
     /**
      * @var     string  Define BlueSkyApp APP handle to use API
      * @since   Kunena 6.4.0
+     */    
+    public $blueskyappHandleOfApp = '';
+    
+    /**
+     * @var     string  Define X API consumer key
+     * @since   Kunena 4.0.0
      */
     public $XConsumerKey = '';
-    public $blueskyappHandleOfApp = '';
 
     /**
      * @var     string  Define BlueSkyApp APP password to use API
      * @since   Kunena 6.4.0
+     */    
+    public $blueskyappPasswordOfApp = '';
+    
+    /**
+     * @var     string  Define X API consumer secret
+     * @since   Kunena 4.0.0
      */
     public $XConsumerSecret = '';
-    public $blueskyappPasswordOfApp = '';
 
     /**
      * @var     boolean  Allow to define if the user can change the subject of topic on replies

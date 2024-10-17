@@ -2853,8 +2853,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     {
         // FIXME: use AJAX instead...
         $uri             = Uri::getInstance();
-        $consumer_key    = trim($this->config->twitterConsumerKey);
-        $consumer_secret = trim($this->config->twitterConsumerSecret);
+        $consumer_key    = trim($this->config->XConsumerKey);
+        $consumer_secret = trim($this->config->XConsumerSecret);
 
         if (is_file(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json')) {
             $tweet_data = file_get_contents(JPATH_CACHE . '/kunena_tweet/kunenatweetdisplay-' . $tweetid . '.json');

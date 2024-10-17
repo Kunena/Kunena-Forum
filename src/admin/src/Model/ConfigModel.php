@@ -1084,12 +1084,14 @@ class ConfigModel extends AdminModel
      * @var     string  Define BlueSkyApp APP handle to use API
      * @since   Kunena 6.4.0
      */
+    public $XConsumerKey = '';
     public $blueskyappHandleOfApp = '';
 
     /**
      * @var     string  Define BlueSkyApp APP password to use API
      * @since   Kunena 6.4.0
      */
+    public $XConsumerSecret = '';
     public $blueskyappPasswordOfApp = '';
 
     /**

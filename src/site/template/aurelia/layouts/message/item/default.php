@@ -123,27 +123,12 @@ $list = [];
 <?php endif; ?>
 
 <?php if (!empty($attachments)) : 
-		//  Display the error message when the user is a guest and he isn't allowed to see the attachments
-		if ($attachs->totalProtected > 0 && !$this->me->exists()) :  
-		    if (!$this->config->showImgForGuest && $attachs->image > 0 ) {
-				if ($attachs->image > 1) {
-                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_MULTIPLES'))->setLayout('unauthorised');
-                } else {
-                    echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG_SIMPLE'))->setLayout('unauthorised');
-                }
-			} else {
-				if ($attachs->file > 1) {
-                echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_MULTIPLES'))->setLayout('unauthorised');
-                } else {
-                    echo KunenaLayout::factory('BBCode/Image')->set('title', Text::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE_SIMPLE'))->setLayout('unauthorised');
-                }
-			} 
-		else : ?> 	
-			<?php if ($attachs->inline == 0) : ?>
-			<div class="card pb-3 pd-3 mb-3">
+    if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest ) || $this->me->exists()) : ?> 	
+					<div class="card pb-3 pd-3 mb-3">
+                    <?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>
             	<div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
-            		<div class="card-body kattach">                		
-             <?php endif; ?>
+            	      <div class="card-body kattach">          		
+             <?php endif; ?>	
             			<ul class="thumbnails" style="list-style:none;">   		
 						<?php foreach ($attachments as $attachment) :	
 
@@ -175,11 +160,11 @@ $list = [];
                              <?php endif; ?>
                         <?php elseif ($this->config->privateMessage && $this->me->isModerator($this->topic->getCategory())) : ?>        
                         <?php endif;
+
 						endforeach; ?>
-						<?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>
 						</ul>
 						<?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>						
-            		</div>
+            	
             	</div>
 			<div class="clearfix"></div>
 			<?php endif; ?>
@@ -223,3 +208,4 @@ $list = [];
         ?>
     </div>
 <?php endif;
+

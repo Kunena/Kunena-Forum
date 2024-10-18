@@ -2303,7 +2303,8 @@ class KunenaUser
     }
 
     /**
-     * Check if the urls and images should be removed in message or signature
+     * Check if the user is allowed to have urls and images in message or signature, it's always allowed for moderator and admin
+     * Note : since Kunena 6.4.0 it return true in case of admin and mod else false if the user isn't allowed
      *
      * @return boolean
      * @throws Exception
@@ -2312,11 +2313,13 @@ class KunenaUser
     public function checkUserAllowedLinksImages()
     {
         if ($this->isModerator() || $this->isAdmin()) {
-            return false;
+            return true;
         }
 
         if ($this->_config->new_users_prevent_post_url_images && $this->posts <= $this->_config->minimal_user_posts_add_url_image) {
-            return true;
+            return false;
         }
+        
+        return true;
     }
 }

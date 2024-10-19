@@ -392,12 +392,6 @@ workspace/kunena/build/tmp)
 			<fileset dir="${kunena.plugins}/plg_finder_kunena" />
 		</copy>
 		<copy
-			todir="${tmp_dir}/packages/plg_kunena_altauserpoints"
-			overwrite="true">
-			<filterchain refid="filter" />
-			<fileset dir="${kunena.plugins}/plg_kunena_altauserpoints" />
-		</copy>
-		<copy
 			todir="${tmp_dir}/packages/plg_kunena_uddeim"
 			overwrite="true">
 			<filterchain refid="filter" />
@@ -486,14 +480,6 @@ workspace/kunena/build/tmp)
 			overwrite="true">
 			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_finder_kunena">
-				<include name="**/*.xml" />
-			</fileset>
-		</copy>
-		<copy
-			todir="${tmp_dir}/packages/plg_kunena_altauserpoints"
-			overwrite="true">
-			<filterchain refid="filter" />
-			<fileset dir="${project_dir}/plugins/plg_kunena_altauserpoints">
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
@@ -717,15 +703,7 @@ workspace/kunena/build/tmp)
 			<property
 				name="base.directory"
 				value="${tmp_dir}/packages/plg_finder_kunena" />
-		</phingcall>
-		<phingcall target="archive">
-			<property
-				name="destination.file"
-				value="dist/package/distribution/packages/plg_kunena_altauserpoints_v${xml.version}" />
-			<property
-				name="base.directory"
-				value="${tmp_dir}/packages/plg_kunena_altauserpoints" />
-		</phingcall>
+		</phingcall>		
 		<phingcall target="archive">
 			<property
 				name="destination.file"

@@ -399,7 +399,6 @@ class KunenaModelInstall extends BaseDatabaseModel
         File::write(KPATH_ADMIN . '/install.php', $contents);
 
         // Uninstall all plugins.
-        $this->uninstallPlugin('kunena', 'altauserpoints');
         $this->uninstallPlugin('kunena', 'community');
         $this->uninstallPlugin('kunena', 'comprofiler');
         $this->uninstallPlugin('kunena', 'easyprofile');

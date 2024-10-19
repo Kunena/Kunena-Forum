@@ -93,12 +93,6 @@ source_file = src/plugins/plg_finder_kunena/language/en-GB/en-GB.plg_finder_kune
 source_lang = en-GB
 minimum_perc = 1
 
-[o:Kunena-Forum:p:kunena-forum-6-x:r:src-plugins-plg-kunena-altauserpoints-language-en-gb-en-gb-plg-kunena-altauserpoints-sys-ini--k6-0]
-file_filter = src/plugins/plg_kunena_altauserpoints/language/<lang>/<lang>.plg_kunena_altauserpoints.sys.ini
-source_file = src/plugins/plg_kunena_altauserpoints/language/en-GB/en-GB.plg_kunena_altauserpoints.sys.ini
-source_lang = en-GB
-minimum_perc = 1
-
 [o:Kunena-Forum:p:kunena-forum-6-x:r:src-plugins-plg-kunena-community-language-en-gb-en-gb-plg-kunena-community-sys-ini--k6-0]
 file_filter = src/plugins/plg_kunena_community/language/<lang>/<lang>.plg_kunena_community.sys.ini
 source_file = src/plugins/plg_kunena_community/language/en-GB/en-GB.plg_kunena_community.sys.ini

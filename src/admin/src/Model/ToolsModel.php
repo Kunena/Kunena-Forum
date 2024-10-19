@@ -466,10 +466,9 @@ class ToolsModel extends AdminModel
         }
 
         $thirdParty              = [];
-        $thirdParty['alup']      = $this->getExtensionVersion('com_altauserpoints', 'AltaUserPoints');
         $thirdParty['cb']        = $this->getExtensionVersion('com_comprofiler', 'CommunityBuilder');
         $thirdParty['jomsocial'] = $this->getExtensionVersion('com_community', 'Jomsocial');
-	$thirdParty['uddeim'] = $this->getExtensionVersion('com_uddeim', 'UddeIm');
+        $thirdParty['uddeim'] = $this->getExtensionVersion('com_uddeim', 'UddeIm');
 
         foreach ($thirdParty as $id => $item) {
             if (empty($item)) {
@@ -807,7 +806,7 @@ class ToolsModel extends AdminModel
      */
     public function getIntegrationSettings(): array
     {
-        $pluginsList = ['finder' => 'Kunena - Finder', 'altauserpoints' => 'Kunena - AltaUserPoints', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIm'];
+        $pluginsList = ['finder' => 'Kunena - Finder', 'comprofiler' => 'Kunena - Community Builder', 'easyblog' => 'Kunena - Easyblog', 'easyprofile' => 'Kunena - Easyprofile', 'easysocial' => 'Kunena - Easysocial', 'gravatar' => 'Kunena - Gravatar', 'community' => 'Kunena - JomSocial', 'joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIm'];
         $pluginFinal = [];
 
         foreach ($pluginsList as $name => $desc) {

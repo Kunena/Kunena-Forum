@@ -136,11 +136,7 @@ class PluginsController extends AdminController
             $cids_exist = [];
 
             foreach ($plg_kunena_exts as $plg) {
-                if ($plg->element == 'altauserpoints') {
-                    if (file_exists(JPATH_SITE . '/components/com_altauserpoints/helper.php')) {
-                        $cids_exist[] = $plg->extension_id;
-                    }
-                } elseif ($plg->element == 'community') {
+                if ($plg->element == 'community') {
                     if (file_exists(JPATH_ROOT . '/components/com_community/libraries/core.php')) {
                         $cids_exist[] = $plg->extension_id;
                     }

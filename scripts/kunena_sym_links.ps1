@@ -145,11 +145,6 @@ function delete-ExistingKunenaDir {
         Remove-Item -LiteralPath $path6 -Force -Recurse
     }
     
-    $path7 = $joomlaInstallDir + "\plugins\kunena\altauserpoints"
-    if (Test-Path -Path $path7) {
-        Remove-Item -LiteralPath $path7 -Force -Recurse
-    }
-    
     $path8 = $joomlaInstallDir + "\plugins\kunena\community"
     if (Test-Path -Path $path8) {
         Remove-Item -LiteralPath $path8 -Force -Recurse
@@ -229,9 +224,6 @@ function make-SymLinksKunena {
     $path5 = $joomlaInstallDir + "\plugins\quickicon\kunena"
     $target5 = $kunenaGitDir + "\src\plugins\plg_quickicon_kunena"
     New-Item -ItemType SymbolicLink -Path $path5 -Target $target5 
-    $path6 = $joomlaInstallDir + "\plugins\kunena\altauserpoints"
-    $target6 = $kunenaGitDir + "\src\plugins\plg_kunena_altauserpoints"
-    New-Item -ItemType SymbolicLink -Path $path6 -Target $target6
     $path7 = $joomlaInstallDir + "\plugins\kunena\community"
     $target7 = $kunenaGitDir + "\src\plugins\plg_kunena_community"
     New-Item -ItemType SymbolicLink -Path $path7 -Target $target7

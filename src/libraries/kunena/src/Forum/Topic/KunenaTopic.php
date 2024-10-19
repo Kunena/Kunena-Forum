@@ -287,6 +287,18 @@ class KunenaTopic extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public $params;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $typeAlias;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $categoryId;
 
     /**
      * @var     string

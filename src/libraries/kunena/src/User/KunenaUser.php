@@ -496,6 +496,12 @@ class KunenaUser
      * @since   Kunena 6.4
      */
     public $ip;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $socials;
 
     /**
      * @var     null

@@ -203,6 +203,90 @@ class KunenaTopic extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public $attachments;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $poll_id;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $moved_id;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $first_post_id;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $first_post_time;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $first_post_userid;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $first_post_message;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $first_post_guest_name;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $last_post_id;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $last_post_time;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $last_post_userid;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $last_post_message;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $last_post_guest_name;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $rating;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $params;
 
     /**
      * @var     string

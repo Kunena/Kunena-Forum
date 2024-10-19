@@ -46,6 +46,72 @@ use Kunena\Forum\Libraries\Tables\KunenaUserTopics;
 class KunenaTopicUser
 {
     /**
+    * @var     string
+    * @since   Kunena 6.4
+    */
+    public $typeAlias;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $user_id;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $topic_id;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $categoryId;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $posts;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $last_post_id;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $owner;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $favorite;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $subscribed;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $params;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $category_id;
+
+    /**
      * @var     boolean
      * @since   Kunena 6.0
      */

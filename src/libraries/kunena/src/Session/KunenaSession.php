@@ -58,6 +58,18 @@ class KunenaSession
      * @since   Kunena 6.0
      */
     public $currvisit;
+    
+    /**
+     * @var     integer|string
+     * @since   Kunena 6.4
+     */
+    public $typeAlias;
+    
+    /**
+     * @var     integer|string
+     * @since   Kunena 6.4
+     */
+    public $allowedcats;
 
 
     /**

@@ -77,6 +77,24 @@ class KunenaRead
      * @since   Kunena 6.4
      */
     public $time = null;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     *
+    public $typeAlias;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $categoryId;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $category_id;
 
     /**
      * @param   mixed  $user   user

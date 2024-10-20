@@ -146,6 +146,96 @@ class KunenaMessage extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public $userid;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $email;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $subject;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $time;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $ip;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $topic_emoticon;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $locked;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $hold;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $ordering;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $hits;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $moved;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $modified_by;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $modified_time;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $modified_reason;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $params;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $message;
 
     /**
      * @var     string

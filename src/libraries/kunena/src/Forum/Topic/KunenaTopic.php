@@ -299,6 +299,60 @@ class KunenaTopic extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public $categoryId;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $myposts;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $my_last_post_id;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $favorite;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $title;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $titleName;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $titleCount;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $count;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $link;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $percent;
 
     /**
      * @var     string

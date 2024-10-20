@@ -64,12 +64,6 @@ class KunenaRead
      * @var     int
      * @since   Kunena 6.4
      */
-    public $catrgorie_id = null;
-
-    /**
-     * @var     int
-     * @since   Kunena 6.4
-     */
     public $message_id = null;
 
     /**
@@ -81,7 +75,7 @@ class KunenaRead
     /**
      * @var     string
      * @since   Kunena 6.4
-     *
+     */
     public $typeAlias;
     
     /**

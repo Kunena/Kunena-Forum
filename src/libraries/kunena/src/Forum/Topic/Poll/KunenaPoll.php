@@ -102,6 +102,30 @@ class KunenaPoll
      * @since   Kunena 6.0
      */
     protected $mylastvoteId;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.4
+     */
+    public $threadid;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $typeAlias;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $title;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $polltimetolive;
 
     /**
      * @param   int  $identifier  identifier

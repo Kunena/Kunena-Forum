@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\View\Users;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;

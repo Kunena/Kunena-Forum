@@ -44,7 +44,7 @@ use Joomla\CMS\HTML\HTMLHelper;
         if (in_array($item->id, $this->path)) {
             $class .= ' active';
         } elseif ($item->type == 'alias') {
-            $aliasToId = $item->params->get('aliasoptions');
+            $aliasToId = $item->getParams()->get('aliasoptions');
 
             if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path) - 1]) {
                 $class .= ' active';
@@ -85,6 +85,7 @@ use Joomla\CMS\HTML\HTMLHelper;
                 case 'separator':
                 case 'url':
                 case 'component':
+                case 'alias':
                     $attributes = [];
 
                     if ($item->deeper) {

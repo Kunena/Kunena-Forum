@@ -89,8 +89,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td><?php echo Text::_('COM_KUNENA_A_BOARD_OFFLINE_DESC') ?></td>
                                     </tr>
                                     <tr <?php if (
-                                            $this->escape($this->config->offlineMessage) != 'The Forum is currently offline for maintenance.
-                                                                                                                                                                                                                                                                                                                Check back soon!'
+                                            str_replace("\r\n", "\n", trim($this->escape($this->config->offlineMessage))) != "The Forum is currently offline for maintenance.\nCheck back soon!"
                                         ) :
                                             echo 'class="changed"';
                                         endif; ?>>
@@ -1794,14 +1793,14 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td><?php echo $this->lists['userlistUserHits'] ?></td>
                                         <td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->userlistUserHits != 0) :
+                                    <tr <?php if ($this->config->superAdminUserlist != 0) :
                                             echo 'class="changed"';
                                         endif; ?>>
                                         <td><?php echo Text::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST') ?></td>
                                         <td><?php echo $this->lists['superAdminUserlist'] ?></td>
                                         <td><?php echo Text::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->userlistUserHits != 2) :
+                                    <tr <?php if ($this->config->showSessionType != 2) :
                                             echo 'class="changed"';
                                         endif; ?>>
                                         <td><?php echo Text::_('COM_KUNENA_COM_A_USER_SESSIONS_TYPE') ?></td>

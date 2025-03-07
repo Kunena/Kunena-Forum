@@ -479,7 +479,8 @@ class KunenaUserSocials
         "value": "",
         "url": "https://www.myspace.com/##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_MYSPACE",
-        "nourl": 0
+        "nourl": 0,
+        "fa": "fa-solid fa-square-share-nodes"
     },
     "linkedin": {
         "value": "",
@@ -541,7 +542,8 @@ class KunenaUserSocials
         "value": "",
         "url": "https://##VALUE##.blogspot.com/",
         "title": "COM_KUNENA_MYPROFILE_BLOGSPOT",
-        "nourl": 0
+        "nourl": 0,
+        "fa": "fa-solid fa-square-share-nodes"
     },
     "flickr": {
         "value": "",
@@ -561,13 +563,15 @@ class KunenaUserSocials
         "value": "",
         "url": "##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_QQSOCIAL",
-        "nourl": 1
+        "nourl": 1,
+        "fa": "fa-solid fa-square-share-nodes"
     },
     "qzone": {
         "value": "",
         "url": "##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_QZONE",
-        "nourl": 1
+        "nourl": 1,
+        "fa": "fa-solid fa-square-share-nodes"
     },
     "weibo": {
         "value": "",
@@ -580,7 +584,8 @@ class KunenaUserSocials
         "value": "",
         "url": "##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_WECHAT",
-        "nourl": 1
+        "nourl": 1,
+        "fa": "fa-solid fa-square-share-nodes"
     },
     "vk": {
         "value": "",
@@ -628,7 +633,8 @@ class KunenaUserSocials
         "value": "",
         "url": "https://ok.ru/##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_OK",
-        "nourl": 0
+        "nourl": 0,
+        "fa": "fa-solid fa-square-share-nodes"
     },
     "pinterest": {
         "value": "",

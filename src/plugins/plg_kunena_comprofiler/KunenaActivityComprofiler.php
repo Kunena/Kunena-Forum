@@ -74,7 +74,7 @@ class KunenaActivityComprofiler extends KunenaActivity
      */
     public function onBeforePost(KunenaMessage $message): void
     {
-        $params = ['actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message];
+        $params = ['actor' => $message->userid, 'replyto' => 0, 'message' => $message];
         KunenaIntegrationComprofiler::trigger('onBeforePost', $params);
     }
 
@@ -88,7 +88,7 @@ class KunenaActivityComprofiler extends KunenaActivity
      */
     public function onBeforeReply(KunenaMessage $message): void
     {
-        $params = ['actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message];
+        $params = ['actor' => $message->userid, 'replyto' => (int) $message->getParent()->userid, 'message' => $message];
         KunenaIntegrationComprofiler::trigger('onBeforeReply', $params);
     }
 
@@ -102,7 +102,7 @@ class KunenaActivityComprofiler extends KunenaActivity
      */
     public function onBeforeEdit(KunenaMessage $message): void
     {
-        $params = ['actor' => $message->get('modified_by'), 'message' => $message];
+        $params = ['actor' => $message->modified_by, 'message' => $message];
         KunenaIntegrationComprofiler::trigger('onBeforeEdit', $params);
     }
 
@@ -116,7 +116,7 @@ class KunenaActivityComprofiler extends KunenaActivity
      */
     public function onAfterPost(KunenaMessage $message): void
     {
-        $params = ['actor' => $message->get('userid'), 'replyto' => 0, 'message' => $message];
+        $params = ['actor' => $message->userid, 'replyto' => 0, 'message' => $message];
         KunenaIntegrationComprofiler::trigger('onAfterPost', $params);
     }
 
@@ -130,7 +130,7 @@ class KunenaActivityComprofiler extends KunenaActivity
      */
     public function onAfterReply(KunenaMessage $message): void
     {
-        $params = ['actor' => $message->get('userid'), 'replyto' => (int) $message->getParent()->userid, 'message' => $message];
+        $params = ['actor' => $message->userid, 'replyto' => (int) $message->getParent()->userid, 'message' => $message];
         KunenaIntegrationComprofiler::trigger('onAfterReply', $params);
     }
 
@@ -144,7 +144,7 @@ class KunenaActivityComprofiler extends KunenaActivity
      */
     public function onAfterEdit(KunenaMessage $message): void
     {
-        $params = ['actor' => $message->get('modified_by'), 'message' => $message];
+        $params = ['actor' => $message->modified_by, 'message' => $message];
         KunenaIntegrationComprofiler::trigger('onAfterEdit', $params);
     }
 

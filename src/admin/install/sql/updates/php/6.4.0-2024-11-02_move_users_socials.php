@@ -42,7 +42,6 @@ function kunena_640_2024_11_02_move_users_socials($parent) {
     $db     = Factory::getContainer()->get('DatabaseDriver');
     
     // Check if some columns of socials are missing in the table #__kunena_users
-    $db = Factory::getContainer()->get('DatabaseDriver');
     $query = $db->getQuery(true);
     $db->setQuery("SHOW COLUMNS FROM `#__kunena_users`");
     $columnsKunenaUsers = $db->loadObjectList();

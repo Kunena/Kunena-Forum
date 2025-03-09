@@ -77,7 +77,7 @@ function kunena_640_2024_11_02_move_users_socials($parent) {
         $listSocialsColumns[] = 'userid'; 
             
         $query  = $db->createQuery()
-        ->select($db->quoteName($listSocialsColumns))
+            ->select($db->quoteName($listSocialsColumns))
             ->from($db->quoteName('#__kunena_users'))
             ->where($db->quoteName('banned') . '= ' . $db->quote('1000-01-01 00:00:00')
         );

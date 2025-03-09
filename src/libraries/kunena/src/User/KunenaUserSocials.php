@@ -656,6 +656,13 @@ class KunenaUserSocials
         "title": "COM_KUNENA_MYPROFILE_BLUESKY_APP",
         "nourl": 0,
         "fa": "fa-brands fa-bluesky"
+    },
+    "threads": {
+        "value": "",
+        "url": "https://www.threads.net/@##VALUE##",
+        "title": "COM_KUNENA_MYPROFILE_THREADS_APP",
+        "nourl": 0,
+        "fa": "fa-brands fa-threads"
     }
 }')
             );

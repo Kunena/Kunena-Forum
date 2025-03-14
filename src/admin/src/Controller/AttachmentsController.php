@@ -89,7 +89,7 @@ class AttachmentsController extends FormController
 
             $messageText = $attachment->removeBBCodeInMessage($message->message);
 
-            if ($messageText !== false) {
+            if (!empty($messageText) && $attachment->inline) {
                 $message->message = $messageText;
             }
 

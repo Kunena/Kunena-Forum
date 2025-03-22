@@ -205,6 +205,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
     <input id="kurl_category_template_text" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=categorytemplate&format=json&catid' . $this->message->id . '&' . Session::getFormToken() . '=1', false); ?>" />
     <input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
     <input id="kpreview_url" type="hidden" name="kpreview_url" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw', false) ?>" />
+    <input type="hidden" id="attachments" name="attachments[]" value="" />
     <?php if (!$this->config->allowChangeSubject) :
     ?>
         <input type="hidden" name="subject" value="<?php echo $this->escape($this->message->subject); ?>" />

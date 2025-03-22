@@ -1293,7 +1293,7 @@ class TopicController extends KunenaController
         @ignore_user_abort(true);
 
         // Mark attachments to be added or deleted.
-        $attachments = $this->app->input->get('attachments', [], 'post', 'array');
+        $attachments = array_flip($this->app->input->get('attachments', [], 'post', 'array'));
         $attachment  = $this->app->input->get('attachment', [], 'post', 'array');
 
         $addList    = array_keys(array_intersect_key($attachments, $attachment));

@@ -476,24 +476,9 @@ jQuery(function ($) {
             sceditor.instance(document.getElementById('message')).val(cleanedEditorText);
         }
         const file_query_id = [file_id];
-        $('#form_submit_button').prop('disabled', false);
-        $.ajax({
-            url: Joomla.getOptions('com_kunena.kunena_upload_files_rem') + '&files_id_delete=' + JSON.stringify(file_query_id) + '&editor_text=' + encodeURIComponent(cleanedEditorText),
-            type: 'POST'
-        }).done(function (data) {
-            $this.closest('div').remove();
-            setTimeout(function () {
-                $('#form_submit_button').prop('disabled', false);
-            }, 100);
-        }).fail(function () {
-            setTimeout(function () {
-                $('#form_submit_button').prop('disabled', false);
-            }, 100);
-        }).always(function () {
-            setTimeout(function () {
-                $('#form_submit_button').prop('disabled', false);
-            }, 200);
-        });
+		$('#form_submit_button').prop('disabled', false);
+        
+		$('#attachments').val(file_query_id);
     });
     // Initialize fileupload
     $('#fileupload').fileupload({

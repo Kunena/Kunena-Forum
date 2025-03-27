@@ -432,7 +432,7 @@
         "url": "##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_WECHAT",
         "nourl": 1,
-        "fa": "fa-solid fa-square-share-nodes"s
+        "fa": "fa-solid fa-square-share-nodes"
     },
     "vk": {
         "value": "",
@@ -466,7 +466,7 @@
         "value": "",
         "url": "https://wa.me/##VALUE##",
         "title": "COM_KUNENA_MYPROFILE_WHATSAPP",
-        "nourl": 1,
+        "nourl": 0,
         "fa": "fa-brands fa-whatsapp"
     },
     "youtube": {

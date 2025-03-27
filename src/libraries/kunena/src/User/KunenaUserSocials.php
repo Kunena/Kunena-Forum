@@ -54,6 +54,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property string  $pinterest
  * @property string  $reddit
  * @property string  $bluesky_app
+ * @property string  $threads
  *
  * @since   Kunena 6.4
  */
@@ -226,6 +227,12 @@ class KunenaUserSocials
      * @since  Kunena 6.4.0
      */
     public $bluesky_app = ''; 
+    
+    /**
+     * @var    string  Threads
+     * @since  Kunena 6.4.0
+     */
+    public $threads = ''; 
     
     protected $userid = 0;
 

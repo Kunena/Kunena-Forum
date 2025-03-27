@@ -16,22 +16,6 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 
 /**
- *  Handle the data by group of 100 lines
- * 
- * @param array $array
- * @param integer $numRows
- * @param integer $size
- */
-function chunk($array, $numRows, $size) {
-    $result = array();
-    for ($i = 0; $i < $numRows; $i += $size) {
-        $result[] = array_slice($array, $i, $size);
-    }
-    
-    return $result['0'];
-}
-
-/**
  * @param $parent
  *
  * @return array
@@ -63,6 +47,7 @@ function kunena_640_2025_03_09_add_threads_to_socials($parent) {
         $db->execute();
         $dataResults = (array) $db->loadAssocList();
         
+        // chunk function is already declared in file 6.4.0-2024-11-02_move_users_socials.php
         foreach (chunk($dataResults, $numRows, 100) as $line) {
             $result = ArrayHelper::toObject($line);
             $socials = KunenaUserSocials::getInstance($result->userid, false);

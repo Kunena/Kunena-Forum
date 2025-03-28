@@ -522,7 +522,8 @@
                 DROP IF EXISTS `digg`,
                 DROP IF EXISTS `skype`,
                 DROP IF EXISTS `yim`,
-                DROP IF EXISTS `google`,
+                DROP IF EXISTS `google`
+                DROP IF EXISTS `friendfeed`,
                 DROP IF EXISTS `github`,
                 DROP IF EXISTS `microsoft`,
                 DROP IF EXISTS `blogspot`,

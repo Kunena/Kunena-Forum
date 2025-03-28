@@ -554,7 +554,15 @@
         <version version="6.4.0-RC5-DEV"
                  versiondate="2025-03-09"
                  versionname="Internal">
-            <phpfile name="6.4.0-2025-03-09_add_threads_to_socials"/>
+            <query mode="silenterror">UPDATE `#__kunena_users` SET `socials` = REPLACE(socials, '}
+}', '},"threads": {
+        "value": "",
+        "url": "https://www.threads.net/@##VALUE##",
+        "title": \"COM_KUNENA_MYPROFILE_THREADS_APP",
+        "nourl": 0,
+        "fa": "fa-brands fa-threads"
+    }
+}');</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

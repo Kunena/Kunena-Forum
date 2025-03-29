@@ -10,11 +10,9 @@
  **/
 defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 
 // Kunena 5.2.0: Convert all configuration options to the news ones in K6.0

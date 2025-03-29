@@ -162,9 +162,10 @@ if (!$config->plainEmail) :
                                                               src="<?php echo Uri::base() . $config->emailHeader; ?>"
                                                               alt="Please enable images to view this content"
                                                               title="Forum"
-                                                              width="560" style="
-            width: 100%;
-            max-width: 560px;
+                                                              width="<?php echo $config->emailHeaderSizeX; ?>"
+                                                              height="<?php echo $config->emailHeaderSizeY; ?>"
+                                                              style="width: 100%;
+            max-width: <?php echo $config->emailHeaderSizeX; ?>px;
             color: #000000; font-size: 13px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;"/></a>
                             </td>
                         </tr>

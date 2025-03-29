@@ -23,13 +23,17 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 function kunena_634_2024_08_01_update_configuration_to_x($parent) {
 	$config = KunenaFactory::getConfig();
 
-	$config->XConsumerKey = $config->twitterConsumerKey;
+	if (isset($config->twitterConsumerKey)) {
+	    $config->XConsumerKey = $config->twitterConsumerKey;
+	    
+	    unset($config->twitterConsumerKey);
+	}
 	
-	unset($config->twitterConsumerKey);
-	
-	$config->XConsumerSecret = $config->twitterConsumerSecret;
-	
-	unset($config->twitterConsumerSecret);
+	if (isset($config->twitterConsumerSecret)) {
+	    $config->XConsumerSecret = $config->twitterConsumerSecret;
+	    
+	    unset($config->twitterConsumerSecret);
+	}
 
 	// Save configuration
 	$config->save();	

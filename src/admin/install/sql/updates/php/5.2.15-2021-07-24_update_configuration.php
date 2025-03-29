@@ -26,7 +26,25 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @since Kunena 5.2.4
  */
 function kunena_5215_2021_07_24_update_configuration($parent) {	
-	$listConfigParams = ['boardTitle', 'email', 'boardOffline', 'offlineMessage', 'enableRss', 'threadsPerPage', 'messagesPerPage', 'messagesPerPageSearch', 'showHistory', 'historyLimit', 'showNew', 'disableEmoticons', 'template', 'showAnnouncement',
+    $db    = Factory::getContainer()->get('DatabaseDriver');
+    
+    $query = $db->createQuery();   
+    
+    $query->select('*') 
+        ->from($db->quoteName('#__kunena_configuration'))
+        ->where($db->quoteName('id') . ' = 1');    
+    
+    $db->setQuery($query);
+    
+    try {        
+        $config = $db->loadAssoc(); 
+    } catch (ExecutionFailureException $e) {
+        KunenaError::displayDatabaseError($e);
+    }
+    
+    $oldParams = json_decode($config['params']);
+    
+    $listConfigParams = ['boardTitle', 'email', 'boardOffline', 'offlineMessage', 'enableRss', 'threadsPerPage', 'messagesPerPage', 'messagesPerPageSearch', 'showHistory', 'historyLimit', 'showNew', 'disableEmoticons', 'template', 'showAnnouncement',
 	    'avatarOnCategory', 'catimagepath', 'showChildCatIcon', 'rteWidth', 'rteHeight', 'enableForumJump', 'reportMsg', 'username', 'askEmail', 'showEmail', 'showUserStats', 'showKarma', 'userEdit', 'userEditTime', 'userEditTimeGrace', 'editMarkup', 'allowSubscriptions',
 	    'subscriptionsChecked', 'allowFavorites', 'maxsubject', 'maxSig', 'regOnly', 'pubWrite', 'floodProtection', 'mailModerators', 'mailAdministrators', 'captcha', 'mailFull', 'allowAvatarUpload', 'allowAvatarGallery', 'avatarQuality',
 	    'avatarSize', 'imageHeight', 'imageWidth', 'imageSize', 'fileTypes', 'fileSize', 'showRanking', 'rankImages', 'userlistRows', 'userlistOnline', 'userlistAvatar', 'userlistPosts', 'userlistKarma', 'userlistEmail', 'userlistJoinDate',

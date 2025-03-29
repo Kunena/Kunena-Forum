@@ -27,7 +27,6 @@ $author          = $topic->getLastPostAuthor();
 $this->ktemplate = KunenaFactory::getTemplate();
 $avatar          = $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb');
 $category        = $this->topic->getCategory();
-$category        = $this->topic->getCategory();
 $txt             = '';
 
 if ($this->topic->ordering) {

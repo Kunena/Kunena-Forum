@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
 	$('#kchecktask').change(function () {
 		const task = $("select#kchecktask").val();
 		if (task === 'move') {
-			$("#kchecktarget").attr('disabled', false).trigger("liszt:updated");
+			$("#kchecktarget").attr('disabled', false).trigger("list:updated");
 		}
 		else {
 			$("#kchecktarget").attr('disabled', true);

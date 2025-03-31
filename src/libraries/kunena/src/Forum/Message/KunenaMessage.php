@@ -236,6 +236,12 @@ class KunenaMessage extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public $message;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.4
+     */
+    public $pm;
 
     /**
      * @var     string

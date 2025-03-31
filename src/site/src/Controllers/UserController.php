@@ -770,7 +770,7 @@ class UserController extends KunenaController
                 $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
                 $mail->setSubject(Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE'));
                 $mail->setSender([$this->config->getEmail(), $mailnamesender]);
-                $mail->Body($this->config->mailBodyUserBanned);
+                $mail->setBody($this->config->mailBodyUserBanned);
                 KunenaEmail::send($mail, $user->email);
             }
 

@@ -6,7 +6,7 @@
  * @package         Kunena.Plugins
  * @subpackage      Comprofiler
  *
- * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2025 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -18,6 +18,7 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
 use CBLib\Application\Application;
 use CBLib\Language\CBTxt;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 
 /**
@@ -102,10 +103,6 @@ class KunenaPrivateComprofiler extends KunenaPrivate
             return '';
         }
 
-        $url  = $_CB_framework->userProfileUrl($userid);
-        $html = '<a class="' . $class . '" href="' . $url . '" title="' .
-            Text::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
-
         if ($userid == $myid) {
             $pmCount = $this->getUnreadCount($myid);
             $text    = $pmCount ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $pmCount) : Text::_('COM_KUNENA_PMS_INBOX');
@@ -114,25 +111,59 @@ class KunenaPrivateComprofiler extends KunenaPrivate
             return '<a class="' . $class . '" href="' . $url . '"><i class="' . $icon . '"></i>' . $text . '</a>';
         }
 
+        // Get the URL for sending a new message
+        $url = $this->getURL($userid);
+        $html = '<a class="' . $class . '" href="' . $url . '" title="' .
+            Text::_('COM_KUNENA_VIEW_PMS') . '"><i class="' . $icon . '"></i>' . Text::_('COM_KUNENA_PM_WRITE') . '</a>';
+
         return $html;
     }
 
     /**
-     * @return  void|string
+     * Get the inbox URL with SEF enabled
+     *
+     * @return  string
      *
      * @since   Kunena 6.0
      */
     public function getInboxURL()
     {
-        global $_CB_framework;
-
-        $userid = $this->getCBUserid();
-
-        if ($userid === null) {
-            return;
+        // Create the URL with Route to enable SEF
+        $url = Route::_('index.php?option=com_comprofiler&view=pluginclass&plugin=pms.mypmspro&action=messages', false);
+        
+        // Try to find the CB message menu item ID for better SEF URLs
+        $menuItemId = $this->findCBMessageMenuItem();
+        if ($menuItemId) {
+            $url = Route::_('index.php?option=com_comprofiler&view=pluginclass&plugin=pms.mypmspro&action=messages&Itemid=' . $menuItemId, false);
         }
+        
+        return $url;
+    }
 
-        return $_CB_framework->userProfileUrl($userid);
+    /**
+     * Find the menu item ID for CB messages
+     *
+     * @return  integer  Menu item ID or 0 if not found
+     *
+     * @since   Kunena 6.0
+     */
+    protected function findCBMessageMenuItem()
+    {
+        // Get all menu items
+        $db = \JFactory::getDbo();
+        $query = $db->getQuery(true)
+            ->select($db->quoteName('id'))
+            ->from($db->quoteName('#__menu'))
+            ->where($db->quoteName('link') . ' LIKE ' . $db->quote('%option=com_comprofiler%'))
+            ->where($db->quoteName('link') . ' LIKE ' . $db->quote('%plugin=pms.mypmspro%'))
+            ->where($db->quoteName('published') . ' = 1');
+        $db->setQuery($query);
+        try {
+            $menuItemId = (int) $db->loadResult();
+            return $menuItemId;
+        } catch (\Exception $e) {
+            return 0;
+        }
     }
 
     /**
@@ -172,8 +203,6 @@ class KunenaPrivateComprofiler extends KunenaPrivate
      */
     public function getInboxLink(string $text)
     {
-        global $_CB_framework;
-
         if (!$text) {
             $text = Text::_('COM_KUNENA_PMS_INBOX');
         }
@@ -183,11 +212,15 @@ class KunenaPrivateComprofiler extends KunenaPrivate
         if ($userid === null) {
             return;
         }
+        
+        $url = $this->getInboxURL();
 
-        return '<a href="' . $_CB_framework->userProfileUrl($userid) . '" rel="follow">' . $text . '</a>';
+        return '<a href="' . $url . '" rel="follow">' . $text . '</a>';
     }
 
     /**
+     * Get the URL for sending a message with SEF enabled
+     *
      * @param   int  $userid  userid
      *
      * @return string
@@ -196,5 +229,76 @@ class KunenaPrivateComprofiler extends KunenaPrivate
      */
     protected function getURL(int $userid): string
     {
+        global $_CB_framework, $_CB_PMS;
+        
+        $myid = Application::MyUser()->getUserId();
+        
+        // Don't send messages to anonymous and to yourself
+        if ($myid == 0 || $userid == 0 || $userid == $myid) {
+            return '';
+        }
+
+        // Create the URL with Route to enable SEF
+        $menuItemId = $this->findCBMessageMenuItem();
+        if ($menuItemId) {
+            return Route::_('index.php?option=com_comprofiler&view=pluginclass&plugin=pms.mypmspro&action=newpm&to=' . $userid . '&Itemid=' . $menuItemId, false);
+        }
+        
+        return Route::_('index.php?option=com_comprofiler&view=pluginclass&plugin=pms.mypmspro&action=newpm&to=' . $userid, false);
+    }
+
+    /**
+     * Get the number of unread private messages for a user
+     *
+     * @param   int  $userid  User id
+     *
+     * @return  integer  Number of unread private messages
+     *
+     * @since   Kunena 6.0
+     */
+    public function getUnreadCount(int $userid): int
+    {
+        global $_CB_framework, $_CB_PMS;
+        
+        // Make sure CB is loaded
+        $cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
+        if (!file_exists($cbpath)) {
+            return 0;
+        }
+        
+        if (!class_exists('CBuser')) {
+            require_once $cbpath;
+        }
+        
+        // Check for messages in PMSPro database table
+        $db = \JFactory::getDbo();
+        
+        // Try to get count from mypmspro_messages table
+        try {
+            $query = $db->getQuery(true)
+                ->select('COUNT(*)')
+                ->from($db->quoteName('#__comprofiler_plugin_mypmspro_messages'))
+                ->where($db->quoteName('to_user') . ' = ' . (int) $userid)
+                ->where($db->quoteName('message_read') . ' = 0');
+            $db->setQuery($query);
+            $count = (int) $db->loadResult();
+            
+            // If we got a count, return it
+            if ($count !== false) {
+                return $count;
+            }
+        } catch (\Exception $e) {
+            // Table doesn't exist or other error
+        }
+        
+        // CB's PMS system fallback
+        outputCbTemplate(Application::Cms()->getClientId());
+        
+        // Try to get the unread count via CB API
+        if (isset($_CB_PMS) && method_exists($_CB_PMS, 'getUnreadCount')) {
+            return (int) $_CB_PMS->getUnreadCount($userid);
+        }
+        
+        return 0;
     }
 }

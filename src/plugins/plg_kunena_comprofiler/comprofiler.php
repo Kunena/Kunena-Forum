@@ -13,6 +13,7 @@
 
 defined('_JEXEC') or die();
 
+use CBLib\Core\CBLib;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -41,17 +42,17 @@ class PlgKunenaComprofiler extends CMSPlugin
     /**
      * plgKunenaComprofiler constructor.
      *
-     * @param   object  $subject                The object to observe
-     * @param   array   $config                 An optional associative array of configuration settings.
+     * @param   DispatcherInterface  $subject   The object to observe
+     * @param   array                $config    An optional associative array of configuration settings.
      *                                          Recognized key values include 'name', 'group', 'params', 'language'
      *                                          (this list is not meant to be comprehensive).
      *
      * @throws Exception
      * @since   Kunena 6.0
      */
-    public function __construct(object &$subject, $config = [])
+    public function __construct(&$subject, $config = [])
     {
-        global $ueConfig;
+        global $_PLUGINS;
 
         // Do not load if Kunena version is not supported or Kunena is offline
         if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.4') && KunenaForum::enabled())) {
@@ -70,16 +71,21 @@ class PlgKunenaComprofiler extends CMSPlugin
 
         require_once JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
 
+        $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
+
+        if (version_compare($this->minCBVersion, CBLib::version(), '>=')) {
+            if ($app->isClient('administrator')) {
+                $app->enqueueMessage(Text::sprintf('PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion), 'notice');
+            }
+            return;
+        }
+
         cbimport('cb.html');
         cbimport('language.front');
 
+        $_PLUGINS->loadPluginGroup('user');
+
         parent::__construct($subject, $config);
-
-        $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
-
-        if ($app->isClient('administrator') && (!isset($ueConfig ['version']) || version_compare($ueConfig ['version'], $this->minCBVersion) < 0)) {
-            $app->enqueueMessage(Text::sprintf('PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion), 'notice');
-        }
     }
 
     /**

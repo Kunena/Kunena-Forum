@@ -15,6 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
 
 \defined('_JEXEC') or die();
 
+use CB\Database\Table\UserTable;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -133,15 +134,12 @@ class KunenaProfileComprofiler extends KunenaProfile
 
         $user = KunenaFactory::getUser($userid);
 
-        if ($user->userid == 0) {
+        if (! $user->exists()) {
             return false;
         }
 
-        // Get CUser object
-        $cbUser = \CBuser::getInstance($user->userid);
-
-        if ($cbUser === null) {
-            return false;
+        if ($task === 'edit') {
+            return $_CB_framework->userProfileEditUrl(null, $xhtml);
         }
 
         return $_CB_framework->userProfileUrl($user->userid, $xhtml);
@@ -229,18 +227,17 @@ class KunenaProfileComprofiler extends KunenaProfile
      */
     public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
     {
-        global $ueConfig;
-
         if ($user->exists()) {
-            if ($ueConfig['name_format'] == 1) {
-                return $user->name;
-            } elseif ($ueConfig['name_format'] == 2) {
-                return $user->name . ' (' . $user->username . ')';
-            } elseif ($ueConfig['name_format'] == 3) {
-                return $user->username;
-            } elseif ($ueConfig['name_format'] == 4) {
-                return $user->username . ' (' . $user->name . ')';
-            }
+            return \CBuser::getUserDataInstance($user->userid)->getFormattedName();
+        }
+
+        if (! $visitorname) {
+            $guestUser = new UserTable();
+
+            $guestUser->set( 'name', $user->name );
+            $guestUser->set( 'username', $user->username );
+
+            return $guestUser->getFormattedName();
         }
 
         return $visitorname;

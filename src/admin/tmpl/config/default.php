@@ -811,9 +811,9 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                     <tr <?php if ($this->config->sendMailUserBanned != 0) :
                                             echo 'class="changed"';
                                         endif; ?>>
-                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_SEND_MAIL_TO_USER_WHEN_BANNED') ?></td>
+                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_SEND_MAIL_TO_USER_WHEN_BANNED_AND_UNBANNED') ?></td>
                                         <td><?php echo $this->lists['sendMailUserBanned'] ?></td>
-                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_SEND_MAIL_TO_USER_WHEN_BANNED_DESC') ?></td>
+                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_SEND_MAIL_TO_USER_WHEN_BANNED_AND_UNBANNED_DESC') ?></td>
                                     </tr>
                                     <tr <?php if ($this->config->mailBodyUserBanned != 0) :
                                             echo 'class="changed"';
@@ -822,6 +822,14 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td><input type="text" class="form-control" name="cfg_mailBodyUserBanned" value="<?php echo $this->escape($this->config->mailBodyUserBanned) ?>" />
                                         </td>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED_DESC') ?></td>
+                                    </tr>
+                                    <tr <?php if ($this->config->mailBodyUserUnBanned != 0) :
+                                            echo 'class="changed"';
+                                        endif; ?>>
+                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_UNBANNED') ?></td>
+                                        <td><input type="text" class="form-control" name="cfg_mailBodyUserUnBanned" value="<?php echo $this->escape($this->config->mailBodyUserUnBanned) ?>" />
+                                        </td>
+                                        <td><?php echo Text::_('COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_UNBANNED_DESC') ?></td>
                                     </tr>
                                 </tbody>
                             </table>

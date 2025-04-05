@@ -252,6 +252,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property string  $datePickerFormat
  * @property boolean $sendMailUserBanned
  * @property boolean $mailBodyUserBanned
+ * @property boolean $mailBodyUserUnBanned
  *
  * @since   Kunena 6.0
  */
@@ -1654,6 +1655,12 @@ class KunenaConfig
      * @since  Kunena 6.2.0
      */
     public $mailBodyUserBanned = '';
+    
+    /**
+     * @var    boolean  enable the send mail to user when he is unbanned
+     * @since  Kunena 6.4.0
+     */
+    public $mailBodyUserUnBanned = '';
 
     /**
      * @return  KunenaConfig|mixed

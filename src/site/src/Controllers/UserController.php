@@ -765,14 +765,23 @@ class UserController extends KunenaController
             }
 
             if ($this->config->sendMailUserBanned) {
-                // Create email to notify the user which has been banned.
-                $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
-                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                $mail->setSubject(Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE'));
-                $mail->setSender([$this->config->getEmail(), $mailnamesender]);
-                KunenaEmail::send($mail, [$user->email]);
-                $mail->setBody($this->config->mailBodyUserBanned);
-                KunenaEmail::send($mail, [$user->email]);
+                if ($ban->isEnabled()) {
+                    // Create email to notify the user which has been banned.
+                    $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
+                    $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                    $mail->setSubject(Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE'));
+                    $mail->setSender([$this->config->getEmail(), $mailnamesender]);
+                    $mail->setBody($this->config->mailBodyUserBanned);
+                    KunenaEmail::send($mail, [$user->email]);
+                } else {
+                    // Create email to notify the user which has been unbanned.
+                    $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
+                    $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                    $mail->setSubject(Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE'));
+                    $mail->setSender([$this->config->getEmail(), $mailnamesender]);
+                    $mail->setBody($this->config->mailBodyUserUnBanned);
+                    KunenaEmail::send($mail, [$user->email]);
+                }
             }
 
             $this->app->enqueueMessage($message, 'success');

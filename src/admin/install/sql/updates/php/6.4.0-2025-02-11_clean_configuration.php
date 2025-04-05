@@ -41,7 +41,7 @@ function kunena_640_2025_02_11_clean_configuration($parent) {
 	    'allowChangeSubject', 'maxLinks', 'readOnly', 'ratingEnabled', 'urlSubjectTopic', 'logModeration', 'attachStart', 'attachEnd', 'googleMapApiKey', 'attachmentUtf8', 'autoEmbedSoundcloud', 'emailHeader', 'userStatus', 'signature', 'personal',
 	    'plainEmail', 'moderatorPermDelete', 'avatarTypes', 'smartLinking', 'defaultAvatar', 'defaultAvatarSmall', 'stopForumSpamKey', 'quickReply', 'avatarEdit', 'activeMenuItem', 'mainMenuId', 'homeId', 'indexId', 'moderatorsId', 'topicListId',
 	    'miscId', 'profileId', 'searchId', 'custom_id', 'avatarType', 'sefRedirect', 'allowEditPoll', 'useSystemEmails', 'autoEmbedInstagram', 'disableRe', 'email_sender_name', 'display_filename_attachment', 'new_users_prevent_post_url_images',
-	    'minimal_user_posts_add_url_image', 'utmSource', 'plugins', 'emailHeaderSizeY', 'emailHeaderSizeX', 'profiler', 'privateMessage', 'datePickerFormat', 'sendMailUserBanned', 'mailBodyUserBanned'
+	    'minimal_user_posts_add_url_image', 'utmSource', 'plugins', 'emailHeaderSizeY', 'emailHeaderSizeX', 'profiler', 'privateMessage', 'datePickerFormat', 'sendMailUserBanned', 'mailBodyUserBanned', 'mailBodyUserUnBanned'
     ];
 	
 	foreach($config as $param => $val) {

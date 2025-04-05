@@ -48,6 +48,7 @@ use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaBan;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Plugin\Kunena\Kunena\KunenaProfileKunena;
 use RuntimeException;
@@ -765,23 +766,7 @@ class UserController extends KunenaController
             }
 
             if ($this->config->sendMailUserBanned) {
-                if ($ban->isEnabled()) {
-                    // Create email to notify the user which has been banned.
-                    $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
-                    $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                    $mail->setSubject(Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE'));
-                    $mail->setSender([$this->config->getEmail(), $mailnamesender]);
-                    $mail->setBody($this->config->mailBodyUserBanned);
-                    KunenaEmail::send($mail, [$user->email]);
-                } else {
-                    // Create email to notify the user which has been unbanned.
-                    $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
-                    $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                    $mail->setSubject(Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE'));
-                    $mail->setSender([$this->config->getEmail(), $mailnamesender]);
-                    $mail->setBody($this->config->mailBodyUserUnBanned);
-                    KunenaEmail::send($mail, [$user->email]);
-                }
+                $this->sendMailWhenUserBannedAndUnbanned($user, $ban);
             }
 
             $this->app->enqueueMessage($message, 'success');
@@ -874,6 +859,35 @@ class UserController extends KunenaController
 
     // Internal functions:
 
+    /**
+     * Send a mail to the user when he is banned or unbanned
+     *
+     * @param   KunenaUser   $user
+     * @param   KunenaBan    $ban
+     *
+     * @return  boolean
+     *
+     * @throws Exception
+     * @since   Kunena 6.5.0
+     */
+    protected function sendMailWhenUserBannedAndUnbanned(KunenaUser $user, $ban) {
+        if ($ban->isEnabled()) {
+            $mailTitle =  Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE');
+            $mailBody = $this->config->mailBodyUserUnBanned;
+        } else {
+            $mailTitle = Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE');
+            $mailBody = $this->config->mailBodyUserUnBanned;
+        }
+        
+        // Create email to notify the user which has been unbanned.
+        $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
+        $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+        $mail->setSubject($mailTitle);
+        $mail->setSender([$this->config->getEmail(), $mailnamesender]);
+        $mail->setBody($mailBody);
+        KunenaEmail::send($mail, [$user->email]);
+    }
+    
     /**
      * Reports a user to stopforumspam.com
      *

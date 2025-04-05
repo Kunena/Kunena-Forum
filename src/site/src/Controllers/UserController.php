@@ -772,6 +772,7 @@ class UserController extends KunenaController
                 $mail->setSender([$this->config->getEmail(), $mailnamesender]);
                 KunenaEmail::send($mail, [$user->email]);
                 $mail->setBody($this->config->mailBodyUserBanned);
+                KunenaEmail::send($mail, [$user->email]);
             }
 
             $this->app->enqueueMessage($message, 'success');

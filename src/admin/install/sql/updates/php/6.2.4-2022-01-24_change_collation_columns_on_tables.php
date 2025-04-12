@@ -53,11 +53,11 @@ function kunena_624_2022_01_24_change_collation_columns_on_tables($parent)
                             $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' VARCHAR(250);';
                             $db->setQuery($query);
                             $db->execute();
-                        }
-
-                        $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' ' . $column->Type . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
-                        $db->setQuery($query);
-                        $db->execute();
+                        } else {
+                            $query = 'ALTER TABLE ' . $db->quoteName($kunenatable) . ' CHANGE ' . $column->Field . ' ' . $column->Field . ' ' . $column->Type . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
+                            $db->setQuery($query);
+                            $db->execute();                            
+                        }                        
                    }
                 }
             }

@@ -56,7 +56,7 @@ class WidgetEditor extends KunenaLayout
         $me               = KunenaUserHelper::getMyself();
 
         if ($me->checkUserAllowedLinksImages()) {
-            $this->addScriptOptions('com_kunena.ckeditor_remove_buttons_url_image', KunenaConfig::getInstance()->new_users_prevent_post_url_images);
+            $this->addScriptOptions('com_kunena.ckeditor_remove_buttons_url_image', KunenaConfig::getInstance()->newUsersPreventPostUrlImages);
             $editorbuttons = $templatesettings->get('editorButtons');
 
             if (empty($editorbuttons)) {

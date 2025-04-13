@@ -40,7 +40,7 @@ if ($attachment->isImage()) {
         ?>
         <a href="<?php echo $name; ?>"
            data-bs-toggle="tooltip" title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>"<?php echo $attributesLink; ?>>
-            <?php echo $config->display_filename_attachment ? $attachment->getShortName($config->attachStart, $config->attachEnd) : ''; ?>
+            <?php echo $config->displayFilenameAttachment ? $attachment->getShortName($config->attachStart, $config->attachEnd) : ''; ?>
             <img loading=lazy src="<?php echo $name; ?>"<?php echo $attributesImg; ?>
                  width="<?php echo $config->thumbWidth; ?>"
                  height="<?php echo $config->thumbHeight; ?>" alt="<?php echo $attachment->getFilename(); ?>"/>
@@ -53,7 +53,7 @@ if ($attachment->isImage()) {
     ?>
     <a href="<?php echo $attachment->getUrl(false, false, true); ?>"
        data-bs-toggle="tooltip" title="<?php echo $attachment->getShortName($config->attachStart, $config->attachEnd); ?>"<?php echo $attributesLink; ?>>
-        <?php echo $config->display_filename_attachment ? $attachment->getShortName($config->attachStart, $config->attachEnd) : ''; ?><?php echo KunenaIcons::file(); ?>
+        <?php echo $config->displayFilenameAttachment ? $attachment->getShortName($config->attachStart, $config->attachEnd) : ''; ?><?php echo KunenaIcons::file(); ?>
     </a>
     <?php
 }

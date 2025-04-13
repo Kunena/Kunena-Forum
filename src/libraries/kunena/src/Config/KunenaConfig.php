@@ -240,7 +240,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property integer $miscId
  * @property integer $profileId
  * @property integer $searchId
- * @property integer $custom_id
+ * @property integer $customId
  * @property integer $avatarType
  * @property boolean $sefRedirect
  * @property boolean $allowEditPoll
@@ -1540,7 +1540,7 @@ class KunenaConfig
      * @var    integer
      * @since  Kunena 5.1.0
      */
-    public $custom_id = '';
+    public $customId = '';
 
     /**
      * @var   integer
@@ -1582,25 +1582,25 @@ class KunenaConfig
      * @var string
      * @since  K5.1.18
      */
-    public $email_sender_name = '';
+    public $emailSenderName = '';
 
     /**
      * @var integer
      * @since  K5.1.19
      */
-    public $display_filename_attachment = 0;
+    public $displayFilenameAttachment = 0;
 
     /**
      * @var integer
      * @since  K5.2.0
      */
-    public $new_users_prevent_post_url_images = 0;
+    public $newUsersPreventPostUrlImages = 0;
 
     /**
      * @var integer
      * @since  K5.2.0
      */
-    public $minimal_user_posts_add_url_image = 10;
+    public $minimalUserPostsAddUrlImage = 10;
 
     /**
      * @var    boolean  utm source

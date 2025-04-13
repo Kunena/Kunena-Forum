@@ -123,8 +123,8 @@ class MiscDisplay extends Display
         $Itemid       = $this->input->getInt('Itemid');
 
         if (!$Itemid) {
-            if ($this->config->custom_id) {
-                $itemidfix = $this->config->custom_id;
+            if ($this->config->customId) {
+                $itemidfix = $this->config->customId;
             } else {
                 $menu      = $this->app->getMenu();
                 $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));

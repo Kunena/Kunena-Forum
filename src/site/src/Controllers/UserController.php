@@ -880,7 +880,7 @@ class UserController extends KunenaController
         }
         
         // Create email to notify the user which has been unbanned.
-        $mailnamesender  = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle);
+        $mailnamesender  = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle);
         $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
         $mail->setSubject($mailTitle);
         $mail->setSender([$this->config->getEmail(), $mailnamesender]);

@@ -2142,7 +2142,7 @@ class KunenaUser
             return true;
         }
 
-        if ($this->_config->new_users_prevent_post_url_images && $this->posts <= $this->_config->minimal_user_posts_add_url_image) {
+        if ($this->_config->newUsersPreventPostUrlImages && $this->posts <= $this->_config->minimalUserPostsAddUrlImage) {
             return false;
         }
         

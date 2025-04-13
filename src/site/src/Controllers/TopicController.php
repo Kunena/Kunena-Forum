@@ -2455,7 +2455,7 @@ class TopicController extends KunenaController
             $emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false);
 
             if (!empty($emailToList)) {
-                $mailnamesender = !empty($this->config->email_sender_name) ? MailHelper::cleanAddress($this->config->email_sender_name) : MailHelper::cleanAddress($this->config->boardTitle . ': ' . $this->me->getName());
+                $mailnamesender = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle . ': ' . $this->me->getName());
                 $mailsubject    = "[" . $this->config->boardTitle . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
 
                 if ($reason) {

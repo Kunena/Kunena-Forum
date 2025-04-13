@@ -65,12 +65,12 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         </td>
                                         <td><?php echo Text::_('COM_KUNENA_A_EMAIL_DESC2') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->email_sender_name != '') :
+                                    <tr <?php if ($this->config->emailSenderName != '') :
                                             echo 'class="changed"';
                                         endif; ?>>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_EMAIL_SENDER_NAME') ?></td>
                                         <td>
-                                            <input type="text" class="form-control" name="cfg_email_sender_name" value="<?php echo $this->escape($this->config->email_sender_name) ?>" />
+                                            <input type="text" class="form-control" name="cfg_emailSenderName" value="<?php echo $this->escape($this->config->emailSenderName) ?>" />
                                         </td>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_EMAIL_SENDER_NAME_DESC') ?></td>
                                     </tr>
@@ -484,11 +484,11 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td><?php echo $this->lists['disableRe'] ?></td>
                                         <td><?php echo Text::_('COM_KUNENA_DISABLE_RE_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->display_filename_attachment != 0) :
+                                    <tr <?php if ($this->config->displayFilenameAttachment != 0) :
                                             echo 'class="changed"';
                                         endif; ?>>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_DISPLAY_FILENAME_ATTACHMENT') ?></td>
-                                        <td><?php echo $this->lists['display_filename_attachment'] ?></td>
+                                        <td><?php echo $this->lists['displayFilenameAttachment'] ?></td>
                                         <td><?php echo Text::_('COM_KUNENA_CONFIG_DISPLAY_FILENAME_ATTACHMENT_DESC') ?></td>
                                     </tr>
                                     <tr <?php if ($this->config->datePickerFormat) :
@@ -978,19 +978,19 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td><?php echo $this->lists['moderatorPermDelete'] ?> </td>
                                         <td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_MOD_PERDELETE_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->new_users_prevent_post_url_images != 0) :
+                                    <tr <?php if ($this->config->newUsersPreventPostUrlImages != 0) :
                                             echo 'class="changed"';
                                         endif; ?>>
                                         <td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_PREVENT_NEW_USERS_POST_URL_IMAGE') ?></td>
-                                        <td><?php echo $this->lists['new_users_prevent_post_url_images'] ?> </td>
+                                        <td><?php echo $this->lists['newUsersPreventPostUrlImages'] ?> </td>
                                         <td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_PREVENT_NEW_USERS_POST_URL_IMAGE_DESC') ?></td>
                                     </tr>
-                                    <tr <?php if ($this->config->minimal_user_posts_add_url_image != 10) :
+                                    <tr <?php if ($this->config->minimalUserPostsAddUrlImage != 10) :
                                             echo 'class="changed"';
                                         endif; ?>>
                                         <td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_MINIMAL_NUMBER_OF_USER_POSTS_TO_ADD_URL_IMAGE') ?></td>
                                         <td>
-                                            <input type="text" class="form-control" name="cfg_minimal_user_posts_add_url_image" value="<?php echo $this->escape($this->config->minimal_user_posts_add_url_image) ?>" />
+                                            <input type="text" class="form-control" name="cfg_minimalUserPostsAddUrlImage" value="<?php echo $this->escape($this->config->minimalUserPostsAddUrlImage) ?>" />
                                         </td>
                                         <td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_MINIMAL_NUMBER_OF_USER_POSTS_TO_ADD_URL_IMAGE_DESC') ?></td>
                                     </tr>

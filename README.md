@@ -69,6 +69,8 @@ The *Kunena* projects thrives on contributions from the community. Our dedicated
 5. [Read our developer wiki](https://github.com/Kunena/Kunena-Forum/wiki)
 6. Send us a pull request
 
+## Powered by
+[![PhpStorm logo.](https://resources.jetbrains.com/storage/products/company/brand/logos/PhpStorm.svg)](https://jb.gg/OpenSourceSupport)
 
 ## LICENSE
 

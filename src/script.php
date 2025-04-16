@@ -57,6 +57,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             '0'   => '8.2.0', // Preferred version
         ],
         'MySQL'   => [
+            '9.3' => '9.3.0',
             '9.2' => '9.2.0',        
             '9.1' => '9.1.0',
             '9.0' => '9.0.0',
@@ -87,7 +88,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             '0' => '10.8.6', // Preferred version
         ],
         'Joomla!' => [
-            '5.3' => '5.3.0-rc2',
+            '5.3' => '5.3.0',
             '5.2' => '5.2.6',
             '5.1' => '5.1.4',
             '5.0' => '5.0.3',

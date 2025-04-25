@@ -65,9 +65,8 @@ abstract class KunenaMessageThankyouHelper
 
         $id = \intval($identifier);
 
-        // TODO: why this returns null? Does it have side effect?
         if ($id < 1) {
-            return false;
+            return new KunenaMessageThankyou;
         }
 
         if ($reload || empty(self::$_instances [$id])) {

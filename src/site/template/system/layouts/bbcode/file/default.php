@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 
@@ -29,17 +30,16 @@ $size     = $this->size;
     </h4>
 
     <?php if ($url) :
-        ?>
+    ?>
 
         <?php echo Text::_('COM_KUNENA_FILENAME'); ?>
         <a href="<?php echo $url; ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape($filename); ?>">
             <?php echo $this->escape(KunenaAttachmentHelper::shortenFilename($filename)); ?>
         </a>
 
-        <br/>
+        <br />
 
-        <?php echo Text::_('COM_KUNENA_FILESIZE') . number_format($size / 1024, 0, '', ',') . ' ' .
-        Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?>
+        <?php echo Text::_('COM_KUNENA_FILESIZE') . HTMLHelper::_('kunenaforum.formatfilesize', $size, 2); ?>
 
     <?php endif; ?>
 </div>

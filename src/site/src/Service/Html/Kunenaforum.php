@@ -326,7 +326,7 @@ class Kunenaforum
 
         // Attach sortable to document
         Factory::getApplication()->getDocument()->addScriptDeclaration(
-        	"
+            "
 		jQuery(document).ready(function ($){
 			var sortableList = new $.JSortableList('#"
                 . $tableId . " tbody','" . $formId . "','" . $sortDir . "' , '" . $saveOrderingUrl . "','','" . $nestedList . "');
@@ -335,5 +335,28 @@ class Kunenaforum
         );
 
         return true;
+    }
+
+    /**
+     * Method to convert bytes to formatted units
+     *
+     * @param   integer   $bytes  The bytes that need to be converted to formatted units
+     * @param   integer   $round  The number of decimals
+     *
+     * @return  string
+     *
+     * @since   Kunena 6.4.3
+     */
+    public static function formatfilesize(int $bytes, int $round = 2)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        $i = 0;
+
+        while ($bytes >= 1024 && $i < count($units) - 1) {
+            $bytes /= 1024;
+            $i++;
+        }
+
+        return round($bytes, $round) . ' ' . Text::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT_' . $units[$i]);
     }
 }

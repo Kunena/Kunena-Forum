@@ -1473,8 +1473,12 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
             }
 
-            if ($attach->protected > 0) {
+            if ($attach->protected != 32) {
                 $attachs->totalProtected = $attachs->totalProtected + 1;
+            }
+            
+            if ($attach->protected == 32) {
+                $attachs->totalPrivate = $attachs->totalPrivate + 1;
             }
         }
 

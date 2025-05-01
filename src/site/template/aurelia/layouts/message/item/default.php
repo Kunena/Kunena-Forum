@@ -125,12 +125,12 @@ $list = [];
 <?php if (!empty($attachments)) : 
     if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest ) || $this->me->exists()) : ?> 	
 					<div class="card pb-3 pd-3 mb-3">
-                    <?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>
+                    <?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>
             	<div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
             	      <div class="card-body kattach">          		
              <?php endif; ?>	
             			<ul class="thumbnails" style="list-style:none;">   		
-						<?php foreach ($attachments as $attachment) : 	
+						<?php foreach ($attachments as $attachment) :  	
 
 						if (!$attachment->protected) : ?>
                             <?php if ($attachment->isAudio()) :
@@ -147,7 +147,7 @@ $list = [];
                                 </li>
                                 <?php endif; ?>
                             <?php endif; ?>                            
-                         <?php elseif ($attachment->protected > 0): ?>
+                         <?php elseif ($attachment->protected > 0 && $this->me->exists()): ?>
                          		<?php if ($attachment->isAudio()) :
                                 echo $attachment->getLayout()->render('audio'); ?>
                             <?php elseif ($attachment->isVideo()) :
@@ -167,7 +167,7 @@ $list = [];
 
 						endforeach; ?>
 						</ul>
-						<?php if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments) || $this->me->isModerator($this->topic->getCategory()) && $attachs->totalPrivate == count($attachments)) : ?>						
+						<?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>						
             	
             	</div>
 			<div class="clearfix"></div>

@@ -65,4 +65,28 @@ class MessageItem extends KunenaLayout
     public $thankyou_delete;
 
     public $numLink;
+
+    /**
+     * Check if the guest, moderator or registred can see attachments
+     *
+     *
+     * @since   Kunena 6.4.3
+     */
+    public function canSeeAttachments($attachments, $attachs, $topic) {
+        if (!$this->me->exists()) {
+            if ($attachs->totalPrivate == count($attachments)) {
+                return false;
+            }
+        } elseif ($this->me->isModerator($topic->getCategory())) {
+            if ($attachs->totalPrivate == count($attachments)) {
+                return true;
+            }
+        } else {
+            if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

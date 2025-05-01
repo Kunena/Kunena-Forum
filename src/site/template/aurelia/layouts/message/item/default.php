@@ -25,23 +25,7 @@ $message              = $this->message;
 $isReply              = $this->message->id != $this->topic->first_post_id;
 $signature            = $this->profile->getSignature();
 $attachments          = $message->getAttachments();
-$attachs              = $message->getNbAttachments();
-$config               = KunenaConfig::getInstance();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
-$displayAttachments   = false;
-
-foreach ($attachments as $attachment) {
-    if (!$attachment->inline) {
-        $displayAttachments = true;
-        break;
-    }
-}
-
-if ($config->orderingSystem == 'mesid') {
-    $this->numLink = $this->location;
-} else {
-    $this->numLink = $message->replynum;
-}
 
 $list = [];
 ?>
@@ -57,7 +41,7 @@ $list = [];
         <?php if ($message->modified_time) :
         ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
                     endif; ?>
-        <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->numLink; ?></a>
+        <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->getNumlink($this->location); ?></a>
         <span class="d-block d-sm-none"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
     </span>
 </small>
@@ -69,7 +53,7 @@ $list = [];
         $langstr = $isReply ? 'COM_KUNENA_MESSAGE_REPLIED_NEW' : 'COM_KUNENA_MESSAGE_CREATED_NEW';
         echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($this->message->getTopic(), $this->message, $this->message->displayField('subject'), null, KunenaTemplate::getInstance()->tooltips() . ' topictitle')); ?>
         <?php
-        if (!empty($this->message->pm) && $config->privateMessage) : ?>
+        if (!empty($this->message->pm) && $this->config->privateMessage) : ?>
         <div class="kmsg">
             <div class="kmsgtext-hide">
                 <?php foreach($this->message->pm as $pm) {
@@ -125,7 +109,7 @@ $list = [];
 <?php if (!empty($attachments)) : 
     if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest ) || $this->me->exists()) : ?> 	
 					<div class="card pb-3 pd-3 mb-3">
-                    <?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>
+                    <?php if ($this->canSeeAttachments($attachments)) : ?>
             	<div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
             	      <div class="card-body kattach">          		
              <?php endif; ?>	
@@ -167,7 +151,7 @@ $list = [];
 
 						endforeach; ?>
 						</ul>
-						<?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>						
+						<?php if ($this->canSeeAttachments($attachments)) : ?>						
             	
             	</div>
 			<div class="clearfix"></div>

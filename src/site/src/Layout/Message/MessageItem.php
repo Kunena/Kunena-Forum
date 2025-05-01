@@ -16,6 +16,9 @@ namespace Kunena\Forum\Site\Layout\Message;
 \defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 
 /**
  * KunenaLayoutMessageList
@@ -69,15 +72,18 @@ class MessageItem extends KunenaLayout
     /**
      * Check if the guest, moderator or registred can see attachments
      *
+     * @param   KunenaAttachment   $attachments  The KunenaAttachment object
      *
      * @since   Kunena 6.4.3
      */
-    public function canSeeAttachments($attachments, $attachs, $topic) {
+    public function canSeeAttachments(KunenaAttachment $attachments) {
+        $attachs = $this->message->getNbAttachments();
+        
         if (!$this->me->exists()) {
             if ($attachs->totalPrivate == count($attachments)) {
                 return false;
             }
-        } elseif ($this->me->isModerator($topic->getCategory())) {
+        } elseif ($this->me->isModerator($this->topic->getCategory())) {
             if ($attachs->totalPrivate == count($attachments)) {
                 return true;
             }
@@ -88,5 +94,22 @@ class MessageItem extends KunenaLayout
         }
         
         return false;
+    }    
+    
+    /**
+     * Get the link number of the specific message
+     *
+     * @param   int            $location The identifier of the message to build the link
+     *
+     * @since   Kunena 6.4.3
+     */
+    public function getNumlink($location) {
+        if ($this->config->orderingSystem == 'mesid') {
+            $numlink = $location;
+        } else {
+            $numlink = $this->message->replynum;
+        }
+        
+        return $numlink;
     }
 }

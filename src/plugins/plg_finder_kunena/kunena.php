@@ -337,7 +337,7 @@ class PlgFinderKunena extends Adapter
     protected function setup()
     {
         // Initialize CLI
-        $api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+        $api = JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
 
         if (is_file($api)) {
             require_once $api;
@@ -601,7 +601,7 @@ class PlgFinderKunena extends Adapter
     protected function getAccessLevel($catid)
     {
         $category = KunenaCategoryHelper::get($catid);
-        $user =Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById(0);
+        $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById(0);
 
         $accesslevels = (array) $user->getAuthorisedViewLevels();
         $groups_r     = (array) Access::getGroupsByUser($user->id, true);

@@ -807,10 +807,10 @@ abstract class KunenaRoute
         foreach ($aliases as $object) {
             if (StringHelper::strtolower($alias) == StringHelper::strtolower($object->alias)) {
                 $var         = $object->type != 'legacy' ? $object->type : 'view';
-                $vars [$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
+                $vars[$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
 
                 if ($var == 'catid') {
-                    $vars ['view'] = 'category';
+                    $vars['view'] = 'category';
                 }
 
                 break;
@@ -833,14 +833,16 @@ abstract class KunenaRoute
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
         self::$config = KunenaFactory::getConfig();
 
-        if (Factory::getApplication()->isClient('administrator')) {
+        if (Factory::getApplication()->isClient('administrator') || Factory::getApplication()->isClient('cli')) {
             self::$adminApp = true;
             KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
             return;
         }
 
-        self::$menus   = Factory::getApplication()->getMenu();
+        $app = KunenaFactory::getApplication();
+
+        self::$menus   = $app->getMenu();
         self::$menu    = self::$menus->getMenu();
         self::$default = self::$menus->getDefault();
         $active        = self::$menus->getActive();
@@ -861,7 +863,7 @@ abstract class KunenaRoute
         }
 
         // If values are both in GET and POST, they are only stored in POST
-        $post = Factory::getApplication()->input->post->getArray([]);
+        $post = $app->input->post->getArray([]);
 
         foreach ($post as $key => $value) {
             if (\in_array($key, ['view', 'layout', 'task']) && !preg_match('/[^a-zA-Z0-9_.]/i', $value)) {
@@ -870,7 +872,7 @@ abstract class KunenaRoute
         }
 
         // Make sure that request URI is not broken
-        $get = Factory::getApplication()->input->get->getArray([]);
+        $get = $app->input->get->getArray([]);
 
         foreach ($get as $key => $value) {
             if (preg_match('/[^a-zA-Z]/', $key)) {
@@ -985,7 +987,8 @@ abstract class KunenaRoute
     public static function fixMissingItemID(): int
     {
         $component = ComponentHelper::getComponent('com_kunena');
-        $items     = Factory::getApplication()->getMenu('site')->getItems('component_id', $component->id);
+        $app       = KunenaFactory::getApplication();
+        $items     = $app->getMenu('site')->getItems('component_id', $component->id);
 
         if ($items) {
             return $items[0]->id;

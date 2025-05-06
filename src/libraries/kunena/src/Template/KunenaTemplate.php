@@ -319,7 +319,7 @@ class KunenaTemplate
             if ($this->config->activeMenuItem) {
                 $id = htmlspecialchars($this->config->activeMenuItem, ENT_COMPAT, 'UTF-8');
                 $this->addScriptDeclaration(
-                	"
+                    "
 					document.addEventListener('DOMContentLoaded', () => {
 						let activeMenuItem = document.querySelector('" . $id . "');
 						if (activeMenuItem) {
@@ -330,12 +330,12 @@ class KunenaTemplate
                 );
             } else {
                 $Itemid = KunenaRoute::fixMissingItemID();
-                $items  = Factory::getApplication()->getMenu('site')->getItems('link', 'index.php?Itemid=' . $Itemid);
+                $items  = KunenaFactory::getApplication()->getMenu('site')->getItems('link', 'index.php?Itemid=' . $Itemid);
 
                 if ($items) {
                     $id = htmlspecialchars('.item-' . $items[0]->id, ENT_COMPAT, 'UTF-8');
                     $this->addScriptDeclaration(
-                    	"
+                        "
 						document.addEventListener('DOMContentLoaded', () => {
 							let activeMenuItem = document.querySelector('" . $id . "');
 							if (activeMenuItem) {
@@ -357,7 +357,7 @@ class KunenaTemplate
      */
     public function isHmvc()
     {
-        $app = Factory::getApplication();
+        $app = KunenaFactory::getApplication();
 
         if (\is_null($this->hmvc)) {
             if (is_dir(JPATH_THEMES . "/{$app->getTemplate()}/com_kunena/pages")) {
@@ -407,10 +407,10 @@ class KunenaTemplate
      */
     public static function getInstance($name = null)
     {
-        $app = Factory::getApplication();
+        $app = KunenaFactory::getApplication();
 
         if (!$name) {
-            $name = Factory::getApplication()->input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
+            $name = $app->input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
         }
 
         $name = KunenaPath::clean($name);
@@ -478,9 +478,9 @@ class KunenaTemplate
         if (!strstr($xml, '<config>')) {
             // Update old template files to new format.
             $xml = preg_replace(
-            	['|<params|', '|</params>|', '|<param\s+|', '|</param>|'],
-            	['<config', '</config>', '<field ', '</field>'],
-            	$xml
+                ['|<params|', '|</params>|', '|<param\s+|', '|</param>|'],
+                ['<config', '</config>', '<field ', '</field>'],
+                $xml
             );
         }
 
@@ -511,7 +511,7 @@ class KunenaTemplate
 
         if ($isForumActive) {
             $this->addScriptDeclaration(
-            	'
+                '
 				document.addEventListener("DOMContentLoaded", () => {
 					let currentMenuItem = document.querySelector(".current");
 					let parentMenuItem = document.querySelector(".alias-parent-active");
@@ -585,8 +585,14 @@ class KunenaTemplate
     {
         $types = ['communication' => 'comm', 'user' => 'user', 'moderation' => 'mod'];
         $names = [
-            'unsubscribe' => 'subscribe', 'unfavorite' => 'favorite', 'unsticky' => 'sticky', 'unlock' => 'lock', 'create' => 'newtopic',
-            'quickReply'  => 'reply', 'quote' => 'kquote', 'edit' => 'kedit',
+            'unsubscribe' => 'subscribe',
+            'unfavorite' => 'favorite',
+            'unsticky' => 'sticky',
+            'unlock' => 'lock',
+            'create' => 'newtopic',
+            'quickReply'  => 'reply',
+            'quote' => 'kquote',
+            'edit' => 'kedit',
         ];
 
         $text  = Text::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
@@ -1050,7 +1056,7 @@ HTML;
      */
     public function getTemplatePaths($path = '', $fullpath = false): array
     {
-        $app = Factory::getApplication();
+        $app = KunenaFactory::getApplication();
 
         if ($path) {
             $path = KunenaPath::clean("/$path");

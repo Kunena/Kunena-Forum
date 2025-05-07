@@ -145,8 +145,9 @@ class KunenaAccess
         $this->moderatorsByUserid = [];
 
         // Reset read KunenaAccess for the current session
-        $me = KunenaUserHelper::getMyself();
-        Factory::getApplication()->setUserState("com_kunena.user{$me->userid}_read", null);
+        $me  = KunenaUserHelper::getMyself();
+        $app = KunenaFactory::getApplication();
+        $app->setUserState("com_kunena.user{$me->userid}_read", null);
 
         // @var KunenaAccess $access
 
@@ -269,7 +270,7 @@ class KunenaAccess
         if (!$enabled) {
             $enabled = true;
             Factory::getApplication()->getDocument()->addScriptDeclaration(
-            	"function kShowAccessType(htmlclass, el) {
+                "function kShowAccessType(htmlclass, el) {
 	var selectedvalue = el.find(\":selected\").val();
 
 	name = selectedvalue.replace(/[^\\w\\d]+/, '-');
@@ -503,7 +504,7 @@ jQuery(document).ready(function ($) {
 
         if (!isset($read[$user->userid])) {
             $id  = $user->userid;
-            $app = Factory::getApplication();
+            $app = KunenaFactory::getApplication();
 
             // TODO: handle guests/bots with no userstate
             $read[$id] = $app->getUserState("com_kunena.user{$id}_read");

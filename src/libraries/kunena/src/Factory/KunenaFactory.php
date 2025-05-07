@@ -15,6 +15,8 @@ namespace Kunena\Forum\Libraries\Factory;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Application\AdministratorApplication;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Integration\KunenaActivity;
@@ -274,5 +276,52 @@ abstract class KunenaFactory
         $lang->_strings = array_merge($lang->_strings, $strings);
 
         return !empty($strings);
+    }
+
+    /**
+     * Get the Joomla Factory application instance
+     *
+     * In CLI context, returns the application for the given client name (e.g. 'site', 'administrator', or any valid custom client),
+     * falling back to 'site' if not specified.
+     * In non-CLI contexts, returns the current application instance.
+     * 
+     * @param   string  $client  The fallback Application Instance to return when run from 'cli' (Console)
+     *
+     * @return  SiteApplication|AdministratorApplication
+     *
+     * @throws  RuntimeException
+     * @since   Kunena 6.4.3
+     */
+    public static function getApplication(string $client = ''): SiteApplication|AdministratorApplication
+    {
+        if (Factory::getApplication()->isClient('cli')) {
+            if (empty($client)) {
+                $client = 'site';
+            }
+
+            switch ($client) {
+                case 'administrator':
+                    $applicationClass = AdministratorApplication::class;
+                    break;
+
+                case 'site':
+                    $applicationClass = SiteApplication::class;
+                    break;
+
+                default:
+                    $applicationClass = '\\Joomla\\CMS\\Application\\' . \ucfirst($client) . 'Application';
+
+                    if (!class_exists($applicationClass)) {
+                        throw new \RuntimeException('Joomla Application class not found: ' . $applicationClass);
+                    }
+                    break;
+            }
+
+            $app = Factory::getContainer()->get($applicationClass);
+        } else {
+            $app = Factory::getApplication();
+        }
+
+        return $app;
     }
 }

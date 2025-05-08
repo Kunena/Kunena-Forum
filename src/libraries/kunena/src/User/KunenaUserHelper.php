@@ -109,8 +109,9 @@ abstract class KunenaUserHelper
      */
     public static function initialize(): void
     {
-        $id        = Factory::getApplication()->getIdentity()->id;
-        self::$_me = self::$_instances [$id] = new KunenaUser($id);
+        // Get the user ide for the current user, note that when run from the cli we need to set it to 0 as cli cannot handle user methods like getIdentity()
+        $id        = Factory::getApplication()->getIdentity()->id ?? 0;
+        self::$_me = self::$_instances[$id] = new KunenaUser($id);
 
         // Initialize avatar if configured.
         $avatars = KunenaFactory::getAvatarIntegration();
@@ -132,12 +133,12 @@ abstract class KunenaUserHelper
     {
         $id = (int) $id;
 
-        if ($id && !empty(self::$_instances [$id])) {
-            return self::$_instances [$id];
+        if ($id && !empty(self::$_instances[$id])) {
+            return self::$_instances[$id];
         }
 
-        if (!empty(self::$_instances_name [$name])) {
-            return self::$_instances_name [$name];
+        if (!empty(self::$_instances_name[$name])) {
+            return self::$_instances_name[$name];
         }
 
         $user = self::get($id);
@@ -146,7 +147,7 @@ abstract class KunenaUserHelper
             $user->username = $user->name = $name;
         }
 
-        self::$_instances_name [$name] = $user;
+        self::$_instances_name[$name] = $user;
 
         return $user;
     }
@@ -195,11 +196,11 @@ abstract class KunenaUserHelper
             KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
             $newUser = new KunenaUser($id);
-            $newUser->userid = $id;            
-            
+            $newUser->userid = $id;
+
             return $newUser;
-        } elseif ($reload || empty(self::$_instances [$id])) {
-            self::$_instances [$id] = new KunenaUser($id);
+        } elseif ($reload || empty(self::$_instances[$id])) {
+            self::$_instances[$id] = new KunenaUser($id);
 
             // Preload avatar if configured.
             $avatars = KunenaFactory::getAvatarIntegration();
@@ -208,7 +209,7 @@ abstract class KunenaUserHelper
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-        return self::$_instances [$id];
+        return self::$_instances[$id];
     }
 
     /**
@@ -267,8 +268,8 @@ abstract class KunenaUserHelper
         $list = [];
 
         foreach ($userids as $userid) {
-            if (isset(self::$_instances [$userid])) {
-                $list [$userid] = self::$_instances [$userid];
+            if (isset(self::$_instances[$userid])) {
+                $list[$userid] = self::$_instances[$userid];
             }
         }
 
@@ -582,14 +583,14 @@ abstract class KunenaUserHelper
                 self::getOnlineUsers();
             }
 
-            $online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > time() - Factory::getApplication()->get('lifetime', 15) * 60) : false;
+            $online = isset(self::$_online[$user->userid]) ? (self::$_online[$user->userid]->time > time() - Factory::getApplication()->get('lifetime', 15) * 60) : false;
         }
 
         if (!$online || ($user->status == 3 && !$user->isMyself() && !self::getMyself()->isModerator())) {
             return -1;
         }
 
-        if ($online && self::$_online [$user->userid]->time < time() - 30) {
+        if ($online && self::$_online[$user->userid]->time < time() - 30) {
             return 1;
         }
 
@@ -774,16 +775,16 @@ abstract class KunenaUserHelper
                 $log = KunenaLog::LOG_USER_REPORT_STOPFORUMSPAM;
 
                 KunenaLog::log(
-                	KunenaLog::TYPE_ACTION,
-                	$log,
-                	[
+                    KunenaLog::TYPE_ACTION,
+                    $log,
+                    [
                         'user_ip_reported'  => $data['ip'],
                         'username_reported' => $data['username'],
                         'email_reported'    => $data['email'],
                     ],
-                	null,
-                	null,
-                	null
+                    null,
+                    null,
+                    null
                 );
             }
 

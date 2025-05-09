@@ -524,7 +524,6 @@ class UserController extends KunenaController
             return true;
         }
 
-        $username = $this->user->get('username');
         $user     = new User($this->user->id);
 
         // Bind the form fields to the user table and save.

@@ -32,7 +32,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
             </td>
             <td>
                 <input type="text" name="username" id="username" class="form-control"
-                       value="<?php echo $this->escape($this->user->get('username')); ?>"
+                       value="<?php echo $this->escape($this->user->username); ?>"
                     <?php
                     if (!$this->changeUsername) {
                         echo 'disabled="disabled"';
@@ -45,7 +45,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
             </td>
             <td>
                 <input class="required form-control" type="text" id="name" name="name"
-                       value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
+                       value="<?php echo $this->escape($this->user->name); ?>" size="40"/>
             </td>
         </tr>
         <tr>
@@ -54,10 +54,10 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
             </td>
             <td>
                 <input class="required validate-email form-control" type="email" id="email" name="email"
-                       value="<?php echo $this->escape($this->user->get('email')); ?>" size="40"/>
+                       value="<?php echo $this->escape($this->user->email); ?>" size="40"/>
             </td>
         </tr>
-        <?php if ($this->user->get('password')) :
+        <?php if ($this->user->password) :
             ?>
             <tr>
                 <td>

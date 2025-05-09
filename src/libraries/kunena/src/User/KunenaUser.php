@@ -2001,6 +2001,7 @@ class KunenaUser
      * @return  integer|string|void
      *
      * @since   Kunena 6.0
+     * @deprecated 6.4.2 use directly $this->variable instead calling get() method
      */
     public function __get(string $name)
     {

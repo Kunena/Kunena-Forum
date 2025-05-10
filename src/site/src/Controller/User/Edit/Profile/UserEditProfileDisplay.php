@@ -67,8 +67,8 @@ class UserEditProfileDisplay extends UserEditDisplay
         $this->genders[] = HTMLHelper::_('select.option', '2', Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
         $this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE');
-        
-        $this->socials = KunenaUserSocials::getInstance(KunenaUserHelper::getMyself()->userid);
+
+        $this->socials = KunenaUserSocials::getInstance($this->profile->userid);
     }
 
     /**

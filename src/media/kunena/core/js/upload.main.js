@@ -178,6 +178,9 @@ jQuery(function ($) {
 	
 	            // Explicitly hide the insert-all button
 	            $('#insert-all').hide();
+				
+				// Add the hidden field attachment_private which should contains an array list with the id of private attachment
+				$('#kattach-list').append('<input id="attachment_private" type="hidden" name="attachment_private" value="'+ filesidtosetprivate +'" />');
 	        })
 	        .fail(function () {
 	            //TODO: handle the error of ajax request

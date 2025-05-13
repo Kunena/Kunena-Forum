@@ -179,7 +179,7 @@ jQuery(function ($) {
 	            // Explicitly hide the insert-all button
 	            $('#insert-all').hide();
 				
-				// Add the hidden field attachment_private which should contains an array list with the id of private attachment
+				// Add the hidden field attachment_private which should contains an array list with the ids of private attachments
 				$('#kattach-list').append('<input id="attachment_private" type="hidden" name="attachment_private" value="'+ filesidtosetprivate +'" />');
 	        })
 	        .fail(function () {
@@ -390,6 +390,16 @@ jQuery(function ($) {
                     }
                 }
             });
+			
+			// Add the hidden field attachment_private which should contains an array list with the id of private attachment
+			if ( $('#attachment_private').length > 0 ) {
+				const file_id = [];
+				file_id.push($('#attachment_private').val()); 
+				
+				$('#kattach-list').append('<input id="attachment_private" type="hidden" name="attachment_private" value="'+ file_id +'" />');
+			} else {
+				$('#kattach-list').append('<input id="attachment_private" type="hidden" name="attachment_private" value="'+ files_id +'" />');
+			}			
 
             // Update global buttons based on state
             if (allPrivate) {

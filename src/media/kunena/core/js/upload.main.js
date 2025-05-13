@@ -395,8 +395,11 @@ jQuery(function ($) {
 			if ( $('#attachment_private').length > 0 ) {
 				const file_id = [];
 				file_id.push($('#attachment_private').val()); 
+				file_id.push(files_id);
 				
-				$('#kattach-list').append('<input id="attachment_private" type="hidden" name="attachment_private" value="'+ file_id +'" />');
+				$('#attachment_private').removeAttr('value');
+				$('#attachment_private').attr('value');
+				$('#attachment_private').val(file_id);
 			} else {
 				$('#kattach-list').append('<input id="attachment_private" type="hidden" name="attachment_private" value="'+ files_id +'" />');
 			}			

@@ -1185,7 +1185,7 @@ class TopicController extends KunenaController
         $body      = (string) $this->input->getRaw('message_private');
         $attachIds = $this->input->get('attachment_private', [], 'array');
 
-        if (!trim($body) && !$attachIds) {
+        if (!$attachIds) {
             return;
         }
 
@@ -1196,7 +1196,10 @@ class TopicController extends KunenaController
         $private            = new KunenaPrivateMessage();
         $private->author_id = $author->userid;
         $private->subject   = $message->subject;
-        $private->body      = $body;
+        
+        if (trim($body)) {
+            $private->body      = $body;
+        }
 
         // Attach message.
         $private->posts()->add($message->id);

@@ -18,7 +18,7 @@ namespace Kunena\Forum\Site\Controller\User\Attachments;
 use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Attachment\KunenaFinder;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentFinder;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -100,7 +100,7 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
             $this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
         }
 
-        $finder = new KunenaFinder();
+        $finder = new KunenaAttachmentFinder();
         $finder->where('userid', '=', $userid);
 
         $this->total      = $finder->count();

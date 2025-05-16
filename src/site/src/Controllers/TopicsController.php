@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Attachment\KunenaFinder;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentFinder;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -95,7 +95,7 @@ class TopicsController extends KunenaController
             }
 
             // Delete attachments in each message
-            $finder = new KunenaFinder();
+            $finder = new KunenaAttachmentFinder();
             $finder->where('mesid', 'IN', array_keys($messages));
             $attachments = $finder->find();
 

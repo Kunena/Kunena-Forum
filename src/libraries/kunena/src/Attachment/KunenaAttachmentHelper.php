@@ -598,6 +598,14 @@ abstract class KunenaAttachmentHelper
      */
     public static function getByUserid($user, array $params): array
     {
+        if (empty($params['orderby'])) {
+            $params['orderby'] = 'desc';
+        }
+        
+        if (empty($params['limit'])) {
+            $params['limit'] = '';
+        }
+        
         if ($params['file'] == '1' && $params['image'] != '1') {
             $filetype = " AND filetype=''";
         } elseif ($params['image'] == '1' && $params['file'] != '1') {
@@ -623,7 +631,7 @@ abstract class KunenaAttachmentHelper
         $db->setQuery($query);
 
         try {
-            $results = $db->loadObjectList('id', 'Attachment');
+            $results = $db->loadObjectList('id');
         } catch (RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }

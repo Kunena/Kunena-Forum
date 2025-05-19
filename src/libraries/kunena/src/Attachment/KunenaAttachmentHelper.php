@@ -639,15 +639,17 @@ abstract class KunenaAttachmentHelper
         $list = [];
 
         if (!empty($results)) {
-            foreach ($results as $instance) {
-                if (!isset(self::$_instances[$instance->id])) {
-                    self::$_instances [$instance->id]                  = $instance;
-                    self::$_messages [$instance->mesid][$instance->id] = $instance;
+            foreach ($results as $result) {
+                if (!isset(self::$_instances[$result->id])) {
+                    $instance                               = self::get($result->id);
+                    self::$_instances[$result->id]          = $instance;
                 }
 
-                $list[] = self::$_instances[$instance->id];
+                $list[] = self::$_instances[$result->id];
             }
         }
+        
+        unset($results);
 
         return $list;
     }

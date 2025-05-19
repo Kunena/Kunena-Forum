@@ -933,6 +933,9 @@ class TopicController extends KunenaController
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
         }
+        
+        // Removed orphaned attachments (one has added on the form and removed after before to submit)        
+        $this->removeOrphanedAttachments(); 
 
         // Post Private message
         try {
@@ -974,6 +977,29 @@ class TopicController extends KunenaController
             $this->setRedirect($topic->getUrl($category, false));
         } else {
             $this->setRedirect($category->getUrl(null, false));
+        }
+    }
+    
+    /**    
+    * Remove orhpaned attachments when submit (which have mesid=0).
+    *    
+    * @return  void
+    *    
+    * @throws  Exception
+    * 
+    * @since   Kunena 6.4    
+    */    
+    public function removeOrphanedAttachments()    
+    {        
+        $params['file'] = '1';        
+        $params['image'] = '1';
+ 
+        $attachments = KunenaAttachmentHelper::getByUserid($this->me, $params);
+
+        foreach ($attachments as $attachment) {
+            if($attachment->mesid == 0) {
+                $attachment->delete();    
+            } 
         }
     }
 

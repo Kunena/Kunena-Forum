@@ -1533,6 +1533,9 @@ class TopicController extends KunenaController
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_DELETED'), 'success');
             }
         }
+        
+        // Removed orphaned attachments (one has added on the form and removed after before to submit)
+        $this->removeOrphanedAttachments(); 
 
         // Edit Private message.
         $this->editPrivate($message);

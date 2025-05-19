@@ -133,6 +133,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         'createimage' => [],
         'createfile'  => [],
         'delete'      => ['Exists', 'Own'],
+        'private'     => ['Private'],
     ];
 
     /**
@@ -752,7 +753,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         // TODO: Add support for PROTECTION_ADMINS
         // Check if KunenaAttachment is private.
         if ($exception && $this->protected && self::PROTECTION_PRIVATE) {
-            $exception = $this->authorisePrivate($action, $user);
+            $exception = $this->authorisePrivate($user, $action);
         }
 
         // Check author access.
@@ -807,15 +808,15 @@ class KunenaAttachment extends KunenaDatabaseObject
     /**
      * Check is an KunenaAttachment is private
      *
-     * @param   string      $action  action
      * @param   KunenaUser  $user    user
+     * @param   string      $action  action
      *
      * @return  KunenaExceptionAuthorise|null|bool
      *
      * @throws Exception
      * @since   Kunena 6.0
      */
-    protected function authorisePrivate(string $action, KunenaUser $user): KunenaExceptionAuthorise|bool|null
+    protected function authorisePrivate(KunenaUser $user, $action = '')
     {
         if (!$user->exists()) {
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 401);
@@ -839,14 +840,14 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         if (\in_array($user->userid, $private->users()->getMapped())) {
             // Yes, I have access..
-            return true;
+            return ;
         } else {
             $messages = KunenaMessageHelper::getMessages($private->posts()->getMapped());
 
             foreach ($messages as $message) {
                 if ($user->isModerator($message->getCategory())) {
                     // Yes, I have access..
-                    return true;
+                    return ;
                 }
             }
         }

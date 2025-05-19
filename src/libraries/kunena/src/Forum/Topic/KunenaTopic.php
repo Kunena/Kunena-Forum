@@ -123,6 +123,7 @@ class KunenaTopic extends KunenaDatabaseObject
         'post.attachment.createimage' => ['Unlocked'],
         'post.attachment.createfile'  => ['Unlocked'],
         'post.attachment.delete'      => [],
+        'post.attachment.private'      => [],
         // TODO: In the future we might want to restrict this: array('Read','Unlocked'),
     ];
 

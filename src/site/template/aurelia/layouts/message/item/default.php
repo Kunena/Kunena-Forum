@@ -130,7 +130,7 @@ $list = [];
             	      <div class="card-body kattach">          		
              <?php endif; ?>	
             			<ul class="thumbnails" style="list-style:none;">   		
-						<?php foreach ($attachments as $attachment) :  	
+						<?php foreach ($attachments as $attachment) :
 
 						if (!$attachment->protected) : ?>
                             <?php if ($attachment->isAudio()) :
@@ -147,7 +147,7 @@ $list = [];
                                 </li>
                                 <?php endif; ?>
                             <?php endif; ?>                            
-                         <?php elseif ($attachment->protected > 0 && $this->me->exists()): ?>
+                         <?php elseif ($attachment->isAuthorised('private')): ?>
                          		<?php if ($attachment->isAudio()) :
                                 echo $attachment->getLayout()->render('audio'); ?>
                             <?php elseif ($attachment->isVideo()) :

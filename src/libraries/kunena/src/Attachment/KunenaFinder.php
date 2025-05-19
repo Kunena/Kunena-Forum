@@ -42,7 +42,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Finder\KunenaFinder
      *
      * @throws  Exception|void
      */
-    public function find()
+   /* public function find()
     {
         if ($this->skip) {
             return [];
@@ -67,11 +67,29 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Finder\KunenaFinder
                 $instances[$id] = KunenaAttachmentHelper::get($id);
             }
         }
-
-        $instances = new KunenaCollection($instances);
+        var_dump($instances);
 
         unset($results);
 
         return $instances;
+    }*/
+    public function find($access = 'read')
+    {
+        $results = parent::find();
+        var_dump($results);
+    }
+    
+    /**
+     * Filter by attachment private.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.4
+     */
+    public function filterByPrivate()
+    {
+        $this->query->where($this->db->quoteName('protected') . ' = 32');
+        
+        return $this;
     }
 }

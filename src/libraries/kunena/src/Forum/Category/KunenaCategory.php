@@ -133,6 +133,7 @@ class KunenaCategory extends KunenaDatabaseObject
         'topic.post.attachment.createimage' => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'],
         'topic.post.attachment.createfile'  => ['Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'],
         'topic.post.attachment.delete'      => ['NotBanned'],
+        'topic.post.attachment.private'      => ['NotBanned'],
         // TODO: In the future we might want to restrict this: array('Read', 'NotBanned', 'Unlocked'),
     ];
 

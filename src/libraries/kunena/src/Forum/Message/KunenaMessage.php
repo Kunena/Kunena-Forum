@@ -99,6 +99,7 @@ class KunenaMessage extends KunenaDatabaseObject
         'attachment.createimage' => ['Read', 'AttachmentsImage'],
         'attachment.createfile'  => ['Read', 'AttachmentsFile'],
         'attachment.delete'      => [],
+        'attachment.private'      => [],
     ];
 
     /**

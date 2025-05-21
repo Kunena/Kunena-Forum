@@ -15,10 +15,11 @@ namespace Kunena\Forum\Libraries\Config;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 
@@ -1319,7 +1320,7 @@ class KunenaConfig
      * @since   Kunena 6.4.0
      */
     public $blueskyappHandleOfApp = '';
-    
+
     /**
      * @var     string  Define X API consumer key
      * @since   Kunena 6.3.0
@@ -1331,7 +1332,7 @@ class KunenaConfig
      * @since   Kunena 6.4.0
      */
     public $blueskyappPasswordOfApp = '';
-    
+
     /**
      * @var     string  Define X API consumer secret
      * @since   Kunena 6.3.0
@@ -1655,7 +1656,7 @@ class KunenaConfig
      * @since  Kunena 6.2.0
      */
     public $mailBodyUserBanned = '';
-    
+
     /**
      * @var    boolean  enable the send mail to user when he is unbanned
      * @since  Kunena 6.4.0
@@ -1769,10 +1770,19 @@ class KunenaConfig
         $this->check();
 
         // Get current configuration
-        $params = get_object_vars($this);
-        unset($params['id']);
+        $params        = ArrayHelper::fromObject($this);
+        $cleanedParams = [];
 
-        $db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($params))}");
+        foreach ($params as $key => $value) {
+            // Check if the key starts with a null byte (indicating a mangled private/protected property)
+            // or if it's the specific '_errors' key (if it's not mangled)
+            if (!str_starts_with($key, "\0") && $key !== '_errors') {
+                $cleanedParams[$key] = $value;
+            }
+        }
+        unset($cleanedParams['id']);
+
+        $db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($cleanedParams))}");
 
         try {
             $db->execute();
@@ -1792,7 +1802,7 @@ class KunenaConfig
     public function reset(): void
     {
         $instance = new KunenaConfig();
-        $this->bind(get_object_vars($instance));
+        $this->bind(ArrayHelper::fromObject($instance));
     }
 
     /**

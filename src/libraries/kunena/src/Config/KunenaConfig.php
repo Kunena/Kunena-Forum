@@ -1683,9 +1683,9 @@ class KunenaConfig
             if (!$instance) {
                 $instance = new KunenaConfig();
                 $instance->load();
-            }
 
-            $cache->store($instance, 'configuration', 'com_kunena');
+                $cache->store($instance, 'configuration', 'com_kunena');
+            }
         }
 
         return $instance;
@@ -1716,7 +1716,12 @@ class KunenaConfig
 
         if ($config) {
             $params = json_decode($config['params']);
-            $this->bind($params);
+
+            if ($params !== null && \json_last_error() === JSON_ERROR_NONE) {
+                $this->bind($params);
+            } else {
+                throw new Exception(\json_last_error_msg(), 500);
+            }
         }
 
         // Perform custom validation of config data before we let anybody access it.
@@ -1776,11 +1781,10 @@ class KunenaConfig
         foreach ($params as $key => $value) {
             // Check if the key starts with a null byte (indicating a mangled private/protected property)
             // or if it's the specific '_errors' key (if it's not mangled)
-            if (!str_starts_with($key, "\0") && $key !== '_errors') {
+            if (!str_starts_with($key, "\0") && $key !== '_errors' && $key !== 'id') {
                 $cleanedParams[$key] = $value;
             }
         }
-        unset($cleanedParams['id']);
 
         $db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($cleanedParams))}");
 

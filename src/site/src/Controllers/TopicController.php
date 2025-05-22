@@ -1228,6 +1228,8 @@ class TopicController extends KunenaController
         if (trim($body)) {
             $private->body      = $body;
         }
+        
+        $private->body      = '';
 
         // Attach message.
         $private->posts()->add($message->id);

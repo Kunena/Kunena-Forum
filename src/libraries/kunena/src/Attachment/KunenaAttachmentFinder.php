@@ -77,7 +77,6 @@ class KunenaAttachmentFinder extends KunenaFinder
     public function find($access = 'read')
     {
         $results = parent::find();
-        var_dump($results);
     }
     
     /**

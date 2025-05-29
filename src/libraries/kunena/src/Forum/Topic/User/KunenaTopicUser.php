@@ -296,8 +296,8 @@ class KunenaTopicUser
      *
      * @return bool
      *
-     * @since   Kunena 6.0
      * @throws \Exception
+     *@since   Kunena 6.0
      */
     public function update(?KunenaMessage $message = null, int $postDelta = 0): bool
     {

@@ -52,9 +52,9 @@ class KunenaEntry
     	$type,
     	$operation,
     	$data,
-    	KunenaCategory $category = null,
-    	KunenaTopic $topic = null,
-    	KunenaUser $user = null
+    	?KunenaCategory $category = null,
+    	?KunenaTopic $topic = null,
+    	?KunenaUser $user = null
     ) {
         $now = new Date();
 

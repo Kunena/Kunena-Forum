@@ -112,9 +112,9 @@ class KunenaPage extends KunenaLayout
     /**
      * Execute main MVC triad to get the current layout.
      *
-     * @param   mixed  $path     path
-     * @param   mixed  $input    input
-     * @param   mixed  $options  options
+     * @param   mixed       $path     path
+     * @param   Input|null  $input    input
+     * @param   mixed       $options  options
      *
      * @return  KunenaLayout
      *
@@ -130,9 +130,9 @@ class KunenaPage extends KunenaLayout
     /**
      * Get main MVC triad from current layout.
      *
-     * @param   mixed  $path     path
-     * @param   mixed  $input    input
-     * @param   mixed  $options  options
+     * @param   mixed       $path     path
+     * @param   Input|null  $input    input
+     * @param   mixed       $options  options
      *
      * @return  KunenaControllerDisplay
      *

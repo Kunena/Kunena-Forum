@@ -613,10 +613,10 @@ class KunenaView extends HtmlView
      *
      * @return string The output of the the template script.
      *
-     * @since   Kunena 6.0
      * @throws \Exception
+     *@since   Kunena 6.0
      */
-    public function loadTemplateFile(string $tpl = null, array $hmvcParams = null): string
+    public function loadTemplateFile(?string $tpl = null, ?array $hmvcParams = null): string
     {
         KunenaProfiler::getInstance() ? $this->profiler->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -724,7 +724,7 @@ class KunenaView extends HtmlView
      * @throws  null
      * @since   Kunena 6.0
      */
-    public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaCategory $category = null)
+    public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, ?KunenaCategory $category = null)
     {
         $uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
 

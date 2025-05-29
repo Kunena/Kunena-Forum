@@ -788,8 +788,8 @@ class KunenaCategory extends KunenaDatabaseObject
      *
      * @return  boolean
      *
-     * @since   Kunena 4.0
      * @throws Exception
+     *@since   Kunena 4.0
      */
     public function isAuthorised($action = 'read', ?KunenaUser $user = null): bool
     {
@@ -812,8 +812,8 @@ class KunenaCategory extends KunenaDatabaseObject
      *
      * @return  KunenaExceptionAuthorise|boolean
      *
-     * @since   Kunena 4.0
      * @throws Exception
+     *@since   Kunena 4.0
      */
     public function tryAuthorise($action = 'read', ?KunenaUser $user = null, $throw = true)
     {
@@ -1208,8 +1208,8 @@ class KunenaCategory extends KunenaDatabaseObject
      *
      * @return  array
      *
-     * @since   Kunena 6.0
      * @throws Exception
+     *@since   Kunena 6.0
      */
     public function newTopic(?array $fields = null, $user = null, ?array $safefields = null): array
     {
@@ -1401,8 +1401,6 @@ class KunenaCategory extends KunenaDatabaseObject
     }
 
     /**
-     * @see     KunenaDatabaseObject::bind()
-     *
      * @param   bool        $include  include
      *
      * @param   array|null  $src      src
@@ -1410,6 +1408,8 @@ class KunenaCategory extends KunenaDatabaseObject
      * @param   array|null  $fields   fields
      *
      * @return  boolean  True on success.
+     * @see     KunenaDatabaseObject::bind()
+     *
      * @since   Kunena 6.0
      */
     public function bind(?array $src = null, ?array $fields = null, $include = false): bool

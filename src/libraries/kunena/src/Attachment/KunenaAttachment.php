@@ -857,7 +857,7 @@ class KunenaAttachment extends KunenaDatabaseObject
 
     /**
      * @param   string    $key    key
-     * @param   null|int  $catid  catid
+     * @param   int|null  $catid  catid
      *
      * @return bool
      *

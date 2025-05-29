@@ -95,7 +95,7 @@ class KunenaTableMap
      *
      * @since   Kunena 6.0
      */
-    public function __construct(string $table, string $key, string $mapped, DatabaseDriver $db = null)
+    public function __construct(string $table, string $key, string $mapped, ?DatabaseDriver $db = null)
     {
         // Set internal variables.
         $this->_tbl        = $table;
@@ -371,7 +371,7 @@ class KunenaTableMap
      *
      * @since   Kunena 6.0
      */
-    public function save(array $map = null, array $filter = null): bool
+    public function save(?array $map = null, ?array $filter = null): bool
     {
         if ($map !== null) {
             $this->setMapped($map);
@@ -432,7 +432,7 @@ class KunenaTableMap
      *
      * @since   Kunena 6.0
      */
-    public function store(array $filter = null): bool
+    public function store(?array $filter = null): bool
     {
         $k = $this->_tbl_key;
         $m = $this->_tbl_mapped;

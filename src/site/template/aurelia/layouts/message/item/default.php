@@ -162,7 +162,7 @@ $list = [];
                                 </li>
                                 <?php endif; ?>
                              <?php endif; ?>
-                        <?php elseif ($attachment->protected) : ?>
+                        <?php elseif ($attachment->protected && !$attachment->inline) : ?>
                             <li class="col-md-3 text-center">
                                 <div class="thumbnail">
                                      <?php echo $attachment->getLayout()->render('thumbnail'); ?>

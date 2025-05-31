@@ -162,7 +162,13 @@ $list = [];
                                 </li>
                                 <?php endif; ?>
                              <?php endif; ?>
-                        <?php elseif ($this->config->privateMessage && $this->me->isModerator($this->topic->getCategory())) : ?>        
+                        <?php elseif ($attachment->protected) : ?>
+                            <li class="col-md-3 text-center">
+                                <div class="thumbnail">
+                                     <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                     <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                </div>
+                            </li>        
                         <?php endif;
 
 						endforeach; ?>

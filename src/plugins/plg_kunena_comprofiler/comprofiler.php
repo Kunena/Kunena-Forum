@@ -17,6 +17,7 @@ use CBLib\Core\CBLib;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaAccessComprofiler;
@@ -227,10 +228,16 @@ class PlgKunenaComprofiler extends CMSPlugin
      */
     public function onKunenaGetPrivate()
     {
+        global $_PLUGINS;
+        
         if (!isset($this->params)) {
             return;
         }
 
+        if (!$_PLUGINS->getLoadedPlugin( 'user', 'pms.mypmspro' )) {
+            return;
+        }
+        
         if (!$this->params->get('private', 1)) {
             return;
         }

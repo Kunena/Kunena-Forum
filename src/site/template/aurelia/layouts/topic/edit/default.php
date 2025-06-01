@@ -493,7 +493,16 @@ Text::script('COM_KUNENA_POLL_TITLE');
         }
     }
     ?>
-    <div id="kattach-list"></div>
+    <div id="kattach-list">
+        <?php
+        if ($this->message->exists()) :
+            if ($this->message->getNbAttachments()->totalPrivate > 0 ) :
+            ?>
+                <input id="attachment_private" type="hidden" name="attachment_private" value="<?php echo implode(',', array_keys($this->message->getAttachments(false, 'private'))); ?>" />
+            <?php
+            endif;
+        endif; ?>
+    </div>
     <div id="poll_options">
         <!-- Placeholder for polls options if inserted in message -->
     </div>

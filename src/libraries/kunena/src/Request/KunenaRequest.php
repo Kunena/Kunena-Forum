@@ -50,8 +50,8 @@ class KunenaRequest
      *
      * @return  KunenaControllerBase| KunenaControllerDisplay
      *
-     * @since   Kunena 6.0
      * @throws \Exception
+     *@since   Kunena 6.0
      */
     public static function factory(string $path, ?Input $input = null, $options = null)
     {

@@ -76,7 +76,6 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Finder\KunenaFinder
     public function find($access = 'read')
     {
         $results = parent::find();
-        var_dump($results);
     }
     
     /**

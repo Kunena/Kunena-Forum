@@ -77,6 +77,7 @@ $config
 			'cast_spaces'                           => true,
 			'no_unused_imports'                     => true,
 			'no_whitespace_in_blank_line'           => true,
+			'nullable_type_declaration_for_default_null_value' => true,
 			// contrib
 			'concat_space'                          => ['spacing' => 'one'],
 			/**

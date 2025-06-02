@@ -298,7 +298,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields(QueryInterface $query = null): array
+    protected static function fields(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.*");
@@ -339,7 +339,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_categoryOrphaned(QueryInterface $query = null): array
+    protected static function fields_categoryOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.id, a.parentid, a.name, a.alias, a.description');
@@ -399,7 +399,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_categoryMissingAlias(QueryInterface $query = null): array
+    protected static function fields_categoryMissingAlias(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.id, a.parentid, a.name, a.alias, a.description');
@@ -430,7 +430,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_categoryWrongAlias(QueryInterface $query = null): array
+    protected static function fields_categoryWrongAlias(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.id, a.parentid, a.name, a.alias, a.description');
@@ -471,7 +471,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_aliasMissingCategory(QueryInterface $query = null): array
+    protected static function fields_aliasMissingCategory(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.*');
@@ -512,7 +512,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_messageBodyMissingMessage(QueryInterface $query = null): array
+    protected static function fields_messageBodyMissingMessage(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.*');
@@ -553,7 +553,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_messageMissingMessageBody(QueryInterface $query = null): array
+    protected static function fields_messageMissingMessageBody(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.id, a.parent, a.thread, a.catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, 'MISSING' AS message");
@@ -569,7 +569,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_topicInSection(QueryInterface $query = null): array
+    protected static function fields_topicInSection(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.id, a.category_id, a.hold, a.subject');
@@ -610,7 +610,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_topicMissingCategory(QueryInterface $query = null): array
+    protected static function fields_topicMissingCategory(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.id, a.category_id, a.hold, a.subject');
@@ -676,7 +676,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_topicMissingMessages(QueryInterface $query = null): array
+    protected static function fields_topicMissingMessages(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.id, a.category_id, a.hold, a.subject, 'MISSING' AS messages");
@@ -717,7 +717,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_topicMissingPoll(QueryInterface $query = null): array
+    protected static function fields_topicMissingPoll(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.id, a.category_id, a.hold, a.subject, poll_id");
@@ -758,7 +758,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_topicPollMismatch(QueryInterface $query = null): array
+    protected static function fields_topicPollMismatch(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.id, a.category_id, a.hold, a.subject, p.title AS poll_title, CONCAT(a.poll_id, ' != ', p.threadid) AS poll_id, t.subject AS real_topic_subject");
@@ -799,7 +799,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_movedMissingTopic(QueryInterface $query = null): array
+    protected static function fields_movedMissingTopic(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.id, a.category_id, a.hold, a.subject, a.moved_id');
@@ -839,7 +839,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_movedAndMessages(QueryInterface $query = null): array
+    protected static function fields_movedAndMessages(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.id, a.category_id, a.hold, a.subject, m.id AS mesid, m.subject AS message_subject, t.message');
@@ -878,7 +878,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_messageWrongCategory(QueryInterface $query = null): array
+    protected static function fields_messageWrongCategory(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.id, a.parent, a.thread, CONCAT(a.catid, ' != ', t.category_id) AS catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
@@ -919,7 +919,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_messageOrphaned(QueryInterface $query = null): array
+    protected static function fields_messageOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.id, a.parent, a.thread, a.catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
@@ -960,7 +960,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_attachmentOrphaned(QueryInterface $query = null): array
+    protected static function fields_attachmentOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.id, a.mesid, a.userid, a.folder, a.filename');
@@ -1001,7 +1001,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_pollOrphaned(QueryInterface $query = null): array
+    protected static function fields_pollOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.*');
@@ -1042,7 +1042,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_pollTopicMismatch(QueryInterface $query = null): array
+    protected static function fields_pollTopicMismatch(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.id, a.title, CONCAT(a.threadid, ' != ', IF(tt.id,tt.id,'0')) AS threadid, t.subject AS topic1_subject, tt.subject AS topic2_subject");
@@ -1083,7 +1083,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_pollOptionOrphaned(QueryInterface $query = null): array
+    protected static function fields_pollOptionOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.*');
@@ -1124,7 +1124,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_pollUserOrphaned(QueryInterface $query = null): array
+    protected static function fields_pollUserOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.*');
@@ -1165,7 +1165,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_thankyouOrphaned(QueryInterface $query = null): array
+    protected static function fields_thankyouOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.*');
@@ -1206,7 +1206,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_userCategoryOrphaned(QueryInterface $query = null): array
+    protected static function fields_userCategoryOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.*');
@@ -1247,7 +1247,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_userReadOrphaned(QueryInterface $query = null): array
+    protected static function fields_userReadOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.*');
@@ -1288,7 +1288,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_userReadWrongCategory(QueryInterface $query = null): array
+    protected static function fields_userReadWrongCategory(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.user_id, a.topic_id, CONCAT(a.category_id, ' != ', t.category_id) AS category_id, a.message_id, FROM_UNIXTIME(a.time) AS time");
@@ -1329,7 +1329,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_userTopicOrphaned(QueryInterface $query = null): array
+    protected static function fields_userTopicOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('a.user_id, a.topic_id, a.category_id, a.posts, a.last_post_id, a.owner, a.favorite, a.subscribed');
@@ -1370,7 +1370,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_userTopicWrongCategory(QueryInterface $query = null): array
+    protected static function fields_userTopicWrongCategory(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select("a.user_id, a.topic_id, CONCAT(a.category_id, ' != ', t.category_id) AS category_id, a.posts, a.last_post_id, a.owner, a.favorite, a.subscribed");
@@ -1412,7 +1412,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_ratingOrphaned(QueryInterface $query = null): array
+    protected static function fields_ratingOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('r.*');
@@ -1453,7 +1453,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_channelOrphaned(QueryInterface $query = null): array
+    protected static function fields_channelOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('*');
@@ -1494,7 +1494,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_ownerOrphaned(QueryInterface $query = null): array
+    protected static function fields_ownerOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('t.id, t.first_post_userid, 1');
@@ -1535,7 +1535,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    protected static function fields_userAvatarOrphaned(QueryInterface $query = null): array
+    protected static function fields_userAvatarOrphaned(?QueryInterface $query = null): array
     {
         if ($query) {
             $query->select('*');

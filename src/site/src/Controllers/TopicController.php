@@ -1212,11 +1212,12 @@ class TopicController extends KunenaController
 
         $body      = (string) $this->input->getRaw('message_private');
         $attachIds = $this->input->get('attachment_private', [], 'array');
+        $attachIds = explode(',', $attachIds[0]);
 
-        if (!$attachIds) {
-            return;
+        if (!trim($body) && !$attachIds) {
+            return;    
         }
-
+        
         $moderator          = $this->me->isModerator($message->getCategory());
         $parent             = $message->getParent();
         $author             = $message->getAuthor();
@@ -1224,10 +1225,7 @@ class TopicController extends KunenaController
         $private            = new KunenaPrivateMessage();
         $private->author_id = $author->userid;
         $private->subject   = $message->subject;
-        
-        if (trim($body)) {
-            $private->body      = $body;
-        }
+        $private->body      = $body;
 
         // Attach message.
         $private->posts()->add($message->id);
@@ -1245,7 +1243,7 @@ class TopicController extends KunenaController
         }
 
         $private->attachments()->setMapped($attachIds);
-
+        
         try {
             $private->save();
         } catch (Exception $e) {
@@ -1579,6 +1577,8 @@ class TopicController extends KunenaController
 
         $body      = (string) $this->input->getRaw('message_private');
         $attachIds = $this->input->get('attachment_private', [], 'array');
+        $attachIds = explode(',', $attachIds[0]);
+        
         $finder    = new KunenaPrivateMessageFinder();
         $finder
             ->filterByMessage($message)

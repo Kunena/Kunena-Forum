@@ -1228,7 +1228,12 @@ class TopicController extends KunenaController
         $private            = new KunenaPrivateMessage();
         $private->author_id = $author->userid;
         $private->subject   = $message->subject;
-        $private->body      = $body;
+        
+        if (!trim($body)) {
+            $private->body      = Text::_('COM_KUNENA_POST_WITH_PRIVATE_ATTACHMENTS_SAVED');
+        } else {
+            $private->body      = $body;
+        }
 
         // Attach message.
         $private->posts()->add($message->id);
@@ -1597,7 +1602,12 @@ class TopicController extends KunenaController
         }
 
         $private->subject = $message->subject;
-        $private->body    = $body;
+
+        if (!trim($body)) {
+            $private->body      = Text::_('COM_KUNENA_POST_WITH_PRIVATE_ATTACHMENTS_SAVED');
+        } else {
+            $private->body      = $body;
+        }
 
         if (!empty($attachIds)) {
             $private->attachments()->setMapped($attachIds);

@@ -1584,6 +1584,11 @@ class TopicController extends KunenaController
 
         $body      = (string) $this->input->getRaw('message_private');
         $attachIds = $this->input->get('attachment_private', [], 'array');
+        
+        if (!trim($body) && !$attachIds) {
+            return;
+        }
+        
         $attachIds = explode(',', $attachIds[0]);
         
         $finder    = new KunenaPrivateMessageFinder();

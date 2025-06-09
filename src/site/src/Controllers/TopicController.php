@@ -1211,13 +1211,13 @@ class TopicController extends KunenaController
         }
 
         $body      = (string) $this->input->getRaw('message_private');
-        $attachIds = $this->input->get('attachment_private', [], 'array');
-        $attachIds = explode(',', $attachIds[0]);
+        $attachIds = $this->input->get('attachment_private', [], 'array');       
 
         if (!trim($body) && !$attachIds) {
             return;    
         }
         
+        $attachIds          = explode(',', $attachIds[0]);
         $moderator          = $this->me->isModerator($message->getCategory());
         $parent             = $message->getParent();
         $author             = $message->getAuthor();

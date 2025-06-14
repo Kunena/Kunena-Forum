@@ -149,7 +149,7 @@ if ($saveOrder) {
                                         <?php
                                         echo str_repeat('<span class="gi">&mdash;</span>', $item->level);
 
-                                        if ($item->checked_out) {
+                                        if ($item->checked_out && isset($item->editor)) {
                                             $canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkIn');
                                             $editor     = KunenaFactory::getUser($item->editor)->getName();
                                             echo HTMLHelper::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'category.', $canCheckin);

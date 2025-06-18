@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\OutputFilter;
@@ -29,7 +30,6 @@ use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Joomla\Event\Event;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
@@ -524,7 +524,7 @@ class TopicController extends KunenaController
                 list($basename, $extension) = $upload->splitFilename();
                 $attachment = new KunenaAttachment();
                 $attachment->bind(
-                	[
+                    [
                         'mesid'         => 0,
                         'userid'        => (int) $me->userid,
                         'protected'     => null,
@@ -680,22 +680,25 @@ class TopicController extends KunenaController
         }
 
         if ($this->me->canDoCaptcha()) {
-            $app     = Factory::getApplication();
-            $captcha = $app->get('captcha', '0');
+            $app    = Factory::getApplication();
+            $plugin = $app->get('captcha', '0');
 
-            if ($captcha && PluginHelper::isEnabled('captcha', $captcha)) {
-                PluginHelper::importPlugin('captcha', $captcha);
-                $captchaCheckEvent = new Event('onCheckAnswer', []);
-                $app->getDispatcher()->dispatch('onCheckAnswer', $captchaCheckEvent);
+            if ($plugin !== 0 && $plugin !== '0' && $plugin !== '' && $plugin !== null && PluginHelper::isEnabled('captcha', $plugin)) {
+                try {
+                    $id      = 'kunena_captcha';
+                    $captcha = Captcha::getInstance((string) $plugin, ['namespace' => $id]);
 
-                $result = $captchaCheckEvent->getArgument('result') ?: [];
-
-                if (\is_array($result) && \count($result) >= 1) {
-                    if (!$result[0]) {
+                    if (!$captcha->checkAnswer(\null)) {
                         $this->setRedirectBack();
 
                         return;
                     }
+                } catch (\RuntimeException $e) {
+                    $app->enqueueMessage($e->getMessage(), 'error');
+
+                    $this->setRedirectBack();
+
+                    return;
                 }
             }
         }
@@ -885,11 +888,11 @@ class TopicController extends KunenaController
 
         if ($this->me->isModerator($category) && $this->config->logModeration) {
             KunenaLog::log(
-            	KunenaLog::TYPE_ACTION,
-            	$isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
-            	['mesid' => $message->id, 'parentid' => $this->id],
-            	$category,
-            	$topic
+                KunenaLog::TYPE_ACTION,
+                $isNew ? KunenaLog::LOG_TOPIC_CREATE : KunenaLog::LOG_POST_CREATE,
+                ['mesid' => $message->id, 'parentid' => $this->id],
+                $category,
+                $topic
             );
         }
 
@@ -933,9 +936,9 @@ class TopicController extends KunenaController
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
         }
-        
+
         // Removed orphaned attachments (one has added on the form and removed after before to submit)        
-        $this->removeOrphanedAttachments(); 
+        $this->removeOrphanedAttachments();
 
         // Post Private message
         try {
@@ -979,28 +982,28 @@ class TopicController extends KunenaController
             $this->setRedirect($category->getUrl(null, false));
         }
     }
-    
+
     /**    
-    * Remove orhpaned attachments when submit (which have mesid=0).
-    *    
-    * @return  void
-    *    
-    * @throws  Exception
-    * 
-    * @since   Kunena 6.4    
-    */    
-    public function removeOrphanedAttachments()    
-    {        
-        $params['file'] = '1';        
+     * Remove orhpaned attachments when submit (which have mesid=0).
+     *    
+     * @return  void
+     *    
+     * @throws  Exception
+     * 
+     * @since   Kunena 6.4    
+     */
+    public function removeOrphanedAttachments()
+    {
+        $params['file'] = '1';
         $params['image'] = '1';
- 
+
         $attachments = KunenaAttachmentHelper::getByUserid($this->me, $params);
-       
+
         if (!empty($attachments)) {
             foreach ($attachments as $attachment) {
-                if($attachment->mesid == 0) {
-                    $attachment->delete();    
-                } 
+                if ($attachment->mesid == 0) {
+                    $attachment->delete();
+                }
             }
         }
     }
@@ -1211,12 +1214,12 @@ class TopicController extends KunenaController
         }
 
         $body      = (string) $this->input->getRaw('message_private');
-        $attachIds = $this->input->get('attachment_private', [], 'array');       
+        $attachIds = $this->input->get('attachment_private', [], 'array');
 
         if (!trim($body) && !$attachIds) {
-            return;    
+            return;
         }
-        
+
         $attachIds          = explode(',', $attachIds[0]);
         $moderator          = $this->me->isModerator($message->getCategory());
         $parent             = $message->getParent();
@@ -1225,7 +1228,7 @@ class TopicController extends KunenaController
         $private            = new KunenaPrivateMessage();
         $private->author_id = $author->userid;
         $private->subject   = $message->subject;
-        
+
         if (!trim($body)) {
             $private->body      = Text::_('COM_KUNENA_POST_WITH_PRIVATE_ATTACHMENTS_SAVED');
         } else {
@@ -1248,7 +1251,7 @@ class TopicController extends KunenaController
         }
 
         $private->attachments()->setMapped($attachIds);
-        
+
         try {
             $private->save();
         } catch (Exception $e) {
@@ -1256,12 +1259,12 @@ class TopicController extends KunenaController
         }
 
         KunenaLog::log(
-        	KunenaLog::TYPE_ACTION,
-        	KunenaLog::LOG_PRIVATE_POST_CREATE,
-        	['id' => $private->id, 'mesid' => $message->id],
-        	$message->getCategory(),
-        	$message->getTopic(),
-        	$pAuthor
+            KunenaLog::TYPE_ACTION,
+            KunenaLog::LOG_PRIVATE_POST_CREATE,
+            ['id' => $private->id, 'mesid' => $message->id],
+            $message->getCategory(),
+            $message->getTopic(),
+            $pAuthor
         );
     }
 
@@ -1444,12 +1447,12 @@ class TopicController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-            	$isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
-            	KunenaLog::LOG_POST_EDIT,
-            	['mesid' => $message->id, 'reason' => $fields['modified_reason']],
-            	$topic->getCategory(),
-            	$topic,
-            	!$isMine ? $message->getAuthor() : null
+                $isMine ? KunenaLog::TYPE_ACTION : KunenaLog::TYPE_MODERATION,
+                KunenaLog::LOG_POST_EDIT,
+                ['mesid' => $message->id, 'reason' => $fields['modified_reason']],
+                $topic->getCategory(),
+                $topic,
+                !$isMine ? $message->getAuthor() : null
             );
         }
 
@@ -1500,7 +1503,6 @@ class TopicController extends KunenaController
                     $topic->poll_id = $poll->id;
                     $topic->save();
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
-
                 } else {
                     if ($this->config->allowEditPoll || (!$this->config->allowEditPoll && !$poll->getUserCount())) {
                         // Edit existing poll
@@ -1536,9 +1538,9 @@ class TopicController extends KunenaController
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_DELETED'), 'success');
             }
         }
-        
+
         // Removed orphaned attachments (one has added on the form and removed after before to submit)
-        $this->removeOrphanedAttachments(); 
+        $this->removeOrphanedAttachments();
 
         // Edit Private message.
         $this->editPrivate($message);
@@ -1582,13 +1584,13 @@ class TopicController extends KunenaController
 
         $body      = (string) $this->input->getRaw('message_private');
         $attachIds = $this->input->get('attachment_private', [], 'array');
-        
+
         if (!trim($body) && !$attachIds) {
             return;
         }
-        
+
         $attachIds = explode(',', $attachIds[0]);
-        
+
         $finder    = new KunenaPrivateMessageFinder();
         $finder
             ->filterByMessage($message)
@@ -1688,12 +1690,12 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	KunenaLog::TYPE_ACTION,
-                	KunenaLog::LOG_POST_THANKYOU,
-                	['mesid' => $message->id],
-                	$category,
-                	$message->getTopic(),
-                	$message->getAuthor()
+                    KunenaLog::TYPE_ACTION,
+                    KunenaLog::LOG_POST_THANKYOU,
+                    ['mesid' => $message->id],
+                    $category,
+                    $message->getTopic(),
+                    $message->getAuthor()
                 );
             }
 
@@ -1714,12 +1716,12 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	KunenaLog::TYPE_MODERATION,
-                	KunenaLog::LOG_POST_UNTHANKYOU,
-                	['mesid' => $message->id, 'userid' => $userid],
-                	$category,
-                	$message->getTopic(),
-                	$message->getAuthor()
+                    KunenaLog::TYPE_MODERATION,
+                    KunenaLog::LOG_POST_UNTHANKYOU,
+                    ['mesid' => $message->id, 'userid' => $userid],
+                    $category,
+                    $message->getTopic(),
+                    $message->getAuthor()
                 );
             }
 
@@ -1906,11 +1908,11 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	KunenaLog::TYPE_MODERATION,
-                	KunenaLog::LOG_TOPIC_STICKY,
-                	[],
-                	$topic->getCategory(),
-                	$topic
+                    KunenaLog::TYPE_MODERATION,
+                    KunenaLog::LOG_TOPIC_STICKY,
+                    [],
+                    $topic->getCategory(),
+                    $topic
                 );
             }
 
@@ -1953,11 +1955,11 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	KunenaLog::TYPE_MODERATION,
-                	KunenaLog::LOG_TOPIC_UNSTICKY,
-                	[],
-                	$topic->getCategory(),
-                	$topic
+                    KunenaLog::TYPE_MODERATION,
+                    KunenaLog::LOG_TOPIC_UNSTICKY,
+                    [],
+                    $topic->getCategory(),
+                    $topic
                 );
             }
 
@@ -2000,11 +2002,11 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	KunenaLog::TYPE_MODERATION,
-                	KunenaLog::LOG_TOPIC_LOCK,
-                	[],
-                	$topic->getCategory(),
-                	$topic
+                    KunenaLog::TYPE_MODERATION,
+                    KunenaLog::LOG_TOPIC_LOCK,
+                    [],
+                    $topic->getCategory(),
+                    $topic
                 );
             }
 
@@ -2047,11 +2049,11 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	KunenaLog::TYPE_MODERATION,
-                	KunenaLog::LOG_TOPIC_UNLOCK,
-                	[],
-                	$topic->getCategory(),
-                	$topic
+                    KunenaLog::TYPE_MODERATION,
+                    KunenaLog::LOG_TOPIC_UNLOCK,
+                    [],
+                    $topic->getCategory(),
+                    $topic
                 );
             }
 
@@ -2104,11 +2106,11 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-                	$log,
-                	isset($message) ? ['mesid' => $message->id] : [],
-                	$category,
-                	$topic
+                    $this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+                    $log,
+                    isset($message) ? ['mesid' => $message->id] : [],
+                    $category,
+                    $topic
                 );
             }
 
@@ -2166,11 +2168,11 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-                	$log,
-                	isset($message) ? ['mesid' => $message->id] : [],
-                	$category,
-                	$topic
+                    $this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+                    $log,
+                    isset($message) ? ['mesid' => $message->id] : [],
+                    $category,
+                    $topic
                 );
             }
 
@@ -2222,11 +2224,11 @@ class TopicController extends KunenaController
 
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-                	$log,
-                	isset($message) ? ['mesid' => $message->id] : [],
-                	$category,
-                	$topic
+                    $this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+                    $log,
+                    isset($message) ? ['mesid' => $message->id] : [],
+                    $category,
+                    $topic
                 );
             }
 
@@ -2289,12 +2291,12 @@ class TopicController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-            	$this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
-            	$log,
-            	['mesid' => $message->id],
-            	$category,
-            	$topic,
-            	$message->getAuthor()
+                $this->me->isModerator($category) ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+                $log,
+                ['mesid' => $message->id],
+                $category,
+                $topic,
+                $message->getAuthor()
             );
         }
 
@@ -2377,12 +2379,12 @@ class TopicController extends KunenaController
 
             switch ($mode) {
                 case 'newer':
-                        $ids = new Date($object->time);
-                        break;
+                    $ids = new Date($object->time);
+                    break;
                 case 'selected':
-                    default:
-                        $ids = $object->id;
-                        break;
+                default:
+                    $ids = $object->id;
+                    break;
             }
         } else {
             $ids = false;
@@ -2396,16 +2398,16 @@ class TopicController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-            	KunenaLog::TYPE_MODERATION,
-            	$messageId ? KunenaLog::LOG_POST_MODERATE : KunenaLog::LOG_TOPIC_MODERATE,
-            	[
-                        'move'    => ['id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'],
-                        'target'  => ['category_id' => $targetCategory, 'topic_id' => $targetTopic],
-                        'options' => ['emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow],
+                KunenaLog::TYPE_MODERATION,
+                $messageId ? KunenaLog::LOG_POST_MODERATE : KunenaLog::LOG_TOPIC_MODERATE,
+                [
+                    'move'    => ['id' => $topicId, 'mesid' => $messageId, 'mode' => isset($mode) ? $mode : 'topic'],
+                    'target'  => ['category_id' => $targetCategory, 'topic_id' => $targetTopic],
+                    'options' => ['emo' => $topic_emoticon, 'subject' => $subject, 'changeAll' => $changesubject, 'shadow' => $shadow],
                 ],
-            	$topic->getCategory(),
-            	$topic,
-            	$message->getAuthor()
+                $topic->getCategory(),
+                $topic,
+                $message->getAuthor()
             );
         }
 
@@ -2550,16 +2552,16 @@ class TopicController extends KunenaController
 
                 if ($this->config->logModeration) {
                     KunenaLog::log(
-                    	KunenaLog::TYPE_REPORT,
-                    	$log,
-                    	[
+                        KunenaLog::TYPE_REPORT,
+                        $log,
+                        [
                             'mesid'   => $message->id,
                             'reason'  => $reason,
                             'message' => $text,
                         ],
-                    	$topic->getCategory(),
-                    	$topic,
-                    	$message->getAuthor()
+                        $topic->getCategory(),
+                        $topic,
+                        $message->getAuthor()
                     );
                 }
 
@@ -2644,12 +2646,12 @@ class TopicController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-            	KunenaLog::TYPE_MODERATION,
-            	KunenaLog::LOG_POLL_MODERATE,
-            	[],
-            	$topic->getCategory(),
-            	$topic,
-            	null
+                KunenaLog::TYPE_MODERATION,
+                KunenaLog::LOG_POLL_MODERATE,
+                [],
+                $topic->getCategory(),
+                $topic,
+                null
             );
         }
 

@@ -1820,10 +1820,7 @@ HTML;
             $result  = '';
             $id      = 'kunena_captcha';
             $captcha = Captcha::getInstance((string) $plugin, ['namespace' => $id]);
-
-            if ($captcha->initialise($id)) {
-                $result = $captcha->display('captcha', $id, 'required');
-            }
+            $result  = $captcha->display('captcha', $id, 'required');
         } catch (\RuntimeException $e) {
             $result = '';
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');

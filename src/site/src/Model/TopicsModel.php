@@ -641,17 +641,26 @@ class TopicsModel extends KunenaModel
                     }
 
                     $latestCategoryIn = $this->config->latestCategoryIn;
-                } elseif ($klatestCategorySel && $klatestContext) {
-                    // Check if it selected show all, else show only the category(ies) selected in the list are showed
-                    if (\is_array($latestCategory)) {
-                        if (\count($latestCategory) == 1) {
-                            if ($latestCategory[0] == 0) {
-                                $latestCategory = false;
+                } elseif ($klatestCategorySel && $klatestContext) { 
+                    if ($klatestCategorySel == 1) {
+                        // Show categories in the category list selected
+                        $latestCategory = $klatestCategory;
+                    } else if ($klatestCategorySel == 2) {
+                        // Hide categories in the category list selected
+                        $latestCategory = $klatestCategory;
+                        $latestCategoryIn = 0;
+                    } else {
+                        // Use global setting
+                        if (\is_array($latestCategory)) {
+                            if (\count($latestCategory) == 1) {
+                                if ($latestCategory[0] == 0) {
+                                    $latestCategory = false;
+                                }
                             }
                         }
+                        
+                        $latestCategory = $klatestCategory;
                     }
-
-                    $latestCategory = $klatestCategory;
                 } elseif ($latestCategoryIn && !$klatestContext) {
                     // Check if it selected show all, else show only the category(ies) selected in the list are showed
                     if (\is_array($latestCategory)) {

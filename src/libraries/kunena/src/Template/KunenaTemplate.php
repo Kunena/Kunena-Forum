@@ -16,15 +16,17 @@ namespace Kunena\Forum\Libraries\Template;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Event\Event;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
+use KunenaScssPhp\ScssPhp\Compiler;
+use KunenaScssPhp\ScssPhp\OutputStyle;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -34,8 +36,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use KunenaScssPhp\ScssPhp\Compiler;
-use KunenaScssPhp\ScssPhp\OutputStyle;
 use SimpleXMLElement;
 use StdClass;
 
@@ -1807,27 +1807,29 @@ HTML;
      */
     public function getCaptcha(): string
     {
-        $app     = Factory::getApplication();
-        $captcha = $app->get('captcha', '0');
+        $app    = Factory::getApplication();
+        $plugin = $app->get('captcha', '0');
+        $result = '';
 
-        if ($captcha && PluginHelper::isEnabled('captcha', $captcha)) {
-            PluginHelper::importPlugin('captcha', $captcha);
-            // $captchaInitEvent    = new Event('onInit', ['kunena_captcha_' . (int) $topic_ids]);
-            // $captchaDisplayEvent = new Event('onDisplay', [null, 'kunena_captcha_' . $topic_ids, 'required']);
-            $captchaInitEvent    = new Event('onInit', []);
-            $captchaDisplayEvent = new Event('onDisplay', []);
-
-            $app->getDispatcher()->dispatch('onInit', $captchaInitEvent);
-            $app->getDispatcher()->dispatch('onDisplay', $captchaDisplayEvent);
-
-            $result = $captchaDisplayEvent->getArgument('result') ?: [];
-
-            if (\is_array($result) && \count($result) >= 1) {
-                return $result[0];
-            }
+        if ($plugin === 0 || $plugin === '0' || $plugin === '' || $plugin === null || !PluginHelper::isEnabled('captcha', $plugin)) {
+            return $result;
         }
 
-        return '';
+        try {
+            // Get an instance of the captcha class that we are using
+            $result  = '';
+            $id      = 'kunena_captcha';
+            $captcha = Captcha::getInstance((string) $plugin, ['namespace' => $id]);
+
+            if ($captcha->initialise($id)) {
+                $result = $captcha->display('captcha', $id, 'required');
+            }
+        } catch (\RuntimeException $e) {
+            $result = '';
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $result;
     }
 
     /**

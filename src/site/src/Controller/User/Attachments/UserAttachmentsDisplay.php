@@ -126,16 +126,16 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
         foreach ($this->attachments as $attachment) {
             $messageIds[] = (int) $attachment->mesid;
         }
-
+        
         $messages = KunenaMessageHelper::getMessages($messageIds, 'none');
-
+        
         // Pre-load topics.
         $topicIds = [];
-
+        
         foreach ($messages as $message) {
             $topicIds[] = $message->thread;
         }
-
+        
         KunenaTopicHelper::getTopics($topicIds, 'none');
 
         $this->headerText = Text::_('COM_KUNENA_MANAGE_ATTACHMENTS');

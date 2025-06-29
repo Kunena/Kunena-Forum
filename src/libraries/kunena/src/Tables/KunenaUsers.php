@@ -411,8 +411,10 @@ class KunenaUsers extends KunenaTable
             throw new UnexpectedValueException(Text::_('COM_KUNENA_UNKNOWN_STATUS'));
         }
 
-        if (\strlen($this->status) < 0 || \strlen($this->status) > 255) {
-            throw new UnexpectedValueException(Text::_('COM_KUNENA_STATUS_TOOLONG'));
+        if (isset($this->status)) {
+            if (\strlen($this->status) < 0 || \strlen($this->status) > 255) {
+                throw new UnexpectedValueException(Text::_('COM_KUNENA_STATUS_TOOLONG'));
+            }
         }
 
         return true;

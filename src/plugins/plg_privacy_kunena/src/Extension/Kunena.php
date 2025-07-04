@@ -293,7 +293,7 @@ class Kunena extends PrivacyPlugin
     private function createKunenaMessagesDomain(int $userid)
     {
         $domain   = $this->createDomain('kunena_user_messages', 'kunena_user_messages_data');
-        $db       = $this->db;
+        $db       = $this->getDatabase();
         $redacted = [];
         $excluded = [];
 
@@ -327,7 +327,7 @@ class Kunena extends PrivacyPlugin
     private function createKunenaPollsDomain(int $userid)
     {
         $domain   = $this->createDomain('kunena_user_polls', 'kunena_user_polls_data');
-        $db       = $this->db;
+        $db       = $this->getDatabase();
         $redacted = [];
         $excluded = [];
 

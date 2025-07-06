@@ -1355,6 +1355,12 @@ class ConfigModel extends AdminModel
      * @since  Kunena 6.0.0
      */
     public $profiler = 0;
+    
+    /**
+     * @var    boolean  show usertype in userlist
+     * @since  Kunena 6.5.0
+     */
+    public $userListUserType = 0;
 
     /**
      * @inheritDoc
@@ -1876,6 +1882,9 @@ class ConfigModel extends AdminModel
 
         $lists ['sendMailUserBanned'] = HTMLHelper::_('select.genericlist', $yesno, 'cfg_sendMailUserBanned', 'class="inputbox form-select" size="1"', 'value', 'text', $config->sendMailUserBanned);
 
+        // K6.5
+        $lists ['userListUserType']         = HTMLHelper::_('select.genericlist', $yesno, 'cfg_userListUserType', 'class="inputbox form-select"size="1"', 'value', 'text', $config->userListUserType);
+        
         return $lists;
     }
 }

@@ -254,6 +254,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property boolean $sendMailUserBanned
  * @property boolean $mailBodyUserBanned
  * @property boolean $mailBodyUserUnBanned
+ * @property boolean $userListUserType
  *
  * @since   Kunena 6.0
  */
@@ -1662,6 +1663,12 @@ class KunenaConfig
      * @since  Kunena 6.4.0
      */
     public $mailBodyUserUnBanned = '';
+    
+    /**
+     * @var    boolean  show the usertype in the userlist in frontend
+     * @since  Kunena 6.5.0
+     */
+    public $userListUserType = 0;
 
     /**
      * @return  KunenaConfig|mixed

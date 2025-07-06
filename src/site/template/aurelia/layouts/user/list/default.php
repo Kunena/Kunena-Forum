@@ -145,6 +145,17 @@ $this->addScript('assets/js/search.js');
                 </th>
             <?php endif;
             ?>
+            
+            <?php if ($config->userListUserType) :
+                $cols++;
+                ?>
+                <th class="col-md-1 center d-none d-md-table-cell">
+                    <?php echo Text::_('COM_KUNENA_USRL_USERTYPE'
+                	);
+                    ?>
+                </th>
+            <?php endif;
+            ?>
 
             <?php if ($config->userlistEmail) :
                 $cols++;
@@ -227,7 +238,7 @@ $this->addScript('assets/js/search.js');
         $this->ktemplate = KunenaFactory::getTemplate();
 
         foreach ($this->users as $user) :
-            $avatar = $config->userlistAvatar ? $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
+        $avatar = $config->userlistAvatar ? $user->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
             ?>
             <tr>
                 <td class="col-md-1 center">
@@ -265,6 +276,13 @@ $this->addScript('assets/js/search.js');
                     ?>
                     <td class="col-md-1 center d-none d-md-table-cell">
                         <?php echo (int) $user->karma; ?>
+                    </td>
+                <?php endif; ?>
+                
+                <?php if ($config->userListUserType) :
+                    ?>
+                    <td class="col-md-1 center d-none d-md-table-cell">
+                        <?php echo Text::_($user->getType()); ?>
                     </td>
                 <?php endif; ?>
 

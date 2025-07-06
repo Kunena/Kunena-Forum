@@ -1808,6 +1808,13 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td><?php echo $this->lists['superAdminUserlist'] ?></td>
                                         <td><?php echo Text::_('COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC') ?></td>
                                     </tr>
+                                    <tr <?php if ($this->config->userListUserType != 0) :
+                                            echo 'class="changed"';
+                                        endif; ?>>
+                                        <td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE') ?></td>
+                                        <td><?php echo $this->lists['userListUserType'] ?></td>
+                                        <td><?php echo Text::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE_DESC') ?></td>
+                                    </tr>
                                     <tr <?php if ($this->config->showSessionType != 2) :
                                             echo 'class="changed"';
                                         endif; ?>>

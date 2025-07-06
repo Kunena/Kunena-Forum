@@ -88,7 +88,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                                         <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_MODERATOR'); ?>
                                     </span>
                                     <span class="kwho-banned">
-                                        <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=banned'); ?>"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?></a>
+                                        <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=banned'); ?>" class="kwho-banned"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?></a>
                                     </span>
                                     <span class="kwho-user">
                                         <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?>

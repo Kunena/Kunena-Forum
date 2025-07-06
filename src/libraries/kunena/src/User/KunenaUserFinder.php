@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Date\Date;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
+use Joomla\CMS\Factory;
 
 /**
  * Class \Kunena\Forum\Libraries\User\KunenaUserFinder
@@ -124,6 +125,17 @@ class KunenaUserFinder extends KunenaFinder
             } else {
                 $this->query->where($this->db->quoteName('a.name') . ' LIKE ' . $this->db->quote($search));
             }
+        }
+
+        return $this;
+    }    
+    
+    public function filterByUserType(string $usertype): KunenaFinder
+    {
+        // Select users banned
+        if ($usertype == 'banned') {
+            $dateNow = Factory::getDate()->toSql();
+            $this->query->where($this->db->quoteName('ku.banned') . ' != ' . $this->db->quote('1000-01-01 00:00:00') . ' AND ' . $this->db->quoteName('ku.banned') . '<=' . $this->db->quote($dateNow));
         }
 
         return $this;

@@ -291,5 +291,8 @@ class UserModel extends KunenaModel
         if (!empty($value) && $value != Text::_('COM_KUNENA_USRL_SEARCH')) {
             $this->setState('list.search', rtrim($value));
         }
+        
+        $usertype = $this->getCmd('usertype', 'all');
+        $this->setState('userlist.usertype', $usertype);
     }
 }

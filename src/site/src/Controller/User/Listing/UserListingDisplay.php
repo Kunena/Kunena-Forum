@@ -117,7 +117,8 @@ class UserListingDisplay extends KunenaControllerDisplay
         $finder = new KunenaUserFinder();
         $finder
             ->filterByConfiguration($filter)
-            ->filterByName((string) $this->state->get('list.search'));
+            ->filterByName((string) $this->state->get('list.search'))
+            ->filterByUserType((string) $this->state->get('userlist.usertype'));
 
         $this->total      = $finder->count();
         $this->pagination = new KunenaPagination($this->total, $start, $limit);

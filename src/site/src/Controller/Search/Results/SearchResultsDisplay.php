@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -66,6 +67,8 @@ class SearchResultsDisplay extends KunenaControllerDisplay
     public $results;
 
     public $error;
+    
+    public $ktemplate;
 
     /**
      * Prepare search results display.
@@ -115,6 +118,8 @@ class SearchResultsDisplay extends KunenaControllerDisplay
         	$this->state->get('list.start'),
         	$this->state->get('list.limit')
         );
+        
+        $this->ktemplate    = KunenaFactory::getTemplate();
     }
 
     /**

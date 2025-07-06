@@ -14,7 +14,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -25,7 +24,6 @@ $category             = $topic->getCategory();
 $author               = $message->getAuthor();
 $isReply              = $message->id != $topic->first_post_id;
 $me                   = isset($this->me) ? $this->me : KunenaUserHelper::getMyself();
-$this->ktemplate      = KunenaFactory::getTemplate();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 
 ?>

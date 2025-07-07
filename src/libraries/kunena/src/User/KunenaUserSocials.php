@@ -300,7 +300,7 @@ class KunenaUserSocials
             KunenaError::displayDatabaseError($e);
         }
         
-        if ($socials) {
+        if ($socials['socials']) {
             $params = json_decode($socials['socials']);
             $this->bind($params);
         }

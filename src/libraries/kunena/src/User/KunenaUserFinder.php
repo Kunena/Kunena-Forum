@@ -130,12 +130,21 @@ class KunenaUserFinder extends KunenaFinder
         return $this;
     }    
     
+    /**
+     * Filter the users by type (banned, admin, moderator...)
+     * 
+     * @param   string  $usertype  Set the type of user to filter
+     *
+     * @return  $this
+     *
+     * @since   Kunena 6.5.0
+     */
     public function filterByUserType(string $usertype): KunenaFinder
     {
         // Select users banned
         if ($usertype == 'banned') {
             $dateNow = Factory::getDate()->toSql();
-            $this->query->where($this->db->quoteName('ku.banned') . ' != ' . $this->db->quote('1000-01-01 00:00:00') . ' AND ' . $this->db->quoteName('ku.banned') . '<=' . $this->db->quote($dateNow));
+            $this->query->where($this->db->quoteName('ku.banned') . ' != ' . $this->db->quote('1000-01-01 00:00:00') . ' OR ' . $this->db->quoteName('ku.banned') . '<=' . $this->db->quote($dateNow));
         }
 
         return $this;

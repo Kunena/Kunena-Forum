@@ -457,8 +457,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         $cache->clean('_system');
 
         // Remove all compiled files from APC cache.
-        if (function_exists('apc_clear_cache')) {
-            @apc_clear_cache();
+        if (function_exists('apcu_clear_cache')) {
+            apcu_clear_cache();
         }
 
         $db = Factory::getContainer()->get(DatabaseInterface::class);

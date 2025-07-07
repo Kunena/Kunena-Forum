@@ -144,7 +144,9 @@ class KunenaUserFinder extends KunenaFinder
         // Select users banned
         if ($usertype == 'banned') {
             $dateNow = Factory::getDate()->toSql();
-            $this->query->where($this->db->quoteName('ku.banned') . ' != ' . $this->db->quote('1000-01-01 00:00:00') . ' OR ' . $this->db->quoteName('ku.banned') . '<=' . $this->db->quote($dateNow));
+            $this->query->where($this->db->quoteName('ku.banned') . ' != ' . $this->db->quote('1000-01-01 00:00:00') . ' OR ' . $this->db->quoteName('ku.banned') . '>=' . $this->db->quote($dateNow));
+        } elseif ($usertype == 'globalmod') {
+            $this->query->where($this->db->quoteName('ku.moderator') . ' =1 ');
         }
 
         return $this;

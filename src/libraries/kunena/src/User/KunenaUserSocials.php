@@ -299,7 +299,7 @@ class KunenaUserSocials
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
         }
-        
+
         if ($socials) {
             $params = json_decode($socials['socials']);
             $this->bind($params);

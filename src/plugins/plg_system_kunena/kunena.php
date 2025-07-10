@@ -119,7 +119,8 @@ class PlgSystemKunena extends CMSPlugin
     public function onAfterInitialise()
     {
         // Add ban check
-        if (!$this->app->isClient('administrator') && !$this->app->isClient('api')) {
+        TODO : in Joomla! 6.0 with plugin compat6 disabled $this->app is null
+        /*if (!$this->app->isClient('administrator') && !$this->app->isClient('api')) {
             $timestamp = time();
             $lastCheck = $this->params->get('ban_check_last', 0);
             
@@ -147,7 +148,7 @@ class PlgSystemKunena extends CMSPlugin
                     $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
-        }
+        }*/
     }
     /**
      * Clean expired bans from the system

@@ -193,7 +193,167 @@ return new class () implements ServiceProviderInterface {
                      */
                     public function postflight(string $type, InstallerAdapter $parent): bool
                     {
-                        $this->deleteUnexistingFiles();
+                        if (function_exists('apcu_clear_cache')) {
+                            apcu_clear_cache();                            
+                        }
+                        
+                        $db = Factory::getContainer()->get(DatabaseInterface::class);
+                        
+                        $table = $db->getPrefix() . 'kunena_version';
+                        
+                        $db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
+                        $upgrade = 0;
+                        $installed = 'NONE';
+                        
+                        if ($db->loadResult() == $table) {
+                            $db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
+                            $installed = $db->loadResult();
+                            
+                            if (!empty($installed)) {
+                                if (version_compare($installed, '5.2.99', '<')) {
+                                    $query = "ALTER TABLE `#__kunena_version` ADD `sampleData` boolean NOT NULL default '0' AFTER `versionname`;";
+                                    $db->setQuery($query);
+                                    
+                                    $db->execute();
+                                }
+                                
+                                $upgrade = 1;
+                            }
+                        }
+                        
+                        $file = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+                        
+                        $manifest    = simplexml_load_file($file);
+                        $version     = (string) $manifest->version;
+                        $build       = (string) $manifest->version;
+                        $date        = (string) $manifest->creationDate;
+                        $versionname = (string) $manifest->versionname;
+                        $installdate = Factory::getDate('now');
+                        $state       = '';
+                        $sampleData  = 0;
+                        
+                        if ($upgrade == 1) {
+                            $sampleData = 1;
+                        } else {
+                            // In case of a clean install the ranks and smileys needs to be inserted in the table to avoid else emoticons/ranks not appears
+                            $queries  = [];
+                            
+                            $query = "INSERT INTO `#__kunena_ranks`
+    		(`rankId`, `rankTitle`, `rankMin`, `rankSpecial`, `rankImage`) VALUES
+    		(1, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK1')}, 0, 0, 'rank1.gif'),
+    		(2, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK2')}, 20, 0, 'rank2.gif'),
+    		(3, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK3')}, 40, 0, 'rank3.gif'),
+    		(4, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK4')}, 80, 0, 'rank4.gif'),
+    		(5, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK5')}, 160, 0, 'rank5.gif'),
+    		(6, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK6')}, 320, 0, 'rank6.gif'),
+    		(7, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN')}, 0, 1, 'rankadmin.gif'),
+    		(8, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR')}, 0, 1, 'rankmod.gif'),
+    		(9, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER')}, 0, 1, 'rankspammer.gif'),
+    		(10, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED')}, 0, 1, 'rankbanned.gif');";
+                            
+                            $queries[] = ['kunena_ranks', $query];
+                            
+                            $query = "INSERT INTO `#__kunena_smileys`
+    		(`id`,`code`,`location`,`emoticonbar`) VALUES
+    		(1, 'B)', '1.png', 1),
+    		(2, '8)', '2.png', 1),
+    		(3, '8-)', '3.png', 1),
+    		(4, ':-(', '4.png', 1),
+    		(5, ':(', '5.png', 1),
+    		(6, ':sad:', '6.png', 1),
+    		(7, ':cry:', '7.png', 1),
+    		(8, ':)', '8.png', 1),
+    		(9, ':-)', '9.png',  1),
+    		(10, ':cheer:', '10.png', 1),
+    		(11, ';)', '11.png', 1),
+    		(12, ';-)', '12.png', 1),
+    		(13, ':wink:', '13.png', 1),
+    		(14, ';-)', '14.png', 1),
+    		(15, ':P', '15.png', 1),
+    		(16, ':p', '16.png', 1),
+    		(17, ':-p', '17.png', 1),
+    		(18, ':-P', '18.png', 1),
+    		(19, ':razz:', '19.png', 1),
+    		(20, ':angry:', '20.png', 1),
+    		(21, ':mad:', '21.png', 1),
+    		(22, ':unsure:', '22.png', 1),
+    		(23, ':o', '23.png', 1);";
+                            
+                            $queries[] = ['kunena_smileys', $query];
+                            
+                            foreach ($queries as $query) {
+                                // Only insert sample/default data if table is empty
+                                $db->setQuery("SELECT * FROM " . $db->quoteName($db->getPrefix() . $query[0]), 0, 1);
+                                $filled = $db->loadObject();
+                                
+                                if (!$filled) {
+                                    $db->setQuery($query[1]);
+                                    
+                                    $db->execute();
+                                }
+                            }
+                        }
+                        
+                        if ($installed != 'NONE') {
+                            $state = $installed;
+                        }
+                        
+                        $query = $db->createQuery();
+                        
+                        $values = [
+                            $db->quote($version),
+                            $db->quote($build),
+                            $db->quote($date),
+                            $db->quote($versionname),
+                            $db->quote($sampleData),
+                            $db->quote($installdate),
+                            $db->quote($state),
+                        ];
+                        
+                        $query->insert($db->quoteName('#__kunena_version'))
+                        ->columns(
+                            [
+                                $db->quoteName('version'),
+                                $db->quoteName('build'),
+                                $db->quoteName('versiondate'),
+                                $db->quoteName('versionname'),
+                                $db->quoteName('sampleData'),
+                                $db->quoteName('installdate'),
+                                $db->quoteName('state'),
+                            ]
+                            )
+                            ->values(implode(', ', $values));
+                            $db->setQuery($query);
+                            
+                            $db->execute();
+                            
+                            $version = '';
+                            $date    = '';
+                            $file    = JPATH_MANIFESTS . '/packages/pkg_kunena.xml';
+                            
+                            if (file_exists($file)) {
+                                $manifest = simplexml_load_file($file);
+                                $version  = (string) $manifest->version;
+                                $date     = (string) $manifest->creationDate;
+                            } else {
+                                $db    = Factory::getContainer()->get(DatabaseInterface::class);
+                                $query = $db->createQuery();
+                                $query->select('version')->from('#__kunena_version')->order('id');
+                                $query->setLimit(1);
+                                $db->setQuery($query);
+                                
+                                $version = $db->loadResult();
+                                
+                                if (!empty($version->versiondate)) {
+                                    $date = (string) $version->versiondate;
+                                } else {
+                                    $date = new Date('now');
+                                }
+                            }
+                            
+                            if (file_exists(JPATH_SITE . '/tmp/custom.scss')) {
+                                File::copy(JPATH_SITE . '/tmp/custom.scss', JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss');
+                            }
                         
                         return true;
                     }

@@ -59,22 +59,6 @@ class plgSystemKunenaInstallerScript extends InstallerScript
     protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
 
     /**
-     * @var  CMSApplication  Holds the application object
-     *
-     * @since   Kunena 6.0
-     */
-    protected $app;
-
-    /**
-     * Database object
-     *
-     * @var    DatabaseDriver
-     *
-     * @since   4.0.0
-     */
-    protected $db;
-
-    /**
      * @var  string  During an update, it will be populated with the old release version
      *
      * @since   Kunena 6.0
@@ -96,6 +80,28 @@ class plgSystemKunenaInstallerScript extends InstallerScript
     {
         $this->enablePlugin('plg_system_kunena');
     }
+
+    /**
+     * Function called before extension installation/update/removal procedure commences
+     *
+     * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
+     * @param   InstallerAdapter  $parent  The class calling this method
+     *
+     * @return  boolean  True on success
+     *
+     * @since   Kunena 6.5
+     */
+    public function preflight($type, $parent)
+    {
+        if (!parent::preflight($type, $parent)) {
+            return false;
+        }
+
+        // Delete kunena.php
+        $this->deleteFiles[JPATH_SITE . '/plugins/system/kunena/kunena.php'];
+        $this->removeFiles();
+    }
+
 
     /**
      * @param $pluginName

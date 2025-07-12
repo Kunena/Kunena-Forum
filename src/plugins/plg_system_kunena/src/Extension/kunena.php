@@ -11,46 +11,101 @@
  * @link            https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+namespace Kunena\Forum\Plugin\System\Kunena\Extension;
 
+\defined('_JEXEC') or die();
+
+use Joomla\CMS\Event\Extension\BeforeUpdateEvent;
+use Joomla\CMS\Event\Extension\BeforeInstallEvent;
+use Joomla\CMS\Event\User\AfterSaveEvent;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Event\Application\AfterInitialiseEvent;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Event\Application\AfterRenderEvent;
+use Joomla\CMS\Event\Application\BeforeCompileHeadEvent;
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
+use Joomla\CMS\Event\Installer\BeforePackageDownloadEvent;
+use Joomla\CMS\Event\Model\PrepareFormEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Date\Date;
+use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\UserFactoryInterface;
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Event\Event;
+use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Controller\Application\Display;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\KunenaInstaller;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaBan;
+use ___NAMESPACE_HELPER___\ComponentsHelper;
+use ___NAMESPACE_HELPER___\InjectorHelper;
+use ___NAMESPACE_HELPER___\OchElementsHelper;
+use ___NAMESPACE_HELPER___\OchHelper;
+use ___NAMESPACE_HELPER___\Ochfoundation5Helper;
+use ___NAMESPACE_HELPER___\TagsHelper;
 
 /**
- * Class plgSystemKunena
+ * Class Kunena
  *
  * @since   Kunena 6.0
  */
-class PlgSystemKunena extends CMSPlugin
+class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
-    /**
-     * Application object
-     *
-     * @var    \Joomla\CMS\Application\CMSApplication
-     * @since  Kunena 6.0
-     */
-    protected $app;
+    use DatabaseAwareTrait;
 
     /**
-     * @param   object  $subject  Subject
+     * Load language file for front-end translations
+     *
+     * @var boolean
+     */
+    protected $autoloadLanguage = \true;
+
+    /**
+     * Returns an array of events this subscriber will listen to.
+     *
+     * The array keys are event names and the value can be:
+     *
+     *  - The method name to call (priority defaults to 0)
+     *  - An array composed of the method name to call and the priority
+     *
+     * @return  array
+     * @since   Kunena 6.5
+     */
+    public static function getSubscribedEvents(): array
+    {
+        $app     = Factory::getApplication();
+        $mapping = [];
+
+        if ($app->isClient('site') || $app->isClient('administrator')) {
+            $mapping['onKunenaGetConfiguration'] = 'onKunenaGetConfiguration';
+            $mapping['onUserAfterSave']          = 'onUserAfterSave';
+            $mapping['onExtensionBeforeInstall'] = 'onExtensionBeforeInstall';
+            $mapping['onAExtensionBeforeUpdate'] = 'onExtensionBeforeUpdate';
+            if ($app->isClient('site')) {
+                // Only allowed in the frontend
+            } elseif ($app->isClient('administrator')) {
+                // Only allowed in the backend
+            }
+        }
+
+        return $mapping;
+    }
+
+    /**
      * @param   array   $config   Config
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
-    public function __construct(object $subject, array $config)
+    public function __construct(array $config)
     {
         if (php_sapi_name() === 'cli') {
             return;
@@ -76,17 +131,14 @@ class PlgSystemKunena extends CMSPlugin
             return;
         }
 
-        parent::__construct($subject, $config);
+        parent::__construct($config);
 
-        // Initialize application object
-        $this->app = Factory::getApplication();
-        
-        $format = $this->app->input->getCmd('format');
+        $format = $this->getApplication()->input->getCmd('format');
 
         require_once JPATH_LIBRARIES . '/kunena/External/autoload.php';
 
-        if (!empty($format) && $format != 'html') {
-            if ($this->app->scope == 'com_kunena') {
+        if (!empty($format) && $format !== 'html') {
+            if ($this->getApplication()->scope == 'com_kunena') {
                 if (!PluginHelper::isEnabled('kunena', 'powered')) {
                     $styles = <<<EOF
                     .layout#kunena + div { display: block !important;}
@@ -98,7 +150,7 @@ class PlgSystemKunena extends CMSPlugin
             }
 
             if (!method_exists(Display::class, 'poweredBy')) {
-                $this->app->enqueueMessage(
+                $this->getApplication()->enqueueMessage(
                     'Please Buy Official powered by remover plugin on: https://www.kunena.org/downloads',
                     'notice'
                 );
@@ -106,34 +158,34 @@ class PlgSystemKunena extends CMSPlugin
         }
 
         // ! Always load language after parent::construct else the name of plugin isn't yet set
-        $this->loadLanguage('plg_system_kunena.sys');
+        $this->getApplication()->getLanguage()->load('plg_system_kunena.sys');
     }
 
     /**
-     * After initialise.
+     * Routines to run onAfterInitialise
      *
+     * @param   AfterInitialiseEvent $event  The event instance.
+     * 
      * @return  void
-     *
      * @since   Kunena 6.0
      */
-    public function onAfterInitialise()
+    public function onAfterInitialise(AfterInitialiseEvent $event): void
     {
         // Add ban check
-        // TODO: in Joomla! 6.0 with plugin compat6 disabled $this->app is null
-        /*if (!$this->app->isClient('administrator') && !$this->app->isClient('api')) {
+        if (!$this->getApplication()->isClient('administrator') && !$this->getApplication()->isClient('api')) {
             $timestamp = time();
             $lastCheck = $this->params->get('ban_check_last', 0);
-            
+
             if ($timestamp - $lastCheck >= 3600) {
                 try {
                     $this->cleanExpiredBans();
-                    
+
                     // Update last check time
                     $this->params->set('ban_check_last', $timestamp);
-                    
+
                     // Save the parameters
-                    $db = Factory::getContainer()->get('DatabaseDriver');
-                    $query = $db->getQuery(true)
+                    $db    = $this->getDatabase();
+                    $query = $db->createQuery()
                         ->update($db->quoteName('#__extensions'))
                         ->set($db->quoteName('params') . ' = ' . $db->quote($this->params->toString()))
                         ->where([
@@ -141,14 +193,14 @@ class PlgSystemKunena extends CMSPlugin
                             $db->quoteName('folder') . ' = ' . $db->quote('system'),
                             $db->quoteName('element') . ' = ' . $db->quote('kunena')
                         ]);
-                    
+
                     $db->setQuery($query);
                     $db->execute();
                 } catch (\Exception $e) {
-                    $this->app->enqueueMessage($e->getMessage(), 'error');
+                    $this->getApplication()->enqueueMessage($e->getMessage(), 'error');
                 }
             }
-        }*/
+        }
     }
 
     /**
@@ -158,22 +210,22 @@ class PlgSystemKunena extends CMSPlugin
      *
      * @since   Kunena 6.0
      */
-    protected function cleanExpiredBans(): void
+    private function cleanExpiredBans(): void
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
+        $db  = $this->getDatabase();
         $now = new Date();
-        
+
         // Find expired site-wide bans
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select('b.*')
             ->from($db->quoteName('#__kunena_users_banned', 'b'))
             ->where($db->quoteName('b.expiration') . ' <= ' . $db->quote($now->toSql()))
             ->where($db->quoteName('b.blocked') . ' = 1')
             ->where($db->quoteName('b.expiration') . ' != ' . $db->quote('9999-12-31 23:59:59'));
-            
+
         $db->setQuery($query);
         $expiredBans = $db->loadObjectList();
-        
+
         foreach ($expiredBans as $ban) {
             // Unblock user in Joomla
             $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($ban->userid);
@@ -181,12 +233,12 @@ class PlgSystemKunena extends CMSPlugin
                 $user->block = 0;
                 $user->save();
             }
-            
+
             // Update Kunena user profile
             $profile = KunenaFactory::getUser($ban->userid);
             $profile->banned = null;
             $profile->save(true);
-            
+
             // Update ban record
             $banInstance = KunenaBan::getInstance($ban->id);
             if ($banInstance->exists()) {
@@ -215,25 +267,26 @@ class PlgSystemKunena extends CMSPlugin
     }
 
     /**
-     * @param   mixed        $user     User
-     * @param   boolean      $isnew    Is new
-     * @param   boolean      $success  Success
-     * @param   string|null  $msg      Message
+     * Method is called after a succesfull save of the user data
+     *
+     * @param   AfterSaveEvent  $event  The event
      *
      * @return  void
-     *
-     * @since   Kunena 6.0
-     * @throws \Exception
+     * @since   2.2.0
      */
-    public function onUserAfterSave($user, bool $isnew, bool $success, ?string $msg): void
+    public function onUserAfterSave(AfterSaveEvent $event): void
     {
+        $user    = $event->getUser();
+        $isNew   = $event->getIsNew();
+        $success = $event->getSavingResult();
+
         // Don't continue if the user wasn't stored successfully
         if (!$success) {
             return;
         }
 
-        if ($isnew && intval($user['id'])) {
-            $kuser = KunenaFactory::getUser(intval($user['id']));
+        if ($isNew && \intval($user['id'])) {
+            $kuser = KunenaFactory::getUser(\intval($user['id']));
             $kuser->save();
         }
     }
@@ -241,23 +294,31 @@ class PlgSystemKunena extends CMSPlugin
     /**
      * Prevent downgrades to Kunena 1.7 and older releases
      *
-     * @param   string  $method    method
-     * @param   string  $type      type
-     * @param   string  $manifest  manifest when use discover install it's null
-     * @param   int     $eid       id
+     * @param   BeforeInstallEvent  $event  The event instance.
      *
-     * @return bool
+     * @return  void
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws  \Exception
      */
-    public function onExtensionBeforeInstall(string $method, string $type, $manifest, int $eid): bool
+    public function onExtensionBeforeInstall(BeforeInstallEvent $event)
     {
+
+        $method   = $event->getMethod();
+        $type     = $event->getType();
+        $manifest = $event->getManifest();
+        $eid      = $event->getExtension();
+
         // We don't want to handle discover install (where there's no manifest provided)
         if (!$manifest) {
-            return false;
+            return;
         }
 
-        return $this->onExtensionBeforeUpdate($type, $manifest);
+        $updateEvent = new BeforeUpdateEvent('onExtensionBeforeUpdate', [
+            'type'     => $type,
+            'manifest' => $manifest,
+        ]);
+
+        $this->onExtensionBeforeUpdate($updateEvent);
     }
 
     /**
@@ -266,37 +327,40 @@ class PlgSystemKunena extends CMSPlugin
      * @param   object  $type      type
      * @param   string  $manifest  manifest
      *
-     * @return  boolean
+     * @return  void
      *
-     * @throws Exception
+     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function onExtensionBeforeUpdate($type, object $manifest): bool
+    public function onExtensionBeforeUpdate(BeforeUpdateEvent $event): void
     {
+        $type     = $event->getType();
+        $manifest = $event->getManifest();
+
         if ($type != 'component') {
-            return true;
+            return;
         }
 
         // Generate component name
-        $name    = strtolower(InputFilter::getInstance()->clean((string) $manifest->name, 'cmd'));
-        $element = (substr($name, 0, 4) == "com_") ? $name : "com_{$name}";
+        $name    = \strtolower(InputFilter::getInstance()->clean((string) $manifest->name, 'cmd'));
+        $element = (\substr($name, 0, 4) === "com_") ? $name : "com_{$name}";
 
-        if ($element != 'com_kunena') {
-            return true;
+        if ($element !== 'com_kunena') {
+            return;
         }
 
         // Kunena 2.0.0-BETA2 and later support this feature in their installer
-        if (version_compare($manifest->version, '2.0.0', '>=')) {
-            return true;
+        if (\version_compare($manifest->version, '2.0.0', '>=')) {
+            return;
         }
 
         // Check if we can downgrade to the current version
-        if (class_exists('KunenaInstaller') && KunenaInstaller::canDowngrade($manifest->version)) {
-            return true;
+        if (\class_exists('KunenaInstaller') && KunenaInstaller::canDowngrade($manifest->version)) {
+            return;
         }
 
         // Old version detected: emulate failed installation
-        $app = Factory::getApplication();
+        $app = $this->getApplication();
         $app->enqueueMessage(sprintf(
             'Sorry, it is not possible to downgrade Kunena %s to version %s.',
             KunenaForum::version(),
@@ -306,7 +370,7 @@ class PlgSystemKunena extends CMSPlugin
         $app->enqueueMessage(Text::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', Text::_('COM_INSTALLER_TYPE_TYPE_' . strtoupper($type))), 'error');
         $app->redirect('index.php?option=com_installer');
 
-        return true;
+        return;
     }
 
     /**
@@ -320,22 +384,26 @@ class PlgSystemKunena extends CMSPlugin
      *
      * @return  string
      *
-     * @throws Exception
+     * @throws  Exception
      * @since   Kunena 2.0
      *
      * @see     self::onKunenaPrepare()
      */
     protected function runJoomlaContentEvent(string &$text, object $params, $page = 0)
     {
-        PluginHelper::importPlugin('content');
+        // Discuss: I cannot find where this is called from, if this is related to onKunenaPrepare, the that should be refactored into a Kunena event: KunenaPrepare
+        // Or not and replace all onKunenaPrepare event triggers with the HTMLHelper set below??
+        return HTMLHelper::_('content.prepare', $text, $params(), 'kunena.topic');
 
-        $row       = new stdClass();
-        $row->text = &$text;
+        // PluginHelper::importPlugin('content');
 
-        Factory::getApplication()->triggerEvent('onContentPrepare', ['text', &$row, &$params, 0]);
+        // $row       = new stdClass();
+        // $row->text = &$text;
 
-        $text = &$row->text;
+        // Factory::getApplication()->triggerEvent('onContentPrepare', ['text', &$row, &$params, 0]);
 
-        return $text;
+        // $text = &$row->text;
+
+        // return $text;
     }
 }

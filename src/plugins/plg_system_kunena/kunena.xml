@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE extension>
-<extension version="2.5" type="plugin" group="system" method="upgrade">
+<extension
+    type="plugin"
+    group="system"
+    method="upgrade">
     <name>plg_system_kunena</name>
     <version>@kunenaversion@</version>
     <creationDate>@kunenaversiondate@</creationDate>
@@ -10,24 +12,36 @@
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_SYSTEM_KUNENA_DESC</description>
-    <namespace>Kunena\Forum\Plugin\System\Kunena</namespace>
+    <namespace path="src">Kunena\Forum\Plugin\System\Kunena</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
-        <filename plugin="kunena">kunena.php</filename>
+        <filename>kunena.xml</filename>
         <folder>language</folder>
+        <folder plugin="kunena">src</folder>
+        <folder>services</folder>
     </files>
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="jcontentevents" type="list" default="0" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS"
-                       description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_DESC" class="inputbox">
+                <field
+                    name="jcontentevents"
+                    type="list"
+                    default="0"
+                    label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS"
+                    description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="jcontentevent_target" type="list" multiple="true" default=""
-                       label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET"
-                       description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_DESC" class="inputbox">
+                <field
+                    name="jcontentevent_target"
+                    type="list"
+                    multiple="true"
+                    default=""
+                    label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET"
+                    description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_DESC"
+                    class="inputbox">
                     <option value="title">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TITLES</option>
                     <option value="body">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_BODIES</option>
                     <option value="announcement_title">announcement_title</option>
@@ -43,8 +57,7 @@
                 <field
                     name="ban_check_last"
                     type="hidden"
-                    default="0"
-                />
+                    default="0" />
             </fieldset>
         </fields>
     </config>

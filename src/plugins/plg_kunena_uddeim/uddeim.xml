@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+<extension version="4.2" type="plugin" group="kunena" method="upgrade">
     <name>plg_kunena_uddeim</name>
-    <version>6.4.0-BETA2</version>
-    <creationDate>2024-10-19</creationDate>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
     <authorEmail>Kunena@kunena.org</authorEmail>
     <authorUrl>https://www.kunena.org</authorUrl>
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_UDDEIM_DESCRIPTION</description>
+    <changelogurl>@kunenachangelog@</changelogurl>
     <namespace>Kunena\Forum\Plugin\Kunena\Uddeim</namespace>
     <files>
         <filename plugin="uddeim">uddeim.php</filename>

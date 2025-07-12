@@ -63,7 +63,7 @@
                 }
             ],
             "description": "scssphp is a compiler for SCSS written in PHP.",
-            "homepage": "http://scssphp.github.io/scssphp/",
+            "homepage": "https://scssphp.github.io/scssphp/",
             "keywords": [
                 "css",
                 "less",

@@ -13,8 +13,6 @@
 
 namespace Kunena\Forum\Site\Dispatcher;
 
-\defined('JPATH_PLATFORM') or die;
-
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -31,6 +29,8 @@ use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
+
+\defined('_JEXEC') or die;
 
 /**
  * ComponentDispatcher class for com_kunena

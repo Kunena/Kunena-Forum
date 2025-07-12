@@ -13,8 +13,6 @@
 
 namespace Kunena\Forum\Administrator\Extension;
 
-\defined('JPATH_PLATFORM') or die;
-
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
@@ -24,6 +22,8 @@ use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
 use Kunena\Forum\Site\Service\Html\Kunenagrid;
 use Kunena\Forum\Site\Service\Html\Kunenaforum;
+
+\defined('_JEXEC') or die;
 
 /**
  * Component class for com_kunena

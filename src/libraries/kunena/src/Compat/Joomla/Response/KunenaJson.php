@@ -10,9 +10,9 @@
 
 namespace Kunena\Forum\Libraries\Compat\Joomla\Response;
 
-\defined('JPATH_PLATFORM') or die;
-
 use Joomla\CMS\Response\JsonResponse;
+
+\defined('_JEXEC') or die;
 
 /**
  * Compatibility layer for \Joomla\CMS\Response\JsonResponse

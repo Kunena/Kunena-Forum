@@ -2352,22 +2352,22 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         switch ($vid_type) {
             case 'divx':
-                $vid_par1     = [[1, 'classid', 'clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616'], [1, 'codebase', 'http://go.divx.com/plugin/DivXBrowserPlugin.cab'], [4, 'type', 'video/divx'], [4, 'pluginspage', 'http://go.divx.com/plugin/download/'], [6, 'src', $vid_source], [6, 'autoplay', 'false'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
+                $vid_par1     = [[1, 'classid', 'clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616'], [1, 'codebase', 'https://go.divx.com/plugin/DivXBrowserPlugin.cab'], [4, 'type', 'video/divx'], [4, 'pluginspage', 'https://go.divx.com/plugin/download/'], [6, 'src', $vid_source], [6, 'autoplay', 'false'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
                 $vid_allowpar = ['previewimage'];
                 break;
             case 'flash':
-                $vid_par1     = [[1, 'classid', 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'], [1, 'codebase', 'http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab'], [2, 'movie', $vid_source], [4, 'src', $vid_source], [4, 'type', 'application/x-shockwave-flash'], [4, 'pluginspage', 'http://www.macromedia.com/go/getflashplayer'], [6, 'quality', 'high'], [6, 'allowFullScreen', 'true'], [6, 'allowScriptAccess', 'never'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
+                $vid_par1     = [[1, 'classid', 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'], [1, 'codebase', 'https://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab'], [2, 'movie', $vid_source], [4, 'src', $vid_source], [4, 'type', 'application/x-shockwave-flash'], [4, 'pluginspage', 'https://www.macromedia.com/go/getflashplayer'], [6, 'quality', 'high'], [6, 'allowFullScreen', 'true'], [6, 'allowScriptAccess', 'never'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
                 $vid_allowpar = ['flashvars', 'wmode', 'bgcolor', 'quality'];
                 break;
             case 'iframe':
                 return '<div class="embed-responsive embed-responsive-16by9"><iframe src="' . $vid_source . '" width="' . $vid_width . '" height="' . $vid_height . '" allowfullscreen style="border: 0"></iframe></div>';
                 break;
             case 'mediaplayer':
-                $vid_par1     = [[1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95'], [1, 'codebase', 'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab'], [4, 'type', 'application/x-mplayer2'], [4, 'pluginspage', 'http://www.microsoft.com/Windows/MediaPlayer/'], [6, 'src', $vid_source], [6, 'autostart', 'false'], [6, 'autosize', 'true'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
+                $vid_par1     = [[1, 'classid', 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95'], [1, 'codebase', 'https://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab'], [4, 'type', 'application/x-mplayer2'], [4, 'pluginspage', 'https://www.microsoft.com/Windows/MediaPlayer/'], [6, 'src', $vid_source], [6, 'autostart', 'false'], [6, 'autosize', 'true'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
                 $vid_allowpar = [];
                 break;
             case 'quicktime':
-                $vid_par1     = [[1, 'classid', 'clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B'], [1, 'codebase', 'http://www.apple.com/qtactivex/qtplugin.cab'], [4, 'type', 'video/quicktime'], [4, 'pluginspage', 'http://www.apple.com/quicktime/download/'], [6, 'src', $vid_source], [6, 'autoplay', 'false'], [6, 'scale', 'aspect'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
+                $vid_par1     = [[1, 'classid', 'clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B'], [1, 'codebase', 'https://www.apple.com/qtactivex/qtplugin.cab'], [4, 'type', 'video/quicktime'], [4, 'pluginspage', 'https://www.apple.com/quicktime/download/'], [6, 'src', $vid_source], [6, 'autoplay', 'false'], [6, 'scale', 'aspect'], [5, 'width', $vid_width], [5, 'height', $vid_height]];
                 $vid_allowpar = [];
                 break;
             case 'realplayer':
@@ -3087,7 +3087,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_SECURE_TEXT_GUESTS') . '</div>';
     }
-    
+
     /**
      * Handle mention bbcode tag in the message
      *

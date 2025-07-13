@@ -43,7 +43,7 @@ class KunenaAttachmentFinder extends KunenaFinder
      *
      * @throws  Exception|void
      */
-   /* public function find()
+    public function find()
     {
         if ($this->skip) {
             return [];
@@ -68,15 +68,10 @@ class KunenaAttachmentFinder extends KunenaFinder
                 $instances[$id] = KunenaAttachmentHelper::get($id);
             }
         }
-        var_dump($instances);
 
         unset($results);
 
         return $instances;
-    }*/
-    public function find($access = 'read')
-    {
-        $results = parent::find();
     }
     
     /**

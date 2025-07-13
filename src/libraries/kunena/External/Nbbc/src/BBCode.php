@@ -46,6 +46,7 @@ namespace Nbbc;
 //  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 //  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+use InvalidArgumentException;
 
 /**
  * A parser that converts BBCode formatted strings into HTML.
@@ -1038,9 +1039,9 @@ class BBCode {
         $hostRegex = /** @lang RegExp */
 <<<REGEX
 (?: # host
-    (?:[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)*\.[a-z]{2,}(?::\d+)?) # domain name
+    (?:[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)*\.[a-zA-Z]{2,63}(?::[0-9]{1,5})?) # domain name
     |
-    (?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d+)?) # ip address
+    (?:(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})(?::[0-9]{1,5})?) # ip address
 )
 REGEX;
 
@@ -1050,18 +1051,21 @@ REGEX;
     (?:(?:https?|ftp)://)? # optional scheme
     $hostRegex # host
     (?:
-        (?=[/?#]) # the part after the domain must be one of these characters
-        [@a-zA-Z0-9!#-'*-.:;\/;?-z~=]*[a-zA-Z0-9#/=]
-    )? # path, query string etc
+        (?=[/?#]) # the part after the domain must start with /, ? or #
+        [a-zA-Z0-9!#$%&'*+,./:;=?@_~-]* # valid URL characters
+        [a-zA-Z0-9#/=] # must end with these
+    )?
 )
 REGEX;
 
         $emailRegex = /** @lang RegExp */
 <<<REGEX
 (?: # email
-    [a-zA-Z0-9._-]+
+   [a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+
     @
-    [a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)*\.[a-z]{2,} # domain name
+    [a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?
+    (?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*
+    \.[a-zA-Z]{2,63}
 )
 REGEX;
 
@@ -1329,26 +1333,38 @@ REGEX;
      * @param int $start The starting index in {@link $array} to process.
      * @return string Returns the stack text from all the elements in the stack.
      */
-    protected function collectText($array, $start = 0) {
-        ob_start();
-        for ($start = \intval($start), $end = \count($array); $start < $end; $start++) {
-            print $array[$start][self::BBCODE_STACK_TEXT];
-        }
-        $output = ob_get_contents();
-        ob_end_clean();
+    protected function collectText(array $array, int $start = 0): string
+    {
+        $texts = [];
+        $count = count($array);
 
-        return $output;
+        for ($i = max(0, $start); $i < $count; $i++) {
+            if (isset($array[$i][self::BBCODE_STACK_TEXT])) {
+                $texts[] = $array[$i][self::BBCODE_STACK_TEXT];
+            }
+        }
+
+        return implode('', $texts);
     }
 
-    protected function collectTextReverse($array, $start = 0, $end = 0) {
-        ob_start();
-        for ($start = \intval($start); $start >= $end; $start--) {
-            print $array[$start][self::BBCODE_STACK_TEXT];
-        }
-        $output = ob_get_contents();
-        ob_end_clean();
+    protected function collectTextReverse(array $array, int $start = 0, int $end = 0): string
+    {
+        $output = [];
+        $start = (int) $start;
+        $end = (int) $end;
 
-        return $output;
+        if ($start < $end) {
+            throw new InvalidArgumentException('Start must be greater than or equal to end');
+        }
+
+        for ($i = $start; $i >= $end; $i--) {
+            if (!isset($array[$i][self::BBCODE_STACK_TEXT])) {
+                continue;
+            }
+            $output[] = $array[$i][self::BBCODE_STACK_TEXT];
+        }
+
+        return implode('', $output);
     }
 
     /**

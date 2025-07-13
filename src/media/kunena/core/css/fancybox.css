@@ -182,9 +182,8 @@ body.compensate-for-scrollbar {
 .fancybox-slide--image .fancybox-content {
 	animation-timing-function: cubic-bezier(.5, 0, .14, 1);
 	-webkit-backface-visibility: hidden;
-	background: transparent;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
+    background: transparent no-repeat;
+    background-size: 100% 100%;
 	left: 0;
 	max-width: none;
 	overflow: visible;

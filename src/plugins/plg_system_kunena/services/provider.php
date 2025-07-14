@@ -17,14 +17,11 @@
 
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Plugin\System\Kunena\Extension\Kunena;
-
-require_once JPATH_SITE . '/plugins/system/ochfoundation5/vendor/autoload.php';
 
 return new class implements ServiceProviderInterface
 {
@@ -36,7 +33,7 @@ return new class implements ServiceProviderInterface
      * @return  void
      * @since   2.0.0
      */
-    public function register(Container $container)
+    public function register(Container $container): void
     {
         $container->set(
             PluginInterface::class,

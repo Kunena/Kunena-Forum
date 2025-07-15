@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Version;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 /** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
@@ -29,7 +30,7 @@ $listOrder     = $this->escape($this->state->get('list.ordering'));
 $listDirn      = $this->escape($this->state->get('list.direction'));
 $joomlaVersion = new Version();
 ?>
-<form action="index.php?option=com_kunena&view=plugins" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugins'); ?>" method="post" name="adminForm" id="adminForm">
     <div class="row">
         <div class="col-md-12">
             <div id="j-main-container" class="j-main-container">

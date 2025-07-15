@@ -41,7 +41,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -165,7 +165,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -206,7 +206,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -242,7 +242,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -516,7 +516,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -699,7 +699,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -847,7 +847,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1008,7 +1008,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1060,7 +1060,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1161,7 +1161,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1204,7 +1204,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1332,7 +1332,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1395,7 +1395,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1431,7 +1431,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1613,7 +1613,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1730,7 +1730,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1838,7 +1838,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>
@@ -1950,7 +1950,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <th scope="col" class="w-25">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_OPTION') ?>
                                         </th>
-                                        <th scope="coll">
+                                        <th scope="col">
                                             <?php echo Text::_('COM_KUNENA_TABLEHEAD_DESCRIPTION') ?>
                                         </th>
                                     </tr>

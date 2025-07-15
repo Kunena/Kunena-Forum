@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" role="presentation" class="close" data-bs-dismiss="modal">x</button>
+                <button type="button" role="button" class="close" data-bs-dismiss="modal">x</button>
                 <h3><?php echo Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH_MODAL_TITLE'); ?></h3>
             </div>
             <div class="modal-body span11">

@@ -27,13 +27,13 @@ namespace Kunena\Forum\Site;
         </a>
     </noscript>
     <object class='tableauViz'  style='display:none;'>
-        <param name='host_url' value='ttps://public.tableau.com/' />
-        <param name='embed_code_version' value='3' /> 
+        <param name='host_url' value='https://public.tableau.com/' />
+        <param name='embed_code_version' value='3' />
         <param name='site_root' value='' />
         <param name='name' value='<?php echo $this->vizualization; ?>/<?php echo $this->vizualizationTab; ?>' />
         <param name='tabs' value='yes' />
         <param name='toolbar' value='yes' />
-        <param name='static_image' value='https://public.tableau.com/static/images/VG/<?php echo $this->vizualization; ?>/<?php echo $this->vizualizationTab; ?>/1_rss.png' /> 
+        <param name='static_image' value='https://public.tableau.com/static/images/VG/<?php echo $this->vizualization; ?>/<?php echo $this->vizualizationTab; ?>/1_rss.png' />
         <param name='animate_transition' value='yes' />
         <param name='display_static_image' value='yes' />
         <param name='display_spinner' value='yes' />

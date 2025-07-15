@@ -17,6 +17,7 @@ namespace Kunena\Forum\Libraries\Html;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
@@ -100,9 +101,9 @@ abstract class KunenaParser
 
             // We load all smileys in array, so we can sort them
             if ($addPath) {
-                $smileyArray [$smiley->code] = $template->getSmileyPath($smiley->file);
+                $smileyArray[$smiley->code] = $template->getSmileyPath($smiley->file);
             } else {
-                $smileyArray [$smiley->code] = $smiley->file;
+                $smileyArray[$smiley->code] = $smiley->file;
             }
         }
 
@@ -165,28 +166,12 @@ abstract class KunenaParser
      */
     public static function &prepareContent(&$content, $target = 'body')
     {
-        $config       = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
-        $events       = (int) $config->get('jcontentevents', false);
-        $event_target = (array) $config->get('jcontentevent_target', []);
+        $params       = new Registry(PluginHelper::getPlugin('system', 'kunena')->params);
+        $events       = (int) $params->get('jcontentevents', false);
+        $event_target = (array) $params->get('jcontentevent_target', []);
 
-        $name   = '';
-        $plugin = PluginHelper::getPlugin('content');
-
-        foreach ($plugin as $value) {
-            $name = \is_array($value->name);
-        }
-
-        if ($events && \in_array($target, $event_target)) {
-            $row       = new stdClass();
-            $row->text =& $content;
-
-            // Run events
-            $params = new Registry();
-            $params->set('ksource', 'kunena');
-
-            PluginHelper::importPlugin('content');
-            Factory::getApplication()->triggerEvent('onContentPrepare', [$name, &$row, &$params, 0]);
-            $content = $row->text;
+        if ($content && $events && \in_array($target, $event_target)) {
+            $content = HTMLHelper::_('content.prepare', $content, $params, 'kunena.contentprepare.' . $target);
         }
 
         return $content;

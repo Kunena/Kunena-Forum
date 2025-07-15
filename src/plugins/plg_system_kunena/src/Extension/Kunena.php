@@ -15,7 +15,6 @@ namespace Kunena\Forum\Plugin\System\Kunena\Extension;
 
 \defined('_JEXEC') or die();
 
-use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Event\Application\AfterInitialiseEvent;

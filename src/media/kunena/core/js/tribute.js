@@ -703,9 +703,7 @@
             node,
             lastNode;
 
-        while (node = el.firstChild) {
-          lastNode = frag.appendChild(node);
-        }
+        while ((node = el.firstChild) !== null)
 
         range.insertNode(frag); // Preserve the selection
 

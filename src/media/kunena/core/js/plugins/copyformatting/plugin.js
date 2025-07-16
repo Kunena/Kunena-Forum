@@ -414,7 +414,7 @@
 			},
 
 			applyFormatting: {
-				editorFocus: CKEDITOR.env.ie && !CKEDITOR.env.edge ? false : true,
+				editorFocus: !(CKEDITOR.env.ie && !CKEDITOR.env.edge),
 				exec: function( editor, data ) {
 					var cmd = editor.getCommand( 'copyFormatting' ),
 						isFromKeystroke = data ? data.from == 'keystrokeHandler' : false,

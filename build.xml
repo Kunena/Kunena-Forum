@@ -464,6 +464,12 @@ workspace/kunena/build/tmp)
 			<fileset dir="${kunena.plugins}/plg_system_kunena" />
 		</copy>
 		<copy
+			todir="${tmp_dir}/packages/plg_task_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${kunena.plugins}/plg_task_kunena" />
+		</copy>
+		<copy
 			todir="${tmp_dir}/packages/plg_quickicon_kunena"
 			overwrite="true">
 			<filterchain refid="filter" />
@@ -576,6 +582,14 @@ workspace/kunena/build/tmp)
 			overwrite="true">
 			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_system_kunena">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+		<copy
+			todir="${tmp_dir}/packages/plg_task_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${project_dir}/plugins/plg_task_kunena">
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
@@ -703,7 +717,7 @@ workspace/kunena/build/tmp)
 			<property
 				name="base.directory"
 				value="${tmp_dir}/packages/plg_finder_kunena" />
-		</phingcall>		
+		</phingcall>
 		<phingcall target="archive">
 			<property
 				name="destination.file"
@@ -808,6 +822,14 @@ workspace/kunena/build/tmp)
 			<property
 				name="base.directory"
 				value="${tmp_dir}/packages/plg_system_kunena" />
+		</phingcall>
+		<phingcall target="archive">
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_task_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_task_kunena" />
 		</phingcall>
 		<phingcall target="archive">
 			<property

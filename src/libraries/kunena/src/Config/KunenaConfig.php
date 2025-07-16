@@ -1611,12 +1611,6 @@ class KunenaConfig
     public $utmSource = 0;
 
     /**
-     * @var    Registry
-     * @since  Kunena 6.0
-     */
-    public $plugins;
-
-    /**
      * @var    string to define the header height image size
      * @since  Kunena 6.0
      */
@@ -1663,7 +1657,7 @@ class KunenaConfig
      * @since  Kunena 6.4.0
      */
     public $mailBodyUserUnBanned = '';
-    
+
     /**
      * @var    boolean  show the usertype in the userlist in frontend
      * @since  Kunena 6.5.0
@@ -1733,10 +1727,6 @@ class KunenaConfig
 
         // Perform custom validation of config data before we let anybody access it.
         $this->check();
-
-        $plugins = [];
-        Factory::getApplication()->triggerEvent('onKunenaGetConfiguration', ['kunena.configuration', &$plugins]);
-        $this->plugins = [];
     }
 
     /**
@@ -1814,20 +1804,6 @@ class KunenaConfig
     {
         $instance = new KunenaConfig();
         $this->bind(ArrayHelper::fromObject($instance));
-    }
-
-    /**
-     * @param   string  $name  Name of the plugin
-     *
-     * @return  Registry
-     *
-     * @internal
-     *
-     * @since   Kunena 6.0
-     */
-    public function getPlugin(string $name): Registry
-    {
-        return isset($this->plugins[$name]) ? $this->plugins[$name] : new Registry();
     }
 
     /**

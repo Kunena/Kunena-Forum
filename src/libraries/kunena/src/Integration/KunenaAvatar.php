@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -34,10 +35,10 @@ use StdClass;
 class KunenaAvatar
 {
     /**
-     * @var     boolean
+     * @var     ?object
      * @since   Kunena 6.0
      */
-    protected static $instance = false;
+    protected static ?object $instance = \null;
 
     /**
      * @var     null
@@ -67,23 +68,36 @@ class KunenaAvatar
      */
     public static function getInstance($integration = null)
     {
-        if (self::$instance === false) {
+        if (\null === self::$instance) {
             PluginHelper::importPlugin('kunena');
 
-            $classes = Factory::getApplication()->triggerEvent('onKunenaGetAvatar');
+            $avatarEvent = new KunenaGetAvatarEvent('onKunenaGetAvatar');
+            Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetAvatar', $avatarEvent);
 
-            foreach ($classes as $class) {
-                if (!\is_object($class)) {
-                    continue;
-                }
+            $avatar = $avatarEvent->getAvatar();
 
-                self::$instance = $class;
-                break;
-            }
-
-            if (!self::$instance) {
+            if ($avatar instanceof KunenaAvatar) {
+                self::$instance = $avatar;
+            } elseif (\is_array($avatar) && $avatar[0] instanceof KunenaAvatar) {
+                self::$instance = $avatar[0];
+            } else {
                 self::$instance = new self();
             }
+
+            // $classes = Factory::getApplication()->triggerEvent('onKunenaGetAvatar');
+
+            // foreach ($classes as $class) {
+            //     if (!\is_object($class)) {
+            //         continue;
+            //     }
+
+            //     self::$instance = $class;
+            //     break;
+            // }
+
+            // if (!self::$instance) {
+            //     self::$instance = new self();
+            // }
         }
 
         return self::$instance;
@@ -96,9 +110,7 @@ class KunenaAvatar
      *
      * @since   Kunena 6.0
      */
-    public function load(array $userlist): void
-    {
-    }
+    public function load(array $userlist): void {}
 
     /**
      * @return  string

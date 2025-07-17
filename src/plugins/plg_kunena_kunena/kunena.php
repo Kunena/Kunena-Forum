@@ -14,6 +14,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
+use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Plugin\Kunena\Kunena\KunenaAvatarKunena;
 use Kunena\Forum\Plugin\Kunena\Kunena\KunenaProfileKunena;
 
@@ -25,17 +26,17 @@ use Kunena\Forum\Plugin\Kunena\Kunena\KunenaProfileKunena;
 class PlgKunenaKunena extends CMSPlugin
 {
     /**
-     * @return  false|KunenaAvatarKunena
+     * @return  void
      *
      * @since   Kunena 6.0
      */
-    public function onKunenaGetAvatar()
+    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event)
     {
         if (!$this->params->get('avatar', 1)) {
-            return false;
+            return;
         }
 
-        return new KunenaAvatarKunena($this->params);
+        $event->setAvatar(new KunenaAvatarKunena($this->params));
     }
 
     /**
@@ -46,7 +47,7 @@ class PlgKunenaKunena extends CMSPlugin
     public function onKunenaGetProfile()
     {
         if (!$this->params->get('profile', 1)) {
-            return false;
+            return;
         }
 
         return new KunenaProfileKunena($this->params);

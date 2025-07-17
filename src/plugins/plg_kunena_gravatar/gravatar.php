@@ -14,6 +14,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
+use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Gravatar\KunenaAvatarGravatar;
 
@@ -48,11 +49,11 @@ class PlgKunenaGravatar extends CMSPlugin
     /**
      * Get Kunena avatar integration object.
      *
-     * @return KunenaAvatarGravatar|void
+     * @return void
      *
      * @since   Kunena 6.0
      */
-    public function onKunenaGetAvatar()
+    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event)
     {
         if (!$this->params->get('avatar', 1)) {
             return;
@@ -60,6 +61,6 @@ class PlgKunenaGravatar extends CMSPlugin
 
         require_once KPATH_FRAMEWORK . '/External/Emberlabs/Gravatar.php';
 
-        return new KunenaAvatarGravatar($this->params);
+        $event->setAvatar(new KunenaAvatarGravatar($this->params));
     }
 }

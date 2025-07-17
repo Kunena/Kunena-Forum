@@ -39,6 +39,11 @@ use Kunena\Forum\Libraries\User\KunenaUserSocials;
  */
 class Dispatcher extends ComponentDispatcher
 {
+    /**
+     * The URL option for the component.
+     *
+     * @var    string
+     */
     public $option = 'com_kunena';
 
     /**
@@ -81,8 +86,8 @@ class Dispatcher extends ComponentDispatcher
             if (!$ksession->save()) {
                 Factory::getApplication()->enqueueMessage(Text::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error');
             }
-        }        
-       
+        }
+
         KunenaUserSocials::addSocialsParams();
 
         $app   = Factory::getApplication();
@@ -123,10 +128,6 @@ class Dispatcher extends ComponentDispatcher
         // Prepare and display the output.
         $params       = new \stdClass();
         $params->text = '';
-        $topics       = new \stdClass();
-        $topics->text = '';
-        PluginHelper::importPlugin('content');
-        Factory::getApplication()->triggerEvent('onContentPrepare', ["com_kunena.{$view}", &$topics, &$params, 0]);
         Factory::getApplication()->triggerEvent('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]);
         $contents = (string) $contents;
         Factory::getApplication()->triggerEvent('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]);
@@ -144,11 +145,11 @@ class Dispatcher extends ComponentDispatcher
 
             foreach ($kunena_profiler->getAll() as $item) {
                 echo sprintf(
-                	"Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>",
-                	$item->name,
-                	$item->getInternalTime(),
-                	$item->getTotalTime(),
-                	$item->calls
+                    "Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>",
+                    $item->name,
+                    $item->getInternalTime(),
+                    $item->getTotalTime(),
+                    $item->calls
                 );
             }
 
@@ -174,10 +175,10 @@ class Dispatcher extends ComponentDispatcher
             Factory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', true);
             Factory::getApplication()->sendHeaders();
 
-            ?>
+?>
             <h2><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC') ?></h2>
             <div><?php echo Text::_('COM_KUNENA_INSTALL_OFFLINE_DESC') ?></div>
-            <?php
+<?php
 
             return;
         }

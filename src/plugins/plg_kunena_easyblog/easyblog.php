@@ -13,6 +13,7 @@
 
 defined('_JEXEC') or die();
 
+use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
@@ -24,7 +25,7 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 {
     /**
      * plgKunenaEasyblog constructor.
-    *
+     *
      * @param   DispatcherInterface  &$subject  The object to observe
      * @param   array                $config    An optional associative array of configuration settings.
      *                                          Recognized key values include 'name', 'group', 'params', 'language'
@@ -56,10 +57,10 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
     /**
      * Get Kunena avatar integration object.
      *
-     * @return KunenaAvatarEasyblog|null
+     * @return void
      * @since Kunena
      */
-    public function onKunenaGetAvatar()
+    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event)
     {
         if (!isset($this->params)) {
             return;
@@ -71,7 +72,7 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 
         require_once __DIR__ . "/KunenaAvatarEasyblog.php";
 
-        return new KunenaAvatarEasyblog($this->params);
+        $event->setAvatar(new KunenaAvatarEasyblog($this->params));
     }
 
     /**

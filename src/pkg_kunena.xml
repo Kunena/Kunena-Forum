@@ -86,6 +86,8 @@
             id="kunena">plg_privacy_kunena_v@kunenaversion@.zip</filename>
     </files>
 
+    <blockChildUninstall>true</blockChildUninstall>
+
     <changelogurl>@kunenachangelog@</changelogurl>
 
     <updateservers>
@@ -95,42 +97,4 @@
             name="Kunena 6.5 Update Site">https://update.kunena.org/6.5/list.xml
         </server>
     </updateservers>
-
-    <restorepoint>
-        <customdirs>
-            <dir>administrator/manifests/packages/kunena</dir>
-            <dir>administrator/components/com_kunena</dir>
-            <dir>components/com_kunena</dir>
-            <dir>libraries/kunena</dir>
-            <dir>plugins/kunena</dir>
-            <dir>plugins/system/kunena</dir>
-            <dir>plugins/quickicon/kunena</dir>
-            <dir>plugins/sampledata/kunena</dir>
-            <dir>media/kunena</dir>
-        </customdirs>
-        <customfiles>
-            <file>administrator/manifests/packages/pkg_kunena.xml</file>
-            <file>administrator/manifests/libraries/kunena.xml</file>
-            <file>administrator/manifests/files/kunena_media.xml</file>
-        </customfiles>
-        <langfiles>
-            <lang>com_kunena</lang>
-            <lang>plg_kunena_community</lang>
-            <lang>plg_kunena_comprofiler</lang>
-            <lang>plg_kunena_easyblog</lang>
-            <lang>plg_kunena_easyprofile</lang>
-            <lang>plg_kunena_easysocial</lang>
-            <lang>plg_kunena_gravatar</lang>
-            <lang>plg_kunena_uddeim</lang>
-            <lang>plg_kunena_joomla</lang>
-            <lang>plg_kunena_kunena</lang>
-            <lang>plg_system_kunena</lang>
-            <lang>plg_quickicon_kunena</lang>
-            <lang>plg_sampledata_kunena</lang>
-            <lang>plg_privacy_kunena</lang>
-        </langfiles>
-        <extraprefixes>
-            <prefix>kunena</prefix>
-        </extraprefixes>
-    </restorepoint>
 </extension>

@@ -16,7 +16,6 @@ namespace Kunena\Forum\Administrator\Dispatcher;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Dispatcher\ComponentDispatcher;
-use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**
@@ -26,23 +25,20 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  */
 class Dispatcher extends ComponentDispatcher
 {
+    /**
+     * The URL option for the component.
+     *
+     * @var    string
+     */
     protected $option = 'com_kunena';
 
-    protected $defaultController = 'cpanel';
-
-    protected function onBeforeDispatch()
-    {
-        // Load the languages
-        $this->loadLanguage();
-
-        // Apply the view and controller from the request, falling back to the default view/controller if necessary
-        $this->applyViewAndController();
-
-        // Access control
-        $this->checkAccess();
-    }
-
-    protected function loadLanguage()
+    /**
+     * Load the language
+     *
+     * @return  void
+     * @since   6.0.0
+     */
+    protected function loadLanguage(): void
     {
         KunenaFactory::loadLanguage('com_kunena', 'admin');
         KunenaFactory::loadLanguage('com_kunena.views', 'admin');
@@ -53,40 +49,5 @@ class Dispatcher extends ComponentDispatcher
         KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
         KunenaFactory::loadLanguage('com_plugins', 'admin');
         KunenaFactory::loadLanguage('com_kunena', 'site');
-    }
-
-    /**
-     * @since K6.0
-     */
-    private function applyViewAndController(): void
-    {
-        // Handle a custom default controller name
-        $view       = $this->input->getCmd('view', $this->defaultController);
-        $controller = $this->input->getCmd('controller', $view);
-        $task       = $this->input->getCmd('task', 'cpanel');
-
-        // Check for a controller.task command.
-        if (strpos($task, '.') !== false) {
-            // Explode the controller.task command.
-            [$controller, $task] = explode('.', $task);
-        }
-
-        $this->input->set('view', $controller);
-        $this->input->set('controller', $controller);
-        $this->input->set('task', $task);
-    }
-
-    /**
-     * Kunena have to check for extension permission
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function checkAccess()
-    {
-        if ($this->app->isClient('administrator') && !$this->app->getIdentity()->authorise('core.manage', 'com_kunena')) {
-            throw new KunenaExceptionAuthorise($this->app->getLanguage()->_('COM_KUNENA_NO_ACCESS'), 401);
-        }
     }
 }

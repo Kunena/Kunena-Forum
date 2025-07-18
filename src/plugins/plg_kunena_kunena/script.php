@@ -39,7 +39,7 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
      * @var    string
      * @since  5.4.0
      */
-    protected $minimumPhp = '7.2.5';
+    protected $minimumPhp = '8.1';
 
     /**
      * Minimum Joomla! version required to install the extension
@@ -47,7 +47,7 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
      * @var    string
      * @since  6.0.0
      */
-    protected $minimumJoomla = '4.0.0-dev';
+    protected $minimumJoomla = '5.3.2';
 
     /**
      * List of required PHP extensions.
@@ -58,29 +58,6 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
     protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
 
     /**
-     * @var  Joomla\CMS\Application\CMSApplication  Holds the application object
-     *
-     * @since   Kunena 6.0
-     */
-    protected $app;
-
-    /**
-     * Database object
-     *
-     * @var    DatabaseDriver
-     *
-     * @since   4.0.0
-     */
-    protected $db;
-
-    /**
-     * @var  string  During an update, it will be populated with the old release version
-     *
-     * @since   Kunena 6.0
-     */
-    private $oldRelease;
-
-    /**
      * method to run after an install/update/uninstall method
      *
      * @param   string            $type    'install', 'update' or 'discover_install'
@@ -88,7 +65,7 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
      *
      * @return void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function postflight($type, $parent)
@@ -101,12 +78,36 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
     }
 
     /**
-     * @param   string  $pluginName  The name of plugin to enable
+     * Function called before extension installation/update/removal procedure commences
+     *
+     * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
+     * @param   InstallerAdapter  $parent  The class calling this method
+     *
+     * @return  boolean  True on success
+     * @since   Kunena 6.5
+     */
+    public function preflight($type, $parent): bool
+    {
+        if (!parent::preflight($type, $parent)) {
+            return false;
+        }
+
+        // Delete kunena.php
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/kunena/kunena.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/kunena/KunenaAvatarKunena.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/kunena/KunenaProfileKunena.php';
+        $this->removeFiles();
+
+        return true;
+    }
+
+    /**
+     * @param $pluginName
      *
      * @return boolean|false
-     * @since version
+     * @since  version
      */
-    public function enablePlugin($pluginName)
+    public function enablePlugin(string $pluginName): bool
     {
         // Create a new db object.
         $db    = Factory::getContainer()->get('DatabaseDriver');
@@ -126,5 +127,7 @@ class plgKunenaKunenaInstallerScript extends InstallerScript
         } catch (ExecutionFailureException $e) {
             return false;
         }
+
+        return true;
     }
 }

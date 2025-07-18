@@ -14,6 +14,7 @@
 defined('_JEXEC') or die();
 
 use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**
@@ -78,10 +79,10 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
     /**
      * Get Kunena profile integration object.
      *
-     * @return KunenaProfileEasyblog|null
+     * @return void
      * @since Kunena
      */
-    public function onKunenaGetProfile()
+    public function onKunenaGetProfile(KunenaGetProfileEvent $event)
     {
         if (!isset($this->params)) {
             return;
@@ -93,6 +94,6 @@ class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
 
         require_once __DIR__ . "/KunenaProfileEasyblog.php";
 
-        return new KunenaProfileEasyblog($this->params);
+        $event->setProfile(new KunenaProfileEasyblog($this->params));
     }
 }

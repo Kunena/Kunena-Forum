@@ -11,10 +11,11 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Kunena;
+namespace Kunena\Forum\Plugin\Kunena\Kunena\Helper;
 
 \defined('_JEXEC') or die();
 
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -23,7 +24,6 @@ use Kunena\Forum\Libraries\Image\KunenaImageHelper;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Exception;
 
 /**
  * Class KunenaAvatar
@@ -33,34 +33,36 @@ use Exception;
 class KunenaAvatarKunena extends KunenaAvatar
 {
     /**
-     * @var     null
+     * @var     boolean
      * @since   Kunena 6.0
      */
-    public $css = true;
+    public bool $css = \true;
 
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
-        $this->resize = true;
+        $this->resize = \true;
     }
 
     /**
-     * @return string
+     * Function to get the link to the User edit page
+     * 
+     * @return  string
      *
+     * @return  string
      * @since   Kunena 6.0
-     *
-     * @throws Exception
+     * @throws  \Exception
      */
     public function getEditURL(): string
     {
@@ -68,15 +70,15 @@ class KunenaAvatarKunena extends KunenaAvatar
     }
 
     /**
+     * Function to get the Avatar image for the user
+     * 
      * @param   KunenaUser  $user   user
      * @param   int         $sizex  sizex
      * @param   int         $sizey  sizey
      *
      * @return  string
-     *
      * @since   Kunena 6.0
-     *
-     * @throws Exception
+     * @throws  \Exception
      */
     protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
     {
@@ -88,7 +90,7 @@ class KunenaAvatarKunena extends KunenaAvatar
             $path     = KPATH_MEDIA . "/avatars";
             $origPath = "{$path}/{$avatar}";
 
-            if (!is_file($origPath)) {
+            if (!\is_file($origPath)) {
                 // If avatar does not exist use default image.
                 if ($sizex <= 90) {
                     $avatar = KunenaConfig::getInstance()->defaultAvatarSmall;
@@ -103,7 +105,7 @@ class KunenaAvatarKunena extends KunenaAvatar
             }
 
             $dir  = \dirname($avatar);
-            $file = basename($avatar);
+            $file = \basename($avatar);
 
             if ($sizex == $sizey) {
                 $resized = "resized/size{$sizex}/{$dir}";
@@ -120,16 +122,16 @@ class KunenaAvatarKunena extends KunenaAvatar
             if (!is_file("{$path}/{$resized}/{$file}")) {
                 try {
                     KunenaImageHelper::version(
-                    	$origPath,
-                    	"{$path}/{$resized}",
-                    	$file,
-                    	$sizex,
-                    	$sizey,
-                    	\intval($config->avatarQuality),
-                    	KunenaImage::SCALE_INSIDE,
-                    	\intval($config->avatarCrop)
+                        $origPath,
+                        "{$path}/{$resized}",
+                        $file,
+                        $sizex,
+                        $sizey,
+                        \intval($config->avatarQuality),
+                        KunenaImage::SCALE_INSIDE,
+                        \intval($config->avatarCrop)
                     );
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     KunenaError::error($e->getMessage());
                 }
 
@@ -143,8 +145,7 @@ class KunenaAvatarKunena extends KunenaAvatar
             return KURL_MEDIA . "avatars/{$resized}/{$file}{$timestamp}";
         } else {
             // When KunenaFactory::getConfig()->avatarType is true it means Icontype
-            if ($config->avatarType)
-            {
+            if ($config->avatarType) {
                 return KURL_MEDIA . "core/svg/person.svg";
             } else {
                 return KURL_MEDIA . 'avatars/' . $config->defaultAvatar;

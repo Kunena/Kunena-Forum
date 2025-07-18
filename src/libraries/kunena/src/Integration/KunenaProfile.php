@@ -15,9 +15,10 @@ namespace Kunena\Forum\Libraries\Integration;
 
 \defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -30,44 +31,40 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 class KunenaProfile
 {
     /**
-     * @var     boolean
+     * @var     ?KunenaProfile
      * @since   Kunena 6.0
      */
-    protected static $instance = false;
+    protected static ?KunenaProfile $instance = \null;
 
     /**
-     * @var boolean
+     * @var   boolean
      * @since Kunena 5.2
      */
-    public $enabled = true;
+    public bool $enabled = \true;
 
     /**
-     * @param   null  $integration  integration
-     *
-     * @return  boolean|KunenaProfile
-     *
-     * @throws  Exception
+     * Function to get the active KunenaProfle instance from the integration
+     * 
+     * @return  KunenaProfile
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
-    public static function getInstance($integration = null)
+    public static function getInstance(): KunenaProfile
     {
-        if (self::$instance === false) {
+        if (\null === self::$instance) {
             PluginHelper::importPlugin('kunena');
 
-            $classes = Factory::getApplication()->triggerEvent('onKunenaGetProfile');
+            $profileEvent = new KunenaGetProfileEvent('onKunenaGetProfile');
+            Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetProfile', $profileEvent);
 
-            foreach ($classes as $class) {
-                if (!\is_object($class)) {
-                    continue;
-                }
+            $profile = $profileEvent->getProfile();
 
-                self::$instance = $class;
-                break;
-            }
-
-            if (!self::$instance) {
-                self::$instance          = new self();
-                self::$instance->enabled = false;
+            if ($profile instanceof KunenaProfile) {
+                self::$instance = $profile;
+            } elseif (\is_array($profile) && $profile[0] instanceof KunenaProfile) {
+                self::$instance = $profile[0];
+            } else {
+                self::$instance = new self();
             }
         }
 
@@ -75,12 +72,13 @@ class KunenaProfile
     }
 
     /**
+     * Function to get Top Hits
+     * 
      * @param   int  $limit  limit
      *
      * @return  array
-     *
-     * @throws  Exception
      * @since   Kunena 6.0
+     * @throws  \Exception
      */
     public function getTopHits(int $limit = 0): array
     {
@@ -92,10 +90,11 @@ class KunenaProfile
     }
 
     /**
+     * Function to get Top Hits
+     * 
      * @param   int  $limit  limit
      *
      * @return  array
-     *
      * @since   Kunena 6.0
      */
     protected function getTopHitsArray(int $limit = 0): array
@@ -104,15 +103,16 @@ class KunenaProfile
     }
 
     /**
+     * Function to get Statistics URL
+     * 
      * @param   string  $action  action
      * @param   bool    $xhtml   xhtml
      *
-     * @return string
-     *
+     * @return  string
      * @since   Kunena 5.0
-     * @throws \Exception
+     * @throws  \Exception
      */
-    public function getStatisticsURL(string $action = '', bool $xhtml = true): string
+    public function getStatisticsURL(string $action = '', bool $xhtml = \true): string
     {
         $config = KunenaFactory::getConfig();
         $my     = Factory::getApplication()->getIdentity();
@@ -125,53 +125,61 @@ class KunenaProfile
     }
 
     /**
+     * Function to get User List URL
+     * 
      * @param   string  $action  action
      * @param   bool    $xhtml   xhtml
      *
-     * @return string
-     *
+     * @return  string|false
      * @since   Kunena 5.0
      */
-    public function getUserListURL(string $action = '', bool $xhtml = true): string
+    public function getUserListURL(string $action = '', bool $xhtml = \true): string|false
     {
         return '';
     }
 
     /**
+     * Function to get User Profile URL
+     * 
      * @param   int     $userid     userid
      * @param   string  $task       task
      * @param   bool    $xhtml      xhtml
-     * @param   string  $avatarTab  avatartab
+     * @param   string  $avatarTab  avatarTab
      *
-     * @return  boolean|void
-     *
+     * @return  string|false
      * @since   Kunena 5.0
+     * @throws  \Exception
      */
-    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = '')
+    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {
+        return '';
     }
 
     /**
+     * Function to get the User Profile
+     * 
      * @param   KunenaLayout  $view    view
-     * @param   object        $params  params
+     * @param   Registry      $params  params
      *
-     * @return  void
-     *
+     * @return  string
      * @since   Kunena 5.0
      */
-    public function showProfile(KunenaLayout $view, object $params)
+    public function showProfile(KunenaLayout $view, Registry $params): string
     {
+        return '';
     }
 
     /**
+     * Function to get User Profile Edit URL
+     * 
      * @param   int   $userid  userid
      * @param   bool  $xhtml   xhtml
      *
-     * @return string
-     *
+     * @return  string|false
      * @since   Kunena 5.0
+     * @throws  \Exception
      */
-    public function getEditProfileURL(int $userid, bool $xhtml = true): string
+    public function getEditProfileURL(int $userid, bool $xhtml = true): string|false
     {
         return '';
     }

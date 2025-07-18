@@ -94,7 +94,6 @@ class plgSystemKunenaInstallerScript extends InstallerScript
         return true;
     }
 
-
     /**
      * @param $pluginName
      *

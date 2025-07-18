@@ -19,6 +19,7 @@
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaAvatarEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaProfileEasySocial;
@@ -110,11 +111,11 @@ class PlgKunenaEasySocial extends EasySocialPlugins
     /**
      * Get Kunena profile integration object.
      *
-     * @return  KunenaProfileEasySocial
+     * @return  void
      *
      * @since   Kunena 5.0
      */
-    public function onKunenaGetProfile()
+    public function onKunenaGetProfile(KunenaGetProfileEvent $event)
     {
         if (!isset($this->params)) {
             return;
@@ -124,7 +125,7 @@ class PlgKunenaEasySocial extends EasySocialPlugins
             return;
         }
 
-        return new KunenaProfileEasySocial($this->params);
+        $event->setProfile(new KunenaProfileEasySocial($this->params));
     }
 
     /**

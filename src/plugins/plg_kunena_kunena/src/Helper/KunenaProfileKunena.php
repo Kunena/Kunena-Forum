@@ -11,20 +11,21 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Kunena;
+namespace Kunena\Forum\Plugin\Kunena\Kunena\Helper;
 
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Exception;
-use RuntimeException;
 
 /**
  * Class KunenaProfile
@@ -34,74 +35,73 @@ use RuntimeException;
 class KunenaProfileKunena extends KunenaProfile
 {
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 5.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 5.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
 
     /**
+     * Function to get User List URL
+     * 
      * @param   string  $action  action
      * @param   bool    $xhtml   xhtml
      *
-     * @return  string
-     *
+     * @return  string|false
      * @since   Kunena 5.0
-     * @throws  null
-     *
-     * @throws  Exception
      */
-    public function getUserListURL(string $action = '', bool $xhtml = true): string
+    public function getUserListURL(string $action = '', bool $xhtml = \true): string|false
     {
         $config = KunenaFactory::getConfig();
         $my     = Factory::getApplication()->getIdentity();
 
         if ($config->userlistAllowed == 0 && $my->id == 0) {
-            return false;
+            return \false;
         }
 
         return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list' . $action, $xhtml);
     }
 
     /**
+     * Function to get Top Hits
+     * 
      * @param   int  $limit  limit
      *
      * @return  array
-     *
-     * @throws  RuntimeException
-     *
-     * @since   Kunena 5.0
+     * @since   Kunena 6.0
+     * @throws  \Exception
      */
     public function getTopHits(int $limit = 0): array
     {
+        /** @var DatabaseDriver $db */
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
         $query->select($db->quoteName(['u.id', 'ku.uhits'], [null, 'count']));
         $query->from($db->quoteName(['#__kunena_users'], ['ku']));
-        $query->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
+        $query->join('INNER', $db->quoteName('#__users', 'u'), $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'));
         $query->where($db->quoteName('ku.uhits') . ' > 0');
         $query->order($db->quoteName('ku.uhits') . ' DESC');
 
         if (KunenaFactory::getConfig()->superAdminUserlist) {
             $filter = Access::getUsersByGroup(8);
-            $query->andwhere('u.id NOT IN (' . implode(',', $filter) . ')');
+            $query->where('u.id NOT IN (' . implode(',', $filter) . ')');
         }
 
         $query->setLimit($limit);
         $db->setQuery($query);
 
         try {
-            $top = (array) $db->loadObjectList();
-        } catch (RuntimeException $e) {
+            $top = $db->loadObjectList() ?? [];
+        } catch (\RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }
 
@@ -109,29 +109,30 @@ class KunenaProfileKunena extends KunenaProfile
     }
 
     /**
-     * @param   int     $view    view
-     * @param   object  $params  params
+     * Function to get the User Profile
+     * 
+     * @param   KunenaLayout  $view    view
+     * @param   Registry      $params  params
      *
-     * @return  void
+     * @return  string
      *
      * @since   Kunena 5.0
      */
-    public function showProfile($view, object $params)
+    public function showProfile(KunenaLayout $view, Registry $params): string
     {
+        return '';
     }
 
     /**
+     * Function to get User Profile Edit URL
+     * 
      * @param   int   $userid  userid
      * @param   bool  $xhtml   xhtml
      *
-     * @return  boolean
-     *
-     * @throws  null
-     * @throws  Exception
-     *
+     * @return  string|false
      * @since   Kunena 5.0
      */
-    public function getEditProfileURL(int $userid, bool $xhtml = true): string
+    public function getEditProfileURL(int $userid, bool $xhtml = true): string|false
     {
         $avatartab = '&avatartab=1';
 
@@ -139,19 +140,18 @@ class KunenaProfileKunena extends KunenaProfile
     }
 
     /**
+     * Function to get User Profile URL
+     * 
      * @param   int     $userid     userid
      * @param   string  $task       task
      * @param   bool    $xhtml      xhtml
      * @param   string  $avatarTab  avatarTab
      *
-     * @return  boolean
-     *
-     * @throws  null
-     * @throws  Exception
-     *
+     * @return  string|false
      * @since   Kunena 5.0
+     * @throws  \Exception
      */
-    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = '')
+    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {
         if ($userid == 0) {
             return false;
@@ -188,11 +188,9 @@ class KunenaProfileKunena extends KunenaProfile
      * @param   bool        $escape       escape
      *
      * @return  string
-     *
-     * @throws  Exception
-     *
-     * @see     KunenaProfile::getProfileName()
      * @since   Kunena 5.2
+     * @throws  Exception
+     * @see     KunenaProfile::getProfileName()
      */
     public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
     {
@@ -205,7 +203,7 @@ class KunenaProfileKunena extends KunenaProfile
         }
 
         if ($escape) {
-            $name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
+            $name = \htmlspecialchars($name, \ENT_COMPAT, 'UTF-8');
         }
 
         return $name;

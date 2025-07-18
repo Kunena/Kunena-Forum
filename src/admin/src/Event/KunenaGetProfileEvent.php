@@ -19,16 +19,16 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
-use Kunena\Forum\Libraries\Integration\KunenaAvatar;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
 
 /**
- * Class for onKunenaGetAvatar event.
+ * Class for onKunenaGetProfile event.
  * Example:
- *  new KunenaGetAvatarEvent('onKunenaGetAvatar', []);
+ *  new KunenaGetProfileEvent('onKunenaGetProfile', []);
  *
  * @since  6.5.0
  */
-class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAwareInterface
+class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwareInterface
 {
     use ResultAware;
     use ResultTypeObjectAware;
@@ -36,27 +36,27 @@ class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAware
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaAvatar  $value  The value to set
+     * @param   KunenaProfile  $value  The value to set
      *
-     * @return  KunenaAvatar
+     * @return  KunenaProfile
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    protected function onSetAvatar(KunenaAvatar $avatar): KunenaAvatar
+    protected function onSetProfile(KunenaProfile $profile): KunenaProfile
     {
-        return $avatar;
+        return $profile;
     }
 
     /**
      * Getter for the data argument.
      *
-     * @return  KunenaAvatar|array
+     * @return  KunenaProfile|array
      * @since   6.5.0
      */
-    public function getAvatar(): KunenaAvatar|array
+    public function getProfile(): KunenaProfile|array
     {
-        if (isset($this->arguments['avatar']) && $this->arguments['avatar'] instanceof KunenaAvatar) {
-            return $this->arguments['avatar'];
+        if (isset($this->arguments['profile']) && $this->arguments['profile'] instanceof KunenaProfile) {
+            return $this->arguments['profile'];
         }
 
         return $this->arguments['result'] ?? [];
@@ -68,8 +68,8 @@ class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAware
      * @return  $this
      * @since   6.5.0
      */
-    public function setAvatar(KunenaAvatar $avatar)
+    public function setProfile(KunenaProfile $profile)
     {
-        return $this->setArgument('avatar', $avatar);
+        return $this->setArgument('profile', $profile);
     }
 }

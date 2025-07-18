@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension
-    version="2.5"
     type="plugin"
-    group="kunena">
+    group="kunena"
+    method="upgrade">
     <name>plg_kunena_kunena</name>
     <version>@kunenaversion@</version>
     <creationDate>@kunenaversiondate@</creationDate>

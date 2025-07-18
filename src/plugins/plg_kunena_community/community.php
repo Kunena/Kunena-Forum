@@ -15,6 +15,8 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
+use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaAccessCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaActivityCommunity;
@@ -105,10 +107,10 @@ class PlgKunenaCommunity extends CMSPlugin
     /**
      * Get Kunena avatar integration object.
      *
-     * @return  KunenaAvatarCommunity|void
+     * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetAvatar()
+    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event)
     {
         if (!isset($this->params)) {
             return;
@@ -118,16 +120,16 @@ class PlgKunenaCommunity extends CMSPlugin
             return;
         }
 
-        return new KunenaAvatarCommunity($this->params);
+        $event->setAvatar(new KunenaAvatarCommunity($this->params));
     }
 
     /**
      * Get Kunena profile integration object.
      *
-     * @return  KunenaProfileCommunity|null|void
+     * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetProfile()
+    public function onKunenaGetProfile(KunenaGetProfileEvent $event)
     {
         if (!isset($this->params)) {
             return;
@@ -137,7 +139,7 @@ class PlgKunenaCommunity extends CMSPlugin
             return;
         }
 
-        return new KunenaProfileCommunity($this->params);
+        $event->setProfile(new KunenaProfileCommunity($this->params));
     }
 
     /**

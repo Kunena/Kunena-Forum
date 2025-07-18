@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE extension>
-<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+<extension
+    type="plugin"
+    group="kunena"
+    method="upgrade">
     <name>plg_kunena_kunena</name>
     <version>@kunenaversion@</version>
     <creationDate>@kunenaversiondate@</creationDate>
@@ -10,27 +12,35 @@
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_KUNENA_DESCRIPTION</description>
-    <namespace>Kunena\Forum\Plugin\Kunena\Kunena</namespace>
+    <namespace path="src">Kunena\Forum\Plugin\Kunena\Kunena</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
-        <filename plugin="kunena">kunena.php</filename>
-        <filename>KunenaAvatarKunena.php</filename>
-        <filename>KunenaProfileKunena.php</filename>
+        <filename>kunena.xml</filename>
         <folder>language</folder>
+        <folder plugin="kunena">src</folder>
+        <folder>services</folder>
     </files>
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="avatar" type="list" default="1" label="PLG_KUNENA_KUNENA_AVATAR"
-                       description="PLG_KUNENA_KUNENA_AVATAR_DESC"
-                       class="inputbox">
+                <field
+                    name="avatar"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_KUNENA_AVATAR"
+                    description="PLG_KUNENA_KUNENA_AVATAR_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="profile" type="list" default="1" label="PLG_KUNENA_KUNENA_PROFILE"
-                       description="PLG_KUNENA_KUNENA_PROFILE_DESC"
-                       class="inputbox">
+                <field
+                    name="profile"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_KUNENA_PROFILE"
+                    description="PLG_KUNENA_KUNENA_PROFILE_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>

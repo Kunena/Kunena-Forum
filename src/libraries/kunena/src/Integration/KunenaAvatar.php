@@ -15,16 +15,15 @@ namespace Kunena\Forum\Libraries\Integration;
 
 \defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use StdClass;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\Avatar
@@ -34,54 +33,45 @@ use StdClass;
 class KunenaAvatar
 {
     /**
-     * @var     boolean
+     * @var     ?KunenaAvatar
      * @since   Kunena 6.0
      */
-    protected static $instance = false;
-
-    /**
-     * @var     null
-     * @since   Kunena 6.0
-     */
-    public $avatarSizes = null;
+    protected static ?KunenaAvatar $instance = \null;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    public $css = false;
+    public bool $css = \false;
 
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $resize = false;
+    protected bool $resize = \false;
 
     /**
-     * @param   null  $integration  integration
-     *
-     * @return  boolean|KunenaAvatar
-     *
-     * @throws  Exception
+     * Function to get the active KunenaAvatar instance from the integration
+     * 
+     * @return  KunenaAvatar
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
-    public static function getInstance($integration = null)
+    public static function getInstance(): KunenaAvatar
     {
-        if (self::$instance === false) {
+        if (\null === self::$instance) {
             PluginHelper::importPlugin('kunena');
 
-            $classes = Factory::getApplication()->triggerEvent('onKunenaGetAvatar');
+            $avatarEvent = new KunenaGetAvatarEvent('onKunenaGetAvatar');
+            Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetAvatar', $avatarEvent);
 
-            foreach ($classes as $class) {
-                if (!\is_object($class)) {
-                    continue;
-                }
+            $avatar = $avatarEvent->getAvatar();
 
-                self::$instance = $class;
-                break;
-            }
-
-            if (!self::$instance) {
+            if ($avatar instanceof KunenaAvatar) {
+                self::$instance = $avatar;
+            } elseif (\is_array($avatar) && $avatar[0] instanceof KunenaAvatar) {
+                self::$instance = $avatar[0];
+            } else {
                 self::$instance = new self();
             }
         }
@@ -90,21 +80,23 @@ class KunenaAvatar
     }
 
     /**
+     * function to (pre) load the Avatars
+     * 
      * @param   array  $userlist  userlist
      *
      * @return  void
-     *
      * @since   Kunena 6.0
      */
-    public function load(array $userlist): void
-    {
-    }
+    public function load(array $userlist): void {}
 
     /**
+     * Function to get the link to the User edit page
+     * 
      * @return  string
      *
      * @throws Exception
      * @since   Kunena 6.0
+     * @deprecated Not used: will be removed without replacement in Kunena 7.0
      */
     public function getEditURL(): string
     {
@@ -112,23 +104,24 @@ class KunenaAvatar
     }
 
     /**
+     * Function to get the Avatar image with link for the user
+     * 
      * @param   KunenaUser  $user   user
      * @param   string      $class  class
      * @param   int         $sizex  sizex
      * @param   int         $sizey  sizey
      *
-     * @return  false|string
-     *
-     * @throws Exception
+     * @return  string|false
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
-    public function getLink(KunenaUser $user, $class = 'kavatar', $sizex = 90, $sizey = 90)
+    public function getLink(KunenaUser $user, $class = 'kavatar', $sizex = 90, $sizey = 90): string|false
     {
         $size   = $this->getSize($sizex, $sizey);
         $avatar = $this->getURL($user, $size->x, $size->y);
 
         if (!$avatar) {
-            return false;
+            return \false;
         }
 
         if ($class == 'none') {
@@ -157,17 +150,18 @@ class KunenaAvatar
     }
 
     /**
+     * Function to get the Avatar image sizes
+     * 
      * @param   int  $sizex  sizex
      * @param   int  $sizey  sizey
      *
-     * @return  StdClass
-     *
-     * @throws  Exception
+     * @return  \StdClass
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
-    public function getSize($sizex = 90, $sizey = 90): StdClass
+    public function getSize($sizex = 90, $sizey = 90): \StdClass
     {
-        $size    = new StdClass();
+        $size    = new \StdClass();
         $size->x = \intval($sizex);
         $size->y = \intval($sizey);
 
@@ -182,14 +176,15 @@ class KunenaAvatar
     }
 
     /**
+     * Function to get the Avatar image for the user
+     * 
      * @param   KunenaUser  $user   user
      * @param   int         $sizex  sizex
      * @param   int         $sizey  sizey
      *
-     * @return string
-     *
+     * @return  string
      * @since   Kunena 6.0
-     * @throws \Exception
+     * @throws  \Exception
      */
     public function getURL(KunenaUser $user, $sizex = 90, int $sizey = 90): string
     {
@@ -207,6 +202,8 @@ class KunenaAvatar
     }
 
     /**
+     * Function to get the Avatar image for the user
+     * 
      * @param   KunenaUser  $user   user
      * @param   integer     $sizex  sizex
      * @param   integer     $sizey  sizey

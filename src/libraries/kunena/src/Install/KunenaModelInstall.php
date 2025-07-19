@@ -401,7 +401,6 @@ class KunenaModelInstall extends BaseDatabaseModel
         // Uninstall all plugins.
         $this->uninstallPlugin('kunena', 'community');
         $this->uninstallPlugin('kunena', 'comprofiler');
-        $this->uninstallPlugin('kunena', 'easyprofile');
         $this->uninstallPlugin('kunena', 'easysocial');
         $this->uninstallPlugin('kunena', 'gravatar');
         $this->uninstallPlugin('kunena', 'joomla');

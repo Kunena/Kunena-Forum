@@ -155,11 +155,6 @@ function delete-ExistingKunenaDir {
         Remove-Item -LiteralPath $path9 -Force -Recurse
     }
     
-    $path10 = $joomlaInstallDir + "\plugins\kunena\easyprofile"
-    if (Test-Path -Path $path10) {
-        Remove-Item -LiteralPath $path10 -Force -Recurse
-    }
-    
     $path11 = $joomlaInstallDir + "\plugins\kunena\easysocial"
     if (Test-Path -Path $path11) {
         Remove-Item -LiteralPath $path11 -Force -Recurse
@@ -230,9 +225,6 @@ function make-SymLinksKunena {
     $path8 = $joomlaInstallDir + "\plugins\kunena\comprofiler"
     $target8 = $kunenaGitDir + "\src\plugins\plg_kunena_comprofiler"
     New-Item -ItemType SymbolicLink -Path $path8 -Target $target8
-    $path9 = $joomlaInstallDir + "\plugins\kunena\easyprofile"
-    $target9 = $kunenaGitDir + "\src\plugins\plg_kunena_easyprofile"
-    New-Item -ItemType SymbolicLink -Path $path9 -Target $target9
     $path10 = $joomlaInstallDir + "\plugins\kunena\easysocial"
     $target10 = $kunenaGitDir + "\src\plugins\plg_kunena_easysocial"
     New-Item -ItemType SymbolicLink -Path $path10 -Target $target10 

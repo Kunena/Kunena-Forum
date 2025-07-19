@@ -148,10 +148,6 @@ class PluginsController extends AdminController
                     if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easyblog/includes/easyblog.php')) {
                         $cids_exist[] = $plg->extension_id;
                     }
-                } elseif ($plg->element == 'easyprofile') {
-                    if (file_exists(JPATH_SITE . '/components/com_jsn/helpers/helper.php')) {
-                        $cids_exist[] = $plg->extension_id;
-                    }
                 } elseif ($plg->element == 'easysocial') {
                     if (file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php')) {
                         $cids_exist[] = $plg->extension_id;

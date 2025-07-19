@@ -416,12 +416,6 @@ workspace/kunena/build/tmp)
 			<fileset dir="${kunena.plugins}/plg_kunena_easyblog" />
 		</copy>
 		<copy
-			todir="${tmp_dir}/packages/plg_kunena_easyprofile"
-			overwrite="true">
-			<filterchain refid="filter" />
-			<fileset dir="${kunena.plugins}/plg_kunena_easyprofile" />
-		</copy>
-		<copy
 			todir="${tmp_dir}/packages/plg_kunena_easysocial"
 			overwrite="true">
 			<filterchain refid="filter" />
@@ -518,14 +512,6 @@ workspace/kunena/build/tmp)
 			overwrite="true">
 			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_easyblog">
-				<include name="**/*.xml" />
-			</fileset>
-		</copy>
-		<copy
-			todir="${tmp_dir}/packages/plg_kunena_easyprofile"
-			overwrite="true">
-			<filterchain refid="filter" />
-			<fileset dir="${project_dir}/plugins/plg_kunena_easyprofile">
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
@@ -741,15 +727,7 @@ workspace/kunena/build/tmp)
 			<property
 				name="base.directory"
 				value="${tmp_dir}/packages/plg_kunena_easyblog" />
-		</phingcall>
-		<phingcall target="archive">
-			<property
-				name="destination.file"
-				value="dist/package/distribution/packages/plg_kunena_easyprofile_v${xml.version}" />
-			<property
-				name="base.directory"
-				value="${tmp_dir}/packages/plg_kunena_easyprofile" />
-		</phingcall>
+		</phingcall>		
 		<phingcall target="archive">
 			<property
 				name="destination.file"

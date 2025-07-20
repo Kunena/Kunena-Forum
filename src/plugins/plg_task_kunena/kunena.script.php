@@ -1,9 +1,10 @@
 <?php
 
 /**
- * Kunena Package
+ * Kunena Plugin
  *
- * @package        Kunena.Package
+ * @package        Kunena.Plugins
+ * @subpackage     Task
  *
  * @copyright      Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -103,6 +104,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             return false;
         }
     }
+
     /**
      * Function to enable the Remove Expired bans task
      * 

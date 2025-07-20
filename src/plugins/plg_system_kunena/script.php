@@ -1,9 +1,10 @@
 <?php
 
 /**
- * Kunena Package
+ * Kunena System Plugin
  *
- * @package        Kunena.Package
+ * @package        Kunena.Plugins
+ * @subpackage     System
  *
  * @copyright      Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
  * @license        https://www.gnu.org/copyleft/gpl.html GNU/GPL

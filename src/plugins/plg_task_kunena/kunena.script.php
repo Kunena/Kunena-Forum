@@ -117,7 +117,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         $query = $db->createQuery()
             ->select('COUNT(*)')
             ->from($db->quoteName('#__scheduler_tasks'))
-            ->where($db->quoteName('type') . ' = ' . $db->quote('remove.exiredbans'));
+            ->where($db->quoteName('type') . ' = ' . $db->quote('remove.expiredbans'));
         $db->setQuery($query);
         $result = $db->loadResult();
 
@@ -136,7 +136,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
         $task  = [
             'title'           => 'Remove Expired Bans',
-            'type'            => 'remove.exiredbans',
+            'type'            => 'remove.expiredbans',
             'execution_rules' => [
                 'rule-type'      => 'interval-hours',
                 'interval-hours' => 1,

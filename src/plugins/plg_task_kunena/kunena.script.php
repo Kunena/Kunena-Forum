@@ -126,9 +126,6 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             return;
         }
 
-        // Get the plugin parameters
-        $params = new Registry();
-
         /** @var \Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent $component */
         $component = Factory::getApplication()->bootComponent('com_scheduler');
 

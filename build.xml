@@ -595,6 +595,14 @@ workspace/kunena/build/tmp)
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
+		<copy
+			todir="${tmp_dir}/packages/plg_task_kunena"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${project_dir}/plugins/plg_task_kunena">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
 		<echo message="Building Plugins..DONE!" />
 	</target>
 
@@ -816,6 +824,14 @@ workspace/kunena/build/tmp)
 			<property
 				name="base.directory"
 				value="${tmp_dir}/packages/plg_sampledata_kunena" />
+		</phingcall>
+		<phingcall target="archive">
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_task_kunena_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_task_kunena" />
 		</phingcall>
 		<!-- Process all packages to zip -->
 

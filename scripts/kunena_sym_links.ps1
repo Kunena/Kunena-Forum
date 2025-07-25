@@ -199,6 +199,11 @@ function delete-ExistingKunenaDir {
     if (Test-Path -Path $path19) {
         Remove-Item -LiteralPath $path19 -Force -Recurse
     }
+    
+    $path20 = $joomlaInstallDir + "\plugins\task\kunena"
+    if (Test-Path -Path $path20) {
+        Remove-Item -LiteralPath $path20 -Force -Recurse
+    }
 }
 
 # Create the symlinks only for Kunena component
@@ -255,6 +260,9 @@ function make-SymLinksKunena {
     $path19 = $joomlaInstallDir + "\media\kunena"
     $target19 = $kunenaGitDir + "\src\media\kunena"
     New-Item -ItemType SymbolicLink -Path $path19 -Target $target19
+    $path20 = $joomlaInstallDir + "\plugins\task\kunena"
+    $target20 = $kunenaGitDir + "\src\plugins\plg_task_kunena"
+    New-Item -ItemType SymbolicLink -Path $path20 -Target $target20
 }
 
 # Make synbolic links for Blue Eagle template

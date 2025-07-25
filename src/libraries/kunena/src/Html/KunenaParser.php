@@ -269,6 +269,7 @@ abstract class KunenaParser
         $txt = preg_replace('/\[tweet(.*?)\](.*?)\[\/tweet]/s', '', $txt);
         $txt = preg_replace('/\[instagram(.*?)\](.*?)\[\/instagram]/s', '', $txt);
         $txt = preg_replace('/\[soundcloud(.*?)\](.*?)\[\/soundcloud]/s', '', $txt);
+        $txt = preg_replace('/\[PRIVATE(.*?)\]/s', '', $txt);
 
         if (PluginHelper::isEnabled('content', 'emailcloak')) {
             $pattern     = "/[^@\s]*@[^@\s]*\.[^@\s]*/";

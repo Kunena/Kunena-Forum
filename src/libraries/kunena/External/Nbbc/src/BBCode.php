@@ -1353,6 +1353,10 @@ REGEX;
         $start = (int) $start;
         $end = (int) $end;
 
+        if ($start < 0 || $end < 0 || $start >= count($array) || $end >= count($array)) {
+            return '';
+        }
+
         if ($start < $end) {
             throw new InvalidArgumentException('Start must be greater than or equal to end');
         }

@@ -132,7 +132,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
         $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
         $task  = [
-            'title'           => 'Remove Expired Bans',
+            'title'           => 'Kunena - Remove Expired Bans',
             'type'            => 'remove.expiredbans',
             'execution_rules' => [
                 'rule-type'      => 'interval-hours',

@@ -1353,9 +1353,11 @@ REGEX;
         $start = (int) $start;
         $end = (int) $end;
 
+        // Added by Kunena team
         if ($start < 0 || $end < 0 || $start >= count($array) || $end >= count($array)) {
             return '';
         }
+        // End of part added by Kunena team
 
         if ($start < $end) {
             throw new InvalidArgumentException('Start must be greater than or equal to end');

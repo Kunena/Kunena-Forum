@@ -1,0 +1,32 @@
+{
+  "name": "kunena/kunena-forum",
+  "description": "Kunena Forum for joomla",
+  "homepage": "https://www.kunena.org",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kunena/Kunena-Forum.git"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.1.0"
+  },
+  "scripts": {
+    "cypress:install": "cypress install",
+    "cypress:open": "cypress open --config-file cypress.config.js",
+    "cypress:run": "cypress run --config-file cypress.config.js"
+  },
+  "browserslist": [
+    "last 2 major version",
+    "not ie < 11"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "cypress": "^14.5.3",
+    "joomla-cypress": "^1.3.1",
+    "mysql": "^2.18.1",
+    "smtp-tester": "^2.1.0",
+    "pg": "^8.16.3"
+  }
+}

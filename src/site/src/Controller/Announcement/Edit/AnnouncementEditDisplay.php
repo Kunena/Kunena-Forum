@@ -53,28 +53,51 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
      */
     protected function before()
     {
-        parent::before();
+        $result = parent::before();
+
+        if ($result === false) {
+            return false;
+        }
 
         $id = $this->input->getInt('id', null);
-
         $this->announcement = KunenaAnnouncementHelper::get($id);
+
+        if (!$this->announcement) {
+            throw new RuntimeException('Failed to load announcement');
+        }
+
         $this->announcement->tryAuthorise($id ? 'edit' : 'create');
 
         $Itemid = $this->input->getInt('Itemid');
-
         if (!$Itemid && $this->config->sefRedirect) {
-            $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = new KunenaController();
-            $controller = Factory::getApplication()->bootComponent('com_kunena')->getMVCFactory()->createController('kunena');
+            $itemid = KunenaRoute::fixMissingItemID();
 
-            if ($id) {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=edit&id={$id}&Itemid={$itemid}", false));
-            } else {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=create&Itemid={$itemid}", false));
+            try {
+                $component = Factory::getApplication()->bootComponent('com_kunena');
+                $factory = $component->getMVCFactory();
+                $controller = $factory->createController('kunena');
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'announcement',
+                    'layout' => $id ? 'edit' : 'create',
+                    'Itemid' => $itemid
+                ];
+
+                if ($id) {
+                    $params['id'] = $id;
+                }
+
+                $url = KunenaRoute::_($params, false);
+                $controller->setRedirect($url);
+                $controller->redirect();
+
+            } catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
-
-            $controller->redirect();
         }
+
+        return true;
     }
 
     /**

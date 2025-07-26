@@ -257,7 +257,7 @@ class HtmlView extends KunenaView
             }
 
             if ($view == 'announcement') {
-                $pathway->addItem(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'), KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=list"));
+                $pathway->addItem(Text::_('COM_KUNENA_ANN_ANNOUNCEMENTS'), KunenaRoute::normalize("index.php?option=com_kunena&view=announcement&layout=listing"));
             } elseif ($id) {
                 $topic = KunenaTopicHelper::get($id);
                 $pathway->addItem($this->escape($topic->subject), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));

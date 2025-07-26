@@ -65,25 +65,6 @@ class UserEditUserDisplay extends UserEditDisplay
         // Check if user is allowed to change his name.
         $this->changeUsername = $userParams->get('change_login_name', 1);
 
-        // Check to see if Frontend User Params have been enabled.
-        if ($userParams->get('frontend_userparams', 0)) {
-            $this->app->getLanguage()->load('com_users', JPATH_ADMINISTRATOR);
-
-            Form::addFormPath(JPATH_ROOT . '/components/com_users/forms');
-            Form::addFieldPath(JPATH_ROOT . '/components/com_users/models/fields');
-
-            PluginHelper::importPlugin('user');
-
-            $registry     = new Registry($this->user->params);
-            $form         = Form::getInstance('com_users.profile', 'frontend');
-            $data         = new StdClass();
-            $data->params = $registry->toArray();
-            $this->app->triggerEvent('onContentPrepareForm', [$form, $data]);
-
-            $form->bind($data);
-            $this->frontendForm = $form->getFieldset('params');
-        }
-
         $this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE');
     }
 

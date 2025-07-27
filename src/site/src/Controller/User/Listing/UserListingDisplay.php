@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\User\KunenaUserFinder;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentUserControllerListDisplay
@@ -101,10 +102,22 @@ class UserListingDisplay extends KunenaControllerDisplay
         $format = $this->input->getCmd('format');
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
-            $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = new KunenaController();
-            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&layout=list&Itemid={$itemid}", false));
-            $controller->redirect();
+            try {
+                $itemid = KunenaRoute::fixMissingItemID();
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'user',
+                    'layout' => 'list',
+                    'Itemid' => $itemid
+                ];
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+            }
+
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
+            }
         }
 
         // Exclude super admins.

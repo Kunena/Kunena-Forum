@@ -34,6 +34,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -111,37 +112,45 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
         $this->layout = $this->input->getInt('layout');
 
         if (!$Itemid && $this->config->sefRedirect) {
-            $controller = new KunenaController();
+            try {
+                if ($this->config->indexId) {
+                    $itemid = $this->config->indexId;
+                } else {
+                    $menu = $this->app->getMenu();
 
-            if ($this->config->indexId) {
-                $itemidfix = $this->config->indexId;
-            } else {
-                $menu = $this->app->getMenu();
+                    if ($view == 'home') {
+                        $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}"));
+                    } else {
+                        $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
+                    }
+
+                    $itemid = $getid->id;
+                }
+
+                if(!$itemid) {
+                    $itemid = KunenaRoute::fixMissingItemID();
+                }
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'category',
+                    'layout' => 'list',
+                    'Itemid' => $itemid
+                ];
 
                 if ($view == 'home') {
-                    $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}"));
-                } else {
-                    $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list"));
+                    if ($defaultmenu) {
+						$params['view'] = 'home';
+                        $params['defaultmenu'] = $defaultmenu;
+                    }
                 }
 
-                $itemidfix = $getid->id;
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
             }
 
-            if (!$itemidfix) {
-                $itemidfix = KunenaRoute::fixMissingItemID();
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
-
-            if ($view == 'home') {
-                if ($defaultmenu) {
-                    $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=home&defaultmenu={$defaultmenu}&Itemid={$itemidfix}", false));
-                } else {
-                    $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemidfix}", false));
-                }
-            } else {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&layout=list&Itemid={$itemidfix}", false));
-            }
-
-            $controller->redirect();
         }
 
         $this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));

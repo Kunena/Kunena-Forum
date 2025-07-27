@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentStatisticsControllerGeneralDisplay
@@ -102,10 +103,21 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
         $Itemid = $this->input->getInt('Itemid');
 
         if (!$Itemid && $this->config->sefRedirect) {
-            $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = new KunenaController();
-            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=statistics&Itemid={$itemid}", false));
-            $controller->redirect();
+            try {
+                $itemid = KunenaRoute::fixMissingItemID();
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'statistics',
+                    'Itemid' => $itemid
+                ];
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+            }
+
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
+            }
         }
 
         if (!$this->config->showStats) {
@@ -152,6 +164,7 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
             $params             = $menu_item->getParams();
             $params_title       = $params->get('page_title');
             $params_description = $params->get('menu-meta_description');
+            $params_robots      = $params->get('robots');
 
             if (!empty($params_title)) {
                 $title = $params->get('page_title');

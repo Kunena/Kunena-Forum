@@ -42,7 +42,7 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    protected function onSetPrivate(KunenaActivity $activity): KunenaActivity
+    protected function onSetActivity(KunenaActivity $activity): KunenaActivity
     {
         return $activity;
     }
@@ -53,7 +53,7 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
      * @return  KunenaActivity|array
      * @since   6.5.0
      */
-    public function getPrivate(): KunenaActivity|array
+    public function getActivity(): KunenaActivity|array
     {
         if (isset($this->arguments['activity']) && $this->arguments['activity'] instanceof KunenaActivity) {
             return $this->arguments['activity'];
@@ -68,7 +68,7 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
      * @return  $this
      * @since   6.5.0
      */
-    public function setPrivate(KunenaActivity $activity)
+    public function setActivity(KunenaActivity $activity)
     {
         return $this->setArgument('activity', $activity);
     }

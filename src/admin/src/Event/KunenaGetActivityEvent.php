@@ -19,6 +19,7 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
+use Kunena\Forum\Libraries\Activity\KunenaActivity;
 
 /**
  * Class for onKunenaGetActivity event.
@@ -31,4 +32,44 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
 {
     use ResultAware;
     use ResultTypeObjectAware;
+    
+    /**
+     * Setter for the object argument.
+     *
+     * @param   KunenaActivity  $value  The value to set
+     *
+     * @return  KunenaActivity
+     * @since   6.5.0
+     * @throws  \BadMethodCallException
+     */
+    protected function onSetPrivate(KunenaActivity $activity): KunenaActivity
+    {
+        return $activity;
+    }
+    
+    /**
+     * Getter for the data argument.
+     *
+     * @return  KunenaActivity|array
+     * @since   6.5.0
+     */
+    public function getPrivate(): KunenaActivity|array
+    {
+        if (isset($this->arguments['activity']) && $this->arguments['activity'] instanceof KunenaActivity) {
+            return $this->arguments['activity'];
+        }
+        
+        return $this->arguments['result'] ?? [];
+    }
+    
+    /**
+     * Setter for the data argument.
+     *
+     * @return  $this
+     * @since   6.5.0
+     */
+    public function setPrivate(KunenaActivity $activity)
+    {
+        return $this->setArgument('activity', $activity);
+    }
 }

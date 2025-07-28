@@ -12,8 +12,9 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
-use Kunena\Forum\Plugin\Kunena\Uddeim\KunenaPrivateUddeim;
+use Kunena\Forum\Administrator\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Plugin\Kunena\Uddeim\KunenaPrivateUddeim;
 
 /**
  * Class PlgKunenaUddeIM
@@ -55,10 +56,12 @@ class PlgKunenaUddeIM extends CMSPlugin
 	}
 
 	/**
-	 * @return KunenaPrivateUddeIM|null
+	 * Get Kunena private message integration object.
+	 * 
+	 * @return void
 	 * @since Kunena
 	 */
-	public function onKunenaGetPrivate()
+	public function onKunenaGetPrivate(KunenaGetPrivateEvent $event)
 	{
 	    if (!isset($this->params)) {
 	        return;
@@ -68,6 +71,6 @@ class PlgKunenaUddeIM extends CMSPlugin
 			return;
 		}
 
-		return new KunenaPrivateUddeim($this->params);
+		$event->setPrivate(new KunenaPrivateUddeim($this->params));
 	}
 }

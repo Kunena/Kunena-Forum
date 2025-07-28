@@ -19,6 +19,8 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Administrator\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
@@ -30,36 +32,33 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 class KunenaPrivate
 {
     /**
-     * @var     boolean
+     * @var     ?KunenaPrivate
      * @since   Kunena 6.0
      */
-    protected static $instance = false;
+    protected static ?KunenaPrivate $instance = \null;
 
     /**
-     * @param   null  $integration  integration
-     *
-     * @return  boolean|KunenaPrivate
-     *
-     * @throws  Exception
+     * Function to get the active KunenaPrivate instance from the integration
+     * 
+     * @return  KunenaPrivate
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
-    public static function getInstance($integration = null)
+    public static function getInstance(): KunenaPrivate
     {
-        if (self::$instance === false) {
+        if (\null === self::$instance) {
             PluginHelper::importPlugin('kunena');
 
-            $classes = Factory::getApplication()->triggerEvent('onKunenaGetPrivate');
+            $privateEvent = new KunenaGetPrivateEvent('onKunenaGetPrivate'); 
+            Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetPrivate', $privateEvent);
 
-            foreach ($classes as $class) {
-                if (!\is_object($class)) {
-                    continue;
-                }
-
-                self::$instance = $class;
-                break;
-            }
-
-            if (!self::$instance) {
+            $private = $privateEvent->getPrivate();
+            
+            if ($private instanceof KunenaPrivate) {
+                self::$instance = $private;
+            } elseif (\is_array($private) && $private[0] instanceof KunenaPrivate) {
+                self::$instance = $private[0];
+            } else {
                 self::$instance = new self();
             }
         }
@@ -68,6 +67,8 @@ class KunenaPrivate
     }
 
     /**
+     * Show the icon of the link for private
+     * 
      * @param   integer  $userid  userid
      *
      * @return  string
@@ -133,6 +134,8 @@ class KunenaPrivate
     }
 
     /**
+     * Show a new icon when there are new items in inbox
+     * 
      * @param   integer  $userid  userid
      * @param   string   $class   class
      * @param   string   $icon    icon
@@ -182,6 +185,8 @@ class KunenaPrivate
     }
 
     /**
+     * Get the number of unread items
+     * 
      * @param   integer  $userid  userid
      *
      * @return  integer

@@ -17,8 +17,8 @@ use CBLib\Core\CBLib;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Plugin\PluginHelper;
 use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Administrator\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -224,11 +224,11 @@ class PlgKunenaComprofiler extends CMSPlugin
     /**
      * Get Kunena private message integration object.
      *
-     * @return  KunenaPrivateComprofiler|void
+     * @return  void
      *
      * @since   Kunena 6.0
      */
-    public function onKunenaGetPrivate()
+    public function onKunenaGetPrivate(KunenaGetPrivateEvent $event)
     {
         global $_PLUGINS;
 
@@ -244,7 +244,7 @@ class PlgKunenaComprofiler extends CMSPlugin
             return;
         }
 
-        return new KunenaPrivateComprofiler($this->params);
+        $event->setPivate(new KunenaPrivateComprofiler($this->params));
     }
 
     /**

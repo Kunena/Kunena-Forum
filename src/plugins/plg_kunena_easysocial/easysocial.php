@@ -19,6 +19,7 @@
 defined('_JEXEC') or die('Unauthorized Access');
 
 use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Administrator\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaAvatarEasySocial;
@@ -131,11 +132,11 @@ class PlgKunenaEasySocial extends EasySocialPlugins
     /**
      * Get Kunena private message integration object.
      *
-     * @return  KunenaPrivateEasySocial
+     * @return  void
      *
      * @since   Kunena 6.0
      */
-    public function onKunenaGetPrivate()
+    public function onKunenaGetPrivate(KunenaGetPrivateEvent $event)
     {
         if (!isset($this->params)) {
             return;
@@ -145,7 +146,7 @@ class PlgKunenaEasySocial extends EasySocialPlugins
             return;
         }
 
-        return new KunenaPrivateEasySocial($this->params);
+        $event->setPrivate(new KunenaPrivateEasySocial($this->params));
     }
 
     /**

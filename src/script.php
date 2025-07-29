@@ -47,7 +47,7 @@ return new class () implements ServiceProviderInterface {
                      * @var    string
                      * @since  6.0.0
                      */
-                    protected $minimumJoomla = '5.2.6';
+                    protected $minimumJoomla = '5.3.2';
                     
                     /**
                      * List of supported versions. Newest version first!
@@ -64,6 +64,7 @@ return new class () implements ServiceProviderInterface {
                             '0'   => '8.2.0', // Preferred version
                         ],
                         'MySQL'   => [
+                            '9.4' => '9.4.0',
                             '9.3' => '9.3.0',
                             '9.2' => '9.2.0',
                             '9.1' => '9.1.0',
@@ -102,7 +103,7 @@ return new class () implements ServiceProviderInterface {
                             '5.2' => '5.2.6',
                             '5.1' => '5.1.4',
                             '5.0' => '5.0.3',
-                            '0' => '5.2.6',  // Preferred version
+                            '0' => '5.3.2',  // Preferred version
                         ],
                     ];
                     
@@ -629,23 +630,6 @@ return new class () implements ServiceProviderInterface {
                             }
                             
                             return true;
-                    }
-                    
-                    private function deleteUnexistingFiles()
-                    {
-                        $files = [];  // overwrite this line with your files to delete
-                        
-                        if (empty($files)) {
-                            return;
-                        }
-                        
-                        foreach ($files as $file) {
-                            try {
-                                File::delete(JPATH_ROOT . $file);
-                            } catch (\FilesystemException $e) {
-                                echo Text::sprintf('FILES_JOOMLA_ERROR_FILE_FOLDER', $file) . '<br>';
-                            }
-                        }
                     }
             }
             );

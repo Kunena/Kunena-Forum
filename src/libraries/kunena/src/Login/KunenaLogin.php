@@ -21,6 +21,7 @@ use Joomla\CMS\Helper\AuthenticationHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Component\Users\Administrator\Helper\UsersHelper;
 use Joomla\Component\Users\Administrator\Model\UserModel;
+use Kunena\Forum\Administrator\Event\KunenaGetLoginEvent;
 
 /**
  * Class KunenaLogin
@@ -50,7 +51,9 @@ class KunenaLogin
     {
         PluginHelper::importPlugin('kunena');
 
-        $classes = Factory::getApplication()->triggerEvent('onKunenaGetLogin');
+        $loginEvent = new KunenaGetLoginEvent('onKunenaGetLogin');
+        $classes = Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetLogin', $loginEvent);
+        $classes = $loginEvent->getLogin();
 
         foreach ($classes as $class) {
             if (!\is_object($class)) {

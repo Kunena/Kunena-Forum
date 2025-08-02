@@ -20,11 +20,12 @@ use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
+use Kunena\Forum\Plugin\Kunena\Joomla\KunenaAccessJoomla;
 
 /**
  * Class for onKunenaGetAccessControl event.
  * Example:
- *  new KunenaGetAccessControlEvent('onKunenaGetAvatar', []);
+ *  new KunenaGetAccessControlEvent('onKunenaGetAccessControl', []);
  *
  * @since  6.5.0
  */
@@ -53,10 +54,8 @@ class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements Resu
      * @return  KunenaAvatar|array
      * @since   6.5.0
      */
-    public function getAccessControl()
+    public function getAccessControl(): array
     {
-        
-
         return $this->arguments['result'] ?? [];
     }
 

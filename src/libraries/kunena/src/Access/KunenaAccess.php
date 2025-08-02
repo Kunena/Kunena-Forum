@@ -106,10 +106,10 @@ class KunenaAccess
     public function __construct()
     {
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        PluginHelper::importPlugin('kunena', 'joomla');
+        PluginHelper::importPlugin('kunena','joomla');
 
         $accessControlEvent = new KunenaGetAccessControlEvent('onKunenaGetAccessControl');
-        $classes = Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetAccessControl', $accessControlEvent);
+        Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetAccessControl', $accessControlEvent);
         $classes = $accessControlEvent->getAccessControl();
 
         foreach ($classes as $class) {

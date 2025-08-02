@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Administrator\Event\KunenaGetAccessControlEvent;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -105,9 +106,11 @@ class KunenaAccess
     public function __construct()
     {
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        PluginHelper::importPlugin('kunena');
+        PluginHelper::importPlugin('kunena', 'joomla');
 
-        $classes = Factory::getApplication()->triggerEvent('onKunenaGetAccessControl');
+        $accessControlEvent = new KunenaGetAccessControlEvent('onKunenaGetAccessControl');
+        $classes = Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetAccessControl', $accessControlEvent);
+        $classes = $accessControlEvent->getAccessControl();
 
         foreach ($classes as $class) {
             if (!\is_object($class)) {

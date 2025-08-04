@@ -25,6 +25,7 @@ use Kunena\Forum\Plugin\Kunena\Community\KunenaAvatarCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaLoginCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaPrivateCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaProfileCommunity;
+use Kunena\Forum\Administrator\Event\KunenaGetActivityEvent;
 
 /**
  * Class PlgKunenaCommunity
@@ -165,11 +166,10 @@ class PlgKunenaCommunity extends CMSPlugin
     /**
      * Get Kunena activity stream integration object.
      *
-     * @return  KunenaActivityCommunity|null|void
-     * @throws Exception
+     * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetActivity()
+    public function onKunenaGetActivity(KunenaGetActivityEvent $event)
     {
         if (!isset($this->params)) {
             return;
@@ -179,6 +179,6 @@ class PlgKunenaCommunity extends CMSPlugin
             return;
         }
 
-        return new KunenaActivityCommunity($this->params);
+        $event->setPrivate(new KunenaActivityCommunity($this->params));
     }
 }

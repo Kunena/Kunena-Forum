@@ -17,6 +17,7 @@ use CBLib\Core\CBLib;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Kunena\Forum\Administrator\Event\KunenaGetActivityEvent;
 use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Administrator\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
@@ -250,12 +251,11 @@ class PlgKunenaComprofiler extends CMSPlugin
     /**
      * Get Kunena activity stream integration object.
      *
-     * @return  KunenaActivityComprofiler|void
+     * @return void
      *
-     * @throws Exception
      * @since   Kunena 6.0
      */
-    public function onKunenaGetActivity()
+    public function onKunenaGetActivity(KunenaGetActivityEvent $event)
     {
         if (!isset($this->params)) {
             return;
@@ -265,6 +265,6 @@ class PlgKunenaComprofiler extends CMSPlugin
             return;
         }
 
-        return new KunenaActivityComprofiler($this->params);
+        $event->setActivity(new KunenaActivityComprofiler($this->params));
     }
 }

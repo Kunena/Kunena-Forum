@@ -125,8 +125,8 @@ class MiscDisplay extends Display
 
         if (!$Itemid) {
             try {
-                if ($this->config->custom_id) {
-                    $itemid = $this->config->custom_id;
+                if ($this->config->customId) {
+                    $itemid = $this->config->customId;
                 } else {
                     $menu      = $this->app->getMenu();
                     $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
@@ -145,7 +145,6 @@ class MiscDisplay extends Display
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
             }
-
             catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }

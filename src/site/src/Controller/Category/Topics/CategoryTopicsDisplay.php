@@ -31,6 +31,7 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -108,10 +109,22 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         $format     = $this->input->getCmd('format');
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
-            $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = new KunenaController();
-            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
-            $controller->redirect();
+            try {
+                $itemid = KunenaRoute::fixMissingItemID();
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'category',
+                    'catid' => $catid,
+                    'Itemid' => $itemid
+                ];
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+            }
+
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
+            }
         }
 
         if ($limit < 1 || $limit > 100) {
@@ -155,13 +168,6 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         }
 
         list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
-
-        if ($limitstart > 1 && !$this->topics) {
-            $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = new KunenaController();
-            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&Itemid={$itemid}", false));
-            $controller->redirect();
-        }
 
         if ($this->total > 0) {
             // Collect user ids for avatar prefetch when integrated.
@@ -293,6 +299,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         if ($menu_item) {
             $params             = $menu_item->getParams();
             $params_description = $params->get('menu-meta_description');
+            $params_title       = $params->get('page_title');
             $params_robots      = $params->get('robots');
 
             if (!empty($params_title)) {

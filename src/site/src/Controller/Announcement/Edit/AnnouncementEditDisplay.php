@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentAnnouncementControllerEditDisplay
@@ -45,7 +46,7 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
     /**
      * Prepare announcement form display.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  null
      * @throws  Exception
@@ -69,13 +70,10 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
         $this->announcement->tryAuthorise($id ? 'edit' : 'create');
 
         $Itemid = $this->input->getInt('Itemid');
-        if (!$Itemid && $this->config->sefRedirect) {
-            $itemid = KunenaRoute::fixMissingItemID();
 
+        if (!$Itemid && $this->config->sefRedirect) {
             try {
-                $component = Factory::getApplication()->bootComponent('com_kunena');
-                $factory = $component->getMVCFactory();
-                $controller = $factory->createController('kunena');
+                $itemid = KunenaRoute::fixMissingItemID();
 
                 $params = [
                     'option' => 'com_kunena',
@@ -88,11 +86,10 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
                     $params['id'] = $id;
                 }
 
-                $url = KunenaRoute::_($params, false);
-                $controller->setRedirect($url);
-                $controller->redirect();
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+            }
 
-            } catch (Exception $e) {
+            catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }

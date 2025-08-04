@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentKunenaControllerApplicationMiscDisplay
@@ -123,21 +124,31 @@ class MiscDisplay extends Display
         $Itemid       = $this->input->getInt('Itemid');
 
         if (!$Itemid) {
-            if ($this->config->customId) {
-                $itemidfix = $this->config->customId;
-            } else {
-                $menu      = $this->app->getMenu();
-                $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
-                $itemidfix = $getid->id;
+            try {
+                if ($this->config->custom_id) {
+                    $itemid = $this->config->custom_id;
+                } else {
+                    $menu      = $this->app->getMenu();
+                    $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=misc"));
+                    $itemid    = $getid->id;
+                }
+
+                if (!$itemid) {
+                    $itemid = KunenaRoute::fixMissingItemID();
+                }
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'misc',
+                    'Itemid' => $itemid
+                ];
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
             }
 
-            if (!$itemidfix) {
-                $itemidfix = KunenaRoute::fixMissingItemID();
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
-
-            $controller = new KunenaController();
-            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=misc&Itemid={$itemidfix}", false));
-            $controller->redirect();
         }
 
         $body   = $params->get('body');

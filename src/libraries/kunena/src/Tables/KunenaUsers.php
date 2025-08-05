@@ -273,6 +273,14 @@ class KunenaUsers extends KunenaTable
      * @since   Kunena 6.4
      */
     public $socials = null;
+    
+    /**
+    * social
+    *
+    * @var     string
+    * @since   Kunena 6.5
+    */
+    public $language = null;
 
     /**
      * Indicates that columns fully support the NULL value in the database

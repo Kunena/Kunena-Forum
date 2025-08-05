@@ -78,6 +78,7 @@ use stdClass;
  * @property    int     $userListtime
  * @property    int     $thankyou
  * @property    string  $ip
+ * @property    string  $language
  * From Joomla users table
  * @property    string  $name
  * @property    string  $username
@@ -310,6 +311,12 @@ class KunenaUser
      * @since   Kunena 6.4
      */
     public $socials;
+    
+    /**
+     * @var     string
+     * @since   Kunena 6.5
+     */
+    public $language;
 
     /**
      * @var     null
@@ -1079,6 +1086,7 @@ class KunenaUser
             'userListtime' => $this->userListtime,
             'thankyou'     => $this->thankyou,
             'ip'           => $this->ip,
+            'language'     => $this->language,
         ];
 
         $table->bind($properties);

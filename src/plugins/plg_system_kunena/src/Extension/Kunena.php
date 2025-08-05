@@ -16,6 +16,7 @@ namespace Kunena\Forum\Plugin\System\Kunena\Extension;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Event\User\AfterLoginEvent;
 use Joomla\CMS\Event\User\AfterSaveEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -24,6 +25,7 @@ use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Joomla\CMS\User\User;
 
 /**
  * Class Kunena
@@ -59,6 +61,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
         if ($app->isClient('site') || $app->isClient('administrator')) {
             $mapping['onUserAfterSave'] = 'onUserAfterSave';
+            $mapping['onUserAfterLogin'] = 'onUserAfterLogin';
 
             if ($app->isClient('site')) {
                 // Only allowed in the frontend
@@ -101,5 +104,52 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             $kuser = KunenaFactory::getUser(\intval($user['id']));
             $kuser->save();
         }
+    }
+    
+    /**
+     * Save the language of the user in the table users of Kunena
+     *
+     * @param   AfterLoginEvent  $event  The event instance
+     * @return string
+     * @since   Kunena 6.5
+     */
+    public function onUserAfterLogin(AfterLoginEvent $event): void
+    {
+        if (
+            !ComponentHelper::isEnabled('com_kunena')
+            || !KunenaForum::isCompatible('6.4')
+            || !KunenaForum::installed()
+        ) {
+            return;
+        }
+        
+        if (!($this->getApplication()->isClient('site'))) {
+            return;
+        }
+        
+        $options = $event->getOptions(); 
+        $kuser = KunenaFactory::getUser(\intval($options['user']->id));
+        $kuser->language = $this->getUserDefaultLanguage($options['user']->params);
+        
+        $kuser->save();
+    }
+    
+    /**
+     * Get the user language defined in his Joomla! profile 
+     * 
+     * @param User $user
+     * @return string
+     * @since   Kunena 6.5
+     */
+    protected function getUserDefaultLanguage($params)
+    {    
+        if (!empty($params)) {            
+            $userParams = json_decode($params);
+            $language = $userParams->language;
+        } else {
+            $language = Factory::getApplication()->getLanguage()->getTag();
+        }
+        
+        return $language;
     }
 }

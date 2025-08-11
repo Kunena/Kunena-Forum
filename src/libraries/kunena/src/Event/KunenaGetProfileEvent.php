@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Administrator\Event;
+namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
@@ -19,57 +19,57 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
-use Kunena\Forum\Libraries\Integration\KunenaPrivate;
+use Kunena\Forum\Libraries\Integration\KunenaProfile;
 
 /**
- * Class for onKunenaGetPrivate event.
+ * Class for onKunenaGetProfile event.
  * Example:
- *  new KunenaGetPrivateEvent('onKunenaGetPrivate', []);
+ *  new KunenaGetProfileEvent('onKunenaGetProfile', []);
  *
  * @since  6.5.0
  */
-class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwareInterface
+class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwareInterface
 {
     use ResultAware;
     use ResultTypeObjectAware;
-    
+
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaPrivate  $value  The value to set
+     * @param   KunenaProfile  $value  The value to set
      *
-     * @return  KunenaPrivate
+     * @return  KunenaProfile
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    protected function onSetPrivate(KunenaPrivate $private): KunenaPrivate
+    protected function onSetProfile(KunenaProfile $profile): KunenaProfile
     {
-        return $private;
+        return $profile;
     }
-    
+
     /**
      * Getter for the data argument.
      *
-     * @return  KunenaPrivate|array
+     * @return  KunenaProfile|array
      * @since   6.5.0
      */
-    public function getPrivate(): KunenaPrivate|array
+    public function getProfile(): KunenaProfile|array
     {
-        if (isset($this->arguments['private']) && $this->arguments['private'] instanceof KunenaPrivate) {
-            return $this->arguments['private'];
+        if (isset($this->arguments['profile']) && $this->arguments['profile'] instanceof KunenaProfile) {
+            return $this->arguments['profile'];
         }
-        
+
         return $this->arguments['result'] ?? [];
     }
-    
+
     /**
      * Setter for the data argument.
      *
      * @return  $this
      * @since   6.5.0
      */
-    public function setPrivate(KunenaPrivate $private)
+    public function setProfile(KunenaProfile $profile)
     {
-        return $this->setArgument('private', $private);
+        return $this->setArgument('profile', $profile);
     }
 }

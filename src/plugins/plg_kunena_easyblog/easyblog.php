@@ -13,8 +13,8 @@
 
 defined('_JEXEC') or die();
 
-use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
-use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
 /**

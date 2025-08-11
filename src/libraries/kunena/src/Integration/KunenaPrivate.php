@@ -19,8 +19,8 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
-use Kunena\Forum\Administrator\Event\KunenaGetPrivateEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
@@ -49,11 +49,11 @@ class KunenaPrivate
         if (\null === self::$instance) {
             PluginHelper::importPlugin('kunena');
 
-            $privateEvent = new KunenaGetPrivateEvent('onKunenaGetPrivate'); 
+            $privateEvent = new KunenaGetPrivateEvent('onKunenaGetPrivate');
             Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetPrivate', $privateEvent);
 
             $private = $privateEvent->getPrivate();
-            
+
             if ($private instanceof KunenaPrivate) {
                 self::$instance = $private;
             } elseif (\is_array($private) && $private[0] instanceof KunenaPrivate) {

@@ -18,10 +18,10 @@
 
 defined('_JEXEC') or die('Unauthorized Access');
 
-use Kunena\Forum\Administrator\Event\KunenaGetActivityEvent;
-use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
-use Kunena\Forum\Administrator\Event\KunenaGetPrivateEvent;
-use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaAvatarEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaProfileEasySocial;

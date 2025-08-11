@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Administrator\Event;
+namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
@@ -22,13 +22,13 @@ use Joomla\CMS\Event\Result\ResultTypeObjectAware;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 
 /**
- * Class for onKunenaGetProfile event.
+ * Class for onKunenaGetLogin event.
  * Example:
- *  new KunenaGetProfileEvent('onKunenaGetProfile', []);
+ *  new KunenaGetLoginEvent('onKunenaGetLogin', []);
  *
  * @since  6.5.0
  */
-class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwareInterface
+class KunenaGetLoginEvent extends AbstractImmutableEvent implements ResultAwareInterface
 {
     use ResultAware;
     use ResultTypeObjectAware;
@@ -42,23 +42,19 @@ class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwar
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    protected function onSetProfile(KunenaProfile $profile): KunenaProfile
+    /*protected function onSetProfile(KunenaProfile $profile): KunenaProfile
     {
         return $profile;
-    }
+    }*/
 
     /**
      * Getter for the data argument.
      *
-     * @return  KunenaProfile|array
+     * @return  array
      * @since   6.5.0
      */
-    public function getProfile(): KunenaProfile|array
+    public function getLogin(): array
     {
-        if (isset($this->arguments['profile']) && $this->arguments['profile'] instanceof KunenaProfile) {
-            return $this->arguments['profile'];
-        }
-
         return $this->arguments['result'] ?? [];
     }
 
@@ -68,8 +64,8 @@ class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwar
      * @return  $this
      * @since   6.5.0
      */
-    public function setProfile(KunenaProfile $profile)
+    /*public function setProfile(KunenaProfile $profile)
     {
         return $this->setArgument('profile', $profile);
-    }
+    }*/
 }

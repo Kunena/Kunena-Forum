@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Administrator\Event;
+namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
@@ -32,7 +32,7 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
 {
     use ResultAware;
     use ResultTypeObjectAware;
-    
+
     /**
      * Setter for the object argument.
      *
@@ -46,7 +46,7 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
     {
         return $activity;
     }
-    
+
     /**
      * Getter for the data argument.
      *
@@ -58,10 +58,10 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
         if (isset($this->arguments['activity']) && $this->arguments['activity'] instanceof KunenaActivity) {
             return $this->arguments['activity'];
         }
-        
+
         return $this->arguments['result'] ?? [];
     }
-    
+
     /**
      * Setter for the data argument.
      *

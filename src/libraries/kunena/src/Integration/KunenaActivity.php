@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\Integration;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
-use Kunena\Forum\Administrator\Event\KunenaGetActivityEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 
 /**
  * Class KunenaIntegrationActivity
@@ -52,7 +52,7 @@ class KunenaActivity
         Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetActivity', $activityEvent);
 
         $classes = $activityEvent->getActivity();
-        
+
         foreach ($classes as $class) {
             if (!\is_object($class)) {
                 continue;

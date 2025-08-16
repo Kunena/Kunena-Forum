@@ -21,7 +21,7 @@ use Joomla\CMS\Helper\AuthenticationHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Component\Users\Administrator\Helper\UsersHelper;
 use Joomla\Component\Users\Administrator\Model\UserModel;
-use Kunena\Forum\Administrator\Event\KunenaGetLoginEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetLoginEvent;
 
 /**
  * Class KunenaLogin

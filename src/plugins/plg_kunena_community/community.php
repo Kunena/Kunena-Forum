@@ -15,9 +15,9 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
-use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
-use Kunena\Forum\Administrator\Event\KunenaGetPrivateEvent;
-use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaAccessCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaActivityCommunity;
@@ -25,7 +25,7 @@ use Kunena\Forum\Plugin\Kunena\Community\KunenaAvatarCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaLoginCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaPrivateCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaProfileCommunity;
-use Kunena\Forum\Administrator\Event\KunenaGetActivityEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 
 /**
  * Class PlgKunenaCommunity

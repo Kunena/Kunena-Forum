@@ -14,7 +14,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Plugin\CMSPlugin;
-use Kunena\Forum\Administrator\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Gravatar\KunenaAvatarGravatar;
 

@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Administrator\Event;
+namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
@@ -20,16 +20,15 @@ use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
-use Kunena\Forum\Plugin\Kunena\Joomla\KunenaAccessJoomla;
 
 /**
- * Class for onKunenaGetAccessControl event.
+ * Class for onKunenaGetAvatar event.
  * Example:
- *  new KunenaGetAccessControlEvent('onKunenaGetAccessControl', []);
+ *  new KunenaGetAvatarEvent('onKunenaGetAvatar', []);
  *
  * @since  6.5.0
  */
-class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements ResultAwareInterface
+class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAwareInterface
 {
     use ResultAware;
     use ResultTypeObjectAware;
@@ -43,10 +42,10 @@ class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements Resu
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    /*protected function onSetAvatar(KunenaAvatar $avatar): KunenaAvatar
+    protected function onSetAvatar(KunenaAvatar $avatar): KunenaAvatar
     {
         return $avatar;
-    }*/
+    }
 
     /**
      * Getter for the data argument.
@@ -54,8 +53,12 @@ class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements Resu
      * @return  KunenaAvatar|array
      * @since   6.5.0
      */
-    public function getAccessControl(): array
+    public function getAvatar(): KunenaAvatar|array
     {
+        if (isset($this->arguments['avatar']) && $this->arguments['avatar'] instanceof KunenaAvatar) {
+            return $this->arguments['avatar'];
+        }
+
         return $this->arguments['result'] ?? [];
     }
 
@@ -65,8 +68,8 @@ class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements Resu
      * @return  $this
      * @since   6.5.0
      */
-    /*public function setAvatar(KunenaAvatar $avatar)
+    public function setAvatar(KunenaAvatar $avatar)
     {
         return $this->setArgument('avatar', $avatar);
-    }*/
+    }
 }

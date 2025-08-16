@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\Integration;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Administrator\Event\KunenaGetProfileEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;

@@ -841,6 +841,7 @@ abstract class KunenaRoute
         }
 
         $app = KunenaFactory::getApplication();
+        $input = $app->getInput();
 
         self::$menus   = $app->getMenu();
         self::$menu    = self::$menus->getMenu();
@@ -863,7 +864,7 @@ abstract class KunenaRoute
         }
 
         // If values are both in GET and POST, they are only stored in POST
-        $post = $app->input->post->getArray([]);
+        $post = $input->post->getArray([]);
 
         foreach ($post as $key => $value) {
             if (\in_array($key, ['view', 'layout', 'task']) && !preg_match('/[^a-zA-Z0-9_.]/i', $value)) {
@@ -872,7 +873,7 @@ abstract class KunenaRoute
         }
 
         // Make sure that request URI is not broken
-        $get = $app->input->get->getArray([]);
+        $get = $input->get->getArray([]);
 
         foreach ($get as $key => $value) {
             if (preg_match('/[^a-zA-Z]/', $key)) {

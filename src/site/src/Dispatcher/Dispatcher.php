@@ -91,7 +91,7 @@ class Dispatcher extends ComponentDispatcher
         KunenaUserSocials::addSocialsParams();
 
         $app   = Factory::getApplication();
-        $input = $app->input;
+        $input = $app->getInput();
         $input->set('limitstart', $input->getInt('limitstart', $input->getInt('start')));
         $view    = $input->getWord('func', $input->getWord('view', 'home'));
         $subview = $input->getWord('layout', 'default');

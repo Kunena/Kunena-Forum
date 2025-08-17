@@ -88,6 +88,18 @@ class KunenaTemplate
      * @since   Kunena 6.0
      */
     public $config = null;
+    
+    /**
+     * @var     KunenaConfig
+     * @since   Kunena 6.0
+     */
+    public $app = null;
+    
+    /**
+     * @var     KunenaConfig
+     * @since   Kunena 6.0
+     */
+    public $input = null;
 
     /**
      * @var     array
@@ -246,6 +258,8 @@ class KunenaTemplate
     public function __construct($name = null)
     {
         $this->config = KunenaFactory::getConfig();
+        $this->app = KunenaFactory::getApplication();
+        $this->input = $this->app->getInput();
 
         if (!$name) {
             $name = $this->config->template;
@@ -312,9 +326,9 @@ class KunenaTemplate
         // Set lookup paths.
         $this->pathTypes += $this->isHmvc() ? $this->pathTypeDefaults : $this->pathTypeOld;
 
-        $view = Factory::getApplication()->input->get('option');
+        $view = $this->input->get('option');
 
-        if ($view == 'com_kunena' && Factory::getApplication()->isClient('site')) {
+        if ($view == 'com_kunena' && $this->app->isClient('site')) {
             // Set active class on menu item alias.
             if ($this->config->activeMenuItem) {
                 $id = htmlspecialchars($this->config->activeMenuItem, ENT_COMPAT, 'UTF-8');
@@ -357,11 +371,9 @@ class KunenaTemplate
      */
     public function isHmvc()
     {
-        $app = KunenaFactory::getApplication();
-
         if (\is_null($this->hmvc)) {
-            if (is_dir(JPATH_THEMES . "/{$app->getTemplate()}/com_kunena/pages")) {
-                $this->hmvc = is_dir(JPATH_THEMES . "/{$app->getTemplate()}/com_kunena/pages");
+            if (is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages")) {
+                $this->hmvc = is_dir(JPATH_THEMES . "/{$this->app->getTemplate()}/com_kunena/pages");
             } else {
                 $this->hmvc = is_dir(KPATH_SITE . "/template/{$this->name}/pages");
             }
@@ -383,8 +395,7 @@ class KunenaTemplate
      */
     public function addScriptDeclaration(string $content, $type = 'text/javascript')
     {
-        $app    = Factory::getApplication();
-        $format = $app->input->getCmd('format');
+        $format = $this->input->getCmd('format');
 
         if (!empty($format) && $format != 'html') {
             return false;
@@ -407,10 +418,11 @@ class KunenaTemplate
      */
     public static function getInstance($name = null)
     {
-        $app = KunenaFactory::getApplication();
-
+        $app   = Factory::getApplication();
+        $input = $app->getInput();
+        
         if (!$name) {
-            $name = $app->input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
+            $name = $input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
         }
 
         $name = KunenaPath::clean($name);
@@ -835,8 +847,7 @@ HTML;
      */
     public function addStyleSheet(string $filename, $group = 'forum')
     {
-        $app    = Factory::getApplication();
-        $format = $app->input->getCmd('format');
+        $format = $this->input->getCmd('format');
 
         if (!empty($format) && $format != 'html') {
             return;
@@ -903,8 +914,7 @@ HTML;
      */
     public function addScssSheet(string $filename)
     {
-        $app    = Factory::getApplication();
-        $format = $app->input->getCmd('format');
+        $format = $this->input->getCmd('format');
 
         if (!empty($format) && $format != 'html') {
             return;
@@ -925,8 +935,7 @@ HTML;
      */
     public function addStyleDeclaration(string $style)
     {
-        $app    = Factory::getApplication();
-        $format = $app->input->getCmd('format');
+        $format = $this->app->input->getCmd('format');
 
         if (!empty($format) && $format != 'html') {
             return false;
@@ -1023,8 +1032,7 @@ HTML;
      */
     public function addScriptOptions(string $key, $options, $merge = true)
     {
-        $app    = Factory::getApplication();
-        $format = $app->input->getCmd('format');
+        $format = $this->input->getCmd('format');
 
         if (!empty($format) && $format != 'html') {
             return false;
@@ -1056,8 +1064,6 @@ HTML;
      */
     public function getTemplatePaths($path = '', $fullpath = false): array
     {
-        $app = KunenaFactory::getApplication();
-
         if ($path) {
             $path = KunenaPath::clean("/$path");
         }
@@ -1066,7 +1072,7 @@ HTML;
 
         foreach (array_reverse($this->default) as $template) {
             $array[] = ($fullpath ? KPATH_SITE : KPATH_COMPONENT_RELATIVE) . "/template/" . $template . $path;
-            $array[] = ($fullpath ? JPATH_ROOT : JPATH_SITE) . "/templates/{$app->getTemplate()}/html/com_kunena" . $path;
+            $array[] = ($fullpath ? JPATH_ROOT : JPATH_SITE) . "/templates/{$this->app->getTemplate()}/html/com_kunena" . $path;
         }
 
         foreach (array_reverse($this->paths) as $template) {
@@ -1860,8 +1866,7 @@ HTML;
      */
     public function addScript(string $filename, $options = [], $attribs = [])
     {
-        $app    = Factory::getApplication();
-        $format = $app->input->getCmd('format');
+        $format = $this->input->getCmd('format');
 
         if (!empty($format) && $format != 'html') {
             return false;

@@ -107,7 +107,7 @@ class KunenaController extends BaseController
         }
 
         if (empty($this->input)) {
-            $this->input = $this->app->input;
+            $this->input = $this->app->getInput();
         }
 
         parent::__construct($config, $factory, $app, $input);
@@ -135,7 +135,7 @@ class KunenaController extends BaseController
             return $instance;
         }
 
-        $input = Factory::getApplication()->input;
+        $input = Factory::getApplication()->getInput();
 
         $app     = Factory::getApplication();
         $command = $input->get('task', 'display');
@@ -149,7 +149,7 @@ class KunenaController extends BaseController
             $input->set('task', $task);
         } else {
             // Base controller.
-            $view = strtolower(Factory::getApplication()->input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
+            $view = strtolower($input->getWord('view', $app->isClient('administrator') ? 'cpanel' : 'home'));
         }
 
         // Set the name for the controller and instantiate it.

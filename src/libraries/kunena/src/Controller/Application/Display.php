@@ -277,7 +277,7 @@ class Display extends KunenaControllerDisplay
 
         // Remove base and add canonical link.
         $this->document->setBase('');
-        $kinput     = Factory::getApplication()->input;
+        $kinput     = $this->app->getInput();
         $limitstart = $kinput->getInt('limitstart', 0);
 
         if (!$limitstart) {

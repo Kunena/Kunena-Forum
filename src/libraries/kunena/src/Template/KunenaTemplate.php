@@ -16,6 +16,7 @@ namespace Kunena\Forum\Libraries\Template;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
@@ -24,6 +25,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
+use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use KunenaScssPhp\ScssPhp\Compiler;
 use KunenaScssPhp\ScssPhp\OutputStyle;
@@ -90,14 +92,14 @@ class KunenaTemplate
     public $config = null;
     
     /**
-     * @var     KunenaConfig
-     * @since   Kunena 6.0
+     * @var     SiteApplication
+     * @since   Kunena 6.5
      */
     public $app = null;
     
     /**
-     * @var     KunenaConfig
-     * @since   Kunena 6.0
+     * @var     Input
+     * @since   Kunena 6.5
      */
     public $input = null;
 
@@ -935,7 +937,7 @@ HTML;
      */
     public function addStyleDeclaration(string $style)
     {
-        $format = $this->app->input->getCmd('format');
+        $format = $this->input->getCmd('format');
 
         if (!empty($format) && $format != 'html') {
             return false;

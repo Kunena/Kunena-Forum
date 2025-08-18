@@ -207,7 +207,7 @@ class KunenaBase extends KunenaLayoutBase
             throw $e;
         }
 
-        $format   =  Factory::getApplication()->input->getWord('format', 'html');
+        $format   =  Factory::getApplication()->getInput()->getWord('format', 'html');
 
         if ($this->debug && $format == 'html') {
             $output = trim($output);

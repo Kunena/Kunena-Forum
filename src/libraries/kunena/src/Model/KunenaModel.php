@@ -97,7 +97,7 @@ class KunenaModel extends BaseDatabaseModel
         $this->app    = Factory::getApplication();
         $this->me     = KunenaUserHelper::getMyself();
         $this->config = KunenaFactory::getConfig();
-        $this->input  = $this->app->input;
+        $this->input  = $this->app->getInput();
     }
 
     /**

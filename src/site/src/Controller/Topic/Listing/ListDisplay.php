@@ -72,6 +72,8 @@ abstract class ListDisplay extends KunenaControllerDisplay
     public $categorylist;
 
     public $topic;
+    
+    public $input;
 
     /**
      * @var     string
@@ -142,6 +144,8 @@ abstract class ListDisplay extends KunenaControllerDisplay
         // Todo: fix params
         $this->catParams    = ['sections' => 1, 'catid' => 0];
         $this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-select fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
+        
+        $this->input = $this->app->getInput();
 
         // Run events.
         $params = new Registry();

@@ -13,7 +13,6 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -27,8 +26,8 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 $cols            = !empty($this->actions) ? 6 : 7;
 $colspan         = !empty($this->actions) ? 4 : 3;
-$view            = Factory::getApplication()->input->getWord('view');
-$layout          = Factory::getApplication()->input->getWord('layout');
+$view            = $this->input->getWord('view');
+$layout          = $this->input->getWord('layout');
 $this->ktemplate = KunenaFactory::getTemplate();
 $social          = $this->ktemplate->params->get('socialshare');
 $me              = KunenaUserHelper::getMyself();

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+<extension
+    type="plugin"
+    group="kunena"
+    method="upgrade">
     <name>plg_kunena_joomla</name>
     <version>@kunenaversion@</version>
     <creationDate>@kunenaversiondate@</creationDate>
@@ -10,27 +13,35 @@
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_JOOMLA_INTEGRATION_DESCRIPTION</description>
-    <namespace>Kunena\Forum\Plugin\Kunena\Joomla</namespace>
+    <namespace path="src">Kunena\Forum\Plugin\Kunena\Joomla</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
-        <filename plugin="joomla">joomla.php</filename>
-        <filename>KunenaAccessJoomla.php</filename>
-        <filename>KunenaLoginJoomla.php</filename>
+        <filename>joomla.xml</filename>
         <folder>language</folder>
+        <folder plugin="joomla">src</folder>
+        <folder>services</folder>
     </files>
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="access" type="list" default="1" label="PLG_KUNENA_JOOMLA_ACCESS"
-                       description="PLG_KUNENA_JOOMLA_ACCESS_DESC"
-                       class="inputbox">
+                <field
+                    name="access"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_JOOMLA_ACCESS"
+                    description="PLG_KUNENA_JOOMLA_ACCESS_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="login" type="list" default="1" label="PLG_KUNENA_JOOMLA_LOGIN"
-                       description="PLG_KUNENA_JOOMLA_LOGIN_DESC"
-                       class="inputbox">
+                <field
+                    name="login"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_JOOMLA_LOGIN"
+                    description="PLG_KUNENA_JOOMLA_LOGIN_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>

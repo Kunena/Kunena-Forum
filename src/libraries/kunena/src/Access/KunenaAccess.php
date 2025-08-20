@@ -35,6 +35,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Plugin\Kunena\Joomla\Helper\KunenaAccessJoomla;
 
 /**
  * Class KunenaAccess
@@ -112,18 +113,25 @@ class KunenaAccess
         Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetAccessControl', $accessControlEvent);
         $classes = $accessControlEvent->getAccessControl();
 
-        foreach ($classes as $class) {
-            if (!\is_object($class)) {
-                continue;
+        if ($classes instanceof KunenaAccessJoomla) {
+            $class = $classes;
+        } elseif (\is_array($classes)) {
+            foreach ($classes as $class) {
+                if ($class instanceof KunenaAccessJoomla) {
+                    break;
+                }
             }
+        } else {
+            // Throw error as we do not have nay class to work with
+        }
 
-            $types                      = $class->getAccessTypes();
-            $this->accesstypes['all'][] = $class;
-            unset($types['all']);
+        /** @var KunenaAccessJoomla $class */
+        $types                      = $class->getAccessTypes();
+        $this->accesstypes['all'][] = $class;
+        unset($types['all']);
 
-            foreach ($types as $type) {
-                $this->accesstypes[$type][] = $class;
-            }
+        foreach ($types as $type) {
+            $this->accesstypes[$type][] = $class;
         }
 
         // If values were not cached (or users permissions have been changed), force reload

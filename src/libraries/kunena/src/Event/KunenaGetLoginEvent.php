@@ -19,7 +19,7 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
-use Kunena\Forum\Libraries\Integration\KunenaProfile;
+use Kunena\Forum\Plugin\Kunena\Joomla\Helper\KunenaLoginJoomla;
 
 /**
  * Class for onKunenaGetLogin event.
@@ -36,25 +36,29 @@ class KunenaGetLoginEvent extends AbstractImmutableEvent implements ResultAwareI
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaProfile  $value  The value to set
+     * @param   KunenaLoginJoomla  $value  The value to set
      *
-     * @return  KunenaProfile
+     * @return  KunenaLoginJoomla
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    /*protected function onSetProfile(KunenaProfile $profile): KunenaProfile
+    protected function onSetLogin(KunenaLoginJoomla $login): KunenaLoginJoomla
     {
-        return $profile;
-    }*/
+        return $login;
+    }
 
     /**
      * Getter for the data argument.
      *
-     * @return  array
+     * @return  KunenaLoginJoomla|array
      * @since   6.5.0
      */
-    public function getLogin(): array
+    public function getLogin(): KunenaLoginJoomla|array
     {
+        if (isset($this->arguments['login']) && $this->arguments['login'] instanceof KunenaLoginJoomla) {
+            return $this->arguments['login'];
+        }
+
         return $this->arguments['result'] ?? [];
     }
 
@@ -64,8 +68,8 @@ class KunenaGetLoginEvent extends AbstractImmutableEvent implements ResultAwareI
      * @return  $this
      * @since   6.5.0
      */
-    /*public function setProfile(KunenaProfile $profile)
+    public function setLogin(KunenaLoginJoomla $login)
     {
-        return $this->setArgument('profile', $profile);
-    }*/
+        return $this->setArgument('login', $login);
+    }
 }

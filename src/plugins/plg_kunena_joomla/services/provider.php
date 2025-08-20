@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Kunena Kunena Plugin
+ * Kunena Joomla Plugin
  *
  * @package         Kunena.Plugins
  * @subpackage      Kunena
@@ -19,7 +19,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Kunena\Forum\Plugin\Kunena\Kunena\Extension\Kunena;
+use Kunena\Forum\Plugin\Kunena\Joomla\Extension\Joomla;
 
 return new class implements ServiceProviderInterface
 {
@@ -37,8 +37,8 @@ return new class implements ServiceProviderInterface
             PluginInterface::class,
             function (Container $container) {
                 $subject = $container->get(DispatcherInterface::class);
-                $config  = (array) PluginHelper::getPlugin('kunena', 'kunena');
-                $plugin  = new Kunena($config);
+                $config  = (array) PluginHelper::getPlugin('kunena', 'joomla');
+                $plugin  = new Joomla($config);
 
                 $plugin->traitSetDispatcher($subject);
                 $plugin->setApplication(Factory::getApplication());

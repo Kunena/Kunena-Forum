@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Joomla;
+namespace Kunena\Forum\Plugin\Kunena\Joomla\Helper;
 
 \defined('_JEXEC') or die();
 
@@ -87,20 +87,32 @@ class KunenaAccessJoomla
             $groupname  = (string) $this->getGroupName($category->accesstype, $category->pubAccess);
             $accessname = Text::sprintf($category->pubRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? Text::_((string) $groupname) : Text::_('COM_KUNENA_NOBODY'));
 
-            $list["joomla.group.{$category->pubAccess}"] = ['type'  => 'joomla.group', 'id' => $category->pubAccess, 'alias' => $accessname,
-                                                            'title' => $accessname, ];
+            $list["joomla.group.{$category->pubAccess}"] = [
+                'type'  => 'joomla.group',
+                'id' => $category->pubAccess,
+                'alias' => $accessname,
+                'title' => $accessname,
+            ];
 
             $groupname = (string) $this->getGroupName((string) $category->accesstype, (string) $category->adminAccess);
 
             if ($groupname && $category->pubAccess != $category->adminAccess) {
                 $accessname                                    = Text::sprintf($category->adminRecurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', Text::_((string) $groupname));
-                $list["joomla.group.{$category->adminAccess}"] = ['type'  => 'joomla.group', 'id' => $category->adminAccess, 'alias' => $accessname,
-                                                                'title' => $accessname, ];
+                $list["joomla.group.{$category->adminAccess}"] = [
+                    'type'  => 'joomla.group',
+                    'id' => $category->adminAccess,
+                    'alias' => $accessname,
+                    'title' => $accessname,
+                ];
             }
         } else {
             $groupname                                = (string) $this->getGroupName($category->accesstype, $category->access);
-            $list["joomla.level.{$category->access}"] = ['type'  => 'joomla.level', 'id' => $category->access, 'alias' => $groupname,
-                                                        'title' => $groupname, ];
+            $list["joomla.level.{$category->access}"] = [
+                'type'  => 'joomla.level',
+                'id' => $category->access,
+                'alias' => $groupname,
+                'title' => $groupname,
+            ];
         }
 
         return $list;
@@ -162,33 +174,33 @@ class KunenaAccessJoomla
         $html = [];
 
         if (!$accesstype || $accesstype == 'joomla.level') {
-            $html ['joomla-level']['access'] = [
+            $html['joomla-level']['access'] = [
                 'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_TITLE'),
                 'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC') . '<br /><br />' . Text::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC_J25'),
                 'input' => HTMLHelper::_('access.assetgrouplist', 'access', $category->accesstype == 'joomla.level' ? $category->access : 1),
             ];
 
             if (!$category->isSection()) {
-                $html ['joomla-level']['post']  = [
+                $html['joomla-level']['post']  = [
                     'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
                     'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
                     'input' => HTMLHelper::_(
-                    	'access.usergroup',
-                    	'params-joomla-level[access_post][]',
-                    	$category->params->get('access_post', [2, 6, 8]),
-                    	'multiple="multiple" class="inputbox form-select" size="10"',
-                    	false
+                        'access.usergroup',
+                        'params-joomla-level[access_post][]',
+                        $category->params->get('access_post', [2, 6, 8]),
+                        'multiple="multiple" class="inputbox form-select" size="10"',
+                        false
                     ),
                 ];
-                $html ['joomla-level']['reply'] = [
+                $html['joomla-level']['reply'] = [
                     'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
                     'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
                     'input' => HTMLHelper::_(
-                    	'access.usergroup',
-                    	'params-joomla-level[access_reply][]',
-                    	$category->params->get('access_reply', [2, 6, 8]),
-                    	'multiple="multiple" class="inputbox form-select" size="10"',
-                    	false
+                        'access.usergroup',
+                        'params-joomla-level[access_reply][]',
+                        $category->params->get('access_reply', [2, 6, 8]),
+                        'multiple="multiple" class="inputbox form-select" size="10"',
+                        false
                     ),
                 ];
             }
@@ -196,10 +208,10 @@ class KunenaAccessJoomla
 
         if (!$accesstype || $accesstype == 'joomla.group') {
             $yesno    = [];
-            $yesno [] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
-            $yesno [] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
+            $yesno[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+            $yesno[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
 
-            $html ['joomla-group']['pubAccess'] = [
+            $html['joomla-group']['pubAccess'] = [
                 'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_TITLE'),
                 'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC') . '<br /><br />' .
                     Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC2') . '<br /><br />' .
@@ -207,12 +219,12 @@ class KunenaAccessJoomla
                 'input' => HTMLHelper::_('access.usergroup', 'pubAccess', $category->pubAccess, 'class="form-select" multiple size="10"', false),
             ];
 
-            $html ['joomla-group']['pubRecurse']  = [
+            $html['joomla-group']['pubRecurse']  = [
                 'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_TITLE'),
                 'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_DESC'),
                 'input' => HTMLHelper::_('select.genericlist', $yesno, 'pubRecurse', 'class="form-select" size="1"', 'value', 'text', $category->pubRecurse),
             ];
-            $html ['joomla-group']['adminAccess'] = [
+            $html['joomla-group']['adminAccess'] = [
                 'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_TITLE'),
                 'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC') . '<br /><br />' .
                     Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC2') . '<br /><br />' .
@@ -220,33 +232,33 @@ class KunenaAccessJoomla
                 'input' => HTMLHelper::_('access.usergroup', 'adminAccess', $category->adminAccess, 'class="form-select" multiple size="10"', false),
             ];
 
-            $html ['joomla-group']['adminRecurse'] = [
+            $html['joomla-group']['adminRecurse'] = [
                 'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_TITLE'),
                 'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_DESC'),
                 'input' => HTMLHelper::_('select.genericlist', $yesno, 'adminRecurse', 'class="form-select" size="1"', 'value', 'text', $category->adminRecurse),
             ];
 
             if (!$category->isSection()) {
-                $html ['joomla-group']['post']  = [
+                $html['joomla-group']['post']  = [
                     'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
                     'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
                     'input' => HTMLHelper::_(
-                    	'access.usergroup',
-                    	'params-joomla-group[access_post][]',
-                    	$category->params->get('access_post', [2, 6, 8]),
-                    	'multiple="multiple" class="form-select" multiple size="10"',
-                    	false
+                        'access.usergroup',
+                        'params-joomla-group[access_post][]',
+                        $category->params->get('access_post', [2, 6, 8]),
+                        'multiple="multiple" class="form-select" multiple size="10"',
+                        false
                     ),
                 ];
-                $html ['joomla-group']['reply'] = [
+                $html['joomla-group']['reply'] = [
                     'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
                     'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
                     'input' => HTMLHelper::_(
-                    	'access.usergroup',
-                    	'params-joomla-group[access_reply][]',
-                    	$category->params->get('access_reply', [2, 6, 8]),
-                    	'multiple="multiple" class="form-select" multiple size="10"',
-                    	false
+                        'access.usergroup',
+                        'params-joomla-group[access_reply][]',
+                        $category->params->get('access_reply', [2, 6, 8]),
+                        'multiple="multiple" class="form-select" multiple size="10"',
+                        false
                     ),
                 ];
             }
@@ -494,9 +506,9 @@ class KunenaAccessJoomla
             // Check against Joomla user groups
             $public = $this->getUsersByGroup($category->pubAccess, $category->pubRecurse, $userids);
             $admin  = $category->adminAccess && $category->adminAccess != $category->pubAccess ? $this->getUsersByGroup(
-            	$category->adminAccess,
-            	$category->adminRecurse,
-            	$userids
+                $category->adminAccess,
+                $category->adminRecurse,
+                $userids
             ) : [];
             $allow  = array_merge($public, $admin);
         }

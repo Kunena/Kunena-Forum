@@ -15,7 +15,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
-use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 
 /**
@@ -39,7 +38,7 @@ class plgKunenaJoomlaInstallerScript extends InstallerScript
      * @var    string
      * @since  5.4.0
      */
-    protected $minimumPhp = '7.2.5';
+    protected $minimumPhp = '8.1';
 
     /**
      * Minimum Joomla! version required to install the extension
@@ -47,7 +46,7 @@ class plgKunenaJoomlaInstallerScript extends InstallerScript
      * @var    string
      * @since  6.0.0
      */
-    protected $minimumJoomla = '4.0.0-dev';
+    protected $minimumJoomla = '5.3.2';
 
     /**
      * List of required PHP extensions.
@@ -56,29 +55,6 @@ class plgKunenaJoomlaInstallerScript extends InstallerScript
      * @since Kunena
      */
     protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
-
-    /**
-     * @var  Joomla\CMS\Application\CMSApplication  Holds the application object
-     *
-     * @since   Kunena 6.0
-     */
-    protected $app;
-
-    /**
-     * Database object
-     *
-     * @var    DatabaseDriver
-     *
-     * @since   4.0.0
-     */
-    protected $db;
-
-    /**
-     * @var  string  During an update, it will be populated with the old release version
-     *
-     * @since   Kunena 6.0
-     */
-    private $oldRelease;
 
     /**
      * method to run after an install/update/uninstall method
@@ -95,20 +71,42 @@ class plgKunenaJoomlaInstallerScript extends InstallerScript
     {
         $type = strtolower($type);
 
-        if ($type == 'install' || $type == 'discover_install') {
+        if ($type === 'install' || $type === 'discover_install') {
             $this->enablePlugin('plg_kunena_joomla');
         }
     }
 
     /**
-     * method to enable the plugin
+     * Function called before extension installation/update/removal procedure commences
      *
-     * @param   string  $pluginName  The name of plugin to enable
+     * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
+     * @param   InstallerAdapter  $parent  The class calling this method
+     *
+     * @return  boolean  True on success
+     * @since   Kunena 6.5
+     */
+    public function preflight($type, $parent): bool
+    {
+        if (!parent::preflight($type, $parent)) {
+            return false;
+        }
+
+        // Delete kunena.php
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/joomla/joomla.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/joomla/KunenaAccessKunena.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/joomla/KunenaLoginKunena.php';
+        $this->removeFiles();
+
+        return true;
+    }
+
+    /**
+     * @param $pluginName
      *
      * @return boolean|false
-     * @since version
+     * @since  version
      */
-    public function enablePlugin($pluginName)
+    public function enablePlugin(string $pluginName): bool
     {
         // Create a new db object.
         $db    = Factory::getContainer()->get('DatabaseDriver');
@@ -128,5 +126,7 @@ class plgKunenaJoomlaInstallerScript extends InstallerScript
         } catch (ExecutionFailureException $e) {
             return false;
         }
+
+        return true;
     }
 }

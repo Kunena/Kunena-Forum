@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Joomla;
+namespace Kunena\Forum\Plugin\Kunena\Joomla\Helper;
 
 \defined('_JEXEC') or die();
 

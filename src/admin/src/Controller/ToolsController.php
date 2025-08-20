@@ -35,7 +35,7 @@ use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Plugin\Kunena\Joomla\KunenaLoginJoomla;
+use Kunena\Forum\Plugin\Kunena\Joomla\Helper\KunenaLoginJoomla;
 use Joomla\Registry\Registry;
 use RuntimeException;
 use StdClass;
@@ -195,15 +195,15 @@ class ToolsController extends FormController
 
         if ($trashDelete) {
             $this->app->enqueueMessage(
-            	"" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
+                "" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
                     . Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS'),
-            	'success'
+                'success'
             );
         } else {
             $this->app->enqueueMessage(
-            	"" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
+                "" . Text::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $pruneDays . " "
                     . Text::_('COM_KUNENA_PRUNEDAYS') . "; " . Text::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . Text::_('COM_KUNENA_PRUNETHREADS'),
-            	'success'
+                'success'
             );
         }
 
@@ -241,7 +241,7 @@ class ToolsController extends FormController
 
             // TODO: need to find a way to make this query working with DatabaseQuery
             $db->setQuery(
-            	"INSERT INTO #__kunena_users (userid, showOnline)
+                "INSERT INTO #__kunena_users (userid, showOnline)
 				SELECT a.id AS userid, 1 AS showOnline
 				FROM #__users AS a
 				LEFT JOIN #__kunena_users AS b ON b.userid=a.id
@@ -264,7 +264,7 @@ class ToolsController extends FormController
 
             // TODO: need to find a way to make this query working with DatabaseQuery
             $db->setQuery(
-            	"DELETE a
+                "DELETE a
 				FROM #__kunena_users AS a
 				LEFT JOIN #__users AS b ON a.userid=b.id
 				WHERE b.username IS NULL"
@@ -395,13 +395,13 @@ class ToolsController extends FormController
 
         if (!Session::checkToken()) {
             $this->setResponse(
-            	[
+                [
                     'success' => false,
                     'header'  => 'An Error Occurred',
                     'message' => 'Please see more details below.',
                     'error'   => Text::_('COM_KUNENA_ERROR_TOKEN'),
                 ],
-            	$ajax
+                $ajax
             );
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
@@ -443,14 +443,14 @@ class ToolsController extends FormController
         $token    = Session::getFormToken() . '=1';
         $redirect = KunenaRoute::_("{$this->baseurl}&task=tools.doRecount&i={$state->reload}&{$token}", false);
         $this->setResponse(
-        	[
+            [
                 'success' => true,
                 'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
                 'header'  => Text::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
                 'message' => $msg,
                 'href'    => $redirect,
             ],
-        	$ajax
+            $ajax
         );
     }
 
@@ -501,13 +501,13 @@ class ToolsController extends FormController
 
         if (!Session::checkToken('request')) {
             $this->setResponse(
-            	[
+                [
                     'success' => false,
                     'header'  => Text::_('COM_KUNENA_AJAX_ERROR'),
                     'message' => Text::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
                     'error'   => Text::_('COM_KUNENA_ERROR_TOKEN'),
                 ],
-            	$ajax
+                $ajax
             );
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
@@ -532,8 +532,8 @@ class ToolsController extends FormController
                             KunenaTopicHelper::recount(false, $state->start, $state->start + $count);
                             $state->start += $count;
                             $msg          = Text::sprintf(
-                            	'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
-                            	round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
+                                'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
+                                round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
                             );
                         }
                         break;
@@ -543,8 +543,8 @@ class ToolsController extends FormController
                             KunenaTopicUserHelper::recount(false, $state->start, $state->start + $count);
                             $state->start += $count;
                             $msg          = Text::sprintf(
-                            	'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
-                            	round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
+                                'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
+                                round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
                             );
                         }
                         break;
@@ -577,13 +577,13 @@ class ToolsController extends FormController
                         $msg    = Text::_('COM_KUNENA_AJAX_REQUESTED_RECOUNTED');
                         $this->app->setUserState('com_kunena.admin.recount', null);
                         $this->setResponse(
-                        	[
+                            [
                                 'success' => true,
                                 'status'  => '100%',
                                 'header'  => $header,
                                 'message' => $msg,
                             ],
-                        	$ajax
+                            $ajax
                         );
                         $this->setRedirect(KunenaRoute::_($this->baseurl, false), $header);
 
@@ -610,28 +610,28 @@ class ToolsController extends FormController
             }
 
             $this->setResponse(
-            	[
+                [
                     'success' => false,
                     'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
                     'header'  => Text::_('COM_KUNENA_AJAX_ERROR'),
                     'message' => Text::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
                     'error'   => $e->getMessage(),
                 ],
-            	$ajax
+                $ajax
             );
         }
 
         $token    = Session::getFormToken() . '=1';
         $redirect = KunenaRoute::_("{$this->baseurl}&task=tools.doRecount&i={$state->reload}&{$token}", false);
         $this->setResponse(
-        	[
+            [
                 'success' => true,
                 'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
                 'header'  => Text::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
                 'message' => $msg,
                 'href'    => $redirect,
             ],
-        	$ajax
+            $ajax
         );
     }
 

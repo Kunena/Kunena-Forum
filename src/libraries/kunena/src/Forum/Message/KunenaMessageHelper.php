@@ -76,8 +76,8 @@ abstract class KunenaMessageHelper
 
         foreach ($ids as $id) {
             // TODO: authorisation needs topics to be loaded, make sure that they are! (performance increase)
-            if (!empty(self::$_instances [$id]) && self::$_instances [$id]->isAuthorised($authorise, null)) {
-                $list [$id] = self::$_instances [$id];
+            if (!empty(self::$_instances[$id]) && self::$_instances[$id]->isAuthorised($authorise, null)) {
+                $list[$id] = self::$_instances[$id];
             }
         }
 
@@ -98,7 +98,7 @@ abstract class KunenaMessageHelper
         foreach ($ids as $i => $id) {
             $id = \intval($id);
 
-            if (!$id || isset(self::$_instances [$id])) {
+            if (!$id || isset(self::$_instances[$id])) {
                 unset($ids[$i]);
             }
         }
@@ -126,9 +126,9 @@ abstract class KunenaMessageHelper
             if (isset($results[$id])) {
                 $instance = new KunenaMessage($results[$id]);
                 $instance->exists(true);
-                self::$_instances [$id] = $instance;
+                self::$_instances[$id] = $instance;
             } else {
-                self::$_instances [$id] = null;
+                self::$_instances[$id] = null;
             }
         }
 
@@ -222,7 +222,7 @@ abstract class KunenaMessageHelper
             foreach ($results as $id => $result) {
                 $instance = new KunenaMessage($result);
                 $instance->exists(true);
-                self::$_instances [$id]             = $instance;
+                self::$_instances[$id]             = $instance;
                 $list[$orderbyid ? $id : $location] = $instance;
                 $location                           += $order;
             }
@@ -257,7 +257,7 @@ abstract class KunenaMessageHelper
         $user        = isset($params['user']) ? $params['user'] : false;
         $where       = isset($params['where']) ? (string) $params['where'] : '';
         $childforums = isset($params['childforums']) ? (bool) $params['childforums'] : false;
-        $view        = Factory::getApplication()->input->getCmd('view');
+        $view        = Factory::getApplication()->getInput()->getCmd('view');
 
         if ($limit < 1 && empty($params['nolimit'])) {
             if ($view == 'search') {
@@ -391,7 +391,7 @@ abstract class KunenaMessageHelper
             foreach ($results as $result) {
                 $instance = new KunenaMessage($result);
                 $instance->exists(true);
-                self::$_instances [$instance->id] = $instance;
+                self::$_instances[$instance->id] = $instance;
                 $messages[$instance->id]          = $instance;
             }
         }
@@ -427,11 +427,11 @@ abstract class KunenaMessageHelper
             }
         }
 
-        if (!isset(self::$_location [$mesid])) {
+        if (!isset(self::$_location[$mesid])) {
             self::loadLocation([$mesid]);
         }
 
-        $location = self::$_location [$mesid];
+        $location = self::$_location[$mesid];
         $count    = 0;
 
         foreach ($location->hold as $meshold => $values) {
@@ -510,10 +510,10 @@ abstract class KunenaMessageHelper
                 $id = (int) $id;
             }
 
-            if (!isset(self::$_location [$id])) {
+            if (!isset(self::$_location[$id])) {
                 $ids[$id]                    = $id;
-                self::$_location [$id]       = new stdClass();
-                self::$_location [$id]->hold = ['before' => 0, 'after' => 0];
+                self::$_location[$id]       = new stdClass();
+                self::$_location[$id]->hold = ['before' => 0, 'after' => 0];
             }
         }
 
@@ -525,7 +525,7 @@ abstract class KunenaMessageHelper
         $db     = Factory::getContainer()->get('DatabaseDriver');
         $query  = $db->createQuery();
         $query->select(
-        	'm.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
+            'm.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
 				SUM(mm.time<m.time) AS before_count,
 				SUM(mm.time>m.time) AS after_count'
         )
@@ -543,13 +543,13 @@ abstract class KunenaMessageHelper
 
         if (!empty($results)) {
             foreach ($results as $result) {
-                $instance = self::$_location [$result->id];
+                $instance = self::$_location[$result->id];
 
                 if (!isset($instance->id)) {
                     $instance->id                    = $result->id;
                     $instance->category_id           = $result->category_id;
                     $instance->topic_id              = $result->topic_id;
-                    self::$_location [$instance->id] = $instance;
+                    self::$_location[$instance->id] = $instance;
                 }
 
                 $instance->hold[$result->hold] = ['before' => $result->before_count, 'after' => $result->after_count];

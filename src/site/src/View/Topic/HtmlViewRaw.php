@@ -39,19 +39,19 @@ class KunenaViewTopic extends KunenaView
      */
     public function displayEdit($tpl = null)
     {
-        $body     = Factory::getApplication()->input->post->get('body', '', 'raw');
+        $body     = Factory::getApplication()->getInput()->post->get('body', '', 'raw');
         $response = [];
 
         if ($this->me->exists() || $this->config->pubWrite) {
             $msgbody              = KunenaParser::parseBBCode($body, $this);
-            $response ['preview'] = $msgbody;
+            $response['preview'] = $msgbody;
         }
 
         // Set the MIME type and header for JSON output.
         $this->document->setMimeEncoding('application/json');
         Factory::getApplication()->setHeader(
-        	'Content-Disposition',
-        	'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
+            'Content-Disposition',
+            'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
         );
         Factory::getApplication()->sendHeaders();
 
@@ -73,7 +73,7 @@ class KunenaViewTopic extends KunenaView
         $response = [];
 
         if ($this->me->exists()) {
-            $search = $this->app->input->get('search');
+            $search = $this->app->getInput()->get('search');
 
             $db     = Factory::getContainer()->get('DatabaseDriver');
             $kquery = $db->createQuery();
@@ -98,8 +98,8 @@ class KunenaViewTopic extends KunenaView
         // Set the MIME type and header for JSON output.
         $this->document->setMimeEncoding('application/json');
         Factory::getApplication()->setHeader(
-        	'Content-Disposition',
-        	'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
+            'Content-Disposition',
+            'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
         );
         Factory::getApplication()->sendHeaders();
 
@@ -116,7 +116,7 @@ class KunenaViewTopic extends KunenaView
      */
     public function displayTopicIcons()
     {
-        $catid = $this->app->input->getInt('catid', 0);
+        $catid = $this->app->getInput()->getInt('catid', 0);
 
         $category        = KunenaCategoryHelper::get($catid);
         $categoryIconset = $category->iconset;
@@ -195,7 +195,7 @@ class KunenaViewTopic extends KunenaView
     public function displayCategorytemplatetext($tpl = null)
     {
         $app      = Factory::getApplication();
-        $catid    = $this->app->input->getInt('catid', 0);
+        $catid    = $this->app->getInput()->getInt('catid', 0);
 
         $category = KunenaCategoryHelper::get($catid);
 

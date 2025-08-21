@@ -89,10 +89,10 @@ class TopicController extends KunenaController
     public function __construct($config = [])
     {
         parent::__construct($config);
-        $this->catid  = $this->app->input->getInt('catid', 0);
-        $this->return = $this->app->input->getInt('return', $this->catid);
-        $this->id     = $this->app->input->getInt('id', 0);
-        $this->mesid  = $this->app->input->getInt('mesid', 0);
+        $this->catid  = $this->app->getInput()->getInt('catid', 0);
+        $this->return = $this->app->getInput()->getInt('return', $this->catid);
+        $this->id     = $this->app->getInput()->getInt('id', 0);
+        $this->mesid  = $this->app->getInput()->getInt('mesid', 0);
     }
 
     /**
@@ -324,7 +324,7 @@ class TopicController extends KunenaController
             KunenaUserHelper::getMyself()->userid == $userid || KunenaUserHelper::getMyself()->isAdmin()
             || KunenaUserHelper::getMyself()->isModerator()
         ) {
-            $editor_text = $this->app->input->get->get('editor_text', '', 'raw');
+            $editor_text = $this->app->getInput()->get->get('editor_text', '', 'raw');
 
             $success['text_prepared'] = $instance->removeBBCodeInMessage($editor_text);
 
@@ -359,7 +359,7 @@ class TopicController extends KunenaController
      */
     public function categorytemplate()
     {
-        $catid    = $this->app->input->getInt('catid', 0);
+        $catid    = $this->app->getInput()->getInt('catid', 0);
 
         $category = KunenaCategoryHelper::get($catid);
 
@@ -391,7 +391,7 @@ class TopicController extends KunenaController
     {
         $user = $this->app->getIdentity();
 
-        $topicid  = $this->app->input->get('topic_id', 0, 'int');
+        $topicid  = $this->app->getInput()->get('topic_id', 0, 'int');
 
         if ($user->id == 0 || KunenaTopicHelper::get($topicid)->first_post_userid == $this->me->userid) {
             $response = KunenaRateHelper::getSelected($topicid);
@@ -425,8 +425,8 @@ class TopicController extends KunenaController
      */
     public function setrate()
     {
-        $starid   = $this->app->input->get('starid', 0, 'int');
-        $topicid  = $this->app->input->get('topic_id', 0, 'int');
+        $starid   = $this->app->getInput()->get('starid', 0, 'int');
+        $topicid  = $this->app->getInput()->get('topic_id', 0, 'int');
         $response = [];
         $user     = KunenaUserHelper::getMyself();
 
@@ -609,20 +609,20 @@ class TopicController extends KunenaController
      */
     public function post()
     {
-        $this->id = $this->app->input->getInt('parentid', 0);
+        $this->id = $this->app->getInput()->getInt('parentid', 0);
         $fields   = [
             'catid'             => $this->catid,
-            'name'              => $this->app->input->getString('authorname', $this->me->getName()),
-            'email'             => $this->app->input->getString('email', null),
-            'subject'           => $this->app->input->post->get('subject', '', 'raw'),
-            'message'           => $this->app->input->post->get('message', '', 'raw'),
-            'icon_id'           => $this->app->input->getInt('topic_emoticon', null),
-            'anonymous'         => $this->app->input->getInt('anonymous', 0),
-            'poll_title'        => $this->app->input->getString('poll_title', ''),
-            'poll_options'      => $this->app->input->post->get('polloptionsID', [], 'array'),
-            'poll_time_to_live' => $this->app->input->getString('poll_time_to_live', 0),
-            'subscribe'         => $this->app->input->getInt('subscribeMe', 0),
-            'private'           => (string) $this->app->input->getRaw('message_private'),
+            'name'              => $this->app->getInput()->getString('authorname', $this->me->getName()),
+            'email'             => $this->app->getInput()->getString('email', null),
+            'subject'           => $this->app->getInput()->post->get('subject', '', 'raw'),
+            'message'           => $this->app->getInput()->post->get('message', '', 'raw'),
+            'icon_id'           => $this->app->getInput()->getInt('topic_emoticon', null),
+            'anonymous'         => $this->app->getInput()->getInt('anonymous', 0),
+            'poll_title'        => $this->app->getInput()->getString('poll_title', ''),
+            'poll_options'      => $this->app->getInput()->post->get('polloptionsID', [], 'array'),
+            'poll_time_to_live' => $this->app->getInput()->getString('poll_time_to_live', 0),
+            'subscribe'         => $this->app->getInput()->getInt('subscribeMe', 0),
+            'private'           => (string) $this->app->getInput()->getRaw('message_private'),
             'rating'            => 0,
             'params'            => '',
             'quote'             => 0,
@@ -706,7 +706,7 @@ class TopicController extends KunenaController
         $isNew = !$topic->exists();
 
         // Redirect to full reply instead.
-        if ($this->app->input->getString('fullreply')) {
+        if ($this->app->getInput()->getString('fullreply')) {
             $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=reply&catid={$fields->catid}&id={$parent->getTopic()->id}&mesid={$parent->id}", false));
 
             return;
@@ -790,8 +790,8 @@ class TopicController extends KunenaController
         @ignore_user_abort(true);
 
         // Mark attachments to be added or deleted.
-        $attachments = $this->app->input->get('attachments', [], 'post', 'array');
-        $attachment  = $this->app->input->get('attachment', [], 'post', 'array');
+        $attachments = $this->app->getInput()->get('attachments', [], 'post', 'array');
+        $attachment  = $this->app->getInput()->get('attachment', [], 'post', 'array');
         $message->addAttachments(array_keys(array_intersect_key($attachments, $attachment)));
         $message->removeAttachments(array_keys(array_diff_key($attachments, $attachment)));
 
@@ -1214,12 +1214,12 @@ class TopicController extends KunenaController
         }
 
         $body      = (string) $this->input->getRaw('message_private');
-        $attachIds = $this->input->get('attachment_private', [], 'array');       
+        $attachIds = $this->input->get('attachment_private', [], 'array');
 
         if (!trim($body) && !$attachIds) {
             return;
         }
-        
+
         $attachIds          = explode(',', $attachIds[0]);
         $moderator          = $this->me->isModerator($message->getCategory());
         $parent             = $message->getParent();
@@ -1228,7 +1228,7 @@ class TopicController extends KunenaController
         $private            = new KunenaPrivateMessage();
         $private->author_id = $author->userid;
         $private->subject   = $message->subject;
-        
+
         if (!trim($body)) {
             $private->body      = Text::_('COM_KUNENA_POST_WITH_PRIVATE_ATTACHMENTS_SAVED');
         } else {
@@ -1277,22 +1277,22 @@ class TopicController extends KunenaController
      */
     public function edit()
     {
-        $this->id = $this->app->input->getInt('mesid', 0);
+        $this->id = $this->app->getInput()->getInt('mesid', 0);
 
         $message = KunenaMessageHelper::get($this->id);
         $topic   = $message->getTopic();
         $fields  = [
-            'name'              => $this->app->input->getString('authorname', $message->name),
-            'email'             => $this->app->input->getString('email', $message->email),
-            'subject'           => $this->app->input->post->get('subject', '', 'raw'),
-            'message'           => $this->app->input->post->get('message', '', 'raw'),
-            'modified_reason'   => $this->app->input->getString('modified_reason', $message->modified_reason),
-            'icon_id'           => $this->app->input->getInt('topic_emoticon', $topic->icon_id),
-            'anonymous'         => $this->app->input->getInt('anonymous', 0),
-            'poll_title'        => $this->app->input->getString('poll_title', null),
-            'poll_options'      => $this->app->input->get('polloptionsID', [], 'array'),
-            'poll_time_to_live' => $this->app->input->getString('poll_time_to_live', 0),
-            'subscribe'         => $this->app->input->getInt('subscribeMe', 0),
+            'name'              => $this->app->getInput()->getString('authorname', $message->name),
+            'email'             => $this->app->getInput()->getString('email', $message->email),
+            'subject'           => $this->app->getInput()->post->get('subject', '', 'raw'),
+            'message'           => $this->app->getInput()->post->get('message', '', 'raw'),
+            'modified_reason'   => $this->app->getInput()->getString('modified_reason', $message->modified_reason),
+            'icon_id'           => $this->app->getInput()->getInt('topic_emoticon', $topic->icon_id),
+            'anonymous'         => $this->app->getInput()->getInt('anonymous', 0),
+            'poll_title'        => $this->app->getInput()->getString('poll_title', null),
+            'poll_options'      => $this->app->getInput()->get('polloptionsID', [], 'array'),
+            'poll_time_to_live' => $this->app->getInput()->getString('poll_time_to_live', 0),
+            'subscribe'         => $this->app->getInput()->getInt('subscribeMe', 0),
             'private'           => (string) $this->input->getRaw('private_message'),
             'params'            => '',
         ];
@@ -1330,8 +1330,8 @@ class TopicController extends KunenaController
         @ignore_user_abort(true);
 
         // Mark attachments to be added or deleted.
-        $attachments = array_flip($this->app->input->get('attachments', [], 'post', 'array'));
-        $attachment  = $this->app->input->get('attachment', [], 'post', 'array');
+        $attachments = array_flip($this->app->getInput()->get('attachments', [], 'post', 'array'));
+        $attachment  = $this->app->getInput()->get('attachment', [], 'post', 'array');
 
         $addList    = array_keys(array_intersect_key($attachments, $attachment));
         $addList    = ArrayHelper::toInteger($addList);
@@ -1456,7 +1456,7 @@ class TopicController extends KunenaController
             );
         }
 
-        $subscribe = $this->app->input->getInt('subscribeMe');
+        $subscribe = $this->app->getInput()->getInt('subscribeMe');
         $usertopic = $topic->getUserTopic();
 
         if ($topic->isAuthorised('subscribe')) {
@@ -1584,13 +1584,13 @@ class TopicController extends KunenaController
 
         $body      = (string) $this->input->getRaw('message_private');
         $attachIds = $this->input->get('attachment_private', [], 'array');
-        
+
         if (!trim($body) && !$attachIds) {
             return;
         }
-        
+
         $attachIds = explode(',', $attachIds[0]);
-        
+
         $finder    = new KunenaPrivateMessageFinder();
         $finder
             ->filterByMessage($message)
@@ -1642,7 +1642,7 @@ class TopicController extends KunenaController
      */
     public function thankyou()
     {
-        $type = $this->app->input->getString('task');
+        $type = $this->app->getInput()->getString('task');
         $this->setThankyou($type);
     }
 
@@ -1701,7 +1701,7 @@ class TopicController extends KunenaController
 
             $activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
         } else {
-            $userid = $this->app->input->getInt('userid', '0');
+            $userid = $this->app->getInput()->getInt('userid', '0');
 
             try {
                 $thankyou->delete($userid);
@@ -1740,7 +1740,7 @@ class TopicController extends KunenaController
      */
     public function unthankyou()
     {
-        $type = $this->app->input->getString('task');
+        $type = $this->app->getInput()->getString('task');
         $this->setThankyou($type);
     }
 
@@ -2330,13 +2330,13 @@ class TopicController extends KunenaController
             return;
         }
 
-        $topicId        = $this->app->input->getInt('id', 0);
-        $messageId      = $this->app->input->getInt('mesid', 0);
-        $targetCategory = $this->app->input->getInt('targetcategory', 0);
-        $targetTopic    = $this->app->input->getInt('targettopic', 0);
+        $topicId        = $this->app->getInput()->getInt('id', 0);
+        $messageId      = $this->app->getInput()->getInt('mesid', 0);
+        $targetCategory = $this->app->getInput()->getInt('targetcategory', 0);
+        $targetTopic    = $this->app->getInput()->getInt('targettopic', 0);
 
         if ($targetTopic < 0) {
-            $targetTopic = $this->app->input->getInt('targetid', 0);
+            $targetTopic = $this->app->getInput()->getInt('targetid', 0);
         }
 
         if ($messageId) {
@@ -2368,14 +2368,14 @@ class TopicController extends KunenaController
             $this->app->enqueueMessage($e->getMessage(), 'error');
         }
 
-        $changesubject  = $this->app->input->getBool('changesubject', false);
-        $subject        = $this->app->input->getString('subject', '');
-        $shadow         = $this->app->input->getBool('shadow', false);
-        $topic_emoticon = $this->app->input->getInt('topic_emoticon', null);
-        $keep_poll      = $this->app->input->getInt('keep_poll', false);
+        $changesubject  = $this->app->getInput()->getBool('changesubject', false);
+        $subject        = $this->app->getInput()->getString('subject', '');
+        $shadow         = $this->app->getInput()->getBool('shadow', false);
+        $topic_emoticon = $this->app->getInput()->getInt('topic_emoticon', null);
+        $keep_poll      = $this->app->getInput()->getInt('keep_poll', false);
 
         if ($object instanceof KunenaMessage) {
-            $mode = $this->app->input->getWord('mode', 'selected');
+            $mode = $this->app->getInput()->getWord('mode', 'selected');
 
             switch ($mode) {
                 case 'newer':
@@ -2483,8 +2483,8 @@ class TopicController extends KunenaController
             $this->setRedirectBack();
         }
 
-        $reason = $this->app->input->getString('reason');
-        $text   = $this->app->input->getString('text');
+        $reason = $this->app->getInput()->getString('reason');
+        $text   = $this->app->getInput()->getString('text');
 
         $template = KunenaTemplate::getInstance();
 
@@ -2590,8 +2590,8 @@ class TopicController extends KunenaController
             return;
         }
 
-        $vote  = $this->app->input->getInt('kpollradio', 0);
-        $id    = $this->app->input->getInt('id', 0);
+        $vote  = $this->app->getInput()->getInt('kpollradio', 0);
+        $id    = $this->app->getInput()->getInt('id', 0);
 
         $topic = KunenaTopicHelper::get($id);
         $poll  = $topic->getPoll();
@@ -2670,7 +2670,7 @@ class TopicController extends KunenaController
      */
     public function topicicons()
     {
-        $catid = $this->app->input->getInt('catid', 0);
+        $catid = $this->app->getInput()->getInt('catid', 0);
 
         $category        = KunenaCategoryHelper::get($catid);
         $categoryIconset = $category->iconset;

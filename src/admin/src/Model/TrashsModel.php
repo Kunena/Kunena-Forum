@@ -132,7 +132,7 @@ class TrashsModel extends ListModel
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
-        $layout        = $app->input->get('layout', 'messages');
+        $layout        = $app->getInput()->get('layout', 'messages');
         $this->context = 'com_kunena.admin.trashs';
 
         if ($layout) {
@@ -166,14 +166,14 @@ class TrashsModel extends ListModel
         $query = $db->createQuery();
 
         $app    = Factory::getApplication();
-        $layout = $app->input->get('layout', 'messages');
+        $layout = $app->getInput()->get('layout', 'messages');
 
         if ($layout == 'messages') {
             // Select the required fields from the table.
             $query->select(
-            	$this->getState(
-                	'list.select',
-                	'km.id AS id, km.subject AS title, kt.subject AS topic, kc.name AS category, u.name AS author, km.ip AS ip, km.time AS time,
+                $this->getState(
+                    'list.select',
+                    'km.id AS id, km.subject AS title, kt.subject AS topic, kc.name AS category, u.name AS author, km.ip AS ip, km.time AS time,
                     km.catid AS category_id, km.thread AS topic_id'
                 )
             );
@@ -193,9 +193,9 @@ class TrashsModel extends ListModel
         } else {
             // Select the required fields from the table.
             $query->select(
-            	$this->getState(
-                	'list.select',
-                	'kt.id AS id, kt.subject AS title, kc.name AS category, u.name AS author, km.ip AS ip, kt.first_post_time AS time,
+                $this->getState(
+                    'list.select',
+                    'kt.id AS id, kt.subject AS title, kc.name AS category, u.name AS author, km.ip AS ip, kt.first_post_time AS time,
                     kt.category_id AS category_id, kt.id AS topic_id'
                 )
             );

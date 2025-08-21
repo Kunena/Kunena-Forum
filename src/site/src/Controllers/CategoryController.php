@@ -57,7 +57,7 @@ class CategoryController extends CategoriesController
      */
     public function jump()
     {
-        $catid = $this->app->input->getInt('catid', 0);
+        $catid = $this->app->getInput()->getInt('catid', 0);
 
         if (!$catid) {
             $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list', false));
@@ -83,8 +83,8 @@ class CategoryController extends CategoriesController
             return;
         }
 
-        $catid    = $this->app->input->getInt('catid', 0);
-        $children = $this->app->input->getBool('children', 0);
+        $catid    = $this->app->getInput()->getInt('catid', 0);
+        $children = $this->app->getInput()->getBool('children', 0);
 
         if (!$catid) {
             // All categories
@@ -148,7 +148,7 @@ class CategoryController extends CategoriesController
             return;
         }
 
-        $category = KunenaCategoryHelper::get($this->app->input->getInt('catid', 0));
+        $category = KunenaCategoryHelper::get($this->app->getInput()->getInt('catid', 0));
 
         try {
             $category->isAuthorised('read');
@@ -187,12 +187,12 @@ class CategoryController extends CategoriesController
 
         $me = KunenaUserHelper::getMyself();
 
-        $userid = $this->app->input->getInt('userid');
+        $userid = $this->app->getInput()->getInt('userid');
 
-        $catid  = $this->app->input->getInt('catid', 0);
+        $catid  = $this->app->getInput()->getInt('catid', 0);
         $catids = $catid
             ? [$catid]
-            : array_keys($this->app->input->get('categories', [], 'post'));
+            : array_keys($this->app->getInput()->get('categories', [], 'post'));
         $catids = ArrayHelper::toInteger($catids);
 
         $categories = KunenaCategoryHelper::getCategories($catids);

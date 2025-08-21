@@ -605,7 +605,7 @@ abstract class KunenaRoute
     {
         $app = Factory::getApplication();
 
-        $referrer = $app->input->server->getString('HTTP_REFERER');
+        $referrer = $app->getInput()->server->getString('HTTP_REFERER');
 
         if ($referrer) {
             $uri = new Uri($referrer);

@@ -245,7 +245,7 @@ class HtmlView extends KunenaView
         $channels       = $this->category->getChannels();
 
         $options            = [];
-        $options []         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+        $options[]         = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
         $cat_params         = ['sections' => 1, 'catid' => 0];
         $this->categorylist = HTMLHelper::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
 
@@ -582,7 +582,7 @@ class HtmlView extends KunenaView
 
         $key = $this->profile->userid . '.' . $this->profile->username;
 
-        if (!isset($profiles [$key])) {
+        if (!isset($profiles[$key])) {
             // Run events
             $params = new Registry();
 
@@ -657,10 +657,10 @@ class HtmlView extends KunenaView
                 // if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
             }
 
-            $profiles [$key] = $contents;
+            $profiles[$key] = $contents;
         }
 
-        return $profiles [$key];
+        return $profiles[$key];
     }
 
     /**
@@ -1253,12 +1253,14 @@ class HtmlView extends KunenaView
         $this->document->getWebAssetManager()->addInlineScript('var arrayanynomousbox={' . $arrayanynomousbox . '}');
         $this->document->getWebAssetManager()->addInlineScript('var pollcategoriesid = {' . $arraypollcatid . '};');
 
-        $catParams = ['ordering'    => 'ordering',
-                      'toplevel'    => 0,
-                      'sections'    => 0,
-                      'direction'   => 1,
-                      'hide_lonely' => 1,
-                      'action'      => 'topic.create', ];
+        $catParams = [
+            'ordering'    => 'ordering',
+            'toplevel'    => 0,
+            'sections'    => 0,
+            'direction'   => 1,
+            'hide_lonely' => 1,
+            'action'      => 'topic.create',
+        ];
 
         $this->catid    = $this->state->get('item.catid');
         $this->category = KunenaCategoryHelper::get($this->catid);
@@ -1347,7 +1349,7 @@ class HtmlView extends KunenaView
 
         Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
 
-        $quote          = (bool) $this->app->input->getBool('quote', false);
+        $quote          = (bool) $this->app->getInput()->getBool('quote', false);
         $this->category = $this->topic->getCategory();
 
         if ($this->config->topicIcons && $this->topic->isAuthorised('edit', null)) {
@@ -1457,7 +1459,7 @@ class HtmlView extends KunenaView
     protected function redirectBack($anchor = '')
     {
         $default  = Uri::base() . ($this->app->isClient('site') ? ltrim(KunenaRoute::_('index.php?option=com_kunena'), '/') : '');
-        $referrer = $this->app->input->server->getString('HTTP_REFERER');
+        $referrer = $this->app->getInput()->server->getString('HTTP_REFERER');
 
         $uri = Uri::getInstance($referrer ? $referrer : $default);
 

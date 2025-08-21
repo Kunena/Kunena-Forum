@@ -71,8 +71,8 @@ class TopicListingUserDisplay extends ListDisplay
 
         if ($this->embedded) {
             $this->moreUri = new Uri(
-            	'index.php?option=com_kunena&view=topics&layout=user&mode=' .
-                $this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
+                'index.php?option=com_kunena&view=topics&layout=user&mode=' .
+                    $this->state->get('list.mode') . '&userid=' . $this->state->get('user') . '&limit=' . $this->state->get('list.limit')
             );
 
             $this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
@@ -146,7 +146,7 @@ class TopicListingUserDisplay extends ListDisplay
                 break;
         }
 
-        $Itemid = Factory::getApplication()->input->getCmd('Itemid');
+        $Itemid = Factory::getApplication()->getInput()->getCmd('Itemid');
         $view   = $this->input->getCmd('view');
         $layout = $this->input->getCmd('layout');
         $format = $this->input->getCmd('format');
@@ -183,20 +183,18 @@ class TopicListingUserDisplay extends ListDisplay
                     return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
                 } elseif ($view == 'topics' && $layout == 'user') {
                     $params['view'] = 'topics';
-					$params = [
+                    $params = [
                         'layout' => 'user',
                         'mode' => $this->state->get('list.mode')
                     ];
                     return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
                 } else {
-	                $params = [
+                    $params = [
                         'mode' => $this->state->get('list.mode')
                     ];
                     return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
                 }
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }

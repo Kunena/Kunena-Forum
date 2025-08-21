@@ -67,7 +67,7 @@ class SearchModel extends KunenaModel
         $text = $this->getState('searchwords');
         $q    = \strlen($text);
 
-        if ($q < 3 && !$this->getState('query.searchuser') && $this->app->input->getString('childforums')) {
+        if ($q < 3 && !$this->getState('query.searchuser') && $this->app->getInput()->getString('childforums')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'), 'error');
 
             return 0;
@@ -189,9 +189,9 @@ class SearchModel extends KunenaModel
             }
 
             if (!$this->getState('query.titleonly')) {
-                $querystrings [] = "(t.message {$not} LIKE '%{$searchword}%' {$operator} m.subject {$not} LIKE '%{$searchword}%')";
+                $querystrings[] = "(t.message {$not} LIKE '%{$searchword}%' {$operator} m.subject {$not} LIKE '%{$searchword}%')";
             } else {
-                $querystrings [] = "(m.subject {$not} LIKE '%{$searchword}%')";
+                $querystrings[] = "(m.subject {$not} LIKE '%{$searchword}%')";
             }
         }
 
@@ -201,9 +201,9 @@ class SearchModel extends KunenaModel
 
             if ($username) {
                 if ($this->getState('query.exactname') == '1') {
-                    $querystrings [] = "m.name LIKE '" . $db->escape($username) . "'";
+                    $querystrings[] = "m.name LIKE '" . $db->escape($username) . "'";
                 } else {
-                    $querystrings [] = "m.name LIKE '%" . $db->escape($username) . "%'";
+                    $querystrings[] = "m.name LIKE '%" . $db->escape($username) . "%'";
                 }
             }
         }
@@ -233,9 +233,9 @@ class SearchModel extends KunenaModel
 
             if ($time) {
                 if ($this->getState('query.beforeafter') == 'after') {
-                    $querystrings [] = "m.time > '{$time}'";
+                    $querystrings[] = "m.time > '{$time}'";
                 } else {
-                    $querystrings [] = "m.time <= '{$time}'";
+                    $querystrings[] = "m.time <= '{$time}'";
                 }
             }
         } else {
@@ -249,7 +249,7 @@ class SearchModel extends KunenaModel
         $topic_id = $this->getState('query.topic_id');
 
         if ($topic_id) {
-            $querystrings [] = "m.id = '{$topic_id}'";
+            $querystrings[] = "m.id = '{$topic_id}'";
         }
 
         return implode(' AND ', $querystrings);
@@ -271,7 +271,7 @@ class SearchModel extends KunenaModel
         foreach ($searchwords as $word) {
             // Do not accept one letter strings
             if (StringHelper::strlen($word) > 1) {
-                $result [] = $word;
+                $result[] = $word;
             }
         }
 
@@ -317,9 +317,24 @@ class SearchModel extends KunenaModel
     public function getUrlParams()
     {
         // Turn internal state into URL, but ignore default values
-        $defaults = ['titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
-                     'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-                     'order'     => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0, 'ids' => 0, 'searchatdate' => '', ];
+        $defaults = [
+            'titleonly' => 0,
+            'searchuser' => '',
+            'exactname' => 0,
+            'childforums' => 0,
+            'starteronly' => 0,
+            'replyless' => 0,
+            'replylimit' => 0,
+            'searchdate' => '365',
+            'beforeafter' => 'after',
+            'sortby' => 'lastpost',
+            'order'     => 'dec',
+            'catids' => '0',
+            'show' => '0',
+            'topic_id' => 0,
+            'ids' => 0,
+            'searchatdate' => '',
+        ];
 
         $url_params = '';
         $state      = $this->getState();
@@ -337,7 +352,7 @@ class SearchModel extends KunenaModel
                 $value = implode(' ', $value);
             }
 
-            if ($value != $defaults [$param]) {
+            if ($value != $defaults[$param]) {
                 $url_params .= "&$param=" . urlencode($value);
             }
         }
@@ -397,7 +412,7 @@ class SearchModel extends KunenaModel
     protected function populateState($ordering = null, $direction = null): void
     {
         // Get search word list
-        $value = StringHelper::trim($this->app->input->get('query', '', 'string'));
+        $value = StringHelper::trim($this->app->getInput()->get('query', '', 'string'));
 
         if ($value == Text::_('COM_KUNENA_GEN_SEARCH_BOX')) {
             $value = '';
@@ -405,67 +420,67 @@ class SearchModel extends KunenaModel
 
         $this->setState('searchwords', $value);
 
-        $value = Factory::getApplication()->input->getInt('titleonly', 0);
+        $value = Factory::getApplication()->getInput()->getInt('titleonly', 0);
         $this->setState('query.titleonly', $value);
 
-        $value = Factory::getApplication()->input->getString('searchuser', '');
+        $value = Factory::getApplication()->getInput()->getString('searchuser', '');
         $this->setState('query.searchuser', rtrim($value));
 
-        $value = Factory::getApplication()->input->getInt('starteronly', 0);
+        $value = Factory::getApplication()->getInput()->getInt('starteronly', 0);
         $this->setState('query.starteronly', $value);
 
         if (!$this->config->pubProfile && !Factory::getApplication()->getIdentity()->guest || $this->config->pubProfile) {
-            $value = Factory::getApplication()->input->getInt('exactname', 0);
+            $value = Factory::getApplication()->getInput()->getInt('exactname', 0);
             $this->setState('query.exactname', $value);
         }
 
-        $value = Factory::getApplication()->input->getInt('replyless', 0);
+        $value = Factory::getApplication()->getInput()->getInt('replyless', 0);
         $this->setState('query.replyless', $value);
 
-        $value = Factory::getApplication()->input->getInt('replylimit', 0);
+        $value = Factory::getApplication()->getInput()->getInt('replylimit', 0);
         $this->setState('query.replylimit', $value);
 
-        $value = Factory::getApplication()->input->getString('searchdate', $this->config->searchTime);
+        $value = Factory::getApplication()->getInput()->getString('searchdate', $this->config->searchTime);
         $this->setState('query.searchdate', $value);
 
-        $value = Factory::getApplication()->input->getString('searchatdate', null);
+        $value = Factory::getApplication()->getInput()->getString('searchatdate', null);
         $this->setState('query.searchatdate', $value);
 
-        $value = Factory::getApplication()->input->getWord('beforeafter', 'after');
+        $value = Factory::getApplication()->getInput()->getWord('beforeafter', 'after');
         $this->setState('query.beforeafter', $value);
 
-        $value = Factory::getApplication()->input->getWord('sortby', 'lastpost');
+        $value = Factory::getApplication()->getInput()->getWord('sortby', 'lastpost');
         $this->setState('query.sortby', $value);
 
-        $value = Factory::getApplication()->input->getWord('order', 'dec');
+        $value = Factory::getApplication()->getInput()->getWord('order', 'dec');
         $this->setState('query.order', $value);
 
-        $value = Factory::getApplication()->input->getInt('childforums', 1);
+        $value = Factory::getApplication()->getInput()->getInt('childforums', 1);
         $this->setState('query.childforums', $value);
 
-        $value = Factory::getApplication()->input->getInt('topic_id', 0);
+        $value = Factory::getApplication()->getInput()->getInt('topic_id', 0);
         $this->setState('query.topic_id', $value);
 
-        if (isset($_POST ['query']) || isset($_POST ['searchword'])) {
-            $value = Factory::getApplication()->input->get('catids', [0], 'post', 'array');
+        if (isset($_POST['query']) || isset($_POST['searchword'])) {
+            $value = Factory::getApplication()->getInput()->get('catids', [0], 'post', 'array');
             $value = ArrayHelper::toInteger($value);
         } else {
-            $value = Factory::getApplication()->input->getString('catids', '0', 'get');
+            $value = Factory::getApplication()->getInput()->getString('catids', '0', 'get');
             $value = explode(' ', $value);
             $value = ArrayHelper::toInteger($value);
         }
 
         $this->setState('query.catids', $value);
 
-        if (isset($_POST ['searchword'])) {
-            $value = Factory::getApplication()->input->get('ids', [0], 'post', 'array');
+        if (isset($_POST['searchword'])) {
+            $value = Factory::getApplication()->getInput()->get('ids', [0], 'post', 'array');
             $value = ArrayHelper::toInteger($value);
 
             if ($value[0] > 0) {
                 $this->setState('query.ids', $value);
             }
         } else {
-            $value = Factory::getApplication()->input->getString('ids', '0', 'get');
+            $value = Factory::getApplication()->getInput()->getString('ids', '0', 'get');
             $value = explode(' ', (int) $value);
             $value = ArrayHelper::toInteger($value);
 
@@ -474,7 +489,7 @@ class SearchModel extends KunenaModel
             }
         }
 
-        $value = Factory::getApplication()->input->getInt('show', 0);
+        $value = Factory::getApplication()->getInput()->getInt('show', 0);
         $this->setState('query.show', $value);
 
         $value = $this->getInt('limitstart', 0);

@@ -225,10 +225,10 @@ class HtmlView extends KunenaView
             return;
         }
 
-        $catid  = $this->app->input->getInt('catid', 0);
-        $id     = $this->app->input->getInt('id', 0);
-        $view   = $this->app->input->getWord('view', 'default');
-        $layout = $this->app->input->getWord('layout', 'default');
+        $catid  = $this->app->getInput()->getInt('catid', 0);
+        $id     = $this->app->getInput()->getInt('id', 0);
+        $view   = $this->app->getInput()->getWord('view', 'default');
+        $layout = $this->app->getInput()->getWord('layout', 'default');
 
         $this->breadcrumb = $pathway = $this->app->getPathway();
         $active     = $this->app->getMenu()->getActive();
@@ -693,9 +693,7 @@ class HtmlView extends KunenaView
      *
      * @throws  Exception
      */
-    public function getPrivateMessageLink()
-    {
-    }
+    public function getPrivateMessageLink() {}
 
     /**
      * @param   array  $matches  matches

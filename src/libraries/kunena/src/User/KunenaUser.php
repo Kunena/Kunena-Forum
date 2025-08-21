@@ -293,25 +293,25 @@ class KunenaUser
      * @since   Kunena 6.0
      */
     public $lastvisitDate;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $typeAlias;    
-       
+    public $typeAlias;
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $ip;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $socials;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.5
@@ -407,7 +407,7 @@ class KunenaUser
 
         if (!isset($identifier)) {
             $this->userid = 0;
-        } else {            
+        } else {
             $this->userid = $identifier;
         }
 
@@ -535,7 +535,7 @@ class KunenaUser
             $user = KunenaUserHelper::getMyself();
         }
 
-        $input     = $this->_app->input;
+        $input     = $this->_app->getInput();
         $method    = $input->getInt('userid');
         $kuser     = KunenaFactory::getUser($method);
         $config    = KunenaConfig::getInstance();
@@ -555,12 +555,12 @@ class KunenaUser
                 if ($user->isModerator() && $kuser->isAdmin() && !$user->isAdmin()) {
                     $exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
                 }
-                
+
                 $banned = $user->isBanned();
-                
+
                 if ($banned) {
                     $banned = KunenaBan::getInstanceByUserid($user->userid, true);
-                    
+
                     if (!$banned->isLifetime()) {
                         $exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()), 403);
                     } else {
@@ -696,8 +696,8 @@ class KunenaUser
     {
         $data = array_diff_key($data, array_flip($ignore));
 
-        foreach((array)$data as $property => $value) {
-                $this->$property = $value;
+        foreach ((array)$data as $property => $value) {
+            $this->$property = $value;
         }
     }
 
@@ -1185,7 +1185,7 @@ class KunenaUser
             } elseif ($this->isMyself()) {
                 $count     = $private->getUnreadCount($this->userid);
                 $this->_pm = $private->getInboxLink(
-                	$count
+                    $count
                         ? Text::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count)
                         : Text::_('COM_KUNENA_PMS_INBOX')
                 );
@@ -2156,19 +2156,20 @@ class KunenaUser
         if ($this->_config->newUsersPreventPostUrlImages && $this->posts <= $this->_config->minimalUserPostsAddUrlImage) {
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * Get user socials info for the userprofile
      * 
      * @throws Exception
      * @since Kunena 6.4.0 
      */
-    public function getSocialInfoUserProfile() {
+    public function getSocialInfoUserProfile()
+    {
         $socials = KunenaUserSocials::getInstance($this->userid);
-        
-        return $socials;        
+
+        return $socials;
     }
 }

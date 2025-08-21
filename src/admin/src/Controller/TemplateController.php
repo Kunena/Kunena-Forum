@@ -106,9 +106,9 @@ class TemplateController extends FormController
 
         if (!$template) {
             $this->app->enqueueMessage(
-            	Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' .
-                Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'),
-            	'error'
+                Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' .
+                    Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'),
+                'error'
             );
 
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -495,9 +495,9 @@ class TemplateController extends FormController
 
         if (!$template) {
             $this->app->enqueueMessage(
-            	Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' .
-                Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'),
-            	'error'
+                Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' .
+                    Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'),
+                'error'
             );
 
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -609,10 +609,10 @@ class TemplateController extends FormController
      */
     public function editscss(): void
     {
-        $template     = $this->app->input->getArray(['cid' => '']);
+        $template     = $this->app->getInput()->getArray(['cid' => '']);
         $templatename = array_shift($template['cid']);
 
-        $filename = $this->app->input->get('filename');
+        $filename = $this->app->getInput()->get('filename');
 
         if (File::getExt($filename) !== 'scss') {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'warning');
@@ -655,10 +655,10 @@ class TemplateController extends FormController
      */
     public function editCss(): void
     {
-        $template     = $this->app->input->getArray(['cid' => '']);
+        $template     = $this->app->getInput()->getArray(['cid' => '']);
         $templatename = array_shift($template['cid']);
 
-        $filename = $this->app->input->get('filename');
+        $filename = $this->app->getInput()->get('filename');
 
         if (File::getExt($filename) !== 'css') {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'), 'error');
@@ -708,12 +708,12 @@ class TemplateController extends FormController
      */
     protected function internalSaveScss(): void
     {
-        $template     = $this->app->input->getArray(['cid' => '']);
+        $template     = $this->app->getInput()->getArray(['cid' => '']);
         $templatename = array_shift($template['cid']);
 
-        $filename    = $this->app->input->get('filename');
-        $filecontent = $this->app->input->get('filecontent', '', 'raw');
-        $task         = $this->app->input->get('task');
+        $filename    = $this->app->getInput()->get('filename');
+        $filecontent = $this->app->getInput()->get('filecontent', '', 'raw');
+        $task         = $this->app->getInput()->get('task');
 
         if (!Session::checkToken('post')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -724,9 +724,9 @@ class TemplateController extends FormController
 
         if (!$templatename) {
             $this->app->enqueueMessage(
-            	Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-                . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'),
-            	'error'
+                Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+                    . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'),
+                'error'
             );
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
@@ -744,9 +744,9 @@ class TemplateController extends FormController
             $this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=editscss', false));
         } elseif (!$return && $task == 'applyScss') {
             $this->app->enqueueMessage(
-            	Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-                . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file),
-            	'error'
+                Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+                    . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file),
+                'error'
             );
             $this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=choosescss', false));
         } elseif ($return && $task == 'saveScss') {
@@ -754,9 +754,9 @@ class TemplateController extends FormController
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
         } else {
             $this->app->enqueueMessage(
-            	Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-                . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file),
-            	'error'
+                Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
+                    . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file),
+                'error'
             );
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
         }
@@ -799,11 +799,11 @@ class TemplateController extends FormController
      */
     protected function internalSaveCss(): void
     {
-        $template     = $this->app->input->getArray(['cid' => '']);
+        $template     = $this->app->getInput()->getArray(['cid' => '']);
         $templatename = array_shift($template['cid']);
-        $filename     = $this->app->input->get('filename');
-        $filecontent  = $this->app->input->get('filecontent', '', 'raw');
-        $task         = $this->app->input->get('task');
+        $filename     = $this->app->getInput()->get('filename');
+        $filecontent  = $this->app->getInput()->get('filecontent', '', 'raw');
+        $task         = $this->app->getInput()->get('task');
 
         if (!Session::checkToken()) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');

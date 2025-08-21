@@ -57,8 +57,8 @@ class Raw extends KunenaView
         // Set the MIME type and header for JSON output.
         $this->document->setMimeEncoding('application/json');
         Factory::getApplication()->setHeader(
-        	'Content-Disposition',
-        	'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
+            'Content-Disposition',
+            'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
         );
         Factory::getApplication()->sendHeaders();
 
@@ -97,8 +97,8 @@ class Raw extends KunenaView
         // Set the MIME type and header for JSON output.
         $this->document->setMimeEncoding('application/json');
         Factory::getApplication()->setHeader(
-        	'Content-Disposition',
-        	'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
+            'Content-Disposition',
+            'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
         );
         Factory::getApplication()->sendHeaders();
 
@@ -118,7 +118,7 @@ class Raw extends KunenaView
     {
         $response = [];
 
-        $gallery_name = $this->app->input->get('gallery_name', null, 'string');
+        $gallery_name = $this->app->getInput()->get('gallery_name', null, 'string');
 
         $list_files = Folder::files(JPATH_BASE . '/media/kunena/avatars/gallery/' . $gallery_name);
 
@@ -130,8 +130,8 @@ class Raw extends KunenaView
         // Set the MIME type and header for JSON output.
         $this->document->setMimeEncoding('application/json');
         Factory::getApplication()->setHeader(
-        	'Content-Disposition',
-        	'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
+            'Content-Disposition',
+            'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"'
         );
         Factory::getApplication()->sendHeaders();
 

@@ -57,8 +57,8 @@ class HomeController extends KunenaController
         $home = $menu->getActive();
 
         if (!$home) {
-            $this->app->input->get('view', 'category');
-            $this->app->input->get('layout', 'list');
+            $this->app->getInput()->get('view', 'category');
+            $this->app->getInput()->get('layout', 'list');
         } else {
             // Find default menu item
             $default = $this->_getDefaultMenuItem($menu, $home);
@@ -86,11 +86,11 @@ class HomeController extends KunenaController
 
             // Add query variables from shown menu item
             foreach ($default->query as $var => $value) {
-                $this->app->input->get($var, $value);
+                $this->app->getInput()->get($var, $value);
             }
 
             // Remove query variables coming from the home menu item
-            $this->app->input->set('defaultmenu', null);
+            $this->app->getInput()->set('defaultmenu', null);
 
             // Set active menu item to point the real page
             $menu->setActive($default->id);
@@ -122,12 +122,12 @@ class HomeController extends KunenaController
     {
         KunenaFactory::loadLanguage('com_kunena.controllers');
 
-        if (empty($active->query ['defaultmenu']) || $active->id == $active->query ['defaultmenu']) {
+        if (empty($active->query['defaultmenu']) || $active->id == $active->query['defaultmenu']) {
             // There is no highlighted menu item
             return false;
         }
 
-        $item = $menu->getItem($active->query ['defaultmenu']);
+        $item = $menu->getItem($active->query['defaultmenu']);
 
         if (!$item) {
             // Menu item points to nowhere, abort
@@ -139,15 +139,15 @@ class HomeController extends KunenaController
             KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_LOOP'), 'menu');
 
             return false;
-        } elseif (empty($item->component) || $item->component != 'com_kunena' || !isset($item->query ['view'])) {
+        } elseif (empty($item->component) || $item->component != 'com_kunena' || !isset($item->query['view'])) {
             // Menu item doesn't point to Kunena, abort
             KunenaError::warning(Text::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
 
             return false;
-        } elseif ($item->query ['view'] == 'home') {
+        } elseif ($item->query['view'] == 'home') {
             // Menu item is pointing to another Home Page, try to find default menu item from there
             $visited[$item->id] = 1;
-            $item               = $this->_getDefaultMenuItem($menu, $item->query ['defaultmenu'], $visited);
+            $item               = $this->_getDefaultMenuItem($menu, $item->query['defaultmenu'], $visited);
         }
 
         return $item;

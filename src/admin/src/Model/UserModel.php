@@ -180,7 +180,8 @@ class UserModel extends KunenaModel
         // Todo: fix params
         $params = [
             'sections' => false,
-            'action'   => 'read', ];
+            'action'   => 'read',
+        ];
 
         return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="form-select" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
     }
@@ -224,10 +225,10 @@ class UserModel extends KunenaModel
             return false;
         }
 
-        $yesnoRank [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RANK_NO_ASSIGNED'));
+        $yesnoRank[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_RANK_NO_ASSIGNED'));
 
         foreach ($specialRanks as $ranks) {
-            $yesnoRank [] = HTMLHelper::_('select.option', $ranks->rankId, Text::_($ranks->rankTitle));
+            $yesnoRank[] = HTMLHelper::_('select.option', $ranks->rankId, Text::_($ranks->rankTitle));
         }
 
         // Build special ranks select list
@@ -298,14 +299,14 @@ class UserModel extends KunenaModel
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
-        $layout  = $app->input->get('layout');
+        $layout  = $app->getInput()->get('layout');
         $context = 'com_kunena.admin.user';
 
         if ($layout) {
             $context .= '.' . $layout;
         }
 
-        $value = Factory::getApplication()->input->getInt('userid');
+        $value = Factory::getApplication()->getInput()->getInt('userid');
         $this->setState($this->getName() . '.id', $value);
     }
 }

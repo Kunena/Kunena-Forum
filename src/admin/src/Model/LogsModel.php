@@ -124,7 +124,7 @@ class LogsModel extends ListModel
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
-        $layout        = $app->input->get('layout');
+        $layout        = $app->getInput()->get('layout');
         $this->context = 'com_kunena.admin.logs';
 
         if ($layout) {
@@ -221,9 +221,9 @@ class LogsModel extends ListModel
 
         // Select the required fields from the table.
         $query->select(
-        	$this->getState(
-            	'list.select',
-            	'kl.*, u.name AS user_name, u.username AS user_username, tu.name AS targetuser_name, tu.username AS targetuser_username,
+            $this->getState(
+                'list.select',
+                'kl.*, u.name AS user_name, u.username AS user_username, tu.name AS targetuser_name, tu.username AS targetuser_username,
                 kc.name AS category_name, kt.subject AS topic_subject'
             )
         );

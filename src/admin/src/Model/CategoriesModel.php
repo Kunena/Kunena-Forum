@@ -51,8 +51,8 @@ class CategoriesModel extends KunenaModel
      * @var     string
      * @since   Kunena 6.0
      */
-    public $context;    
-    
+    public $context;
+
     /**
      * @var     KunenaCategory[]
      * @since   Kunena 6.0
@@ -113,16 +113,26 @@ class CategoriesModel extends KunenaModel
 
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'search', 'id',
-                'ordering', 'a.ordering',
-                'published', 'p.published',
-                'title', 'p.title',
-                'access', 'p.access',
-                'locked', 'p.locked',
-                'review', 'p.review',
-                'allowPolls', 'p.allowPolls',
-                'anonymous', 'p.anonymous',
-                'category', 'levels',
+                'search',
+                'id',
+                'ordering',
+                'a.ordering',
+                'published',
+                'p.published',
+                'title',
+                'p.title',
+                'access',
+                'p.access',
+                'locked',
+                'p.locked',
+                'review',
+                'p.review',
+                'allowPolls',
+                'p.allowPolls',
+                'anonymous',
+                'p.anonymous',
+                'category',
+                'levels',
             ];
         }
 
@@ -470,7 +480,7 @@ class CategoriesModel extends KunenaModel
 
             $admin = 0;
             $acl   = KunenaAccess::getInstance();
-            
+
             foreach ($this->internalAdminCategories as $category) {
                 // Get ACL groups for the category.
                 $access               = $acl->getCategoryAccess($category);
@@ -489,7 +499,7 @@ class CategoriesModel extends KunenaModel
                 // Checkout?
                 if (!$this->me->isAdmin($category) && !$category->isCheckedOut(0)) {
                     $category->checked_out = 0;
-                } 
+                }
 
                 $admin += $this->me->isAdmin($category);
             }
@@ -521,7 +531,7 @@ class CategoriesModel extends KunenaModel
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
-        $layout        = $app->input->get('layout');
+        $layout        = $app->getInput()->get('layout');
         $this->context = 'com_kunena.admin.categories';
 
         if ($layout) {
@@ -790,14 +800,14 @@ class CategoriesModel extends KunenaModel
             }
 
             // Support old ordering field
-            $oldOrdering = $app->input->get('filter_order');
+            $oldOrdering = $app->getInput()->get('filter_order');
 
             if (!empty($oldOrdering) && \in_array($oldOrdering, $this->filter_fields)) {
                 $this->setState('list.ordering', $oldOrdering);
             }
 
             // Support old direction field
-            $oldDirection = $app->input->get('filter_order_Dir');
+            $oldDirection = $app->getInput()->get('filter_order_Dir');
 
             if (!empty($oldDirection) && \in_array(strtoupper($oldDirection), ['ASC', 'DESC', ''])) {
                 $this->setState('list.direction', $oldDirection);

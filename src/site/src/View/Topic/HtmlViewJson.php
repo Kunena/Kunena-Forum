@@ -36,7 +36,7 @@ class KunenaViewTopic extends KunenaView
      */
     public function display($tpl = null)
     {
-        $id                        = Factory::getApplication()->input->getInt('id');
+        $id                        = Factory::getApplication()->getInput()->getInt('id');
         $topic                     = KunenaTopicHelper::get($id);
         $topic->subject            = KunenaParser::parseText($topic->subject);
         $topic->first_post_message = KunenaParser::stripBBCode($topic->first_post_message);

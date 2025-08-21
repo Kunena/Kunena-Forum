@@ -840,14 +840,14 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         if (\in_array($user->userid, $private->users()->getMapped())) {
             // Yes, I have access..
-            return ;
+            return;
         } else {
             $messages = KunenaMessageHelper::getMessages($private->posts()->getMapped());
 
             foreach ($messages as $message) {
                 if ($user->isModerator($message->getCategory())) {
                     // Yes, I have access..
-                    return ;
+                    return;
                 }
             }
         }
@@ -867,7 +867,7 @@ class KunenaAttachment extends KunenaDatabaseObject
     public function upload(string $key = 'kattachment', ?int $catid = null): bool
     {
         $config    = KunenaFactory::getConfig();
-        $input     = Factory::getApplication()->input;
+        $input     = Factory::getApplication()->getInput();
         $fileInput = $input->files->get($key, null, 'raw');
 
         $upload = KunenaUpload::getInstance(KunenaAttachmentHelper::getExtensions($catid, $this->userid));
@@ -961,17 +961,18 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         return false;
     }
-    
+
     /**
      * Say if the attachment belong to the user
      * 
      * @return boolean
      * @since   Kunena 6.3
      */
-    public function isMyOwnPrivateAttachment() {
+    public function isMyOwnPrivateAttachment()
+    {
         if ($this->protected == 32) {
             $me       = KunenaUserHelper::getMyself();
-        
+
             if ($this->userid == $me->userid) {
                 return true;
             }
@@ -1016,10 +1017,10 @@ class KunenaAttachment extends KunenaDatabaseObject
 
             // Find available filename.
             $this->filename = KunenaAttachmentHelper::getAvailableFilename(
-            	$this->folder,
-            	$basename,
-            	$extension,
-            	$this->protected
+                $this->folder,
+                $basename,
+                $extension,
+                $this->protected
             );
         }
 

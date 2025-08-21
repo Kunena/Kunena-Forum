@@ -286,12 +286,12 @@ class UserModel extends KunenaModel
 
         $this->setState('list.direction', $value);
 
-        $value = $this->app->input->get('search', null, 'string');
+        $value = $this->app->getInput()->get('search', null, 'string');
 
         if (!empty($value) && $value != Text::_('COM_KUNENA_USRL_SEARCH')) {
             $this->setState('list.search', rtrim($value));
         }
-        
+
         $usertype = $this->getCmd('usertype', 'all');
         $this->setState('userlist.usertype', $usertype);
     }

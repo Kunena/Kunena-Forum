@@ -296,7 +296,7 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
     protected function prepareDocument()
     {
         $app    = Factory::getApplication();
-        $format = $app->input->getCmd('format');
+        $format = $app->getInput()->getCmd('format');
 
         if (!empty($format) && $format != 'html') {
             return false;

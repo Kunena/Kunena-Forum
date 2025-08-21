@@ -113,14 +113,14 @@ class CategoryModel extends CategoriesModel
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
-        $layout        = $app->input->get('layout');
+        $layout        = $app->getInput()->get('layout');
         $this->context = 'com_kunena.admin.category';
 
         if ($layout) {
             $this->context .= '.' . $layout;
         }
 
-        $value = Factory::getApplication()->input->getInt('catid');
+        $value = Factory::getApplication()->getInput()->getInt('catid');
         $this->setState($this->getName() . '.id', $value);
     }
 }

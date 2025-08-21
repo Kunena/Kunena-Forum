@@ -138,13 +138,13 @@ class SmileyModel extends AdminModel
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
-        $layout = $app->input->get('layout');
+        $layout = $app->getInput()->get('layout');
 
         if ($layout) {
             $context .= '.' . $layout;
         }
 
-        $value = Factory::getApplication()->input->getInt('id');
+        $value = Factory::getApplication()->getInput()->getInt('id');
         $this->setState($this->getName() . '.id', $value);
         $this->setState('item.id', $value);
     }

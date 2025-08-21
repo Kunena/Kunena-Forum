@@ -537,7 +537,7 @@ class KunenaView extends HtmlView
         $this->_output = null;
 
         $app            = Factory::getApplication();
-        $input          = $app->input;
+        $input          = $app->getInput();
         $template       = Factory::getApplication()->getTemplate(true);
         $layout         = $this->getLayout();
         $layoutTemplate = $this->getLayoutTemplate();
@@ -553,15 +553,15 @@ class KunenaView extends HtmlView
         // Load the language file for the template
         $lang = Factory::getApplication()->getLanguage();
         $lang->load('tpl_' . $template->template, JPATH_BASE)
-        || $lang->load('tpl_' . $template->parent, JPATH_THEMES . '/' . $template->parent)
-        || $lang->load('tpl_' . $template->template, JPATH_THEMES . '/' . $template->template);
+            || $lang->load('tpl_' . $template->parent, JPATH_THEMES . '/' . $template->parent)
+            || $lang->load('tpl_' . $template->template, JPATH_THEMES . '/' . $template->template);
 
         // Change the template folder if alternative layout is in different template
         if (isset($layoutTemplate) && $layoutTemplate !== '_' && $layoutTemplate != $template->template) {
             $this->_path['template'] = str_replace(
-            	JPATH_THEMES . DIRECTORY_SEPARATOR . $template->template,
-            	JPATH_THEMES . DIRECTORY_SEPARATOR . $layoutTemplate,
-            	$this->_path['template']
+                JPATH_THEMES . DIRECTORY_SEPARATOR . $template->template,
+                JPATH_THEMES . DIRECTORY_SEPARATOR . $layoutTemplate,
+                $this->_path['template']
             );
         }
 

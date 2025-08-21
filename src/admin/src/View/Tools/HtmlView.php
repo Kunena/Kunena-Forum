@@ -149,7 +149,7 @@ class HtmlView extends BaseHtmlView
             $this->setToolBarReport();
         } elseif ($layout == 'subscriptions') {
             $app = Factory::getApplication();
-            $id  = $app->input->get('id', 0, 'int');
+            $id  = $app->getInput()->get('id', 0, 'int');
 
             if ($id) {
                 $topic          = KunenaTopicHelper::get($id);
@@ -160,11 +160,11 @@ class HtmlView extends BaseHtmlView
                 $topicSubscribers            = $acl->loadSubscribers($topic, KunenaAccess::TOPIC_SUBSCRIPTION);
                 $this->topicSubscribersUsers = KunenaUserHelper::loadUsers($topicSubscribers);
                 $this->catTopicSubscribers   = $acl->getSubscribers(
-                	$topic->getCategory()->id,
-                	$id,
-                	KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION,
-                	1,
-                	1
+                    $topic->getCategory()->id,
+                    $id,
+                    KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION,
+                    1,
+                    1
                 );
             }
 

@@ -103,15 +103,15 @@ class UserController extends FormController
      */
     protected function saveInternal(string $type)
     {
-        $newView      = $this->app->input->getString('newView');
-        $newRank      = $this->app->input->getString('newRank');
-        $signature    = $this->app->input->getString('signature');
-        $deleteSig    = $this->app->input->getInt('deleteSig');
-        $moderator    = $this->app->input->getInt('moderator');
-        $uid          = $this->app->input->getInt('uid');
-        $deleteAvatar = $this->app->input->getInt('deleteAvatar');
-        $newOrder     = $this->app->input->getInt('newOrder');
-        $modCatids    = $moderator ? $this->app->input->get('catid', [], 'array') : [];
+        $newView      = $this->app->getInput()->getString('newView');
+        $newRank      = $this->app->getInput()->getString('newRank');
+        $signature    = $this->app->getInput()->getString('signature');
+        $deleteSig    = $this->app->getInput()->getInt('deleteSig');
+        $moderator    = $this->app->getInput()->getInt('moderator');
+        $uid          = $this->app->getInput()->getInt('uid');
+        $deleteAvatar = $this->app->getInput()->getInt('deleteAvatar');
+        $newOrder     = $this->app->getInput()->getInt('newOrder');
+        $modCatids    = $moderator ? $this->app->getInput()->get('catid', [], 'array') : [];
         $modCatids    = ArrayHelper::toInteger($modCatids);
         KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 
@@ -125,8 +125,8 @@ class UserController extends FormController
                 $user->signature = $signature;
             }
 
-            $user->personalText = $this->app->input->getString('personalText');
-            $birthdate          = $this->app->input->getString('birthdate');
+            $user->personalText = $this->app->getInput()->getString('personalText');
+            $birthdate          = $this->app->getInput()->getString('birthdate');
 
             if ($birthdate) {
                 $date = Factory::getDate($birthdate);
@@ -137,14 +137,14 @@ class UserController extends FormController
             }
 
             $user->birthdate    = $birthdate;
-            $user->location     = trim($this->app->input->getString('location'));
-            $user->gender       = $this->app->input->getInt('gender', '');
-            $user->websitename  = $this->app->input->getString('websitename');
-            $user->websiteurl   = $this->app->input->getString('websiteurl');
-            $user->hideEmail    = $this->app->input->getInt('hidemail');
-            $user->showOnline   = $this->app->input->getInt('showonline');
-            $user->canSubscribe = $this->app->input->getInt('cansubscribe');
-            $user->userListtime = $this->app->input->getInt('userlisttime');
+            $user->location     = trim($this->app->getInput()->getString('location'));
+            $user->gender       = $this->app->getInput()->getInt('gender', '');
+            $user->websitename  = $this->app->getInput()->getString('websitename');
+            $user->websiteurl   = $this->app->getInput()->getString('websiteurl');
+            $user->hideEmail    = $this->app->getInput()->getInt('hidemail');
+            $user->showOnline   = $this->app->getInput()->getInt('showonline');
+            $user->canSubscribe = $this->app->getInput()->getInt('cansubscribe');
+            $user->userListtime = $this->app->getInput()->getInt('userlisttime');
             $user->view         = $newView;
             $user->ordering     = $newOrder;
             $user->rank         = $newRank;
@@ -244,7 +244,7 @@ class UserController extends FormController
             return;
         }
 
-        $catid = $this->app->input->getInt('catid');
+        $catid = $this->app->getInput()->getInt('catid');
         $uids  = (array) $this->app->getUserState('kunena.usermove.userids');
 
         $error = null;

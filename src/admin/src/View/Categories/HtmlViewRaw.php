@@ -40,7 +40,7 @@ class HtmlView extends BaseHtmlView
      */
     public function displayChkAliases(): void
     {
-        $alias = $this->app->input->get('alias', null, 'string');
+        $alias = $this->app->getInput()->get('alias', null, 'string');
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
@@ -66,7 +66,7 @@ class HtmlView extends BaseHtmlView
      */
     public function displayDeleteAlias(): void
     {
-        $alias = $this->app->input->get('alias', null, 'string');
+        $alias = $this->app->getInput()->get('alias', null, 'string');
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();

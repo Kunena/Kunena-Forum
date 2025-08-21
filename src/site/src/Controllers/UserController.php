@@ -86,9 +86,9 @@ class UserController extends KunenaController
             $redirect = $params->get('integration', 1);
         }
 
-        if ($redirect && $this->app->input->getCmd('format', 'html') == 'html') {
+        if ($redirect && $this->app->getInput()->getCmd('format', 'html') == 'html') {
             $profileIntegration = KunenaFactory::getProfile();
-            $layout             = $this->app->input->getCmd('layout', 'default');
+            $layout             = $this->app->getInput()->getCmd('layout', 'default');
 
             if ($profileIntegration instanceof KunenaProfileKunena) {
                 // Continue
@@ -105,7 +105,7 @@ class UserController extends KunenaController
             }
         }
 
-        $layout = $this->app->input->getCmd('layout', 'default');
+        $layout = $this->app->getInput()->getCmd('layout', 'default');
 
         if ($layout == 'list') {
             if (!KunenaFactory::getConfig()->userlistAllowed && $this->app->getIdentity()->guest) {
@@ -165,7 +165,7 @@ class UserController extends KunenaController
             return;
         }
 
-        $layout = $this->app->input->getString('topicLayout', 'default');
+        $layout = $this->app->getInput()->getString('topicLayout', 'default');
         $this->me->setTopicLayout($layout);
         $this->setRedirectBack();
     }
@@ -203,7 +203,7 @@ class UserController extends KunenaController
         // 14400 seconds = 6 hours
         $karma_delay = '14400';
 
-        $userid = $this->app->input->getInt('userid', 0);
+        $userid = $this->app->getInput()->getInt('userid', 0);
 
         $target = KunenaFactory::getUser($userid);
         $karma = KunenaKarmaHelper::get($userid);
@@ -296,7 +296,7 @@ class UserController extends KunenaController
     {
         $return = null;
         $errors = 0;
-        $userid = $this->app->input->getInt('userid');
+        $userid = $this->app->getInput()->getInt('userid');
 
         if (!Session::checkToken('post')) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);
@@ -361,14 +361,14 @@ class UserController extends KunenaController
             $log = KunenaLog::LOG_USER_EDIT;
 
             KunenaLog::log(
-            	KunenaLog::TYPE_ACTION,
-            	$log,
-            	[
+                KunenaLog::TYPE_ACTION,
+                $log,
+                [
                     'edited_by_moderator' => $edited_by_moderator,
                 ],
-            	null,
-            	null,
-            	$this->user
+                null,
+                null,
+                $this->user
             );
         }
 
@@ -393,9 +393,9 @@ class UserController extends KunenaController
         }
 
         // Clean request
-        $post           = $this->app->input->post->getArray();
-        $post_password  = $this->app->input->post->get('password', '', 'raw');
-        $post_password2 = $this->app->input->post->get('password2', '', 'raw');
+        $post           = $this->app->getInput()->post->getArray();
+        $post_password  = $this->app->getInput()->post->get('password', '', 'raw');
+        $post_password2 = $this->app->getInput()->post->get('password2', '', 'raw');
 
         if (empty($post_password) || empty($post_password2)) {
             unset($post['password'], $post['password2']);
@@ -452,8 +452,8 @@ class UserController extends KunenaController
 
             if (\strlen($valueTrim) != $valueLength) {
                 $this->app->enqueueMessage(
-                	Text::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
-                	'error'
+                    Text::_('COM_USERS_MSG_SPACES_IN_PASSWORD'),
+                    'error'
                 );
 
                 $validPassword = false;
@@ -465,8 +465,8 @@ class UserController extends KunenaController
 
                 if ($nInts < $minimumIntegers) {
                     $this->app->enqueueMessage(
-                    	Text::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
-                    	'error'
+                        Text::plural('COM_USERS_MSG_NOT_ENOUGH_INTEGERS_N', $minimumIntegers),
+                        'error'
                     );
 
                     $validPassword = false;
@@ -479,8 +479,8 @@ class UserController extends KunenaController
 
                 if ($nsymbols < $minimumSymbols) {
                     $this->app->enqueueMessage(
-                    	Text::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
-                    	'error'
+                        Text::plural('COM_USERS_MSG_NOT_ENOUGH_SYMBOLS_N', $minimumSymbols),
+                        'error'
                     );
 
                     $validPassword = false;
@@ -493,8 +493,8 @@ class UserController extends KunenaController
 
                 if ($nUppercase < $minimumUppercase) {
                     $this->app->enqueueMessage(
-                    	Text::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
-                    	'error'
+                        Text::plural('COM_USERS_MSG_NOT_ENOUGH_UPPERCASE_LETTERS_N', $minimumUppercase),
+                        'error'
                     );
 
                     $validPassword = false;
@@ -505,8 +505,8 @@ class UserController extends KunenaController
             if (!empty($minimumLength)) {
                 if (\strlen((string) $value) < $minimumLength) {
                     $this->app->enqueueMessage(
-                    	Text::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
-                    	'error'
+                        Text::plural('COM_USERS_MSG_PASSWORD_TOO_SHORT_N', $minimumLength),
+                        'error'
                     );
 
                     $validPassword = false;
@@ -570,7 +570,7 @@ class UserController extends KunenaController
      */
     protected function saveProfile()
     {
-        $input  = $this->app->input;
+        $input  = $this->app->getInput();
         $method = $input->getMethod();
         $user   = KunenaFactory::getUser($input->$method->get('userid', 0, 'int'));
 
@@ -589,13 +589,13 @@ class UserController extends KunenaController
 
             $user->signature = $signature;
         }
- 
+
         // Save values entered by user for the social 
         $socials = KunenaUserSocials::getInstance($user->userid);
 
-        foreach($socials as $key => $social) {
-            if ($input->$method->get('social'.$key, '', 'string') !== null) {
-                $socials->$key->value = $input->$method->get('social'.$key, '', 'string');
+        foreach ($socials as $key => $social) {
+            if ($input->$method->get('social' . $key, '', 'string') !== null) {
+                $socials->$key->value = $input->$method->get('social' . $key, '', 'string');
             }
         }
 
@@ -642,18 +642,18 @@ class UserController extends KunenaController
      */
     protected function saveSettings()
     {
-        $this->user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+        $this->user = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
 
-        if ($this->app->input->get('hidemail', null) === null) {
+        if ($this->app->getInput()->get('hidemail', null) === null) {
             return;
         }
 
-        $this->user->ordering     = $this->app->input->getInt('messageordering', 0);
-        $this->user->hideEmail    = $this->app->input->getInt('hidemail', 1);
-        $this->user->showOnline   = $this->app->input->getInt('showonline', 1);
-        $this->user->canSubscribe = $this->app->input->getInt('cansubscribe', -1);
-        $this->user->userListtime = $this->app->input->getInt('userlisttime', -2);
-        $this->user->socialshare  = $this->app->input->getInt('socialshare', 1);
+        $this->user->ordering     = $this->app->getInput()->getInt('messageordering', 0);
+        $this->user->hideEmail    = $this->app->getInput()->getInt('hidemail', 1);
+        $this->user->showOnline   = $this->app->getInput()->getInt('showonline', 1);
+        $this->user->canSubscribe = $this->app->getInput()->getInt('cansubscribe', -1);
+        $this->user->userListtime = $this->app->getInput()->getInt('userlisttime', -2);
+        $this->user->socialshare  = $this->app->getInput()->getInt('socialshare', 1);
     }
 
     /**
@@ -665,7 +665,7 @@ class UserController extends KunenaController
      */
     public function ban()
     {
-        $user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+        $user = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
 
         if (!$user->exists() || !Session::checkToken('post')) {
             $this->setRedirect($user->getUrl(false), Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
@@ -683,20 +683,20 @@ class UserController extends KunenaController
             return;
         }
 
-        $ip             = $this->app->input->getString('ip', '');
-        $banlevel       = $this->app->input->getInt('banlevel', 0);
-        $expiration     = $this->app->input->getString('expiration', '');
-        $reason_private = $this->app->input->getString('reason_private', '');
-        $reason_public  = $this->app->input->getString('reason_public', '');
-        $comment        = $this->app->input->getString('comment', '');
+        $ip             = $this->app->getInput()->getString('ip', '');
+        $banlevel       = $this->app->getInput()->getInt('banlevel', 0);
+        $expiration     = $this->app->getInput()->getString('expiration', '');
+        $reason_private = $this->app->getInput()->getString('reason_private', '');
+        $reason_public  = $this->app->getInput()->getString('reason_public', '');
+        $comment        = $this->app->getInput()->getString('comment', '');
 
-        $banDelPosts     = $this->app->input->getString('bandelposts', '');
-        $banDelPostsPerm = $this->app->input->getString('bandelpostsperm', '');
-        $DelAvatar       = $this->app->input->getString('delavatar', '');
-        $DelSignature    = $this->app->input->getString('delsignature', '');
-        $DelProfileInfo  = $this->app->input->getString('delprofileinfo', '');
+        $banDelPosts     = $this->app->getInput()->getString('bandelposts', '');
+        $banDelPostsPerm = $this->app->getInput()->getString('bandelpostsperm', '');
+        $DelAvatar       = $this->app->getInput()->getString('delavatar', '');
+        $DelSignature    = $this->app->getInput()->getString('delsignature', '');
+        $DelProfileInfo  = $this->app->getInput()->getString('delprofileinfo', '');
 
-        $delban = $this->app->input->getString('delban', '');
+        $delban = $this->app->getInput()->getString('delban', '');
 
         if (!$ban->id) {
             $ban->ban($user->userid, $ip, $banlevel, $expiration, $reason_private, $reason_public, $comment);
@@ -743,9 +743,9 @@ class UserController extends KunenaController
         if ($success) {
             if ($this->config->logModeration) {
                 KunenaLog::log(
-                	KunenaLog::TYPE_MODERATION,
-                	$log,
-                	[
+                    KunenaLog::TYPE_MODERATION,
+                    $log,
+                    [
                         'expiration'     => $delban ? 'NOW' : $expiration,
                         'reason_private' => $reason_private,
                         'reason_public'  => $reason_public,
@@ -757,9 +757,9 @@ class UserController extends KunenaController
                             'deletePosts'    => (bool) $banDelPosts,
                         ],
                     ],
-                	null,
-                	null,
-                	$user
+                    null,
+                    null,
+                    $user
                 );
 
                 KunenaUserHelper::recountBanned();
@@ -798,18 +798,18 @@ class UserController extends KunenaController
             $user->websitename = '';
             $user->websiteurl  = '';
             $user->signature   = '';
-            
+
             // Empty socials value in the user profile if they are filled
             $socials = KunenaUserSocials::getInstance($user->userid);
-            
-            foreach ($socials as $key => $social) {                
+
+            foreach ($socials as $key => $social) {
                 if (isset($social->value)) {
                     $socials->$key->value = '';
-                } 
+                }
             }
-            
+
             $socials->save();
-             
+
             $user->save();
             $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO'), 'success');
         } elseif (!empty($DelSignature)) {
@@ -870,7 +870,8 @@ class UserController extends KunenaController
      * @throws Exception
      * @since   Kunena 6.5.0
      */
-    protected function sendMailWhenUserBannedAndUnbanned(KunenaUser $user, $ban) {
+    protected function sendMailWhenUserBannedAndUnbanned(KunenaUser $user, $ban)
+    {
         if ($ban->isEnabled()) {
             $mailTitle =  Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE');
             $mailBody = $this->config->mailBodyUserUnBanned;
@@ -878,7 +879,7 @@ class UserController extends KunenaController
             $mailTitle = Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE');
             $mailBody = $this->config->mailBodyUserUnBanned;
         }
-        
+
         // Create email to notify the user which has been unbanned.
         $mailnamesender  = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle);
         $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
@@ -887,7 +888,7 @@ class UserController extends KunenaController
         $mail->setBody($mailBody);
         KunenaEmail::send($mail, [$user->email]);
     }
-    
+
     /**
      * Reports a user to stopforumspam.com
      *
@@ -983,7 +984,7 @@ class UserController extends KunenaController
             return;
         }
 
-        $input  = $this->app->input;
+        $input  = $this->app->getInput();
         $method = $input->getMethod();
 
         $username  = $input->$method->get('username', '', 'USERNAME');
@@ -1030,8 +1031,8 @@ class UserController extends KunenaController
         }
 
         // Get the return url from the request and validate that it is internal.
-        if (!empty($this->app->input->getBase64('return'))) {
-            $return = base64_decode($this->app->input->getBase64('return'));
+        if (!empty($this->app->getInput()->getBase64('return'))) {
+            $return = base64_decode($this->app->getInput()->getBase64('return'));
 
             if ($return && Uri::isInternal($return)) {
                 // Redirect the user.
@@ -1062,7 +1063,7 @@ class UserController extends KunenaController
             return;
         }
 
-        $status     = $this->app->input->getInt('status', 0);
+        $status     = $this->app->getInput()->getInt('status', 0);
         $me         = KunenaUserHelper::getMyself();
         $me->status = $status;
 
@@ -1097,7 +1098,7 @@ class UserController extends KunenaController
             return;
         }
 
-        $status_text     = $this->app->input->post->getString('status_text', '');
+        $status_text     = $this->app->getInput()->post->getString('status_text', '');
         $me              = KunenaUserHelper::getMyself();
         $me->status_text = $status_text;
 
@@ -1130,7 +1131,7 @@ class UserController extends KunenaController
         }
 
         $upload = KunenaUpload::getInstance();
-        $user   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+        $user   = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
 
         // We are converting all exceptions into JSON.
         try {
@@ -1198,7 +1199,7 @@ class UserController extends KunenaController
      */
     protected function deleteOldAvatars()
     {
-        $user = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+        $user = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
 
         if (!empty($user->avatar)) {
             if (preg_match('|^users/|', $user->avatar)) {
@@ -1240,7 +1241,7 @@ class UserController extends KunenaController
         }
 
         $success = [];
-        $kuser   = KunenaFactory::getUser($this->app->input->getInt('userid', 0));
+        $kuser   = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
 
         if (
             KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin()
@@ -1391,7 +1392,8 @@ class UserController extends KunenaController
      * 
      * @since   Kunena 6.3
      */
-    public function getusersmentions() {
+    public function getusersmentions()
+    {
         $id = $this->input->getInt('topicid', 0);
 
         $userListMentions = [];
@@ -1441,7 +1443,8 @@ class UserController extends KunenaController
      *
      * @since   Kunena 6.3
      */
-    public function getusersmentionssearch() {
+    public function getusersmentionssearch()
+    {
         $user = $this->input->getString('usersearch', null);
 
         $db     = Factory::getContainer()->get('DatabaseDriver');

@@ -23,7 +23,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
-$view    = Factory::getApplication()->input->getWord('view');
+$view    = Factory::getApplication()->getInput()->getWord('view');
 ?>
 
 <div class="row">
@@ -42,12 +42,12 @@ $view    = Factory::getApplication()->input->getWord('view');
         </div>
 
         <?php if ($view != 'user') :
-            ?>
+        ?>
             <div class="filter-sel float-end">
                 <h2 class="filter-time float-end" id="filter-time"></h2>
                 <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
-                      id="timeselect" name="timeselect"
-                      method="post" target="_self" class="form-inline d-none d-sm-block">
+                    id="timeselect" name="timeselect"
+                    method="post" target="_self" class="form-inline d-none d-sm-block">
                     <?php $this->displayTimeFilter('sel'); ?>
                     <?php echo HTMLHelper::_('form.token'); ?>
                 </form>
@@ -69,79 +69,79 @@ $view    = Factory::getApplication()->input->getWord('view');
 </div>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics'); ?>" method="post"
-      name="ktopicsform" id="ktopicsform">
+    name="ktopicsform" id="ktopicsform">
     <?php echo HTMLHelper::_('form.token'); ?>
 
     <table class="table<?php echo KunenaTemplate::getInstance()->borderless(); ?>">
         <thead>
-        <?php if (empty($this->messages)) : ?>
-            <tr>
-                <th scope="row">&nbsp;</th>
-            </tr>
-        <?php else : ?>
-            <th scope="col" class="center d-none d-md-table-cell">
-                <a id="forumtop"> </a>
-                <a href="#forumbottom" rel="nofollow">
-                    <?php echo KunenaIcons::arrowdown(); ?>
-                </a>
-            </th>
-            <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
-            <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
-                / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
-            <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+            <?php if (empty($this->messages)) : ?>
+                <tr>
+                    <th scope="row">&nbsp;</th>
+                </tr>
+            <?php else : ?>
+                <th scope="col" class="center d-none d-md-table-cell">
+                    <a id="forumtop"> </a>
+                    <a href="#forumbottom" rel="nofollow">
+                        <?php echo KunenaIcons::arrowdown(); ?>
+                    </a>
+                </th>
+                <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
+                <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_REPLIES'); ?>
+                    / <?php echo Text::_('COM_KUNENA_GEN_HITS'); ?></th>
+                <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
 
-            <?php if (!empty($this->actions)) : ?>
-                <th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value=""/></th>
+                <?php if (!empty($this->actions)) : ?>
+                    <th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value="" /></th>
+                <?php endif; ?>
             <?php endif; ?>
-        <?php endif; ?>
         </thead>
 
         <tfoot>
-        <?php if (!empty($this->messages)) : ?>
-            <tr>
-                <th scope="col" class="center d-none d-md-table-cell">
-                    <a id="forumbottom"> </a>
-                    <a href="#forumtop" rel="nofollow">
-                        <span class="dropdown-divider"></span>
-                        <?php echo KunenaIcons::arrowup(); ?>
-                    </a>
-                </th>
-                <?php if (!empty($this->actions)) : ?>
-                    <th scope="col" class="d-none d-md-table-cell">
-                        <div class="form-group">
-                            <div class="input-group" role="group">
-                                <?php if (!empty($this->moreUri)) {
-                                    echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-start', 'nofollow');
-                                } ?>
-                                <?php
-                                if (!empty($this->actions)) :
-                                    ?>
-                                    <?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-select kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
-                                    <?php
-                                    if (isset($this->actions['move'])) :
-                                        $options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
-                                        echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-select fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
-                                    endif; ?>
-                                    <input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
-                                            value="<?php echo Text::_('COM_KUNENA_GO') ?>"/>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+            <?php if (!empty($this->messages)) : ?>
+                <tr>
+                    <th scope="col" class="center d-none d-md-table-cell">
+                        <a id="forumbottom"> </a>
+                        <a href="#forumtop" rel="nofollow">
+                            <span class="dropdown-divider"></span>
+                            <?php echo KunenaIcons::arrowup(); ?>
+                        </a>
                     </th>
-                <?php endif; ?>
-            </tr>
-        <?php endif; ?>
+                    <?php if (!empty($this->actions)) : ?>
+                        <th scope="col" class="d-none d-md-table-cell">
+                            <div class="form-group">
+                                <div class="input-group" role="group">
+                                    <?php if (!empty($this->moreUri)) {
+                                        echo HTMLHelper::_('kunenaforum.link', $this->moreUri, Text::_('COM_KUNENA_MORE'), null, 'btn btn-outline-primary float-start', 'nofollow');
+                                    } ?>
+                                    <?php
+                                    if (!empty($this->actions)) :
+                                    ?>
+                                        <?php echo HTMLHelper::_('select.genericlist', $this->actions, 'task', 'class="form-select kchecktask" ', 'value', 'text', 0, 'kchecktask'); ?>
+                                        <?php
+                                        if (isset($this->actions['move'])) :
+                                            $options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
+                                            echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-select fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
+                                        endif; ?>
+                                        <input type="submit" name="kcheckgo" class="btn btn-outline-primary border"
+                                            value="<?php echo Text::_('COM_KUNENA_GO') ?>" />
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </th>
+                    <?php endif; ?>
+                </tr>
+            <?php endif; ?>
         </tfoot>
 
         <tbody class="message-list">
-        <?php
-        foreach ($this->messages as $i => $message) {
-            echo $this->subLayout('Message/Row')
-                ->set('message', $message)
-                ->set('position', $i)
-                ->set('checkbox', !empty($this->actions));
-        }
-        ?>
+            <?php
+            foreach ($this->messages as $i => $message) {
+                echo $this->subLayout('Message/Row')
+                    ->set('message', $message)
+                    ->set('position', $i)
+                    ->set('checkbox', !empty($this->actions));
+            }
+            ?>
         </tbody>
     </table>
 </form>
@@ -153,10 +153,10 @@ $view    = Factory::getApplication()->input->getWord('view');
 </div>
 
 <?php if ($view != 'user') :
-    ?>
+?>
     <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>" id="timeselect"
-          name="timeselect"
-          method="post" target="_self" class="timefilter float-end">
+        name="timeselect"
+        method="post" target="_self" class="timefilter float-end">
         <?php $this->displayTimeFilter('sel'); ?>
     </form>
 <?php endif; ?>

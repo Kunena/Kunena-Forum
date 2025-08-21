@@ -253,8 +253,8 @@ class KunenaController extends BaseController
                 $return = '';
 
                 // If controller didn't set a new redirect, try if request has return url in it.
-                if (!empty($app->input->getBase64('return'))) {
-                    $return = base64_decode($app->input->getBase64('return'));
+                if (!empty($app->getInput()->getBase64('return'))) {
+                    $return = base64_decode($app->getInput()->getBase64('return'));
                 }
 
                 // Only allow internal urls to be used.
@@ -345,8 +345,8 @@ class KunenaController extends BaseController
         $document = Factory::getApplication()->getDocument();
 
         // Set the default view name and format from the Request.
-        $vName   = Factory::getApplication()->input->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');
-        $lName   = Factory::getApplication()->input->getWord('layout', 'default');
+        $vName   = Factory::getApplication()->getInput()->getWord('view', $this->app->isClient('administrator') ? 'cpanel' : 'home');
+        $lName   = Factory::getApplication()->getInput()->getWord('layout', 'default');
         $vFormat = $document->getType();
 
         if ($this->app->isClient('site')) {

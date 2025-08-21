@@ -195,7 +195,7 @@ class AnnouncementController extends KunenaController
             return;
         }
 
-        $cid = $this->app->input->get('cid', (array) $this->app->input->getInt('id'), 'post', 'array');
+        $cid = $this->app->getInput()->get('cid', (array) $this->app->getInput()->getInt('id'), 'post', 'array');
         $cid = ArrayHelper::toInteger($cid);
 
         foreach ($cid as $id) {
@@ -219,9 +219,9 @@ class AnnouncementController extends KunenaController
             if ($announcement->isAuthorised('delete') || $announcement->delete()) {
                 if ($this->config->logModeration) {
                     KunenaLog::log(
-                    	KunenaLog::TYPE_MODERATION,
-                    	KunenaLog::LOG_ANNOUNCEMENT_DELETE,
-                    	['id' => $announcement->id]
+                        KunenaLog::TYPE_MODERATION,
+                        KunenaLog::LOG_ANNOUNCEMENT_DELETE,
+                        ['id' => $announcement->id]
                     );
                 }
 
@@ -251,16 +251,16 @@ class AnnouncementController extends KunenaController
 
         $now                    = new Date();
         $fields                 = [];
-        $fields['title']        = $this->app->input->getString('title', '');
-        $fields['description']  = $this->app->input->getString('description', '');
-        $fields['sdescription'] = $this->app->input->getString('sdescription', '');
-        $fields['created']      = $this->app->input->getString('created');
-        $fields['publish_up']   = $this->app->input->getString('publish_up');
-        $fields['publish_down'] = $this->app->input->getString('publish_down');
-        $fields['published']    = $this->app->input->getInt('published', 1);
-        $fields['showdate']     = $this->app->input->getInt('showdate', 1);
+        $fields['title']        = $this->app->getInput()->getString('title', '');
+        $fields['description']  = $this->app->getInput()->getString('description', '');
+        $fields['sdescription'] = $this->app->getInput()->getString('sdescription', '');
+        $fields['created']      = $this->app->getInput()->getString('created');
+        $fields['publish_up']   = $this->app->getInput()->getString('publish_up');
+        $fields['publish_down'] = $this->app->getInput()->getString('publish_down');
+        $fields['published']    = $this->app->getInput()->getInt('published', 1);
+        $fields['showdate']     = $this->app->getInput()->getInt('showdate', 1);
 
-        $id           = $this->app->input->getInt('id');
+        $id           = $this->app->getInput()->getInt('id');
         $announcement = KunenaAnnouncementHelper::get($id);
 
         if ($fields['created'] == null) {
@@ -297,10 +297,10 @@ class AnnouncementController extends KunenaController
 
         if ($this->config->logModeration) {
             KunenaLog::log(
-            	KunenaLog::TYPE_MODERATION,
-            	$id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT :
-                KunenaLog::LOG_ANNOUNCEMENT_CREATE,
-            	['id' => $announcement->id]
+                KunenaLog::TYPE_MODERATION,
+                $id ? KunenaLog::LOG_ANNOUNCEMENT_EDIT :
+                    KunenaLog::LOG_ANNOUNCEMENT_CREATE,
+                ['id' => $announcement->id]
             );
         }
 

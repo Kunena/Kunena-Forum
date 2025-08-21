@@ -330,7 +330,7 @@ class TemplatesModel extends AdminModel
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
-        $layout = $app->input->get('layout');
+        $layout = $app->getInput()->get('layout');
 
         if ($layout) {
             $this->context .= '.' . $layout;
@@ -370,7 +370,7 @@ class TemplatesModel extends AdminModel
     public function getUserStateFromRequest(string $key, string $request, $default = null, $type = 'none', $resetPage = true)
     {
         $app      = Factory::getApplication();
-        $input    = $app->input;
+        $input    = $app->getInput();
         $oldState = $app->getUserState($key);
         $curState = ($oldState !== null) ? $oldState : $default;
         $newState = $input->get($request, null, $type);

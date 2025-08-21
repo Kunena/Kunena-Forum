@@ -71,7 +71,7 @@ abstract class KunenaError
     public static function initialize(): void
     {
         if (!self::$enabled && !KunenaForum::isDev()) {
-            self::$format = Factory::getApplication()->input->getWord('format', 'html');
+            self::$format = Factory::getApplication()->getInput()->getWord('format', 'html');
             self::$debug  = JDEBUG || KunenaFactory::getConfig()->debug;
             self::$admin  = Factory::getApplication()->isClient('administrator');
 
@@ -159,8 +159,8 @@ abstract class KunenaError
             $app->enqueueMessage('Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage(), 'error');
         } elseif (!JDEBUG && !KunenaFactory::getConfig()->debug && !self::$admin) {
             $app->enqueueMessage('Kunena ' . Text::sprintf(
-            	'COM_KUNENA_INTERNAL_ERROR_ADMIN',
-            	'<a href="https://www.kunena.org/">www.kunena.org</a>'
+                'COM_KUNENA_INTERNAL_ERROR_ADMIN',
+                '<a href="https://www.kunena.org/">www.kunena.org</a>'
             ), 'error');
         } elseif (KunenaFactory::getUser()->isAdmin() && $app->isClient('site')) {
             $app->enqueueMessage('Exception throw at line ' . $exception->getLine() . ' in file ' . $exception->getFile() . ' with message ' . $exception->getMessage(), 'error');
@@ -253,14 +253,14 @@ abstract class KunenaError
 
             if ($debug) {
                 // Clean up file path (take also care of some symbolic links).
-                $file     = strtr($error ['file'], '\\', '/');
+                $file     = strtr($error['file'], '\\', '/');
                 $file     = preg_replace('%' . strtr(JPATH_ROOT, '\\', '/') . '/%', '\\1', $file);
                 $file     = preg_replace('%^.*?/((administrator/)?(components|modules|plugins|templates)/)%', '\\1', $file);
                 $errorMsg = sprintf(
-                	"<p><b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b></p>",
-                	$error['message'],
-                	$file,
-                	$error['line']
+                    "<p><b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b></p>",
+                    $error['message'],
+                    $file,
+                    $error['line']
                 );
                 $parts    = explode('/', $file);
                 $dir      = (string) array_shift($parts);

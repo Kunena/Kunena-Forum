@@ -91,11 +91,11 @@ class RankController extends AdminController
             return;
         }
 
-        $rankTitle   = $this->app->input->getString('rankTitle');
-        $rankImage   = basename($this->app->input->getString('rankImage'));
-        $rankSpecial = $this->app->input->getInt('rankSpecial', 0);
-        $rankMin     = $this->app->input->getInt('rankMin');
-        $rankid      = $this->app->input->getInt('rankid', 0);
+        $rankTitle   = $this->app->getInput()->getString('rankTitle');
+        $rankImage   = basename($this->app->getInput()->getString('rankImage'));
+        $rankSpecial = $this->app->getInput()->getInt('rankSpecial', 0);
+        $rankMin     = $this->app->getInput()->getInt('rankMin');
+        $rankid      = $this->app->getInput()->getInt('rankid', 0);
 
         if (!$rankid) {
             $query = $db->createQuery();

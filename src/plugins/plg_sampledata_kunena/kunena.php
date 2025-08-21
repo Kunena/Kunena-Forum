@@ -115,7 +115,7 @@ class PlgSampledataKunena extends CMSPlugin
      */
     public function onAjaxSampledataApplyStep1()
     {
-        if (!Session::checkToken('get') || $this->app->input->get('type') != $this->_name) {
+        if (!Session::checkToken('get') || $this->app->getInput()->get('type') != $this->_name) {
             return;
         }
 

@@ -319,7 +319,7 @@ class StatisticsModel extends ListModel
         $app = Factory::getApplication();
 
         // Adjust the context to support modal layouts.
-        $layout = $app->input->get('layout');
+        $layout = $app->getInput()->get('layout');
 
         if ($layout) {
             $this->context .= '.' . $layout;

@@ -142,8 +142,8 @@ class CategoryController extends KunenaController
         $post['params'] += $this->input->get("params", [], 'array');
         $success        = false;
 
-        $category = KunenaCategoryHelper::get(\intval($post ['catid']));
-        $parent   = KunenaCategoryHelper::get(\intval($post ['parentid']));
+        $category = KunenaCategoryHelper::get(\intval($post['catid']));
+        $parent   = KunenaCategoryHelper::get(\intval($post['parentid']));
 
         if ($category->exists() && !$category->isAuthorised('admin')) {
             // Category exists and user is not admin in category
@@ -158,7 +158,7 @@ class CategoryController extends KunenaController
             // User needs to be admin in parent (both new and old) in order to move category, parentid=0 needs global admin rights
             if (!$me->isAdmin($parent) || ($category->exists() && !$me->isAdmin($category->getParent()))) {
                 $ignore            = array_merge($ignore, ['parentid', 'ordering']);
-                $post ['parentid'] = $category->parentid;
+                $post['parentid'] = $category->parentid;
             }
 
             // Only global admin can change access control and class_sfx (others are inherited from parent)
@@ -196,23 +196,23 @@ class CategoryController extends KunenaController
             } catch (KunenaException $e) {
                 if (!empty($e->getMessage())) {
                     $this->app->enqueueMessage(
-                    	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $e->getMessage()),
-                    	'error'
+                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $e->getMessage()),
+                        'error'
                     );
                 } else {
                     $this->app->enqueueMessage(
-                    	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
-                    	'error'
+                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
+                        'error'
                     );
                 }
             }
 
-            $aliasesInput = $this->app->input->getString('aliases_all');
+            $aliasesInput = $this->app->getInput()->getString('aliases_all');
 
             if (!empty($aliasesInput)) {
                 $aliases_all = explode(',', $aliasesInput);
 
-                $aliases = $this->app->input->post->getArray(['aliases' => []]);
+                $aliases = $this->app->getInput()->post->getArray(['aliases' => []]);
 
                 if ($aliases_all && \count($aliases['aliases']) > 1) {
                     $aliases = array_diff($aliases_all, $aliases['aliases']);
@@ -244,12 +244,12 @@ class CategoryController extends KunenaController
 
                 if ($category->tryAuthorise('admin', null, false) && $category->removeModerator($user)) {
                     $this->app->enqueueMessage(
-                    	Text::sprintf(
-                        	'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED',
-                        	$this->escape($user->getName()),
-                        	$this->escape($category->name)
+                        Text::sprintf(
+                            'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED',
+                            $this->escape($user->getName()),
+                            $this->escape($category->name)
                         ),
-                    	'success'
+                        'success'
                     );
                 }
             }
@@ -386,7 +386,7 @@ class CategoryController extends KunenaController
      */
     public function publish(): void
     {
-        $cid = $this->app->input->get('cid', [], 'array');
+        $cid = $this->app->getInput()->get('cid', [], 'array');
         $cid = ArrayHelper::toInteger($cid);
 
         $this->setVariable($cid, 'published', 1);
@@ -404,7 +404,7 @@ class CategoryController extends KunenaController
      */
     public function unpublish(): void
     {
-        $cid = $this->app->input->get('cid', [], 'array');
+        $cid = $this->app->getInput()->get('cid', [], 'array');
         $cid = ArrayHelper::toInteger($cid);
 
         $this->setVariable($cid, 'published', 0);
@@ -452,8 +452,8 @@ class CategoryController extends KunenaController
 
             if (!$category->isAuthorised('admin')) {
                 $this->app->enqueueMessage(
-                	Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
-                	'notice'
+                    Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
+                    'notice'
                 );
             } elseif (!$category->isCheckedOut($this->me->userid)) {
                 $category->set($variable, $value);
@@ -462,8 +462,8 @@ class CategoryController extends KunenaController
                     $category->save();
                 } catch (Exception $e) {
                     $this->app->enqueueMessage(
-                    	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
-                    	'error'
+                        Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
+                        'error'
                     );
                 }
 
@@ -471,8 +471,8 @@ class CategoryController extends KunenaController
                 $name = $category->name;
             } else {
                 $this->app->enqueueMessage(
-                	Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
-                	'notice'
+                    Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
+                    'notice'
                 );
             }
         }
@@ -495,7 +495,7 @@ class CategoryController extends KunenaController
      */
     public function ChkAliases(): void
     {
-        $alias = $this->app->input->get('alias', null, 'string');
+        $alias = $this->app->getInput()->get('alias', null, 'string');
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery()

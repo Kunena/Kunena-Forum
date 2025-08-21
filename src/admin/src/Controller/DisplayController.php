@@ -51,7 +51,7 @@ class DisplayController extends BaseController
     public function display($cachable = false, $urlparams = []): BaseController
     {
         $document = $this->app->getDocument();
-        $view = Factory::getApplication()->input->getCmd('view', '');
+        $view = Factory::getApplication()->getInput()->getCmd('view', '');
 
         if ($view !== 'ranks') {
             $wa = $document->getWebAssetManager();

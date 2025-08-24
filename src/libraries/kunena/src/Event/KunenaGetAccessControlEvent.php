@@ -19,8 +19,7 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
-use Kunena\Forum\Libraries\Integration\KunenaAvatar;
-use Kunena\Forum\Plugin\Kunena\Joomla\KunenaAccessJoomla;
+use Kunena\Forum\Plugin\Kunena\Joomla\Helper\KunenaAccessJoomla;
 
 /**
  * Class for onKunenaGetAccessControl event.
@@ -37,25 +36,29 @@ class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements Resu
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaAvatar  $value  The value to set
+     * @param   KunenaAccessJoomla  $value  The value to set
      *
-     * @return  KunenaAvatar
+     * @return  KunenaAccessJoomla
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    /*protected function onSetAvatar(KunenaAvatar $avatar): KunenaAvatar
+    protected function onSetAccessControl(KunenaAccessJoomla $accesscontrol): KunenaAccessJoomla
     {
-        return $avatar;
-    }*/
+        return $accesscontrol;
+    }
 
     /**
      * Getter for the data argument.
      *
-     * @return  KunenaAvatar|array
+     * @return  KunenaAccessJoomla|array
      * @since   6.5.0
      */
-    public function getAccessControl(): array
+    public function getAccessControl(): KunenaAccessJoomla|array
     {
+        if (isset($this->arguments['accesscontrol']) && $this->arguments['accesscontrol'] instanceof KunenaAccessJoomla) {
+            return $this->arguments['accesscontrol'];
+        }
+
         return $this->arguments['result'] ?? [];
     }
 
@@ -65,8 +68,8 @@ class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements Resu
      * @return  $this
      * @since   6.5.0
      */
-    /*public function setAvatar(KunenaAvatar $avatar)
+    public function setAccessControl(KunenaAccessJoomla $accesscontrol)
     {
-        return $this->setArgument('avatar', $avatar);
-    }*/
+        return $this->setArgument('accesscontrol', $accesscontrol);
+    }
 }

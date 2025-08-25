@@ -113,11 +113,11 @@ class KunenaAccess
         Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetAccessControl', $accessControlEvent);
         $classes = $accessControlEvent->getAccessControl();
 
-        if ($classes instanceof KunenaAccessJoomla) {
+        if ($classes instanceof KunenaAccessAbstract) {
             $class = $classes;
         } elseif (\is_array($classes)) {
             foreach ($classes as $class) {
-                if ($class instanceof KunenaAccessJoomla) {
+                if ($class instanceof KunenaAccessAbstract) {
                     break;
                 }
             }

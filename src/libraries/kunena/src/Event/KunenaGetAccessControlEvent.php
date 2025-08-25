@@ -19,7 +19,7 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
-use Kunena\Forum\Plugin\Kunena\Joomla\Helper\KunenaAccessJoomla;
+use Kunena\Forum\Libraries\Access\KunenaAccessAbstract;
 
 /**
  * Class for onKunenaGetAccessControl event.
@@ -36,13 +36,13 @@ class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements Resu
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaAccessJoomla  $value  The value to set
+     * @param   KunenaAccessAbstract  $value  The value to set
      *
-     * @return  KunenaAccessJoomla
+     * @return  KunenaAccessAbstract
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    protected function onSetAccessControl(KunenaAccessJoomla $accesscontrol): KunenaAccessJoomla
+    protected function onSetAccessControl(KunenaAccessAbstract $accesscontrol): KunenaAccessAbstract
     {
         return $accesscontrol;
     }
@@ -50,12 +50,12 @@ class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements Resu
     /**
      * Getter for the data argument.
      *
-     * @return  KunenaAccessJoomla|array
+     * @return  KunenaAccessAbstract|array
      * @since   6.5.0
      */
-    public function getAccessControl(): KunenaAccessJoomla|array
+    public function getAccessControl(): KunenaAccessAbstract|array
     {
-        if (isset($this->arguments['accesscontrol']) && $this->arguments['accesscontrol'] instanceof KunenaAccessJoomla) {
+        if (isset($this->arguments['accesscontrol']) && $this->arguments['accesscontrol'] instanceof KunenaAccessAbstract) {
             return $this->arguments['accesscontrol'];
         }
 
@@ -68,7 +68,7 @@ class KunenaGetAccessControlEvent extends AbstractImmutableEvent implements Resu
      * @return  $this
      * @since   6.5.0
      */
-    public function setAccessControl(KunenaAccessJoomla $accesscontrol)
+    public function setAccessControl(KunenaAccessAbstract $accesscontrol)
     {
         return $this->setArgument('accesscontrol', $accesscontrol);
     }

@@ -22,39 +22,23 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Access\KunenaAccessAbstract;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Exception;
 
 /**
  * Kunena Access Control for Joomla 4.0
  *
  * @since   Kunena 6.0
  */
-class KunenaAccessJoomla
+class KunenaAccessJoomla extends KunenaAccessAbstract
 {
     /**
      * @var     null
      * @since   Kunena 6.0
      */
     protected static $viewLevels = null;
-
-    /**
-     * @var     null
-     * @since   Kunena 6.0
-     */
-    protected $params = null;
-
-    /**
-     * @param   object  $params  params
-     *
-     * @since   Kunena 6.0
-     */
-    public function __construct(object $params)
-    {
-        $this->params = $params;
-    }
 
     /**
      * Get list of supported access types.

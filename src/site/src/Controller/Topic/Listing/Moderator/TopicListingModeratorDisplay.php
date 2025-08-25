@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentTopicControllerListDisplay
@@ -75,21 +76,32 @@ class TopicListingModeratorDisplay extends ListDisplay
         $Itemid = $this->input->getInt('Itemid');
 
         if (!$Itemid && $this->config->sefRedirect) {
-            if ($this->config->moderatorsId) {
-                $itemidfix = $this->config->moderatorsId;
-            } else {
-                $menu      = $this->app->getMenu();
-                $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=moderator"));
-                $itemidfix = $getid->id;
+            try {
+                if ($this->config->moderatorsId) {
+                    $itemid = $this->config->moderatorsId;
+                } else {
+                    $menu      = $this->app->getMenu();
+                    $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=moderator"));
+                    $itemid = $getid->id;
+                }
+
+                if (!$itemid) {
+                    $itemid = KunenaRoute::fixMissingItemID();
+                }
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'topics',
+                    'layout' => 'moderator',
+                    'Itemid' => $itemid
+                ];
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
             }
 
-            if (!$itemidfix) {
-                $itemidfix = KunenaRoute::fixMissingItemID();
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
-
-            $controller = new KunenaController();
-            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=moderator&Itemid={$itemidfix}", false));
-            $controller->redirect();
         }
 
         if ($limit < 1 || $limit > 100) {

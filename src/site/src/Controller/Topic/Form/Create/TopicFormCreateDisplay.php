@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentTopicControllerFormCreateDisplay
@@ -112,27 +113,36 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
         $format = $this->input->getCmd('format');
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
-            if ($this->config->searchId) {
-                $itemidfix = $this->config->searchId;
-            } else {
-                $menu      = $this->app->getMenu();
-                $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
-                $itemidfix = $getid->id;
+            try {
+                if ($this->config->searchId) {
+                    $itemid = $this->config->searchId;
+                } else {
+                    $menu      = $this->app->getMenu();
+                    $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topic&layout=create"));
+                    $itemid    = $getid->id;
+                }
+
+                if (!$itemid) {
+                    $itemid = KunenaRoute::fixMissingItemID();
+                }
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'topic',
+                    'layout' => 'create',
+                    'Itemid' => $itemid
+                ];
+
+                if ($catid) {
+                    $params['catid'] = $catid;
+                }
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
             }
 
-            if (!$itemidfix) {
-                $itemidfix = KunenaRoute::fixMissingItemID();
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
-
-            $controller = new KunenaController();
-
-            if ($catid) {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$catid}&Itemid={$itemidfix}", false));
-            } else {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&Itemid={$itemidfix}", false));
-            }
-
-            $controller->redirect();
         }
 
         $this->me        = KunenaUserHelper::getMyself();
@@ -243,8 +253,6 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
         $this->editorType = $this->ktemplate->params->get('editorType');
 
-        $this->UserCanPostImage = true;
-        
         $this->UserCanPostImage = $this->me->checkUserAllowedLinksImages();
 
         /** @var HtmlDocument $doc */

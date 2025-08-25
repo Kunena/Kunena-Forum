@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentTopicControllerListUserDisplay
@@ -151,37 +152,53 @@ class TopicListingUserDisplay extends ListDisplay
         $format = $this->input->getCmd('format');
 
         if (!$Itemid && $format != 'feed') {
-            $controller = new KunenaController();
-
-            if ($this->config->profileId) {
-                $itemidfix = $this->config->profileId;
-            } else {
-                $menu = $this->app->getMenu();
-
-                if ($view == 'user' && $layout == 'default') {
-                    $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
-                } elseif ($view == 'topics' && $layout == 'user') {
-                    $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}"));
+            try {
+                if ($this->config->profileId) {
+                    $itemid = $this->config->profileId;
                 } else {
-                    $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}"));
+                    $menu = $this->app->getMenu();
+
+                    if ($view == 'user' && $layout == 'default') {
+                        $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+                    } elseif ($view == 'topics' && $layout == 'user') {
+                        $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}"));
+                    } else {
+                        $getid = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}"));
+                    }
+
+                    $itemid = $getid->id;
                 }
 
-                $itemidfix = $getid->id;
+                if (!$itemid) {
+                    $itemid = KunenaRoute::fixMissingItemID();
+                }
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'user',
+                    'Itemid' => $itemid
+                ];
+
+                if ($view == 'user' && $layout == 'default') {
+                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+                } elseif ($view == 'topics' && $layout == 'user') {
+                    $params['view'] = 'topics';
+					$params = [
+                        'layout' => 'user',
+                        'mode' => $this->state->get('list.mode')
+                    ];
+                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+                } else {
+	                $params = [
+                        'mode' => $this->state->get('list.mode')
+                    ];
+                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+                }
             }
 
-            if (!$itemidfix) {
-                $itemidfix = KunenaRoute::fixMissingItemID();
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
-
-            if ($view == 'user' && $layout == 'default') {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemidfix}", false));
-            } elseif ($view == 'topics' && $layout == 'user') {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=user&mode={$this->state->get('list.mode')}&Itemid={$itemidfix}", false));
-            } else {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&mode={$this->state->get('list.mode')}&Itemid={$itemidfix}", false));
-            }
-
-            $controller->redirect();
         }
 
         if (\is_array($categoryIds) && \count($categoryIds) > 0) {

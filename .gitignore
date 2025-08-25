@@ -14,6 +14,8 @@ src/libraries/kunena/External
 src/libraries/kunena/kunena.xml
 src/site/template/aurelia/config/kunena_tmpl_aurelia.xml
 src/site/template/aurelia/config/template.xml
+tests/System/output/videos
+tests/System/output/screenshots
 
 # Builds
 build

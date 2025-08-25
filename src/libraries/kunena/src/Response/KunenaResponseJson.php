@@ -51,10 +51,8 @@ class KunenaResponseJson extends JsonResponse
     {
         parent::__construct($response, $message, $error, $ignoreMessages);
 
-        if ($response instanceof Exception) {
+        if ($response instanceof \Throwable) {
             $this->code = $response->getCode();
-
-            // Build data from exceptions.
             $exceptions = [];
             $e          = $response;
 
@@ -64,7 +62,7 @@ class KunenaResponseJson extends JsonResponse
                     'message' => $e->getMessage(),
                 ];
 
-                if (JDEBUG) {
+                if (\defined('JDEBUG') && JDEBUG) {
                     $exception += [
                         'type' => \get_class($e),
                         'file' => $e->getFile(),
@@ -74,17 +72,18 @@ class KunenaResponseJson extends JsonResponse
 
                 $exceptions[] = $exception;
                 $e            = $e->getPrevious();
-            } while (JDEBUG && $e);
+            } while (\defined('JDEBUG') && JDEBUG && $e);
 
-            // Create response data on exceptions.
             $this->data = ['exceptions' => $exceptions];
         }
 
-        // Empty output buffer to make sure that the response is clean and valid.
-        while (($output = ob_get_clean()) !== false) {
-            // In debug mode send also output buffers (debug dumps, PHP notices and warnings).
-            if ($output && \defined(JDEBUG)) {
-                $response->messages['php'][] = $output;
+        // Empty output buffer with safety limit
+        $maxIterations = 10;
+        $iteration     = 0;
+        while ($iteration++ < $maxIterations && ($output = ob_get_clean()) !== false) {
+            if ($output && \defined('JDEBUG') && JDEBUG) {
+                $this->messages['php']   = $this->messages['php'] ?? [];
+                $this->messages['php'][] = $output;
             }
         }
     }

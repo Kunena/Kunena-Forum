@@ -18,7 +18,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 }
 
-.p-autho {
+.p-author {
   padding-left: 40px;
 }
 
@@ -415,7 +415,7 @@ button.load-more:hover, button.load-more:focus {
 
 .nsfw .display-sensitive-image:hover, .nsfw .display-sensitive-image:focus, .nsfw .display-sensitive-image:active, .no-tweets-pane .load-tweets:hover, .no-tweets-pane .load-tweets:focus, .no-tweets-pane .load-tweets:active {
   background-color: rgba(0, 0, 0, .5);
-  background-image: linear-gradient(top, rgba(0, 0, 0, .5), rgba(0, 0, 0, .15));
+  background-image: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.15));
   border-color: rgba(0, 0, 0, .27);
 }
 

@@ -31,9 +31,8 @@
 	flex: 0 0 24px;
 	height: 24px;
 	width: 24px;
-	background: url("../images/stars.svg");
-	background-position: 0 0;
-	cursor: pointer;
+    background: url("../images/stars.svg") 0 0;
+    cursor: pointer;
 }
 
 #kunena .c-rating__item:hover,
@@ -48,10 +47,9 @@
 	flex: 0 0 14px;
 	height: 14px;
 	width: 14px;
-	background: url("../images/stars.svg");
-	background-size: 200%;
-	background-position: 0 0;
-	cursor: pointer;
+    background-size: 200%;
+    background: url("../images/stars.svg") 0 0;
+    cursor: pointer;
 }
 
 #ktopicsform [class*='category'] .c-rating__item.is-active {

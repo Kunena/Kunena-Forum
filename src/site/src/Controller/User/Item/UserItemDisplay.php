@@ -30,6 +30,7 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\UserModel;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentUserControllerItemDisplay
@@ -89,7 +90,7 @@ class UserItemDisplay extends KunenaControllerDisplay
     public $avatar;
 
     public $banInfo;
-    
+
     public $socials;
 
     /**
@@ -147,27 +148,35 @@ class UserItemDisplay extends KunenaControllerDisplay
         $format = $this->input->getCmd('format');
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
-            $controller = new KunenaController();
+            try {
+                if ($this->config->profileId) {
+                    $itemid = $this->config->profileId;
+                } else {
+                    $menu      = $this->app->getMenu();
+                    $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
+                    $itemid = $getid->id;
+                }
 
-            if ($this->config->profileId) {
-                $itemidfix = $this->config->profileId;
-            } else {
-                $menu      = $this->app->getMenu();
-                $getid     = $menu->getItem(KunenaRoute::getItemID("index.php?option=com_kunena&view=user"));
-                $itemidfix = $getid->id;
+                if (!$itemid) {
+                    $itemid = KunenaRoute::fixMissingItemID();
+                }
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'user',
+                    'Itemid' => $itemid
+                ];
+
+                if ($userid) {
+                    $params['userid'] = $userid;
+                }
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
             }
 
-            if (!$itemidfix) {
-                $itemidfix = KunenaRoute::fixMissingItemID();
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
-
-            if (!$userid) {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&Itemid={$itemidfix}", false));
-            } else {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=user&userid={$userid}&Itemid={$itemidfix}", false));
-            }
-
-            $controller->redirect();
         }
 
         $this->headerText = Text::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());

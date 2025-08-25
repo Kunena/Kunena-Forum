@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class AnnouncementListingDisplay
@@ -67,10 +68,22 @@ class AnnouncementListingDisplay extends KunenaControllerDisplay
         $Itemid = $this->input->getInt('Itemid');
 
         if (!$Itemid && $this->config->sefRedirect) {
-            $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = new KunenaController();
-            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=listing&Itemid={$itemid}", false));
-            $controller->redirect();
+            try {
+                $itemid = KunenaRoute::fixMissingItemID();
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'announcement',
+                    'layout' => 'listing',
+                    'Itemid' => $itemid
+                ];
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+            }
+
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
+            }
         }
 
         if ($limit < 1 || $limit > 100) {

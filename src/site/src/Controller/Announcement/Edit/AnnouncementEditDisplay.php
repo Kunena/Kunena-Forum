@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use RuntimeException;
 
 /**
  * Class ComponentAnnouncementControllerEditDisplay
@@ -45,7 +46,7 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
     /**
      * Prepare announcement form display.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  null
      * @throws  Exception
@@ -53,28 +54,47 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
      */
     protected function before()
     {
-        parent::before();
+        $result = parent::before();
+
+        if ($result === false) {
+            return false;
+        }
 
         $id = $this->input->getInt('id', null);
-
         $this->announcement = KunenaAnnouncementHelper::get($id);
+
+        if (!$this->announcement) {
+            throw new RuntimeException('Failed to load announcement');
+        }
+
         $this->announcement->tryAuthorise($id ? 'edit' : 'create');
 
         $Itemid = $this->input->getInt('Itemid');
 
         if (!$Itemid && $this->config->sefRedirect) {
-            $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = new KunenaController();
-            $controller = Factory::getApplication()->bootComponent('com_kunena')->getMVCFactory()->createController('kunena');
+            try {
+                $itemid = KunenaRoute::fixMissingItemID();
 
-            if ($id) {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=edit&id={$id}&Itemid={$itemid}", false));
-            } else {
-                $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=create&Itemid={$itemid}", false));
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'announcement',
+                    'layout' => $id ? 'edit' : 'create',
+                    'Itemid' => $itemid
+                ];
+
+                if ($id) {
+                    $params['id'] = $id;
+                }
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
             }
 
-            $controller->redirect();
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
+            }
         }
+
+        return true;
     }
 
     /**

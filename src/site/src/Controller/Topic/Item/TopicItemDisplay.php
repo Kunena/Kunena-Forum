@@ -42,6 +42,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use RuntimeException;
 use stdClass;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 
@@ -132,10 +133,23 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $format = $this->input->getInt('format');
 
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
-            $itemid     = KunenaRoute::fixMissingItemID();
-            $controller = new KunenaController();
-            $controller->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$catid}&id={$id}&Itemid={$itemid}", false));
-            $controller->redirect();
+            try {
+                $itemid = KunenaRoute::fixMissingItemID();
+
+                $params = [
+                    'option' => 'com_kunena',
+                    'view' => 'topic',
+                    'catid' => $catid,
+                    'id' => $id,
+                    'Itemid' => $itemid
+                ];
+
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+            }
+
+            catch (Exception $e) {
+                throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
+            }
         }
 
         if ($limit < 1 || $limit > 100) {
@@ -587,7 +601,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
         $multispaces_replaced = '';
         if (!empty($this->topic->first_post_message)) {
             $firstPostMessage = KunenaParser::stripBBCode($this->topic->first_post_message, 160);
-            $firstPostMessage = $this->topic->subject;
             $multispaces_replaced = preg_replace('/\s+/', ' ', $firstPostMessage);
         }
 

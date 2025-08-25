@@ -42,7 +42,7 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Finder\KunenaFinder
      *
      * @throws  Exception|void
      */
-   /* public function find()
+    public function find()
     {
         if ($this->skip) {
             return [];
@@ -67,15 +67,10 @@ class KunenaFinder extends \Kunena\Forum\Libraries\Database\Finder\KunenaFinder
                 $instances[$id] = KunenaAttachmentHelper::get($id);
             }
         }
-        var_dump($instances);
 
         unset($results);
 
         return $instances;
-    }*/
-    public function find($access = 'read')
-    {
-        $results = parent::find();
     }
     
     /**

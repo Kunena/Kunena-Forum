@@ -3100,7 +3100,7 @@ class Compiler
 on line $line of $fname:
 Compound selectors may no longer be extended.
 Consider `@extend $replacement` instead.
-See http://bit.ly/ExtendCompound for details.
+See https://bit.ly/ExtendCompound for details.
 EOL;
 
                             $this->logger->warn($message);

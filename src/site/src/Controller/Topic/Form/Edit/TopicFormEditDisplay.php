@@ -220,8 +220,6 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
 
         $this->selectcatlist = false;
 
-        $this->UserCanPostImage = true;
-
         $this->UserCanPostImage = $this->me->checkUserAllowedLinksImages();
 
         /** @var HtmlDocument $doc */

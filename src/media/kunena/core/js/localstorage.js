@@ -1,5 +1,31 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // --- Logic for Collapse elements ---
+    // Function to clear localStorage based on prefix
+    function clearLocalStorageByPrefix(prefix) {
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith(prefix)) {
+                keysToRemove.push(key);
+            }
+        }
+        keysToRemove.forEach((key) => {
+            localStorage.removeItem(key);
+        });
+        console.log(
+            `Removed ${keysToRemove.length} localStorage items with prefix "${prefix}".`
+        );
+    }
+
+    // Check for URL parameter on page load
+    // [URL]?clear-kunena-localstorage=true
+    const urlParams = new URLSearchParams(window.location.search);
+    const clearStateParam = urlParams.get("clear-kunena-localstorage");
+
+    if (clearStateParam === "true") {
+        clearLocalStorageByPrefix("kunena-");
+    }
+
+    // Logic for Collapse elements
     const collapseToggles = document.querySelectorAll(
         '[data-bs-toggle="collapse"]'
     );
@@ -35,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // --- Corrected Logic for Dismissible Alerts ---
     // First, select all alert boxes that are dismissible
     const dismissibleAlerts = document.querySelectorAll(".alert-dismissible");
 

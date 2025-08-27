@@ -65,17 +65,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const dismissibleAlerts = document.querySelectorAll(".alert-dismissible");
 
     dismissibleAlerts.forEach((alertElement) => {
-        // For each alert, find the closest parent div with an ID starting with 'announcement'
-        const alertContainer = alertElement.closest('div[id^="announcement"]');
+        if (!alertElement.id) return; // Skip if no ID is found
 
-        if (!alertContainer) return; // Skip if no matching parent is found
-
-        const alertId = alertContainer.id;
+        const alertId = alertElement.id;
         const storageKey = `kunena-alert-dismissed-${alertId}`;
 
         // 1. On page load, check if the alert was previously dismissed
         if (localStorage.getItem(storageKey) === "true") {
-            alertContainer.classList.add("d-none");
+            alertElement.classList.add("d-none");
         }
 
         // 2. Add event listener to the alert to save its state when closed

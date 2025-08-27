@@ -16,6 +16,16 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
+    // Check for localstarage clear button and add on click event to it when found
+    const clearButton = document.getElementById("clear-kunena-storage-button");
+
+    // Add a click event listener
+    if (clearButton) {
+        clearButton.addEventListener("click", function () {
+            clearLocalStorageByPrefix("kunena-");
+        });
+    }
+
     // Check for URL parameter on page load
     // [URL]?clear-kunena-localstorage=true
     const urlParams = new URLSearchParams(window.location.search);

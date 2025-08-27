@@ -19,31 +19,15 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
-use Exception;
+use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 
 /**
  * Class KunenaLoginJoomla
  *
  * @since   Kunena 6.0
  */
-class KunenaLoginJoomla
+class KunenaLoginJoomla extends KunenaLoginAbstract
 {
-    /**
-     * @var     null
-     * @since   Kunena 6.0
-     */
-    protected $params = null;
-
-    /**
-     * @param   object  $params  params
-     *
-     * @since   Kunena 6.0
-     */
-    public function __construct(object $params)
-    {
-        $this->params = $params;
-    }
-
     /**
      * Method to login via Joomla! framework
      *

@@ -55,11 +55,11 @@ class KunenaLogin
         $classes = Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetLogin', $loginEvent);
         $classes = $loginEvent->getLogin();
 
-        if ($classes instanceof KunenaLogin) {
+        if ($classes instanceof KunenaLoginAbstract) {
             $this->instances[] = $classes;
         } elseif (\is_array($classes)) {
             foreach ($classes as $class) {
-                if ($class instanceof KunenaLogin) {
+                if ($class instanceof KunenaLoginAbstract) {
                     $this->instances[] = $class;
                 }
             }

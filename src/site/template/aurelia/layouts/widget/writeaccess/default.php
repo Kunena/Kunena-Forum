@@ -27,7 +27,7 @@ $config = KunenaFactory::getConfig();
     <div class="btn-toolbar float-end">
         <div class="btn-group">
             <div class="btn btn-outline-primary border btn-sm" data-bs-toggle="collapse"
-                 data-bs-target="#writeaccess"><?php echo KunenaIcons::collapse(); ?></div>
+                data-bs-target="#writeaccess"><?php echo KunenaIcons::collapse(); ?></div>
         </div>
     </div>
 
@@ -35,7 +35,7 @@ $config = KunenaFactory::getConfig();
         <?php echo Text::_('COM_KUNENA_WRITEACCESS'); ?>
     </h3>
 
-    <div class="row-fluid " id="writeaccess">
+    <div class="row-fluid collapse show" id="writeaccess">
         <div class="card card-block bg-faded p-2">
             <ul class="unstyled col-md-6">
                 <li>
@@ -44,111 +44,111 @@ $config = KunenaFactory::getConfig();
                 <li>
                     <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
                 </li>
-                    <?php } else { ?>
-                    <li>
-                        <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
-                    </li>
-                    <?php }
+            <?php } else { ?>
+                <li>
+                    <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_CREATETOPIC'); ?>
+                </li>
+            <?php }
 
                     if ($topic->isAuthorised('reply', KunenaUserHelper::getMyself())) { ?>
-                    <li>
-                        <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
-                    </li>
-                    <?php } else { ?>
-                    <li>
-                        <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
-                    </li>
-                    <?php }
+                <li>
+                    <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
+                </li>
+            <?php } else { ?>
+                <li>
+                    <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_REPLY'); ?>
+                </li>
+                <?php }
 
                     if ($topic->isAuthorised('edit') || $topic->isAuthorised('reply')) {
                         if ($config->imageUpload == '') {
-                            ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
-                        </li> <?php
+                ?>
+                    <li>
+                        <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
+                    </li> <?php
                         } elseif ($config->imageUpload == 'everybody') {
                             ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
-                        </li> <?php
+                    <li>
+                        <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
+                    </li> <?php
                         } elseif (
                             $config->imageUpload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
                             $config->imageUpload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
                             $config->imageUpload == 'registered' && KunenaUserHelper::getMyself()->exists()
                         ) {
                             ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
-                        </li> <?php
+                    <li>
+                        <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
+                    </li> <?php
                         } else {
                             ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
-                        </li> <?php
+                    <li>
+                        <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_IMAGE_ADDATTACH'); ?>
+                    </li> <?php
                         }
 
                         if ($config->fileUpload == '') {
                             ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
-                        </li> <?php
+                    <li>
+                        <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+                    </li> <?php
                         } elseif ($config->fileUpload == 'everybody') {
                             ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
-                        </li> <?php
+                    <li>
+                        <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+                    </li> <?php
                         } elseif (
                             $config->fileUpload == 'admin' && KunenaUserHelper::getMyself()->isAdmin() ||
                             $config->fileUpload == 'moderator' && KunenaUserHelper::getMyself()->isModerator() ||
                             $config->fileUpload == 'registered' && KunenaUserHelper::getMyself()->exists()
                         ) {
                             ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
-                        </li> <?php
+                    <li>
+                        <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+                    </li> <?php
                         } else {
                             ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
-                        </li> <?php
+                    <li>
+                        <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_ADDATTACH'); ?>
+                    </li> <?php
                         }
                     }
 
                     if ($topic->isAuthorised('edit') || $topic->getUserTopic()->posts && $config->userEdit) {
                         if ($config->userEdit == 3 && $topic->getLastPostAuthor()->userid != KunenaUserHelper::getMyself()->userid) {
                             ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
-                        </li>
-                            <?php
-                        } elseif ($config->userEdit == 4 && $topic->getFirstPostAuthor()->userid != KunenaUserHelper::getMyself()->userid) {
-                            if (KunenaUserHelper::getMyself()->isAdmin()) {
-                                ?>
-                            <li>
-                                <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
-                            </li>
-                                <?php
-                            } else {
-                                ?>
-                            <li>
-                                <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
-                            </li>
-                                <?php
-                            }
-                        } else {
-                            ?>
-                        <li>
-                            <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
-                        </li>
-                            <?php
-                        }
-                    } else { ?>
                     <li>
                         <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
                     </li>
-                    <?php }
+                    <?php
+                        } elseif ($config->userEdit == 4 && $topic->getFirstPostAuthor()->userid != KunenaUserHelper::getMyself()->userid) {
+                            if (KunenaUserHelper::getMyself()->isAdmin()) {
                     ?>
+                        <li>
+                            <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+                        </li>
+                    <?php
+                            } else {
+                    ?>
+                        <li>
+                            <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+                        </li>
+                    <?php
+                            }
+                        } else {
+                    ?>
+                    <li>
+                        <b><?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
+                    </li>
+                <?php
+                        }
+                    } else { ?>
+                <li>
+                    <b><?php echo Text::_('COM_KUNENA_ACCESS_NOTALLOWED'); ?></b> <?php echo Text::_('COM_KUNENA_ACCESS_ALLOWED_EDITPOST'); ?>
                 </li>
+            <?php }
+            ?>
+            </li>
             </ul>
         </div>
     </div>

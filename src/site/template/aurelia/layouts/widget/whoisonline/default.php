@@ -38,7 +38,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
         <?php endif; ?>
     </h2>
 
-    <div class="shadow-lg rounded " id="kwho">
+    <div class="shadow-lg rounded collapse show" id="kwho">
         <div class="card-body">
             <div class="container">
                 <div class="row">

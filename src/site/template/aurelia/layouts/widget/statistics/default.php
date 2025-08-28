@@ -22,21 +22,21 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
     <div class="btn-toolbar float-end">
         <div class="btn-group">
             <div class="btn btn-outline-primary border btn-sm" data-bs-toggle="collapse"
-                 data-bs-target="#kstats"><?php echo KunenaIcons::collapse(); ?></div>
+                data-bs-target="#kstats"><?php echo KunenaIcons::collapse(); ?></div>
         </div>
     </div>
     <h2 class="card-header">
         <?php if ($this->statisticsUrl) :
-            ?>
+        ?>
             <a href="<?php echo $this->statisticsUrl; ?>">
                 <?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
             </a>
         <?php else :
-            ?>
+        ?>
             <?php echo Text::_('COM_KUNENA_STATISTICS'); ?>
         <?php endif; ?>
     </h2>
-    <div class="shadow-lg rounded " id="kstats">
+    <div class="shadow-lg rounded collapse show" id="kstats">
         <div class="card-body">
             <div class="container">
                 <div class="row">

@@ -85,6 +85,8 @@ class KunenaLogin
      * @return  integer
      *
      * @since   Kunena 6.0
+     * 
+     * @deprecated : methods to handle TFA will be removed in Joomla! 6.0 will be removed in Kunena 6.5
      *
      * @throws  Exception
      */
@@ -250,6 +252,8 @@ class KunenaLogin
      * @return  boolean True if TFA is enabled for this user
      *
      * @since   Kunena 6.0
+     * 
+     * @deprecated : methods to handle TFA will be removed in Joomla! 6.0 will be removed in Kunena 6.5
      *
      * @throws  Exception
      */

@@ -556,8 +556,8 @@ class TopicController extends KunenaController
                         }
 
                         $image = new KunenaImage($uploadFile);
-                        $image = $image->correctImageOrientation();
-                        $image = $image->resize($this->config->imageWidth, $this->config->imageHeight, false);
+                        $image->correctImageOrientation();
+                        $image->resize($this->config->imageWidth, $this->config->imageHeight, false);
 
                         $options = ['quality' => $quality];
                         $image->toFile($uploadFile, $imageInfo->type, $options);

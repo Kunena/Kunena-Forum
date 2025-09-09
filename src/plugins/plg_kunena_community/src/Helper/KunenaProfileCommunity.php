@@ -12,15 +12,15 @@
  * @link             https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Community;
+namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
 
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
-use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use RuntimeException;
 
@@ -32,19 +32,17 @@ use RuntimeException;
 class KunenaProfileCommunity extends KunenaProfile
 {
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaProfileCommunity constructor.
+     * @param   Registry  $params  params
      *
-     * @param   object  $params  params
-     *
-     * @since   Kunena 5.0
+     * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
@@ -100,18 +98,6 @@ class KunenaProfileCommunity extends KunenaProfile
     }
 
     /**
-     * @param   KunenaLayout  $view    view
-     * @param   object        $params  params
-     *
-     * @return  void
-     *
-     * @since   Kunena 5.0
-     */
-    public function showProfile(KunenaLayout $view, object $params)
-    {
-    }
-
-    /**
      * @param   int   $userid  userid
      * @param   bool  $xhtml   xhtml
      *
@@ -125,16 +111,18 @@ class KunenaProfileCommunity extends KunenaProfile
     }
 
     /**
+     * Function to get User Profile URL
+     * 
      * @param   int     $userid     userid
      * @param   string  $task       task
      * @param   bool    $xhtml      xhtml
      * @param   string  $avatarTab  avatarTab
      *
-     * @return  boolean|string
-     *
+     * @return  string|false
      * @since   Kunena 5.0
+     * @throws  \Exception
      */
-    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = '')
+    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {
         // Make sure that user profile exist.
         if (!$userid || \CFactory::getUser($userid) === null) {

@@ -16,28 +16,28 @@ namespace Kunena\Forum\Plugin\Kunena\Community;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 
 /**
  * Class KunenaLoginCommunity
  *
  * @since   Kunena 6.0
  */
-class KunenaLoginCommunity
+class KunenaLoginCommunity extends KunenaLoginAbstract
 {
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaLoginCommunity constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }

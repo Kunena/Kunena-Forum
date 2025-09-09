@@ -22,31 +22,29 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Html\KunenaParser;
-use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use Exception;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Integration\KunenaActivityAbstract;
 
 /**
  * Class KunenaActivityCommunity
  *
  * @since   Kunena 6.0
  */
-class KunenaActivityCommunity extends KunenaActivity
+class KunenaActivityCommunity extends KunenaActivityAbstract
 {
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaActivityCommunity constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
-     * @throws Exception
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
@@ -70,9 +68,9 @@ class KunenaActivityCommunity extends KunenaActivity
         $act->actor   = $message->userid;
         $act->target  = 0;
         $act->title   = Text::_(
-        	'{actor} ' . Text::sprintf(
-            	'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
-            	' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>'
+            '{actor} ' . Text::sprintf(
+                'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE',
+                ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->displayField('subject') . '</a>'
             )
         );
         $act->content = $this->buildContent($message);
@@ -177,12 +175,12 @@ class KunenaActivityCommunity extends KunenaActivity
         // Get users who have subscribed to the topic, excluding current user.
         $acl         = KunenaAccess::getInstance();
         $subscribers = $acl->getSubscribers(
-        	$message->catid,
-        	$message->thread,
-        	KunenaAccess::TOPIC_SUBSCRIPTION,
-        	false,
-        	false,
-        	[$message->userid]
+            $message->catid,
+            $message->thread,
+            KunenaAccess::TOPIC_SUBSCRIPTION,
+            false,
+            false,
+            [$message->userid]
         );
 
         foreach ($subscribers as $sub) {
@@ -264,13 +262,13 @@ class KunenaActivityCommunity extends KunenaActivity
 
         // Finally, send notifications
         \CNotificationLibrary::add(
-        	'kunena_thankyou',
-        	$actor->id,
-        	$target->id,
-        	Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT'),
-        	Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT'),
-        	'',
-        	$params
+            'kunena_thankyou',
+            $actor->id,
+            $target->id,
+            Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE_ACT'),
+            Text::sprintf('PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TEXT'),
+            '',
+            $params
         );
 
         $act          = new \stdClass();
@@ -278,13 +276,13 @@ class KunenaActivityCommunity extends KunenaActivity
         $act->actor   = $actor->id;
         $act->target  = $target->id;
         $act->title   = Text::sprintf(
-        	'PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_WALL',
-        	$params->get('actor_url'),
-        	$params->get('actor'),
-        	$params->get('recipientUrl'),
-        	$params->get('recipientName'),
-        	$params->get('url'),
-        	$params->get('title')
+            'PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_WALL',
+            $params->get('actor_url'),
+            $params->get('actor'),
+            $params->get('recipientUrl'),
+            $params->get('recipientName'),
+            $params->get('url'),
+            $params->get('title')
         );
         $act->content = null;
         $act->app     = 'kunena.message.thankyou';

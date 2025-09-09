@@ -1,51 +1,92 @@
 <?php
 
 /**
- * Kunena Plugin
+ * Kunena System Plugin
  *
- * @package          Kunena.Plugins
- * @subpackage       Community
+ * @package         Kunena.Plugins
+ * @subpackage      System
  *
- * @copyright   (C)  2008 - @currentyear@ Kunena Team. All rights reserved.
- * @copyright   (C)  2013 - 2014 iJoomla, Inc. All rights reserved.
- * @license          https://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link             https://www.kunena.org
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+namespace Kunena\Forum\Plugin\Kunena\Kunena\Extension;
 
+\defined('_JEXEC') or die();
+
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Event\SubscriberInterface;
+use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Plugin\Kunena\Community\KunenaAccessCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaAccessCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaAvatarCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaProfileCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaLoginCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaPrivateCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\KunenaActivityCommunity;
-use Kunena\Forum\Plugin\Kunena\Community\KunenaAvatarCommunity;
-use Kunena\Forum\Plugin\Kunena\Community\KunenaLoginCommunity;
-use Kunena\Forum\Plugin\Kunena\Community\KunenaPrivateCommunity;
-use Kunena\Forum\Plugin\Kunena\Community\KunenaProfileCommunity;
-use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 
 /**
- * Class PlgKunenaCommunity
+ * Class Kunena
  *
  * @since   Kunena 6.0
  */
-class PlgKunenaCommunity extends CMSPlugin
+class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
+    use DatabaseAwareTrait;
+
+    /**
+     * Load language file for front-end translations
+     *
+     * @var boolean
+     */
+    protected $autoloadLanguage = \true;
+
+    /**
+     * Returns an array of events this subscriber will listen to.
+     *
+     * The array keys are event names and the value can be:
+     *
+     *  - The method name to call (priority defaults to 0)
+     *  - An array composed of the method name to call and the priority
+     *
+     * @return  array
+     * @since   Kunena 6.5
+     */
+    public static function getSubscribedEvents(): array
+    {
+        $app     = Factory::getApplication();
+        $mapping = [];
+
+        if ($app->isClient('site') || $app->isClient('administrator')) {
+            $mapping['onKunenaGetAccess'] = 'onKunenaGetAccess';
+            $mapping['onKunenaGetActivity'] = 'onKunenaGetActivity';
+            $mapping['onKunenaGetAvatar']  = 'onKunenaGetAvatar';
+            $mapping['onKunenaGetLogin'] = 'onKunenaGetLogin';
+            $mapping['onKunenaGetPrivate'] = 'onKunenaGetPrivate';
+            $mapping['onKunenaGetProfile'] = 'onKunenaGetProfile';
+
+            if ($app->isClient('site')) {
+                // Only allowed in the frontend
+            } elseif ($app->isClient('administrator')) {
+                // Only allowed in the backend
+            }
+        }
+
+        return $mapping;
+    }
+
     /**
      * plgKunenaCommunity constructor.
      *
-     * @param   DispatcherInterface  &$subject  The object to observe
-     * @param   array                 $config   An optional associative array of configuration settings.
-     *                                          Recognized key values include 'name', 'group', 'params', 'language'
-     *                                          (this list is not meant to be comprehensive).
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
+     * @param  array $config
      */
-    public function __construct(&$subject, $config)
+    public function __construct(array $config = [])
     {
         // Do not load if Kunena version is not supported or Kunena is offline
         if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.4') && KunenaForum::enabled())) {
@@ -55,13 +96,13 @@ class PlgKunenaCommunity extends CMSPlugin
         // Do not load if JomSocial is not installed
         $path = JPATH_ROOT . '/components/com_community/libraries/core.php';
 
-        if (!is_file($path)) {
+        if (!\is_file($path)) {
             return;
         }
 
         include_once $path;
 
-        parent::__construct($subject, $config);
+        parent::__construct($config);
 
         $this->loadLanguage('plg_kunena_community.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_community.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
     }
@@ -179,6 +220,6 @@ class PlgKunenaCommunity extends CMSPlugin
             return;
         }
 
-        $event->setPrivate(new KunenaActivityCommunity($this->params));
+        $event->setActivity(new KunenaActivityCommunity($this->params));
     }
 }

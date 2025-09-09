@@ -11,20 +11,21 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Community;
+namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
 
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Integration\KunenaPrivate;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Integration\KunenaPrivateAbstract;
 
 /**
  * Class KunenaPrivateCommunity
  *
  * @since   Kunena 6.0
  */
-class KunenaPrivateCommunity extends KunenaPrivate
+class KunenaPrivateCommunity extends KunenaPrivateAbstract
 {
     /**
      * @var     boolean
@@ -33,19 +34,17 @@ class KunenaPrivateCommunity extends KunenaPrivate
     protected $loaded = false;
 
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaPrivateCommunity constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
      */
-    public function __construct($params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
         \CFactory::load('libraries', 'messaging');

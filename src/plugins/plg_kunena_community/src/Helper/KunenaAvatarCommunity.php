@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Community;
+namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
 
 \defined('_JEXEC') or die();
 
@@ -21,6 +21,7 @@ use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Exception;
+use Joomla\Registry\Registry;
 
 /**
  * Class \Kunena\Forum\Libraries\Integration\AvatarCommunity
@@ -30,19 +31,17 @@ use Exception;
 class KunenaAvatarCommunity extends KunenaAvatar
 {
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * \Kunena\Forum\Libraries\Integration\AvatarCommunity constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }

@@ -28,13 +28,13 @@ use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 class KunenaActivity
 {
     /**
-     * @var     mixed
+     * @var     boolean
      * @since   Kunena 6.0
      */
-    protected static $instance;
+    protected static $instance = false;
 
     /**
-     * @var     array
+     * @var     array| KunenaActivity[]
      * @since   Kunena 6.0
      */
     protected $instances = [];
@@ -53,12 +53,14 @@ class KunenaActivity
 
         $classes = $activityEvent->getActivity();
 
-        foreach ($classes as $class) {
-            if (!\is_object($class)) {
-                continue;
+        if ($classes instanceof KunenaActivityAbstract) {
+            $this->instances[] = $classes;
+        } elseif (\is_array($classes)) {
+            foreach ($classes as $class) {
+                if ($class instanceof KunenaActivityAbstract) {
+                    $this->instances[] = $class;
+                }
             }
-
-            $this->instances[] = $class;
         }
     }
 
@@ -69,10 +71,10 @@ class KunenaActivity
      *
      * @throws  Exception
      */
-    public static function getInstance(): KunenaActivity
+    public static function getInstance()
     {
-        if (!self::$instance) {
-            self::$instance = new static();
+        if (self::$instance === false) {
+            self::$instance = new KunenaActivity();
         }
 
         return self::$instance;

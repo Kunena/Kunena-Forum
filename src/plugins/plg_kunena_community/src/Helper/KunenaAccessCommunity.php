@@ -11,20 +11,22 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Community;
+namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Access\KunenaAccessAbstract;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
-use Exception;
 use RuntimeException;
 
 /**
@@ -32,7 +34,7 @@ use RuntimeException;
  *
  * @since   Kunena 6.0
  */
-class KunenaAccessCommunity
+class KunenaAccessCommunity extends KunenaAccessAbstract
 {
     /**
      * @var     boolean
@@ -47,25 +49,23 @@ class KunenaAccessCommunity
     protected $groups = false;
 
     /**
-     * @var     array
+     * @var     Object
      * @since   Kunena 6.0
      */
     protected $tree = [];
 
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaAccessCommunity constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
@@ -169,7 +169,7 @@ class KunenaAccessCommunity
                 $options[] = HTMLHelper::_('select.option', $item->id, str_repeat('- ', $item->level) . $item->name, 'value', 'text', !is_numeric($item->id));
             }
 
-            $html ['jomsocial']['access'] = [
+            $html['jomsocial']['access'] = [
                 'title' => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_TITLE'),
                 'desc'  => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_DESC'),
                 'input' => HTMLHelper::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox form-control" size="10"', 'value', 'text', $selected),
@@ -284,7 +284,7 @@ class KunenaAccessCommunity
             }
 
             foreach ($list as $catid) {
-                $allowed [$catid] = $catid;
+                $allowed[$catid] = $catid;
             }
         }
 

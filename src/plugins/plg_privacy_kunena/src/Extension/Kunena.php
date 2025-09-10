@@ -16,13 +16,17 @@ namespace Kunena\Forum\Plugin\Privacy\Kunena\Extension;
 // No direct access
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\User;
 use Joomla\Component\Privacy\Administrator\Export\Domain;
 use Joomla\Component\Privacy\Administrator\Plugin\PrivacyPlugin;
 use Joomla\Component\Privacy\Administrator\Removal\Status;
 use Joomla\Component\Privacy\Administrator\Table\RequestTable;
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\ParameterType;
+use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Plugin\Privacy\Kunena\Helper\KunenaHelper;
 
 /**
@@ -30,15 +34,41 @@ use Kunena\Forum\Plugin\Privacy\Kunena\Helper\KunenaHelper;
  *
  * @since  6.1.0
  */
-class Kunena extends PrivacyPlugin
+class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
+    use DatabaseAwareTrait;
+
     /**
-     * Application object
+     * Returns an array of events this subscriber will listen to.
      *
-     * @var    CMSApplicationInterface
-     * @since  6.1.0
+     * The array keys are event names and the value can be:
+     *
+     *  - The method name to call (priority defaults to 0)
+     *  - An array composed of the method name to call and the priority
+     *
+     * @return  array
+     * @since   Kunena 6.5
      */
-    protected $app;
+    public static function getSubscribedEvents(): array
+    {
+        $app     = Factory::getApplication();
+        $mapping = [];
+
+        if ($app->isClient('site') || $app->isClient('administrator')) {
+            $mapping['onPrivacyCanRemoveData']            = 'onPrivacyCanRemoveData';
+            $mapping['onPrivacyExportRequest']            = 'onPrivacyExportRequest';
+            $mapping['onPrivacyRemoveData']               = 'onPrivacyRemoveData';
+            $mapping['onPrivacyCollectAdminCapabilities'] = 'onPrivacyCollectAdminCapabilities';
+
+            if ($app->isClient('site')) {
+                // Only allowed in the frontend
+            } elseif ($app->isClient('administrator')) {
+                // Only allowed in the backend
+            }
+        }
+
+        return $mapping;
+    }
 
     /**
      * Performs validation to determine if the data associated with a remove information request can be processed

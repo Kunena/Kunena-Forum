@@ -69,7 +69,7 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
     }
 
     /**
-     * plgKunenaEasyblog constructor.
+     * plgKunenaUddeim constructor.
      *
      * @param  array $config
      */

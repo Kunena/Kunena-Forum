@@ -9,15 +9,19 @@
  * @link           https://www.kunena.org
  */
 
-defined('_JEXEC') or die;
+namespace Kunena\Forum\Plugin\Sampledata\Kunena\Extension;
 
-use Joomla\CMS\Factory;
+\defined('_JEXEC') or die();
+
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Session\Session;
 use Joomla\Component\Menus\Administrator\Model\ItemModel;
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Install\KunenaSampleData;
 
@@ -26,32 +30,15 @@ use Kunena\Forum\Libraries\Install\KunenaSampleData;
  *
  * @since  4.0.0
  */
-class PlgSampledataKunena extends CMSPlugin
+final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
-    /**
-     * Database object
-     *
-     * @var    DatabaseDriver
-     *
-     * @since   4.0.0
-     */
-    protected $db;
+    use DatabaseAwareTrait;
 
     /**
-     * Application object
-     *
-     * @var    ApplicationCms
-     *
-     * @since   4.0.0
-     */
-    protected $app;
-
-    /**
-     * Affects constructor behavior. If true, language files will be loaded automatically.
+     * Load the language file on instantiation.
      *
      * @var    boolean
-     *
-     * @since   4.0.0
+     * @since  3.1
      */
     protected $autoloadLanguage = true;
 
@@ -78,6 +65,22 @@ class PlgSampledataKunena extends CMSPlugin
      */
     private $menuItemModel;
 
+
+    /**
+     * Returns an array of events this subscriber will listen to.
+     *
+     * @return  array
+     *
+     * @since   6.5
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'onSampledataGetOverview'    => 'onSampledataGetOverview',
+            'onAjaxSampledataApplyStep1' => 'onAjaxSampledataApplyStep1',
+        ];
+    }
+
     /**
      * Get an overview of the proposed sampleData.
      *
@@ -87,7 +90,9 @@ class PlgSampledataKunena extends CMSPlugin
      */
     public function onSampledataGetOverview()
     {
-        if (!$this->app->getIdentity()->authorise('core.manage', 'com_kunena')) {
+        $app = $this->getApplication();
+
+        if (!$app->getIdentity()->authorise('core.manage', 'com_kunena')) {
             return;
         }
 
@@ -95,7 +100,7 @@ class PlgSampledataKunena extends CMSPlugin
             return;
         }
 
-        $data              = new stdClass();
+        $data              = new \stdClass();
         $data->name        = $this->_name;
         $data->title       = Text::_('PLG_SAMPLEDATA_KUNENA_OVERVIEW_TITLE');
         $data->description = Text::_('PLG_SAMPLEDATA_KUNENA_OVERVIEW_DESC');
@@ -115,7 +120,7 @@ class PlgSampledataKunena extends CMSPlugin
      */
     public function onAjaxSampledataApplyStep1()
     {
-        if (!Session::checkToken('get') || $this->app->getInput()->get('type') != $this->_name) {
+        if (!Session::checkToken('get') || $app->getInput()->get('type') != $this->_name) {
             return;
         }
 
@@ -149,7 +154,8 @@ class PlgSampledataKunena extends CMSPlugin
     private function enablePlugin(string $pluginName): bool
     {
         // Create a new db object.
-        $db    = Factory::getContainer()->get('DatabaseDriver');
+        /** @var DatabaseDriver $db */
+        $db    = $this->getDatabase();
         $query = $db->createQuery();
 
         $query

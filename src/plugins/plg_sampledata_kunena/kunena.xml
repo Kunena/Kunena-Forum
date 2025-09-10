@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" group="sampledata" method="upgrade">
+<extension
+	type="plugin"
+	group="sampledata"
+	method="upgrade">
 	<name>plg_sampledata_kunena</name>
 	<version>@kunenaversion@</version>
 	<versionname>@kunenaversionname@</versionname>
@@ -10,12 +13,13 @@
 	<copyright>(C) 2008 - @currentyear@ Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPLv3 or later</license>
 	<description>PLG_SAMPLEDATA_KUNENA_XML_DESCRIPTION</description>
-	<namespace>Kunena\Forum\Plugin\Sampledata\Kunena</namespace>
+	<namespace path="src">Kunena\Forum\Plugin\Sampledata\Kunena</namespace>
 	<changelogurl>@kunenachangelog@</changelogurl>
 	<scriptfile>script.php</scriptfile>
 	<files>
-		<filename plugin="kunena">kunena.php</filename>
 		<folder>language</folder>
+		<folder plugin="kunena">services</folder>
+		<folder>src</folder>
 	</files>
 	<config>
 		<fields name="params">

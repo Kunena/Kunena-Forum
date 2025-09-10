@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+<extension
+    version="2.5"
+    type="plugin"
+    group="kunena"
+    method="upgrade">
     <name>PLG_KUNENA_EASYBLOG</name>
     <version>0.0.2</version>
     <creationDate>2020-01-10</creationDate>
@@ -10,28 +14,37 @@
     <license>GNU/GPL version 3 or later; see LICENSE.txt</license>
     <copyright>Copyright of Ruud van Lent (2015)</copyright>
     <description>PLG_KUNENA_EASYBLOG_DESCRIPTION</description>
-    <namespace>Kunena\Forum\Plugin\Kunena\Easyblog</namespace>
+    <namespace path="src">Kunena\Forum\Plugin\Kunena\Easyblog</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
+    <scriptfile>script.php</scriptfile>
     <files>
-        <filename plugin="easyblog">easyblog.php</filename>
-        <filename>KunenaAvatarEasyblog.php</filename>
-        <filename>KunenaProfileEasyblog.php</filename>
+        <filename>Easyblog.xml</filename>
         <folder>language</folder>
+        <folder plugin="Easyblog">src</folder>
+        <folder>services</folder>
     </files>
     <config>
         <fields name="params">
             <fieldset name="basic">
                 <!-- Decide to use either Kunena or Easyblog Avatar -->
-                <field name="avatar" type="radio" default="1" label="PLG_KUNENA_EASYBLOG_AVATAR"
-                       description="PLG_KUNENA_EASYBLOG_AVATAR_DESC"
-                       class="btn-group">
+                <field
+                    name="avatar"
+                    type="radio"
+                    default="1"
+                    label="PLG_KUNENA_EASYBLOG_AVATAR"
+                    description="PLG_KUNENA_EASYBLOG_AVATAR_DESC"
+                    class="btn-group">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
                 <!-- Decide to use either Kunena or Easyblog Profile -->
-                <field name="profile" type="radio" default="1" label="PLG_KUNENA_EASYBLOG_PROFILE"
-                       description="PLG_KUNENA_EASYBLOG_PROFILE_DESC"
-                       class="btn-group">
+                <field
+                    name="profile"
+                    type="radio"
+                    default="1"
+                    label="PLG_KUNENA_EASYBLOG_PROFILE"
+                    description="PLG_KUNENA_EASYBLOG_PROFILE_DESC"
+                    class="btn-group">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>

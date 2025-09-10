@@ -11,12 +11,16 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Easyblog\Helper;
+
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
  * Class KunenaAvatarEasyblog
@@ -26,19 +30,17 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 class KunenaAvatarEasyblog extends KunenaAvatar
 {
     /**
-     * @var null
-     * @since Kunena
+     * @var     Registry
+     * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaAvatarEasyblog constructor.
+     * @param   Registry  $params  params
      *
-     * @param $params
-     *
-     * @since Kunena
+     * @since   Kunena 6.0
      */
-    public function __construct($params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
@@ -49,21 +51,23 @@ class KunenaAvatarEasyblog extends KunenaAvatar
      * @throws Exception
      * @throws null
      */
-    public function getEditURL()
+    public function getEditURL(): string
     {
         return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
     }
 
     /**
-     * @param $user
-     * @param $sizex
-     * @param $sizey
+     * @param   KunenaUser  $user   user
+     * @param   int         $sizex  sizex
+     * @param   int         $sizey  sizey
      *
-     * @return string
-     * @since Kunena
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     *
      * @throws Exception
      */
-    public function _getURL($user, $sizex, $sizey)
+    protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
     {
         if (!$user->userid == 0) {
             $user   = KunenaFactory::getUser($user->userid);

@@ -11,46 +11,89 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Kunena\Easyblog\Extension;
+
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Plugin\Kunena\Easyblog\Helper\KunenaAvatarEasyblog;
+use Kunena\Forum\Plugin\Kunena\Easyblog\Helper\KunenaProfileEasyblog;
 
 /**
  * Class plgKunenaEasyblog
  *
  * @since Kunena
  */
-class plgKunenaEasyblog extends Joomla\CMS\Plugin\CMSPlugin
+class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
+    use DatabaseAwareTrait;
+
+    /**
+     * Load language file for front-end translations
+     *
+     * @var boolean
+     */
+    protected $autoloadLanguage = \true;
+
+    /**
+     * Returns an array of events this subscriber will listen to.
+     *
+     * The array keys are event names and the value can be:
+     *
+     *  - The method name to call (priority defaults to 0)
+     *  - An array composed of the method name to call and the priority
+     *
+     * @return  array
+     * @since   Kunena 6.5
+     */
+    public static function getSubscribedEvents(): array
+    {
+        $app     = Factory::getApplication();
+        $mapping = [];
+
+        if ($app->isClient('site') || $app->isClient('administrator')) {
+            $mapping['onKunenaGetAvatar']        = 'onKunenaGetAvatar';
+            $mapping['onKunenaGetProfile']       = 'onKunenaGetProfile';
+
+            if ($app->isClient('site')) {
+                // Only allowed in the frontend
+            } elseif ($app->isClient('administrator')) {
+                // Only allowed in the backend
+            }
+        }
+
+        return $mapping;
+    }
+
     /**
      * plgKunenaEasyblog constructor.
      *
-     * @param   DispatcherInterface  &$subject  The object to observe
-     * @param   array                $config    An optional associative array of configuration settings.
-     *                                          Recognized key values include 'name', 'group', 'params', 'language'
-     *                                         (this list is not meant to be comprehensive).
-     *
-     * @since Kunena
+     * @param  array $config
      */
-    public function __construct(&$subject, $config)
+    public function __construct(array $config = [])
     {
         // Do not load if Kunena version is not supported or Kunena is offline
-        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.4') && KunenaForum::enabled())) {
+        if (!(\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.4') && KunenaForum::enabled())) {
             return;
         }
 
         // Do not load if Easyblog is not installed
         $path = JPATH_ADMINISTRATOR . '/components/com_easyblog/includes/easyblog.php';
 
-        if (!is_file($path)) {
+        if (!\is_file($path)) {
             return;
         }
 
         include_once $path;
 
-        parent::__construct($subject, $config);
+        parent::__construct($config);
 
         $this->loadLanguage('plg_kunena_easyblog.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easyblog.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
     }

@@ -313,7 +313,7 @@ class KunenaUpload
         $filename = $filename ? $filename : $this->filename;
 
         $user    = Factory::getApplication()->getIdentity();
-        $session = Factory::getSession();
+        $session = Factory::getApplication()->getSession();
         $token   = Factory::getApplication()->get('secret') . $user->id . $session->getToken();
         list($name, $ext) = $this->splitFilename($filename);
 

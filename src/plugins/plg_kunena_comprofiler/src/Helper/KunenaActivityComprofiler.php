@@ -11,38 +11,36 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
-use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use Exception;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Integration\KunenaActivityAbstract;
 
 /**
  * Class KunenaActivityComprofiler
  *
  * @since   Kunena 6.0
  */
-class KunenaActivityComprofiler extends KunenaActivity
+class KunenaActivityComprofiler extends KunenaActivityAbstract
 {
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaActivityComprofiler constructor.
+     * @param   Registry  $params  params
      *
-     * @param   object  $params  params
-     *
-     * @throws Exception
      * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }

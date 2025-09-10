@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
@@ -23,6 +23,7 @@ use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Exception;
+use Joomla\Registry\Registry;
 use RuntimeException;
 
 /**
@@ -33,26 +34,24 @@ use RuntimeException;
 class KunenaProfileComprofiler extends KunenaProfile
 {
     /**
-     * @var     null
-     * @since   Kunena 5.0
+     * @var     Registry
+     * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaProfileComprofiler constructor.
+     * @param   Registry  $params  params
      *
-     * @param   object  $params  params
-     *
-     * @since   Kunena 5.0
+     * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
 
     /**
      * @param   string  $event   event
-     * @param   object  $params  params
+     * @param   array  $params  params
      *
      * @return  void
      *
@@ -60,7 +59,7 @@ class KunenaProfileComprofiler extends KunenaProfile
      *
      * @since   Kunena 5.0
      */
-    public static function trigger(string $event, object $params): void
+    public static function trigger(string $event, array $params): void
     {
         KunenaIntegrationComprofiler::trigger($event, $params);
     }
@@ -117,18 +116,16 @@ class KunenaProfileComprofiler extends KunenaProfile
     /**
      * Get the profile URL from CB
      *
-     * @param   int          $userid     userid
-     * @param   string|null  $task       task
-     * @param   bool         $xhtml      xhtml
-     * @param   string       $avatarTab  avatarTab
+     * @param   int     $userid     userid
+     * @param   string  $task       task
+     * @param   bool    $xhtml      xhtml
+     * @param   string  $avatarTab  avatarTab
      *
-     * @return  boolean|string
-     *
-     * @throws  Exception
-     *
+     * @return  string|false
      * @since   Kunena 5.0
+     * @throws  \Exception
      */
-    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = '')
+    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {
         global $_CB_framework;
 
@@ -147,24 +144,28 @@ class KunenaProfileComprofiler extends KunenaProfile
 
     /**
      * @param   KunenaLayout  $view    view
-     * @param   object        $params  params
+     * @param   Registry      $params  params
      *
      * @return  string
      *
      * @since   Kunena 5.0
      */
-    public function showProfile(KunenaLayout $view, object $params)
+    public function showProfile(KunenaLayout $view, Registry $params): string
     {
         global $_PLUGINS;
 
         $_PLUGINS->loadPluginGroup('user');
 
         return implode(
-        	' ',
-        	$_PLUGINS->trigger(
-            	'forumSideProfile',
-            	['kunena', $view, $view->profile->userid,
-                    ['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params], ]
+            ' ',
+            $_PLUGINS->trigger(
+                'forumSideProfile',
+                [
+                    'kunena',
+                    $view,
+                    $view->profile->userid,
+                    ['config' => &$view->config, 'userprofile' => &$view->profile, 'params' => &$params],
+                ]
             )
         );
     }
@@ -234,8 +235,8 @@ class KunenaProfileComprofiler extends KunenaProfile
         if (! $visitorname) {
             $guestUser = new UserTable();
 
-            $guestUser->set( 'name', $user->name );
-            $guestUser->set( 'username', $user->username );
+            $guestUser->set('name', $user->name);
+            $guestUser->set('username', $user->username);
 
             return $guestUser->getFormattedName();
         }

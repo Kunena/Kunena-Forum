@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
@@ -21,13 +21,15 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
 use Exception;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Access\KunenaAccessAbstract;
 
 /**
  * Kunena Access Control for CommunityBuilder
  *
  * @since   Kunena 6.0
  */
-class KunenaAccessComprofiler
+class KunenaAccessComprofiler extends KunenaAccessAbstract
 {
     /**
      * @var     boolean
@@ -48,19 +50,17 @@ class KunenaAccessComprofiler
     protected $tree = [];
 
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaAccessComprofiler constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
@@ -174,7 +174,7 @@ class KunenaAccessComprofiler
                 $options[] = HTMLHelper::_('select.option', 0, Text::_('PLG_KUNENA_COMPROFILER_NO_GROUPS_FOUND'), 'value', 'text');
             }
 
-            $html ['communitybuilder']['access'] = [
+            $html['communitybuilder']['access'] = [
                 'title' => Text::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_TITLE'),
                 'desc'  => Text::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_DESC'),
                 'input' => HTMLHelper::_('select.genericlist', $options, 'access-communitybuilder', 'class="inputbox form-control" size="10"', 'value', 'text', $selected),

@@ -1,42 +1,56 @@
 <?php
 
 /**
- * Kunena Plugin
+ * Kunena System Plugin
  *
  * @package         Kunena.Plugins
- * @subpackage      Comprofiler
+ * @subpackage      System
  *
  * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Extension;
+
+\defined('_JEXEC') or die();
 
 use CBLib\Core\CBLib;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaAccessComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaAvatarComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaProfileComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaLoginComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaPrivateComprofiler;
+use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaActivityComprofiler;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaAccessComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaAvatarComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaActivityComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaLoginComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaPrivateComprofiler;
-use Kunena\Forum\Plugin\Kunena\Comprofiler\KunenaProfileComprofiler;
 
 /**
- * Class PlgKunenaComprofiler
+ * Class Kunena
  *
  * @since   Kunena 6.0
  */
-class PlgKunenaComprofiler extends CMSPlugin
+class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
+    use DatabaseAwareTrait;
+
+    /**
+     * Load language file for front-end translations
+     *
+     * @var boolean
+     */
+    protected $autoloadLanguage = \true;
+
     /**
      * @var     string  CB version 2.10 works with Php 8.1 and with Joomla! 5.2
      * @since   Kunena 6.0
@@ -44,17 +58,48 @@ class PlgKunenaComprofiler extends CMSPlugin
     public $minCBVersion = '2.10';
 
     /**
-     * plgKunenaComprofiler constructor.
+     * Returns an array of events this subscriber will listen to.
      *
-     * @param   DispatcherInterface  $subject   The object to observe
-     * @param   array                $config    An optional associative array of configuration settings.
-     *                                          Recognized key values include 'name', 'group', 'params', 'language'
-     *                                          (this list is not meant to be comprehensive).
+     * The array keys are event names and the value can be:
      *
-     * @throws Exception
-     * @since   Kunena 6.0
+     *  - The method name to call (priority defaults to 0)
+     *  - An array composed of the method name to call and the priority
+     *
+     * @return  array
+     * @since   Kunena 6.5
      */
-    public function __construct(&$subject, $config = [])
+    public static function getSubscribedEvents(): array
+    {
+        $app     = Factory::getApplication();
+        $mapping = [];
+
+        if ($app->isClient('site') || $app->isClient('administrator')) {
+            $mapping['onKunenaDisplay']          = 'onKunenaDisplay';
+            $mapping['onKunenaGetAccessControl'] = 'onKunenaGetAccessControl';
+            $mapping['onKunenaGetActivity']      = 'onKunenaGetActivity';
+            $mapping['onKunenaGetAvatar']        = 'onKunenaGetAvatar';
+            $mapping['onKunenaGetLogin']         = 'onKunenaGetLogin';
+            $mapping['onKunenaGetPrivate']       = 'onKunenaGetPrivate';
+            $mapping['onKunenaGetProfile']       = 'onKunenaGetProfile';
+            $mapping['onKunenaGetProfile']       = 'onKunenaGetProfile';
+            $mapping['onKunenaPrepare']          = 'onKunenaPrepare';
+
+            if ($app->isClient('site')) {
+                // Only allowed in the frontend
+            } elseif ($app->isClient('administrator')) {
+                // Only allowed in the backend
+            }
+        }
+
+        return $mapping;
+    }
+
+    /**
+     * plgKunenaCommunity constructor.
+     *
+     * @param  array $config
+     */
+    public function __construct(array $config = [])
     {
         global $_PLUGINS;
 
@@ -67,8 +112,8 @@ class PlgKunenaComprofiler extends CMSPlugin
 
         // Do not load if CommunityBuilder is not installed
         if (
-            (!file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) ||
-            (!file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
+            (!\file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) ||
+            (!\file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
         ) {
             return;
         }
@@ -77,7 +122,7 @@ class PlgKunenaComprofiler extends CMSPlugin
 
         $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
-        if (version_compare($this->minCBVersion, CBLib::version(), '>=')) {
+        if (\version_compare($this->minCBVersion, CBLib::version(), '>=')) {
             if ($app->isClient('administrator')) {
                 $app->enqueueMessage(Text::sprintf('PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion), 'notice');
             }
@@ -89,8 +134,9 @@ class PlgKunenaComprofiler extends CMSPlugin
 
         $_PLUGINS->loadPluginGroup('user');
 
-        parent::__construct($subject, $config);
+        parent::__construct($config);
     }
+
 
     /**
      * @param   string  $type    type
@@ -121,7 +167,7 @@ class PlgKunenaComprofiler extends CMSPlugin
 
     /**
      * @param   string  $context  context
-     * @param   int     $item     items
+     * @param   object  $item     items
      * @param   object  $params   params
      * @param   int     $page     page
      *
@@ -245,7 +291,7 @@ class PlgKunenaComprofiler extends CMSPlugin
             return;
         }
 
-        $event->setPivate(new KunenaPrivateComprofiler($this->params));
+        $event->setPrivate(new KunenaPrivateComprofiler($this->params));
     }
 
     /**

@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
@@ -19,30 +19,35 @@ use CB\Plugin\PMS\PMSHelper;
 use CB\Plugin\PMS\UddeIM;
 use CBLib\Application\Application;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\KunenaPrivate;
+use Kunena\Forum\Libraries\Integration\KunenaPrivateAbstract;
 
 /**
  * Class KunenaPrivateComprofiler
  *
  * @since   Kunena 6.0
  */
-class KunenaPrivateComprofiler extends KunenaPrivate
+class KunenaPrivateComprofiler extends KunenaPrivateAbstract
 {
     /**
-     * @var     null
+     * @var     boolean
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected $loaded = false;
 
     /**
-     * KunenaPrivateComprofiler constructor.
-     *
-     * @param   object  $params  params
+     * @var     Registry
+     * @since   Kunena 6.0
+     */
+    protected ?Registry $params = \null;
+
+    /**
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
@@ -62,7 +67,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
             return 0;
         }
 
-        return ( $_CB_PMS->getPMSunreadCount( $userid )[0] ?? 0 );
+        return ($_CB_PMS->getPMSunreadCount($userid)[0] ?? 0);
     }
 
     /**
@@ -80,7 +85,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate
             return '';
         }
 
-        return ( $_CB_PMS->getPMSlinks( $userid, 0, '', '', 2 )[0]['url'] ?? '' );
+        return ($_CB_PMS->getPMSlinks($userid, 0, '', '', 2)[0]['url'] ?? '');
     }
 
     /**
@@ -132,10 +137,10 @@ class KunenaPrivateComprofiler extends KunenaPrivate
             if (! $myid || $myid === $user->userid) {
                 return '';
             }
-        } elseif (! PMSHelper::canMessage( $myid, $user->userid )) {
+        } elseif (! PMSHelper::canMessage($myid, $user->userid)) {
             return '';
         }
 
-        return ( $_CB_PMS->getPMSlinks( $user->userid, $myid, '', '', 1 )[0]['url'] ?? '' );
+        return ($_CB_PMS->getPMSlinks($user->userid, $myid, '', '', 1)[0]['url'] ?? '');
     }
 }

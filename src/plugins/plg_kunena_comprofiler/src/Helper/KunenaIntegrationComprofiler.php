@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
@@ -65,7 +65,7 @@ class KunenaIntegrationComprofiler
     {
         global $_PLUGINS;
         $config            = KunenaFactory::getConfig();
-        $params ['config'] = $config;
+        $params['config'] = $config;
         $_PLUGINS->loadPluginGroup('user');
         $_PLUGINS->trigger('kunenaIntegration', [$event, &$config, &$params]);
     }

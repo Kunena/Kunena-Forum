@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Comprofiler;
+namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
@@ -20,28 +20,28 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Exception;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 
 /**
  * Class KunenaLoginComprofiler
  *
  * @since   Kunena 6.0
  */
-class KunenaLoginComprofiler
+class KunenaLoginComprofiler extends KunenaLoginAbstract
 {
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaLoginComprofiler constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }

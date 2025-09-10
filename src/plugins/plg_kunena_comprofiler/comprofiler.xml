@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+<extension
+    type="plugin"
+    group="kunena"
+    method="upgrade">
     <name>plg_kunena_comprofiler</name>
     <version>@kunenaversion@</version>
     <creationDate>@kunenaversiondate@</creationDate>
@@ -10,54 +13,75 @@
     <copyright>www.kunena.org</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_KUNENA_COMPROFILER_DESCRIPTION</description>
-    <namespace>Kunena\Forum\Plugin\Kunena\Comprofiler</namespace>
+    <namespace path="src">Kunena\Forum\Plugin\Kunena\Comprofiler</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
+    <scriptfile>script.php</scriptfile>
     <files>
-        <filename plugin="comprofiler">comprofiler.php</filename>
-        <filename>KunenaAccessComprofiler.php</filename>
-        <filename>KunenaActivityComprofiler.php</filename>
-        <filename>KunenaAvatarComprofiler.php</filename>
-        <filename>KunenaIntegrationComprofiler.php</filename>
-        <filename>KunenaLoginComprofiler.php</filename>
-        <filename>KunenaPrivateComprofiler.php</filename>
-        <filename>KunenaProfileComprofiler.php</filename>
+        <filename>comprofiler.xml</filename>
         <folder>language</folder>
+        <folder plugin="comprofiler">src</folder>
+        <folder>services</folder>
     </files>
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="access" type="list" default="1" label="PLG_KUNENA_COMPROFILER_ACCESS"
-                       description="PLG_KUNENA_COMPROFILER_ACCESS_DESC"
-                       class="inputbox">
+                <field
+                    name="access"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_COMPROFILER_ACCESS"
+                    description="PLG_KUNENA_COMPROFILER_ACCESS_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="login" type="list" default="1" label="PLG_KUNENA_COMPROFILER_LOGIN"
-                       description="PLG_KUNENA_COMPROFILER_LOGIN_DESC"
-                       class="inputbox">
+                <field
+                    name="login"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_COMPROFILER_LOGIN"
+                    description="PLG_KUNENA_COMPROFILER_LOGIN_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="activity" type="list" default="1" label="PLG_KUNENA_COMPROFILER_ACTIVITY"
-                       description="PLG_KUNENA_COMPROFILER_ACTIVITY_DESC" class="inputbox">
+                <field
+                    name="activity"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_COMPROFILER_ACTIVITY"
+                    description="PLG_KUNENA_COMPROFILER_ACTIVITY_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="avatar" type="list" default="1" label="PLG_KUNENA_COMPROFILER_AVATAR"
-                       description="PLG_KUNENA_COMPROFILER_AVATAR_DESC"
-                       class="inputbox">
+                <field
+                    name="avatar"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_COMPROFILER_AVATAR"
+                    description="PLG_KUNENA_COMPROFILER_AVATAR_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="profile" type="list" default="1" label="PLG_KUNENA_COMPROFILER_PROFILE"
-                       description="PLG_KUNENA_COMPROFILER_PROFILE_DESC"
-                       class="inputbox">
+                <field
+                    name="profile"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_COMPROFILER_PROFILE"
+                    description="PLG_KUNENA_COMPROFILER_PROFILE_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-                <field name="private" type="list" default="1" label="PLG_KUNENA_COMPROFILER_PRIVATE"
-                       description="PLG_KUNENA_COMPROFILER_PRIVATE_DESC"
-                       class="inputbox">
+                <field
+                    name="private"
+                    type="list"
+                    default="1"
+                    label="PLG_KUNENA_COMPROFILER_PRIVATE"
+                    description="PLG_KUNENA_COMPROFILER_PRIVATE_DESC"
+                    class="inputbox">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>

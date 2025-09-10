@@ -81,7 +81,6 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             $mapping['onKunenaGetLogin']         = 'onKunenaGetLogin';
             $mapping['onKunenaGetPrivate']       = 'onKunenaGetPrivate';
             $mapping['onKunenaGetProfile']       = 'onKunenaGetProfile';
-            $mapping['onKunenaGetProfile']       = 'onKunenaGetProfile';
             $mapping['onKunenaPrepare']          = 'onKunenaPrepare';
 
             if ($app->isClient('site')) {

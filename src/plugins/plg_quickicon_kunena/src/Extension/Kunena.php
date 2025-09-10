@@ -11,12 +11,18 @@
  * @link            https://www.kunena.org
  **/
 
-defined('_JEXEC') or die();
+namespace Kunena\Forum\Plugin\Quickicon\kunena\Extension;
+
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
@@ -25,8 +31,10 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
  *
  * @since  Kunena 6.0
  */
-class PlgQuickiconKunena extends CMSPlugin
+final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
+    use DatabaseAwareTrait;
+
     /**
      * Load the language file on instantiation.
      *
@@ -36,12 +44,18 @@ class PlgQuickiconKunena extends CMSPlugin
     protected $autoloadLanguage = true;
 
     /**
-     * Application object.
+     * Returns an array of events this subscriber will listen to.
      *
-     * @var    CMSApplication
-     * @since  3.7.0
+     * @return  array
+     *
+     * @since   6.5
      */
-    protected $app;
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'onGetIcons' => 'onGetIcons',
+        ];
+    }
 
     /**
      * Display Kunena backend icon in Joomla 4.0
@@ -55,7 +69,9 @@ class PlgQuickiconKunena extends CMSPlugin
      */
     public function onGetIcons(string $context): array
     {
-        if ($context != $this->params->get('context', 'mod_quickicon') || !$this->app->getIdentity()->authorise('core.manage', 'com_kunena')) {
+        $app = $this->getApplication();
+
+        if ($context != $this->params->get('context', 'mod_quickicon') || !$app->getIdentity()->authorise('core.manage', 'com_kunena')) {
             return [];
         }
 
@@ -63,20 +79,21 @@ class PlgQuickiconKunena extends CMSPlugin
 
         $updateInfo = null;
 
-        if (KunenaForum::installed() && $this->app->getIdentity()->authorise('core.manage', 'com_installer')) {
+        if (KunenaForum::installed() && $app->getIdentity()->authorise('core.manage', 'com_installer')) {
             $updateSite = 'https://update.kunena.org/%';
-            $db         = Factory::getContainer()->get('DatabaseDriver');
+            /** @var DatabaseDriver $db */
+            $db         = $this->getDatabase();
 
             $query = $db->createQuery()
                 ->select('*')
-                ->from($db->qn('#__updates'))
-                ->where($db->qn('extension_id') . ' > 0')
-                ->where($db->qn('detailsurl') . ' LIKE ' . $db->q($updateSite));
+                ->from($db->quoteName('#__updates'))
+                ->where($db->quoteName('extension_id') . ' > 0')
+                ->where($db->quoteName('detailsurl') . ' LIKE ' . $db->quote($updateSite));
             $db->setQuery($query);
             $list = (array) $db->loadObjectList();
 
             if ($list) {
-                $updateInfo          = new stdClass();
+                $updateInfo          = new \stdClass();
                 $updateInfo->addons  = 0;
                 $updateInfo->version = 0;
 
@@ -90,9 +107,9 @@ class PlgQuickiconKunena extends CMSPlugin
             } else {
                 $query = $db->createQuery()
                     ->select('update_site_id')
-                    ->from($db->qn('#__update_sites'))
-                    ->where($db->qn('enabled') . ' = 0')
-                    ->where($db->qn('location') . ' LIKE ' . $db->q($updateSite));
+                    ->from($db->quoteName('#__update_sites'))
+                    ->where($db->quoteName('enabled') . ' = 0')
+                    ->where($db->quoteName('location') . ' LIKE ' . $db->quote($updateSite));
                 $db->setQuery($query);
                 $updateInfo = !$db->loadResult();
             }
@@ -100,7 +117,7 @@ class PlgQuickiconKunena extends CMSPlugin
 
         $link = 'index.php?option=com_kunena';
 
-        $useIcons = version_compare(JVERSION, '3.0', '>');
+        $useIcons = \version_compare(JVERSION, '3.0', '>');
 
         if (!KunenaForum::installed()) {
             $icon = 'fas fa-exclamation-triangle';
@@ -126,7 +143,7 @@ class PlgQuickiconKunena extends CMSPlugin
             $icon  = 'kunena/icons/icon-48-kupdate-alert-white.png';
             $text  = Text::_('COM_KUNENA') . '<br />' . Text::_('PLG_QUICKICON_KUNENA_UPDATE_DISABLED');
             $class = 'pulse error';
-        } elseif (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<')) {
+        } elseif (!empty($updateInfo->version) && \version_compare(KunenaForum::version(), $updateInfo->version, '<')) {
             // Has updates
             $icon = 'fas fa-download';
 
@@ -154,7 +171,7 @@ class PlgQuickiconKunena extends CMSPlugin
         }
 
         // Use one line in J!4.0.
-        $text = preg_replace('|<br />|', ' - ', $text);
+        $text = \preg_replace('|<br />|', ' - ', $text);
 
         return [
             [

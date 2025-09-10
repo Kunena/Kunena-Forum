@@ -19,7 +19,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Kunena\Forum\Plugin\Kunena\Kunena\Extension\Community;
+use Kunena\Forum\Plugin\Kunena\Community\Extension\Community;
 
 return new class implements ServiceProviderInterface
 {

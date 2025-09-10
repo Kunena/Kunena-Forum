@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Kunena\Extension;
+namespace Kunena\Forum\Plugin\Kunena\Community\Extension;
 
 \defined('_JEXEC') or die();
 
@@ -29,7 +29,7 @@ use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaAvatarCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaProfileCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaLoginCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaPrivateCommunity;
-use Kunena\Forum\Plugin\Kunena\Community\KunenaActivityCommunity;
+use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaActivityCommunity;
 
 /**
  * Class Kunena
@@ -64,12 +64,12 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
         $mapping = [];
 
         if ($app->isClient('site') || $app->isClient('administrator')) {
-            $mapping['onKunenaGetAccess'] = 'onKunenaGetAccess';
-            $mapping['onKunenaGetActivity'] = 'onKunenaGetActivity';
-            $mapping['onKunenaGetAvatar']  = 'onKunenaGetAvatar';
-            $mapping['onKunenaGetLogin'] = 'onKunenaGetLogin';
-            $mapping['onKunenaGetPrivate'] = 'onKunenaGetPrivate';
-            $mapping['onKunenaGetProfile'] = 'onKunenaGetProfile';
+            $mapping['onKunenaGetAccessControl'] = 'onKunenaGetAccessControl';
+            $mapping['onKunenaGetActivity']      = 'onKunenaGetActivity';
+            $mapping['onKunenaGetAvatar']        = 'onKunenaGetAvatar';
+            $mapping['onKunenaGetLogin']         = 'onKunenaGetLogin';
+            $mapping['onKunenaGetPrivate']       = 'onKunenaGetPrivate';
+            $mapping['onKunenaGetProfile']       = 'onKunenaGetProfile';
 
             if ($app->isClient('site')) {
                 // Only allowed in the frontend

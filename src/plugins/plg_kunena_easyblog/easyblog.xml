@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension
-    version="2.5"
     type="plugin"
     group="kunena"
     method="upgrade">
@@ -20,7 +19,7 @@
     <files>
         <filename>Easyblog.xml</filename>
         <folder>language</folder>
-        <folder plugin="Easyblog">src</folder>
+        <folder plugin="easyblog">src</folder>
         <folder>services</folder>
     </files>
     <config>

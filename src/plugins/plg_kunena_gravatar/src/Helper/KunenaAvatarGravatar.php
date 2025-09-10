@@ -11,11 +11,12 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Gravatar;
+namespace Kunena\Forum\Plugin\Kunena\Gravatar\Helper;
 
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -30,19 +31,17 @@ use Pedrollo\GravatarLib\Gravatar;
 class KunenaAvatarGravatar extends KunenaAvatar
 {
     /**
-     * @var     null
+     * @var     Registry
      * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaAvatarGravatar constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
         require_once __DIR__ . '/gravatar.php';

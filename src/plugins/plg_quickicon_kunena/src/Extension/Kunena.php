@@ -21,6 +21,7 @@ use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Event\SubscriberInterface;
+use Joomla\Module\Quickicon\Administrator\Event\QuickIconsEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 
@@ -58,19 +59,20 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
     /**
      * Display Kunena backend icon in Joomla 4.0
      *
-     * @param   string  $context  context
+     * @param   QuickIconsEvent  $context  context
      *
      * @return array
      * @since   Kunena 6.0
      *
      * @throws \Exception
      */
-    public function onGetIcons(string $context): array
+    public function onGetIcons(QuickIconsEvent $event): void
     {
         $app = $this->getApplication();
+        $context = $event->getContext();
 
         if ($context != $this->params->get('context', 'mod_quickicon') || !$app->getIdentity()->authorise('core.manage', 'com_kunena')) {
-            return [];
+            return;
         }
 
         KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
@@ -171,16 +173,23 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
         // Use one line in J!4.0.
         $text = \preg_replace('|<br />|', ' - ', $text);
 
-        return [
-            [
-                'link'  => $link,
-                'image' => $img,
-                'icon'  => $icon,
-                'text'  => $text,
-                'class' => $class,
-                'id'    => 'plg_quickicon_kunena',
-                'group' => 'update_quickicon',
-            ],
+        $iconDefinition = [
+            'link'  => $link,
+            'image' => $img,
+            'icon'  => $icon,
+            'text'  => $text,
+            'class' => $class,
+            'id'    => 'plg_quickicon_kunena',
+            'group' => 'update_quickicon',
         ];
+
+        // Add the icon to the result array
+        $result = $event->getArgument('result', []);
+
+        $result[] = [
+            $iconDefinition,
+        ];
+
+        $event->setArgument('result', $result);
     }
 }

@@ -17,7 +17,6 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
-        <filename>Gravatar.xml</filename>
         <folder>language</folder>
         <folder plugin="gravatar">src</folder>
         <folder>services</folder>

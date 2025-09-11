@@ -16,13 +16,15 @@ namespace Kunena\Forum\Plugin\Privacy\Kunena\Extension;
 // No direct access
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Event\Privacy\CanRemoveDataEvent;
+use Joomla\CMS\Event\Privacy\CollectCapabilitiesEvent;
+use Joomla\CMS\Event\Privacy\ExportRequestEvent;
+use Joomla\CMS\Event\Privacy\RemoveDataEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\User\User;
 use Joomla\Component\Privacy\Administrator\Export\Domain;
 use Joomla\Component\Privacy\Administrator\Plugin\PrivacyPlugin;
 use Joomla\Component\Privacy\Administrator\Removal\Status;
-use Joomla\Component\Privacy\Administrator\Table\RequestTable;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\ParameterType;
@@ -75,19 +77,20 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
      *
      * This event will not allow a super user account to be removed
      *
-     * @param   RequestTable  $request  The request record being processed
-     * @param   User          $user     The user account associated with this request if available
+     * @param   CanRemoveDataEvent  $event  The request event
      *
-     * @return  Status
+     * @return  void
      *
-     * @since   6.1.0
+     * @since   3.9.0
      */
-    public function onPrivacyCanRemoveData(RequestTable $request, User $user = null)
+    public function onPrivacyCanRemoveData(CanRemoveDataEvent $event)
     {
+        $user   = $event->getUser();
         $status = new Status();
 
         if (!$user) {
-            return $status;
+            $event->addResult($status);
+            return;
         }
 
         if ($user->authorise('core.admin')) {
@@ -95,7 +98,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
             $status->reason    = Text::_('PLG_PRIVACY_USER_ERROR_CANNOT_REMOVE_SUPER_USER');
         }
 
-        return $status;
+        $event->addResult($status);
     }
 
     /**
@@ -115,17 +118,18 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
      * - #__kunena_users
      * - #__kunena_user_banned
      *
-     * @param   RequestTable  $request  The request record being processed
-     * @param   User          $user     The user account associated with this request if available
+     * @param   ExportRequestEvent  $event  The request event
      *
-     * @return  \Joomla\Component\Privacy\Administrator\Export\Domain[]
+     * @return  void
      *
-     * @since   6.1.0
+     * @since   3.9.0
      */
-    public function onPrivacyExportRequest(RequestTable $request, User $user = null)
+    public function onPrivacyExportRequest(ExportRequestEvent $event)
     {
+        $user = $event->getUser();
+
         if (!$user) {
-            return [];
+            return;
         }
 
         $domains = [];
@@ -141,7 +145,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
         $domains[] = $this->createKunenaTopicsDomain($user->id);
         $domains[] = $this->createKunenaUserbannedDomain($user->id);
 
-        return $domains;
+        $event->addResult($domains);
     }
 
     /**
@@ -149,15 +153,16 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
      *
      * This event will pseudoanonymise the user data
      *
-     * @param   RequestTable  $request  The request record being processed
-     * @param   User          $user     The user account associated with this request if available
+     * @param   RemoveDataEvent  $event  The remove data event
      *
      * @return  void
      *
-     * @since   6.1.0
+     * @since   3.9.0
      */
-    public function onPrivacyRemoveData(RequestTable $request, User $user = null)
+    public function onPrivacyRemoveData(RemoveDataEvent $event)
     {
+        $user = $event->getUser();
+
         // This plugin only processes data for registered user accounts
         if (!$user) {
             return;
@@ -192,26 +197,30 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
 
     /**
      * Adds the Kunena Privacy Information to Joomla Privacy plugin.
+     * 
+     * @param   CollectCapabilitiesEvent  $event  Event instance
      *
-     * @return  array
+     * @return  void
      *
      * @since   6.1.0
      */
-    public function onPrivacyCollectAdminCapabilities(): array
+    public function onPrivacyCollectAdminCapabilities(CollectCapabilitiesEvent $event): void
     {
-        return [
-            'Kunena Privacy' => [
-                Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_EMAIL'),
-                Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_IP_ADDRESS'),
-                Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_USERPROFILE'),
-                Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_POSTS'),
-                Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_RATINGS'),
-                Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_STATISTICS'),
-                Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_COOKIES'),
-                Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_LOGS'),
-                Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_SOCIAL'),
-            ],
-        ];
+        $event->addResult(
+            [
+                'Kunena Privacy' => [
+                    Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_EMAIL'),
+                    Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_IP_ADDRESS'),
+                    Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_USERPROFILE'),
+                    Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_POSTS'),
+                    Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_RATINGS'),
+                    Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_STATISTICS'),
+                    Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_COOKIES'),
+                    Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_LOGS'),
+                    Text::_('PLG_PRIVACY_KUNENA_CAPABILITY_SOCIAL'),
+                ],
+            ]
+        );
     }
 
     /**

@@ -17,7 +17,6 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
-        <filename>comprofiler.xml</filename>
         <folder>language</folder>
         <folder plugin="comprofiler">src</folder>
         <folder>services</folder>

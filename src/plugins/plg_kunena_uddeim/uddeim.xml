@@ -17,7 +17,6 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
-        <filename>Uddeim.xml</filename>
         <folder>language</folder>
         <folder plugin="uddeim">src</folder>
         <folder>services</folder>

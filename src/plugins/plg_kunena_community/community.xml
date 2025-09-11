@@ -17,7 +17,6 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
-        <filename>community.xml</filename>
         <folder>language</folder>
         <folder plugin="community">src</folder>
         <folder>services</folder>

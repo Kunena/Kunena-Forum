@@ -13,6 +13,8 @@ namespace Kunena\Forum\Plugin\Sampledata\Kunena\Extension;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Event\Plugin\AjaxEvent;
+use Joomla\CMS\Event\SampleData\GetOverviewEvent;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Session\Session;
@@ -84,11 +86,13 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
     /**
      * Get an overview of the proposed sampleData.
      *
-     * @return  \stdClass|void  True on success.
+     * @param   GetOverviewEvent  $event  Event instance
+     * 
+     * @return  void
      *
      * @since   4.0.0
      */
-    public function onSampledataGetOverview()
+    public function onSampledataGetOverview(GetOverviewEvent $event): void
     {
         $app = $this->getApplication();
 
@@ -107,20 +111,21 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
         $data->icon        = 'comments';
         $data->steps       = 1;
 
-        return $data;
+        $event->addResult($data);
     }
 
     /**
      * First step to enable the Language filter plugin.
      *
-     * @return  array|void  Will be converted into the JSON response to the module.
+     * @param   AjaxEvent $event  Event instance
      *
-     * @throws Exception
-     * @since   4.0.0
+     * @return  void
+     *
+     * @since  4.0.0
      */
-    public function onAjaxSampledataApplyStep1()
+    public function onAjaxSampledataApplyStep1(AjaxEvent $event): void
     {
-        if (!Session::checkToken('get') || $app->getInput()->get('type') != $this->_name) {
+        if (!Session::checkToken('get') || $this->getApplication()->getInput()->get('type') != $this->_name) {
             return;
         }
 
@@ -130,7 +135,8 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
 
             $response['message'] = Text::_('PLG_SYSTEM_KUNENA_NOT_ENABLED');
 
-            return $response;
+            $event->addResult($response);
+            return;
         }
 
         KunenaSampleData::installSampleData();
@@ -139,7 +145,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
         $response['success'] = true;
         $response['message'] = Text::_('PLG_SAMPLEDATA_KUNENA_STEP1_SUCCESS');
 
-        return $response;
+        $event->addResult($response);
     }
 
     /**

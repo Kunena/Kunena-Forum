@@ -44,7 +44,6 @@ class KunenaAvatarGravatar extends KunenaAvatar
     public function __construct(Registry $params)
     {
         $this->params = $params;
-        require_once __DIR__ . '/gravatar.php';
     }
 
     /**

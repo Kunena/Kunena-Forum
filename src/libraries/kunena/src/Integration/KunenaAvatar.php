@@ -69,7 +69,7 @@ class KunenaAvatar
 
             if ($avatar instanceof KunenaAvatar) {
                 self::$instance = $avatar;
-            } elseif (\is_array($avatar) && $avatar[0] instanceof KunenaAvatar) {
+            } elseif (\is_array($avatar) && !empty($avatar) && $avatar[0] instanceof KunenaAvatar) {
                 self::$instance = $avatar[0];
             } else {
                 self::$instance = new self();

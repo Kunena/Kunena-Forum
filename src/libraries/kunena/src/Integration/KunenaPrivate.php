@@ -55,7 +55,7 @@ class KunenaPrivate
 
             if ($private instanceof KunenaPrivate) {
                 self::$instance = $private;
-            } elseif (\is_array($private) && $private[0] instanceof KunenaPrivate) {
+            } elseif (\is_array($private) && !empty($private) && $private[0] instanceof KunenaPrivate) {
                 self::$instance = $private[0];
             } else {
                 self::$instance = new self();

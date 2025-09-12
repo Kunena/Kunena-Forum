@@ -155,13 +155,16 @@ abstract class ListDisplay extends KunenaControllerDisplay
         $params->set('kunena_layout', 'list');
         PluginHelper::importPlugin('kunena');
         KunenaParser::prepareContent($content, 'topicList_default');
-        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
-            'context' => 'kunena.topic.list',
-            'subject' => $this->topic,
-            'params'  => $params,
-            'page'    => 0
-        ]);
-        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+
+        // @todo: this has never worked as $this->topics does not exist here
+        // should be removed, commented out for now
+        // $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+        //     'context' => 'kunena.topic.list',
+        //     'subject' => $this->topic,
+        //     'params'  => $params,
+        //     'page'    => 0
+        // ]);
+        // $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
     }
 
     /**

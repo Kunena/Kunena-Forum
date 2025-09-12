@@ -94,7 +94,7 @@ class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             return;
         }
 
-        parent::__construct($subject, $config);
+        parent::__construct($config);
 
         $this->loadLanguage('plg_kunena_uddeim.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_uddeim.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
     }

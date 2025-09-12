@@ -15,7 +15,7 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 
 \defined('_JEXEC') or die();
 
-use CBLib\Registry\Registry;
+use CBLib\Registry\Registry as CBRegistry;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -110,7 +110,7 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
             ->where('element = \'mod_cblogin\'')
             ->andWhere('type = \'module\'');
         $raw_params = $db->loadResult();
-        $params     = new Registry($raw_params);
+        $params     = new CBRegistry($raw_params);
 
         return $params->get('remember_enabled', 1);
     }

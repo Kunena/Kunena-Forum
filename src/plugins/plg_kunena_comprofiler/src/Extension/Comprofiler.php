@@ -16,16 +16,21 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Extension;
 \defined('_JEXEC') or die();
 
 use CBLib\Core\CBLib;
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
+use Kunena\Forum\Libraries\Event\KunenaDisplayEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetAccessControlEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetLoginEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaAccessComprofiler;
 use Kunena\Forum\Plugin\Kunena\Comprofiler\Helper\KunenaAvatarComprofiler;
@@ -138,17 +143,16 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
 
     /**
-     * @param   string  $type    type
-     * @param   null    $view    view
-     * @param   null    $params  params
+     * @param   KunenaDisplayEvent  $event  The event instance
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function onKunenaDisplay(string $type, $view = null, $params = null): void
+    public function onKunenaDisplay(KunenaDisplayEvent $event): void
     {
+        $type        = $event->getType();
         $integration = KunenaFactory::getProfile();
 
         if (!$integration instanceof KunenaProfileComprofiler) {
@@ -165,18 +169,20 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
     }
 
     /**
-     * @param   string  $context  context
-     * @param   object  $item     items
-     * @param   object  $params   params
-     * @param   int     $page     page
+     * @param   KunenaPrepareEvent  $event  The event instance
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function onKunenaPrepare(string $context, &$item, object $params, $page = 0): void
+    public function onKunenaPrepare(KunenaPrepareEvent $event): void
     {
+        $context = $event->getContext();
+        $item    = $event->getItem();
+        $params  = $event->getParams();
+        $page    = $event->getPage();
+
         if ($context == 'kunena.user') {
             $triggerParams = ['userid' => $item->userid, 'userinfo' => &$item];
             $integration   = KunenaFactory::getProfile();
@@ -188,13 +194,14 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
     }
 
     /**
-     * Get Kunena access control object.
+     * Function to get the KunenaAccessControl for this integration
+     * 
+     * @param   KunenaGetAccessEvent  $event  The event instance
      *
-     * @return  KunenaAccessComprofiler|void
-     *
+     * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetAccessControl()
+    public function onKunenaGetAccessControl(KunenaGetAccessControlEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -204,17 +211,18 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             return;
         }
 
-        return new KunenaAccessComprofiler($this->params);
+        $event->setAccessControl(new KunenaAccessComprofiler($this->params));
     }
 
     /**
-     * Get Kunena login integration object.
+     * Function to get the KunenaLogin for this integration
+     * 
+     * @param   KunenaGetLoginJoomla  $event  The event instance
      *
-     * @return  KunenaLoginComprofiler|void
-     *
+     * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetLogin()
+    public function onKunenaGetLogin(KunenaGetLoginEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -224,7 +232,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             return;
         }
 
-        return new KunenaLoginComprofiler($this->params);
+        $event->setLogin(new KunenaLoginComprofiler($this->params));
     }
 
     /**
@@ -234,7 +242,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
      *
      * @since   Kunena 6.0
      */
-    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event)
+    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -254,7 +262,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
      *
      * @since   Kunena 6.0
      */
-    public function onKunenaGetProfile(KunenaGetProfileEvent $event)
+    public function onKunenaGetProfile(KunenaGetProfileEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -274,7 +282,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
      *
      * @since   Kunena 6.0
      */
-    public function onKunenaGetPrivate(KunenaGetPrivateEvent $event)
+    public function onKunenaGetPrivate(KunenaGetPrivateEvent $event): void
     {
         global $_PLUGINS;
 
@@ -300,7 +308,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
      *
      * @since   Kunena 6.0
      */
-    public function onKunenaGetActivity(KunenaGetActivityEvent $event)
+    public function onKunenaGetActivity(KunenaGetActivityEvent $event): void
     {
         if (!isset($this->params)) {
             return;

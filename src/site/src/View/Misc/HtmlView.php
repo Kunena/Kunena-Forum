@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\View\KunenaView;
@@ -159,9 +160,7 @@ class HtmlView extends KunenaView
      *
      * @since   Kunena 6.0
      */
-    protected function _prepareDocument()
-    {
-    }
+    protected function _prepareDocument() {}
 
     /**
      * @param   null  $tpl  tpl
@@ -270,7 +269,15 @@ class HtmlView extends KunenaView
 
         PluginHelper::importPlugin('kunena');
 
-        Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
+        foreach ($this->messages as &$message) {
+            $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+                'context' => 'kunena.messages',
+                'subject' => $message,
+                'params'  => $params,
+                'page'    => 0
+            ]);
+            $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        }
 
         foreach ($this->messages as $message) {
             $this->position++;
@@ -340,7 +347,13 @@ class HtmlView extends KunenaView
 
         PluginHelper::importPlugin('kunena');
 
-        Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topics', &$this->topics, &$params, 0]);
+        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+            'context' => 'kunena.topics',
+            'subject' => $this->topics,
+            'params'  => $params,
+            'page'    => 0
+        ]);
+        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
         foreach ($this->topics as $this->topic) {
             $this->position++;

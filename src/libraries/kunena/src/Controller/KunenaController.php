@@ -27,6 +27,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Event\KunenaDisplayEvent;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -409,10 +410,13 @@ class KunenaController extends BaseController
             // Render the view.
             if ($vFormat == 'html') {
                 PluginHelper::importPlugin('kunena');
-                Factory::getApplication()->triggerEvent('onKunenaDisplay', ['start', $view]);
+                $displayEvent = new KunenaDisplayEvent('onKunenaDisplay', ['type' => 'start', 'view' => $view]);
+                Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
+
                 $test = new KunenaView($config);
                 $test->displayAll();
-                Factory::getApplication()->triggerEvent('onKunenaDisplay', ['end', $view]);
+                $displayEvent->setType('end');
+                Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
             } else {
                 $view->displayLayout();
             }

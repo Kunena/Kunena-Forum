@@ -22,6 +22,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
@@ -163,7 +164,13 @@ class TopicFormReplyDisplay extends KunenaControllerDisplay
 
         PluginHelper::importPlugin('kunena');
 
-        $this->app->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
+        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+            'context' => 'kunena.topic',
+            'subject' => $this->topic,
+            'params'  => $params,
+            'page'    => 0
+        ]);
+        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
         $this->headerText = Text::_('COM_KUNENA_BUTTON_MESSAGE_REPLY') . ': ' . $this->topic->subject;
 

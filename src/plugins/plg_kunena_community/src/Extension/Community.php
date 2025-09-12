@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaAccessCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaAvatarCommunity;
 use Kunena\Forum\Plugin\Kunena\Community\Helper\KunenaProfileCommunity;

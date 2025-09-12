@@ -30,6 +30,8 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Event\KunenaDisplayEvent;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
@@ -314,8 +316,22 @@ class HtmlView extends KunenaView
 
         PluginHelper::importPlugin('kunena');
 
-        Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
-        Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
+        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+            'context' => 'kunena.topic',
+            'subject' => $this->topic,
+            'params'  => $params,
+            'page'    => 0
+        ]);
+        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        foreach ($this->messages as &$message) {
+            $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+                'context' => 'kunena.messages',
+                'subject' => $message,
+                'params'  => $params,
+                'page'    => 0
+            ]);
+            $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        }
 
         $this->moderators = $this->get('Moderators');
         $this->usertopic  = $this->topic->getUserTopic();
@@ -593,7 +609,13 @@ class HtmlView extends KunenaView
 
             PluginHelper::importPlugin('kunena');
 
-            Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.user', &$this->profile, &$params, 0]);
+            $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+                'context' => 'kunena.user',
+                'subject' => $this->profile,
+                'params'  => $params,
+                'page'    => 0
+            ]);
+            $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
             // Karma points and buttons
             $userkarma_title = $userkarma_minus = $userkarma_plus = '';
@@ -651,7 +673,11 @@ class HtmlView extends KunenaView
                     $contents = (string) $this->loadTemplateFile('profile');
                 }
 
-                $contents .= implode(' ', Factory::getApplication()->triggerEvent('onKunenaDisplay', ['topic.profile', $this, $params]));
+                $displayEvent = new KunenaDisplayEvent('onKunenaDisplay', ['type' => 'topic.profile', 'view' => $this, 'params' => $params]);
+                Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
+                $result = $displayEvent->getArgument('result', []);
+
+                $contents .= \implode(' ', $result);
 
                 // FIXME: enable caching after fixing the issues (also external profile stuff affects this)
                 // if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
@@ -1083,7 +1109,13 @@ class HtmlView extends KunenaView
 
         PluginHelper::importPlugin('kunena');
 
-        Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$history, &$params, 0]);
+        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+            'context' => 'kunena.messages',
+            'subject' => $history,
+            'params'  => $params,
+            'page'    => 0
+        ]);
+        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
         echo $this->loadTemplateFile('history');
     }
@@ -1347,7 +1379,13 @@ class HtmlView extends KunenaView
 
         PluginHelper::importPlugin('kunena');
 
-        Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
+        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+            'context' => 'kunena.topic',
+            'subject' => $this->topic,
+            'params'  => $params,
+            'page'    => 0
+        ]);
+        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
         $quote          = (bool) $this->app->getInput()->getBool('quote', false);
         $this->category = $this->topic->getCategory();
@@ -1412,7 +1450,13 @@ class HtmlView extends KunenaView
 
         PluginHelper::importPlugin('kunena');
 
-        Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
+        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+            'context' => 'kunena.topic',
+            'subject' => $this->topic,
+            'params'  => $params,
+            'page'    => 0
+        ]);
+        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         $this->_prepareDocument('edit');
 
         $this->action = 'edit';

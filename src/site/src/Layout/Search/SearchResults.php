@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
@@ -147,7 +148,15 @@ class SearchResults extends KunenaLayout
         $params->set('kunena_layout', 'default');
 
         PluginHelper::importPlugin('kunena');
-        Factory::getApplication()->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->results, &$params, 0]);
+        foreach ($this->results as &$result) {
+            $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+                'context' => 'kunena.messages',
+                'subject' => $result,
+                'params'  => $params,
+                'page'    => 0
+            ]);
+            $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        }
 
         foreach ($this->results as $this->message) {
             $this->topic        = $this->message->getTopic();
@@ -165,9 +174,9 @@ class SearchResults extends KunenaLayout
                 }
 
                 $ressubject = preg_replace(
-                	"/" . preg_quote($searchword, '/') . "/iu",
-                	'<span  class="searchword" >' . $searchword . '</span>',
-                	$ressubject
+                    "/" . preg_quote($searchword, '/') . "/iu",
+                    '<span  class="searchword" >' . $searchword . '</span>',
+                    $ressubject
                 );
 
                 // FIXME: enable highlighting, but only after we can be sure that we do not break html

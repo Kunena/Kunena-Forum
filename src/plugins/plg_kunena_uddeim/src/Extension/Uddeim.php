@@ -28,7 +28,7 @@ use Kunena\Forum\Plugin\Kunena\Uddeim\KunenaPrivateUddeim;
  * Class PlgKunenaUddeIM
  * @since Kunena
  */
-class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
+class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
     use DatabaseAwareTrait;
 
@@ -105,7 +105,7 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
      * @return void
      * @since Kunena
      */
-    public function onKunenaGetPrivate(KunenaGetPrivateEvent $event)
+    public function onKunenaGetPrivate(KunenaGetPrivateEvent $event): void
     {
         if (!isset($this->params)) {
             return;

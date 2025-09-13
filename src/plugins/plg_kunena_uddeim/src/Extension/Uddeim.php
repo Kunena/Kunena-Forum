@@ -22,7 +22,7 @@ use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Plugin\Kunena\Uddeim\KunenaPrivateUddeim;
+use Kunena\Forum\Plugin\Kunena\Uddeim\Helper\KunenaPrivateUddeim;
 
 /**
  * Class PlgKunenaUddeIM

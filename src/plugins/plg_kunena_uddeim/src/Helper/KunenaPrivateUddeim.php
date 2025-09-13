@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Plugin\Kunena\Uddeim;
+namespace Kunena\Forum\Plugin\Kunena\Uddeim\Helper;
 
 \defined('_JEXEC') or die();
 

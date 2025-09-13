@@ -69,8 +69,8 @@ class plgKunenaUddeimInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/uddeim.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaPrivateUddeim.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/uddeim/uddeim.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/uddeim/KunenaPrivateUddeim.php';
         $this->removeFiles();
 
         return true;

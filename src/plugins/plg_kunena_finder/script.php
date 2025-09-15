@@ -19,7 +19,7 @@ use Joomla\CMS\Installer\InstallerScript;
  *
  * @since Kunena
  */
-class plgKunenaEasyblogInstallerScript extends InstallerScript
+class plgKunenaFinderInstallerScript extends InstallerScript
 {
     /**
      * The extension name. This should be set in the installer script.
@@ -27,7 +27,7 @@ class plgKunenaEasyblogInstallerScript extends InstallerScript
      * @var    string
      * @since  5.4.0
      */
-    protected $extension = 'plg_kunena_easyblog';
+    protected $extension = 'plg_kunena_finder';
 
     /**
      * Minimum PHP version required to install the extension
@@ -69,9 +69,7 @@ class plgKunenaEasyblogInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/easyblog/easyblog.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/easyblog/KunenaAvatarEasyblog.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/easyblog/KunenaProfileEasyblog.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/finder/finder.php';
         $this->removeFiles();
 
         return true;

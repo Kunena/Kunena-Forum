@@ -69,14 +69,14 @@ class plgKunenaComprofilerInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/comprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaAccessComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaActivityComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaAvatarComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaIntegrationComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaLoginComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaPrivateComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaProfileComprofiler.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/comprofiler.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaAccessComprofiler.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaActivityComprofiler.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaAvatarComprofiler.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaIntegrationComprofiler.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaLoginComprofiler.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaPrivateComprofiler.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaProfileComprofiler.php';
         $this->removeFiles();
 
         return true;

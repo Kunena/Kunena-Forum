@@ -19,7 +19,7 @@ use Joomla\CMS\Installer\InstallerScript;
  *
  * @since Kunena
  */
-class plgKunenaEasyblogInstallerScript extends InstallerScript
+class plgKunenaGravatarInstallerScript extends InstallerScript
 {
     /**
      * The extension name. This should be set in the installer script.
@@ -27,7 +27,7 @@ class plgKunenaEasyblogInstallerScript extends InstallerScript
      * @var    string
      * @since  5.4.0
      */
-    protected $extension = 'plg_kunena_comprofiler';
+    protected $extension = 'plg_kunena_gravatar';
 
     /**
      * Minimum PHP version required to install the extension
@@ -69,9 +69,8 @@ class plgKunenaEasyblogInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/easyblog.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaAvatarEasyblog.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/community/KunenaProfileEasyblog.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/gravatar/gravatar.php';
+        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/gravatar/KunenaAvatarGravatar.php';
         $this->removeFiles();
 
         return true;

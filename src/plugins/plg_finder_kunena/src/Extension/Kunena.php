@@ -11,6 +11,8 @@
  * @link            https://www.kunena.org
  **/
 
+namespace Kunena\Forum\Plugin\Finder\Kunena\Extension;
+
 defined('_JEXEC') or die('');
 
 use Joomla\CMS\Factory;
@@ -18,12 +20,18 @@ use Joomla\CMS\Log\Log;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Event\Finder\AfterDeleteEvent;
+use Joomla\CMS\Event\Finder\AfterSaveEvent;
+use Joomla\CMS\Event\Finder\BeforeSaveEvent;
 use Joomla\Component\Finder\Administrator\Indexer\Adapter;
 use Joomla\Component\Finder\Administrator\Indexer\Indexer;
 use Joomla\Component\Finder\Administrator\Indexer\Result;
 use Joomla\Component\Finder\Administrator\Indexer\Helper;
+use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\QueryInterface;
+use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
@@ -39,8 +47,10 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
  *
  * @since Kunena
  */
-class PlgFinderKunena extends Adapter
+final class Kunena extends Adapter implements SubscriberInterface
 {
+    use DatabaseAwareTrait;
+
     /**
      * The plugin identifier.
      *
@@ -90,6 +100,12 @@ class PlgFinderKunena extends Adapter
     protected $state_field = 'published';
 
     /**
+     * @var    ?string
+     * @since  6.5.0
+     */
+    protected $old_cataccesstype = \null;
+
+    /**
      * The table name.
      *
      * @var string
@@ -98,21 +114,49 @@ class PlgFinderKunena extends Adapter
     protected $table = '#__kunena_messages';
 
     /**
+     * Load the language file on instantiation.
+     *
+     * @var    boolean
+     * @since  3.1
+     */
+    protected $autoloadLanguage = true;
+
+    /**
+     * Returns an array of events this subscriber will listen to.
+     *
+     * @return  array
+     *
+     * @since   5.0.0
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return \array_merge(parent::getSubscribedEvents(), [
+            'onFinderBeforeSave'   => 'onFinderBeforeSave',
+            'onFinderAfterSave'    => 'onFinderAfterSave',
+            'onFinderBeforeDelete' => 'onFinderBeforeDelete',
+            'onFinderAfterDelete'  => 'onFinderAfterDelete',
+            'onBuildIndex'         => 'onBuildIndex',
+        ]);
+    }
+
+    /**
      * Method to reindex the link information for an item that has been saved.
      * This event is fired before the data is actually saved so we are going
      * to queue the item to be indexed later.
      *
-     * @param   string                  $context  The context of the content passed to the plugin.
-     * @param   Joomla\CMS\Table\Table  $row      A Joomla\CMS\Table\Table object
-     * @param   boolean                 $isNew    If the content is just about to be created
+     * @param   BeforeSaveEvent   $event  The event instance.
      *
-     * @return  boolean  True on success.
+     * @return  void
      *
      * @since   2.5
-     * @throws  Exception on database error.
+     * @throws  \Exception on database error.
      */
-    public function onFinderBeforeSave($context, $row, $isNew)
+    public function onFinderBeforeSave(BeforeSaveEvent $event): void
     {
+        $context = $event->getContext();
+        $row     = $event->getItem();
+        $isNew   = $event->getIsNew();
+
         // If a category will be change, we want to see, if the accesstype and access level has changed
         if (($row instanceof TableKunenaCategories) && !$isNew) {
             $old_table = clone $row;
@@ -120,36 +164,36 @@ class PlgFinderKunena extends Adapter
             $this->old_cataccess     = $old_table->access;
             $this->old_cataccesstype = $old_table->accesstype;
         }
-
-        return true;
     }
 
     /**
      * Method to determine if the access level of an item changed.
      *
-     * @param   string                  $context  The context of the content passed to the plugin.
-     * @param   Joomla\CMS\Table\Table  $row      A Joomla\CMS\Table\Table object
-     * @param   boolean                 $isNew    If the content has just been created
+     * @param   AfterSaveEvent   $event  The event instance.
      *
-     * @return  boolean  True on success.
+     * @return  void
      *
      * @since   2.5
-     * @throws  Exception on database error.
-     * @throws null
+     * @throws  \Exception on database error.
+     * @throws  null
      */
-    public function onFinderAfterSave($context, $row, $isNew)
+    public function onFinderAfterSave(AfterSaveEvent $event): void
     {
+        $context = $event->getContext();
+        $row     = $event->getItem();
+        $isNew   = $event->getIsNew();
+
         // If a category has been changed, we want to check if the access has been changed
         if (($row instanceof TableKunenaCategories) && !$isNew) {
             // Access type of Category is still not the joomla access level system.
             // We didn't show them before and we don't show them now. No reindex necessary
             if ($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') {
-                return true;
+                return;
             }
 
             // Access level did not change. We do not need to reindex
             if ($row->accesstype == 'joomla.level' && $this->old_cataccesstype == 'joomla.level' && $row->access == $this->old_cataccess) {
-                return true;
+                return;
             }
 
             // Well, seems like an access level change has occured. So we need to reindex all messages within this category
@@ -158,8 +202,6 @@ class PlgFinderKunena extends Adapter
             foreach ($messages as $message) {
                 $this->reindex($message->id);
             }
-
-            return true;
         }
 
         // We only want to handle Kunena messages in here
@@ -167,8 +209,6 @@ class PlgFinderKunena extends Adapter
             // Reindex the item.
             $this->reindex($row->id);
         }
-
-        return true;
     }
 
     /**
@@ -176,58 +216,54 @@ class PlgFinderKunena extends Adapter
      * Since Messages are getting deleted in process of deleting categories or messages, we
      * delete the finderresults before those objects are deleted.
      *
-     * @param   string                  $context  The context of the action being performed.
-     * @param   Joomla\CMS\Table\Table  $table    A Joomla\CMS\Table\Table object containing the record to be deleted
+     * @param   KunenaBeforeDeleteEvent   $event  The event instance.
      *
-     * @return  boolean  True on success.
+     * @return  void
      *
      * @since   2.5
-     * @throws  Exception on database error.
-     * @throws null
+     * @throws  \Exception on database error.
+     * @throws  null
      */
-    public function onFinderBeforeDelete($context, $table)
+    public function onFinderBeforeDelete(KunenaBeforeDeleteEvent $event): void
     {
+        $context = $event->getContext();
+        $table   = $event->getItem();
+
         if ($table instanceof TableKunenaCategories) {
             $messages = $this->getMessagesByCategory($table->id);
 
             foreach ($messages as $message) {
                 $this->remove($message->id);
             }
-
-            return true;
         } elseif ($table instanceof TableKunenaTopics) {
             $messages = $this->getMessagesByTopic($table->id);
 
             foreach ($messages as $message) {
                 $this->remove($message->id);
             }
-
-            return true;
         }
-
-        return true;
     }
 
     /**
      * Method to remove the link information for items that have been deleted.
      *
-     * @param   string                  $context  The context of the action being performed.
-     * @param   Joomla\CMS\Table\Table  $table    A Joomla\CMS\Table\Table object containing the record to be deleted
+     * @param   AfterDeleteEvent   $event  The event instance.
      *
-     * @return  boolean  True on success.
+     * @return  void
      *
      * @since   2.5
-     * @throws  Exception on database error.
+     * @throws  \Exception on database error.
      */
-    public function onFinderAfterDelete($context, $table)
+    public function onFinderAfterDelete(AfterDeleteEvent $event): void
     {
-        if ($context == 'com_finder.index') {
-            return $this->remove($table->link_id);
-        } elseif ($table instanceof TableKunenaMessages) {
-            return $this->remove($table->id);
-        }
+        $context = $event->getContext();
+        $table   = $event->getItem();
 
-        return true;
+        if ($context == 'com_finder.index') {
+            $this->remove($table->link_id);
+        } elseif ($table instanceof TableKunenaMessages) {
+            $this->remove($table->id);
+        }
     }
 
     /**
@@ -239,10 +275,10 @@ class PlgFinderKunena extends Adapter
      * @return   boolean  True on success.
      *
      * @since   2.5
-     * @throws  Exception on error.
-     * @throws null
+     * @throws  \Exception on error.
+     * @throws  null
      */
-    public function onBuildIndex()
+    public function onBuildIndex(): bool
     {
         Log::add('FinderIndexerAdapter::onBuildIndex', Log::INFO);
 
@@ -282,7 +318,7 @@ class PlgFinderKunena extends Adapter
 
         unset($items, $item);
 
-        return true;
+        return \true;
     }
 
     /**
@@ -292,13 +328,13 @@ class PlgFinderKunena extends Adapter
      *
      * @return  void
      *
-     * @since Kunena
-     * @throws  Exception on database error.
+     * @since   Kunena
+     * @throws  \Exception on database error.
      */
-    protected function index(Result $item)
+    protected function index(Result $item): void
     {
         // Check if the extension is enabled
-        if (ComponentHelper::isEnabled($this->extension) == false) {
+        if (ComponentHelper::isEnabled($this->extension) == \false) {
             return;
         }
 
@@ -332,25 +368,25 @@ class PlgFinderKunena extends Adapter
      * @return   boolean  True on success.
      *
      * @since   2.5
-     * @throws Exception
+     * @throws  \Exception
      */
-    protected function setup()
+    protected function setup(): bool
     {
         // Initialize CLI
         $api = JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
 
-        if (is_file($api)) {
+        if (\is_file($api)) {
             require_once $api;
         }
 
         // Check if Kunena has been installed.
-        if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.4') || !KunenaForum::installed()) {
-            return false;
+        if (!\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.4') || !KunenaForum::installed()) {
+            return \false;
         }
 
         KunenaForum::setup();
 
-        return true;
+        return \true;
     }
 
     /**
@@ -359,9 +395,9 @@ class PlgFinderKunena extends Adapter
      * @return   integer  The number of content items available to index.
      *
      * @since   2.5
-     * @throws  Exception on database error.
+     * @throws  \Exception on database error.
      */
-    protected function getContentCount()
+    protected function getContentCount(): int
     {
         Log::add('FinderIndexerAdapter::getContentCount', Log::INFO);
 
@@ -374,11 +410,11 @@ class PlgFinderKunena extends Adapter
 
         try {
             $return = (int) $this->db->loadResult();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             KunenaError::displayDatabaseError($e);
         }
 
-        return $return;
+        return (int) $return;
     }
 
     /**
@@ -389,10 +425,10 @@ class PlgFinderKunena extends Adapter
      * @return  Result  A FinderIndexerResult object.
      *
      * @since   2.5
-     * @throws  Exception on database error.
-     * @throws null
+     * @throws  \Exception on database error.
+     * @throws  null
      */
-    protected function getItem($id)
+    protected function getItem($id): Result
     {
         Log::add('FinderIndexerAdapter::getItem', Log::INFO);
 
@@ -418,10 +454,10 @@ class PlgFinderKunena extends Adapter
      * @return  array  An array of Result objects.
      *
      * @since   2.5
-     * @throws null
-     * @throws Exception on database error.
+     * @throws  null
+     * @throws  \Exception on database error.
      */
-    protected function getItems($offset, $limit, $sql = null)
+    protected function getItems($offset, $limit, $sql = \null): array
     {
         Log::add("FinderIndexerAdapter::getItems({$offset}, {$limit})", Log::INFO);
 
@@ -434,7 +470,7 @@ class PlgFinderKunena extends Adapter
 
         try {
             $ids = $this->db->loadColumn();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             KunenaError::displayDatabaseError($e);
         }
 
@@ -457,12 +493,12 @@ class PlgFinderKunena extends Adapter
      *
      * @param   KunenaMessage $message  The KunenaMessage object
      *
-     * @return Result
-     * @since Kunena
-     * @throws Exception
-     * @throws null
+     * @return  Result
+     * @since   Kunena
+     * @throws  \Exception
+     * @throws  null
      */
-    protected function createIndexerResult($message)
+    protected function createIndexerResult($message): Result
     {
         // Convert the item to a result object.
         $item        = new Result();
@@ -473,7 +509,7 @@ class PlgFinderKunena extends Adapter
         $item->title = $message->subject;
 
         // Build the necessary url, route, path and alias information.
-        $itemid = KunenaRoute::fixMissingItemID();
+        $itemid      = KunenaRoute::fixMissingItemID();
         $item->url   = $message->getUrl($message->catid, 'last', $itemid);
         $item->route = $item->url;
         $item->alias = KunenaRoute::stringURLSafe($message->subject);
@@ -483,8 +519,8 @@ class PlgFinderKunena extends Adapter
         $item->summary = $item->body;
 
         // Set other information.
-        $item->published = intval($message->hold == 0);
-        $item->state     = intval($message->getCategory()->published == 1);
+        $item->published = \intval($message->hold == 0);
+        $item->state     = \intval($message->getCategory()->published == 1);
         $item->language  = '*';
 
         // TODO: add access control
@@ -506,24 +542,24 @@ class PlgFinderKunena extends Adapter
      * Method to translate the native content states into states that the
      * indexer can use.
      *
-     * @param   integer  $item      The item state.
-     * @param   integer  $category  The category state. [optional]
+     * @param   integer   $item      The item state.
+     * @param   ?integer  $category  The category state. [optional]
      *
      * @return  integer  The translated indexer state.
      *
      * @since   2.5
      */
-    protected function translateState($item, $category = null)
+    protected function translateState($item, $category = \null): int
     {
         // If category is present, factor in its states as well
-        if ($category !== null) {
+        if ($category !== \null) {
             if ($category != 1) {
                 $item = 0;
             }
         }
 
         // Translate the state
-        return intval($item == 1);
+        return \intval($item == 1);
     }
 
     /**
@@ -531,10 +567,10 @@ class PlgFinderKunena extends Adapter
      *
      * @param   int $cat_id The id of the category
      *
-     * @return mixed
-     * @since Kunena
-     * @throws null
-     * @throws Exception
+     * @return  mixed
+     * @since   Kunena
+     * @throws  null
+     * @throws  \Exception
      */
     protected function getMessagesByCategory($cat_id)
     {
@@ -560,9 +596,9 @@ class PlgFinderKunena extends Adapter
      *
      * @param   int $topic_id The id of the topic
      *
-     * @return mixed
-     * @since Kunena
-     * @throws Exception
+     * @return  mixed
+     * @since   Kunena
+     * @throws  \Exception
      */
     protected function getMessagesByTopic($topic_id)
     {
@@ -594,28 +630,28 @@ class PlgFinderKunena extends Adapter
      *
      * @param   int $catid The id of the category
      *
-     * @return integer
-     * @since Kunena
-     * @throws Exception
+     * @return  integer
+     * @since   Kunena
+     * @throws  \Exception
      */
-    protected function getAccessLevel($catid)
+    protected function getAccessLevel($catid): int
     {
         $category = KunenaCategoryHelper::get($catid);
-        $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById(0);
+        $user     = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById(0);
 
         $accesslevels = (array) $user->getAuthorisedViewLevels();
-        $groups_r     = (array) Access::getGroupsByUser($user->id, true);
-        $groups       = (array) Access::getGroupsByUser($user->id, false);
+        $groups_r     = (array) Access::getGroupsByUser($user->id, \true);
+        $groups       = (array) Access::getGroupsByUser($user->id, \false);
 
         // Check against Joomla access level
         if ($category->accesstype == 'joomla.level') {
-            if (in_array($category->access, $accesslevels)) {
+            if (\in_array($category->access, $accesslevels)) {
                 return 1;
             }
         }
         // Check against Joomla user group
         elseif ($category->accesstype == 'joomla.group') {
-            $pubAccess = in_array($category->pubAccess, $category->pubRecurse ? $groups_r : $groups);
+            $pubAccess = \in_array($category->pubAccess, $category->pubRecurse ? $groups_r : $groups);
 
             if ($pubAccess) {
                 return 1;

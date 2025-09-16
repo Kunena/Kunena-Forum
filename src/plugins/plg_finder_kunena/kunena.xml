@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension version="2.5" type="plugin" group="finder" method="upgrade">
+<extension
+    version="2.5"
+    type="plugin"
+    group="finder"
+    method="upgrade">
     <name>plg_finder_kunena</name>
     <version>@kunenaversion@</version>
     <creationDate>@kunenaversiondate@</creationDate>
@@ -10,10 +14,12 @@
     <copyright>(C) 2008 - @currentyear@ Kunena Team. All rights reserved.</copyright>
     <license>GNU/GPLv3 or later</license>
     <description>PLG_FINDER_KUNENA_DESCRIPTION</description>
-    <namespace>Joomla\Plugin\Finder\Kunena</namespace>
+    <namespace path="src">Kunena\Forum\Plugin\Finder\Kunena</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
+    <scriptfile>script.php</scriptfile>
     <files>
-        <filename plugin="kunena">kunena.php</filename>
+        <folder plugin="kunena">src</folder>
+        <folder>services</folder>
         <folder>language</folder>
     </files>
 </extension>

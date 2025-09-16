@@ -16,7 +16,6 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Extension;
 \defined('_JEXEC') or die();
 
 use CBLib\Core\CBLib;
-use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;

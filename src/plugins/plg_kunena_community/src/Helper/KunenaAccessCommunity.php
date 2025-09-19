@@ -1,0 +1,334 @@
+<?php
+
+/**
+ * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Community
+ *
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
+
+namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
+
+\defined('_JEXEC') or die();
+
+use Exception;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Access\KunenaAccessAbstract;
+use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
+use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Tree\KunenaTree;
+use RuntimeException;
+
+/**
+ * Class KunenaAccessCommunity
+ *
+ * @since   Kunena 6.0
+ */
+class KunenaAccessCommunity extends KunenaAccessAbstract
+{
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    protected $categories = false;
+
+    /**
+     * @var     boolean
+     * @since   Kunena 6.0
+     */
+    protected $groups = false;
+
+    /**
+     * @var     Object
+     * @since   Kunena 6.0
+     */
+    protected $tree = [];
+
+    /**
+     * @var     Registry
+     * @since   Kunena 6.0
+     */
+    protected ?Registry $params = \null;
+
+    /**
+     * @param   Registry  $params  params
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(Registry $params)
+    {
+        $this->params = $params;
+    }
+
+    /**
+     * Get list of supported access types.
+     *
+     * List all access types you want to handle. All names must be less than 20 characters.
+     * Examples: joomla.level, mycomponent.groups, mycomponent.vipusers
+     *
+     * @return  array    Supported access types.
+     * @since   Kunena 6.0
+     */
+    public function getAccessTypes()
+    {
+        return ['jomsocial'];
+    }
+
+    /**
+     * Get group name in selected access type.
+     *
+     * @param   string  $accesstype  Access type.
+     * @param   null    $id          Group id.
+     *
+     * @return  boolean|void|string
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public function getGroupName(string $accesstype, $id = null)
+    {
+        if ($accesstype == 'jomsocial') {
+            $this->loadGroups();
+
+            if ($id !== null) {
+                return isset($this->groups[$id]) ? $this->groups[$id]->name : '';
+            }
+
+            return $this->groups;
+        }
+
+        return;
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    protected function loadGroups(): void
+    {
+        if ($this->groups === false) {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery();
+            $query->select('id, CONCAT(\'c\', categoryid) AS parentid, name')
+                ->from($db->quoteName('#__community_groups'))
+                ->order('categoryid, name');
+            $db->setQuery($query);
+
+            try {
+                $this->groups = (array) $db->loadObjectList('id');
+            } catch (RuntimeException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+
+            if ($this->categories !== false) {
+                $this->tree->add($this->groups);
+            }
+        }
+    }
+
+    /**
+     * Get HTML list of the available groups
+     *
+     * @param   string|null       $accesstype  Access type.
+     * @param   KunenaCategory    $category    Group id.
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public function getAccessOptions($accesstype, KunenaCategory $category): array
+    {
+        $html = [];
+
+        if (!$accesstype || $accesstype == 'jomsocial') {
+            $this->loadCategories();
+            $this->loadGroups();
+            $options  = [];
+            $selected = 'jomsocial' == $category->accesstype && isset($this->groups[$category->access]) ? $category->access : null;
+
+            foreach ($this->tree as $item) {
+                if (!$selected && is_numeric($item->id)) {
+                    $selected = $item->id;
+                }
+
+                $options[] = HTMLHelper::_('select.option', $item->id, str_repeat('- ', $item->level) . $item->name, 'value', 'text', !is_numeric($item->id));
+            }
+
+            $html['jomsocial']['access'] = [
+                'title' => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_TITLE'),
+                'desc'  => Text::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_DESC'),
+                'input' => HTMLHelper::_('select.genericlist', $options, 'access-jomsocial', 'class="inputbox form-control" size="10"', 'value', 'text', $selected),
+            ];
+        }
+
+        return $html;
+    }
+
+    /**
+     * @return  void
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    protected function loadCategories(): void
+    {
+        if ($this->categories === false) {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery();
+            $query->select('CONCAT(\'c\', id) AS id, CONCAT(\'c\', parent) AS parentid, name')
+                ->from($db->quoteName('#__community_groups_category'))
+                ->order('parent, name');
+            $db->setQuery($query);
+
+            try {
+                $this->categories = (array) $db->loadObjectList('id');
+            } catch (RuntimeException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+
+            $this->tree = new KunenaTree($this->categories);
+
+            if ($this->groups !== false) {
+                $this->tree->add($this->groups);
+            }
+        }
+    }
+
+    /**
+     * Load moderators and administrators for listed categories.
+     *
+     * This function is used to add category administrators and moderators to listed categories. In addition
+     * integration can also add global administrators (catid=0).
+     *
+     * Results may be cached.
+     *
+     * @param   array|null  $categories  List of categories, null = all.
+     *
+     * @return  array(array => u, 'category_id'=>c, 'role'=>r))
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public function loadCategoryRoles(array $categories = null): array
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select($db->quoteName('g.memberid', 'user_id'), $db->quoteName('c.id', 'category_id') . ',' . KunenaForum::ADMINISTRATOR . ' AS role')
+            ->from($db->quoteName('#__kunena_categories', 'c'))
+            ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . '= \'jomsocial\' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
+            ->where($db->quoteName('c.published') . ' = 1')
+            ->andWhere($db->quoteName('g.approved') . ' = 1')
+            ->andWhere($db->quoteName('g.permissions') . ' = ' . $db->quote(COMMUNITY_GROUP_ADMIN));
+        $db->setQuery($query);
+
+        try {
+            $list = (array) $db->loadObjectList();
+        } catch (RuntimeException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return $list;
+    }
+
+    /**
+     * Authorise list of categories.
+     *
+     * Function accepts array of id indexed \Kunena\Forum\Libraries\Forum\Category\Category objects and removes
+     * unauthorised categories from the list.
+     *
+     * Results for the current user are saved into session.
+     *
+     * @param   int    $userid      User who needs the authorisation (null=current user, 0=visitor).
+     * @param   array  $categories  List of categories in access type.
+     *
+     * @return  array, where category ids are in the keys.
+     * @since   Kunena 6.0
+     *
+     * @throws Exception
+     */
+    public function authoriseCategories(int $userid, array &$categories): array
+    {
+        $allowed = [];
+
+        if (KunenaFactory::getUser($userid)->exists()) {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery();
+            $query->select($db->quoteName('c.id'))
+                ->from($db->quoteName('#__kunena_categories', 'c'))
+                ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = \'jomsocial\' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
+                ->where($db->quoteName('c.published') . ' = 1')
+                ->andWhere($db->quoteName('g.approved') . '= 1')
+                ->andWhere($db->quoteName('g.memberid') . ' = ' . $db->quote((int) $userid));
+            $db->setQuery($query);
+
+            try {
+                $list = (array) $db->loadColumn();
+            } catch (RuntimeException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+
+            foreach ($list as $catid) {
+                $allowed[$catid] = $catid;
+            }
+        }
+
+        return $allowed;
+    }
+
+    /**
+     * Authorise list of userids to topic or category.
+     *
+     * @param   mixed  $topic    Category or topic.
+     * @param   array  $userids  list(allow, deny).
+     *
+     * @return  array
+     *
+     * @since   Kunena 6.0
+     *
+     * @throws  Exception
+     */
+    public function authoriseUsers(KunenaDatabaseObject $topic, array $userids): array
+    {
+        if (empty($userids)) {
+            return [[], []];
+        }
+
+        $category = $topic->getCategory();
+        $userlist = implode(',', $userids);
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select($db->quoteName('c.id'))
+            ->from($db->quoteName('#__kunena_categories', 'c'))
+            ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = ' . $db->quoteName('jomsocial') . ' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
+            ->where($db->quoteName('c.id') . ' = ' . $db->quote((int) $category->id))
+            ->andWhere($db->quoteName('g.approved') . '= 1')
+            ->andWhere($db->quoteName('g.memberid') . ' IN (' . $userlist . ')');
+        $db->setQuery($query);
+
+        try {
+            $allow = (array) $db->loadColumn();
+            $deny  = [];
+        } catch (RuntimeException $e) {
+            KunenaError::displayDatabaseError($e);
+        }
+
+        return [$allow, $deny];
+    }
+}

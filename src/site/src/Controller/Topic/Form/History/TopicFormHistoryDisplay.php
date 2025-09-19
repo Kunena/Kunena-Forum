@@ -21,6 +21,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
@@ -71,10 +72,10 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
         $this->topic   = KunenaTopicHelper::get($id);
         $category      = $this->topic->getCategory();
         $this->history = KunenaMessageHelper::getMessagesByTopic(
-        	$this->topic,
-        	0,
-        	(int) $this->config->historyLimit,
-        	'DESC'
+            $this->topic,
+            0,
+            (int) $this->config->historyLimit,
+            'DESC'
         );
 
         $this->replycount   = $this->topic->getReplies();
@@ -124,7 +125,13 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 
         PluginHelper::importPlugin('kunena');
 
-        $this->app->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->history, &$params, 0]);
+        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+            'context' => 'kunena.messages',
+            'subject' => $this->history,
+            'params'  => $params,
+            'page'    => 0
+        ]);
+        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
         // FIXME: need to improve BBCode class on this...
         $this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);
@@ -140,7 +147,5 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
      *
      * @since   Kunena 6.0
      */
-    protected function prepareDocument()
-    {
-    }
+    protected function prepareDocument() {}
 }

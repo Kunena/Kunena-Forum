@@ -24,6 +24,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -72,7 +73,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
     public $categorylist;
 
     public $topic;
-    
+
     public $input;
 
     /**
@@ -140,11 +141,11 @@ abstract class ListDisplay extends KunenaControllerDisplay
         }*/
 
         $options    = [];
-        $options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+        $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
         // Todo: fix params
         $this->catParams    = ['sections' => 1, 'catid' => 0];
         $this->categorylist = HTMLHelper::_('select.genericlist', $options, 'catid', 'class="class="form-select fbs" size="1" onchange = "this.form.submit()"', 'value', 'text');
-        
+
         $this->input = $this->app->getInput();
 
         // Run events.
@@ -154,7 +155,16 @@ abstract class ListDisplay extends KunenaControllerDisplay
         $params->set('kunena_layout', 'list');
         PluginHelper::importPlugin('kunena');
         KunenaParser::prepareContent($content, 'topicList_default');
-        $this->app->triggerEvent('onKunenaPrepare', ['kunena.topic.list', &$this->topic, &$params, 0]);
+
+        // @todo: this has never worked as $this->topics does not exist here
+        // should be removed, commented out for now
+        // $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+        //     'context' => 'kunena.topic.list',
+        //     'subject' => $this->topic,
+        //     'params'  => $params,
+        //     'page'    => 0
+        // ]);
+        // $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
     }
 
     /**

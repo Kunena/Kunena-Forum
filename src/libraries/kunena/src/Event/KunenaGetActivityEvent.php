@@ -19,7 +19,7 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
-use Kunena\Forum\Libraries\Activity\KunenaActivity;
+use Kunena\Forum\Libraries\Integration\KunenaActivityAbstract;
 
 /**
  * Class for onKunenaGetActivity event.
@@ -36,13 +36,13 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaActivity  $value  The value to set
+     * @param   KunenaActivityAbstract  $value  The value to set
      *
-     * @return  KunenaActivity
+     * @return  KunenaActivityAbstract
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    protected function onSetActivity(KunenaActivity $activity): KunenaActivity
+    protected function onSetActivity(KunenaActivityAbstract $activity): KunenaActivityAbstract
     {
         return $activity;
     }
@@ -50,12 +50,12 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
     /**
      * Getter for the data argument.
      *
-     * @return  KunenaActivity|array
+     * @return  KunenaActivityAbstract|array
      * @since   6.5.0
      */
-    public function getActivity(): KunenaActivity|array
+    public function getActivity(): KunenaActivityAbstract|array
     {
-        if (isset($this->arguments['activity']) && $this->arguments['activity'] instanceof KunenaActivity) {
+        if (isset($this->arguments['activity']) && $this->arguments['activity'] instanceof KunenaActivityAbstract) {
             return $this->arguments['activity'];
         }
 
@@ -68,7 +68,7 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
      * @return  $this
      * @since   6.5.0
      */
-    public function setActivity(KunenaActivity $activity)
+    public function setActivity(KunenaActivityAbstract $activity)
     {
         return $this->setArgument('activity', $activity);
     }

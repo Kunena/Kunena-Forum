@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * Kunena Plugin
+ *
+ * @package         Kunena.Plugins
+ * @subpackage      Community
+ *
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
+
+namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
+
+\defined('_JEXEC') or die();
+
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
+
+/**
+ * Class KunenaLoginCommunity
+ *
+ * @since   Kunena 6.0
+ */
+class KunenaLoginCommunity extends KunenaLoginAbstract
+{
+    /**
+     * @var     Registry
+     * @since   Kunena 6.0
+     */
+    protected ?Registry $params = \null;
+
+    /**
+     * @param   Registry  $params  params
+     *
+     * @since   Kunena 6.0
+     */
+    public function __construct(Registry $params)
+    {
+        $this->params = $params;
+    }
+
+    /**
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getLoginURL(): string
+    {
+        return \CRoute::_('index.php?option=com_community&view=frontpage');
+    }
+
+    /**
+     * @return  string
+     *
+     * @since   Kunena 6.0
+     */
+    public function getLogoutURL(): string
+    {
+        return \CRoute::_('index.php?option=com_community&view=frontpage');
+    }
+
+    /**
+     * @return string
+     * @since   Kunena 6.0
+     */
+    public function getRegistrationURL()
+    {
+        $usersConfig = ComponentHelper::getParams('com_users');
+
+        if ($usersConfig->get('allowUserRegistration')) {
+            return \CRoute::_('index.php?option=com_community&view=register');
+        }
+
+        //return;
+    }
+}

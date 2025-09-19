@@ -98,7 +98,7 @@ class Joomla extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     public function onKunenaGetAccessControl(KunenaGetAccessControlEvent $event)
     {
         if (!$this->params->get('access', 1)) {
-            return \false;
+            return;
         }
 
         $event->setAccessControl(new KunenaAccessJoomla($this->params));

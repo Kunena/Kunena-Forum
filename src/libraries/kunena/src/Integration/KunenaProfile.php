@@ -61,7 +61,7 @@ class KunenaProfile
 
             if ($profile instanceof KunenaProfile) {
                 self::$instance = $profile;
-            } elseif (\is_array($profile) && $profile[0] instanceof KunenaProfile) {
+            } elseif (\is_array($profile) && !empty($profile)  && $profile[0] instanceof KunenaProfile) {
                 self::$instance = $profile[0];
             } else {
                 self::$instance = new self();

@@ -19,7 +19,7 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
-use Kunena\Forum\Libraries\Integration\KunenaPrivate;
+use Kunena\Forum\Libraries\Integration\KunenaPrivateAbstract;
 
 /**
  * Class for onKunenaGetPrivate event.
@@ -36,13 +36,13 @@ class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwar
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaPrivate  $value  The value to set
+     * @param   KunenaPrivateAbstract  $value  The value to set
      *
-     * @return  KunenaPrivate
+     * @return  KunenaPrivateAbstract
      * @since   6.5.0
      * @throws  \BadMethodCallException
      */
-    protected function onSetPrivate(KunenaPrivate $private): KunenaPrivate
+    protected function onSetPrivate(KunenaPrivateAbstract $private): KunenaPrivateAbstract
     {
         return $private;
     }
@@ -50,12 +50,12 @@ class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwar
     /**
      * Getter for the data argument.
      *
-     * @return  KunenaPrivate|array
+     * @return  KunenaPrivateAbstract|array
      * @since   6.5.0
      */
-    public function getPrivate(): KunenaPrivate|array
+    public function getPrivate(): KunenaPrivateAbstract|array
     {
-        if (isset($this->arguments['private']) && $this->arguments['private'] instanceof KunenaPrivate) {
+        if (isset($this->arguments['private']) && $this->arguments['private'] instanceof KunenaPrivateAbstract) {
             return $this->arguments['private'];
         }
 
@@ -68,7 +68,7 @@ class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwar
      * @return  $this
      * @since   6.5.0
      */
-    public function setPrivate(KunenaPrivate $private)
+    public function setPrivate(KunenaPrivateAbstract $private)
     {
         return $this->setArgument('private', $private);
     }

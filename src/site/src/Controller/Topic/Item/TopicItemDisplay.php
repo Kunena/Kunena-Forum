@@ -45,6 +45,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use stdClass;
 use Kunena\Forum\Libraries\Controller\KunenaController;
+use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 
 /**
  * Class ComponentTopicControllerItemDisplay
@@ -145,9 +146,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
-            }
-
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }
@@ -169,19 +168,19 @@ class TopicItemDisplay extends KunenaControllerDisplay
          }*/
 
         $options    = [];
-        $options [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
+        $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FORUM_TOP'));
 
         // Todo: fix params
         $this->catParams    = ['sections' => 1, 'catid' => 0];
         $this->categorylist = HTMLHelper::_(
-        	'kunenaforum.categorylist',
-        	'catid',
-        	0,
-        	$options,
-        	$this->catParams,
-        	'class="form-select" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_FORUM_TOP') . '" size="1" onchange = "this.form.submit()"',
-        	'value',
-        	'text'
+            'kunenaforum.categorylist',
+            'catid',
+            0,
+            $options,
+            $this->catParams,
+            'class="form-select" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_FORUM_TOP') . '" size="1" onchange = "this.form.submit()"',
+            'value',
+            'text'
         );
 
         // Load topic and message.
@@ -288,9 +287,22 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         PluginHelper::importPlugin('kunena');
         KunenaParser::prepareContent($content, 'topic_top');
-        $this->app->triggerEvent('onKunenaPrepare', ['kunena.topic', &$this->topic, &$params, 0]);
-        $this->app->triggerEvent('onKunenaPrepare', ['kunena.messages', &$this->messages, &$params, 0]);
-
+        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+            'context' => 'kunena.topic',
+            'subject' => $this->topic,
+            'params'  => $params,
+            'page'    => 0
+        ]);
+        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        foreach ($this->messages as &$message) {
+            $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+                'context' => 'kunena.messages',
+                'subject' => $message,
+                'params'  => $params,
+                'page'    => 0
+            ]);
+            $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        }
         // Get user data, captcha & quick reply.
         $this->userTopic  = $this->topic->getUserTopic();
         $this->quickReply = $this->topic->isAuthorised('reply') && $this->me->exists() && $this->config->quickReply;

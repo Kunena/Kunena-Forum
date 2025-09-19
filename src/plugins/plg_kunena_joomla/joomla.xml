@@ -17,7 +17,6 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
-        <filename>joomla.xml</filename>
         <folder>language</folder>
         <folder plugin="joomla">src</folder>
         <folder>services</folder>

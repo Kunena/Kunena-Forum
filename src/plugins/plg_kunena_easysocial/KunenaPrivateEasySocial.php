@@ -21,35 +21,34 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial;
 \defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Integration\KunenaPrivate;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Integration\KunenaPrivateAbstract;
 
 /**
  * @package     Kunena
  *
  * @since       Kunena 5.0
  */
-class KunenaPrivateEasySocial extends KunenaPrivate
+class KunenaPrivateEasySocial extends KunenaPrivateAbstract
 {
     /**
      * @var     boolean
-     * @since   Kunena 5.0
+     * @since   Kunena 6.0
      */
     protected $loaded = false;
 
     /**
-     * @var     null
-     * @since   Kunena 5.0
+     * @var     Registry
+     * @since   Kunena 6.0
      */
-    protected $params = null;
+    protected ?Registry $params = \null;
 
     /**
-     * KunenaPrivateEasySocial constructor.
+     * @param   Registry  $params  params
      *
-     * @param   object  $params  params
-     *
-     * @since   Kunena 5.0
+     * @since   Kunena 6.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
 

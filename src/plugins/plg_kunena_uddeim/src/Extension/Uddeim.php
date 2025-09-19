@@ -102,6 +102,8 @@ class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     /**
      * Get Kunena private message integration object.
      * 
+     * @param   KunenaGetPrivateEvent  $event The event  instance
+     * 
      * @return void
      * @since Kunena
      */
@@ -115,6 +117,7 @@ class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             return;
         }
 
+        $event->stopPropagation();
         $event->setPrivate(new KunenaPrivateUddeim($this->params));
     }
 }

@@ -20,6 +20,7 @@ defined('_JEXEC') or die('Unauthorized Access');
 
 use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetLoginEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -73,12 +74,13 @@ class PlgKunenaEasySocial extends EasySocialPlugins
 
     /**
      * Get Kunena login integration object.
-     *
-     * @return  KunenaLoginEasySocial
-     *
+     * 
+     * @param   KunenaGetLoginEvent  $event  The event instance
+     * 
+     * @return  void
      * @since   Kunena 5.0
      */
-    public function onKunenaGetLogin()
+    public function onKunenaGetLogin(KunenaGetLoginEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -88,16 +90,18 @@ class PlgKunenaEasySocial extends EasySocialPlugins
             return;
         }
 
-        return new KunenaLoginEasySocial($this->params);
+        $event->addResult(new KunenaLoginEasySocial($this->params));
     }
 
     /**
      * Get Kunena avatar integration object.
+     * 
+     * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return  void
      * @since   Kunena 5.0
      */
-    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event)
+    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -107,11 +111,14 @@ class PlgKunenaEasySocial extends EasySocialPlugins
             return;
         }
 
+        $event->stopPropagation();
         $event->setAvatar(new KunenaAvatarEasySocial($this->params));
     }
 
     /**
      * Get Kunena profile integration object.
+     * 
+     * @param   KunenaGetProfileEvent  $event  The event instance
      *
      * @return  void
      *
@@ -127,11 +134,14 @@ class PlgKunenaEasySocial extends EasySocialPlugins
             return;
         }
 
+        $event->stopPropagation();
         $event->setProfile(new KunenaProfileEasySocial($this->params));
     }
 
     /**
      * Get Kunena private message integration object.
+     * 
+     * @param   KunenaGetPrivateEvent  $event The event  instance
      *
      * @return  void
      *
@@ -147,17 +157,20 @@ class PlgKunenaEasySocial extends EasySocialPlugins
             return;
         }
 
+        $event->stopPropagation();
         $event->setPrivate(new KunenaPrivateEasySocial($this->params));
     }
 
     /**
      * Get Kunena activity stream integration object.
      *
+     * @param   KunenaGetActivityEvent  $event  The event instance
+     *
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public function onKunenaGetActivity(KunenaGetActivityEvent $event)
+    public function onKunenaGetActivity(KunenaGetActivityEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -167,6 +180,6 @@ class PlgKunenaEasySocial extends EasySocialPlugins
             return;
         }
 
-        $event->setActivty(new KunenaActivityEasySocial($this->params));
+        $event->addResult(new KunenaActivityEasySocial($this->params));
     }
 }

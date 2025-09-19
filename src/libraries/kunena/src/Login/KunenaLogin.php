@@ -52,16 +52,13 @@ class KunenaLogin
         PluginHelper::importPlugin('kunena');
 
         $loginEvent = new KunenaGetLoginEvent('onKunenaGetLogin');
-        $classes = Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetLogin', $loginEvent);
-        $classes = $loginEvent->getLogin();
+        Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetLogin', $loginEvent);
 
-        if ($classes instanceof KunenaLoginAbstract) {
-            $this->instances[] = $classes;
-        } elseif (\is_array($classes)) {
-            foreach ($classes as $class) {
-                if ($class instanceof KunenaLoginAbstract) {
-                    $this->instances[] = $class;
-                }
+        $classes = $loginEvent->getArgument('result', []);
+
+        foreach ($classes as $class) {
+            if ($class instanceof KunenaLoginAbstract) {
+                $this->instances[] = $class;
             }
         }
     }

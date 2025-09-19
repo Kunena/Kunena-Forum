@@ -19,7 +19,6 @@ use Joomla\CMS\Event\AbstractImmutableEvent;
 use Joomla\CMS\Event\Result\ResultAware;
 use Joomla\CMS\Event\Result\ResultAwareInterface;
 use Joomla\CMS\Event\Result\ResultTypeObjectAware;
-use Kunena\Forum\Libraries\Integration\KunenaActivityAbstract;
 
 /**
  * Class for onKunenaGetActivity event.
@@ -32,44 +31,4 @@ class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwa
 {
     use ResultAware;
     use ResultTypeObjectAware;
-
-    /**
-     * Setter for the object argument.
-     *
-     * @param   KunenaActivityAbstract  $value  The value to set
-     *
-     * @return  KunenaActivityAbstract
-     * @since   6.5.0
-     * @throws  \BadMethodCallException
-     */
-    protected function onSetActivity(KunenaActivityAbstract $activity): KunenaActivityAbstract
-    {
-        return $activity;
-    }
-
-    /**
-     * Getter for the data argument.
-     *
-     * @return  KunenaActivityAbstract|array
-     * @since   6.5.0
-     */
-    public function getActivity(): KunenaActivityAbstract|array
-    {
-        if (isset($this->arguments['activity']) && $this->arguments['activity'] instanceof KunenaActivityAbstract) {
-            return $this->arguments['activity'];
-        }
-
-        return $this->arguments['result'] ?? [];
-    }
-
-    /**
-     * Setter for the data argument.
-     *
-     * @return  $this
-     * @since   6.5.0
-     */
-    public function setActivity(KunenaActivityAbstract $activity)
-    {
-        return $this->setArgument('activity', $activity);
-    }
 }

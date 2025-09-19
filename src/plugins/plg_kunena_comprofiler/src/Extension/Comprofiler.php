@@ -195,7 +195,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
     /**
      * Function to get the KunenaAccessControl for this integration
      * 
-     * @param   KunenaGetAccessEvent  $event  The event instance
+     * @param   KunenaGetAccessControlEvent  $event  The event instance
      *
      * @return  void
      * @since   Kunena 6.0
@@ -210,13 +210,14 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             return;
         }
 
-        $event->setAccessControl(new KunenaAccessComprofiler($this->params));
+
+        $event->addResult(new KunenaAccessComprofiler($this->params));
     }
 
     /**
      * Function to get the KunenaLogin for this integration
      * 
-     * @param   KunenaGetLoginJoomla  $event  The event instance
+     * @param   KunenaGetLoginEvent  $event  The event instance
      *
      * @return  void
      * @since   Kunena 6.0
@@ -231,11 +232,13 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             return;
         }
 
-        $event->setLogin(new KunenaLoginComprofiler($this->params));
+        $event->addResult(new KunenaLoginComprofiler($this->params));
     }
 
     /**
      * Get Kunena avatar integration object.
+     * 
+     * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return  void
      *
@@ -251,11 +254,14 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             return;
         }
 
+        $event->stopPropagation();
         $event->setAvatar(new KunenaAvatarComprofiler($this->params));
     }
 
     /**
      * Get Kunena profile integration object.
+     * 
+     * @param   KunenaGetProfileEvent  $event  The event instance
      *
      * @return  void
      *
@@ -271,14 +277,16 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             return;
         }
 
+        $event->stopPropagation();
         $event->setProfile(new KunenaProfileComprofiler($this->params));
     }
 
     /**
      * Get Kunena private message integration object.
+     * 
+     * @param   KunenaGetPrivateEvent  $event The event  instance
      *
      * @return  void
-     *
      * @since   Kunena 6.0
      */
     public function onKunenaGetPrivate(KunenaGetPrivateEvent $event): void
@@ -297,11 +305,14 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             return;
         }
 
+        $event->stopPropagation();
         $event->setPrivate(new KunenaPrivateComprofiler($this->params));
     }
 
     /**
      * Get Kunena activity stream integration object.
+     *
+     * @param   KunenaGetActivityEvent  $event  The event instance
      *
      * @return void
      *
@@ -317,6 +328,6 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             return;
         }
 
-        $event->setActivity(new KunenaActivityComprofiler($this->params));
+        $event->addResult([new KunenaActivityComprofiler($this->params)]);
     }
 }

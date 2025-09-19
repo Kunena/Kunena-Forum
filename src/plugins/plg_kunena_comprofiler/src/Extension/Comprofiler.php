@@ -328,6 +328,6 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
             return;
         }
 
-        $event->addResult([new KunenaActivityComprofiler($this->params)]);
+        $event->addResult(new KunenaActivityComprofiler($this->params));
     }
 }

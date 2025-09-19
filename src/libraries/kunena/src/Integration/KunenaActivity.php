@@ -51,15 +51,11 @@ class KunenaActivity
         $activityEvent = new KunenaGetActivityEvent('onKunenaGetActivity');
         Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetActivity', $activityEvent);
 
-        $classes = $activityEvent->getActivity();
+        $classes = $activityEvent->getArgument('result', []);
 
-        if ($classes instanceof KunenaActivityAbstract) {
-            $this->instances[] = $classes;
-        } elseif (\is_array($classes)) {
-            foreach ($classes as $class) {
-                if ($class instanceof KunenaActivityAbstract) {
-                    $this->instances[] = $class;
-                }
+        foreach ($classes as $class) {
+            if ($class instanceof KunenaActivityAbstract) {
+                $this->instances[] = $class;
             }
         }
     }

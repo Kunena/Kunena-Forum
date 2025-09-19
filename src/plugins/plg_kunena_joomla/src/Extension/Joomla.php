@@ -90,7 +90,7 @@ class Joomla extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     /**
      * Function to get the KunenaAccessControl for this integration
      * 
-     * @param   KunenaGetAccessEvent  $event  The event instance
+     * @param   KunenaGetAccessControlEvent  $event  The event instance
      *
      * @return  void
      * @since   Kunena 6.0
@@ -101,19 +101,19 @@ class Joomla extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             return;
         }
 
-        $event->setAccessControl(new KunenaAccessJoomla($this->params));
+        $event->addResult(new KunenaAccessJoomla($this->params));
     }
 
     /**
      * Function to get the KunenaLogin for this integration
      * 
-     * @param   KunenaGetLoginJoomla  $event  The event instance
+     * @param   KunenaGetLoginEvent  $event  The event instance
      *
      * @return  void
      * @since   Kunena 6.0
      */
     public function onKunenaGetLogin(KunenaGetLoginEvent $event)
     {
-        $event->setLogin(new KunenaLoginJoomla($this->params));
+        $event->addResult(new KunenaLoginJoomla($this->params));
     }
 }

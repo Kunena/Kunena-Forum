@@ -20,8 +20,10 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
+use Kunena\Forum\Libraries\Event\KunenaGetAccessControlEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetLoginEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -111,12 +113,13 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
     /**
      * Get Kunena access control object.
      *
-     * @return  KunenaAccessCommunity|void
-     *
+     * @param   KunenaGetAccessControlEvent  $event  The event instance
+     * 
+     * @return  void
      * @todo    Should we remove category ACL integration?
      * @since   Kunena
      */
-    public function onKunenaGetAccessControl()
+    public function onKunenaGetAccessControl(KunenaGetAccessControlEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -126,16 +129,18 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
             return;
         }
 
-        return new KunenaAccessCommunity($this->params);
+        $event->addResult(new KunenaAccessCommunity($this->params));
     }
 
     /**
      * Get Kunena login integration object.
      *
-     * @return  KunenaLoginCommunity|null|void
+     * @param   KunenaGetLoginEvent  $event  The event instance
+     * 
+     * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetLogin()
+    public function onKunenaGetLogin(KunenaGetLoginEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -145,11 +150,13 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
             return;
         }
 
-        return new KunenaLoginCommunity($this->params);
+        $event->addResult(new KunenaLoginCommunity($this->params));
     }
 
     /**
      * Get Kunena avatar integration object.
+     * 
+     * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return  void
      * @since   Kunena 6.0
@@ -164,16 +171,19 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
             return;
         }
 
+        $event->stopPropagation();
         $event->setAvatar(new KunenaAvatarCommunity($this->params));
     }
 
     /**
      * Get Kunena profile integration object.
+     * 
+     * @param   KunenaGetProfileEvent  $event  The event instance
      *
      * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetProfile(KunenaGetProfileEvent $event)
+    public function onKunenaGetProfile(KunenaGetProfileEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -183,16 +193,19 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
             return;
         }
 
+        $event->stopPropagation();
         $event->setProfile(new KunenaProfileCommunity($this->params));
     }
 
     /**
      * Get Kunena private message integration object.
+     * 
+     * @param   KunenaGetPrivateEvent  $event The event  instance
      *
      * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetPrivate(KunenaGetPrivateEvent $event)
+    public function onKunenaGetPrivate(KunenaGetPrivateEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -202,16 +215,19 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
             return;
         }
 
+        $event->stopPropagation();
         $event->setPrivate(new KunenaPrivateCommunity($this->params));
     }
 
     /**
      * Get Kunena activity stream integration object.
      *
+     * @param   KunenaGetActivityEvent  $event  The event instance
+     * 
      * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetActivity(KunenaGetActivityEvent $event)
+    public function onKunenaGetActivity(KunenaGetActivityEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -221,6 +237,6 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
             return;
         }
 
-        $event->setActivity(new KunenaActivityCommunity($this->params));
+        $event->addResult(new KunenaActivityCommunity($this->params));
     }
 }

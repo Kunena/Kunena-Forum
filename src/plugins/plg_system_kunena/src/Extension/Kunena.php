@@ -105,7 +105,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             $kuser->save();
         }
     }
-    
+
     /**
      * Save the language of the user in the table users of Kunena
      *
@@ -122,18 +122,18 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         ) {
             return;
         }
-        
+
         if (!($this->getApplication()->isClient('site'))) {
             return;
         }
-        
-        $options = $event->getOptions(); 
+
+        $options = $event->getOptions();
         $kuser = KunenaFactory::getUser(\intval($options['user']->id));
         $kuser->language = $this->getUserDefaultLanguage($options['user']->params);
-        
+
         $kuser->save();
     }
-    
+
     /**
      * Get the user language defined in his Joomla! profile 
      * 
@@ -142,14 +142,18 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      * @since   Kunena 6.5
      */
     protected function getUserDefaultLanguage($params)
-    {    
-        if (!empty($params)) {            
-            $userParams = json_decode($params);
+    {
+        $language = '';
+
+        if (!empty($params)) {
+            $userParams = \json_decode($params);
             $language = $userParams->language;
-        } else {
+        }
+
+        if (empty($language)) {
             $language = Factory::getApplication()->getLanguage()->getTag();
         }
-        
+
         return $language;
     }
 }

@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Integration\KunenaProfile;
  * Example:
  *  new KunenaGetProfileEvent('onKunenaGetProfile', []);
  *
- * @since  6.5.0
+ * @since  7.0.0
  */
 class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwareInterface
 {
@@ -39,7 +39,7 @@ class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwar
      * @param   KunenaProfile  $value  The value to set
      *
      * @return  KunenaProfile
-     * @since   6.5.0
+     * @since   7.0.0
      * @throws  \BadMethodCallException
      */
     protected function onSetProfile(KunenaProfile $profile): KunenaProfile
@@ -51,7 +51,7 @@ class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwar
      * Getter for the data argument.
      *
      * @return  KunenaProfile|array
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function getProfile(): KunenaProfile|array
     {
@@ -66,7 +66,7 @@ class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwar
      * Setter for the data argument.
      *
      * @return  $this
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function setProfile(KunenaProfile $profile)
     {

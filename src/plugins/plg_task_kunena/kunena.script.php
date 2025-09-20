@@ -30,7 +30,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
      * The extension name. This should be set in the installer script.
      *
      * @var    string
-     * @since  6.5.0
+     * @since  7.0.0
      */
     protected $extension = 'plg_task_kunena';
 
@@ -38,7 +38,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
      * Minimum PHP version required to install the extension
      *
      * @var    string
-     * @since  6.5.0
+     * @since  7.0.0
      */
     protected $minimumPhp = '8.1';
 
@@ -46,7 +46,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
      * Minimum Joomla! version required to install the extension
      *
      * @var    string
-     * @since  6.5.0
+     * @since  7.0.0
      */
     protected $minimumJoomla = '5.3.2';
 
@@ -67,7 +67,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
      * @return void
      *
      * @throws Exception
-     * @since   Kunena 6.5.0
+     * @since   Kunena 7.0.0
      */
     public function postflight($type, $parent)
     {
@@ -81,7 +81,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
      * @param   string  $pluginName
      *
      * @return  boolean
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function enablePlugin(string $pluginName): bool
     {
@@ -109,7 +109,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
      * Function to enable the Remove Expired bans task
      * 
      * @return  void
-     * @since   6.5.0
+     * @since   7.0.0
      */
     private function addRemoveExpiredBansTask(): void
     {

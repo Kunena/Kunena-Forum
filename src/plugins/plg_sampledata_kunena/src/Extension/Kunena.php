@@ -73,7 +73,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
      *
      * @return  array
      *
-     * @since   6.5
+     * @since   7.0.0
      */
     public static function getSubscribedEvents(): array
     {

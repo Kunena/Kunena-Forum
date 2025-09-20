@@ -25,6 +25,6 @@ use Joomla\CMS\Event\Model\DeleteEvent;
  *
  * Joomla Core doesn't have a Finder\BeforeDeleteEvent
  * 
- * @since  6.5.0
+ * @since  7.0.0
  */
 class KunenaBeforeDeleteEvent extends DeleteEvent implements FinderEventInterface {}

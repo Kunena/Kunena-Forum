@@ -25,7 +25,7 @@ use Joomla\CMS\Event\Result\ResultTypeObjectAware;
  * Example:
  *  new KunenaGetLoginEvent('onKunenaGetLogin', []);
  *
- * @since  6.5.0
+ * @since  7.0.0
  */
 class KunenaGetLoginEvent extends AbstractImmutableEvent implements ResultAwareInterface
 {

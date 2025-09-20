@@ -101,7 +101,7 @@ final class Kunena extends Adapter implements SubscriberInterface
 
     /**
      * @var    ?string
-     * @since  6.5.0
+     * @since  7.0.0
      */
     protected $old_cataccesstype = \null;
 

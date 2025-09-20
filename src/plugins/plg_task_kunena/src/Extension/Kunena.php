@@ -34,7 +34,7 @@ use Kunena\Forum\Libraries\User\KunenaBan;
  * A task plugin.
  * {@see ExecuteTaskEvent}.
  *
- * @since 6.5.0
+ * @since 7.0.0
  */
 final class Kunena extends CMSPlugin implements SubscriberInterface
 {
@@ -74,7 +74,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
      *
      * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
      *
-     * @since  6.5.0
+     * @since  7.0.0
      * @throws \Exception
      */
     private function removeExpiredBans(ExecuteTaskEvent $event): int

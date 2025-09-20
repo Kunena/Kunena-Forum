@@ -22,6 +22,6 @@ use Joomla\CMS\Event\Content\ContentPrepareEvent;
  * Example:
  *  new KunenaPrepareEvent('onEventName', ['context' => 'com_example.example', 'subject' => $contentObject, 'params' => $params, 'page' => $pageNum]);
  *
- * @since  6.5.0
+ * @since  7.0.0
  */
 class KunenaPrepareEvent extends ContentPrepareEvent {}

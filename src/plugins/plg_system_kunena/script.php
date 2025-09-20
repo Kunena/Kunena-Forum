@@ -80,7 +80,7 @@ class plgSystemKunenaInstallerScript extends InstallerScript
      * @param   InstallerAdapter  $parent  The class calling this method
      *
      * @return  boolean  True on success
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0.0
      */
     public function preflight($type, $parent): bool
     {

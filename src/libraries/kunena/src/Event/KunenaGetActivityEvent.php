@@ -25,7 +25,7 @@ use Joomla\CMS\Event\Result\ResultTypeObjectAware;
  * Example:
  *  new KunenaGetActivityEvent('onKunenaGetActivity', []);
  *
- * @since  6.5.0
+ * @since  7.0.0
  */
 class KunenaGetActivityEvent extends AbstractImmutableEvent implements ResultAwareInterface
 {

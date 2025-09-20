@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Integration\KunenaAvatar;
  * Example:
  *  new KunenaGetAvatarEvent('onKunenaGetAvatar', []);
  *
- * @since  6.5.0
+ * @since  7.0.0
  */
 class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAwareInterface
 {
@@ -39,7 +39,7 @@ class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAware
      * @param   KunenaAvatar  $value  The value to set
      *
      * @return  KunenaAvatar
-     * @since   6.5.0
+     * @since   7.0.0
      * @throws  \BadMethodCallException
      */
     protected function onSetAvatar(KunenaAvatar $avatar): KunenaAvatar
@@ -51,7 +51,7 @@ class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAware
      * Getter for the data argument.
      *
      * @return  KunenaAvatar|array
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function getAvatar(): KunenaAvatar|array
     {
@@ -66,7 +66,7 @@ class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAware
      * Setter for the data argument.
      *
      * @return  $this
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function setAvatar(KunenaAvatar $avatar)
     {

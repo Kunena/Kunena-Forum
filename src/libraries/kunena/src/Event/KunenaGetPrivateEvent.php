@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Integration\KunenaPrivateAbstract;
  * Example:
  *  new KunenaGetPrivateEvent('onKunenaGetPrivate', []);
  *
- * @since  6.5.0
+ * @since  7.0.0
  */
 class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwareInterface
 {
@@ -39,7 +39,7 @@ class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwar
      * @param   KunenaPrivateAbstract  $value  The value to set
      *
      * @return  KunenaPrivateAbstract
-     * @since   6.5.0
+     * @since   7.0.0
      * @throws  \BadMethodCallException
      */
     protected function onSetPrivate(KunenaPrivateAbstract $private): KunenaPrivateAbstract
@@ -51,7 +51,7 @@ class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwar
      * Getter for the data argument.
      *
      * @return  KunenaPrivateAbstract|array
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function getPrivate(): KunenaPrivateAbstract|array
     {
@@ -66,7 +66,7 @@ class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwar
      * Setter for the data argument.
      *
      * @return  $this
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function setPrivate(KunenaPrivateAbstract $private)
     {

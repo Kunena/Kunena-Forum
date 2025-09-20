@@ -51,7 +51,7 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
      *  - An array composed of the method name to call and the priority
      *
      * @return  array
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0.0
      */
     public static function getSubscribedEvents(): array
     {

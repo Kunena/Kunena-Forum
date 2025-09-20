@@ -52,7 +52,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      *  - An array composed of the method name to call and the priority
      *
      * @return  array
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0.0
      */
     public static function getSubscribedEvents(): array
     {
@@ -111,7 +111,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      *
      * @param   AfterLoginEvent  $event  The event instance
      * @return string
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0.0
      */
     public function onUserAfterLogin(AfterLoginEvent $event): void
     {
@@ -139,7 +139,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      * 
      * @param User $user
      * @return string
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0.0
      */
     protected function getUserDefaultLanguage($params)
     {    

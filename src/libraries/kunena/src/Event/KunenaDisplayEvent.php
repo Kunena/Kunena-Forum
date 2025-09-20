@@ -23,7 +23,7 @@ use Joomla\Registry\Registry;
  * Example:
  *  new KunenaDisplayEvent('com_example.view', ['type' => '', 'view' => '', 'params' => Registry]);
  *
- * @since  6.5.0
+ * @since  7.0.0
  */
 class KunenaDisplayEvent extends AbstractImmutableEvent
 {
@@ -51,7 +51,7 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * @param   string  $value  The value to set
      *
      * @return  string
-     * @since   6.5.0
+     * @since   7.0.0
      */
     protected function onSetType(string $value): string
     {
@@ -62,7 +62,7 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * Getter for the type argument.
      *
      * @return  string
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function getType(): string
     {
@@ -73,7 +73,7 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * Setter for the type argument.
      *
      * @return  $this
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function setType(string $type)
     {
@@ -86,7 +86,7 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * @param   Object  $value  The value to set
      *
      * @return  Object
-     * @since   6.5.0
+     * @since   7.0.0
      */
     protected function onSetView(Object $value): Object
     {
@@ -97,7 +97,7 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * Getter for the view argument.
      *
      * @return  Object
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function getView(): Object
     {
@@ -108,7 +108,7 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * Setter for the view argument.
      *
      * @return  $this
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function setView(Object $view)
     {
@@ -121,7 +121,7 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * @param   Registry  $value  The value to set
      *
      * @return  Registry
-     * @since   6.5.0
+     * @since   7.0.0
      */
     protected function onSetParams(Registry $value): Registry
     {
@@ -132,7 +132,7 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * Getter for the params argument.
      *
      * @return  Registry
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function getParams(): Registry
     {
@@ -143,7 +143,7 @@ class KunenaDisplayEvent extends AbstractImmutableEvent
      * Setter for the params argument.
      *
      * @return  $this
-     * @since   6.5.0
+     * @since   7.0.0
      */
     public function setParams(string $params)
     {

@@ -6,7 +6,7 @@
     method="upgrade">
     <name>pkg_kunena</name>
     <packagename>kunena</packagename>
-    <version>6.5.0-DEV</version>
+    <version>7.0.0-DEV</version>
     <versionname>INTERNAL</versionname>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
@@ -94,7 +94,7 @@
         <server
             type="collection"
             priority="1"
-            name="Kunena 6.5 Update Site">https://update.kunena.org/6.5/list.xml
+            name="Kunena 7.0 Update Site">https://update.kunena.org/7.0/list.xml
         </server>
     </updateservers>
 </extension>

@@ -93,13 +93,13 @@ class KunenaTemplate
     
     /**
      * @var     SiteApplication
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0
      */
     public $app = null;
     
     /**
      * @var     Input
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0
      */
     public $input = null;
 

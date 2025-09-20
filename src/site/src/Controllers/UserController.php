@@ -868,7 +868,7 @@ class UserController extends KunenaController
      * @return  boolean
      *
      * @throws Exception
-     * @since   Kunena 6.5.0
+     * @since   Kunena 7.0.0
      */
     protected function sendMailWhenUserBannedAndUnbanned(KunenaUser $user, $ban)
     {

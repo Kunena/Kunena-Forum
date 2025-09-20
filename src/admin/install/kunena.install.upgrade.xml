@@ -533,7 +533,7 @@
                  versionname="Internal">
         <phpfile name="6.4.5-2025-07-30_remove_columns_users_table"/>
         </version>
-                <version version="6.5.0-DEV"
+                <version version="7.0.0-DEV"
                  versiondate="2025-07-29"
                  versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `language` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`</query>

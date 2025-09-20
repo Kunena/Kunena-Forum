@@ -314,7 +314,7 @@ class KunenaUser
 
     /**
      * @var     string
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0
      */
     public $language;
 

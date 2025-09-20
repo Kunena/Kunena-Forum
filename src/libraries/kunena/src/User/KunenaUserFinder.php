@@ -137,7 +137,7 @@ class KunenaUserFinder extends KunenaFinder
      *
      * @return  $this
      *
-     * @since   Kunena 6.5.0
+     * @since   Kunena 7.0.0
      */
     public function filterByUserType(string $usertype): KunenaFinder
     {

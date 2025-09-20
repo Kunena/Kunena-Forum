@@ -278,7 +278,7 @@ class KunenaUsers extends KunenaTable
     * social
     *
     * @var     string
-    * @since   Kunena 6.5
+    * @since   Kunena 7.0
     */
     public $language = null;
 

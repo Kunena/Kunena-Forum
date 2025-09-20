@@ -20,20 +20,20 @@ use Joomla\Registry\Registry;
 /**
  * class KunenaLoginAbstract 
  *
- * @since   Kunena 6.5
+ * @since   Kunena 7.0
  */
 abstract class KunenaLoginAbstract
 {
     /**
      * @var     ?Registry
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0
      */
     protected ?Registry $params = \null;
 
     /**
      * @param   Registry  $params  params
      *
-     * @since   Kunena 6.5
+     * @since   Kunena 7.0
      */
     public function __construct(Registry $params)
     {

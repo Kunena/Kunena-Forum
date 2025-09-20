@@ -120,13 +120,13 @@ return new class () implements ServiceProviderInterface {
                      * Version of the currently installed Kunena component
                      *
                      * @var string
-                     * @since Kunena 6.5.0
+                     * @since Kunena 7.0.0
                      */
                     protected string $installedVersion;
                     
                     /**
                      *
-                     * @since Kunena 6.5
+                     * @since Kunena 7.0.0
                      */
                     public function __construct(AdministratorApplication $app, DatabaseInterface $db)
                     {
@@ -137,7 +137,7 @@ return new class () implements ServiceProviderInterface {
                     
                     /**
                      *
-                     * @since Kunena 6.5
+                     * @since Kunena 7.0.0
                      */
                     public function install(InstallerAdapter $parent): bool
                     {
@@ -148,7 +148,7 @@ return new class () implements ServiceProviderInterface {
 
                     /**
                      *
-                     * @since Kunena 6.5
+                     * @since Kunena 7.0.0
                      */
                     public function update(InstallerAdapter $parent): bool
                     {
@@ -159,7 +159,7 @@ return new class () implements ServiceProviderInterface {
                     
                     /**
                      *
-                     * @since Kunena 6.5
+                     * @since Kunena 7.0.0
                      */
                     public function uninstall(InstallerAdapter $parent): bool
                     {
@@ -170,7 +170,7 @@ return new class () implements ServiceProviderInterface {
                     
                     /**
                      *
-                     * @since Kunena 6.5
+                     * @since Kunena 7.0.0
                      */
                     public function preflight(string $type, InstallerAdapter $parent): bool
                     {
@@ -192,7 +192,7 @@ return new class () implements ServiceProviderInterface {
                     
                     /**
                      *
-                     * @since Kunena 6.5
+                     * @since Kunena 7.0.0
                      */
                     public function postflight(string $type, InstallerAdapter $parent): bool
                     {
@@ -366,7 +366,7 @@ return new class () implements ServiceProviderInterface {
                      *
                      * @param   string  $version  version
                      *
-                     * @since   6.5.0
+                     * @since   7.0.0
                      */
                     protected function deleteRemovedFolder(string $installedVersion)
                     {
@@ -403,7 +403,7 @@ return new class () implements ServiceProviderInterface {
                      * Get the version of the current installed Kunena from Joomla! extensions table
                      *
                      * @return  string Installed version number or 0 when not installed
-                     * @since   6.5.0
+                     * @since   7.0.0
                      */
                     private function getInstalledVersion(): string
                     {

@@ -111,27 +111,19 @@ class KunenaAccess
 
         $accessControlEvent = new KunenaGetAccessControlEvent('onKunenaGetAccessControl');
         Factory::getApplication()->getDispatcher()->dispatch('onKunenaGetAccessControl', $accessControlEvent);
-        $classes = $accessControlEvent->getAccessControl();
 
-        if ($classes instanceof KunenaAccessAbstract) {
-            $class = $classes;
-        } elseif (\is_array($classes)) {
-            foreach ($classes as $class) {
-                if ($class instanceof KunenaAccessAbstract) {
-                    break;
+        $classes = $accessControlEvent->getArgument('result', []);
+
+        foreach ($classes as $class) {
+            if ($class instanceof KunenaAccessAbstract) {
+                $types                      = $class->getAccessTypes();
+                $this->accesstypes['all'][] = $class;
+                unset($types['all']);
+
+                foreach ($types as $type) {
+                    $this->accesstypes[$type][] = $class;
                 }
             }
-        } else {
-            // Throw error as we do not have nay class to work with
-        }
-
-        /** @var KunenaAccessJoomla $class */
-        $types                      = $class->getAccessTypes();
-        $this->accesstypes['all'][] = $class;
-        unset($types['all']);
-
-        foreach ($types as $type) {
-            $this->accesstypes[$type][] = $class;
         }
 
         // If values were not cached (or users permissions have been changed), force reload

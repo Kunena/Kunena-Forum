@@ -79,12 +79,13 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      * @return  void
      * @since   Kunena 6.0
      */
-    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event)
+    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event): void
     {
         if (!$this->params->get('avatar', 1)) {
             return;
         }
 
+        $event->stopPropagation();
         $event->setAvatar(new KunenaAvatarKunena($this->params));
     }
 
@@ -102,6 +103,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             return;
         }
 
+        $event->stopPropagation();
         $event->setProfile(new KunenaProfileKunena($this->params));
     }
 }

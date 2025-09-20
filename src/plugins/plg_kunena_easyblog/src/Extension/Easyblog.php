@@ -100,11 +100,13 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
 
     /**
      * Get Kunena avatar integration object.
+     * 
+     * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return void
      * @since Kunena
      */
-    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event)
+    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event): void
     {
         if (!isset($this->params)) {
             return;
@@ -116,11 +118,14 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
 
         require_once __DIR__ . "/KunenaAvatarEasyblog.php";
 
+        $event->stopPropagation();
         $event->setAvatar(new KunenaAvatarEasyblog($this->params));
     }
 
     /**
      * Get Kunena profile integration object.
+     * 
+     * @param   KunenaGetProfileEvent  $event  The event instance
      *
      * @return void
      * @since Kunena
@@ -137,6 +142,7 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
 
         require_once __DIR__ . "/KunenaProfileEasyblog.php";
 
+        $event->stopPropagation();
         $event->setProfile(new KunenaProfileEasyblog($this->params));
     }
 }

@@ -86,11 +86,13 @@ class Gravatar extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
 
     /**
      * Get Kunena avatar integration object.
+     * 
+     * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return void
      * @since Kunena
      */
-    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event)
+    public function onKunenaGetAvatar(KunenaGetAvatarEvent $event): void
     {
         if (!$this->params->get('avatar', 1)) {
             return;
@@ -98,6 +100,7 @@ class Gravatar extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
 
         require_once KPATH_FRAMEWORK . '/External/Emberlabs/Gravatar.php';
 
+        $event->stopPropagation();
         $event->setAvatar(new KunenaAvatarGravatar($this->params));
     }
 }

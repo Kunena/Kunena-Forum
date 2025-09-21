@@ -15,7 +15,6 @@ namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
 
 \defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -27,7 +26,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
-use RuntimeException;
 
 /**
  * Class KunenaAccessCommunity
@@ -53,12 +51,6 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
      * @since   Kunena 6.0
      */
     protected $tree = [];
-
-    /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
 
     /**
      * @param   Registry  $params  params
@@ -93,7 +85,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
      * @return  boolean|void|string
      * @since   Kunena 6.0
      *
-     * @throws Exception
+     * @throws  \Exception
      */
     public function getGroupName(string $accesstype, $id = null)
     {
@@ -129,7 +121,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
 
             try {
                 $this->groups = (array) $db->loadObjectList('id');
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 KunenaError::displayDatabaseError($e);
             }
 
@@ -149,7 +141,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws Exception
+     * @throws  \Exception
      */
     public function getAccessOptions($accesstype, KunenaCategory $category): array
     {
@@ -184,7 +176,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws  \Exception
      */
     protected function loadCategories(): void
     {
@@ -198,7 +190,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
 
             try {
                 $this->categories = (array) $db->loadObjectList('id');
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 KunenaError::displayDatabaseError($e);
             }
 
@@ -223,7 +215,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
      * @return  array(array => u, 'category_id'=>c, 'role'=>r))
      * @since   Kunena 6.0
      *
-     * @throws Exception
+     * @throws  \Exception
      */
     public function loadCategoryRoles(array $categories = null): array
     {
@@ -239,7 +231,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
 
         try {
             $list = (array) $db->loadObjectList();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }
 
@@ -260,7 +252,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
      * @return  array, where category ids are in the keys.
      * @since   Kunena 6.0
      *
-     * @throws Exception
+     * @throws  \Exception
      */
     public function authoriseCategories(int $userid, array &$categories): array
     {
@@ -279,7 +271,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
 
             try {
                 $list = (array) $db->loadColumn();
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 KunenaError::displayDatabaseError($e);
             }
 
@@ -301,7 +293,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws  \Exception
      */
     public function authoriseUsers(KunenaDatabaseObject $topic, array $userids): array
     {
@@ -325,7 +317,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
         try {
             $allow = (array) $db->loadColumn();
             $deny  = [];
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }
 

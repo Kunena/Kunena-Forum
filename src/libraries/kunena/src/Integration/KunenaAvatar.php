@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
@@ -32,6 +33,12 @@ use Kunena\Forum\Libraries\User\KunenaUser;
  */
 class KunenaAvatar
 {
+    /**
+     * @var     ?Registry
+     * @since   Kunena 7.0
+     */
+    protected ?Registry $params = \null;
+
     /**
      * @var     ?KunenaAvatar
      * @since   Kunena 6.0

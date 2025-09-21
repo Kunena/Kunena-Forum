@@ -41,7 +41,7 @@ use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaActivityEasySocial;
  *
  * @since       Kunena 5.0
  */
-class Easysocial extends EasySocialPlugins implements SubscriberInterface, DatabaseAwareInterface
+class Easysocial extends \EasySocialPlugins implements SubscriberInterface, DatabaseAwareInterface
 {
     use DatabaseAwareTrait;
 
@@ -105,11 +105,17 @@ class Easysocial extends EasySocialPlugins implements SubscriberInterface, Datab
             return \true;
         }
 
-        parent::__construct($config);
+        // $subject = $this->getDispatcher();
+        // parent::__construct($subject, $config);
 
         $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
         return true;
+    }
+
+    public function initEasySocial(&$subject, $config)
+    {
+        parent::__construct($subject, $config);
     }
 
     /**

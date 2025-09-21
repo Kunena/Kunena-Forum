@@ -40,9 +40,9 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
      *
      * @since   Kunena
      *
-     * @throws Exception
+     * @throws  \Exception
      */
-    public function loginUser(string $username, string $password, bool $rememberme, $secretkey = null)
+    public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null)
     {
         $credentials = ['username' => $username, 'password' => $password];
 
@@ -54,7 +54,7 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
 
         try {
             $logged   = Factory::getApplication()->login($credentials, $options);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
 
@@ -66,9 +66,9 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
      *
      * @since   Kunena
      *
-     * @throws  Exception
+     * @throws  \Exception
      */
-    public function logoutUser()
+    public function logoutUser($return = null)
     {
         $error = Factory::getApplication()->logout();
 

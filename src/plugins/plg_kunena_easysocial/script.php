@@ -30,30 +30,6 @@ class plgKunenaEasysocialInstallerScript extends InstallerScript
     protected $extension = 'plg_kunena_easysocial';
 
     /**
-     * Minimum PHP version required to install the extension
-     *
-     * @var    string
-     * @since  5.4.0
-     */
-    protected $minimumPhp = '8.1';
-
-    /**
-     * Minimum Joomla! version required to install the extension
-     *
-     * @var    string
-     * @since  6.0.0
-     */
-    protected $minimumJoomla = '5.3.2';
-
-    /**
-     * List of required PHP extensions.
-     *
-     * @var array
-     * @since Kunena
-     */
-    protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
-
-    /**
      * Function called before extension installation/update/removal procedure commences
      *
      * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
@@ -69,12 +45,15 @@ class plgKunenaEasysocialInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/easysocial/easysocial.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/easysocial/KunenaActivityEasysocial.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/easysocial/KunenaAvatarEasysocial.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/easysocial/KunenaLoginEasysocial.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/easysocial/KunenaPrivateEasysocial.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/easysocial/KunenaProfileEasysocial.php';
+        $this->deleteFiles[] = '/plugins/kunena/easysocial/easysocial.php';
+        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaActivityEasysocial.php';
+        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaAvatarEasysocial.php';
+        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaLoginEasysocial.php';
+        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaPrivateEasysocial.php';
+        $this->deleteFiles[] = '/plugins/kunena/easysocial/KunenaProfileEasysocial.php';
+        $this->deleteFolders[] = '/plugins/kunena/easysocial/alerts';
+        $this->deleteFolders[] = '/plugins/kunena/easysocial/badges';
+        $this->deleteFolders[] = '/plugins/kunena/easysocial/points';
         $this->removeFiles();
 
         return true;

@@ -35,7 +35,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Plugin\Kunena\Joomla\Helper\KunenaAccessJoomla;
 
 /**
  * Class KunenaAccess
@@ -115,7 +114,7 @@ class KunenaAccess
         $classes = $accessControlEvent->getArgument('result', []);
 
         foreach ($classes as $class) {
-            if ($class instanceof KunenaAccessAbstract) {
+            if ($class instanceof KunenaAccess) {
                 $types                      = $class->getAccessTypes();
                 $this->accesstypes['all'][] = $class;
                 unset($types['all']);

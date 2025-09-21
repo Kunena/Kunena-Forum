@@ -16,7 +16,6 @@ namespace Kunena\Forum\Plugin\Kunena\Community\Helper;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 
 /**
@@ -26,22 +25,6 @@ use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
  */
 class KunenaLoginCommunity extends KunenaLoginAbstract
 {
-    /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
-    /**
-     * @param   Registry  $params  params
-     *
-     * @since   Kunena 6.0
-     */
-    public function __construct(Registry $params)
-    {
-        $this->params = $params;
-    }
-
     /**
      * @return  string
      *
@@ -73,7 +56,5 @@ class KunenaLoginCommunity extends KunenaLoginAbstract
         if ($usersConfig->get('allowUserRegistration')) {
             return \CRoute::_('index.php?option=com_community&view=register');
         }
-
-        //return;
     }
 }

@@ -21,26 +21,20 @@ use CBLib\Application\Application;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Kunena\Forum\Libraries\Integration\KunenaPrivateAbstract;
+use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 
 /**
  * Class KunenaPrivateComprofiler
  *
  * @since   Kunena 6.0
  */
-class KunenaPrivateComprofiler extends KunenaPrivateAbstract
+class KunenaPrivateComprofiler extends KunenaPrivate
 {
     /**
      * @var     boolean
      * @since   Kunena 6.0
      */
     protected $loaded = false;
-
-    /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
 
     /**
      * @param   Registry  $params  params

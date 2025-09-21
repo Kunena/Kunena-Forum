@@ -20,7 +20,6 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Exception;
 use Joomla\Registry\Registry;
 
 /**
@@ -30,12 +29,6 @@ use Joomla\Registry\Registry;
  */
 class KunenaAvatarCommunity extends KunenaAvatar
 {
-    /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
     /**
      * @param   Registry  $params  params
      *
@@ -82,7 +75,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws  \Exception
      */
     protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
     {

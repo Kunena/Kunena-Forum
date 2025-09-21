@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use RuntimeException;
 
 /**
  * Class KunenaProfileCommunity
@@ -31,12 +30,6 @@ use RuntimeException;
  */
 class KunenaProfileCommunity extends KunenaProfile
 {
-    /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
     /**
      * @param   Registry  $params  params
      *
@@ -72,7 +65,7 @@ class KunenaProfileCommunity extends KunenaProfile
      *
      * @return  array
      *
-     * @throws  RuntimeException
+     * @throws  \RuntimeException
      *
      * @since   Kunena 5.0
      */
@@ -90,7 +83,7 @@ class KunenaProfileCommunity extends KunenaProfile
 
         try {
             $top = (array) $db->loadObjectList();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }
 

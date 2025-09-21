@@ -22,14 +22,14 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Integration\KunenaPrivateAbstract;
+use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 
 /**
  * @package     Kunena
  *
  * @since       Kunena 5.0
  */
-class KunenaPrivateEasySocial extends KunenaPrivateAbstract
+class KunenaPrivateEasySocial extends KunenaPrivate
 {
     /**
      * @var     boolean
@@ -38,15 +38,9 @@ class KunenaPrivateEasySocial extends KunenaPrivateAbstract
     protected $loaded = false;
 
     /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
-    /**
      * @param   Registry  $params  params
      *
-     * @since   Kunena 6.0
+     * @since   Kunena 5.0
      */
     public function __construct(Registry $params)
     {

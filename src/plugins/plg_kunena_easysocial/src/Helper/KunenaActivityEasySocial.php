@@ -23,34 +23,26 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
-use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Integration\KunenaAccess;
+use Kunena\Forum\Libraries\Integration\KunenaActivity;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
-use Kunena\Forum\Libraries\Integration\KunenaActivity;
-use Exception;
 
 /**
  * @package  Easysocial
  *
  * @since    Kunena 5.0
  */
-class KunenaActivityEasySocial extends KunenaActivity
+class KunenaActivityEasySocial  extends KunenaActivity
 {
     /**
-     * @var     null
-     * @since   Kunena 5.0
-     */
-    protected $params = null;
-
-    /**
-     * KunenaActivityEasySocial constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 5.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
@@ -62,7 +54,7 @@ class KunenaActivityEasySocial extends KunenaActivity
      *
      * @since   Kunena 5.0
      */
-    public function onAfterPost(KunenaMessage $message): void
+    public function onAfterPost(KunenaMessage $message)
     {
         if (StringHelper::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
             $this->assignPoints('thread.new');
@@ -127,11 +119,11 @@ class KunenaActivityEasySocial extends KunenaActivity
      *
      * @return  void
      *
-     * @since     1.3
+     * @since   1.3
      *
-     * @access    public
+     * @access  public
      *
-     * @throws Exception
+     * @throws  \Exception
      */
     public function onAfterReply(KunenaMessage $message): void
     {
@@ -192,7 +184,7 @@ class KunenaActivityEasySocial extends KunenaActivity
      *
      * @access    public
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function getSubscribers(KunenaMessage $message)
     {

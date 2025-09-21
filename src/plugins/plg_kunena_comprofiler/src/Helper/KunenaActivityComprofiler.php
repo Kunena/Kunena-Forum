@@ -18,23 +18,16 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
-use Exception;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Integration\KunenaActivityAbstract;
+use Kunena\Forum\Libraries\Integration\KunenaActivity;
 
 /**
  * Class KunenaActivityComprofiler
  *
  * @since   Kunena 6.0
  */
-class KunenaActivityComprofiler extends KunenaActivityAbstract
+class KunenaActivityComprofiler extends KunenaActivity
 {
-    /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
     /**
      * @param   Registry  $params  params
      *
@@ -50,7 +43,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  null
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function getUserPoints(int $userid)
@@ -67,7 +60,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onBeforePost(KunenaMessage $message): void
@@ -81,7 +74,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onBeforeReply(KunenaMessage $message): void
@@ -95,7 +88,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onBeforeEdit(KunenaMessage $message): void
@@ -109,7 +102,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterPost(KunenaMessage $message): void
@@ -123,7 +116,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterReply(KunenaMessage $message): void
@@ -137,7 +130,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterEdit(KunenaMessage $message): void
@@ -151,7 +144,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterDelete(KunenaMessage $message): void
@@ -166,7 +159,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterUndelete(KunenaMessage $message): void
@@ -183,7 +176,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterThankyou(int $actor, int $target, KunenaMessage $message): void
@@ -198,7 +191,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterSubscribe(KunenaTopic $topic, string $action): void
@@ -214,7 +207,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterFavorite(KunenaTopic $topic, int $action): void
@@ -230,7 +223,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterSticky(KunenaTopic $topic, int $action): void
@@ -246,7 +239,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterLock(KunenaTopic $topic, int $action): void
@@ -263,7 +256,7 @@ class KunenaActivityComprofiler extends KunenaActivityAbstract
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onAfterKarma(int $target, int $actor, int $delta): void

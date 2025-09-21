@@ -31,6 +31,12 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 class KunenaProfile
 {
     /**
+     * @var     ?Registry
+     * @since   Kunena 7.0
+     */
+    protected ?Registry $params = \null;
+
+    /**
      * @var     ?KunenaProfile
      * @since   Kunena 6.0
      */

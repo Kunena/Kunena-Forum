@@ -17,9 +17,7 @@
     <changelogurl>@kunenachangelog@</changelogurl>
     <scriptfile>script.php</scriptfile>
     <files>
-        <folder>alerts</folder>
-        <folder>badges</folder>
-        <folder>points</folder>
+        <folder>rules</folder>
         <folder>language</folder>
         <folder plugin="easysocial">src</folder>
         <folder>services</folder>

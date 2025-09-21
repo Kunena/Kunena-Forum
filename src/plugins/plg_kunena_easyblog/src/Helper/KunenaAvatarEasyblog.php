@@ -30,12 +30,6 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 class KunenaAvatarEasyblog extends KunenaAvatar
 {
     /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
-    /**
      * @param   Registry  $params  params
      *
      * @since   Kunena 6.0
@@ -65,7 +59,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
      *
      * @since   Kunena 6.0
      *
-     * @throws Exception
+     * @throws \Exception
      */
     protected function _getURL(KunenaUser $user, int $sizex, int $sizey): string
     {

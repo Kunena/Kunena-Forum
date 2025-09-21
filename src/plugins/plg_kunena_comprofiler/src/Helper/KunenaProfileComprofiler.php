@@ -22,9 +22,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
-use Exception;
 use Joomla\Registry\Registry;
-use RuntimeException;
 
 /**
  * Class KunenaProfileComprofiler
@@ -33,12 +31,6 @@ use RuntimeException;
  */
 class KunenaProfileComprofiler extends KunenaProfile
 {
-    /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
     /**
      * @param   Registry  $params  params
      *
@@ -55,7 +47,7 @@ class KunenaProfileComprofiler extends KunenaProfile
      *
      * @return  void
      *
-     * @throws  Exception
+     * @throws  \Exception
      *
      * @since   Kunena 5.0
      */
@@ -67,7 +59,7 @@ class KunenaProfileComprofiler extends KunenaProfile
     /**
      * @return  void
      *
-     * @throws  Exception
+     * @throws  \Exception
      *
      * @since   Kunena 5.0
      */
@@ -79,7 +71,7 @@ class KunenaProfileComprofiler extends KunenaProfile
     /**
      * @return  void
      *
-     * @throws  Exception
+     * @throws  \Exception
      *
      * @since   Kunena 5.0
      */
@@ -175,7 +167,7 @@ class KunenaProfileComprofiler extends KunenaProfile
      *
      * @return  array
      *
-     * @throws  Exception
+     * @throws  \Exception
      *
      * @since   Kunena 5.0
      */
@@ -193,7 +185,7 @@ class KunenaProfileComprofiler extends KunenaProfile
 
         try {
             $top = (array) $db->loadObjectList();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }
 

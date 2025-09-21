@@ -43,6 +43,7 @@ return new class implements ServiceProviderInterface
                 $plugin->traitSetDispatcher($subject);
                 $plugin->setApplication(Factory::getApplication());
                 $plugin->setDatabase($container->get('DatabaseDriver'));
+                $plugin->initEasySocial($subject, $config);
 
                 return $plugin;
             }

@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
@@ -30,6 +31,12 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
  */
 class KunenaPrivate
 {
+    /**
+     * @var     ?Registry
+     * @since   Kunena 7.0
+     */
+    protected ?Registry $params = \null;
+
     /**
      * @var     ?KunenaPrivate
      * @since   Kunena 6.0

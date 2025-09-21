@@ -39,12 +39,6 @@ class KunenaAvatarKunena extends KunenaAvatar
     public bool $css = \true;
 
     /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
-    /**
      * @param   Registry  $params  params
      *
      * @since   Kunena 6.0

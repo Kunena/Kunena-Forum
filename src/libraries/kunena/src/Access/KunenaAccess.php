@@ -114,7 +114,7 @@ class KunenaAccess
         $classes = $accessControlEvent->getArgument('result', []);
 
         foreach ($classes as $class) {
-            if ($class instanceof KunenaAccess) {
+            if ($class instanceof KunenaAccessAbstract) {
                 $types                      = $class->getAccessTypes();
                 $this->accesstypes['all'][] = $class;
                 unset($types['all']);

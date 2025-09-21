@@ -34,30 +34,6 @@ class plgSystemKunenaInstallerScript extends InstallerScript
     protected $extension = 'plg_system_kunena';
 
     /**
-     * Minimum PHP version required to install the extension
-     *
-     * @var    string
-     * @since  5.4.0
-     */
-    protected $minimumPhp = '8.1';
-
-    /**
-     * Minimum Joomla! version required to install the extension
-     *
-     * @var    string
-     * @since  6.0.0
-     */
-    protected $minimumJoomla = '5.3.2';
-
-    /**
-     * List of required PHP extensions.
-     *
-     * @var array
-     * @since Kunena
-     */
-    protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
-
-    /**
      * method to run after an install/update/uninstall method
      *
      * @param   string            $type    'install', 'update' or 'discover_install'
@@ -89,7 +65,7 @@ class plgSystemKunenaInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/system/kunena/kunena.php';
+        $this->deleteFiles[] = '/plugins/system/kunena/kunena.php';
         $this->removeFiles();
 
         return true;

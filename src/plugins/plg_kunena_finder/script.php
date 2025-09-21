@@ -30,30 +30,6 @@ class plgKunenaFinderInstallerScript extends InstallerScript
     protected $extension = 'plg_kunena_finder';
 
     /**
-     * Minimum PHP version required to install the extension
-     *
-     * @var    string
-     * @since  5.4.0
-     */
-    protected $minimumPhp = '8.1';
-
-    /**
-     * Minimum Joomla! version required to install the extension
-     *
-     * @var    string
-     * @since  6.0.0
-     */
-    protected $minimumJoomla = '5.3.2';
-
-    /**
-     * List of required PHP extensions.
-     *
-     * @var array
-     * @since Kunena
-     */
-    protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
-
-    /**
      * Function called before extension installation/update/removal procedure commences
      *
      * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
@@ -69,7 +45,7 @@ class plgKunenaFinderInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/finder/finder.php';
+        $this->deleteFiles[] = '/plugins/kunena/finder/finder.php';
         $this->removeFiles();
 
         return true;

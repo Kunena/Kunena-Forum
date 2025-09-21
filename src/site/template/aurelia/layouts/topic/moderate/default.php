@@ -96,12 +96,20 @@ $labels          = $this->ktemplate->params->get('labels');
     <div><?php echo Text::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
     <br />
     <div class="kmoderate-topicIcons">
-        <?php foreach ($this->topicIcons as $icon): ?>
+        <?php foreach ($this->topicIcons as $icon): 
+        if ($this->topic->icon_id != 0) {
+            $topicIconId = $this->topic->icon_id;
+        } else {
+            $topicIconId = $this->topic->icon_id;
+        }
+
+        if ($icon->id == $topicIconId) { $checked = ' checked="checked" ';  } else { $checked = ''; }
+        ?>
             <input type="radio" 
                    id="radio<?php echo $icon->id; ?>" 
                    name="topic_emoticon"
-                   value="<?php echo $icon->id; ?>" 
-                   <?php echo !empty($icon->checked) ? ' checked="checked" ' : ''; ?> 
+                   value="<?php echo $topicIconId; ?>" 
+                   <?php echo $checked; ?> 
             />
             
             <?php 

@@ -165,6 +165,7 @@ $list = [];
             	</div>
 			<div class="clearfix"></div>
 		<?php endif; ?>
+		</div>
     <?php  endif; ?> 
 <?php endif; ?>
 

@@ -35,30 +35,6 @@ class plgPrivacyKunenaInstallerScript extends InstallerScript
     protected $extension = 'plg_privacy_kunena';
 
     /**
-     * Minimum PHP version required to install the extension
-     *
-     * @var    string
-     * @since  5.4.0
-     */
-    protected $minimumPhp = '7.4.1';
-
-    /**
-     * Minimum Joomla! version required to install the extension
-     *
-     * @var    string
-     * @since  6.0.0
-     */
-    protected $minimumJoomla = '4.3.4';
-
-    /**
-     * List of required PHP extensions.
-     *
-     * @var array
-     * @since Kunena
-     */
-    protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
-
-    /**
      * @var  Joomla\CMS\Application\CMSApplication  Holds the application object
      *
      * @since   Kunena 6.0

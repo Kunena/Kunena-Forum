@@ -15,9 +15,9 @@ namespace Kunena\Forum\Libraries\Integration;
 
 \defined('_JEXEC') or die();
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 
 /**
@@ -27,6 +27,12 @@ use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
  */
 class KunenaActivity
 {
+    /**
+     * @var     ?Registry
+     * @since   Kunena 7.0
+     */
+    protected ?Registry $params = \null;
+
     /**
      * @var     boolean
      * @since   Kunena 6.0
@@ -54,7 +60,7 @@ class KunenaActivity
         $classes = $activityEvent->getArgument('result', []);
 
         foreach ($classes as $class) {
-            if ($class instanceof KunenaActivityAbstract) {
+            if ($class instanceof KunenaActivity) {
                 $this->instances[] = $class;
             }
         }

@@ -35,12 +35,6 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 class KunenaProfileKunena extends KunenaProfile
 {
     /**
-     * @var     Registry
-     * @since   Kunena 5.0
-     */
-    protected ?Registry $params = \null;
-
-    /**
      * @param   Registry  $params  params
      *
      * @since   Kunena 5.0
@@ -189,7 +183,7 @@ class KunenaProfileKunena extends KunenaProfile
      *
      * @return  string
      * @since   Kunena 5.2
-     * @throws  Exception
+     * @throws  \Exception
      * @see     KunenaProfile::getProfileName()
      */
     public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string

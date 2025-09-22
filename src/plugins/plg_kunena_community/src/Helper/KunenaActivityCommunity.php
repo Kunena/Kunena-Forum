@@ -22,23 +22,16 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Html\KunenaParser;
-use Exception;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Integration\KunenaActivityAbstract;
+use Kunena\Forum\Libraries\Integration\KunenaActivity;
 
 /**
  * Class KunenaActivityCommunity
  *
  * @since   Kunena 6.0
  */
-class KunenaActivityCommunity extends KunenaActivityAbstract
+class KunenaActivityCommunity extends KunenaActivity
 {
-    /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
     /**
      * @param   Registry  $params  params
      *
@@ -54,7 +47,7 @@ class KunenaActivityCommunity extends KunenaActivityAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws  \Exception
      */
     public function onAfterPost($message): void
     {
@@ -163,7 +156,7 @@ class KunenaActivityCommunity extends KunenaActivityAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws  \Exception
      */
     public function onAfterReply($message): void
     {

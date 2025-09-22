@@ -117,7 +117,7 @@ class KunenaLogin
      *
      * @since   Kunena 6.0
      */
-    public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null): ?bool
+    public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null)
     {
         foreach ($this->instances as $login) {
             if (method_exists($login, 'loginUser')) {
@@ -135,7 +135,7 @@ class KunenaLogin
      *
      * @since   Kunena 6.0
      */
-    public function logoutUser($return = null): ?string
+    public function logoutUser($return = null)
     {
         foreach ($this->instances as $login) {
             if (method_exists($login, 'logoutUser')) {

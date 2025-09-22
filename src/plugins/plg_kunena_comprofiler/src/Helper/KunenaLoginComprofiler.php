@@ -19,8 +19,6 @@ use CBLib\Registry\Registry as CBRegistry;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Exception;
-use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 
 /**
@@ -31,22 +29,6 @@ use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 class KunenaLoginComprofiler extends KunenaLoginAbstract
 {
     /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
-    /**
-     * @param   Registry  $params  params
-     *
-     * @since   Kunena 6.0
-     */
-    public function __construct(Registry $params)
-    {
-        $this->params = $params;
-    }
-
-    /**
      * @param   string  $username    username
      * @param   string  $password    password
      * @param   string  $rememberme  remember me
@@ -56,9 +38,9 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
      * @since   Kunena 6.0
      *
      * @throws null
-     * @throws Exception
+     * @throws \Exception
      */
-    public function loginUser(string $username, string $password, string $rememberme): ?string
+    public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null)
     {
         cbimport('cb.authentication');
         global $ueConfig;
@@ -80,10 +62,10 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws  \Exception
      * @throws  null
      */
-    public function logoutUser(): ?string
+    public function logoutUser($return = null)
     {
         cbimport('cb.authentication');
 
@@ -100,7 +82,7 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
      *
      * @since   Kunena 6.0
      */
-    public function getRememberMe()
+    public function getRememberMe(): bool
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();

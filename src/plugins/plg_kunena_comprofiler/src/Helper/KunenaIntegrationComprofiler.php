@@ -16,7 +16,6 @@ namespace Kunena\Forum\Plugin\Kunena\Comprofiler\Helper;
 \defined('_JEXEC') or die();
 
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
-use Exception;
 
 /**
  * Class KunenaIntegrationComprofiler
@@ -58,7 +57,7 @@ class KunenaIntegrationComprofiler
      *
      * @return  void
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public static function trigger(string $event, array $params): void
@@ -73,7 +72,7 @@ class KunenaIntegrationComprofiler
     /**
      * @return  void
      *
-     * @throws  Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public static function close(): void

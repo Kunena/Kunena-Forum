@@ -35,7 +35,6 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Plugin\Kunena\Joomla\Helper\KunenaAccessJoomla;
 
 /**
  * Class KunenaAccess

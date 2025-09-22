@@ -16,37 +16,21 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
-namespace Kunena\Forum\Plugin\Kunena\Easysocial;
+namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 
 \defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 
 /**
  * @package     Kunena
  *
  * @since       Kunena 5.0
  */
-class KunenaLoginEasySocial
+class KunenaLoginEasySocial extends KunenaLoginAbstract
 {
-    /**
-     * @var     null
-     * @since   Kunena 6.0
-     */
-    protected $params = null;
-
-    /**
-     * KunenaLoginEasySocial constructor.
-     *
-     * @param   object  $params  params
-     *
-     * @since   Kunena 5.0
-     */
-    public function __construct(object $params)
-    {
-        $this->params = $params;
-    }
-
     /**
      * @return  mixed
      *

@@ -31,12 +31,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 class KunenaProfileEasyblog extends KunenaProfile
 {
     /**
-     * @var     Registry
-     * @since   Kunena 5.0
-     */
-    protected ?Registry $params = \null;
-
-    /**
      * @param   Registry  $params  params
      *
      * @since   Kunena 5.0

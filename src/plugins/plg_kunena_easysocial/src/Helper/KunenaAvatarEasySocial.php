@@ -16,10 +16,11 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
-namespace Kunena\Forum\Plugin\Kunena\Easysocial;
+namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 
 \defined('_JEXEC') or die('Unauthorized Access');
 
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaAvatar;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -33,19 +34,11 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 class KunenaAvatarEasySocial extends KunenaAvatar
 {
     /**
-     * @var     null
+     * @param   Registry  $params  params
+     *
      * @since   Kunena 5.0
      */
-    protected $params = null;
-
-    /**
-     * \Kunena\Forum\Libraries\Integration\AvatarEasySocial constructor.
-     *
-     * @param   object  $params  params
-     *
-     * @since  Kunena 6.0
-     */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }

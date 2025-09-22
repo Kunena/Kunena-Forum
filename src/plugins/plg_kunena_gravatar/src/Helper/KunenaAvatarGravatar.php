@@ -31,12 +31,6 @@ use Pedrollo\GravatarLib\Gravatar;
 class KunenaAvatarGravatar extends KunenaAvatar
 {
     /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
-
-    /**
      * @param   Registry  $params  params
      *
      * @since   Kunena 6.0

@@ -1,0 +1,11 @@
+[
+	{
+		"extension": "com_kunena",
+		"element": "post",
+		"rule": "reply",
+		"value": {
+			"email": false,
+			"system": true
+		}
+	}
+]

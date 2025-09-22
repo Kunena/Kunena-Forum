@@ -150,7 +150,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
      *
      * @return  array
      *
-     * @throws Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function getAccessOptions($accesstype, KunenaCategory $category): array

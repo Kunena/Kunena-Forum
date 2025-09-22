@@ -16,60 +16,106 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
-defined('_JEXEC') or die('Unauthorized Access');
+namespace Kunena\Forum\Plugin\Kunena\Easysocial\Extension;
 
+\defined('_JEXEC') or die('Unauthorized Access');
+
+use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Event\KunenaGetActivityEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetAvatarEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetLoginEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
-use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaAvatarEasySocial;
-use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaProfileEasySocial;
-use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaLoginEasySocial;
-use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaPrivateEasySocial;
-use Kunena\Forum\Plugin\Kunena\Easysocial\KunenaActivityEasySocial;
-
-$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
-
-if (!is_file($file)) {
-    return;
-}
-
-require_once $file;
+use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaAvatarEasySocial;
+use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaProfileEasySocial;
+use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaLoginEasySocial;
+use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaPrivateEasySocial;
+use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaActivityEasySocial;
 
 /**
  * @package     Kunena
  *
  * @since       Kunena 5.0
  */
-class PlgKunenaEasySocial extends EasySocialPlugins
+class Easysocial extends \EasySocialPlugins implements SubscriberInterface, DatabaseAwareInterface
 {
-    public $params;
+    use DatabaseAwareTrait;
 
     /**
-     * plgKunenaEasySocial constructor.
+     * Load language file for front-end translations
      *
-     * @param   object  $subject                The object to observe
-     * @param   array   $config                 An optional associative array of configuration settings.
-     *                                          Recognized key values include 'name', 'group', 'params', 'language'
-     *                                          (this list is not meant to be comprehensive).
-     *
-     * @throws Exception
-     * @since   Kunena 5.0
+     * @var boolean
      */
-    public function __construct(object $subject, $config = [])
+    protected $autoloadLanguage = \true;
+
+    /**
+     * Returns an array of events this subscriber will listen to.
+     *
+     * The array keys are event names and the value can be:
+     *
+     *  - The method name to call (priority defaults to 0)
+     *  - An array composed of the method name to call and the priority
+     *
+     * @return  array
+     * @since   Kunena 7.0.0
+     */
+    public static function getSubscribedEvents(): array
     {
-        // Do not load if Kunena version is not supported or Kunena is offline
-        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.4') && KunenaForum::enabled())) {
-            return true;
+        $app     = Factory::getApplication();
+        $mapping = [];
+
+        if ($app->isClient('site') || $app->isClient('administrator')) {
+            $mapping['onKunenaGetActivity'] = 'onKunenaGetActivity';
+            $mapping['onKunenaGetAvatar']   = 'onKunenaGetAvatar';
+            $mapping['onKunenaGetLogin']    = 'onKunenaGetLogin';
+            $mapping['onKunenaGetProfile']  = 'onKunenaGetProfile';
+            $mapping['onKunenaGetPrivate']  = 'onKunenaGetPrivate';
+
+            if ($app->isClient('site')) {
+                // Only allowed in the frontend
+            } elseif ($app->isClient('administrator')) {
+                // Only allowed in the backend
+            }
         }
 
-        parent::__construct($subject, $config);
+        return $mapping;
+    }
+
+    /**
+     * plgKunenaEasysocial constructor.
+     *
+     * @param  array $config
+     */
+    public function __construct(array $config = [])
+    {
+        $file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
+
+        if (!\is_file($file)) {
+            return \true;
+        }
+
+        require_once $file;
+
+        // Do not load if Kunena version is not supported or Kunena is offline
+        if (!(\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.4') && KunenaForum::enabled())) {
+            return \true;
+        }
+
+        // $subject = $this->getDispatcher();
+        // parent::__construct($subject, $config);
 
         $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
         return true;
+    }
+
+    public function initEasySocial(&$subject, $config)
+    {
+        parent::__construct($subject, $config);
     }
 
     /**

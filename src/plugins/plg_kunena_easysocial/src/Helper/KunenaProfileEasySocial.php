@@ -16,12 +16,13 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
-namespace Kunena\Forum\Plugin\Kunena\Easysocial;
+namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 
 \defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Integration\KunenaProfile;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
@@ -35,33 +36,25 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 class KunenaProfileEasySocial extends KunenaProfile
 {
     /**
-     * @var     null
-     * @since   Kunena 5.0
-     */
-    protected $params = null;
-
-    /**
-     * KunenaProfileEasySocial constructor.
-     *
-     * @param   object  $params  params
+     * @param   Registry  $params  params
      *
      * @since   Kunena 5.0
      */
-    public function __construct(object $params)
+    public function __construct(Registry $params)
     {
         $this->params = $params;
     }
 
     /**
+     * Function to get User List URL
+     * 
      * @param   string  $action  action
      * @param   bool    $xhtml   xhtml
      *
-     * @return string
-     *
+     * @return  string|false
      * @since   Kunena 5.0
-     * @throws \Exception
      */
-    public function getUserListURL(string $action = '', bool $xhtml = true): string
+    public function getUserListURL(string $action = '', bool $xhtml = \true): string|false
     {
         $config = KunenaFactory::getConfig();
         $my     = Factory::getApplication()->getIdentity();
@@ -74,16 +67,18 @@ class KunenaProfileEasySocial extends KunenaProfile
     }
 
     /**
+     * Function to get User Profile URL
+     * 
      * @param   int     $userid     userid
      * @param   string  $task       task
      * @param   bool    $xhtml      xhtml
-     * @param   string  $avatarTab  avatartab
+     * @param   string  $avatarTab  avatarTab
      *
-     * @return boolean|void
-     *
+     * @return  string|false
      * @since   Kunena 5.0
+     * @throws  \Exception
      */
-    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = '')
+    public function getProfileURL(int $userid, $task = '', bool $xhtml = true, string $avatarTab = ''): string|false
     {
         if ($userid) {
             $user = \ES::user($userid);
@@ -126,14 +121,15 @@ class KunenaProfileEasySocial extends KunenaProfile
     }
 
     /**
+     * Function to get the User Profile
+     * 
      * @param   KunenaLayout  $view    view
-     * @param   object        $params  params
+     * @param   Registry      $params  params
      *
-     * @return  void
-     *
+     * @return  string
      * @since   Kunena 5.0
      */
-    public function showProfile(KunenaLayout $view, object $params)
+    public function showProfile(KunenaLayout $view, Registry $params): string
     {
         $userid = $view->profile->userid;
 
@@ -167,6 +163,8 @@ class KunenaProfileEasySocial extends KunenaProfile
         if (!\is_null($birthday)) {
             $view->profile->birthdate = $birthday->format('Y-m-d');
         }
+
+        return '';
     }
 
     /**
@@ -185,14 +183,16 @@ class KunenaProfileEasySocial extends KunenaProfile
     }
 
     /**
+     * Function to get User Profile Edit URL
+     * 
      * @param   int   $userid  userid
      * @param   bool  $xhtml   xhtml
      *
-     * @return  mixed
-     *
+     * @return  string|false
      * @since   Kunena 5.0
+     * @throws  \Exception
      */
-    public function getEditProfileURL(int $userid, bool $xhtml = true): string
+    public function getEditProfileURL(int $userid, bool $xhtml = true): string|false
     {
         $options = ['layout' => 'edit'];
 
@@ -206,10 +206,10 @@ class KunenaProfileEasySocial extends KunenaProfile
      * @param   string      $visitorname  name
      * @param   bool        $escape       escape
      *
-     * @return string
-     * @since Kunena 5.2
+     * @return  string
+     * @since   Kunena 5.2
      */
-    public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true)
+    public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
     {
         $config          = \ES::config();
         $displayusername = $config->get('users.displayName');

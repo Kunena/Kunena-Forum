@@ -18,25 +18,19 @@ namespace Kunena\Forum\Plugin\Kunena\Uddeim\Helper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Registry\Registry;
-use Kunena\Forum\Libraries\Integration\KunenaPrivateAbstract;
+use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 
 /**
  * Class KunenaPrivateUddeIM
  * @since Kunena
  */
-class KunenaPrivateUddeim extends KunenaPrivateAbstract
+class KunenaPrivateUddeim extends KunenaPrivate
 {
     /**
      * @var null|uddeIMAPI
      * @since Kunena
      */
     protected $uddeim = null;
-
-    /**
-     * @var     Registry
-     * @since   Kunena 6.0
-     */
-    protected ?Registry $params = \null;
 
     /**
      * @param   Registry  $params  params

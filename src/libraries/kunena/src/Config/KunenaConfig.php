@@ -255,6 +255,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property boolean $mailBodyUserBanned
  * @property boolean $mailBodyUserUnBanned
  * @property boolean $userListUserType
+ * @property boolean $stopForumSpamNewUserCheck
  *
  * @since   Kunena 6.0
  */
@@ -1663,6 +1664,12 @@ class KunenaConfig
      * @since  Kunena 7.0.0
      */
     public $userListUserType = 0;
+
+    /**
+     * @var    boolean  check new user on stopforumspam api
+     * @since  Kunena 7.0.0
+     */
+    public $stopForumSpamNewUserCheck = 0;
 
     /**
      * @return  KunenaConfig|mixed

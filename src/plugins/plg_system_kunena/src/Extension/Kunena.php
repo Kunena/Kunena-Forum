@@ -18,7 +18,9 @@ namespace Kunena\Forum\Plugin\System\Kunena\Extension;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\User\AfterLoginEvent;
 use Joomla\CMS\Event\User\AfterSaveEvent;
+use Joomla\CMS\Event\User\BeforeSaveEvent;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
@@ -26,6 +28,9 @@ use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Joomla\CMS\User\User;
+use Joomla\Http\Http;
+use Joomla\Utilities\IpHelper;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 
 /**
  * Class Kunena
@@ -65,12 +70,67 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
             if ($app->isClient('site')) {
                 // Only allowed in the frontend
+                $mapping['onUserBeforeSave'] = 'onUserBeforeSave';
             } elseif ($app->isClient('administrator')) {
                 // Only allowed in the backend
             }
         }
 
         return $mapping;
+    }
+
+    /**
+     * Method is called before user data is stored in the database
+     *
+     * @param   array    $user   Holds the old user data.
+     * @param   boolean  $isNew  True if a new user is stored.
+     * @param   array    $data   Holds the new user data.
+     *
+     * @return  boolean
+     *
+     * @since   7.0.0
+     * @throws  \Exception when listed on stopforumspam
+     */
+    public function onUserBeforeSave(BeforeSaveEvent $event): void
+    {
+        $isNew = $event->getIsNew();
+
+        if (!$isNew) {
+            // User is already registered, no need to check
+            return;
+        }
+
+        if (!KunenaConfig::getInstance()->stopForumSpamNewUserCheck) {
+            // Checking of new user is disabled
+            return;
+        };
+
+        // Check that the terms is checked if required ie only in registration from frontend.
+        $data              = $event->getData();
+        $query['username'] = $data['username'];
+        $query['email']    = $data['email'];
+        $query['ip']       = IpHelper::getIp();
+
+        if ($query['ip'] === '::1' || $query['ip'] === '127.0.0.1') {
+            // Local Host
+            unset($query['ip']);
+        }
+
+        $http     = new Http();
+        $request  = 'https://api.stopforumspam.org/api?' . \http_build_query($query) . '&json';
+        $response = $http->get($request);
+
+        if ($response->getStatusCode() == '200') {
+            // The query has worked
+            $result = \json_decode($response->getBody());
+
+            if ($result && $result->success) {
+                if (($result->username->appears ?? false) || ($result->email->appears ?? false) || ($result->ip->appears ?? false)) {
+                    $this->loadLanguage('plg_system_kunena.sys');
+                    throw new \Exception(Text::_('PLG_SYSTEM_KUNENA_STOPFORUMSPAMLISTED'), 400);
+                }
+            }
+        }
     }
 
     /**
@@ -105,7 +165,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             $kuser->save();
         }
     }
-    
+
     /**
      * Save the language of the user in the table users of Kunena
      *
@@ -122,18 +182,18 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         ) {
             return;
         }
-        
+
         if (!($this->getApplication()->isClient('site'))) {
             return;
         }
-        
-        $options = $event->getOptions(); 
+
+        $options = $event->getOptions();
         $kuser = KunenaFactory::getUser(\intval($options['user']->id));
         $kuser->language = $this->getUserDefaultLanguage($options['user']->params);
-        
+
         $kuser->save();
     }
-    
+
     /**
      * Get the user language defined in his Joomla! profile 
      * 
@@ -142,14 +202,14 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      * @since   Kunena 7.0.0
      */
     protected function getUserDefaultLanguage($params)
-    {    
-        if (!empty($params)) {            
+    {
+        if (!empty($params)) {
             $userParams = json_decode($params);
             $language = $userParams->language;
         } else {
             $language = Factory::getApplication()->getLanguage()->getTag();
         }
-        
+
         return $language;
     }
 }

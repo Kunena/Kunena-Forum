@@ -228,7 +228,7 @@ jQuery(document).ready(function ($) {
         $('#modal_confirm_template_category').modal('hide');
         const textarea = $("#editor").next();
         textarea.empty();
-        CKEDITOR.instances.message.setData(category_template_text.responseJSON);
+        CKEDITOR.instances.message.setData(category_template_text?.responseJSON?.data);
     });
 
     $('#modal_confirm_erase_keep_old').click(function () {
@@ -236,7 +236,7 @@ jQuery(document).ready(function ($) {
         const existing_content = CKEDITOR.instances.message.getData();
         const textarea = $("#editor").next();
         textarea.empty();
-        CKEDITOR.instances.message.setData(category_template_text.responseJSON + ' ' + existing_content);
+        CKEDITOR.instances.message.setData(category_template_text?.responseJSON?.data + ' ' + existing_content);
     });
 
     if ($.fn.datepicker !== undefined) {

@@ -125,13 +125,15 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
 
         PluginHelper::importPlugin('kunena');
 
-        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
-            'context' => 'kunena.messages',
-            'subject' => $this->history,
-            'params'  => $params,
-            'page'    => 0
-        ]);
-        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        foreach ($this->history as &$result) {
+            $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+                'context' => 'kunena.messages',
+                'subject' => $result,
+                'params'  => $params,
+                'page'    => 0
+            ]);
+            $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        }
 
         // FIXME: need to improve BBCode class on this...
         $this->attachments        = KunenaAttachmentHelper::getByMessage($this->history);

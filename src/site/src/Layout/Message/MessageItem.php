@@ -72,11 +72,11 @@ class MessageItem extends KunenaLayout
     /**
      * Check if the guest, moderator or registred can see attachments
      *
-     * @param   KunenaAttachment   $attachments  The KunenaAttachment object
+     * @param   Array   $attachments  Array containing KunenaAttachment object
      *
      * @since   Kunena 6.4.3
      */
-    public function canSeeAttachments(KunenaAttachment $attachments) {
+    public function canSeeAttachments($attachments) {
         $attachs = $this->message->getNbAttachments();
         
         if (!$this->me->exists()) {

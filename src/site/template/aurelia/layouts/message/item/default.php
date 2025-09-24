@@ -14,7 +14,6 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
@@ -25,6 +24,7 @@ $message              = $this->message;
 $isReply              = $this->message->id != $this->topic->first_post_id;
 $signature            = $this->profile->getSignature();
 $attachments          = $message->getAttachments();
+$attachs              = $message->getNbAttachments();
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 
 $list = [];
@@ -158,7 +158,7 @@ $list = [];
 	         <?php endif;
 	    endforeach; ?>
 
-						endforeach; ?>
+						
 						</ul>
 						<?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>						
             	

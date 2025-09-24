@@ -1045,6 +1045,13 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                     </td>
                                     <td align="left" valign="top"><?php echo Text::_('COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC') ?></td>
                                 </tr>
+                                <tr <?php if ($this->config->stopForumSpamNewUserCheck != 0) :
+                                        echo 'class="changed"';
+                                    endif; ?>>
+                                    <td><?php echo Text::_('COM_KUNENA_STOP_FORUM_SPAM_NEWUSERCHECK') ?></td>
+                                    <td><?php echo $this->lists['stopForumSpamNewUserCheck'] ?> </td>
+                                    <td><?php echo Text::_('COM_KUNENA_STOP_FORUM_SPAM_NEWUSERCHECK_DESC') ?></td>
+                                </tr>
                             </table>
                         </fieldset>
                         <?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -1260,11 +1267,11 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td>
                                             <?php
                                             echo Text::sprintf(
-                                        	'COM_KUNENA_A_IMGSIZE_DESC',
-                                        	ini_get('post_max_size'),
-                                        	ini_get('upload_max_filesize'),
-                                        	function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
-                                        )
+                                                'COM_KUNENA_A_IMGSIZE_DESC',
+                                                ini_get('post_max_size'),
+                                                ini_get('upload_max_filesize'),
+                                                function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
+                                            )
                                             ?>
                                         </td>
                                     </tr>
@@ -1371,11 +1378,11 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                         <td>
                                             <?php
                                             echo Text::sprintf(
-                                        	'COM_KUNENA_A_FILESIZE_DESC',
-                                        	ini_get('post_max_size'),
-                                        	ini_get('upload_max_filesize'),
-                                        	function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
-                                        )
+                                                'COM_KUNENA_A_FILESIZE_DESC',
+                                                ini_get('post_max_size'),
+                                                ini_get('upload_max_filesize'),
+                                                function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
+                                            )
                                             ?>
                                         </td>
                                     </tr>
@@ -2112,12 +2119,12 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
             <?php // Load the setting confirmation box form.
             ?>
             <?php echo HTMLHelper::_(
-            	'bootstrap.renderModal',
-            	'joomla-dialog-setting',
-            	[
+                'bootstrap.renderModal',
+                'joomla-dialog-setting',
+                [
                     'title'  => Text::_('COM_KUNENA_CONFIG_MODAL_TITLE'),
                 ],
-            	$this->loadTemplate('setting')
+                $this->loadTemplate('setting')
             ); ?>
         </div>
     </div>

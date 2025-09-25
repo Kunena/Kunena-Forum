@@ -1152,10 +1152,8 @@
                 default="1"
                 label="COM_KUNENA_A_AVATARTYPE"
                 description="COM_KUNENA_A_AVATARTYPE_DESC">
-                <option value="0">COM_KUNENA_A_AVATARTYPE_OPTION_KUNENA</option>
-                <option value="1">COM_KUNENA_A_AVATARTYPE_OPTION_GRAVATAR</option>
-                <option value="2">COM_KUNENA_A_AVATARTYPE_OPTION_EASYPROFILE</option>
-                <option value="3">COM_KUNENA_A_AVATARTYPE_OPTION_JOMSOCIAL</option>
+                <option value="0">COM_KUNENA_AVATAR_IMAGE</option>
+                <option value="1">COM_KUNENA_AVATAR_ICONTYPE</option>
             </field>
             <field
                 name="defaultAvatar"
@@ -1172,7 +1170,7 @@
             <field
                 name="avatarTypes"
                 type="text"
-                default="gif, jpeg, jpg, png"
+                default="gif,jpeg,jpg,png"
                 label="COM_KUNENA_CONFIG_AVATAR_FILESALLOWED"
                 description="COM_KUNENA_CONFIG_AVATAR_FILESALLOWED_DESC" />
             <field
@@ -1198,12 +1196,16 @@
             <field
                 name="avatarSize"
                 type="number"
+                min="0"
+                max="99999"
                 default="2048"
                 label="COM_KUNENA_A_AVSIZE"
                 description="COM_KUNENA_A_AVSIZE_DESC" />
             <field
                 name="avatarQuality"
                 type="number"
+                min="1"
+                max="100"
                 default="75"
                 label="COM_KUNENA_AVATAR_QUALITY"
                 description="COM_KUNENA_AVATAR_QUALITY_DESC" />
@@ -1239,12 +1241,14 @@
             <field
                 name="attachmentLimit"
                 type="number"
+                min="0"
+                max="999"
                 default="8"
                 label="COM_KUNENA_A_ATTACHMENT_LIMIT"
                 description="COM_KUNENA_A_ATTACHMENT_LIMIT_DESC" />
             <field
                 name="attachmentProtection"
-                type="radio"
+                type="protectAttachments"
                 default="0"
                 layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_ATTACHMENT_PROTECTION"
@@ -1272,10 +1276,11 @@
                 default="registered"
                 label="COM_KUNENA_A_IMAGE_UPLOAD"
                 description="COM_KUNENA_A_IMAGE_UPLOAD_DESC">
-                <option value="everybody">COM_KUNENA_A_UPLOAD_OPTION_EVERYBODY</option>
-                <option value="registered">COM_KUNENA_A_UPLOAD_OPTION_REGISTERED</option>
-                <option value="moderator">COM_KUNENA_A_UPLOAD_OPTION_MODERATOR</option>
-                <option value="admin">COM_KUNENA_A_UPLOAD_OPTION_ADMIN</option>
+                <option value="everybody">COM_KUNENA_EVERYBODY</option>
+                <option value="registered">COM_KUNENA_REGISTERED_USERS</option>
+                <option value="moderator">COM_KUNENA_MODERATORS</option>
+                <option value="admin">COM_KUNENA_ADMINS</option>
+                <option value="">COM_KUNENA_NOBODY</option>
             </field>
             <field
                 name="showImgForGuest"
@@ -1311,30 +1316,40 @@
                 description="COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC" />
             <field
                 name="imageSize"
-                type="number"
+                type="fileSize"
+                min="0"
+                max="99999"
                 default="150"
                 label="COM_KUNENA_A_IMGSIZE"
                 description="COM_KUNENA_A_IMGSIZE_DESC" />
             <field
                 name="imageWidth"
                 type="number"
+                min="0"
+                max="9999"
                 default="800"
                 label="COM_KUNENA_A_IMGWIDTH"
                 description="COM_KUNENA_A_IMGWIDTH_DESC" />
             <field
                 name="imageHeight"
                 type="number"
+                min="0"
+                max="9999"
                 default="800"
                 label="COM_KUNENA_A_IMGHEIGHT"
                 description="COM_KUNENA_A_IMGHEIGHT_DESC" />
             <field
                 name="thumbWidth"
                 type="number"
+                min="0"
+                max="9999"
                 default="32"
                 label="COM_KUNENA_A_IMGTHUMBWIDTH"
                 description="COM_KUNENA_A_IMGTHUMBWIDTH_DESC" />
             <field
                 name="thumbHeight"
+                min="0"
+                max="9999"
                 type="number"
                 default="32"
                 label="COM_KUNENA_A_IMGTHUMBHEIGHT"
@@ -1342,6 +1357,8 @@
             <field
                 name="imageQuality"
                 type="number"
+                min="1"
+                max="100"
                 default="50"
                 label="COM_KUNENA_A_IMGQUALITY"
                 description="COM_KUNENA_A_IMGQUALITY_DESC" />
@@ -1355,10 +1372,11 @@
                 default="registered"
                 label="COM_KUNENA_A_FILE_UPLOAD"
                 description="COM_KUNENA_A_FILE_UPLOAD_DESC">
-                <option value="everybody">COM_KUNENA_A_UPLOAD_OPTION_EVERYBODY</option>
-                <option value="registered">COM_KUNENA_A_UPLOAD_OPTION_REGISTERED</option>
-                <option value="moderator">COM_KUNENA_A_UPLOAD_OPTION_MODERATOR</option>
-                <option value="admin">COM_KUNENA_A_UPLOAD_OPTION_ADMIN</option>
+                <option value="everybody">COM_KUNENA_EVERYBODY</option>
+                <option value="registered">COM_KUNENA_REGISTERED_USERS</option>
+                <option value="moderator">COM_KUNENA_MODERATORS</option>
+                <option value="admin">COM_KUNENA_ADMINS</option>
+                <option value="">COM_KUNENA_NOBODY</option>
             </field>
             <field
                 name="showFileForGuest"
@@ -1378,7 +1396,7 @@
                 description="COM_KUNENA_A_FILEALLOWEDTYPES_DESC" />
             <field
                 name="fileSize"
-                type="number"
+                type="fileSize"
                 default="120"
                 label="COM_KUNENA_A_FILESIZE"
                 description="COM_KUNENA_A_FILESIZE_DESC" />

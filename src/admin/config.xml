@@ -1127,6 +1127,16 @@
                 default=""
                 label="COM_KUNENA_STOP_FORUM_SPAM_KEY"
                 description="COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC" />
+            <field
+                name="stopForumSpamNewUserCheck"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_STOP_FORUM_SPAM_NEWUSERCHECK"
+                description="COM_KUNENA_STOP_FORUM_SPAM_NEWUSERCHECK_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
         </fieldset>
     </fieldset>
 

@@ -1421,13 +1421,15 @@
             </field>
             <field
                 name="rankImages"
-                type="radio"
+                type="list"
                 default="1"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_RANKINGIMAGES"
                 description="COM_KUNENA_A_RANKINGIMAGES_DESC">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
+                <option value="0">COM_KUNENA_RANK_TEXT</option>
+                <option value="1">COM_KUNENA_RANK_IMAGE</option>
+                <option value="2">COM_KUNENA_RANK_USERGROUP</option>
+                <option value="3">COM_KUNENA_RANK_BOTH</option>
+                <option value="4">COM_KUNENA_RANK_CSS</option>
             </field>
         </fieldset>
     </fieldset>

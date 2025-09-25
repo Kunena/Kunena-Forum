@@ -17,6 +17,7 @@ namespace Kunena\Forum\Administrator\View\Tools;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
@@ -191,6 +192,13 @@ class HtmlView extends BaseHtmlView
     protected function setToolBar(): void
     {
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
+
+        $canDo = ContentHelper::getActions('com_kunena');
+
+        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+            ToolBarHelper::preferences('com_kunena');
+        }
+
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/tools';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }

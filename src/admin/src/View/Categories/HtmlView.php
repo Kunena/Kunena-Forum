@@ -17,12 +17,12 @@ namespace Kunena\Forum\Administrator\View\Categories;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -140,6 +140,12 @@ class HtmlView extends BaseHtmlView
         $childBar->popupButton('batch', 'JTOOLBAR_BATCH')
             ->selector('joomla-dialog-batch')
             ->listCheck(true);
+
+        $canDo = ContentHelper::getActions('com_kunena');
+
+        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+            ToolBarHelper::preferences('com_kunena');
+        }
 
         $helpUrl = 'https://docs.kunena.org/en/setup/sections-categories';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

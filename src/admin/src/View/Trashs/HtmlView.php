@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\View\Trashs;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Object\CMSObject;
@@ -150,6 +151,12 @@ class HtmlView extends BaseHtmlView
             ->message('COM_KUNENA_TRASH_RESTORE_ITEMS')
             ->icon('icon-checkin')
             ->listCheck(true);
+
+        $canDo = ContentHelper::getActions('com_kunena');
+
+        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+            ToolBarHelper::preferences('com_kunena');
+        }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/trashbin';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

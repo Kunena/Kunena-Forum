@@ -17,6 +17,7 @@ namespace Kunena\Forum\Administrator\View\Cpanel;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -64,8 +65,8 @@ class HtmlView extends BaseHtmlView
             Text::script('MOD_SAMPLEDATA_ITEM_ALREADY_PROCESSED');
 
             Factory::getApplication()->getDocument()->addScriptOptions(
-            	'sample-data',
-            	[
+                'sample-data',
+                [
                     'icon' => Uri::root(true) . '/media/system/images/ajax-loader.gif',
                 ]
             );
@@ -112,6 +113,12 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::spacer();
         ToolbarHelper::divider();
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_DASHBOARD'), 'dashboard');
+
+        $canDo = ContentHelper::getActions('com_kunena');
+
+        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+            ToolBarHelper::preferences('com_kunena');
+        }
 
         ToolbarHelper::spacer();
         $helpUrl = 'https://docs.kunena.org/en/';

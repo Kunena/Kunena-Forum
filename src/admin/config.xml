@@ -964,54 +964,60 @@
             <field
                 name="holdNewUsersPosts"
                 type="number"
+                min="0"
+                max="99"
                 default="0"
                 label="COM_KUNENA_A_HOLD_NEWUSERS_POSTS"
                 description="COM_KUNENA_A_HOLD_NEWUSERS_POSTS_DESC" />
             <field
                 name="userDeleteMessage"
-                type="radio"
+                type="list"
                 default="0"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_DELETEMESSAGE"
                 description="COM_KUNENA_A_DELETEMESSAGE_DESC">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
+                <option value="0">COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED</option>
+                <option value="1">COM_KUNENA_A_DELETEMESSAGE_ALLOWED_IF_REPLIES</option>
+                <option value="2">COM_KUNENA_A_DELETEMESSAGE_ALWAYS_ALLOWED</option>
+                <option value="3">COM_KUNENA_CONFIG_DELETEMESSAGE_NOT_FIRST_MESSAGE</option>
+                <option value="4">COM_KUNENA_CONFIG_DELETEMESSAGE_ONLY_LAST_MESSAGE</option>
             </field>
             <field
                 name="modSeeDeleted"
-                type="radio"
+                type="list"
                 default="0"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_COM_A_MOD_SEE_DELETED"
                 description="COM_KUNENA_COM_A_MOD_SEE_DELETED_DESC">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
+                <option value="2">COM_KUNENA_A_SEE_RESTORE_DELETED_NOBODY</option>
+                <option value="1">COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINSMODS</option>
+                <option value="0">COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINS</option>
             </field>
             <field
                 name="floodProtection"
                 type="number"
+                min=""
+                max="3600"
                 default="0"
                 label="COM_KUNENA_A_FLOOD"
                 description="COM_KUNENA_A_FLOOD_DESC" />
             <field
                 name="mailModerators"
-                type="radio"
+                type="list"
                 default="0"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_MAILMOD"
                 description="COM_KUNENA_A_MAILMOD_DESC">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
+                <option value="-1">COM_KUNENA_NO</option>
+                <option value="0">COM_KUNENA_CFG_OPTION_UNAPPROVED_POSTS</option>
+                <option value="1">COM_KUNENA_CFG_OPTION_ALL_NEW_POSTS</option>
             </field>
             <field
                 name="mailAdministrators"
-                type="radio"
+                type="list"
                 default="0"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_MAILADMIN"
                 description="COM_KUNENA_A_MAILADMIN_DESC">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
+                <option value="-1">COM_KUNENA_NO</option>
+                <option value="0">COM_KUNENA_CFG_OPTION_UNAPPROVED_POSTS</option>
+                <option value="1">COM_KUNENA_CFG_OPTION_ALL_NEW_POSTS</option>
             </field>
             <field
                 name="ipTracking"
@@ -1036,6 +1042,8 @@
             <field
                 name="maxLinks"
                 type="number"
+                min="0"
+                max="99"
                 default="6"
                 label="COM_KUNENA_ADMIN_CONFIG_MAX_LINKS"
                 description="COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC" />
@@ -1082,6 +1090,8 @@
             <field
                 name="minimalUserPostsAddUrlImage"
                 type="number"
+                min="0"
+                max="99"
                 default="10"
                 label="COM_KUNENA_ADMIN_CONFIG_MINIMAL_NUMBER_OF_USER_POSTS_TO_ADD_URL_IMAGE"
                 description="COM_KUNENA_ADMIN_CONFIG_MINIMAL_NUMBER_OF_USER_POSTS_TO_ADD_URL_IMAGE_DESC" />
@@ -1095,13 +1105,15 @@
                 default="0"
                 label="COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_TITLE"
                 description="COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_DESC">
-                <option value="0">COM_KUNENA_A_CAPTCHA_OPTION_NOBODY</option>
-                <option value="1">COM_KUNENA_A_CAPTCHA_OPTION_GUESTS</option>
-                <option value="2">COM_KUNENA_A_CAPTCHA_OPTION_GUESTS_NEW_USERS</option>
+                <option value="-1">COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_NOBODY</option>
+                <option value="0">COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_REGISTERED_USERS</option>
+                <option value="1">COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_GUESTS_REGISTERED_USERS</option>
             </field>
             <field
                 name="captchaPostLimit"
                 type="number"
+                min="0"
+                max="99"
                 default="0"
                 label="COM_KUNENA_A_CAPTCHA_POST_LIMIT"
                 description="COM_KUNENA_A_CAPTCHA_POST_LIMIT_DESC" />

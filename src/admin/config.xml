@@ -762,12 +762,16 @@
             <field
                 name="emailHeaderSizeY"
                 type="number"
+                min="1"
+                max="9999"
                 default="560"
                 label="COM_KUNENA_EMAIL_HEADER_SIZEY"
                 description="COM_KUNENA_EMAIL_HEADER_SIZEY_DESC" />
             <field
                 name="emailHeaderSizeX"
                 type="number"
+                min="1"
+                max="9999"
                 default="560"
                 label="COM_KUNENA_EMAIL_HEADER_SIZEX"
                 description="COM_KUNENA_EMAIL_HEADER_SIZEX_DESC" />
@@ -807,9 +811,9 @@
                 default="post"
                 label="COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS"
                 description="COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS_DESC">
-                <option value="post">COM_KUNENA_A_SUBSCRIPTIONS_OPTION_ALL_POSTS</option>
-                <option value="first">COM_KUNENA_A_SUBSCRIPTIONS_OPTION_FIRST_POST</option>
-                <option value="none">COM_KUNENA_A_SUBSCRIPTIONS_OPTION_NO_POSTS</option>
+                <option value="disabled">COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_DISABLED</option>
+                <option value="topic">COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_TOPIC</option>
+                <option value="post">COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_POST</option>
             </field>
             <field
                 name="topicSubscriptions"
@@ -817,9 +821,9 @@
                 default="every"
                 label="COM_KUNENA_A_TOPIC_SUBSCRIPTIONS"
                 description="COM_KUNENA_A_TOPIC_SUBSCRIPTIONS_DESC">
-                <option value="every">COM_KUNENA_A_SUBSCRIPTIONS_OPTION_ALL_POSTS</option>
-                <option value="first">COM_KUNENA_A_SUBSCRIPTIONS_OPTION_FIRST_POST</option>
-                <option value="none">COM_KUNENA_A_SUBSCRIPTIONS_OPTION_NO_POSTS</option>
+                <option value="disabled">COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_DISABLED</option>
+                <option value="first">COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_FIRST</option>
+                <option value="every">COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_EVERY</option>
             </field>
             <field
                 name="subscriptionsChecked"
@@ -834,20 +838,21 @@
             <field
                 name="emailRecipientCount"
                 type="integer"
-                default="0"
-                label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT"
-                description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT_DESC"
                 first="0"
                 last="100"
-                step="5" />
+                step="5"
+                default="10"
+                label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT"
+                description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT_DESC" />
             <field
                 name="emailRecipientPrivacy"
                 type="list"
                 default="bcc"
                 label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY"
                 description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_DESC">
-                <option value="bcc">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_BCC</option>
-                <option value="to">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_TO</option>
+                <option value="to">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_TO</option>
+                <option value="cc">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_CC</option>
+                <option value="bcc">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_BCC</option>
             </field>
             <field
                 name="emailVisibleAddress"
@@ -887,14 +892,14 @@
             </field>
             <field
                 name="mailBodyUserBanned"
-                type="text"
-                default="0"
+                type="textarea"
+                default=""
                 label="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED"
                 description="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED_DESC" />
             <field
                 name="mailBodyUserUnBanned"
-                type="text"
-                default="0"
+                type="textarea"
+                default=""
                 label="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_UNBANNED"
                 description="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_UNBANNED_DESC" />
         </fieldset>

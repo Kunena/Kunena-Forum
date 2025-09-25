@@ -1618,8 +1618,9 @@
                 default="topic"
                 label="COM_KUNENA_A_RSS_TYPE"
                 description="COM_KUNENA_A_RSS_TYPE_DESC">
-                <option value="topic">COM_KUNENA_A_RSS_TYPE_TOPIC</option>
                 <option value="post">COM_KUNENA_A_RSS_TYPE_POST</option>
+                <option value="topic">COM_KUNENA_A_RSS_TYPE_TOPIC</option>
+                <option value="recent">COM_KUNENA_A_RSS_TYPE_RECENT</option>
             </field>
             <field
                 name="rssSpecification"
@@ -1627,6 +1628,8 @@
                 default="rss2.0"
                 label="COM_KUNENA_A_RSS_SPEC"
                 description="COM_KUNENA_A_RSS_SPEC_DESC">
+                <option value="rss0.91">RSS 0.91</option>
+                <option value="rss1.0">RSS 1.0</option>
                 <option value="rss2.0">RSS 2.0</option>
                 <option value="atom1.0">Atom 1.0</option>
             </field>
@@ -1636,30 +1639,36 @@
                 default="1 month"
                 label="COM_KUNENA_A_RSS_TIMELIMIT"
                 description="COM_KUNENA_A_RSS_TIMELIMIT_DESC">
-                <option value="1 day">1 Day</option>
-                <option value="1 week">1 Week</option>
-                <option value="1 month">1 Month</option>
-                <option value="6 months">6 Months</option>
-                <option value="1 year">1 Year</option>
+                <option value="1 week">COM_KUNENA_A_RSS_TIMELIMIT_WEEK</option>
+                <option value="1 month">COM_KUNENA_A_RSS_TIMELIMIT_MONTH</option>
+                <option value="1 year">COM_KUNENA_A_RSS_TIMELIMIT_YEAR</option>
             </field>
             <field
                 name="rssLimit"
                 type="number"
+                min="0"
+                max="999"
                 default="100"
                 label="COM_KUNENA_A_RSS_LIMIT"
                 description="COM_KUNENA_A_RSS_LIMIT_DESC" />
             <field
                 name="rssIncludedCategories"
-                type="kunenacategory"
-                multiple="true"
+                type="categoryList"
                 default=""
+                action="read"
+                sections="0"
+                multiple="true"
+                select="COM_KUNENA_CONFIG_RSSINCLUDEDCATEGORIES_SHOW_ALL"
                 label="COM_KUNENA_A_RSS_INCLUDED_CATEGORIES"
                 description="COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC" />
             <field
                 name="rssExcludedCategories"
-                type="kunenacategory"
-                multiple="true"
+                type="categoryList"
                 default=""
+                action="read"
+                sections="0"
+                multiple="true"
+                select="COM_KUNENA_CONFIG_RSSEXCLUDEDCATEGORIES_NOT_EXCLUDE"
                 label="COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES"
                 description="COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC" />
             <field
@@ -1679,7 +1688,8 @@
                 label="COM_KUNENA_A_RSS_AUTHOR_FORMAT"
                 description="COM_KUNENA_A_RSS_AUTHOR_FORMAT_DESC">
                 <option value="name">COM_KUNENA_A_RSS_AUTHOR_FORMAT_NAME</option>
-                <option value="username">COM_KUNENA_A_RSS_AUTHOR_FORMAT_USERNAME</option>
+                <option value="email">COM_KUNENA_A_RSS_AUTHOR_FORMAT_EMAIL</option>
+                <option value="both">COM_KUNENA_A_RSS_AUTHOR_FORMAT_BOTH</option>
             </field>
             <field
                 name="rssAuthorInTitle"
@@ -1697,10 +1707,14 @@
                 default="0"
                 label="COM_KUNENA_CONFIG_RSS_CHARACTERS_COUNT"
                 description="COM_KUNENA_CONFIG_RSS_CHARACTERS_COUNT_DESC">
-                <option value="0">COM_KUNENA_CONFIG_RSS_CHARACTERS_COUNT_FULL</option>
-                <option value="20">20</option>
+                <option value="0">COM_KUNENA_A_RSS_WORD_COUNT_ALL</option>
+                <option value="-1">JNONE</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
+                <option value="250">250</option>
+                <option value="500">500</option>
+                <option value="750">750</option>
+                <option value="1000">1000</option>
             </field>
             <field
                 name="rssOldTitles"
@@ -1718,9 +1732,12 @@
                 default="900"
                 label="COM_KUNENA_A_RSS_CACHE"
                 description="COM_KUNENA_A_RSS_CACHE_DESC">
-                <option value="900">15 Minutes</option>
-                <option value="1800">30 Minutes</option>
-                <option value="3600">1 Hour</option>
+                <option value="0">0</option>
+                <option value="60">1</option>
+                <option value="300">5</option>
+                <option value="900">15</option>
+                <option value="1800">30</option>
+                <option value="3600">60</option>
             </field>
             <field
                 name="rssFeedBurnerUrl"

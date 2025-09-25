@@ -873,8 +873,8 @@ class UserController extends KunenaController
     protected function sendMailWhenUserBannedAndUnbanned(KunenaUser $user, $ban)
     {
         if ($ban->isEnabled()) {
-            $mailTitle =  Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE');
-            $mailBody = $this->config->mailBodyUserUnBanned;
+            $mailTitle =  Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE');
+            $mailBody = $this->config->mailBodyUserBanned;
         } else {
             $mailTitle = Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE');
             $mailBody = $this->config->mailBodyUserUnBanned;

@@ -593,28 +593,36 @@
             <field
                 name="thankYouMax"
                 type="number"
+                min="1"
+                max="999"
                 default="10"
                 label="COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS"
                 description="COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS" />
             <field
                 name="userEdit"
-                type="radio"
+                type="list"
                 default="1"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_USER_EDIT"
                 description="COM_KUNENA_A_USER_EDIT_DESC">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
+                <option value="0">COM_KUNENA_EDIT_ALLOWED_NEVER</option>
+                <option value="1">COM_KUNENA_EDIT_ALLOWED_ALWAYS</option>
+                <option value="2">COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES</option>
+                <option value="3">COM_KUNENA_EDIT_ALLOWED_ONLY_LAST_MESSAGE</option>
+                <option value="4">COM_KUNENA_EDIT_ALLOWED_ONLY_FIRST_MESSAGE</option>
             </field>
             <field
                 name="userEditTime"
                 type="number"
+                min="0"
+                max="999"
                 default="0"
                 label="COM_KUNENA_A_USER_EDIT_TIME"
                 description="COM_KUNENA_A_USER_EDIT_TIME_DESC" />
             <field
                 name="userEditTimeGrace"
                 type="number"
+                min="1"
+                max="86400"
                 default="600"
                 label="COM_KUNENA_A_USER_EDIT_TIMEGRACE"
                 description="COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC" />
@@ -721,6 +729,8 @@
             <field
                 name="maxSig"
                 type="number"
+                min="1"
+                max="9999"
                 default="300"
                 label="COM_KUNENA_A_SIGNATURE"
                 description="COM_KUNENA_A_SIGNATURE_DESC" />

@@ -1453,15 +1453,21 @@
             <field
                 name="trimLongUrlsFront"
                 type="number"
+                min="0"
+                max="999"
                 default="40"
                 label="COM_KUNENA_A_TRIMLONGURLSFRONT"
-                description="COM_KUNENA_A_TRIMLONGURLSFRONT_DESC" />
+                description="COM_KUNENA_A_TRIMLONGURLSFRONT_DESC"
+                showon="trimLongUrls:1" />
             <field
                 name="trimLongUrlsBack"
                 type="number"
+                min="0"
+                max="999"
                 default="20"
                 label="COM_KUNENA_A_TRIMLONGURLSBACK"
-                description="COM_KUNENA_A_TRIMLONGURLSBACK_DESC" />
+                description="COM_KUNENA_A_TRIMLONGURLSBACK_DESC"
+                showon="trimLongUrls:1" />
             <field
                 name="autoLink"
                 type="radio"
@@ -1538,13 +1544,13 @@
                 default="text"
                 label="COM_KUNENA_COM_A_BBCODE_IMG_SECURE"
                 description="COM_KUNENA_COM_A_BBCODE_IMG_SECURE_DESC">
-                <option value="text">COM_KUNENA_COM_A_BBCODE_IMG_SECURE_TEXT</option>
-                <option value="image">COM_KUNENA_COM_A_BBCODE_IMG_SECURE_IMAGE</option>
-                <option value="link">COM_KUNENA_COM_A_BBCODE_IMG_SECURE_LINK</option>
+                <option value="text">COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_TEXT</option>
+                <option value="link">COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_LINK</option>
+                <option value="image">COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_IMAGE</option>
             </field>
             <field
                 name="ebayLanguage"
-                type="list"
+                type="ebayLanguage"
                 default="0"
                 label="COM_KUNENA_A_EBAYLANGUAGECODE"
                 description="COM_KUNENA_A_EBAYLANGUAGECODE_DESC">
@@ -1552,7 +1558,7 @@
             <field
                 name="ebayAffiliateId"
                 type="text"
-                default="5337089937"
+                default=""
                 label="COM_KUNENA_A_EBAY_AFFILIATE_ID"
                 description="COM_KUNENA_A_EBAY_AFFILIATE_ID_DESC" />
             <field
@@ -1563,7 +1569,7 @@
                 description="COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC" />
             <field
                 name="ebayCertId"
-                type="text"
+                type="password"
                 default=""
                 label="COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_LABEL"
                 description="COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_DESC" />

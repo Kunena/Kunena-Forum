@@ -55,7 +55,8 @@
                 type="textarea"
                 default="&lt;h2&gt;The Forum is currently offline for maintenance.&lt;/h2&gt;\n&lt;div&gt;Check back soon!&lt;/di&gt;>"
                 label="COM_KUNENA_A_BOARD_OFFLINE_MES"
-                description="COM_KUNENA_A_BOARD_OFFLINE_MES_DESC" />
+                description="COM_KUNENA_A_BOARD_OFFLINE_MES_DESC"
+                showon="boardOffline:1" />
             <field
                 name="readOnly"
                 type="radio"
@@ -178,7 +179,8 @@
                 type="list"
                 default="60"
                 label="COM_KUNENA_CFG_CACHE_TIME"
-                description="COM_KUNENA_CFG_CACHE_TIME_DESC">
+                description="COM_KUNENA_CFG_CACHE_TIME_DESC"
+                showon="cache:1">
                 <option value="60">COM_KUNENA_CFG_OPTION_1_MINUTE</option>
                 <option value="120">COM_KUNENA_CFG_OPTION_2_MINUTES</option>
                 <option value="180">COM_KUNENA_CFG_OPTION_3_MINUTES</option>
@@ -237,7 +239,8 @@
                 max="999"
                 default="6"
                 label="COM_KUNENA_A_HISTLIM"
-                description="COM_KUNENA_A_HISTLIM_DESC" />
+                description="COM_KUNENA_A_HISTLIM_DESC"
+                showon="showHistory:1" />
             <field
                 name="postDateFormat"
                 type="postDateFormat"
@@ -341,9 +344,8 @@
             </field>
             <field
                 name="latestCategoryIn"
-                type="radio"
+                type="list"
                 default="1"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_LATESTCATEGORY_IN"
                 description="COM_KUNENA_A_LATESTCATEGORY_IN_DESC">
                 <option value="0">COM_KUNENA_A_LATESTCATEGORY_IN_HIDE</option>
@@ -617,7 +619,8 @@
                 max="999"
                 default="0"
                 label="COM_KUNENA_A_USER_EDIT_TIME"
-                description="COM_KUNENA_A_USER_EDIT_TIME_DESC" />
+                description="COM_KUNENA_A_USER_EDIT_TIME_DESC"
+                showon="userEdit!:0" />
             <field
                 name="userEditTimeGrace"
                 type="number"
@@ -625,14 +628,16 @@
                 max="86400"
                 default="600"
                 label="COM_KUNENA_A_USER_EDIT_TIMEGRACE"
-                description="COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC" />
+                description="COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC"
+                showon="userEdit!:0" />
             <field
                 name="editMarkup"
                 type="radio"
                 default="1"
                 layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_USER_MARKUP"
-                description="COM_KUNENA_A_USER_MARKUP_DESC">
+                description="COM_KUNENA_A_USER_MARKUP_DESC"
+                showon="userEdit!:0">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
@@ -717,6 +722,15 @@
                 <option value="1">JYES</option>
             </field>
             <field
+                name="maxSig"
+                type="number"
+                min="1"
+                max="9999"
+                default="300"
+                label="COM_KUNENA_A_SIGNATURE"
+                description="COM_KUNENA_A_SIGNATURE_DESC"
+                showon="signature:1" />
+            <field
                 name="personal"
                 type="radio"
                 default="1"
@@ -726,14 +740,6 @@
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
-            <field
-                name="maxSig"
-                type="number"
-                min="1"
-                max="9999"
-                default="300"
-                label="COM_KUNENA_A_SIGNATURE"
-                description="COM_KUNENA_A_SIGNATURE_DESC" />
             <field
                 name="privateMessage"
                 type="radio"
@@ -895,13 +901,15 @@
                 type="textarea"
                 default=""
                 label="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED"
-                description="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED_DESC" />
+                description="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED_DESC"
+                showon="sendMailUserBanned:1" />
             <field
                 name="mailBodyUserUnBanned"
                 type="textarea"
                 default=""
                 label="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_UNBANNED"
-                description="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_UNBANNED_DESC" />
+                description="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_UNBANNED_DESC"
+                showon="sendMailUserBanned:1" />
         </fieldset>
     </fieldset>
 
@@ -1116,7 +1124,8 @@
                 max="99"
                 default="0"
                 label="COM_KUNENA_A_CAPTCHA_POST_LIMIT"
-                description="COM_KUNENA_A_CAPTCHA_POST_LIMIT_DESC" />
+                description="COM_KUNENA_A_CAPTCHA_POST_LIMIT_DESC"
+                showon="captcha!:-1" />
         </fieldset>
         <fieldset
             name="stopforumspam"
@@ -1200,7 +1209,8 @@
                 max="99999"
                 default="2048"
                 label="COM_KUNENA_A_AVSIZE"
-                description="COM_KUNENA_A_AVSIZE_DESC" />
+                description="COM_KUNENA_A_AVSIZE_DESC"
+                showon="allowAvatarUpload:1" />
             <field
                 name="avatarQuality"
                 type="number"
@@ -1208,14 +1218,16 @@
                 max="100"
                 default="75"
                 label="COM_KUNENA_AVATAR_QUALITY"
-                description="COM_KUNENA_AVATAR_QUALITY_DESC" />
+                description="COM_KUNENA_AVATAR_QUALITY_DESC"
+                showon="allowAvatarUpload:1" />
             <field
                 name="avatarCrop"
                 type="radio"
                 default="0"
                 layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_AVATAR_CROP"
-                description="COM_KUNENA_AVATAR_CROP_DESC">
+                description="COM_KUNENA_AVATAR_CROP_DESC"
+                showon="allowAvatarUpload:1">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
@@ -1297,14 +1309,16 @@
                 type="text"
                 default="jpg,jpeg,gif,png"
                 label="COM_KUNENA_A_IMAGEALLOWEDTYPES"
-                description="COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC" />
+                description="COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC"
+                showon="imageUpload!:" />
             <field
                 name="checkMimeTypes"
                 type="radio"
                 default="1"
                 layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_IMAGECHECKMIMETYPES"
-                description="COM_KUNENA_A_IMAGECHECKMIMETYPES_DESC">
+                description="COM_KUNENA_A_IMAGECHECKMIMETYPES_DESC"
+                showon="imageUpload!:">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
@@ -1313,7 +1327,8 @@
                 type="text"
                 default="image/jpeg,image/jpg,image/gif,image/png"
                 label="COM_KUNENA_A_IMAGEALLOWEDMIMETYPES"
-                description="COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC" />
+                description="COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC"
+                showon="imageUpload!:" />
             <field
                 name="imageSize"
                 type="fileSize"
@@ -1321,7 +1336,8 @@
                 max="99999"
                 default="150"
                 label="COM_KUNENA_A_IMGSIZE"
-                description="COM_KUNENA_A_IMGSIZE_DESC" />
+                description="COM_KUNENA_A_IMGSIZE_DESC"
+                showon="imageUpload!:" />
             <field
                 name="imageWidth"
                 type="number"
@@ -1329,7 +1345,8 @@
                 max="9999"
                 default="800"
                 label="COM_KUNENA_A_IMGWIDTH"
-                description="COM_KUNENA_A_IMGWIDTH_DESC" />
+                description="COM_KUNENA_A_IMGWIDTH_DESC"
+                showon="imageUpload!:" />
             <field
                 name="imageHeight"
                 type="number"
@@ -1337,7 +1354,8 @@
                 max="9999"
                 default="800"
                 label="COM_KUNENA_A_IMGHEIGHT"
-                description="COM_KUNENA_A_IMGHEIGHT_DESC" />
+                description="COM_KUNENA_A_IMGHEIGHT_DESC"
+                showon="imageUpload!:" />
             <field
                 name="thumbWidth"
                 type="number"
@@ -1345,7 +1363,8 @@
                 max="9999"
                 default="32"
                 label="COM_KUNENA_A_IMGTHUMBWIDTH"
-                description="COM_KUNENA_A_IMGTHUMBWIDTH_DESC" />
+                description="COM_KUNENA_A_IMGTHUMBWIDTH_DESC"
+                showon="imageUpload!:" />
             <field
                 name="thumbHeight"
                 min="0"
@@ -1353,7 +1372,8 @@
                 type="number"
                 default="32"
                 label="COM_KUNENA_A_IMGTHUMBHEIGHT"
-                description="COM_KUNENA_A_IMGTHUMBHEIGHT_DESC" />
+                description="COM_KUNENA_A_IMGTHUMBHEIGHT_DESC"
+                showon="imageUpload!:" />
             <field
                 name="imageQuality"
                 type="number"
@@ -1361,7 +1381,8 @@
                 max="100"
                 default="50"
                 label="COM_KUNENA_A_IMGQUALITY"
-                description="COM_KUNENA_A_IMGQUALITY_DESC" />
+                description="COM_KUNENA_A_IMGQUALITY_DESC"
+                showon="imageUpload!:" />
         </fieldset>
         <fieldset
             name="files"
@@ -1393,13 +1414,15 @@
                 type="text"
                 default="txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2"
                 label="COM_KUNENA_A_FILEALLOWEDTYPES"
-                description="COM_KUNENA_A_FILEALLOWEDTYPES_DESC" />
+                description="COM_KUNENA_A_FILEALLOWEDTYPES_DESC"
+                showon="fileUpload!:" />
             <field
                 name="fileSize"
                 type="fileSize"
                 default="120"
                 label="COM_KUNENA_A_FILESIZE"
-                description="COM_KUNENA_A_FILESIZE_DESC" />
+                description="COM_KUNENA_A_FILESIZE_DESC"
+                showon="fileUpload!:" />
         </fieldset>
     </fieldset>
 
@@ -1424,7 +1447,8 @@
                 type="list"
                 default="1"
                 label="COM_KUNENA_A_RANKINGIMAGES"
-                description="COM_KUNENA_A_RANKINGIMAGES_DESC">
+                description="COM_KUNENA_A_RANKINGIMAGES_DESC"
+                showon="showRanking:1">
                 <option value="0">COM_KUNENA_RANK_TEXT</option>
                 <option value="1">COM_KUNENA_RANK_IMAGE</option>
                 <option value="2">COM_KUNENA_RANK_USERGROUP</option>
@@ -2018,13 +2042,15 @@
                 max="99"
                 default="4"
                 label="COM_KUNENA_A_POLL_NUMBER_OPTIONS"
-                description="COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC" />
+                description="COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC"
+                showon="pollEnabled:1" />
             <field
                 name="pollTimeBtVotes"
                 type="text"
                 default="00:15:00"
                 label="COM_KUNENA_A_POLL_TIME_VOTES"
-                description="COM_KUNENA_A_POLL_TIME_VOTES_DESC" />
+                description="COM_KUNENA_A_POLL_TIME_VOTES_DESC"
+                showon="pollEnabled:1" />
             <field
                 name="pollNbVotesByUser"
                 type="number"
@@ -2032,14 +2058,16 @@
                 max="999"
                 default="100"
                 label="COM_KUNENA_A_POLL_NUMBER_VOTES_BY_USER"
-                description="COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC" />
+                description="COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC"
+                showon="pollEnabled:1" />
             <field
                 name="pollAllowVoteOne"
                 type="radio"
                 default="1"
                 layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_POLL_ALLOW_ONE_VOTE"
-                description="COM_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC">
+                description="COM_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC"
+                showon="pollEnabled:1">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
@@ -2049,7 +2077,8 @@
                 default="1"
                 layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_POLL_SHOW_USER_LIST"
-                description="COM_KUNENA_A_POLL_SHOW_USER_LIST_DESC">
+                description="COM_KUNENA_A_POLL_SHOW_USER_LIST_DESC"
+                showon="pollEnabled:1">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>
@@ -2058,7 +2087,8 @@
                 type="list"
                 default="0"
                 label="COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL"
-                description="COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DESC">
+                description="COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DESC"
+                showon="pollEnabled:1">
                 <option value="0">COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DISALLOW</option>
                 <option value="1">COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_ALLOW</option>
             </field>

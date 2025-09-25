@@ -31,119 +31,119 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
 <div id="kunena" class="container-fluid">
     <div class="row">
         <div id="j-main-container" class="col-md-12" role="main">
-  <?php
-function setSampleDataFlag($value = 1)
-{
-    $db = Factory::getContainer()->get('DatabaseDriver');
-    $query = $db->getQuery(true);
-    
-    $query->update($db->quoteName('#__kunena_version'))
-          ->set($db->quoteName('sampleData') . ' = ' . $db->quote($value));
-    
-    $db->setQuery($query);
-    
-    try {
-        return $db->execute();
-    } catch (Exception $e) {
-        return false;
-    }
-}
+            <?php
+            function setSampleDataFlag($value = 1)
+            {
+                $db = Factory::getContainer()->get('DatabaseDriver');
+                $query = $db->getQuery(true);
 
-if (!isset($_POST['sample_data_choice']) && !KunenaForum::versionSampleData()) : ?>
-    <div class="row clearfix">
-        <div class="col-xl-3 col-md-3">
-            <div class="card proj-t-card bg-warning">
-                <div class="card-body">
-                    <div class="row align-items-center mb-30">
-                        <div class="col-auto">
-                            <i class="fas fa-database text-white f-30"></i>
-                        </div>
-                        <div class="col pl-0">
-                            <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
-                            <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></h6>
+                $query->update($db->quoteName('#__kunena_version'))
+                    ->set($db->quoteName('sampleData') . ' = ' . $db->quote($value));
+
+                $db->setQuery($query);
+
+                try {
+                    return $db->execute();
+                } catch (Exception $e) {
+                    return false;
+                }
+            }
+
+            if (!isset($_POST['sample_data_choice']) && !KunenaForum::versionSampleData()) : ?>
+                <div class="row clearfix">
+                    <div class="col-xl-3 col-md-3">
+                        <div class="card proj-t-card bg-warning">
+                            <div class="card-body">
+                                <div class="row align-items-center mb-30">
+                                    <div class="col-auto">
+                                        <i class="fas fa-database text-white f-30"></i>
+                                    </div>
+                                    <div class="col pl-0">
+                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
+                                        <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></h6>
+                                    </div>
+                                </div>
+                                <div>
+                                    <form method="post" id="sampleDataForm">
+                                        <ul id="sample-data-wrapper" class="list-group list-group-flush sample-data">
+                                            <li class="list-group-item sampledata-kunena">
+                                                <div class="d-flex flex-column">
+                                                    <div class="sample-data__title mb-3">
+                                                        <?php echo Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_QUESTION'); ?>
+                                                    </div>
+                                                    <div class="btn-group justify-content-center">
+                                                        <button type="submit" name="sample_data_choice" value="yes" class="btn btn-secondary btn-sm mx-1">
+                                                            <?php echo Text::_('JYES'); ?>
+                                                        </button>
+                                                        <button type="submit" name="sample_data_choice" value="no" class="btn btn-secondary btn-sm mx-1">
+                                                            <?php echo Text::_('JNO'); ?>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                                <h6 class="pt-badge bg-cyan"><i class="fas fa-exclamation text-white f-18"></i></h6>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <form method="post" id="sampleDataForm">
-                            <ul id="sample-data-wrapper" class="list-group list-group-flush sample-data">
-                                <li class="list-group-item sampledata-kunena">
-                                    <div class="d-flex flex-column">
-                                        <div class="sample-data__title mb-3">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_QUESTION'); ?>
+                </div>
+                <?php else :
+                if (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'no') {
+                    setSampleDataFlag(1);
+                    echo '<div class="alert alert-success">' . Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_SKIPPED') . '</div>';
+                } elseif (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'yes') {
+                    if (!KunenaForum::versionSampleData()) : ?>
+                        <div class="row clearfix">
+                            <div class="col-xl-3 col-md-3">
+                                <div class="card proj-t-card bg-warning">
+                                    <div class="card-body">
+                                        <div class="row align-items-center mb-30">
+                                            <div class="col-auto">
+                                                <i class="fas fa-database text-white f-30"></i>
+                                            </div>
+                                            <div class="col pl-0">
+                                                <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
+                                                <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></h6>
+                                            </div>
                                         </div>
-                                        <div class="btn-group justify-content-center">
-                                            <button type="submit" name="sample_data_choice" value="yes" class="btn btn-secondary btn-sm mx-1">
-                                                <?php echo Text::_('JYES'); ?>
-                                            </button>
-                                            <button type="submit" name="sample_data_choice" value="no" class="btn btn-secondary btn-sm mx-1">
-                                                <?php echo Text::_('JNO'); ?>
-                                            </button>
+                                        <div>
+                                            <ul id="sample-data-wrapper" class="list-group list-group-flush sample-data">
+                                                <li class="list-group-item sampledata-kunena">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="sample-data__title me-2">
+                                                            <span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
+                                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?>
+                                                        </div>
+                                                        <button type="button"
+                                                            class="btn btn-secondary btn-sm apply-sample-data"
+                                                            data-type="kunena"
+                                                            data-steps="1">
+                                                            <span class="icon-upload" aria-hidden="true"></span>
+                                                            <?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL'); ?>
+                                                        </button>
+                                                    </div>
+                                                    <p class="sample-data__desc small mt-1">
+                                                        <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_SAMPLE_DATA') ?>
+                                                    </p>
+                                                </li>
+                                                <li class="list-group-item sampledata-progress-kunena d-none">
+                                                    <div class="progress mb-3">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
-                                </li>
-                            </ul>
-                        </form>
-                    </div>
-                    <h6 class="pt-badge bg-cyan"><i class="fas fa-exclamation text-white f-18"></i></h6>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php else :
-    if (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'no') {
-        setSampleDataFlag(1);
-        echo '<div class="alert alert-success">' . Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_SKIPPED') . '</div>';
-    } elseif (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'yes') {
-        if (!KunenaForum::versionSampleData()) : ?>
-            <div class="row clearfix">
-                <div class="col-xl-3 col-md-3">
-                    <div class="card proj-t-card bg-warning">
-                        <div class="card-body">
-                            <div class="row align-items-center mb-30">
-                                <div class="col-auto">
-                                    <i class="fas fa-database text-white f-30"></i>
                                 </div>
-                                <div class="col pl-0">
-                                    <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
-                                    <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></h6>
-                                </div>
-                            </div>
-                            <div>
-                                <ul id="sample-data-wrapper" class="list-group list-group-flush sample-data">
-                                    <li class="list-group-item sampledata-kunena">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="sample-data__title me-2">
-                                                <span class="sample-data__icon icon-comments me-1" aria-hidden="true"></span>
-                                                <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_FORUM_SAMPLE_DATA'); ?>
-                                            </div>
-                                            <button type="button" 
-                                                    class="btn btn-secondary btn-sm apply-sample-data" 
-                                                    data-type="kunena" 
-                                                    data-steps="1">
-                                                <span class="icon-upload" aria-hidden="true"></span> 
-                                                <?php echo Text::_('COM_KUNENA_CPANEL_BUTTON_INSTALL'); ?>
-                                            </button>
-                                        </div>
-                                        <p class="sample-data__desc small mt-1">
-                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL_SAMPLE_DATA') ?>
-                                        </p>
-                                    </li>
-                                    <li class="list-group-item sampledata-progress-kunena d-none">
-                                        <div class="progress mb-3">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
-                                        </div>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-          
-        <?php endif;
-    }
-endif; ?>
+
+            <?php endif;
+                }
+            endif; ?>
             <?php if (!$this->KunenaMenusExists) : ?>
                 <div class="row clearfix">
                     <div class="col-xl-3 col-md-3">
@@ -349,7 +349,7 @@ endif; ?>
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
-                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=config'); ?>" class="stretched-link">
+                                        <a href="<?php echo Route::_('index.php?option=com_config&view=component&component=com_kunena'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_CONFIG') ?>
                                         </a>
                                     </h6>

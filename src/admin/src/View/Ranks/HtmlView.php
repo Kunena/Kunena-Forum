@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\View\Ranks;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\Language\Text;
@@ -109,6 +110,12 @@ class HtmlView extends BaseHtmlView
         $toolbar->addNew('rank.add', 'COM_KUNENA_NEW_RANK');
         ToolbarHelper::editList('ranks.edit');
         ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'ranks.remove');
+
+        $canDo = ContentHelper::getActions('com_kunena');
+
+        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+            ToolBarHelper::preferences('com_kunena');
+        }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/ranks/add-rank';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

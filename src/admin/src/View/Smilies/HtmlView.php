@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\View\Smilies;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
@@ -97,6 +98,12 @@ class HtmlView extends BaseHtmlView
         $toolbar->addNew('smilies.add', 'COM_KUNENA_NEW_SMILIE');
         ToolbarHelper::editList('smilies.edit');
         ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'smilies.remove');
+
+        $canDo = ContentHelper::getActions('com_kunena');
+
+        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+            ToolBarHelper::preferences('com_kunena');
+        }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/emoticons/new-emoticon';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

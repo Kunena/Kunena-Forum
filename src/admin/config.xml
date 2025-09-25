@@ -1757,6 +1757,8 @@
             <field
                 name="userlistRows"
                 type="number"
+                min="1"
+                max="999"
                 default="30"
                 label="COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS"
                 description="COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC" />
@@ -1866,13 +1868,15 @@
                 default="2"
                 label="COM_KUNENA_COM_A_USER_SESSIONS_TYPE"
                 description="COM_KUNENA_COM_A_SESSIONS_TYPE_DESC">
-                <option value="0">COM_KUNENA_COM_A_SESSIONS_TYPE_ALL</option>
-                <option value="1">COM_KUNENA_COM_A_SESSIONS_TYPE_KUNENA</option>
-                <option value="2">COM_KUNENA_COM_A_SESSIONS_TYPE_JOOMLA</option>
+                <option value="0">COM_KUNENA_SHOW_SESSION_TYPE_ALL</option>
+                <option value="1">COM_KUNENA_SHOW_SESSION_TYPE_VALID</option>
+                <option value="2">COM_KUNENA_SHOW_SESSION_TYPE_TIME</option>
             </field>
             <field
                 name="showSessionStartTime"
                 type="number"
+                min="1"
+                max="9999"
                 default="1800"
                 label="COM_KUNENA_COM_A_USER_SESSIONS_START_TIME"
                 description="COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC" />
@@ -1923,6 +1927,8 @@
             <field
                 name="popUserCount"
                 type="number"
+                min="1"
+                max="999"
                 default="5"
                 label="COM_KUNENA_USERNUM"
                 description="COM_KUNENA_USERNUM" />
@@ -1939,6 +1945,8 @@
             <field
                 name="popSubjectCount"
                 type="number"
+                min="1"
+                max="999"
                 default="5"
                 label="COM_KUNENA_NUMPOP"
                 description="COM_KUNENA_NUMPOP" />
@@ -1955,6 +1963,8 @@
             <field
                 name="popPollsCount"
                 type="number"
+                min="1"
+                max="999"
                 default="5"
                 label="COM_KUNENA_POLLSPOP"
                 description="COM_KUNENA_POLLSPOP" />
@@ -1971,18 +1981,21 @@
             <field
                 name="popThanksCount"
                 type="number"
+                min="1"
+                max="999"
                 default="5"
                 label="COM_KUNENA_THANKSPOP"
                 description="COM_KUNENA_THANKSPOP" />
             <field
                 name="userlistCountUsers"
-                type="radio"
+                type="list"
                 default="1"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST"
                 description="COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST_DESC">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
+                <option value="0">COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ALL</option>
+                <option value="1">COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVATED_ACCOUNT</option>
+                <option value="2">COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVE</option>
+                <option value="3">COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_NON_BLOCKED_USERS</option>
             </field>
         </fieldset>
         <fieldset
@@ -2001,6 +2014,8 @@
             <field
                 name="pollNbOptions"
                 type="number"
+                min="1"
+                max="99"
                 default="4"
                 label="COM_KUNENA_A_POLL_NUMBER_OPTIONS"
                 description="COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC" />
@@ -2013,6 +2028,8 @@
             <field
                 name="pollNbVotesByUser"
                 type="number"
+                min="1"
+                max="999"
                 default="100"
                 label="COM_KUNENA_A_POLL_NUMBER_VOTES_BY_USER"
                 description="COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC" />
@@ -2038,13 +2055,12 @@
             </field>
             <field
                 name="allowUserEditPoll"
-                type="radio"
+                type="list"
                 default="0"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL"
                 description="COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DESC">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
+                <option value="0">COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DISALLOW</option>
+                <option value="1">COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_ALLOW</option>
             </field>
         </fieldset>
     </fieldset>

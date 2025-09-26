@@ -28,7 +28,10 @@ use Joomla\Database\DatabaseInterface;
  *
  * Propertylist generated via KunenaConfig::getIdeProperties()
  * 
+ * @property string $XConsumerKey                          The X consumer key
+ * @property string $XConsumerSecret                       The X consumer secret
  * @property string $accessComponent                       Direct Component Access
+ * @property string $activeMenuItem                        Active menu class name
  * @property string $allowAvatarGallery                    Use Avatars Gallery
  * @property string $allowAvatarUpload                     Allow Avatar Upload
  * @property string $allowChangeSubject                    Let users edit the subject
@@ -55,6 +58,8 @@ use Joomla\Database\DatabaseInterface;
  * @property string $avatarType                            Default avatar type
  * @property string $avatarTypes                           Allowed avatar types
  * @property string $bbcodeImgSecure                       Display Images With Non-standard File Extensions
+ * @property string $blueskyappHandleOfApp                 BlueSky App ID
+ * @property string $blueskyappPasswordOfApp               The BlueSky consumer secret
  * @property string $boardOffline                          Forum Offline
  * @property string $boardTitle                            Forum Title
  * @property string $boxGhostMessage                       Check Shadow Topic Box
@@ -72,6 +77,8 @@ use Joomla\Database\DatabaseInterface;
  * @property string $disableRe                             Disable Re: on subject
  * @property string $displayFilenameAttachment             Display attachment filename
  * @property string $ebayAffiliateId                       eBay Affiliate ID
+ * @property string $ebayApiKey                            eBay AppID key
+ * @property string $ebayCertId                            eBay Cert ID (Client Secret)
  * @property string $ebayLanguage                          eBay Widget Language Code
  * @property string $editMarkup                            Show Edited Mark Up
  * @property string $email                                 Forum E-mail Address
@@ -81,6 +88,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $emailRecipientCount                   E-mail to Multiple Recipients
  * @property string $emailRecipientPrivacy                 E-mail Recipient Privacy
  * @property string $emailSenderName                       Sender name for mail
+ * @property string $emailVisibleAddress                   Visible E-mail Recipient
  * @property string $enableForumJump                       Enable Category Jump
  * @property string $enableRss                             Enable RSS Feeds
  * @property string $fallbackEnglish                       Use English On Missing Strings
@@ -88,11 +96,13 @@ use Joomla\Database\DatabaseInterface;
  * @property string $fileTypes                             Allowed File Types
  * @property string $fileUpload                            Allow File Uploads
  * @property string $floodProtection                       Flood Protection
+ * @property string $googleMapApiKey                       Google maps API key to get better stats usage of google API
  * @property string $hideIp                                Hide IP Addresses From Moderators
  * @property string $highlightCode                         Enable Code Highlighting
  * @property string $historyLimit                          History Limit
  * @property string $holdGuestPosts                        Moderate Guests
  * @property string $holdNewUsersPosts                     Moderate New Users
+ * @property string $homeId                                Home ID
  * @property string $imageHeight                           Maximum Image Height (px)
  * @property string $imageMimeTypes                        Legal MIME Types
  * @property string $imageQuality                          Image Quality for JPG Resizing (%)
@@ -100,6 +110,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $imageTypes                            Allowed Image Types
  * @property string $imageUpload                           Allow Image Uploads
  * @property string $imageWidth                            Maximum Image Width (px)
+ * @property string $indexId                               Index ID
  * @property string $ipTracking                            IP Address Tracking
  * @property array  $latestCategory                        Category List in Recent Topics
  * @property string $latestCategoryIn                      Category Filter in Recent Topics
@@ -107,15 +118,20 @@ use Joomla\Database\DatabaseInterface;
  * @property string $listCatShowModerators                 Show Moderators in Category Index
  * @property string $logModeration                         Define if you want to log action or moderation
  * @property string $mailAdministrators                    E-mail Administrators
+ * @property string $mailBodyUserBanned                    Set the body of the mail when the user is banned
+ * @property string $mailBodyUserUnBanned                  Set the body of the mail when the user is unbanned
  * @property string $mailFull                              Include Post Contents
  * @property string $mailModerators                        E-mail Moderators
+ * @property string $mainMenuId                            Mainmenu
  * @property string $maxLinks                              Max Links in message
  * @property string $maxSig                                Max. Signature Length
  * @property string $messagesPerPage                       Messages Per Page
  * @property string $messagesPerPageSearch                 Search Results
  * @property string $minimalUserPostsAddUrlImage           Set the number minimum of user posts to able to add url and image
+ * @property string $miscId                                MISC ID
  * @property string $modSeeDeleted                         Show Deleted Messages
  * @property string $moderatorPermDelete                   Allow moderators to permdelete
+ * @property string $moderatorsId                          Moderators ID
  * @property string $newUsersPreventPostUrlImages          Prevent that new users are able to add url and image in his messages or profile
  * @property string $offlineMessage                        Forum Offline Message
  * @property string $orderingSystem                        Reply Numbering Inside Topic
@@ -135,6 +151,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $postDateFormat                        Message Time Format
  * @property string $postDateFormatHover                   Hover Message Time Format
  * @property string $privateMessage                        Enable private message
+ * @property string $profileId                             Profile ID
  * @property string $profiler                              Enable profiler
  * @property string $pubProfile                            Allow Guests to see User Profiles
  * @property string $pubWrite                              Allow Guests to Post/Write
@@ -149,6 +166,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $rssAuthorInTitle                      Render Author in Title
  * @property string $rssCache                              Caching Interval
  * @property array  $rssExcludedCategories                 Exclude Categories
+ * @property string $rssFeedBurnerUrl                      The URL of the basic RSS feed into FeedBurner.
  * @property array  $rssIncludedCategories                 Include Categories
  * @property string $rssLimit                              RSS Limit
  * @property string $rssOldTitles                          Use Oldstyle Titles
@@ -156,6 +174,8 @@ use Joomla\Database\DatabaseInterface;
  * @property string $rssTimeLimit                          RSS History (timelimit)
  * @property string $rssType                               RSS Feed type
  * @property string $rssWordCount                          Limit Number of Characters Per Item
+ * @property string $rules                                 Permissions
+ * @property string $searchId                              Search ID
  * @property string $searchTime                            Search Time
  * @property string $sef                                   Search Engine Friendly URLs
  * @property string $sefRedirect                           SEF Redirect
@@ -188,6 +208,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $signature                             Signatures
  * @property string $smartLinking                          Smart Auto Linking
  * @property string $statsLinkAllowed                      Allow Guests to see Stats link
+ * @property string $stopForumSpamKey                      API key
  * @property string $stopForumSpamNewUserCheck             Check New User
  * @property string $subscriptionsChecked                  Check Subscription Box
  * @property string $superAdminUserlist                    Hide Super Users in user list
@@ -200,6 +221,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $timeToCreatePage                      Display Page Creation Time
  * @property string $topicIcons                            Selectable Topic Icons
  * @property string $topicLayout                           Default topic layout
+ * @property string $topicListId                           Topiclist ID
  * @property string $topicSubscriptions                    Topic Subscriptions
  * @property string $trimLongUrls                          Trim Long URLs
  * @property string $trimLongUrlsBack                      Back Portion of Trimmed URLs
@@ -226,7 +248,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $userlistUserHits                      Show Profile Hits
  * @property string $username                              Display User Name
  * @property string $utmSource                             UTM Source
- *   
+ *    
  * @since 7.0.0
  */
 class KunenaConfig
@@ -460,18 +482,20 @@ class KunenaConfig
         }
 
         $defaults = [];
-        $params   = ComponentHelper::getParams(self::COMPONENT);
 
         // Assuming typical Joomla form XML structure: <config><fields name="params"><fieldset><field ...>
         // Adjust XPath if your config.xml structure is different.
         foreach ($xml->xpath('//field') as $field) {
             $attributes = $field->attributes();
-            $name = (string) ($attributes['name'] ?? '');
-            $type = (string) ($attributes['type'] ?? '');
+            $name       = (string) ($attributes['name'] ?? '');
+            $type       = (string) ($attributes['type'] ?? '');
+            $config     = (string) ($attributes['config'] ?? '');
 
             if (
                 !empty($name)
-                && $params->get($name, 'SkIpThIs') !== 'SkIpThIs'
+                && !\str_starts_with($name, '@')
+                && $type !== 'spacer'
+                && $config !== 'false'
             ) {
                 $defaults[$name] = (string) ($attributes['default'] ?? '');
             }
@@ -503,12 +527,15 @@ class KunenaConfig
         // Adjust XPath if your config.xml structure is different.
         foreach ($xml->xpath('//field') as $field) {
             $attributes = $field->attributes();
-            $name = (string) ($attributes['name'] ?? '');
-            $type = (string) ($attributes['type'] ?? '');
+            $name       = (string) ($attributes['name'] ?? '');
+            $type       = (string) ($attributes['type'] ?? '');
+            $config     = (string) ($attributes['config'] ?? '');
 
             if (
                 !empty($name)
-                && $params->get($name, 'SkIpThIs') !== 'SkIpThIs'
+                && !\str_starts_with($name, '@')
+                && $type !== 'spacer'
+                && $config !== 'false'
             ) {
                 $type              = \is_array($params->get($name, '')) ? 'array ' : 'string';
                 $label             = Text::_((string) ($attributes['label'] ?? ''));

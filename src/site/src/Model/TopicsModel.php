@@ -101,9 +101,9 @@ class TopicsModel extends KunenaModel
         if (Factory::getApplication()->getDocument()->getType() != 'feed') {
             $time = $this->getState('list.time');
         } else {
-            if($this->config->rssTimeLimit == '1 week') {
+            if ($this->config->rssTimeLimit == '1 week') {
                 $time = '168';
-            } elseif ($this->config->rssTimeLimit == '1 month'){
+            } elseif ($this->config->rssTimeLimit == '1 month') {
                 $time = '720;';
             } else {
                 $time = '8760';
@@ -300,7 +300,8 @@ class TopicsModel extends KunenaModel
             'started'    => $started,
             'posted'     => $posts,
             'favorited'  => $favorites,
-            'subscribed' => $subscriptions, ];
+            'subscribed' => $subscriptions,
+        ];
 
         list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestCategory, $limitstart, $limit, $params);
 
@@ -391,7 +392,8 @@ class TopicsModel extends KunenaModel
             'orderby'   => $lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
             'starttime' => $time,
             'hold'      => $hold,
-            'where'     => $where, ];
+            'where'     => $where,
+        ];
 
         list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($latestCategory, $limitstart, $limit, $params);
 
@@ -598,10 +600,9 @@ class TopicsModel extends KunenaModel
             $latestCategoryIn = true;
 
             // Check if the category is in excluded list
-            if (!empty($this->config->rssExcludedCategories)) {
-                $cat_excluded = explode(',', $this->config->rssExcludedCategories);
+            if (\is_array($this->config->rssExcludedCategories) && $this->config->rssExcludedCategories[0] != 0) {
 
-                if (\in_array($catid, $cat_excluded)) {
+                if (\in_array($catid, $this->config->rssExcludedCategories)) {
                     $latestCategory   = $this->config->rssExcludedCategories;
                     $latestCategoryIn = 0;
                     $this->setState('list.categories.exclude', 1);
@@ -633,15 +634,14 @@ class TopicsModel extends KunenaModel
                  * From Kunena 6.1 in Kunena menus the default value of topics_catselection for option "Use Global" should be set to 2 instead of empty
                  */
                 if (($latestCategoryIn == -1 && !$klatestContext) || ($klatestCategorySel == -1 && $klatestContext)) {
-                    if($this->config->latestCategory == 0) {
+                    if (\is_array($this->config->latestCategory) && $this->config->latestCategory[0] == 0) {
                         $latestCategory = false;
-                    }
-                    else {
-                        $latestCategory = explode(',', $this->config->latestCategory);
+                    } else {
+                        $latestCategory = $this->config->latestCategory;
                     }
 
                     $latestCategoryIn = $this->config->latestCategoryIn;
-                } elseif ($klatestCategorySel && $klatestContext) { 
+                } elseif ($klatestCategorySel && $klatestContext) {
                     if ($klatestCategorySel == 1) {
                         // Show categories in the category list selected
                         $latestCategory = $klatestCategory;
@@ -658,7 +658,7 @@ class TopicsModel extends KunenaModel
                                 }
                             }
                         }
-                        
+
                         $latestCategory = $klatestCategory;
                     }
                 } elseif ($latestCategoryIn && !$klatestContext) {
@@ -676,7 +676,7 @@ class TopicsModel extends KunenaModel
                     $latestCategory = $latestCategory;
                 } else {
                     // Make sure that category list is an array when it's different to zero.
-                    if ($latestCategory !=0 || !empty($latestCategory)){
+                    if ($latestCategory != 0 || !empty($latestCategory)) {
                         if (!\is_array($latestCategory)) {
                             $latestCategory = explode(',', $latestCategory);
                         }
@@ -686,7 +686,7 @@ class TopicsModel extends KunenaModel
                 }
             } else {
                 // Use RSS configuration.
-                if (!empty($this->config->rssExcludedCategories)) {
+                if (\is_array($this->config->rssExcludedCategories) && $this->config->rssExcludedCategories[0] != 0) {
                     $latestCategory   = $this->config->rssExcludedCategories;
                     $latestCategoryIn = 0;
                 } else {
@@ -704,10 +704,10 @@ class TopicsModel extends KunenaModel
             // Selection time from user state / menu item / url parameter / configuration.
             if (!$this->me->exists() || $this->me->exists() && $this->me->userListtime == -2) {
                 $value = $this->getUserStateFromRequest(
-                	"com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time",
-                	'sel',
-                	$params->get('topics_time', $this->config->showListTime),
-                	'int'
+                    "com_kunena.topics_{$active}_{$layout}_{$mode}_{$userid}_{$catid}_list_time",
+                    'sel',
+                    $params->get('topics_time', $this->config->showListTime),
+                    'int'
                 );
                 $this->setState('list.time', (int) $value);
             }

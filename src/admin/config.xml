@@ -13,6 +13,12 @@
                 type="KunenaConfig"
                 hidden="true" />
             <field
+                name="template"
+                type="hidden"
+                default="aurelia"
+                label="Template" />
+
+            <field
                 name="boardTitle"
                 type="text"
                 default="Kunena"

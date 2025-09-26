@@ -380,6 +380,18 @@ return new class() implements ServiceProviderInterface {
                                 // Load the single cell and json_decode data
                                 $config = $db->loadResult() ?? '{}';
 
+                                // Convert Config parameters that are now arrays to avoid loosing the setting value on import
+                                $processConfig    = json_decode($config, true);
+                                $arrayConversions = ['latestCategory', 'rssExcludedCategories', 'rssIncludedCategories'];
+
+                                foreach ($processConfig as $param => $value) {
+                                    if (in_array($param, $arrayConversions) && is_string($value)) {
+                                        $processConfig[$param] = explode(',', $value);
+                                    }
+                                }
+
+                                $config = json_encode($processConfig);
+
                                 $bindValues = ['component', 'com_kunena'];
                                 $query = $db->createQuery();
                                 $query->select('extension_id')

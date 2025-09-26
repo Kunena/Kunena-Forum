@@ -186,7 +186,7 @@ return new class() implements ServiceProviderInterface {
                         File::copy(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss', JPATH_SITE . '/tmp/custom.scss');
                     }
 
-                    $this->deleteRemovedFolder($this->installedVersion);
+                    $this->deleteRemovedFilesFolders($this->installedVersion);
 
                     return true;
                 }
@@ -419,13 +419,13 @@ return new class() implements ServiceProviderInterface {
                 }
 
                 /**
-                 * Delete the folders from Kunena directories which has been removed in the install package
+                 * Delete the files and folders from Kunena directories which has been removed in the install package
                  *
                  * @param   string  $version  version
                  *
                  * @since   7.0.0
                  */
-                protected function deleteRemovedFolder(string $installedVersion)
+                protected function deleteRemovedFilesFolders(string $installedVersion)
                 {
                     if (version_compare($installedVersion, '6.3.0', '<') && version_compare($installedVersion, '6.0.0', '>=')) {
                         // Set and delete the following folders
@@ -460,10 +460,10 @@ return new class() implements ServiceProviderInterface {
 
                         $deleteFiles   = [];
                         // Administrator files
-                        $deleteFiles[] = '/administrator/components/com_kunena/scr/Controller/ConfigController.php';
-                        $deleteFiles[] = '/administrator/components/com_kunena/scr/Model/ConfigModel.php';
+                        $deleteFiles[] = '/administrator/components/com_kunena/src/Controller/ConfigController.php';
+                        $deleteFiles[] = '/administrator/components/com_kunena/src/Model/ConfigModel.php';
 
-                        $this->deleteFilesFolders(deleteFolders: $deleteFiles);
+                        $this->deleteFilesFolders(deleteFolders: $deleteFolders, deleteFiles: $deleteFiles);
                     }
                 }
 

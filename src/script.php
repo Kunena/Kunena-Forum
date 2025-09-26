@@ -448,10 +448,36 @@ return new class() implements ServiceProviderInterface {
                         // Library folders
                         $deleteFolders[] = '/libraries/kunena/Src';
 
-                        foreach ($deleteFolders as $folder) {
-                            if (Folder::exists(JPATH_ROOT . $folder) && !Folder::delete(JPATH_ROOT . $folder)) {
-                                echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $folder) . '<br>';
-                            }
+                        $this->deleteFilesFolders(deleteFolders: $deleteFolders);
+                    }
+
+                    if (version_compare($installedVersion, '7.0.0', '<')) {
+                        // Set and delete the following folders
+                        $deleteFolders   = [];
+                        // Administrator folders
+                        $deleteFolders[] = '/administrator/components/com_kunena/tmpl/config';
+                        $deleteFolders[] = '/administrator/components/com_kunena/src/View/Config';
+
+                        $deleteFiles   = [];
+                        // Administrator files
+                        $deleteFiles[] = '/administrator/components/com_kunena/scr/Controller/ConfigController.php';
+                        $deleteFiles[] = '/administrator/components/com_kunena/scr/Model/ConfigModel.php';
+
+                        $this->deleteFilesFolders(deleteFolders: $deleteFiles);
+                    }
+                }
+
+                private function deleteFilesFolders(array $deleteFolders = [], array $deleteFiles = []): void
+                {
+                    foreach ($deleteFolders as $folder) {
+                        if (Folder::exists(JPATH_ROOT . $folder) && !Folder::delete(JPATH_ROOT . $folder)) {
+                            echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $folder) . '<br>';
+                        }
+                    }
+
+                    foreach ($deleteFiles as $file) {
+                        if (file_exists(JPATH_ROOT . $file) && !File::delete(JPATH_ROOT . $file)) {
+                            echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $file) . '<br>';
                         }
                     }
                 }

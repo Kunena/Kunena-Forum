@@ -15,10 +15,8 @@ use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Date\Date;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Installer\InstallerAdapter;
-use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\DI\Container;
@@ -186,7 +184,7 @@ return new class() implements ServiceProviderInterface {
                         File::copy(JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss', JPATH_SITE . '/tmp/custom.scss');
                     }
 
-                    $this->deleteRemovedFilesFolders($this->installedVersion);
+                    $this->deleteRemovedFolder($this->installedVersion);
 
                     return true;
                 }
@@ -359,85 +357,17 @@ return new class() implements ServiceProviderInterface {
                         File::copy(JPATH_SITE . '/tmp/custom.scss', JPATH_SITE . '/components/com_kunena/template/aurelia/assets/scss/custom.scss');
                     }
 
-                    // Convert Config settings to com_kunena component parameters
-                    if ($type === 'update') {
-                        $scriptHelper = new InstallerScript();
-                        $comParams    = $scriptHelper->getItemArray('params', '#__extensions', 'name', 'com_kunena');
-
-                        if (empty($comParams)) {
-                            $manifest        = $scriptHelper->getItemArray('manifest_cache', '#__extensions', 'name', 'pkg_kunena');
-                            $installedVerion = $manifest['version'];
-
-                            if (version_compare($installedVerion, '7.0.0', '<')) {
-                                // Get the configuration settings
-                                /** @var DatabaseDriver  $db */
-                                $query = $db->getQuery(true)
-                                    ->select($db->quoteName('params'))
-                                    ->from($db->quoteName('#__kunena_configuration'))
-                                    ->where($db->quoteName('id') . ' = 1');
-                                $db->setQuery($query);
-
-                                // Load the single cell and json_decode data
-                                $config = $db->loadResult() ?? '{}';
-
-                                // Convert Config parameters that are now arrays to avoid loosing the setting value on import
-                                $processConfig    = json_decode($config, true);
-                                $arrayConversions = ['latestCategory', 'rssExcludedCategories', 'rssIncludedCategories'];
-
-                                foreach ($processConfig as $param => $value) {
-                                    if (in_array($param, $arrayConversions) && is_string($value)) {
-                                        $processConfig[$param] = explode(',', $value);
-                                    }
-                                }
-
-                                $config = json_encode($processConfig);
-
-                                $bindValues = ['component', 'com_kunena'];
-                                $query = $db->createQuery();
-                                $query->select('extension_id')
-                                    ->from($db->quoteName('#__extensions'))
-                                    ->where($db->quotename('type') . ' = :type')
-                                    ->where($db->quoteName('element') . ' = :element')
-                                    ->bind([':type', ':element'], $bindValues, [ParameterType::STRING, ParameterType::STRING]);
-                                $db->setQuery($query);
-                                $componentId = (int) ($db->loadResult() ?? 0);
-
-                                if ($componentId) {
-                                    $query = $db->createQuery()
-                                        ->update($db->quoteName('#__extensions'))
-                                        ->set('params = :params')
-                                        ->where('extension_id = :id')
-                                        ->bind(':params', $config)
-                                        ->bind(':id', $componentId, ParameterType::INTEGER);
-
-                                    // Update table
-                                    $converted = $db->setQuery($query)->execute();
-                                } else {
-                                    $converted = false;
-                                }
-
-                                if ($converted) {
-                                    // We have  been able to convert the configuration to component parameters
-                                    $this->app->enqueueMessage('Kunena Configuration settings were automatically converted to the new Configuration settings, please validate after installation completes.');
-                                } else {
-                                    // We have not been able to convert the configuration to component parameters
-                                    $this->app->enqueueMessage('We are sorry to inform you that we were not able to convert you Kunena configuration settings to the new version. You need to do this manually after installation completes.', 'error');
-                                }
-                            }
-                        }
-                    }
-
                     return true;
                 }
 
                 /**
-                 * Delete the files and folders from Kunena directories which has been removed in the install package
+                 * Delete the folders from Kunena directories which has been removed in the install package
                  *
                  * @param   string  $version  version
                  *
                  * @since   7.0.0
                  */
-                protected function deleteRemovedFilesFolders(string $installedVersion)
+                protected function deleteRemovedFolder(string $installedVersion)
                 {
                     if (version_compare($installedVersion, '6.3.0', '<') && version_compare($installedVersion, '6.0.0', '>=')) {
                         // Set and delete the following folders
@@ -460,36 +390,10 @@ return new class() implements ServiceProviderInterface {
                         // Library folders
                         $deleteFolders[] = '/libraries/kunena/Src';
 
-                        $this->deleteFilesFolders(deleteFolders: $deleteFolders);
-                    }
-
-                    if (version_compare($installedVersion, '7.0.0', '<')) {
-                        // Set and delete the following folders
-                        $deleteFolders   = [];
-                        // Administrator folders
-                        $deleteFolders[] = '/administrator/components/com_kunena/tmpl/config';
-                        $deleteFolders[] = '/administrator/components/com_kunena/src/View/Config';
-
-                        $deleteFiles   = [];
-                        // Administrator files
-                        $deleteFiles[] = '/administrator/components/com_kunena/src/Controller/ConfigController.php';
-                        $deleteFiles[] = '/administrator/components/com_kunena/src/Model/ConfigModel.php';
-
-                        $this->deleteFilesFolders(deleteFolders: $deleteFolders, deleteFiles: $deleteFiles);
-                    }
-                }
-
-                private function deleteFilesFolders(array $deleteFolders = [], array $deleteFiles = []): void
-                {
-                    foreach ($deleteFolders as $folder) {
-                        if (Folder::exists(JPATH_ROOT . $folder) && !Folder::delete(JPATH_ROOT . $folder)) {
-                            echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $folder) . '<br>';
-                        }
-                    }
-
-                    foreach ($deleteFiles as $file) {
-                        if (file_exists(JPATH_ROOT . $file) && !File::delete(JPATH_ROOT . $file)) {
-                            echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $file) . '<br>';
+                        foreach ($deleteFolders as $folder) {
+                            if (Folder::exists(JPATH_ROOT . $folder) && !Folder::delete(JPATH_ROOT . $folder)) {
+                                echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $folder) . '<br>';
+                            }
                         }
                     }
                 }
@@ -731,7 +635,6 @@ return new class() implements ServiceProviderInterface {
 
                         return false;
                     }
-
                     return true;
                 }
             }

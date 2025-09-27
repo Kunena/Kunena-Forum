@@ -59,7 +59,7 @@ class Com_KunenaInstallerScript extends InstallerScript
         $manifest               = $this->getItemArray('manifest_cache', '#__extensions', 'name', $this->extension);
         $this->installedVersion = $manifest['version'] ?? '';
 
-        if ($type === 'upgrade') {
+        if ($type === 'update') {
             if (version_compare($this->installedVersion, '7.0.0', '<')) {
                 $this->deleteFolders[] = '/administrator/components/com_kunena/tmpl/config';
                 $this->deleteFolders[] = '/administrator/components/com_kunena/src/View/Config';

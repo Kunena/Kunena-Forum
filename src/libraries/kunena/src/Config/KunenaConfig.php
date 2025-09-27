@@ -127,6 +127,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $mailModerators                        E-mail Moderators
  * @property string $mainMenuId                            Mainmenu
  * @property string $maxLinks                              Max Links in message
+ * @property string $maxPersonalText                       Max. Personal Text Length
  * @property string $maxSig                                Max. Signature Length
  * @property string $messagesPerPage                       Messages Per Page
  * @property string $messagesPerPageSearch                 Search Results

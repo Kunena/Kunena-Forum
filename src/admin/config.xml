@@ -2198,7 +2198,7 @@
         <field
             name="maxPersonalText"
             type="text"
-            default=""
+            default="50"
             label="Max. Personal Text Length" />
     </fieldset>
 </config>

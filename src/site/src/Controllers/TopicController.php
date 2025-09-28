@@ -2456,7 +2456,7 @@ class TopicController extends KunenaController
             return;
         }
 
-        if (!$this->config->getEmail() || !MailHelper::isEmailAddress($this->config->getEmail())) {
+        if (!$this->config->email || !MailHelper::isEmailAddress($this->config->email)) {
             // Error: email address is invalid
             $this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_INVALID'), 'error');
             $this->setRedirectBack();
@@ -2518,7 +2518,7 @@ class TopicController extends KunenaController
                 $msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);
 
                 $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                $mail->setSender([$this->config->getEmail(), $mailnamesender]);
+                $mail->setSender([$this->config->email, $mailnamesender]);
                 $mail->setSubject($mailsubject);
                 $mail->addReplyTo($this->me->email, $this->me->username);
 

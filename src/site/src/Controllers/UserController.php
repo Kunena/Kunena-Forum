@@ -884,7 +884,7 @@ class UserController extends KunenaController
         $mailnamesender  = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle);
         $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
         $mail->setSubject($mailTitle);
-        $mail->setSender([$this->config->getEmail(), $mailnamesender]);
+        $mail->setSender([$this->config->email, $mailnamesender]);
         $mail->setBody($mailBody);
         KunenaEmail::send($mail, [$user->email]);
     }

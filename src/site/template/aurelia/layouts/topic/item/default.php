@@ -36,7 +36,6 @@ Text::script('COM_KUNENA_SOCIAL_REDDIT_LABEL');
 $this->addScript('assets/js/topic.js');
 
 $this->ktemplate = KunenaFactory::getTemplate();
-$social          = $this->ktemplate->params->get('socialshare');
 $quick           = $this->ktemplate->params->get('quick');
 $txt             = '';
 
@@ -87,14 +86,6 @@ if ($this->topic->locked) {
     </h2>
 
     <div class="clearfix"></div>
-
-    <?php if ($social == 1 && $this->me->socialshare != 0 || $social == 1 && !$this->me->exists()) : ?>
-        <div><?php echo $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate); ?></div>
-    <?php endif; ?>
-
-    <?php if ($social == 2 && $this->me->socialshare != 0 || $social == 2 && !$this->me->exists()) : ?>
-        <div><?php echo $this->subLayout('Widget/Socialcustomtag'); ?></div>
-    <?php endif; ?>
 
     <?php
     if ($this->ktemplate->params->get('displayModule')) {

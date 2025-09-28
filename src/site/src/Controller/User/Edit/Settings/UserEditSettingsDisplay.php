@@ -153,30 +153,7 @@ class UserEditSettingsDisplay extends UserEditDisplay
         	$this->escape($this->profile->userListtime),
         	'kuserlisttime'
         );
-        $this->settings[] = $item;
-
-        $ktemplate = KunenaFactory::getTemplate();
-        $social    = $ktemplate->params->get('socialshare');
-
-        if ($social != 0) {
-            $item             = new StdClass();
-            $item->name       = 'socialshare';
-            $item->label      = Text::_('COM_KUNENA_USER_SOCIALSHARE');
-            $options          = [];
-            $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
-            $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
-            $item->field      = HTMLHelper::_(
-            	'select.genericlist',
-            	$options,
-            	'socialshare',
-            	'class="kinputbox form-select" size="1"',
-            	'value',
-            	'text',
-            	$this->escape($this->profile->socialshare),
-            	'ksocialshare'
-            );
-            $this->settings[] = $item;
-        }
+        $this->settings[] = $item;        
 
         $this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE');
     }

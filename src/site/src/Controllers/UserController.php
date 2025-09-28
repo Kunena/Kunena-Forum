@@ -653,7 +653,6 @@ class UserController extends KunenaController
         $this->user->showOnline   = $this->app->getInput()->getInt('showonline', 1);
         $this->user->canSubscribe = $this->app->getInput()->getInt('cansubscribe', -1);
         $this->user->userListtime = $this->app->getInput()->getInt('userlisttime', -2);
-        $this->user->socialshare  = $this->app->getInput()->getInt('socialshare', 1);
     }
 
     /**

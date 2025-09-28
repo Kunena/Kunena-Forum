@@ -2200,5 +2200,10 @@
             type="text"
             default="50"
             label="Max. Personal Text Length" />
+        <field
+            name="defaultPage"
+            type="text"
+            default="recent"
+            label="The Default Page" />
     </fieldset>
 </config>

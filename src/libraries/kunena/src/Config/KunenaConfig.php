@@ -74,6 +74,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $debug                                 Enable Debug Mode
  * @property string $defaultAvatar                         Default avatar
  * @property string $defaultAvatarSmall                    Default small avatar
+ * @property string $defaultPage                           The Default Page
  * @property string $defaultSort                           Message Ordering
  * @property string $disableEmoticons                      Disable Emoticons
  * @property string $disableRe                             Disable Re: on subject

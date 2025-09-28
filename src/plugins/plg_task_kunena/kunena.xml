@@ -19,5 +19,5 @@
 		<folder plugin="kunena">services</folder>
 		<folder>src</folder>
 	</files>
-	<scriptfile>kunena.script.php</scriptfile>
+	<scriptfile>script.php</scriptfile>
 </extension>

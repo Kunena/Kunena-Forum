@@ -34,30 +34,6 @@ class plgQuickiconKunenaInstallerScript extends InstallerScript
     protected $extension = 'plg_quickicon_kunena';
 
     /**
-     * Minimum PHP version required to install the extension
-     *
-     * @var    string
-     * @since  5.4.0
-     */
-    protected $minimumPhp = '7.2.5';
-
-    /**
-     * Minimum Joomla! version required to install the extension
-     *
-     * @var    string
-     * @since  6.0.0
-     */
-    protected $minimumJoomla = '4.0.0-dev';
-
-    /**
-     * List of required PHP extensions.
-     *
-     * @var array
-     * @since Kunena
-     */
-    protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
-
-    /**
      * @var  CMSApplication  Holds the application object
      *
      * @since   Kunena 6.0
@@ -112,7 +88,7 @@ class plgQuickiconKunenaInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/quickicon/kunena/kunena.php';
+        $this->deleteFiles[] = '/plugins/quickicon/kunena/kunena.php';
         $this->removeFiles();
 
         return true;

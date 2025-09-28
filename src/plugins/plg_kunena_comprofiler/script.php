@@ -30,30 +30,6 @@ class plgKunenaComprofilerInstallerScript extends InstallerScript
     protected $extension = 'plg_kunena_comprofiler';
 
     /**
-     * Minimum PHP version required to install the extension
-     *
-     * @var    string
-     * @since  5.4.0
-     */
-    protected $minimumPhp = '8.1';
-
-    /**
-     * Minimum Joomla! version required to install the extension
-     *
-     * @var    string
-     * @since  6.0.0
-     */
-    protected $minimumJoomla = '5.3.2';
-
-    /**
-     * List of required PHP extensions.
-     *
-     * @var array
-     * @since Kunena
-     */
-    protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
-
-    /**
      * Function called before extension installation/update/removal procedure commences
      *
      * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
@@ -69,14 +45,14 @@ class plgKunenaComprofilerInstallerScript extends InstallerScript
         }
 
         // Delete kunena.php
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/comprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaAccessComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaActivityComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaAvatarComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaIntegrationComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaLoginComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaPrivateComprofiler.php';
-        $this->deleteFiles[] = JPATH_SITE . '/plugins/kunena/comprofiler/KunenaProfileComprofiler.php';
+        $this->deleteFiles[] = '/plugins/kunena/comprofiler/comprofiler.php';
+        $this->deleteFiles[] = '/plugins/kunena/comprofiler/KunenaAccessComprofiler.php';
+        $this->deleteFiles[] = '/plugins/kunena/comprofiler/KunenaActivityComprofiler.php';
+        $this->deleteFiles[] = '/plugins/kunena/comprofiler/KunenaAvatarComprofiler.php';
+        $this->deleteFiles[] = '/plugins/kunena/comprofiler/KunenaIntegrationComprofiler.php';
+        $this->deleteFiles[] = '/plugins/kunena/comprofiler/KunenaLoginComprofiler.php';
+        $this->deleteFiles[] = '/plugins/kunena/comprofiler/KunenaPrivateComprofiler.php';
+        $this->deleteFiles[] = '/plugins/kunena/comprofiler/KunenaProfileComprofiler.php';
         $this->removeFiles();
 
         return true;

@@ -34,29 +34,28 @@ class plgTaskKunenaInstallerScript extends InstallerScript
      */
     protected $extension = 'plg_task_kunena';
 
-    /**
-     * Minimum PHP version required to install the extension
-     *
-     * @var    string
-     * @since  7.0.0
-     */
-    protected $minimumPhp = '8.1';
 
     /**
-     * Minimum Joomla! version required to install the extension
+     * Function called before extension installation/update/removal procedure commences
      *
-     * @var    string
-     * @since  7.0.0
+     * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
+     * @param   InstallerAdapter  $parent  The class calling this method
+     *
+     * @return  boolean  True on success
+     * @since   Kunena 7.0.0
      */
-    protected $minimumJoomla = '5.3.2';
+    public function preflight($type, $parent): bool
+    {
+        if (!parent::preflight($type, $parent)) {
+            return false;
+        }
 
-    /**
-     * List of required PHP extensions.
-     *
-     * @var array
-     * @since Kunena
-     */
-    protected $extensions = ['dom', 'gd', 'json', 'pcre', 'SimpleXML'];
+        // Delete kunena.php
+        $this->deleteFiles[] = '/plugins/task/kunena/kunena.script.php';
+        $this->removeFiles();
+
+        return true;
+    }
 
     /**
      * method to run after an install/update/uninstall method

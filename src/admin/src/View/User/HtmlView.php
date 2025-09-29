@@ -230,29 +230,6 @@ class HtmlView extends BaseHtmlView
         );
         $this->settings[] = $item;
 
-        $ktemplate = KunenaFactory::getTemplate();
-        $social    = $ktemplate->params->get('socialshare');
-
-        if ($social != 0) {
-            $item             = new StdClass();
-            $item->name       = 'socialshare';
-            $item->label      = Text::_('COM_KUNENA_USER_SOCIALSHARE');
-            $options          = [];
-            $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
-            $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
-            $item->field      = HTMLHelper::_(
-                'select.genericlist',
-                $options,
-                'social',
-                'class="form-select" size="1"',
-                'value',
-                'text',
-                $this->escape($this->user->socialshare),
-                'ksocialshare'
-            );
-            $this->settings[] = $item;
-        }
-
         $this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="form-select" size="1"', 'value', 'text', $this->user->ordering);
         $this->modCats     = $this->get('listmodcats');
         $this->selectRank  = $this->get('listuserranks');

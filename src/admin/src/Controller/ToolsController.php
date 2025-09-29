@@ -867,64 +867,6 @@ class ToolsController extends FormController
     }
 
     /**
-     * Method to completely remove kunena by checking before if the user is a super-administrator
-     *
-     * @return  void
-     *
-     * @since   Kunena 4.0
-     *
-     * @throws  null
-     * @throws  Exception
-     */
-    public function uninstall(): void
-    {
-        if (!Session::checkToken()) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-
-            return;
-        }
-
-        // Check if the user has the super-administrator rights
-        $username = $this->input->getString('username');
-        $password = $this->input->getString('password');
-        $code     = $this->input->getInt('secretkey');
-
-        $login = KunenaLogin::getInstance();
-
-        if ($login->isTFAEnabled()) {
-            if (empty($code) || $code == 0) {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_SECRETKEY_INVALID'), 'error');
-                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-            }
-        }
-
-        $params = new Registry();
-        $Joomlalogin = new KunenaLoginJoomla($params);
-
-        try {
-            $logged  = $Joomlalogin->loginUser($username, $password, false);
-        } catch (Exception $e) {
-            $this->app->enqueueMessage($e->getMessage(), 'error');
-        }
-
-        $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserByUsername($username);
-
-        $isRoot = $user->authorise('core.admin');
-
-        if ($logged && $isRoot) {
-            $this->app->setUserState('com_kunena.uninstall.allowed', true);
-
-            $this->setRedirect(KunenaRoute::_('administrator/index.php?option=com_kunena&task=install.uninstall&' . Session::getFormToken() . '=1', false));
-
-            return;
-        }
-
-        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_UNINSTALL_LOGIN_FAILED'), 'error');
-        $this->setRedirect(KunenaRoute::_($this->baseurl, false));
-    }
-
-    /**
      * System Report
      *
      * @return  void

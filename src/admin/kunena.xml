@@ -24,6 +24,13 @@
                 charset="utf8">sql/install/mysql/create_tables.utf8.sql</file>
         </sql>
     </install>
+    <uninstall>
+        <sql>
+            <file
+                driver="mysql"
+                charset="utf8">sql/uninstall/mysql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
     <files folder="site">
         <folder>language</folder>
         <folder>src</folder>

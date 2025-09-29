@@ -20,7 +20,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -172,11 +171,6 @@ class HtmlView extends BaseHtmlView
             $this->setToolBarSubscriptions();
         } elseif ($layout == 'syncUsers') {
             $this->setToolBarSyncUsers();
-        } elseif ($layout == 'uninstall') {
-            $login              = KunenaLogin::getInstance();
-            $this->isTFAEnabled = $login->isTFAEnabled();
-
-            $this->setToolBarUninstall();
         }
 
         return parent::display($tpl);
@@ -365,21 +359,6 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::cancel();
         ToolbarHelper::spacer();
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/synchronize-users';
-        ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-    }
-
-    /**
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    protected function setToolBarUninstall(): void
-    {
-        ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
-        ToolbarHelper::spacer();
-        ToolbarHelper::cancel();
-        ToolbarHelper::spacer();
-        $helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/uninstall-kunena';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }
 }

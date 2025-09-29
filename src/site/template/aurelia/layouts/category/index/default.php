@@ -34,14 +34,6 @@ if ($this->config->enableForumJump) {
 
 $mmm             = 0;
 
-if ($this->templateParams->get('socialshare') == 1) {
-    echo "<div>" . $this->subLayout('Widget/Social')->set('me', $this->me)->set('ktemplate', $this->ktemplate) . "</div>";
-}
-
-if ($this->templateParams->get('socialshare') == 2) {
-    echo "<div>" . $this->subLayout('Widget/Socialcustomtag') . "</div>";
-}
-
 if ($this->templateParams->get('displayModule')) {
     echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
 }

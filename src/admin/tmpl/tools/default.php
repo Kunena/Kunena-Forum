@@ -205,28 +205,6 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                     </a>
                 </div>
 
-                <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=uninstall'); ?>">
-                        <div class="card proj-t-card comp-card">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS'); ?>
-                                        </h6>
-                                        <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_TOOLS_LABEL_UNINSTALL_PROCESS_DESC'); ?>
-                                        </h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-wrench bg-cyan"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
                 <?php if (KunenaForum::isDev()) :
                 ?>
                     <div class="col-xl-3 col-md-6">

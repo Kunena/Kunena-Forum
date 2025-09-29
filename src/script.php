@@ -542,21 +542,6 @@ return new class() implements ServiceProviderInterface {
                             }
                         }
                     }
-
-                    if (version_compare($installedVersion, '7.0.0', '<') && version_compare($installedVersion, '6.4.5', '>=')) {
-                        // Set and delete the following folders
-                        $deleteFiles   = [];
-                        // Administrator folders
-                        $deleteFiles[] = '/administrator/components/com_kunena/src/Controller/InstallController.php';
-                        $deleteFiles[] = '/administrator/components/com_kunena/tmpl/tools/uninstall.php';
-
-                        foreach ($deleteFiles as $file) {
-                            if (is_file(JPATH_ROOT . $file) && !File::delete(JPATH_ROOT . $file)) {
-                                echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $file) . '<br>';
-
-                            }
-                        }
-                    }
                 }
 
                 /**

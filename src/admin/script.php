@@ -66,6 +66,8 @@ class Com_KunenaInstallerScript extends InstallerScript
                 $this->deleteFolders[] = '/administrator/components/com_kunena/src/View/Config';
                 $this->deleteFiles[]   = '/administrator/components/com_kunena/src/Controller/ConfigController.php';
                 $this->deleteFiles[]   = '/administrator/components/com_kunena/src/Model/ConfigModel.php';
+                $this->deleteFiles[]   = '/administrator/components/com_kunena/src/Controller/InstallController.php';
+                $this->deleteFiles[]   = '/administrator/components/com_kunena/tmpl/tools/uninstall.php';
 
                 $this->removeFiles();
             }

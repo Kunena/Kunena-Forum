@@ -239,7 +239,7 @@ foreach ($this->sections as $section) :
 
                 <?php if (!empty($this->more[$section->id])) : ?>
                     <tr>
-                        <td>
+                        <td colspan="7">
                             <h4>
                                 <?php echo $this->getCategoryLink($section, Text::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
                                 <small>

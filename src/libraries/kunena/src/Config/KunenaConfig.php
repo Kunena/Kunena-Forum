@@ -35,7 +35,6 @@ use Joomla\Database\DatabaseInterface;
  * @property string $allowAvatarGallery                    Use Avatars Gallery
  * @property string $allowAvatarUpload                     Allow Avatar Upload
  * @property string $allowChangeSubject                    Let users edit the subject
- * @property string $allowEditPoll                         Allow Edit Poll
  * @property string $allowFavorites                        Allow Favorites
  * @property string $allowSubscriptions                    Allow Subscriptions
  * @property string $allowUserEditPoll                     Set if you want allow the user to edit the poll when someone has voted
@@ -76,7 +75,6 @@ use Joomla\Database\DatabaseInterface;
  * @property string $defaultAvatarSmall                    Default small avatar
  * @property string $defaultPage                           The Default Page
  * @property string $defaultSort                           Message Ordering
- * @property string $disableEmoticons                      Disable Emoticons
  * @property string $disableRe                             Disable Re: on subject
  * @property string $displayFilenameAttachment             Display attachment filename
  * @property string $ebayAffiliateId                       eBay Affiliate ID
@@ -94,7 +92,6 @@ use Joomla\Database\DatabaseInterface;
  * @property string $emailVisibleAddress                   Visible E-mail Recipient
  * @property string $enableForumJump                       Enable Category Jump
  * @property string $enableRss                             Enable RSS Feeds
- * @property string $enableThreadedLayouts                 Enable Threaded Layouts
  * @property string $fallbackEnglish                       Use English On Missing Strings
  * @property string $fileSize                              Maximum File Size (KB)
  * @property string $fileTypes                             Allowed File Types
@@ -128,7 +125,6 @@ use Joomla\Database\DatabaseInterface;
  * @property string $mailModerators                        E-mail Moderators
  * @property string $mainMenuId                            Mainmenu
  * @property string $maxLinks                              Max Links in message
- * @property string $maxPersonalText                       Max. Personal Text Length
  * @property string $maxSig                                Max. Signature Length
  * @property string $messagesPerPage                       Messages Per Page
  * @property string $messagesPerPageSearch                 Search Results

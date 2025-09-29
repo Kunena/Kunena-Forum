@@ -109,9 +109,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                 <?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
                             </label>
                             <input type="text" id="subject<?php echo \intval($message->id); ?>" name="subject" class="form-control" maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>" <?php
-                                                                                                                                                                            if (!$config->allowChangeSubject && !$me->isModerator()) :
-                                                                                                                                                                            ?>disabled<?php
-                                                                                                                                                                                    endif; ?> value="<?php echo $message->displayField('subject'); ?>" />
+                                                                                                                                                                                                                if (!$config->allowChangeSubject && !$me->isModerator()) :
+                                                                                                                                                                                                                ?>disabled<?php
+                                                                                                                                                                                                                endif; ?> value="<?php echo $message->displayField('subject'); ?>" />
                         </div>
 
                         <div class="form-group">
@@ -170,7 +170,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
                         </div>
                         <input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
-                        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disableEmoticons ?>" />
+                        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
                     </form>
                 </div>
             </div>
@@ -226,9 +226,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                     <?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
                                 </label>
                                 <input type="text" id="subject<?php echo \intval($message->id); ?>" name="subject" class="form-control" maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>" <?php
-                                                                                                                                                                                if (!$config->allowChangeSubject && !$me->isModerator()) :
-                                                                                                                                                                                ?>disabled<?php
-                                                                                                                                                                                        endif; ?> value="<?php echo $message->displayField('subject'); ?>" />
+                                                                                                                                                                                                                    if (!$config->allowChangeSubject && !$me->isModerator()) :
+                                                                                                                                                                                                                    ?>disabled<?php
+                                                                                                                                                                                                                    endif; ?> value="<?php echo $message->displayField('subject'); ?>" />
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12 control-label" style="padding:0;">
@@ -285,7 +285,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
                         </div>
                         <input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
-                        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disableEmoticons ?>" />
+                        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
                     </form>
                 </div>
             </div>

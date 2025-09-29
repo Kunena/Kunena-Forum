@@ -16,10 +16,11 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\WebAsset\WebAssetManager;
+use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
-use Joomla\String\StringHelper;
 
 HTMLHelper::_('bootstrap.framework');
 
@@ -28,7 +29,7 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('multiselect');
 
 $this->document->addScriptDeclaration(
-	' var max_count = ' . (int) $this->config->maxSig . '
+    ' var max_count = ' . (int) $this->config->maxSig . '
 jQuery(function($) {
 	jQuery(\'#user-signature\').keypress(function (e) {
 		var len = jQuery(this).val().length;
@@ -43,6 +44,8 @@ jQuery(function($) {
 });
 '
 );
+
+$template = KunenaTemplate::getInstance();
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -50,15 +53,15 @@ jQuery(function($) {
         <div id="j-main-container" class="col-md-12" role="main">
             <div class="card card-block bg-faded p-2">
                 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users'); ?>"
-                      method="post" id="adminForm"
-                      name="adminForm">
-                    <input type="hidden" name="task" value=""/>
-                    <input type="hidden" name="boxchecked" value="1"/>
-                    <input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>"/>
+                    method="post" id="adminForm"
+                    name="adminForm">
+                    <input type="hidden" name="task" value="" />
+                    <input type="hidden" name="boxchecked" value="1" />
+                    <input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
                     <?php echo HTMLHelper::_('form.token'); ?>
-                    
+
                     <h1 style="text-transform: capitalize;"><?php echo Text::_('COM_KUNENA_USER_TITLE_EDIT_USERNAME'); ?>
-                                    : <?php echo $this->user->username; ?></h1>
+                        : <?php echo $this->user->username; ?></h1>
 
                     <article class="data-block">
                         <div class="data-container">
@@ -67,50 +70,50 @@ jQuery(function($) {
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#tab1" type="button" role="tab"
-                                                    aria-controls="tab1"
-                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></button>
+                                                data-bs-target="#tab1" type="button" role="tab"
+                                                aria-controls="tab1"
+                                                aria-selected="true"><?php echo Text::_('COM_KUNENA_A_BASIC_SETTINGS'); ?></button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="tab2-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#tab2" type="button" role="tab"
-                                                    aria-controls="tab2"
-                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_USER_INFO'); ?></button>
+                                                data-bs-target="#tab2" type="button" role="tab"
+                                                aria-controls="tab2"
+                                                aria-selected="true"><?php echo Text::_('COM_KUNENA_USER_INFO'); ?></button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="tab3-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#tab3" type="button" role="tab"
-                                                    aria-controls="tab3"
-                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_MOD_NEW'); ?></button>
+                                                data-bs-target="#tab3" type="button" role="tab"
+                                                aria-controls="tab3"
+                                                aria-selected="true"><?php echo Text::_('COM_KUNENA_MOD_NEW'); ?></button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="tab4-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#tab4" type="button" role="tab"
-                                                    aria-controls="tab4"
-                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></button>
+                                                data-bs-target="#tab4" type="button" role="tab"
+                                                aria-controls="tab4"
+                                                aria-selected="true"><?php echo Text::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'); ?></button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="tab5-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#tab5" type="button" role="tab"
-                                                    aria-controls="tab5"
-                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></button>
+                                                data-bs-target="#tab5" type="button" role="tab"
+                                                aria-controls="tab5"
+                                                aria-selected="true"><?php echo Text::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'); ?></button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="tab6-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#tab6" type="button" role="tab"
-                                                    aria-controls="tab6"
-                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_TRASH_IP'); ?></button>
+                                                data-bs-target="#tab6" type="button" role="tab"
+                                                aria-controls="tab6"
+                                                aria-selected="true"><?php echo Text::_('COM_KUNENA_TRASH_IP'); ?></button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="tab7-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#tab7" type="button" role="tab"
-                                                    aria-controls="tab7"
-                                                    aria-selected="true"><?php echo Text::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></button>
+                                                data-bs-target="#tab7" type="button" role="tab"
+                                                aria-controls="tab7"
+                                                aria-selected="true"><?php echo Text::_('COM_KUNENA_USER_LABEL_FORUM_SETTINGS'); ?></button>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="tab1" role="tabpanel"
-                                             aria-labelledby="tab1-tab">
+                                            aria-labelledby="tab1-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_UAVATAR'); ?></legend>
                                                 <div class="kwho-<?php echo $this->user->getType(0, true); ?>">
@@ -120,7 +123,7 @@ jQuery(function($) {
                                                 if ($this->editavatar) : ?>
                                                     <div>
                                                         <label><input type="checkbox" value="1"
-                                                                      name="deleteAvatar"/> <?php echo Text::_('COM_KUNENA_DELAV'); ?>
+                                                                name="deleteAvatar" /> <?php echo Text::_('COM_KUNENA_DELAV'); ?>
                                                         </label>
                                                     </div>
                                                 <?php endif; ?>
@@ -128,143 +131,142 @@ jQuery(function($) {
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
                                                 <div>
-                                                        <textarea id="user-signature" class="inputbox form-control"
-                                                                  name="signature"
-                                                                  cols="4" rows="6"
-                                                        ><?php echo $this->escape($this->user->signature); ?></textarea>
+                                                    <textarea id="user-signature" class="inputbox form-control"
+                                                        name="signature"
+                                                        cols="4" rows="6"><?php echo $this->escape($this->user->signature); ?></textarea>
                                                 </div>
                                                 <div>
                                                     <label><input type="checkbox" value="1"
-                                                                  name="deleteSig"/> <?php echo Text::_('COM_KUNENA_DELSIG'); ?>
+                                                            name="deleteSig" /> <?php echo Text::_('COM_KUNENA_DELSIG'); ?>
                                                     </label>
                                                 </div>
                                                 <div>
                                                     <?php
-                                                    if (!empty($this->user->signature)){
+                                                    if (!empty($this->user->signature)) {
                                                         $valueSignature = (intval($this->config->maxSig) - StringHelper::strlen($this->user->signature));
                                                     } else {
                                                         $valueSignature = '';
                                                     }
                                                     echo Text::sprintf(
-                                                    	'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
-                                                    	intval($this->config->maxSig),
-                                                    	'<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . $valueSignature . '" />'
+                                                        'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
+                                                        intval($this->config->maxSig),
+                                                        '<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . $valueSignature . '" />'
                                                     ); ?>
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="tab-pane fade show" id="tab2" role="tabpanel"
-                                             aria-labelledby="tab2-tab">
+                                            aria-labelledby="tab2-tab">
                                             <fieldset>
                                                 <table class="table table-bordered table-striped table-hover">
                                                     <tbody>
-                                                    <tr>
-                                                        <td class="col-md-3">
-                                                            <label for="personalText">
-                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <input id="personalText" type="text"
-                                                                   class="inputbox form-control"
-                                                                   maxlength="<?php echo (int) $this->config->maxPersonalText; ?>"
-                                                                   name="personalText"
-                                                                   value="<?php echo $this->escape($this->user->personalText); ?>"/>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <label for="birthdate">
-                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <div id="birthdate">
-                                                                <div class="input-append date">
-                                                                    <input type="text" name="birthdate"
-                                                                    	   class="inputbox form-control"	
-                                                                           data-date-format="<?php $this->config->datePickerFormat; ?>"
-                                                                           value="<?php echo $this->user->birthdate == '1000-01-01' || empty($this->user->birthdate)  ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
+                                                        <tr>
+                                                            <td class="col-md-3">
+                                                                <label for="personalText">
+                                                                    <?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <input id="personalText" type="text"
+                                                                    class="inputbox form-control"
+                                                                    maxlength="<?php echo (int) $template->params->get('maxPersonalText', '50'); ?>"
+                                                                    name="personalText"
+                                                                    value="<?php echo $this->escape($this->user->personalText); ?>" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label for="birthdate">
+                                                                    <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <div id="birthdate">
+                                                                    <div class="input-append date">
+                                                                        <input type="text" name="birthdate"
+                                                                            class="inputbox form-control"
+                                                                            data-date-format="<?php $this->config->datePickerFormat; ?>"
+                                                                            value="<?php echo $this->user->birthdate == '1000-01-01' || empty($this->user->birthdate)  ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <label for="location">
-                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <input id="location" type="text" name="location"
-                                                                   class="inputbox form-control"
-                                                                   value="<?php echo $this->escape($this->user->location); ?>"/>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <label for="gender">
-                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_GENDER'); ?>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <?php
-                                                            // Make the select list for the view type
-                                                            $gender[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-                                                            $gender[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-                                                            $gender[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
-                                                            // Build the html select list
-                                                            echo HTMLHelper::_(
-                                                            	'select.genericlist',
-                                                            	$gender,
-                                                            	'gender',
-                                                            	'class="inputbox form-control" size="1"',
-                                                            	'value',
-                                                            	'text',
-                                                            	$this->escape($this->user->gender),
-                                                            	'gender'
-                                                            );
-                                                            ?>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <label for="social-site">
-                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <span class="hasTooltip"
-                                                                  title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
-                                                                      . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
-                                                                <input id="social-site" type="text" name="websitename"
-                                                                       class="inputbox form-control"
-                                                                       value="<?php echo $this->escape($this->user->websitename); ?>"/>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <label for="social-url">
-                                                                <?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <span class="hasTooltip"
-                                                                  title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
-                                                                <input id="social-url" type="text" name="websiteurl"
-                                                                       class="inputbox form-control"
-                                                                       value="<?php echo $this->escape($this->user->websiteurl); ?>"/>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label for="location">
+                                                                    <?php echo Text::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <input id="location" type="text" name="location"
+                                                                    class="inputbox form-control"
+                                                                    value="<?php echo $this->escape($this->user->location); ?>" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label for="gender">
+                                                                    <?php echo Text::_('COM_KUNENA_MYPROFILE_GENDER'); ?>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <?php
+                                                                // Make the select list for the view type
+                                                                $gender[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+                                                                $gender[] = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+                                                                $gender[] = HTMLHelper::_('select.option', 2, Text::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+                                                                // Build the html select list
+                                                                echo HTMLHelper::_(
+                                                                    'select.genericlist',
+                                                                    $gender,
+                                                                    'gender',
+                                                                    'class="inputbox form-control" size="1"',
+                                                                    'value',
+                                                                    'text',
+                                                                    $this->escape($this->user->gender),
+                                                                    'gender'
+                                                                );
+                                                                ?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label for="social-site">
+                                                                    <?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <span class="hasTooltip"
+                                                                    title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
+                                                                                . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
+                                                                    <input id="social-site" type="text" name="websitename"
+                                                                        class="inputbox form-control"
+                                                                        value="<?php echo $this->escape($this->user->websitename); ?>" />
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label for="social-url">
+                                                                    <?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <span class="hasTooltip"
+                                                                    title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
+                                                                    <input id="social-url" type="text" name="websiteurl"
+                                                                        class="inputbox form-control"
+                                                                        value="<?php echo $this->escape($this->user->websiteurl); ?>" />
+                                                                </span>
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </fieldset>
                                         </div>
 
                                         <div class="tab-pane fade show" id="tab3" role="tabpanel"
-                                             aria-labelledby="tab3-tab">
+                                            aria-labelledby="tab3-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_MODCHANGE'); ?></legend>
                                                 <table class="table table-striped">
@@ -281,25 +283,25 @@ jQuery(function($) {
                                         </div>
 
                                         <div class="tab-pane fade show" id="tab4" role="tabpanel"
-                                             aria-labelledby="tab4-tab">
+                                            aria-labelledby="tab4-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
                                                 <table class="table table-striped">
                                                     <thead>
-                                                    <tr>
-                                                        <?php /*
+                                                        <tr>
+                                                            <?php /*
                                                             <th width="1%" class="d-none d-md-table-cell">
                                                                 <input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
                                                             </th>
                                                             */ ?>
-                                                        <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
-                                                        <th width="1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
-                                                    </tr>
+                                                            <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
+                                                            <th width="1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
+                                                        </tr>
                                                     </thead>
                                                     <?php
                                                     if (!empty($this->subsCatsList)) :
                                                         foreach ($this->subsCatsList as $cat) :
-                                                            ?>
+                                                    ?>
                                                             <tr>
                                                                 <td><?php echo $this->escape($cat->name); ?>
                                                                     <small><?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($cat->alias)); ?></small>
@@ -318,26 +320,26 @@ jQuery(function($) {
                                         </div>
 
                                         <div class="tab-pane fade show" id="tab5" role="tabpanel"
-                                             aria-labelledby="tab5-tab">
+                                            aria-labelledby="tab5-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
                                                 <table class="table table-striped">
                                                     <thead>
-                                                    <tr>
-                                                        <?php /*
+                                                        <tr>
+                                                            <?php /*
                                                             <th width="1%" class="d-none d-md-table-cell">
                                                                 <input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
                                                             </th>
                                                             */ ?>
-                                                        <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
-                                                        <th width="1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
-                                                    </tr>
+                                                            <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
+                                                            <th width="1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
+                                                        </tr>
                                                     </thead>
 
                                                     <?php
                                                     if ($this->sub) :
                                                         foreach ($this->sub as $topic) :
-                                                            ?>
+                                                    ?>
                                                             <tr>
                                                                 <td><?php echo $this->escape($topic->subject); ?></td>
                                                                 <td><?php echo $this->escape($topic->id); ?></td>
@@ -354,7 +356,7 @@ jQuery(function($) {
                                         </div>
 
                                         <div class="tab-pane fade show" id="tab6" role="tabpanel"
-                                             aria-labelledby="tab6-tab">
+                                            aria-labelledby="tab6-tab">
                                             <fieldset>
                                                 <legend><?php echo Text::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
                                                 <table class="table table-striped">
@@ -375,7 +377,7 @@ jQuery(function($) {
                                                         }
 
                                                         $userlist = implode(', ', $userlist);
-                                                        ?>
+                                                    ?>
                                                         <tr>
                                                             <td width="30"><?php echo ++$i; ?></td>
                                                             <td width="60">
@@ -392,7 +394,7 @@ jQuery(function($) {
                                         </div>
 
                                         <div class="tab-pane fade show" id="tab7" role="tabpanel"
-                                             aria-labelledby="tab7-tab">
+                                            aria-labelledby="tab7-tab">
                                             <fieldset>
                                                 <table class="table table-striped">
                                                     <tr>

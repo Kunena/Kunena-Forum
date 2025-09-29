@@ -162,204 +162,204 @@ class KunenaTopic extends KunenaDatabaseObject
      * @since   Kunena 6.0
      */
     public $category_id = 0;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $subject;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $icon_id;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $label_id;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $locked;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $ordering;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $hits;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $attachments;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $poll_id;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $moved_id;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $first_post_id;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $first_post_time;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $first_post_userid;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $first_post_message;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $first_post_guest_name;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $last_post_id;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $last_post_time;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $last_post_userid;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $last_post_message;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $last_post_guest_name;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $rating;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $params;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $typeAlias;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $categoryId;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $myposts;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $my_last_post_id;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $favorite;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $title;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $titleName;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $titleCount;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $count;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $link;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $percent;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
-    public $avatar;    
+    public $avatar;
 
     /**
      * @var     string
@@ -665,9 +665,7 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @since   Kunena 6.0
      */
-    public function getKeywords($user = null, $glue = false): void
-    {
-    }
+    public function getKeywords($user = null, $glue = false): void {}
 
     /**
      * @param   int  $value  value
@@ -1397,11 +1395,11 @@ class KunenaTopic extends KunenaDatabaseObject
     public function getUrl($category = null, $xhtml = true, $action = null, $itemid = 0)
     {
         return KunenaRoute::getTopicUrl(
-        	$this,
-        	$xhtml,
-        	$action,
-        	$category ? KunenaCategoryHelper::get($category) : $this->getCategory(),
-        	$itemid
+            $this,
+            $xhtml,
+            $action,
+            $category ? KunenaCategoryHelper::get($category) : $this->getCategory(),
+            $itemid
         );
     }
 
@@ -1742,7 +1740,7 @@ class KunenaTopic extends KunenaDatabaseObject
             if ($subjectall) {
                 $subject = $target->subject;
             }
-        } elseif($target instanceof KunenaCategory) {
+        } elseif ($target instanceof KunenaCategory) {
             // Move messages into category
 
             if ($target->isSection()) {
@@ -1926,18 +1924,18 @@ class KunenaTopic extends KunenaDatabaseObject
 
             // Update first and last post information into the target topic
             $target->updatePostInfo(
-            	$this->first_post_id,
-            	$this->first_post_time,
-            	$this->first_post_userid,
-            	$this->first_post_message,
-            	$this->first_post_guest_name
+                $this->first_post_id,
+                $this->first_post_time,
+                $this->first_post_userid,
+                $this->first_post_message,
+                $this->first_post_guest_name
             );
             $target->updatePostInfo(
-            	$this->last_post_id,
-            	$this->last_post_time,
-            	$this->last_post_userid,
-            	$this->last_post_message,
-            	$this->last_post_guest_name
+                $this->last_post_id,
+                $this->last_post_time,
+                $this->last_post_userid,
+                $this->last_post_message,
+                $this->last_post_guest_name
             );
 
             // Save target topic
@@ -2283,7 +2281,7 @@ class KunenaTopic extends KunenaDatabaseObject
         $poll   = $this->getPoll();
         $config = KunenaFactory::getConfig();
 
-        if ($poll->exists() && $poll->getUserCount() && !$config->allowEditPoll) {
+        if ($poll->exists() && $poll->getUserCount() && !$config->allowUserEditPoll) {
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL'), 403);
         }
 

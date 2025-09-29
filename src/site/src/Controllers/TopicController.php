@@ -1504,7 +1504,7 @@ class TopicController extends KunenaController
                     $topic->save();
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
                 } else {
-                    if ($this->config->allowEditPoll || (!$this->config->allowEditPoll && !$poll->getUserCount())) {
+                    if ($this->config->allowUserEditPoll || (!$this->config->allowUserEditPoll && !$poll->getUserCount())) {
                         // Edit existing poll
                         try {
                             $topic->isAuthorised('poll.edit');

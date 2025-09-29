@@ -2103,6 +2103,12 @@
             name="menu_settings"
             label="COM_KUNENA_ADMIN_MENU_SETTINGS_DESC">
             <field
+                name="defaultPage"
+                type="text"
+                default="recent"
+                label="The Default Page"
+                hidden="true" />
+            <field
                 name="activeMenuItem"
                 type="text"
                 default=""
@@ -2180,30 +2186,5 @@
             type="text"
             default="aurelia"
             label="Template" />
-        <field
-            name="disableEmoticons"
-            type="text"
-            default="0"
-            label="Disable Emoticons" />
-        <field
-            name="enableThreadedLayouts"
-            type="text"
-            default="0"
-            label="Enable Threaded Layouts" />
-        <field
-            name="allowEditPoll"
-            type="text"
-            default="1"
-            label="Allow Edit Poll" />
-        <field
-            name="maxPersonalText"
-            type="text"
-            default="50"
-            label="Max. Personal Text Length" />
-        <field
-            name="defaultPage"
-            type="text"
-            default="recent"
-            label="The Default Page" />
     </fieldset>
 </config>

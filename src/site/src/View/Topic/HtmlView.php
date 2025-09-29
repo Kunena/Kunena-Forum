@@ -767,7 +767,7 @@ class HtmlView extends KunenaView
             }
         }
 
-        if ($this->config->enableThreadedLayouts) {
+        if ($this->ktemplate->params->get('enableThreadedLayouts', '0')) {
             $url = "index.php?option=com_kunena&view=user&task=change&topicLayout=%s&" . Session::getFormToken() . '=1';
 
             if ($this->layout != 'default') {

@@ -23,6 +23,8 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Filesystem\File;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Install\KunenaModelInstall;
+use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -174,6 +176,15 @@ return new class() implements ServiceProviderInterface {
                 public function preflight(string $type, InstallerAdapter $parent): bool
                 {
                     if ($type === 'uninstall') {
+                        $items = KunenaMenuFix::getAll();
+
+                        foreach ($items as $item) {
+                            KunenaMenuFix::delete($item->id);
+                        }
+
+                        $installer = new KunenaModelInstall();
+                        $installer->deleteMenu();
+
                         return true;
                     }
 

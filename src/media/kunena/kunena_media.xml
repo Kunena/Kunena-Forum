@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension type="file" version="2.5" method="upgrade">
+<extension
+    type="file"
+    method="upgrade">
     <name>Kunena Media Files</name>
     <version>@kunenaversion@</version>
     <versionname>@kunenaversionname@</versionname>
@@ -13,17 +15,8 @@
     <description>Kunena media files.</description>
     <changelogurl>@kunenachangelog@</changelogurl>
     <fileset>
-        <files target="media/kunena">
-            <folder>attachments</folder>
-            <folder>avatars</folder>
-            <folder>category_images</folder>
-            <folder>core</folder>
-            <folder>email</folder>
-            <folder>emoticons</folder>
-            <folder>images</folder>
-            <folder>labels</folder>
-            <folder>ranks</folder>
-            <folder>topic_icons</folder>
+        <files target="media">
+            <folder>kunena</folder>
         </files>
     </fileset>
 </extension>

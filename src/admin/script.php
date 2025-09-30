@@ -96,52 +96,56 @@ class Com_KunenaInstallerScript extends InstallerScript
 
                 // Only convert when there are not component settings ( = first upgrade to 7.0.0)
                 if (empty($comParams)) {
-                    // Get the configuration settings
-                    /** @var DatabaseDriver  $db */
-                    $db    = Factory::getContainer()->get('DatabaseDriver');
-
-                    $query = $db->createQuery()
-                        ->select($db->quoteName('params'))
-                        ->from($db->quoteName('#__kunena_configuration'))
-                        ->where($db->quoteName('id') . ' = 1');
-                    $db->setQuery($query);
-
-                    $config = $db->loadResult() ?? '{}';
-
-                    // Convert Config parameters that are now arrays to avoid loosing the setting value on import
-                    $processConfig    = json_decode($config, true);
-                    $arrayConversions = ['latestCategory', 'rssExcludedCategories', 'rssIncludedCategories'];
-
-                    foreach ($processConfig as $param => $value) {
-                        if (in_array($param, $arrayConversions) && is_string($value)) {
-                            $processConfig[$param] = explode(',', $value);
-                        }
-                    }
-
-                    $componentId = $this->getComponentId();
-
-                    if ($componentId) {
-                        $paramsString = json_encode($processConfig);
+                    try {
+                        // Get the configuration settings
+                        /** @var DatabaseDriver  $db */
+                        $db    = Factory::getContainer()->get('DatabaseDriver');
 
                         $query = $db->createQuery()
-                            ->update($db->quoteName('#__extensions'))
-                            ->set('params = :params')
-                            ->where('extension_id = :id')
-                            ->bind(':params', $paramsString)
-                            ->bind(':id', $componentId, ParameterType::INTEGER);
+                            ->select($db->quoteName('params'))
+                            ->from($db->quoteName('#__kunena_configuration'))
+                            ->where($db->quoteName('id') . ' = 1');
+                        $db->setQuery($query);
 
-                        // Update table
-                        $converted = $db->setQuery($query)->execute();
-                    } else {
-                        $converted = false;
-                    }
+                        $config = $db->loadResult() ?? '{}';
 
-                    if ($converted) {
-                        // We have  been able to convert the configuration to component parameters
-                        Factory::getApplication()->enqueueMessage('Kunena Configuration settings were automatically converted to the new Configuration settings, please validate after installation completes.');
-                    } else {
-                        // We have not been able to convert the configuration to component parameters
-                        Factory::getApplication()->enqueueMessage('We are sorry to inform you that we were not able to convert you Kunena configuration settings to the new version. You need to do this manually after installation completes.', 'error');
+                        // Convert Config parameters that are now arrays to avoid loosing the setting value on import
+                        $processConfig    = json_decode($config, true);
+                        $arrayConversions = ['latestCategory', 'rssExcludedCategories', 'rssIncludedCategories'];
+
+                        foreach ($processConfig as $param => $value) {
+                            if (in_array($param, $arrayConversions) && is_string($value)) {
+                                $processConfig[$param] = explode(',', $value);
+                            }
+                        }
+
+                        $componentId = $this->getComponentId();
+
+                        if ($componentId) {
+                            $paramsString = json_encode($processConfig);
+
+                            $query = $db->createQuery()
+                                ->update($db->quoteName('#__extensions'))
+                                ->set('params = :params')
+                                ->where('extension_id = :id')
+                                ->bind(':params', $paramsString)
+                                ->bind(':id', $componentId, ParameterType::INTEGER);
+
+                            // Update table
+                            $converted = $db->setQuery($query)->execute();
+                        } else {
+                            $converted = false;
+                        }
+
+                        if ($converted) {
+                            // We have  been able to convert the configuration to component parameters
+                            Factory::getApplication()->enqueueMessage('Kunena Configuration settings were automatically converted to the new Configuration settings, please validate after installation completes.');
+                        } else {
+                            // We have not been able to convert the configuration to component parameters
+                            Factory::getApplication()->enqueueMessage('We are sorry to inform you that we were not able to convert you Kunena configuration settings to the new version. You need to do this manually after installation completes.', 'error');
+                        }
+                    } catch (\Exception $e) {
+                        // Do nothing
                     }
                 }
             }

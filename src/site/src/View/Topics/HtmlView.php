@@ -344,13 +344,15 @@ class HtmlView extends KunenaView
 
         PluginHelper::importPlugin('kunena');
 
-        $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
-            'context' => 'kunena.topics',
-            'subject' => $this->topics,
-            'params'  => $params,
-            'page'    => 0
-        ]);
-        $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        foreach ($this->topics as &$topic) {
+            $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
+                'context' => 'kunena.topics',
+                'subject' => $topic,
+                'params'  => $params,
+                'page'    => 0
+            ]);
+            $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
+        }
 
         foreach ($this->topics as $this->topic) {
             $this->position++;

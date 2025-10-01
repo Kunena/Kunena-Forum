@@ -127,11 +127,12 @@ class HtmlView extends KunenaView
     public function displayDefault($tpl = null)
     {
         $this->layout           = 'default';
+        $model                  = $this->getModel();
         $this->params           = $this->state->get('params');
-        $this->topics           = $this->get('Topics');
-        $this->total            = $this->get('Total');
-        $this->topicActions     = $this->get('TopicActions');
-        $this->actionMove       = $this->get('ActionMove');
+        $this->topics           = $model->getTopics();
+        $this->total            = $model->getTotal();
+        $this->topicActions     = $model->getTopicActions();
+        $this->actionMove       = $model->getActionMove();
         $this->message_ordering = $this->me->getMessageOrdering();
 
         $this->URL = KunenaRoute::_();
@@ -170,11 +171,12 @@ class HtmlView extends KunenaView
     public function displayUser($tpl = null)
     {
         $this->layout           = 'user';
+        $model                  = $this->getModel();
         $this->params           = $this->state->get('params');
-        $this->topics           = $this->get('Topics');
-        $this->total            = $this->get('Total');
-        $this->topicActions     = $this->get('TopicActions');
-        $this->actionMove       = $this->get('ActionMove');
+        $this->topics           = $model->getTopics();
+        $this->total            = $model->getTotal();
+        $this->topicActions     = $model->getTopicActions();
+        $this->actionMove       = $model->getActionMove();
         $this->message_ordering = $this->me->getMessageOrdering();
 
         $this->URL = KunenaRoute::_();
@@ -206,10 +208,11 @@ class HtmlView extends KunenaView
     public function displayPosts($tpl = null)
     {
         $this->layout           = 'posts';
+        $model                  = $this->getModel();
         $this->params           = $this->state->get('params');
-        $this->messages         = $this->get('Messages');
-        $this->topics           = $this->get('Topics');
-        $this->total            = $this->get('Total');
+        $this->messages         = $model->getMessages();
+        $this->topics           = $model->getTopics();
+        $this->total            = $model->getTotal();
         $this->actionMove       = false;
         $this->message_ordering = $this->me->getMessageOrdering();
 
@@ -340,7 +343,7 @@ class HtmlView extends KunenaView
         $params->set('kunena_layout', 'topics');
 
         PluginHelper::importPlugin('kunena');
-
+        var_dump($this->topics); die();
         $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
             'context' => 'kunena.topics',
             'subject' => $this->topics,

@@ -192,8 +192,9 @@ class HtmlView extends KunenaView
     public function displayUnread($tpl = null)
     {
         // Redirect unread layout to the page that contains the first unread message
-        $category = $this->get('Category');
-        $topic    = $this->get('Topic');
+        $model    = $this->getModel();
+        $category = $model->getCategory();
+        $topic    = $model->getTopic();
         KunenaTopicHelper::fetchNewStatus([$topic->id => $topic]);
 
         $message = KunenaMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
@@ -241,9 +242,10 @@ class HtmlView extends KunenaView
 
         $this->setLayout($this->layout);
 
-        $this->category = $this->get('Category');
-        $this->topic    = $this->get('Topic');
-        $this->message  = $this->get('Messages');
+        $model          = $this->getModel();
+        $this->category = $model->getCategory();
+        $this->topic    = $model->getTopic();
+        $this->message  = $model->getMessages();
         $channels       = $this->category->getChannels();
 
         $options            = [];
@@ -297,8 +299,8 @@ class HtmlView extends KunenaView
             return;
         }
 
-        $this->messages = $this->get('Messages');
-        $this->total    = $this->get('Total');
+        $this->messages = $model->getMessages();
+        $this->total    = model->getTotal();
 
         // If page does not exist, redirect to the last page (no redirect in embedded mode).
         if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start')) {
@@ -333,7 +335,7 @@ class HtmlView extends KunenaView
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }
 
-        $this->moderators = $this->get('Moderators');
+        $this->moderators = $model->getModerators();
         $this->usertopic  = $this->topic->getUserTopic();
 
         $this->pagination = $this->getPagination(5);

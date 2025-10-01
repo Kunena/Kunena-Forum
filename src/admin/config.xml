@@ -355,7 +355,7 @@
             <field
                 name="latestCategory"
                 type="categoryList"
-                default=""
+                default="0"
                 action="read"
                 sections="0"
                 multiple="true"
@@ -1679,7 +1679,7 @@
             <field
                 name="rssIncludedCategories"
                 type="categoryList"
-                default=""
+                default="0"
                 action="read"
                 sections="0"
                 multiple="true"
@@ -1689,7 +1689,7 @@
             <field
                 name="rssExcludedCategories"
                 type="categoryList"
-                default=""
+                default="0"
                 action="read"
                 sections="0"
                 multiple="true"

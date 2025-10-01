@@ -315,9 +315,16 @@ class KunenaConfig
         // Check if the key exists in the protected array
         if (\array_key_exists($key, $this->config)) {
 
-            // Ensure minum value
+            // Ensure array when nothing using default value
+            if (\in_array($key, ['latestCategory', 'rssExcludedCategories', 'rssIncludedCategories'])) {
+                if (!\is_array($this->config[$key])) {
+                    $this->config[$key] = [$this->config[$key]];
+                }
+            }
+
+            // Ensure minimum value
             if (\in_array($key, ['messagesPerPage', 'messagesPerPageSearch', 'threadsPerPage'])) {
-                $this->config[$key]       = max($this->config[$key], 1);
+                $this->config[$key] = max($this->config[$key], 1);
             }
 
             if ($key === 'email') {

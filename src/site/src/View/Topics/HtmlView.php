@@ -343,7 +343,7 @@ class HtmlView extends KunenaView
         $params->set('kunena_layout', 'topics');
 
         PluginHelper::importPlugin('kunena');
-        var_dump($this->topics); die();
+
         $prepareEvent = new KunenaPrepareEvent('onKunenaPrepare', [
             'context' => 'kunena.topics',
             'subject' => $this->topics,

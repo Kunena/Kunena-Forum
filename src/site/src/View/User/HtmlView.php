@@ -133,12 +133,13 @@ class HtmlView extends KunenaView
     public function displayDefault($tpl = null)
     {
         $this->layout           = 'default';
+        $model                  = $this->getModel();
         $this->params           = $this->state->get('params');
-        $this->Itemid           = $this->get('Itemid');
-        $this->topics           = $this->get('Topics');
-        $this->total            = $this->get('Total');
-        $this->topicActions     = $this->get('TopicActions');
-        $this->actionMove       = $this->get('ActionMove');
+        $this->Itemid           = $model->getItemid();
+        $this->topics           = $model->getTopics();
+        $this->total            = $model->getTotal();
+        $this->topicActions     = $model->getTopicActions();
+        $this->actionMove       = $model->getActionMove();
         $this->message_ordering = $this->me->getMessageOrdering();
 
         $this->URL = KunenaRoute::_();

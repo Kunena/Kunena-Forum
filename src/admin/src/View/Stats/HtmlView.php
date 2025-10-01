@@ -16,6 +16,7 @@ namespace Kunena\Forum\Administrator\View\Stats;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
@@ -76,5 +77,11 @@ class HtmlView extends BaseHtmlView
 
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_STAT_FORUMSTATS'), 'stats');
+
+        $canDo = ContentHelper::getActions('com_kunena');
+
+        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+            ToolBarHelper::preferences('com_kunena');
+        }
     }
 }

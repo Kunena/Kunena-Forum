@@ -17,6 +17,7 @@ namespace Kunena\Forum\Administrator\View\Logs;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -156,6 +157,12 @@ class HtmlView extends BaseHtmlView
         //     ->url('#joomla-dialog-clean')
         //     ->modalWidth('800px')
         //     ->modalHeight('fit-content');
+
+        $canDo = ContentHelper::getActions('com_kunena');
+
+        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+            ToolBarHelper::preferences('com_kunena');
+        }
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);

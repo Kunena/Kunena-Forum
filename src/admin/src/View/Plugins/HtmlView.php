@@ -144,6 +144,12 @@ class HtmlView extends BaseHtmlView
             $toolbar->checkin('plugins.checkin');
         }
 
+        $canDo = ContentHelper::getActions('com_kunena');
+
+        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+            ToolBarHelper::preferences('com_kunena');
+        }
+
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/plugins';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }

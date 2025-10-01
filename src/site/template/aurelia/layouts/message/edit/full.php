@@ -160,6 +160,6 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
             <input type="reset" name="reset" class="btn btn-outline-primary border" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
         </div>
         <input type="hidden" id="kurl_emojis" name="kurl_emojis" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=listemoji&format=raw') ?>" />
-        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $config->disableEmoticons ?>" />
+        <input type="hidden" id="kemojis_allowed" name="kemojis_allowed" value="<?php echo $template->params->get('disableEmoticons', '0'); ?>" />
     </form>
 </div>

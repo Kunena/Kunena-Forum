@@ -111,127 +111,127 @@ class KunenaMessage extends KunenaDatabaseObject
     public $thankyou = [];
 
     public $replynum;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $typeAlias;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $parent;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $thread;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $catid;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $name;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $userid;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $email;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $subject;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $time;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $ip;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $topic_emoticon;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $locked;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $hold;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $ordering;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $hits;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $moved;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $modified_by;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $modified_time;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $modified_reason;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $params;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
@@ -616,20 +616,20 @@ class KunenaMessage extends KunenaDatabaseObject
 
         // Get all subscribers, moderators and admins who should get the email.
         $emailToList = KunenaAccess::getInstance()->getSubscribers(
-        	$this->catid,
-        	$this->thread,
-        	$mailsubs,
-        	$mailmods,
-        	$mailadmins,
-        	KunenaUserHelper::getMyself()->userid
+            $this->catid,
+            $this->thread,
+            $mailsubs,
+            $mailmods,
+            $mailadmins,
+            KunenaUserHelper::getMyself()->userid
         );
 
         if ($emailToList) {
-            if (!$config->getEmail()) {
+            if (!$config->email) {
                 KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
 
                 return false;
-            } elseif (!MailHelper::isEmailAddress($config->getEmail())) {
+            } elseif (!MailHelper::isEmailAddress($config->email)) {
                 KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
 
                 return false;
@@ -649,7 +649,7 @@ class KunenaMessage extends KunenaDatabaseObject
                 if (
                     $config->emailVisibleAddress != $emailTo->email ||
                     (
-                    	\count($emailToList) == 1 &&
+                        \count($emailToList) == 1 &&
                         ($emailTo->moderator || $emailTo->subscription)
                     )
                 ) {
@@ -665,7 +665,7 @@ class KunenaMessage extends KunenaDatabaseObject
             // Create email.
             $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
             $mail->setSubject($mailsubject);
-            $mail->setSender([$config->getEmail(), $mailnamesender]);
+            $mail->setSender([$config->email, $mailnamesender]);
 
             // Send email to all subscribers.
             if (!empty($receivers[1])) {
@@ -1104,7 +1104,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
         try {
             $topic->update($this, $postDelta);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 
@@ -1451,7 +1451,7 @@ class KunenaMessage extends KunenaDatabaseObject
         $attachs->totalNonProtected    = 0;
         $attachs->readable = 0;
         $attachs->totalProtected = 0;
-        $attachs->totalPrivate = 0; 
+        $attachs->totalPrivate = 0;
 
         foreach ($attachments as $attach) {
             if ($attach->inline) {
@@ -1477,7 +1477,7 @@ class KunenaMessage extends KunenaDatabaseObject
             if ($attach->protected != 32) {
                 $attachs->totalProtected = $attachs->totalProtected + 1;
             }
-            
+
             if ($attach->protected == 32) {
                 $attachs->totalPrivate = $attachs->totalPrivate + 1;
             }
@@ -1649,13 +1649,13 @@ class KunenaMessage extends KunenaDatabaseObject
         } else {
             $title2 = substr($string, $start, $length);
             $title  = preg_replace(
-            	'/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
+                '/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
                     '|[\x00-\x7F][\x80-\xBF]+' .
                     '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
                     '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
                     '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
-            	'',
-            	$title2
+                '',
+                $title2
             );
         }
 

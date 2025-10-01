@@ -16,6 +16,7 @@
     <description>COM_KUNENA_XML_DESCRIPTION</description>
     <namespace path="src">Kunena\Forum</namespace>
     <changelogurl>@kunenachangelog@</changelogurl>
+    <scriptfile>script.php</scriptfile>
     <install>
         <sql>
             <file
@@ -50,7 +51,7 @@
             <menu view="smilies">COM_KUNENA_EMOTICON_MANAGER</menu>
             <menu view="ranks">COM_KUNENA_RANK_MANAGER</menu>
             <menu view="templates">COM_KUNENA_TEMPLATE_MANAGER</menu>
-            <menu view="config">COM_KUNENA_CONFIGURATION</menu>
+            <menu link="option=com_config&amp;view=component&amp;component=com_kunena">COM_KUNENA_CONFIGURATION</menu>
             <menu view="stats">COM_KUNENA_MENU_STATISTICS</menu>
             <menu view="plugins">COM_KUNENA_PLUGIN_MANAGER</menu>
             <menu view="logs">COM_KUNENA_LOG_MANAGER</menu>

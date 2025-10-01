@@ -117,16 +117,6 @@ CREATE TABLE IF NOT EXISTS `#__kunena_karma`
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `#__kunena_configuration`
-(
-    `id`     int(11) NOT NULL default '0',
-    `params` text    NULL,
-    PRIMARY KEY (id)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARSET = utf8mb4
-    DEFAULT COLLATE = utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS `#__kunena_topics`
 (
     `id`                    int(11)    NOT NULL auto_increment,

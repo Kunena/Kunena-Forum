@@ -14,1857 +14,622 @@ namespace Kunena\Forum\Libraries\Config;
 
 \defined('_JEXEC') or die();
 
-use Exception;
+use Joomla\CMS\Cache\CacheController;
+use Joomla\CMS\Cache\Controller\CallbackController;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
-use Joomla\Database\Exception\ExecutionFailureException;
-use Joomla\Registry\Registry;
-use Joomla\Utilities\ArrayHelper;
-use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
-use Kunena\Forum\Libraries\Error\KunenaError;
+use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 
 /**
- * Class KunenaConfig
+ * Kunena Config class
  *
- * @property int     $id
- * @property string  $boardTitle
- * @property string  $email
- * @property boolean $boardOffline
- * @property string  $offlineMessage
- * @property boolean $enableRss
- * @property integer $threadsPerPage
- * @property integer $messagesPerPage
- * @property integer $messagesPerPageSearch
- * @property boolean $showHistory
- * @property integer $historyLimit
- * @property boolean $showNew
- * @property boolean $disableEmoticons
- * @property string  $template
- * @property boolean $showAnnouncement
- * @property boolean $avatarOnCategory
- * @property boolean $showChildCatIcon
- * @property integer $rteWidth
- * @property integer $rteHeight
- * @property boolean $enableForumJump
- * @property boolean $reportMsg
- * @property boolean $username
- * @property boolean $askEmail
- * @property boolean $showEmail
- * @property boolean $showUserStats
- * @property boolean $showKarma
- * @property boolean $userEdit
- * @property integer $userEditTime
- * @property integer $userEditTimeGrace
- * @property boolean $editMarkup
- * @property boolean $allowSubscriptions
- * @property boolean $subscriptionsChecked
- * @property boolean $allowFavorites
- * @property integer $maxSig
- * @property boolean $regOnly
- * @property boolean $pubWrite
- * @property boolean $floodProtection
- * @property boolean $mailModerators
- * @property boolean $mailAdministrators
- * @property boolean $captcha
- * @property boolean $mailFull
- * @property boolean $allowAvatarUpload
- * @property boolean $allowAvatarGallery
- * @property integer $avatarQuality
- * @property integer $avatarSize
- * @property integer $imageHeight
- * @property integer $imageWidth
- * @property integer $imageSize
- * @property string  $fileTypes
- * @property integer $fileSize
- * @property boolean $showRanking
- * @property boolean $rankImages
- * @property integer $userlistRows
- * @property boolean $userlistOnline
- * @property boolean $userlistAvatar
- * @property boolean $userlistPosts
- * @property boolean $userlistKarma
- * @property boolean $userlistEmail
- * @property boolean $userlistJoinDate
- * @property boolean $userlistLastVisitDate
- * @property boolean $userlistUserHits
- * @property boolean $latestCategory
- * @property boolean $showStats
- * @property boolean $showWhoIsOnline
- * @property boolean $showGenStats
- * @property boolean $showPopUserStats
- * @property integer $popUserCount
- * @property boolean $showPopSubjectStats
- * @property boolean $popSubjectCount
- * @property boolean $showSpoilerTag
- * @property boolean $showVideoTag
- * @property boolean $showEbayTag
- * @property boolean $trimLongUrls
- * @property integer $trimLongUrlsFront
- * @property integer $trimLongUrlsBack
- * @property boolean $autoEmbedYoutube
- * @property boolean $autoEmbedEbay
- * @property boolean $ebayLanguageCode
- * @property integer $sessionTimeOut
- * @property boolean $highlightCode
- * @property string  $rssType
- * @property string  $rssTimeLimit
- * @property integer $rssLimit
- * @property array   $rssIncludedCategories
- * @property string  $rssExcludedCategories
- * @property string  $rssSpecification
- * @property boolean $rssAllowHtml
- * @property string  $rssAuthorFormat
- * @property boolean $rssAuthorInTitle
- * @property integer $rssWordCount
- * @property boolean $rssOldTitles
- * @property boolean $rssCache
- * @property string  $defaultPage
- * @property string  $defaultSort
- * @property boolean $sef
- * @property boolean $showImgForGuest
- * @property boolean $showFileForGuest
- * @property integer $pollNbOptions
- * @property boolean $pollAllowVoteOne
- * @property boolean $pollEnabled
- * @property integer $popPollsCount
- * @property boolean $showPopPollStats
- * @property integer $pollTimeBtVotes
- * @property integer $pollNbVotesByUser
- * @property boolean $pollResultsUserslist
- * @property boolean $allowUserEditPoll
- * @property integer $maxPersonalText
- * @property string  $orderingSystem
- * @property string  $postDateFormat
- * @property string  $postDateFormatHover
- * @property boolean $hideIp
- * @property string  $imageTypes
- * @property boolean $checkMimeTypes
- * @property string  $imageMimeTypes
- * @property integer $imageQuality
- * @property integer $thumbHeight
- * @property integer $thumbWidth
- * @property string  $hideUserProfileInfo
- * @property boolean $boxGhostMessage
- * @property integer $userDeleteMessage
- * @property integer $latestCategoryIn
- * @property boolean $topicIcons
- * @property boolean $debug
- * @property boolean $catsAutoSubscribed
- * @property boolean $showBannedReason
- * @property boolean $showThankYou
- * @property boolean $showPopThankYouStats
- * @property integer $popThanksCount
- * @property boolean $modSeeDeleted
- * @property string  $bbcodeImgSecure
- * @property boolean $listCatShowModerators
- * @property boolean $lightbox
- * @property integer $showListTime
- * @property integer $showSessionType
- * @property integer $showSessionStartTime
- * @property boolean $userlistAllowed
- * @property integer $userlistCountUsers
- * @property boolean $enableThreadedLayouts
- * @property string  $categorySubscriptions
- * @property string  $topicSubscriptions
- * @property boolean $pubProfile
- * @property integer $thankYouMax
- * @property integer $emailRecipientCount
- * @property string  $emailRecipientPrivacy
- * @property string  $emailVisibleAddress
- * @property integer $captchaPostLimit
- * @property string  $imageUpload
- * @property string  $fileUpload
- * @property string  $topicLayout
- * @property boolean $timeToCreatePage
- * @property boolean $showImgFilesManageProfile
- * @property boolean $holdNewUsersPosts
- * @property boolean $holdGuestPosts
- * @property integer $attachmentLimit
- * @property boolean $pickupCategory
- * @property string  $articleDisplay
- * @property boolean $sendEmails
- * @property boolean $fallbackEnglish
- * @property boolean $cache
- * @property integer $cacheTime
- * @property integer $ebayAffiliateId
- * @property boolean $ipTracking
- * @property string  $rssFeedBurnerUrl
- * @property boolean $autoLink
- * @property boolean $accessComponent
- * @property boolean $statsLinkAllowed
- * @property boolean $superAdminUserlist
- * @property boolean $attachmentProtection
- * @property boolean $categoryIcons
- * @property boolean $avatarCrop
- * @property boolean $userReport
- * @property integer $searchTime
- * @property boolean $teaser
- * @property boolean $ebayLanguage
- * @property string  $ebayApiKey
- * @property string  $ebayCertId
- * @property string  $blueskyappHandleOfApp
- * @property string  $blueskyappPasswordOfApp
- * @property string  $XConsumerKey
- * @property string  $XConsumerSecret
- * @property boolean $allowChangeSubject
- * @property integer $maxLinks
- * @property boolean $readOnly
- * @property boolean $ratingEnabled
- * @property boolean $urlSubjectTopic
- * @property boolean $logModeration
- * @property integer $attachStart
- * @property integer $attachEnd
- * @property string  $googleMapApiKey
- * @property boolean $attachmentUtf8
- * @property boolean $autoEmbedSoundcloud
- * @property string  $emailHeader
- * @property integer $emailHeaderSizeX
- * @property integer $emailHeaderSizeY
- * @property boolean $userStatus
- * @property boolean $signature
- * @property boolean $personal
- * @property boolean $plainEmail
- * @property boolean $moderatorPermDelete
- * @property string  $avatarTypes
- * @property boolean $smartLinking
- * @property string  $defaultAvatar
- * @property string  $defaultAvatarSmall
- * @property string  $stopForumSpamKey
- * @property boolean $quickReply
- * @property boolean $avatarEdit
- * @property string  $activeMenuItem
- * @property integer $mainMenuId
- * @property integer $homeId
- * @property integer $indexId
- * @property integer $moderatorsId
- * @property integer $topicListId
- * @property integer $miscId
- * @property integer $profileId
- * @property integer $searchId
- * @property integer $customId
- * @property integer $avatarType
- * @property boolean $sefRedirect
- * @property boolean $allowEditPoll
- * @property boolean $useSystemEmails
- * @property boolean $autoEmbedInstagram
- * @property boolean $disableRe
- * @property boolean $utmSource
- * @property boolean $profiler
- * @property string  $datePickerFormat
- * @property boolean $sendMailUserBanned
- * @property boolean $mailBodyUserBanned
- * @property boolean $mailBodyUserUnBanned
- * @property boolean $userListUserType
- * @property boolean $stopForumSpamNewUserCheck
- *
- * @since   Kunena 6.0
+ * Propertylist generated via KunenaConfig::getIdeProperties()
+ * 
+ * @property string $XConsumerKey                          The X consumer key
+ * @property string $XConsumerSecret                       The X consumer secret
+ * @property string $accessComponent                       Direct Component Access
+ * @property string $activeMenuItem                        Active menu class name
+ * @property string $allowAvatarGallery                    Use Avatars Gallery
+ * @property string $allowAvatarUpload                     Allow Avatar Upload
+ * @property string $allowChangeSubject                    Let users edit the subject
+ * @property string $allowFavorites                        Allow Favorites
+ * @property string $allowSubscriptions                    Allow Subscriptions
+ * @property string $allowUserEditPoll                     Set if you want allow the user to edit the poll when someone has voted
+ * @property string $articleDisplay                        Choose how to display article by default
+ * @property string $askEmail                              Require E-mail
+ * @property string $attachEnd                             Number of characters from end for shorten filename
+ * @property string $attachStart                           Number of characters from start for shorten filename
+ * @property string $attachmentLimit                       Limit Attachments
+ * @property string $attachmentProtection                  Protect Attachments
+ * @property string $attachmentUtf8                        Enable utf8 characters on attachments
+ * @property string $autoEmbedEbay                         Auto Embed eBay Items
+ * @property string $autoEmbedInstagram                    Auto Embed Instagram Items
+ * @property string $autoEmbedSoundcloud                   Auto Embed Soundcloud items
+ * @property string $autoEmbedYoutube                      Auto Embed YouTube Videos
+ * @property string $autoLink                              Auto-Link URLs
+ * @property string $avatarCrop                            Avatar Cropping
+ * @property string $avatarEdit                            Edit avatar by clicking on avatar
+ * @property string $avatarOnCategory                      Show Avatar on Category Index and Recent Topics
+ * @property string $avatarQuality                         Avatar Quality (%)
+ * @property string $avatarSize                            Max. Avatar File Size (KB)
+ * @property string $avatarType                            Default avatar type
+ * @property string $avatarTypes                           Allowed avatar types
+ * @property string $bbcodeImgSecure                       Display Images With Non-standard File Extensions
+ * @property string $blueskyappHandleOfApp                 BlueSky App ID
+ * @property string $blueskyappPasswordOfApp               The BlueSky consumer secret
+ * @property string $boardOffline                          Forum Offline
+ * @property string $boardTitle                            Forum Title
+ * @property string $boxGhostMessage                       Check Shadow Topic Box
+ * @property string $cache                                 Caching
+ * @property string $cacheTime                             Cache Time
+ * @property string $captcha                               Display Captcha for :
+ * @property string $captchaPostLimit                      CAPTCHA Challenge for Users
+ * @property string $categorySubscriptions                 Category Subscriptions
+ * @property string $checkMimeTypes                        Check MIME Types
+ * @property string $datePickerFormat                      Date format for datepicker
+ * @property string $debug                                 Enable Debug Mode
+ * @property string $defaultAvatar                         Default avatar
+ * @property string $defaultAvatarSmall                    Default small avatar
+ * @property string $defaultPage                           The Default Page
+ * @property string $defaultSort                           Message Ordering
+ * @property string $disableRe                             Disable Re: on subject
+ * @property string $displayFilenameAttachment             Display attachment filename
+ * @property string $ebayAffiliateId                       eBay Affiliate ID
+ * @property string $ebayApiKey                            eBay AppID key
+ * @property string $ebayCertId                            eBay Cert ID (Client Secret)
+ * @property string $ebayLanguage                          eBay Widget Language Code
+ * @property string $editMarkup                            Show Edited Mark Up
+ * @property string $email                                 Forum E-mail Address
+ * @property string $emailHeader                           Email Header Image
+ * @property string $emailHeaderSizeX                      Header Width
+ * @property string $emailHeaderSizeY                      Header Height
+ * @property string $emailRecipientCount                   E-mail to Multiple Recipients
+ * @property string $emailRecipientPrivacy                 E-mail Recipient Privacy
+ * @property string $emailSenderName                       Sender name for mail
+ * @property string $emailVisibleAddress                   Visible E-mail Recipient
+ * @property string $enableForumJump                       Enable Category Jump
+ * @property string $enableRss                             Enable RSS Feeds
+ * @property string $fallbackEnglish                       Use English On Missing Strings
+ * @property string $fileSize                              Maximum File Size (KB)
+ * @property string $fileTypes                             Allowed File Types
+ * @property string $fileUpload                            Allow File Uploads
+ * @property string $floodProtection                       Flood Protection
+ * @property string $googleMapApiKey                       Google maps API key to get better stats usage of google API
+ * @property string $hideIp                                Hide IP Addresses From Moderators
+ * @property string $highlightCode                         Enable Code Highlighting
+ * @property string $historyLimit                          History Limit
+ * @property string $holdGuestPosts                        Moderate Guests
+ * @property string $holdNewUsersPosts                     Moderate New Users
+ * @property string $homeId                                Home ID
+ * @property string $imageHeight                           Maximum Image Height (px)
+ * @property string $imageMimeTypes                        Legal MIME Types
+ * @property string $imageQuality                          Image Quality for JPG Resizing (%)
+ * @property string $imageSize                             Maximum Image File Size (KB)
+ * @property string $imageTypes                            Allowed Image Types
+ * @property string $imageUpload                           Allow Image Uploads
+ * @property string $imageWidth                            Maximum Image Width (px)
+ * @property string $indexId                               Index ID
+ * @property string $ipTracking                            IP Address Tracking
+ * @property array  $latestCategory                        Category List in Recent Topics
+ * @property string $latestCategoryIn                      Category Filter in Recent Topics
+ * @property string $lightbox                              Enable Lightbox for Images
+ * @property string $listCatShowModerators                 Show Moderators in Category Index
+ * @property string $logModeration                         Define if you want to log action or moderation
+ * @property string $mailAdministrators                    E-mail Administrators
+ * @property string $mailBodyUserBanned                    Set the body of the mail when the user is banned
+ * @property string $mailBodyUserUnBanned                  Set the body of the mail when the user is unbanned
+ * @property string $mailFull                              Include Post Contents
+ * @property string $mailModerators                        E-mail Moderators
+ * @property string $mainMenuId                            Mainmenu
+ * @property string $maxLinks                              Max Links in message
+ * @property string $maxSig                                Max. Signature Length
+ * @property string $messagesPerPage                       Messages Per Page
+ * @property string $messagesPerPageSearch                 Search Results
+ * @property string $minimalUserPostsAddUrlImage           Set the number minimum of user posts to able to add url and image
+ * @property string $miscId                                MISC ID
+ * @property string $modSeeDeleted                         Show Deleted Messages
+ * @property string $moderatorPermDelete                   Allow moderators to permdelete
+ * @property string $moderatorsId                          Moderators ID
+ * @property string $newUsersPreventPostUrlImages          Prevent that new users are able to add url and image in his messages or profile
+ * @property string $offlineMessage                        Forum Offline Message
+ * @property string $orderingSystem                        Reply Numbering Inside Topic
+ * @property string $personal                              Personal
+ * @property string $pickupCategory                        Force users to pickup a category
+ * @property string $plainEmail                            Plain Text Emails
+ * @property string $pollAllowVoteOne                      Single Vote Only
+ * @property string $pollEnabled                           Enable Polls
+ * @property string $pollNbOptions                         Maximum Number Poll Options
+ * @property string $pollNbVotesByUser                     Maximum Number of Votes Per User
+ * @property string $pollResultsUserslist                  Show Voters
+ * @property string $pollTimeBtVotes                       Time Between Consecutive Votes
+ * @property string $popPollsCount                         Number of Popular Polls
+ * @property string $popSubjectCount                       Number of Popular Subjects
+ * @property string $popThanksCount                        Number of Popular Thank Yous
+ * @property string $popUserCount                          Number of Popular Users
+ * @property string $postDateFormat                        Message Time Format
+ * @property string $postDateFormatHover                   Hover Message Time Format
+ * @property string $privateMessage                        Enable private message
+ * @property string $profileId                             Profile ID
+ * @property string $profiler                              Enable profiler
+ * @property string $pubProfile                            Allow Guests to see User Profiles
+ * @property string $pubWrite                              Allow Guests to Post/Write
+ * @property string $quickReply                            Show Quick Reply
+ * @property string $rankImages                            Show Rank
+ * @property string $ratingEnabled                         Allow rating
+ * @property string $readOnly                              Read Only Mode
+ * @property string $regOnly                               Registered Users Only
+ * @property string $reportMsg                             Message Reporting
+ * @property string $rssAllowHtml                          Render HTML &amp; BBCode in RSS feeds
+ * @property string $rssAuthorFormat                       Author Format
+ * @property string $rssAuthorInTitle                      Render Author in Title
+ * @property string $rssCache                              Caching Interval
+ * @property array  $rssExcludedCategories                 Exclude Categories
+ * @property string $rssFeedBurnerUrl                      The URL of the basic RSS feed into FeedBurner.
+ * @property array  $rssIncludedCategories                 Include Categories
+ * @property string $rssLimit                              RSS Limit
+ * @property string $rssOldTitles                          Use Oldstyle Titles
+ * @property string $rssSpecification                      RSS Specification
+ * @property string $rssTimeLimit                          RSS History (timelimit)
+ * @property string $rssType                               RSS Feed type
+ * @property string $rssWordCount                          Limit Number of Characters Per Item
+ * @property string $rules                                 Permissions
+ * @property string $searchId                              Search ID
+ * @property string $searchTime                            Search Time
+ * @property string $sef                                   Search Engine Friendly URLs
+ * @property string $sefRedirect                           SEF Redirect
+ * @property string $sendEmails                            Send E-mails to Users
+ * @property string $sendMailUserBanned                    Send a mail to the user when he is banned and unbanned
+ * @property string $sessionTimeOut                        Session Lifetime
+ * @property string $showAnnouncement                      Show Announcement
+ * @property string $showBannedReason                      Show Banned Reason
+ * @property string $showChildCatIcon                      Show Sub-Category Image
+ * @property string $showEmail                             Show E-mail
+ * @property string $showFileForGuest                      Show Attachments for Guests
+ * @property string $showGenStats                          Show General Statistics
+ * @property string $showHistory                           Show History
+ * @property string $showImgFilesManageProfile             Display profile tab to manage attachments
+ * @property string $showImgForGuest                       Show Images for Guests
+ * @property string $showKarma                             Show Karma Indicator
+ * @property string $showListTime                          Recent Topics Time Period
+ * @property string $showNew                               Show New posts
+ * @property string $showPopPollStats                      Show Popular Poll Statistics
+ * @property string $showPopSubjectStats                   Show Popular Subject Statistics
+ * @property string $showPopThankYouStats                  Show Popular Thank You Statistics
+ * @property string $showPopUserStats                      Show Popular User Statistics
+ * @property string $showRanking                           Ranking
+ * @property string $showSessionStartTime                  Online Users Time Limit
+ * @property string $showSessionType                       Online Users Contains
+ * @property string $showStats                             Show Statistics
+ * @property string $showThankYou                          Enable Thank You Feature
+ * @property string $showUserStats                         Show User Statistics
+ * @property string $showWhoIsOnline                       Show Who is Online
+ * @property string $signature                             Signatures
+ * @property string $smartLinking                          Smart Auto Linking
+ * @property string $statsLinkAllowed                      Allow Guests to see Stats link
+ * @property string $stopForumSpamKey                      API key
+ * @property string $stopForumSpamNewUserCheck             Check New User
+ * @property string $subscriptionsChecked                  Check Subscription Box
+ * @property string $superAdminUserlist                    Hide Super Users in user list
+ * @property string $teaser                                Hide Replies For Guests
+ * @property string $template                              Template
+ * @property string $thankYouMax                           Visible Thank You Limit
+ * @property string $threadsPerPage                        Topics Per Page
+ * @property string $thumbHeight                           Thumbnail Height (px)
+ * @property string $thumbWidth                            Thumbnail Width (px)
+ * @property string $timeToCreatePage                      Display Page Creation Time
+ * @property string $topicIcons                            Selectable Topic Icons
+ * @property string $topicLayout                           Default topic layout
+ * @property string $topicListId                           Topiclist ID
+ * @property string $topicSubscriptions                    Topic Subscriptions
+ * @property string $trimLongUrls                          Trim Long URLs
+ * @property string $trimLongUrlsBack                      Back Portion of Trimmed URLs
+ * @property string $trimLongUrlsFront                     Front Portion of Trimmed URLs
+ * @property string $urlSubjectTopic                       Prevent posting topic or reply with URL in title
+ * @property string $useSystemEmails                       Treat as System Email
+ * @property string $userDeleteMessage                     User Can Delete Own Post
+ * @property string $userEdit                              User Edits
+ * @property string $userEditTime                          User Edit Time
+ * @property string $userEditTimeGrace                     User Edit Grace Time
+ * @property string $userListUserType                      Show User Types
+ * @property string $userReport                            User can report himself
+ * @property string $userStatus                            Show User Status
+ * @property string $userlistAllowed                       Allow Guests to see Userlist
+ * @property string $userlistAvatar                        Display Avatar
+ * @property string $userlistCountUsers                    User Count Contains
+ * @property string $userlistEmail                         Show E-mail
+ * @property string $userlistJoinDate                      Show Join Date
+ * @property string $userlistKarma                         Show Karma
+ * @property string $userlistLastVisitDate                 Show Last Visit Date
+ * @property string $userlistOnline                        Online Status
+ * @property string $userlistPosts                         Show Number of Posts
+ * @property string $userlistRows                          Users Per Page
+ * @property string $userlistUserHits                      Show Profile Hits
+ * @property string $username                              Display User Name
+ * @property string $utmSource                             UTM Source
+ *    
+ * @since 7.0.0
  */
 class KunenaConfig
 {
     /**
-     * @var    integer  ID
-     * @since  Kunena 1.5.2
-     */
-    public $id = 0;
-
-    /**
-     * @var    string  Board Title
-     * @since  Kunena 1.0.0
-     */
-    public $boardTitle = 'Kunena';
-
-    /**
-     * @var    string  Email
-     * @since  Kunena 1.0.0
-     */
-    public $email = '';
-
-    /**
-     * @var    boolean  Board offline
-     * @since  Kunena 1.0.0
-     */
-    public $boardOffline = 0;
-
-    /**
-     * @var    string  Offline message
-     * @since  Kunena 1.0.0
-     */
-    public $offlineMessage = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
-
-    /**
-     * @var    boolean Enable RSS
-     * @since  Kunena 1.0.0
-     */
-    public $enableRss = 1;
-
-    /**
-     * @var    integer    Threads per page
-     * @since  Kunena 1.0.0
-     */
-    public $threadsPerPage = 20;
-
-    /**
-     * @var    integer  Messages per page
-     * @since  Kunena 1.0.0
-     */
-    public $messagesPerPage = 6;
-
-    /**
-     * @var    integer  Messages per page search
-     * @since  Kunena 1.0.0
-     */
-    public $messagesPerPageSearch = 15;
-
-    /**
-     * @var    boolean  Show history
-     * @since  Kunena 1.0.0
-     */
-    public $showHistory = 1;
-
-    /**
-     * @var    integer  History limit
-     * @since  Kunena 1.0.0
-     */
-    public $historyLimit = 6;
-
-    /**
-     * @var    boolean  Show new
-     * @since  Kunena 1.0.0
-     */
-    public $showNew = 1;
-
-    /**
-     * @var    boolean  Disable emoticons
-     * @since  Kunena 1.0.0
-     */
-    public $disableEmoticons = 0;
-
-    /**
-     * @var    string  Template
-     * @since  Kunena 1.0.0
-     */
-    public $template = 'aurelia';
-
-    /**
-     * @var    boolean  Show announcement
-     * @since  Kunena 1.0.0
-     */
-    public $showAnnouncement = 1;
-
-    /**
-     * @var    boolean  Avatar on category
-     * @since  Kunena 1.0.0
-     */
-    public $avatarOnCategory = 0;
-
-    /**
-     * @var    boolean  Show child category icon
-     * @since  Kunena 1.0.0
-     */
-    public $showChildCatIcon = 1;
-
-    /**
-     * @var    integer  Text area width
-     * @since  Kunena 1.0.0
-     */
-    public $rteWidth = 450;
-
-    /**
-     * @var    integer  Text area height
-     * @since  Kunena 1.0.0
-     */
-    public $rteHeight = 300;
-
-    /**
-     * @var    boolean  Enable forum jump
-     * @since  Kunena 1.0.0
-     */
-    public $enableForumJump = 1;
-
-    /**
-     * @var    boolean  Report message
-     * @since  Kunena 1.0.0
-     */
-    public $reportMsg = 1;
-
-    /**
-     * @var    boolean  Username
-     * @since  Kunena 1.0.0
-     */
-    public $username = 1;
-
-    /**
-     * @var    boolean  Ask email
-     * @since  Kunena 1.0.0
-     */
-    public $askEmail = 0;
-
-    /**
-     * @var    boolean  Show email
-     * @since  Kunena 1.0.0
-     */
-    public $showEmail = 0;
-
-    /**
-     * @var    boolean  Show user statistics
-     * @since  Kunena 1.0.0
-     */
-    public $showUserStats = 1;
-
-    /**
-     * @var    boolean  Show karma
-     * @since  Kunena 1.0.0
-     */
-    public $showKarma = 1;
-
-    /**
-     * @var    boolean  User edit
-     * @since  Kunena 1.0.0
-     */
-    public $userEdit = 1;
-
-    /**
-     * @var    integer  User edit time
-     * @since  Kunena 1.0.0
-     */
-    public $userEditTime = 0;
-
-    /**
-     * @var    integer  User edit time Grace
-     * @since  Kunena 1.0.0
-     */
-    public $userEditTimeGrace = 600;
-
-    /**
-     * @var    boolean  Edit markup
-     * @since  Kunena 1.0.0
-     */
-    public $editMarkup = 1;
-
-    /**
-     * @var    boolean  Allow subscriptions
-     * @since  Kunena 1.0.0
-     */
-    public $allowSubscriptions = 1;
-
-    /**
-     * @var    boolean  Subscriptions Checked
-     * @since  Kunena 1.0.0
-     */
-    public $subscriptionsChecked = 1;
-
-    /**
-     * @var    boolean  Allow favorites
-     * @since  Kunena 1.0.0
-     */
-    public $allowFavorites = 1;
-
-    /**
-     * @var    integer  Max signature length
-     * @since  Kunena 1.0.0
-     */
-    public $maxSig = 300;
-
-    /**
-     * @var    boolean  Registered users only
-     * @since  Kunena 1.0.0
-     */
-    public $regOnly = 0;
-
-    /**
-     * @var    boolean  Public write
-     * @since  Kunena 1.0.0
-     */
-    public $pubWrite = 0;
-
-    /**
-     * @var    boolean  Flood projection
-     * @since  Kunena 1.0.0
-     */
-    public $floodProtection = 0;
-
-    /**
-     * @var    boolean  Mail moderators
-     * @since  Kunena 1.0.0
-     */
-    public $mailModerators = 0;
-
-    /**
-     * @var    boolean  Mail admin
-     * @since  Kunena 1.0.0
-     */
-    public $mailAdministrators = 0;
-
-    /**
-     * @var    boolean  CAPTCHA
-     * @since  Kunena 1.0.0
-     */
-    public $captcha = 0;
-
-    /**
-     * @var    boolean  Mail full
-     * @since  Kunena 1.0.0
-     */
-    public $mailFull = 1;
-
-    /**
-     * @var    boolean  Allow avatar upload
-     * @since  Kunena 1.0.0
-     */
-    public $allowAvatarUpload = 1;
-
-    /**
-     * @var    boolean  Allow avatar gallery
-     * @since  Kunena 1.0.0
-     */
-    public $allowAvatarGallery = 1;
-
-    /**
-     * @var    integer  Avatar quality
-     * @since  Kunena 1.0.0
-     */
-    public $avatarQuality = 75;
-
-    /**
-     * @var    integer  Avatar size
-     * @since  Kunena 1.0.0
-     */
-    public $avatarSize = 2048;
-
-    /**
-     * @var    integer  Image height
-     * @since  Kunena 1.0.0
-     */
-    public $imageHeight = 800;
-
-    /**
-     * @var    integer  Image width
-     * @since  Kunena 1.0.0
-     */
-    public $imageWidth = 800;
-
-    /**
-     * @var    integer  Image size
-     * @since  Kunena 1.0.0
-     */
-    public $imageSize = 150;
-
-    /**
-     * @var    string  File types
-     * @since  Kunena 1.0.0
-     */
-    public $fileTypes = 'txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2';
-
-    /**
-     * @var    integer  File size
-     * @since  Kunena 1.0.0
-     */
-    public $fileSize = 120;
-
-    /**
-     * @var    boolean  Show ranking
-     * @since  Kunena 1.0.0
-     */
-    public $showRanking = 1;
-
-    /**
-     * @var    boolean  Rank images
-     * @since  Kunena 1.0.0
-     */
-    public $rankImages = 1;
-
-    /**
-     * @var    integer  User list rows
-     * @since  Kunena 1.0.0
-     */
-    public $userlistRows = 30;
-
-    /**
-     * @var    boolean  User list online
-     * @since  Kunena 1.0.0
-     */
-    public $userlistOnline = 1;
-
-    /**
-     * @var    boolean  user list avatar
-     * @since  Kunena 1.0.0
-     */
-    public $userlistAvatar = 1;
-
-    /**
-     * @var    boolean  User list posts
-     * @since  Kunena 1.0.0
-     */
-    public $userlistPosts = 1;
-
-    /**
-     * @var    boolean  User list karma
-     * @since  Kunena 1.0.0
-     */
-    public $userlistKarma = 1;
-
-    /**
-     * @var    boolean  User list email
-     * @since  Kunena 1.0.0
-     */
-    public $userlistEmail = 0;
-
-    /**
-     * @var    boolean  User list join date
-     * @since  Kunena 1.0.0
-     */
-    public $userlistJoinDate = 1;
-
-    /**
-     * @var    boolean  User list lst visit date
-     * @since  Kunena 1.0.0
-     */
-    public $userlistLastVisitDate = 1;
-
-    /**
-     * @var    boolean  User list user hits
-     * @since  Kunena 1.0.0
-     */
-    public $userlistUserHits = 1;
-
-    /**
-     * @var    integer  Latest category; select, integer multiple
-     * @since  Kunena 1.0.0
-     */
-    public $latestCategory = 0;
-
-    /**
-     * @var    boolean  Show stats
-     * @since  Kunena 1.0.0
-     */
-    public $showStats = 1;
-
-    /**
-     * @var    boolean  Show who is online
-     * @since  Kunena 1.0.0
-     */
-    public $showWhoIsOnline = 1;
-
-    /**
-     * @var    boolean  Show general statistics
-     * @since  Kunena 1.0.0
-     */
-    public $showGenStats = 1;
-
-    /**
-     * @var    boolean  Show population user statistics
-     * @since  Kunena 1.0.0
-     */
-    public $showPopUserStats = 1;
-
-    /**
-     * @var    integer  Population user count
-     * @since  Kunena 1.0.0
-     */
-    public $popUserCount = 5;
-
-    /**
-     * @var    boolean  Show population subject statistics
-     * @since  Kunena 1.0.0
-     */
-    public $showPopSubjectStats = 1;
-
-    /**
-     * @var    integer  Population subject count
-     * @since  Kunena 1.0.0
-     */
-    public $popSubjectCount = 5;
-
-    /**
-     * @var    boolean  Show spoiler tag
-     * @since  Kunena 1.0.5
-     */
-    public $showSpoilerTag = 1;
-
-    /**
-     * @var    boolean  Show video tag
-     * @since  Kunena 1.0.5
-     */
-    public $showVideoTag = 1;
-
-    /**
-     * @var    boolean  Show ebay tag
-     * @since  Kunena 1.0.5
-     */
-    public $showEbayTag = 1;
-
-    /**
-     * @var    boolean  Trim long URLs
-     * @since  Kunena 1.0.5
-     */
-    public $trimLongUrls = 1;
-
-    /**
-     * @var    integer  Trim long URLs in front
-     * @since  Kunena 1.0.5
-     */
-    public $trimLongUrlsFront = 40;
-
-    /**
-     * @var    integer  Trim long URLs in back
-     * @since  Kunena 1.0.5
-     */
-    public $trimLongUrlsBack = 20;
-
-    /**
-     * @var    boolean  Auto embed youtube
-     * @since  Kunena 1.0.5
-     */
-    public $autoEmbedYoutube = 1;
-
-    /**
-     * @var    boolean  Auto embed ebay
-     * @since  Kunena 1.0.5
-     */
-    public $autoEmbedEbay = 1;
-
-    /**
-     * @var    string  Ebay language code
-     * @since  Kunena 1.0.5
-     */
-    public $ebayLanguageCode = 'en-us';
-
-    /**
-     * @var    integer  Session time out. In seconds
-     * @since  Kunena 1.0.5
-     */
-    public $sessionTimeOut = 1800;
-
-    /**
-     * @var    boolean  Highlight code
-     * @since  Kunena 1.0.5RC2
-     */
-    public $highlightCode = 0;
-
-    /**
-     * @var    string  RSS type
-     * @since  Kunena 1.0.6
-     */
-    public $rssType = 'topic';
-
-    /**
-     * @var    string  RSS time limit
-     * @since  Kunena 1.0.6
-     */
-    public $rssTimeLimit = '1 month';
-
-    /**
-     * @var    integer  RSS limit
-     * @since  Kunena 1.0.6
-     */
-    public $rssLimit = 100;
-
-    /**
-     * @var    array  RSS included categories
-     * @since  Kunena 1.0.6
-     */
-    public $rssIncludedCategories = 0;
-
-    /**
-     * @var    string  RSS excluded categories
-     * @since  Kunena 1.0.6
-     */
-    public $rssExcludedCategories = 0;
-
-    /**
-     * @var    string  RSS specification
-     * @since  Kunena 1.0.6
-     */
-    public $rssSpecification = 'rss2.0';
-
-    /**
-     * @var    boolean  RSS allow HTML
-     * @since  Kunena 1.0.6
-     */
-    public $rssAllowHtml = 1;
-
-    /**
-     * @var    string  RSS author format
-     * @since  Kunena 1.0.6
-     */
-    public $rssAuthorFormat = 'name';
-
-    /**
-     * @var    boolean  RSS author in title
-     * @since  Kunena 1.0.6
-     */
-    public $rssAuthorInTitle = 1;
-
-    /**
-     * @var    integer  RSS word count
-     * @since  Kunena 1.0.6
-     */
-    public $rssWordCount = '0';
-
-    /**
-     * @var    boolean  RSS old titles
-     * @since  Kunena 1.0.6
-     */
-    public $rssOldTitles = 1;
-
-    /**
-     * @var    integer  RSS cache
-     * @since  Kunena 1.0.6
-     */
-    public $rssCache = 900;
-
-    /**
-     * @var    string  Default page
-     * @since  Kunena 1.0.6
-     */
-    public $defaultPage = 'recent';
-
-    /**
-     * @var    string  Default sort.  Description for the latest post first
-     * @since  Kunena 1.0.8
-     */
-    public $defaultSort = 'asc';
-
-    /**
-     * @var    boolean  Search engine friendly URLs
-     * @since  Kunena 1.5.8
-     */
-    public $sef = 1;
-
-    /**
-     * @var    boolean  Showing For Guest
-     * @since  Kunena 1.6.0
-     */
-    public $showImgForGuest = 1;
-
-    /**
-     * @var    boolean  Show file for guest
-     * @since  Kunena 1.6.0
-     */
-    public $showFileForGuest = 1;
-
-    /**
-     * @var    integer  Major version number
-     * @since  Kunena 1.6.0
-     */
-    public $pollNbOptions = 4;
-
-    /**
-     * @var    boolean  Pool allow one ore more time
-     * @since  Kunena 1.6.0
-     */
-    public $pollAllowVoteOne = 1;
-
-    /**
-     * @var    boolean  Poll enabled.  For poll integration
-     * @since  Kunena 1.6.0
-     */
-    public $pollEnabled = 1;
-
-    /**
-     * @var    integer  Population poll count
-     * @since  Kunena 1.6.0
-     */
-    public $popPollsCount = 5;
-
-    /**
-     * @var    boolean  Show population poll statistics
-     * @since  Kunena 1.6.0
-     */
-    public $showPopPollStats = 1;
-
-    /**
-     * @var    integer  Poll time by votes
-     * @since  Kunena 1.6.0
-     */
-    public $pollTimeBtVotes = '00:15:00';
-
-    /**
-     * @var    integer  Poll and votes by user
-     * @since  Kunena 1.6.0
-     */
-    public $pollNbVotesByUser = 100;
-
-    /**
-     * @var    boolean  Poll result user list
-     * @since  Kunena 1.6.0
-     */
-    public $pollResultsUserslist = 1;
-
-    /**
-     * @var    boolean  Poll result user list
-     * @since  Kunena 1.6.0
-     */
-    public $allowUserEditPoll = 0;
-
-    /**
-     * @var    integer  Max person text
-     * @since  Kunena 1.6.0
-     */
-    public $maxPersonalText = 50;
-
-    /**
-     * @var    string  Ordering system
-     * @since  Kunena 1.6.0
-     */
-    public $orderingSystem = 'mesid';
-
-    /**
-     * @var    string  Post date format
-     * @since  Kunena 1.6.0
-     */
-    public $postDateFormat = 'ago';
-
-    /**
-     * @var    string  Post date format hover
-     * @since  Kunena 1.6.0
-     */
-    public $postDateFormatHover = 'datetime';
-
-    /**
-     * @var    boolean  Hide IP
-     * @since  Kunena 1.6.0
-     */
-    public $hideIp = 1;
-
-    /**
-     * @var    string  Image types
-     * @since  Kunena 1.6.0
-     */
-    public $imageTypes = 'jpg,jpeg,gif,png,webp,avif';
-
-    /**
-     * @var    boolean  Check MIM types
-     * @since  Kunena 1.6.0
-     */
-    public $checkMimeTypes = 1;
-
-    /**
-     * @var    string  Image MIME types
-     * @since  Kunena 1.6.0
-     */
-    public $imageMimeTypes = 'image/jpeg,image/jpg,image/gif,image/png,image/webp,image/avif';
-
-    /**
-     * @var    integer  Image quality
-     * @since  Kunena 1.6.0
-     */
-    public $imageQuality = 50;
-
-    /**
-     * @var    integer  Thumbnail height
-     * @since  Kunena 1.6.0
-     */
-    public $thumbHeight = 32;
-
-    /**
-     * @var    integer  Thumbnail width
-     * @since  Kunena 1.6.0
-     */
-    public $thumbWidth = 32;
-
-    /**
-     * @var    string  Hide user profile info
-     * @since  1.6.0
-     */
-    public $hideUserProfileInfo = 'put_empty';
-
-    /**
-     * @var    boolean  Box ghost message
-     * @since  Kunena 1.6.0
-     */
-    public $boxGhostMessage = 0;
-
-    /**
-     * @var    integer  User delete message
-     * @since  Kunena 1.6.0
-     */
-    public $userDeleteMessage = 0;
-
-    /**
-     * @var    integer  Latest category in
-     * @since  Kunena 1.6.0
-     */
-    public $latestCategoryIn = 1;
-
-    /**
-     * @var    boolean  Topic icons
-     * @since  Kunena 1.6.0
-     */
-    public $topicIcons = 1;
-
-    /**
-     * @var    boolean  Debug
-     * @since  Kunena 1.6.0
-     */
-    public $debug = 0;
-
-    /**
-     * @var    boolean  Category auto subscribe
-     * @since  Kunena 1.6.0
-     */
-    public $catsAutoSubscribed = 0;
-
-    /**
-     * @var    boolean  SHow ban reason
-     * @since  Kunena 1.6.0
-     */
-    public $showBannedReason = 0;
-
-    /**
-     * @var    boolean  Show thank you
-     * @since  Kunena 1.6.0
-     */
-    public $showThankYou = 1;
-
-    /**
-     * @var    boolean  Show population thank you statistics
-     * @since  Kunena 1.6.0
-     */
-    public $showPopThankYouStats = 1;
-
-    /**
-     * @var    integer  Population thank you count
-     * @since  Kunena 1.6.0
-     */
-    public $popThanksCount = 5;
-
-    /**
-     * @var    boolean  Moderators see deleted topics
-     * @since  Kunena 1.6.0
-     */
-    public $modSeeDeleted = 0;
-
-    /**
-     * @var    string  BBCode image secure.  Allow only secure image extensions (jpg/gif/png)
-     * @since  Kunena 1.6.0
-     */
-    public $bbcodeImgSecure = 'text';
-
-    /**
-     * @var    boolean  List category show moderators
-     * @since  Kunena 1.6.0
-     */
-    public $listCatShowModerators = 1;
-
-    /**
-     * @var    boolean  Major version number
-     * @since  Kunena 1.6.1
-     */
-    public $lightbox = 1;
-
-    /**
-     * @var    integer  Show list time
-     * @since  Kunena 1.6.1
-     */
-    public $showListTime = 720;
-
-    /**
-     * @var    integer  Show session type
-     * @since  Kunena 1.6.1
-     */
-    public $showSessionType = 2;
-
-    /**
-     * @var    integer  Show session start time
-     * @since  Kunena 1.6.1
-     */
-    public $showSessionStartTime = 1800;
-
-    /**
-     * @var    boolean  User list allowed
-     * @since  Kunena 1.6.2
-     */
-    public $userlistAllowed = 1;
-
-    /**
-     * @var    integer  User list count users
-     * @since  Kunena 1.6.4
-     */
-    public $userlistCountUsers = 1;
-
-    /**
-     * @var    boolean  Enable threaded layouts
-     * @since  Kunena 1.6.4
-     */
-    public $enableThreadedLayouts = 0;
-
-    /**
-     * @var    string  Category subscriptions
-     * @since  Kunena 1.6.4
-     */
-    public $categorySubscriptions = 'post';
-
-    /**
-     * @var    string  Topic subscriptions
-     * @since  Kunena 1.6.4
-     */
-    public $topicSubscriptions = 'every';
-
-    /**
-     * @var    boolean  Public profile
-     * @since  Kunena 1.6.4
-     */
-    public $pubProfile = 1;
-
-    /**
-     * @var    integer  Thank you max
-     * @since  Kunena 1.6.5
-     */
-    public $thankYouMax = 10;
-
-    /**
-     * @var    integer  Email recipient count
-     * @since  Kunena 1.6.6
-     */
-    public $emailRecipientCount = 0;
-
-    /**
-     * @var    string  Email recipient pricing
-     * @since  Kunena 1.6.6
-     */
-    public $emailRecipientPrivacy = 'bcc';
-
-    /**
-     * @var    string  Email visible address
-     * @since  Kunena 1.6.6
-     */
-    public $emailVisibleAddress = '';
-
-    /**
-     * @var    integer  CAPTCHA post limit
-     * @since  Kunena 1.6.6
-     */
-    public $captchaPostLimit = 0;
-
-    /**
-     * @var    string  Image upload
-     * @since  Kunena 2.0.0
-     */
-    public $imageUpload = 'registered';
-
-    /**
-     * @var    string  File upload
-     * @since  Kunena 2.0.0
-     */
-    public $fileUpload = 'registered';
-
-    /**
-     * @var    string  Topic layout
-     * @since  Kunena 2.0.0
-     */
-    public $topicLayout = 'flat';
-
-    /**
-     * @var    boolean  Time to create page
-     * @since  Kunena 2.0.0
-     */
-    public $timeToCreatePage = 1;
-
-    /**
-     * @var    boolean  Show image files in mange profile
-     * @since  Kunena 2.0.0
-     */
-    public $showImgFilesManageProfile = 1;
-
-    /**
-     * @var    boolean  Hold new users posts
-     * @since  Kunena 2.0.0
-     */
-    public $holdNewUsersPosts = 0;
-
-    /**
-     * @var    boolean  Hold guest posts
-     * @since  Kunena 2.0.0
-     */
-    public $holdGuestPosts = 0;
-
-    /**
-     * @var    integer  Attachment limit
-     * @since  Kunena 2.0.0
-     */
-    public $attachmentLimit = 8;
-
-    /**
-     * @var    boolean  Pickup category
-     * @since  Kunena 2.0.0
-     */
-    public $pickupCategory = 0;
-
-    /**
-     * @var    string  Article display
-     * @since  Kunena 2.0.0
-     */
-    public $articleDisplay = 'intro';
-
-    /**
-     * @var    boolean  Send emails
-     * @since  Kunena 2.0.0
-     */
-    public $sendEmails = 1;
-
-    /**
-     * @var    boolean  Fallback english
-     * @since  Kunena 2.0.0
-     */
-    public $fallbackEnglish = 1;
-
-    /**
-     * @var    boolean  Cache
-     * @since  Kunena 2.0.0
-     */
-    public $cache = 1;
-
-    /**
-     * @var    integer  Cache time
-     * @since  Kunena 2.0.0
-     */
-    public $cacheTime = 60;
-
-    /**
-     * @var    integer  Ebay affiliate ID
-     * @since  Kunena 2.0.0
-     */
-    public $ebayAffiliateId = 5337089937;
-
-    /**
-     * @var    boolean  IP tracking
-     * @since  Kunena 2.0.0
-     */
-    public $ipTracking = 1;
-
-    /**
-     * @var    string  RSS feedburner URL
-     * @since  Kunena 2.0.3
-     */
-    public $rssFeedBurnerUrl = '';
-
-    /**
-     * @var    boolean  Auto link
-     * @since  Kunena 3.0.0
-     */
-    public $autoLink = 1;
-
-    /**
-     * @var    boolean  Access component
-     * @since  Kunena 3.0.0
-     */
-    public $accessComponent = 1;
-
-    /**
-     * @var    boolean  Statistic link allowed
-     * @since  Kunena 3.0.4
-     */
-    public $statsLinkAllowed = 1;
-
-    /**
-     * @var    boolean  Super admin user list
-     * @since  Kunena 3.0.6
-     */
-    public $superAdminUserlist = 0;
-
-    /**
-     * @var     boolean  Attachment protection
-     * @since   Kunena 4.0.0
-     */
-    public $attachmentProtection = 0;
-
-    /**
-     * @var     boolean  Category icons
-     * @since   Kunena 4.0.0
-     */
-    public $categoryIcons = 1;
-
-    /**
-     * @var     boolean  Avatar crop
-     * @since   Kunena 4.0.0
-     */
-    public $avatarCrop = 0;
-
-    /**
-     * @var     boolean  User can report himself
-     * @since   Kunena 4.0.0
-     */
-    public $userReport = 1;
-
-    /**
-     * @var     integer  Search time
-     * @since   Kunena 4.0.0
-     */
-    public $searchTime = 365;
-
-    /**
-     * @var     boolean  Teaser
-     * @since   Kunena 4.0.0
-     */
-    public $teaser = 0;
-
-    /**
-     * @var    boolean  Define ebay widget language
-     * @since  Kunena 3.0.7
-     */
-    public $ebayLanguage = 0;
-
-    /**
-     * @var    string  Define ebay Api key to be allowed to display ebay widget
-     * @since  Kunena 3.0.7
-     */
-    public $ebayApiKey = '';
-
-    /**
-     * @var    string  Define ebay cert Id key to be allowed to display ebay widget; select, boolean
-     * @since  5.2.0
-     */
-    public $ebayCertId = '';
-
-    /**
-     * @var     string  Define BlueSkyApp APP handle to use API
-     * @since   Kunena 6.4.0
-     */
-    public $blueskyappHandleOfApp = '';
-
-    /**
-     * @var     string  Define X API consumer key
-     * @since   Kunena 6.3.0
-     */
-    public $XConsumerKey = '';
-
-    /**
-     * @var     string  Define BlueSkyApp APP password to use API
-     * @since   Kunena 6.4.0
-     */
-    public $blueskyappPasswordOfApp = '';
-
-    /**
-     * @var     string  Define X API consumer secret
-     * @since   Kunena 6.3.0
-     */
-    public $XConsumerSecret = '';
-
-    /**
-     * @var     boolean  Allow to define if the user can change the subject of topic on replies
-     * @since   Kunena 4.0.0
-     */
-    public $allowChangeSubject = 1;
-
-    /**
-     * @var     integer  Max Links limit
-     * @since   Kunena 4.0.0
-     */
-    public $maxLinks = 6;
-
-    /**
-     * @var    boolean  Read Only State
-     * @since  Kunena 5.0.0
-     */
-    public $readOnly = 0;
-
-    /**
-     * @var    boolean  Rating integration
-     * @since  Kunena 5.0.0
-     */
-    public $ratingEnabled = 0;
-
-    /**
-     * @var    boolean  Allow to prevent posting if the subject of topic contains URL
-     * @since  Kunena 5.0.0
-     */
-    public $urlSubjectTopic = 0;
-
-    /**
-     * @var    boolean Allow to enable log to save moderation actions
-     * @since  Kunena 5.0.0
-     */
-    public $logModeration = 0;
-
-    /**
-     * @var    integer Define the number of characters from start when shorter then attachments filename
-     * @since  Kunena 5.0.0
-     */
-    public $attachStart = 0;
-
-    /**
-     * @var    integer Define the number of characters from end when shorten then attachments filename
-     * @since  Kunena 5.0.0
-     */
-    public $attachEnd = 14;
-
-    /**
-     * @var    string Define the google maps API key
-     * @since  Kunena 5.0.0
-     */
-    public $googleMapApiKey = '';
-
-    /**
-     * @var    boolean Allow to remove utf8 characters from filename of attachments
-     * @since  Kunena 5.0.0
-     */
-    public $attachmentUtf8 = 1;
-
-    /**
-     * @var    boolean Allow to auto-embded soundcloud item when you put just the URL in a message
-     * @since  Kunena 5.0.0
-     */
-    public $autoEmbedSoundcloud = 1;
-
-    /**
-     * @var    string to define the image location
-     * @since  Kunena 5.0.2
-     */
-    public $emailHeader = 'media/kunena/email/hero-wide.png';
-
-    /**
-     * @var    boolean show user status
-     * @since  Kunena 5.0.3
-     */
-    public $userStatus = 1;
-
-    /**
-     * @var    boolean Allow user signatures
-     * @since  Kunena 5.1.0
-     */
-    public $signature = 1;
-
-    /**
-     * @var    boolean Allow user personal
-     * @since  Kunena 5.1.0
-     */
-    public $personal = 1;
-
-    /**
-     * @var    boolean
-     * @since  Kunena 5.0.4
-     */
-    public $plainEmail = 0;
-
-    /**
-     * @var    boolean
-     * @since  Kunena 5.0.13
-     */
-    public $moderatorPermDelete = 0;
-
-    /**
-     * @var    string
-     * @since  Kunena 5.0.4
-     */
-    public $avatarTypes = 'gif, jpeg, jpg, png';
-
-    /**
-     * @var    boolean
-     * @since  Kunena 5.1.0
-     */
-    public $smartLinking = 0;
-
-    /**
-     * @var    string
-     * @since  Kunena 5.1.0
-     */
-    public $defaultAvatar = 'nophoto.png';
-
-    /**
-     * @var    string
-     * @since  Kunena 5.1.0
-     */
-    public $defaultAvatarSmall = 's_nophoto.png';
-
-    /**
-     * @var    string
-     * @since  Kunena 5.1.0
-     */
-    public $stopForumSpamKey = '';
-
-    /**
-     * @var    boolean
-     * @since  Kunena 5.1.0
-     */
-    public $quickReply = 1;
-
-    /**
-     * @var    boolean
-     * @since  Kunena 5.1.0
-     */
-    public $avatarEdit = 0;
-
-    /**
-     * @var    string
-     * @since  Kunena 5.1.0
-     */
-    public $activeMenuItem = '';
-
-    /**
-     * @var    integer
-     * @since  Kunena 5.1.0
-     */
-    public $mainMenuId = '';
-
-    /**
-     * @var    integer
-     * @since  Kunena 5.1.0
-     */
-    public $homeId = '';
-
-    /**
-     * @var    integer
-     * @since  Kunena 5.1.0
-     */
-    public $indexId = '';
-
-    /**
-     * @var    integer
-     * @since  Kunena 5.1.0
-     */
-    public $moderatorsId = '';
-
-    /**
-     * @var    integer
-     * @since  Kunena 5.1.0
-     */
-    public $topicListId = '';
-
-    /**
-     * @var    integer
-     * @since  Kunena 5.1.0
-     */
-    public $miscId = '';
-
-    /**
-     * @var    integer
-     * @since  Kunena 5.1.0
-     */
-    public $profileId = '';
-
-    /**
-     * @var    integer
-     * @since  Kunena 5.1.0
-     */
-    public $searchId = '';
-
-    /**
-     * @var    integer
-     * @since  Kunena 5.1.0
-     */
-    public $customId = '';
-
-    /**
-     * @var   integer
-     * @since  Kunena 5.1.0
-     */
-    public $avatarType = 1;
-
-    /**
-     * @var    boolean
-     * @since  Kunena 5.1.1
-     */
-    public $sefRedirect = 1;
-
-    /**
-     * @var    boolean
-     * @since  Kunena 5.1.1
-     */
-    public $allowEditPoll = 1;
-
-    /**
-     * @var    boolean
-     * @since  Kunena 5.1.2
-     */
-    public $useSystemEmails = 0;
-
-    /**
-     * @var    boolean  Auto embed instagram
-     * @since  Kunena 5.1.5
-     */
-    public $autoEmbedInstagram = 1;
-
-    /**
-     * @var    boolean
-     * @since  Kunena 5.1.14
-     */
-    public $disableRe = 0;
-
-    /**
      * @var string
-     * @since  K5.1.18
      */
-    public $emailSenderName = '';
+    private const COMPONENT = 'com_kunena';
 
     /**
-     * @var integer
-     * @since  K5.1.19
+     * @var KunenaConfig|null
      */
-    public $displayFilenameAttachment = 0;
+    private static ?KunenaConfig $instance = \null;
 
     /**
-     * @var integer
-     * @since  K5.2.0
+     * @var array
      */
-    public $newUsersPreventPostUrlImages = 0;
+    private array $config = [];
 
     /**
-     * @var integer
-     * @since  K5.2.0
+     * Private constructor to prevent direct instantiation of this utility class.
+     * This class is intended to be used statically.
+     * 
+     * @since  7.0.0
      */
-    public $minimalUserPostsAddUrlImage = 10;
+    private function __construct()
+    {
+        // Prevent direct instantiation
+    }
 
     /**
-     * @var    boolean  utm source
-     * @since  Kunena 1.0.5
+     * Public clone method to prevent cloning of this utility class.
+     * Throw an exception to make it explicit that cloning is not allowed.
+     * 
+     * @since  7.0.0
      */
-    public $utmSource = 0;
+    public function __clone()
+    {
+        throw new \BadMethodCallException('Cloning of ' . __CLASS__ . ' is not allowed.');
+    }
 
     /**
-     * @var    string to define the header height image size
-     * @since  Kunena 6.0
+     * Public wakeup method to prevent unserialization of this utility class.
+     * Throw an exception to make it explicit that unserialization is not allowed.
+     * 
+     * @since  7.0.0
      */
-    public $emailHeaderSizeY = 560;
+    public function __wakeup()
+    {
+        throw new \BadMethodCallException('Unserialization of ' . __CLASS__ . ' is not allowed.');
+    }
 
     /**
-     * @var    string to define the header width image size
-     * @since  Kunena 6.0
-     */
-    public $emailHeaderSizeX = 560;
-
-    /**
-     * @var    boolean  enabling profiler into Kunena
-     * @since  Kunena 6.0.0
-     */
-    public $profiler = 0;
-
-    /**
-     * @var    boolean  enabling private message buildin into Kunena
-     * @since  Kunena 6.1.0
-     */
-    public $privateMessage = 1;
-
-    /**
-     * @var    string default format of the date in datepicker in forms
-     * @since  Kunena 6.2.0
-     */
-    public $datePickerFormat = 'mm/dd/yyyy';
-
-    /**
-     * @var    boolean  enable the send mail to user when he is banned
-     * @since  Kunena 6.2.0
-     */
-    public $sendMailUserBanned = 0;
-
-    /**
-     * @var    boolean  enable the send mail to user when he is banned
-     * @since  Kunena 6.2.0
-     */
-    public $mailBodyUserBanned = '';
-
-    /**
-     * @var    boolean  enable the send mail to user when he is unbanned
-     * @since  Kunena 6.4.0
-     */
-    public $mailBodyUserUnBanned = '';
-
-    /**
-     * @var    boolean  show the usertype in the userlist in frontend
-     * @since  Kunena 7.0.0
-     */
-    public $userListUserType = 0;
-
-    /**
-     * @var    boolean  check new user on stopforumspam api
-     * @since  Kunena 7.0.0
-     */
-    public $stopForumSpamNewUserCheck = 0;
-
-    /**
-     * @return  KunenaConfig|mixed
+     * Magic method to get protected properties by key.
+     * This is called when reading data from inaccessible properties.
      *
-     * @throws  Exception
-     * @since   Kunena 6.0
+     * @param   string $key The key requested (e.g., 'name' for $class->name)
+     * @return  mixed|null The value from the $param array or null if the key doesn't exist
+     * @since   7.0.0
+     */
+    public function __get(string $key): mixed
+    {
+        // Check if the key exists in the protected array
+        if (\array_key_exists($key, $this->config)) {
+
+            // Ensure array when nothing using default value
+            if (\in_array($key, ['latestCategory', 'rssExcludedCategories', 'rssIncludedCategories'])) {
+                if (!\is_array($this->config[$key])) {
+                    $this->config[$key] = [$this->config[$key]];
+                }
+            }
+
+            // Ensure minimum value
+            if (\in_array($key, ['messagesPerPage', 'messagesPerPageSearch', 'threadsPerPage'])) {
+                $this->config[$key] = max($this->config[$key], 1);
+            }
+
+            if ($key === 'email') {
+                $email = $this->email;
+
+                return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
+            }
+
+            // Return the value
+            return $this->config[$key];
+        }
+
+        throw new \Exception('Trying to get non-existing property: ' . $key, 500);
+    }
+
+    /**
+     * Magic method to set inaccessible properties.
+     * This is called when writing data to inaccessible properties.
+     * It allows setting a configuration value only if the key already exists
+     * in the loaded configuration array.
+     *
+     * @param   string $key The key requested (e.g., 'name' for $class->name)
+     * @param   mixed $value The value to set
+     * @return  void
+     * @since   7.0.0
+     */
+    public function __set(string $key, mixed $value): void
+    {
+        // Only set the value if the key is already present in the config array
+        if (\array_key_exists($key, $this->config)) {
+            $this->config[$key] = $value;
+
+            return;
+        }
+
+        throw new \Exception('Trying to set non-existing property: ' . $key, 500);
+    }
+
+    /**
+     * Get an instance of KunenaConfig
+     * 
+     * @return  ?KunenaConfig
+     * @since   7.0.0
      */
     public static function getInstance(): ?KunenaConfig
     {
-        static $instance = null;
+        if (\null === self::$instance) {
+            $instance = new KunenaConfig();
+            $instance->config = self::getCachedConfig();
+            self::$instance = $instance;
+        }
 
-        if (!$instance) {
-            $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()
-                ->get(CacheControllerFactoryInterface::class)
-                ->createCacheController('output', $options);
-            $instance = $cache->get('configuration', 'com_kunena');
+        return self::$instance;
+    }
 
-            if (!$instance) {
-                $instance = new KunenaConfig();
-                $instance->load();
 
-                $cache->store($instance, 'configuration', 'com_kunena');
+    /**
+     * Function to build the configuration values with default values from config.xml
+     * 
+     * @return  array
+     * @since   7.0.0
+     */
+    private static function buildConfig(): array
+    {
+        $config   = [];
+        $params   = ComponentHelper::getParams(self::COMPONENT);
+        $defaults = self::getXmlDefaults(JPATH_ADMINISTRATOR . '/components/' . self::COMPONENT . '/config.xml');
+
+        foreach ($defaults as $name => $default) {
+            $config[$name] = $params->get($name, $default);
+        }
+
+        return $config;
+    }
+
+    /**
+     * Function to get the cached (or create when not existing) configuration settings
+     * 
+     * @return  array
+     * @since   7.0.0
+     */
+    private static function getCachedConfig(): array
+    {
+        /** @var CallbackController $cache */
+        $cache  = self::getConfigCacheController();
+        $config = $cache->get(
+            fn() => self::buildConfig(),
+            [],
+            'config'
+        );
+
+        return $config;
+    }
+
+    /**
+     * Function to store the configuration settings in to Joomla configured cache
+     * 
+     * @param   array  $config  The config object to store.
+     *
+     * @return  void
+     * @since   7.0.0
+     */
+    private static function storeCachedConfig(array $config): void
+    {
+        /** @var CallbackController $cache */
+        $cache = self::getConfigCacheController();
+        $cache->store($config, 'config');
+    }
+
+    /**
+     * Function to get the Configuration cache Controller
+     * 
+     * @return  CacheController
+     * @since   7.0.0
+     */
+    private static function getConfigCacheController(): CacheController
+    {
+        $options = [
+            'defaultgroup' => self::COMPONENT . '_configuration',
+            'caching'      => \true,                                // Force caching
+            'lifetime'     => 5259600                               // Config cache never expires
+        ];
+
+        /** @var CallbackController $cache */
+        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
+
+        return $cache;
+    }
+
+    /**
+     * get the XML file
+     *
+     * @param   string  $path  Path to the XML file
+     *
+     * @return  SimpleXMLElement|false
+     * @since   7.0.0
+     */
+    private static function getXml(string $path): \SimpleXMLElement|false
+    {
+        if (!\is_file($path)) {
+            return \false;
+        }
+
+        $xml = new \SimpleXMLElement(\file_get_contents($path));
+
+        return $xml;
+    }
+
+    /**
+     * Extract default values from config.xml using Joomla Form API
+     *
+     * @param   string  $path  Path to the XML file
+     *
+     * @return  array<string, mixed>
+     * @since   7.0.0
+     */
+    private static function getXmlDefaults(string $path): array
+    {
+        $xml = self::getXml($path);
+
+        if (!$xml) {
+            return [];
+        }
+
+        $defaults = [];
+
+        // Assuming typical Joomla form XML structure: <config><fields name="params"><fieldset><field ...>
+        // Adjust XPath if your config.xml structure is different.
+        foreach ($xml->xpath('//field') as $field) {
+            $attributes = $field->attributes();
+            $name       = (string) ($attributes['name'] ?? '');
+            $type       = (string) ($attributes['type'] ?? '');
+            $config     = (string) ($attributes['config'] ?? '');
+
+            if (
+                !empty($name)
+                && !\str_starts_with($name, '@')
+                && $type !== 'spacer'
+                && $config !== 'false'
+            ) {
+                $defaults[$name] = (string) ($attributes['default'] ?? '');
             }
         }
 
-        return $instance;
+        return $defaults;
     }
 
     /**
-     * Load config settings from database table.
+     * Print all properties on screen to create a docblock property list we can use in this class
      *
-     * @return  void
+     * @param   string  $path  Path to the XML file
      *
-     * @throws  Exception
-     * @since   Kunena 6.0
+     * @return  never
+     * @since   7.0.0
      */
-    public function load(): void
+    public static function getIdeProperties(): never
     {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select('*')
-            ->from($db->quoteName('#__kunena_configuration'))
-            ->where($db->quoteName('id') . ' = 1');
-        $db->setQuery($query);
+        $xml = self::getXml(JPATH_ADMINISTRATOR . '/components/' . self::COMPONENT . '/config.xml');
 
-        try {
-            $config = $db->loadAssoc();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
+        if (!$xml) {
+            die('- nothing to list -');
         }
 
-        if ($config) {
-            $params = json_decode($config['params']);
+        $properties = [];
+        $params     = ComponentHelper::getParams(self::COMPONENT);
 
-            if ($params !== null && \json_last_error() === JSON_ERROR_NONE) {
-                $this->bind($params);
-            } else {
-                throw new Exception(\json_last_error_msg(), 500);
+        // Assuming typical Joomla form XML structure: <config><fields name="params"><fieldset><field ...>
+        // Adjust XPath if your config.xml structure is different.
+        foreach ($xml->xpath('//field') as $field) {
+            $attributes = $field->attributes();
+            $name       = (string) ($attributes['name'] ?? '');
+            $type       = (string) ($attributes['type'] ?? '');
+            $config     = (string) ($attributes['config'] ?? '');
+
+            if (
+                !empty($name)
+                && !\str_starts_with($name, '@')
+                && $type !== 'spacer'
+                && $config !== 'false'
+            ) {
+                $type              = \is_array($params->get($name, '')) ? 'array ' : 'string';
+                $label             = Text::_((string) ($attributes['label'] ?? ''));
+                $properties[$name] = ['label' => $label, 'type' => $type];
             }
         }
 
-        // Perform custom validation of config data before we let anybody access it.
-        $this->check();
+        $maxLength = 0;
+        foreach ($properties as $property => $value) {
+            $length = \strlen($property . $value['type']);
+            if ($length > $maxLength) {
+                $maxLength = $length;
+            }
+        }
+
+        // Ensure the array is sorted by key
+        \ksort($properties);
+
+        // Step 2: Iterate and pad the property key to align the label
+        foreach ($properties as $property => $value) {
+            // Pad the property key with spaces on the right side
+            $paddedProperty = \str_pad($property, $maxLength);
+            $label          = $value['label'];
+            $type           = $value['type'];
+            // Output the string, aligning the label
+            echo " * @property $type \$$paddedProperty    $label\r\n";
+        }
+
+        die;
     }
 
     /**
-     * @param   mixed  $properties  properties
+     * Function to save a key value in the component configuration
      *
-     * @return  void
-     *
-     * @since   Kunena 6.0
+     * @return  boolean
+     * @since   7.0.0
      */
-    public function bind($properties): void
+    public function save(): bool
     {
-        $this->setProperties($properties);
-    }
-
-    /**
-     * Messages per page
-     *
-     * @return  void
-     *
-     * @since   Kunena 6.0
-     */
-    public function check(): void
-    {
-        // Add anything that requires validation
-
-        // Need to have at least one per page of these
-        $this->messagesPerPage       = max($this->messagesPerPage, 1);
-        $this->messagesPerPageSearch = max($this->messagesPerPageSearch, 1);
-        $this->threadsPerPage        = max($this->threadsPerPage, 1);
-    }
-
-    /**
-     * @return  void
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function save(): void
-    {
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        // Perform custom validation of config data before we write it.
-        $this->check();
-
-        // Get current configuration
-        $params        = ArrayHelper::fromObject($this);
-        $cleanedParams = [];
+        $params  = ComponentHelper::getParams(self::COMPONENT);
+        $changed = \false;
 
         foreach ($params as $key => $value) {
-            // Check if the key starts with a null byte (indicating a mangled private/protected property)
-            // or if it's the specific '_errors' key (if it's not mangled)
-            if (!str_starts_with($key, "\0") && $key !== '_errors' && $key !== 'id') {
-                $cleanedParams[$key] = $value;
+            if ($this->config[$key] === $value) {
+                continue;
             }
+
+            $params->set($key, $this->config[$key]);
+            $changed = \true;
         }
 
-        $db->setQuery("REPLACE INTO #__kunena_configuration SET id=1, params={$db->quote(json_encode($cleanedParams))}");
+        if ($changed) {
+            /** @var DatabaseDriver $db */
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
+            $query = $db->createQuery()
+                ->update($db->quoteName('#__extensions'))
+                ->set($db->quoteName('params') . ' = ' . $db->quote(\json_encode($params)))
+                ->where($db->quoteName('name') . ' = ' . $db->quote(self::COMPONENT));
+
+            $db->setQuery($query);
+
+            $result = $db->execute();
+
+            // Clean out the Cache and start with new value(s)
+            $this->reset();
+
+            return $result;
         }
 
-        // Clear cache.
-        KunenaCacheHelper::clear();
+        return \true;
     }
 
     /**
+     * Function to clear the local cached $config variable
+     * 
      * @return  void
-     *
-     * @since   Kunena 6.0
+     * @since   7.0.0
      */
     public function reset(): void
     {
-        $instance = new KunenaConfig();
-        $this->bind(ArrayHelper::fromObject($instance));
-    }
+        $cache = self::getConfigCacheController();
+        $cache->clean();
 
-    /**
-     * Email set for the configuration
-     *
-     * @return  string
-     *
-     * @throws  Exception
-     * @since   Kunena 6.0
-     */
-    public function getEmail(): string
-    {
-        $email = $this->email;
-
-        return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
-    }
-
-    /**
-     * Modifies existing property of the class object
-     *
-     * @param   string  $property  The name of the property.
-     * @param   mixed   $value     The value of the property to set.
-     *
-     * @return  bool  true on success
-     *
-     * @since   Kunena 6.4
-     */
-    public function set($property, $value): bool
-    {
-        $this->$property = $value;
-
-        return true;
-    }
-
-    /**
-     * Set the object properties based on a named array/hash.
-     *
-     * @param   mixed  $properties  Either an associative array or another object.
-     *
-     * @return  boolean
-     *
-     * @since   Kunena 6.4
-     */
-    public function setProperties($properties)
-    {
-        if (\is_array($properties) || \is_object($properties)) {
-            foreach ((array) $properties as $k => $v) {
-                // Use the set function which might be overridden.
-                $this->set($k, $v);
-            }
-
-            return true;
+        if (self::$instance !== \null) {
+            self::$instance = \null;
         }
-
-        return false;
     }
 }

@@ -1,9 +1,2190 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<!DOCTYPE config>
-<config>
-    <fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
-        <field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL" class="inputbox" filter="rules"
-               validate="rules" component="com_kunena"
-               section="component"/>
+<?xml version="1.0" encoding="utf-8"?>
+
+<config addfieldprefix="Kunena\Forum\Libraries\Form\Field">
+    <inlinehelp button="show" />
+    <fieldset
+        name="general"
+        label="JGLOBAL_FIELDSET_GLOBAL">
+        <fieldset
+            name="basic_settings"
+            label="JGLOBAL_FIELDSET_GLOBAL">
+            <field
+                name="kunenaConfig"
+                type="KunenaConfig"
+                config="false"
+                hidden="true" />
+            <field
+                name="boardTitle"
+                type="text"
+                default="Kunena"
+                label="COM_KUNENA_A_BOARD_TITLE"
+                description="COM_KUNENA_A_BOARD_TITLE_DESC" />
+            <field
+                name="email"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_EMAIL"
+                description="COM_KUNENA_A_EMAIL_DESC2" />
+            <field
+                name="emailSenderName"
+                type="text"
+                default=""
+                label="COM_KUNENA_CONFIG_EMAIL_SENDER_NAME"
+                description="COM_KUNENA_CONFIG_EMAIL_SENDER_NAME_DESC" />
+            <field
+                name="sendEmails"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_SEND_EMAILS"
+                description="COM_KUNENA_A_SEND_EMAILS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="boardOffline"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_BOARD_OFFLINE"
+                description="COM_KUNENA_A_BOARD_OFFLINE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="offlineMessage"
+                type="textarea"
+                default="&lt;h2&gt;The Forum is currently offline for maintenance.&lt;/h2&gt;\n&lt;div&gt;Check back soon!&lt;/di&gt;>"
+                label="COM_KUNENA_A_BOARD_OFFLINE_MES"
+                description="COM_KUNENA_A_BOARD_OFFLINE_MES_DESC"
+                showon="boardOffline:1" />
+            <field
+                name="readOnly"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_BOARD_READONLY"
+                description="COM_KUNENA_A_BOARD_READONLY_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="sessionTimeOut"
+                type="number"
+                min="60"
+                max="982980"
+                step="60"
+                default="1800"
+                label="COM_KUNENA_A_KUNENA_SESSION_TIMEOUT"
+                description="COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC" />
+            <field
+                name="enableRss"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_RSS"
+                description="COM_KUNENA_A_RSS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="debug"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_DEBUG_MODE"
+                description="COM_KUNENA_DEBUG_MODE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="profiler"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_PROFILER"
+                description="COM_KUNENA_ADMIN_CONFIG_PROFILER_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="fallbackEnglish"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CFG_FALLBACK_ENGLISH"
+                description="COM_KUNENA_CFG_FALLBACK_ENGLISH_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="timeToCreatePage"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_TIME_TO_CREATEPAGE"
+                description="COM_KUNENA_TIME_TO_CREATEPAGE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+        </fieldset>
+        <fieldset
+            name="seo"
+            label="COM_KUNENA_SEO_SETTINGS">
+            <field
+                name="sef"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SEF"
+                description="COM_KUNENA_SEF_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="accessComponent"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CFG_ACCESS_COMPONENT"
+                description="COM_KUNENA_CFG_ACCESS_COMPONENT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="sefRedirect"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SEF_REDIRECT"
+                description="COM_KUNENA_SEF_REDIRECT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+        </fieldset>
+        <fieldset
+            name="cache"
+            label="COM_KUNENA_CACHING_SETTINGS">
+            <field
+                name="cache"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CFG_CACHE"
+                description="COM_KUNENA_CFG_CACHE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="cacheTime"
+                type="list"
+                default="60"
+                label="COM_KUNENA_CFG_CACHE_TIME"
+                description="COM_KUNENA_CFG_CACHE_TIME_DESC"
+                showon="cache:1">
+                <option value="60">COM_KUNENA_CFG_OPTION_1_MINUTE</option>
+                <option value="120">COM_KUNENA_CFG_OPTION_2_MINUTES</option>
+                <option value="180">COM_KUNENA_CFG_OPTION_3_MINUTES</option>
+                <option value="300">COM_KUNENA_CFG_OPTION_5_MINUTES</option>
+                <option value="600">COM_KUNENA_CFG_OPTION_10_MINUTES</option>
+                <option value="900">COM_KUNENA_CFG_OPTION_15_MINUTES</option>
+                <option value="1800">COM_KUNENA_CFG_OPTION_30_MINUTES</option>
+                <option value="3600">COM_KUNENA_CFG_OPTION_60_MINUTES</option>
+            </field>
+        </fieldset>
+    </fieldset>
+    <fieldset
+        name="frontend"
+        label="COM_KUNENA_A_FRONTEND">
+        <fieldset
+            name="looks"
+            label="COM_KUNENA_A_LOOKS">
+            <field
+                name="threadsPerPage"
+                type="number"
+                min="1"
+                max="999"
+                default="20"
+                label="COM_KUNENA_A_THREADS"
+                description="COM_KUNENA_A_THREADS_DESC" />
+            <field
+                name="messagesPerPage"
+                type="number"
+                min="1"
+                max="999"
+                default="6"
+                label="COM_KUNENA_A_MESSAGES"
+                description="COM_KUNENA_A_MESSAGES_DESC" />
+            <field
+                name="messagesPerPageSearch"
+                type="number"
+                min="1"
+                max="999"
+                default="15"
+                label="COM_KUNENA_A_MESSAGES_SEARCH"
+                description="COM_KUNENA_A_MESSAGES_DESC_SEARCH" />
+            <field
+                name="showHistory"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_HISTORY"
+                description="COM_KUNENA_A_HISTORY_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="historyLimit"
+                type="number"
+                min="1"
+                max="999"
+                default="6"
+                label="COM_KUNENA_A_HISTLIM"
+                description="COM_KUNENA_A_HISTLIM_DESC"
+                showon="showHistory:1" />
+            <field
+                name="postDateFormat"
+                type="postDateFormat"
+                default="ago"
+                label="COM_KUNENA_CFG_POST_DATEFORMAT"
+                description="COM_KUNENA_CFG_POST_DATEFORMAT_DESC" />
+            <field
+                name="postDateFormatHover"
+                type="postDateFormat"
+                default="datetime"
+                label="COM_KUNENA_CFG_POST_DATEFORMAT_HOVER"
+                description="COM_KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC" />
+            <field
+                name="showNew"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_SHOWNEW"
+                description="COM_KUNENA_A_SHOWNEW_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showAnnouncement"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SHOW_ANNOUNCEMENT"
+                description="COM_KUNENA_SHOW_ANNOUNCEMENT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="avatarOnCategory"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SHOW_AVATAR_ON_CAT"
+                description="COM_KUNENA_SHOW_AVATAR_ON_CAT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="listCatShowModerators"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_LISTCAT_SHOW_MODERATORS"
+                description="COM_KUNENA_LISTCAT_SHOW_MODERATORS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showChildCatIcon"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST"
+                description="COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="enableForumJump"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_FORUM_JUMP"
+                description="COM_KUNENA_A_FORUM_JUMP_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="reportMsg"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_COM_A_REPORT"
+                description="COM_KUNENA_COM_A_REPORT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="orderingSystem"
+                type="list"
+                default="mesid"
+                label="COM_KUNENA_COM_A_ORDERING_SYSTEM"
+                description="COM_KUNENA_COM_A_REPORT_ORDERING_SYSTEM_DESC">
+                <option value="mesid">COM_KUNENA_COM_A_ORDERING_SYSTEM_NEW</option>
+                <option value="lastpost">COM_KUNENA_COM_A_ORDERING_SYSTEM_OLD</option>
+            </field>
+            <field
+                name="hideIp"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_COM_A_HIDE_IP"
+                description="COM_KUNENA_COM_A_HIDE_IP_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="latestCategoryIn"
+                type="list"
+                default="1"
+                label="COM_KUNENA_A_LATESTCATEGORY_IN"
+                description="COM_KUNENA_A_LATESTCATEGORY_IN_DESC">
+                <option value="0">COM_KUNENA_A_LATESTCATEGORY_IN_HIDE</option>
+                <option value="1">COM_KUNENA_A_LATESTCATEGORY_IN_SHOW</option>
+            </field>
+            <field
+                name="latestCategory"
+                type="categoryList"
+                default="0"
+                action="read"
+                sections="0"
+                multiple="true"
+                select="COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL"
+                label="COM_KUNENA_A_LATESTCATEGORY"
+                description="COM_KUNENA_A_LATESTCATEGORY_DESC" />
+            <field
+                name="topicIcons"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_COM_A_TOPICICONS"
+                description="COM_KUNENA_COM_A_TOPCIICONS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="lightbox"
+                type="list"
+                default="1"
+                label="COM_KUNENA_COM_A_ENABLELIGHTBOX"
+                description="COM_KUNENA_COM_A_ENABLELIGHTBOX_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+                <option value="2">COM_KUNENA_A_LIGHTBOX_NO_JS</option>
+            </field>
+            <field
+                name="showListTime"
+                type="list"
+                default="720"
+                label="COM_KUNENA_COM_A_SHOW_TOPICS_FROM_LAST_TIME"
+                description="COM_KUNENA_COM_A_SHOW_TOPICS_FROM_LAST_TIME_DESC">
+                <option value="-1">COM_KUNENA_SHOW_SELECT_ALL</option>
+                <option value="0">COM_KUNENA_SHOW_LASTVISIT</option>
+                <option value="4">COM_KUNENA_SHOW_4_HOURS</option>
+                <option value="8">COM_KUNENA_SHOW_8_HOURS</option>
+                <option value="12">COM_KUNENA_SHOW_12_HOURS</option>
+                <option value="24">COM_KUNENA_SHOW_24_HOURS</option>
+                <option value="48">COM_KUNENA_SHOW_48_HOURS</option>
+                <option value="168">COM_KUNENA_SHOW_WEEK</option>
+                <option value="720">COM_KUNENA_SHOW_MONTH</option>
+                <option value="8760">COM_KUNENA_SHOW_YEAR</option>
+            </field>
+            <field
+                name="topicLayout"
+                type="list"
+                default="flat"
+                label="COM_KUNENA_COM_A_TOPIC_LAYOUT"
+                description="COM_KUNENA_COM_A_TOPIC_LAYOUT_DESC">
+                <option value="flat">COM_KUNENA_COM_A_TOPIC_LAYOUT_FLAT</option>
+                <option value="threaded">COM_KUNENA_COM_A_TOPIC_LAYOUT_THREADED</option>
+                <option value="indented">COM_KUNENA_COM_A_TOPIC_LAYOUT_INDENTED</option>
+            </field>
+            <field
+                name="pickupCategory"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_PICKUP_CATEGORY"
+                description="COM_KUNENA_PICKUP_CATEGORY_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="articleDisplay"
+                type="list"
+                default="intro"
+                label="COM_KUNENA_COM_A_ARTICLE_DISPLAY"
+                description="COM_KUNENA_COM_A_ARTICLE_DISPLAY_DESC">
+                <option value="full">COM_KUNENA_COM_A_FULL_ARTICLE</option>
+                <option value="intro">COM_KUNENA_COM_A_INTRO_ARTICLE</option>
+                <option value="link">COM_KUNENA_COM_A_ARTICLE_LINK</option>
+            </field>
+            <field
+                name="defaultSort"
+                type="list"
+                default="asc"
+                label="COM_KUNENA_CFG_DEFAULT_SORT"
+                description="COM_KUNENA_CFG_DEFAULT_SORT_DESC">
+                <option value="asc">COM_KUNENA_OPTION_DEFAULT_SORT_FIRST</option>
+                <option value="desc">COM_KUNENA_OPTION_DEFAULT_SORT_LAST</option>
+            </field>
+            <field
+                name="searchTime"
+                type="list"
+                default="365"
+                label="COM_KUNENA_CFG_SEARCH_TIME"
+                description="COM_KUNENA_CFG_SEARCH_TIME_DESC">
+                <option value="1">COM_KUNENA_CFG_SEARCH_DATE_YESTERDAY</option>
+                <option value="7">COM_KUNENA_CFG_SEARCH_DATE_WEEK</option>
+                <option value="14">COM_KUNENA_CFG_SEARCH_DATE_2WEEKS</option>
+                <option value="30">COM_KUNENA_CFG_SEARCH_DATE_MONTH</option>
+                <option value="90">COM_KUNENA_CFG_SEARCH_DATE_3MONTHS</option>
+                <option value="180">COM_KUNENA_CFG_SEARCH_DATE_6MONTHS</option>
+                <option value="365">COM_KUNENA_CFG_SEARCH_DATE_YEAR</option>
+                <option value="all">COM_KUNENA_CFG_SEARCH_DATE_ANY</option>
+            </field>
+            <field
+                name="allowChangeSubject"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ALLOW_CHANGE_SUBJECT_REPLIES_LABEL"
+                description="COM_KUNENA_ALLOW_CHANGE_SUBJECT_REPLIES_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="ratingEnabled"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIGURATION_RATING_ENABLED"
+                description="COM_KUNENA_CONFIGURATION_RATING_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="attachStart"
+                type="number"
+                min="0"
+                max="999"
+                default="0"
+                label="COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START"
+                description="COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_START_DESC" />
+            <field
+                name="attachEnd"
+                type="number"
+                min="0"
+                max="999"
+                default="14"
+                label="COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END"
+                description="COM_KUNENA_CONFIG_ATTACHMENT_SHORTEN_NAME_END_DESC" />
+            <field
+                name="quickReply"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_QUICK_REPLY"
+                description="COM_KUNENA_A_QUICK_REPLY_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="disableRe"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_DISABLE_RE"
+                description="COM_KUNENA_DISABLE_RE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="displayFilenameAttachment"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIG_DISPLAY_FILENAME_ATTACHMENT"
+                description="COM_KUNENA_CONFIG_DISPLAY_FILENAME_ATTACHMENT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="datePickerFormat"
+                type="text"
+                default=""
+                label="COM_KUNENA_CONFIG_DISPLAY_DATE_PICKER_FORMAT"
+                description="COM_KUNENA_CONFIG_DISPLAY_DATE_PICKER_FORMAT_DESC" />
+        </fieldset>
+    </fieldset>
+    <fieldset
+        name="users"
+        label="COM_KUNENA_A_USERS">
+        <fieldset
+            name="user_related"
+            label="COM_KUNENA_A_USER_RELATED">
+            <field
+                name="username"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_DISPLAY_NAME"
+                description="COM_KUNENA_A_USERNAME_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="askEmail"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_ASK_EMAIL"
+                description="COM_KUNENA_A_ASK_EMAIL_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showEmail"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_SHOWMAIL"
+                description="COM_KUNENA_A_SHOWMAIL_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showUserStats"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_USERSTATS"
+                description="COM_KUNENA_A_USERSTATS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showKarma"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_KARMA"
+                description="COM_KUNENA_A_KARMA_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showThankYou"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_THANKYOU"
+                description="COM_KUNENA_A_THANKYOU_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="thankYouMax"
+                type="number"
+                min="1"
+                max="999"
+                default="10"
+                label="COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS"
+                description="COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS" />
+            <field
+                name="userEdit"
+                type="list"
+                default="1"
+                label="COM_KUNENA_A_USER_EDIT"
+                description="COM_KUNENA_A_USER_EDIT_DESC">
+                <option value="0">COM_KUNENA_EDIT_ALLOWED_NEVER</option>
+                <option value="1">COM_KUNENA_EDIT_ALLOWED_ALWAYS</option>
+                <option value="2">COM_KUNENA_A_EDIT_ALLOWED_IF_REPLIES</option>
+                <option value="3">COM_KUNENA_EDIT_ALLOWED_ONLY_LAST_MESSAGE</option>
+                <option value="4">COM_KUNENA_EDIT_ALLOWED_ONLY_FIRST_MESSAGE</option>
+            </field>
+            <field
+                name="userEditTime"
+                type="number"
+                min="0"
+                max="999"
+                default="0"
+                label="COM_KUNENA_A_USER_EDIT_TIME"
+                description="COM_KUNENA_A_USER_EDIT_TIME_DESC"
+                showon="userEdit!:0" />
+            <field
+                name="userEditTimeGrace"
+                type="number"
+                min="1"
+                max="86400"
+                default="600"
+                label="COM_KUNENA_A_USER_EDIT_TIMEGRACE"
+                description="COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC"
+                showon="userEdit!:0" />
+            <field
+                name="editMarkup"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_USER_MARKUP"
+                description="COM_KUNENA_A_USER_MARKUP_DESC"
+                showon="userEdit!:0">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="allowFavorites"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_FAVORITES"
+                description="COM_KUNENA_A_FAVORITES_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="boxGhostMessage"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_GHOSTMESSAGE"
+                description="COM_KUNENA_A_GHOSTMESSAGE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showBannedReason"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_SHOWBANNEDREASON_PROFILE"
+                description="COM_KUNENA_A_SHOWBANNEDREASON_PROFILE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showImgFilesManageProfile"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE"
+                description="COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userReport"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT"
+                description="COM_KUNENA_A_USER_CAN_SEND_OWN_REPORT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="logModeration"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIGURATION_LOG_COLLECT_DATA"
+                description="COM_KUNENA_CONFIGURATION_LOG_COLLECT_DATA_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userStatus"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIGURATION_USER_STATUS"
+                description="COM_KUNENA_CONFIGURATION_USER_STATUS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="signature"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_SIGNATURES"
+                description="COM_KUNENA_A_SIGNATURES_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="maxSig"
+                type="number"
+                min="1"
+                max="9999"
+                default="300"
+                label="COM_KUNENA_A_SIGNATURE"
+                description="COM_KUNENA_A_SIGNATURE_DESC"
+                showon="signature:1" />
+            <field
+                name="personal"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_PERSONAL"
+                description="COM_KUNENA_A_PERSONAL_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="privateMessage"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_PRIVATEMESSAGE"
+                description="COM_KUNENA_ADMIN_PRIVATEMESSAGE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+        </fieldset>
+    </fieldset>
+
+    <fieldset
+        name="emails"
+        label="COM_KUNENA_SUBSCRIPTIONS">
+        <fieldset
+            name="subscriptions"
+            label="COM_KUNENA_SUBSCRIPTIONS">
+            <field
+                name="emailHeader"
+                type="text"
+                default="media/kunena/email/hero-wide.png"
+                label="COM_KUNENA_EMAIL_HEADER"
+                description="COM_KUNENA_EMAIL_HEADER_DESC" />
+            <field
+                name="emailHeaderSizeY"
+                type="number"
+                min="1"
+                max="9999"
+                default="560"
+                label="COM_KUNENA_EMAIL_HEADER_SIZEY"
+                description="COM_KUNENA_EMAIL_HEADER_SIZEY_DESC" />
+            <field
+                name="emailHeaderSizeX"
+                type="number"
+                min="1"
+                max="9999"
+                default="560"
+                label="COM_KUNENA_EMAIL_HEADER_SIZEX"
+                description="COM_KUNENA_EMAIL_HEADER_SIZEX_DESC" />
+            <field
+                name="allowSubscriptions"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_SUBSCRIPTIONS"
+                description="COM_KUNENA_A_SUBSCRIPTIONS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="mailFull"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_MAILFULL"
+                description="COM_KUNENA_MAILFULL_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="plainEmail"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_PLAINEMAIL"
+                description="COM_KUNENA_PLAINEMAIL_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="categorySubscriptions"
+                type="list"
+                default="post"
+                label="COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS"
+                description="COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS_DESC">
+                <option value="disabled">COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_DISABLED</option>
+                <option value="topic">COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_TOPIC</option>
+                <option value="post">COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_POST</option>
+            </field>
+            <field
+                name="topicSubscriptions"
+                type="list"
+                default="every"
+                label="COM_KUNENA_A_TOPIC_SUBSCRIPTIONS"
+                description="COM_KUNENA_A_TOPIC_SUBSCRIPTIONS_DESC">
+                <option value="disabled">COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_DISABLED</option>
+                <option value="first">COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_FIRST</option>
+                <option value="every">COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_EVERY</option>
+            </field>
+            <field
+                name="subscriptionsChecked"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SUBSCRIPTIONSCHECKED"
+                description="COM_KUNENA_SUBSCRIPTIONSCHECKED_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="emailRecipientCount"
+                type="integer"
+                first="0"
+                last="100"
+                step="5"
+                default="10"
+                label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT"
+                description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT_DESC" />
+            <field
+                name="emailRecipientPrivacy"
+                type="list"
+                default="bcc"
+                label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY"
+                description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_DESC">
+                <option value="to">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_TO</option>
+                <option value="cc">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_CC</option>
+                <option value="bcc">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_BCC</option>
+            </field>
+            <field
+                name="emailVisibleAddress"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS"
+                description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS_DESC" />
+            <field
+                name="useSystemEmails"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_USE_SYSTEM_EMAILS"
+                description="COM_KUNENA_A_USE_SYSTEM_EMAILS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="utmSource"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_USE_UTM_SOURCE"
+                description="COM_KUNENA_A_USE_UTM_SOURCE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="sendMailUserBanned"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIG_SEND_MAIL_TO_USER_WHEN_BANNED_AND_UNBANNED"
+                description="COM_KUNENA_CONFIG_SEND_MAIL_TO_USER_WHEN_BANNED_AND_UNBANNED_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="mailBodyUserBanned"
+                type="textarea"
+                default=""
+                label="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED"
+                description="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_BANNED_DESC"
+                showon="sendMailUserBanned:1" />
+            <field
+                name="mailBodyUserUnBanned"
+                type="textarea"
+                default=""
+                label="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_UNBANNED"
+                description="COM_KUNENA_CONFIG_MAILBODY_USER_WHEN_UNBANNED_DESC"
+                showon="sendMailUserBanned:1" />
+        </fieldset>
+    </fieldset>
+
+    <fieldset
+        name="security"
+        label="COM_KUNENA_A_SECURITY">
+        <fieldset
+            name="security_settings"
+            label="COM_KUNENA_A_SECURITY_SETTINGS">
+            <field
+                name="pubWrite"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_PUBWRITE"
+                description="COM_KUNENA_A_PUBWRITE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="holdGuestPosts"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_HOLD_GUEST_POSTS"
+                description="COM_KUNENA_A_HOLD_GUEST_POSTS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userlistAllowed"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="pubProfile"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_PUBPROFILE"
+                description="COM_KUNENA_ADMIN_CONFIG_PUBPROFILE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="regOnly"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_REGISTERED_ONLY"
+                description="COM_KUNENA_A_REG_ONLY_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="holdNewUsersPosts"
+                type="number"
+                min="0"
+                max="99"
+                default="0"
+                label="COM_KUNENA_A_HOLD_NEWUSERS_POSTS"
+                description="COM_KUNENA_A_HOLD_NEWUSERS_POSTS_DESC" />
+            <field
+                name="userDeleteMessage"
+                type="list"
+                default="0"
+                label="COM_KUNENA_A_DELETEMESSAGE"
+                description="COM_KUNENA_A_DELETEMESSAGE_DESC">
+                <option value="0">COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED</option>
+                <option value="1">COM_KUNENA_A_DELETEMESSAGE_ALLOWED_IF_REPLIES</option>
+                <option value="2">COM_KUNENA_A_DELETEMESSAGE_ALWAYS_ALLOWED</option>
+                <option value="3">COM_KUNENA_CONFIG_DELETEMESSAGE_NOT_FIRST_MESSAGE</option>
+                <option value="4">COM_KUNENA_CONFIG_DELETEMESSAGE_ONLY_LAST_MESSAGE</option>
+            </field>
+            <field
+                name="modSeeDeleted"
+                type="list"
+                default="0"
+                label="COM_KUNENA_COM_A_MOD_SEE_DELETED"
+                description="COM_KUNENA_COM_A_MOD_SEE_DELETED_DESC">
+                <option value="2">COM_KUNENA_A_SEE_RESTORE_DELETED_NOBODY</option>
+                <option value="1">COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINSMODS</option>
+                <option value="0">COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINS</option>
+            </field>
+            <field
+                name="floodProtection"
+                type="number"
+                min=""
+                max="3600"
+                default="0"
+                label="COM_KUNENA_A_FLOOD"
+                description="COM_KUNENA_A_FLOOD_DESC" />
+            <field
+                name="mailModerators"
+                type="list"
+                default="0"
+                label="COM_KUNENA_A_MAILMOD"
+                description="COM_KUNENA_A_MAILMOD_DESC">
+                <option value="-1">COM_KUNENA_NO</option>
+                <option value="0">COM_KUNENA_CFG_OPTION_UNAPPROVED_POSTS</option>
+                <option value="1">COM_KUNENA_CFG_OPTION_ALL_NEW_POSTS</option>
+            </field>
+            <field
+                name="mailAdministrators"
+                type="list"
+                default="0"
+                label="COM_KUNENA_A_MAILADMIN"
+                description="COM_KUNENA_A_MAILADMIN_DESC">
+                <option value="-1">COM_KUNENA_NO</option>
+                <option value="0">COM_KUNENA_CFG_OPTION_UNAPPROVED_POSTS</option>
+                <option value="1">COM_KUNENA_CFG_OPTION_ALL_NEW_POSTS</option>
+            </field>
+            <field
+                name="ipTracking"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_IP_TRACKING"
+                description="COM_KUNENA_A_IP_TRACKING_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="statsLinkAllowed"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED"
+                description="COM_KUNENA_ADMIN_CONFIG_STATSLINK_ALLOWED_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="maxLinks"
+                type="number"
+                min="0"
+                max="99"
+                default="6"
+                label="COM_KUNENA_ADMIN_CONFIG_MAX_LINKS"
+                description="COM_KUNENA_ADMIN_CONFIG_MAX_LINKS_DESC" />
+            <field
+                name="teaser"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_TEASER"
+                description="COM_KUNENA_TEASER_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="urlSubjectTopic"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_URL_SUBJECT"
+                description="COM_KUNENA_ADMIN_CONFIG_URL_SUBJECT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="moderatorPermDelete"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_MOD_PERDELETE"
+                description="COM_KUNENA_ADMIN_CONFIG_MOD_PERDELETE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="newUsersPreventPostUrlImages"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_PREVENT_NEW_USERS_POST_URL_IMAGE"
+                description="COM_KUNENA_ADMIN_CONFIG_PREVENT_NEW_USERS_POST_URL_IMAGE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="minimalUserPostsAddUrlImage"
+                type="number"
+                min="0"
+                max="99"
+                default="10"
+                label="COM_KUNENA_ADMIN_CONFIG_MINIMAL_NUMBER_OF_USER_POSTS_TO_ADD_URL_IMAGE"
+                description="COM_KUNENA_ADMIN_CONFIG_MINIMAL_NUMBER_OF_USER_POSTS_TO_ADD_URL_IMAGE_DESC" />
+        </fieldset>
+        <fieldset
+            name="captcha"
+            label="COM_KUNENA_A_CAPTCHA_CONFIGURATION">
+            <field
+                name="captcha"
+                type="list"
+                default="0"
+                label="COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_TITLE"
+                description="COM_KUNENA_CONFIGURATION_CAPTCHA_FOR_WHO_DESC">
+                <option value="-1">COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_NOBODY</option>
+                <option value="0">COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_REGISTERED_USERS</option>
+                <option value="1">COM_KUNENA_CONFIGURATION_OPTION_CAPTCHA_GUESTS_REGISTERED_USERS</option>
+            </field>
+            <field
+                name="captchaPostLimit"
+                type="number"
+                min="0"
+                max="99"
+                default="0"
+                label="COM_KUNENA_A_CAPTCHA_POST_LIMIT"
+                description="COM_KUNENA_A_CAPTCHA_POST_LIMIT_DESC"
+                showon="captcha!:-1" />
+        </fieldset>
+        <fieldset
+            name="stopforumspam"
+            label="COM_KUNENA_STOP_FORUM_SPAM_CONFIGURATION">
+            <field
+                name="stopForumSpamKey"
+                type="text"
+                default=""
+                label="COM_KUNENA_STOP_FORUM_SPAM_KEY"
+                description="COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC" />
+            <field
+                name="stopForumSpamNewUserCheck"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_STOP_FORUM_SPAM_NEWUSERCHECK"
+                description="COM_KUNENA_STOP_FORUM_SPAM_NEWUSERCHECK_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+        </fieldset>
+    </fieldset>
+
+    <fieldset
+        name="avatars"
+        label="COM_KUNENA_A_AVATARS">
+        <fieldset
+            name="avatar_settings"
+            label="COM_KUNENA_A_AVATAR_SETTINGS">
+            <field
+                name="avatarType"
+                type="list"
+                default="1"
+                label="COM_KUNENA_A_AVATARTYPE"
+                description="COM_KUNENA_A_AVATARTYPE_DESC">
+                <option value="0">COM_KUNENA_AVATAR_IMAGE</option>
+                <option value="1">COM_KUNENA_AVATAR_ICONTYPE</option>
+            </field>
+            <field
+                name="defaultAvatar"
+                type="text"
+                default="nophoto.png"
+                label="COM_KUNENA_A_AVATAR_DEFAULT"
+                description="COM_KUNENA_A_AVATAR_DEFAULT_DESC" />
+            <field
+                name="defaultAvatarSmall"
+                type="text"
+                default="s_nophoto.png"
+                label="COM_KUNENA_A_AVATAR_DEFAULT_SMALL"
+                description="COM_KUNENA_A_AVATAR_DEFAULT_SMALL_DESC" />
+            <field
+                name="avatarTypes"
+                type="text"
+                default="gif,jpeg,jpg,png"
+                label="COM_KUNENA_CONFIG_AVATAR_FILESALLOWED"
+                description="COM_KUNENA_CONFIG_AVATAR_FILESALLOWED_DESC" />
+            <field
+                name="allowAvatarUpload"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_AVATARUPLOAD"
+                description="COM_KUNENA_A_AVATARUPLOAD_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="allowAvatarGallery"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_AVATARGALLERY"
+                description="COM_KUNENA_A_AVATARGALLERY_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="avatarSize"
+                type="number"
+                min="0"
+                max="99999"
+                default="2048"
+                label="COM_KUNENA_A_AVSIZE"
+                description="COM_KUNENA_A_AVSIZE_DESC"
+                showon="allowAvatarUpload:1" />
+            <field
+                name="avatarQuality"
+                type="number"
+                min="1"
+                max="100"
+                default="75"
+                label="COM_KUNENA_AVATAR_QUALITY"
+                description="COM_KUNENA_AVATAR_QUALITY_DESC"
+                showon="allowAvatarUpload:1" />
+            <field
+                name="avatarCrop"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_AVATAR_CROP"
+                description="COM_KUNENA_AVATAR_CROP_DESC"
+                showon="allowAvatarUpload:1">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="avatarEdit"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_AVATAREDIT"
+                description="COM_KUNENA_A_AVATAREDIT_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+        </fieldset>
+    </fieldset>
+
+    <fieldset
+        name="uploads"
+        label="COM_KUNENA_A_UPLOADS">
+        <fieldset
+            name="attachments"
+            label="COM_KUNENA_A_ATTACHMENTS">
+            <field
+                name="attachmentLimit"
+                type="number"
+                min="0"
+                max="999"
+                default="8"
+                label="COM_KUNENA_A_ATTACHMENT_LIMIT"
+                description="COM_KUNENA_A_ATTACHMENT_LIMIT_DESC" />
+            <field
+                name="attachmentProtection"
+                type="protectAttachments"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_ATTACHMENT_PROTECTION"
+                description="COM_KUNENA_A_ATTACHMENT_PROTECTION_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="attachmentUtf8"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIGURATION_ATTACHMENT_FILENAME_UTF8"
+                description="COM_KUNENA_CONFIGURATION_ATTACHMENT_FILENAME_UTF8_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+        </fieldset>
+        <fieldset
+            name="images"
+            label="COM_KUNENA_A_IMAGE">
+            <field
+                name="imageUpload"
+                type="list"
+                default="registered"
+                label="COM_KUNENA_A_IMAGE_UPLOAD"
+                description="COM_KUNENA_A_IMAGE_UPLOAD_DESC">
+                <option value="everybody">COM_KUNENA_EVERYBODY</option>
+                <option value="registered">COM_KUNENA_REGISTERED_USERS</option>
+                <option value="moderator">COM_KUNENA_MODERATORS</option>
+                <option value="admin">COM_KUNENA_ADMINS</option>
+                <option value="">COM_KUNENA_NOBODY</option>
+            </field>
+            <field
+                name="showImgForGuest"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SHOWIMGFORGUEST"
+                description="COM_KUNENA_SHOWIMGFORGUEST_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="imageTypes"
+                type="text"
+                default="jpg,jpeg,gif,png"
+                label="COM_KUNENA_A_IMAGEALLOWEDTYPES"
+                description="COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC"
+                showon="imageUpload!:" />
+            <field
+                name="checkMimeTypes"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_IMAGECHECKMIMETYPES"
+                description="COM_KUNENA_A_IMAGECHECKMIMETYPES_DESC"
+                showon="imageUpload!:">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="imageMimeTypes"
+                type="text"
+                default="image/jpeg,image/jpg,image/gif,image/png"
+                label="COM_KUNENA_A_IMAGEALLOWEDMIMETYPES"
+                description="COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC"
+                showon="imageUpload!:" />
+            <field
+                name="imageSize"
+                type="fileSize"
+                min="0"
+                max="99999"
+                default="150"
+                label="COM_KUNENA_A_IMGSIZE"
+                description="COM_KUNENA_A_IMGSIZE_DESC"
+                showon="imageUpload!:" />
+            <field
+                name="imageWidth"
+                type="number"
+                min="0"
+                max="9999"
+                default="800"
+                label="COM_KUNENA_A_IMGWIDTH"
+                description="COM_KUNENA_A_IMGWIDTH_DESC"
+                showon="imageUpload!:" />
+            <field
+                name="imageHeight"
+                type="number"
+                min="0"
+                max="9999"
+                default="800"
+                label="COM_KUNENA_A_IMGHEIGHT"
+                description="COM_KUNENA_A_IMGHEIGHT_DESC"
+                showon="imageUpload!:" />
+            <field
+                name="thumbWidth"
+                type="number"
+                min="0"
+                max="9999"
+                default="32"
+                label="COM_KUNENA_A_IMGTHUMBWIDTH"
+                description="COM_KUNENA_A_IMGTHUMBWIDTH_DESC"
+                showon="imageUpload!:" />
+            <field
+                name="thumbHeight"
+                min="0"
+                max="9999"
+                type="number"
+                default="32"
+                label="COM_KUNENA_A_IMGTHUMBHEIGHT"
+                description="COM_KUNENA_A_IMGTHUMBHEIGHT_DESC"
+                showon="imageUpload!:" />
+            <field
+                name="imageQuality"
+                type="number"
+                min="1"
+                max="100"
+                default="50"
+                label="COM_KUNENA_A_IMGQUALITY"
+                description="COM_KUNENA_A_IMGQUALITY_DESC"
+                showon="imageUpload!:" />
+        </fieldset>
+        <fieldset
+            name="files"
+            label="COM_KUNENA_A_FILE">
+            <field
+                name="fileUpload"
+                type="list"
+                default="registered"
+                label="COM_KUNENA_A_FILE_UPLOAD"
+                description="COM_KUNENA_A_FILE_UPLOAD_DESC">
+                <option value="everybody">COM_KUNENA_EVERYBODY</option>
+                <option value="registered">COM_KUNENA_REGISTERED_USERS</option>
+                <option value="moderator">COM_KUNENA_MODERATORS</option>
+                <option value="admin">COM_KUNENA_ADMINS</option>
+                <option value="">COM_KUNENA_NOBODY</option>
+            </field>
+            <field
+                name="showFileForGuest"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SHOWFILEFORGUEST"
+                description="COM_KUNENA_SHOWFILEFORGUEST_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="fileTypes"
+                type="text"
+                default="txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2"
+                label="COM_KUNENA_A_FILEALLOWEDTYPES"
+                description="COM_KUNENA_A_FILEALLOWEDTYPES_DESC"
+                showon="fileUpload!:" />
+            <field
+                name="fileSize"
+                type="fileSize"
+                default="120"
+                label="COM_KUNENA_A_FILESIZE"
+                description="COM_KUNENA_A_FILESIZE_DESC"
+                showon="fileUpload!:" />
+        </fieldset>
+    </fieldset>
+
+    <fieldset
+        name="ranking"
+        label="COM_KUNENA_A_RANKING">
+        <fieldset
+            name="ranking_settings"
+            label="COM_KUNENA_A_RANKING_SETTINGS">
+            <field
+                name="showRanking"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_RANKING"
+                description="COM_KUNENA_A_RANKING_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="rankImages"
+                type="list"
+                default="1"
+                label="COM_KUNENA_A_RANKINGIMAGES"
+                description="COM_KUNENA_A_RANKINGIMAGES_DESC"
+                showon="showRanking:1">
+                <option value="0">COM_KUNENA_RANK_TEXT</option>
+                <option value="1">COM_KUNENA_RANK_IMAGE</option>
+                <option value="2">COM_KUNENA_RANK_USERGROUP</option>
+                <option value="3">COM_KUNENA_RANK_BOTH</option>
+                <option value="4">COM_KUNENA_RANK_CSS</option>
+            </field>
+        </fieldset>
+    </fieldset>
+
+    <fieldset
+        name="bbcode"
+        label="COM_KUNENA_A_BBCODE">
+        <fieldset
+            name="bbcode_settings"
+            label="COM_KUNENA_A_BBCODE_SETTINGS">
+            <field
+                name="trimLongUrls"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_TRIMLONGURLS"
+                description="COM_KUNENA_A_TRIMLONGURLS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="trimLongUrlsFront"
+                type="number"
+                min="0"
+                max="999"
+                default="40"
+                label="COM_KUNENA_A_TRIMLONGURLSFRONT"
+                description="COM_KUNENA_A_TRIMLONGURLSFRONT_DESC"
+                showon="trimLongUrls:1" />
+            <field
+                name="trimLongUrlsBack"
+                type="number"
+                min="0"
+                max="999"
+                default="20"
+                label="COM_KUNENA_A_TRIMLONGURLSBACK"
+                description="COM_KUNENA_A_TRIMLONGURLSBACK_DESC"
+                showon="trimLongUrls:1" />
+            <field
+                name="autoLink"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_AUTOLINK"
+                description="COM_KUNENA_A_AUTOLINK_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="smartLinking"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_SMARTAUTOLINK"
+                description="COM_KUNENA_A_SMARTAUTOLINK_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="autoEmbedYoutube"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_AUTOEMBEDYOUTUBE"
+                description="COM_KUNENA_A_AUTOEMBEDYOUTUBE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="autoEmbedEbay"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_AUTOEMBEDEBAY"
+                description="COM_KUNENA_A_AUTOEMBEDEBAY_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="autoEmbedInstagram"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_AUTOEMBEDINSTAGRAM"
+                description="COM_KUNENA_A_AUTOEMBEDINSTAGRAM_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="autoEmbedSoundcloud"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD"
+                description="COM_KUNENA_CONFIGURATION_AUTOEMBEDSOUNDCLOUD_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="highlightCode"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_HIGHLIGHTCODE"
+                description="COM_KUNENA_A_HIGHLIGHTCODE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="bbcodeImgSecure"
+                type="list"
+                default="text"
+                label="COM_KUNENA_COM_A_BBCODE_IMG_SECURE"
+                description="COM_KUNENA_COM_A_BBCODE_IMG_SECURE_DESC">
+                <option value="text">COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_TEXT</option>
+                <option value="link">COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_LINK</option>
+                <option value="image">COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_IMAGE</option>
+            </field>
+            <field
+                name="ebayLanguage"
+                type="ebayLanguage"
+                default="0"
+                label="COM_KUNENA_A_EBAYLANGUAGECODE"
+                description="COM_KUNENA_A_EBAYLANGUAGECODE_DESC">
+            </field>
+            <field
+                name="ebayAffiliateId"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_EBAY_AFFILIATE_ID"
+                description="COM_KUNENA_A_EBAY_AFFILIATE_ID_DESC" />
+            <field
+                name="ebayApiKey"
+                type="text"
+                default=""
+                label="COM_KUNENA_CONFIGURATION_EBAY_API_KEY_LABEL"
+                description="COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC" />
+            <field
+                name="ebayCertId"
+                type="password"
+                default=""
+                label="COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_LABEL"
+                description="COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_DESC" />
+            <field
+                name="blueskyappHandleOfApp"
+                type="text"
+                default=""
+                label="COM_KUNENA_CONFIGURATION_BLUESKYAPP_HANDLE_OF_APP_LABEL"
+                description="COM_KUNENA_CONFIGURATION_BLUESKYAPP_HANDLE_OF_APP_DESC" />
+            <field
+                name="blueskyappPasswordOfApp"
+                type="password"
+                default=""
+                label="COM_KUNENA_CONFIGURATION_BLUESKYAPP_PASSWORD_OF_APP_LABEL"
+                description="COM_KUNENA_CONFIGURATION_BLUESKYAPP_PASSWORD_OF_APP_DESC" />
+            <field
+                name="XConsumerKey"
+                type="text"
+                default=""
+                label="COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_KEY_LABEL"
+                description="COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_KEY_DESC" />
+            <field
+                name="XConsumerSecret"
+                type="password"
+                default=""
+                label="COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_LABEL"
+                description="COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_DESC" />
+            <field
+                name="googleMapApiKey"
+                type="text"
+                default=""
+                label="COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY"
+                description="COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY_DESC" />
+        </fieldset>
+    </fieldset>
+
+    <fieldset
+        name="rss"
+        label="COM_KUNENA_ADMIN_RSS">
+        <fieldset
+            name="rss_settings"
+            label="COM_KUNENA_ADMIN_RSS_SETTINGS">
+            <field
+                name="rssType"
+                type="list"
+                default="topic"
+                label="COM_KUNENA_A_RSS_TYPE"
+                description="COM_KUNENA_A_RSS_TYPE_DESC">
+                <option value="post">COM_KUNENA_A_RSS_TYPE_POST</option>
+                <option value="topic">COM_KUNENA_A_RSS_TYPE_TOPIC</option>
+                <option value="recent">COM_KUNENA_A_RSS_TYPE_RECENT</option>
+            </field>
+            <field
+                name="rssSpecification"
+                type="list"
+                default="rss2.0"
+                label="COM_KUNENA_A_RSS_SPEC"
+                description="COM_KUNENA_A_RSS_SPEC_DESC">
+                <option value="rss0.91">RSS 0.91</option>
+                <option value="rss1.0">RSS 1.0</option>
+                <option value="rss2.0">RSS 2.0</option>
+                <option value="atom1.0">Atom 1.0</option>
+            </field>
+            <field
+                name="rssTimeLimit"
+                type="list"
+                default="1 month"
+                label="COM_KUNENA_A_RSS_TIMELIMIT"
+                description="COM_KUNENA_A_RSS_TIMELIMIT_DESC">
+                <option value="1 week">COM_KUNENA_A_RSS_TIMELIMIT_WEEK</option>
+                <option value="1 month">COM_KUNENA_A_RSS_TIMELIMIT_MONTH</option>
+                <option value="1 year">COM_KUNENA_A_RSS_TIMELIMIT_YEAR</option>
+            </field>
+            <field
+                name="rssLimit"
+                type="number"
+                min="0"
+                max="999"
+                default="100"
+                label="COM_KUNENA_A_RSS_LIMIT"
+                description="COM_KUNENA_A_RSS_LIMIT_DESC" />
+            <field
+                name="rssIncludedCategories"
+                type="categoryList"
+                default="0"
+                action="read"
+                sections="0"
+                multiple="true"
+                select="COM_KUNENA_CONFIG_RSSINCLUDEDCATEGORIES_SHOW_ALL"
+                label="COM_KUNENA_A_RSS_INCLUDED_CATEGORIES"
+                description="COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC" />
+            <field
+                name="rssExcludedCategories"
+                type="categoryList"
+                default="0"
+                action="read"
+                sections="0"
+                multiple="true"
+                select="COM_KUNENA_CONFIG_RSSEXCLUDEDCATEGORIES_NOT_EXCLUDE"
+                label="COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES"
+                description="COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC" />
+            <field
+                name="rssAllowHtml"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_RSS_ALLOW_HTML"
+                description="COM_KUNENA_A_RSS_ALLOW_HTML_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="rssAuthorFormat"
+                type="list"
+                default="name"
+                label="COM_KUNENA_A_RSS_AUTHOR_FORMAT"
+                description="COM_KUNENA_A_RSS_AUTHOR_FORMAT_DESC">
+                <option value="name">COM_KUNENA_A_RSS_AUTHOR_FORMAT_NAME</option>
+                <option value="email">COM_KUNENA_A_RSS_AUTHOR_FORMAT_EMAIL</option>
+                <option value="both">COM_KUNENA_A_RSS_AUTHOR_FORMAT_BOTH</option>
+            </field>
+            <field
+                name="rssAuthorInTitle"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_RSS_AUTHOR_IN_TITLE"
+                description="COM_KUNENA_A_RSS_AUTHOR_IN_TITLE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="rssWordCount"
+                type="list"
+                default="0"
+                label="COM_KUNENA_CONFIG_RSS_CHARACTERS_COUNT"
+                description="COM_KUNENA_CONFIG_RSS_CHARACTERS_COUNT_DESC">
+                <option value="0">COM_KUNENA_A_RSS_WORD_COUNT_ALL</option>
+                <option value="-1">JNONE</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="250">250</option>
+                <option value="500">500</option>
+                <option value="750">750</option>
+                <option value="1000">1000</option>
+            </field>
+            <field
+                name="rssOldTitles"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_RSS_OLD_TITLES"
+                description="COM_KUNENA_A_RSS_OLD_TITLES_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="rssCache"
+                type="list"
+                default="900"
+                label="COM_KUNENA_A_RSS_CACHE"
+                description="COM_KUNENA_A_RSS_CACHE_DESC">
+                <option value="0">0</option>
+                <option value="60">1</option>
+                <option value="300">5</option>
+                <option value="900">15</option>
+                <option value="1800">30</option>
+                <option value="3600">60</option>
+            </field>
+            <field
+                name="rssFeedBurnerUrl"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_RSS_FEEDBURNER_URL"
+                description="COM_KUNENA_A_RSS_FEEDBURNER_URL_DESC" />
+        </fieldset>
+    </fieldset>
+
+    <fieldset
+        name="extra"
+        label="COM_KUNENA_ADMIN_CONFIG_EXTRA">
+        <fieldset
+            name="userlist"
+            label="COM_KUNENA_ADMIN_CONFIG_USERLIST_SETTINGS">
+            <field
+                name="userlistRows"
+                type="number"
+                min="1"
+                max="999"
+                default="30"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC" />
+            <field
+                name="userlistOnline"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userlistAvatar"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_AVATAR"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_USERLIST_AVATAR_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userlistPosts"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userlistKarma"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_KARMA"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_KARMA_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userlistEmail"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userlistJoinDate"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userlistLastVisitDate"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userlistUserHits"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="superAdminUserlist"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST"
+                description="COM_KUNENA_A_SHOW_SUPERADMINS_IN_USERLIST_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="userListUserType"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE"
+                description="COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showSessionType"
+                type="list"
+                default="2"
+                label="COM_KUNENA_COM_A_USER_SESSIONS_TYPE"
+                description="COM_KUNENA_COM_A_SESSIONS_TYPE_DESC">
+                <option value="0">COM_KUNENA_SHOW_SESSION_TYPE_ALL</option>
+                <option value="1">COM_KUNENA_SHOW_SESSION_TYPE_VALID</option>
+                <option value="2">COM_KUNENA_SHOW_SESSION_TYPE_TIME</option>
+            </field>
+            <field
+                name="showSessionStartTime"
+                type="number"
+                min="1"
+                max="9999"
+                default="1800"
+                label="COM_KUNENA_COM_A_USER_SESSIONS_START_TIME"
+                description="COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC" />
+        </fieldset>
+        <fieldset
+            name="stats"
+            label="COM_KUNENA_STATS">
+            <field
+                name="showWhoIsOnline"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SHOWWHOIS"
+                description="COM_KUNENA_SHOWWHOISDESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showStats"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_SHOWSTATS"
+                description="COM_KUNENA_SHOWSTATSDESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showGenStats"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_STATSGENERAL"
+                description="COM_KUNENA_STATSGENERALDESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="showPopUserStats"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_USERSTATS"
+                description="COM_KUNENA_USERSTATSDESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="popUserCount"
+                type="number"
+                min="1"
+                max="999"
+                default="5"
+                label="COM_KUNENA_USERNUM"
+                description="COM_KUNENA_USERNUM" />
+            <field
+                name="showPopSubjectStats"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_USERPOPULAR"
+                description="COM_KUNENA_USERPOPULARDESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="popSubjectCount"
+                type="number"
+                min="1"
+                max="999"
+                default="5"
+                label="COM_KUNENA_NUMPOP"
+                description="COM_KUNENA_NUMPOP" />
+            <field
+                name="showPopPollStats"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_POLLSSTATS"
+                description="COM_KUNENA_POLLSTATSDESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="popPollsCount"
+                type="number"
+                min="1"
+                max="999"
+                default="5"
+                label="COM_KUNENA_POLLSPOP"
+                description="COM_KUNENA_POLLSPOP" />
+            <field
+                name="showPopThankYouStats"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_THANKSSTATS"
+                description="COM_KUNENA_THANKSSTATSDESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="popThanksCount"
+                type="number"
+                min="1"
+                max="999"
+                default="5"
+                label="COM_KUNENA_THANKSPOP"
+                description="COM_KUNENA_THANKSPOP" />
+            <field
+                name="userlistCountUsers"
+                type="list"
+                default="1"
+                label="COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST"
+                description="COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST_DESC">
+                <option value="0">COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ALL</option>
+                <option value="1">COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVATED_ACCOUNT</option>
+                <option value="2">COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVE</option>
+                <option value="3">COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_NON_BLOCKED_USERS</option>
+            </field>
+        </fieldset>
+        <fieldset
+            name="polls"
+            label="COM_KUNENA_A_POLL_TITLE">
+            <field
+                name="pollEnabled"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_POLL_ENABLED"
+                description="COM_KUNENA_A_ENABLED_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="pollNbOptions"
+                type="number"
+                min="1"
+                max="99"
+                default="4"
+                label="COM_KUNENA_A_POLL_NUMBER_OPTIONS"
+                description="COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC"
+                showon="pollEnabled:1" />
+            <field
+                name="pollTimeBtVotes"
+                type="text"
+                default="00:15:00"
+                label="COM_KUNENA_A_POLL_TIME_VOTES"
+                description="COM_KUNENA_A_POLL_TIME_VOTES_DESC"
+                showon="pollEnabled:1" />
+            <field
+                name="pollNbVotesByUser"
+                type="number"
+                min="1"
+                max="999"
+                default="100"
+                label="COM_KUNENA_A_POLL_NUMBER_VOTES_BY_USER"
+                description="COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC"
+                showon="pollEnabled:1" />
+            <field
+                name="pollAllowVoteOne"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_POLL_ALLOW_ONE_VOTE"
+                description="COM_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC"
+                showon="pollEnabled:1">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="pollResultsUserslist"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_POLL_SHOW_USER_LIST"
+                description="COM_KUNENA_A_POLL_SHOW_USER_LIST_DESC"
+                showon="pollEnabled:1">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="allowUserEditPoll"
+                type="list"
+                default="0"
+                label="COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL"
+                description="COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DESC"
+                showon="pollEnabled:1">
+                <option value="0">COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_DISALLOW</option>
+                <option value="1">COM_KUNENA_CONFIG_POLL_ALLOW_USER_EDIT_POLL_ALLOW</option>
+            </field>
+        </fieldset>
+    </fieldset>
+
+    <fieldset
+        name="menu"
+        label="COM_KUNENA_ADMIN_MENU_SETTINGS">
+        <fieldset
+            name="menu_settings"
+            label="COM_KUNENA_ADMIN_MENU_SETTINGS_DESC">
+            <field
+                name="defaultPage"
+                type="text"
+                default="recent"
+                label="The Default Page"
+                hidden="true" />
+            <field
+                name="activeMenuItem"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_ACTIVEMENU"
+                description="COM_KUNENA_A_ACTIVEMENU_DESC" />
+            <field
+                name="mainMenuId"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_MAINMENU"
+                description="COM_KUNENA_A_MAINMENU_DESC" />
+            <field
+                name="homeId"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_HOMEID"
+                description="COM_KUNENA_A_HOMEID_DESC" />
+            <field
+                name="indexId"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_INDEXID"
+                description="COM_KUNENA_A_INDEXID_DESC" />
+            <field
+                name="moderatorsId"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_MODERATORSID"
+                description="COM_KUNENA_A_MODERATORSID_DESC" />
+            <field
+                name="topicListId"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_TOPICLISTID"
+                description="COM_KUNENA_A_TOPICLISTID_DESC" />
+            <field
+                name="miscId"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_MISCID"
+                description="COM_KUNENA_A_MISCID_DESC" />
+            <field
+                name="profileId"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_PROFILEID"
+                description="COM_KUNENA_A_PROFILEID_DESC" />
+            <field
+                name="searchId"
+                type="text"
+                default=""
+                label="COM_KUNENA_A_SEARCHID"
+                description="COM_KUNENA_A_SEARCHID_DESC" />
+        </fieldset>
+    </fieldset>
+    <fieldset
+        name="permissions"
+        label="JCONFIG_PERMISSIONS_LABEL"
+        description="JCONFIG_PERMISSIONS_DESC">
+        <field
+            name="rules"
+            type="rules"
+            label="JCONFIG_PERMISSIONS_LABEL"
+            class="inputbox"
+            filter="rules"
+            validate="rules"
+            component="com_kunena"
+            section="component" />
+    </fieldset>
+    <fieldset
+        name="no-config-parameters"
+        hidden="true">
+        <field
+            name="template"
+            type="text"
+            default="aurelia"
+            label="Template" />
     </fieldset>
 </config>

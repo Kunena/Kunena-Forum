@@ -16,6 +16,7 @@ namespace Kunena\Forum\Plugin\System\Kunena\Extension;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Event\Model\AfterSaveEvent as ModelAfterSaveEvent;
 use Joomla\CMS\Event\User\AfterLoginEvent;
 use Joomla\CMS\Event\User\AfterSaveEvent;
 use Joomla\CMS\Event\User\BeforeSaveEvent;
@@ -73,6 +74,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
                 $mapping['onUserBeforeSave'] = 'onUserBeforeSave';
             } elseif ($app->isClient('administrator')) {
                 // Only allowed in the backend
+                $mapping['onExtensionAfterSave'] = 'onExtensionAfterSave';
             }
         }
 
@@ -211,5 +213,27 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         }
 
         return $language;
+    }
+
+
+    /**
+     * Method is called when an extension is being saved
+     *
+     * @param   ModelAfterSaveEvent $event  The event instance.
+     *
+     * @return  void
+     *
+     * @since   3.9.0
+     */
+    public function onExtensionAfterSave(ModelAfterSaveEvent $event): void
+    {
+        $context = $event->getContext();
+        $table   = $event->getItem();
+        $isNew   = $event->getIsNew();
+
+        if ($context === 'com_config.component' && $table->type === 'component' && $table->element === 'com_kunena') {
+            // We need to clear the cache for com_kunena configuration
+            KunenaConfig::getInstance()->reset();
+        }
     }
 }

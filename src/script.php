@@ -23,6 +23,8 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Filesystem\File;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Install\KunenaModelInstall;
+use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -174,8 +176,18 @@ return new class() implements ServiceProviderInterface {
                 public function preflight(string $type, InstallerAdapter $parent): bool
                 {
                     if ($type === 'uninstall') {
+                        $items = KunenaMenuFix::getAll();
+
+                        foreach ($items as $item) {
+                            KunenaMenuFix::delete($item->id);
+                        }
+
+                        $installer = new KunenaModelInstall();
+                        $installer->deleteMenu();
+
                         return true;
                     }
+
 
                     $manifest = $parent->manifest;
 
@@ -199,6 +211,7 @@ return new class() implements ServiceProviderInterface {
                  */
                 public function postflight(string $type, InstallerAdapter $parent): bool
                 {
+
                     if ($type === 'uninstall') {
                         return true;
                     }
@@ -206,6 +219,7 @@ return new class() implements ServiceProviderInterface {
                     if (function_exists('apcu_clear_cache')) {
                         apcu_clear_cache();
                     }
+
 
                     $db = Factory::getContainer()->get(DatabaseInterface::class);
 
@@ -401,20 +415,6 @@ return new class() implements ServiceProviderInterface {
                         foreach ($deleteFolders as $folder) {
                             if (is_dir(JPATH_ROOT . $folder) && !Folder::delete(JPATH_ROOT . $folder)) {
                                 echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $folder) . '<br>';
-                            }
-                        }
-                    }
-
-                    if (version_compare($installedVersion, '7.0.0', '<') && version_compare($installedVersion, '6.4.5', '>=')) {
-                        // Set and delete the following folders
-                        $deleteFiles   = [];
-                        // Administrator folders
-                        $deleteFiles[] = '/administrator/components/com_kunena/src/Controller/InstallController.php';
-                        $deleteFiles[] = '/administrator/components/com_kunena/tmpl/tools/uninstall.php';
-
-                        foreach ($deleteFiles as $file) {
-                            if (is_file(JPATH_ROOT . $file) && !File::delete(JPATH_ROOT . $file)) {
-                                echo Text::sprintf('JLIB_INSTALLER_ERROR_FILE_FOLDER', $file) . '<br>';
                             }
                         }
                     }
@@ -650,6 +650,13 @@ return new class() implements ServiceProviderInterface {
                     // Don't allow to upgrade before the version 5.1.0
                     if (version_compare($installed, '5.1.0', '<')) {
                         $app->enqueueMessage('You should not upgrade Kunena from the version ' . $installed . ', you can do the upgrade only since 5.1.0', 'notice');
+
+                        return false;
+                    }
+
+                    // Don't allow to upgrade before the version 6.4.5
+                    if (version_compare($installed, '6.4.5', '<')) {
+                        $app->enqueueMessage('You cannot not upgrade Kunena from version ' . $installed . ', you can only upgrade from version 6.4.5 or higher', 'notice');
 
                         return false;
                     }

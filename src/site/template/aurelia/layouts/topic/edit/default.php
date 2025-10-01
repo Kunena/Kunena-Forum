@@ -63,36 +63,36 @@ if ($this->ktemplate->params->get('formRecover')) {
 
 $this->doc->addScriptOptions('com_kunena.editor_type', $this->editorType);
 $this->doc->addScriptOptions('com_kunena.kunena_topicicontype', $topicicontype);
-$this->doc->addScriptOptions('com_kunena.allowEditPoll', $this->config->allowEditPoll);
+$this->doc->addScriptOptions('com_kunena.allowUserEditPoll', $this->config->allowUserEditPoll);
 $this->doc->addScriptOptions('com_kunena.privateMessage', $this->config->privateMessage);
 $this->doc->addScriptOptions('com_kunena.imageHeight', $this->config->imageHeight);
 $this->doc->addScriptOptions('com_kunena.imageWidth', $this->config->imageWidth);
 $this->doc->addScriptOptions(
-	'com_kunena.kunena_upload_files_set_inline',
-	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinline&format=json&' . Session::getFormToken() . '=1', false)
+    'com_kunena.kunena_upload_files_set_inline',
+    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinline&format=json&' . Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
-	'com_kunena.kunena_upload_files_set_private',
-	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setprivate&format=json&' . Session::getFormToken() . '=1', false)
+    'com_kunena.kunena_upload_files_set_private',
+    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setprivate&format=json&' . Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
-	'com_kunena.kunena_upload_files_rem',
-	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&userid=' . KunenaUserHelper::getMyself()->userid . '&' .
+    'com_kunena.kunena_upload_files_rem',
+    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=removeattachments&format=json&userid=' . KunenaUserHelper::getMyself()->userid . '&' .
         Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
-	'com_kunena.kunena_upload_files_rem_inline',
-	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' .
+    'com_kunena.kunena_upload_files_rem_inline',
+    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setinlinestatus&format=json&' .
         Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
-	'com_kunena.kunena_upload_files_preload',
-	KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' .
+    'com_kunena.kunena_upload_files_preload',
+    KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadattachments&format=json&' .
         Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions(
-	'com_kunena.kunena_url_topic_get_mentions',
-	KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' . $this->topic->id)
+    'com_kunena.kunena_url_topic_get_mentions',
+    KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' . $this->topic->id)
 );
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
@@ -352,19 +352,19 @@ Text::script('COM_KUNENA_POLL_TITLE');
         <?php endif; ?>
     </div>
 
-        <?php if ($this->message->exists() && $this->config->editMarkup) : ?>
-            <h2>
-                <?php echo Text::_('COM_KUNENA_EDITING_REASON') ?>
-            </h2>
-            <div class="shadow-lg pl-5 pt-3 pb-1 mb-5 rounded">
-                <div class="form-group row" id="modified-reason">
-                    <div class="col-md-10">
-                        <input class="form-control" name="modified_reason"
-                               maxlength="200"
-                               type="text"
-                               value="<?php echo $this->modified_reason; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"
-                               placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"/>
-                   
+    <?php if ($this->message->exists() && $this->config->editMarkup) : ?>
+        <h2>
+            <?php echo Text::_('COM_KUNENA_EDITING_REASON') ?>
+        </h2>
+        <div class="shadow-lg pl-5 pt-3 pb-1 mb-5 rounded">
+            <div class="form-group row" id="modified-reason">
+                <div class="col-md-10">
+                    <input class="form-control" name="modified_reason"
+                        maxlength="200"
+                        type="text"
+                        value="<?php echo $this->modified_reason; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>"
+                        placeholder="<?php echo Text::_('COM_KUNENA_EDITING_ENTER_REASON') ?>" />
+
                 </div>
             </div>
         </div>
@@ -405,10 +405,10 @@ Text::script('COM_KUNENA_POLL_TITLE');
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
                         </button>
                         <?php if ($this->config->privateMessage) : ?>
-                        <button id="set-secure-all" class="btn btn-outline-primary" type="submit" style="display:none;">
-                            <?php echo KunenaIcons::secure(); ?>
-                            <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_SET_SECURE_ALL_BUTTON') ?></span>
-                        </button>
+                            <button id="set-secure-all" class="btn btn-outline-primary" type="submit" style="display:none;">
+                                <?php echo KunenaIcons::secure(); ?>
+                                <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_SET_SECURE_ALL_BUTTON') ?></span>
+                            </button>
                         <?php endif; ?>
                         <div class="clearfix"></div>
                         <br />
@@ -497,10 +497,10 @@ Text::script('COM_KUNENA_POLL_TITLE');
     <div id="kattach-list">
         <?php
         if ($this->message->exists()) :
-            if ($this->message->getNbAttachments()->totalPrivate > 0 ) :
-            ?>
+            if ($this->message->getNbAttachments()->totalPrivate > 0) :
+        ?>
                 <input id="attachment_private" type="hidden" name="attachment_private" value="<?php echo implode(',', array_keys($this->message->getAttachments(false, 'private'))); ?>" />
-            <?php
+        <?php
             endif;
         endif; ?>
     </div>

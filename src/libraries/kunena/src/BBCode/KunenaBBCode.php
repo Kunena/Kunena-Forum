@@ -374,9 +374,7 @@ class KunenaBBCode extends BBCode
      * @return  void
      * @since   Kunena 6.0
      */
-    public function IsValidEmail($email)
-    {
-    }
+    public function IsValidEmail($email) {}
 
     /**
      * @param   mixed  $params  params
@@ -1121,7 +1119,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $this->templateParams = KunenaFactory::getTemplate()->params;
         $this->me             = KunenaUserHelper::getMyself();
 
-        if (!$this->config->disableEmoticons) {
+        if (!$this->templateParams->get('disableEmoticons', '0')) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
             $query->select([$db->quoteName('code'), $db->quoteName('location')])
@@ -1132,7 +1130,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             $template = KunenaFactory::getTemplate();
 
             foreach ($smileys as $smiley) {
-                $this->default_smileys [$smiley->code] = $template->getSmileyPath($smiley->location);
+                $this->default_smileys[$smiley->code] = $template->getSmileyPath($smiley->location);
             }
         }
 
@@ -1162,8 +1160,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $data = ['grant_type' => 'client_credentials', 'scope' => 'https://api.ebay.com/oauth/api_scope'];
 
-        $headersOauth = ['Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Basic ' . base64_encode($config->ebayApiKey . ':' . $config->ebayCertId), ];
+        $headersOauth = [
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Basic ' . base64_encode($config->ebayApiKey . ':' . $config->ebayCertId),
+        ];
 
         $responseOauth = $http->post('https://api.ebay.com/identity/v1/oauth2/token', $data, $headersOauth);
 
@@ -1494,19 +1494,19 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if (!$default) {
             $tag_rule = $bbcode->getRule($name);
 
-            if (isset($tag_rule ['default'])) {
-                $default = $tag_rule ['default'] ['_default'];
+            if (isset($tag_rule['default'])) {
+                $default = $tag_rule['default']['_default'];
             } else {
-                $default = $tag_rule ['default'] = array();
+                $default = $tag_rule['default'] = array();
             }
         }
 
         if ($action == BBCode::BBCODE_CHECK) {
             if (!\is_string($default) || \strlen($default) == "") {
                 return true;
-            } elseif (isset($list_styles [$default])) {
+            } elseif (isset($list_styles[$default])) {
                 return true;
-            } elseif (isset($ci_list_styles [strtolower($default)])) {
+            } elseif (isset($ci_list_styles[strtolower($default)])) {
                 return true;
             } else {
                 return false;
@@ -1521,18 +1521,18 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             $elem = 'ul';
         } elseif ($default == '1') {
             $elem = 'ol';
-        } elseif (isset($list_styles [$default])) {
+        } elseif (isset($list_styles[$default])) {
             $elem = 'ol';
-            $type = $list_styles [$default];
+            $type = $list_styles[$default];
         } else {
             $default = strtolower($default);
 
-            if (isset($ul_types [$default])) {
+            if (isset($ul_types[$default])) {
                 $elem = 'ul';
-                $type = $ul_types [$default];
-            } elseif (isset($ci_list_styles [$default])) {
+                $type = $ul_types[$default];
+            } elseif (isset($ci_list_styles[$default])) {
                 $elem = 'ol';
-                $type = $ci_list_styles [$default];
+                $type = $ci_list_styles[$default];
             }
         }
 
@@ -2225,16 +2225,16 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $vid_minheight = 44; // Min. display size
         $vid_sizemax   = 100; // max. display zoom in percent
 
-        $vid ["type"]  = (isset($params ["type"])) ? StringHelper::strtolower($params ["type"]) : '';
-        $vid ["param"] = (isset($params ["param"])) ? $params ["param"] : '';
+        $vid["type"]  = (isset($params["type"])) ? StringHelper::strtolower($params["type"]) : '';
+        $vid["param"] = (isset($params["param"])) ? $params["param"] : '';
 
-        if (!$vid ["type"]) {
+        if (!$vid["type"]) {
             $vid_players = ['divx' => 'divx', 'flash' => 'swf', 'mediaplayer' => 'avi,mp3,wma,wmv', 'quicktime' => 'mov,qt,qti,qtif,qtvr', 'realplayer', 'rm'];
 
             foreach ($vid_players as $vid_player => $vid_exts) {
                 foreach (explode(',', $vid_exts) as $vid_ext) {
                     if (preg_match('/^(.*\.' . $vid_ext . ')$/i', $content) > 0) {
-                        $vid ["type"] = $vid_player;
+                        $vid["type"] = $vid_player;
                         break 2;
                     }
                 }
@@ -2243,15 +2243,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             unset($vid_players);
         }
 
-        if (!$vid ["type"]) {
+        if (!$vid["type"]) {
             $vid_auto = preg_match('#^https?://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs);
 
             if ($vid_auto) {
-                $vid ["type"] = StringHelper::strtolower($vid_regs [1]);
+                $vid["type"] = StringHelper::strtolower($vid_regs[1]);
 
-                switch ($vid ["type"]) {
+                switch ($vid["type"]) {
                     case 'wideo':
-                        $vid ["type"] = 'wideo.fr';
+                        $vid["type"] = 'wideo.fr';
                         break;
                 }
             }
@@ -2290,8 +2290,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             //
         ];
 
-        if (isset($vid_providers [$vid ["type"]])) {
-            list($vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2) = (isset($vid_providers [$vid ["type"]])) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
+        if (isset($vid_providers[$vid["type"]])) {
+            list($vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2) = (isset($vid_providers[$vid["type"]])) ? $vid_providers[$vid["type"]] : $vid_providers["_default"];
         } else {
             return;
         }
@@ -2300,7 +2300,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if (!empty($vid_auto)) {
             if ($vid_match && (preg_match("/$vid_match/i", $content, $vid_regs) > 0)) {
-                $content = $vid_regs [1];
+                $content = $vid_regs[1];
             } else {
                 return;
             }
@@ -2308,7 +2308,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $uri = Uri::getInstance();
 
-        if ($uri->isSSL() && $vid ["type"] == 'youtube') {
+        if ($uri->isSSL() && $vid["type"] == 'youtube') {
             $vid_source = preg_replace("/^http:/", "https:", $vid_source);
         }
 
@@ -2318,7 +2318,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             $vid_par2 = [];
         }
 
-        $vid_size = isset($params ["size"]) ? \intval($params ["size"]) : 0;
+        $vid_size = isset($params["size"]) ? \intval($params["size"]) : 0;
 
         if (($vid_size > 0) && ($vid_size < $vid_sizemax)) {
             $vid_width  = (int) ($vid_width * $vid_size / 100);
@@ -2328,25 +2328,25 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $vid_width  += $vid_addx;
         $vid_height += $vid_addy;
 
-        if (!isset($params ["size"])) {
-            if (isset($params ["width"])) {
-                if ($params ['width'] == '1') {
-                    $params ['width'] = $vid_minwidth;
+        if (!isset($params["size"])) {
+            if (isset($params["width"])) {
+                if ($params['width'] == '1') {
+                    $params['width'] = $vid_minwidth;
                 }
             }
 
-            if (isset($params ["width"])) {
-                $vid_width = \intval($params ["width"]);
+            if (isset($params["width"])) {
+                $vid_width = \intval($params["width"]);
             }
 
-            if (isset($params ["height"])) {
-                if ($params ['height'] == '1') {
-                    $params ['height'] = $vid_minheight;
+            if (isset($params["height"])) {
+                if ($params['height'] == '1') {
+                    $params['height'] = $vid_minheight;
                 }
             }
 
-            if (isset($params ["height"])) {
-                $vid_height = \intval($params ["height"]);
+            if (isset($params["height"])) {
+                $vid_height = \intval($params["height"]);
             }
         }
 
@@ -2392,15 +2392,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             list($vid_key, $vid_name, $vid_value) = $vid_data;
 
             if ($vid_key && 1) {
-                $vidinternalObject [$vid_name] = ' ' . $vid_name . '="' . preg_replace('/%vcode%/', $content, $vid_value) . '"';
+                $vidinternalObject[$vid_name] = ' ' . $vid_name . '="' . preg_replace('/%vcode%/', $content, $vid_value) . '"';
             }
 
             if ($vid_key && 2) {
-                $vid_param [$vid_name] = '<param name="' . $vid_name . '" value="' . preg_replace('/%vcode%/', $content, $vid_value) . '" />';
+                $vid_param[$vid_name] = '<param name="' . $vid_name . '" value="' . preg_replace('/%vcode%/', $content, $vid_value) . '" />';
             }
 
             if ($vid_key && 4) {
-                $vid_embed [$vid_name] = ' ' . $vid_name . '="' . preg_replace('/%vcode%/', $content, $vid_value) . '"';
+                $vid_embed[$vid_name] = ' ' . $vid_name . '="' . preg_replace('/%vcode%/', $content, $vid_value) . '"';
             }
         }
 
@@ -2464,14 +2464,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if (!empty($default)) {
             $attachment = KunenaAttachmentHelper::get($default);
-            unset($attachments [$attachment->id]);
+            unset($attachments[$attachment->id]);
         } elseif (empty($content) && !empty($attachments)) {
             $attachment = array_shift($attachments);
         } elseif (!empty($attachments)) {
             foreach ($attachments as $att) {
                 if ($att->getFilename() == $content) {
                     $attachment = $att;
-                    unset($attachments [$att->id]);
+                    unset($attachments[$att->id]);
                     break;
                 }
             }
@@ -2587,7 +2587,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return '[ ' . basename(!empty($params ["name"]) ? $params ["name"] : trim(strip_tags($content))) . ' ]';
+            return '[ ' . basename(!empty($params["name"]) ? $params["name"] : trim(strip_tags($content))) . ' ]';
         }
 
         // Make sure that filename does not contain path or URL.
@@ -2754,8 +2754,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if (ctype_xdigit($params['colortext'])) {
             if ($layout->getPath()) {
                 return (string) $layout
-                ->set('content', $content)
-                ->set('params', $params);
+                    ->set('content', $content)
+                    ->set('params', $params);
             }
         }
 
@@ -3103,7 +3103,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      * @since   Kunena 6.3
      * @throws  Exception
      */
-    public function DoMention($bbcode, $action, $name, $default, $params, $content) {
+    public function DoMention($bbcode, $action, $name, $default, $params, $content)
+    {
         if ($action == BBCode::BBCODE_CHECK) {
             return true;
         }

@@ -313,6 +313,7 @@ workspace/kunena/build/tmp)
 			<filterchain refid="filter" />
 			<fileset dir="${kunena.admin}">
 				<include name="**/*.xml" />
+				<include name="script.php" />
 				<include name="api/**" />
 				<include name="install/**" />
 				<include name="media/**" />
@@ -735,7 +736,7 @@ workspace/kunena/build/tmp)
 			<property
 				name="base.directory"
 				value="${tmp_dir}/packages/plg_kunena_easyblog" />
-		</phingcall>		
+		</phingcall>
 		<phingcall target="archive">
 			<property
 				name="destination.file"

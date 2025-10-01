@@ -98,7 +98,7 @@ class TopicEditEditor extends KunenaLayout
                     $option = 1;
                 }
             } elseif ($item == 'emoticons') {
-                if (!$this->config->disableEmoticons && $templatesettings->get($item)) {
+                if (!$templatesettings->get('disableEmoticons', '0') && $templatesettings->get($item)) {
                     $option = 1;
                 }
             } elseif ($templatesettings->get($item)) {

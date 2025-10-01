@@ -872,8 +872,8 @@ class UserController extends KunenaController
     protected function sendMailWhenUserBannedAndUnbanned(KunenaUser $user, $ban)
     {
         if ($ban->isEnabled()) {
-            $mailTitle =  Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE');
-            $mailBody = $this->config->mailBodyUserUnBanned;
+            $mailTitle =  Text::_('COM_KUNENA_USER_BANNED_MAIL_TITLE');
+            $mailBody = $this->config->mailBodyUserBanned;
         } else {
             $mailTitle = Text::_('COM_KUNENA_USER_UNBANNED_MAIL_TITLE');
             $mailBody = $this->config->mailBodyUserUnBanned;
@@ -883,7 +883,7 @@ class UserController extends KunenaController
         $mailnamesender  = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle);
         $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
         $mail->setSubject($mailTitle);
-        $mail->setSender([$this->config->getEmail(), $mailnamesender]);
+        $mail->setSender([$this->config->email, $mailnamesender]);
         $mail->setBody($mailBody);
         KunenaEmail::send($mail, [$user->email]);
     }

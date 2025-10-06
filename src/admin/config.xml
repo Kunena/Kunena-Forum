@@ -15,10 +15,9 @@
                 hidden="true" />
             <field
                 name="template"
-                type="text"
+                type="hidden"
                 default="aurelia"
-                label="Template"
-                hidden="true" />
+                label="Template" />
             <field
                 name="boardTitle"
                 type="text"

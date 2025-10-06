@@ -278,8 +278,8 @@ class TemplatesModel extends AdminModel
             return false;
         }
 
-        if ($response->code == '200') {
-            $xml = simplexml_load_string($response->body);
+        if ($response->getStatusCode() == '200') {
+            $xml = simplexml_load_string($response->getBody());
 
             if ($xml) {
                 foreach ($xml->templates as $template) {

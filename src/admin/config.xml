@@ -14,6 +14,12 @@
                 config="false"
                 hidden="true" />
             <field
+                name="template"
+                type="text"
+                default="aurelia"
+                label="Template"
+                hidden="true" />
+            <field
                 name="boardTitle"
                 type="text"
                 default="Kunena"
@@ -2177,14 +2183,5 @@
             validate="rules"
             component="com_kunena"
             section="component" />
-    </fieldset>
-    <fieldset
-        name="no-config-parameters"
-        hidden="true">
-        <field
-            name="template"
-            type="text"
-            default="aurelia"
-            label="Template" />
     </fieldset>
 </config>

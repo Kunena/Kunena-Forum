@@ -86,7 +86,7 @@ class KunenaLogin
      *
      * @since   Kunena 6.0
      * 
-     * @deprecated : methods to handle TFA will be removed in Joomla! 6.0 will be removed in Kunena 6.5
+     * @deprecated : methods to handle TFA will be removed in Joomla! 6.0 will be removed in Kunena 7.0
      *
      * @throws  Exception
      */
@@ -253,7 +253,7 @@ class KunenaLogin
      *
      * @since   Kunena 6.0
      * 
-     * @deprecated : methods to handle TFA will be removed in Joomla! 6.0 will be removed in Kunena 6.5
+     * @deprecated : methods to handle TFA will be removed in Joomla! 6.0 will be removed in Kunena 7.0
      *
      * @throws  Exception
      */

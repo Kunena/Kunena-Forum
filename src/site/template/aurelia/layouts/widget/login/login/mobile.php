@@ -64,27 +64,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                     </div>
                 </div>
 
-                <?php $login = KunenaLogin::getInstance(); ?>
-                <?php
-                if ($login->getTwoFactorMethods() > 1) :
-                    ?>
-                    <div id="kmobile-form-login-tfa" class="control-group center">
-                        <div class="controls">
-                            <div class="input-prepend input-append">
-                            <span class="add-on">
-                                <?php echo KunenaIcons::star(); ?>
-                                <label for="kmobile-secretkey" class="element-invisible">
-                                    <?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
-                                </label>
-                          </span>
-                                <input id="kmobile-secretkey" type="text" name="secretkey" class="input-small"
-                                       tabindex="3"
-                                       size="18" placeholder="<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-
                 <?php if ($this->rememberMe) : ?>
                     <div class="form-group row center" id="kform-login-remember">
                         <div class="controls">

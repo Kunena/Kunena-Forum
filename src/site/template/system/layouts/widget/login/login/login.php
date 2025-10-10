@@ -60,26 +60,6 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
             </div>
         </div>
 
-        <?php $login = KunenaLogin::getInstance(); ?>
-        <?php
-        if ($login->getTwoFactorMethods() > 1) :
-            ?>
-            <div id="kform-login-tfa" class="control-group center">
-                <div class="controls">
-                    <div class="input-prepend input-append">
-                    <span class="add-on">
-                        <?php echo KunenaIcons::star(); ?>
-                        <label for="kk-lgn-secretkey" class="element-invisible">
-                            <?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>
-                        </label>
-                  </span>
-                        <input id="kk-lgn-secretkey" type="text" name="secretkey" class="input-small" tabindex="3"
-                               size="18" placeholder="<?php echo Text::_('COM_KUNENA_LOGIN_SECRETKEY'); ?>"/>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-
         <div id="kform-login-submit" class="control-group center">
             <p>
                 <button type="submit" tabindex="3" name="submit" class="btn btn-outline-primary btn">

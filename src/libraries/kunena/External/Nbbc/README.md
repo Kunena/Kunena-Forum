@@ -7,7 +7,7 @@
 
 NBBC is a high-speed, extensible, easy-to-use validating BBCode parser that accepts BBCode as input and generates XHTML 1.0 Transitional-compliant markup as its output no matter how mangled the input. It includes built-in support for most common BBCode, as well as external-wiki support, image-library support, a standard library of smileys (emoticons), and via its powerful API it can even be transformed into a validating HTML parser!
 
-NBBC is well-tested, with its output validated against a unit-test suite with over a hundred different tests. It is written entirely in PHP, using clean, namespace-friendly, object-oriented code, and it is compatible both PHP 5.4 and up.
+NBBC is well-tested, with its output validated against a unit-test suite with over a hundred different tests. It is written entirely in PHP, using clean, namespace-friendly, object-oriented code, and it is compatible with PHP 7.1 and up.
 
 While flexible and powerful, NBBC is also designed to be an easy to use, and is an easy drop-in replacement for most existing BBCode-parsing solutions. In many cases, it can be implemented in your own projects with only two or three lines of code. Only a single PHP source file is necessary in your projects, a compact, optimized file that is automatically generated from the included heavily-commented original PHP source files.
 

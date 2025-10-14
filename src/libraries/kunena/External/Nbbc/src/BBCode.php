@@ -82,11 +82,11 @@ namespace Nbbc;
  */
 class BBCode {
     /**
-     * Current version number
+     * Current version number - HACK by Kunena team : set correct version number
      */
     const BBCODE_VERSION = '3.0.0';
-    /**
-     * Current release date
+     /**
+     * Current release date - HACK by Kunena team : set correct release date
      */
     const BBCODE_RELEASE = '2025-09-16';
 
@@ -253,6 +253,8 @@ class BBCode {
         $this->ignore_newlines = false;
         $this->output_limit = 0;
         $this->plain_mode = false;
+        // $this->text_length = 0; - Added by KUNENA TEAM
+        $this->text_length = 0;
         $this->was_limited = false;
         $this->limit_tail = "...";
         $this->limit_precision = 0.15;
@@ -320,6 +322,16 @@ class BBCode {
     public function setDebug($enable = true) {
         $this->debug = $enable;
         return $this;
+    }
+    
+    /**
+     * Define the path of log file - Added by KUNENA TEAM
+     *
+     * @param string $logfilepath
+     */
+    public function setLogFile($logfile = '')
+    {
+        Debugger::$log_file = $logfile;
     }
 
 
@@ -1233,6 +1245,13 @@ REGEX;
     // Note that only one of the e, h, k, or u "formatting flags" may be specified;
     // these flags are mutually-exclusive.
     public function fillTemplate($template, $insert_array, $default_array = []) {
+        /*START HACK BY KUNENA >*/
+        if (\is_array($template))
+        {
+            return \call_user_func($template, $insert_array);
+        }
+        /*< END HACK BY KUNENA*/
+        
         $pieces = preg_split('/(\{\$[a-zA-Z0-9_.:\/-]+\})/', $template, -1, PREG_SPLIT_DELIM_CAPTURE);
 
         // Special (common) high-speed case:  No inserts found in the template.
@@ -1910,13 +1929,23 @@ REGEX;
                                 ."\"</tt>, value <tt>\"".htmlspecialchars($value)."\", against \""
                                 .htmlspecialchars($pattern)."\"</tt><br>\n");
                         }
-                        if (!preg_match($pattern, $value)) {
-                            if ($this->debug) {
-                                Debugger::debug("<b>DoTag:</b> parameter <tt>\"".htmlspecialchars($param)
-                                    ."\"</tt> failed 'allow' check.<br>\n");
+
+                        /**
+                         * Hack by Kunena to check if value if empty for Php 8.1+ to avoid deprecated message
+                         */
+                        if (!empty($value))
+                        {
+                            if (!preg_match($pattern, $value)) {
+                                if ($this->debug) {
+                                    Debugger::debug("<b>DoTag:</b> parameter <tt>\"".htmlspecialchars($param)
+                                        ."\"</tt> failed 'allow' check.<br>\n");
+                                }
+                                return false;
                             }
-                            return false;
                         }
+                        /**
+                         * End of hack by Kunena to check if value if empty
+                         */
                     }
                     return true;
                 }

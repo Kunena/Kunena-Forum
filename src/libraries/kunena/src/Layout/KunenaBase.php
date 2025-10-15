@@ -97,6 +97,7 @@ class KunenaBase extends KunenaLayoutBase
      */
     protected $debug;
 
+    public $id;
     public $output;
     public $user;
     public $headerText;

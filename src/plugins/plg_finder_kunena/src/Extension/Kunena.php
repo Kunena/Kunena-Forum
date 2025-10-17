@@ -298,25 +298,20 @@ final class Kunena extends Adapter implements SubscriberInterface
         // Get the content items to index.
         $items = $this->getItems($offset, $limit);
 
-        // Iterate through the items and index them.
-        $item = null;
-
         foreach ($items as $item) {
             $this->index($item);
-        }
 
-        if ($item) {
             // Adjust the offsets.
-            $iState->batchOffset = $iState->batchSize;
-            $iState->totalItems  -= $item->id - $offset;
-
-            // Update the indexer state.
-            $aState['offset']                    = $item->id;
-            $iState->pluginState[$this->context] = $aState;
-            Indexer::setState($iState);
+            $offset++;
+            $iState->batchOffset++;
+            $iState->totalItems--;
         }
 
-        unset($items, $item);
+
+        // Update the indexer state.
+        $aState['offset']                    = $offset;
+        $iState->pluginState[$this->context] = $aState;
+        Indexer::setState($iState);
 
         return \true;
     }
@@ -403,7 +398,7 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         // Get the list query.
         $sql = $this->db->createQuery();
-        $sql->select('MAX(id)')->from('#__kunena_messages');
+        $sql->select('COUNT(*)')->from('#__kunena_messages');
 
         // Get the total number of content items to index.
         $this->db->setQuery($sql);
@@ -463,10 +458,10 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         // Get the list query.
         $sql = $this->db->createQuery();
-        $sql->select('id')->from('#__kunena_messages')->where('id>' . $this->db->quote($offset));
+        $sql->select('id')->from('#__kunena_messages')->setLimit($limit, $offset);
 
         // Get the content items to index.
-        $this->db->setQuery($sql, 0, $limit);
+        $this->db->setQuery($sql);
 
         try {
             $ids = $this->db->loadColumn();

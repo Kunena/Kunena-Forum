@@ -375,7 +375,7 @@ final class Kunena extends Adapter implements SubscriberInterface
         }
 
         // Check if Kunena has been installed.
-        if (!\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('6.4') || !KunenaForum::installed()) {
+        if (!\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('7.0') || !KunenaForum::installed()) {
             return \false;
         }
 

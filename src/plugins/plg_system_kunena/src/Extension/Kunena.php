@@ -147,7 +147,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     {
         if (
             !ComponentHelper::isEnabled('com_kunena')
-            || !KunenaForum::isCompatible('6.4')
+            || !KunenaForum::isCompatible('7.0')
             || !KunenaForum::installed()
         ) {
             return;
@@ -179,7 +179,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     {
         if (
             !ComponentHelper::isEnabled('com_kunena')
-            || !KunenaForum::isCompatible('6.4')
+            || !KunenaForum::isCompatible('7.0')
             || !KunenaForum::installed()
         ) {
             return;

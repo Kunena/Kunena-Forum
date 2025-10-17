@@ -107,7 +107,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
         global $_PLUGINS;
 
         // Do not load if Kunena version is not supported or Kunena is offline
-        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('6.4') && KunenaForum::enabled())) {
+        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.0') && KunenaForum::enabled())) {
             return;
         }
 

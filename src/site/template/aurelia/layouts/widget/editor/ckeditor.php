@@ -91,11 +91,7 @@ $template = KunenaTemplate::getInstance();
     </div>
     <div class="tab-pane fade" id="message_private-tab" role="tabpanel" aria-labelledby="profile-tab">
         <textarea class="span12" name="message_private" id="message_private" rows="12" tabindex="7"
-            placeholder="<?php echo Text::_('COM_KUNENA_ENTER_PRIVATE_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate) {
-                                                                                        echo $this->message->getCategory()->topictemplate;
-                                                                                    }
-
-                                                                                    if (!empty($this->privateMessage->body)) {
+            placeholder="<?php echo Text::_('COM_KUNENA_ENTER_PRIVATE_MESSAGE') ?>"><?php if (!empty($this->privateMessage->body)) {
                                                                                         echo $this->escape($this->privateMessage->body);
                                                                                     } ?>
     </textarea>

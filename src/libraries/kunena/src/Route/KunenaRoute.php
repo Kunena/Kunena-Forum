@@ -219,9 +219,15 @@ abstract class KunenaRoute
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         if (!$uri || (\is_string($uri) && $uri[0] == '&')) {
-            if (!isset($current[$uri])) {
+            if (!isset($uri)) {
+                $uriTmp = '';
+            } else {
+                $uriTmp = $uri;
+            }
+
+            if (!isset($current[$uriTmp])) {
                 $get = Uri::getInstance()->getQuery(true);
-                $uri = $current[$uri] = Uri::getInstance('index.php?' . http_build_query($get) . $uri);
+                $uri = $current[$uriTmp] = Uri::getInstance('index.php?' . http_build_query($get) . $uri);
 
                 if (Factory::getApplication()->isClient('administrator')) {
                     self::setItemID($uri);
@@ -230,7 +236,7 @@ abstract class KunenaRoute
                 $uri->delVar('defaultmenu');
                 $uri->delVar('language');
             } else {
-                $uri = $current[$uri];
+                $uri = $current[$uriTmp];
             }
         } elseif (is_numeric($uri)) {
             if (!isset(self::$menu[\intval($uri)])) {

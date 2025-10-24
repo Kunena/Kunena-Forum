@@ -272,17 +272,17 @@ abstract class KunenaError
                 $extension = strtr((string) array_shift($parts), '_', ' ');
 
                 switch ($dir) {
-                    case 'components';
+                    case 'components':
                         $extension = ucwords(substr($extension, 4)) . ' Component';
                         break;
-                    case 'modules';
+                    case 'modules':
                         $extension = ucwords(substr($extension, 4)) . ' Module';
                         break;
-                    case 'plugins';
+                    case 'plugins':
                         $plugin    = preg_replace('/\.php/', '', strtr((string) array_shift($parts), '_', ' '));
                         $extension = ucwords($extension) . ' - ' . ucwords($plugin) . ' Plugin';
                         break;
-                    case 'templates';
+                    case 'templates':
                         $extension = ucwords($extension) . ' Template';
                         break;
                     default:

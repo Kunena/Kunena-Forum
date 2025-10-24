@@ -404,8 +404,14 @@ class TopicItemDisplay extends KunenaControllerDisplay
                 $message->thankyou = $thankyou_list;
             }
         }
+        
+        if (!isset($mesid)) {
+            $mesidTmp = '';
+        } else {
+            $mesidTmp = $mesid;
+        }
 
-        if (!isset($this->messages[$mesid]) && !empty($this->messages)) {
+        if (!isset($this->messages[$mesidTmp]) && !empty($this->messages)) {
             $this->message = reset($this->messages);
         }
 

@@ -1710,10 +1710,15 @@ HTML;
 
             $xml = simplexml_load_file($xmlfile);
 
-            if ($topiclabels == 1) {
-                $id = $topic->icon_id;
+            if ($topic->ordering) {
+                // Set sticky label on topic
+                $id = '11';
             } else {
-                $id = $topic->label_id;
+                if ($topiclabels == 1) {
+                    $id = $topic->icon_id;
+                } else {
+                    $id = $topic->label_id;
+                }
             }
 
             return $this->get_xml_label($xml, $id, $topicicontype);

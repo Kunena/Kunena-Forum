@@ -209,23 +209,29 @@ class BBCodeLexer {
                 $state = self::BBCODE_LEXSTATE_TAG;
                 $length += strlen($text);
             } else {
-                switch (ord(substr($this->text, 0, 1))) {
-                    case 10:
-                    case 13:
-                        $state = self::BBCODE_LEXSTATE_TEXT;
-                        $length++;
-                        break;
-                    default:
-                        $state = self::BBCODE_LEXSTATE_TEXT;
-                        $length += strlen($text);
-                        break;
-                    case 40:
-                    case 60:
-                    case 91:
-                    case 123:
-                        $state = self::BBCODE_LEXSTATE_TEXT;
-                        break;
+                // Hack by Kunena : to remove the deprected message with Php 8.5
+                if (!empty(substr($this->text, 0, 1))) {
+                //    
+                    switch (ord(substr($this->text, 0, 1))) {
+                        case 10:
+                        case 13:
+                            $state = self::BBCODE_LEXSTATE_TEXT;
+                            $length++;
+                            break;
+                        default:
+                            $state = self::BBCODE_LEXSTATE_TEXT;
+                            $length += strlen($text);
+                            break;
+                        case 40:
+                        case 60:
+                        case 91:
+                        case 123:
+                            $state = self::BBCODE_LEXSTATE_TEXT;
+                            break;
+                    }
+                // End Hack by Kunena : to remove the deprected message with Php 8.5
                 }
+                //
             }
         }
 

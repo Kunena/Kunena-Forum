@@ -16,6 +16,8 @@ namespace Kunena\Forum\Administrator\Helper;
  * Forum component helper.
  *
  * @since  4.0
+ * 
+ * @deprecated Kunena 7.0 will be removed in Kunena 7.1 without replacement
  */
 class StatisticsHelper
 {

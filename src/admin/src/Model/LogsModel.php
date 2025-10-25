@@ -34,8 +34,6 @@ class LogsModel extends ListModel
      *
      * @throws  Exception
      * @since   Kunena 6.0
-     *
-     * @see     JController
      */
     public function __construct($config = [])
     {

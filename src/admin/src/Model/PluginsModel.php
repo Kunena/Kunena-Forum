@@ -33,7 +33,7 @@ class PluginsModel extends JoomlaPluginsModel
      * @throws Exception
      * @since   Kunena 1.6
      *
-     * @see     JController
+     * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
      */
     public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {

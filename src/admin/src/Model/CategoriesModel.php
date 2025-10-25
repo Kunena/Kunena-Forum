@@ -29,7 +29,6 @@ use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Model\KunenaModel;

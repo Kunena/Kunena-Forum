@@ -15,7 +15,6 @@ namespace Kunena\Forum\Libraries\Response;
 
 \defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Response\JsonResponse;
 
 /**

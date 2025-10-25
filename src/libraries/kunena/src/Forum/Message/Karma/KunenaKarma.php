@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Forum\Message\Karma;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;

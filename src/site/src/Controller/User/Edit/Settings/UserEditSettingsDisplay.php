@@ -18,7 +18,6 @@ namespace Kunena\Forum\Site\Controller\User\Edit\Settings;
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 use StdClass;
 

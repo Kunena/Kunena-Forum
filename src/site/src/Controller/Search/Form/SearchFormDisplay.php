@@ -22,7 +22,6 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\SearchModel;
-use Kunena\Forum\Libraries\Controller\KunenaController;
 use RuntimeException;
 
 /**

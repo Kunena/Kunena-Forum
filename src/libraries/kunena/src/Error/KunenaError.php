@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Error;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;

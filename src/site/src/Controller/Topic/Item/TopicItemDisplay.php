@@ -44,7 +44,6 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use stdClass;
-use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 
 /**

@@ -16,7 +16,6 @@ namespace Kunena\Forum\Site\Layout\Search;
 \defined('_JEXEC') or die;
 
 use Exception;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;

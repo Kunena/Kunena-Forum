@@ -17,12 +17,8 @@ namespace Kunena\Forum\Site\Controller\User\Edit\User;
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Registry\Registry;
 use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
-use StdClass;
 
 /**
  * Class ComponentUserControllerEditUserDisplay

@@ -13,6 +13,8 @@
 
 namespace Kunena\Forum\Administrator\Controller;
 
+\defined('_JEXEC') or die();
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
@@ -20,8 +22,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use RuntimeException;
-
-\defined('_JEXEC') or die();
 
 /**
  * Kunena Rank Controller

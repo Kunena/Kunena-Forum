@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Forum\Topic;
 
 use Exception;
 use Joomla\CMS\Date\Date;
-use Joomla\CMS\User\User;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;

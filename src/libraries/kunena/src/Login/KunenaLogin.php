@@ -17,10 +17,7 @@ namespace Kunena\Forum\Libraries\Login;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Helper\AuthenticationHelper;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Component\Users\Administrator\Helper\UsersHelper;
-use Joomla\Component\Users\Administrator\Model\UserModel;
 use Kunena\Forum\Libraries\Event\KunenaGetLoginEvent;
 
 /**

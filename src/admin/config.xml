@@ -1185,7 +1185,7 @@
             <field
                 name="avatarTypes"
                 type="text"
-                default="gif,jpeg,jpg,png"
+                default="gif,jpeg,jpg,png,webp,avif"
                 label="COM_KUNENA_CONFIG_AVATAR_FILESALLOWED"
                 description="COM_KUNENA_CONFIG_AVATAR_FILESALLOWED_DESC" />
             <field
@@ -1313,7 +1313,7 @@
             <field
                 name="imageTypes"
                 type="text"
-                default="jpg,jpeg,gif,png"
+                default="jpg,jpeg,gif,png,webp,avif"
                 label="COM_KUNENA_A_IMAGEALLOWEDTYPES"
                 description="COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC"
                 showon="imageUpload!:" />
@@ -1331,7 +1331,7 @@
             <field
                 name="imageMimeTypes"
                 type="text"
-                default="image/jpeg,image/jpg,image/gif,image/png"
+                default="image/jpeg,image/jpg,image/gif,image/png,image/webp,image/avif"
                 label="COM_KUNENA_A_IMAGEALLOWEDMIMETYPES"
                 description="COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC"
                 showon="imageUpload!:" />

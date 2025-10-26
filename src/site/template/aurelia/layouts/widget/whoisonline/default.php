@@ -91,7 +91,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                                         <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=banned'); ?>" class="kwho-banned"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?></a>
                                     </span>
                                     <span class="kwho-user">
-                                        <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?>
+                                        <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=user'); ?>" class="kwho-user"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?></a>
                                     </span>
                                     <span class="kwho-guest">
                                         <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>

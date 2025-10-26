@@ -217,7 +217,7 @@ class KunenaUpload
                         throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
                     }
                 } else {
-                    if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0 && stripos($type, 'audio/') === false && stripos($type, 'video/') === false) {
+                    if (stripos($type, 'image/') === false && stripos($type, 'image/') <= 0) {
                         if (!$this->checkFileSizeFileAttachment($size)) {
                             throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
                         }

@@ -77,13 +77,14 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->categories      = $this->get('AdminCategories');
-        $this->pagination      = $this->get('AdminNavigation');
-        $this->state           = $this->get('State');
+        $model                 = $this->getModel();
+        $this->categories      = $model->getAdminCategories();
+        $this->pagination      = $model->getAdminNavigation();
+        $this->state           = $model->getState();
         $this->pagesTotal      = 100;
-        $this->batchCategories = $this->get('BatchCategories');
-        $this->filterForm      = $this->get('FilterForm');
-        $this->activeFilters   = $this->get('ActiveFilters');
+        $this->batchCategories = $model->getBatchCategories();
+        $this->filterForm      = $model->getFilterForm();
+        $this->activeFilters   = $model->getActiveFilters();
 
         // Preprocess the list of items to find ordering divisions.
         $this->ordering = [];
@@ -93,7 +94,7 @@ class HtmlView extends BaseHtmlView
         }
 
         // Check for errors.
-        if (\count($errors = $this->get('Errors'))) {
+        if (\count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 

@@ -117,6 +117,7 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         $userids = (array) Factory::getApplication()->getUserState('kunena.usermove.userids');
+        $model            = $this->getModel();
 
         if ($userids && $this->getLayout() == 'move') {
             $this->setToolBarMove();

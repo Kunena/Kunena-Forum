@@ -99,11 +99,12 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->state         = $this->get('State');
-        $this->items         = $this->get('Items');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
-        $this->pagination    = $this->get('Pagination');
+        $model               = $this->getModel();
+        $this->state         = $model->getState();
+        $this->items         = $model->getItems();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+        $this->pagination    = $model->getPagination();
 
         $layout = $this->getLayout() == 'default' ? 'messages' : $this->getLayout();
         $this->setLayout($layout);

@@ -76,12 +76,13 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->state         = $this->get('state');
+        $model               = $this->getModel();
+        $this->state         = $model->getstate();
         $this->group         = $this->state->get('group');
-        $this->items         = $this->get('items');
-        $this->pagination    = $this->get('Pagination');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
 
         $document = Factory::getApplication()->getDocument();
         $document->setTitle(Text::_('Forum Logs'));
@@ -90,49 +91,24 @@ class HtmlView extends BaseHtmlView
 
         return parent::display($tpl);
     }
-
+    
     /**
-     * @return  array
+     * Get the log type
+     * 
+     * @param   integer  $id  id
+     *
+     * @return string
      *
      * @since   Kunena 6.0
-     * 
-     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
-     */
-    protected function getFilterTypeFields(): array
-    {
-        $filterFields   = [];
-        $filterFields[] = HTMLHelper::_('select.option', 1, 'MOD');
-        $filterFields[] = HTMLHelper::_('select.option', 2, 'ACT');
-        $filterFields[] = HTMLHelper::_('select.option', 3, 'ERR');
-        $filterFields[] = HTMLHelper::_('select.option', 4, 'REP');
-
-        return $filterFields;
-    }
-
-    /**
-     * @return  array
      *
-     * @since   Kunena 6.0
-     * 
-     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
      */
-    protected function getFilterOperationFields(): array
+    public function getType(int $id): string
     {
-        $filterFields = [];
-
-        $reflection = new ReflectionClass('Kunena\Forum\Libraries\Log\KunenaLog');
-
-        $constants = $reflection->getConstants();
-        ksort($constants);
-
-        foreach ($constants as $key => $value) {
-            if (strpos($key, 'LOG_') === 0) {
-                $filterFields[] = HTMLHelper::_('select.option', $key, Text::_("COM_KUNENA_{$value}"));
-            }
-        }
-
-        return $filterFields;
+        static $types = [1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP'];
+        
+        return isset($types[$id]) ? $types[$id] : '???';
     }
+    
 
     /**
      * Set the toolbar on log manager
@@ -166,37 +142,5 @@ class HtmlView extends BaseHtmlView
 
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/users';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-    }
-
-    /**
-     * @param   integer  $id  id
-     *
-     * @return string
-     *
-     * @since   Kunena 6.0
-     * 
-     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
-     */
-    public function getType(int $id): string
-    {
-        static $types = [1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP'];
-
-        return isset($types[$id]) ? $types[$id] : '???';
-    }
-
-    /**
-     * @param   string  $name  name
-     *
-     * @return  string
-     *
-     * @since   Kunena 6.0
-     * 
-     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
-     */
-    public function getGroupCheckbox(string $name): string
-    {
-        $checked = isset($this->group[$name]) ? ' checked="checked"' : '';
-
-        return '<input type="checkbox" name="group_' . $name . '" value="1" title="Group By" ' . $checked . ' class="filter form-control" />';
     }
 }

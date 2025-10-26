@@ -118,6 +118,7 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         $layout = $this->getLayout();
+        $model  = $this->getModel();
 
         if ($layout == 'default') {
             $this->setToolBar();
@@ -132,10 +133,10 @@ class HtmlView extends BaseHtmlView
 
             $this->setToolBarMenu();
         } elseif ($layout == 'prune') {
-            $this->forumList       = $this->get('PruneCategories');
-            $this->listTrashDelete = $this->get('PruneListtrashDelete');
-            $this->controlOptions  = $this->get('PruneControlOptions');
-            $this->keepSticky      = $this->get('PruneKeepSticky');
+            $this->forumList       = $model->getPruneCategories();
+            $this->listTrashDelete = $model->getPruneListtrashDelete();
+            $this->controlOptions  = $model->getPruneControlOptions();
+            $this->keepSticky      = $model->getPruneKeepSticky();
 
             $this->setToolBarPrune();
         } elseif ($layout == 'purgerestatements') {
@@ -143,8 +144,8 @@ class HtmlView extends BaseHtmlView
         } elseif ($layout == 'recount') {
             $this->setToolBarRecount();
         } elseif ($layout == 'report') {
-            $this->systemReport          = $this->get('SystemReport');
-            $this->systemReportAnonymous = $this->get('SystemReportAnonymous');
+            $this->systemReport          = $model->getSystemReport();
+            $this->systemReportAnonymous = $model->getSystemReportAnonymous();
 
             $this->setToolBarReport();
         } elseif ($layout == 'subscriptions') {

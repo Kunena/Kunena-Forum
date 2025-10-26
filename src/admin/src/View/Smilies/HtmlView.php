@@ -53,12 +53,13 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->items      = $this->get('Items');
-        $this->state      = $this->get('State');
-        $this->pagination = $this->get('Pagination');
+        $model            = $this->getModel();
+        $this->items      = $model->getItems();
+        $this->state      = $model->getState();
+        $this->pagination = $model->getPagination();
         $this->ktemplate  = KunenaTemplate::getInstance();
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
 
         $this->addToolbar();
 

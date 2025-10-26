@@ -67,7 +67,8 @@ class HtmlView extends BaseHtmlView
      */
     public function displayEdit()
     {
-        $this->category = $this->get('AdminCategory');
+        $model          = $this->getModel();
+        $this->category = $model->getAdminCategory();
 
         // FIXME: better access control and gracefully handle no rights
         // Prevent fatal error if no rights:
@@ -75,8 +76,8 @@ class HtmlView extends BaseHtmlView
             return;
         }
 
-        $this->options    = $this->get('AdminOptions');
-        $this->moderators = $this->get('AdminModerators');
+        $this->options    = $model->getAdminOptions();
+        $this->moderators = $model->getAdminModerators();
         $this->setToolBarEdit();
         $this->display();
     }
@@ -87,7 +88,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarEdit()
     {
-        $this->category = $this->get('AdminCategory');
+        $model          = $this->getModel();
+        $this->category = $model->getAdminCategory();
 
         // Get the toolbar object instance
         $this->bar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar('toolbar');
@@ -120,8 +122,9 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->category = $this->get('AdminCategory');
-        $this->state    = $this->get('State');
+        $model          = $this->getModel();
+        $this->category = $model->getAdminCategory();
+        $this->state    = $model->getState();
 
         // FIXME: better access control and gracefully handle no rights
         // Prevent fatal error if no rights:
@@ -129,8 +132,8 @@ class HtmlView extends BaseHtmlView
             return;
         }
 
-        $this->options    = $this->get('AdminOptions');
-        $this->moderators = $this->get('AdminModerators');
+        $this->options    = $model->getAdminOptions();
+        $this->moderators = $model->getAdminModerators();
 
         $this->addToolbar();
 
@@ -146,7 +149,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
-        $this->category = $this->get('AdminCategory');
+        $model          = $this->getModel();
+        $this->category = $model->getAdminCategory();
 
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_CATEGORY_MANAGER'), 'list-view');
         ToolbarHelper::spacer();

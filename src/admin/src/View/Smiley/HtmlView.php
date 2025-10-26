@@ -41,10 +41,11 @@ class HtmlView extends BaseHtmlView
     {
         $this->setLayout('edit');
 
-        $this->state          = $this->get('state');
-        $this->smileySelected = $this->get('smiley');
+        $model                = $this->getModel();
+        $this->state          = $model->getState();
+        $this->smileySelected = $model->getSmiley();
         $this->smileyPath     = KunenaFactory::getTemplate()->getSmileyPath();
-        $this->listSmileys    = $this->get('SmileysPaths');
+        $this->listSmileys    = $model->getSmileysPaths();
 
         $this->addToolbar();
 

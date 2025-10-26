@@ -45,25 +45,6 @@ class HtmlView extends BaseHtmlView
     protected $state;
 
     /**
-     * Returns an array of standard published state filter options.
-     *
-     * @return  array  The HTML code for the select tag
-     *
-     * @since   Kunena 6.0
-     * 
-     * @deprecated Kunena 6.3 will be removed in Kunena 7.0 without replacement
-     */
-    public static function specialOptions(): array
-    {
-        // Build the active state filter options.
-        $options   = [];
-        $options[] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_FIELD_LABEL_YES'));
-        $options[] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FIELD_LABEL_NO'));
-
-        return $options;
-    }
-
-    /**
      * @param   null  $tpl  tpl
      *
      * @return  void
@@ -74,15 +55,16 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->items         = $this->get('Items');
-        $this->state         = $this->get('state');
-        $this->pagination    = $this->get('Pagination');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $model               = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->state         = $model->getState();
+        $this->pagination    = $model->getPagination();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
         $this->ktemplate     = KunenaTemplate::getInstance();
 
         // Check for errors.
-        if (\count($errors = $this->get('Errors'))) {
+        if (\count($errors = $model->getErrors())) {
             throw new Exception(implode("\n", $errors));
         }
 

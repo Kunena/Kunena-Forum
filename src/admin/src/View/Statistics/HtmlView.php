@@ -61,10 +61,11 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->state      = $this->get('state');
+        $model            = $this->getModel();
+        $this->state      = $model->getState();
         $this->group      = $this->state->get('group');
-        $this->items      = $this->get('items');
-        $this->pagination = $this->get('Pagination');
+        $this->items      = $model->getItems();
+        $this->pagination = $model->getPagination();
 
         $this->filterUserFields    = $this->getFilterUserFields();
         $this->sortFields          = $this->getSortFields();

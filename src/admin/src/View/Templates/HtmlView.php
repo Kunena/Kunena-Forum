@@ -119,9 +119,10 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->templates    = $this->get('Templates');
-        $this->pagination   = $this->get('Pagination');
-        $this->templatesxml = $this->get('Templatesxml');
+        $model              = $this->getModel();
+        $this->templates    = $model->getTemplates();
+        $this->pagination   = $model->getPagination();
+        $this->templatesxml = $model->getTemplatesxml();
 
         $this->addToolbar();
 
@@ -170,9 +171,10 @@ class HtmlView extends BaseHtmlView
     {
         $this->setToolBarEdit();
 
-        $this->form         = $this->get('Form');
-        $this->params       = $this->get('editparams');
-        $this->details      = $this->get('templatedetails');
+        $model              = $this->getModel();
+        $this->form         = $model->getForm();
+        $this->params       = $model->getEditparams();
+        $this->details      = $model->getTemplatedetails();
         $this->templatename = $this->app->getUserState('kunena.edit.templatename');
         $template           = KunenaTemplate::getInstance($this->templatename);
         $template->initializeBackend();
@@ -221,11 +223,12 @@ class HtmlView extends BaseHtmlView
     public function displayEditCss(): void
     {
         $this->setToolBarEditCss();
+        $model              = $this->getModel();
         $this->templatename = $this->app->getUserState('kunena.templatename');
         $this->filename     = $this->app->getUserState('kunena.editCss.filename');
-        $this->content      = $this->get('FileContentParsed');
+        $this->content      = $model->getFileContentParsed();
         $this->cssPath      = KPATH_SITE . '/template/' . $this->templatename . '/assets/css/' . $this->filename;
-        $this->ftp          = $this->get('FTPcredentials');
+        $this->ftp          = $model->getFTPcredentials();
         $this->display();
     }
 
@@ -242,8 +245,8 @@ class HtmlView extends BaseHtmlView
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
 
-        $toolsbar->apply('applyCss');
-        $toolsbar->save('saveCss');
-        $toolsbar->cancel();
+        $toolbar->apply('applyCss');
+        $toolbar->save('saveCss');
+        $toolbar->cancel();
     }
 }

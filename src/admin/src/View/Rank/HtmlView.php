@@ -41,10 +41,11 @@ class HtmlView extends BaseHtmlView
     {
         $this->setLayout('edit');
 
-        $this->state        = $this->get('state');
-        $this->rankSelected = $this->get('rank');
+        $model              = $this->getModel();
+        $this->state        = $model->getState();
+        $this->rankSelected = $model->getRank();
         $this->rankPath     = KunenaFactory::getTemplate()->getRankPath();
-        $this->listRanks    = $this->get('RanksPaths');
+        $this->listRanks    = $model->getRanksPaths();
 
         $this->addToolbar();
 

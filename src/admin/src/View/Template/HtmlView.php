@@ -42,7 +42,8 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $app = Factory::getApplication();
+        $app   = Factory::getApplication();
+        $model = $this->getModel();
 
         if ($this->getLayout() == "choosecss") {
             $this->setToolBarChooseCss();
@@ -84,19 +85,19 @@ class HtmlView extends BaseHtmlView
             $this->setToolBarEditScss();
             $this->templatename = $app->getUserState('kunena.templatename');
             $this->filename     = $app->getUserState('kunena.editscss.filename');
-            $this->content      = $this->get('FileScssParsed');
+            $this->content      = $model->getFileScssParsed();
 
             $this->scss_path = KPATH_SITE . '/template/' . $this->templatename . '/assets/scss/' . $this->filename;
-            $this->ftp       = $this->get('FTPcredentials');
+            $this->ftp       = $model->getFTPcredentials();
 
             return parent::display($tpl);
         } elseif ($this->getLayout() == "editcss") {
             $this->setToolBarEditCss();
             $this->templatename = $app->getUserState('kunena.templatename');
             $this->filename     = $app->getUserState('kunena.editCss.filename');
-            $this->content      = $this->get('FileContentParsed');
+            $this->content      = $model->getFileContentParsed();
             $this->cssPath      = KPATH_MEDIA . '/core/css/' . $this->filename;
-            $this->ftp          = $this->get('FTPcredentials');
+            $this->ftp          = $model->getFTPcredentials();
 
             return parent::display($tpl);
         } elseif ($this->getLayout() == "addnew") {
@@ -104,9 +105,8 @@ class HtmlView extends BaseHtmlView
 
             return parent::display($tpl);
         } else {
-            $this->form         = $this->get('Form');
-            $this->params       = $this->get('editparams');
-            $this->details      = $this->get('templatedetails');
+            $this->form         = $model->getForm();
+            $this->details      = $model->getTemplatedetails();
             $this->templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
             $template           = KunenaTemplate::getInstance($this->templatename);
             $template->initializeBackend();

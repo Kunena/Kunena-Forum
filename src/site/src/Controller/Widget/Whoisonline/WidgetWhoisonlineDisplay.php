@@ -41,6 +41,8 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
     public $onlineList;
 
     public $hiddenList;
+    
+    public $linkUserlistAllowedToShow;
 
     /**
      * @var     string
@@ -113,6 +115,12 @@ class WidgetWhoisonlineDisplay extends KunenaControllerDisplay
 
         $profile        = KunenaFactory::getProfile();
         $this->usersUrl = $profile->getUserListURL();
+        
+        if (!$me->exists() && $this->config->userlistAllowed || $me->exists()) {
+            $this->linkUserlistAllowedToShow = 1;    
+        } else {
+            $this->linkUserlistAllowedToShow = 0;
+        }
     }
 
     /**

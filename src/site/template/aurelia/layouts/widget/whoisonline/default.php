@@ -82,16 +82,28 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                                         <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
                                     </span>
                                     <span class="kwho-globalmoderator">
-                                        <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=globalmod'); ?>" class="kwho-globalmoderator"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></a>
+                                        <?php if ($this->linkUserlistAllowedToShow) : ?>
+                                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=globalmod'); ?>" class="kwho-globalmoderator"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></a>
+                                    	<?php else : ?>
+                                    	    <?php echo Text::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
+                                    	<?php endif; ?>
                                     </span>
                                     <span class="kwho-moderator">
                                         <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_MODERATOR'); ?>
                                     </span>
                                     <span class="kwho-banned">
-                                        <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=banned'); ?>" class="kwho-banned"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?></a>
+                                        <?php if ($this->linkUserlistAllowedToShow) : ?>
+                                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=banned'); ?>" class="kwho-banned"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?></a>
+                                    	<?php else : ?>
+                                    	    <?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?>
+                                    	<?php endif; ?>
                                     </span>
                                     <span class="kwho-user">
-                                        <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=user'); ?>" class="kwho-user"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?></a>
+                                        <?php if ($this->linkUserlistAllowedToShow) : ?>
+                                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=user'); ?>" class="kwho-user"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?></a>
+                                    	<?php else : ?>
+                                    	    <?php echo Text::_('COM_KUNENA_COLOR_USER'); ?>
+                                    	<?php endif; ?>
                                     </span>
                                     <span class="kwho-guest">
                                         <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>

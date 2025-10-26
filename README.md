@@ -26,7 +26,7 @@ In addition we recommend the following PHP settings:
 *Kunena* requires the following Joomla settings:
 
     * Bootstrap 5 compatible template
-    * Upgraded to latest versions all extensions that claim to integrate with Kunena 6.5
+    * Upgraded to latest versions all extensions that claim to integrate with Kunena 7.0
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard
 
 
@@ -36,7 +36,7 @@ If you are looking for examples on how *Kunena* works or can be installed, we re
 
 ## TRANSLATIONS
 
-Kunena is on Transifex - Help us to translate : https://app.transifex.com/Kunena-Forum/kunena-forum-6-x
+Kunena is on Transifex - Help us to translate : https://crowdin.com/project/kunena-forum
 
 ## INSTALLATION
 

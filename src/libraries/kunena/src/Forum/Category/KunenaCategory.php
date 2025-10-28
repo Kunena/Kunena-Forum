@@ -54,6 +54,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  * @property int     $parentid
  * @property string  $name
  * @property string  $alias
+ * @property string  $image
  * @property string  $icon
  * @property int     $icon_id
  * @property int     $locked
@@ -214,6 +215,12 @@ class KunenaCategory extends KunenaDatabaseObject
      * @since   Kunena 6.0
      */
     public $locked;
+
+    /**
+     * @var     string
+     * @since   Kunena 6.0
+     */
+    public $image;
 
     /**
      * @var     boolean
@@ -832,7 +839,7 @@ class KunenaCategory extends KunenaDatabaseObject
             $exception = $this->authoriseRead($user);
 
             if ($throw && $exception) {
-                throw new $exception();
+               throw new KunenaExceptionAuthorise($exception->getMessage(), $exception->getCode());
             }
 
             return $exception;

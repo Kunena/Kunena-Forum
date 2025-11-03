@@ -25,4 +25,6 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 class TopicPollResults extends KunenaLayout
 {
     public $intervalTimeToLive;
+    public $users_voted_morelist;
+    public $users_voted_list;
 }

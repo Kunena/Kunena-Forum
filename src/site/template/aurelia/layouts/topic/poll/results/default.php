@@ -86,11 +86,12 @@ if ($this->show_title && $this->poll->polltimetolive != '1000-01-01 00:00:00') {
                 echo Text::_('COM_KUNENA_POLL_VOTERS_TOTAL') . " <b>" . $this->usercount . "</b> ";
 
                 if (!empty($this->users_voted_list)) :
-                echo ' ( ' . implode(', ', $this->users_voted_list) . ' <span style="display: none;" id="kpoll-moreusers-div">, ' . implode(', ', $this->users_voted_morelist) . ' </span>) '; ?>
+                echo ' ( ' . implode(', ', $this->users_voted_list) . ' <span style="display: none;" id="kpoll-moreusers-span">, ' . implode(', ', $this->users_voted_morelist) . ' </span>) '; ?>
                     <?php
                     if ($this->usercount > '5') :
                         ?>
-                        <a href="#" id="kpoll-moreusers"><?php echo Text::_('COM_KUNENA_POLLUSERS_MORE') ?></a>                                                
+                        <a href="#kpoll-moreusers-span" class="link-show-extra-users link-show-more" id="kpoll-moreusers"><?php echo Text::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
+                        <a href="#kpoll-lesssers-span" class="link-show-extra-users" id="kpoll-lessusers" style="display: none;"><?php echo Text::_('COM_KUNENA_POLLUSERS_LESS') ?></a>                                                
                     <?php endif;
                 endif; ?>
             </td>

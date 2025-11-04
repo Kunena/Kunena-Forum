@@ -36,10 +36,6 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	$('#kpoll-moreusers').click(function () {
-		$('#kpoll-moreusers-div').show();
-	});
-
 	/* Under a poll : show more users list */
 	$(".link-show-extra-users").click(function () {
 		if (!$(this).hasClass('link-show-more')) {

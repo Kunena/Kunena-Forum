@@ -528,11 +528,17 @@
                  versionname="Internal">
             <phpfile name="6.4.0-2025-05-14_fill_kunena_private_table"/>
         </version>
-	<version version="6.4.5-DEV"
+        <version version="6.4.5-DEV"
                  versiondate="2025-07-31"
                  versionname="Internal">
         <phpfile name="6.4.5-2025-07-30_remove_columns_users_table"/>
         </version>
+        <version version="6.4.7-DEV"
+                 versiondate="2025-11-04"
+                 versionname="Internal">
+        <query mode="silenterror">UPDATE `#__kunena_polls` SET `polltimetolive` = '1000-01-01 00:00:00' WHERE `polltimetolive` IS NULL;</query>
+        <query mode="silenterror">ALTER TABLE `#__kunena_polls` CHANGE `polltimetolive` `polltimetolive` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
+        </version>         
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

@@ -58,6 +58,7 @@ return new class() implements ServiceProviderInterface {
                  */
                 protected $versions = [
                     'PHP'     => [
+                        '8.5' => '8.5.0',
                         '8.4' => '8.4.1',
                         '8.3' => '8.3.0',
                         '8.2' => '8.2.0',

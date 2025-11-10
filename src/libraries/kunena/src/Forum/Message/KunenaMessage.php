@@ -56,25 +56,26 @@ use StdClass;
 /**
  * Class \Kunena\Forum\Libraries\Forum\Message\Message
  *
- * @property int    $parent
- * @property int    $thread
- * @property int    $catid
- * @property string $name
- * @property int    $userid
- * @property string $email
- * @property string $subject
- * @property int    $time
- * @property string $ip
- * @property int    $topic_emoticon
- * @property int    $locked
- * @property int    $hold
- * @property int    $ordering
- * @property int    $hits
- * @property int    $moved
- * @property int    $modified_by
- * @property string $modified_time
- * @property string $modified_reason
- * @property string $message
+ * @property int     $parent
+ * @property int     $thread
+ * @property int     $catid
+ * @property string  $name
+ * @property int     $userid
+ * @property string  $email
+ * @property string  $subject
+ * @property int     $time
+ * @property string  $ip
+ * @property int     $topic_emoticon
+ * @property int     $locked
+ * @property int     $hold
+ * @property int     $ordering
+ * @property int     $hits
+ * @property int     $moved
+ * @property int     $deleted_time
+ * @property int     $modified_by
+ * @property string  $modified_time
+ * @property string  $modified_reason
+ * @property string  $message
  * @since   Kunena 6.0
  */
 class KunenaMessage extends KunenaDatabaseObject
@@ -210,6 +211,12 @@ class KunenaMessage extends KunenaDatabaseObject
 
     /**
      * @var     integer
+     * @since   Kunena 7.0
+     */
+    public $deleted_time;
+
+    /**
+     * @var     integer
      * @since   Kunena 6.4
      */
     public $modified_by;
@@ -237,7 +244,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public $message;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
@@ -1583,6 +1590,13 @@ class KunenaMessage extends KunenaDatabaseObject
             }
         }
 
+        // When the message is set to be deleted, set the deleted time to the deleted time
+        if ($this->hold === 2) {
+            $this->deleted_time = Factory::getDate()->toUnix();
+        } else {
+            $this->deleted_time = 0;
+        }
+
         // Flood protection
         $config = KunenaFactory::getConfig();
 
@@ -2031,6 +2045,7 @@ class KunenaMessage extends KunenaDatabaseObject
             'ordering'        => $this->ordering,
             'hits'            => $this->hits,
             'moved'           => $this->moved,
+            'deleted_time'    => $this->deleted_time,
             'modified_by'     => $this->modified_by,
             'modified_time'   => $this->modified_time,
             'modified_reason' => $this->modified_reason,

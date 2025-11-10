@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Administrator\Model\TrashsModel;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
@@ -94,47 +95,17 @@ class TrashsController extends AdminController
             return;
         }
 
+        /** @var TrashsModel $model */
+        $model = $this->getModel();
+
         if ($type == 'topics') {
-            $topics = KunenaTopicHelper::getTopics($cid, 'none');
-
-            foreach ($topics as $topic) {
-                try {
-                    $topic->delete();
-                } catch (Exception $e) {
-                    $this->app->enqueueMessage($e->getMessage(), 'error');
-                }
-            }
-
-            KunenaTopicHelper::recount($cid);
-            KunenaCategoryHelper::recount($topic->getCategory()->id);
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
+            if ($model->purgeTopics($cid)) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
+            };
         } elseif ($type == 'messages') {
-            $messages = KunenaMessageHelper::getMessages($cid, 'none');
-
-            foreach ($messages as $message) {
-                try {
-                    $message->delete();
-                } catch (Exception $e) {
-                    $this->app->enqueueMessage($e->getMessage(), 'error');
-                }
-
-                $target  = KunenaMessageHelper::get($message->id);
-                $topic   = KunenaTopicHelper::get($target->getTopic());
-
-                if ($topic->attachments > 0) {
-                    $topic->attachments = $topic->attachments - 1;
-
-                    try {
-                        $topic->save(false);
-                    } catch (Exception $e) {
-                        $this->app->enqueueMessage($e->getMessage(), 'error');
-                    }
-                }
-            }
-
-            KunenaTopicHelper::recount($cid);
-            KunenaCategoryHelper::recount($topic->getCategory()->id);
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
+            if ($model->purgeMessages($cid, age: 0)) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
+            };
         }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));

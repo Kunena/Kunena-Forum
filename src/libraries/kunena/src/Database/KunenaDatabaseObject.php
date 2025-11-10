@@ -180,15 +180,15 @@ abstract class KunenaDatabaseObject
      */
     protected function getTable()
     {
-       $className = 'Kunena\Forum\Libraries\Tables\\' . $this->_table;
-       $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $className = 'Kunena\Forum\Libraries\Tables\\' . $this->_table;
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-       if (class_exists($className)) {
-           $table = new $className($db);
-       } else {
-           $className = 'Kunena\Forum\Libraries\Tables\Table' . $this->_table;
-           $table = new $className($db);
-       }
+        if (class_exists($className)) {
+            $table = new $className($db);
+        } else {
+            $className = 'Kunena\Forum\Libraries\Tables\Table' . $this->_table;
+            $table = new $className($db);
+        }
 
         return $table;
     }
@@ -250,13 +250,14 @@ abstract class KunenaDatabaseObject
         try {
             // Trigger the onKunenaBeforeSave event.
             Factory::getApplication()->triggerEvent('onKunenaBeforeSave', ["com_kunena.{$this->_name}", &$table, $isNew]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 
         // Store the data, the store() method from Joomla\CMS\Table\Table return only boolean and not exception.
         try {
-            $table->store();
+            $updateNulls = (bool) ($this->updateNulls ?? \false);
+            $table->store($updateNulls);
         } catch (Exception $e) {
             throw new KunenaException($e->getMessage());
         }
@@ -332,7 +333,7 @@ abstract class KunenaDatabaseObject
         try {
             // Trigger the onKunenaBeforeDelete event.
             Factory::getApplication()->triggerEvent('onKunenaBeforeDelete', ["com_kunena.{$this->_name}", $table]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 
@@ -379,7 +380,7 @@ abstract class KunenaDatabaseObject
      * 
      * @since   Kunena 6.4
      */
-    protected function getTableProperties() : array
+    protected function getTableProperties(): array
     {
         $properties = [
             'id' => $this->id,

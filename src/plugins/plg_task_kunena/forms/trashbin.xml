@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fields name="params">
+		<fieldset name="task_params">
+			<field
+				name="age"
+				type="number"
+				label="PLG_TASK_KUNENA_AGE_LABEL"
+				description="PLG_TASK_KUNENA_AGE_DESC"
+				required="true"
+				default="31"
+				min="0"
+				step="1"
+				filter="int" />
+		</fieldset>
+	</fields>
+</form>

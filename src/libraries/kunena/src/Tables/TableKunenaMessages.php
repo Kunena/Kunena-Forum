@@ -131,6 +131,12 @@ class TableKunenaMessages extends KunenaTable
 
     /**
      * @var     null
+     * @since   Kunena 7.0
+     */
+    public $deleted_time = null;
+
+    /**
+     * @var     null
      * @since   Kunena 6.0
      */
     public $modified_by = null;
@@ -206,8 +212,8 @@ class TableKunenaMessages extends KunenaTable
             ->select(['m.*', 't.message'])
             ->from($this->_db->quoteName('#__kunena_messages', 'm'))
             ->innerJoin(
-            	$this->_db->quoteName('#__kunena_messages_text', 't') .
-                ' ON ' . $this->_db->quoteName('m.id') . ' = ' . $this->_db->quoteName('t.mesid')
+                $this->_db->quoteName('#__kunena_messages_text', 't') .
+                    ' ON ' . $this->_db->quoteName('m.id') . ' = ' . $this->_db->quoteName('t.mesid')
             )
             ->where($this->_db->quoteName('m.id') . ' = ' . (int) $this->$k);
         $this->_db->setQuery($query);
@@ -317,7 +323,7 @@ class TableKunenaMessages extends KunenaTable
         } else {
             $query->insert($this->_db->quoteName('#__kunena_messages_text'))
                 ->columns(
-                	[
+                    [
                         $this->_db->quoteName('mesid'),
                         $this->_db->quoteName('message'),
                     ]

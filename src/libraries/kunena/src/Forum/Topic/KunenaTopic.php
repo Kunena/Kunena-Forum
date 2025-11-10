@@ -681,10 +681,20 @@ class KunenaTopic extends KunenaDatabaseObject
             $value = 0;
         }
 
+        $date = new Date();
+
         $this->hold = (int) $value;
+
+        if ($this->hold === 3) {
+            $deletedTime = $date->toUnix();
+        } else {
+            $deletedTime = 0;
+        }
+
         $query      = $this->_db->createQuery();
         $query->update($this->_db->quoteName('#__kunena_messages'))
             ->set($this->_db->quoteName('hold') . ' = ' . $this->_db->quote($this->hold))
+            ->set($this->_db->quoteName('deleted_time') . ' = ' . $this->_db->quote($deletedTime))
             ->where($this->_db->quoteName('thread') . ' = ' . (int) $this->id . ' AND ' . $this->_db->quoteName('hold') . ' = ' . $this->_db->quote($this->_hold));
 
         $this->_db->setQuery($query);

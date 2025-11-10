@@ -16,6 +16,7 @@ namespace Kunena\Forum\Plugin\Task\Kunena\Extension;
 // No direct access
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -27,7 +28,9 @@ use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Event\SubscriberInterface;
+use Kunena\Forum\Administrator\Model\TrashsModel;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\User\KunenaBan;
 
 /**
@@ -49,6 +52,11 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             'langConstPrefix' => 'PLG_TASK_KUNENA_REMOVEEXPIREDBANS',
             'method'          => 'removeExpiredBans',
         ],
+        'purge.trash' => [
+            'langConstPrefix' => 'PLG_TASK_KUNENA_PURGETRASH',
+            'form'            => 'trashbin',
+            'method'          => 'purgeTrash',
+        ],
     ];
 
     /**
@@ -66,6 +74,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         return [
             'onTaskOptionsList'    => 'advertiseRoutines',
             'onExecuteTask'        => 'standardRoutineHandler',
+            'onContentPrepareForm' => 'enhanceTaskItemForm',
         ];
     }
 
@@ -127,6 +136,51 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             $this->logTask(Text::sprintf('PLG_TASK_KUNENA_REMOVEEXPIREDBANSERROR', $e->getMessage()));
 
             return Status::KNOCKOUT;
+        }
+
+        return Status::OK;
+    }
+
+    /**
+     * Method to purge trashbin.
+     *
+     * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
+     *
+     * @since  7.0.0
+     * @throws \Exception
+     */
+    private function purgeTrash(ExecuteTaskEvent $event): int
+    {
+        if (
+            !ComponentHelper::isEnabled('com_kunena')
+            || !KunenaForum::isCompatible('7.0')
+            || !KunenaForum::installed()
+        ) {
+            return Status::NO_RUN;
+        }
+
+        $params      = $event->getArgument('params');
+        $age         = $params->age;
+        $app         = Factory::getApplication();
+        $trashsModel = new TrashsModel();
+
+        $app->input->set('layout', 'messages');
+        $messages  = $trashsModel->getItems();
+        $cid       = [];
+
+        if (!empty($messages)) {
+            $cid    = \array_column($messages, 'id');
+            $result = $trashsModel->purgeMessages($cid, $age);
+
+            if (!$result) {
+                $msgs = $app->getMessageQueue();
+
+                foreach ($msgs as $msg) {
+                    $this->logTask($msg['message']);
+                }
+
+                return Status::KNOCKOUT;
+            }
         }
 
         return Status::OK;

@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls`
     `id`             int(11)      NOT NULL auto_increment,
     `title`          varchar(150) NOT NULL,
     `threadid`       int(11)      NOT NULL,
-    `polltimetolive` datetime DEFAULT '1000-01-01 00:00:00',
+    `polltimetolive` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
     PRIMARY KEY (id),
     KEY `threadid` (threadid)
 )

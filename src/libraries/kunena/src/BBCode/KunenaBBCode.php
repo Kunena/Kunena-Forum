@@ -1618,6 +1618,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if (!empty($bbcode->parent->forceSecure)) {
             return '';
         }
+        
+        // Display nothing in subscription mails
+        if (!empty($bbcode->context)) {
+            return '';
+        }
 
         if (!Factory::getApplication()->getIdentity()->guest) {
             $layout = KunenaLayout::factory('BBCode/Hide');

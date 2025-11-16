@@ -178,6 +178,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_messages`
     `ordering`        int(11)      NULL     default '0',
     `hits`            int(11)      NULL     default '0',
     `moved`           tinyint(4)   NULL     default '0',
+    `deleted_time`    int(11)      NOT NULL default '0',
     `modified_by`     int(7)       NULL,
     `modified_time`   int(11)      NULL,
     `modified_reason` tinytext     NULL,

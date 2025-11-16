@@ -16,10 +16,15 @@ namespace Kunena\Forum\Administrator\Model;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\QueryInterface;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Text;
 
 /**
  * Trash Model for Kunena
@@ -174,7 +179,7 @@ class TrashsModel extends ListModel
                 $this->getState(
                     'list.select',
                     'km.id AS id, km.subject AS title, kt.subject AS topic, kc.name AS category, u.name AS author, km.ip AS ip, km.time AS time,
-                    km.catid AS category_id, km.thread AS topic_id'
+                    km.catid AS category_id, km.thread AS topic_id, km.deleted_time as deleted_time'
                 )
             );
             $query->from($db->quoteName('#__kunena_messages', 'km'));
@@ -228,5 +233,84 @@ class TrashsModel extends ListModel
         $query->order($ordering . ' ' . $direction);
 
         return $query;
+    }
+
+    /**
+     * Function to purge Topics in trashbin
+     * 
+     * @param   array $cid  The topics to purge
+     * 
+     * @return boolean
+     * @since  Kunena 7.0.0
+     */
+    public function purgeTopics(array $cid): bool
+    {
+        $app    = Factory::getApplication();
+        $topics = KunenaTopicHelper::getTopics($cid, 'none');
+
+        foreach ($topics as $topic) {
+            try {
+                $topic->delete();
+            } catch (Exception $e) {
+                $app->enqueueMessage($e->getMessage(), 'error');
+                return \false;
+            }
+        }
+
+        KunenaTopicHelper::recount($cid);
+        KunenaCategoryHelper::recount($topic->getCategory()->id);
+
+        return \true;
+    }
+
+    /**
+     * Function to purge messages in trashbin
+     * 
+     * @param   array $cid  The messages to purge
+     * @param   int   $age  The minimum age to delete the messages for
+     * 
+     * @return boolean
+     * @since  Kunena 7.0.0
+     */
+    public function purgeMessages(array $cid, $age = 0): bool
+    {
+        $app       = Factory::getApplication();
+        $messages  = KunenaMessageHelper::getMessages($cid, 'none');
+        $date      = (new Date('now - ' . $age . ' days'))->toUnix();
+        $processed = \false;
+
+        foreach ($messages as $message) {
+
+            if ($message->deleted_time < $date || $age === 0) {
+                try {
+                    $message->delete();
+                } catch (Exception $e) {
+                    $app->enqueueMessage($e->getMessage(), 'error');
+                    return \false;
+                }
+
+                $processed = \true;
+                $target    = KunenaMessageHelper::get($message->id);
+                $topic     = KunenaTopicHelper::get($target->getTopic());
+
+                if ($topic->attachments > 0) {
+                    $topic->attachments = $topic->attachments - 1;
+
+                    try {
+                        $topic->save(\false);
+                    } catch (Exception $e) {
+                        $app->enqueueMessage($e->getMessage(), 'error');
+                        return \false;
+                    }
+                }
+            }
+        }
+
+        if ($processed) {
+            KunenaTopicHelper::recount($cid);
+            KunenaCategoryHelper::recount($topic->getCategory()->id);
+        }
+
+        return \true;
     }
 }

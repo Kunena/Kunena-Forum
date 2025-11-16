@@ -543,49 +543,50 @@
                 }
                 }' WHERE socials IS NULL;
             </query>
-            <phpfile name="6.4.0-2024-11-02_move_users_socials" />
+
+            <phpfile name="6.4.0-2024-11-02_move_users_socials"/>
         </version>
-        <version
-            version="6.4.0-RC3-DEV"
-            versiondate="2025-01-16"
-            versionname="Internal">
-            <phpfile name="6.4.0-2025-01-16_remove_socials_columns" />
-            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY birthdate date NULL DEFAULT '1000-01-01';</query>
+        <version version="6.4.0-RC3-DEV"
+                 versiondate="2025-01-16"
+                 versionname="Internal">            
+            <phpfile name="6.4.0-2025-01-16_remove_socials_columns"/>
+            <query mode="silenterror">ALTER TABLE `#__kunena_users` MODIFY birthdate date         NULL     DEFAULT '1000-01-01';</query>
         </version>
-        <version
-            version="6.4.0-RC4-DEV"
-            versiondate="2025-02-11"
-            versionname="Internal">
-            <phpfile name="6.4.0-2025-02-11_clean_configuration" />
+        <version version="6.4.0-RC4-DEV"
+                 versiondate="2025-02-11"
+                 versionname="Internal">
+            <phpfile name="6.4.0-2025-02-11_clean_configuration"/>
         </version>
-        <version
-            version="6.4.3-DEV"
-            versiondate="2025-06-14"
-            versionname="Internal">
-            <phpfile name="6.4.0-2025-05-14_fill_kunena_private_table" />
+        <version version="6.4.3-DEV"
+                 versiondate="2025-06-14"
+                 versionname="Internal">
+            <phpfile name="6.4.0-2025-05-14_fill_kunena_private_table"/>
         </version>
-        <version
-            version="6.4.5-DEV"
-            versiondate="2025-07-31"
-            versionname="Internal">
-            <phpfile name="6.4.5-2025-07-30_remove_columns_users_table" />
+        <version version="6.4.5-DEV"
+                 versiondate="2025-07-31"
+                 versionname="Internal">
+        <phpfile name="6.4.5-2025-07-30_remove_columns_users_table"/>
+        <version version="6.4.7-DEV"
+                 versiondate="2025-11-04"
+                 versionname="Internal">
+        <query mode="silenterror">UPDATE `#__kunena_polls` SET `polltimetolive` = '1000-01-01 00:00:00' WHERE `polltimetolive` IS NULL;</query>
+        <query mode="silenterror">ALTER TABLE `#__kunena_polls` CHANGE `polltimetolive` `polltimetolive` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
+        </version> 
         </version>
-        <version
-            version="7.0.0-DEV"
-            versiondate="2025-07-29"
-            versionname="Internal">
+                <version version="7.0.0-DEV"
+                 versiondate="2025-07-29"
+                 versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `language` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`</query>
         </version>
-        <version
+       <version
             version="7.0.0-BETA3"
             versiondate="2025-11-10"
             versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD `deleted_time` int(11) NOT NULL default '0' AFTER `moved`</query>
         </version>
-        <version
-            version="@kunenaversion@"
-            versiondate="@kunenaversiondate@"
-            versionname="@kunenaversionname@">
+        <version version="@kunenaversion@"
+                 versiondate="@kunenaversiondate@"
+                 versionname="@kunenaversionname@">
         </version>
     </upgrade>
 </comupgrade>

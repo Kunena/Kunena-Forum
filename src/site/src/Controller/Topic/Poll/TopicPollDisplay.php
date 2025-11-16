@@ -68,6 +68,8 @@ class TopicPollDisplay extends KunenaControllerDisplay
     public $userhasvoted;
     public $show_title;
     public $intervalTimeToLive;
+    public $users_voted_list;
+    public $users_voted_morelist;
 
     /**
      * Prepare poll display.
@@ -119,8 +121,8 @@ class TopicPollDisplay extends KunenaControllerDisplay
 
             $this->show_title = true;
 
-            $users_voted_list     = [];
-            $users_voted_morelist = [];
+            $this->users_voted_list     = [];
+            $this->users_voted_morelist = [];
 
             if ($this->config->pollResultsUserslist && !empty($usersvoted)) {
                 $userids_votes = [];
@@ -135,9 +137,9 @@ class TopicPollDisplay extends KunenaControllerDisplay
 
                 foreach ($loaded_users as $userid => $user) {
                     if ($i <= '4') {
-                        $users_voted_list[] = $loaded_users[$userid]->getLink();
+                        $this->users_voted_list[] = $loaded_users[$userid]->getLink();
                     } else {
-                        $users_voted_morelist[] = $loaded_users[$userid]->getLink();
+                        $this->users_voted_morelist[] = $loaded_users[$userid]->getLink();
                     }
 
                     $i++;

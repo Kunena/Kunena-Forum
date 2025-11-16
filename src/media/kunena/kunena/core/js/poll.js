@@ -36,7 +36,17 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	$('#kpoll-moreusers').click(function () {
-		$('#kpoll-moreusers-div').show();
+	/* Under a poll : show more users list */
+	$(".link-show-extra-users").click(function () {
+		if (!$(this).hasClass('link-show-more')) {
+			$("#kpoll-moreusers-span").hide();	
+			$(this).hide();		
+		}
+		else {
+			$("#kpoll-moreusers").show();	
+			$("#kpoll-moreusers-span").show();
+			$("#kpoll-lessusers").show();	
+			$(this).hide();
+		}
 	});
 });

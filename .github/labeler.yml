@@ -1,11 +1,11 @@
-"6.0":
-- './*'
+6.0:
+  - './*'
 Aurelia:
-- './src/components/com_kunena/template/aurelia/*'
+  - './src/components/com_kunena/template/aurelia/*'
 backend:
-- './src/administrator/components/com_kunena/*'
+  - './src/administrator/components/com_kunena/*'
 Codeception tests:
-- './tests/*'
-- './codeception.yml'
+  - './tests/*'
+  - './codeception.yml'
 documentation:
-- './docs/*'
+  - './docs/*'

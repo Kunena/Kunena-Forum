@@ -415,7 +415,9 @@ class KunenaAttachment extends KunenaDatabaseObject
         $path = $this->getPath();
 
         if ($path && $this->isImage()) {
-            [$this->width, $this->height] = Image::getImageFileProperties($path);
+             $imageProperties = Image::getImageFileProperties($path);
+             $this->width = $imageProperties->width;
+             $this->height = $imageProperties->height;
         } else {
             $this->width = $this->height = 0;
         }

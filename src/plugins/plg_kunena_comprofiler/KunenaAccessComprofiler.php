@@ -225,7 +225,7 @@ class KunenaAccessComprofiler
      *
      * @throws Exception
      */
-    public function loadCategoryRoles(array $categories = null): array
+    public function loadCategoryRoles(?array $categories = null): array
     {
         $roles  = [];
         $params = ['categories' => $categories, 'roles' => &$roles];

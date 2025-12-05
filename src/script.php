@@ -41,6 +41,15 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      * @since  6.0.0
      */
     protected $minimumJoomla = '5.3.4';
+    
+    
+    /**
+     * Starting from this Joomla! version and beyond, it's not allowed to install the extension
+     *
+     * @var    string
+     * @since  6.0.0
+     */
+    protected $maximumJoomla = '6.0.0';
 
     /**
      * List of supported versions. Newest version first!
@@ -220,6 +229,10 @@ class Pkg_KunenaInstallerScript extends InstallerScript
         $app = Factory::getApplication();
 
         $major = $minor = 0;
+        
+        if (version_compare($version, $this->maximumJoomla, '>=')) {
+            return false;
+        }
 
         foreach ($this->versions[$name] as $major => $minor) {
             if (!$major || version_compare($version, $major, '<')) {

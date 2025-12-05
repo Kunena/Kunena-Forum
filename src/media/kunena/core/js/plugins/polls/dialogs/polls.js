@@ -157,9 +157,13 @@ CKEDITOR.dialog.add( 'pollsDialog', function( editor ) {
 							jQuery('#' + this.domId).css('width', 230);
 							// Get the input element
 							var theInput = jQuery('#' + this.domId).find('input');
-							console.log(theInput);
+
 							// Apply the datepicker to the input control
 							jQuery(theInput.attr('id')).datepicker({ 
+								showButtonPanel: true,
+								format: "yyyy-mm-dd",
+								todayHighlight: true,
+								autoclose: true
 								
 							});
 						},

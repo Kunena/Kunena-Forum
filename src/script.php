@@ -49,7 +49,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      * @var    string
      * @since  6.0.0
      */
-    protected $maximumJoomla = '6.0.0';
+    protected $maximumJoomla = '6.0.0-alpha1';
 
     /**
      * List of supported versions. Newest version first!
@@ -230,7 +230,17 @@ class Pkg_KunenaInstallerScript extends InstallerScript
 
         $major = $minor = 0;
         
-        if (version_compare($version, $this->maximumJoomla, '>=')) {
+        if ($name == 'Joomla!' && version_compare($version, $this->maximumJoomla, '>=')) {
+            $app->enqueueMessage(
+                sprintf(
+                    "%s %s is not supported. It is recommended to use Kunena 7.0 or later on %s 6.0 and beyond.",
+                    $name,
+                    $version,
+                    $name
+                    ),
+                'notice'
+                );
+            
             return false;
         }
 

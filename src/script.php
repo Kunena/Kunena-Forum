@@ -48,7 +48,7 @@ return new class() implements ServiceProviderInterface {
                  * @var    string
                  * @since  6.0.0
                  */
-                protected $minimumJoomla = '5.3.4';
+                protected $minimumJoomla = '5.4.1';
 
                 /**
                  * List of supported versions. Newest version first!
@@ -108,7 +108,7 @@ return new class() implements ServiceProviderInterface {
                         '5.2' => '5.2.6',
                         '5.1' => '5.1.4',
                         '5.0' => '5.0.3',
-                        '0' => '5.3.4',  // Preferred version
+                        '0' => '5.4.1',  // Preferred version
                     ],
                 ];
 

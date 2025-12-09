@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
+$login = KunenaLogin::getInstance();
 ?>
 <div class="kloginform center">
     <h1><?php echo Text::_('COM_KUNENA_LOGIN_FORUM'); ?></h1>

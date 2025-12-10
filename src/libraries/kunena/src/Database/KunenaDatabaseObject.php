@@ -256,8 +256,7 @@ abstract class KunenaDatabaseObject
 
         // Store the data, the store() method from Joomla\CMS\Table\Table return only boolean and not exception.
         try {
-            $updateNulls = (bool) ($this->updateNulls ?? \false);
-            $table->store($updateNulls);
+            $table->store();
         } catch (Exception $e) {
             throw new KunenaException($e->getMessage());
         }

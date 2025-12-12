@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Forum\Topic\Rate;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
@@ -26,6 +25,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Tables\TableKunenaRate;
 use RuntimeException;
 
@@ -179,7 +179,7 @@ class KunenaRate
      *
      * @param   KunenaUser  $user  user
      *
-     * @return  JsonResponse
+     * @return  KunenaResponseJson
      *
      * @throws Exception
      * @since    Kunena 2.0
@@ -196,25 +196,25 @@ class KunenaRate
         if (!$user->exists()) {
             $exception = new RuntimeException('COM_KUNENA_RATE_LOGIN', 500);
 
-            return new JsonResponse($exception);
+            return new KunenaResponseJson($exception);
         }
 
         if ($user->isBanned()) {
             $exception = new RuntimeException('COM_KUNENA_RATE_NOT_ALLOWED_WHEN_BANNED', 500);
 
-            return new JsonResponse($exception);
+            return new KunenaResponseJson($exception);
         }
 
         if ($user->userid == $topic->first_post_userid) {
             $exception = new RuntimeException('COM_KUNENA_RATE_NOT_YOURSELF', 500);
 
-            return new JsonResponse($exception);
+            return new KunenaResponseJson($exception);
         }
 
         if ($this->exists($user->userid)) {
             $exception = new RuntimeException('COM_KUNENA_RATE_ALLREADY', 500);
 
-            return new JsonResponse($exception);
+            return new KunenaResponseJson($exception);
         }
 
         $time  = Factory::getDate();
@@ -245,9 +245,9 @@ class KunenaRate
             $topic = KunenaTopicHelper::get($this->topic_id);
             $activityIntegration->onAfterRate($user->userid, $topic);
 
-            $response = new JsonResponse(null, 'COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
+            $response = new KunenaResponseJson(null, 'COM_KUNENA_RATE_SUCCESSFULLY_SAVED');
         } catch (Exception $e) {
-            $response = new JsonResponse($e);
+            $response = new KunenaResponseJson($e);
         }
 
         return $response;

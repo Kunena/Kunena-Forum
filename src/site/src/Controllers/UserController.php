@@ -24,7 +24,6 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
@@ -45,6 +44,7 @@ use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Path\KunenaPath;
+use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaBan;
@@ -1183,7 +1183,7 @@ class UserController extends KunenaController
         while (@ob_end_clean()) {
         }
 
-        echo new JsonResponse($response);
+        echo new KunenaResponseJson($response);
 
         jexit();
     }

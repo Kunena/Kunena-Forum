@@ -26,7 +26,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -53,7 +52,6 @@ use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
 use Kunena\Forum\Libraries\KunenaPrivate\Message\KunenaPrivateMessageFinder;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Log\KunenaLog;
-use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
@@ -375,7 +373,7 @@ class TopicController extends KunenaController
         while (@ob_end_clean()) {
         }
 
-        echo new JsonResponse($category->topictemplate);
+        echo new KunenaResponseJson($category->topictemplate);
 
         jexit();
     }
@@ -411,7 +409,7 @@ class TopicController extends KunenaController
         while (@ob_end_clean()) {
         }
 
-        echo new JsonResponse($response);
+        echo new KunenaResponseJson($response);
 
         jexit();
     }

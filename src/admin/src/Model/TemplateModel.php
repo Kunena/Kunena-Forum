@@ -17,6 +17,7 @@ namespace Kunena\Forum\Administrator\Model;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Client\ClientHelper;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Template\KunenaTemplateHelper;
@@ -194,6 +195,17 @@ class TemplateModel extends AdminModel
         }
 
         return $newState;
+    }
+    
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 6.0
+     */
+    public function getFTPCredentials()
+    {
+        // Set FTP credentials, if given
+        return ClientHelper::setCredentialsFromRequest('ftp');
     }
 
     /**

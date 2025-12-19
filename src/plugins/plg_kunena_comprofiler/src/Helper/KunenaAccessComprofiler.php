@@ -207,7 +207,7 @@ class KunenaAccessComprofiler extends KunenaAccessAbstract
      *
      * @throws \Exception
      */
-    public function loadCategoryRoles(array $categories = null): array
+    public function loadCategoryRoles(?array $categories = null): array
     {
         $roles  = [];
         $params = ['categories' => $categories, 'roles' => &$roles];

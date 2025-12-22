@@ -13,14 +13,6 @@ updates:
     schedule:
       interval: "daily"
 
-  # Enable version updates for Docker
-  - package-ecosystem: "docker"
-    # Look for a `Dockerfile` in the `root` directory
-    directory: "/"
-    # Check for updates once a week
-    schedule:
-      interval: "weekly"
-
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`

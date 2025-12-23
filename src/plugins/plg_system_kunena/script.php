@@ -40,7 +40,7 @@ class plgSystemKunenaInstallerScript extends InstallerScript
      * @var    string
      * @since  5.4.0
      */
-    protected $minimumPhp = '7.2.5';
+    protected $minimumPhp = '8.2.0';
 
     /**
      * Minimum Joomla! version required to install the extension

@@ -10,6 +10,7 @@
 		"friendsofphp/php-cs-fixer" : "~3.27.0",
 		"squizlabs/php_codesniffer" : "~3.7.2",
 		"codeception/codeception" : "^5.3.3",
+		"symfony/css-selector" : "^7.3",
 		"dealerdirect/phpcodesniffer-composer-installer" : "^v1.0.0",
 		"phing/phing" : "dev-main",
 		"kunena/codestyle" : "dev-master"

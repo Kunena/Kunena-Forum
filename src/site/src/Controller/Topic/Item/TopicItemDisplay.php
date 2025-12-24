@@ -670,8 +670,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
                     }
                 }
             }
-        }
-        else {
+        } else {
             $uri = trim(strtok($this->topic->getUrl(), '?'));
             $doc->addHeadLink($uri, 'canonical');
         }

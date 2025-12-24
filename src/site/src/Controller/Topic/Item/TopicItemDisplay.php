@@ -671,6 +671,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
                 }
             }
         }
+        else {
+            $uri = trim(strtok($this->topic->getUrl(), '?'));
+            $doc->addHeadLink($uri, 'canonical');
+        }
 
         $menu_item = $this->app->getMenu()->getActive();
 

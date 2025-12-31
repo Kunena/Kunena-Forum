@@ -169,7 +169,7 @@ class HtmlView extends BaseHtmlView
 
         $item             = new StdClass();
         $item->name       = 'showonline';
-        $item->label      = Text::_('COM_KUNENA_USER_SHOWONLINE');
+        $item->label      = Text::_('COM_KUNENA_USER_AMDIN_SHOWONLINE');
         $options          = [];
         $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
         $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
@@ -187,9 +187,9 @@ class HtmlView extends BaseHtmlView
 
         $item             = new StdClass();
         $item->name       = 'cansubscribe';
-        $item->label      = Text::_('COM_KUNENA_USER_CANSUBSCRIBE');
+        $item->label      = Text::_('COM_KUNENA_USER_ADMIN_CANSUBSCRIBE');
         $options          = [];
-        $options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+        $options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_USER_ADMIN_ORDER_KUNENA_GLOBAL'));
         $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
         $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
         $item->field      = HTMLHelper::_(
@@ -206,9 +206,9 @@ class HtmlView extends BaseHtmlView
 
         $item             = new StdClass();
         $item->name       = 'userlisttime';
-        $item->label      = Text::_('COM_KUNENA_USER_USERLISTTIME');
+        $item->label      = Text::_('COM_KUNENA_USER_ADMIN_USERLISTTIME');
         $options          = [];
-        $options[]        = HTMLHelper::_('select.option', -2, Text::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+        $options[]        = HTMLHelper::_('select.option', -2, Text::_('COM_KUNENA_USER_ADMIN_ORDER_KUNENA_GLOBAL'));
         $options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_SHOW_ALL'));
         $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_SHOW_LASTVISIT'));
         $options[]        = HTMLHelper::_('select.option', 4, Text::_('COM_KUNENA_SHOW_4_HOURS'));

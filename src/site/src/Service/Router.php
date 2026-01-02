@@ -217,11 +217,12 @@ class Router extends RouterView
             $id = (int) $query['id'];
 
             if ($id) {
-                $subject = KunenaRoute::stringURLSafe(KunenaTopicHelper::get($id)->subject);
+                $subject = KunenaTopicHelper::get($id)->subject;
 
                 if (empty($subject)) {
                     $segments[] = $id;
                 } else {
+                    $subject    = KunenaRoute::stringURLSafe($subject);
                     $segments[] = "{$id}-{$subject}";
                 }
 
@@ -382,9 +383,9 @@ class Router extends RouterView
             $var   = array_shift($seg);
             $value = array_shift($seg);
 
-            if (empty($var) && empty($value)) {
+            if (empty($var) || empty($value)) {
                 // Skip /-/
-                continue;
+                break;
             }
 
             if (is_numeric($var)) {

@@ -9,7 +9,7 @@
 
 *Kunena* 7.0 requires
 
-    Joomla: version 5.3.4 or greater (>= 5.3.4 recommended)
+    Joomla: version 5.3.4 or greater (>= 5.4.2 recommended)
     PHP: version 8.2.0 or greater (>= 8.3.0 recommended)
     MySQL: version 8.4.0 or greater (>= 8.4.0 recommended)
 
@@ -36,7 +36,7 @@ If you are looking for examples on how *Kunena* works or can be installed, we re
 
 ## TRANSLATIONS
 
-Kunena is on Crowdin - Help us to translate : https://crowdin.com/project/kunena-forum
+Kunena is on Crowdin - Help us to translate : https://crowdin.com/editor/kunena-forum-70
 
 ## INSTALLATION
 

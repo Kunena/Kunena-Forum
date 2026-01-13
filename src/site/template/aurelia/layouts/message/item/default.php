@@ -123,7 +123,7 @@ $list = [];
 <?php endif; ?>
 
 <?php if (!empty($attachments)) : 
-    if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest ) || $this->me->exists()) : ?> 	
+if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest ) || $this->me->exists() && $attachs->inline != count($attachments)) : ?> 	
 	    <div class="card pb-3 pd-3 mb-3">
             <?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>
                 <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>

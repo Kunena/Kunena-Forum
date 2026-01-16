@@ -373,6 +373,8 @@ class Router extends RouterView
                     $sefcats = false;
                     $vars    = $variables + $vars;
                     continue;
+                } else {
+                    break;
                 }
             }
 
@@ -383,9 +385,9 @@ class Router extends RouterView
             $var   = array_shift($seg);
             $value = array_shift($seg);
 
-            if (empty($var) || empty($value)) {
+            if (empty($var) && empty($value)) {
                 // Skip /-/
-                break;
+                continue;
             }
 
             if (is_numeric($var)) {

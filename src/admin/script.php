@@ -127,9 +127,8 @@ class Com_KunenaInstallerScript extends InstallerScript
                             $query = $db->createQuery()
                                 ->update($db->quoteName('#__extensions'))
                                 ->set('params = :params')
-                                ->where('extension_id = :id')
-                                ->bind(':params', $paramsString)
-                                ->bind(':id', $componentId, ParameterType::INTEGER);
+                                ->where($db->quoteName('extension_id'), $componentId)
+                                ->bind(':params', $paramsString);
 
                             // Update table
                             $converted = $db->setQuery($query)->execute();

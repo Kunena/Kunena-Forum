@@ -36,6 +36,14 @@ use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaLoginEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaPrivateEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaActivityEasySocial;
 
+$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
+
+if (!is_file($file)) {
+    return;
+}
+
+require_once $file;
+
 /**
  * @package     Kunena
  *
@@ -92,14 +100,6 @@ class Easysocial extends \EasySocialPlugins implements SubscriberInterface, Data
      */
     public function __construct(array $config = [])
     {
-        $file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
-
-        if (!\is_file($file)) {
-            return \true;
-        }
-
-        require_once $file;
-
         // Do not load if Kunena version is not supported or Kunena is offline
         if (!(\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.0') && KunenaForum::enabled())) {
             return \true;

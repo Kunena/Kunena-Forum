@@ -110,13 +110,25 @@ class Com_KunenaInstallerScript extends InstallerScript
                         $config = $db->loadResult() ?? '{}';
 
                         // Convert Config parameters that are now arrays to avoid loosing the setting value on import
-                        $processConfig    = json_decode($config, true);
+                        $oldConfig        = json_decode($config, true);
                         $arrayConversions = ['latestCategory', 'rssExcludedCategories', 'rssIncludedCategories'];
+                        $processConfig    = [];
+                        $usedKeys         = [];
 
-                        foreach ($processConfig as $param => $value) {
+                        foreach ($oldConfig as $param => $value) {
+                            if (in_array(strtolower($param), $usedKeys)) {
+                                // We assume that all newly named Keys are handled first, and the old obsolete ones last
+                                continue;
+                            }
+
+                            $usedKeys[] = strtolower($param);
+
                             if (in_array($param, $arrayConversions) && is_string($value)) {
                                 $processConfig[$param] = explode(',', $value);
+                                continue;
                             }
+
+                            $processConfig[$param] = $value;
                         }
 
                         $componentId = $this->getComponentId();
@@ -127,8 +139,9 @@ class Com_KunenaInstallerScript extends InstallerScript
                             $query = $db->createQuery()
                                 ->update($db->quoteName('#__extensions'))
                                 ->set('params = :params')
-                                ->where($db->quoteName('extension_id'), $componentId)
-                                ->bind(':params', $paramsString);
+                                ->where('extension_id = :id')
+                                ->bind(':params', $paramsString)
+                                ->bind(':id', $componentId, ParameterType::INTEGER);
 
                             // Update table
                             $converted = $db->setQuery($query)->execute();

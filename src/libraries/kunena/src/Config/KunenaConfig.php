@@ -584,7 +584,6 @@ class KunenaConfig
     public function save(): bool
     {
         $params  = ComponentHelper::getParams(self::COMPONENT);
-        $changed = \false;
 
         foreach ($params as $key => $value) {
             if ($this->config[$key] === $value) {
@@ -592,29 +591,24 @@ class KunenaConfig
             }
 
             $params->set($key, $this->config[$key]);
-            $changed = \true;
         }
 
-        if ($changed) {
-            /** @var DatabaseDriver $db */
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-            $query = $db->createQuery()
-                ->update($db->quoteName('#__extensions'))
-                ->set($db->quoteName('params') . ' = ' . $db->quote(\json_encode($params)))
-                ->where($db->quoteName('name') . ' = ' . $db->quote(self::COMPONENT));
+        $query = $db->createQuery()
+            ->update($db->quoteName('#__extensions'))
+            ->set($db->quoteName('params') . ' = ' . $db->quote(\json_encode($params)))
+            ->where($db->quoteName('name') . ' = ' . $db->quote(self::COMPONENT));
 
-            $db->setQuery($query);
+        $db->setQuery($query);
 
-            $result = $db->execute();
+        $result = $db->execute();
 
-            // Clean out the Cache and start with new value(s)
-            $this->reset();
+        // Clean out the Cache and start with new value(s)
+        $this->reset();
 
-            return $result;
-        }
-
-        return \true;
+        return $result;
     }
 
     /**

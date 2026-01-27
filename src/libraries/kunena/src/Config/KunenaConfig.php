@@ -626,10 +626,11 @@ class KunenaConfig
     public function reset(): void
     {
         $cache = self::getConfigCacheController();
-        $cache->clean();
 
-        if (self::$instance !== \null) {
-            self::$instance = \null;
-        }
+        // Clean the Kunena configuration cache and the _system cache as that is where Joomla itself caches the component cache
+        $cache->clean(self::COMPONENT . '_configuration');
+        $cache->clean('_system');
+
+        self::$instance = \null;
     }
 }

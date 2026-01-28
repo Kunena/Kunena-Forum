@@ -20,6 +20,7 @@ use Joomla\Filesystem\Folder;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Extension;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -152,6 +153,22 @@ class Pkg_KunenaInstallerScript extends InstallerScript
     {
         $manifest = $parent->getParent()->getManifest();
 
+        // Prevent installation if the plugin Backward Compatibility 6 isn't enabled
+        if (!PluginHelper::isEnabled('behaviour', 'compat6') && version_compare(JVERSION, '6.0.0-alpha1', '>=')) {
+            $app = Factory::getApplication();
+            
+            $app->enqueueMessage(
+                sprintf(
+                    "Kunena %s can only be installed on Joomla! %s when the plugin Backward Compatibility 6 is enabled.",
+                    $manifest->version,
+                    JVERSION
+                    ),
+                'notice'
+                );
+            
+            return false;
+        }
+        
         // Prevent installation if requirements are not met.
         if (!$this->checkRequirements($manifest->version)) {
             return false;

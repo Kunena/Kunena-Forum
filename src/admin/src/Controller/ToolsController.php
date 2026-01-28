@@ -884,6 +884,10 @@ class ToolsController extends FormController
 
             return;
         }
+        
+        if (!version_compare(JVERSION, '6.0.0-alpha1', '>=')) {
+            return;
+        }
 
         // Check if the user has the super-administrator rights
         $username = $this->input->getString('username');

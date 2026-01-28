@@ -205,6 +205,8 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                     </a>
                 </div>
 
+				<?php if (!version_compare(JVERSION, '6.0.0-alpha1', '>=')) :
+				?>
                 <div class="col-xl-3 col-md-6">
                     <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=uninstall'); ?>">
                         <div class="card proj-t-card comp-card">
@@ -226,6 +228,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                         </div>
                     </a>
                 </div>
+                <?php endif; ?>
 
                 <?php if (KunenaForum::isDev()) :
                 ?>

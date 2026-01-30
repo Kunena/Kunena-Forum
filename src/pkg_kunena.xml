@@ -5,8 +5,8 @@
     method="upgrade">
     <name>pkg_kunena</name>
     <packagename>kunena</packagename>
-    <version>7.0.1-DEV</version>
-    <versionname>INTERNAL</versionname>
+    <version>7.0.1</version>
+    <versionname>Lepenica</versionname>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
     <authorEmail>kunena@kunena.org</authorEmail>

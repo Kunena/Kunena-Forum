@@ -107,7 +107,8 @@ class Com_KunenaInstallerScript extends InstallerScript
                     $config = $db->loadResult() ?? '{}';
 
                     $processConfig    = json_decode($config, true);
-                    // Not all old config settings where converted to snake case, lets do that here
+
+                    // Not all old config settings where converted to camel case, lets do that here
                     $keyConversions = [
                         'email_sender_name'                 => 'emailSenderName',
                         'display_filename_attachment'       => 'displayFilenameAttachment',

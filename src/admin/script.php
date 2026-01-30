@@ -106,8 +106,23 @@ class Com_KunenaInstallerScript extends InstallerScript
 
                     $config = $db->loadResult() ?? '{}';
 
-                    // Convert Config parameters that are now arrays to avoid loosing the setting value on import
                     $processConfig    = json_decode($config, true);
+                    // Not all old config settings where converted to snake case, lets do that here
+                    $keyConversions = [
+                        'email_sender_name'                 => 'emailSenderName',
+                        'display_filename_attachment'       => 'displayFilenameAttachment',
+                        'new_users_prevent_post_url_images' => 'newUsersPreventPostUrlImages',
+                        'minimal_user_posts_add_url_image'  => 'minimalUserPostsAddUrlImage'
+                    ];
+
+                    foreach ($keyConversions as $oldKey => $newKey) {
+                        if (array_key_exists($oldKey, $processConfig)) {
+                            $processConfig[$newKey] = $processConfig[$oldKey];
+                            unset($processConfig[$oldKey]);
+                        }
+                    }
+
+                    // Convert Config parameters that are now arrays to avoid loosing the setting value on import
                     $arrayConversions = ['latestCategory', 'rssExcludedCategories', 'rssIncludedCategories'];
 
                     foreach ($processConfig as $param => $value) {

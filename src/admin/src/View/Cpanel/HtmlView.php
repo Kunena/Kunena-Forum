@@ -50,6 +50,8 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         $this->addToolbar();
+        
+        $app = Factory::getApplication();
 
         $lang = Factory::getApplication()->getLanguage();
         $lang->load('mod_sampledata', JPATH_ADMINISTRATOR);
@@ -69,6 +71,13 @@ class HtmlView extends BaseHtmlView
                     'icon' => Uri::root(true) . '/media/system/images/ajax-loader.gif',
                 ]
             );
+        }
+        
+        if (version_compare(JVERSION, '6.0.0-alpha1', '>=')) {
+            $app->enqueueMessage(Text::sprintf('COM_KUNENA_ADMIN_KUNENA_NOT_SUPPORTED',
+                KunenaForum::version(),
+                JVERSION
+                ), 'warning');
         }
 
         $this->KunenaMenusExists = KunenaMenuHelper::KunenaMenusExists();

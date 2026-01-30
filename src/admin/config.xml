@@ -1599,7 +1599,7 @@
                 description="COM_KUNENA_CONFIGURATION_EBAY_API_KEY_DESC" />
             <field
                 name="ebayCertId"
-                type="password"
+                type="text"
                 default=""
                 label="COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_LABEL"
                 description="COM_KUNENA_CONFIGURATION_EBAY_CERTID_KEY_DESC" />
@@ -1611,7 +1611,7 @@
                 description="COM_KUNENA_CONFIGURATION_BLUESKYAPP_HANDLE_OF_APP_DESC" />
             <field
                 name="blueskyappPasswordOfApp"
-                type="password"
+                type="text"
                 default=""
                 label="COM_KUNENA_CONFIGURATION_BLUESKYAPP_PASSWORD_OF_APP_LABEL"
                 description="COM_KUNENA_CONFIGURATION_BLUESKYAPP_PASSWORD_OF_APP_DESC" />
@@ -1623,7 +1623,7 @@
                 description="COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_KEY_DESC" />
             <field
                 name="XConsumerSecret"
-                type="password"
+                type="text"
                 default=""
                 label="COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_LABEL"
                 description="COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_DESC" />

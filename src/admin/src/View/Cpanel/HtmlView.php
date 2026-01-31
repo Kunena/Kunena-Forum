@@ -73,11 +73,11 @@ class HtmlView extends BaseHtmlView
             );
         }
         
-        if (version_compare(JVERSION, '6.0.0-alpha1', '>=')) {
+        if (version_compare(JVERSION, '6.1.0-alpha1', '>=')) {
             $app->enqueueMessage(Text::sprintf('COM_KUNENA_ADMIN_KUNENA_NOT_SUPPORTED',
                 KunenaForum::version(),
                 JVERSION
-                ), 'warning');
+            ), 'warning');
         }
 
         $this->KunenaMenusExists = KunenaMenuHelper::KunenaMenusExists();

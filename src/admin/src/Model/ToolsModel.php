@@ -17,7 +17,6 @@ namespace Kunena\Forum\Administrator\Model;
 
 use Exception;
 use Joomla\CMS\Application\CMSApplicationInterface;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;

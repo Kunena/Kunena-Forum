@@ -17,6 +17,7 @@ namespace Kunena\Forum\Administrator\Model;
 
 use Exception;
 use Joomla\CMS\Application\CMSApplicationInterface;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -687,9 +688,9 @@ class ToolsModel extends AdminModel
     protected function internalGetKunenaConfiguration(): string
     {
         $config = KunenaConfig::getInstance();
-
+        
         if ($config) {
-            $params = get_object_vars($config);
+            $params = $config->getConfigReport();
 
             $kconfigSettings = '[table]';
             $kconfigSettings .= '[tr][th]Kunena config settings:[/th][/tr]';

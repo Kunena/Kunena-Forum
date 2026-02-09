@@ -399,6 +399,17 @@ class KunenaConfig
 
         return $config;
     }
+    
+    /**
+     * Function to build the configuration values with default values from config.xml and fill it with values 
+     *
+     * @return  array
+     * @since   7.0.2
+     */
+    public function getConfigReport(): array
+    {
+        return $this->buildConfig();
+    }
 
     /**
      * Function to get the cached (or create when not existing) configuration settings

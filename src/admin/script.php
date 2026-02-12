@@ -16,8 +16,11 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
+use Joomla\CMS\Language\Text;
 use Joomla\Database\ParameterType;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 
 /**
  * Kunena package installer script.
@@ -166,6 +169,12 @@ class Com_KunenaInstallerScript extends InstallerScript
                 // remove cached Kunena Config settings
                 KunenaConfig::getInstance()->reset();
             }
+
+            try {
+                $this->upgradeDatabase();
+            } catch (\Exception $e) {
+                Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            }
         }
     }
 
@@ -190,5 +199,58 @@ class Com_KunenaInstallerScript extends InstallerScript
         $componentId = (int) ($db->loadResult() ?? 0);
 
         return $componentId;
+    }
+
+    /**
+     * Method to upgrade the database at the end of installation.
+     *
+     * @return  boolean
+     *
+     * @throws Exception
+     * @since   Kunena 6.0
+     */
+    protected function upgradeDatabase()
+    {
+        $app = Factory::getApplication();
+        $app->getLanguage()->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
+
+        $xml = simplexml_load_file(__DIR__ . '/install/kunena.install.upgrade.xml');
+
+        if ($xml === false) {
+            $app->enqueueMessage(Text::_('COM_KUNENA_INSTALL_DB_UPGRADE_FAILED_XML'), 'error');
+
+            return false;
+        }
+
+        // The column "state" in kunena_version indicate from which version to update
+
+        $modelInstall = new KunenaModelInstall();
+
+        foreach ($xml->upgrade[0] as $version) {
+            // If we have already upgraded to this version, continue to the next one
+            $vernum = (string) $version['version'];
+
+            if (!empty($status[$vernum])) {
+                continue;
+            }
+
+            // Update state
+            $status[$vernum] = 1;
+
+            if ($version['version'] == '@' . 'kunenaversion' . '@') {
+                $git    = 1;
+                $vernum = KunenaForum::version();
+            }
+
+            if (isset($git) || version_compare(strtolower($version['version']), strtolower($this->installedVersion), '>')) {
+                foreach ($version as $action) {
+                    $modelInstall->processUpgradeXMLNode($action);
+
+                    $app->enqueueMessage(Text::sprintf('COM_KUNENA_INSTALL_VERSION_UPGRADED', $vernum), 'success');
+                }
+            }
+        }
+
+        return true;
     }
 }

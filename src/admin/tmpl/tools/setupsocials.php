@@ -37,22 +37,9 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                             <tr>
                                 <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_ISSUES_DETECTED') ?></td>
                             </tr>
-                            <?php if ($this->legacy) :
-                                ?>
-                                <tr>
-                                    <th width="20%"><?php echo Text::_('COM_KUNENA_A_MENU_MANAGER_LEGACY') ?></th>
-                                    <th colspan="3"><?php echo count($this->legacy) ?></th>
-                                </tr>
-                                <?php foreach ($this->legacy as $item) :
-                                    ?>
-                                <tr>
-                                    <td></td>
-                                    <td><?php echo "/{$item->route} ({$item->menutype}: {$item->id})" ?></td>
-                                    <td><?php echo $item->link ?></td>
-                                    <td><?php echo $item->published == 0 ? Text::_('COM_KUNENA_UNPUBLISHED') : ($item->published < 0 ? Text::_('COM_KUNENA_TRASHED') : Text::_('COM_KUNENA_PUBLISHED')) ?></td>
-                                </tr>
-                                <?php endforeach ?>
-                            <?php endif; ?>
+                            <tr>                                    
+                                 <th colspan="3"><?php echo $this->socialsIsPresent; ?></th>
+                            </tr>
                             <?php
                             if ($this->conflicts) :
                                 ?>

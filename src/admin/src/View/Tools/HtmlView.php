@@ -142,7 +142,9 @@ class HtmlView extends BaseHtmlView
         } elseif ($layout == 'purgerestatements') {
             $this->setToolBarPurgeReStatements();
         } elseif ($layout == 'setupsocials') {
-            $this->setToolBarSetupsocials();        
+            $this->setToolBarSetupsocials(); 
+            
+            $this->socialsIsPresent       = $model->getSocialsIsPresent();
         } elseif ($layout == 'recount') {
             $this->setToolBarRecount();
         } elseif ($layout == 'report') {

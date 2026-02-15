@@ -861,4 +861,24 @@ class ToolsModel extends AdminModel
             . $this->maxExecMem . ' | [u]Max file upload:[/u] ' . $this->fileUploads . ' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] ' . $this->joomlaMenuDetails . '[/spoiler][/quote][quote][b]Joomla default template details :[/b] ' . $this->jtemplateDetails->name . ' | [u]author:[/u] ' . $this->jtemplateDetails->author . ' | [u]version:[/u] ' . $this->jtemplateDetails->version . ' | [u]creationdate:[/u] ' . $this->jtemplateDetails->creationdate . ' [/quote][quote][b]Kunena default template details :[/b] ' . $this->ktemplateDetails->name . ' | [u]author:[/u] ' . $this->ktemplateDetails->author . ' | [u]version:[/u] ' . $this->ktemplateDetails->version . ' | [u]creationdate:[/u] ' . $this->ktemplateDetails->creationDate . ' [/quote] [quote][b]Kunena template params[/b]:[spoiler] ' . $this->ktemplateParams . '[/spoiler][/quote][quote] [b]Kunena version detailed:[/b] ' . $this->kunenaVersionInfo . '
 	    | [u]Kunena detailed configuration:[/u] [spoiler] ' . $this->kconfigSettings . '[/spoiler]| [u]Kunena integration settings:[/u][spoiler] ' . implode(' ', $this->integrationSettings) . '[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] ' . $this->joomlaLanguages . '[/spoiler][/quote]' . $this->thirdPartyText . ' ' . $this->sefText . ' ' . $this->plgText . ' ' . $this->modText;
     }
+    
+    /**
+     * @return  boolean
+     *
+     * @since   Kunena 7.0.2
+     */
+    public function getSocialsIsPresent(): bool
+    {
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        
+        $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'socials';";
+        $db->setQuery($query);
+        $columnSocials = $db->loadResult();
+        
+        if (!$columnSocials) {
+            return Text::_('COM_KUNENA_ADMIN_SOCIALS_NOT_PRESENT');    
+        } else {
+            return Text::_('COM_KUNENA_ADMIN_SOCIALS_ARE_PRESENT');
+        }
+    }
 }

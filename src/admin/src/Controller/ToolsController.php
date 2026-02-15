@@ -880,21 +880,30 @@ class ToolsController extends FormController
                 'vk', 'telegram', 'apple', 'vimeo', 'whatsapp', 'youtube', 'ok', 'pinterest', 'reddit'];
             
             // Check if column bsky_app exist to import value from it just in case
-            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'bsky_app';";
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('bsky_app');
             $db->setQuery($query);
             $columnBsky = $db->loadResult();
             
-            if (!$columnBsky) {
+            if ($columnBsky) {
                 $listOldSocialsColumns[] = 'bsky_app';
             }
             
             // Check if column bluesky_app exist to import value from it just in case
-            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'bluesky_app';";
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('bluesky_app');
             $db->setQuery($query);
             $columnBluesky = $db->loadResult();
             
-            if (!$columnBluesky) {
+            if ($columnBluesky) {
                 $listOldSocialsColumns[] = 'bluesky_app';
+            }
+            
+            // Check if column delicious exist to import value from it just in case
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('delicious');
+            $db->setQuery($query);
+            $columnDelicious = $db->loadResult();
+            
+            if ($columnDelicious) {
+                $listOldSocialsColumns[] = 'delicious';
             }
             
             $query  = $db->createQuery()
@@ -1137,21 +1146,30 @@ class ToolsController extends FormController
                 }
             }
             
+            // Check if column socialshare exist to remove the column
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('socialshare');
+            $db->setQuery($query);
+            $columnSocialshare = $db->loadResult();
+            
+            if ($columnSocialshare) {
+                $listOldSocialsColumns[] = 'socialshare';
+            }
+            
             // Remove old socials columns            
             foreach ($listOldSocialsColumns as $column) {
-             /*$query = "SHOW COLUMNS FROM " . $db->quoteName('#__kunena_users') . " LIKE '{$column}';";
-             $db->setQuery($query);
-             $column = $db->loadResult();
+                $query = "SHOW COLUMNS FROM " . $db->quoteName('#__kunena_users') . " LIKE '{$column}';";
+                $db->setQuery($query);
+                $column = $db->loadResult();
              
-             if ($column) {
-             $query = $db->getQuery(true);
-             $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
-             $db->setQuery($query);
-             $db->execute();
-             }*/
+                if ($column) {
+                    $query = $db->getQuery(true);
+                    $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
+                    $db->setQuery($query);
+                    $db->execute();
+                }
             }
-            die();
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_ALREADY_EXISTS_NOTHING_TO_DO'), 'message');
+
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CREATED_AND_SOCIAL_DATA_IMPORTED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         } else {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_ALREADY_EXISTS_NOTHING_TO_DO'), 'message');

@@ -376,7 +376,7 @@ class HtmlView extends BaseHtmlView
     {
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
-        ToolbarHelper::custom('tools.recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_ADMIN_LAUNCH_SETUPSOCIALS', false);
+        ToolbarHelper::custom('tools.setupsocials', 'apply.png', 'apply_f2.png', 'COM_KUNENA_ADMIN_LAUNCH_SETUPSOCIALS', false);
         ToolbarHelper::spacer();
         ToolbarHelper::cancel();
         ToolbarHelper::spacer();

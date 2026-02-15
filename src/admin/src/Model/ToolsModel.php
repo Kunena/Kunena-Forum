@@ -863,11 +863,11 @@ class ToolsModel extends AdminModel
     }
     
     /**
-     * @return  boolean
+     * @return  string
      *
      * @since   Kunena 7.0.2
      */
-    public function getSocialsIsPresent(): bool
+    public function getSocialsIsPresent(): string
     {
         $db     = Factory::getContainer()->get('DatabaseDriver');
         

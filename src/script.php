@@ -322,10 +322,6 @@ return new class() implements ServiceProviderInterface {
                         }
                     }
 
-                    if ($installed != 'NONE') {
-                        $state = $installed;
-                    }
-
                     $query = $db->createQuery();
 
                     $values = [

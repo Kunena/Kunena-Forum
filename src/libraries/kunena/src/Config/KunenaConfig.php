@@ -328,9 +328,7 @@ class KunenaConfig
             }
 
             if ($key === 'email') {
-                $email = $this->email;
-
-                return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
+                return !empty($this->config[$key]) ? $this->config[$key] : Factory::getApplication()->get('mailfrom', '');
             }
 
             // Return the value
@@ -399,7 +397,7 @@ class KunenaConfig
 
         return $config;
     }
-    
+
     /**
      * Function to build the configuration values with default values from config.xml and fill it with values 
      *

@@ -671,7 +671,7 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
             }
 
-            $mailnamesender  = !empty($config->emailSenderName) ? MailHelper::cleanAddress($config->emailSenderName) : MailHelper::cleanAddress($config->boardTitle);
+            $mailnamesender  = !empty((string) $config->emailSenderName) ? MailHelper::cleanAddress($config->emailSenderName) : MailHelper::cleanAddress($config->boardTitle);
             $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
             $subject     = $this->subject ? $this->subject : $topic->subject;
 

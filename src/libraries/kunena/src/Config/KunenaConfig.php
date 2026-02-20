@@ -303,6 +303,19 @@ class KunenaConfig
     }
 
     /**
+     * Magic method to check if the key exists in the protected array.
+     * This allows empty() and isset() to work correctly.
+     *
+     * @param   string $key The key requested (e.g., 'name' for $class->name)
+     * @return  bool true if the key exists
+     * @since   7.0.2
+     */
+    public function __isset(string $key): bool
+    {
+        return isset($this->config[$key]);
+    }
+
+    /**
      * Magic method to get protected properties by key.
      * This is called when reading data from inaccessible properties.
      *

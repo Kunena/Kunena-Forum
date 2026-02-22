@@ -845,6 +845,349 @@ class ToolsController extends FormController
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
         }
     }
+    
+    /**
+     * Set up socials in case the updates has failed
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.0.2
+     *
+     * @throws  null
+     * @throws  Exception
+     */
+    public function setupsocials(): void
+    {
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        
+        $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'socials';";
+        $db->setQuery($query);
+        $columnSocials = $db->loadResult();
+        
+        if (!$columnSocials) {
+            // Create the column socials
+            $query = "ALTER TABLE `#__kunena_users` ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`";
+            $query = $db->setQuery($query);
+            
+            try {
+                $db->execute();
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+            
+            // Move values of old socials columns to the JSON in column socials
+            $listOldSocialsColumns = ['userid', 'x_social', 'facebook', 'myspace', 'linkedin', 'linkedin_company', 'digg', 'skype', 'yim', 'google', 'github', 'microsoft', 'blogspot', 'flickr', 'bebo', 'instagram', 'qqsocial', 'qzone', 'weibo', 'wechat',
+                'vk', 'telegram', 'apple', 'vimeo', 'whatsapp', 'youtube', 'ok', 'pinterest', 'reddit'];
+            
+            // Check if column bsky_app exist to import value from it just in case
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('bsky_app');
+            $db->setQuery($query);
+            $columnBsky = $db->loadResult();
+            
+            if ($columnBsky) {
+                $listOldSocialsColumns[] = 'bsky_app';
+            }
+            
+            // Check if column bluesky_app exist to import value from it just in case
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('bluesky_app');
+            $db->setQuery($query);
+            $columnBluesky = $db->loadResult();
+            
+            if ($columnBluesky) {
+                $listOldSocialsColumns[] = 'bluesky_app';
+            }
+            
+            // Check if column delicious exist to import value from it just in case
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('delicious');
+            $db->setQuery($query);
+            $columnDelicious = $db->loadResult();
+            
+            if ($columnDelicious) {
+                $listOldSocialsColumns[] = 'delicious';
+            }
+            
+            // Prepare the JSON for each user with putting the old value of each social
+            // Set the content in the column socials
+            $limit = 100;
+            $offset = 0;
+            
+            do {
+                $query  = $db->createQuery()
+                    ->select($db->quoteName($listOldSocialsColumns))
+                    ->from($db->quoteName('#__kunena_users'))
+                    ->where($db->quoteName('banned') . '= ' . $db->quote('1000-01-01 00:00:00'))
+                    ->setLimit($limit, $offset);
+                $db->setQuery($query);
+                $valuesOldColumns = $db->loadObjectList();
+                
+                if (!empty($valuesOldColumns)) {
+                    foreach ($valuesOldColumns as $value) {
+                        $bluesky_app = '';
+                        if (isset($value->bsky_app)) {
+                            $bluesky_app = $value->bsky_app;
+                        } elseif (isset($value->bluesky_app)) {
+                            $bluesky_app = $value->bluesky_app;
+                        }
+                        
+                        $fields = array(
+                            $db->quoteName('socials') . ' = ' . $db->quote('{
+                            "x_social": {
+                            "value": "' . $value->x_social . '",
+                            "url": "https://x.com/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_X_SOCIAL",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-x-twitter"
+                            },
+                            "facebook": {
+                            "value": "' . $value->facebook . '",
+                            "url": "https://www.facebook.com/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_FACEBOOK",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-facebook"
+                            },
+                            "myspace": {
+                            "value": "' . $value->myspace . '",
+                            "url": "https://www.myspace.com/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_MYSPACE",
+                            "nourl": 0,
+                            "fa": "fa-solid fa-square-share-nodes"
+                            },
+                            "linkedin": {
+                            "value": "' . $value->linkedin . '",
+                            "url": "https://www.linkedin.com/in/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_LINKEDIN",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-linkedin"
+                            },
+                            "linkedin_company": {
+                            "value": "' . $value->linkedin_company . '",
+                            "url": "https://www.linkedin.com/company/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_LINKEDIN",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-linkedin"
+                            },
+                            "digg": {
+                            "value": "' . $value->digg . '",
+                            "url": "https://www.digg.com/users/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_DIGG",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-digg"
+                            },
+                            "skype": {
+                            "value": "' . $value->skype . '",
+                            "url": "skype:##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_SKYPE",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-skype"
+                            },
+                            "yim": {
+                            "value": "' . $value->yim . '",
+                            "url": "##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_YIM",
+                            "nourl": 1,
+                            "fa": "fa-brands fa-yahoo"
+                            },
+                            "google": {
+                            "value": "' . $value->google . '",
+                            "url": "##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_GOOGLE",
+                            "nourl": 1,
+                            "fa": "fa-brands fa-google"
+                            },
+                            "github": {
+                            "value": "' . $value->github . '",
+                            "url": "https://www.github.com/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_GITHUB",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-github"
+                            },
+                            "microsoft": {
+                            "value": "' . $value->microsoft . '",
+                            "url": "##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_MICROSOFT",
+                            "nourl": 1,
+                            "fa": "fa-brands fa-microsoft"
+                            },
+                            "blogspot": {
+                            "value": "' . $value->blogspot . '",
+                            "url": "https://##VALUE##.blogspot.com/",
+                            "title": "COM_KUNENA_MYPROFILE_BLOGSPOT",
+                            "nourl": 0,
+                            "fa": "fa-solid fa-square-share-nodes"
+                            },
+                            "flickr": {
+                            "value": "' . $value->flickr . '",
+                            "url": "https://www.flickr.com/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_FLICKR",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-flickr"
+                            },
+                            "instagram": {
+                            "value": "' . $value->bebo . '",
+                            "url": "https://www.instagram.com/##VALUE##/",
+                            "title": "COM_KUNENA_MYPROFILE_INSTAGRAM",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-instagram"
+                            },
+                            "qqsocial": {
+                            "value": "' . $value->instagram . '",
+                            "url": "##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_QQSOCIAL",
+                            "nourl": 1,
+                            "fa": "fa-solid fa-square-share-nodes"
+                            },
+                            "qzone": {
+                            "value": "' . $value->qqsocial . '",
+                            "url": "##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_QZONE",
+                            "nourl": 1,
+                            "fa": "fa-solid fa-square-share-nodes"
+                            },
+                            "weibo": {
+                            "value": "' . $value->qzone . '",
+                            "url": "##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_WEIBO",
+                            "nourl": 1,
+                            "fa": "fa-brands fa-weibo"
+                            },
+                            "wechat": {
+                            "value": "' . $value->weibo . '",
+                            "url": "##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_WECHAT",
+                            "nourl": 1,
+                            "fa": "fa-solid fa-square-share-nodes"
+                            },
+                            "vk": {
+                            "value": "' . $value->wechat . '",
+                            "url": "https://vk.com/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_VK",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-vk"
+                            },
+                            "telegram": {
+                            "value": "' . $value->vk . '",
+                            "url": "https://t.me/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_TELEGRAM",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-telegram"
+                            },
+                            "apple": {
+                            "value": "' . $value->telegram . '",
+                            "url": "##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_APPLE",
+                            "nourl": 1,
+                            "fa": "fa-brands fa-apple"
+                            },
+                            "vimeo": {
+                            "value": "' . $value->apple . '",
+                            "url": "https://vimeo.com/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_VIMEO",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-vimeo"
+                            },
+                            "whatsapp": {
+                            "value": "' . $value->vimeo . '",
+                            "url": "https://wa.me/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_WHATSAPP",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-whatsapp"
+                            },
+                            "youtube": {
+                            "value": "' . $value->whatsapp . '",
+                            "url": "https://www.youtube.com/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_YOUTUBE",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-youtube"
+                            },
+                            "ok": {
+                            "value": "' . $value->youtube . '",
+                            "url": "https://ok.ru/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_OK",
+                            "nourl": 0,
+                            "fa": "fa-solid fa-square-share-nodes"
+                            },
+                            "pinterest": {
+                            "value": "' . $value->ok . '",
+                            "url": "https://pinterest.com/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_PINTEREST",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-pinterest"
+                            },
+                            "reddit": {
+                            "value": "' . $value->pinterest . '",
+                            "url": "https://www.reddit.com/user/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_REDDIT",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-reddit"
+                            },
+                            "bluesky_app": {
+                            "value": "' . $value->reddit . '",
+                            "url": "https://bsky.app/##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_BLUESKY_APP",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-bluesky"
+                            },
+                            "threads": {
+                            "value": "' . $bluesky_app . '",
+                            "url": "https://www.threads.net/@##VALUE##",
+                            "title": "COM_KUNENA_MYPROFILE_THREADS_APP",
+                            "nourl": 0,
+                            "fa": "fa-brands fa-threads"
+                            }
+                            }')
+                        );
+                        
+                        $conditions = array(
+                            $db->quoteName('userid') . ' = ' . $value->userid
+                        );
+                        
+                        $query = $db->getQuery(true);
+                        $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
+                        $db->setQuery($query);
+                        
+                        try {
+                            $db->execute();
+                        } catch (Exception $e) {
+                            echo $e->getMessage();
+                        }
+                    }
+                    
+                    $offset += $limit;
+                } else {
+                    break;
+                }
+            }  while (true);          
+            
+            // Check if column socialshare exist to remove the column
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('socialshare');
+            $db->setQuery($query);
+            $columnSocialshare = $db->loadResult();
+            
+            if ($columnSocialshare) {
+                $listOldSocialsColumns[] = 'socialshare';
+            }
+            
+            // Remove old socials columns            
+            foreach ($listOldSocialsColumns as $column) {
+                $query = "SHOW COLUMNS FROM " . $db->quoteName('#__kunena_users') . " LIKE '{$column}';";
+                $db->setQuery($query);
+                $column = $db->loadResult();
+             
+                if ($column) {
+                    $query = $db->getQuery(true);
+                    $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
+                    $db->setQuery($query);
+                    $db->execute();
+                }
+            }
+
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CREATED_AND_SOCIAL_DATA_IMPORTED'), 'message');
+            $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_ALREADY_EXISTS_NOTHING_TO_DO'), 'message');
+            $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+        }
+    }
 
     /**
      * Method to just redirect to main manager in case of use of cancel button

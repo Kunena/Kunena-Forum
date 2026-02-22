@@ -141,6 +141,10 @@ class HtmlView extends BaseHtmlView
             $this->setToolBarPrune();
         } elseif ($layout == 'purgerestatements') {
             $this->setToolBarPurgeReStatements();
+        } elseif ($layout == 'setupsocials') {
+            $this->setToolBarSetupsocials(); 
+            
+            $this->socialsIsPresent       = $model->getSocialsIsPresent();
         } elseif ($layout == 'recount') {
             $this->setToolBarRecount();
         } elseif ($layout == 'report') {
@@ -360,6 +364,23 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::cancel();
         ToolbarHelper::spacer();
         $helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/synchronize-users';
+        ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+    }
+    
+    /**
+     * @return  void
+     *
+     * @since   Kunena 7.0.2
+     */
+    protected function setToolBarSetupsocials(): void
+    {
+        ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
+        ToolbarHelper::spacer();
+        ToolbarHelper::custom('tools.setupsocials', 'apply.png', 'apply_f2.png', 'COM_KUNENA_ADMIN_LAUNCH_SETUPSOCIALS', false);
+        ToolbarHelper::spacer();
+        ToolbarHelper::cancel();
+        ToolbarHelper::spacer();
+        $helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/setup-socials';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
     }
 }

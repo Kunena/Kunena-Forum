@@ -41,7 +41,7 @@ class Pkg_KunenaInstallerScript extends InstallerScript
      * @var    string
      * @since  6.0.0
      */
-    protected $minimumJoomla = '5..0.3';
+    protected $minimumJoomla = '5.0.3';
     
     
     /**
@@ -97,8 +97,8 @@ class Pkg_KunenaInstallerScript extends InstallerScript
             '0' => '10.8.6', // Preferred version
         ],
         'Joomla!' => [
-            '6.0' => '6.0.2',
-            '5.4' => '5.4.2',
+            '6.0' => '6.0.3',
+            '5.4' => '5.4.3',
             '5.3' => '5.3.4',
             '5.2' => '5.2.6',
             '5.1' => '5.1.4',

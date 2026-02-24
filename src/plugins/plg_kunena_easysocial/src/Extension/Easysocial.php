@@ -36,14 +36,6 @@ use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaLoginEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaPrivateEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaActivityEasySocial;
 
-$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
-
-if (!is_file($file)) {
-    return;
-}
-
-require_once $file;
-
 /**
  * @package     Kunena
  *
@@ -102,11 +94,19 @@ class Easysocial extends \EasySocialPlugins implements SubscriberInterface, Data
     {
         // Do not load if Kunena version is not supported or Kunena is offline
         if (!(\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.0') && KunenaForum::enabled())) {
-            return \true;
+            return;
         }
 
-        // $subject = $this->getDispatcher();
-        // parent::__construct($subject, $config);
+        // Do not load if Easyblog is not installed
+        $path = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
+
+        if (!\is_file($path)) {
+            return;
+        }
+
+        include_once $path;
+
+        parent::__construct($config);
 
         $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
 

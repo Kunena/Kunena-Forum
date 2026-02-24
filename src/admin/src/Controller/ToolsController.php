@@ -876,8 +876,26 @@ class ToolsController extends FormController
             }
             
             // Move values of old socials columns to the JSON in column socials
-            $listOldSocialsColumns = ['userid', 'x_social', 'facebook', 'myspace', 'linkedin', 'linkedin_company', 'digg', 'skype', 'yim', 'google', 'github', 'microsoft', 'blogspot', 'flickr', 'bebo', 'instagram', 'qqsocial', 'qzone', 'weibo', 'wechat',
+            $listOldSocialsColumns = ['userid', 'facebook', 'myspace', 'linkedin', 'linkedin_company', 'digg', 'skype', 'yim', 'google', 'github', 'microsoft', 'blogspot', 'flickr', 'bebo', 'instagram', 'qqsocial', 'qzone', 'weibo', 'wechat',
                 'vk', 'telegram', 'apple', 'vimeo', 'whatsapp', 'youtube', 'ok', 'pinterest', 'reddit'];
+            
+            // Check if column twitter exist to import value from it just in case
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('twitter');
+            $db->setQuery($query);
+            $columnTwitter = $db->loadResult();
+            
+            if ($columnTwitter) {
+                $listOldSocialsColumns[] = 'twitter';
+            }
+            
+            // Check if column x_social exist to import value from it just in case
+            $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('x_social');
+            $db->setQuery($query);
+            $columnX_social = $db->loadResult();
+            
+            if ($columnX_social) {
+                $listOldSocialsColumns[] = 'x_social';
+            }
             
             // Check if column bsky_app exist to import value from it just in case
             $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('bsky_app');
@@ -922,6 +940,13 @@ class ToolsController extends FormController
                 
                 if (!empty($valuesOldColumns)) {
                     foreach ($valuesOldColumns as $value) {
+                        $X_social = '';
+                        if (isset($value->x_social)) {
+                            $X_social = $value->x_social;
+                        } elseif (isset($value->twitter)) {
+                            $X_social = $value->twiter;
+                        }
+                        
                         $bluesky_app = '';
                         if (isset($value->bsky_app)) {
                             $bluesky_app = $value->bsky_app;
@@ -932,7 +957,7 @@ class ToolsController extends FormController
                         $fields = array(
                             $db->quoteName('socials') . ' = ' . $db->quote('{
                             "x_social": {
-                            "value": "' . $value->x_social . '",
+                            "value": "' . $X_social . '",
                             "url": "https://x.com/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_X_SOCIAL",
                             "nourl": 0,

@@ -35,21 +35,14 @@ use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaProfileEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaLoginEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaPrivateEasySocial;
 use Kunena\Forum\Plugin\Kunena\Easysocial\Helper\KunenaActivityEasySocial;
-
-$file = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
-
-if (!is_file($file)) {
-    return;
-}
-
-require_once $file;
+use Joomla\CMS\Plugin\CMSPlugin;
 
 /**
  * @package     Kunena
  *
  * @since       Kunena 5.0
  */
-class Easysocial extends \EasySocialPlugins implements SubscriberInterface, DatabaseAwareInterface
+class Easysocial extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
     use DatabaseAwareTrait;
 
@@ -102,11 +95,10 @@ class Easysocial extends \EasySocialPlugins implements SubscriberInterface, Data
     {
         // Do not load if Kunena version is not supported or Kunena is offline
         if (!(\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.0') && KunenaForum::enabled())) {
-            return \true;
+            return;
         }
 
-        // $subject = $this->getDispatcher();
-        // parent::__construct($subject, $config);
+        //parent::__construct($config);
 
         $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_easysocial.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
@@ -114,7 +106,14 @@ class Easysocial extends \EasySocialPlugins implements SubscriberInterface, Data
     }
 
     public function initEasySocial(&$subject, $config)
-    {
+    {        
+        // Do not load if Easyblog is not installed
+        $path = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
+        
+        if (!\is_file($path)) {
+            return;
+        }
+        
         parent::__construct($subject, $config);
     }
 

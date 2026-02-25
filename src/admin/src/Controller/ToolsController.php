@@ -1194,15 +1194,17 @@ class ToolsController extends FormController
             
             // Remove old socials columns            
             foreach ($listOldSocialsColumns as $column) {
-                $query = "SHOW COLUMNS FROM " . $db->quoteName('#__kunena_users') . " LIKE '{$column}';";
-                $db->setQuery($query);
-                $column = $db->loadResult();
-             
-                if ($column) {
-                    $query = $db->getQuery(true);
-                    $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
+                if ($column != 'userid') {
+                    $query = "SHOW COLUMNS FROM " . $db->quoteName('#__kunena_users') . " LIKE '{$column}';";
                     $db->setQuery($query);
-                    $db->execute();
+                    $column = $db->loadResult();
+                 
+                    if ($column) {
+                        $query = $db->getQuery(true);
+                        $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
+                        $db->setQuery($query);
+                        $db->execute();
+                    }
                 }
             }
 

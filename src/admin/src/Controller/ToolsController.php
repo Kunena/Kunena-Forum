@@ -847,6 +847,43 @@ class ToolsController extends FormController
     }
     
     /**
+     * Set up column language in case the updates has failed
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.0.2
+     *
+     * @throws  null
+     * @throws  Exception
+     */
+    public function setupcolumnlanguage(): void
+    {
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        
+        $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'language';";
+        $db->setQuery($query);
+        $columnLanguage = $db->loadResult();
+        
+        if (!$columnLanguage) {
+            // Create the column language
+            $query = "ALTER TABLE `#__kunena_users` ADD `language` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`";
+            $query = $db->setQuery($query);
+            
+            try {
+                $db->execute();
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+            
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_COLUMN_LANGUAGE_HAS_BEEN_CREATED'), 'message');
+            $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+        }
+        
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_COLUMN_LANGUAGE_EXIST_ALREADY_NOTHING_TO_DO'), 'message');
+        $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+    }
+    
+    /**
      * Set up socials in case the updates has failed
      *
      * @return  void

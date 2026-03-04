@@ -85,7 +85,7 @@ class KunenaAvatarCommunity extends KunenaAvatar
         $user = \CFactory::getUser($kuser->userid);
 
         if ($kuser->userid == 0) {
-            $avatar = str_replace(Uri::root(true), '', COMMUNITY_PATH_ASSETS) . "user-Male.png";
+            $avatar = Uri::root() . "components/com_community/assets/user-Male.png";
         } elseif ($sizex <= 90) {
             $avatar = $user->getThumbAvatar();
         } else {

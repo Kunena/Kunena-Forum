@@ -160,7 +160,9 @@ class KunenaProfileCommunity extends KunenaProfile
         $cconfig         = \CFactory::getConfig();
         $displayusername = $cconfig->get('displayname');
 
-        if ($displayusername == 'name') {
+        if ($user->id == 0) {
+            return $user->name;
+        } elseif ($displayusername == 'name') {
             return \CFactory::getUser($user->userid)->name;
         } else {
             return \CFactory::getUser($user->userid)->username;

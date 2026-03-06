@@ -23,35 +23,44 @@ $wa = $this->document->getWebAssetManager();
 $wa->usePreset('choicesjs')
     ->useScript('multiselect')
     ->addInlineScript(
-        "
-		jQuery(document).ready(function ($) {
-	$('#link_sel_all').click(function(e) {
-		$('#report_final').select();
-		try {
-			var successful = document.execCommand('copy');
-			var msg = successful ? 'successful' : 'unsuccessful';
-			console.log('Copying text command was ' + msg);
-		}
-		catch (err)
-		{
-			console.log('Oops, unable to copy');
-	}
-	});
+        '
+document.addEventListener("DOMContentLoaded", function() {
 
-	$('#link_sel_all_complete').click(function(e) {
-		$('#report_final_anonymous').select();
-		try {
-			var successful = document.execCommand('copy');
-			var msg = successful ? 'successful' : 'unsuccessful';
-			console.log('Copying text command was ' + msg);
-		}
-		catch (err)
-		{
-			console.log('Oops, unable to copy');
-		}
-	});
-});
-	"
+    var copyToClipboard = function(inputId) {
+        var input = document.getElementById(inputId);
+        
+        if (!input) {
+            console.error("Could not find element with ID: " + inputId);
+            return;
+        }
+
+        // Modern Clipboard API
+        navigator.clipboard.writeText(input.value).then(function() {
+            // Using standard concatenation to avoid Joomla parsing issues
+            console.log("Copying successful for ID: " + inputId);
+        }).catch(function(err) {
+            console.error("Modern copy failed. Check HTTPS/Permissions: ", err);
+        });
+    };
+
+    // Button 1
+    var btn1 = document.getElementById("link_sel_all");
+    if (btn1) {
+        btn1.addEventListener("click", function(e) {
+            e.preventDefault();
+            copyToClipboard("report_final");
+        });
+    }
+
+    // Button 2
+    var btn2 = document.getElementById("link_sel_all_complete");
+    if (btn2) {
+        btn2.addEventListener("click", function(e) {
+            e.preventDefault();
+            copyToClipboard("report_final_anonymous");
+        });
+    }
+});'
     );
 ?>
 

@@ -34,6 +34,9 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+        input.select(); 
+        input.setSelectionRange(0, 99999);
+
         // Modern Clipboard API
         navigator.clipboard.writeText(input.value).then(function() {
             // Using standard concatenation to avoid Joomla parsing issues

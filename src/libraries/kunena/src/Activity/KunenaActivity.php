@@ -13,6 +13,8 @@
 
 namespace Kunena\Forum\Libraries\Activity;
 
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+
 \defined('_JEXEC') or die();
 
 /**
@@ -205,15 +207,15 @@ class KunenaActivity
     /**
      * Triggered after giving thankyou to a message.
      *
-     * @param   int  $actor    Actor user Id (usually current user).
-     * @param   int  $target   Target user Id.
-     * @param   int  $message  Message Id.
+     * @param   int            $actor    Actor user Id (usually current user).
+     * @param   int            $target   Target user Id.
+     * @param   KunenaMessage  $message  KunenaMessage object.
      *
      * @return  void
      *
      * @since   Kunena 6.0
      */
-    public function onAfterThankyou(int $actor, int $target, int $message): void
+    public function onAfterThankyou(int $actor, int $target, KunenaMessage $message): void
     {
     }
 

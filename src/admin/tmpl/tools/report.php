@@ -33,9 +33,13 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("Could not find element with ID: " + inputId);
             return;
         }
-
+        
         // Modern Clipboard API
         navigator.clipboard.writeText(input.value).then(function() {
+            // Only select text when copy worked without error
+            input.select(); 
+            input.setSelectionRange(0, 99999);
+            
             // Using standard concatenation to avoid Joomla parsing issues
             console.log("Copying successful for ID: " + inputId);
         }).catch(function(err) {

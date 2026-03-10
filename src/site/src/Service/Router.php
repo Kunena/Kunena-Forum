@@ -374,7 +374,9 @@ class Router extends RouterView
                     $vars    = $variables + $vars;
                     continue;
                 } else {
-                    break;
+                    if ($segment !== 'attachment') {
+                        break;
+                    }
                 }
             }
 

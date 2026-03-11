@@ -127,33 +127,7 @@ $list = [];
                                 echo $attachment->getLayout()->render('audio'); ?>
                             <?php elseif ($attachment->isVideo()) :
                                 echo $attachment->getLayout()->render('video'); ?>
-                                <?php else :
-                                if (!$attachment->inline) : ?>
-                                    <li class="col-md-3 text-center">
-                                        <div class="thumbnail">
-                                            <?php echo $attachment->getLayout()->render('thumbnail'); ?>
-                                            <?php echo $attachment->getLayout()->render('textlink'); ?>
-                                        </div>
-                                    </li>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        <?php elseif ($attachment->isAuthorised('private')): ?>
-                            <?php if ($attachment->isAudio()) :
-                                echo $attachment->getLayout()->render('audio'); ?>
-                            <?php elseif ($attachment->isVideo()) :
-                                echo $attachment->getLayout()->render('video'); ?>
-                                <?php else :
-                                if (!$attachment->inline) : ?>
-                                    <li class="col-md-3 text-center">
-                                        <div class="thumbnail">
-                                            <?php echo $attachment->getLayout()->render('thumbnail'); ?>
-                                            <?php echo $attachment->getLayout()->render('textlink'); ?>
-                                        </div>
-                                    </li>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                            <?php else :
-                            if (!$attachment->inline) : ?>
+                            <?php elseif (!$attachment->inline) : ?>
                                 <li class="col-md-3 text-center">
                                     <div class="thumbnail">
                                         <?php echo $attachment->getLayout()->render('thumbnail'); ?>
@@ -161,13 +135,30 @@ $list = [];
                                     </div>
                                 </li>
                             <?php endif; ?>
+                        <?php elseif ($attachment->isAuthorised('private')): ?>
+                            <?php if ($attachment->isAudio()) :
+                                echo $attachment->getLayout()->render('audio'); ?>
+                            <?php elseif ($attachment->isVideo()) :
+                                echo $attachment->getLayout()->render('video'); ?>
+                            <?php elseif (!$attachment->inline) : ?>
+                                <li class="col-md-3 text-center">
+                                    <div class="thumbnail">
+                                        <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                        <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
+                        <?php elseif ($attachment->protected < 32 && !$attachment->inline) : ?>
+                            <li class="col-md-3 text-center">
+                                <div class="thumbnail">
+                                    <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                    <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                </div>
+                            </li>
                     <?php endif;
                     endforeach; ?>
-
-
                 </ul>
                 <?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>
-
                 </div>
                 <div class="clearfix"></div>
             <?php endif; ?>

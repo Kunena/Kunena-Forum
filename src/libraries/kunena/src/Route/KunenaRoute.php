@@ -289,7 +289,7 @@ abstract class KunenaRoute
         static $candidates = [];
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
-        $view   = $uri->getVar('view');
+        $view   = $uri->getVar('view', '');
         $catid  = (int) $uri->getVar('catid');
         $Itemid = (int) $uri->getVar('Itemid');
         $key    = $view . $catid;

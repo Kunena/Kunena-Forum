@@ -40,7 +40,7 @@ $list = [];
         <?php echo $message->getTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover'); ?>
         <?php if ($message->modified_time) :
         ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan('config_postDateFormat', 'config_postDateFormatHover');
-                    endif; ?>
+            endif; ?>
         <a href="#<?php echo $this->message->id; ?>" id="<?php echo $this->message->id; ?>" rel="canonical">#<?php echo $this->getNumlink($this->location); ?></a>
         <span class="d-block d-sm-none"><?php echo Text::_('COM_KUNENA_BY') . ' ' . $message->getAuthor()->getLink(); ?></span>
     </span>
@@ -54,13 +54,13 @@ $list = [];
         echo Text::sprintf($langstr, $message->getAuthor()->getLink(), $this->getTopicLink($this->message->getTopic(), $this->message, $this->message->displayField('subject'), null, KunenaTemplate::getInstance()->tooltips() . ' topictitle')); ?>
         <?php
         if (!empty($this->message->pm) && $this->config->privateMessage) : ?>
-        <div class="kmsg">
-            <div class="kmsgtext-hide">
-                <?php foreach($this->message->pm as $pm) {
-                    echo $pm->displayField('body');
-                } ?>
+            <div class="kmsg">
+                <div class="kmsgtext-hide">
+                    <?php foreach ($this->message->pm as $pm) {
+                        echo $pm->displayField('body');
+                    } ?>
+                </div>
             </div>
-        </div>
         <?php endif ?>
     </div>
     <div class="kmsg">
@@ -81,9 +81,15 @@ $list = [];
     <div class="report pb-5">
         <?php echo KunenaLayout::factory('Widget/Button')
             ->setProperties([
-                'url'   => '#report' . $message->id . '', 'name' => 'report', 'scope' => 'message',
-                'type'  => 'user', 'id' => 'btn_report', 'normal' => '', 'icon' => KunenaIcons::reportname(),
-                'modal' => 'modal', 'pullright' => 'pullright',
+                'url'   => '#report' . $message->id . '',
+                'name' => 'report',
+                'scope' => 'message',
+                'type'  => 'user',
+                'id' => 'btn_report',
+                'normal' => '',
+                'icon' => KunenaIcons::reportname(),
+                'modal' => 'modal',
+                'pullright' => 'pullright',
             ]); ?>
     </div>
     <?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->userReport || !$this->config->userReport && $this->me->userid != $this->message->userid) : ?>
@@ -106,67 +112,58 @@ $list = [];
     <?php endif; ?>
 <?php endif; ?>
 
-<?php if (!empty($attachments)) : 
-    if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest ) || $this->me->exists() && $attachs->inline != count($attachments)) : ?> 	
-	    <div class="card pb-3 pd-3 mb-3">
+<?php if (!empty($attachments)) :
+    if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest) || $this->me->exists() && $attachs->inline != count($attachments)) : ?>
+        <div class="card pb-3 pd-3 mb-3">
             <?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>
                 <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
-            	<div class="card-body kattach">          		
-             <?php endif; ?>	
-	    <ul class="thumbnails" style="list-style:none;">
-	       		
-	    <?php foreach ($attachments as $attachment) :
-	         if (!$attachment->protected) : ?>
-                  <?php if ($attachment->isAudio()) :
-                       echo $attachment->getLayout()->render('audio'); ?>
-                  <?php elseif ($attachment->isVideo()) :
-                       echo $attachment->getLayout()->render('video'); ?>
-                  <?php else : 
-                       if (!$attachment->inline) : ?>
-                            <li class="col-md-3 text-center">
-                                 <div class="thumbnail">
-                                      <?php echo $attachment->getLayout()->render('thumbnail'); ?>
-                                      <?php echo $attachment->getLayout()->render('textlink'); ?>
-                                 </div>
-                            </li>
-                       <?php endif; ?>
-                  <?php endif; ?>                            
-	         <?php elseif ($attachment->isAuthorised('private')): ?>
-                  <?php if ($attachment->isAudio()) :
-                       echo $attachment->getLayout()->render('audio'); ?>
-                  <?php elseif ($attachment->isVideo()) :
-                       echo $attachment->getLayout()->render('video'); ?>
-                  <?php else :  
-                       if (!$attachment->inline) : ?>
-                            <li class="col-md-3 text-center">
-                                 <div class="thumbnail">
-                                      <?php echo $attachment->getLayout()->render('thumbnail'); ?>
-                                      <?php echo $attachment->getLayout()->render('textlink'); ?>
-                                 </div>
-                            </li>
-                       <?php endif; ?>
-                  <?php endif; ?>
-	         <?php elseif ($this->config->attachmentProtection && $attachment->protected < 32) : 
-                  if (!$attachment->inline) : ?>
-                       <li class="col-md-3 text-center">
-                            <div class="thumbnail">
-                                 <?php echo $attachment->getLayout()->render('thumbnail'); ?>
-                                 <?php echo $attachment->getLayout()->render('textlink'); ?>
-                            </div>
-                       </li>
-                  <?php endif; ?>               
-	         <?php endif;
-	    endforeach; ?>
+                <div class="card-body kattach">
+                <?php endif; ?>
+                <ul class="thumbnails" style="list-style:none;">
 
-						
-						</ul>
-						<?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>						
-            	
-            	</div>
-			<div class="clearfix"></div>
-		<?php endif; ?>
-		</div>
-    <?php  endif; ?> 
+                    <?php foreach ($attachments as $attachment) :
+                        if (!$attachment->protected) : ?>
+                            <?php if ($attachment->isAudio()) :
+                                echo $attachment->getLayout()->render('audio'); ?>
+                            <?php elseif ($attachment->isVideo()) :
+                                echo $attachment->getLayout()->render('video'); ?>
+                            <?php elseif (!$attachment->inline) : ?>
+                                <li class="col-md-3 text-center">
+                                    <div class="thumbnail">
+                                        <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                        <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
+                        <?php elseif ($attachment->isAuthorised('private')): ?>
+                            <?php if ($attachment->isAudio()) :
+                                echo $attachment->getLayout()->render('audio'); ?>
+                            <?php elseif ($attachment->isVideo()) :
+                                echo $attachment->getLayout()->render('video'); ?>
+                            <?php elseif (!$attachment->inline) : ?>
+                                <li class="col-md-3 text-center">
+                                    <div class="thumbnail">
+                                        <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                        <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
+                        <?php elseif ($attachment->protected < 32 && !$attachment->inline) : ?>
+                            <li class="col-md-3 text-center">
+                                <div class="thumbnail">
+                                    <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                                    <?php echo $attachment->getLayout()->render('textlink'); ?>
+                                </div>
+                            </li>
+                    <?php endif;
+                    endforeach; ?>
+                </ul>
+                <?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>
+                </div>
+                <div class="clearfix"></div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 <?php endif; ?>
 
 
@@ -206,4 +203,3 @@ $list = [];
         ?>
     </div>
 <?php endif;
-

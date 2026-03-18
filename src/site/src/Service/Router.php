@@ -217,12 +217,11 @@ class Router extends RouterView
             $id = (int) $query['id'];
 
             if ($id) {
-                $subject = KunenaTopicHelper::get($id)->subject;
+                $subject = KunenaRoute::stringURLSafe(KunenaTopicHelper::get($id)->subject);
 
                 if (empty($subject)) {
                     $segments[] = $id;
-                } else {
-                    $subject    = KunenaRoute::stringURLSafe($subject);
+                } else {                    
                     $segments[] = "{$id}-{$subject}";
                 }
 

@@ -367,15 +367,11 @@ class Router extends RouterView
                 // Find out if we have SEF alias (category, view or layout)
                 $alias     = strtr($segment, ':', '-');
                 $variables = KunenaRoute::resolveAlias($alias);
-
+                
                 if ($variables) {
                     $sefcats = false;
                     $vars    = $variables + $vars;
                     continue;
-                } else {
-                    if ($segment !== 'attachment') {
-                        break;
-                    }
                 }
             }
 

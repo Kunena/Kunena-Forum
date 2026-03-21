@@ -205,8 +205,9 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      */
     protected function getUserDefaultLanguage($params)
     {
-        if (!empty($params)) {
-            $userParams = json_decode($params);
+        $userParams = json_decode($params);
+        
+        if (!empty($userParams->language)) {              
             $language = $userParams->language;
         } else {
             $language = Factory::getApplication()->getLanguage()->getTag();

@@ -217,12 +217,11 @@ class Router extends RouterView
             $id = (int) $query['id'];
 
             if ($id) {
-                $subject = KunenaTopicHelper::get($id)->subject;
+                $subject = KunenaRoute::stringURLSafe(KunenaTopicHelper::get($id)->subject);
 
                 if (empty($subject)) {
                     $segments[] = $id;
-                } else {
-                    $subject    = KunenaRoute::stringURLSafe($subject);
+                } else {                    
                     $segments[] = "{$id}-{$subject}";
                 }
 
@@ -368,15 +367,11 @@ class Router extends RouterView
                 // Find out if we have SEF alias (category, view or layout)
                 $alias     = strtr($segment, ':', '-');
                 $variables = KunenaRoute::resolveAlias($alias);
-
+                
                 if ($variables) {
                     $sefcats = false;
                     $vars    = $variables + $vars;
                     continue;
-                } else {
-                    if ($segment !== 'attachment') {
-                        break;
-                    }
                 }
             }
 

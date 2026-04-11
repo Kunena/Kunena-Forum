@@ -62,7 +62,7 @@ return new class() implements ServiceProviderInterface {
                         '8.4' => '8.4.1',
                         '8.3' => '8.3.0',
                         '8.2' => '8.2.0',
-                        '0'   => '8.3.0', // Preferred version
+                        '0'   => '8.5.0', // Preferred version
                     ],
                     'MySQL'   => [
                         '9.6' => '9.6.0',
@@ -77,7 +77,7 @@ return new class() implements ServiceProviderInterface {
                         '8.2' => '8.2.0',
                         '8.1' => '8.1.0',
                         '8.0' => '8.0.16',
-                        '0'   => '8.4.2', // Preferred version
+                        '0'   => '9.6.0', // Preferred version
                     ],
                     'mariaDB' => [
                         '12.2' => '12.2.2',
@@ -100,14 +100,14 @@ return new class() implements ServiceProviderInterface {
                         '10.6' => '10.6',
                         '10.5' => '10.5',
                         '10.4' => '10.4',
-                        '0' => '10.8.6', // Preferred version
+                        '0' => '12.2.2', // Preferred version
                     ],
                     'Joomla!' => [
                         '6.1' => '6.1-rc2',
                         '6.0' => '6.0.4',
                         '5.4' => '5.4.4',
                         '5.3' => '5.3.4',
-                        '0' => '5.4.4',  // Preferred version
+                        '0' => '6.1.0',  // Preferred version
                     ],
                 ];
 
@@ -515,18 +515,32 @@ return new class() implements ServiceProviderInterface {
                     }
 
                     $recommended = end($this->versions[$name]);
-                    $app->enqueueMessage(
-                        sprintf(
-                            "%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.",
-                            $name,
-                            $version,
-                            $name,
-                            $minor,
-                            $name,
-                            $recommended
-                        ),
-                        'notice'
-                    );
+                    reset($this->versions[$name]);
+                    if (version_compare($version, next($this->versions[$name]), '<=')) {
+                        $app->enqueueMessage(
+                            sprintf(
+                                "%s %s is not supported. Minimum required version is %s %s, but it is highly recommended to use %s %s or later.",
+                                $name,
+                                $version,
+                                $name,
+                                $minor,
+                                $name,
+                                $recommended
+                                ),
+                            'notice'
+                            );
+                    } else {
+                        $app->enqueueMessage(
+                            sprintf(
+                                "%s %s is not supported. Minimum required version is %s %s.",
+                                $name,
+                                $version,
+                                $name,
+                                $minor
+                                ),
+                            'notice'
+                            );
+                    }
 
                     return false;
                 }

@@ -92,6 +92,9 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
         }
 
         include_once $path;
+        
+        // Call loadApi method to load Kunena constants
+        KunenaForum::loadApi();
 
         parent::__construct($config);
 

@@ -80,6 +80,9 @@ class Gravatar extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
         if (!(\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.0') && KunenaForum::enabled())) {
             return;
         }
+        
+        // Call loadApi method to load Kunena constants
+        KunenaForum::loadApi();
 
         parent::__construct($config);
     }

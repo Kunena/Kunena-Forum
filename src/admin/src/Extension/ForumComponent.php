@@ -52,24 +52,9 @@ class ForumComponent extends MVCComponent implements BootableExtensionInterface,
     {
         $this->getRegistry()->register('kunenagrid', new Kunenagrid($container->get(SiteApplication::class)));
         $this->getRegistry()->register('kunenaforum', new Kunenaforum($container->get(SiteApplication::class)));
-
+    
         // Load Kunena API and autoload vendor libraries
         require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
         require_once JPATH_LIBRARIES . '/kunena/External/autoload.php';
-    }
-    
-    /**
-     * Booting the api file when it's needed in plugins and modules to avoid to use boot().
-     *
-     * Plugins and modules doens't need extra things like are loaded with boot().
-     *
-     * @return  void
-     *
-     * @since   Kunena 7.0.4
-     */
-    public function bootApi()
-    {
-        require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
-    }
-        
+    }        
 }

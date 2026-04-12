@@ -93,6 +93,9 @@ class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         if ($uddeim->version() < 1) {
             return;
         }
+        
+        // Call loadApi method to load Kunena constants
+        KunenaForum::loadApi();
 
         parent::__construct($config);
 

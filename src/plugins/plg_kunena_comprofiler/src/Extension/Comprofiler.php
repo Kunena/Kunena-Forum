@@ -120,6 +120,9 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
         ) {
             return;
         }
+        
+        // Call loadApi method to load Kunena constants
+        KunenaForum::loadApi();
 
         require_once JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
 

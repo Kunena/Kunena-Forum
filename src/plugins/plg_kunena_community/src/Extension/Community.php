@@ -104,6 +104,9 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
         }
 
         include_once $path;
+        
+        // Call loadApi method to load Kunena constants
+        KunenaForum::loadApi();
 
         parent::__construct($config);
 

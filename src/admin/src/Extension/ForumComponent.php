@@ -57,4 +57,19 @@ class ForumComponent extends MVCComponent implements BootableExtensionInterface,
         require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
         require_once JPATH_LIBRARIES . '/kunena/External/autoload.php';
     }
+    
+    /**
+     * Booting the api file when it's needed in plugins and modules to avoid to use boot().
+     *
+     * Plugins and modules doens't need extra things like are loaded with boot().
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.0.4
+     */
+    public function bootApi()
+    {
+        require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
+    }
+        
 }

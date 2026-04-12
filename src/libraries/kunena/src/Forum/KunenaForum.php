@@ -525,4 +525,16 @@ abstract class KunenaForum
         // Render the view.
         $view->displayLayout($layout, $template);
     }
+    
+    /**
+     * Just load the API to be used in modules and plugins instead of booting component.
+     *
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.0
+     */
+    public static function loadApi() {
+        require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
+    }
 }

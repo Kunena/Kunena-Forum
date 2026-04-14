@@ -1585,7 +1585,7 @@ class TopicController extends KunenaController
         $body      = (string) $this->input->getRaw('message_private');
         $attachIds = $this->input->get('attachment_private', [], 'array');
 
-        if (!trim($body) && !$attachIds) {
+        if (!$message->message && !trim($body) && !$attachIds) {
             return;
         }
 

@@ -1589,7 +1589,9 @@ class TopicController extends KunenaController
             return;
         }
 
-        $attachIds = explode(',', $attachIds[0]);
+        if (isset($attachIds[0])) {
+            $attachIds = explode(',', $attachIds[0]);
+        }
 
         $finder    = new KunenaPrivateMessageFinder();
         $finder
@@ -1607,9 +1609,11 @@ class TopicController extends KunenaController
         }
 
         $private->subject = $message->subject;
-
-        if (!trim($body)) {
+        $attachs = $message->getAttachments();
+        if ($message->message && !trim($body) && count($attachs) > 0) {
             $private->body      = Text::_('COM_KUNENA_POST_WITH_PRIVATE_ATTACHMENTS_SAVED');
+        } elseif ($message->message && !trim($body) && count($attachs ) == 0) {
+            $private->body      = Text::_('COM_KUNENA_POST_WITH_PRIVATE_ATTACHMENTS_SAVED_NO_ATTACHEMNTS');
         } else {
             $private->body      = $body;
         }

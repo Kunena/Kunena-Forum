@@ -144,6 +144,17 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
         } else {
             $this->captchaEnabled = false;
         }
+        
+        $this->pmHasBody = false;
+        
+        if(isset($this->message->pm)) {
+          $pmId = array_key_first($this->message->pm);
+          $pmBody = $this->message->pm[$pmId]->body;
+
+          if (!empty($pmBody)) {
+              $this->pmHasBody = true;  
+          }
+        }
 
         // Thank you info and buttons.
         $this->thankyou             = [];

@@ -1270,7 +1270,7 @@ HTML;
     public function getTopicIcon(KunenaTopic $topic): string
     {
         $topicicontype   = $this->params->get('topicicontype');
-        $categoryIconset = $topic->getCategory()->iconset;
+        $categoryIconset = $topic->getCategory()->iconset ?: 'default';
 
         if ($this->config->topicIcons) {
             $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/topicicons.xml';

@@ -20,13 +20,11 @@
     "last 2 major version",
     "not ie < 11"
   ],
-  "dependencies": {
-  },
   "devDependencies": {
-    "cypress": "^15.14.1",
-    "joomla-cypress": "^2.0.0",
+    "cypress": "^4.2.0",
+    "joomla-cypress": "^1.0.3",
     "mysql": "^2.18.1",
-    "smtp-tester": "^2.1.0",
-    "pg": "^8.20.0"
+    "pg": "^8.20.0",
+    "smtp-tester": "^2.1.0"
   }
 }

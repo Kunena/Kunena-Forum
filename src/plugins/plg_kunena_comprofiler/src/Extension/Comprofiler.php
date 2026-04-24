@@ -59,7 +59,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
      * @var     string  CB version 2.11 works with Php 8.1 and with Joomla! 5.4/6.0
      * @since   Kunena 6.0
      */
-    public $minCBVersion = '2.11.0+2025.10.24.18.56.48.4e5935587';
+    public $minCBVersion = '2.11.0+build.2026.04.17.15.58.10.fe6bcab9e';
 
     /**
      * Returns an array of events this subscriber will listen to.

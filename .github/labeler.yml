@@ -1,11 +1,14 @@
-6.0:
-  - './*'
+# Add 'K7.0' label to any changes within the entire repository
+K7.0:
+- changed-files:
+  - any-glob-to-any-file: '**'
+
+# Add 'Aurelia' label to any changes within the directory template
 Aurelia:
-  - './src/components/com_kunena/template/aurelia/*'
-backend:
-  - './src/administrator/components/com_kunena/*'
-Codeception tests:
-  - './tests/*'
-  - './codeception.yml'
-documentation:
-  - './docs/*'
+  - changed-files:
+    - any-glob-to-any-file: 'src/site/template/**'
+
+
+# Add 'Feature' label to any PR where the head branch name starts with `feature` or has a `feature` section in the name
+Feature:
+ - head-branch: ['^feature', 'feature']

@@ -4,7 +4,7 @@
 	"homepage" : "https://github.com/Kunena/Kunena-Forum",
 	"license" : "GPL-3.0-or-later",
 	"require-dev" : {
-		"phpunit/phpunit" : "~12.5.22",
+		"phpunit/phpunit" : "~11.5.55",
 		"joomla/cms-coding-standards" : "~2.0.0-alpha2@dev",
 		"joomla/coding-standards" : "~3.0@dev",
 		"friendsofphp/php-cs-fixer" : "~3.95",

@@ -1,5 +1,5 @@
-# Add 'K7.0' label to any changes within the entire repository
-K7.0:
+# Add '7.0' label to any changes within the entire repository
+7.0:
 - changed-files:
   - any-glob-to-any-file: '**'
 
@@ -10,5 +10,5 @@ Aurelia:
 
 
 # Add 'Feature' label to any PR where the head branch name starts with `feature` or has a `feature` section in the name
-Feature:
+feature:
  - head-branch: ['^feature', 'feature']

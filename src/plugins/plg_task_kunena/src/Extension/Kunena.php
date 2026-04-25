@@ -153,7 +153,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
     {
         if (
             !ComponentHelper::isEnabled('com_kunena')
-            || !KunenaForum::isCompatible('7.0')
+            || !KunenaForum::isCompatible('7.1')
             || !KunenaForum::installed()
         ) {
             return Status::NO_RUN;

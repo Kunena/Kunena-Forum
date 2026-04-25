@@ -69,6 +69,8 @@ class MessageItem extends KunenaLayout
 
     public $numLink;
 
+    public $pmHasBody;
+
     /**
      * Check if the guest, moderator or registred can see attachments
      *

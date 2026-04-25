@@ -63,4 +63,6 @@ class TopicItemMessage extends KunenaLayout
     public $more_thankyou;
 
     public $thankyou_delete;
+    
+    public $pmHasBody;
 }

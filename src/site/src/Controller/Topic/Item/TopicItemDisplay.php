@@ -110,6 +110,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
     public $image;
 
     public $params;
+    
+    public $pmHasBody;
 
     /**
      * Prepare topic display.

@@ -103,6 +103,8 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
     public $thankyou_delete;
 
     public $captchaDisplay;
+    
+    public $pmHasBody;
 
     /**
      * Prepare displaying message.

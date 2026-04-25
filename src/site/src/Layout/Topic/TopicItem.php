@@ -61,4 +61,6 @@ class TopicItem extends KunenaLayout
     public $user;
 
     public $output;
+    
+    public $pmHasBody;
 }

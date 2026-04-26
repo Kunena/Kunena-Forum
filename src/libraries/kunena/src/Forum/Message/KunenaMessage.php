@@ -638,16 +638,6 @@ class KunenaMessage extends KunenaDatabaseObject
         );
 
         if ($emailToList) {
-            if (!$config->email) {
-                KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
-
-                return false;
-            } elseif (!MailHelper::isEmailAddress($config->email)) {
-                KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
-
-                return false;
-            }
-
             $topic = $this->getTopic();
 
             // Make a list from all receivers; split the receivers into two distinct groups.
@@ -670,63 +660,56 @@ class KunenaMessage extends KunenaDatabaseObject
                     $sentusers[]                         = $emailTo->id;
                 }
             }
-
-            $mailnamesender  = !empty($config->emailSenderName) ? MailHelper::cleanAddress($config->emailSenderName) : MailHelper::cleanAddress($config->boardTitle);
-            $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+            
             $subject     = $this->subject ? $this->subject : $topic->subject;
-
-            // Create email.
-            $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-            $mail->setSubject($mailsubject);
-            $mail->setSender([$config->email, $mailnamesender]);
-
-            // Send email to all subscribers.
-            if (!empty($receivers[1])) {
-                $this->attachEmailBody($mail, 1, $subject, $url, $once);
-                KunenaEmail::send($mail, $receivers[1]);
-            }
-
-            // Send email to all moderators.
-            if (!empty($receivers[0])) {
-                $this->attachEmailBody($mail, 0, $subject, $url, $once);
-                KunenaEmail::send($mail, $receivers[0]);
-            }
-
-            // Store the mails data for all subscribers in mail queue
-            if (PluginHelper::isEnabled('kunena', 'plg_kunena_mails_queue')) {
-                $columns = array('subject', 'message_id', 'sent_to', 'message_url');
-
-                $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[1])), $db->quote($url));
-
+            
+            // If the task plugin mail queue cron if enabled we store at this point the list of emails to be send
+            if (PluginHelper::isEnabled('kunena', 'plg_task_kunena_mailsqueue')) {
+                $columns = array('subject', 'messageId', 'url', 'emailListJson');
+                
+                $values = array($db->quote($subject), $this->id, $url, $db->quote(json_encode($receivers)));
+                
                 $query     = $db->createQuery()
-                    ->insert($db->quoteName('#__kunena_mails_queue'))
-                    ->columns($db->quoteName($columns))
-                    ->values(implode(',', $values));
-
+                ->insert($db->quoteName('#__kunena_plg_task_mailsqueue'))
+                ->columns($db->quoteName($columns))
+                ->values(implode(',', $values));
+                
                 $db->setQuery($query);
-
+                
                 try {
                     $db->execute();
                 } catch (ExecutionFailureException $e) {
                     KunenaError::displayDatabaseError($e);
                 }
-
-                // Store the mails data for all moderators in mail queue
-                $columns = array('subject', 'message_id', 'sent_to', 'message_url');
-
-                $values = array($db->quote($subject), $this->id, $db->quote(implode(',', $receivers[0])), $db->quote($url));
-
-                $query     = $db->createQuery()
-                    ->insert($db->quoteName('#__kunena_mails_queue'))
-                    ->columns($db->quoteName($columns))
-                    ->values(implode(',', $values));
-
-                $db->setQuery($query);
-
-                try {
-                    $db->execute();
-                } catch (ExecutionFailureException $e) {
-                    KunenaError::displayDatabaseError($e);
+            } else {
+                if (!$config->email) {
+                    KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
+                    
+                    return false;
+                } elseif (!MailHelper::isEmailAddress($config->email)) {
+                    KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
+                    
+                    return false;
+                }
+                
+                $mailnamesender  = !empty($config->emailSenderName) ? MailHelper::cleanAddress($config->emailSenderName) : MailHelper::cleanAddress($config->boardTitle);
+                $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");                
+                
+                // Create email.
+                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                $mail->setSubject($mailsubject);
+                $mail->setSender([$config->email, $mailnamesender]);
+                
+                // Send email to all subscribers.
+                if (!empty($receivers[1])) {
+                    $this->attachEmailBody($mail, 1, $subject, $url, $once);
+                    KunenaEmail::send($mail, $receivers[1]);
+                }
+                
+                // Send email to all moderators.
+                if (!empty($receivers[0])) {
+                    $this->attachEmailBody($mail, 0, $subject, $url, $once);
+                    KunenaEmail::send($mail, $receivers[0]);
                 }
             }
 

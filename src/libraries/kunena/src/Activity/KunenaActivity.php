@@ -207,9 +207,9 @@ class KunenaActivity
     /**
      * Triggered after giving thankyou to a message.
      *
-     * @param   int  $actor    Actor user Id (usually current user).
-     * @param   int  $target   Target user Id.
-     * @param   int  $message  Message Id.
+     * @param   int            $actor    Actor user Id (usually current user).
+     * @param   int            $target   Target user Id.
+     * @param   KunenaMessage  $message  Message Id.
      *
      * @return  void
      *
@@ -222,9 +222,9 @@ class KunenaActivity
     /**
      * Triggered after removing thankyou from a message.
      *
-     * @param   int  $actor    Actor user Id (usually current user).
-     * @param   int  $target   Target user Id.
-     * @param   int  $message  Message Id.
+     * @param   int            $actor    Actor user Id (usually current user).
+     * @param   int            $target   Target user Id.
+     * @param   KunenaMessage  $message  Message Id.
      *
      * @return  void
      *

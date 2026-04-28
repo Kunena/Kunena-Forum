@@ -13,6 +13,8 @@
 
 namespace Kunena\Forum\Libraries\Activity;
 
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+
 \defined('_JEXEC') or die();
 
 /**
@@ -213,7 +215,7 @@ class KunenaActivity
      *
      * @since   Kunena 6.0
      */
-    public function onAfterThankyou(int $actor, int $target, int $message): void
+    public function onAfterThankyou(int $actor, int $target, KunenaMessage $message): void
     {
     }
 
@@ -228,7 +230,7 @@ class KunenaActivity
      *
      * @since   Kunena 6.0
      */
-    public function onAfterUnThankyou(int $actor, int $target, int $message): void
+    public function onAfterUnThankyou(int $actor, int $target, KunenaMessage $message): void
     {
     }
 

@@ -348,7 +348,11 @@ workspace/kunena/build/tmp)
 		<copy
 			todir="${tmp_dir}/packages/lib_kunena"
 			overwrite="true">
-			<fileset dir="${project_dir}/libraries/kunena" />
+			<filterchain refid="filter" />
+			<fileset dir="${kunena.media}">
+				<exclude name="core/js/sceditor/bbcode.js" />
+				<exclude name="core/js/sceditor/sceditor.js" />
+			</fileset>
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/lib_kunena"

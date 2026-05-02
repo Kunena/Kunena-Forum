@@ -854,57 +854,6 @@
 		});
 	}
 
-	/**
-	 * Removes the first and last divs from the HTML.
-	 *
-	 * This is needed for pasting
-	 * @param  {string} html
-	 * @return {string}
-	 * @private
-	 */
-	function removeFirstLastDiv(html) {
-		var	node, next, removeDiv,
-			output = document.createElement('div');
-
-		removeDiv = function (node, isFirst) {
-			// Don't remove divs that have styling
-			if (dom.hasStyling(node)) {
-				return;
-			}
-
-			if ((node.childNodes.length !== 1 ||
-				!is(node.firstChild, 'br'))) {
-				while ((next = node.firstChild)) {
-					output.insertBefore(next, node);
-				}
-			}
-
-			if (isFirst) {
-				var lastChild = output.lastChild;
-
-				if (node !== lastChild && is(lastChild, 'div') &&
-					node.nextSibling === lastChild) {
-					output.insertBefore(document.createElement('br'), node);
-				}
-			}
-
-			output.removeChild(node);
-		};
-
-		css(output, 'display', 'none');
-		output.innerHTML = html.replace(/<\/div>\n/g, '</div>');
-
-		if ((node = output.firstChild) && is(node, 'div')) {
-			removeDiv(node, true);
-		}
-
-		if ((node = output.lastChild) && is(node, 'div')) {
-			removeDiv(node);
-		}
-
-		return output.innerHTML;
-	}
-
 	function isFunction(fn) {
 		return typeof fn === 'function';
 	}
@@ -1794,6 +1743,10 @@
 			return convertToHTML(base.parse(str, preserveNewLines), true);
 		};
 
+		base.toHTMLFragment = function (str, preserveNewLines) {
+			return convertToHTML(base.parse(str, preserveNewLines), false);
+		};
+
 		/**
 		 * @private
 		 */
@@ -2188,6 +2141,7 @@
 
 		return number.length < 2 ? '0' + number : number;
 	}
+
 	/**
 	 * Normalises a CSS colour to hex #xxxxxx format
 	 *
@@ -2210,7 +2164,7 @@
 		}
 
 		// expand shorthand
-		if ((match = colorStr.match(/#([0-f])([0-f])([0-f])\s*?$/i))) {
+		if ((match = colorStr.match(/#([0-9a-f])([0-9a-f])([0-9a-f])\s*?$/i))) {
 			return '#' +
 				match[1] + match[1] +
 				match[2] + match[2] +
@@ -2432,26 +2386,30 @@
 		 *
 		 * @private
 		 * @param {HTMLElement}	element
+		 * @param {boolean}	hasCodeParent
 		 * @return {string} BBCode
 		 * @memberOf SCEditor.plugins.bbcode.prototype
 		 */
-		function elementToBbcode(element) {
-			var toBBCode = function (node, vChildren) {
+		function elementToBbcode(element, hasCodeParent) {
+			var toBBCode = function (node, hasCodeParent, vChildren) {
 				var ret = '';
 
 				dom.traverse(node, function (node) {
 					var	content      = '',
 						nodeType     = node.nodeType,
 						tag          = node.nodeName.toLowerCase(),
+						isCodeTag    = tag === 'code',
+						isEmoticon   = tag === 'img' &&
+							!!attr(node, EMOTICON_DATA_ATTR),
 						vChild       = validChildren[tag],
 						firstChild   = node.firstChild,
 						isValidChild = true;
 
-					if (typeof vChildren === 'object') {
+					if (vChildren) {
 						isValidChild = vChildren.indexOf(tag) > -1;
 
 						// Emoticons should always be converted
-						if (is(node, 'img') && attr(node, EMOTICON_DATA_ATTR)) {
+						if (isEmoticon) {
 							isValidChild = true;
 						}
 
@@ -2463,11 +2421,7 @@
 						}
 					}
 
-					// 3 = text and 1 = element
-					if (nodeType !== 3 && nodeType !== 1) {
-						return;
-					}
-
+					// 1 = element
 					if (nodeType === 1) {
 						// skip empty nlf elements (new lines automatically
 						// added after block level elements like quotes)
@@ -2477,25 +2431,31 @@
 
 						// don't convert iframe contents
 						if (tag !== 'iframe') {
-							content = toBBCode(node, vChild);
+							content = toBBCode(node, hasCodeParent || isCodeTag,
+								vChild);
 						}
 
 						// TODO: isValidChild is no longer needed. Should use
 						// valid children bbcodes instead by creating BBCode
 						// tokens like the parser.
 						if (isValidChild) {
-							// code tags should skip most styles
-							if (tag !== 'code') {
-								// First parse inline codes
-								content = handleTags(node, content, false);
-							}
+							// Emoticons should be converted if they have found
+							// their way into a code tag
+							if (!hasCodeParent || isEmoticon) {
+								if (!isCodeTag) {
+									// Parse inline codes first so they don't
+									// contain block level codes
+									content = handleTags(node, content, false);
+								}
 
-							content = handleTags(node, content, true);
+								content = handleTags(node, content, true);
+							}
 							ret += handleBlockNewlines(node, content);
 						} else {
 							ret += content;
 						}
-					} else {
+					// 3 = text
+					} else if (nodeType === 3) {
 						ret += node.nodeValue;
 					}
 				}, false, true);
@@ -2503,7 +2463,7 @@
 				return ret;
 			};
 
-			return toBBCode(element);
+			return toBBCode(element, hasCodeParent);
 		};
 
 		/**
@@ -2535,12 +2495,11 @@
 		 */
 		function toHtml(asFragment, source, legacyAsFragment) {
 			var	parser = new BBCodeParser(base.opts.parserOptions);
-			var html = parser.toHTML(
-				base.opts.bbcodeTrim ? source.trim() : source
-			);
+			var toHTML = (asFragment || legacyAsFragment) ?
+				parser.toHTMLFragment :
+				parser.toHTML;
 
-			return (asFragment || legacyAsFragment) ?
-				removeFirstLastDiv(html) : html;
+			return toHTML(base.opts.bbcodeTrim ? source.trim() : source);
 		}
 
 		/**
@@ -2557,6 +2516,7 @@
 			context = context || document;
 
 			var	bbcode, elements;
+			var hasCodeParent = !!dom.closest(parent, 'code');
 			var containerParent = context.createElement('div');
 			var container = context.createElement('div');
 			var parser = new BBCodeParser(base.opts.parserOptions);
@@ -2589,7 +2549,7 @@
 
 			dom.removeWhiteSpace(containerParent);
 
-			bbcode = elementToBbcode(container);
+			bbcode = elementToBbcode(container, hasCodeParent);
 
 			context.body.removeChild(containerParent);
 

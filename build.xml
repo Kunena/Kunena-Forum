@@ -348,11 +348,7 @@ workspace/kunena/build/tmp)
 		<copy
 			todir="${tmp_dir}/packages/lib_kunena"
 			overwrite="true">
-			<filterchain refid="filter" />
-			<fileset dir="${kunena.media}">
-				<exclude name="core/js/sceditor/bbcode.js" />
-				<exclude name="core/js/sceditor/sceditor.js" />
-			</fileset>
+			<fileset dir="${project_dir}/libraries/kunena" />			
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/lib_kunena"
@@ -372,7 +368,10 @@ workspace/kunena/build/tmp)
 		<copy
 			todir="${tmp_dir}/packages/kunena_media"
 			overwrite="true">
-			<fileset dir="${kunena.media}" />
+			<filterchain refid="filter" />
+			<fileset dir="${kunena.media}">
+				<exclude name="core/js/dev/*" />
+			</fileset>
 		</copy>
 		<!-- Add version information to all xml files and forum.php -->
 		<copy

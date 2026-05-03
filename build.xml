@@ -370,7 +370,8 @@ workspace/kunena/build/tmp)
 			overwrite="true">
 			<filterchain refid="filter" />
 			<fileset dir="${kunena.media}">
-				<exclude name="core/js/dev/*" />
+				<exclude name="core/js/dev/sceditor/sceditor.js" />
+				<exclude name="core/js/dev/sceditor/bbcode.js" />
 			</fileset>
 		</copy>
 		<!-- Add version information to all xml files and forum.php -->

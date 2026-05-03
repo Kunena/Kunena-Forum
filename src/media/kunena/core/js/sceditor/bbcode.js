@@ -563,7 +563,7 @@
 				if ((element.complete && (width || height)) ||
 					(width && height)) {
 
-					attribs = '=' + dom.width(element) + 'x' +
+					attribs = '=' + 'size=' + dom.width(element) + 'x' +
 						dom.height(element);
 				}
 
@@ -578,6 +578,12 @@
 				height = attrs.height;
 
 				// handle [img=340x240]url[/img]
+				if(attrs.size) {
+					match = attrs.size(split(/x/i));
+					width = match[0];
+					height = match.length ===2 ? match[1] : '';
+				}
+				
 				if (attrs.defaultattr) {
 					match = attrs.defaultattr.split(/x/i);
 

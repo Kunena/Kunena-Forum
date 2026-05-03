@@ -20,16 +20,16 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
-if(!$this->config->debug) {
-    $this->wa->registerAndUseScript('sceditor/sceditor', 'media/kunena/core/js/sceditor/sceditor.min.js')
-        ->registerAndUseScript('sceditor/bbcode', 'media/kunena/core/js/sceditor/bbcode.min.js')
-        ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
+if($this->config->debug && file_exists('media/kunena/core/js/dev/sceditor/sceditor.js') && file_exists('media/kunena/core/js/dev/sceditor/bbcode.js')) {
+    $this->wa->registerAndUseScript('sceditor/sceditor', 'media/kunena/core/js/dev/sceditor/sceditor.js')
+        ->registerAndUseScript('sceditor/bbcode', 'media/kunena/core/js/dev/sceditor/bbcode.js');
 } else {
-    $this->wa->registerAndUseScript('sceditor/sceditor', 'media/kunena/core/js/sceditor/sceditor.js')
-    ->registerAndUseScript('sceditor/bbcode', 'media/kunena/core/js/sceditor/bbcode.js')
-    ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
+    $this->wa->registerAndUseScript('sceditor/sceditor_min', 'media/kunena/core/js/sceditor/sceditor.min.js')
+        ->registerAndUseScript('sceditor/sceditor_bbcode_min', 'media/kunena/core/js/sceditor/bbcode.min.js');        
 }
 
+$this->wa->registerAndUseScript('kunena_sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js')
+    ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
 $this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
 
 Text::script('COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD');
@@ -66,7 +66,7 @@ $this->doc->addScriptOptions('com_kunena.root_path', Uri::root(true));
 $this->doc->addScriptOptions('com_kunena.editor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));
 
 HTMLHelper::_('bootstrap.tab');
-// Echo $this->subLayout('Widget/Datepicker');
+// echo $this->subLayout('Widget/Datepicker');
 
 $topictemplate = !$this->config->pickupCategory;
 $this->doc->addScriptOptions('com_kunena.ckeditor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));

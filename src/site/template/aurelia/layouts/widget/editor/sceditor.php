@@ -20,9 +20,15 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
-$this->wa->registerAndUseScript('sceditor/sceditor', 'media/kunena/core/js/sceditor/sceditor.js')
+if(!$this->config->debug) {
+    $this->wa->registerAndUseScript('sceditor/sceditor', 'media/kunena/core/js/sceditor/sceditor.min.js')
+        ->registerAndUseScript('sceditor/bbcode', 'media/kunena/core/js/sceditor/bbcode.min.js')
+        ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
+} else {
+    $this->wa->registerAndUseScript('sceditor/sceditor', 'media/kunena/core/js/sceditor/sceditor.js')
     ->registerAndUseScript('sceditor/bbcode', 'media/kunena/core/js/sceditor/bbcode.js')
     ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
+}
 
 $this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
 
@@ -59,7 +65,6 @@ $this->doc->addScriptOptions('com_kunena.template_editor_buttons_configuration',
 $this->doc->addScriptOptions('com_kunena.root_path', Uri::root(true));
 $this->doc->addScriptOptions('com_kunena.editor_emoticons', json_encode(KunenaParser::getEmoticons(0, 1, 0)));
 
-$this->wa->registerAndUseScript('sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js');
 HTMLHelper::_('bootstrap.tab');
 // Echo $this->subLayout('Widget/Datepicker');
 

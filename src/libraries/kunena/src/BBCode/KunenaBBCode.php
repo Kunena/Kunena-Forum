@@ -725,7 +725,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         'img'          => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoImage',
-            'allow'         => ['size' => '/^\d*x\d*$/'],
+            'allow'         => ['size' => '/^\d*x?\d*$/'],
             'class'         => 'block',
             'allow_in'      => ['listitem', 'block', 'columns', 'link'],
             'content'       => BBCode::BBCODE_VERBATIM,

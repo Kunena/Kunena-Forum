@@ -159,7 +159,7 @@ workspace/kunena/build/tmp)
 		value="src/libraries/kunena" />
 	<property
 		name="kunena.media"
-		value="src/media/kunena" />
+		value="src/media" />
 	<property
 		name="kunena.plugins"
 		value="src/plugins" />
@@ -348,7 +348,7 @@ workspace/kunena/build/tmp)
 		<copy
 			todir="${tmp_dir}/packages/lib_kunena"
 			overwrite="true">
-			<fileset dir="${project_dir}/libraries/kunena" />			
+			<fileset dir="${project_dir}/libraries/kunena" />
 		</copy>
 		<copy
 			todir="${tmp_dir}/packages/lib_kunena"

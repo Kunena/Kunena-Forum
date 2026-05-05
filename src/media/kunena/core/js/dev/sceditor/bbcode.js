@@ -579,7 +579,7 @@
 
 				// handle [img=340x240]url[/img]
 				if(attrs.size) {
-					match = attrs.size(split(/x/i));
+					match = attrs.size.split(/x/i);
 					width = match[0];
 					height = match.length ===2 ? match[1] : '';
 				}

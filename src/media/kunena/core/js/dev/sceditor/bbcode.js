@@ -563,7 +563,7 @@
 				if ((element.complete && (width || height)) ||
 					(width && height)) {
 
-					attribs = 'size=' + dom.width(element) + 'x' +
+					attribs = ' size=' + dom.width(element) + 'x' +
 						dom.height(element);
 				}
 

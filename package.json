@@ -21,7 +21,7 @@
     "not ie < 11"
   ],
   "devDependencies": {
-    "cypress": "^15.14.2",
+    "cypress": "^15.15.0",
     "joomla-cypress": "^2.0.0",
     "mysql": "^2.18.1",
     "pg": "^8.20.0",

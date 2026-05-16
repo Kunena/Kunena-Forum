@@ -178,6 +178,17 @@ class KunenaSampleData
         } catch (ExecutionFailureException $e) {
             throw new KunenaException($e->getMessage(), $e->getCode());
         }
+        
+        // Update number of posts of the user linked to the welcome message
+        $query = "UPDATE `#__kunena_users` SET `posts`=1 WHERE `userid`=" . $db->quote($my->id);
+        
+        $db->setQuery($query);
+        
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            throw new KunenaException($e->getMessage(), $e->getCode());
+        }
 
         $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_version'))->set('sampleData = 1')->setLimit(1);

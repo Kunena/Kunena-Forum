@@ -1130,7 +1130,8 @@ class UserController extends KunenaController
         }
 
         $upload = KunenaUpload::getInstance();
-        $user   = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
+        $joomlaUserId = Factory::getApplication()->getIdentity()->id;
+        $user   = KunenaFactory::getUser($joomlaUserId);
 
         // We are converting all exceptions into JSON.
         try {

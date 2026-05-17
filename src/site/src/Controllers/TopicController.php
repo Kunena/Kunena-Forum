@@ -441,7 +441,7 @@ class TopicController extends KunenaController
         }
 
         // To use rating feature it should be enabled at same time in Kunena configuration and in the category
-        if (!$this->config->ratingEnabled && KunenaCategoryHelper::get($this->catid)->allowRatings) {
+        if (!$this->config->ratingEnabled || !KunenaCategoryHelper::get($this->catid)->allowRatings) {
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
 

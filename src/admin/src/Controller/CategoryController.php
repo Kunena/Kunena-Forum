@@ -185,6 +185,10 @@ class CategoryController extends KunenaController
                 $ignore = array_merge($ignore, $access);
             }
 
+            if(!isset($post['iconset'])) {
+                $post['iconset'] = 'default';
+            }
+
             $category->bind($post, $ignore);
 
             if (!$category->exists()) {

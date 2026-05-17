@@ -320,7 +320,7 @@ jQuery(document).ready(function ($) {
       feed: dataFeed,
       itemTemplate:
         '<li data-id="{id}">' +
-        '<img src="{avatar}" />' +
+        '<img src="{avatar}" width="36" height="36"/>' +
         ' '+
         '<strong class="username">{username}</strong>' +
         '</li>',

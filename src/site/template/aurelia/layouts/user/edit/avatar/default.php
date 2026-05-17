@@ -37,7 +37,7 @@ $this->wa->registerAndUseStyle('fileupload', 'media/kunena/core/css/fileupload.c
 
 $this->doc->addScriptOptions('com_kunena.avatar_remove_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=removeavatar&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_preload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=loadavatar&format=json&' . Session::getFormToken() . '=1', false));
-$this->doc->addScriptOptions('com_kunena.avatar_upload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=upload&format=json'));
+$this->doc->addScriptOptions('com_kunena.avatar_upload_url', KunenaRoute::_('index.php?option=com_kunena&view=user&task=upload&format=json&' . Session::getFormToken() . '=1', false));
 $this->doc->addScriptOptions('com_kunena.avatar_delete', KunenaIcons::delete());
 ?>
 <h3>

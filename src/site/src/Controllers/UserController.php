@@ -1129,6 +1129,10 @@ class UserController extends KunenaController
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
 
+        if (!Session::checkToken('get')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
         $upload = KunenaUpload::getInstance();
         $joomlaUserId = Factory::getApplication()->getIdentity()->id;
         $user   = KunenaFactory::getUser($joomlaUserId);

@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Event\KunenaGetProfileEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
  * Class KunenaProfile
@@ -171,6 +172,21 @@ class KunenaProfile
      * @since   Kunena 5.0
      */
     public function showProfile(KunenaLayout $view, Registry $params): string
+    {
+        return '';
+    }
+    
+    /**
+     * Function to get the User Profile Name
+     *
+     * @param   KunenaUser  $user         KunenaUser object
+     * @param   string      $visitorname  Name of the visitor
+     * @param   bool        $escape       In case of the escapement is done in the method
+     *
+     * @return  string
+     * @since   Kunena 7.0
+     */
+    public function getProfileName(KunenaUser $user, $visitorname = '', $escape = true): string
     {
         return '';
     }

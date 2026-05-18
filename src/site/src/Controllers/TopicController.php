@@ -189,6 +189,14 @@ class TopicController extends KunenaController
      */
     public function setprivate()
     {
+        if (!Session::checkToken('request')) {
+            throw new RuntimeException(Text::_('JINVALID_TOKEN'), 403);
+        }
+
+        if (!$this->me->exists()) {
+            throw new RuntimeException(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);
+        }
+
         $attachs_id = $this->input->getString('files_id', '');
         $attachs_id = json_decode($attachs_id);
 
@@ -208,8 +216,11 @@ class TopicController extends KunenaController
 
         foreach ($attach_ids_final as $id) {
             $attachment = KunenaAttachmentHelper::get($id);
-            $attachment->protected = KunenaAttachment::PROTECTION_PRIVATE;
-            $attachment->save();
+
+            if ($attachment->isAuthorised('private')) {
+                $attachment->protected = KunenaAttachment::PROTECTION_PRIVATE;
+                $attachment->save();
+            }
         }
     }
 

@@ -27,6 +27,7 @@ if ($this->category->allowRatings) :
         ->registerAndUseScript('krating', 'media/kunena/core/js/krating.js'); ?>
 
     <input id="topic_id" type="hidden" value="<?php echo $this->topic->id; ?>"/>
+    <input id="cat_id" type="hidden" value="<?php echo $this->category->id; ?>"/>
     <input type="hidden" id="krating_url" name="krating_url"
            value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadrate&format=json'); ?>"/>
     <input type="hidden" id="krating_submit_url" name="url"

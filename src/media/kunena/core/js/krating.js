@@ -44,11 +44,13 @@ jQuery(document).ready(function ($) {
             const ratingElement = ratingItem.querySelector('.c-rating');
             const currentRating = rate;
             const maxRating = 5;
+			const cat_id = $("#cat_id").val();
+
             const callback = function (rating) {
                 $.ajax({
                         dataType: "json",
                         url: $('#krating_submit_url').val(),
-                        data: 'starid=' + rating + '&topic_id=' + topicid
+                        data: 'starid=' + rating + '&topic_id=' + topicid + '&cat_id=' + cat_id
                     }
                 ).done(function (response) {
                         if (response.success) {

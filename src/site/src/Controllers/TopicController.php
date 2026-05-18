@@ -440,8 +440,10 @@ class TopicController extends KunenaController
             throw new RuntimeException(Text::_('JINVALID_TOKEN'), 403);
         }
         
+        $catid  = $this->app->input->get('cat_id', 0, 'int');
+        
         // To use rating feature it should be enabled at same time in Kunena configuration and in the category
-        if (!$this->config->ratingEnabled || !KunenaCategoryHelper::get($this->catid)->allowRatings) {
+        if (!$this->config->ratingEnabled || !KunenaCategoryHelper::get($catid)->allowRatings) {
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
 

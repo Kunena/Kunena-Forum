@@ -436,12 +436,21 @@ class TopicController extends KunenaController
      */
     public function setrate()
     {
+        if (!Session::checkToken('request')) {
+            throw new RuntimeException(Text::_('JINVALID_TOKEN'), 403);
+        }
+        
+        // To use rating feature it should be enabled at same time in Kunena configuration and in the category
+        if (!$this->config->ratingEnabled || !KunenaCategoryHelper::get($this->catid)->allowRatings) {
+            throw new RuntimeException(Text::_('Bad Request'), 400);
+        }
+
         $starid   = $this->app->input->get('starid', 0, 'int');
         $topicid  = $this->app->input->get('topic_id', 0, 'int');
         $response = [];
         $user     = KunenaUserHelper::getMyself();
 
-        if ($user->exists() || $this->config->ratingEnabled) {
+        if ($user->exists()) {
             $rate           = KunenaRateHelper::get($topicid);
             $rate->rate     = $starid;
             $rate->topic_id = $topicid;

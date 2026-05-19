@@ -186,7 +186,7 @@ class KunenaProfile
      * @return  string
      * @since   Kunena 7.0
      */
-    public function getProfileName(KunenaUser $user, $visitorname = '', $escape = true): string
+    public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
     {
         return '';
     }

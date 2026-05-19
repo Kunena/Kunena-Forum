@@ -97,20 +97,6 @@ class KunenaAvatar
     public function load(array $userlist): void {}
 
     /**
-     * Function to get the link to the User edit page
-     * 
-     * @return  string
-     *
-     * @throws Exception
-     * @since   Kunena 6.0
-     * @deprecated Not used: will be removed without replacement in Kunena 7.0
-     */
-    public function getEditURL(): string
-    {
-        return '';
-    }
-
-    /**
      * Function to get the Avatar image with link for the user
      * 
      * @param   KunenaUser  $user   user

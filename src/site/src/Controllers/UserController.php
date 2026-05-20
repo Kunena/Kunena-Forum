@@ -1468,7 +1468,7 @@ class UserController extends KunenaController
         $query  = $db->createQuery();
         $query->select($db->quoteName(array('name', 'username')))
             ->from($db->quoteName('#__users'))
-            ->where($db->quoteName('username') . ' LIKE \'%' . $user . '%\'');
+            ->where($db->quoteName('username') . ' LIKE \'%' . $db->escape($user) . '%\'');
         $db->setQuery($query);
         $row = $db->loadObjectList();
 

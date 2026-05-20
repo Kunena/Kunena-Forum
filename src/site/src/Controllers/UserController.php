@@ -54,6 +54,7 @@ use Kunena\Forum\Libraries\User\KunenaUserSocials;
 use Kunena\Forum\Plugin\Kunena\Kunena\Helper\KunenaProfileKunena;
 use RuntimeException;
 use stdClass;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 
 /**
  * Kunena User Controller
@@ -1398,8 +1399,20 @@ class UserController extends KunenaController
      */
     public function getusersmentions()
     {
+        if (!Session::checkToken('get')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+        
         $id = $this->input->getInt('topicid', 0);
-
+        
+        // Check if the user requesting it has made a post in the topic
+        $user = KunenaFactory::getUser();
+        $topic = KunenaTopicHelper::get($id)->getUserTopic($user->userid);
+        
+        if (!$topic->exists()) {
+            throw new RuntimeException(Text::_('Not allowed'), 403);
+        }
+        
         $userListMentions = [];
 
         if ($id > 0) {

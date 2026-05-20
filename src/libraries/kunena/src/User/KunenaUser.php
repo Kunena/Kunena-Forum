@@ -1904,7 +1904,7 @@ class KunenaUser
                 }
 
                 if ($this->websiteurl) {
-                    return '<a href="' . $this->escape($url) . '" target="_blank" rel="noopener noreferrer"><span data-bs-toggle="tooltip" data-placement="right" title="' . $websitename . '">' . KunenaIcons::globe() . '</span></a>';
+                    return '<a href="' . $this->escape($url) . '" target="_blank" rel="noopener noreferrer"><span data-bs-toggle="tooltip" data-placement="right" title="' . $this->escape($websitename) . '">' . KunenaIcons::globe() . '</span></a>';
                 }
                 break;
             case 'private':

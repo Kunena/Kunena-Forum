@@ -75,10 +75,10 @@ $announcement = $this->announcement;
         <td>
         <?php if ($this->config->username) :
             ?>
-                <?php echo $announcement->getAuthor()->username; ?>
+                <?php echo $this->escape($announcement->getAuthor()->username); ?>
             <?php else :
             ?>
-                <?php echo $announcement->getAuthor()->name; ?>
+                <?php echo $this->escape($announcement->getAuthor()->name); ?>
             <?php endif; ?>
         </td>
     <?php endif; ?>

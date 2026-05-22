@@ -59,6 +59,18 @@ class KunenaRate
      * @since   Kunena 6.0
      */
     public $time = null;
+    
+    /**
+     * @var     null
+     * @since   Kunena 7.0
+     */
+    public $id = 0;
+    
+    /**
+     * @var     null
+     * @since   Kunena 7.0
+     */
+    public $typeAlias = null;
 
     /**
      * @var     boolean

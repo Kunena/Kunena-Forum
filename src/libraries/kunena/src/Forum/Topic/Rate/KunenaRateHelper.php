@@ -115,11 +115,11 @@ abstract class KunenaRateHelper
      * @param   integer  $id      id
      * @param   integer  $userid  userid
      *
-     * @return  float
+     * @return  int
      *
      * @since   Kunena 6.0
      */
-    public static function getRate(int $id, int $userid): float
+    public static function getRate(int $id, int $userid): int
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
@@ -129,6 +129,10 @@ abstract class KunenaRateHelper
             ->andWhere($db->quoteName('userid') . ' = ' . $db->quote($userid));
         $db->setQuery($query);
 
-        return round($db->loadResult());
+        if (empty($db->loadResult())) {
+            return 0;
+        } else {
+            return $db->loadResult();
+        }
     }
 }

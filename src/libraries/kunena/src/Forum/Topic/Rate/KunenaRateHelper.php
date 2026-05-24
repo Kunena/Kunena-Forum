@@ -85,7 +85,11 @@ abstract class KunenaRateHelper
             ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
         $db->setQuery($query);
 
-        return round($db->loadResult());
+        if (empty($db->loadResult())) {
+            return '0';
+        } else {
+            return round($db->loadResult());
+        }
     }
 
     /**

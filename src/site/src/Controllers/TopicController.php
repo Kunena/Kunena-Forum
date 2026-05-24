@@ -372,6 +372,10 @@ class TopicController extends KunenaController
      */
     public function categorytemplate()
     {
+        if (!Session::checkToken('get')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
         $catid    = $this->app->getInput()->getInt('catid', 0);
 
         $category = KunenaCategoryHelper::get($catid);
@@ -402,6 +406,10 @@ class TopicController extends KunenaController
      */
     public function loadrate()
     {
+        if (!Session::checkToken('get')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
         $user = $this->app->getIdentity();
 
         $topicid  = $this->app->getInput()->get('topic_id', 0, 'int');
@@ -2696,6 +2704,10 @@ class TopicController extends KunenaController
      */
     public function topicicons()
     {
+        if (!Session::checkToken('get')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
         $catid = $this->app->getInput()->getInt('catid', 0);
 
         $category        = KunenaCategoryHelper::get($catid);

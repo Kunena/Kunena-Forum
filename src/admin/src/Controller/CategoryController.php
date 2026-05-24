@@ -144,6 +144,9 @@ class CategoryController extends KunenaController
 
         $category = KunenaCategoryHelper::get(\intval($post['catid']));
         $parent   = KunenaCategoryHelper::get(\intval($post['parentid']));
+        
+        unset($post['params-joomla-level']);
+        unset($post['params-joomla-group']);
 
         if ($category->exists() && !$category->isAuthorised('admin')) {
             // Category exists and user is not admin in category

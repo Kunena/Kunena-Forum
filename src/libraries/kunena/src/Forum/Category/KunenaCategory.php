@@ -394,6 +394,12 @@ class KunenaCategory extends KunenaDatabaseObject
      * @since   Kunena 6.4
      */
     public $topictemplate;
+    
+    /**
+     * @var     string
+     * @since   Kunena 7.0.6
+     */
+    public $aliases_all;
 
     /**
      * @var     array

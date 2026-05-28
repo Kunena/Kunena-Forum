@@ -23,7 +23,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "cypress": "^15.15.0",
+    "cypress": "^15.16.0",
     "joomla-cypress": "^2.0.0",
     "mysql": "^2.18.1",
     "smtp-tester": "^2.1.0",

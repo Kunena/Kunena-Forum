@@ -48,7 +48,7 @@ return new class() implements ServiceProviderInterface {
                  * @var    string
                  * @since  6.0.0
                  */
-                protected $minimumJoomla = '5.4.5';
+                protected $minimumJoomla = '5.4.6';
 
                 /**
                  * List of supported versions. Newest version first!
@@ -80,6 +80,7 @@ return new class() implements ServiceProviderInterface {
                         '0'   => '9.6.0', // Preferred version
                     ],
                     'mariaDB' => [
+                        '12.3' => '12.3.2',
                         '12.2' => '12.2.2',
                         '12.1' => '12.1.2',
                         '12.0' => '12.0.2',
@@ -104,9 +105,9 @@ return new class() implements ServiceProviderInterface {
                     ],
                     'Joomla!' => [
                         '6.2' => '6.1.0-alpha1',
-                        '6.1' => '6.1.0',
+                        '6.1' => '6.1.1',
                         '6.0' => '6.0.4',
-                        '5.4' => '5.4.5',
+                        '5.4' => '5.4.6',
                         '0' => '6.1.0',  // Preferred version
                     ],
                 ];

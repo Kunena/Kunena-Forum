@@ -643,9 +643,20 @@ jQuery(function ($) {
 	                const isProtected = Boolean(file.protected === 1 || file.protected === 32);
 	                
 	                // Create the image preview
-	                let image = file.image ? '<img alt="" src="' + file.path + '" width="100" height="100" /><br />' : Joomla.getOptions('com_kunena.icons.attach') + ' <br />';
-					const span = $('<span/>').text(file.name);
-					const object = $('<div><p>' + image + span + '<br /></p></div>');
+					const imgObject = 	$('<img>', {					    
+										    alt: '',
+										    width: '100',
+										    height: '100'
+										});
+					imgObject.attr('src' , file.path);
+
+					let image = file.image ? imgObject : Joomla.getOptions('com_kunena.icons.attach') + ' <br />';				
+					const span = $('<span />').text(file.name);
+					const paragraph =  $('<p></p>').append(image);
+					paragraph.append('<br />');
+					paragraph.append(span);
+					paragraph.append('<br />');
+					const object = $('<div>').append(paragraph);
 	                
 	                // Create button container
 	                const buttonContainer = $('<div class="btn-group mt-2"/>');

@@ -1894,7 +1894,7 @@ class KunenaUser
                 }
 
                 if ($this->websiteurl) {
-                    return '<a href="' . $this->escape($url) . '" target="_blank" rel="noopener noreferrer"><span data-bs-toggle="tooltip" data-placement="right" title="' . $websitename . '">' . KunenaIcons::globe() . '</span></a>';
+                    return '<a href="' . $this->escape($url) . '" target="_blank" rel="noopener noreferrer"><span data-bs-toggle="tooltip" data-placement="right" title="' . $this->escape($websitename) . '">' . KunenaIcons::globe() . '</span></a>';
                 }
                 break;
             case 'private':
@@ -1907,7 +1907,7 @@ class KunenaUser
                 return '<span data-bs-toggle="tooltip" data-placement="right" title="' . Text::_('COM_KUNENA_VIEW_PMS') . '" >' . $pms->showIcon($this->userid) . '</span>';
                 break;
             case 'email':
-                return '<a href="mailto:' . $this->email . '" data-bs-toggle="tooltip" data-placement="right" title="' . $this->email . '">' . KunenaIcons::email() . '</a>';
+                return '<a href="mailto:' . $this->email . '" data-bs-toggle="tooltip" data-placement="right" title="' . $this->escape($this->email) . '">' . KunenaIcons::email() . '</a>';
                 break;
             case 'profile':
                 if (!$this->userid) {

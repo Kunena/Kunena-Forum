@@ -75,10 +75,6 @@ class AttachmentDisplay extends KunenaControllerDisplay
             header('HTTP/1.1 ' . $error->getResponseStatus(), true);
 
             echo $error->getResponseStatus();
-
-            if (JDEBUG) {
-                echo "<pre>{$e->getTraceAsString()}</pre>";
-            }
         }
 
         flush();

@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Karma\KunenaKarmaHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
@@ -1382,7 +1383,19 @@ class UserController extends KunenaController
      * @since   Kunena 6.3
      */
     public function getusersmentions() {
+        if (!Session::checkToken('get')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+        
         $id = $this->input->getInt('topicid', 0);
+        
+        // Check if the user requesting it has made a post in the topic
+        $user = KunenaFactory::getUser();
+        $topic = KunenaTopicHelper::get($id)->getUserTopic($user->userid);
+        
+        if (!$topic->exists()) {
+            throw new RuntimeException(Text::_('Not allowed'), 403);
+        }
 
         $userListMentions = [];
 

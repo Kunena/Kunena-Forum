@@ -92,7 +92,7 @@ $this->doc->addScriptOptions(
 );
 $this->doc->addScriptOptions(
 	'com_kunena.kunena_url_topic_get_mentions',
-	KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' . $this->topic->id)
+    KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' . $this->topic->id . '&' . Session::getFormToken() . '=1', false)
 );
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);

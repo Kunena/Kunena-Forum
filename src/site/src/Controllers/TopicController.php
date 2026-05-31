@@ -302,7 +302,9 @@ class TopicController extends KunenaController
      */
     protected function checkpermissions($attachment_userid)
     {
-        if (KunenaUserHelper::getMyself()->userid != $attachment_userid || !KunenaUserHelper::getMyself()->isAdmin() || !KunenaUserHelper::getMyself()->isModerator()) {
+        $me = KunenaUserHelper::getMyself();
+        
+        if ($me->userid != $attachment_userid && !$me->isAdmin() && !$me->isModerator()) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
     }

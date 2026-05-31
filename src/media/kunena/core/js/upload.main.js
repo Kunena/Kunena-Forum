@@ -644,7 +644,8 @@ jQuery(function ($) {
 	                
 	                // Create the image preview
 	                let image = file.image ? '<img alt="" src="' + file.path + '" width="100" height="100" /><br />' : Joomla.getOptions('com_kunena.icons.attach') + ' <br />';
-	                const object = $('<div><p>' + image + '<span>' + file.name + '</span><br /></p></div>');
+					const span = $('<span/>').text(file.name);
+					const object = $('<div><p>' + image + span + '<br /></p></div>');
 	                
 	                // Create button container
 	                const buttonContainer = $('<div class="btn-group mt-2"/>');

@@ -116,6 +116,14 @@ class TopicController extends KunenaController
         }
 
         $mes_id      = $this->input->getInt('mes_id', 0);
+        
+        // Check if the user is allowed to read the message with the given mes_id
+        $message = KunenaMessageHelper::get($mes_id);
+        
+        if (!$message->isAuthorised('read')) {
+            throw new RuntimeException(Text::_('Not allowed'), 403);
+        }
+        
         $attachments = KunenaAttachmentHelper::getByMessage($mes_id);
         $list        = [];
 

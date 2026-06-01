@@ -58,7 +58,7 @@ jQuery(function($) {
                     <?php echo HTMLHelper::_('form.token'); ?>
                     
                     <h1 style="text-transform: capitalize;"><?php echo Text::_('COM_KUNENA_USER_TITLE_EDIT_USERNAME'); ?>
-                                    : <?php echo $this->user->username; ?></h1>
+                                    : <?php echo $this->escape($this->user->username); ?></h1>
 
                     <article class="data-block">
                         <div class="data-container">

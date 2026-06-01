@@ -45,8 +45,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                                            onclick="Joomla.isChecked(this.checked);"/>
                                 </td>
                                 <td><?php echo $user->id ?></td>
-                                <td><?php echo $user->username ?></td>
-                                <td><?php echo $user->email ?></td>
+                                <td><?php echo $this->escape($user->username) ?></td>
+                                <td><?php echo $this->escape($user->email) ?></td>
                             </tr>
                         <?php endforeach ?>
                         <tr>
@@ -62,8 +62,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                                            onclick="Joomla.isChecked(this.checked);"/>
                                 </td>
                                 <td><?php echo $user->id ?></td>
-                                <td><?php echo $user->username ?></td>
-                                <td><?php echo $user->email ?></td>
+                                <td><?php echo $this->escape($user->username) ?></td>
+                                <td><?php echo $this->escape($user->email) ?></td>
                             </tr>
                         <?php endforeach ?>
                         <tr>
@@ -79,8 +79,8 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                                            onclick="Joomla.isChecked(this.checked);"/>
                                 </td>
                                 <td><?php echo $sub->id ?></td>
-                                <td><?php echo $sub->username ?></td>
-                                <td><?php echo $sub->email ?></td>
+                                <td><?php echo $this->escape($sub->username) ?></td>
+                                <td><?php echo $this->escape($sub->email) ?></td>
                                 <td><?php echo intval($sub->subscription) ?></td>
                                 <td><?php echo intval($sub->moderator) ?></td>
                                 <td><?php echo intval($sub->admin) ?></td>

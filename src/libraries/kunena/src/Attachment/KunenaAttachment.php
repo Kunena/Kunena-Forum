@@ -995,8 +995,6 @@ class KunenaAttachment extends KunenaDatabaseObject
         if ($exception && $this->mesid && $this->protected && (self::PROTECTION_PUBLIC + self::PROTECTION_ACL)) {
             // Load message authorisation.
             $exception = $this->getMessage()->tryAuthorise('attachment.' . $action, $user, false);
-        } else {
-            $exception = $this->getMessage()->tryAuthorise('attachment.' . $action, $user);
         }
         
         // TODO: Add support for PROTECTION_FRIENDS

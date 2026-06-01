@@ -29,7 +29,7 @@ if ($this->category->allowRatings) :
     <input id="topic_id" type="hidden" value="<?php echo $this->topic->id; ?>"/>
     <input id="cat_id" type="hidden" value="<?php echo $this->category->id; ?>"/>
     <input type="hidden" id="krating_url" name="krating_url"
-           value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadrate&format=json'); ?>"/>
+           value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=loadrate&format=json&' . Session::getFormToken() . '=1'); ?>"/>
     <input type="hidden" id="krating_submit_url" name="url"
            value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=setrate&topic_id=' . $this->topic->id . '&format=json&' . Session::getFormToken() . '=1'); ?>"/>
     <div id="krating"

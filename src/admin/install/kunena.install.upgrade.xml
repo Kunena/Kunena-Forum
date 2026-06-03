@@ -565,7 +565,7 @@
         <version version="6.4.5-DEV"
                  versiondate="2025-07-31"
                  versionname="Internal">
-        <phpfile name="6.4.5-2025-07-30_remove_columns_users_table"/>
+            <phpfile name="6.4.5-2025-07-30_remove_columns_users_table"/>
         <version version="6.4.7-DEV"
                  versiondate="2025-11-04"
                  versionname="Internal">
@@ -583,6 +583,12 @@
             versiondate="2025-11-10"
             versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD `deleted_time` int(11) NOT NULL default '0' AFTER `moved`</query>
+        </version>
+        <version
+            version="7.0.6-DEV"
+            versiondate="2026-05-30"
+            versionname="Internal">
+           <phpfile name="7.0.6-2026-05-30_add_index_files_in_attachments_directories"/>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

@@ -18,12 +18,9 @@ namespace Kunena\Forum\Administrator\View\Logs;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use ReflectionClass;
 
 /**
  * Logs view for Kunena backend

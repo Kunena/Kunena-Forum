@@ -19,7 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -71,7 +70,6 @@ class KunenaModel extends BaseDatabaseModel
     protected $filter = null;
 
     /**
-     * @var     CMSObject
      * @since   Kunena 6.0
      */
     protected $state = null;

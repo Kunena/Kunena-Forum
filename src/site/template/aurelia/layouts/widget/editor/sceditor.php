@@ -13,12 +13,21 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+
+$user = Factory::getApplication()->getIdentity();
+$userLanguage = $user->getParam('language', 'default');
+if (!LanguageHelper::exists($userLanguage)) {
+    $userLanguage = 'default';
+}
+$joomlaLanguage = Factory::getApplication()->getLanguage()->getLocale();
 
 if($this->config->debug && file_exists('media/kunena/core/js/dev/sceditor/sceditor.js') && file_exists('media/kunena/core/js/dev/sceditor/bbcode.js')) {
     $this->wa->registerAndUseScript('sceditor/sceditor', 'media/kunena/core/js/dev/sceditor/sceditor.js')
@@ -31,6 +40,19 @@ if($this->config->debug && file_exists('media/kunena/core/js/dev/sceditor/scedit
 $this->wa->registerAndUseScript('kunena_sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js')
     ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
 $this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
+
+$jlang = substr($joomlaLanguage[2], 0, 2);
+if ($userLanguage != 'default' && $userLanguage != 'active') {
+    $ulang = substr($userLanguage, 0, 2);
+    if (is_file('media/kunena/core/js/sceditor/languages/'.$ulang.'.js')) {
+        $this->wa->registerAndUseScript('sceditor/sclang', 'media/kunena/core/js/sceditor/languages/'.$ulang.'.js');
+        $this->doc->addScriptOptions('com_kunena.sceditor_userdefaultlanguage', $ulang);
+    }
+} elseif (is_file('media/kunena/core/js/sceditor/languages/'.$jlang.'.js')) {
+    $this->wa->registerAndUseScript('sceditor/sclang', 'media/kunena/core/js/sceditor/languages/'.$jlang.'.js');
+    $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', $jlang);
+} else
+    $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', '');
 
 Text::script('COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD');
 Text::script('COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY');

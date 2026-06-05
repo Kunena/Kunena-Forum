@@ -743,9 +743,9 @@ jQuery(document).ready(function ($) {
 		}
 		else
 		{   //basic setting
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|bulletlist,orderedlist,table|emoticon,quote,image,video,link,unlink,code|map,x_social,instagram,ebay,soundcloud|undo,redo,cut,copy,pastetext,source';
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|bulletlist,orderedlist,table,|emoticon,quote,image,video,link,unlink,code|map,x_social,instagram,ebay,soundcloud|undo,redo,cut,copy,pastetext,source';
 		}
-		
+
 		//add email for private, before inserting poll
 		var toolbar_buttons_private = '';
 		toolbar_buttons_private = toolbar_buttons.replace('emoticon','email|emoticon');

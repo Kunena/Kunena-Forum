@@ -23,7 +23,6 @@ use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Event\KunenaBeforeModifySocialsEvent;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
@@ -897,15 +896,6 @@ class ToolsController extends FormController
     public function setupsocials(): void
     {
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        
-        $accessControlEvent = new KunenaBeforeModifySocialsEvent('onKunenaBeforeModifySocials');
-        Factory::getApplication()->getDispatcher()->dispatch('onKunenaBeforeModifySocials', $accessControlEvent);
-        
-        $classes = $accessControlEvent->getArgument('result', []);
-        
-        var_dump($classes);
-        
-        die();
         
         $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'socials';";
         $db->setQuery($query);

@@ -760,7 +760,7 @@ jQuery(document).ready(function ($) {
 
 		var userlang = Joomla.getOptions('com_kunena.sceditor_userdefaultlanguage');
 		userlang = (typeof userlang == 'undefined') && Joomla.getOptions('com_kunena.sceditor_joomladefaultlanguage');
-		
+
 		sceditor.create(textarea, {
 			plugins: 'undo',
 			format: 'bbcode',

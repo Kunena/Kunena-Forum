@@ -1428,9 +1428,9 @@ class UserController extends KunenaController
                 $obj->userid = $user->userid;
                 $obj->avatar = $user->getAvatarURL();
                 if ($this->config->username) {
-                    $obj->username = $this->escape($user->username);
+                    $obj->username = $user->username;
                 } else {
-                    $obj->username = $this->escape($user->name);
+                    $obj->username = $user->name;
                 }
 
                 $userListMentions[] = $obj;

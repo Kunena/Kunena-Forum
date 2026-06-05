@@ -37,10 +37,6 @@ if($this->config->debug && file_exists('media/kunena/core/js/dev/sceditor/scedit
         ->registerAndUseScript('sceditor/sceditor_bbcode_min', 'media/kunena/core/js/sceditor/bbcode.min.js');        
 }
 
-$this->wa->registerAndUseScript('kunena_sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js')
-    ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
-$this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
-
 $jlang = substr($joomlaLanguage[2], 0, 2);
 if ($userLanguage != 'default' && $userLanguage != 'active') {
     $ulang = substr($userLanguage, 0, 2);
@@ -53,6 +49,12 @@ if ($userLanguage != 'default' && $userLanguage != 'active') {
     $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', $jlang);
 } else
     $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', '');
+
+// Load undo plugin in first before loading sceditor.js config script
+$this->wa->registerAndUseScript('sceditor/undo', 'media/kunena/core/js/sceditor/undo.js')
+    ->registerAndUseScript('kunena_sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js')
+    ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
+$this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
 
 Text::script('COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD');
 Text::script('COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY');

@@ -528,3 +528,39 @@ div.sceditor-group {
   right: auto;
   left: 0;
 }
+
+//displays the last fixed button-group (undo,redo,cut,copy,pastetext,source,maximize) on the left side)
+.sceditor-container:not(.sceditor-maximize) .sceditor-group:last-child{
+    display: grid;   /*or block ruby*/
+    position: absolute;
+    left: -28px;
+    background: none;  /*optional*/
+    border: none;
+}
+/*space needed for left-side buttons*/
+#kunena.layout #myTab, #kunena.layout #myTabContent {
+    margin-left: 12px;
+}
+
+/*new buttons - will only work with new famfamfam.png*/
+IMPORTANT  replace  media/kunena/core/css/sceditor/themes/famfamfam.png
+
+.sceditor-button-redo div {
+        background-position: 0px -694px;
+        }
+.sceditor-button-undo div {
+        background-position: 0px -676px;
+        }
+/*.sceditor-button-horizontalrule div {    if you don't like the orig. icon
+        background-position: 0px -765px;
+        }*/
+
+.sceditor-button-spoiler div {
+    background: url("/media/kunena/core/images/spoiler.png");
+}
+.sceditor-button-hidetext div {
+    background: url("/media/kunena/core/images/hidden.png");
+}
+.sceditor-button-confidential div {
+    background: url("/media/kunena/core/images/confidential.png");
+}

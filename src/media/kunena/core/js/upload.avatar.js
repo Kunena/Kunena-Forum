@@ -64,7 +64,7 @@ jQuery(function ($) {
 				'userid': $('#kunena_userid').val(),
 				'filename': file.name,
 				'size': file.size,
-				'mime': file.type
+				'mime': file.type,
 			};
 		});
 

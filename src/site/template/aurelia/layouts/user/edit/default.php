@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Plugin\Kunena\Kunena\Helper\KunenaAvatarKunena;
+use Joomla\CMS\Session\Session;
 
 $this->ktemplate = KunenaFactory::getTemplate();
 $bootstrap = $this->ktemplate->params->get('bootstrap');
@@ -33,7 +34,7 @@ if ($bootstrap) {
 $this->profile = KunenaFactory::getUser($this->user->id);
 $this->me      = KunenaUserHelper::getMyself();
 $tabs          = $this->getTabsEdit();
-$avatar        = KunenaFactory::getAvatarIntegration();
+$avatar        = KunenaFactory::getAvatarIntegration(); echo Session::getFormToken();
 ?>
 <h2>
     <?php echo Text::sprintf('COM_KUNENA_USER_PROFILE', $this->escape($this->profile->getName())); ?>

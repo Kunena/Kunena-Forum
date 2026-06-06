@@ -2639,15 +2639,17 @@ class TopicController extends KunenaController
         $poll  = $topic->getPoll();
 
         try {
-            $topic->isAuthorised('poll.vote');
+            $topic->isAuthorised('poll.vote', null, true); // throw on failure
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($topic->getUrl($this->return, false));
+            return; // -- abort, do not vote
         }
 
         if (!$poll->getMyVotes()) {
             try {
                 // Give a new vote
-                $poll->vote($vote);
+                $poll->vote($vote, false, null, $topic);
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
@@ -2656,7 +2658,7 @@ class TopicController extends KunenaController
         } elseif (!$this->config->pollAllowVoteOne) {
             try {
                 // Change existing vote
-                $poll->vote($vote, true);
+                $poll->vote($vote, true, null, $topic);
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }

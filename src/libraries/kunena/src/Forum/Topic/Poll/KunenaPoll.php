@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Tables\TableKunenaPolls;
 use StdClass;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 
 /**
  * Class \Kunena\Forum\Libraries\Forum\Topic\TopicPoll
@@ -372,16 +373,19 @@ class KunenaPoll
     }
 
     /**
-     * @param   int    $option  option
-     * @param   bool   $change  change
-     * @param   mixed  $user    user
+     * Save the vote on the poll option choose by the user
+     * 
+     * @param   int            $option   option
+     * @param   bool           $change   change
+     * @param   mixed          $user     user
+     * @param   KunenaTopic    $topic    topic
      *
      * @return  boolean
      *
      * @throws Exception
      * @since   Kunena 6.0
      */
-    public function vote(int $option, $change = false, $user = null): bool
+    public function vote(int $option, $change = false, $user = null, KunenaTopic $topic = null): bool
     {
         if (!$this->exists()) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));
@@ -397,6 +401,10 @@ class KunenaPoll
 
         if (!$user->exists()) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_NOT_EXIST'));
+        }
+        
+        if (!$topic->isAuthorised('poll.vote', null, true)) {
+            throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_NOT_AUTHORIZED'));
         }
 
         $lastVoteId = $this->getLastVoteId($user);

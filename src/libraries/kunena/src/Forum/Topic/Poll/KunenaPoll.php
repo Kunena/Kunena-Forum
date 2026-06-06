@@ -385,7 +385,7 @@ class KunenaPoll
      * @throws Exception
      * @since   Kunena 6.0
      */
-    public function vote(int $option, $change = false, $user = null, KunenaTopic $topic = null): bool
+    public function vote(int $option, $change = false, $user = null, KunenaTopic $topic): bool
     {
         if (!$this->exists()) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));

@@ -376,9 +376,9 @@ class KunenaPoll
      * Save the vote on the poll option choose by the user, increase the number of votes of the user
      *
      * @param   int            $option   option
+     * @param   KunenaTopic    $topic    topic
      * @param   bool           $change   change
      * @param   mixed          $user     user
-     * @param   KunenaTopic    $topic    topic
      *
      * @return  boolean
      *

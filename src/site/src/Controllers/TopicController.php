@@ -2649,7 +2649,7 @@ class TopicController extends KunenaController
         if (!$poll->getMyVotes()) {
             try {
                 // Give a new vote
-                $poll->saveVote($vote, false, null, $topic);
+                $poll->saveVote($vote, $topic);
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
@@ -2658,7 +2658,7 @@ class TopicController extends KunenaController
         } elseif (!$this->config->pollAllowVoteOne) {
             try {
                 // Change existing vote
-                $poll->saveVote($vote, true, null, $topic);
+                $poll->saveVote($vote, $topic, true);
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }

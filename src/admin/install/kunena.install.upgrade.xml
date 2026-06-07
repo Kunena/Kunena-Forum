@@ -538,6 +538,11 @@
                  versionname="Internal">
         <query mode="silenterror">UPDATE `#__kunena_polls` SET `polltimetolive` = '1000-01-01 00:00:00' WHERE `polltimetolive` IS NULL;</query>
         <query mode="silenterror">ALTER TABLE `#__kunena_polls` CHANGE `polltimetolive` `polltimetolive` DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';</query>
+        </version>
+        <version version="6.4.12-DEV"
+                 versiondate="2025-11-04"
+                 versionname="Internal">
+        <phpfile name="6.4.12-2026-05-30_add_index_files_in_attachments_directories"/>
         </version>         
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

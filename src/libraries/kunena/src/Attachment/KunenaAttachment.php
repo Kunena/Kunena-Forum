@@ -1042,6 +1042,10 @@ class KunenaAttachment extends KunenaDatabaseObject
             }
 
             $success = File::copy($source, $destination);
+            
+            // Create index.hml into the user folder
+            $content = '<html><body></body></html>';
+            File::write(JPATH_ROOT . "/media/kunena/attachments/{$this->userid}/index.html", $content);
 
             if (!$success) {
                 throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $destination));

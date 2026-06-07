@@ -982,6 +982,8 @@ class TopicController extends KunenaController
             $this->postPrivate($message);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         $message->sendNotification();
@@ -1708,6 +1710,8 @@ class TopicController extends KunenaController
             $message->isAuthorised($type);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         $category            = KunenaCategoryHelper::get($this->catid);
@@ -1802,6 +1806,13 @@ class TopicController extends KunenaController
 
         try {
             $topic->isAuthorised('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
+        }
+        
+        try {
             $topic->subscribe(1);
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'), 'success');
@@ -1872,6 +1883,13 @@ class TopicController extends KunenaController
 
         try {
             $topic->isAuthorised('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
+        }
+        
+        try {
             $topic->favorite(1);
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_FAVORITED_TOPIC'), 'success');
@@ -1906,6 +1924,13 @@ class TopicController extends KunenaController
 
         try {
             $topic->isAuthorised('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
+        }
+        
+        try {            
             $topic->favorite(0);
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNFAVORITED_TOPIC'), 'success');
@@ -1937,9 +1962,16 @@ class TopicController extends KunenaController
         }
 
         $topic = KunenaTopicHelper::get($this->id);
-
+        
         try {
             $topic->isAuthorised('sticky');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
+        }
+
+        try {            
             $topic->sticky(1);
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_SET'), 'success');
@@ -1986,6 +2018,8 @@ class TopicController extends KunenaController
             $topic->isAuthorised('sticky');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         if ($topic->sticky(0)) {
@@ -2033,6 +2067,8 @@ class TopicController extends KunenaController
             $topic->isAuthorised('lock');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         if ($topic->lock(1)) {
@@ -2080,6 +2116,8 @@ class TopicController extends KunenaController
             $topic->isAuthorised('lock');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         if ($topic->lock(0)) {
@@ -2140,6 +2178,13 @@ class TopicController extends KunenaController
 
         try {
             $target->isAuthorised('delete');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
+        }
+        
+        try {            
             $target->publish($hold);
 
             if ($this->config->logModeration) {
@@ -2199,9 +2244,16 @@ class TopicController extends KunenaController
         }
 
         $category = $topic->getCategory();
-
+        
         try {
             $target->isAuthorised('undelete');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
+        }
+
+        try {            
             $target->publish(KunenaForum::PUBLISHED);
 
             if ($this->config->logModeration) {
@@ -2258,6 +2310,13 @@ class TopicController extends KunenaController
 
         try {
             $topic->isAuthorised('permdelete');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
+        }
+        
+        try {            
             $target->delete();
 
             if ($this->config->logModeration) {
@@ -2322,6 +2381,13 @@ class TopicController extends KunenaController
 
         try {
             $target->isAuthorised('approve');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($target->getUrl($this->return, false));
+            return; // -- abort
+        }
+        
+        try {
             $target->publish(KunenaForum::PUBLISHED);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');

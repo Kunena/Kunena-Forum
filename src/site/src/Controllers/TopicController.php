@@ -2393,17 +2393,27 @@ class TopicController extends KunenaController
 
         $error        = null;
         $targetobject = null;
+        
+        if ($targetobject) {
+            $redirect = $targetobject->getUrl($this->return, false, 'last');
+        } else {
+            $redirect = $topic->getUrl($this->return, false, 'first');
+        }
 
         try {
             $object->isAuthorised('move');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($redirect);
+            return; // -- abort
         }
 
         try {
             $target->isAuthorised('read');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($redirect);
+            return; // -- abort
         }
 
         $changesubject  = $this->app->input->getBool('changesubject', false);
@@ -2455,11 +2465,7 @@ class TopicController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'), 'success');
         }
 
-        if ($targetobject) {
-            $this->setRedirect($targetobject->getUrl($this->return, false, 'last'));
-        } else {
-            $this->setRedirect($topic->getUrl($this->return, false, 'first'));
-        }
+        $this->setRedirect($redirect);        
     }
 
     /**
@@ -2519,6 +2525,7 @@ class TopicController extends KunenaController
             // Deny access if user cannot read target
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+            return; // -- abort
         }
 
         $reason = $this->app->input->getString('reason');
@@ -2638,6 +2645,8 @@ class TopicController extends KunenaController
             $topic->isAuthorised('poll.vote');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($topic->getUrl($this->return, false));
+            return; // -- abort, do not vote
         }
 
         if (!$poll->getMyVotes()) {

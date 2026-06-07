@@ -984,6 +984,8 @@ class TopicController extends KunenaController
             $this->postPrivate($message);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         $message->sendNotification();
@@ -1712,6 +1714,8 @@ class TopicController extends KunenaController
             $message->isAuthorised($type);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         $category            = KunenaCategoryHelper::get($this->catid);
@@ -1990,6 +1994,8 @@ class TopicController extends KunenaController
             $topic->isAuthorised('sticky');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         if ($topic->sticky(0)) {
@@ -2037,6 +2043,8 @@ class TopicController extends KunenaController
             $topic->isAuthorised('lock');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         if ($topic->lock(1)) {
@@ -2084,6 +2092,8 @@ class TopicController extends KunenaController
             $topic->isAuthorised('lock');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
         }
 
         if ($topic->lock(0)) {
@@ -2259,9 +2269,16 @@ class TopicController extends KunenaController
         }
 
         $category = $topic->getCategory();
-
+        
         try {
             $topic->isAuthorised('permdelete');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- abort
+        }
+
+        try {            
             $target->delete();
 
             if ($this->config->logModeration) {
@@ -2325,7 +2342,14 @@ class TopicController extends KunenaController
         $category = $topic->getCategory();
 
         try {
-            $target->isAuthorised('approve');
+            $target->isAuthorised('approve');            
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($target->getUrl($this->return, false));
+            return; // -- abort
+        }
+        
+        try {
             $target->publish(KunenaForum::PUBLISHED);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -2397,17 +2421,27 @@ class TopicController extends KunenaController
 
         $error        = null;
         $targetobject = null;
+        
+        if ($targetobject) {
+            $redirect = $targetobject->getUrl($this->return, false, 'last');
+        } else {
+            $redirect = $topic->getUrl($this->return, false, 'first');
+        }
 
         try {
             $object->isAuthorised('move');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($redirect);
+            return; // -- abort
         }
 
         try {
             $target->isAuthorised('read');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($redirect);
+            return; // -- abort
         }
 
         $changesubject  = $this->app->getInput()->getBool('changesubject', false);
@@ -2459,11 +2493,8 @@ class TopicController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE'), 'success');
         }
 
-        if ($targetobject) {
-            $this->setRedirect($targetobject->getUrl($this->return, false, 'last'));
-        } else {
-            $this->setRedirect($topic->getUrl($this->return, false, 'first'));
-        }
+        $this->setRedirect($redirect);
+
     }
 
     /**
@@ -2523,6 +2554,7 @@ class TopicController extends KunenaController
             // Deny access if user cannot read target
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+            return; // -- abort
         }
 
         $reason = $this->app->getInput()->getString('reason');
@@ -2639,7 +2671,7 @@ class TopicController extends KunenaController
         $poll  = $topic->getPoll();
 
         try {
-            $topic->isAuthorised('poll.vote', null, true); // throw on failure
+            $topic->tryAuthorise('poll.vote', null, true); // throw on failure
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirect($topic->getUrl($this->return, false));

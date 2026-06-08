@@ -106,13 +106,36 @@ textarea.form-control {
   margin-left: -30px !important;
 }
 
-/**
-Part for Kunena icons for SCEditor
-*/
-.sceditor-button-soundcloud div { background: url("/media/kunena/core/images/soundcloud.png"); }
-.sceditor-button-ebay div { background: url("/media/kunena/core/images/ebay.png"); }
-.sceditor-button-instagram div { background: url("/media/kunena/core/images/instagram.png"); }
-.sceditor-button-x_social div { background: url("/media/kunena/core/images/x.png"); }
-.sceditor-button-map div { background: url("/media/kunena/core/images/map.png"); }
-.sceditor-button-video div { background: url("/media/kunena/core/images/film.png"); }
-.sceditor-button-poll div { background: url("/media/kunena/core/images/poll.png"); }
+/*------------------------------------------------------------------
+SCeditor
+-------------------------------------------------------------------- */
+.sceditor-button-video div {
+  background-position: 0px -849px;
+}
+.sceditor-button-map div {
+  background-position: 0px -868px;
+}
+.sceditor-button-x_social div {
+  background-position: 0px -884px;
+}
+.sceditor-button-instagram div {
+  background-position: 0px -901px;
+}
+.sceditor-button-soundcloud div {
+  background-position: 0px -920px;
+}
+.sceditor-button-ebay div {
+  background-position: 0px -937px;
+}
+.sceditor-button-poll div {
+  background-position: 0px -780px;
+}
+.sceditor-button-spoiler div {
+  background-position: 0px -830px;
+}
+.sceditor-button-hidetext div {
+  background-position: 0px -814px;
+}
+.sceditor-button-confidential div {
+  background-position: 0px -796px;
+}

@@ -696,11 +696,11 @@ jQuery(document).ready(function ($) {
 		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 		{
 			// TODO: need to change the values(bold, italic) from template parameters to be handled here
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,x_social,instagram,ebay,soundcloud,poll|source';
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript,|left,center,right,justify,|font,size,color,removeformat,|bulletlist,orderedlist,|confidential,hidetext,spoiler,|emoticon,quote,image,video,link,unlink,code,|map,x_social,instagram,ebay,soundcloud,|cut,copy,pastetext,source,maximize';
 		}
 		else
 		{
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist|table,code,quote,image,link,unlink,emoticon,video,map,x_social,instagram,ebay,soundcloud,poll|source';
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript,|left,center,right,justify,|font,size,color,removeformat,|bulletlist,orderedlist,|confidential,hidetext,spoiler,|emoticon,quote,image,video,link,unlink,code,|map,x_social,instagram,ebay,soundcloud,|cut,copy,pastetext,source,maximize';
 		}
 
 		//add email for private, before inserting poll

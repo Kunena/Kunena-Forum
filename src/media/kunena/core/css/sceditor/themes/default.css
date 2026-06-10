@@ -16,12 +16,6 @@ div.sceditor-grip,
   height: 16px;
 }
 
-/*displays the last fixed button-group (undo,redo,cut,copy,pastetext,source,maximize) on the left side)*/
-#kunena.layout .sceditor-container:not(.sceditor-maximize) .sceditor-group:last-child{
-    background: none;  /*optional*/
-    border: none;
-}
-
 .sceditor-button-youtube div {
   background-position: 0px 0px;
 }

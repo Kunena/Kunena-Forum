@@ -56,6 +56,35 @@ jQuery(document).ready(function ($) {
 				}
 			}
 		};
+		
+		// Add Hidetext
+		sceditor.command.set('hidetext', {
+			exec: function () {
+				this.insert('\n[hidetext] ','[/hidetext]');
+			},
+			txtExec: ['[hide]', '[/hide]'],
+		}),
+		// End of Hidetext
+
+		// Add Confidential
+		sceditor.command.set('confidential', {
+			exec: function () {
+				this.insert('\n[confidential] ', '[/confidential]');
+			},
+			txtExec: ['[confidential]', '[/confidential]'],
+			tooltip: Joomla.Text._('COM_KUNENA_EDITOR_CONFIDENTIAL')
+		}),
+		// End Confidential
+
+		// Add Spoiler
+		sceditor.command.set('spoiler', {
+			exec: function () {
+				this.insert('\n[spoiler] ','[/spoiler]');
+			},
+			txtExec: ['[spoiler]', '[/spoiler]'],
+			tooltip: Joomla.Text._('COM_KUNENA_EDITOR_SPOILER')
+		}),
+		// End spoiler
 
 		// Add bbcode soundcloud
 		sceditor.formats.bbcode.set('soundcloud', {
@@ -691,16 +720,30 @@ jQuery(document).ready(function ($) {
 
 		var textarea = document.getElementById('message');
 		var textarea_private = document.getElementById('message_private');
-		var toolbar_buttons = '';
 
 		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
 		{
-			// TODO: need to change the values(bold, italic) from template parameters to be handled here
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript,|left,center,right,justify,|font,size,color,removeformat,|bulletlist,orderedlist,|confidential,hidetext,spoiler,|emoticon,quote,image,video,link,unlink,code,|map,x_social,instagram,ebay,soundcloud,|cut,copy,pastetext,source,maximize';
+			var toolbar_buttons_config = Joomla.getOptions('com_kunena.template_editor_buttons_configuration');
+
+			//list in config:         bold,italic,underline,strike,superscript,subscript, right,left,justify,center, font,size,color,removeformat, bulletlist,orderedlist,table,horizontalrule, confidential,hidetext,spoiler, emoticon,quote,image,video,link,unlink,code, map,x_social,instagram,ebay,soundcloud,maximize,
+			//not in config:          fix: undo,redo,cut,copy,pastetext,source,  date,time,print  br?
+			//lists of all buttons (with spacers)   TODO: need to change the values(bold, italic) from template parameters to be handled here
+					          
+			var toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript,|left,center,right,justify,|font,size,color,removeformat,|bulletlist,orderedlist,table,|confidential,hidetext,spoiler,|emoticon,quote,image,video,link,unlink,code,|map,x_social,instagram,ebay,soundcloud,|undo,redo,cut,copy,pastetext,horizontalrule,source,maximize';
+
+			var button_match = toolbar_buttons.split(',');
+			button_match.forEach(function(buttonmatch) {
+				buttonmatch = buttonmatch.replace('|','');
+
+				if (toolbar_buttons_config.indexOf(buttonmatch) ==-1 && buttonmatch.length > 1)
+				{
+					toolbar_buttons = toolbar_buttons.replace(buttonmatch + ',','');
+				}
+			});
 		}
 		else
-		{
-			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript,|left,center,right,justify,|font,size,color,removeformat,|bulletlist,orderedlist,|confidential,hidetext,spoiler,|emoticon,quote,image,video,link,unlink,code,|map,x_social,instagram,ebay,soundcloud,|cut,copy,pastetext,source,maximize';
+		{	//basic setting
+			toolbar_buttons = 'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|bulletlist,orderedlist,table,|emoticon,quote,image,video,link,unlink,code|map,x_social,instagram,ebay,soundcloud|undo,redo,cut,copy,pastetext,source';
 		}
 
 		//add email for private, before inserting poll
@@ -719,6 +762,7 @@ jQuery(document).ready(function ($) {
 		userlang = (typeof userlang == 'undefined') && Joomla.getOptions('com_kunena.sceditor_joomladefaultlanguage');
 
 		sceditor.create(textarea, {
+			plugins: 'undo',
 			format: 'bbcode',
 			toolbar: toolbar_buttons,
 			locale: userlang,
@@ -768,6 +812,7 @@ jQuery(document).ready(function ($) {
 		});
 
 		sceditor.create(textarea_private, {
+			plugins: 'undo',
 			format: 'bbcode',
 			toolbar: toolbar_buttons_private,
 			locale: userlang,

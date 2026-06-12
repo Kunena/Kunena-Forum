@@ -21,7 +21,7 @@ $title    = $this->title;
 $url      = $this->url;
 $size     = $this->size;
 $alt      = $this->alt;
-
+$style    = $this->float ? " float:".$this->float.";" : '';
 $canLink = isset($this->canLink) ? $this->canLink : true;
 
 echo $this->subLayout('Widget/Lightbox');
@@ -30,10 +30,11 @@ $config = KunenaConfig::getInstance();
 
 $attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 $width          = $size ? (int) $size . "px;" : 'auto ';
-$attributesImg  = ' style="max-height: ' . (int) $config->imageHeight . 'px;' . ' max-width:' . $width . '"';
+$attributesImg  = ' style="max-height: ' . (int) $config->imageHeight . 'px;' . ' max-width:' . $width . $style . '"';
 $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
+if (stripos(get_headers($url)[0],"200 OK")) {
 ?>
-<div class="kmsgimage">
+<div class="kmsgimage<?php echo ($style ? ' float' : ''); ?>">
     <?php if ($canLink) :
         ?>
     <a href="<?php echo $this->escape($url); ?>" data-bs-toggle="tooltip" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>
@@ -45,4 +46,7 @@ $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
             ?>
     </a>
         <?php endif; ?>
-</div>
+</div> 
+<?php }
+    else
+    echo 'image missing '.$url;

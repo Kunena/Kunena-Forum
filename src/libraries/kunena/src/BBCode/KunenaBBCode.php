@@ -725,7 +725,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         'img'          => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoImage',
-            'allow'         => ['size' => '/^\d*x?\d*$/'],
+            'allow'         => ['size' => '/^\d*x?\d*$/','alt' => '/^[\w]*$/', 'float' => '/\bleft\b|\bright\b/' ],
             'class'         => 'block',
             'allow_in'      => ['listitem', 'block', 'columns', 'link'],
             'content'       => BBCode::BBCODE_VERBATIM,
@@ -2705,6 +2705,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             ->set('url', null)
             ->set('filename', null)
             ->set('size', isset($params['size']) ? $params['size'] : 0)
+            ->set('float', isset($params['float']) ? $params['float'] : 0)
             ->set('alt', \count($matches) > 0 ? $altText : 0)
             ->set('canLink', $bbcode->autoLink_disable == 0);
 

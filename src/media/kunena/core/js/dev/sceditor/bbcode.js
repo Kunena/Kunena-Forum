@@ -164,7 +164,7 @@
 					editor,
 					caller,
 					selected,
-					function (url, width, height) {
+					function (url, width, height, float, alt) {
 						var attrs  = '';
 
 						if (width) {
@@ -173,6 +173,14 @@
 
 						if (height) {
 							attrs += ' height=' + height;
+						}
+						
+						if (float) {
+							attrs += ' float=' + float;
+						}
+						
+						if (alt) {
+							attrs += ' alt=' + alt;
 						}
 
 						editor.insertText(
@@ -545,8 +553,9 @@
 			allowedChildren: ['#'],
 			quoteType: QuoteType.never,
 			format: function (element, content) {
-				var	width, height,
+				var width, height, float, altxt,
 					attribs   = '',
+					name      = 'float',
 					style     = function (name) {
 						return element.style ? element.style[name] : null;
 					};
@@ -558,6 +567,8 @@
 
 				width = attr(element, 'width') || style('width');
 				height = attr(element, 'height') || style('height');
+				float = element.style['float'];
+				altxt = attr(element, 'alt');
 
 				// only add width and height if one is specified
 				if ((element.complete && (width || height)) ||
@@ -566,13 +577,24 @@
 					attribs = ' size=' + dom.width(element) + 'x' +
 						dom.height(element);
 				}
+				
+				if (float){
+					attribs += ' float=' + float;
+				}
+				              
+				if (altxt){
+					attribs += ' alt=' + altxt;
+				} 
 
 				return '[img' + attribs + ']' + attr(element, 'src') + '[/img]';
 			},
 			html: function (token, attrs, content) {
-				var	undef, width, height, match,
+				var	undef, width, height, match, style, altxt,
 					attribs = '';
 
+				style = attrs.float;
+				altxt = attrs.alt; 
+					
 				// handle [img width=340 height=240]url[/img]
 				width  = attrs.width;
 				height = attrs.height;
@@ -598,6 +620,14 @@
 				if (height !== undef) {
 					attribs += ' height="' + escapeEntities(height, true) + '"';
 				}
+				
+				if (style) {
+					attribs += ' style="float:' + style + ';"'; 
+				}
+				
+				if (altxt) {
+					attribs += ' alt="' + altxt + '"'; 
+				}  
 
 				return '<img' + attribs +
 					' src="' + escapeUriScheme(content) + '" />';

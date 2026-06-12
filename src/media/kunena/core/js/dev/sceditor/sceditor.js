@@ -32,7 +32,11 @@
 	 * @type {function(*): boolean}
 	 */
 	var isNumber = isTypeof.bind(null, 'number');
-
+	
+	/**
+	 * Kunena change : variable for active image control
+	 */
+	var selected = [];  //=> selected must be global
 
 	/**
 	 * Returns true if an object has no keys
@@ -1706,8 +1710,8 @@
 	// Regex used by DOMPurify to filter URLs. Might as well match here as otherwise
 	// URLs will be filtered out by DOMPurify anyway
 	var VALID_URI_REGEX = /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|matrix):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i;
-	// Safe image data URIs
-	var VALID_DATA_REGEX = /^data:image\/(png|bmp|gif|p?jpe?g);/i;
+	// Safe image data URIs, Kunena change on VALID_DATA_REGEX 
+	var VALID_DATA_REGEX = /^data:image\/(a?png|bmp|gif|p?jpe?g|webp|avif);/i;
 	var WHITESPACE_REGEX = /[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g;
 
 	/**
@@ -3208,14 +3212,20 @@
 			'<div><input type="button" class="button" value="{insert}"' +
 				' /></div>',
 
-		image:
+		image: // Kunena change in html code 
 			'<div><label for="image">{url}</label> ' +
 				'<input type="text" id="image" dir="ltr" placeholder="https://" /></div>' +
-			'<div><label for="width">{width}</label> ' +
-				'<input type="text" id="width" size="2" dir="ltr" /></div>' +
-			'<div><label for="height">{height}</label> ' +
-				'<input type="text" id="height" size="2" dir="ltr" /></div>' +
-			'<div><input type="button" class="button" value="{insert}" />' +
+		            '<div><center><i><label for="properties">optional</label></i></center><br> ' +
+		            '<div><label for="altxt">{altxt}</label> ' +
+						'<input type="text" id="altxt" size="20" dir="ltr" /></div>' +
+					'<div><label for="size">{width}&emsp;{height}&emsp;{float}</label> ' +
+					'<input type="text" id="width" size="3" dir="ltr" />&emsp;<input type="text" id="height" size="3" dir="ltr" />&emsp;&nbsp;' +
+		                '<select name="float" id="float">' +
+							'<option value="">' + '' + '</option>' +
+							'<option value="left">' + 'left' + '</option>' +
+							'<option value="right">' + 'right' + '</option>' +
+						'</select></div>' +
+					'<div><input type="button" class="button" value="{insert}" />' +
 				'</div>',
 
 		email:
@@ -3718,10 +3728,15 @@
 		},
 		// END_COMMAND
 
-		// START_COMMAND: Horizontal Rule
+		// START_COMMAND: Kunena change on Horizontal Rule
 		horizontalrule: {
-			exec: 'inserthorizontalrule',
-			tooltip: 'Insert a horizontal rule'
+			exec: function () {
+				this.wysiwygEditorInsertHtml(
+					'<br>',
+					'<hr>'
+				);
+			},
+			tooltip: Joomla.Text._('COM_KUNENA_EDITOR_HR')
 		},
 		// END_COMMAND
 
@@ -3746,20 +3761,32 @@
 					url: editor._('URL:'),
 					width: editor._('Width (optional):'),
 					height: editor._('Height (optional):'),
-					insert: editor._('Insert')
+					// Kunena change : add float and altxt, and add language string on insert
+					float: editor._('Position:'),
+					altxt: editor._('ALT (alternativ Text):'),  
+					insert: editor._(Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL'))
 				}, true));
-
 
 				var	urlInput = find(content, '#image')[0];
 
-				urlInput.value = selected;
+				// Kunena change
+				if (selected.url) {  //if an image is selected
+					urlInput.value = selected.url;
+					find(content, '#width')[0].value = selected.width;
+					find(content, '#height')[0].value = selected.height;
+					find(content, '#float')[0].value = selected.float;  
+				    find(content, '#altxt')[0].value = selected.alt;                
+				}
+				else {urlInput.value = '';}            
 
-				on(content, 'click', '.button', function (e) {
-					if (urlInput.value) {
+				on(content, 'click', '.button', function (e) {   
+					if (urlInput.value) {  //only if url is set                  
 						cb(
 							urlInput.value,
 							find(content, '#width')[0].value,
-							find(content, '#height')[0].value
+							find(content, '#height')[0].value,
+							find(content, '#float')[0].value,
+							find(content, '#altxt')[0].value                                                      
 						);
 					}
 
@@ -3775,9 +3802,10 @@
 				defaultCmds.image._dropDown(
 					editor,
 					caller,
-					'',
-					function (url, width, height) {
-						var attrs  = '';
+					selected,
+					function (url, width, height, float, altxt) {
+						// Kunena change : variable definition added
+						var attrs  = ' tabindex="-1"'; 
 
 						if (width) {
 							attrs += ' width="' + parseInt(width, 10) + '"';
@@ -3785,6 +3813,14 @@
 
 						if (height) {
 							attrs += ' height="' + parseInt(height, 10) + '"';
+						}
+						
+						if (float) {
+							attrs += ' style="float:' + float + '"';
+						} 
+
+						if (altxt) {
+							attrs += ' alt="' + altxt + '"';
 						}
 
 						attrs += ' src="' + entities(url) + '"';
@@ -6067,6 +6103,12 @@
 			// Add the editor to the container
 			appendChild(editorContainer, wysiwygEditor);
 			appendChild(editorContainer, sourceEditor);
+			
+			// Kunena change
+			wysiwygEditor.onload = function() {   //add tabindex to all images to get focus attribute
+				wysiwygEditor.contentWindow.document.querySelectorAll('img').forEach(img => {
+			               img.setAttribute('tabindex','-1'); });              
+			};
 
 			// TODO: make this optional somehow
 			base.dimensions(
@@ -7758,6 +7800,11 @@
 
 			updateToolBar();
 			updateActiveButtons();
+			
+			// Kunena change
+			wysiwygEditor.contentWindow.document.querySelectorAll('img').forEach(img => {
+				img.setAttribute('tabindex', '-1');
+			});
 		};
 
 		/**
@@ -7789,6 +7836,18 @@
 					}
 				}
 			} else if (cmd.exec) {
+				// Kunena
+				if (caller.classList.contains('sceditor-button-image') && !isUndefined(wysiwygEditor.contentWindow)) {                
+					var selectitem = wysiwygEditor.contentWindow.document.querySelectorAll(':focus').item(0);                   
+						if (!isUndefined(selectitem) && selectitem && selectitem.tagName === 'IMG'){ 
+				        	selected.url = selectitem.src;
+				            selected.width = selectitem.width;
+				            selected.height = selectitem.height;
+				            selected.float = selectitem.style.cssFloat;
+				            selected.alt = selectitem.alt;                            
+					}
+				}
+				
 				if (isFunction(cmd.exec)) {
 					cmd.exec.call(base, caller);
 				} else {

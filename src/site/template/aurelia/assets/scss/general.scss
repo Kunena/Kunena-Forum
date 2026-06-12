@@ -1217,6 +1217,11 @@ a.dropdown-toggle {
     width: 100%;
 }
 
+/*display change for floating image*/
+.kmsgimage.float {
+    display:inline;
+}
+
 .embed-container {
     position: relative;
     height: 0;

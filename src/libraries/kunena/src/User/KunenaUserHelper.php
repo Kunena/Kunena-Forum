@@ -627,8 +627,9 @@ abstract class KunenaUserHelper
 
         // Update user post count
         $query = "INSERT INTO #__kunena_users (userid, posts)
-				SELECT user_id AS userid, SUM(posts) AS posts
-				FROM #__kunena_user_topics
+				SELECT kut.user_id AS userid, SUM(kut.posts) AS posts
+				FROM `#__kunena_user_topics` AS kut 
+                INNER JOIN `#__kunena_users` AS ku ON kut.user_id=ku.userid
 				GROUP BY user_id
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
         $db->setQuery($query);

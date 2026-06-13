@@ -20,9 +20,7 @@ use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\OutputFilter;
-use Joomla\CMS\Http\Http;
 use Joomla\Http\HttpFactory;
-use Joomla\CMS\Http\Transport\StreamTransport;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
@@ -60,7 +58,6 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use stdClass;
-use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 /**
  * Kunena Topic Controller

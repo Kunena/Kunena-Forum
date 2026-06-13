@@ -21,6 +21,7 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Http\Http;
+use Joomla\Http\HttpFactory;
 use Joomla\CMS\Http\Transport\StreamTransport;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailHelper;
@@ -59,6 +60,7 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 use stdClass;
+use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 /**
  * Kunena Topic Controller
@@ -1068,30 +1070,48 @@ class TopicController extends KunenaController
         if (KunenaUserHelper::isIPv6($message->ip)) {
             $ip = '[' . $message->ip . ']';
         }
-
-        $data = 'ip=' . $ip;
-
+        
+        $url = 'https://api.stopforumspam.org/api';
+        
+        $requestData = [
+            'ip' => $ip,            
+        ];
+        
         if (!empty($name)) {
-            $data .= '&username=' . $name;
+            $requestData = [
+                'username' => $name,
+            ];
         }
-
+        
         if (!empty($email)) {
-            $data .= '&email=' . $email;
+            $requestData = [
+                'email' => $email,
+            ];
         }
 
+        // Prepare connection
         $options = new Registry();
+        $options->set('userAgent', KunenaForum::version());
+        
+        $http = (new HttpFactory())->getHttp($options);
+        
+        // Http transport throws an exception when there's no response.
+        try {
+            $response = $http->post($url, json_encode($requestData), [
+                'Accept'       => 'application/json',
+                'Content-Type' => 'application/json',
+            ], 20);
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            
+            return '';
+        }
 
-        $transport = new StreamTransport($options);
-
-        // Create a 'stream' transport.
-        $http = new Http($options, $transport);
-
-        $response = $http->post('https://api.stopforumspam.org/api', $data . '&json');
-
-        if ($response->code == '200') {
-            // The query has worked
-            $result = json_decode($response->body);
-
+        // Decode response
+        $result = json_decode((string) $response->getBody(), true);
+        
+        // The query has worked
+        if ($response->getStatusCode() === 200) {
             if ($result->success) {
                 if ($result->ip->appears) {
                     return true;
@@ -1110,14 +1130,13 @@ class TopicController extends KunenaController
                 }
             } else {
                 // TODO : log the result or display something in debug mode
-
+                
                 return false;
             }
-        } else {
-            // The query has failed or has been refused
-
-            // TODO : log the result or display something in debug mode
-
+        }
+        
+        // Handle other non-success response
+        if ($response->getStatusCode() !== 200) {
             return false;
         }
     }

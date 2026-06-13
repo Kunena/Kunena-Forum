@@ -165,6 +165,10 @@ class TopicController extends KunenaController
      */
     public function setinline()
     {
+        if (!Session::checkToken('request')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+        
         $attachs_id = $this->input->getString('files_id', '');
         $attachs_id = json_decode($attachs_id);
 
@@ -243,11 +247,7 @@ class TopicController extends KunenaController
         // Only support JSON requests.
         if ($this->input->getWord('format', 'html') != 'json') {
             throw new RuntimeException(Text::_('Bad Request'), 400);
-        }
-
-        if (!Session::checkToken('request')) {
-            throw new RuntimeException(Text::_('Forbidden'), 403);
-        }
+        }        
 
         $response = [];
 
@@ -291,6 +291,10 @@ class TopicController extends KunenaController
      */
     public function removeinlineonattachment()
     {
+        if (!Session::checkToken('request')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+        
         $attach_id = $this->input->getInt('file_id', 0);
 
         $instance = KunenaAttachmentHelper::get($attach_id);

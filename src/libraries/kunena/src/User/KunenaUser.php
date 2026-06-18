@@ -37,6 +37,7 @@ use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaSidebar;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -1450,9 +1451,12 @@ class KunenaUser
         $params->set('kunena_view', 'topic');
         $params->set('kunena_layout', $layout->getLayout());
 
+        $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('kunena');
 
-        Factory::getApplication()->triggerEvent('onKunenaSidebar', [$this->userid]);
+        $dispatcher->dispatch('onKunenaSidebar', new KunenaSidebar('onKunenaSidebar', [
+            'userid' => $this->userid,
+        ]));
 
         return KunenaFactory::getProfile()->showProfile($view, $params);
     }

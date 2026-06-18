@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\BBCode;
 use Exception;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -2005,9 +2006,16 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 // Identify the source of the event to be Kunena itself
                 // this is important to avoid recursive event behaviour with our own plugins
                 $params->set('ksource', 'kunena');
-                PluginHelper::importPlugin('content');
+                $dispatcher = Factory::getApplication()->getDispatcher();
+                PluginHelper::importPlugin('content', null, true, $dispatcher);
 
-                Factory::getApplication()->triggerEvent('onContentPrepare', ['text', &$article, &$params, 0]);
+                $dispatcher->dispatch(
+                    'onContentPrepare',
+                    new ContentPrepareEvent(
+                        'onContentPrepare',
+                        ['context' => 'com_kunena.bbcode', 'subject' => &$article, 'params' => &$params, 'page' => 0]
+                        )
+                );
                 $article->text       = HTMLHelper::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
                 $bbcode->text_length += \strlen($article->text);
                 $html                = $article->text;

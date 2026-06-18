@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site;
 
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -92,8 +93,17 @@ $params       = new stdClass();
 $params->text = '';
 $topics       = new stdClass();
 $topics->text = '';
-PluginHelper::importPlugin('content');
-Factory::getApplication()->triggerEvent('onContentPrepare', ["com_kunena.{$view}", &$topics, &$params, 0]);
+$dispatcher = Factory::getApplication()->getDispatcher();
+PluginHelper::importPlugin('content', null, true, $dispatcher);
+
+$dispatcher->dispatch(
+    'onContentPrepare',
+    new ContentPrepareEvent(
+        'onContentPrepare',
+        ['context' => "com_kunena.{$view}", 'subject' => &$topics, 'params' => &$params, 'page' => 0]
+        )
+);
+
 Factory::getApplication()->triggerEvent('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]);
 $contents = (string) $contents;
 Factory::getApplication()->triggerEvent('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]);

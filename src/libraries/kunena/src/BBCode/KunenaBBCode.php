@@ -166,7 +166,7 @@ class KunenaBBCode extends BBCode
 
         $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('kunena');
-        $dispatcher->dispatch('onKunenaBbcodeConstruct', new KunenaBbcodeConstruct('onExtensionBeforeSave', [
+        $dispatcher->dispatch('onKunenaBbcodeConstruct', new KunenaBbcodeConstruct('onKunenaBbcodeConstruct', [
             'this' => $this,
         ]));
 

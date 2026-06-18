@@ -34,6 +34,7 @@ use Joomla\Uri\UriHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Event\KunenaBbcodeConstruct;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
@@ -163,8 +164,11 @@ class KunenaBBCode extends BBCode
         $this->SetURLPattern([$this, 'parseUrl']);
         $this->SetURLTarget('_blank');
 
+        $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('kunena');
-        Factory::getApplication()->triggerEvent('onKunenaBbcodeConstruct', [$this]);
+        $dispatcher->dispatch('onKunenaBbcodeConstruct', new KunenaBbcodeConstruct('onExtensionBeforeSave', [
+            'this' => $this,
+        ]));
 
         // Load Kunena Library Language file as this method can also be used outside Kunena (e.g. EasySocial)
         Factory::getApplication()->getLanguage()->load('com_kunena.libraries', JPATH_ADMINISTRATOR . '/components/com_kunena');

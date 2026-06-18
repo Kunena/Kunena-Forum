@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `class_sfx`        varchar(20)  NOT NULL,
     `allowPolls`       tinyint		NOT NULL DEFAULT '0',
     `topicOrdering`    varchar(16)  NOT NULL default 'lastpost',
-    `iconset`          varchar(191) NULL     DEFAULT NULL,
+    `iconset`          varchar(191) NULL     DEFAULT 'default',
     `numTopics`        mediumint(8) NOT NULL default '0',
     `numPosts`         mediumint(8) NOT NULL default '0',
     `last_topic_id`    int(11)      NOT NULL default '0',

@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Router;
+use Joomla\CMS\Router\SiteRouter;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
@@ -66,7 +67,7 @@ if (!KunenaConfig::getInstance()->accessComponent) {
 }
 
 // Load router
-Router::getInstance('site');
+Factory::getContainer()->get(SiteRouter::class);
 
 // Initialize Kunena Framework.
 KunenaForum::setup();

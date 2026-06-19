@@ -590,6 +590,12 @@
             versionname="Internal">
            <phpfile name="7.0.6-2026-05-30_add_index_files_in_attachments_directories"/>
         </version>
+        <version
+            version="7.0.7-DEV"
+            versiondate="2026-06-18"
+            versionname="Internal">
+            <query mode="silenterror">UPDATE `#__kunena_categories` SET iconset = 'default' WHERE iconset IS NULL;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

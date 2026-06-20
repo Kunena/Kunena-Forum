@@ -23,7 +23,6 @@ use Kunena\Forum\Libraries\Controller\Application\Display;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
-use Kunena\Forum\Libraries\Controller\KunenaController;
 use RuntimeException;
 
 /**

@@ -16,9 +16,6 @@ namespace Kunena\Forum\Site\Layout\Message;
 \defined('_JEXEC') or die;
 
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
-use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
-use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
-use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 
 /**
  * KunenaLayoutMessageList

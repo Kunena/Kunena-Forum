@@ -30,7 +30,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Model\CategoryModel;
-use Kunena\Forum\Libraries\Controller\KunenaController;
 use RuntimeException;
 
 /**

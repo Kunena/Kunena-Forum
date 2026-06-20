@@ -16,8 +16,6 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
-use Kunena\Forum\Libraries\Login\KunenaLogin;
 
 ?>
     <h3>

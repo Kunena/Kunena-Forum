@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
-use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>

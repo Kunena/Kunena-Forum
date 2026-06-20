@@ -26,12 +26,12 @@ jQuery(document).ready(function ($) {
 				},
 				'Liveleak': {
 					'match': /liveleak\.com\/(?:view\?[a-z]=)([^\/]+)/,
-					'url': 'http://www.liveleak.com/ll_embed?i=',
+					'url': 'https://www.liveleak.com/ll_embed?i=',
 					'html': '<iframe width="500" height="300" src="{url}" frameborder="0" data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
 				},
 				'MetaCafe': {
 					'match': /metacafe\.com\/watch\/([^\/]+)/,
-					'url': 'http://www.metacafe.com/embed/',
+					'url': 'https://www.metacafe.com/embed/',
 					'html': '<iframe src="{url}" width="440" height="248" frameborder=0 data-kunena-vt="{type}" data-kunena-vsrc="{src}"></iframe>'
 				},
 				'Mixer': {

@@ -31,6 +31,7 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Event\KunenaDisplayEvent;
+use Kunena\Forum\Libraries\Event\KunenaGetButtons;
 use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -785,9 +786,16 @@ class HtmlView extends KunenaView
             }
         }
 
+        $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('kunena');
 
-        Factory::getApplication()->triggerEvent('onKunenaGetButtons', ['topic.action', $this->topicButtons, $this]);
+        $dispatcher->dispatch(
+            'onKunenaGetButtons',
+            new KunenaGetButtons(
+                'onKunenaGetButtons',
+                ['context' => 'topic.action', 'buttons' => $this->topicButtons, 'object' => $this]
+                )
+        );
 
         return (string) $this->loadTemplateFile('actions');
     }
@@ -861,9 +869,16 @@ class HtmlView extends KunenaView
             $this->message->isAuthorised('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
         }
 
+        $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('kunena');
 
-        Factory::getApplication()->triggerEvent('onKunenaGetButtons', ['message.action', $this->messageButtons, $this]);
+        $dispatcher->dispatch(
+            'onKunenaGetButtons',
+            new KunenaGetButtons(
+                'onKunenaGetButtons',
+                ['context' => 'message.action', 'buttons' => $this->messageButtons, 'object' => $this]
+                )
+        );
 
         return (string) $this->loadTemplateFile("message_actions");
     }

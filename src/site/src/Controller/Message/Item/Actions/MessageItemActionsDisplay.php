@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site\Controller\Message\Item\Actions;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
@@ -23,6 +24,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Event\KunenaGetButtons;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -547,9 +549,16 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
             }
         }
 
+        $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('kunena');
 
-        $this->app->triggerEvent('onKunenaGetButtons', ['message.action', $this->messageButtons, $this]);
+        $dispatcher->dispatch(
+            'onKunenaGetButtons',
+            new KunenaGetButtons(
+                'onKunenaGetButtons',
+                ['context' => 'message.action', 'buttons' => $this->messageButtons, 'object' => $this]
+                )
+        );
     }
 
     /**

@@ -16,11 +16,13 @@ namespace Kunena\Forum\Site\Controller\Topic\Item\Actions;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Event\KunenaGetButtons;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -267,9 +269,16 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
             }
         }
 
+        $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('kunena');
 
-        $this->app->triggerEvent('onKunenaGetButtons', ['topic.action', $this->topicButtons, $this]);
+        $dispatcher->dispatch(
+            'onKunenaGetButtons',
+            new KunenaGetButtons(
+                'onKunenaGetButtons',
+                ['context' => 'topic.action', 'buttons' => $this->topicButton, 'object' => $this]
+                )
+        );
     }
 
     /**

@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site\Controller\Category\Index\Actions;
 
 use Exception;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
@@ -26,6 +27,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\Event\KunenaGetButtons;
 
 /**
  * Class ComponentCategoryControllerIndexActionsDisplay
@@ -111,9 +113,16 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
             }
         }
 
+        $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('kunena');
 
-        $this->app->triggerEvent('onKunenaGetButtons', ['category.action', $this->categoryButtons, $this]);
+        $dispatcher->dispatch(
+            'onKunenaGetButtons',
+            new KunenaGetButtons(
+                'onKunenaGetButtons',
+                ['context' => 'category.action', 'buttons' => $this->categoryButtons, 'object' => $this]
+                )
+       );
     }
 
     /**

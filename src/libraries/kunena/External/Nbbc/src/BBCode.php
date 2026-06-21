@@ -1167,7 +1167,8 @@ REGEX;
                 if (empty($urlParts['url'])) {
                     $url = $part;
                     if (empty($urlParts['scheme'])) {
-                        $url = 'http://'.$part;
+                        // Kunena change : use https instead of http
+                        $url = 'https://'.$part;
                     }
                     $urlParts['url'] = $url;
                 }

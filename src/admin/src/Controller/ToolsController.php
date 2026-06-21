@@ -19,10 +19,12 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Event\KunenaBeforeModifySocialsEvent;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
@@ -1251,6 +1253,47 @@ class ToolsController extends FormController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_ALREADY_EXISTS_NOTHING_TO_DO'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         }
+    }
+    
+    /**
+     * Method to call the plugin modifysocials to send to it the data of socials to change
+     *
+     * @param   null  $key  key
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.1.0
+     *
+     * @throws  Exception
+     */
+    public function modifysocials()
+    {
+        if (!PluginHelper::isEnabled('system', 'modifysocials')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_PLUGIN_MODIFYSOCIALS_PLUGIN_NOT_ENABLED'), 'message');
+            $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+        }
+        
+        $name = $this->input->getString('name');
+        $profileURL = $this->input->getString('profileurl', '##VALUE##');
+        $languageKey = $this->input->getString('languagekey');
+        $noURL = $this->input->getInt('nourl', 0);
+        $fa = $this->input->getString('fa');
+        
+        $socials = ['name' => $name, 'profileURL' => $profileURL, 'languageKey' => $languageKey, 'noURL' => $noURL, 'fa' => $fa];
+ 
+        $dispatcher = Factory::getApplication()->getDispatcher();
+        PluginHelper::importPlugin('modifysocials');
+        
+        $dispatcher->dispatch(
+            'onKunenaBeforeModifySocials',
+            new KunenaBeforeModifySocialsEvent(
+                'onKunenaBeforeModifySocials', [
+                    'socials' => $socials,
+                ]))->getArgument('result', []); 
+                
+       $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CHANGED'), 'message');
+       $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+
     }
 
     /**

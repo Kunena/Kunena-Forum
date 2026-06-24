@@ -619,7 +619,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         $multispaces_replaced = '';
         if (!empty($this->topic->first_post_message)) {
-            $firstPostMessage = KunenaParser::stripBBCode($this->topic->first_post_message, 160);
+            $firstPostMessage = KunenaParser::stripBBCode($this->topic->first_post_message, 160, false);
             $multispaces_replaced = preg_replace('/\s+/', ' ', $firstPostMessage);
         }
 
@@ -688,7 +688,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $multispaces_replaced_desc = preg_replace('/\s+/', ' ', $this->topic->first_post_message);
 
             if ($total > 1 && $page > 1) {
-                $small = KunenaParser::stripBBCode($multispaces_replaced_desc, 130);
+                $small = KunenaParser::stripBBCode($multispaces_replaced_desc, 130, false);
 
                 if (empty($small)) {
                     $small = $headerText;
@@ -696,7 +696,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
                 $this->setDescription($small . " - " . Text::_('COM_KUNENA_PAGES') . " {$page}");
             } else {
-                $small = KunenaParser::stripBBCode($multispaces_replaced_desc, 160);
+                $small = KunenaParser::stripBBCode($multispaces_replaced_desc, 160, false);
 
                 if (empty($small)) {
                     $small = $headerText;

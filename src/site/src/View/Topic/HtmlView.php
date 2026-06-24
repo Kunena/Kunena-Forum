@@ -429,7 +429,7 @@ class HtmlView extends KunenaView
                 } else {
                     // Create Meta Description form the content of the first message
                     // better for search results display but NOT for search ranking!
-                    $description = KunenaParser::stripBBCode($this->topic->first_post_message, 182);
+                    $description = KunenaParser::stripBBCode($this->topic->first_post_message, 182, false);
                     $description = preg_replace('/\s+/', ' ', $description); // Remove newlines
                     $description = trim($description); // Remove trailing spaces and beginning
 

@@ -1275,23 +1275,23 @@ class ToolsController extends FormController
         
         $name = $this->input->getString('name');
         $profileURL = $this->input->getString('profileurl', '##VALUE##');
-        $languageKey = $this->input->getString('languagekey');
         $noURL = $this->input->getInt('nourl', 0);
         $fa = $this->input->getString('fa');
         
-        $socials = ['name' => $name, 'profileURL' => $profileURL, 'languageKey' => $languageKey, 'noURL' => $noURL, 'fa' => $fa];
+        $socials = ['name' => $name, 'profileURL' => $profileURL, 'noURL' => $noURL, 'fa' => $fa];
  
         $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('modifysocials');
         
-        $dispatcher->dispatch(
+        $result = $dispatcher->dispatch(
             'onKunenaBeforeModifySocials',
             new KunenaBeforeModifySocialsEvent(
                 'onKunenaBeforeModifySocials', [
                     'socials' => $socials,
-                ]))->getArgument('result', []); 
-                
+                ]))->getArgument('result', []);
+       
        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CHANGED'), 'message');
+       $this->app->enqueueMessage($result[0], 'message');
        $this->app->redirect(KunenaRoute::_($this->baseurl, false));
 
     }

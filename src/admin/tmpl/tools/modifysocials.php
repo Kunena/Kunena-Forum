@@ -39,10 +39,6 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                 <td colspan="4"><input type="text" name="name" required size="20" /></td>
                             </tr>                            
                             <tr>
-                                <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_LANGUAGEKEY_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
-                                <td colspan="4"><input type="text" name="languagekey" required size="20" /></td>
-                            </tr>
-                            <tr>
                                 <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_NOURL_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
                                 <td colspan="4">
                                     <select name="nourl">

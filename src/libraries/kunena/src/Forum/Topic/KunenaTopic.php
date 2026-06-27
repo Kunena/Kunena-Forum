@@ -1854,7 +1854,13 @@ class KunenaTopic extends KunenaDatabaseObject
             $app->enqueueMessage($e->getMessage(), 'error');
         }
 
-        $query = 'UPDATE ' . $this->_db->quoteName('#__kunena_messages') . ' SET ' . $this->_db->quoteName('time') . ' = IF(time <= @ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread=' . $target->id . ' ORDER BY time ASC, id ASC';
+        // Use prepared statement to avoid SQL injection
+        $query = $this->_db->getQuery(true)
+            ->update($this->_db->quoteName('#__kunena_messages'))
+            ->set($this->_db->quoteName('time') . ' = IF(time <= @ktime, @ktime:=@ktime+1, @ktime:=time)')
+            ->where($this->_db->quoteName('thread') . ' = :thread')
+            ->bind(':thread', $target->id, \Joomla\Database\ParameterType::INTEGER)
+            ->order($this->_db->quoteName('time') . ' ASC, ' . $this->_db->quoteName('id') . ' ASC');
         $this->_db->setQuery($query);
 
         try {
@@ -1993,8 +1999,20 @@ class KunenaTopic extends KunenaDatabaseObject
         $this->_authfcache = $this->_authccache = $this->_authcache = [];
 
         $db        = Factory::getContainer()->get('DatabaseDriver');
-        $queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread={$db->quote($this->id)}";
-        $queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id={$db->quote($this->id)}";
+        // Use prepared statement to avoid SQL injection
+        $query = $db->getQuery(true)
+            ->update($db->quoteName('#__kunena_messages'))
+            ->set($db->quoteName('hold') . ' = 2')
+            ->where($db->quoteName('thread') . ' = :thread')
+            ->bind(':thread', $this->id, \Joomla\Database\ParameterType::INTEGER);
+        $queries[] = $query;
+        // Use prepared statement to avoid SQL injection
+        $query = $db->getQuery(true)
+            ->update($db->quoteName('#__kunena_topics'))
+            ->set($db->quoteName('hold') . ' = 2')
+            ->where($db->quoteName('id') . ' = :id')
+            ->bind(':id', $this->id, \Joomla\Database\ParameterType::INTEGER);
+        $queries[] = $query;
 
         foreach ($queries as $query) {
             $db->setQuery($query);

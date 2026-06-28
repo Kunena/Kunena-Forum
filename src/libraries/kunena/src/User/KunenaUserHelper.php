@@ -618,20 +618,15 @@ abstract class KunenaUserHelper
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
 
-        /*
-        $query = $db->createQuery();
-        $query->insert($db->quoteName('#__kunena_users') . ' (userid, posts)')
-            ->select("user_id AS userid, SUM(posts) AS posts")
-            ->from($db->quoteName('#__kunena_user_topics'))
-            ->group('user_id' . ' ON DUPLICATE KEY UPDATE posts = VALUES(posts)');*/
-
         // Update user post count
-        $query = "INSERT INTO #__kunena_users (userid, posts)
-				SELECT kut.user_id AS userid, SUM(kut.posts) AS posts
-				FROM `#__kunena_user_topics` AS kut 
-                INNER JOIN `#__kunena_users` AS ku ON kut.user_id=ku.userid
-				GROUP BY user_id
-			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_users'))
+            ->columns([$db->quoteName('userid'), $db->quoteName('posts')])
+            ->select($db->quoteName('kut.user_id') . ' AS ' . $db->quoteName('userid'))
+            ->select('SUM(' . $db->quoteName('kut.posts') . ') AS ' . $db->quoteName('posts'))
+            ->from($db->quoteName('#__kunena_user_topics', 'kut'))
+            ->join('INNER', $db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('kut.user_id') . '=' . $db->quoteName('ku.userid'))
+            ->group($db->quoteName('user_id'));
         $db->setQuery($query);
 
         try {
@@ -657,11 +652,10 @@ abstract class KunenaUserHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         // Update banned state
-        $query = "UPDATE #__kunena_users AS u
-			INNER JOIN (
-				SELECT userid, MAX(expiration) AS banned FROM #__kunena_users_banned GROUP BY userid
-			) AS b ON u.userid=b.userid
-			SET u.banned=b.banned";
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_users', 'u'))
+            ->join('INNER', '(' . $db->quoteName('userid') . ', MAX(' . $db->quoteName('expiration') . ') AS ' . $db->quoteName('banned') . ' FROM ' . $db->quoteName('#__kunena_users_banned') . ' GROUP BY ' . $db->quoteName('userid') . ') AS b ON ' . $db->quoteName('u.userid') . '=' . $db->quoteName('b.userid'))
+            ->set($db->quoteName('u.banned') . '=' . $db->quoteName('b.banned'));
         $db->setQuery($query);
 
         try {

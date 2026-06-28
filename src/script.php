@@ -233,7 +233,9 @@ return new class() implements ServiceProviderInterface {
                     $installed = 'NONE';
 
                     if ($db->loadResult() == $table) {
-                        $db->setQuery("SELECT version FROM #__kunena_version ORDER BY `id` DESC", 0, 1);
+                        $query = $db->createQuery();
+                        $query->select('version')->from($db->quoteName('#__kunena_version'))->order($db->quoteName('id') . ' DESC');
+                        $db->setQuery($query, 0, 1);
                         $installed = $db->loadResult();
 
                         if (!empty($installed)) {
@@ -310,7 +312,9 @@ return new class() implements ServiceProviderInterface {
 
                         foreach ($queries as $query) {
                             // Only insert sample/default data if table is empty
-                            $db->setQuery("SELECT * FROM " . $db->quoteName($db->getPrefix() . $query[0]), 0, 1);
+                            $checkQuery = $db->createQuery();
+                            $checkQuery->select('*')->from($db->quoteName($db->getPrefix() . $query[0]));
+                            $db->setQuery($checkQuery, 0, 1);
                             $filled = $db->loadObject();
 
                             if (!$filled) {

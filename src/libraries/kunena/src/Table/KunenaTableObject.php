@@ -1009,7 +1009,11 @@ abstract class KunenaTableObject
         }
 
         static::$db = Factory::getContainer()->get('DatabaseDriver');
-        static::$db->setQuery('SELECT COUNT(' . static::$db->quoteName('userid') . ')' . ' FROM ' . static::$db->quoteName('#__session') . ' WHERE ' . static::$db->quoteName('userid') . ' = ' . static::$db->quote((int) $against));
+        $query = static::$db->createQuery();
+        $query->select('COUNT(' . static::$db->quoteName('userid') . ')')
+            ->from(static::$db->quoteName('#__session'))
+            ->where(static::$db->quoteName('userid') . ' = ' . static::$db->quote((int) $against));
+        static::$db->setQuery($query);
 
         // If a session exists for the user then it is checked out.
         return (bool) static::$db->loadResult();

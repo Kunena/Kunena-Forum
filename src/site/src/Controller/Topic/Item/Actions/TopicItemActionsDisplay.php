@@ -276,7 +276,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
             'onKunenaGetButtons',
             new KunenaGetButtons(
                 'onKunenaGetButtons',
-                ['context' => 'topic.action', 'buttons' => $this->topicButton, 'object' => $this]
+                ['context' => 'topic.action', 'buttons' => $this->topicButtons, 'object' => $this]
                 )
         );
     }

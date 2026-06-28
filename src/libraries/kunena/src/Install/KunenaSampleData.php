@@ -145,9 +145,29 @@ class KunenaSampleData
 
         $queries[] = ['kunena_messages_text', $query];
 
-        $query = "INSERT INTO `#__kunena_topics`
-		(`id`, `category_id`, `subject`, `posts`, `first_post_id`, `first_post_time`, `first_post_userid`, `first_post_message`, `first_post_guest_name`, `last_post_id`, `last_post_time`, `last_post_userid`, `last_post_message`, `last_post_guest_name`, `rating`, `params`) VALUES
-		(1, 2, " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ", 1, 1, " . $posttime->toUnix() . ", " . $db->quote($my->id) . ", " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ", 'Kunena', 1, " . $posttime->toUnix() . ", " . $db->quote($my->id) . ", " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ", 'Kunena', 1, '');";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_topics'))
+            ->columns([
+                $db->quoteName('id'), 
+                $db->quoteName('category_id'), 
+                $db->quoteName('subject'), 
+                $db->quoteName('posts'), 
+                $db->quoteName('first_post_id'), 
+                $db->quoteName('first_post_time'), 
+                $db->quoteName('first_post_userid'), 
+                $db->quoteName('first_post_message'), 
+                $db->quoteName('first_post_guest_name'), 
+                $db->quoteName('last_post_id'), 
+                $db->quoteName('last_post_time'), 
+                $db->quoteName('last_post_userid'), 
+                $db->quoteName('last_post_message'), 
+                $db->quoteName('last_post_guest_name'), 
+                $db->quoteName('rating'), 
+                $db->quoteName('params')
+            ])
+            ->values(
+                '1, 2, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ', 1, 1, ' . $posttime->toUnix() . ', ' . $db->quote($my->id) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ', ' . $db->quote('Kunena') . ', 1, ' . $posttime->toUnix() . ', ' . $db->quote($my->id) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ', ' . $db->quote('Kunena') . ', 1, ' . $db->quote('')
+            );
 
         $queries[] = ['kunena_topics', $query];
 

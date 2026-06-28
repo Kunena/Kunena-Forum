@@ -96,37 +96,37 @@ class KunenaSampleData
         $cat1_alias    = KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE'), 'welcome-mat');
         $cat2_alias    = KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE'), 'suggestion-box');
 
-        $query = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES
-		('announcement', 'view', 'announcement', 1),
-		('category', 'view', 'category', 1),
-		('common', 'view', 'common', 1),
-		('credits', 'view', 'credits', 1),
-		('home', 'view', 'home', 1),
-		('misc', 'view', 'misc', 1),
-		('search', 'view', 'search', 1),
-		('statistics', 'view', 'statistics', 1),
-		('topic', 'view', 'topic', 1),
-		('topics', 'view', 'topics', 1),
-		('user', 'view', 'user', 1),
-		('category/create', 'layout', 'category.create', 1),
-		('create', 'layout', 'category.create', 0),
-		('category/default', 'layout', 'category.default', 1),
-		('default', 'layout', 'category.default', 0),
-		('category/edit', 'layout', 'category.edit', 1),
-		('edit', 'layout', 'category.edit', 0),
-		('category/manage', 'layout', 'category.manage', 1),
-		('manage', 'layout', 'category.manage', 0),
-		('category/moderate', 'layout', 'category.moderate', 1),
-		('moderate', 'layout', 'category.moderate', 0),
-		('category/user', 'layout', 'category.user', 1),
-		({$db->quote($section_alias)}, 'catid', '1', 1),
-		({$db->quote($cat1_alias)}, 'catid', '2', 1),
-		({$db->quote($cat2_alias)}, 'catid', '3', 1);";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_aliases'))
+            ->columns([$db->quoteName('alias'), $db->quoteName('type'), $db->quoteName('item'), $db->quoteName('state')])
+            ->values($db->quote('announcement') . ', ' . $db->quote('view') . ', ' . $db->quote('announcement') . ', 1')
+            ->values($db->quote('category') . ', ' . $db->quote('view') . ', ' . $db->quote('category') . ', 1')
+            ->values($db->quote('common') . ', ' . $db->quote('view') . ', ' . $db->quote('common') . ', 1')
+            ->values($db->quote('credits') . ', ' . $db->quote('view') . ', ' . $db->quote('credits') . ', 1')
+            ->values($db->quote('home') . ', ' . $db->quote('view') . ', ' . $db->quote('home') . ', 1')
+            ->values($db->quote('misc') . ', ' . $db->quote('view') . ', ' . $db->quote('misc') . ', 1')
+            ->values($db->quote('search') . ', ' . $db->quote('view') . ', ' . $db->quote('search') . ', 1')
+            ->values($db->quote('statistics') . ', ' . $db->quote('view') . ', ' . $db->quote('statistics') . ', 1')
+            ->values($db->quote('topic') . ', ' . $db->quote('view') . ', ' . $db->quote('topic') . ', 1')
+            ->values($db->quote('topics') . ', ' . $db->quote('view') . ', ' . $db->quote('topics') . ', 1')
+            ->values($db->quote('user') . ', ' . $db->quote('view') . ', ' . $db->quote('user') . ', 1')
+            ->values($db->quote('category/create') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.create') . ', 1')
+            ->values($db->quote('create') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.create') . ', 0')
+            ->values($db->quote('category/default') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.default') . ', 1')
+            ->values($db->quote('default') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.default') . ', 0')
+            ->values($db->quote('category/edit') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.edit') . ', 1')
+            ->values($db->quote('edit') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.edit') . ', 0')
+            ->values($db->quote('category/manage') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.manage') . ', 1')
+            ->values($db->quote('manage') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.manage') . ', 0')
+            ->values($db->quote('category/moderate') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.moderate') . ', 1')
+            ->values($db->quote('moderate') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.moderate') . ', 0')
+            ->values($db->quote('category/user') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.user') . ', 1')
+            ->values($db->quote($section_alias) . ', ' . $db->quote('catid') . ', ' . $db->quote('1') . ', 1')
+            ->values($db->quote($cat1_alias) . ', ' . $db->quote('catid') . ', ' . $db->quote('2') . ', 1')
+            ->values($db->quote($cat2_alias) . ', ' . $db->quote('catid') . ', ' . $db->quote('3') . ', 1');
 
         $queries[] = ['kunena_aliases', $query];
 
-        // REMOVING CATEGORY INSERT QUERY
-        
         // Category 1 - Section
         $query = $db->createQuery();
         $query->insert($db->quoteName('#__kunena_categories'))
@@ -170,7 +170,6 @@ class KunenaSampleData
             );
 
         $queries[] = ['kunena_categories', $query];
-        // REMOVED OLD CATEGORY INSERT QUERY 
         
         // Category 3
         $query = $db->createQuery();

@@ -46,18 +46,19 @@ class KunenaSampleData
         $my       = Factory::getApplication()->getIdentity();
         $queries  = [];
 
-        $query = "INSERT INTO `#__kunena_ranks`
-		(`rankId`, `rankTitle`, `rankMin`, `rankSpecial`, `rankImage`) VALUES
-		(1, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK1')}, 0, 0, 'rank1.gif'),
-		(2, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK2')}, 20, 0, 'rank2.gif'),
-		(3, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK3')}, 40, 0, 'rank3.gif'),
-		(4, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK4')}, 80, 0, 'rank4.gif'),
-		(5, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK5')}, 160, 0, 'rank5.gif'),
-		(6, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK6')}, 320, 0, 'rank6.gif'),
-		(7, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN')}, 0, 1, 'rankadmin.gif'),
-		(8, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR')}, 0, 1, 'rankmod.gif'),
-		(9, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER')}, 0, 1, 'rankspammer.gif'),
-		(10, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED')}, 0, 1, 'rankbanned.gif');";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_ranks'))
+            ->columns([$db->quoteName('rankId'), $db->quoteName('rankTitle'), $db->quoteName('rankMin'), $db->quoteName('rankSpecial'), $db->quoteName('rankImage')])
+            ->values('1, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK1') . ', 0, 0, ' . $db->quote('rank1.gif'))
+            ->values('2, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK2') . ', 20, 0, ' . $db->quote('rank2.gif'))
+            ->values('3, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK3') . ', 40, 0, ' . $db->quote('rank3.gif'))
+            ->values('4, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK4') . ', 80, 0, ' . $db->quote('rank4.gif'))
+            ->values('5, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK5') . ', 160, 0, ' . $db->quote('rank5.gif'))
+            ->values('6, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK6') . ', 320, 0, ' . $db->quote('rank6.gif'))
+            ->values('7, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN') . ', 0, 1, ' . $db->quote('rankadmin.gif'))
+            ->values('8, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR') . ', 0, 1, ' . $db->quote('rankmod.gif'))
+            ->values('9, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER') . ', 0, 1, ' . $db->quote('rankspammer.gif'))
+            ->values('10, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED') . ', 0, 1, ' . $db->quote('rankbanned.gif'));
 
         $queries[] = ['kunena_ranks', $query];
 

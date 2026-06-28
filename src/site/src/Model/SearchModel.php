@@ -173,7 +173,7 @@ class SearchModel extends KunenaModel
         $querystrings = [];
 
         foreach ($this->getSearchWords() as $searchword) {
-            $searchword = $db->escape(StringHelper::trim($searchword));
+            $searchword = StringHelper::trim($searchword);
 
             if (empty($searchword)) {
                 continue;
@@ -188,10 +188,13 @@ class SearchModel extends KunenaModel
                 $searchword = StringHelper::substr($searchword, 1);
             }
 
+            // Escape the searchword for use in SQL
+            $escapedSearchword = $db->escape($searchword);
+
             if (!$this->getState('query.titleonly')) {
-                $querystrings[] = "(t.message {$not} LIKE '%{$searchword}%' {$operator} m.subject {$not} LIKE '%{$searchword}%')";
+                $querystrings[] = "(t.message {$not} LIKE '%{$escapedSearchword}%' {$operator} m.subject {$not} LIKE '%{$escapedSearchword}%')";
             } else {
-                $querystrings[] = "(m.subject {$not} LIKE '%{$searchword}%')";
+                $querystrings[] = "(m.subject {$not} LIKE '%{$escapedSearchword}%')";
             }
         }
 
@@ -200,10 +203,12 @@ class SearchModel extends KunenaModel
             $username = $this->getState('query.searchuser');
 
             if ($username) {
+                // Escape the username for use in SQL
+                $escapedUsername = $db->escape($username);
                 if ($this->getState('query.exactname') == '1') {
-                    $querystrings[] = "m.name LIKE '" . $db->escape($username) . "'";
+                    $querystrings[] = "m.name LIKE '" . $escapedUsername . "'";
                 } else {
-                    $querystrings[] = "m.name LIKE '%" . $db->escape($username) . "%'";
+                    $querystrings[] = "m.name LIKE '%" . $escapedUsername . "%'";
                 }
             }
         }
@@ -233,9 +238,9 @@ class SearchModel extends KunenaModel
 
             if ($time) {
                 if ($this->getState('query.beforeafter') == 'after') {
-                    $querystrings[] = "m.time > '{$time}'";
+                    $querystrings[] = "m.time > " . $db->quote($time);
                 } else {
-                    $querystrings[] = "m.time <= '{$time}'";
+                    $querystrings[] = "m.time <= " . $db->quote($time);
                 }
             }
         } else {
@@ -243,13 +248,13 @@ class SearchModel extends KunenaModel
             $time_end_day   = new DateTime($this->getState('query.searchatdate'));
             $time_end_day->add(new DateInterval("PT23H59M59S"));
 
-            $querystrings[] = " m.time > {$time_start_day} AND m.time < {$time_end_day->getTimestamp()}";
+            $querystrings[] = " m.time > " . $db->quote($time_start_day) . " AND m.time < " . $db->quote($time_end_day->getTimestamp());
         }
 
         $topic_id = $this->getState('query.topic_id');
 
         if ($topic_id) {
-            $querystrings[] = "m.id = '{$topic_id}'";
+            $querystrings[] = "m.id = " . $db->quote($topic_id);
         }
 
         return implode(' AND ', $querystrings);

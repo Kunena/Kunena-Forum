@@ -237,14 +237,15 @@ class ToolsController extends FormController
         if ($userAdd) {
             $db->createQuery();
 
-            // TODO: need to find a way to make this query working with DatabaseQuery
-            $db->setQuery(
-                "INSERT INTO #__kunena_users (userid, showOnline)
-				SELECT a.id AS userid, 1 AS showOnline
-				FROM #__users AS a
-				LEFT JOIN #__kunena_users AS b ON b.userid=a.id
-				WHERE b.userid IS NULL"
-            );
+            $query = $db->createQuery();
+            $query->insert($db->quoteName('#__kunena_users'))
+                ->columns([$db->quoteName('userid'), $db->quoteName('showOnline')])
+                ->select($db->quoteName('a.id') . ' AS ' . $db->quoteName('userid'))
+                ->select('1 AS ' . $db->quoteName('showOnline'))
+                ->from($db->quoteName('#__users', 'a'))
+                ->join('LEFT', $db->quoteName('#__kunena_users', 'b') . ' ON ' . $db->quoteName('b.userid') . '=' . $db->quoteName('a.id'))
+                ->where($db->quoteName('b.userid') . ' IS NULL');
+            $db->setQuery($query);
 
             try {
                 $db->execute();
@@ -260,13 +261,12 @@ class ToolsController extends FormController
         if ($userDel) {
             $db->createQuery();
 
-            // TODO: need to find a way to make this query working with DatabaseQuery
-            $db->setQuery(
-                "DELETE a
-				FROM #__kunena_users AS a
-				LEFT JOIN #__users AS b ON a.userid=b.id
-				WHERE b.username IS NULL"
-            );
+            $query = $db->createQuery();
+            $query->delete($db->quoteName('a'))
+                ->from($db->quoteName('#__kunena_users', 'a'))
+                ->join('LEFT', $db->quoteName('#__users', 'b') . ' ON ' . $db->quoteName('a.userid') . '=' . $db->quoteName('b.id'))
+                ->where($db->quoteName('b.username') . ' IS NULL');
+            $db->setQuery($query);
 
             try {
                 $db->execute();
@@ -284,8 +284,12 @@ class ToolsController extends FormController
 
             $db->createQuery();
 
-            // TODO: need to find a way to make this query working with DatabaseQuery
-            $db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned > " . $db->quote($now->toSql()));
+            $query = $db->createQuery();
+            $query->delete($db->quoteName('a'))
+                ->from($db->quoteName('#__kunena_users', 'a'))
+                ->join('LEFT', $db->quoteName('#__users', 'b') . ' ON ' . $db->quoteName('a.userid') . '=' . $db->quoteName('b.id'))
+                ->where($db->quoteName('banned') . ' > ' . $db->quote($now->toSql()));
+            $db->setQuery($query);
 
             try {
                 $db->execute();
@@ -867,9 +871,8 @@ class ToolsController extends FormController
         $columnLanguage = $db->loadResult();
         
         if (!$columnLanguage) {
-            // Create the column language
-            $query = "ALTER TABLE `#__kunena_users` ADD `language` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`";
-            $query = $db->setQuery($query);
+            $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' ADD `language` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`';
+            $db->setQuery($query);
             
             try {
                 $db->execute();
@@ -905,7 +908,7 @@ class ToolsController extends FormController
         
         if (!$columnSocials) {
             // Create the column socials
-            $query = "ALTER TABLE `#__kunena_users` ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`";
+            $query = "ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`";
             $query = $db->setQuery($query);
             
             try {

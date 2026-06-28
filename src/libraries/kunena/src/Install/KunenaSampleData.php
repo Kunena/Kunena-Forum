@@ -61,31 +61,32 @@ class KunenaSampleData
 
         $queries[] = ['kunena_ranks', $query];
 
-        $query = "INSERT INTO `#__kunena_smileys`
-		(`id`,`code`,`location`,`emoticonbar`) VALUES
-		(1, 'B)', '1.png', 1),
-		(2, '8)', '2.png', 1),
-		(3, '8-)', '3.png', 1),
-		(4, ':-(', '4.png', 1),
-		(5, ':(', '5.png', 1),
-		(6, ':sad:', '6.png', 1),
-		(7, ':cry:', '7.png', 1),
-		(8, ':)', '8.png', 1),
-		(9, ':-)', '9.png', 1),
-		(10, ':cheer:', '10.png', 1),
-		(11, ';)', '11.png', 1),
-		(12, ';-)', '12.png', 1),
-		(13, ':wink:', '13.png', 1),
-		(14, ';-)', '14.png', 1),
-		(15, ':P', '15.png', 1),
-		(16, ':p', '16.png', 1),
-		(17, ':-p', '17.png', 1),
-		(18, ':-P', '18.png', 1),
-		(19, ':razz:', '19.png', 1),
-		(20, ':angry:', '20.png', 1),
-		(21, ':mad:', '21.png', 1),
-		(22, ':unsure:', '22.png', 1),
-		(23, ':o', '23.png', 1);";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_smileys'))
+            ->columns([$db->quoteName('id'), $db->quoteName('code'), $db->quoteName('location'), $db->quoteName('emoticonbar')])
+            ->values('1, ' . $db->quote('B)') . ', ' . $db->quote('1.png') . ', 1')
+            ->values('2, ' . $db->quote('8)') . ', ' . $db->quote('2.png') . ', 1')
+            ->values('3, ' . $db->quote('8-)') . ', ' . $db->quote('3.png') . ', 1')
+            ->values('4, ' . $db->quote(':-(') . ', ' . $db->quote('4.png') . ', 1')
+            ->values('5, ' . $db->quote(':(') . ', ' . $db->quote('5.png') . ', 1')
+            ->values('6, ' . $db->quote(':sad:') . ', ' . $db->quote('6.png') . ', 1')
+            ->values('7, ' . $db->quote(':cry:') . ', ' . $db->quote('7.png') . ', 1')
+            ->values('8, ' . $db->quote(':)') . ', ' . $db->quote('8.png') . ', 1')
+            ->values('9, ' . $db->quote(':-)') . ', ' . $db->quote('9.png') . ', 1')
+            ->values('10, ' . $db->quote(':cheer:') . ', ' . $db->quote('10.png') . ', 1')
+            ->values('11, ' . $db->quote(';)') . ', ' . $db->quote('11.png') . ', 1')
+            ->values('12, ' . $db->quote(';-)') . ', ' . $db->quote('12.png') . ', 1')
+            ->values('13, ' . $db->quote(':wink:') . ', ' . $db->quote('13.png') . ', 1')
+            ->values('14, ' . $db->quote(';-)') . ', ' . $db->quote('14.png') . ', 1')
+            ->values('15, ' . $db->quote(':P') . ', ' . $db->quote('15.png') . ', 1')
+            ->values('16, ' . $db->quote(':p') . ', ' . $db->quote('16.png') . ', 1')
+            ->values('17, ' . $db->quote(':-p') . ', ' . $db->quote('17.png') . ', 1')
+            ->values('18, ' . $db->quote(':-P') . ', ' . $db->quote('18.png') . ', 1')
+            ->values('19, ' . $db->quote(':razz:') . ', ' . $db->quote('19.png') . ', 1')
+            ->values('20, ' . $db->quote(':angry:') . ', ' . $db->quote('20.png') . ', 1')
+            ->values('21, ' . $db->quote(':mad:') . ', ' . $db->quote('21.png') . ', 1')
+            ->values('22, ' . $db->quote(':unsure:') . ', ' . $db->quote('22.png') . ', 1')
+            ->values('23, ' . $db->quote(':o') . ', ' . $db->quote('23.png') . ', 1');
 
         $queries[] = ['kunena_smileys', $query];
 

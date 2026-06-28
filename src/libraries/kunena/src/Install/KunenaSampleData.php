@@ -133,21 +133,55 @@ class KunenaSampleData
 
         $queries[] = ['kunena_categories', $query];
 
-        $query = "INSERT INTO `#__kunena_messages`
-		(`id`, `parent`, `thread`, `catid`, `userid`, `name`, `subject`, `time`, `ip`) VALUES
-		(1, 0, 1, 2, " . $db->quote($my->id) . ", 'Kunena', " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ", " . $posttime->toUnix() . ", '127.0.0.1');";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_messages'))
+            ->columns([
+                $db->quoteName('id'), 
+                $db->quoteName('parent'), 
+                $db->quoteName('thread'), 
+                $db->quoteName('catid'), 
+                $db->quoteName('userid'), 
+                $db->quoteName('name'), 
+                $db->quoteName('subject'), 
+                $db->quoteName('time'), 
+                $db->quoteName('ip')
+            ])
+            ->values(
+                '1, 0, 1, 2, ' . $db->quote($my->id) . ', ' . $db->quote('Kunena') . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ', ' . $posttime->toUnix() . ', ' . $db->quote('127.0.0.1')
+            );
 
         $queries[] = ['kunena_messages', $query];
 
-        $query = "INSERT INTO `#__kunena_messages_text`
-		(`mesid`, `message`) VALUES
-		(1, " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ");";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_messages_text'))
+            ->columns([$db->quoteName('mesid'), $db->quoteName('message')])
+            ->values('1, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')));
 
         $queries[] = ['kunena_messages_text', $query];
 
-        $query = "INSERT INTO `#__kunena_topics`
-		(`id`, `category_id`, `subject`, `posts`, `first_post_id`, `first_post_time`, `first_post_userid`, `first_post_message`, `first_post_guest_name`, `last_post_id`, `last_post_time`, `last_post_userid`, `last_post_message`, `last_post_guest_name`, `rating`, `params`) VALUES
-		(1, 2, " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ", 1, 1, " . $posttime->toUnix() . ", " . $db->quote($my->id) . ", " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ", 'Kunena', 1, " . $posttime->toUnix() . ", " . $db->quote($my->id) . ", " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ", 'Kunena', 1, '');";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_topics'))
+            ->columns([
+                $db->quoteName('id'), 
+                $db->quoteName('category_id'), 
+                $db->quoteName('subject'), 
+                $db->quoteName('posts'), 
+                $db->quoteName('first_post_id'), 
+                $db->quoteName('first_post_time'), 
+                $db->quoteName('first_post_userid'), 
+                $db->quoteName('first_post_message'), 
+                $db->quoteName('first_post_guest_name'), 
+                $db->quoteName('last_post_id'), 
+                $db->quoteName('last_post_time'), 
+                $db->quoteName('last_post_userid'), 
+                $db->quoteName('last_post_message'), 
+                $db->quoteName('last_post_guest_name'), 
+                $db->quoteName('rating'), 
+                $db->quoteName('params')
+            ])
+            ->values(
+                '1, 2, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ', 1, 1, ' . $posttime->toUnix() . ', ' . $db->quote($my->id) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ', ' . $db->quote('Kunena') . ', 1, ' . $posttime->toUnix() . ', ' . $db->quote($my->id) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ', ' . $db->quote('Kunena') . ', 1, ' . $db->quote('')
+            );
 
         $queries[] = ['kunena_topics', $query];
 
@@ -170,8 +204,14 @@ class KunenaSampleData
         }
 
         // Insert missing users
-        $query = "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline
-		FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_users'))
+            ->columns([$db->quoteName('userid'), $db->quoteName('showOnline')])
+            ->select($db->quoteName('a.id') . ' AS ' . $db->quoteName('userid'))
+            ->select('1 AS ' . $db->quoteName('showOnline'))
+            ->from($db->quoteName('#__users', 'a'))
+            ->join('LEFT', $db->quoteName('#__kunena_users', 'b') . ' ON ' . $db->quoteName('b.userid') . '=' . $db->quoteName('a.id'))
+            ->where($db->quoteName('b.userid') . ' IS NULL');
 
         $db->setQuery($query);
 
@@ -182,7 +222,10 @@ class KunenaSampleData
         }
         
         // Update number of posts of the user linked to the welcome message
-        $query = "UPDATE `#__kunena_users` SET `posts`=1 WHERE `userid`=" . $db->quote($my->id);
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_users'))
+            ->set($db->quoteName('posts') . ' = 1')
+            ->where($db->quoteName('userid') . ' = ' . $db->quote($my->id));
         
         $db->setQuery($query);
         

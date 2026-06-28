@@ -129,22 +129,24 @@ class KunenaSampleData
 
         $queries[] = ['kunena_aliases', $query];
 
+        $categoriesColumns = [
+            $db->quoteName('id'), $db->quoteName('parentid'), $db->quoteName('name'), $db->quoteName('alias'),
+            $db->quoteName('icon'), $db->quoteName('icon_id'), $db->quoteName('locked'), $db->quoteName('accesstype'),
+            $db->quoteName('access'), $db->quoteName('pubAccess'), $db->quoteName('pubRecurse'), $db->quoteName('adminAccess'),
+            $db->quoteName('adminRecurse'), $db->quoteName('ordering'), $db->quoteName('published'), $db->quoteName('channels'),
+            $db->quoteName('checked_out'), $db->quoteName('checked_out_time'), $db->quoteName('review'),
+            $db->quoteName('allowAnonymous'), $db->quoteName('postAnonymous'), $db->quoteName('hits'),
+            $db->quoteName('description'), $db->quoteName('headerdesc'), $db->quoteName('topictemplate'),
+            $db->quoteName('class_sfx'), $db->quoteName('allowPolls'), $db->quoteName('topicOrdering'),
+            $db->quoteName('iconset'), $db->quoteName('numTopics'), $db->quoteName('numPosts'),
+            $db->quoteName('last_topic_id'), $db->quoteName('last_post_id'), $db->quoteName('last_post_time'),
+            $db->quoteName('params'), $db->quoteName('allowRatings')
+        ];
+        
         // Category 1 - Section
         $query = $db->createQuery();
         $query->insert($db->quoteName('#__kunena_categories'))
-            ->columns([
-                $db->quoteName('id'), $db->quoteName('parentid'), $db->quoteName('name'), $db->quoteName('alias'), 
-                $db->quoteName('icon'), $db->quoteName('icon_id'), $db->quoteName('locked'), $db->quoteName('accesstype'), 
-                $db->quoteName('access'), $db->quoteName('pubAccess'), $db->quoteName('pubRecurse'), $db->quoteName('adminAccess'), 
-                $db->quoteName('adminRecurse'), $db->quoteName('ordering'), $db->quoteName('published'), $db->quoteName('channels'), 
-                $db->quoteName('checked_out'), $db->quoteName('checked_out_time'), $db->quoteName('review'), 
-                $db->quoteName('allowAnonymous'), $db->quoteName('postAnonymous'), $db->quoteName('hits'), 
-                $db->quoteName('description'), $db->quoteName('headerdesc'), $db->quoteName('topictemplate'), 
-                $db->quoteName('class_sfx'), $db->quoteName('allowPolls'), $db->quoteName('topicOrdering'), 
-                $db->quoteName('iconset'), $db->quoteName('numTopics'), $db->quoteName('numPosts'), 
-                $db->quoteName('last_topic_id'), $db->quoteName('last_post_id'), $db->quoteName('last_post_time'), 
-                $db->quoteName('params'), $db->quoteName('allowRatings')
-            ])
+        ->columns($categoriesColumns)
             ->values(
                 '1, 0, ' . $db->quote($section) . ', ' . $db->quote($section_alias) . ', ' . $db->quote('') . ', 0, 0, ' . $db->quote('joomla.group') . ', 1, 1, 1, 8, 1, 1, 1, ' . $db->quote('THIS') . ', 0, ' . $db->quote('0000-00-00 00:00:00') . ', 0, 0, 0, 0, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')) . ', ' . $db->quote('') . ', ' . $db->quote('') . ', 0, ' . $db->quote('lastpost') . ', ' . $db->quote('default') . ', 0, 0, 0, 0, 0, ' . $db->quote('{"display":{"index":{"parent":"3","children":"3"}}}') . ', 0'
             );
@@ -154,19 +156,7 @@ class KunenaSampleData
         // Category 2
         $query = $db->createQuery();
         $query->insert($db->quoteName('#__kunena_categories'))
-            ->columns([
-                $db->quoteName('id'), $db->quoteName('parentid'), $db->quoteName('name'), $db->quoteName('alias'), 
-                $db->quoteName('icon'), $db->quoteName('icon_id'), $db->quoteName('locked'), $db->quoteName('accesstype'), 
-                $db->quoteName('access'), $db->quoteName('pubAccess'), $db->quoteName('pubRecurse'), $db->quoteName('adminAccess'), 
-                $db->quoteName('adminRecurse'), $db->quoteName('ordering'), $db->quoteName('published'), $db->quoteName('channels'), 
-                $db->quoteName('checked_out'), $db->quoteName('checked_out_time'), $db->quoteName('review'), 
-                $db->quoteName('allowAnonymous'), $db->quoteName('postAnonymous'), $db->quoteName('hits'), 
-                $db->quoteName('description'), $db->quoteName('headerdesc'), $db->quoteName('topictemplate'), 
-                $db->quoteName('class_sfx'), $db->quoteName('allowPolls'), $db->quoteName('topicOrdering'), 
-                $db->quoteName('iconset'), $db->quoteName('numTopics'), $db->quoteName('numPosts'), 
-                $db->quoteName('last_topic_id'), $db->quoteName('last_post_id'), $db->quoteName('last_post_time'), 
-                $db->quoteName('params'), $db->quoteName('allowRatings')
-            ])
+        ->columns($categoriesColumns)
             ->values(
                 '2, 1, ' . $db->quote($cat1) . ', ' . $db->quote($cat1_alias) . ', ' . $db->quote('') . ', 0, 0, ' . $db->quote('joomla.group') . ', 1, 1, 1, 8, 1, 1, 1, ' . $db->quote('THIS') . ', 0, ' . $db->quote('0000-00-00 00:00:00') . ', 0, 0, 0, 0, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')) . ', ' . $db->quote('') . ', ' . $db->quote('') . ', 0, ' . $db->quote('lastpost') . ', ' . $db->quote('default') . ', 1, 1, 1, 1, ' . $posttime->toUnix() . ', ' . $db->quote('{"display":{"index":{"parent":"3","children":"3"}}}') . ', 0'
             );
@@ -176,19 +166,7 @@ class KunenaSampleData
         // Category 3
         $query = $db->createQuery();
         $query->insert($db->quoteName('#__kunena_categories'))
-            ->columns([
-                $db->quoteName('id'), $db->quoteName('parentid'), $db->quoteName('name'), $db->quoteName('alias'), 
-                $db->quoteName('icon'), $db->quoteName('icon_id'), $db->quoteName('locked'), $db->quoteName('accesstype'), 
-                $db->quoteName('access'), $db->quoteName('pubAccess'), $db->quoteName('pubRecurse'), $db->quoteName('adminAccess'), 
-                $db->quoteName('adminRecurse'), $db->quoteName('ordering'), $db->quoteName('published'), $db->quoteName('channels'), 
-                $db->quoteName('checked_out'), $db->quoteName('checked_out_time'), $db->quoteName('review'), 
-                $db->quoteName('allowAnonymous'), $db->quoteName('postAnonymous'), $db->quoteName('hits'), 
-                $db->quoteName('description'), $db->quoteName('headerdesc'), $db->quoteName('topictemplate'), 
-                $db->quoteName('class_sfx'), $db->quoteName('allowPolls'), $db->quoteName('topicOrdering'), 
-                $db->quoteName('iconset'), $db->quoteName('numTopics'), $db->quoteName('numPosts'), 
-                $db->quoteName('last_topic_id'), $db->quoteName('last_post_id'), $db->quoteName('last_post_time'), 
-                $db->quoteName('params'), $db->quoteName('allowRatings')
-            ])
+        ->columns($categoriesColumns)
             ->values(
                 '3, 1, ' . $db->quote($cat2) . ', ' . $db->quote($cat2_alias) . ', ' . $db->quote('') . ', 0, 0, ' . $db->quote('joomla.group') . ', 1, 1, 1, 8, 1, 2, 1, ' . $db->quote('THIS') . ', 0, ' . $db->quote('0000-00-00 00:00:00') . ', 0, 0, 0, 0, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')) . ', ' . $db->quote('') . ', ' . $db->quote('') . ', 1, ' . $db->quote('lastpost') . ', ' . $db->quote('default') . ', 0, 0, 0, 0, 0, ' . $db->quote('{"display":{"index":{"parent":"3","children":"3"}}}') . ', 0'
             );

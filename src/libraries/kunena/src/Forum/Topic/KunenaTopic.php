@@ -1010,19 +1010,22 @@ class KunenaTopic extends KunenaDatabaseObject
 
             // Delete thank yous
             $query = $db->createQuery();
-            $query->delete($db->quoteName('t'))
-                ->from($db->quoteName('#__kunena_thankyou', 't'))
-                ->join('INNER', $db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.postid'))
-                ->where($db->quoteName('m.thread') . ' = :thread');
+            $query->delete($db->quoteName('#__kunena_thankyou'))
+                ->where($db->quoteName('postid') . ' IN (SELECT ' . $db->quoteName('id') . ' FROM ' . $db->quoteName('#__kunena_messages') . ' WHERE ' . $db->quoteName('thread') . ' = :thread)');
             $query->bind(':thread', $this->id, ParameterType::INTEGER);
             $queries[] = $query;
 
             // Delete all messages
             $query = $db->createQuery();
-            $query->delete($db->quoteName('m'))
-                ->from($db->quoteName('#__kunena_messages', 'm'))
-                ->join('INNER', $db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
-                ->where($db->quoteName('m.thread') . ' = :thread');
+            $query->delete($db->quoteName('#__kunena_messages'))
+                ->where($db->quoteName('thread') . ' = :thread');
+            $query->bind(':thread', $this->id, ParameterType::INTEGER);
+            $queries[] = $query;
+
+            // Delete all messages text
+            $query = $db->createQuery();
+            $query->delete($db->quoteName('#__kunena_messages_text'))
+                ->where($db->quoteName('mesid') . ' IN (SELECT ' . $db->quoteName('id') . ' FROM ' . $db->quoteName('#__kunena_messages') . ' WHERE ' . $db->quoteName('thread') . ' = :thread)');
             $query->bind(':thread', $this->id, ParameterType::INTEGER);
             $queries[] = $query;
 

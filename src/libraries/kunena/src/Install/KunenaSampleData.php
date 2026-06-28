@@ -170,8 +170,14 @@ class KunenaSampleData
         }
 
         // Insert missing users
-        $query = "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline
-		FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_users'))
+            ->columns([$db->quoteName('userid'), $db->quoteName('showOnline')])
+            ->select($db->quoteName('a.id') . ' AS ' . $db->quoteName('userid'))
+            ->select('1 AS ' . $db->quoteName('showOnline'))
+            ->from($db->quoteName('#__users', 'a'))
+            ->join('LEFT', $db->quoteName('#__kunena_users', 'b') . ' ON ' . $db->quoteName('b.userid') . '=' . $db->quoteName('a.id'))
+            ->where($db->quoteName('b.userid') . ' IS NULL');
 
         $db->setQuery($query);
 
@@ -182,7 +188,10 @@ class KunenaSampleData
         }
         
         // Update number of posts of the user linked to the welcome message
-        $query = "UPDATE `#__kunena_users` SET `posts`=1 WHERE `userid`=" . $db->quote($my->id);
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_users'))
+            ->set($db->quoteName('posts') . ' = 1')
+            ->where($db->quoteName('userid') . ' = ' . $db->quote($my->id));
         
         $db->setQuery($query);
         

@@ -139,9 +139,10 @@ class KunenaSampleData
 
         $queries[] = ['kunena_messages', $query];
 
-        $query = "INSERT INTO `#__kunena_messages_text`
-		(`mesid`, `message`) VALUES
-		(1, " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')) . ");";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_messages_text'))
+            ->columns([$db->quoteName('mesid'), $db->quoteName('message')])
+            ->values('1, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')));
 
         $queries[] = ['kunena_messages_text', $query];
 

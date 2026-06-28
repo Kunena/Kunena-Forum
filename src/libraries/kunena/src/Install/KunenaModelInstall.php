@@ -1204,7 +1204,12 @@ class KunenaModelInstall extends BaseDatabaseModel
         if ($versionprefix) {
             // Version table exists, try to get installed version
             $state = $state ? " WHERE state=''" : "";
-            $this->db->setQuery("SELECT * FROM " . $this->db->quoteName($this->db->getPrefix() . $versionprefix . 'version') . $state . " ORDER BY `id` DESC", 0, 1);
+            $query = $this->db->createQuery();
+            $query->select('*')
+                ->from($this->db->quoteName($this->db->getPrefix() . $versionprefix . 'version'))
+                ->where($state ? $this->db->quoteName('state') . '=\'' . '' . '\'' : '1=1')
+                ->order($this->db->quoteName('id') . ' DESC');
+            $this->db->setQuery($query, 0, 1);
 
             try {
                 $version = $this->db->loadObject();
@@ -2199,7 +2204,9 @@ class KunenaModelInstall extends BaseDatabaseModel
             $cfgtable = "{$version->prefix}config";
 
             if (isset($tables[$cfgtable])) {
-                $this->db->setQuery("SELECT * FROM #__{$cfgtable}");
+                $query = $this->db->createQuery();
+                $query->select('*')->from($this->db->quoteName("#__{$cfgtable}"));
+                $this->db->setQuery($query);
                 $config->bind((array) $this->db->loadAssoc());
                 $config->id = 1;
             }
@@ -2337,8 +2344,13 @@ class KunenaModelInstall extends BaseDatabaseModel
             'components/com_fireboard/avatars',
         ];
 
-        $query = "SELECT COUNT(*) FROM `#__kunena_users`
-			WHERE userid>{$this->db->quote($stats->current)} AND avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
+        $query = $this->db->createQuery();
+        $query->select('COUNT(*)')
+            ->from($this->db->quoteName('#__kunena_users'))
+            ->where($this->db->quoteName('userid') . ' > ' . $this->db->quote($stats->current))
+            ->where($this->db->quoteName('avatar') . ' != ' . $this->db->quote(''))
+            ->where($this->db->quoteName('avatar') . ' NOT LIKE ' . $this->db->quote('gallery/%'))
+            ->where($this->db->quoteName('avatar') . ' NOT LIKE ' . $this->db->quote('users/%'));
         $this->db->setQuery($query);
 
         try {
@@ -2351,8 +2363,13 @@ class KunenaModelInstall extends BaseDatabaseModel
             return true;
         }
 
-        $query = "SELECT userid, avatar FROM `#__kunena_users`
-			WHERE userid>{$this->db->quote($stats->current)} AND avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
+        $query = $this->db->createQuery();
+        $query->select([$this->db->quoteName('userid'), $this->db->quoteName('avatar')])
+            ->from($this->db->quoteName('#__kunena_users'))
+            ->where($this->db->quoteName('userid') . ' > ' . $this->db->quote($stats->current))
+            ->where($this->db->quoteName('avatar') . ' != ' . $this->db->quote(''))
+            ->where($this->db->quoteName('avatar') . ' NOT LIKE ' . $this->db->quote('gallery/%'))
+            ->where($this->db->quoteName('avatar') . ' NOT LIKE ' . $this->db->quote('users/%'));
         $query->setLimit(1023);
         $this->db->setQuery($query);
 

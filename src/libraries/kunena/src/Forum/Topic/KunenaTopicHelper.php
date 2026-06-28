@@ -609,12 +609,11 @@ abstract class KunenaTopicHelper
         $rows = $db->getAffectedRows();
 
         // Find out if there are deleted topics with visible replies.
-        $query = "UPDATE #__kunena_topics AS tt
-			INNER JOIN (
-				SELECT m.thread, MIN(m.hold) AS hold FROM #__kunena_messages AS m WHERE m.hold IN (0,1) {$threads} GROUP BY thread
-			) AS c ON tt.id=c.thread
-			SET tt.hold = c.hold
-			WHERE tt.moved_id=0 {$topics}";
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_topics', 'tt'))
+            ->join('INNER', '(' . $db->quoteName('m.thread') . ', MIN(' . $db->quoteName('m.hold') . ') AS ' . $db->quoteName('hold') . ' FROM ' . $db->quoteName('#__kunena_messages', 'm') . ' WHERE ' . $db->quoteName('m.hold') . ' IN (0,1) ' . $threads . ' GROUP BY ' . $db->quoteName('thread') . ') AS c ON ' . $db->quoteName('tt.id') . '=' . $db->quoteName('c.thread'))
+            ->set($db->quoteName('tt.hold') . ' = ' . $db->quoteName('c.hold'))
+            ->where($db->quoteName('tt.moved_id') . '=0 ' . $topics);
         $db->setQuery($query);
 
         try {

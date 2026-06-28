@@ -153,7 +153,9 @@ class KunenaSampleData
 
         foreach ($queries as $query) {
             // Only insert sample/default data if table is empty
-            $db->setQuery("SELECT * FROM " . $db->quoteName($db->getPrefix() . $query[0]), 0, 1);
+            $checkQuery = $db->createQuery();
+            $checkQuery->select('*')->from($db->quoteName($db->getPrefix() . $query[0]));
+            $db->setQuery($checkQuery, 0, 1);
             $filled = $db->loadObject();
 
             if (!$filled) {

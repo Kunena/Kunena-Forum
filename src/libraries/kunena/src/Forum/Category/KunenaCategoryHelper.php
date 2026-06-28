@@ -905,32 +905,64 @@ abstract class KunenaCategoryHelper
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
 
-        $rows    = 0;
-        $queries = [];
-
+        $rows = 0;
         // Fix wrong category id in aliases
-        $queries[] = "UPDATE #__kunena_aliases AS a INNER JOIN #__kunena_categories AS c ON a.alias = c.alias SET a.item = c.id WHERE a.type='catid'";
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_aliases', 'a'))
+            ->join('INNER', $db->quoteName('#__kunena_categories', 'c') . ' ON ' . $db->quoteName('a.alias') . ' = ' . $db->quoteName('c.alias'))
+            ->set($db->quoteName('a.item') . ' = ' . $db->quoteName('c.id'))
+            ->where($db->quoteName('a.type') . ' = ' . $db->quote('catid'));
+        
+        $db->setQuery($query);
 
-        // Delete aliases from non-existing categories
-        $queries[] = "DELETE a FROM #__kunena_aliases AS a LEFT JOIN #__kunena_categories AS c ON a.item = c.id WHERE a.type='catid' AND c.id IS NULL";
-
-        // Add missing category aliases
-        $queries[] = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) SELECT alias, 'catid' AS type, id AS item FROM #__kunena_categories WHERE alias!=''";
-
-        foreach ($queries as $query) {
-            $db->setQuery($query);
-
-            try {
-                $db->execute();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-
-                return false;
-            }
-
-            $rows += $db->getAffectedRows();
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+            return false;
         }
 
+        $rows += $db->getAffectedRows();
+
+        // Delete aliases from non-existing categories
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('a'))
+            ->from($db->quoteName('#__kunena_aliases', 'a'))
+            ->join('LEFT', $db->quoteName('#__kunena_categories', 'c') . ' ON ' . $db->quoteName('a.item') . ' = ' . $db->quoteName('c.id'))
+            ->where($db->quoteName('a.type') . ' = ' . $db->quote('catid'))
+            ->where($db->quoteName('c.id') . ' IS NULL');
+        
+        $db->setQuery($query);
+
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+            return false;
+        }
+
+        $rows += $db->getAffectedRows();
+
+        // Add missing category aliases
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_aliases'))
+            ->columns([$db->quoteName('alias'), $db->quoteName('type'), $db->quoteName('item')])
+            ->select($db->quoteName('alias'))
+            ->select($db->quote('catid') . ' AS ' . $db->quoteName('type'))
+            ->select($db->quoteName('id') . ' AS ' . $db->quoteName('item'))
+            ->from($db->quoteName('#__kunena_categories'))
+            ->where($db->quoteName('alias') . ' != ' . $db->quote(''));
+        
+        $db->setQuery($query);
+
+        try {
+            $db->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+            return false;
+        }
+
+        $rows += $db->getAffectedRows();
         return $rows;
     }
 

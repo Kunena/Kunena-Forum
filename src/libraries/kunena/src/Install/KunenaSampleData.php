@@ -133,9 +133,22 @@ class KunenaSampleData
 
         $queries[] = ['kunena_categories', $query];
 
-        $query = "INSERT INTO `#__kunena_messages`
-		(`id`, `parent`, `thread`, `catid`, `userid`, `name`, `subject`, `time`, `ip`) VALUES
-		(1, 0, 1, 2, " . $db->quote($my->id) . ", 'Kunena', " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ", " . $posttime->toUnix() . ", '127.0.0.1');";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_messages'))
+            ->columns([
+                $db->quoteName('id'), 
+                $db->quoteName('parent'), 
+                $db->quoteName('thread'), 
+                $db->quoteName('catid'), 
+                $db->quoteName('userid'), 
+                $db->quoteName('name'), 
+                $db->quoteName('subject'), 
+                $db->quoteName('time'), 
+                $db->quoteName('ip')
+            ])
+            ->values(
+                '1, 0, 1, 2, ' . $db->quote($my->id) . ', ' . $db->quote('Kunena') . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')) . ', ' . $posttime->toUnix() . ', ' . $db->quote('127.0.0.1')
+            );
 
         $queries[] = ['kunena_messages', $query];
 

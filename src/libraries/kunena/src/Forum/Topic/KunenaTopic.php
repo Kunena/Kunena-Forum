@@ -972,30 +972,66 @@ class KunenaTopic extends KunenaDatabaseObject
             $db = Factory::getContainer()->get('DatabaseDriver');
 
             // Delete user topics
-            $queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id={$db->quote($this->id)}";
+            $query = $db->createQuery();
+            $query->delete($db->quoteName('#__kunena_user_topics'))
+                ->where($db->quoteName('topic_id') . ' = :topic_id');
+            $query->bind(':topic_id', $this->id, ParameterType::INTEGER);
+            $queries[] = $query;
 
             // Delete user read
-            $queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id={$db->quote($this->id)}";
+            $query = $db->createQuery();
+            $query->delete($db->quoteName('#__kunena_user_read'))
+                ->where($db->quoteName('topic_id') . ' = :topic_id');
+            $query->bind(':topic_id', $this->id, ParameterType::INTEGER);
+            $queries[] = $query;
 
             if ($this->poll_id) {
                 // Delete poll (users)
-                $queries[] = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->quote($this->poll_id)}";
+                $query = $db->createQuery();
+                $query->delete($db->quoteName('#__kunena_polls_users'))
+                    ->where($db->quoteName('pollid') . ' = :pollid');
+                $query->bind(':pollid', $this->poll_id, ParameterType::INTEGER);
+                $queries[] = $query;
 
                 // Delete poll (options)
-                $queries[] = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->quote($this->poll_id)}";
+                $query = $db->createQuery();
+                $query->delete($db->quoteName('#__kunena_polls_options'))
+                    ->where($db->quoteName('pollid') . ' = :pollid');
+                $query->bind(':pollid', $this->poll_id, ParameterType::INTEGER);
+                $queries[] = $query;
 
                 // Delete poll
-                $queries[] = "DELETE FROM #__kunena_polls WHERE id={$db->quote($this->poll_id)}";
+                $query = $db->createQuery();
+                $query->delete($db->quoteName('#__kunena_polls'))
+                    ->where($db->quoteName('id') . ' = :id');
+                $query->bind(':id', $this->poll_id, ParameterType::INTEGER);
+                $queries[] = $query;
             }
 
             // Delete thank yous
-            $queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.thread={$db->quote($this->id)}";
+            $query = $db->createQuery();
+            $query->delete($db->quoteName('t'))
+                ->from($db->quoteName('#__kunena_thankyou', 't'))
+                ->join('INNER', $db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.postid'))
+                ->where($db->quoteName('m.thread') . ' = :thread');
+            $query->bind(':thread', $this->id, ParameterType::INTEGER);
+            $queries[] = $query;
 
             // Delete all messages
-            $queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread={$db->quote($this->id)}";
+            $query = $db->createQuery();
+            $query->delete($db->quoteName('m'))
+                ->from($db->quoteName('#__kunena_messages', 'm'))
+                ->join('INNER', $db->quoteName('#__kunena_messages_text', 't') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.mesid'))
+                ->where($db->quoteName('m.thread') . ' = :thread');
+            $query->bind(':thread', $this->id, ParameterType::INTEGER);
+            $queries[] = $query;
 
             // Delete rating
-            $queries[] = "DELETE FROM #__kunena_rate WHERE topic_id={$db->quote($this->id)}";
+            $query = $db->createQuery();
+            $query->delete($db->quoteName('#__kunena_rate'))
+                ->where($db->quoteName('topic_id') . ' = :topic_id');
+            $query->bind(':topic_id', $this->id, ParameterType::INTEGER);
+            $queries[] = $query;
 
             foreach ($queries as $query) {
                 $db->setQuery($query);

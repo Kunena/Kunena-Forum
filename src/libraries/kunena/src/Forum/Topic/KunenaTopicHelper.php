@@ -443,47 +443,91 @@ abstract class KunenaTopicHelper
             return 0;
         }
 
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
         if (\is_array($ids)) {
-            $idlist = implode(',', $ids);
+            // For array of IDs, we need to create a proper IN clause
+            $placeholders = [];
+            foreach ($ids as $id) {
+                $placeholders[] = (int) $id;
+            }
+            $idlist = implode(',', $placeholders);
         } else {
             $idlist = (int) $ids;
         }
+        
+        $queries = [];
 
         // Delete user topics
-        $queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id IN ({$idlist})";
+        $query = $db->createQuery();
+        $query->delete('#__kunena_user_topics')
+              ->where('topic_id IN (' . $idlist . ')');
+        $queries [] = $query;
 
         // Delete user read
-        $queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id IN ({$idlist})";
+        $query = $db->createQuery();
+        $query->delete('#__kunena_user_read')
+              ->where('topic_id IN (' . $idlist . ')');
+        $queries [] = $query;
 
         // Delete thank yous
-        $queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.thread IN ({$idlist})";
+        $query = $db->createQuery();
+        $query->delete('t')
+              ->from('#__kunena_thankyou AS t')
+              ->join('INNER', '#__kunena_messages AS m ON m.id=t.postid')
+              ->where('m.thread IN (' . $idlist . ')');
+        $queries [] = $query;
 
         // Delete poll users (if not shadow)
-        $queries[] = "DELETE p FROM #__kunena_polls_users AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.id IN ({$idlist}) AND tt.moved_id=0";
+        $query = $db->createQuery();
+        $query->delete('p')
+              ->from('#__kunena_polls_users AS p')
+              ->join('INNER', '#__kunena_topics AS tt ON tt.poll_id=p.pollid')
+              ->where('tt.id IN (' . $idlist . ')')
+              ->where('tt.moved_id=0');
+        $queries [] = $query;
 
         // Delete poll options (if not shadow)
-        $queries[] = "DELETE p FROM #__kunena_polls_options AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.id IN ({$idlist}) AND tt.moved_id=0";
+        $query = $db->createQuery();
+        $query->delete('p')
+              ->from('#__kunena_polls_options AS p')
+              ->join('INNER', '#__kunena_topics AS tt ON tt.poll_id=p.pollid')
+              ->where('tt.id IN (' . $idlist . ')')
+              ->where('tt.moved_id=0');
+        $queries [] = $query;
 
         // Delete polls (if not shadow)
-        $queries[] = "DELETE p FROM #__kunena_polls AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.id WHERE tt.id IN ({$idlist}) AND tt.moved_id=0";
+        $query = $db->createQuery();
+        $query->delete('p')
+              ->from('#__kunena_polls AS p')
+              ->join('INNER', '#__kunena_topics AS tt ON tt.poll_id=p.id')
+              ->where('tt.id IN (' . $idlist . ')')
+              ->where('tt.moved_id=0');
+        $queries [] = $query;
 
         // Delete messages
-        $queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread IN ({$idlist})";
-
+        $query = $db->createQuery();
+        $query->delete('m, t')
+              ->from('#__kunena_messages AS m')
+              ->join('INNER', '#__kunena_messages_text AS t ON m.id=t.mesid')
+              ->where('m.thread IN (' . $idlist . ')');
+        $queries [] = $query;
+              
         // TODO: delete attachments
         // Delete topics
-        $queries[] = "DELETE FROM #__kunena_topics WHERE id IN ({$idlist})";
-
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
+        $query = $db->createQuery();
+        $query->delete('#__kunena_topics')
+              ->where('id IN (' . $idlist . ')');
+        self::executeQuery($db, $query);
+        
         foreach ($queries as $query) {
             $db->setQuery($query);
-
+            
             try {
                 $db->execute();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
-
+                
                 return false;
             }
         }

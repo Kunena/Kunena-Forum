@@ -1797,20 +1797,6 @@ HTML;
     }
 
     /**
-     * @param   bool  $topic_ids  topics id's
-     *
-     * @return string
-     *
-     * @throws \Exception
-     * @since   Kunena 6.0
-     * @deprecated  Kunena 6.3 Use getCaptcha() instead
-     */
-    public function recaptcha(bool $topic_ids = false): string
-    {
-        return $this->getCaptcha();
-    }
-
-    /**
      * Function to get the Global Configured Captcha
      * 
      * @return string

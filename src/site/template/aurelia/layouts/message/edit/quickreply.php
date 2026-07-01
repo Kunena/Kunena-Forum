@@ -52,7 +52,7 @@ $quick    = $template->params->get('quick');
 $editor   = $template->params->get('editor');
 
 if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
-    $this->captchaDisplay = $template->recaptcha($message->id);
+    $this->captchaDisplay = $template->getCaptcha();
     $this->captchaEnabled = true;
 }
 ?>

@@ -908,10 +908,10 @@ abstract class KunenaCategoryHelper
         $rows = 0;
         // Fix wrong category id in aliases
         $query = $db->createQuery();
-        $query->update($db->quoteName('#__kunena_aliases', 'a'))
-            ->join('INNER', $db->quoteName('#__kunena_categories', 'c') . ' ON ' . $db->quoteName('a.alias') . ' = ' . $db->quoteName('c.alias'))
-            ->set($db->quoteName('a.item') . ' = ' . $db->quoteName('c.id'))
-            ->where($db->quoteName('a.type') . ' = ' . $db->quote('catid'));
+        $query->update($db->quoteName('#__kunena_aliases', 'ka'))
+            ->join('INNER', $db->quoteName('#__kunena_categories', 'kc') . ' ON ' . $db->quoteName('ka.alias') . ' = ' . $db->quoteName('kc.alias'))
+            ->set($db->quoteName('ka.item') . ' = ' . $db->quoteName('kc.id'))
+            ->where($db->quoteName('ka.type') . ' = ' . $db->quote('kc.catid'));
         
         $db->setQuery($query);
 
@@ -925,13 +925,8 @@ abstract class KunenaCategoryHelper
         $rows += $db->getAffectedRows();
 
         // Delete aliases from non-existing categories
-        $query = $db->createQuery();
-        $query->delete($db->quoteName('a'))
-            ->from($db->quoteName('#__kunena_aliases', 'a'))
-            ->join('LEFT', $db->quoteName('#__kunena_categories', 'c') . ' ON ' . $db->quoteName('a.item') . ' = ' . $db->quoteName('c.id'))
-            ->where($db->quoteName('a.type') . ' = ' . $db->quote('catid'))
-            ->where($db->quoteName('c.id') . ' IS NULL');
-        
+        $query = "DELETE a FROM #__kunena_aliases AS a LEFT JOIN #__kunena_categories AS c ON a.item = c.id WHERE a.type='catid' AND c.id IS NULL";
+
         $db->setQuery($query);
 
         try {
@@ -944,14 +939,7 @@ abstract class KunenaCategoryHelper
         $rows += $db->getAffectedRows();
 
         // Add missing category aliases
-        $query = $db->createQuery();
-        $query->insert($db->quoteName('#__kunena_aliases'))
-            ->columns([$db->quoteName('alias'), $db->quoteName('type'), $db->quoteName('item')])
-            ->select($db->quoteName('alias'))
-            ->select($db->quote('catid') . ' AS ' . $db->quoteName('type'))
-            ->select($db->quoteName('id') . ' AS ' . $db->quoteName('item'))
-            ->from($db->quoteName('#__kunena_categories'))
-            ->where($db->quoteName('alias') . ' != ' . $db->quote(''));
+        $query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) SELECT alias, 'catid' AS type, id AS item FROM #__kunena_categories WHERE alias!=''";        
         
         $db->setQuery($query);
 

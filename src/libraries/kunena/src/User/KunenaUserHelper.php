@@ -619,15 +619,18 @@ abstract class KunenaUserHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         // Update user post count
+        // Create the SELECT query for user post counts
+        $selectQuery = $db->createQuery();
+        $selectQuery->select($db->quoteName('user_id') . ' AS ' . $db->quoteName('userid'))
+            ->select('SUM(' . $db->quoteName('posts') . ') AS ' . $db->quoteName('posts'))
+            ->from($db->quoteName('#__kunena_user_topics'))
+            ->group($db->quoteName('user_id'));
+
+        // Create the INSERT query using the SELECT query
         $query = $db->createQuery();
         $query->insert($db->quoteName('#__kunena_users'))
             ->columns([$db->quoteName('userid'), $db->quoteName('posts')])
-            ->select($db->quoteName('kut.user_id') . ' AS ' . $db->quoteName('userid'))
-            ->select('SUM(' . $db->quoteName('kut.posts') . ') AS ' . $db->quoteName('posts'))
-            ->from($db->quoteName('#__kunena_user_topics', 'kut'))
-            ->join('INNER', $db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('kut.user_id') . '=' . $db->quoteName('ku.userid'))
-            ->group($db->quoteName('user_id'));
-        $db->setQuery($query);
+            ->values($selectQuery) . ' ON DUPLICATE KEY UPDATE ' . $db->quoteName('posts') . '=VALUES(' . $db->quoteName('posts') . ')';
 
         try {
             $db->execute();

@@ -652,12 +652,13 @@ abstract class KunenaTopicHelper
 
         $rows = $db->getAffectedRows();
 
-        // Find out if there are deleted topics with visible replies.
-        $query = $db->createQuery();
-        $query->update($db->quoteName('#__kunena_topics', 'tt'))
-            ->join('INNER', '(' . $db->quoteName('m.thread') . ', MIN(' . $db->quoteName('m.hold') . ') AS ' . $db->quoteName('hold') . ' FROM ' . $db->quoteName('#__kunena_messages', 'm') . ' WHERE ' . $db->quoteName('m.hold') . ' IN (0,1) ' . $threads . ' GROUP BY ' . $db->quoteName('thread') . ') AS c ON ' . $db->quoteName('tt.id') . '=' . $db->quoteName('c.thread'))
-            ->set($db->quoteName('tt.hold') . ' = ' . $db->quoteName('c.hold'))
-            ->where($db->quoteName('tt.moved_id') . '=0 ' . $topics);
+        // Find out if there are deleted topics with visible replies.            
+        $query = "UPDATE #__kunena_topics AS tt
+			INNER JOIN (
+				SELECT m.thread, MIN(m.hold) AS hold FROM #__kunena_messages AS m WHERE m.hold IN (0,1) {$threads} GROUP BY thread
+			) AS c ON tt.id=c.thread
+			SET tt.hold = c.hold
+			WHERE tt.moved_id=0 {$topics}";
         $db->setQuery($query);
 
         try {
@@ -671,32 +672,37 @@ abstract class KunenaTopicHelper
         $rows += $db->getAffectedRows();
 
         // Recount total posts, total attachments and update first & last post information (by time)
-        $query = "UPDATE #__kunena_topics AS tt
-			INNER JOIN (
-				SELECT m.thread, m.hold, COUNT(DISTINCT m.id) AS posts, COUNT(a.id) as attachments, MIN(m.time) AS mintime, MAX(m.time) AS maxtime
-				FROM #__kunena_messages AS m
-				LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
-				WHERE m.moved=0 {$threads}
-				GROUP BY m.thread, m.hold
-			) AS c ON tt.id=c.thread
-			INNER JOIN #__kunena_messages AS mmin ON c.thread=mmin.thread AND mmin.hold=tt.hold AND mmin.time=c.mintime
-			INNER JOIN #__kunena_messages AS mmax ON c.thread=mmax.thread AND mmax.hold=tt.hold AND mmax.time=c.maxtime
-			INNER JOIN #__kunena_messages_text AS tmin ON tmin.mesid=mmin.id
-			INNER JOIN #__kunena_messages_text AS tmax ON tmax.mesid=mmax.id
-			SET tt.posts=c.posts,
-				tt.attachments=c.attachments,
-				tt.first_post_id = mmin.id,
-				tt.first_post_time = mmin.time,
-				tt.first_post_userid = mmin.userid,
-				tt.first_post_message = tmin.message,
-				tt.first_post_guest_name = mmin.name,
-				tt.last_post_id = mmax.id,
-				tt.last_post_time = mmax.time,
-				tt.last_post_userid = mmax.userid,
-				tt.last_post_message = tmax.message,
-				tt.last_post_guest_name = mmax.name
-			WHERE moved_id=0 {$topics}";
-        $db->setQuery($query);
+        $query = $db->createQuery();
+        $query->update($db->quoteName('#__kunena_topics', 'tt'))
+            ->join('INNER', '(' . 
+                $db->quoteName('m.thread') . ', ' . 
+                $db->quoteName('m.hold') . ', ' . 
+                'COUNT(DISTINCT ' . $db->quoteName('m.id') . ') AS ' . $db->quoteName('posts') . ', ' . 
+                'COUNT(' . $db->quoteName('a.id') . ') as ' . $db->quoteName('attachments') . ', ' . 
+                'MIN(' . $db->quoteName('m.time') . ') AS ' . $db->quoteName('mintime') . ', ' . 
+                'MAX(' . $db->quoteName('m.time') . ') AS ' . $db->quoteName('maxtime') . ' ' . 
+                'FROM ' . $db->quoteName('#__kunena_messages', 'm') . ' ' . 
+                'LEFT JOIN ' . $db->quoteName('#__kunena_attachments', 'a') . ' ON ' . $db->quoteName('m.id') . '=' . $db->quoteName('a.mesid') . ' ' . 
+                'WHERE ' . $db->quoteName('m.moved') . '=0 ' . $threads . ' ' . 
+                'GROUP BY ' . $db->quoteName('m.thread') . ', ' . $db->quoteName('m.hold') . 
+            ') AS c ON ' . $db->quoteName('tt.id') . '=' . $db->quoteName('c.thread'))
+            ->join('INNER', $db->quoteName('#__kunena_messages', 'mmin') . ' ON ' . $db->quoteName('c.thread') . '=' . $db->quoteName('mmin.thread') . ' AND ' . $db->quoteName('mmin.hold') . '=' . $db->quoteName('tt.hold') . ' AND ' . $db->quoteName('mmin.time') . '=' . $db->quoteName('c.mintime'))
+            ->join('INNER', $db->quoteName('#__kunena_messages', 'mmax') . ' ON ' . $db->quoteName('c.thread') . '=' . $db->quoteName('mmax.thread') . ' AND ' . $db->quoteName('mmax.hold') . '=' . $db->quoteName('tt.hold') . ' AND ' . $db->quoteName('mmax.time') . '=' . $db->quoteName('c.maxtime'))
+            ->join('INNER', $db->quoteName('#__kunena_messages_text', 'tmin') . ' ON ' . $db->quoteName('tmin.mesid') . '=' . $db->quoteName('mmin.id'))
+            ->join('INNER', $db->quoteName('#__kunena_messages_text', 'tmax') . ' ON ' . $db->quoteName('tmax.mesid') . '=' . $db->quoteName('mmax.id'))
+            ->set($db->quoteName('tt.posts') . '=' . $db->quoteName('c.posts'))
+            ->set($db->quoteName('tt.attachments') . '=' . $db->quoteName('c.attachments'))
+            ->set($db->quoteName('tt.first_post_id') . '=' . $db->quoteName('mmin.id'))
+            ->set($db->quoteName('tt.first_post_time') . '=' . $db->quoteName('mmin.time'))
+            ->set($db->quoteName('tt.first_post_userid') . '=' . $db->quoteName('mmin.userid'))
+            ->set($db->quoteName('tt.first_post_message') . '=' . $db->quoteName('tmin.message'))
+            ->set($db->quoteName('tt.first_post_guest_name') . '=' . $db->quoteName('mmin.name'))
+            ->set($db->quoteName('tt.last_post_id') . '=' . $db->quoteName('mmax.id'))
+            ->set($db->quoteName('tt.last_post_time') . '=' . $db->quoteName('mmax.time'))
+            ->set($db->quoteName('tt.last_post_userid') . '=' . $db->quoteName('mmax.userid'))
+            ->set($db->quoteName('tt.last_post_message') . '=' . $db->quoteName('tmax.message'))
+            ->set($db->quoteName('tt.last_post_guest_name') . '=' . $db->quoteName('mmax.name'))
+            ->where($db->quoteName('moved_id') . '=0 ' . $topics);
 
         try {
             $db->execute();

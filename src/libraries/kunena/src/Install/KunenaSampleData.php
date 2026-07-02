@@ -46,46 +46,48 @@ class KunenaSampleData
         $my       = Factory::getApplication()->getIdentity();
         $queries  = [];
 
-        $query = "INSERT INTO `#__kunena_ranks`
-		(`rankId`, `rankTitle`, `rankMin`, `rankSpecial`, `rankImage`) VALUES
-		(1, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK1')}, 0, 0, 'rank1.gif'),
-		(2, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK2')}, 20, 0, 'rank2.gif'),
-		(3, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK3')}, 40, 0, 'rank3.gif'),
-		(4, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK4')}, 80, 0, 'rank4.gif'),
-		(5, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK5')}, 160, 0, 'rank5.gif'),
-		(6, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK6')}, 320, 0, 'rank6.gif'),
-		(7, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN')}, 0, 1, 'rankadmin.gif'),
-		(8, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR')}, 0, 1, 'rankmod.gif'),
-		(9, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER')}, 0, 1, 'rankspammer.gif'),
-		(10, {$db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED')}, 0, 1, 'rankbanned.gif');";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_ranks'))
+            ->columns([$db->quoteName('rankId'), $db->quoteName('rankTitle'), $db->quoteName('rankMin'), $db->quoteName('rankSpecial'), $db->quoteName('rankImage')])
+            ->values('1, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK1') . ', 0, 0, ' . $db->quote('rank1.gif'))
+            ->values('2, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK2') . ', 20, 0, ' . $db->quote('rank2.gif'))
+            ->values('3, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK3') . ', 40, 0, ' . $db->quote('rank3.gif'))
+            ->values('4, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK4') . ', 80, 0, ' . $db->quote('rank4.gif'))
+            ->values('5, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK5') . ', 160, 0, ' . $db->quote('rank5.gif'))
+            ->values('6, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK6') . ', 320, 0, ' . $db->quote('rank6.gif'))
+            ->values('7, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_ADMIN') . ', 0, 1, ' . $db->quote('rankadmin.gif'))
+            ->values('8, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR') . ', 0, 1, ' . $db->quote('rankmod.gif'))
+            ->values('9, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER') . ', 0, 1, ' . $db->quote('rankspammer.gif'))
+            ->values('10, ' . $db->quote('COM_KUNENA_SAMPLEDATA_RANK_BANNED') . ', 0, 1, ' . $db->quote('rankbanned.gif'));
 
         $queries[] = ['kunena_ranks', $query];
 
-        $query = "INSERT INTO `#__kunena_smileys`
-		(`id`,`code`,`location`,`emoticonbar`) VALUES
-		(1, 'B)', '1.png', 1),
-		(2, '8)', '2.png', 1),
-		(3, '8-)', '3.png', 1),
-		(4, ':-(', '4.png', 1),
-		(5, ':(', '5.png', 1),
-		(6, ':sad:', '6.png', 1),
-		(7, ':cry:', '7.png', 1),
-		(8, ':)', '8.png', 1),
-		(9, ':-)', '9.png', 1),
-		(10, ':cheer:', '10.png', 1),
-		(11, ';)', '11.png', 1),
-		(12, ';-)', '12.png', 1),
-		(13, ':wink:', '13.png', 1),
-		(14, ';-)', '14.png', 1),
-		(15, ':P', '15.png', 1),
-		(16, ':p', '16.png', 1),
-		(17, ':-p', '17.png', 1),
-		(18, ':-P', '18.png', 1),
-		(19, ':razz:', '19.png', 1),
-		(20, ':angry:', '20.png', 1),
-		(21, ':mad:', '21.png', 1),
-		(22, ':unsure:', '22.png', 1),
-		(23, ':o', '23.png', 1);";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_smileys'))
+            ->columns([$db->quoteName('id'), $db->quoteName('code'), $db->quoteName('location'), $db->quoteName('emoticonbar')])
+            ->values('1, ' . $db->quote('B)') . ', ' . $db->quote('1.png') . ', 1')
+            ->values('2, ' . $db->quote('8)') . ', ' . $db->quote('2.png') . ', 1')
+            ->values('3, ' . $db->quote('8-)') . ', ' . $db->quote('3.png') . ', 1')
+            ->values('4, ' . $db->quote(':-(') . ', ' . $db->quote('4.png') . ', 1')
+            ->values('5, ' . $db->quote(':(') . ', ' . $db->quote('5.png') . ', 1')
+            ->values('6, ' . $db->quote(':sad:') . ', ' . $db->quote('6.png') . ', 1')
+            ->values('7, ' . $db->quote(':cry:') . ', ' . $db->quote('7.png') . ', 1')
+            ->values('8, ' . $db->quote(':)') . ', ' . $db->quote('8.png') . ', 1')
+            ->values('9, ' . $db->quote(':-)') . ', ' . $db->quote('9.png') . ', 1')
+            ->values('10, ' . $db->quote(':cheer:') . ', ' . $db->quote('10.png') . ', 1')
+            ->values('11, ' . $db->quote(';)') . ', ' . $db->quote('11.png') . ', 1')
+            ->values('12, ' . $db->quote(';-)') . ', ' . $db->quote('12.png') . ', 1')
+            ->values('13, ' . $db->quote(':wink:') . ', ' . $db->quote('13.png') . ', 1')
+            ->values('14, ' . $db->quote(';-)') . ', ' . $db->quote('14.png') . ', 1')
+            ->values('15, ' . $db->quote(':P') . ', ' . $db->quote('15.png') . ', 1')
+            ->values('16, ' . $db->quote(':p') . ', ' . $db->quote('16.png') . ', 1')
+            ->values('17, ' . $db->quote(':-p') . ', ' . $db->quote('17.png') . ', 1')
+            ->values('18, ' . $db->quote(':-P') . ', ' . $db->quote('18.png') . ', 1')
+            ->values('19, ' . $db->quote(':razz:') . ', ' . $db->quote('19.png') . ', 1')
+            ->values('20, ' . $db->quote(':angry:') . ', ' . $db->quote('20.png') . ', 1')
+            ->values('21, ' . $db->quote(':mad:') . ', ' . $db->quote('21.png') . ', 1')
+            ->values('22, ' . $db->quote(':unsure:') . ', ' . $db->quote('22.png') . ', 1')
+            ->values('23, ' . $db->quote(':o') . ', ' . $db->quote('23.png') . ', 1');
 
         $queries[] = ['kunena_smileys', $query];
 
@@ -96,40 +98,78 @@ class KunenaSampleData
         $cat1_alias    = KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE'), 'welcome-mat');
         $cat2_alias    = KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE'), 'suggestion-box');
 
-        $query = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES
-		('announcement', 'view', 'announcement', 1),
-		('category', 'view', 'category', 1),
-		('common', 'view', 'common', 1),
-		('credits', 'view', 'credits', 1),
-		('home', 'view', 'home', 1),
-		('misc', 'view', 'misc', 1),
-		('search', 'view', 'search', 1),
-		('statistics', 'view', 'statistics', 1),
-		('topic', 'view', 'topic', 1),
-		('topics', 'view', 'topics', 1),
-		('user', 'view', 'user', 1),
-		('category/create', 'layout', 'category.create', 1),
-		('create', 'layout', 'category.create', 0),
-		('category/default', 'layout', 'category.default', 1),
-		('default', 'layout', 'category.default', 0),
-		('category/edit', 'layout', 'category.edit', 1),
-		('edit', 'layout', 'category.edit', 0),
-		('category/manage', 'layout', 'category.manage', 1),
-		('manage', 'layout', 'category.manage', 0),
-		('category/moderate', 'layout', 'category.moderate', 1),
-		('moderate', 'layout', 'category.moderate', 0),
-		('category/user', 'layout', 'category.user', 1),
-		({$db->quote($section_alias)}, 'catid', '1', 1),
-		({$db->quote($cat1_alias)}, 'catid', '2', 1),
-		({$db->quote($cat2_alias)}, 'catid', '3', 1);";
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_aliases'))
+            ->columns([$db->quoteName('alias'), $db->quoteName('type'), $db->quoteName('item'), $db->quoteName('state')])
+            ->values($db->quote('announcement') . ', ' . $db->quote('view') . ', ' . $db->quote('announcement') . ', 1')
+            ->values($db->quote('category') . ', ' . $db->quote('view') . ', ' . $db->quote('category') . ', 1')
+            ->values($db->quote('common') . ', ' . $db->quote('view') . ', ' . $db->quote('common') . ', 1')
+            ->values($db->quote('credits') . ', ' . $db->quote('view') . ', ' . $db->quote('credits') . ', 1')
+            ->values($db->quote('home') . ', ' . $db->quote('view') . ', ' . $db->quote('home') . ', 1')
+            ->values($db->quote('misc') . ', ' . $db->quote('view') . ', ' . $db->quote('misc') . ', 1')
+            ->values($db->quote('search') . ', ' . $db->quote('view') . ', ' . $db->quote('search') . ', 1')
+            ->values($db->quote('statistics') . ', ' . $db->quote('view') . ', ' . $db->quote('statistics') . ', 1')
+            ->values($db->quote('topic') . ', ' . $db->quote('view') . ', ' . $db->quote('topic') . ', 1')
+            ->values($db->quote('topics') . ', ' . $db->quote('view') . ', ' . $db->quote('topics') . ', 1')
+            ->values($db->quote('user') . ', ' . $db->quote('view') . ', ' . $db->quote('user') . ', 1')
+            ->values($db->quote('category/create') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.create') . ', 1')
+            ->values($db->quote('create') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.create') . ', 0')
+            ->values($db->quote('category/default') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.default') . ', 1')
+            ->values($db->quote('default') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.default') . ', 0')
+            ->values($db->quote('category/edit') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.edit') . ', 1')
+            ->values($db->quote('edit') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.edit') . ', 0')
+            ->values($db->quote('category/manage') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.manage') . ', 1')
+            ->values($db->quote('manage') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.manage') . ', 0')
+            ->values($db->quote('category/moderate') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.moderate') . ', 1')
+            ->values($db->quote('moderate') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.moderate') . ', 0')
+            ->values($db->quote('category/user') . ', ' . $db->quote('layout') . ', ' . $db->quote('category.user') . ', 1')
+            ->values($db->quote($section_alias) . ', ' . $db->quote('catid') . ', ' . $db->quote('1') . ', 1')
+            ->values($db->quote($cat1_alias) . ', ' . $db->quote('catid') . ', ' . $db->quote('2') . ', 1')
+            ->values($db->quote($cat2_alias) . ', ' . $db->quote('catid') . ', ' . $db->quote('3') . ', 1');
 
         $queries[] = ['kunena_aliases', $query];
 
-        $query = "INSERT INTO `#__kunena_categories`
-			(`id`, `parentid`, `name`, `alias`, `icon`, `icon_id`, `locked`, `accesstype`, `access`, `pubAccess`, `pubRecurse`, `adminAccess`, `adminRecurse`, `ordering`, `published`, `channels`, `checked_out`, `checked_out_time`, `review`, `allowAnonymous`, `postAnonymous`, `hits`, `description`, `headerdesc`, `topictemplate`, `class_sfx`, `allowPolls`, `topicOrdering`, `iconset`, `numTopics`, `numPosts`, `last_topic_id`, `last_post_id`, `last_post_time`, `params`, `allowRatings`) VALUES 
-			(1, 0, {$db->quote($section)}, {$db->quote($section_alias)}, '', 0, 0, 'joomla.group', 1, 1, 1, 8, 1, 1, 1, 'THIS', 0, '0000-00-00 00:00:00', 0, 0, 0, 0, " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')) . ", " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')) . ", '', '', 0, 'lastpost', 'default', 0, 0, 0, 0, 0, '{\"display\":{\"index\":{\"parent\":\"3\",\"children\":\"3\"}}}', 0),
-			(2, 1, {$db->quote($cat1)}, {$db->quote($cat1_alias)}, '', 0, 0, 'joomla.group', 1, 1, 1, 8, 1, 1, 1, 'THIS', 0, '0000-00-00 00:00:00', 0, 0, 0, 0, " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')) . ", " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')) . ", '', '', 0, 'lastpost', 'default', 1, 1, 1, 1, {$posttime->toUnix()}, '{\"display\":{\"index\":{\"parent\":\"3\",\"children\":\"3\"}}}', 0),
-			(3, 1, {$db->quote($cat2)}, {$db->quote($cat2_alias)}, '', 0, 0, 'joomla.group', 1, 1, 1, 8, 1, 2, 1, 'THIS', 0, '0000-00-00 00:00:00', 0, 0, 0, 0, " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')) . ", " . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')) . ", '', '', 1, 'lastpost', 'default', 0, 0, 0, 0, 0, '{\"display\":{\"index\":{\"parent\":\"3\",\"children\":\"3\"}}}', 0);";
+        $categoriesColumns = [
+            $db->quoteName('id'), $db->quoteName('parentid'), $db->quoteName('name'), $db->quoteName('alias'),
+            $db->quoteName('icon'), $db->quoteName('icon_id'), $db->quoteName('locked'), $db->quoteName('accesstype'),
+            $db->quoteName('access'), $db->quoteName('pubAccess'), $db->quoteName('pubRecurse'), $db->quoteName('adminAccess'),
+            $db->quoteName('adminRecurse'), $db->quoteName('ordering'), $db->quoteName('published'), $db->quoteName('channels'),
+            $db->quoteName('checked_out'), $db->quoteName('checked_out_time'), $db->quoteName('review'),
+            $db->quoteName('allowAnonymous'), $db->quoteName('postAnonymous'), $db->quoteName('hits'),
+            $db->quoteName('description'), $db->quoteName('headerdesc'), $db->quoteName('topictemplate'),
+            $db->quoteName('class_sfx'), $db->quoteName('allowPolls'), $db->quoteName('topicOrdering'),
+            $db->quoteName('iconset'), $db->quoteName('numTopics'), $db->quoteName('numPosts'),
+            $db->quoteName('last_topic_id'), $db->quoteName('last_post_id'), $db->quoteName('last_post_time'),
+            $db->quoteName('params'), $db->quoteName('allowRatings')
+        ];
+        
+        // Category 1 - Section
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_categories'))
+        ->columns($categoriesColumns)
+            ->values(
+                '1, 0, ' . $db->quote($section) . ', ' . $db->quote($section_alias) . ', ' . $db->quote('') . ', 0, 0, ' . $db->quote('joomla.group') . ', 1, 1, 1, 8, 1, 1, 1, ' . $db->quote('THIS') . ', 0, ' . $db->quote('0000-00-00 00:00:00') . ', 0, 0, 0, 0, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')) . ', ' . $db->quote('') . ', ' . $db->quote('') . ', 0, ' . $db->quote('lastpost') . ', ' . $db->quote('default') . ', 0, 0, 0, 0, 0, ' . $db->quote('{"display":{"index":{"parent":"3","children":"3"}}}') . ', 0'
+            );
+
+        $queries[] = ['kunena_categories', $query];
+
+        // Category 2
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_categories'))
+        ->columns($categoriesColumns)
+            ->values(
+                '2, 1, ' . $db->quote($cat1) . ', ' . $db->quote($cat1_alias) . ', ' . $db->quote('') . ', 0, 0, ' . $db->quote('joomla.group') . ', 1, 1, 1, 8, 1, 1, 1, ' . $db->quote('THIS') . ', 0, ' . $db->quote('0000-00-00 00:00:00') . ', 0, 0, 0, 0, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')) . ', ' . $db->quote('') . ', ' . $db->quote('') . ', 0, ' . $db->quote('lastpost') . ', ' . $db->quote('default') . ', 1, 1, 1, 1, ' . $posttime->toUnix() . ', ' . $db->quote('{"display":{"index":{"parent":"3","children":"3"}}}') . ', 0'
+            );
+
+        $queries[] = ['kunena_categories', $query];
+        
+        // Category 3
+        $query = $db->createQuery();
+        $query->insert($db->quoteName('#__kunena_categories'))
+        ->columns($categoriesColumns)
+            ->values(
+                '3, 1, ' . $db->quote($cat2) . ', ' . $db->quote($cat2_alias) . ', ' . $db->quote('') . ', 0, 0, ' . $db->quote('joomla.group') . ', 1, 1, 1, 8, 1, 2, 1, ' . $db->quote('THIS') . ', 0, ' . $db->quote('0000-00-00 00:00:00') . ', 0, 0, 0, 0, ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')) . ', ' . $db->quote(Text::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')) . ', ' . $db->quote('') . ', ' . $db->quote('') . ', 1, ' . $db->quote('lastpost') . ', ' . $db->quote('default') . ', 0, 0, 0, 0, 0, ' . $db->quote('{"display":{"index":{"parent":"3","children":"3"}}}') . ', 0'
+            );
 
         $queries[] = ['kunena_categories', $query];
 

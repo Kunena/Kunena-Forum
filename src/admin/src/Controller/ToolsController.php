@@ -235,16 +235,19 @@ class ToolsController extends FormController
         }
 
         if ($userAdd) {
-            $db->createQuery();
+            // Create a SELECT query to get the users that need to be added
+            $selectQuery = $db->createQuery();
+            $selectQuery->select($db->quoteName('ju.id') . ' AS ' . $db->quoteName('userid'))
+                ->select('1 AS ' . $db->quoteName('showOnline'))
+                ->from($db->quoteName('#__users', 'ju'))
+                ->join('LEFT', $db->quoteName('#__kunena_users', 'ku') . ' ON ' . $db->quoteName('ku.userid') . '=' . $db->quoteName('ju.id'))
+                ->where($db->quoteName('ku.userid') . ' IS NULL');
 
+            // Create the INSERT query using the SELECT query
             $query = $db->createQuery();
             $query->insert($db->quoteName('#__kunena_users'))
                 ->columns([$db->quoteName('userid'), $db->quoteName('showOnline')])
-                ->select($db->quoteName('a.id') . ' AS ' . $db->quoteName('userid'))
-                ->select('1 AS ' . $db->quoteName('showOnline'))
-                ->from($db->quoteName('#__users', 'a'))
-                ->join('LEFT', $db->quoteName('#__kunena_users', 'b') . ' ON ' . $db->quoteName('b.userid') . '=' . $db->quoteName('a.id'))
-                ->where($db->quoteName('b.userid') . ' IS NULL');
+                ->values($selectQuery);
             $db->setQuery($query);
 
             try {
@@ -259,14 +262,14 @@ class ToolsController extends FormController
         }
 
         if ($userDel) {
+            // TODO: need to find a way to make this query working with DatabaseQuery
             $db->createQuery();
-
-            $query = $db->createQuery();
-            $query->delete($db->quoteName('a'))
-                ->from($db->quoteName('#__kunena_users', 'a'))
-                ->join('LEFT', $db->quoteName('#__users', 'b') . ' ON ' . $db->quoteName('a.userid') . '=' . $db->quoteName('b.id'))
-                ->where($db->quoteName('b.username') . ' IS NULL');
-            $db->setQuery($query);
+            $db->setQuery(
+                "DELETE a
+				FROM #__kunena_users AS a
+				LEFT JOIN #__users AS b ON a.userid=b.id
+				WHERE b.username IS NULL"
+                );
 
             try {
                 $db->execute();
@@ -282,14 +285,9 @@ class ToolsController extends FormController
         if ($userDelLife) {
             $now = Factory::getDate();
 
+            // TODO: need to find a way to make this query working with DatabaseQuery
             $db->createQuery();
-
-            $query = $db->createQuery();
-            $query->delete($db->quoteName('a'))
-                ->from($db->quoteName('#__kunena_users', 'a'))
-                ->join('LEFT', $db->quoteName('#__users', 'b') . ' ON ' . $db->quoteName('a.userid') . '=' . $db->quoteName('b.id'))
-                ->where($db->quoteName('banned') . ' > ' . $db->quote($now->toSql()));
-            $db->setQuery($query);
+            $db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned > " . $db->quote($now->toSql()));
 
             try {
                 $db->execute();

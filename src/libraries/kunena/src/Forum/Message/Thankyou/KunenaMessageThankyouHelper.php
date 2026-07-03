@@ -349,7 +349,7 @@ abstract class KunenaMessageThankyouHelper
         $query    = $db->createQuery();
         $subquery = $db->createQuery();
 
-        $subquery->select('targetuserid AS userid, COUNT(*) AS thankyou')
+        $subquery->select($db->quoteName('targetuserid') . ' AS userid, COUNT(*) AS thankyou')
             ->from($db->quoteName('#__kunena_thankyou'))
             ->group($db->quoteName('targetuserid'));
 

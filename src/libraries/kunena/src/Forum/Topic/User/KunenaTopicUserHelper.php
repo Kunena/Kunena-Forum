@@ -291,24 +291,33 @@ abstract class KunenaTopicUserHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         // Move all user topics which do not exist in new topic
-        $queries[] = "UPDATE #__kunena_user_topics AS ut
-			INNER JOIN #__kunena_user_topics AS o ON o.user_id = ut.user_id
-			SET ut.topic_id={$db->quote($new->id)}, ut.category_id={$db->quote($new->category_id)}
-			WHERE o.topic_id={$db->quote($old->id)} AND ut.topic_id IS NULL";
+        $query1 = $db->createQuery();
+        $query1->update($db->quoteName('#__kunena_user_topics', 'ut'))
+            ->innerJoin($db->quoteName('#__kunena_user_topics', 'o') . ' ON ' . $db->quoteName('o.user_id') . ' = ' . $db->quoteName('ut.user_id'))
+            ->set($db->quoteName('ut.topic_id') . ' = ' . $db->quote($new->id))
+            ->set($db->quoteName('ut.category_id') . ' = ' . $db->quote($new->category_id))
+            ->where($db->quoteName('o.topic_id') . ' = ' . $db->quote($old->id))
+            ->where($db->quoteName('ut.topic_id') . ' IS NULL');
+        $queries[] = $query1;
 
         // Merge user topics information that exists in both topics
-        $queries[] = "UPDATE #__kunena_user_topics AS ut
-			INNER JOIN #__kunena_user_topics AS o ON o.user_id = ut.user_id
-			SET ut.posts = o.posts + ut.posts,
-				ut.last_post_id = GREATEST( o.last_post_id, ut.last_post_id ),
-				ut.owner = GREATEST( o.owner, ut.owner ),
-				ut.favorite = GREATEST( o.favorite, ut.favorite ),
-				ut.subscribed = GREATEST( o.subscribed, ut.subscribed )
-				WHERE ut.topic_id = {$db->quote($new->id)}
-				AND o.topic_id = {$db->quote($old->id)}";
+        $query2 = $db->createQuery();
+        $query2->update($db->quoteName('#__kunena_user_topics', 'ut'))
+            ->innerJoin($db->quoteName('#__kunena_user_topics', 'o') . ' ON ' . $db->quoteName('o.user_id') . ' = ' . $db->quoteName('ut.user_id'))
+            ->set($db->quoteName('ut.posts') . ' = o.posts + ut.posts')
+            ->set($db->quoteName('ut.last_post_id') . ' = GREATEST(o.last_post_id, ut.last_post_id)')
+            ->set($db->quoteName('ut.owner') . ' = GREATEST(o.owner, ut.owner)')
+            ->set($db->quoteName('ut.favorite') . ' = GREATEST(o.favorite, ut.favorite)')
+            ->set($db->quoteName('ut.subscribed') . ' = GREATEST(o.subscribed, ut.subscribed)')
+            ->where($db->quoteName('ut.topic_id') . ' = ' . $db->quote($new->id))
+            ->where($db->quoteName('o.topic_id') . ' = ' . $db->quote($old->id));
+        $queries[] = $query2;
 
         // Delete all user topics from the shadow topic
-        $queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id={$db->quote($old->id)}";
+        $query3 = $db->createQuery();
+        $query3->delete($db->quoteName('#__kunena_user_topics'))
+            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
+        $queries[] = $query3;
 
         foreach ($queries as $query) {
             $db->setQuery($query);
@@ -399,19 +408,19 @@ abstract class KunenaTopicUserHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         if (\is_array($topicids)) {
-            $where  = 'AND m.thread IN (' . implode(',', $topicids) . ')';
-            $where2 = 'AND ut.topic_id IN (' . implode(',', $topicids) . ')';
+            $where  = 'AND '. $db->quoteName('m.thread') . ' IN (' . implode(',', $topicids) . ')';
+            $where2 = 'AND ' . $db->quoteName('ut.topic_id') . ' IN (' . implode(',', $topicids) . ')';
         } elseif ((int) $topicids) {
-            $where  = 'AND m.thread=' . (int) $topicids;
-            $where2 = 'AND ut.topic_id=' . (int) $topicids;
+            $where  = 'AND ' . $db->quoteName('m.thread') . '=' . (int) $topicids;
+            $where2 = 'AND ' . $db->quoteName('ut.topic_id') . '=' . (int) $topicids;
         } else {
             $where  = '';
             $where2 = '';
         }
 
         if ($end) {
-            $where  .= " AND (m.thread BETWEEN {$start} AND {$end})";
-            $where2 .= " AND (ut.topic_id BETWEEN {$start} AND {$end})";
+            $where  .= " AND (" . $db->quoteName('m.thread') . " BETWEEN {$start} AND {$end})";
+            $where2 .= " AND (" . $db->quoteName('ut.topic_id') . " BETWEEN {$start} AND {$end})";
         }
 
         // Create missing user topics and update post count and last post if there are posts by that user
@@ -419,16 +428,26 @@ abstract class KunenaTopicUserHelper
         $query    = $db->createQuery();
 
         // Create the base subQuery select statement.
-        $subQuery->select('m.userid AS `user_id`, m.thread AS `topic_id`, m.catid AS `category_id`, SUM(m.hold=0) AS `posts`, MAX(IF(m.hold=0,m.id,0)) AS `last_post_id`, MAX(IF(m.parent=0,1,0)) AS `owner`')
+        $subQuery->select($db->quoteName('m.userid') . ' AS ' . $db->quoteName('user_id') . ', ' .
+                         $db->quoteName('m.thread') . ' AS ' . $db->quoteName('topic_id') . ', ' .
+                         $db->quoteName('m.catid') . ' AS ' . $db->quoteName('category_id') . ', ' .
+                         'SUM(' . $db->quoteName('m.hold') . '=0) AS ' . $db->quoteName('posts') . ', ' .
+                         'MAX(IF(' . $db->quoteName('m.hold') . '=0,' . $db->quoteName('m.id') . ',0)) AS ' . $db->quoteName('last_post_id') . ', ' .
+                         'MAX(IF(' . $db->quoteName('m.parent') . '=0,1,0)) AS ' . $db->quoteName('owner'))
             ->from($db->quoteName('#__kunena_messages', 'm'))
             ->where($db->quoteName('m.userid') . ' > 0 AND ' . $db->quoteName('m.moved') . ' = 0 ' . $where)
-            ->group('m.userid, m.thread');
+            ->group($db->quoteName('m.userid') . ', ' . $db->quoteName('m.thread'));
 
         // Create the base insert statement.
-        $query->insert(
-        	$db->quoteName('#__kunena_user_topics') . ' (`user_id`, `topic_id`, `category_id`, `posts`, `last_post_id`, `owner`) ' . $subQuery . '
-			ON DUPLICATE KEY UPDATE `category_id` = VALUES(`category_id`), `posts` = VALUES(`posts`), `last_post_id` = VALUES(`last_post_id`)'
-        );
+        $query->insert($db->quoteName('#__kunena_user_topics'))
+            ->columns($db->quoteName(array('user_id', 'topic_id', 'category_id', 'posts', 'last_post_id', 'owner')))
+            ->values($subQuery);
+        
+        // Add ON DUPLICATE KEY UPDATE clause manually
+        $query .= ' ON DUPLICATE KEY UPDATE ' .
+                  $db->quoteName('category_id') . ' = VALUES(' . $db->quoteName('category_id') . '), ' .
+                  $db->quoteName('posts') . ' = VALUES(' . $db->quoteName('posts') . '), ' .
+                  $db->quoteName('last_post_id') . ' = VALUES(' . $db->quoteName('last_post_id') . ')';
         $db->setQuery($query);
 
         try {

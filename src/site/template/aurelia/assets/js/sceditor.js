@@ -401,10 +401,24 @@ jQuery(document).ready(function ($) {
 		// Add bbcode maps
 		sceditor.formats.bbcode.set('map', {
 			format: function (element, content) {
+				var mapSrc, mapMatch;
+
 				if (jQuery(element).data('sceditor-emoticon'))
 					return content;
 	
-				var url = jQuery(element).attr('data-kunena-mapsrc') || jQuery(element).attr('src'),
+				mapSrc = jQuery(element).attr('src');
+
+				if (!content)
+					content = jQuery(element).attr('data-kunena-mapsrc');
+
+				if (!content && mapSrc) {
+					mapMatch = mapSrc.match(/[?&]q=([^&]+)/i);
+
+					if (mapMatch && mapMatch[1])
+						content = decodeURIComponent(mapMatch[1].replace(/\+/g, '%20'));
+				}
+
+				var url = content || mapSrc,
 					width = jQuery(element).attr('width'),
 					height = jQuery(element).attr('height'),
 					align = jQuery(element).data('scealign');
@@ -439,15 +453,16 @@ jQuery(document).ready(function ($) {
 				}
 	
 				if (align === 'left' || align === 'right')
-					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
+					attribs += ' style="float: ' + align + '; border: 0;" data-scealign="' + align + '"';
+				else
+					attribs += ' style="border: 0;"';
 	
 				query = encodeURIComponent(content || '');
 				src = 'https://www.google.com/maps?q=' + query + '&output=embed';
 
 				return '<iframe' + attribs +
 					' src="' + sceditor.escapeUriScheme(src) + '"' +
-					' data-kunena-mapsrc="' + sceditor.escapeEntities(content || '', true) + '"' +
-					' frameborder="0"></iframe>';
+					' data-kunena-mapsrc="' + sceditor.escapeEntities(content || '', true) + '"></iframe>';
 			}
 		})
 	

@@ -714,6 +714,7 @@ jQuery(document).ready(function ($) {
 		userlang = (typeof userlang == 'undefined') && Joomla.getOptions('com_kunena.sceditor_joomladefaultlanguage');
 
 		sceditor.create(textarea, {
+			plugins: 'autoyoutube',
 			format: 'bbcode',
 			toolbar: toolbar_buttons,
 			locale: userlang,

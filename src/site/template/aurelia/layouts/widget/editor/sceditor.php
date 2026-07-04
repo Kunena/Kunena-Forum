@@ -50,11 +50,11 @@ if ($userLanguage != 'default' && $userLanguage != 'active') {
 } else
     $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', '');
 
-    // Load undo plugin in first before loading sceditor.js config script
-    $this->wa->registerAndUseScript('sceditor/autoyoubutbe', 'media/kunena/core/js/sceditor/autoyoutube.js')
+// Load autoyoutube plugin in first before loading sceditor.js config script
+$this->wa->registerAndUseScript('sceditor/autoyoubutbe', 'media/kunena/core/js/sceditor/autoyoutube.js')
     ->registerAndUseScript('kunena_sceditor', 'components/com_kunena/template/aurelia/assets/js/sceditor.js')
     ->registerAndUseStyle('sceditor/themes/default', 'media/kunena/core/css/sceditor/themes/default.css');
-    $this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
+$this->doc->addScriptOptions('com_kunena.sceditor_style_path', URI::root() . 'media/kunena/core/css/sceditor/themes/content/default.css');
 
 Text::script('COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD');
 Text::script('COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY');

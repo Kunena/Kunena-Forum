@@ -236,21 +236,30 @@ abstract class KunenaTopicUserReadHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         // Move all user topics which do not exist in new topic
-        $queries[] = "UPDATE #__kunena_user_read AS ur
-			INNER JOIN #__kunena_user_read AS o ON o.user_id = ur.user_id
-			SET ur.topic_id={$db->quote($new->id)}, ur.category_id={$db->quote($new->category_id)}
-			WHERE o.topic_id={$db->quote($old->id)} AND ur.topic_id IS NULL";
+        $query1 = $db->createQuery();
+        $query1->update($db->quoteName('#__kunena_user_read', 'ur'))
+            ->innerJoin($db->quoteName('#__kunena_user_read', 'o') . ' ON ' . $db->quoteName('o.user_id') . ' = ' . $db->quoteName('ur.user_id'))
+            ->set($db->quoteName('ur.topic_id') . ' = ' . $db->quote($new->id))
+            ->set($db->quoteName('ur.category_id') . ' = ' . $db->quote($new->category_id))
+            ->where($db->quoteName('o.topic_id') . ' = ' . $db->quote($old->id))
+            ->where($db->quoteName('ur.topic_id') . ' IS NULL');
+        $queries[] = $query1;
 
         // Merge user topics information that exists in both topics
-        $queries[] = "UPDATE #__kunena_user_read AS ur
-			INNER JOIN #__kunena_user_read AS o ON o.user_id = ur.user_id
-			SET ur.message_id = LEAST( o.message_id, ur.message_id ),
-				ur.time = LEAST( o.time, ur.time )
-				WHERE ur.topic_id = {$db->quote($new->id)}
-				AND o.topic_id = {$db->quote($old->id)}";
+        $query2 = $db->createQuery();
+        $query2->update($db->quoteName('#__kunena_user_read', 'ur'))
+            ->innerJoin($db->quoteName('#__kunena_user_read', 'o') . ' ON ' . $db->quoteName('o.user_id') . ' = ' . $db->quoteName('ur.user_id'))
+            ->set($db->quoteName('ur.message_id') . ' = LEAST(o.message_id, ur.message_id)')
+            ->set($db->quoteName('ur.time') . ' = LEAST(o.time, ur.time)')
+            ->where($db->quoteName('ur.topic_id') . ' = ' . $db->quote($new->id))
+            ->where($db->quoteName('o.topic_id') . ' = ' . $db->quote($old->id));
+        $queries[] = $query2;
 
         // Delete all user topics from the shadow topic
-        $queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id={$db->quote($old->id)}";
+        $query3 = $db->createQuery();
+        $query3->delete($db->quoteName('#__kunena_user_read'))
+            ->where($db->quoteName('topic_id') . ' = ' . $db->quote($old->id));
+        $queries[] = $query3;
 
         foreach ($queries as $query) {
             $db->setQuery($query);

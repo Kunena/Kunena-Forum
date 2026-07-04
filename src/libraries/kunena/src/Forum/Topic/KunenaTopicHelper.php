@@ -384,14 +384,18 @@ abstract class KunenaTopicHelper
         // Get items
         if ($whereuser) {
             $query = $db->createQuery();
-            $query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
+            $query->select($db->quoteName('tt') . '.*, ' . $db->quoteName('ut.posts') . ' AS ' . $db->quoteName('myposts') . ', ' .
+                          $db->quoteName('ut.last_post_id') . ' AS ' . $db->quoteName('my_last_post_id') . ', ' .
+                          $db->quoteName('ut.favorite') . ', ' . $db->quoteName('tt.last_post_id') . ' AS ' . $db->quoteName('lastread') . ', 0 AS ' . $db->quoteName('unread'))
                 ->from($db->quoteName('#__kunena_user_topics', 'ut'))
                 ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id'))
                 ->where($where)
                 ->order($orderby);
         } else {
             $query = $db->createQuery();
-            $query->select('tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread')
+            $query->select($db->quoteName('tt') . '.*, ' . $db->quoteName('ut.posts') . ' AS ' . $db->quoteName('myposts') . ', ' .
+                          $db->quoteName('ut.last_post_id') . ' AS ' . $db->quoteName('my_last_post_id') . ', ' .
+                          $db->quoteName('ut.favorite') . ', ' . $db->quoteName('tt.last_post_id') . ' AS ' . $db->quoteName('lastread') . ', 0 AS ' . $db->quoteName('unread'))
                 ->from($db->quoteName('#__kunena_topics', 'tt'))
                 ->leftJoin($db->quoteName('#__kunena_user_topics', 'ut') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('ut.topic_id') . ' AND ' . $db->quoteName('ut.user_id') . ' = ' . $db->quote($user->userid))
                 ->where($where)

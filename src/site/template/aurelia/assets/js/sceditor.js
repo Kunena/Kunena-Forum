@@ -433,10 +433,8 @@ jQuery(document).ready(function ($) {
 				if (jQuery(element).data('sceditor-emoticon'))
 					return content;
 	
-				var url = jQuery(element).attr('src'),
-					width = jQuery(element).attr('width'),
-					height = jQuery(element).attr('height'),
-					align = jQuery(element).data('scealign');
+				var type = jQuery(element).attr('type'),
+					zoom = jQuery(element).attr('zoom');
 	
 				var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
 					? '=' + width + 'x' + height
@@ -515,11 +513,11 @@ jQuery(document).ready(function ($) {
 	
 				$content.find('.button').on('click', function (e) {
 					var city = $content.find('#city').val(),
-						type = $content.find('#type').val(),
-						zoom = $content.find('#zoom').val()
+						type = $content.find('#type-select').val(),
+						zoom = $content.find('#zoom-select').val()
 					;
 	
-					var attrs = '';
+					var attrs = ' type=' + type + ' zoom=' + zoom;
 	
 					if (city)
 						editor.insert('[map' + attrs + ']' + city + '[/map]');

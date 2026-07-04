@@ -453,7 +453,7 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="map">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE') + '</label> ' +
+					'<label for="type">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE') + '</label> ' +
 					'<select name="type" id="type-select">' +
 					'<option value="hybrid">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_HYBRID') + '</option>' +
 					'<option value="roadmap">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_ROADMAP') + '</option>' +
@@ -462,7 +462,7 @@ jQuery(document).ready(function ($) {
 					'</select>' +
 					'</div>' +
 					'<div>' +
-					'<label for="width">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_ZOOM_LEVEL') + '</label> ' +
+					'<label for="zoom">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_ZOOM_LEVEL') + '</label> ' +
 					'<select name="zoom" id="zoom-select">' +
 					'<option value="2">2</option>' +
 					'<option value="4">4</option>' +
@@ -475,7 +475,7 @@ jQuery(document).ready(function ($) {
 					'</select>' +
 					'</div>' +
 					'<div>' +
-					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_CITY') + '</label> ' +
+					'<label for="city">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_CITY') + '</label> ' +
 					'<input type="text" id="city" size="10" />' +
 					'</div>' +
 					'<div>' +
@@ -486,14 +486,11 @@ jQuery(document).ready(function ($) {
 	
 				$content.find('.button').on('click', function (e) {
 					var city = $content.find('#city').val(),
-						width = $content.find('#width').val(),
-						height = $content.find('#height').val()
+						type = $content.find('#type').val(),
+						zoom = $content.find('#zoom').val()
 					;
 	
-					var attrs = width !== undefined && height !== undefined && width > 0 && height > 0
-						? '=' + width + 'x' + height
-						: ''
-					;
+					var attrs = '';
 	
 					if (city)
 						editor.insert('[map' + attrs + ']' + city + '[/map]');

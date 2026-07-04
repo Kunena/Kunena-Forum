@@ -404,7 +404,7 @@ jQuery(document).ready(function ($) {
 				if (jQuery(element).data('sceditor-emoticon'))
 					return content;
 	
-				var url = jQuery(element).attr('src'),
+				var url = jQuery(element).attr('data-kunena-mapsrc') || jQuery(element).attr('src'),
 					width = jQuery(element).attr('width'),
 					height = jQuery(element).attr('height'),
 					align = jQuery(element).data('scealign');
@@ -420,7 +420,7 @@ jQuery(document).ready(function ($) {
 				return '[map' + attrs + ']' + url + '[/map]';
 			},
 			html: function (token, attrs, content) {
-				var	width, height, match,
+				var	width, height, match, query, src,
 					align = attrs.align,
 					attribs = '';
 	
@@ -441,8 +441,13 @@ jQuery(document).ready(function ($) {
 				if (align === 'left' || align === 'right')
 					attribs += ' style="float: ' + align + '" data-scealign="' + align + '"';
 	
-				return '<img alt="" ' + attribs +
-					' src="' + sceditor.escapeUriScheme(content) + '" />';
+				query = encodeURIComponent(content || '');
+				src = 'https://www.google.com/maps?q=' + query + '&output=embed';
+
+				return '<iframe' + attribs +
+					' src="' + sceditor.escapeUriScheme(src) + '"' +
+					' data-kunena-mapsrc="' + sceditor.escapeEntities(content || '', true) + '"' +
+					' frameborder="0"></iframe>';
 			}
 		})
 	

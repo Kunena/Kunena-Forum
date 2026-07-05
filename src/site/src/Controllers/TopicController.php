@@ -686,7 +686,10 @@ class TopicController extends KunenaController
         }
 
         // Need to do to the replacement in case of VBA code is inserted without the bbcode tags [code][/code]
-        $fields['message'] = preg_replace('~"",""~', '"", ""', $fields['message']);
+        // Optimized: only perform replacement if the pattern exists in the message
+        if (strpos($fields['message'], '"",""') !== false) {
+            $fields['message'] = str_replace('"",""', '"", ""', $fields['message']);
+        }
 
 
         if (!$this->id) {
@@ -721,26 +724,25 @@ class TopicController extends KunenaController
         }
 
         if ($this->me->canDoCaptcha()) {
-            $app    = Factory::getApplication();
+            $app = Factory::getApplication();
             $plugin = $app->get('captcha', '0');
 
-            if ($plugin !== 0 && $plugin !== '0' && $plugin !== '' && $plugin !== null && PluginHelper::isEnabled('captcha', $plugin)) {
-                try {
-                    $id      = 'kunena_captcha';
-                    $captcha = Captcha::getInstance((string) $plugin, ['namespace' => $id]);
+            // Early return if CAPTCHA is not properly configured
+            if ($plugin === '0' || $plugin === '' || $plugin === null || !PluginHelper::isEnabled('captcha', $plugin)) {
+                return;
+            }
 
-                    if (!$captcha->checkAnswer(\null)) {
-                        $this->setRedirectBack();
+            try {
+                $captcha = Captcha::getInstance((string) $plugin, ['namespace' => 'kunena_captcha']);
 
-                        return;
-                    }
-                } catch (\RuntimeException $e) {
-                    $app->enqueueMessage($e->getMessage(), 'error');
-
+                if (!$captcha->checkAnswer(\null)) {
                     $this->setRedirectBack();
-
                     return;
                 }
+            } catch (\RuntimeException $e) {
+                $app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirectBack();
+                return;
             }
         }
 

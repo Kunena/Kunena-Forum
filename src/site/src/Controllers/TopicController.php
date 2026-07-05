@@ -78,6 +78,8 @@ class TopicController extends KunenaController
     public $id;
 
     public $mesid;
+    
+    public $me;
 
     /**
      * @param   array  $config  config
@@ -92,6 +94,7 @@ class TopicController extends KunenaController
         $this->return = $this->app->getInput()->getInt('return', $this->catid);
         $this->id     = $this->app->getInput()->getInt('id', 0);
         $this->mesid  = $this->app->getInput()->getInt('mesid', 0);
+        $this->me     = KunenaUserHelper::getMyself();
     }
 
     /**
@@ -312,10 +315,8 @@ class TopicController extends KunenaController
      * @since Kunena 5.1
      */
     protected function checkpermissions($attachment_userid)
-    {
-        $me = KunenaUserHelper::getMyself();
-        
-        if ($me->userid != $attachment_userid && !$me->isAdmin() && !$me->isModerator()) {
+    {        
+        if ($this->me->userid != $attachment_userid && !$this->me->isAdmin() && !$this->me->isModerator()) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
     }
@@ -345,8 +346,8 @@ class TopicController extends KunenaController
         $instance  = KunenaAttachmentHelper::get($attach_id);
 
         if (
-            KunenaUserHelper::getMyself()->userid == $userid || KunenaUserHelper::getMyself()->isAdmin()
-            || KunenaUserHelper::getMyself()->isModerator()
+            $this->me->userid == $userid || $this->me->isAdmin()
+            || $this->me->isModerator()
         ) {
             $editor_text = $this->app->getInput()->get->get('editor_text', '', 'raw');
 
@@ -470,9 +471,8 @@ class TopicController extends KunenaController
         $starid   = $this->app->getInput()->get('starid', 0, 'int');
         $topicid  = $this->app->getInput()->get('topic_id', 0, 'int');
         $response = [];
-        $user     = KunenaUserHelper::getMyself();
 
-        if ($user->exists()) {
+        if ($this->me->exists()) {
             $rate           = KunenaRateHelper::get($topicid);
             $rate->rate     = $starid;
             $rate->topic_id = $topicid;
@@ -525,7 +525,6 @@ class TopicController extends KunenaController
                 throw new RuntimeException(Text::_('Forbidden'), 403);
             }
 
-            $me    = KunenaUserHelper::getMyself();
             $catid = $this->input->getInt('catid', 0);
             $mesid = $this->input->getInt('mesid', 0);
 
@@ -557,7 +556,7 @@ class TopicController extends KunenaController
             ];
 
             // Upload!
-            $upload->addExtensions(KunenaAttachmentHelper::getExtensions($category->id, $me->userid));
+            $upload->addExtensions(KunenaAttachmentHelper::getExtensions($category->id, $this->me->userid));
             $response = (object) $upload->ajaxUpload($options);
 
             if (!empty($response->completed)) {
@@ -568,7 +567,7 @@ class TopicController extends KunenaController
                 $attachment->bind(
                     [
                         'mesid'         => 0,
-                        'userid'        => (int) $me->userid,
+                        'userid'        => (int) $this->me->userid,
                         'protected'     => null,
                         'hash'          => $response->hash,
                         'size'          => $response->size,
@@ -1430,7 +1429,7 @@ class TopicController extends KunenaController
         }
 
         // Check if we are editing first post and update topic if we are!
-        if ($topic->first_post_id == $message->id || $this->config->allowChangeSubject && $topic->first_post_userid == $message->userid || KunenaUserHelper::getMyself()->isModerator()) {
+        if ($topic->first_post_id == $message->id || $this->config->allowChangeSubject && $topic->first_post_userid == $message->userid || $this->me->isModerator()) {
             $topic->subject = $fields['subject'];
         }
 

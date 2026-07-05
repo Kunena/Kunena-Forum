@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
@@ -1083,35 +1084,61 @@ class TopicController extends KunenaController
             $data .= '&email=' . $email;
         }
 
-        $options = new Registry();
+        // Check short-lived cache before making the blocking external HTTP call.
+        // Both positive (blacklisted) and negative results are cached to avoid repeated lookups
+        // for the same payload during the same interactive session window.
+        // Lifetime is in minutes; '1' = blacklisted, '0' = not blacklisted.
+        $cacheOptions = [
+            'defaultgroup' => 'com_kunena_blacklist',
+            'caching'      => true,
+            'lifetime'     => 10,
+        ];
+        $cache    = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $cacheOptions);
+        $cacheKey = md5($data);
+        $cached   = $cache->get($cacheKey);
+
+        if ($cached !== false) {
+            return $cached === '1';
+        }
+
+        // Use an aggressive timeout suitable for a synchronous interactive post submission.
+        $options = new Registry(['timeout' => 5]);
 
         $transport = new StreamTransport($options);
 
         // Create a 'stream' transport.
         $http = new Http($options, $transport);
 
-        $response = $http->post('https://api.stopforumspam.org/api', $data . '&json');
+        try {
+            $response = $http->post('https://api.stopforumspam.org/api', $data . '&json');
+        } catch (Exception $e) {
+            // Fail open on transport error or timeout: do not block posting due to an
+            // external service failure. The error result is intentionally not cached so
+            // that a transient network issue does not prevent legitimate posts.
+
+            // TODO : log the result or display something in debug mode
+
+            return false;
+        }
 
         if ($response->code == '200') {
             // The query has worked
             $result = json_decode($response->body);
 
             if ($result->success) {
+                $blacklisted = false;
+
                 if ($result->ip->appears) {
-                    return true;
+                    $blacklisted = true;
                 } elseif (!empty($result->username)) {
-                    if ($result->username->appears) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    $blacklisted = (bool) $result->username->appears;
                 } elseif (!empty($result->email)) {
-                    if ($result->email->appears) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    $blacklisted = (bool) $result->email->appears;
                 }
+
+                $cache->store($blacklisted ? '1' : '0', $cacheKey);
+
+                return $blacklisted;
             } else {
                 // TODO : log the result or display something in debug mode
 

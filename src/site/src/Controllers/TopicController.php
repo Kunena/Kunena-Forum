@@ -1089,7 +1089,13 @@ class TopicController extends KunenaController
 
         ksort($requestData);
 
-        $cacheKey = 'stopforumspam.' . sha1(json_encode($requestData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        $payload = json_encode($requestData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        if ($payload === false) {
+            return false;
+        }
+
+        $cacheKey = 'stopforumspam.' . sha1($payload);
         $options  = [
             'defaultgroup' => 'com_kunena_stopforumspam',
             'caching'      => true,
@@ -1098,14 +1104,17 @@ class TopicController extends KunenaController
         $cache    = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
 
         return (bool) $cache->get(
-            function () use ($requestData, $url) {
+            function () use ($payload, $url) {
                 $options = new Registry();
                 $options->set('userAgent', KunenaForum::version());
 
                 $http = (new HttpFactory())->getHttp($options);
 
                 try {
-                    $response = $http->post($url, http_build_query($requestData) . '&json', [], 3);
+                    $response = $http->post($url, $payload, [
+                        'Accept'       => 'application/json',
+                        'Content-Type' => 'application/json',
+                    ], 3);
                 } catch (RuntimeException $e) {
                     return false;
                 }
@@ -1120,7 +1129,7 @@ class TopicController extends KunenaController
                     return false;
                 }
 
-                return !empty($result['ip']['appears']) || !empty($result['username']['appears']) || !empty($result['email']['appears']);
+                return ($result['ip']['appears'] ?? false) || ($result['username']['appears'] ?? false) || ($result['email']['appears'] ?? false);
             },
             [],
             $cacheKey

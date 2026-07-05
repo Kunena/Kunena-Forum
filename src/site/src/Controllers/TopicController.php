@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
@@ -1064,83 +1065,66 @@ class TopicController extends KunenaController
      */
     protected function checkIfBlacklisted($message)
     {
-        $ip    = $message->ip;
-        $name  = $message->name;
-        $email = $message->email;
+        $ip    = trim((string) $message->ip);
+        $name  = trim((string) $message->name);
+        $email = trim((string) $message->email);
 
         // Prepare the request to stopforumspam
-        if (KunenaUserHelper::isIPv6($message->ip)) {
-            $ip = '[' . $message->ip . ']';
+        if (KunenaUserHelper::isIPv6($ip)) {
+            $ip = '[' . $ip . ']';
         }
-        
+
         $url = 'https://api.stopforumspam.org/api';
-        
         $requestData = [
-            'ip' => $ip,            
+            'ip' => $ip,
         ];
-        
+
         if (!empty($name)) {
-            $requestData = [
-                'username' => $name,
-            ];
+            $requestData['username'] = $name;
         }
-        
+
         if (!empty($email)) {
-            $requestData = [
-                'email' => $email,
-            ];
+            $requestData['email'] = $email;
         }
 
-        // Prepare connection
-        $options = new Registry();
-        $options->set('userAgent', KunenaForum::version());
-        
-        $http = (new HttpFactory())->getHttp($options);
-        
-        // Http transport throws an exception when there's no response.
-        try {
-            $response = $http->post($url, json_encode($requestData), [
-                'Accept'       => 'application/json',
-                'Content-Type' => 'application/json',
-            ], 20);
-        } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-            
-            return '';
-        }
+        ksort($requestData);
 
-        // Decode response
-        $result = json_decode((string) $response->getBody(), true);
-        
-        // The query has worked
-        if ($response->getStatusCode() === 200) {
-            if ($result->success) {
-                if ($result->ip->appears) {
-                    return true;
-                } elseif (!empty($result->username)) {
-                    if ($result->username->appears) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } elseif (!empty($result->email)) {
-                    if ($result->email->appears) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+        $cacheKey = 'stopforumspam.' . sha1(json_encode($requestData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        $options  = [
+            'defaultgroup' => 'com_kunena_stopforumspam',
+            'caching'      => true,
+            'lifetime'     => 600,
+        ];
+        $cache    = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
+
+        return (bool) $cache->get(
+            function () use ($requestData, $url) {
+                $options = new Registry();
+                $options->set('userAgent', KunenaForum::version());
+
+                $http = (new HttpFactory())->getHttp($options);
+
+                try {
+                    $response = $http->post($url, http_build_query($requestData) . '&json', [], 3);
+                } catch (RuntimeException $e) {
+                    return false;
                 }
-            } else {
-                // TODO : log the result or display something in debug mode
-                
-                return false;
-            }
-        }
-        
-        // Handle other non-success response
-        if ($response->getStatusCode() !== 200) {
-            return false;
-        }
+
+                if ($response->getStatusCode() !== 200) {
+                    return false;
+                }
+
+                $result = json_decode((string) $response->getBody(), true);
+
+                if (!is_array($result) || empty($result['success'])) {
+                    return false;
+                }
+
+                return !empty($result['ip']['appears']) || !empty($result['username']['appears']) || !empty($result['email']['appears']);
+            },
+            [],
+            $cacheKey
+        );
     }
 
     /**

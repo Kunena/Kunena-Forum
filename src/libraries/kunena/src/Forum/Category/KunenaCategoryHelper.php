@@ -814,12 +814,35 @@ abstract class KunenaCategoryHelper
     public static function recount($categories = '')
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
+        $categoryIds = [];
 
         if (\is_array($categories)) {
-            $categories = implode(',', $categories);
+            $categoryIds = $categories;
+        } elseif (!empty($categories)) {
+            $categoryIds = explode(',', (string) $categories);
         }
 
-        $categories = !empty($categories) ? "AND t.category_id IN ({$categories})" : '';
+        $categoryIds = array_values(array_filter(array_map('intval', $categoryIds)));
+        $categories1 = '';
+        $categories2 = '';
+        $binds       = [];
+
+        if ($categoryIds) {
+            $placeholders1 = [];
+            $placeholders2 = [];
+
+            foreach ($categoryIds as $i => $id) {
+                $placeholder1    = ':category1_' . $i;
+                $placeholder2    = ':category2_' . $i;
+                $placeholders1[] = $placeholder1;
+                $placeholders2[] = $placeholder2;
+                $binds[]         = [$placeholder1, $id];
+                $binds[]         = [$placeholder2, $id];
+            }
+
+            $categories1 = 'AND t.category_id IN (' . implode(',', $placeholders1) . ')';
+            $categories2 = 'AND t.category_id IN (' . implode(',', $placeholders2) . ')';
+        }
 
         // Update category post count and last post info on categories which have published topics
         $query = "UPDATE " . $db->quoteName('#__kunena_categories') . " AS c
@@ -833,12 +856,12 @@ abstract class KunenaCategoryHelper
 																	AND moved_id =0
 															GROUP BY category_id) AS temp
 															WHERE temp.last_post_time = t.last_post_time
-															{$categories}
+															{$categories1}
 															AND t.category_id=temp.category_id
 															) AS t2 ON t2.category_id=t.category_id
 					WHERE t.hold =0
 					AND t.moved_id =0
-					{$categories}
+					{$categories2}
 					GROUP BY t.category_id
 			) AS r ON r.id=c.id
 			INNER JOIN " . $db->quoteName('#__kunena_topics') . " AS tt ON tt.id=r.last_topic_id
@@ -848,6 +871,10 @@ abstract class KunenaCategoryHelper
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time";
         $db->setQuery($query);
+
+        foreach ($binds as [$placeholder, $id]) {
+            $db->bind($placeholder, $id, \Joomla\Database\ParameterType::INTEGER);
+        }
 
         try {
             $db->execute();

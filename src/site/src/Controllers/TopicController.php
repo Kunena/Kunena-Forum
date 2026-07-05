@@ -57,7 +57,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use RuntimeException;
 use stdClass;
 
 /**
@@ -72,6 +71,10 @@ use stdClass;
  */
 class TopicController extends KunenaController
 {
+    private const STOPFORUMSPAM_CACHE_TTL = 600;
+
+    private const STOPFORUMSPAM_TIMEOUT = 3;
+
     public $catid;
 
     public $return;
@@ -1099,7 +1102,7 @@ class TopicController extends KunenaController
         $options  = [
             'defaultgroup' => 'com_kunena_stopforumspam',
             'caching'      => true,
-            'lifetime'     => 600,
+            'lifetime'     => self::STOPFORUMSPAM_CACHE_TTL,
         ];
         $cache    = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
 
@@ -1114,8 +1117,8 @@ class TopicController extends KunenaController
                     $response = $http->post($url, $payload, [
                         'Accept'       => 'application/json',
                         'Content-Type' => 'application/json',
-                    ], 3);
-                } catch (RuntimeException $e) {
+                    ], self::STOPFORUMSPAM_TIMEOUT);
+                } catch (\RuntimeException $e) {
                     return false;
                 }
 

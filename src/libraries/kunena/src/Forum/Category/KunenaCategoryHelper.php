@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Language\Transliterate;
+use Joomla\Database\ParameterType;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
@@ -873,7 +874,7 @@ abstract class KunenaCategoryHelper
         $db->setQuery($query);
 
         foreach ($binds as [$placeholder, $id]) {
-            $db->bind($placeholder, $id, \Joomla\Database\ParameterType::INTEGER);
+            $db->bind($placeholder, $id, ParameterType::INTEGER);
         }
 
         try {

@@ -563,8 +563,20 @@ abstract class KunenaTopicHelper
         }
 
         $db        = Factory::getContainer()->get('DatabaseDriver');
-        $queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread IN ({$idlist})";
-        $queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id IN ({$idlist})";
+        
+        // Create prepared query for messages
+        $query1 = $db->createQuery();
+        $query1->update($db->quoteName('#__kunena_messages'))
+               ->set($db->quoteName('hold') . ' = ' . $db->quote('2'))
+               ->where($db->quoteName('thread') . ' IN (' . $idlist . ')');
+        $queries[] = $query1;
+        
+        // Create prepared query for topics
+        $query2 = $db->createQuery();
+        $query2->update($db->quoteName('#__kunena_topics'))
+               ->set($db->quoteName('hold') . ' = ' . $db->quote('2'))
+               ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
+        $queries[] = $query2;
 
         foreach ($queries as $query) {
             $db->setQuery($query);

@@ -1090,6 +1090,7 @@ class TopicController extends KunenaController
             $requestData['email'] = $email;
         }
 
+        // Keep a stable field order so identical lookups share the same cache key.
         ksort($requestData);
 
         $payload = json_encode($requestData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
@@ -1132,7 +1133,9 @@ class TopicController extends KunenaController
                     return false;
                 }
 
-                return ($result['ip']['appears'] ?? false) || ($result['username']['appears'] ?? false) || ($result['email']['appears'] ?? false);
+                return (isset($result['ip']['appears']) && $result['ip']['appears'])
+                    || (isset($result['username']['appears']) && $result['username']['appears'])
+                    || (isset($result['email']['appears']) && $result['email']['appears']);
             },
             [],
             $cacheKey

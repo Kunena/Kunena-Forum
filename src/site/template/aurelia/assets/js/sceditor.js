@@ -764,6 +764,7 @@ jQuery(document).ready(function ($) {
 		});
 
 		sceditor.create(textarea_private, {
+			plugins: 'autoyoutube',
 			format: 'bbcode',
 			toolbar: toolbar_buttons_private,
 			locale: userlang,

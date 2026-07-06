@@ -59,7 +59,8 @@ $this->addScript('assets/js/search.js');
                             <legend><?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="query" class="form-control" value="<?php echo $this->escape($this->state->get('searchwords')); ?>" placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>" />
+                                    <label for="ksearch-query" hidden="hidden"><?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?></label>
+                                    <input id="ksearch-query" type="text" name="query" class="form-control" value="<?php echo $this->escape($this->state->get('searchwords')); ?>" placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -74,17 +75,17 @@ $this->addScript('assets/js/search.js');
                                 <legend><?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="kusersearch" hidden="hidden"><?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?></label>
                                         <input id="kusersearch" type="text" name="searchuser" class="form-control" value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="exactname" value="1" <?php if ($this->state->get('query.exactname')) {
+                                        <label id="exactname"  hidden="hidden"><?php echo Text::_('COM_KUNENA_SEARCH_EXACT'); ?></label>
+                                        <input type="checkbox" name="exactname" value="1" <?php if ($this->state->get('query.exactname')) {
                                                                                                     echo ' checked="checked" ';
                                                                                                 } ?> />
                                             <?php echo Text::_('COM_KUNENA_SEARCH_EXACT'); ?>
-                                        </label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -125,7 +126,8 @@ $this->addScript('assets/js/search.js');
                                             <?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?>
                                         </legend>
                                         <div id="searchatdate" class="input-group input-group date" data-date-format="<?php echo $this->config->datePickerFormat; ?>">
-                                            <input type="text" class="form-control" name="searchatdate" data-date-format="<?php echo $this->config->datePickerFormat; ?>">
+                                            <label for="searchatdate" hidden="hidden"><?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?></label>
+                                            <input type="text" class="form-control" id="searchatdate" name="searchatdate" data-date-format="<?php echo $this->config->datePickerFormat; ?>">
                                             <button class="btn btn-outline-secondary" type="button" id="button-searchatdate"><?php echo KunenaIcons::calendar(); ?></button>
                                         </div>
                                     </fieldset>
@@ -138,7 +140,8 @@ $this->addScript('assets/js/search.js');
                                                 <?php echo Text::_('COM_KUNENA_SEARCH_START'); ?>
                                             </legend>
                                             <div class="col-md-6">
-                                                <input type="text" name="limitstart" class="form-control" value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5" />
+                                                <label for="limitstart" hidden="hidden"><?php echo Text::_('COM_KUNENA_SEARCH_START'); ?></label>
+                                                <input type="text" id="limitstart" name="limitstart" class="form-control" value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5" />
                                             </div>
                                             <div class="col-md-6">
                                                 <?php $this->displayLimitList('limit'); ?>
@@ -157,7 +160,7 @@ $this->addScript('assets/js/search.js');
                                                                                                         echo 'checked="checked"';
                                                                                                     } ?> />
                                                         <?php echo Text::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?>
-                                                    </label>
+                                                   </label>
                                                 </div>
 
                                                 <div class="radio">

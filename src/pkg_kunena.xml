@@ -5,8 +5,8 @@
     method="upgrade">
     <name>pkg_kunena</name>
     <packagename>kunena</packagename>
-    <version>7.0.7-DEV</version>
-    <versionname>INTERNAL</versionname>
+    <version>7.0.7</version>
+    <versionname>Fuchiade</versionname>
     <creationDate>@kunenaversiondate@</creationDate>
     <author>Kunena Team</author>
     <authorEmail>kunena@kunena.org</authorEmail>

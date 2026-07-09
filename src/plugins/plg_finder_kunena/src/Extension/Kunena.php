@@ -6,7 +6,7 @@
  * @package         Kunena.Plugins
  * @subpackage      Finder
  *
- * @copyright       Copyright (C) 2008 - 2026 Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -501,9 +501,9 @@ final class Kunena extends Adapter implements SubscriberInterface
         $item->catid = $message->catid;
 
         // Set title context.
-        // Odpovedi v ramci tematu nemaji vlastni subject (ten ma jen zakladajici
-        // prispevek tematu) - pokud je subject prazdny, pouzijeme predmet cele
-        // diskuze (thread), aby indexovany zaznam mel vzdy vyplneny titulek.
+        // Replies within a thread do not have their own subject (only the
+        // original post in the thread has one) — if the subject is empty, we use the subject of the entire
+        // discussion (thread) so that the indexed record always has a title.
         $subject = $message->subject;
 
         if ($subject === \null || \trim((string) $subject) === '') {

@@ -6,7 +6,7 @@
  * @package         Kunena.Plugins
  * @subpackage      Finder
  *
- * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @copyright       Copyright (C) 2008 - 2026 Kunena Team. All rights reserved.
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
@@ -501,13 +501,22 @@ final class Kunena extends Adapter implements SubscriberInterface
         $item->catid = $message->catid;
 
         // Set title context.
-        $item->title = $message->subject;
+        // Odpovedi v ramci tematu nemaji vlastni subject (ten ma jen zakladajici
+        // prispevek tematu) - pokud je subject prazdny, pouzijeme predmet cele
+        // diskuze (thread), aby indexovany zaznam mel vzdy vyplneny titulek.
+        $subject = $message->subject;
+
+        if ($subject === \null || \trim((string) $subject) === '') {
+            $subject = $this->getThreadSubject($message->thread);
+        }
+
+        $item->title = $subject;
 
         // Build the necessary url, route, path and alias information.
         $itemid      = KunenaRoute::fixMissingItemID();
         $item->url   = $message->getUrl($message->catid, 'last', $itemid);
         $item->route = $item->url;
-        $item->alias = KunenaRoute::stringURLSafe($message->subject);
+        $item->alias = KunenaRoute::stringURLSafe($subject);
 
         // Set body context.
         $item->body    = KunenaParser::stripBBCode($message->message);
@@ -531,6 +540,43 @@ final class Kunena extends Adapter implements SubscriberInterface
         $item->layout = $this->layout;
 
         return $item;
+    }
+
+    /**
+     * Method to retrieve the subject of the head message of a thread.
+     * Used as a fallback when a reply message has no own subject.
+     *
+     * @param   int  $threadId  The id of the thread (head message id).
+     *
+     * @return  string
+     * @since   Kunena
+     */
+    protected function getThreadSubject($threadId): string
+    {
+        static $cache = [];
+
+        $threadId = (int) $threadId;
+
+        if (\array_key_exists($threadId, $cache)) {
+            return $cache[$threadId];
+        }
+
+        $db    = $this->getDatabase();
+        $query = $db->createQuery();
+        $query->select('subject')
+            ->from('#__kunena_messages')
+            ->where('id = ' . $threadId);
+        $db->setQuery($query);
+
+        try {
+            $subject = (string) $db->loadResult();
+        } catch (\Exception $e) {
+            $subject = '';
+        }
+
+        $cache[$threadId] = $subject;
+
+        return $subject;
     }
 
     /**

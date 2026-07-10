@@ -260,13 +260,43 @@ class PlgFinderKunena extends Adapter
         $limit  = (int) ($iState->batchSize - $iState->batchOffset);
 
         // Get the content items to index.
-        $items = $this->getItems($offset, $limit);
+        // Capture any stray output/warnings so they get logged instead of bubbling
+        // up to com_finder, which treats any output as a plugin failure.
+        ob_start();
+
+        try {
+            $items = $this->getItems($offset, $limit);
+        } catch (\Throwable $e) {
+            ob_end_clean();
+            Log::add("Finder Kunena plugin: getItems({$offset}, {$limit}) threw " . get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
+            throw $e;
+        }
+
+        $stray = trim(ob_get_clean());
+
+        if ($stray !== '') {
+            Log::add("Finder Kunena plugin: getItems({$offset}, {$limit}) produced output: " . substr($stray, 0, 3000), Log::ERROR);
+        }
 
         // Iterate through the items and index them.
         $item = null;
 
         foreach ($items as $item) {
-            $this->index($item);
+            ob_start();
+
+            try {
+                $this->index($item);
+            } catch (\Throwable $e) {
+                ob_end_clean();
+                Log::add("Finder Kunena plugin: index of message {$item->id} threw " . get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
+                throw $e;
+            }
+
+            $stray = trim(ob_get_clean());
+
+            if ($stray !== '') {
+                Log::add("Finder Kunena plugin: message {$item->id} produced output: " . substr($stray, 0, 3000), Log::ERROR);
+            }
         }
 
         if ($item) {

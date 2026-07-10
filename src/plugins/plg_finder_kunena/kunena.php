@@ -515,9 +515,11 @@ class PlgFinderKunena extends Adapter
         // Set title context.
         $item->title = $message->subject;
 
-        // Build the necessary url, route, path and alias information.
-        $itemid = KunenaRoute::fixMissingItemID();
-        $item->url   = $message->getUrl($message->catid, 'last', $itemid);
+        // Build the necessary url, route, path and alias information. Use the
+        // message permalink (mesid) without a hardcoded Itemid: Kunena resolves
+        // the page and position at request time, while menu ids baked into
+        // stored urls can turn into 404s.
+        $item->url   = 'index.php?option=com_kunena&view=topic&catid=' . (int) $message->catid . '&id=' . (int) $message->thread . '&mesid=' . (int) $message->id;
         $item->route = $item->url;
         $item->alias = KunenaRoute::stringURLSafe($message->subject);
 

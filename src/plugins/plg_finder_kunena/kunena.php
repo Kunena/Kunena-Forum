@@ -259,28 +259,31 @@ class PlgFinderKunena extends Adapter
         $offset = (int) $aState['offset'];
         $limit  = (int) ($iState->batchSize - $iState->batchOffset);
 
+        // The adapter state offset counts indexed items (like core adapters), while
+        // the item query walks message ids. Track the id cursor separately so the
+        // progress accounting adds up even when message ids have gaps.
+        $lastId = (int) ($aState['last_id'] ?? 0);
+
         // Get the content items to index.
         // Capture any stray output/warnings so they get logged instead of bubbling
         // up to com_finder, which treats any output as a plugin failure.
         ob_start();
 
         try {
-            $items = $this->getItems($offset, $limit);
+            $items = $this->getItems($lastId, $limit);
         } catch (\Throwable $e) {
             ob_end_clean();
-            Log::add("Finder Kunena plugin: getItems({$offset}, {$limit}) threw " . get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
+            Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) threw " . get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
             throw $e;
         }
 
         $stray = trim(ob_get_clean());
 
         if ($stray !== '') {
-            Log::add("Finder Kunena plugin: getItems({$offset}, {$limit}) produced output: " . substr($stray, 0, 3000), Log::ERROR);
+            Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) produced output: " . substr($stray, 0, 3000), Log::ERROR);
         }
 
         // Iterate through the items and index them.
-        $item = null;
-
         foreach ($items as $item) {
             ob_start();
 
@@ -297,18 +300,27 @@ class PlgFinderKunena extends Adapter
             if ($stray !== '') {
                 Log::add("Finder Kunena plugin: message {$item->id} produced output: " . substr($stray, 0, 3000), Log::ERROR);
             }
-        }
 
-        if ($item) {
             // Adjust the offsets.
-            $iState->batchOffset = $iState->batchSize;
-            $iState->totalItems  -= $item->id - $offset;
-
-            // Update the indexer state.
-            $aState['offset']                    = $item->id;
-            $iState->pluginState[$this->context] = $aState;
-            Indexer::setState($iState);
+            $offset++;
+            $lastId = (int) $item->id;
+            $iState->batchOffset++;
+            $iState->totalItems--;
         }
+
+        // If the query returned fewer items than requested, all messages are indexed.
+        // Settle any difference between the counted total and the items actually
+        // delivered (e.g. messages deleted while indexing was running).
+        if (\count($items) < $limit) {
+            $iState->totalItems -= max(0, (int) $aState['total'] - $offset);
+            $offset             = (int) $aState['total'];
+        }
+
+        // Update the indexer state.
+        $aState['offset']                    = $offset;
+        $aState['last_id']                   = $lastId;
+        $iState->pluginState[$this->context] = $aState;
+        Indexer::setState($iState);
 
         unset($items, $item);
 
@@ -395,9 +407,10 @@ class PlgFinderKunena extends Adapter
     {
         Log::add('FinderIndexerAdapter::getContentCount', Log::INFO);
 
-        // Get the list query.
+        // Get the list query. Count the actual number of messages: the indexer's
+        // progress accounting expects the item count, not the highest id.
         $sql = $this->db->createQuery();
-        $sql->select('MAX(id)')->from('#__kunena_messages');
+        $sql->select('COUNT(*)')->from('#__kunena_messages');
 
         // Get the total number of content items to index.
         $this->db->setQuery($sql);

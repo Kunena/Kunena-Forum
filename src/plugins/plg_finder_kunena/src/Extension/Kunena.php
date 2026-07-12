@@ -294,12 +294,41 @@ final class Kunena extends Adapter implements SubscriberInterface
         // Get the batch offset and size.
         $offset = (int) $aState['offset'];
         $limit  = (int) ($iState->batchSize - $iState->batchOffset);
+        
+        // The adapter state offset counts indexed items (like core adapters), while
+        // the item query walks message ids. Track the id cursor separately so the
+        // progress accounting adds up even when message ids have gaps.
+        $lastId = (int) ($aState['last_id'] ?? 0);
+        
+        // Capture any stray output/warnings so they get logged instead of bubbling
+        // up to com_finder, which treats any output as a plugin failure.
+        ob_start();
 
         // Get the content items to index.
-        $items = $this->getItems($offset, $limit);
+        try {
+            $items = $this->getItems($lastId, $limit);
+        } catch (\Throwable $e) {
+            ob_end_clean();
+            Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) threw " . get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
+            throw $e;
+        };
 
         foreach ($items as $item) {
-            $this->index($item);
+            ob_start();
+            
+            try {
+                $this->index($item);
+            } catch (\Throwable $e) {
+                ob_end_clean();
+                Log::add("Finder Kunena plugin: index of message {$item->id} threw " . get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
+                throw $e;
+            }
+            
+            $stray = trim(ob_get_clean());
+            
+            if ($stray !== '') {
+                Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) produced output: " . substr($stray, 0, 3000), Log::ERROR);
+            }
 
             // Adjust the offsets.
             $offset++;
@@ -307,12 +336,22 @@ final class Kunena extends Adapter implements SubscriberInterface
             $iState->totalItems--;
         }
 
+        // If the query returned fewer items than requested, all messages are indexed.
+        // Settle any difference between the counted total and the items actually
+        // delivered (e.g. messages deleted while indexing was running).
+        if (\count($items) < $limit) {
+            $iState->totalItems -= max(0, (int) $aState['total'] - $offset);
+            $offset             = (int) $aState['total'];
+        }
 
         // Update the indexer state.
         $aState['offset']                    = $offset;
+        $aState['last_id']                   = $lastId;
         $iState->pluginState[$this->context] = $aState;
         Indexer::setState($iState);
 
+        unset($items, $item);
+        
         return \true;
     }
 

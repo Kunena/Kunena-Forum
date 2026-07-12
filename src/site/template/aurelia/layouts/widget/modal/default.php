@@ -43,7 +43,7 @@ $data        = $this->data;
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline-primary border" type="submit" id="btn_statustext">
+                <button class="btn btn-outline-primary border" type="submit" id="btn_statustext" aria-label="<?php echo Text::_('JSUBMIT') ?>">
                     <?php echo Text::_('JSUBMIT'); ?>
                 </button>
                 <button class="btn btn-outline-primary border" type="button" data-bs-dismiss="modal">

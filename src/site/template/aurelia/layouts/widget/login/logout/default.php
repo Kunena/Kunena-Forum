@@ -150,7 +150,7 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
                         <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" method="post"
                               id="logout-form" class="form-inline">
                             <div>
-                                <button class="btn btn-link" name="submit" type="submit">
+                                <button class="btn btn-link" name="submit" type="submit" aria-label="<?php echo Text::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?>">
                                     <?php echo KunenaIcons::out(); ?>
                                     <?php echo Text::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>
                                 </button>

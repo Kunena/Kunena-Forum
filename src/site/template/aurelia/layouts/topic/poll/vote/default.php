@@ -24,6 +24,13 @@ $this->addScript('poll.js');
 
 $polllifespan = '';
 
+ 
+if ($this->userhasvoted && !$this->config->pollAllowVoteOne) {
+    $valueVoteButton = Text::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE');
+} else {
+    $valueVoteButton = Text::_('COM_KUNENA_POLL_BUTTON_VOTE');
+}
+
 if ($this->poll->polltimetolive != '1000-01-01 00:00:00') {
     if ($this->intervalTimeToLive->format('%R%a') >= 1) {
         $polllifespan = '<span style="font-size: 18px;"> (' . Text::sprintf('COM_KUNENA_POLL_RUNS_UNTILL', $this->poll->polltimetolive) . ')</span>';
@@ -68,13 +75,12 @@ if ($this->poll->polltimetolive != '1000-01-01 00:00:00') {
 
                 </ul>
 
-                <input id="kpoll-button-vote" class="btn btn-outline-success" type="submit"
-                       value="<?php echo $this->userhasvoted && !$this->config->pollAllowVoteOne
-                           ? Text::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE')
-                           : Text::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>"/>
-                <input id="kpoll_go_results" type="button" class="btn btn-outline-success"
-                       value="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>"/>
-                <input id="kpoll_hide_results" type="button" class="btn btn-outline-success" style="display:none;"
+                <input id="kpoll-button-vote" class="btn btn-outline-success" aria-label="<?php echo $valueVoteButton ?>" type="submit"
+                       value="<?php echo $valueVoteButton ?>"/>
+                <input id="kpoll_go_results" type="button" aria-label="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>" 
+                       class="btn btn-outline-success" value="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_VIEW_RESULTS') ?>"/>
+                <input id="kpoll_hide_results" type="button" aria-label="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_HIDE_RESULTS') ?>" 
+                       class="btn btn-outline-success" style="display:none;"
                        value="<?php echo Text::_('COM_KUNENA_POLL_BUTTON_HIDE_RESULTS') ?>"/>
             </div>
         </form>

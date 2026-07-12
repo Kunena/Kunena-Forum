@@ -208,10 +208,10 @@ $this->addScript('assets/js/search.js');
 
                     </div>
                     <div class="text-center mt-3">
-                        <button type="submit" class="btn btn-outline-primary">
+                        <button type="submit" class="btn btn-outline-primary" aria-label="<?php echo Text::_('COM_KUNENA_SEARCH_SEND') ?>">
                             <?php echo KunenaIcons::search(); ?><?php echo ' ' . Text::_('COM_KUNENA_SEARCH_SEND') . ' '; ?>
                         </button>
-                        <button type="reset" class="btn btn-outline-primary" onclick="window.history.back();">
+                        <button type="reset" class="btn btn-outline-primary" aria-label="<?php echo Text::_('COM_KUNENA_CANCEL') ?>" onclick="window.history.back();">
                             <?php echo KunenaIcons::cancel(); ?><?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
                         </button>
                     </div>

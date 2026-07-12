@@ -70,7 +70,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
                 <div id="kform-login-desktop-submit" class="control-group center">
                     <p>
-                        <button type="submit" tabindex="3" name="submit" class="btn btn-outline-primary">
+                        <button type="submit" tabindex="3" name="submit" class="btn btn-outline-primary" aria-label="<?php echo Text::_('JLOGIN') ?>">
                             <?php echo Text::_('JLOGIN'); ?>
                         </button>
                     </p>

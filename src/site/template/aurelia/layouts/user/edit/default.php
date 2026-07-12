@@ -88,7 +88,7 @@ $avatar        = KunenaFactory::getAvatarIntegration();
         <br />
 
         <div class="center">
-            <button class="btn btn-outline-primary validate" type="submit">
+            <button class="btn btn-outline-primary validate" type="submit" aria-label="<?php echo Text::_('COM_KUNENA_SAVE') ?>">
                 <?php echo KunenaIcons::save(); ?><?php echo Text::_('COM_KUNENA_SAVE'); ?>
             </button>
             <button class="btn btn-outline-primary border" type="button" name="cancel" onclick="window.history.back();"

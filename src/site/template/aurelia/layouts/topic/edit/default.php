@@ -395,16 +395,16 @@ Text::script('COM_KUNENA_POLL_TITLE');
                             <!-- The file input field used as target for the file upload widget -->
                             <input id="fileupload" type="file" name="file" multiple>
                         </span>
-                        <button id="insert-all" class="btn btn-outline-primary" type="submit" style="display:none;">
+                        <button id="insert-all" class="btn btn-outline-primary" type="submit" style="display:none;" aria-label="<?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?>">
                             <?php echo KunenaIcons::upload(); ?>
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_INSERT_ALL_BUTTON') ?></span>
                         </button>
-                        <button id="remove-all" class="btn btn-outline-danger" type="submit" style="display:none;">
+                        <button id="remove-all" class="btn btn-outline-danger" type="submit" style="display:none;" aria-label="<?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?>">
                             <?php echo KunenaIcons::cancel(); ?>
                             <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_REMOVE_ALL_BUTTON') ?></span>
                         </button>
                         <?php if ($this->config->privateMessage) : ?>
-                            <button id="set-secure-all" class="btn btn-outline-primary" type="submit" style="display:none;">
+                            <button id="set-secure-all" class="btn btn-outline-primary" type="submit" style="display:none;" aria-label="<?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_SET_SECURE_ALL_BUTTON') ?>">
                                 <?php echo KunenaIcons::secure(); ?>
                                 <span><?php echo Text::_('COM_KUNENA_UPLOADED_LABEL_SET_SECURE_ALL_BUTTON') ?></span>
                             </button>
@@ -469,11 +469,11 @@ Text::script('COM_KUNENA_POLL_TITLE');
     <?php endif; ?>
     <div class="form-group row">
         <div class="col-md-10 center">
-            <button id="form_submit_button" type="submit" class="btn btn-outline-success btn-md form-validate" disabled tabindex="8">
+            <button id="form_submit_button" type="submit" class="btn btn-outline-success btn-md form-validate" disabled tabindex="8" aria-label="<?php echo Text::_('COM_KUNENA_SUBMIT') ?>">
                 <?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_SUBMIT'); ?>
             </button>
 
-            <button type="reset" class="btn btn-outline-primary btn-md" onclick="window.history.back();" tabindex="10">
+            <button type="reset" class="btn btn-outline-primary btn-md" onclick="window.history.back();" tabindex="10" aria-label="<?php echo Text::_('COM_KUNENA_CANCEL') ?>">
                 <?php echo KunenaIcons::delete(); ?>
                 <?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>
             </button>

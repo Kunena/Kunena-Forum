@@ -128,7 +128,13 @@ $this->addScript('assets/js/search.js');
                                         <div id="searchatdate" class="input-group input-group date" data-date-format="<?php echo $this->config->datePickerFormat; ?>">
                                             <label for="searchatdate" hidden="hidden"><?php echo Text::_('COM_KUNENA_SEARCH_AT_A_SPECIFIC_DATE'); ?></label>
                                             <input type="text" class="form-control" id="searchatdate" name="searchatdate" data-date-format="<?php echo $this->config->datePickerFormat; ?>">
-                                            <button class="btn btn-outline-secondary" type="button" id="button-searchatdate"><?php echo KunenaIcons::calendar(); ?></button>
+                                            <button
+                                                class="btn btn-outline-secondary"
+                                                type="button"
+                                                id="button-searchatdate"
+                                                aria-label="<?php echo Text::_('COM_KUNENA_SEARCH_LABEL_SELECT_DATE'); ?>">
+                                                <?php echo KunenaIcons::calendar(); ?>
+                                            </button>
                                         </div>
                                     </fieldset>
                                 </div>

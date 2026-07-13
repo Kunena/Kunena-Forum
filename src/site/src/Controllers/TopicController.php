@@ -1044,14 +1044,13 @@ class TopicController extends KunenaController
     {
         $params['file'] = '1';
         $params['image'] = '1';
+        $params['mesid'] = '0';
 
         $attachments = KunenaAttachmentHelper::getByUserid($this->me, $params);
 
         if (!empty($attachments)) {
-            foreach ($attachments as $attachment) {
-                if ($attachment->mesid == 0) {
-                    $attachment->delete();
-                }
+            foreach ($attachments as $attachment) {                
+                $attachment->delete();               
             }
         }
     }

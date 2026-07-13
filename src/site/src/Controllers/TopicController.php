@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
@@ -56,7 +57,6 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use RuntimeException;
 use stdClass;
 
 /**
@@ -71,6 +71,10 @@ use stdClass;
  */
 class TopicController extends KunenaController
 {
+    private const STOPFORUMSPAM_CACHE_TTL = 600;
+
+    private const STOPFORUMSPAM_TIMEOUT = 3;
+
     public $catid;
 
     public $return;
@@ -1064,83 +1068,78 @@ class TopicController extends KunenaController
      */
     protected function checkIfBlacklisted($message)
     {
-        $ip    = $message->ip;
-        $name  = $message->name;
-        $email = $message->email;
+        $ip    = trim((string) $message->ip);
+        $name  = trim((string) $message->name);
+        $email = trim((string) $message->email);
 
         // Prepare the request to stopforumspam
-        if (KunenaUserHelper::isIPv6($message->ip)) {
-            $ip = '[' . $message->ip . ']';
+        if (KunenaUserHelper::isIPv6($ip)) {
+            $ip = '[' . $ip . ']';
         }
-        
+
         $url = 'https://api.stopforumspam.org/api';
-        
         $requestData = [
-            'ip' => $ip,            
+            'ip' => $ip,
         ];
-        
+
         if (!empty($name)) {
-            $requestData = [
-                'username' => $name,
-            ];
+            $requestData['username'] = $name;
         }
-        
+
         if (!empty($email)) {
-            $requestData = [
-                'email' => $email,
-            ];
+            $requestData['email'] = $email;
         }
 
-        // Prepare connection
-        $options = new Registry();
-        $options->set('userAgent', KunenaForum::version());
-        
-        $http = (new HttpFactory())->getHttp($options);
-        
-        // Http transport throws an exception when there's no response.
-        try {
-            $response = $http->post($url, json_encode($requestData), [
-                'Accept'       => 'application/json',
-                'Content-Type' => 'application/json',
-            ], 20);
-        } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-            
-            return '';
-        }
+        // Keep a stable field order so identical lookups share the same cache key.
+        ksort($requestData);
 
-        // Decode response
-        $result = json_decode((string) $response->getBody(), true);
-        
-        // The query has worked
-        if ($response->getStatusCode() === 200) {
-            if ($result->success) {
-                if ($result->ip->appears) {
-                    return true;
-                } elseif (!empty($result->username)) {
-                    if ($result->username->appears) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } elseif (!empty($result->email)) {
-                    if ($result->email->appears) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            } else {
-                // TODO : log the result or display something in debug mode
-                
-                return false;
-            }
-        }
-        
-        // Handle other non-success response
-        if ($response->getStatusCode() !== 200) {
+        $payload = json_encode($requestData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        if ($payload === false) {
             return false;
         }
+
+        $cacheKey = 'stopforumspam.' . sha1($payload);
+        $options  = [
+            'defaultgroup' => 'com_kunena_stopforumspam',
+            'caching'      => true,
+            'lifetime'     => self::STOPFORUMSPAM_CACHE_TTL,
+        ];
+        $cache    = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('callback', $options);
+
+        return (bool) $cache->get(
+            function () use ($payload, $url) {
+                $options = new Registry();
+                $options->set('userAgent', KunenaForum::version());
+
+                $http = (new HttpFactory())->getHttp($options);
+
+                try {
+                    $response = $http->post($url, $payload, [
+                        'Accept'       => 'application/json',
+                        'Content-Type' => 'application/json',
+                    ], self::STOPFORUMSPAM_TIMEOUT);
+                } catch (\RuntimeException $e) {
+                    return false;
+                }
+
+                if ($response->getStatusCode() !== 200) {
+                    return false;
+                }
+
+                $result = json_decode((string) $response->getBody(), true);
+
+                if (!is_array($result) || empty($result['success'])) {
+                    return false;
+                }
+
+                return (isset($result['ip']['appears']) && $result['ip']['appears'])
+                    || (isset($result['username']['appears']) && $result['username']['appears'])
+                    || (isset($result['email']['appears']) && $result['email']['appears']);
+            },
+            [],
+            $cacheKey
+        );
     }
 
     /**

@@ -759,9 +759,11 @@ class TopicController extends KunenaController
             return;
         }
 
+        $dateNowUnix = Factory::getDate()->toUnix();
+        
         // Flood protection
         if ($this->config->floodProtection && !$this->me->isModerator($category) && $isNew) {
-            $timelimit = Factory::getDate()->toUnix() - $this->config->floodProtection;
+            $timelimit = $dateNowUnix - $this->config->floodProtection;
             $ip        = KunenaUserHelper::getUserIp();
 
             $query = $this->db->createQuery();
@@ -785,7 +787,7 @@ class TopicController extends KunenaController
         }
 
         // Ignore identical for 5 minutes
-        $duplicatetimewindow = Factory::getDate()->toUnix() - 1 * 60;
+        $duplicatetimewindow = $dateNowUnix - 1 * 60;
         $lastTopic           = $topic->getCategory()->getLastTopic();
 
         if (

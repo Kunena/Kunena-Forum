@@ -82,8 +82,6 @@ class TopicController extends KunenaController
     public $id;
 
     public $mesid;
-    
-    public $me;
 
     /**
      * @param   array  $config  config
@@ -98,7 +96,6 @@ class TopicController extends KunenaController
         $this->return = $this->app->getInput()->getInt('return', $this->catid);
         $this->id     = $this->app->getInput()->getInt('id', 0);
         $this->mesid  = $this->app->getInput()->getInt('mesid', 0);
-        $this->me     = KunenaUserHelper::getMyself();
     }
 
     /**

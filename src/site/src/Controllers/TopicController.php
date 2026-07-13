@@ -670,8 +670,6 @@ class TopicController extends KunenaController
             'quote'             => 0,
         ];
 
-        $this->app->setUserState('com_kunena.postfields', $fields);
-
         if (!Session::checkToken('post')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();
@@ -685,6 +683,8 @@ class TopicController extends KunenaController
 
             return;
         }
+        
+        $this->app->setUserState('com_kunena.postfields', $fields);
 
         // Need to do to the replacement in case of VBA code is inserted without the bbcode tags [code][/code]
         // Optimized: only perform replacement if the pattern exists in the message

@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.0
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' 
+          php-version: '8.3' 
           extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, simplexml, tokenizer, zip
           coverage: none
           tools: composer:v2
@@ -34,13 +34,13 @@ jobs:
         run: phing
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: nightly-build
           path: build/
 
       - name: Upload to FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}

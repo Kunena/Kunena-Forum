@@ -23,13 +23,13 @@ use Joomla\CMS\Event\Result\ResultTypeStringAware;
 /**
  * Class for Model event.
  * Example:
- *  new KunenaUserTabsEdit('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
+ *  new KunenaUserTabsEditEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
  *
  * Joomla Core doesn't have a Finder\BeforeDeleteEvent
  * 
  * @since  7.1.0
  */
-class KunenaUserTabsEdit  extends GenericEvent implements ResultAwareInterface {
+class KunenaUserTabsEditEvent extends GenericEvent implements ResultAwareInterface {
     use ResultAware;
     use ResultTypeStringAware;
     

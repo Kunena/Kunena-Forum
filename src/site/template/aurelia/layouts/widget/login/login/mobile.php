@@ -80,7 +80,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
                 <div id="kmobile-form-login-submit" class="control-group center">
                     <p>
-                        <button type="submit" tabindex="3" name="submit" class="btn btn-outline-primary" aria-label="<?php echo Text::_('JLOGIN') ?>">
+                        <button type="submit" tabindex="3" name="submit" class="btn btn-outline-primary">
                             <?php echo Text::_('JLOGIN'); ?>
                         </button>
                     </p>

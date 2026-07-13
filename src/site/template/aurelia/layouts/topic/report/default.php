@@ -55,9 +55,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
         <br>
         <div class="control-group">
             <div class="controls">
-                <input class="btn btn-outline-primary" type="submit" aria-label="<?php echo Text::_('COM_KUNENA_REPORT_SEND'); ?>" name="Submit"
+                <input class="btn btn-outline-primary" type="submit" name="Submit"
                        value="<?php echo Text::_('COM_KUNENA_REPORT_SEND'); ?>"/>
-                <button type="button" class="btn btn-secondary border" data-bs-dismiss="modal" aria-label="<?php echo Text::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?>" aria-hidden="true">
+                <button type="button" class="btn btn-secondary border" data-bs-dismiss="modal" aria-hidden="true">
                     <?php echo Text::_('COM_KUNENA_REPORT_CLOSEMODAL_LABEL'); ?></button>
             </div>
         </div>

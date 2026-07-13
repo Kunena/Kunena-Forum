@@ -286,7 +286,7 @@ $labels          = $this->ktemplate->params->get('labels');
             <br />
             <div class="control-group center">
                 <button name="submit" type="submit"
-                    class="btn btn-outline-success btn-md" aria-label="<?php echo Text::_('COM_KUNENA_POST_MODERATION_PROCEED') ?>">
+                    class="btn btn-outline-success btn-md">
                     <?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_POST_MODERATION_PROCEED'); ?>
                 </button>
 

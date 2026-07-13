@@ -1,0 +1,50 @@
+name: Nightly Build with FTP Upload
+
+on:
+  schedule:
+    - cron: '0 23 * * *' # Execute the workflow everday at 23:00 UTC
+  workflow_dispatch: # Allow to launch the workflow manually
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' 
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, simplexml, tokenizer, zip
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Install Phing
+        run: |
+          wget https://www.phing.info/get/phing-latest.phar
+          chmod +x phing-latest.phar
+          sudo mv phing-latest.phar /usr/local/bin/phing
+
+      - name: Run Phing build
+        run: phing
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nightly-build
+          path: build/
+
+      - name: Upload to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: build/
+          server-dir: /public_html/update/nightlybuilds/
+          dangerous-clean-slate: true

@@ -728,22 +728,21 @@ class TopicController extends KunenaController
             $app = Factory::getApplication();
             $plugin = $app->get('captcha', '0');
 
-            // Early return if CAPTCHA is not properly configured
-            if ($plugin === '0' || $plugin === '' || $plugin === null || !PluginHelper::isEnabled('captcha', $plugin)) {
-                return;
-            }
-
-            try {
-                $captcha = Captcha::getInstance((string) $plugin, ['namespace' => 'kunena_captcha']);
-
-                if (!$captcha->checkAnswer(\null)) {
-                    $this->setRedirectBack();
-                    return;
+            if ($plugin !== '0' || $plugin !== '' || $plugin !== null) {
+                if (PluginHelper::isEnabled('captcha', $plugin)) {
+                    try {
+                        $captcha = Captcha::getInstance((string) $plugin, ['namespace' => 'kunena_captcha']);
+                        
+                        if (!$captcha->checkAnswer(\null)) {
+                            $this->setRedirectBack();
+                            return;
+                        }
+                    } catch (\RuntimeException $e) {
+                        $app->enqueueMessage($e->getMessage(), 'error');
+                        $this->setRedirectBack();
+                        return;
+                    }
                 }
-            } catch (\RuntimeException $e) {
-                $app->enqueueMessage($e->getMessage(), 'error');
-                $this->setRedirectBack();
-                return;
             }
         }
 

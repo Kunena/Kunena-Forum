@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
@@ -128,9 +129,10 @@ class Dispatcher extends ComponentDispatcher
         // Prepare and display the output.
         $params       = new \stdClass();
         $params->text = '';
-        Factory::getApplication()->triggerEvent('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]);
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        $dispatcher->dispatch('onKunenaBeforeRender', new \Joomla\Event\Event('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]));
         $contents = (string) $contents;
-        Factory::getApplication()->triggerEvent('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]);
+        $dispatcher->dispatch('onKunenaAfterRender', new \Joomla\Event\Event('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]));
         echo $contents;
 
         // Remove custom error handlers.

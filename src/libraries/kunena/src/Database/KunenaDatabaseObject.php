@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 
 /**
@@ -249,7 +250,8 @@ abstract class KunenaDatabaseObject
 
         try {
             // Trigger the onKunenaBeforeSave event.
-            Factory::getApplication()->triggerEvent('onKunenaBeforeSave', ["com_kunena.{$this->_name}", &$table, $isNew]);
+            $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+            $dispatcher->dispatch('onKunenaBeforeSave', new \Joomla\Event\Event('onKunenaBeforeSave', ['com_kunena.' . $this->_name, &$table, $isNew]));
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
@@ -269,7 +271,8 @@ abstract class KunenaDatabaseObject
         $this->saveInternal();
 
         // Trigger the onKunenaAfterSave event.
-        Factory::getApplication()->triggerEvent('onKunenaAfterSave', ["com_kunena.{$this->_name}", &$table, $isNew]);
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        $dispatcher->dispatch('onKunenaAfterSave', new \Joomla\Event\Event('onKunenaAfterSave', ['com_kunena.' . $this->_name, &$table, $isNew]));
 
         $this->_saving = false;
 
@@ -331,7 +334,8 @@ abstract class KunenaDatabaseObject
 
         try {
             // Trigger the onKunenaBeforeDelete event.
-            Factory::getApplication()->triggerEvent('onKunenaBeforeDelete', ["com_kunena.{$this->_name}", $table]);
+            $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+            $dispatcher->dispatch('onKunenaBeforeDelete', new \Joomla\Event\Event('onKunenaBeforeDelete', ['com_kunena.' . $this->_name, $table]));
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
@@ -347,7 +351,8 @@ abstract class KunenaDatabaseObject
         $this->_exists = false;
 
         // Trigger the onKunenaAfterDelete event.
-        Factory::getApplication()->triggerEvent('onKunenaAfterDelete', ["com_kunena.{$this->_name}", $table]);
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        $dispatcher->dispatch('onKunenaAfterDelete', new \Joomla\Event\Event('onKunenaAfterDelete', ['com_kunena.' . $this->_name, $table]));
 
         return true;
     }

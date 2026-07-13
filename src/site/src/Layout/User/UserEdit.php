@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -102,7 +103,8 @@ class UserEdit extends KunenaLayout
 
         PluginHelper::importPlugin('kunena');
 
-        $plugins = Factory::getApplication()->triggerEvent('on\Kunena\Forum\Libraries\User\KunenaUserTabsEdit', [$tabs]);
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        $plugins = $dispatcher->dispatch('on\Kunena\Forum\Libraries\User\KunenaUserTabsEdit', new \Joomla\Event\Event('on\Kunena\Forum\Libraries\User\KunenaUserTabsEdit', [$tabs]));
 
         $tabs = $tabs + $plugins;
 

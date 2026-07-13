@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Event\DispatcherInterface;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
@@ -300,7 +301,8 @@ class UserItem extends KunenaLayout
 
         PluginHelper::importPlugin('kunena');
 
-        $plugins = Factory::getApplication()->triggerEvent('on\Kunena\Forum\Libraries\User\KunenaUserTabs', [$tabs]);
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        $plugins = $dispatcher->dispatch('on\Kunena\Forum\Libraries\User\KunenaUserTabs', new \Joomla\Event\Event('on\Kunena\Forum\Libraries\User\KunenaUserTabs', [$tabs]));
 
         $tabs = $tabs + $plugins;
 

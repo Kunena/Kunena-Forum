@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Event\KunenaUserTabsEdit;
+use Kunena\Forum\Libraries\Event\KunenaUserTabsEditEvent;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -107,7 +107,7 @@ class UserEdit extends KunenaLayout
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
         $plugins =  $dispatcher->dispatch(
             'onKunenaUserTabsEdit',
-            new KunenaUserTabsEdit(
+            new KunenaUserTabsEditEvent(
                 'onKunenaUserTabsEdit',
                 ['tabs' => $tabs]
                 )

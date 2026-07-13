@@ -23,7 +23,7 @@ use Joomla\Event\DispatcherInterface;
 use Joomla\Input\Input;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Event\KunenaUserTabs;
+use Kunena\Forum\Libraries\Event\KunenaUserTabsEvent;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaBan;
@@ -305,7 +305,7 @@ class UserItem extends KunenaLayout
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
         $plugins =  $dispatcher->dispatch(
             'onKunenaUserTabs',
-            new KunenaUserTabs(
+            new KunenaUserTabsEvent(
                 'onKunenaUserTabs',
                 ['tabs' => $tabs]
                 )

@@ -28,6 +28,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
@@ -1110,7 +1111,8 @@ class KunenaMessage extends KunenaDatabaseObject
         $activity = KunenaFactory::getActivityIntegration();
 
         if ($postDelta < 0) {
-            Factory::getApplication()->triggerEvent('onDeleteKunenaPost', [[$this->id]]);
+            $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+            $dispatcher->dispatch('onDeleteKunenaPost', new \Joomla\Event\Event('onDeleteKunenaPost', [[$this->id]]));
             $activity->onAfterDelete($this);
         } elseif ($postDelta > 0) {
             $topic->markRead();

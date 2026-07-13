@@ -29,6 +29,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
+use Joomla\Event\DispatcherInterface;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Utilities\ArrayHelper;
@@ -344,7 +345,8 @@ class UserController extends KunenaController
 
         PluginHelper::importPlugin('system');
 
-        $this->app->triggerEvent('OnAfterKunenaProfileUpdate', [$this->user, $success]);
+        $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+        $dispatcher->dispatch('OnAfterKunenaProfileUpdate', new \Joomla\Event\Event('OnAfterKunenaProfileUpdate', [$this->user, $success]));
 
         if ($errors) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);

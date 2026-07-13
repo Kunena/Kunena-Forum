@@ -22,6 +22,7 @@ use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\SiteRouter;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -104,9 +105,10 @@ $dispatcher->dispatch(
         )
 );
 
-Factory::getApplication()->triggerEvent('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]);
+$dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+$dispatcher->dispatch('onKunenaBeforeRender', new \Joomla\Event\Event('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]));
 $contents = (string) $contents;
-Factory::getApplication()->triggerEvent('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]);
+$dispatcher->dispatch('onKunenaAfterRender', new \Joomla\Event\Event('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]));
 
 echo $contents;
 

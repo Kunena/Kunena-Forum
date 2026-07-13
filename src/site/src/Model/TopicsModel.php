@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -222,7 +223,8 @@ class TopicsModel extends KunenaModel
                     $topics = false;
 
                     PluginHelper::importPlugin('kunena');
-                    Factory::getApplication()->triggerEvent('onKunenaGetTopics', [$layout, $pluginmode, &$topics, &$total, $this]);
+                    $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+                    $dispatcher->dispatch('onKunenaGetTopics', new \Joomla\Event\Event('onKunenaGetTopics', [$layout, $pluginmode, &$topics, &$total, $this]));
 
                     if (!empty($topics)) {
                         $this->topics = $topics;

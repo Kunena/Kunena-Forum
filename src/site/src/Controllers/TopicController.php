@@ -794,7 +794,7 @@ class TopicController extends KunenaController
         ) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_DUPLICATE_IGNORED'), 'error');
 
-            return $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$topic->getCategory()->id}&id={$lastTopic->id}&mesid={$lastTopic->last_post_id}", false));
+            return $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$lastTopic->id}&mesid={$lastTopic->last_post_id}", false));
         }
 
         // Set topic icon if permitted
@@ -803,7 +803,7 @@ class TopicController extends KunenaController
         }
 
         // Check for guest user if the IP, username or email are blacklisted
-        if ($message->getCategory()->allowAnonymous && !$this->me->userid) {
+        if ($category->allowAnonymous && !$this->me->userid) {
             if ($this->checkIfBlacklisted($message)) {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_BALCKLISTED'), 'error');
                 $this->setRedirectBack();
@@ -818,7 +818,7 @@ class TopicController extends KunenaController
         }
 
         // If requested: Make message to be anonymous
-        if ($fields['anonymous'] && $message->getCategory()->allowAnonymous) {
+        if ($fields['anonymous'] && $category->allowAnonymous) {
             $message->makeAnonymous();
         }
 

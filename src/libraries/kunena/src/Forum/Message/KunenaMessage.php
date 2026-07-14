@@ -639,6 +639,16 @@ class KunenaMessage extends KunenaDatabaseObject
         );
 
         if ($emailToList) {
+            if (!$config->email) {
+                KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
+                
+                return false;
+            } elseif (!MailHelper::isEmailAddress($config->email)) {
+                KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
+                
+                return false;
+            }
+            
             $topic = $this->getTopic();
 
             // Make a list from all receivers; split the receivers into two distinct groups.
@@ -683,16 +693,6 @@ class KunenaMessage extends KunenaDatabaseObject
                     KunenaError::displayDatabaseError($e);
                 }
             } else {
-                if (!$config->email) {
-                    KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
-                    
-                    return false;
-                } elseif (!MailHelper::isEmailAddress($config->email)) {
-                    KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
-                    
-                    return false;
-                }
-                
                 $mailnamesender  = !empty($config->emailSenderName) ? MailHelper::cleanAddress($config->emailSenderName) : MailHelper::cleanAddress($config->boardTitle);
                 $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");                
                 

@@ -260,11 +260,11 @@ class TemplatesModel extends AdminModel
         
         // Retrieve the Joomla! cache controller to store data in Joomla! cache
         $cache = Factory::getContainer()
-        ->get(CacheControllerFactoryInterface::class)
-        ->createCacheController('output', ['defaultgroup' => 'com_kunena', 'lifetime' => 60]);
+            ->get(CacheControllerFactoryInterface::class)
+            ->createCacheController('output', ['defaultgroup' => 'com_kunena', 'lifetime' => 60]);
         
         $cached = $cache->get($cacheId, 'com_kunena');
-        
+
         if ($cached !== false) {
             return $cached;
         }
@@ -314,10 +314,14 @@ class TemplatesModel extends AdminModel
                         $this->template[$temp->name] = $temp;
                     }
                 }
-                
+
                 // Store the data in the Joomla! cache
-                $cache->store($this->template, $cacheId, 'com_kunena');
+                $stored = $cache->store($this->template, $cacheId, 'com_kunena');
                 
+                if (!$stored) {
+                    $this->app->enqueueMessage('To avoid timeout in order to use Joomla! cache you need to enable cache into Joomla! configuration', 'notice');
+                }
+
                 return $this->template;
             }
         }

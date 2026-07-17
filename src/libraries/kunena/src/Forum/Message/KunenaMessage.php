@@ -693,24 +693,59 @@ class KunenaMessage extends KunenaDatabaseObject
                     KunenaError::displayDatabaseError($e);
                 }
             } else {
-                $mailnamesender  = !empty($config->emailSenderName) ? MailHelper::cleanAddress($config->emailSenderName) : MailHelper::cleanAddress($config->boardTitle);
-                $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");                
-                
-                // Create email.
-                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                $mail->setSubject($mailsubject);
-                $mail->setSender([$config->email, $mailnamesender]);
-                
-                // Send email to all subscribers.
-                if (!empty($receivers[1])) {
-                    $this->attachEmailBody($mail, 1, $subject, $url, $once);
-                    KunenaEmail::send($mail, $receivers[1]);
-                }
-                
-                // Send email to all moderators.
-                if (!empty($receivers[0])) {
-                    $this->attachEmailBody($mail, 0, $subject, $url, $once);
-                    KunenaEmail::send($mail, $receivers[0]);
+                $mailnamesender = !empty($config->emailSenderName) ? MailHelper::cleanAddress($config->emailSenderName) : MailHelper::cleanAddress($config->boardTitle);
+
+                $app             = Factory::getApplication();
+                $lang            = $app->getLanguage();
+                $currentLanguage = $lang->getTag();
+
+                // Send one email per recipient, in their own language.
+                foreach ($emailToList as $emailTo) {
+                    if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
+                        continue;
+                    }
+
+                    if (
+                        $config->emailVisibleAddress == $emailTo->email &&
+                        !(
+                            \count($emailToList) == 1 &&
+                            ($emailTo->moderator || $emailTo->subscription)
+                        )
+                    ) {
+                        continue;
+                    }
+
+                    // Determine subscription type (1 = subscriber, 0 = moderator/admin).
+                    $subscriptionType = $emailTo->subscription ? 1 : 0;
+
+                    // Load the recipient's language if it differs from the current one.
+                    $recipientLanguage = null;
+
+                    if (!empty($emailTo->id)) {
+                        $kunenaUser = KunenaUserHelper::get((int) $emailTo->id);
+
+                        if (!empty($kunenaUser->language)) {
+                            $recipientLanguage = $kunenaUser->language;
+                        }
+                    }
+
+                    if ($recipientLanguage && $recipientLanguage !== $currentLanguage) {
+                        $lang->load('com_kunena', JPATH_SITE, $recipientLanguage, true);
+                    }
+
+                    $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+
+                    $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                    $mail->setSubject($mailsubject);
+                    $mail->setSender([$config->email, $mailnamesender]);
+
+                    $this->attachEmailBody($mail, $subscriptionType, $subject, $url, $once);
+                    KunenaEmail::send($mail, [$emailTo->email]);
+
+                    // Restore original language if it was changed.
+                    if ($recipientLanguage && $recipientLanguage !== $currentLanguage) {
+                        $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
+                    }
                 }
             }
 

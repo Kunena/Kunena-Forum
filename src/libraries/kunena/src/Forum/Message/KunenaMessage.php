@@ -729,22 +729,26 @@ class KunenaMessage extends KunenaDatabaseObject
                         }
                     }
 
-                    if ($recipientLanguage && $recipientLanguage !== $currentLanguage) {
+                    $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
+
+                    if ($languageChanged) {
                         $lang->load('com_kunena', JPATH_SITE, $recipientLanguage, true);
                     }
 
-                    $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+                    try {
+                        $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
 
-                    $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                    $mail->setSubject($mailsubject);
-                    $mail->setSender([$config->email, $mailnamesender]);
+                        $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                        $mail->setSubject($mailsubject);
+                        $mail->setSender([$config->email, $mailnamesender]);
 
-                    $this->attachEmailBody($mail, $subscriptionType, $subject, $url, $once);
-                    KunenaEmail::send($mail, [$emailTo->email]);
-
-                    // Restore original language if it was changed.
-                    if ($recipientLanguage && $recipientLanguage !== $currentLanguage) {
-                        $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
+                        $this->attachEmailBody($mail, $subscriptionType, $subject, $url, $once);
+                        KunenaEmail::send($mail, [$emailTo->email]);
+                    } finally {
+                        // Restore original language regardless of success or failure.
+                        if ($languageChanged) {
+                            $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
+                        }
                     }
                 }
             }

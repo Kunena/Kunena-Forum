@@ -79,6 +79,10 @@ abstract class KunenaEmail
         $chunks = array_chunk($receivers, $emailRecipientCount);
 
         $success = true;
+        
+        if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
+            $mail->SMTPKeepAlive = true;
+        }
 
         foreach ($chunks as $emails) {
             if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to') {
@@ -98,6 +102,10 @@ abstract class KunenaEmail
                 $success = false;
                 Log::add($e->getMessage(), Log::ERROR, 'kunena');
             }
+        }
+        
+        if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
+            $mail->smtpClose();
         }
 
         return $success;

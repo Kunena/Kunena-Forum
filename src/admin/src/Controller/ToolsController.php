@@ -547,7 +547,7 @@ class ToolsController extends FormController
                     case 2:
                         if ($state->categories) {
                             // Update category statistics
-                            KunenaCategoryHelper::recount();
+                            KunenaCategoryHelper::recountBatch();
                             KunenaCategoryHelper::fixAliases();
                             $msg = Text::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORIES_X', '100%');
                         }

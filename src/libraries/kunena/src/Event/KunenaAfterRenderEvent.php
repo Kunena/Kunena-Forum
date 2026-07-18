@@ -20,6 +20,6 @@ namespace Kunena\Forum\Libraries\Event;
  * Example:
  *  new KunenaAfterRenderEvent('onEventName', ['context' => 'com_example.example', 'content' => $content]);
  *
- * @since  7.0.0
+ * @since  7.1.0
  */
 class KunenaAfterRenderEvent extends KunenaContentEvent {}

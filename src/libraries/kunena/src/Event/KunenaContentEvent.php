@@ -1,11 +1,15 @@
 <?php
 
 /**
- * Joomla! Content Management System
+ * Kunena Component
  *
- * @copyright  (C) 2023 Open Source Matters, Inc. <https://www.joomla.org>
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @package         Kunena.Administrator
+ * @subpackage      Event
+ *
+ * @copyright       Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
+ * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link            https://www.kunena.org
+ **/
 
 namespace Kunena\Forum\Libraries\Event;
 
@@ -30,7 +34,7 @@ abstract class KunenaContentEvent extends AbstractImmutableEvent
      *
      * @throws  \BadMethodCallException
      *
-     * @since   5.0.0
+     * @since   7.1.0
      */
     public function __construct($name, array $arguments = [])
     {
@@ -52,7 +56,7 @@ abstract class KunenaContentEvent extends AbstractImmutableEvent
      *
      * @return  string
      *
-     * @since  5.0.0
+     * @since  7.1.0
      */
     protected function onSetContext(string $value): string
     {
@@ -64,7 +68,7 @@ abstract class KunenaContentEvent extends AbstractImmutableEvent
      *
      * @return  string
      *
-     * @since  5.0.0
+     * @since  7.1.0
      */
     public function getContext(): string
     {

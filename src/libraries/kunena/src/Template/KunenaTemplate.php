@@ -22,6 +22,7 @@ use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
@@ -171,6 +172,22 @@ class KunenaTemplate
      * @since   Kunena 6.0
      */
     protected $filecache = [];
+
+    /**
+     * Cached XML documents keyed by file path and mtime.
+     *
+     * @var     array
+     * @since   Kunena 7.1
+     */
+    protected static $xmlFileCache = [];
+
+    /**
+     * Cache controller instance for persistent template cache.
+     *
+     * @var     mixed
+     * @since   Kunena 7.1
+     */
+    protected static $persistentTemplateCache;
 
     /**
      * @var     array
@@ -1164,34 +1181,44 @@ HTML;
             $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons' . $categoryIconset . '/topicicons.xml';
 
             if (is_file($xmlfile)) {
-                $xml = simplexml_load_file($xmlfile);
+                $cacheId = $this->getTemplateCacheId('topicicons', $xmlfile);
+                $cached  = $this->getPersistentTemplateCache()->get($cacheId);
 
-                if (isset($xml->icons)) {
-                    foreach ($xml->icons as $icons) {
-                        $type   = (string) $icons->attributes()->type;
-                        $width  = (int) $icons->attributes()->width;
-                        $height = (int) $icons->attributes()->height;
+                if (
+                    \is_array($cached)
+                    && isset($cached[0])
+                ) {
+                    $this->topicIcons = $cached;
+                } else {
+                    $xml = $this->loadXmlFileCached($xmlfile);
 
-                        foreach ($icons->icon as $icon) {
-                            $attributes = $icon->attributes();
-                            $icon       = new stdClass();
-                            $icon->id   = (int) $attributes->id;
-                            $icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
-                            $icon->name = (string) $attributes->name;
+                    if ($xml && isset($xml->icons)) {
+                        foreach ($xml->icons as $icons) {
+                            $type   = (string) $icons->attributes()->type;
+                            $width  = (int) $icons->attributes()->width;
+                            $height = (int) $icons->attributes()->height;
 
-                            if ($icon->type != 'user') {
-                                $icon->id = $icon->type . '_' . $icon->name;
+                            foreach ($icons->icon as $icon) {
+                                $attributes = $icon->attributes();
+                                $icon       = new stdClass();
+                                $icon->id   = (int) $attributes->id;
+                                $icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
+                                $icon->name = (string) $attributes->name;
+
+                                if ($icon->type != 'user') {
+                                    $icon->id = $icon->type . '_' . $icon->name;
+                                }
+
+                                $icon->published             = (int) $attributes->published;
+                                $icon->title                 = (string) $attributes->title;
+                                $icon->svg                   = (string) $attributes->svg;
+                                $icon->fa                    = (string) $attributes->fa;
+                                $icon->filename              = (string) $attributes->src;
+                                $icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
+                                $icon->height                = (int) $attributes->height ? (int) $attributes->height : $height;
+                                $icon->relpath               = $this->getTopicIconPath("{$icon->filename}", false);
+                                $this->topicIcons[$icon->id] = $icon;
                             }
-
-                            $icon->published             = (int) $attributes->published;
-                            $icon->title                 = (string) $attributes->title;
-                            $icon->svg                   = (string) $attributes->svg;
-                            $icon->fa                    = (string) $attributes->fa;
-                            $icon->filename              = (string) $attributes->src;
-                            $icon->width                 = (int) $attributes->width ? (int) $attributes->width : $width;
-                            $icon->height                = (int) $attributes->height ? (int) $attributes->height : $height;
-                            $icon->relpath               = $this->getTopicIconPath("{$icon->filename}", false);
-                            $this->topicIcons[$icon->id] = $icon;
                         }
                     }
                 }
@@ -1210,6 +1237,10 @@ HTML;
                 $icon->height        = 48;
                 $icon->relpath       = $this->getTopicIconPath("user/{$icon->filename}", false);
                 $this->topicIcons[0] = $icon;
+            }
+
+            if (isset($cacheId) && !empty($this->topicIcons)) {
+                $this->getPersistentTemplateCache()->store($this->topicIcons, $cacheId);
             }
         }
 
@@ -1279,7 +1310,7 @@ HTML;
                 $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
             }
 
-            $xml  = simplexml_load_file($xmlfile);
+            $xml  = $this->loadXmlFileCached($xmlfile);
             $icon = $this->get_xml_icon($xml, $topic->icon_id, $topicicontype);
 
             if ($topic->ordering) {
@@ -1368,7 +1399,7 @@ HTML;
                 $iconid = 2;
             }
 
-            $xml  = simplexml_load_file($xmlfile);
+            $xml  = $this->loadXmlFileCached($xmlfile);
             $icon = $this->get_xml_systemicon($xml, $iconid, $topicicontype);
 
             if ($topicicontype == 'svg') {
@@ -1545,31 +1576,41 @@ HTML;
             $xmlfile = $this->getCategoryIconPath('categoryIcons.xml', false);
 
             if (is_file($xmlfile)) {
-                $xml = simplexml_load_file($xmlfile);
+                $cacheId = $this->getTemplateCacheId('categoryicons', $xmlfile);
+                $cached  = $this->getPersistentTemplateCache()->get($cacheId);
 
-                if (isset($xml->icons)) {
-                    foreach ($xml->icons as $icons) {
-                        $type   = (string) $icons->attributes()->type;
-                        $width  = (int) $icons->attributes()->width;
-                        $height = (int) $icons->attributes()->height;
+                if (
+                    \is_array($cached)
+                    && isset($cached[0])
+                ) {
+                    $this->categoryIcons = $cached;
+                } else {
+                    $xml = $this->loadXmlFileCached($xmlfile);
 
-                        foreach ($icons->icon as $icon) {
-                            $attributes = $icon->attributes();
-                            $icon       = new stdClass();
-                            $icon->id   = (int) $attributes->id;
-                            $icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
-                            $icon->name = (string) $attributes->name;
+                    if ($xml && isset($xml->icons)) {
+                        foreach ($xml->icons as $icons) {
+                            $type   = (string) $icons->attributes()->type;
+                            $width  = (int) $icons->attributes()->width;
+                            $height = (int) $icons->attributes()->height;
 
-                            if ($icon->type != 'user') {
-                                $icon->id = $icon->type . '_' . $icon->name;
+                            foreach ($icons->icon as $icon) {
+                                $attributes = $icon->attributes();
+                                $icon       = new stdClass();
+                                $icon->id   = (int) $attributes->id;
+                                $icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
+                                $icon->name = (string) $attributes->name;
+
+                                if ($icon->type != 'user') {
+                                    $icon->id = $icon->type . '_' . $icon->name;
+                                }
+
+                                $icon->published                = (int) $attributes->published;
+                                $icon->title                    = (string) $attributes->title;
+                                $icon->filename                 = (string) $attributes->src;
+                                $icon->width                    = (int) $attributes->width ? (int) $attributes->width : $width;
+                                $icon->height                   = (int) $attributes->height ? (int) $attributes->height : $height;
+                                $this->categoryIcons[$icon->id] = $icon;
                             }
-
-                            $icon->published                = (int) $attributes->published;
-                            $icon->title                    = (string) $attributes->title;
-                            $icon->filename                 = (string) $attributes->src;
-                            $icon->width                    = (int) $attributes->width ? (int) $attributes->width : $width;
-                            $icon->height                   = (int) $attributes->height ? (int) $attributes->height : $height;
-                            $this->categoryIcons[$icon->id] = $icon;
                         }
                     }
                 }
@@ -1588,6 +1629,10 @@ HTML;
                 $icon->height           = 48;
                 $icon->relpath          = $this->getCategoryIconPath("user/{$icon->filename}", false);
                 $this->categoryIcons[0] = $icon;
+            }
+
+            if (isset($cacheId) && !empty($this->categoryIcons)) {
+                $this->getPersistentTemplateCache()->store($this->categoryIcons, $cacheId);
             }
         }
 
@@ -1666,13 +1711,19 @@ HTML;
             Folder::create($outputDir);
         }
 
+        $outputPath = $outputDir . "/" . $outputFile;
+
+        if (!$this->shouldCompileScss($inputFile, $outputPath)) {
+            return;
+        }
+
         $scss = new Compiler();
         $scss->addImportPath(\dirname($inputFile));
         $scss->setOutputStyle(OutputStyle::COMPRESSED);
         $scssContent = file_get_contents($inputFile);
         $style = $scss->compileString($scssContent, $inputFile);
 
-        file_put_contents($outputDir . "/" . $outputFile, $style->getCss());
+        file_put_contents($outputPath, $style->getCss());
     }
 
     /**
@@ -1708,8 +1759,6 @@ HTML;
                 $xmlfile = JPATH_ROOT . '/media/kunena/labels/labels.xml';
             }
 
-            $xml = simplexml_load_file($xmlfile);
-
             if ($topic->ordering) {
                 // Set sticky label on topic
                 $id = '11';
@@ -1721,8 +1770,166 @@ HTML;
                 }
             }
 
+            $cacheId = $this->getTemplateCacheId('labels', $xmlfile);
+            $labels  = $this->getPersistentTemplateCache()->get($cacheId);
+
+            if (!\is_array($labels) || empty($labels)) {
+                $labels = [];
+                $xml    = $this->loadXmlFileCached($xmlfile);
+
+                if ($xml && isset($xml->labels)) {
+                    foreach ($xml->labels->label as $labelNode) {
+                        $attributes = $labelNode->attributes();
+                        $label      = new stdClass();
+                        $label->id  = (int) $attributes->id;
+                        $label->svg = (string) $attributes->svg;
+                        $label->fa  = (string) $attributes->fa;
+                        $label->src = (string) $attributes->src;
+                        $label->name = (string) $attributes->name;
+                        $label->new = (string) $attributes->new;
+                        $label->labeltype = (string) $attributes->labeltype;
+                        $labels[$label->id] = $label;
+                    }
+                }
+
+                if (!empty($labels)) {
+                    $this->getPersistentTemplateCache()->store($labels, $cacheId);
+                }
+            }
+
+            if (!isset($labels[$id])) {
+                $id = 0;
+            }
+
+            if (isset($labels[$id])) {
+                return $labels[$id];
+            }
+
+            $xml = $this->loadXmlFileCached($xmlfile);
+
             return $this->get_xml_label($xml, $id, $topicicontype);
         }
+    }
+
+    /**
+     * Build a cache key that is automatically invalidated when XML files change.
+     *
+     * @param   string  $prefix   Cache domain prefix.
+     * @param   string  $xmlfile  XML source file.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.1
+     */
+    protected function getTemplateCacheId(string $prefix, string $xmlfile): string
+    {
+        $cacheKey = realpath($xmlfile) ?: $xmlfile;
+        $mtime    = is_file($xmlfile) ? (int) filemtime($xmlfile) : 0;
+
+        return $prefix . '.' . md5($cacheKey . '|' . $mtime . '|v2');
+    }
+
+    /**
+     * Return a persistent cache controller for template metadata.
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 7.1
+     */
+    protected function getPersistentTemplateCache()
+    {
+        if (self::$persistentTemplateCache) {
+            return self::$persistentTemplateCache;
+        }
+
+        $options = [
+            'defaultgroup' => 'com_kunena_template',
+            'caching'      => true,
+            'lifetime'     => 86400,
+        ];
+
+        self::$persistentTemplateCache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
+
+        return self::$persistentTemplateCache;
+    }
+
+    /**
+     * Load XML files once per request and invalidate when file mtime changes.
+     *
+     * @param   string  $xmlfile  XML file path.
+     *
+     * @return  null|SimpleXMLElement
+     *
+     * @since   Kunena 7.1
+     */
+    protected function loadXmlFileCached(string $xmlfile): ?SimpleXMLElement
+    {
+        if (!is_file($xmlfile)) {
+            return null;
+        }
+
+        $cacheKey = realpath($xmlfile) ?: $xmlfile;
+        $mtime    = (int) filemtime($xmlfile);
+
+        if (
+            isset(self::$xmlFileCache[$cacheKey])
+            && self::$xmlFileCache[$cacheKey]['mtime'] === $mtime
+            && self::$xmlFileCache[$cacheKey]['xml'] instanceof SimpleXMLElement
+        ) {
+            return self::$xmlFileCache[$cacheKey]['xml'];
+        }
+
+        $xml = simplexml_load_file($xmlfile);
+
+        if ($xml instanceof SimpleXMLElement) {
+            self::$xmlFileCache[$cacheKey] = [
+                'mtime' => $mtime,
+                'xml' => $xml,
+            ];
+
+            return $xml;
+        }
+
+        return null;
+    }
+
+    /**
+     * Rebuild SCSS only when source files are newer than generated CSS.
+     *
+     * @param   string  $inputFile   SCSS entry file.
+     * @param   string  $outputPath  Compiled CSS output path.
+     *
+     * @return  bool
+     *
+     * @since   Kunena 7.1
+     */
+    protected function shouldCompileScss(string $inputFile, string $outputPath): bool
+    {
+        if (!is_file($outputPath)) {
+            return true;
+        }
+
+        $outputMtime = (int) filemtime($outputPath);
+
+        if ((int) filemtime($inputFile) > $outputMtime) {
+            return true;
+        }
+
+        $inputDir = \dirname($inputFile);
+
+        if (!is_dir($inputDir)) {
+            return true;
+        }
+
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($inputDir, \FilesystemIterator::SKIP_DOTS));
+
+        foreach ($iterator as $fileInfo) {
+            if ($fileInfo->isFile() && strtolower($fileInfo->getExtension()) === 'scss' && $fileInfo->getMTime() > $outputMtime) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

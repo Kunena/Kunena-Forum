@@ -110,9 +110,13 @@ abstract class KunenaCategoryHelper
             return [];
         }
 
+        $cat_instances = [];
+
         foreach ($instances as $id => $instance) {
-            $kunenacategory      = self::get($id);
-            $cat_instances [$id] = $kunenacategory;
+            $kunenacategory = new KunenaCategory((array) $instance);
+            $kunenacategory->exists(true);
+            self::$_instances[$id] = $kunenacategory;
+            $cat_instances[$id]    = $kunenacategory;
         }
 
         // TODO: remove this by adding level into table

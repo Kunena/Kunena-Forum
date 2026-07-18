@@ -810,6 +810,8 @@ abstract class KunenaCategoryHelper
      * @since   Kunena 6.0
      *
      * @throws  Exception
+     * 
+     * @deprecated Kunena 7.0
      */
     public static function recount($categories = '')
     {

@@ -2354,6 +2354,8 @@ class TopicController extends KunenaController
     }
 
     /**
+     * Approve the topic selected
+     * 
      * @return  void
      *
      * @throws  Exception
@@ -2413,6 +2415,8 @@ class TopicController extends KunenaController
         }
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS'), 'success');
+        
+        KunenaTopicHelper::recount();
 
         // Only email if message wasn't modified by the author before approval
         // TODO: this is just a workaround for #1862, we need to find better solution.

@@ -271,6 +271,8 @@ class TopicsController extends KunenaController
     }
 
     /**
+     * Approve the topics given by the array
+     * 
      * @return  void
      *
      * @throws  null
@@ -325,6 +327,8 @@ class TopicsController extends KunenaController
 
             $this->app->enqueueMessage($message, 'success');
         }
+        
+        KunenaTopicHelper::recount();
 
         $this->setRedirectBack();
     }

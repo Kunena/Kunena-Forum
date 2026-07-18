@@ -15,13 +15,13 @@ namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Event\Content\ContentPrepareEvent;
+use Joomla\CMS\Event\Content\BeforeDisplayEvent;
 
 /**
  * Class for onKunenaBeforeRender event.
  * Example:
- *  new KunenaBeforeRenderEvent('onEventName', ['context' => 'com_example.example', 'subject' => $contentObject, 'params' => $params, 'page' => $pageNum]);
+ *  new KunenaBeforeRenderEvent('onEventName', ['context' => 'com_example.example', 'content' => $content]);
  *
  * @since  7.0.0
  */
-class KunenaBeforeRenderEvent extends ContentPrepareEvent {}
+class KunenaBeforeRenderEvent extends BeforeDisplayEvent {}

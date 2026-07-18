@@ -15,8 +15,7 @@ namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Event\Finder\FinderEventInterface;
-use Joomla\CMS\Event\Model\DeleteEvent;
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
 
 /**
  * Class for Model event.
@@ -25,6 +24,6 @@ use Joomla\CMS\Event\Model\DeleteEvent;
  *
  * Joomla Core doesn't have a Finder\BeforeDeleteEvent
  * 
- * @since  7.0.0
+ * @since  7.1.0
  */
-class KunenaAfterDeleteEvent extends DeleteEvent implements FinderEventInterface {}
+class KunenaAfterDeleteEvent extends ContentPrepareEvent {}

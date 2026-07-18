@@ -134,7 +134,14 @@ class Dispatcher extends ComponentDispatcher
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
         $dispatcher->dispatch('onKunenaBeforeRender', new KunenaBeforeRenderEvent('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]));
         $contents = (string) $contents;
-        $dispatcher->dispatch('onKunenaAfterRender', new KunenaAfterRenderEvent('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]));
+        $dispatcher->dispatch(
+            'onKunenaAfterRender',
+            new KunenaAfterRenderEvent(
+                'onKunenaAfterRender',
+                ['context' => "com_kunena.{$view}",
+                'content' => &$contents]
+                )
+            );
         echo $contents;
 
         // Remove custom error handlers.

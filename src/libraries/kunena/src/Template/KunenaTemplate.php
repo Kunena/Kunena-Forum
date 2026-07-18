@@ -929,7 +929,7 @@ HTML;
 
     /**
      * Compile SCSS in case of the cache directory is not created or it's deleted
-     * 
+     *
      * @since   Kunena 6.1
      */
     public function createCacheDir()
@@ -1299,13 +1299,13 @@ HTML;
         if ($this->config->topicIcons) {
             $categoryIconset = 'images/topic_icons';
 
-            if (!file_exists($categoryIconset)) {
+            if (!$this->getPathStatCached($categoryIconset)['exists']) {
                 $categoryIconset = 'media/kunena/topic_icons' . $this->categoryIconset;
             }
         } else {
             $categoryIconset = 'images/topic_icons';
 
-            if (!file_exists($categoryIconset)) {
+            if (!$this->getPathStatCached($categoryIconset)['exists']) {
                 $categoryIconset = 'media/kunena/topic_icons';
             }
         }

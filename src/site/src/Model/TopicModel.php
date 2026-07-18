@@ -86,9 +86,10 @@ class TopicModel extends KunenaModel
             $thankyous = KunenaMessageThankyouHelper::getByMessage($this->messages);
 
             // First collect ids and users
-            $userlist       = [];
-            $this->threaded = [];
-            $location       = $this->getState('list.start');
+            $userlist         = [];
+            $thankyouUserlist = [];
+            $this->threaded   = [];
+            $location         = $this->getState('list.start');
 
             foreach ($this->messages as $message) {
                 $message->replynum = ++$location;
@@ -110,6 +111,10 @@ class TopicModel extends KunenaModel
 
                 if (!empty($thankyou_list)) {
                     $message->thankyou = $thankyou_list;
+
+                    foreach (array_keys($thankyou_list) as $userid) {
+                        $thankyouUserlist[(int) $userid] = (int) $userid;
+                    }
                 }
             }
 
@@ -126,7 +131,7 @@ class TopicModel extends KunenaModel
             }
 
             // Prefetch all users/avatars to avoid user by user queries during template iterations
-            KunenaUserHelper::loadUsers($userlist);
+            KunenaUserHelper::loadUsers($userlist + $thankyouUserlist);
 
             // Get attachments
             KunenaAttachmentHelper::getByMessage($this->messages);

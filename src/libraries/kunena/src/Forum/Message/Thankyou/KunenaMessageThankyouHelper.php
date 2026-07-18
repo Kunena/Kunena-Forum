@@ -21,6 +21,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Kunena Forum Message Thank You Helper Class
@@ -122,8 +123,15 @@ abstract class KunenaMessageThankyouHelper
         }
 
         if (!empty($results)) {
+            $userids = [];
+
             foreach ($results as $result) {
                 self::$_instances [$result->postid]->_add($result->userid, $result->time);
+                $userids[(int) $result->userid] = (int) $result->userid;
+            }
+
+            if (!empty($userids)) {
+                KunenaUserHelper::loadUsers($userids);
             }
         }
 

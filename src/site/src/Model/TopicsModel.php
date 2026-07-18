@@ -439,6 +439,10 @@ class TopicsModel extends KunenaModel
             if (!$permdelete && $topic->isAuthorised('permdelete')) {
                 $permdelete = true;
             }
+
+            if ($delete && $approve && $undelete && $move && $permdelete) {
+                break;
+            }
         }
 
         $actionDropdown[] = HTMLHelper::_('select.option', 'none', Text::_('COM_KUNENA_BULK_CHOOSE_ACTION'));

@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\View\Topic;
 
 use Exception;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -135,6 +134,22 @@ class HtmlView extends KunenaView
      * @since version
      */
     public $attachments;
+
+    /**
+     * Per-request cache for message authorisation results.
+     *
+     * @var     array
+     * @since   Kunena 7.1
+     */
+    protected $messageAuthorisationCache = [];
+
+    /**
+     * Per-request cache for moderator checks scoped by user/category.
+     *
+     * @var     array
+     * @since   Kunena 7.1
+     */
+    protected $messageModeratorCache = [];
 
     /**
      * @var string
@@ -639,8 +654,6 @@ class HtmlView extends KunenaView
             }
 
             // TODO: add context (options) to caching
-            $options = ['defaultgroup' => 'com_kunena'];
-            $this->cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
             $this->cachekey   = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
             $this->cachegroup = 'com_kunena.messages';
 
@@ -829,24 +842,38 @@ class HtmlView extends KunenaView
 
         $this->messageButtons = new Registry();
         $this->message_closed = null;
+        $hasThanked           = \array_key_exists($this->me->userid, $this->message->thankyou);
+        $canReply             = $this->isCurrentMessageAuthorised('reply');
+        $canThankyou          = $this->isCurrentMessageAuthorised('thankyou');
+        $canUnthankyou        = $this->isCurrentMessageAuthorised('unthankyou');
+        $canEdit              = $this->isCurrentMessageAuthorised('edit');
+        $canMove              = $this->isCurrentMessageAuthorised('move');
+        $canApprove           = $this->isCurrentMessageAuthorised('approve');
+        $canDelete            = $this->isCurrentMessageAuthorised('delete');
+        $canUndelete          = $this->isCurrentMessageAuthorised('undelete');
+        $canPermdelete        = $this->isCurrentMessageAuthorised('permdelete');
+        $isModerator          = $this->isCurrentMessageModerator();
 
         // Reply / Quote
-        if ($this->message->isAuthorised('reply')) {
-            $this->quickReply ? $this->messageButtons->set('quickReply', $this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}")) : null;
+        if ($canReply) {
+            if ($this->quickReply) {
+                $this->messageButtons->set('quickReply', $this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}"));
+            }
+
             $this->messageButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
             $this->messageButtons->set('quote', $this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication'));
-        } elseif (!$this->me->isModerator($this->topic->getCategory())) {
+        } elseif (!$isModerator) {
             // User is not allowed to write a post
             $this->message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') : ($this->me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : Text::_('COM_KUNENA_VIEW_DISABLED'));
         }
 
         // Thank you
-        if ($this->message->isAuthorised('thankyou') && !\array_key_exists($this->me->userid, $this->message->thankyou)) {
+        if ($canThankyou && !$hasThanked) {
             $this->messageButtons->set('thankyou', $this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user'));
         }
 
         // Unthank you
-        if ($this->message->isAuthorised('unthankyou') && \array_key_exists($this->me->userid, $this->message->thankyou)) {
+        if ($canUnthankyou && $hasThanked) {
             $this->messageButtons->set('unthankyou', $this->getButton(sprintf($task, 'unthankyou'), 'unthankyou', 'message', 'moderation'));
         }
 
@@ -856,17 +883,34 @@ class HtmlView extends KunenaView
         }
 
         // Moderation and own post actions
-        $this->message->isAuthorised('edit') ? $this->messageButtons->set('edit', $this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation')) : null;
-        $this->message->isAuthorised('move') ? $this->messageButtons->set('moderate', $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation')) : null;
+        if ($canEdit) {
+            $this->messageButtons->set('edit', $this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation'));
+        }
+
+        if ($canMove) {
+            $this->messageButtons->set('moderate', $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation'));
+        }
 
         if ($this->message->hold == 1) {
-            $this->message->isAuthorised('approve') ? $this->messageButtons->set('publish', $this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation')) : null;
-            $this->message->isAuthorised('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
+            if ($canApprove) {
+                $this->messageButtons->set('publish', $this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation'));
+            }
+
+            if ($canDelete) {
+                $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation'));
+            }
         } elseif ($this->message->hold == 2 || $this->message->hold == 3) {
-            $this->message->isAuthorised('undelete') ? $this->messageButtons->set('undelete', $this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation')) : null;
-            $this->message->isAuthorised('permdelete') ? $this->messageButtons->set('permdelete', $this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent')) : null;
+            if ($canUndelete) {
+                $this->messageButtons->set('undelete', $this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation'));
+            }
+
+            if ($canPermdelete) {
+                $this->messageButtons->set('permdelete', $this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent'));
+            }
         } else {
-            $this->message->isAuthorised('delete') ? $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
+            if ($canDelete) {
+                $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation'));
+            }
         }
 
         $dispatcher = Factory::getApplication()->getDispatcher();
@@ -909,6 +953,49 @@ class HtmlView extends KunenaView
             case 'MESSAGE_ACTIONS':
                 return $this->getMessageActions();
         }
+    }
+
+    /**
+     * Cached authorisation wrapper for the current message.
+     *
+     * @param   string  $action  Authorisation action.
+     *
+     * @return  bool
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function isCurrentMessageAuthorised(string $action): bool
+    {
+        $messageId = (int) $this->message->id;
+        $userId    = (int) $this->me->userid;
+
+        if (!isset($this->messageAuthorisationCache[$messageId][$userId]) || !array_key_exists($action, $this->messageAuthorisationCache[$messageId][$userId])) {
+            $this->messageAuthorisationCache[$messageId][$userId][$action] = $this->message->isAuthorised($action);
+        }
+
+        return $this->messageAuthorisationCache[$messageId][$userId][$action];
+    }
+
+    /**
+     * Cached moderator lookup for the current message category.
+     *
+     * @return  bool
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function isCurrentMessageModerator(): bool
+    {
+        $userId     = (int) $this->me->userid;
+        $categoryId = isset($this->category->id) ? (int) $this->category->id : (int) $this->message->catid;
+
+        if (!isset($this->messageModeratorCache[$userId]) || !array_key_exists($categoryId, $this->messageModeratorCache[$userId])) {
+            $category = $this->category ?? $this->message->getCategory();
+            $this->messageModeratorCache[$userId][$categoryId] = $this->me->isModerator($category);
+        }
+
+        return $this->messageModeratorCache[$userId][$categoryId];
     }
 
     /**
@@ -972,18 +1059,9 @@ class HtmlView extends KunenaView
 
                 $this->total_thankyou = \count($message->thankyou);
                 $thankyous            = \array_slice($message->thankyou, 0, $this->config->thankYouMax, true);
+                $canUnthankyou        = $this->isCurrentMessageAuthorised('unthankyou') && $this->isCurrentMessageModerator();
 
-                if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory())) {
-                    $canUnthankyou = true;
-                } else {
-                    $canUnthankyou = false;
-                }
-
-                $userids_thankyous = [];
-
-                foreach ($thankyous as $userid => $time) {
-                    $userids_thankyous[] = $userid;
-                }
+                $userids_thankyous = array_keys($thankyous);
 
                 $loaded_users = KunenaUserHelper::loadUsers($userids_thankyous);
 
@@ -998,8 +1076,6 @@ class HtmlView extends KunenaView
         }
 
         // TODO: add context (options, template) to caching
-        $options = ['defaultgroup' => 'com_kunena'];
-        $this->cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
         $this->cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
         $this->cachegroup = 'com_kunena.messages';
 

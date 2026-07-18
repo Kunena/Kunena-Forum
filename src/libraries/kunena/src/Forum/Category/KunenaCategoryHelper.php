@@ -474,10 +474,13 @@ abstract class KunenaCategoryHelper
         $session    = KunenaFactory::getSession();
         $categories = self::getCategories($catids);
         $catlist    = [];
+        $channelMap = [];
 
         foreach ($categories as $category) {
-            $catlist += $category->getChannels();
-            $catlist += $category->getChildren(-1);
+            $channels = $category->getChannels();
+            $channels += $category->getChildren(-1);
+            $channelMap[$category->id] = $channels;
+            $catlist += $channels;
         }
 
         if (empty($catlist)) {
@@ -519,8 +522,7 @@ abstract class KunenaCategoryHelper
         }
 
         foreach ($categories as $category) {
-            $channels = $category->getChannels();
-            $channels += $category->getChildren(-1);
+            $channels = $channelMap[$category->id] ?? [];
             $category->getNewCount(array_sum(array_intersect_key($new, $channels)));
         }
     }
@@ -682,7 +684,8 @@ abstract class KunenaCategoryHelper
         $params              += $defaults;
         $params['published'] = isset($params['published']) ? (int) $params['published'] : (empty($params['unpublished']) ? 1 : null);
 
-        $list = self::_getChildren($parents, $levels, $params, $optimize);
+        $authoriseCache = [];
+        $list           = self::_getChildren($parents, $levels, $params, $optimize, $authoriseCache);
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
@@ -700,7 +703,7 @@ abstract class KunenaCategoryHelper
      * @throws \Exception
      * @since   Kunena 6.0
      */
-    protected static function _getChildren(array $parents, int $levels, array $params, bool $optimize): array
+    protected static function _getChildren(array $parents, int $levels, array $params, bool $optimize, array &$authoriseCache = []): array
     {
         $list = [];
 
@@ -771,10 +774,18 @@ abstract class KunenaCategoryHelper
                 $clist = [];
 
                 if ($levels && !empty($children)) {
-                    $clist = self::_getChildren([$id], $levels - 1, $params, $optimize);
+                    $clist = self::_getChildren([$id], $levels - 1, $params, $optimize, $authoriseCache);
                 }
 
-                $allowed = $params['action'] == 'none' || ($params['action'] == 'read' && !empty(self::$allowed[$id])) || $instance->isAuthorised($params['action'], null);
+                $action = $params['action'];
+
+                if (!isset($authoriseCache[$action][$id])) {
+                    $authoriseCache[$action][$id] = $action == 'none'
+                        || ($action == 'read' && !empty(self::$allowed[$id]))
+                        || $instance->isAuthorised($action, null);
+                }
+
+                $allowed = $authoriseCache[$action][$id];
 
                 if (empty($clist) && !$allowed) {
                     continue;

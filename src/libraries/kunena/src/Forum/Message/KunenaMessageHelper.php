@@ -72,10 +72,22 @@ abstract class KunenaMessageHelper
 
         self::loadMessages($ids);
 
+        // Preload topics once to avoid per-message topic hydration during isAuthorised().
+        $topicids = [];
+
+        foreach ($ids as $id) {
+            if (!empty(self::$_instances[$id])) {
+                $topicids[(int) self::$_instances[$id]->thread] = (int) self::$_instances[$id]->thread;
+            }
+        }
+
+        if (!empty($topicids)) {
+            KunenaTopicHelper::getTopics($topicids);
+        }
+
         $list = [];
 
         foreach ($ids as $id) {
-            // TODO: authorisation needs topics to be loaded, make sure that they are! (performance increase)
             if (!empty(self::$_instances[$id]) && self::$_instances[$id]->isAuthorised($authorise, null)) {
                 $list[$id] = self::$_instances[$id];
             }

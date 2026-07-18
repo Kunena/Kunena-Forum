@@ -24,6 +24,8 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Controller\KunenaControllerApplication;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaAfterRenderEvent;
+use Kunena\Forum\Libraries\Event\KunenaBeforeRenderEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -130,9 +132,9 @@ class Dispatcher extends ComponentDispatcher
         $params       = new \stdClass();
         $params->text = '';
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-        $dispatcher->dispatch('onKunenaBeforeRender', new \Joomla\Event\Event('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]));
+        $dispatcher->dispatch('onKunenaBeforeRender', new KunenaBeforeRenderEvent('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]));
         $contents = (string) $contents;
-        $dispatcher->dispatch('onKunenaAfterRender', new \Joomla\Event\Event('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]));
+        $dispatcher->dispatch('onKunenaAfterRender', new KunenaAfterRenderEvent('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]));
         echo $contents;
 
         // Remove custom error handlers.

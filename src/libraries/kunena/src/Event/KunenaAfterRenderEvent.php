@@ -15,15 +15,13 @@ namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Event\AbstractEvent;
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
 
 /**
- * Class for Model event.
+ * Class for onKunenaAfterRender event.
  * Example:
- *  new KunenaBbcodeConstructEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
+ *  new KunenaAfterRenderEvent('onEventName', ['context' => 'com_example.example', 'subject' => $contentObject, 'params' => $params, 'page' => $pageNum]);
  *
- * Joomla Core doesn't have a Finder\BeforeDeleteEvent
- * 
- * @since  7.1.0
+ * @since  7.0.0
  */
-class KunenaBbcodeConstruct extends AbstractEvent {}
+class KunenaAfterRenderEvent extends ContentPrepareEvent {}

@@ -36,6 +36,7 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
+use Kunena\Forum\Libraries\Event\KunenaAfterProfileUpdateEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -346,7 +347,7 @@ class UserController extends KunenaController
         PluginHelper::importPlugin('system');
 
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-        $dispatcher->dispatch('OnAfterKunenaProfileUpdate', new \Joomla\Event\Event('OnAfterKunenaProfileUpdate', [$this->user, $success]));
+        $dispatcher->dispatch('OnKunenaAfterProfileUpdate', new KunenaAfterProfileUpdateEvent('OnKunenaAfterProfileUpdate', [$this->user, $success]));
 
         if ($errors) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_SAVE_ERROR'), 500);

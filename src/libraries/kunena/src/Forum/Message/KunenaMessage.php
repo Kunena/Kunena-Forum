@@ -37,6 +37,7 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Event\KunenaDeleteEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -1112,7 +1113,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
         if ($postDelta < 0) {
             $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-            $dispatcher->dispatch('onDeleteKunenaPost', new \Joomla\Event\Event('onDeleteKunenaPost', [[$this->id]]));
+            $dispatcher->dispatch('onDeleteKunenaPost', new KunenaDeleteEvent('onDeleteKunenaPost', [[$this->id]]));
             $activity->onAfterDelete($this);
         } elseif ($postDelta > 0) {
             $topic->markRead();

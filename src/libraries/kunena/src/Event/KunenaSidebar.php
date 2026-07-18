@@ -20,7 +20,7 @@ use Joomla\CMS\Event\AbstractEvent;
 /**
  * Class for Model event.
  * Example:
- *  new KunenaBeforeDeleteEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
+ *  new KunenaSidebarEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
  *
  * Joomla Core doesn't have a Finder\BeforeDeleteEvent
  * 

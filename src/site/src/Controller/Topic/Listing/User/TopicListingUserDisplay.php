@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Event\DispatcherInterface;
+use Kunena\Forum\Libraries\Event\KunenaGetUserTopics;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
@@ -137,7 +138,7 @@ class TopicListingUserDisplay extends ListDisplay
                 $pluginmode = $this->state->get('list.modetype');
 
                 $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-                $dispatcher->dispatch('onKunenaGetUserTopics', new \Joomla\Event\Event('onKunenaGetUserTopics', [$pluginmode, &$finder, &$order, &$categoryIds, $this]));
+                $dispatcher->dispatch('onKunenaGetUserTopics', new KunenaGetUserTopics('onKunenaGetUserTopics', [$pluginmode, &$finder, &$order, &$categoryIds, $this]));
                 break;
 
             default:

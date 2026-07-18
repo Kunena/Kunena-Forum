@@ -20,10 +20,10 @@ use Joomla\CMS\Event\AbstractEvent;
 /**
  * Class for Model event.
  * Example:
- *  new KunenaBbcodeConstructEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
+ *  new KunenaGetTopicsEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
  *
  * Joomla Core doesn't have a Finder\BeforeDeleteEvent
  * 
  * @since  7.1.0
  */
-class KunenaBbcodeConstruct extends AbstractEvent {}
+class KunenaGetTopicsEvent extends AbstractEvent {}

@@ -15,8 +15,6 @@ namespace Kunena\Forum\Libraries\Event;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Event\Content\BeforeDisplayEvent;
-
 /**
  * Class for onKunenaBeforeRender event.
  * Example:
@@ -24,4 +22,4 @@ use Joomla\CMS\Event\Content\BeforeDisplayEvent;
  *
  * @since  7.0.0
  */
-class KunenaBeforeRenderEvent extends BeforeDisplayEvent {}
+class KunenaBeforeRenderEvent extends KunenaContentEvent {}

@@ -31,7 +31,7 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Event\KunenaDisplayEvent;
-use Kunena\Forum\Libraries\Event\KunenaGetButtons;
+use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -791,7 +791,7 @@ class HtmlView extends KunenaView
 
         $dispatcher->dispatch(
             'onKunenaGetButtons',
-            new KunenaGetButtons(
+            new KunenaGetButtonsEvent(
                 'onKunenaGetButtons',
                 ['context' => 'topic.action', 'buttons' => $this->topicButtons, 'object' => $this]
                 )
@@ -874,7 +874,7 @@ class HtmlView extends KunenaView
 
         $dispatcher->dispatch(
             'onKunenaGetButtons',
-            new KunenaGetButtons(
+            new KunenaGetButtonsEvent(
                 'onKunenaGetButtons',
                 ['context' => 'message.action', 'buttons' => $this->messageButtons, 'object' => $this]
                 )

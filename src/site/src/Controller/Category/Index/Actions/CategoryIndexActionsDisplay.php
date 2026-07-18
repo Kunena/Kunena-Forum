@@ -27,7 +27,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
-use Kunena\Forum\Libraries\Event\KunenaGetButtons;
+use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 
 /**
  * Class ComponentCategoryControllerIndexActionsDisplay
@@ -118,7 +118,7 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 
         $dispatcher->dispatch(
             'onKunenaGetButtons',
-            new KunenaGetButtons(
+            new KunenaGetButtonsEvent(
                 'onKunenaGetButtons',
                 ['context' => 'category.action', 'buttons' => $this->categoryButtons, 'object' => $this]
                 )

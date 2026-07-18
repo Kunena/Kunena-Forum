@@ -24,7 +24,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Event\KunenaGetButtons;
+use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -554,7 +554,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
 
         $dispatcher->dispatch(
             'onKunenaGetButtons',
-            new KunenaGetButtons(
+            new KunenaGetButtonsEvent(
                 'onKunenaGetButtons',
                 ['context' => 'message.action', 'buttons' => $this->messageButtons, 'object' => $this]
                 )

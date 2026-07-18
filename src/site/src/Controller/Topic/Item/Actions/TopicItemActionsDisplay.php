@@ -22,7 +22,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
-use Kunena\Forum\Libraries\Event\KunenaGetButtons;
+use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -274,7 +274,7 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
 
         $dispatcher->dispatch(
             'onKunenaGetButtons',
-            new KunenaGetButtons(
+            new KunenaGetButtonsEvent(
                 'onKunenaGetButtons',
                 ['context' => 'topic.action', 'buttons' => $this->topicButtons, 'object' => $this]
                 )

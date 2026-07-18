@@ -133,6 +133,8 @@ class CategoryModel extends CategoriesModel
 
             KunenaCategoryHelper::getNewTopics(array_keys($allsubcats));
 
+            $hasModeratorStatus = !empty(KunenaAccess::getInstance()->getModeratorStatus());
+
             $modcats      = [];
             $lastpostlist = [];
             $userlist     = [];
@@ -201,7 +203,7 @@ class CategoryModel extends CategoriesModel
             }
 
             // Fix last post position when user can see unapproved or deleted posts
-            if ($lastpostlist && !$topicOrdering && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
+            if ($lastpostlist && !$topicOrdering && ($this->me->isAdmin() || $hasModeratorStatus)) {
                 KunenaMessageHelper::getMessages($lastpostlist);
                 KunenaMessageHelper::loadLocation($lastpostlist);
             }
@@ -267,6 +269,7 @@ class CategoryModel extends CategoriesModel
             $access = KunenaAccess::getInstance();
             $hold   = $format == 'feed' ? 0 : $access->getAllowedHold($this->me, $catid);
             $moved  = $format == 'feed' ? 0 : 1;
+            $hasModeratorStatus = !empty($access->getModeratorStatus());
             $params = [
                 'hold'  => $hold,
                 'moved' => $moved, ];
@@ -315,7 +318,7 @@ class CategoryModel extends CategoriesModel
                 $lastreadlist = KunenaTopicHelper::fetchNewStatus($this->topics);
 
                 // Fetch last / new post positions when user can see unapproved or deleted posts
-                if ($lastreadlist || $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()) {
+                if ($lastreadlist || $this->me->isAdmin() || $hasModeratorStatus) {
                     KunenaMessageHelper::loadLocation($lastpostlist + $lastreadlist);
                 }
             }

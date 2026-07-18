@@ -190,6 +190,30 @@ class KunenaTemplate
     protected static $persistentTemplateCache;
 
     /**
+     * Cached filesystem metadata keyed by original path.
+     *
+     * @var     array
+     * @since   Kunena 7.1
+     */
+    protected static $pathStatCache = [];
+
+    /**
+     * Cached file existence checks keyed by absolute file path.
+     *
+     * @var     array
+     * @since   Kunena 7.1
+     */
+    protected static $fileExistsCache = [];
+
+    /**
+     * Cached maximum SCSS mtime per source directory.
+     *
+     * @var     array
+     * @since   Kunena 7.1
+     */
+    protected static $scssDirectoryMtimeCache = [];
+
+    /**
      * @var     array
      * @since   Kunena 6.0
      */
@@ -887,12 +911,13 @@ HTML;
 
             $filemin      = $filename;
             $filemin_path = preg_replace('/\.css$/u', '-min.css', $filename);
+            $fileminAbs   = JPATH_ROOT . "/$filemin_path";
 
-            if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path")) {
+            if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && $this->isFileCached($fileminAbs)) {
                 $filemin = preg_replace('/\.css$/u', '-min.css', $filename);
             }
 
-            if (file_exists(JPATH_ROOT . "/$filemin")) {
+            if ($this->isFileCached(JPATH_ROOT . "/$filemin")) {
                 $filename = $filemin;
             }
 
@@ -1823,8 +1848,9 @@ HTML;
      */
     protected function getTemplateCacheId(string $prefix, string $xmlfile): string
     {
-        $cacheKey = realpath($xmlfile) ?: $xmlfile;
-        $mtime    = is_file($xmlfile) ? (int) filemtime($xmlfile) : 0;
+        $stat     = $this->getPathStatCached($xmlfile);
+        $cacheKey = $stat['cacheKey'];
+        $mtime    = $stat['mtime'];
 
         return $prefix . '.' . md5($cacheKey . '|' . $mtime . '|v2');
     }
@@ -1864,12 +1890,14 @@ HTML;
      */
     protected function loadXmlFileCached(string $xmlfile): ?SimpleXMLElement
     {
-        if (!is_file($xmlfile)) {
+        $stat = $this->getPathStatCached($xmlfile);
+
+        if (!$stat['exists']) {
             return null;
         }
 
-        $cacheKey = realpath($xmlfile) ?: $xmlfile;
-        $mtime    = (int) filemtime($xmlfile);
+        $cacheKey = $stat['cacheKey'];
+        $mtime    = $stat['mtime'];
 
         if (
             isset(self::$xmlFileCache[$cacheKey])
@@ -1905,13 +1933,13 @@ HTML;
      */
     protected function shouldCompileScss(string $inputFile, string $outputPath): bool
     {
-        if (!is_file($outputPath)) {
+        if (!$this->isFileCached($outputPath)) {
             return true;
         }
 
-        $outputMtime = (int) filemtime($outputPath);
+        $outputMtime = $this->getPathStatCached($outputPath)['mtime'];
 
-        if ((int) filemtime($inputFile) > $outputMtime) {
+        if ($this->getPathStatCached($inputFile)['mtime'] > $outputMtime) {
             return true;
         }
 
@@ -1921,15 +1949,87 @@ HTML;
             return true;
         }
 
+        return $this->getMaxScssMtimeCached($inputDir) > $outputMtime;
+    }
+
+    /**
+     * Return cached path metadata to avoid repeated realpath/filemtime calls.
+     *
+     * @param   string  $path  File path.
+     *
+     * @return  array{exists: bool, cacheKey: string, mtime: int}
+     *
+     * @since   Kunena 7.1
+     */
+    protected function getPathStatCached(string $path): array
+    {
+        if (isset(self::$pathStatCache[$path])) {
+            return self::$pathStatCache[$path];
+        }
+
+        $resolved = realpath($path);
+        $cacheKey = $resolved ?: $path;
+        $exists   = $resolved !== false || is_file($path);
+        $mtime    = 0;
+
+        if ($exists) {
+            $mtime = (int) filemtime($cacheKey);
+        }
+
+        self::$pathStatCache[$path] = [
+            'exists'   => $exists,
+            'cacheKey' => $cacheKey,
+            'mtime'    => $mtime,
+        ];
+
+        return self::$pathStatCache[$path];
+    }
+
+    /**
+     * Cached wrapper for is_file() to reduce repeated filesystem checks.
+     *
+     * @param   string  $path  Absolute file path.
+     *
+     * @return  bool
+     *
+     * @since   Kunena 7.1
+     */
+    protected function isFileCached(string $path): bool
+    {
+        if (!array_key_exists($path, self::$fileExistsCache)) {
+            self::$fileExistsCache[$path] = is_file($path);
+        }
+
+        return self::$fileExistsCache[$path];
+    }
+
+    /**
+     * Compute and cache latest SCSS source mtime for a directory.
+     *
+     * @param   string  $inputDir  SCSS source directory.
+     *
+     * @return  int
+     *
+     * @since   Kunena 7.1
+     */
+    protected function getMaxScssMtimeCached(string $inputDir): int
+    {
+        if (isset(self::$scssDirectoryMtimeCache[$inputDir])) {
+            return self::$scssDirectoryMtimeCache[$inputDir];
+        }
+
+        $maxMtime = 0;
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($inputDir, \FilesystemIterator::SKIP_DOTS));
 
         foreach ($iterator as $fileInfo) {
-            if ($fileInfo->isFile() && strtolower($fileInfo->getExtension()) === 'scss' && $fileInfo->getMTime() > $outputMtime) {
-                return true;
+            if ($fileInfo->isFile() && strtolower($fileInfo->getExtension()) === 'scss') {
+                $maxMtime = max($maxMtime, $fileInfo->getMTime());
             }
         }
 
-        return false;
+        self::$scssDirectoryMtimeCache[$inputDir] = $maxMtime;
+
+        return $maxMtime;
     }
 
     /**

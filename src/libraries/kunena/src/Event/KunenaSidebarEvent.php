@@ -18,12 +18,12 @@ namespace Kunena\Forum\Libraries\Event;
 use Joomla\CMS\Event\AbstractEvent;
 
 /**
- * Class for Model event.
+ * Class for onKunenaSidebar Model event.
  * Example:
- *  new KunenaGetButtons('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
+ *  new KunenaSidebarEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
  *
  * Joomla Core doesn't have a Finder\BeforeDeleteEvent
  * 
  * @since  7.1.0
  */
-class KunenaGetButtons extends AbstractEvent {}
+class KunenaSidebarEvent extends AbstractEvent {}

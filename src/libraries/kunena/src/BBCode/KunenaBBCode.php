@@ -35,7 +35,7 @@ use Joomla\Uri\UriHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
-use Kunena\Forum\Libraries\Event\KunenaBbcodeConstruct;
+use Kunena\Forum\Libraries\Event\KunenaBbcodeConstructEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
@@ -167,7 +167,7 @@ class KunenaBBCode extends BBCode
 
         $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('kunena');
-        $dispatcher->dispatch('onKunenaBbcodeConstruct', new KunenaBbcodeConstruct('onKunenaBbcodeConstruct', [
+        $dispatcher->dispatch('onKunenaBbcodeConstruct', new KunenaBbcodeConstructEvent('onKunenaBbcodeConstruct', [
             'this' => $this,
         ]));
 

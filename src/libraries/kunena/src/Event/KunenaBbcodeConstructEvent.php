@@ -18,7 +18,7 @@ namespace Kunena\Forum\Libraries\Event;
 use Joomla\CMS\Event\AbstractEvent;
 
 /**
- * Class for Model event.
+ * Class for onKunenaBbcodeConstruct Model event.
  * Example:
  *  new KunenaBbcodeConstructEvent('onEventName', ['context' => 'com_example.example', 'subject' => $itemObjectToDelete]);
  *
@@ -26,4 +26,4 @@ use Joomla\CMS\Event\AbstractEvent;
  * 
  * @since  7.1.0
  */
-class KunenaBbcodeConstruct extends AbstractEvent {}
+class KunenaBbcodeConstructEvent extends AbstractEvent {}

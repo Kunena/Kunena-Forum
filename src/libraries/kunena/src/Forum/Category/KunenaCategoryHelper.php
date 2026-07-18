@@ -901,7 +901,7 @@ abstract class KunenaCategoryHelper
      *
      * @return  boolean|integer
      *
-     * @since   Kunena 7.1
+     * @since   Kunena 7.0
      *
      * @throws  Exception
      */

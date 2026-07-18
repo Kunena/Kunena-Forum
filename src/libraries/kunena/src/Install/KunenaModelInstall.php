@@ -3096,7 +3096,7 @@ class KunenaModelInstall extends BaseDatabaseModel
                     break;
                 case 3:
                     // Update category statistics
-                    KunenaCategoryHelper::recount();
+                    KunenaCategoryHelper::recountBatch();
                     $this->addStatus(Text::sprintf('COM_KUNENA_MIGRATE_RECOUNT_CATEGORY'), true, '', 'recount');
                     break;
                 default:

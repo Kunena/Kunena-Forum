@@ -125,6 +125,10 @@ class Router extends RouterView
      */
     public function build(&$query)
     {
+        static $categoryAliasCache = [];
+        static $topicSubjectCache  = [];
+        static $userSlugCache      = [];
+
         $segments = [];
 
         // If Kunena Forum isn't installed or SEF is not enabled, do nothing
@@ -191,7 +195,11 @@ class Router extends RouterView
             if ($catid) {
                 $numeric = true;
 
-                $alias = KunenaCategoryHelper::get($catid)->alias;
+                if (!array_key_exists($catid, $categoryAliasCache)) {
+                    $categoryAliasCache[$catid] = (string) KunenaCategoryHelper::get($catid)->alias;
+                }
+
+                $alias = $categoryAliasCache[$catid];
 
                 // If category alias is empty, use category id; otherwise use alias
                 $segments[] = empty($alias) ? $catid : $alias;
@@ -217,7 +225,11 @@ class Router extends RouterView
             $id = (int) $query['id'];
 
             if ($id) {
-                $subject = KunenaRoute::stringURLSafe(KunenaTopicHelper::get($id)->subject);
+                if (!array_key_exists($id, $topicSubjectCache)) {
+                    $topicSubjectCache[$id] = KunenaRoute::stringURLSafe((string) KunenaTopicHelper::get($id)->subject);
+                }
+
+                $subject = $topicSubjectCache[$id];
 
                 if (empty($subject)) {
                     $segments[] = $id;
@@ -294,7 +306,13 @@ class Router extends RouterView
             if ($query['userid'] == '@') {
                 $segments[] = '%' . ++$pos . '$s';
             } else {
-                $segments[] = (int) $query['userid'] . '-' . KunenaRoute::stringURLSafe(KunenaUserHelper::get((int) $query['userid'])->getName());
+                $userid = (int) $query['userid'];
+
+                if (!array_key_exists($userid, $userSlugCache)) {
+                    $userSlugCache[$userid] = KunenaRoute::stringURLSafe((string) KunenaUserHelper::get($userid)->getName());
+                }
+
+                $segments[] = $userid . '-' . $userSlugCache[$userid];
             }
 
             unset($query['userid']);

@@ -16,11 +16,10 @@ namespace Kunena\Forum\Site\View\Topics;
 \defined('_JEXEC') or die();
 
 use Exception;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Event\KunenaPrepareEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -113,6 +112,24 @@ class HtmlView extends KunenaView
     public $total;
 
     public $params;
+
+    /**
+     * @var array
+     * @since   Kunena 7.1
+     */
+    protected $userTypeCache = [];
+
+    /**
+     * @var array
+     * @since   Kunena 7.1
+     */
+    protected $avatarCache = [];
+
+    /**
+     * @var array
+     * @since   Kunena 7.1
+     */
+    protected $categoryLinkCache = [];
 
     /**
      * @param   null  $tpl  tpl
@@ -258,6 +275,7 @@ class HtmlView extends KunenaView
     public function displayPostRows()
     {
         $this->position = 0;
+        $templateHash   = $this->getTemplateMD5();
 
         // Run events
         $params = new Registry();
@@ -281,20 +299,18 @@ class HtmlView extends KunenaView
             $this->position++;
             $this->topic    = $this->message->getTopic();
             $this->category = $this->topic->getCategory();
-            $usertype       = $this->me->getType($this->category->id, true);
+            $usertype       = $this->getCurrentUserTypeByCategory((int) $this->category->id);
 
             // TODO: add context (options, template) to caching
             $this->cache = true;
-            $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
-            $cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
+            $cachekey    = "{$templateHash}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
             $cachegroup  = 'com_kunena.posts';
 
             // FIXME: enable caching after fixing the issues
             $contents = false; // $cache->get($cachekey, $cachegroup);
 
             if (!$contents) {
-                $this->categoryLink     = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
+                $this->categoryLink     = $this->getCategoryBreadcrumb($this->category);
                 $this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
                 $this->firstPostTime    = $this->topic->first_post_time;
                 $this->firstUserName    = $this->topic->first_post_guest_name;
@@ -303,7 +319,7 @@ class HtmlView extends KunenaView
                 $this->pages            = ceil($this->topic->getTotal() / $this->config->messagesPerPage);
 
                 if ($this->config->avatarOnCategory) {
-                    $this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
+                    $this->topic->avatar = $this->getAvatarForUser((int) $this->topic->last_post_userid);
                 }
 
                 $contents = $this->loadTemplateFile('row');
@@ -335,6 +351,7 @@ class HtmlView extends KunenaView
     {
         $lasttopic      = null;
         $this->position = 0;
+        $templateHash   = $this->getTemplateMD5();
 
         // Run events
         $params = new Registry();
@@ -357,20 +374,18 @@ class HtmlView extends KunenaView
         foreach ($this->topics as $this->topic) {
             $this->position++;
             $this->category = $this->topic->getCategory();
-            $usertype       = $this->me->getType($this->category->id, true);
+            $usertype       = $this->getCurrentUserTypeByCategory((int) $this->category->id);
 
             // TODO: add context (options, template) to caching
             $this->cache = true;
-            $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('output', $options);
-            $cachekey    = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
+            $cachekey    = "{$templateHash}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
             $cachegroup  = 'com_kunena.topics';
 
             // FIXME: enable caching after fixing the issues
             $contents = false; // $cache->get($cachekey, $cachegroup);
 
             if (!$contents) {
-                $this->categoryLink     = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
+                $this->categoryLink     = $this->getCategoryBreadcrumb($this->category);
                 $this->firstPostAuthor  = $this->topic->getfirstPostAuthor();
                 $this->firstPostTime    = $this->topic->first_post_time;
                 $this->firstUserName    = $this->topic->first_post_guest_name;
@@ -382,7 +397,7 @@ class HtmlView extends KunenaView
                 $this->pages            = ceil($this->topic->getTotal() / $this->config->messagesPerPage);
 
                 if ($this->config->avatarOnCategory) {
-                    $this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
+                    $this->topic->avatar = $this->getAvatarForUser((int) $this->topic->last_post_userid);
                 }
 
                 $contents = $this->loadTemplateFile('row');
@@ -427,5 +442,57 @@ class HtmlView extends KunenaView
 
                 return $date->toSpan('config_postDateFormat', 'config_postDateFormatHover');
         }
+    }
+
+    /**
+     * @param   int  $categoryId  Category id
+     *
+     * @return  string
+     */
+    protected function getCurrentUserTypeByCategory(int $categoryId): string
+    {
+        if (!array_key_exists($categoryId, $this->userTypeCache)) {
+            $this->userTypeCache[$categoryId] = $this->me->getType($categoryId, true);
+        }
+
+        return $this->userTypeCache[$categoryId];
+    }
+
+    /**
+     * @param   int  $userId  User id
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     */
+    protected function getAvatarForUser(int $userId): string
+    {
+        if (!array_key_exists($userId, $this->avatarCache)) {
+            $this->avatarCache[$userId] = KunenaFactory::getUser($userId)->getAvatarImage('klist-avatar', 'list');
+        }
+
+        return $this->avatarCache[$userId];
+    }
+
+    /**
+     * @param   KunenaCategory  $category  Category object
+     *
+     * @return  string
+     */
+    protected function getCategoryBreadcrumb(KunenaCategory $category): string
+    {
+        $cacheKey = (int) $category->id;
+
+        if (!array_key_exists($cacheKey, $this->categoryLinkCache)) {
+            $parent = $category->getParent();
+
+            if ($parent) {
+                $this->categoryLinkCache[$cacheKey] = $this->getCategoryLink($parent) . ' / ' . $this->getCategoryLink($category);
+            } else {
+                $this->categoryLinkCache[$cacheKey] = $this->getCategoryLink($category);
+            }
+        }
+
+        return $this->categoryLinkCache[$cacheKey];
     }
 }

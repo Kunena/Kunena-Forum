@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * KunenaLayoutSearchResults
@@ -157,14 +158,49 @@ class SearchResults extends KunenaLayout
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }
 
+        $userIds           = [];
+        $categoryLinkCache = [];
+        $profileCache      = [];
+
+        foreach ($this->results as $result) {
+            $userId = (int) $result->userid;
+
+            if ($userId) {
+                $userIds[$userId] = $userId;
+            }
+
+            $category = $result->getCategory();
+            $cacheKey = (int) $category->id;
+
+            if (!array_key_exists($cacheKey, $categoryLinkCache)) {
+                $parent = $category->getParent();
+
+                if ($parent) {
+                    $categoryLinkCache[$cacheKey] = $this->getCategoryLink($parent) . ' / ' . $this->getCategoryLink($category);
+                } else {
+                    $categoryLinkCache[$cacheKey] = $this->getCategoryLink($category);
+                }
+            }
+        }
+
+        if (!empty($userIds)) {
+            KunenaUserHelper::loadUsers($userIds);
+        }
+
         foreach ($this->results as $this->message) {
             $this->topic        = $this->message->getTopic();
             $this->category     = $this->message->getCategory();
-            $this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
+            $this->categoryLink = $categoryLinkCache[(int) $this->category->id] ?? $this->getCategoryLink($this->category);
             $ressubject         = KunenaParser::parseText($this->message->subject);
             $resmessage         = KunenaParser::parseBBCode($this->message->message, 500);
 
-            $profile          = KunenaFactory::getUser((int) $this->message->userid);
+            $userId = (int) $this->message->userid;
+
+            if (!array_key_exists($userId, $profileCache)) {
+                $profileCache[$userId] = KunenaFactory::getUser($userId);
+            }
+
+            $profile          = $profileCache[$userId];
             $this->useravatar = $profile->getAvatarImage('kavatar', 'post');
 
             foreach ($this->searchwords as $searchword) {

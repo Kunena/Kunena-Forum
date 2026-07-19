@@ -152,6 +152,22 @@ class HtmlView extends KunenaView
     protected $messageModeratorCache = [];
 
     /**
+     * Per-request cache for viewer user type keyed by category id.
+     *
+     * @var     array
+     * @since   Kunena 7.1
+     */
+    protected $messageUserTypeCache = [];
+
+    /**
+     * Precomputed template hash for the current displayMessages() call.
+     *
+     * @var     string
+     * @since   Kunena 7.1
+     */
+    protected $messageTemplateHash = '';
+
+    /**
      * @var string
      * @since version
      */
@@ -999,6 +1015,25 @@ class HtmlView extends KunenaView
     }
 
     /**
+     * Cached user type lookup for the current viewer/category pair.
+     *
+     * @param   int  $categoryId  Category id
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    protected function getCurrentViewerTypeByCategory(int $categoryId): string
+    {
+        if (!array_key_exists($categoryId, $this->messageUserTypeCache)) {
+            $this->messageUserTypeCache[$categoryId] = $this->me->getType($categoryId, true);
+        }
+
+        return $this->messageUserTypeCache[$categoryId];
+    }
+
+    /**
      * @param   null  $template  template
      *
      * @return  void
@@ -1009,6 +1044,8 @@ class HtmlView extends KunenaView
      */
     public function displayMessages($template = null)
     {
+        $this->messageTemplateHash = $this->getTemplateMD5();
+
         foreach ($this->messages as $id => $message) {
             $this->displayMessage($id, $message, $template);
         }
@@ -1038,7 +1075,7 @@ class HtmlView extends KunenaView
         $this->message  = $message;
         $this->profile  = $this->message->getAuthor();
         $this->replynum = $message->replynum;
-        $usertype       = $this->me->getType($this->category->id, true);
+        $usertype       = $this->getCurrentViewerTypeByCategory((int) $this->category->id);
 
         if ($usertype == 'user' && $this->message->userid == $this->profile->userid) {
             $usertype = 'owner';
@@ -1076,7 +1113,8 @@ class HtmlView extends KunenaView
         }
 
         // TODO: add context (options, template) to caching
-        $this->cachekey   = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
+        $templateHash     = $this->messageTemplateHash ?: $this->getTemplateMD5();
+        $this->cachekey   = "message.{$templateHash}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
         $this->cachegroup = 'com_kunena.messages';
 
         if ($this->config->reportMsg && $this->me->exists()) {

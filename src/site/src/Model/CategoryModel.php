@@ -133,7 +133,18 @@ class CategoryModel extends CategoriesModel
 
             KunenaCategoryHelper::getNewTopics(array_keys($allsubcats));
 
-            $hasModeratorStatus = !empty(KunenaAccess::getInstance()->getModeratorStatus());
+            $access             = KunenaAccess::getInstance();
+            $hasModeratorStatus = !empty($access->getModeratorStatus());
+
+            // Pre-build moderator map for all subcategories in one pass (avoids N singleton + method calls in loop)
+            $catModeratorMap = [];
+
+            if ($this->config->listCatShowModerators) {
+                foreach ($allsubcats as $subcat) {
+                    $modUserids = array_keys($access->getModerators($subcat->id));
+                    $catModeratorMap[$subcat->id] = !empty($modUserids) ? array_combine($modUserids, $modUserids) : [];
+                }
+            }
 
             $modcats      = [];
             $lastpostlist = [];
@@ -150,8 +161,8 @@ class CategoryModel extends CategoriesModel
                     }
 
                     if ($this->config->listCatShowModerators) {
-                        // Get list of moderators
-                        $subcat->moderators = $subcat->getModerators(false, false);
+                        // Assign from pre-built map instead of calling getModerators() per category
+                        $subcat->moderators = $catModeratorMap[$subcat->id] ?? [];
                         $userlist           += $subcat->moderators;
                     }
 
@@ -266,9 +277,9 @@ class CategoryModel extends CategoriesModel
 
             $topicOrdering = $this->getCategory()->topicOrdering;
 
-            $access = KunenaAccess::getInstance();
-            $hold   = $format == 'feed' ? 0 : $access->getAllowedHold($this->me, $catid);
-            $moved  = $format == 'feed' ? 0 : 1;
+            $access             = KunenaAccess::getInstance();
+            $hold               = $format == 'feed' ? 0 : $access->getAllowedHold($this->me, $catid);
+            $moved              = $format == 'feed' ? 0 : 1;
             $hasModeratorStatus = !empty($access->getModeratorStatus());
             $params = [
                 'hold'  => $hold,

@@ -178,17 +178,21 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
 
         $this->more[$catid] = 0;
 
+        // Cache parsed Registry objects by raw params string to avoid re-parsing identical JSON per category.
+        $registryParamsCache = [];
+
         foreach ($sections as $key => $category) {
             $this->categories[$category->id] = [];
             $this->more[$category->id]       = 0;
 
-            $registry = new Registry();
+            $paramsStr = (string) $category->params;
 
-            if (!empty($registry->params)) {
-                $registry->loadString($category->params);
+            if (!isset($registryParamsCache[$paramsStr])) {
+                $registry                        = new Registry();
+                $registryParamsCache[$paramsStr] = $registry->loadString($paramsStr);
             }
 
-            $params = $registry->loadString($category->params);
+            $params = $registryParamsCache[$paramsStr];
 
             // Display only categories which are supposed to show up.
             if ($catid || $params->get('display.index.parent', 3) > 0) {
@@ -224,22 +228,25 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
         foreach ($categories as $key => $category) {
             $this->more[$category->id] = 0;
 
-            $registry = new Registry();
+            $paramsStr = (string) $category->params;
 
-            if (!empty($registry->params)) {
-                $registry->loadString($category->params);
+            if (!isset($registryParamsCache[$paramsStr])) {
+                $registry                        = new Registry();
+                $registryParamsCache[$paramsStr] = $registry->loadString($paramsStr);
             }
 
-            $params = $registry->loadString($category->params);
+            $params = $registryParamsCache[$paramsStr];
 
-            $subregistry = new Registry();
+            $parent          = $category->getParent();
+            $parentParamsStr = $parent ? (string) $parent->params : '';
 
-            if (!empty($subregistry->params)) {
-                $subregistry->loadString($category->getParent()->params);
+            if (!isset($registryParamsCache[$parentParamsStr])) {
+                $subregistry                              = new Registry();
+                $registryParamsCache[$parentParamsStr]    = $subregistry->loadString($parentParamsStr);
             }
 
-            if ($category->getParent()) {
-                $subparams = $subregistry->loadString($category->getParent()->params);
+            if ($parent) {
+                $subparams = $registryParamsCache[$parentParamsStr];
 
                 // Display only categories which are supposed to show up.
                 if ($catid || $params->get('display.index.parent', 3) > 1) {
@@ -270,20 +277,21 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
             $rssURL = $category->getRSSUrl();
 
             if (!empty($rssURL)) {
-                $category->rssURL = $category->getRSSUrl();
+                $category->rssURL = $rssURL;
             }
         }
 
         $subcategories = KunenaCategoryHelper::getChildren($categoryIds);
 
         foreach ($subcategories as $category) {
-            $registry = new Registry();
+            $paramsStr = (string) $category->params;
 
-            if (!empty($registry->params)) {
-                $registry->loadString($category->params);
+            if (!isset($registryParamsCache[$paramsStr])) {
+                $registry                        = new Registry();
+                $registryParamsCache[$paramsStr] = $registry->loadString($paramsStr);
             }
 
-            $params = $registry->loadString($category->params);
+            $params = $registryParamsCache[$paramsStr];
 
             // Display only categories which are supposed to show up.
             if ($catid || $params->get('display.index.parent', 3) > 2) {

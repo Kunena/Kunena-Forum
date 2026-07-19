@@ -748,7 +748,7 @@ HTML;
 
                 $path = "template/{$template}{$basepath}";
 
-                if (is_file(KPATH_SITE . "/{$path}/{$file}")) {
+                if ($this->getPathStatCached(KPATH_SITE . "/{$path}/{$file}")['exists']) {
                     $this->filecache[$filepath] = KPATH_COMPONENT_RELATIVE . "/{$path}/{$file}";
                     break;
                 }
@@ -1296,16 +1296,15 @@ HTML;
      */
     public function getTopicIconPath($filename = '', $url = true): string
     {
-        if ($this->config->topicIcons) {
-            $categoryIconset = 'images/topic_icons';
+        $categoryIconset = 'images/topic_icons';
+        $defaultIconPathExists = $this->getPathStatCached($categoryIconset)['exists'];
 
-            if (!$this->getPathStatCached($categoryIconset)['exists']) {
+        if ($this->config->topicIcons) {
+            if (!$defaultIconPathExists) {
                 $categoryIconset = 'media/kunena/topic_icons' . $this->categoryIconset;
             }
         } else {
-            $categoryIconset = 'images/topic_icons';
-
-            if (!$this->getPathStatCached($categoryIconset)['exists']) {
+            if (!$defaultIconPathExists) {
                 $categoryIconset = 'media/kunena/topic_icons';
             }
         }
@@ -1331,7 +1330,7 @@ HTML;
         if ($this->config->topicIcons) {
             $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/topicicons.xml';
 
-            if (!file_exists($xmlfile)) {
+            if (!$this->getPathStatCached($xmlfile)['exists']) {
                 $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/topicicons.xml';
             }
 
@@ -1386,7 +1385,7 @@ HTML;
         } else {
             $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/systemicons.xml';
 
-            if (!file_exists($xmlfile)) {
+            if (!$this->getPathStatCached($xmlfile)['exists']) {
                 $xmlfile = JPATH_ROOT . '/media/kunena/topic_icons/default/systemicons.xml';
             }
 
@@ -1434,7 +1433,7 @@ HTML;
             } else {
                 $file = JPATH_ROOT . '/media/kunena/topic_icons/' . $categoryIconset . '/system/normal.png';
 
-                if (!file_exists($file)) {
+                if (!$this->getPathStatCached($file)['exists']) {
                     $categoryIconset = 'default';
                 }
 
@@ -2183,12 +2182,13 @@ HTML;
 
             $filemin      = $filename;
             $filemin_path = preg_replace('/\.js$/u', '-min.js', $filename);
+            $minPathStat   = $this->getPathStatCached(JPATH_ROOT . "/$filemin_path");
 
-            if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && is_file(JPATH_ROOT . "/$filemin_path")) {
+            if (!JDEBUG && !$this->config->debug && !KunenaForum::isDev() && $minPathStat['exists']) {
                 $filemin = preg_replace('/\.js$/u', '-min.js', $filename);
             }
 
-            if (file_exists(JPATH_ROOT . "/$filemin")) {
+            if ($this->getPathStatCached(JPATH_ROOT . "/$filemin")['exists']) {
                 $filename = $filemin;
             }
 

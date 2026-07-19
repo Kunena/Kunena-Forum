@@ -580,8 +580,8 @@ class TopicController extends KunenaController
                         'caption'       => $caption,
                         'inline'        => null,
                     ]
-                );
-
+                    );
+                
                 // Resize image if needed.
                 if ($attachment->isImage()) {
                     $imageInfo = KunenaImage::getImageFileProperties($uploadFile);
@@ -610,9 +610,29 @@ class TopicController extends KunenaController
                         $attachment->hash = md5_file($uploadFile);
                         $attachment->size = fileSize($uploadFile);
                     }
-                }
+                } 
 
                 $attachment->saveFile($uploadFile, $basename, $extension, true);
+
+                /*$attachmentData =
+                [
+                    'mesid'         => 0,
+                    'userid'        => (int) $me->userid,
+                    'protected'     => $this->config->attachmentProtection ? 1 : 0,
+                    'hash'          => $response->hash,
+                    'size'          => $response->size,
+                    'folder'        => "media/kunena/attachments/{$me->userid}",
+                    'filetype'      => $response->mime,
+                    'filename'      => $attachment->filename,
+                    'filename_real' => $response->filename,
+                    'caption'       => $caption,
+                    'inline'        => null,
+                    ];
+
+                
+                $pendingAttachments = $this->app->getUserState('com_kunena.pendingAttachments', []);
+                $pendingAttachments[] = $attachmentData;
+                $this->app->setUserState('com_kunena.pendingAttachments', $pendingAttachments); */
 
                 // Set id and override response variables just in case if attachment was modified.
                 $response->id       = $attachment->id;
@@ -671,8 +691,6 @@ class TopicController extends KunenaController
             'quote'             => 0,
         ];
 
-        $this->app->setUserState('com_kunena.postfields', $fields);
-
         if (!Session::checkToken('post')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
             $this->setRedirectBack();
@@ -685,7 +703,11 @@ class TopicController extends KunenaController
             $this->setRedirectBack();
 
             return;
-        }
+        }        
+        
+        $this->app->setUserState('com_kunena.postfields', $fields);
+        //$this->app->setUserState('com_kunena.pendingAttachments', null);
+        $pendingAttachments = $this->app->getUserState('com_kunena.pendingAttachments', []);
 
         // Need to do to the replacement in case of VBA code is inserted without the bbcode tags [code][/code]
         $fields['message'] = preg_replace('~"",""~', '"", ""', $fields['message']);
@@ -792,6 +814,13 @@ class TopicController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_DUPLICATE_IGNORED'), 'error');
 
             return $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$topic->getCategory()->id}&id={$lastTopic->id}&mesid={$lastTopic->last_post_id}", false));
+        }
+        
+        // Save attachments in database which are stored in user session
+        foreach ($pendingAttachments as $attachmentData) {
+            $attachment = new KunenaAttachment();
+            $attachment->bind($attachmentData);
+            $attachment->save();
         }
 
         // Set topic icon if permitted
@@ -982,6 +1011,9 @@ class TopicController extends KunenaController
 
         // Removed orphaned attachments (one has added on the form and removed after before to submit)        
         $this->removeOrphanedAttachments();
+        
+        // Empty session storage
+        $this->app->setUserState('com_kunena.pendingAttachments', null);
 
         // Post Private message
         try {

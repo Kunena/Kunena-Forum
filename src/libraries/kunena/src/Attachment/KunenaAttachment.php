@@ -862,20 +862,20 @@ class KunenaAttachment extends KunenaDatabaseObject
 
         if (!$this->filename_real) {
             $this->filename_real = $this->filename;
-        }
-
+        } 
+        
         if (!$this->filename || $this->filename == $this->filename_real) {
             if (!$basename || !$extension) {
                 throw new InvalidArgumentException(__CLASS__ . '::' . __METHOD__ . '(): Parameters $basename or $extension not provided.');
             }
-
+            
             // Find available filename.
             $this->filename = KunenaAttachmentHelper::getAvailableFilename(
                 $this->folder,
                 $basename,
                 $extension,
                 $this->protected
-            );
+                );
         }
 
         // Create target directory if it does not exist.
@@ -913,7 +913,27 @@ class KunenaAttachment extends KunenaDatabaseObject
             }
         }
 
-        return $this->save();
+        return true;
+    }
+    
+    /**
+     * 
+     */
+    public function getFilenameUpload($basename, $extension, $folder)
+    {
+        if (!$this->filename || $this->filename == $this->filename_real) {
+            if (!$basename || !$extension) {
+                throw new InvalidArgumentException(__CLASS__ . '::' . __METHOD__ . '(): Parameters $basename or $extension not provided.');
+            }
+            
+            // Find available filename.
+            return KunenaAttachmentHelper::getAvailableFilename(
+                $folder,
+                $basename,
+                $extension,
+                $this->protected
+                );
+        }
     }
 
     /**

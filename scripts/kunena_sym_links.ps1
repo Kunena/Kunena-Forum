@@ -263,6 +263,15 @@ function make-SymLinksKunena {
     $path20 = $joomlaInstallDir + "\plugins\task\kunena"
     $target20 = $kunenaGitDir + "\src\plugins\plg_task_kunena"
     New-Item -ItemType SymbolicLink -Path $path20 -Target $target20
+
+    # Modify pkg_kunena.xml to set versionname to GIT
+    $pkgKunenaPath = $joomlaInstallDir + "\administrator\manifests\packages\pkg_kunena.xml"
+    if (Test-Path -Path $pkgKunenaPath) {
+        $xmlContent = Get-Content -Path $pkgKunenaPath -Raw
+        $xmlContent = $xmlContent -replace '<versionname>.*?</versionname>', '<versionname>GIT</versionname>'
+        $xmlContent | Set-Content -Path $pkgKunenaPath
+        Write-Host "Updated versionname to GIT in pkg_kunena.xml"
+    }
 }
 
 # Make synbolic links for Blue Eagle template

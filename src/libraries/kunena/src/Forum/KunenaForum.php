@@ -353,17 +353,25 @@ abstract class KunenaForum
         } else {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
-            $query->select('version')->from('#__kunena_version')->order('id');
+            $query->select('*')->from('#__kunena_version')->order('id');
             $query->setLimit(1);
             $db->setQuery($query);
 
-            self::$version      = $db->loadResult();
-            self::$version_date = Factory::getDate()->format('Y-m-d');
-            self::$version_name = 'Git Repository';
+            $version = $db->loadObject();
+
+            self::$version      = $version->version;
+            self::$version_date = $version->versiondate;
+            self::$version_name = $version->versionname;
         }
 
         self::$version_major = substr(self::$version, 0, 3);
-        self::$version_name  = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
+        
+        // Only set version name to 'Git Repository' if the version contains development indicators
+        if (strpos(self::$version, 'GIT') !== false) {
+            self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
+        } else {
+            self::$version_name = (string) ($manifest->versionname ?? 'Stable Release');
+        }
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();

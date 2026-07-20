@@ -175,6 +175,9 @@ Text::script('COM_KUNENA_EDITOR_DIALOG_VIDEO_PROPERTIES');
 Text::script('COM_KUNENA_EDITOR_DIALOG_MAPS_PROPERTIES');
 Text::script('COM_KUNENA_EDITOR_DIALOG_BASIC_SETTINGS');
 Text::script('COM_KUNENA_POLL_TITLE');
+
+// Reset state of attachments stored in user session on upload
+$this->app->setUserState('com_kunena.pendingAttachments', null);
 ?>
 <div id="modal_confirm_template_category" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

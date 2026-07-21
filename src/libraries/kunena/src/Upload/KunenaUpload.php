@@ -301,9 +301,10 @@ class KunenaUpload
     }
 
     /**
-     * @param   string  $filename  Original filename.
+     * @param   string  $filename  Original filename. When omitted, a cryptographically
+     *                             secure random filename is generated with random_bytes().
      *
-     * @return  string  Protected filename.
+     * @return  string  Protected filename (32 lower-case hexadecimal characters).
      *
      * @throws  Exception
      * @since   Kunena 6.0
@@ -311,6 +312,12 @@ class KunenaUpload
     public function getProtectedFilename($filename = null): string
     {
         $filename = $filename ? $filename : $this->filename;
+
+        // When no original filename is available, generate a cryptographically secure
+        // random name instead of relying on weak pseudo-random sources such as rand().
+        if (!$filename) {
+            return bin2hex(random_bytes(16));
+        }
 
         $user    = Factory::getApplication()->getIdentity();
         $session = Factory::getApplication()->getSession();

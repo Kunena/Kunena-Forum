@@ -301,7 +301,7 @@ class KunenaUpload
     }
 
     /**
-     * @param   string  $filename  Original filename. When omitted, a cryptographically
+     * @param   string  $filename  Original filename. When null or empty, a cryptographically
      *                             secure random filename is generated with random_bytes().
      *
      * @return  string  Protected filename (32 lower-case hexadecimal characters).

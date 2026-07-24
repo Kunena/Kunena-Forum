@@ -155,6 +155,8 @@ class SearchModel extends KunenaModel
 
         if (empty($this->messages)) {
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', '<strong>' . $text . '</strong>'), 'notice');
+        } else {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SEARCH_RESULTS_FOUND', '<strong>' . $text . '</strong>', $this->total), 'message');
         }
 
         return $this->messages;

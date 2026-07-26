@@ -34,13 +34,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                 <?php
                 // Search tools bar
                 echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
-                ?>
-                <?php if (empty($this->items)) : ?>
-                    <div class="alert alert-info">
-                        <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
-                        <?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
-                    </div>
-                <?php else : ?>
+                ?>                
                     <table class="table itemList" id="mailsqueueList">
                         <thead>
                             <tr>
@@ -105,8 +99,6 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             <?php $i++; endforeach; ?>
                         </tbody>
                     </table>
-                <?php endif; ?>
-
                 <?php echo $this->pagination->getListFooter(); ?>
 
                 <?php echo HTMLHelper::_(

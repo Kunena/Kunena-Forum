@@ -4,8 +4,8 @@
         <field
             name="search"
             type="text"
-            label="JSEARCH_FILTER_SEARCH_LABEL"
-            hint="JSEARCH_FILTER_SEARCH_DESC"
+            label="COM_KUNENA_ADMIN_MAILSQUEUE_FILTER_SEARCH_LABEL"
+            hint="COM_KUNENA_ADMIN_MAILSQUEUE_FILTER_SEARCH_DESC"
         />
     </fields>
     <fields name="list">

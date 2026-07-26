@@ -62,7 +62,6 @@ class MailsqueuesModel extends ListModel
      */
     public function getForm($data = [], $loadData = true)
     {
-        // TODO: Implement getForm() method.
     }
 
     /**

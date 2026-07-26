@@ -90,6 +90,7 @@ class MailsqueuesController extends FormController
             $db->execute();
         } catch (RuntimeException $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
         }
@@ -126,6 +127,7 @@ class MailsqueuesController extends FormController
             $db->execute();
         } catch (RuntimeException $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
         }

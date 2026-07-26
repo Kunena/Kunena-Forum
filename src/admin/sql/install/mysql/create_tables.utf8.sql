@@ -538,5 +538,6 @@ CREATE TABLE IF NOT EXISTS `#__kunena_plg_task_mailsqueue`
     `send`          tinyint(4) NOT NULL default '0',
     PRIMARY KEY (`id`)
 )
-    ENGINE = MyISAM
-    DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;

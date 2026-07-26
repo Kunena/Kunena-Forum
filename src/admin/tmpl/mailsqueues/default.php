@@ -87,8 +87,9 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                     </td>
                                     <td class="d-none d-md-table-cell">
                                         <?php
-                                        $url = $this->escape($row->url);
-                                        echo '<span title="' . $url . '">' . (mb_strlen($url) > 50 ? mb_substr($url, 0, 50) . '&hellip;' : $url) . '</span>';
+                                        $rawUrl     = $row->url;
+                                        $displayUrl = mb_strlen($rawUrl) > 50 ? mb_substr($rawUrl, 0, 50) . '…' : $rawUrl;
+                                        echo '<span title="' . $this->escape($rawUrl) . '">' . $this->escape($displayUrl) . '</span>';
                                         ?>
                                     </td>
                                     <td class="d-none d-md-table-cell">

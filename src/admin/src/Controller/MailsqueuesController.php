@@ -80,11 +80,9 @@ class MailsqueuesController extends FormController
             return;
         }
 
-        $cids = implode(',', $cid);
-
         $query = $db->createQuery()
             ->delete()->from($db->quoteName('#__kunena_plg_task_mailsqueue'))
-            ->where("id IN ($cids)");
+            ->whereIn($db->quoteName('id'), $cid);
 
         $db->setQuery($query);
 

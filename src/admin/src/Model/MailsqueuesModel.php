@@ -147,6 +147,7 @@ class MailsqueuesModel extends ListModel
 
         // Add the list ordering clause.
         $direction = strtoupper($this->state->get('list.direction'));
+        $direction = \in_array($direction, ['ASC', 'DESC'], true) ? $direction : 'DESC';
 
         switch ($this->state->get('list.ordering')) {
             case 'subject':

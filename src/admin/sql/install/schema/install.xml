@@ -1130,4 +1130,37 @@
              unique="1"
              columns="id"/>
     </table>
+    <table name="kunena_plg_task_mailsqueue">
+        <field primary_key="yes"
+               name="id"
+               type="int(11)"
+               null="0"
+               extra="auto_increment"/>
+        <field name="subject"
+               type="tinytext"
+               null="0"/>
+        <field name="messageId"
+               type="int(11)"
+               null="0"
+               default="0"/>
+        <field name="url"
+               type="text"
+               null="0"/>
+        <field name="emailListJson"
+               type="text"
+               null="0"/>
+        <field name="categoryName"
+               type="text"
+               null="0"/>
+        <field name="once"
+               type="text"
+               null="0"/>
+        <field name="send"
+               type="tinyint(4)"
+               null="0"
+               default="0"/>
+        <key name="PRIMARY"
+             unique="1"
+             columns="id"/>
+    </table>
 </schema>

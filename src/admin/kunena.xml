@@ -55,6 +55,7 @@
             <menu view="stats">COM_KUNENA_MENU_STATISTICS</menu>
             <menu view="plugins">COM_KUNENA_PLUGIN_MANAGER</menu>
             <menu view="logs">COM_KUNENA_LOG_MANAGER</menu>
+            <menu view="mailsqueues">COM_KUNENA_A_MAILSQUEUE_MANAGER</menu>
             <menu view="tools">COM_KUNENA_FORUM_TOOLS</menu>
             <menu view="trashs">COM_KUNENA_TRASH_MANAGER</menu>
         </submenu>

@@ -91,7 +91,7 @@ if ($this->show_title && $this->poll->polltimetolive != '1000-01-01 00:00:00') {
                     if ($this->usercount > '5') :
                         ?>
                         <a href="#kpoll-moreusers-span" class="link-show-extra-users link-show-more" id="kpoll-moreusers"><?php echo Text::_('COM_KUNENA_POLLUSERS_MORE') ?></a>
-                        <a href="#kpoll-lesssers-span" class="link-show-extra-users" id="kpoll-lessusers" style="display: none;"><?php echo Text::_('COM_KUNENA_POLLUSERS_LESS') ?></a>                                                
+                        <a href="#kpoll-lessusers-span" class="link-show-extra-users" id="kpoll-lessusers" style="display: none;"><?php echo Text::_('COM_KUNENA_POLLUSERS_LESS') ?></a>                                                
                     <?php endif;
                 endif; ?>
             </td>

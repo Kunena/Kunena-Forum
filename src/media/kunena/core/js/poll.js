@@ -37,16 +37,18 @@ jQuery(document).ready(function ($) {
 	});
 
 	/* Under a poll : show more users list */
-	$(".link-show-extra-users").click(function () {
-		if (!$(this).hasClass('link-show-more')) {
-			$("#kpoll-moreusers-span").hide();	
-			$(this).hide();		
-		}
-		else {
-			$("#kpoll-moreusers").show();	
-			$("#kpoll-moreusers-span").show();
-			$("#kpoll-lessusers").show();	
-			$(this).hide();
-		}
-	});
+	$(".link-show-extra-users").off('click').on('click', function (event) {
+	        event.preventDefault();
+
+	        if (!$(this).hasClass('link-show-more')) {
+	            $("#kpoll-moreusers-span").hide();
+	            $("#kpoll-moreusers").show();
+	            $(this).hide();
+	        } else {
+	            $("#kpoll-moreusers").hide();
+	            $("#kpoll-moreusers-span").show();
+	            $("#kpoll-lessusers").show();
+	            $(this).hide();
+	        }
+	 });
 });

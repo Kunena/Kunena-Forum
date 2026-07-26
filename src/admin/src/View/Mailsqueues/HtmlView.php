@@ -75,11 +75,11 @@ class HtmlView extends BaseHtmlView
         $toolbar = $this->getDocument()->getToolbar();
 
         // Set the title bar text
-        ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_MAILSQUEUE_MANAGER'), 'envelope');
+        ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_ADMIN_MAILSQUEUE_MANAGER'), 'envelope');
 
         ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'mailsqueues.remove');
 
-        $toolbar->popupButton('purge', 'COM_KUNENA_A_MAILSQUEUE_PURGE')
+        $toolbar->popupButton('purge', 'COM_KUNENA_ADMIN_MAILSQUEUE_PURGE')
             ->selector('joomla-dialog-purge')
             ->listCheck(false);
 

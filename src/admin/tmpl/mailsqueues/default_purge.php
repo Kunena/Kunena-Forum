@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 ?>
 <div class="p-3">
     <div class="row">
-        <p><?php echo Text::_('COM_KUNENA_A_MAILSQUEUE_PURGE_CONFIRM'); ?></p>
+        <p><?php echo Text::_('COM_KUNENA_ADMIN_MAILSQUEUE_PURGE_CONFIRM'); ?></p>
     </div>
 </div>
 <div class="btn-toolbar p-3">

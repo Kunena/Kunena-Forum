@@ -74,7 +74,7 @@ class MailsqueuesController extends FormController
         $cid = ArrayHelper::toInteger($cid, []);
 
         if (empty($cid)) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_MAILSQUEUE_NO_ROWS_SELECTED'), 'notice');
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ADMIN_MAILSQUEUE_NO_ROWS_SELECTED'), 'notice');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
@@ -95,7 +95,7 @@ class MailsqueuesController extends FormController
             return;
         }
 
-        $this->app->enqueueMessage(Text::_('COM_KUNENA_A_MAILSQUEUE_DELETED'), 'success');
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_ADMIN_MAILSQUEUE_DELETED'), 'success');
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }
 
@@ -132,7 +132,7 @@ class MailsqueuesController extends FormController
             return;
         }
 
-        $this->app->enqueueMessage(Text::_('COM_KUNENA_A_MAILSQUEUE_PURGED'), 'success');
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_ADMIN_MAILSQUEUE_PURGED'), 'success');
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }
 }

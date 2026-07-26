@@ -51,22 +51,22 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                     <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" class="w-20">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_A_MAILSQUEUE_SUBJECT', 'subject', $listDirn, $listOrder); ?>
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_ADMIN_MAILSQUEUE_SUBJECT', 'subject', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" class="w-5 d-none d-md-table-cell">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_A_MAILSQUEUE_MESSAGEID', 'messageId', $listDirn, $listOrder); ?>
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_ADMIN_MAILSQUEUE_MESSAGEID', 'messageId', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" class="w-20 d-none d-md-table-cell">
-                                    <?php echo Text::_('COM_KUNENA_A_MAILSQUEUE_URL'); ?>
+                                    <?php echo Text::_('COM_KUNENA_ADMIN_MAILSQUEUE_URL'); ?>
                                 </th>
                                 <th scope="col" class="w-15 d-none d-md-table-cell">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_A_MAILSQUEUE_CATEGORYNAME', 'categoryName', $listDirn, $listOrder); ?>
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_ADMIN_MAILSQUEUE_CATEGORYNAME', 'categoryName', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" class="w-10 d-none d-md-table-cell">
-                                    <?php echo Text::_('COM_KUNENA_A_MAILSQUEUE_ONCE'); ?>
+                                    <?php echo Text::_('COM_KUNENA_ADMIN_MAILSQUEUE_ONCE'); ?>
                                 </th>
                                 <th scope="col" class="w-5 text-center">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_A_MAILSQUEUE_SEND', 'send', $listDirn, $listOrder); ?>
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_ADMIN_MAILSQUEUE_SEND', 'send', $listDirn, $listOrder); ?>
                                 </th>
                             </tr>
                         </thead>
@@ -113,7 +113,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                     'bootstrap.renderModal',
                     'joomla-dialog-purge',
                     [
-                        'title' => Text::_('COM_KUNENA_A_MAILSQUEUE_PURGE'),
+                        'title' => Text::_('COM_KUNENA_ADMIN_MAILSQUEUE_PURGE'),
                     ],
                     $this->loadTemplate('purge')
                 ); ?>

@@ -62,6 +62,13 @@ class MailsqueuesModel extends ListModel
      */
     public function getForm($data = [], $loadData = true)
     {
+        $form = $this->loadForm('com_kunena.mailsqueues', 'filter_mailsqueues', ['control' => '', 'load_data' => $loadData]);
+        
+        if (empty($form)) {
+            return false;
+        }
+        
+        return $form;
     }
 
     /**

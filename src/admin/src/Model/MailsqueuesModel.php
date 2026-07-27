@@ -137,7 +137,7 @@ class MailsqueuesModel extends ListModel
             )
         );
 
-        $query->from($db->quoteName('#__kunena_plg_task_mailsqueue', 'a'));
+        $query->from($db->quoteName('#__kunena_notifications_mailsqueue', 'a'));
 
         // Filter by search.
         $search = $this->getState('filter.search');

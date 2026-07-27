@@ -1130,7 +1130,7 @@
              unique="1"
              columns="id"/>
     </table>
-    <table name="kunena_plg_task_mailsqueue">
+    <table name="kunena_notifications_mailsqueue">
         <field primary_key="yes"
                name="id"
                type="int(11)"

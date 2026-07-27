@@ -682,7 +682,7 @@ class KunenaMessage extends KunenaDatabaseObject
                 $values = array($db->quote($subject), $this->id, $db->quote($url), $db->quote(json_encode($receivers)), $db->quote($this->getCategory()->name), $db->quote($once));
                 
                 $query     = $db->createQuery()
-                ->insert($db->quoteName('#__kunena_plg_task_mailsqueue'))
+                ->insert($db->quoteName('#__kunena_notifications_mailsqueue'))
                 ->columns($db->quoteName($columns))
                 ->values(implode(',', $values));
                 

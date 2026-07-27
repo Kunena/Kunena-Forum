@@ -81,7 +81,7 @@ class MailsqueuesController extends FormController
         }
 
         $query = $db->createQuery()
-            ->delete()->from($db->quoteName('#__kunena_plg_task_mailsqueue'))
+            ->delete()->from($db->quoteName('#__kunena_notifications_mailsqueue'))
             ->whereIn($db->quoteName('id'), $cid);
 
         $db->setQuery($query);
@@ -119,7 +119,7 @@ class MailsqueuesController extends FormController
         }
 
         $query = $db->createQuery()
-            ->delete()->from($db->quoteName('#__kunena_plg_task_mailsqueue'));
+            ->delete()->from($db->quoteName('#__kunena_notifications_mailsqueue'));
 
         $db->setQuery($query);
 

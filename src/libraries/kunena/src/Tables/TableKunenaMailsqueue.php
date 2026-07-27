@@ -19,7 +19,7 @@ use Joomla\Database\DatabaseDriver;
 
 /**
  * Kunena Mails Queue Table
- * Provides access to the #__kunena_plg_task_mailsqueue table
+ * Provides access to the #__kunena_notifications_mailsqueue table
  *
  * @since   Kunena 7.1
  */
@@ -82,6 +82,6 @@ class TableKunenaMailsqueue extends KunenaTable
      */
     public function __construct(DatabaseDriver $db)
     {
-        parent::__construct('#__kunena_plg_task_mailsqueue', 'id', $db);
+        parent::__construct('#__kunena_notifications_mailsqueue', 'id', $db);
     }
 }

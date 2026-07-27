@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `#__kunena_plg_task_mailsqueue`
+CREATE TABLE IF NOT EXISTS `#__kunena_notifications_mailsqueue`
 (
     `id`            int(11)    NOT NULL auto_increment,
     `subject`       tinytext   NOT NULL,

@@ -590,6 +590,26 @@
             versionname="Internal">
            <phpfile name="7.0.6-2026-05-30_add_index_files_in_attachments_directories"/>
         </version>
+        <version
+            version="7.1.0-ALPHA1"
+            versiondate="2026-07-26"
+            versionname="Internal">
+            <query mode="silenterror">CREATE TABLE IF NOT EXISTS `#__kunena_notifications_mailsqueue`
+(
+    `id`            int(11)    NOT NULL auto_increment,
+    `subject`       tinytext   NOT NULL,
+    `messageId`     int(11)    NOT NULL default '0',
+    `url`           text       NOT NULL,
+    `emailListJson` text       NOT NULL,
+    `categoryName`  text       NOT NULL,
+    `once`          text       NOT NULL,
+    `send`          tinyint(4) NOT NULL default '0',
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

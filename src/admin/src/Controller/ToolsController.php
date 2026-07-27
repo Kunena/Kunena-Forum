@@ -1290,7 +1290,7 @@ class ToolsController extends FormController
                 'onKunenaBeforeModifySocials', [
                     'socials' => $socials,
                 ]))->getArgument('result', []);
-       
+
        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CHANGED'), 'message');
        $this->app->enqueueMessage($result[0], 'message');
        $this->app->redirect(KunenaRoute::_($this->baseurl, false));

@@ -20,6 +20,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Component\Scheduler\Administrator\Event\ExecuteTaskEvent;
@@ -29,8 +31,10 @@ use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Administrator\Model\TrashsModel;
+use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\User\KunenaBan;
 
 /**
@@ -56,6 +60,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             'langConstPrefix' => 'PLG_TASK_KUNENA_PURGETRASH',
             'form'            => 'trashbin',
             'method'          => 'purgeTrash',
+        ],
+        'add.mailsqueue' => [
+            'langConstPrefix' => 'PLG_TASK_KUNENA_SENDNOTIFICATIONS',
+            'method'          => 'sendNotifications',
         ],
     ];
 
@@ -181,6 +189,97 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
 
                 return Status::KNOCKOUT;
             }
+        }
+
+        return Status::OK;
+    }
+
+    /**
+     * Method to send queued notification emails in batches.
+     *
+     * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
+     *
+     * @since  7.1.0
+     * @throws \Exception
+     */
+    private function sendNotifications(ExecuteTaskEvent $event): int
+    {
+        if (
+            !ComponentHelper::isEnabled('com_kunena')
+            || !KunenaForum::isCompatible('7.1')
+            || !KunenaForum::installed()
+        ) {
+            return Status::NO_RUN;
+        }
+
+        try {
+            $config    = KunenaFactory::getConfig();
+            $batchSize = !empty($config->emailBatchSize) ? (int) $config->emailBatchSize : 50;
+            $db        = $this->getDatabase();
+
+            $query = $db->createQuery()
+                ->select('*')
+                ->from($db->quoteName('#__kunena_notifications_mailsqueue'))
+                ->where($db->quoteName('send') . ' = 0')
+                ->setLimit($batchSize);
+
+            $db->setQuery($query);
+            $queuedItems = $db->loadObjectList();
+
+            if (empty($queuedItems)) {
+                $this->logTask(Text::_('PLG_TASK_KUNENA_SENDNOTIFICATIONS_NOTHING'));
+
+                return Status::OK;
+            }
+
+            $sentCount = 0;
+
+            foreach ($queuedItems as $item) {
+                $receivers = json_decode($item->emailListJson, true);
+                $once      = (bool) $item->once;
+                $url       = $item->url;
+                $subject   = $item->subject;
+
+                $message = KunenaMessageHelper::get((int) $item->messageId);
+
+                $mailnamesender = !empty($config->emailSenderName)
+                    ? MailHelper::cleanAddress($config->emailSenderName)
+                    : MailHelper::cleanAddress($config->boardTitle);
+
+                $mailsubject = MailHelper::cleanSubject($subject . ' (' . $item->categoryName . ')');
+
+                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                $mail->setSubject($mailsubject);
+                $mail->setSender([$config->email, $mailnamesender]);
+
+                // Send to subscribers.
+                if (!empty($receivers[1])) {
+                    $message->attachEmailBody($mail, 1, $subject, $url, $once);
+                    KunenaEmail::send($mail, $receivers[1]);
+                }
+
+                // Send to moderators.
+                if (!empty($receivers[0])) {
+                    $message->attachEmailBody($mail, 0, $subject, $url, $once);
+                    KunenaEmail::send($mail, $receivers[0]);
+                }
+
+                $updateQuery = $db->createQuery()
+                    ->update($db->quoteName('#__kunena_notifications_mailsqueue'))
+                    ->set($db->quoteName('send') . ' = 1')
+                    ->where($db->quoteName('id') . ' = ' . (int) $item->id);
+
+                $db->setQuery($updateQuery);
+                $db->execute();
+
+                $sentCount++;
+            }
+
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_SENDNOTIFICATIONSSUCCESS', $sentCount));
+        } catch (\Exception $e) {
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_SENDNOTIFICATIONSERROR', $e->getMessage()));
+
+            return Status::KNOCKOUT;
         }
 
         return Status::OK;

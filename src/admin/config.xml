@@ -857,6 +857,15 @@
                 label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT"
                 description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT_DESC" />
             <field
+                name="emailBatchSize"
+                type="number"
+                min="1"
+                max="9999"
+                step="1"
+                default="50"
+                label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_BATCH_SIZE"
+                description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_BATCH_SIZE_DESC" />
+            <field
                 name="emailRecipientPrivacy"
                 type="list"
                 default="bcc"

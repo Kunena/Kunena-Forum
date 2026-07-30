@@ -676,7 +676,7 @@ class KunenaMessage extends KunenaDatabaseObject
             $subject     = $this->subject ? $this->subject : $topic->subject;
             
             // If the task plugin mail queue cron if enabled we store at this point the list of emails to be send
-            if (PluginHelper::isEnabled('task', 'sendnotificationskunena')) {
+            if (PluginHelper::isEnabled('task', 'kunena')) {
                 $columns = array('subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once');
                 
                 $values = array($db->quote($subject), $this->id, $db->quote($url), $db->quote(json_encode($receivers)), $db->quote($this->getCategory()->name), $db->quote($once));
@@ -1680,7 +1680,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * @throws Exception
      * @since   Kunena 6.0
      */
-    protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once): void
+    public function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once): void
     {
         $layout = KunenaLayout::factory('Email/Subscription')->debug(false)
             ->set('mail', $mail)

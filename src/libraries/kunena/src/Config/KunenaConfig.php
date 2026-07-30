@@ -86,6 +86,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $emailHeader                           Email Header Image
  * @property string $emailHeaderSizeX                      Header Width
  * @property string $emailHeaderSizeY                      Header Height
+ * @property int    $emailBatchSize                        Max mails sent per scheduled task run
  * @property string $emailRecipientCount                   E-mail to Multiple Recipients
  * @property string $emailRecipientPrivacy                 E-mail Recipient Privacy
  * @property string $emailSenderName                       Sender name for mail

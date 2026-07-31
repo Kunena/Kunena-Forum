@@ -20,6 +20,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Mail\MailHelper;
+use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Component\Scheduler\Administrator\Event\ExecuteTaskEvent;
@@ -27,8 +29,11 @@ use Joomla\Component\Scheduler\Administrator\Task\Status;
 use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseDriver;
+use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Administrator\Model\TrashsModel;
+use Kunena\Forum\Libraries\Email\KunenaEmail;
+use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\User\KunenaBan;
@@ -56,6 +61,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             'langConstPrefix' => 'PLG_TASK_KUNENA_PURGETRASH',
             'form'            => 'trashbin',
             'method'          => 'purgeTrash',
+        ],
+        'sending.notificationskunena' => [
+            'langConstPrefix' => 'PLG_TASK_SENDNOTIFICATIONSKUNENA_SENDING',
+            'method'          => 'sendNotifications',
         ],
     ];
 
@@ -184,5 +193,145 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         }
 
         return Status::OK;
+    }
+    
+    /**
+     * Method to retrieve the list of mails to send from the table and send them.
+     *
+     * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
+     *
+     * @return integer  The routine exit code.
+     *
+     * @since  7.1.0
+     * @throws \Exception
+     */
+    private function sendNotifications(ExecuteTaskEvent $event): int
+    {
+        if (
+            !ComponentHelper::isEnabled('com_kunena')
+            || !KunenaForum::isCompatible('7.1')
+            || !KunenaForum::installed()
+            ) {
+                return Status::NO_RUN;
+            }
+        
+        $config = KunenaFactory::getConfig();
+        
+        if (!$config->email) {
+            KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
+            
+            return false;
+        } elseif (!MailHelper::isEmailAddress($config->email)) {
+            KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
+            
+            return false;
+        }
+        
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $batchSize =  $config->emailBatchSize;
+        $processedCount = 0;
+        
+        // Process the notifications by batch
+        do {
+            $query = $db->createQuery()
+                ->select('*')
+                ->from($db->quoteName('#__kunena_notifications_mailsqueue'))
+                ->where($db->quoteName('send') . ' = ' . $db->quote('0'))
+                ->order($db->quoteName('id') . ' ASC')
+                ->setLimit($batchSize);
+            
+            $db->setQuery($query);
+            
+            try {
+                $mailsToSend = $db->loadObjectList();
+            } catch (ExecutionFailureException $e) {
+                $mailsToSend = [];
+            }
+            
+            // Si plus de notifications à traiter, on sort de la boucle
+            if (empty($mailsToSend)) {
+                break;
+            }
+            
+            $mailer = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+            
+            // Table to store the IDs of the notifications which are processed
+            $processedIds = [];
+            
+            foreach($mailsToSend as $mail) {
+                $receivers = json_decode($mail->emailListJson);
+                
+                $sendStatus = $this->sending($config, $mailer, $mail->subject, $mail->url, $mail->once, $mail->categoryName, $mail->id, $receivers);
+                
+                // Add the ID in the list of processed
+                $processedIds[] = $mail->id;
+            }
+            
+            // Mark the notifications as send
+            if (!empty($processedIds)) {
+                $updateQuery = $db->createQuery()
+                    ->update($db->quoteName('#__kunena_notifications_mailsqueue'))
+                    ->set($db->quoteName('send') . ' = ' . $db->quote('1'))
+                    ->where($db->quoteName('id') . ' IN (' . implode(',', $processedIds) . ')');
+                
+                $db->setQuery($updateQuery);
+                
+                try {
+                    $db->execute();
+                    $processedCount += count($processedIds);
+                } catch (ExecutionFailureException $e) {
+                    // If an error is throwed, teh error is logged and we continue
+                    $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_ERROR_UPDATING', $e->getMessage()));
+                }
+            }
+            
+        } while (!empty($mailsToSend));
+        
+        // Log the number of notifications processed
+        if ($processedCount > 0) {
+            $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_PROCESSED', $processedCount));
+        }
+        
+        return Status::OK;
+    }
+    
+    /**
+     * Method to send the mails by using KunenaEmail send
+     *
+     * @param   KunenaConfig  $config        KunenaConfig object
+     * @param   string        $mailer        Joomla! mailer object
+     * @param   string        $subject       The subject of the post on which the user had subscribed
+     * @param   string        $url           The url of the post on which the user had subscribed
+     * @param   string        $once          The current version number
+     * @param   string        $categoryName  The name of the categoy in which the post subscribed is
+     * @param   int           $idQueue       The current id of the queue subscription item
+     * @param   int           $receivers     The list of users which will receive the subscription mail
+     *
+     * @return  void
+     *
+     * @since   7.1.0
+     */
+    private function sending($config, $mailer, $subject, $url, $once, $categoryName, $idQueue, $receivers)
+    {
+        $mailnamesender  = !empty($config->emailSenderName) ? MailHelper::cleanAddress($config->emailSenderName) : MailHelper::cleanAddress($config->boardTitle);
+        $mailsubject = MailHelper::cleanSubject($subject . " (" . $categoryName . ")");
+        
+        // Create email.
+        $mailer->setSubject($mailsubject);
+        $mailer->setSender([$config->email, $mailnamesender]);
+        
+        // Send email to all subscribers.
+        if (!empty($receivers[1])) {
+            $this->attachEmailBody($mailer, 1, $subject, $url, $once);
+            $successAllSub[$idQueue] = KunenaEmail::send($mailer, $receivers[1]);
+        }
+        
+        // Send email to all moderators.
+        if (!empty($receivers[0])) {
+            $this->attachEmailBody($mailer, 0, $subject, $url, $once);
+            $successMods[$idQueue] = KunenaEmail::send($mailer, $receivers[0]);
+        }
+        
+        return;
     }
 }

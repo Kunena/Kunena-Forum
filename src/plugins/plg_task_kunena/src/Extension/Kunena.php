@@ -228,28 +228,68 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         }
         
         $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery()
-        ->select('*')
-        ->from($db->quoteName('#__kunena_notifications_mailsqueue'))
-        ->where($db->quoteName('send') . ' = ' . $db->quote('0'));
-        $db->setQuery($query);
+        $batchSize =  $config->emailBatchSize;
+        $processedCount = 0;
         
-        try {
-            $mailsToSend = $db->loadObjectList();
-        } catch (ExecutionFailureException $e) {
-        }
-        
-        // check if $mailsToSend isn't empty
-        if (empty($mailsToSend)) {
-            return;
-        }
-        
-        $mailer = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-        
-        foreach($mailsToSend as $mail) {
-            $receivers = json_decode($mail->emailListJson);
+        // Process the notifications by batch
+        do {
+            $query = $db->createQuery()
+                ->select('*')
+                ->from($db->quoteName('#__kunena_notifications_mailsqueue'))
+                ->where($db->quoteName('send') . ' = ' . $db->quote('0'))
+                ->order($db->quoteName('id') . ' ASC')
+                ->setLimit($batchSize);
             
-            $sendStatus = $this->sending($config, $mailer, $mail->subject, $mail->url, $mail->once, $mail->categoryName, $mail->id, $receivers);
+            $db->setQuery($query);
+            
+            try {
+                $mailsToSend = $db->loadObjectList();
+            } catch (ExecutionFailureException $e) {
+                $mailsToSend = [];
+            }
+            
+            // Si plus de notifications à traiter, on sort de la boucle
+            if (empty($mailsToSend)) {
+                break;
+            }
+            
+            $mailer = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+            
+            // Table to store the IDs of the notifications which are processed
+            $processedIds = [];
+            
+            foreach($mailsToSend as $mail) {
+                $receivers = json_decode($mail->emailListJson);
+                
+                $sendStatus = $this->sending($config, $mailer, $mail->subject, $mail->url, $mail->once, $mail->categoryName, $mail->id, $receivers);
+                
+                // Add the ID in the list of processed
+                $processedIds[] = $mail->id;
+            }
+            
+            // Mark the notifications as send
+            if (!empty($processedIds)) {
+                $updateQuery = $db->createQuery()
+                    ->update($db->quoteName('#__kunena_notifications_mailsqueue'))
+                    ->set($db->quoteName('send') . ' = ' . $db->quote('1'))
+                    ->where($db->quoteName('id') . ' IN (' . implode(',', $processedIds) . ')');
+                
+                $db->setQuery($updateQuery);
+                
+                try {
+                    $db->execute();
+                    $processedCount += count($processedIds);
+                } catch (ExecutionFailureException $e) {
+                    // If an error is throwed, teh error is logged and we continue
+                    $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_ERROR_UPDATING', $e->getMessage()));
+                }
+            }
+            
+        } while (!empty($mailsToSend));
+        
+        // Log the number of notifications processed
+        if ($processedCount > 0) {
+            $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_PROCESSED', $processedCount));
         }
         
         return Status::OK;

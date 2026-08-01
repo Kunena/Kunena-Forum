@@ -775,7 +775,7 @@ abstract class KunenaCategoryHelper
                     continue;
                 }
 
-                if (!empty($clist) || !$params['search'] || \intval($params['search']) == $id || StringHelper::stristr(Transliterate::utf8_latin_to_ascii($instance->name), (string) Transliterate::utf8_latin_to_ascii($params['search'])) || StringHelper::stristr($instance->name, (string) $params['search'])) {
+                if (!empty($clist) || !$params['search'] || \intval($params['search']) == $id || StringHelper::stristr(Transliterate::utf8_latin_to_ascii($instance->name), (string) Transliterate::utf8_latin_to_ascii($params['search'])) !== false) {
                     if (!$filtered && (empty($clist) || $params['parents'])) {
                         $list [$id] = $instance;
                     }
@@ -1006,6 +1006,150 @@ abstract class KunenaCategoryHelper
         }
 
         $rows += $db->getAffectedRows();
+
+        if ($rows) {
+            // If something changed, clean our cache
+            KunenaCacheHelper::clearCategories();
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Recount categories in batches, rebuilt from the original recount() logic.
+     *
+     * Unlike recountBatch(), this method:
+     * - Restricts the "no published topics" cleanup update to the requested category
+     *   IDs (or batch of IDs) instead of touching the whole #__kunena_categories table,
+     *   so it will not reset counters on categories outside of the requested scope.
+     * - Reuses exactly the same per-category SQL as recount() for each batch, only
+     *   chunking the category ID list so that very large forums (hundreds/thousands
+     *   of categories) don't build oversized "IN (...)" clauses or SQL queries that
+     *   time out / fail.
+     * - Aggregates the affected row count and clears the categories cache once, at
+     *   the end, exactly like recount() does.
+     *
+     * @param   string|array  $categories  categories  A comma separated list (or array) of
+     *                                                  category ids to recount. Empty value
+     *                                                  recounts every category.
+     * @param   int           $batchSize   batchSize    Number of categories processed per batch.
+     *
+     * @return  boolean|integer
+     *
+     * @since   Kunena 7.0
+     *
+     * @throws  Exception
+     */
+    public static function recountBatchFixed($categories = '', $batchSize = 100)
+    {
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        if (\is_array($categories)) {
+            $categories = implode(',', $categories);
+        }
+
+        $categories = trim((string) $categories);
+
+        // Resolve the list of category IDs that we actually need to recount.
+        $query = $db->createQuery();
+        $query->select($db->quoteName('id'))
+            ->from($db->quoteName('#__kunena_categories'));
+
+        if ($categories !== '') {
+            $query->where($db->quoteName('id') . ' IN (' . $categories . ')');
+        }
+
+        $db->setQuery($query);
+
+        try {
+            $categoryIds = $db->loadColumn();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
+        if (empty($categoryIds)) {
+            return 0;
+        }
+
+        $batchSize = max(1, (int) $batchSize);
+        $rows      = 0;
+
+        foreach (array_chunk($categoryIds, $batchSize) as $batch) {
+            $batchList   = implode(',', $batch);
+            $batchFilter = "AND t.category_id IN ({$batchList})";
+
+            // Update category post count and last post info on categories in this
+            // batch which have published topics (same query as recount()).
+            $query = "UPDATE #__kunena_categories AS c
+				INNER JOIN (
+						SELECT t.category_id AS id, COUNT( * ) AS numTopics, SUM( t.posts ) AS numPosts, t2.id as last_topic_id
+						FROM #__kunena_topics AS t INNER JOIN (SELECT t.id, t.category_id, t.last_post_time
+																FROM #__kunena_topics AS t,
+																		(SELECT category_id ,  max(last_post_time) as last_post_time
+																		FROM  `#__kunena_topics`
+																		WHERE hold =0
+																		AND moved_id =0
+																		{$batchFilter}
+																GROUP BY category_id) AS temp
+																WHERE temp.last_post_time = t.last_post_time
+																{$batchFilter}
+																AND t.category_id=temp.category_id
+																) AS t2 ON t2.category_id=t.category_id
+						WHERE t.hold =0
+						AND t.moved_id =0
+						{$batchFilter}
+						GROUP BY t.category_id
+				) AS r ON r.id=c.id
+				INNER JOIN #__kunena_topics AS tt ON tt.id=r.last_topic_id
+				SET c.numTopics = r.numTopics,
+					c.numPosts = r.numPosts,
+					c.last_topic_id=r.last_topic_id,
+					c.last_post_id = tt.last_post_id,
+					c.last_post_time = tt.last_post_time";
+            $db->setQuery($query);
+
+            try {
+                $db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+
+                return false;
+            }
+
+            $rows += $db->getAffectedRows();
+
+            // Update categories in this batch which have no published topics.
+            // This is scoped to the current batch of ids, unlike recountBatch()
+            // which ran this update once against the entire categories table.
+            $query  = $db->createQuery();
+            $fields = array(
+                $db->quoteName('c.numTopics') . ' = 0',
+                $db->quoteName('c.numPosts') . ' = 0',
+                $db->quoteName('c.last_topic_id') . ' = 0',
+                $db->quoteName('c.last_post_id') . ' = 0',
+                $db->quoteName('c.last_post_time') . ' = 0',
+            );
+
+            $query
+                ->update($db->quoteName('#__kunena_categories', 'c'))
+                ->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0')
+                ->set($fields)
+                ->where($db->quoteName('tt.id') . ' IS NULL')
+                ->where($db->quoteName('c.id') . ' IN (' . $batchList . ')');
+            $db->setQuery($query);
+
+            try {
+                $db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+
+                return false;
+            }
+
+            $rows += $db->getAffectedRows();
+        }
 
         if ($rows) {
             // If something changed, clean our cache

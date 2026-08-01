@@ -791,7 +791,7 @@ abstract class KunenaCategoryHelper
                     continue;
                 }
 
-                if (!empty($clist) || !$params['search'] || \intval($params['search']) == $id || StringHelper::stristr(Transliterate::utf8_latin_to_ascii($instance->name), (string) Transliterate::utf8_latin_to_ascii($params['search'])) || StringHelper::stristr($instance->name, (string) $params['search'])) {
+                if (!empty($clist) || !$params['search'] || \intval($params['search']) == $id || StringHelper::stristr(Transliterate::utf8_latin_to_ascii($instance->name), (string) Transliterate::utf8_latin_to_ascii($params['search'])) !== false) {
                     if (!$filtered && (empty($clist) || $params['parents'])) {
                         $list [$id] = $instance;
                     }
@@ -950,112 +950,129 @@ abstract class KunenaCategoryHelper
      *
      * @throws  Exception
      */
-    public static function recountBatch($categories = '')
+    public static function recountBatch($categories = '', $batchSize = 50)
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
-
+        $categoryIds = [];
+        
         if (\is_array($categories)) {
-            $categories = implode(',', $categories);
-        }
-
-        $categories = !empty($categories) ? "AND t.category_id IN ({$categories})" : '';
-
-        // Get all category IDs that need to be processed
-        $query = $db->createQuery();
-        $query->select($db->quoteName('id'))
-              ->from($db->quoteName('#__kunena_categories'));
-        
-        if (!empty($categories)) {
-            $query->where($db->quoteName('id') . ' IN (' . $categories . ')');
+            $categoryIds = $categories;
+        } elseif (!empty($categories)) {
+            $categoryIds = explode(',', (string) $categories);
         }
         
-        $db->setQuery($query);
+        $categoryIds = array_values(array_filter(array_map('intval', $categoryIds)));
         
-        try {
-            $categoryIds = $db->loadColumn();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-            return false;
+        if (empty($categoryIds)) {
+            return 0;
         }
-
-        $rows = 0;
-        $batchSize = 100; // Process 100 categories at a time
+        
+        $totalRows = 0;
+        $batchSize = max(1, (int) $batchSize);
         
         // Process categories in batches
         foreach (array_chunk($categoryIds, $batchSize) as $batch) {
-            $batchList = implode(',', $batch);
-            $batchCondition = "AND t.category_id IN ({$batchList})";
-
-            // Update category post count and last post info for this batch
-            $query = "UPDATE #__kunena_categories AS c
-                    INNER JOIN (
-                        SELECT t.category_id AS id, COUNT( * ) AS numTopics, SUM( t.posts ) AS numPosts, t2.id as last_topic_id
-                        FROM #__kunena_topics AS t INNER JOIN (SELECT t.id, t.category_id, t.last_post_time
-                                                            FROM #__kunena_topics AS t,
-                                                                (SELECT category_id ,  max(last_post_time) as last_post_time
-                                                                FROM  `#__kunena_topics`
-                                                                WHERE hold =0
-                                                                AND moved_id =0
-                                                                {$batchCondition}
-                                                                GROUP BY category_id) AS temp
-                                                            WHERE temp.last_post_time = t.last_post_time
-                                                            {$batchCondition}
-                                                            AND t.category_id=temp.category_id
-                                                            ) AS t2 ON t2.category_id=t.category_id
-                        WHERE t.hold =0
-                        AND t.moved_id =0
-                        {$batchCondition}
-                        GROUP BY t.category_id
-                    ) AS r ON r.id=c.id
-                    INNER JOIN #__kunena_topics AS tt ON tt.id=r.last_topic_id
-                    SET c.numTopics = r.numTopics,
-                        c.numPosts = r.numPosts,
-                        c.last_topic_id=r.last_topic_id,
-                        c.last_post_id = tt.last_post_id,
-                        c.last_post_time = tt.last_post_time";
-            $db->setQuery($query);
-
-            try {
-                $db->execute();
-                $rows += $db->getAffectedRows();
-            } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
-                return false;
+            $placeholders1 = [];
+            $placeholders2 = [];
+            $binds       = [];
+            
+            foreach ($batch as $i => $id) {
+                $placeholder1    = ':category1_' . $i;
+                $placeholder2    = ':category2_' . $i;
+                $placeholders1[] = $placeholder1;
+                $placeholders2[] = $placeholder2;
+                $binds[]         = [$placeholder1, $id];
+                $binds[]         = [$placeholder2, $id];
             }
+            
+            $categories1 = 'AND t.category_id IN (' . implode(',', $placeholders1) . ')';
+            $categories2 = 'AND t.category_id IN (' . implode(',', $placeholders2) . ')';
+            
+            $subQuerySelect = "SELECT t.category_id AS id, COUNT( * ) AS numTopics, SUM( t.posts ) AS numPosts, t2.id as last_topic_id
+					FROM " . $db->quoteName('#__kunena_topics') . " AS t INNER JOIN (SELECT t.id, t.category_id, t.last_post_time
+											FROM #__kunena_topics AS t,
+											(SELECT category_id ,  max(last_post_time) as last_post_time
+											FROM  " . $db->quoteName('#__kunena_topics') . "
+											WHERE hold =0
+											AND moved_id =0
+										GROUP BY category_id) AS temp
+										WHERE temp.last_post_time = t.last_post_time
+										{$categories1}
+										AND t.category_id=temp.category_id
+										) AS t2 ON t2.category_id=t.category_id
+					WHERE t.hold =0
+					AND t.moved_id =0
+					{$categories2}
+					GROUP BY t.category_id";
+            
+            // Update category post count and last post info on categories which have published topics
+            $query = "UPDATE " . $db->quoteName('#__kunena_categories') . " AS c
+				INNER JOIN ($subQuerySelect) AS r ON r.id=c.id
+				INNER JOIN " . $db->quoteName('#__kunena_topics') . " AS tt ON tt.id=r.last_topic_id
+				SET c.numTopics = r.numTopics,
+					c.numPosts = r.numPosts,
+					c.last_topic_id=r.last_topic_id,
+					c.last_post_id = tt.last_post_id,
+					c.last_post_time = tt.last_post_time";
+				
+				$db->setQuery($query);
+				
+				foreach ($binds as [$placeholder, $id]) {
+				    $db->bind($placeholder, $id, ParameterType::INTEGER);
+				}
+				
+				try {
+				    $db->execute();
+				} catch (ExecutionFailureException $e) {
+				    KunenaError::displayDatabaseError($e);
+				    
+				    return false;
+				}
+				
+				$totalRows += $db->getAffectedRows();
+				
+				// Update categories which have no published topics
+				$query = $db->createQuery();
+				$fields = array(
+				    $db->quoteName('c.numTopics') . ' = 0',
+				    $db->quoteName('c.numPosts') . ' = 0',
+				    $db->quoteName('c.last_topic_id') . ' = 0',
+				    $db->quoteName('c.last_post_id') . ' = 0',
+				    $db->quoteName('c.last_post_time') . ' = 0',
+				);
+				
+				$query
+				->update($db->quoteName('#__kunena_categories', 'c'))
+				->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0')
+				->set($fields)
+				->where($db->quoteName('c.id') . ' IN (' . implode(',', $placeholders1) . ')')
+				->where($db->quoteName('tt.id') . ' IS NULL');
+				
+				$db->setQuery($query);
+				
+				foreach ($binds as $i => [$placeholder, $id]) {
+				    if ($i % 2 === 0) {
+				        $db->bind($placeholder, $id, ParameterType::INTEGER);
+				    }
+				}
+				
+				try {
+				    $db->execute();
+				} catch (ExecutionFailureException $e) {
+				    KunenaError::displayDatabaseError($e);
+				    
+				    return false;
+				}
+				
+				$totalRows += $db->getAffectedRows();
         }
-
-        // Update categories which have no published topics
-        $query = $db->createQuery();
-        $fields = array(
-            $db->quoteName('c.numTopics') . ' = 0',
-            $db->quoteName('c.numPosts') . ' = 0',
-            $db->quoteName('c.last_topic_id') . ' = 0',
-            $db->quoteName('c.last_post_id') . ' = 0',
-            $db->quoteName('c.last_post_time') . ' = 0',
-        );
-
-        $query
-            ->update($db->quoteName('#__kunena_categories', 'c'))
-            ->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0')
-            ->set($fields)
-            ->where($db->quoteName('tt.id') . ' IS NULL');
-        $db->setQuery($query);
-
-        try {
-            $db->execute();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
-            return false;
-        }
-
-        $rows += $db->getAffectedRows();
-
-        if ($rows) {
+        
+        if ($totalRows) {
             // If something changed, clean our cache
             KunenaCacheHelper::clearCategories();
         }
-
-        return $rows;
+        
+        return $totalRows;
     }
 
     /**

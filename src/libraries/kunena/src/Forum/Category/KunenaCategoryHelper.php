@@ -791,7 +791,7 @@ abstract class KunenaCategoryHelper
                     continue;
                 }
 
-                if (!empty($clist) || !$params['search'] || \intval($params['search']) == $id || StringHelper::stristr(Transliterate::utf8_latin_to_ascii($instance->name), (string) Transliterate::utf8_latin_to_ascii($params['search'])) !== false) {
+                if (!empty($clist) || !$params['search'] || \intval($params['search']) == $id || StringHelper::stristr(Transliterate::utf8_latin_to_ascii($instance->name), (string) Transliterate::utf8_latin_to_ascii($params['search'])) || StringHelper::stristr($instance->name, (string) $params['search'])) {
                     if (!$filtered && (empty($clist) || $params['parents'])) {
                         $list [$id] = $instance;
                     }

@@ -23,7 +23,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Database\DatabaseDriver;
@@ -577,6 +576,131 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
+     * Choose how to handle the notification : store in queue for later in task plugin or send it now
+     *
+     * @param   null|string  $url       url
+     * @param   boolean      $approved  false
+     * @param   boolean      $type  Default on true to let send the notification now
+     *
+     * @return  boolean|false
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    public function processNotification($url = null, $approved = false, $type = true)
+    {  
+        // No need to go further if mail settings are not configured
+        $db        = Factory::getContainer()->get('DatabaseDriver');
+        
+        // TODO : check if mail is enabled in Joomla! configuration
+        
+        if (!$this->_config->sendEmails) {
+            return false;
+        }
+        
+        // Gather data to be able to the handle to send the notification
+        $emailToList = $this->gatherNotificationData();        
+        
+        if (!$url) {
+            $url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl();
+        }
+        
+        if ($type) {
+            // Send the notification now
+            $this->sendNotificationNow();
+        } else {
+            // Store the notification in queue
+            $columns = array('subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once');
+            
+            $values = array($db->quote($subject), $this->id, $db->quote($url), $db->quote(json_encode($receivers)), $db->quote($this->getCategory()->name), $db->quote($once));
+            
+            $query     = $db->createQuery()
+            ->insert($db->quoteName('#__kunena_notifications_mailsqueue'))
+            ->columns($db->quoteName($columns))
+            ->values(implode(',', $values));
+            
+            $db->setQuery($query);
+            
+            try {
+                $db->execute();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+        }
+    }
+    
+    /**
+     * Gather necessary data to be able to send the notification mail
+     *
+     * @param   null|string  $url       url
+     * @param   boolean      $approved  false
+     * @param   boolean      $type  Default on true to let send the notification now
+     *
+     * @return  boolean|false
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    private function gatherNotificationData()
+    {
+        if ($this->hold > 1) {
+            return false;
+        } elseif ($this->hold == 1) {
+            $mailsubs   = 0;
+            $mailmods   = $this->_config->mailModerators >= 0;
+            $mailadmins = $this->_config->mailAdministrators >= 0;
+        } else {
+            $mailsubs   = (bool) $this->_config->allowSubscriptions;
+            $mailmods   = $this->_config->mailModerators >= 1;
+            $mailadmins = $this->_configs->mailAdministrators >= 1;
+        }
+        
+        $this->_approved = $approved;
+        
+        $once = false;
+        
+        if ($mailsubs) {
+            if (!$this->parent) {
+                // New topic: Send email only to category subscribers
+                $mailsubs = $this->_config->categorySubscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
+                $once     = $this->_config->categorySubscriptions == 'topic';
+            } elseif ($this->_config->categorySubscriptions != 'post') {
+                // Existing topic: Send email only to topic subscribers
+                $mailsubs = $this->_config->topicSubscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
+                $once     = $this->_config->topicSubscriptions == 'first';
+            } else {
+                // Existing topic: Send email to both category and topic subscribers
+                $mailsubs = $this->_config->topicSubscriptions == 'disabled'
+                    ? KunenaAccess::CATEGORY_SUBSCRIPTION
+                    : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
+                    
+                    // FIXME: category subscription can override topic
+                    $once = $this->_config->topicSubscriptions == 'first';
+            }
+        }
+        
+        // Get all subscribers, moderators and admins who should get the email.
+        $emailToList = KunenaAccess::getInstance()->getSubscribers(
+            $this->catid,
+            $this->thread,
+            $mailsubs,
+            $mailmods,
+            $mailadmins,
+            KunenaUserHelper::getMyself()->userid
+            );
+        
+        return $emailToList;
+    }
+    
+    /**
+     * @since   Kunena 7.1
+     */
+    private function sendNotificationNow()
+    {
+        
+    }
+
+    /**
      * Send email notifications from the message.
      *
      * @param   null|string  $url       url
@@ -587,6 +711,8 @@ class KunenaMessage extends KunenaDatabaseObject
      * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
+     * 
+     * @deprecated Kunena 7.1
      */
     public function sendNotification($url = null, $approved = false)
     {
@@ -682,44 +808,24 @@ class KunenaMessage extends KunenaDatabaseObject
             
             $subject     = $this->subject ? $this->subject : $topic->subject;
             
-            // If the task plugin mail queue cron if enabled we store at this point the list of emails to be send
-            if (PluginHelper::isEnabled('task', 'kunena')) {
-                $columns = array('subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once');
-                
-                $values = array($db->quote($subject), $this->id, $db->quote($url), $db->quote(json_encode($receivers)), $db->quote($this->getCategory()->name), $db->quote($once));
-                
-                $query     = $db->createQuery()
-                ->insert($db->quoteName('#__kunena_notifications_mailsqueue'))
-                ->columns($db->quoteName($columns))
-                ->values(implode(',', $values));
-                
-                $db->setQuery($query);
-                
-                try {
-                    $db->execute();
-                } catch (ExecutionFailureException $e) {
-                    KunenaError::displayDatabaseError($e);
-                }
-            } else {
-                $mailnamesender  = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
-                $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");                
-                
-                // Create email.
-                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-                $mail->setSubject($mailsubject);
-                $mail->setSender([$this->_config->email, $mailnamesender]);
-                
-                // Send email to all subscribers.
-                if (!empty($receivers[1])) {
-                    $this->attachEmailBody($mail, 1, $subject, $url, $once);
-                    KunenaEmail::send($mail, $receivers[1]);
-                }
-                
-                // Send email to all moderators.
-                if (!empty($receivers[0])) {
-                    $this->attachEmailBody($mail, 0, $subject, $url, $once);
-                    KunenaEmail::send($mail, $receivers[0]);
-                }
+            $mailnamesender  = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
+            $mailsubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+            
+            // Create email.
+            $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+            $mail->setSubject($mailsubject);
+            $mail->setSender([$this->_config->email, $mailnamesender]);
+            
+            // Send email to all subscribers.
+            if (!empty($receivers[1])) {
+                $this->attachEmailBody($mail, 1, $subject, $url, $once);
+                KunenaEmail::send($mail, $receivers[1]);
+            }
+            
+            // Send email to all moderators.
+            if (!empty($receivers[0])) {
+                $this->attachEmailBody($mail, 0, $subject, $url, $once);
+                KunenaEmail::send($mail, $receivers[0]);
             }
 
             // Update subscriptions.

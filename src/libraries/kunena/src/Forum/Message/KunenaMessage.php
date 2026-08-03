@@ -1185,23 +1185,21 @@ class KunenaMessage extends KunenaDatabaseObject
             }
         }
 
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
         // Delete thank yous
-        $queries[] = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)}";
+        $queries[] = "DELETE FROM #__kunena_thankyou WHERE postid={$this->_db->quote($this->id)}";
 
         // Delete message
-        $queries[] = "DELETE FROM #__kunena_messages_text WHERE mesid={$db->quote($this->id)}";
+        $queries[] = "DELETE FROM #__kunena_messages_text WHERE mesid={$this->_db->quote($this->id)}";
 
         // Cascade changes into other tables
         $this->update();
 
         foreach ($queries as $query) {
-            $db->setQuery($query);
-            $db->execute();
+            $this->_db->setQuery($query);
+            $this->_db->execute();
 
             try {
-                $db->execute();
+                $this->_db->execute();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
             }

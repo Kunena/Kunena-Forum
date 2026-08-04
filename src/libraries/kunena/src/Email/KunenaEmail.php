@@ -48,54 +48,37 @@ abstract class KunenaEmail
         if (isset(static::$mailer_error_status)) {
             // Mailer is broken, so prevent any sending
             Log::add(static::$mailer_error_status->getMessage(), Log::ERROR, 'kunena');
-
+            
             return false;
         }
-
+        
         $config = KunenaFactory::getConfig();
-
+        
         if (!empty($config->emailRecipientCount)) {
             $emailRecipientCount = $config->emailRecipientCount;
         } else {
             $emailRecipientCount = 1;
         }
-
-        $emailRecipientPrivacy = $config->emailRecipientPrivacy ?: 'bcc';
-
-        // If we hide email addresses from other users, we need to add TO address to prevent email from becoming spam.
-        if (
-            $emailRecipientCount > 1
-            && $emailRecipientPrivacy == 'bcc'
-            && MailHelper::isEmailAddress($config->emailVisibleAddress)
-        ) {
-            $mail->AddAddress($config->emailVisibleAddress, MailHelper::cleanAddress($config->boardTitle));
-
-            // Also make sure that email receiver limits are not violated (TO + CC + BCC = limit).
-            if ($emailRecipientCount > 9) {
-                $emailRecipientCount--;
-            }
-        }
-
+        
+        $emailRecipientPrivacy = $config->emailRecipientPrivacy ?: 'cc';
+        
         $chunks = array_chunk($receivers, $emailRecipientCount);
-
+        
         $success = true;
         
         if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
             $mail->SMTPKeepAlive = true;
         }
-
+        
         foreach ($chunks as $emails) {
             if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to') {
                 $mail->ClearAddresses();
                 $mail->addRecipient($emails);
-            } elseif ($emailRecipientPrivacy == 'cc') {
+            } else {
                 $mail->ClearCCs();
                 $mail->addCC($emails);
-            } else {
-                $mail->ClearBCCs();
-                $mail->addBCC($emails);
             }
-
+            
             try {
                 $mail->Send();
             } catch (Exception $e) {
@@ -107,7 +90,7 @@ abstract class KunenaEmail
         if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
             $mail->smtpClose();
         }
-
+        
         return $success;
     }
 

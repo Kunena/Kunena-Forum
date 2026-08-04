@@ -868,12 +868,11 @@
             <field
                 name="emailRecipientPrivacy"
                 type="list"
-                default="bcc"
+                default="cc"
                 label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY"
                 description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_DESC">
                 <option value="to">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_TO</option>
                 <option value="cc">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_CC</option>
-                <option value="bcc">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_BCC</option>
             </field>
             <field
                 name="emailVisibleAddress"

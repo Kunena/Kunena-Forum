@@ -214,7 +214,7 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
             || ($this->category->isAuthorised('moderate') && !$this->config->hideIp)
         ) {
             if (!empty($this->message->ip)) {
-                $this->ipLink = '<a href="https://dnslytics.com/ip/' . $this->message->ip
+                $this->ipLink = '<a href="https://search.dnslytics.com/ip/' . $this->message->ip
                     . '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
             } else {
                 $this->ipLink = '&nbsp;';

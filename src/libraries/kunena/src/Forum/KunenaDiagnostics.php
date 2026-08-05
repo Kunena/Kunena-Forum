@@ -393,7 +393,7 @@ abstract class KunenaDiagnostics
             return '';
         }
 
-        return 'Please fix the alias for category with id(s):' . $ids->id;
+        return 'Please fix the alias for category with id(s):' . implode(', ', $ids);
     }
 
     /**

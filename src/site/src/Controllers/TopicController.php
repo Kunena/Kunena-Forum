@@ -2433,7 +2433,7 @@ class TopicController extends KunenaController
         $modifiedByAuthor = ($message->modified_by == $message->userid);
 
         if (!$modifiedByAuthor) {
-            $target->sendNotification(null, true);
+            $target->sendNotification(null, true, true);
         }
 
         $this->setRedirect($target->getUrl($this->return, false));

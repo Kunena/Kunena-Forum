@@ -1063,16 +1063,17 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @param   null|string  $url  url
      * @param   bool         $approved
+     * @param   boolean      $type  Default on false mean to store the notification in queue (in database)
      *
      * @return  void
      *
      * @throws Exception
      * @since   Kunena 6.0
      */
-    public function sendNotification($url = null, $approved = false): void
+    public function sendNotification($url = null, $approved = false, $type = false): void
     {
         // Reload message just in case if it was published by bulk update.
-        KunenaMessageHelper::get($this->first_post_id, true)->sendNotification($url, $approved);
+        KunenaMessageHelper::get($this->first_post_id, true)->processNotification($url, $approved, $type);
     }
 
     /**

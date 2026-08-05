@@ -528,7 +528,7 @@ class TopicsController extends KunenaController
                     $message->isAuthorised('approve');
                     $message->publish(KunenaForum::PUBLISHED);
 
-                    $message->sendNotification();
+                    $message->processNotification();
                     $success++;
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');

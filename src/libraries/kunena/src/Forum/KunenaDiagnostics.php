@@ -383,13 +383,17 @@ abstract class KunenaDiagnostics
 
         $list = (array) $db->loadObjectList();
 
-        $ids = new stdClass();
+        $ids = [];
 
         foreach ($list as $item) {
-            $ids->id = $item->id;
+            $ids[] = $item->id;
+        }
+        
+        if (empty($ids)) {
+            return '';
         }
 
-        return 'Please fix the alias for category id:' . $ids->id;
+        return 'Please fix the alias for category with id(s):' . $ids->id;
     }
 
     /**

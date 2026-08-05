@@ -580,14 +580,14 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @param   null|string  $url       url
      * @param   boolean      $approved  false
-     * @param   boolean      $type  Default on true to let send the notification now
+     * @param   boolean      $type  Default on false mean to store the notification in queue (in database)
      *
      * @return  boolean|false
      *
      * @throws  Exception
      * @since   Kunena 7.1
      */
-    public function processNotification($url = null, $approved = false, $type = true)
+    public function processNotification($url = null, $approved = false, $type = false)
     {  
         // No need to go further if mail settings are not configured        
         $joomlaConfig = Factory::getApplication()->getConfig();

@@ -994,7 +994,7 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
-        $message->sendNotification();
+        $message->processNotification();
 
         // Now try adding any new subscriptions if asked for by the poster
         $usertopic = $topic->getUserTopic();
@@ -1610,7 +1610,7 @@ class TopicController extends KunenaController
         if ($message->hold == 1) {
             // If user cannot approve message by himself, send email to moderators.
             if (!$topic->isAuthorised('approve')) {
-                $message->sendNotification();
+                $message->processNotification();
             }
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_GEN_MODERATED'), 'success');

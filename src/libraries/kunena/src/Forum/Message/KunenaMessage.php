@@ -592,7 +592,7 @@ class KunenaMessage extends KunenaDatabaseObject
         // No need to go further if mail settings are not configured        
         $joomlaConfig = Factory::getApplication()->getConfig();
         
-        if (!$joomlaConfig->mailonline) {
+        if (!$joomlaConfig->get('mailonline')) {
             return false;
         }
         
@@ -635,6 +635,8 @@ class KunenaMessage extends KunenaDatabaseObject
                 KunenaError::displayDatabaseError($e);
             }
         }
+        
+        return true;
     }
     
     /**
@@ -656,7 +658,7 @@ class KunenaMessage extends KunenaDatabaseObject
         } else {
             $mailsubs   = (bool) $this->_config->allowSubscriptions;
             $mailmods   = $this->_config->mailModerators >= 1;
-            $mailadmins = $this->_configs->mailAdministrators >= 1;
+            $mailadmins = $this->_config->mailAdministrators >= 1;
         }
         
         $once = false;
@@ -714,7 +716,7 @@ class KunenaMessage extends KunenaDatabaseObject
             }
         }
         
-        return array($receivers, $once, $sentusers);
+        return array($emailToList, $once, $sentusers);
     }
     
     /**

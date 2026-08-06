@@ -188,7 +188,7 @@ abstract class KunenaDiagnostics
      *
      * @since   Kunena 6.0
      */
-    public static function canNotice(string $function): bool
+    public static function canNotice(string $function): string
     {
         $queryFunction = 'notice_' . $function;
 
@@ -196,7 +196,7 @@ abstract class KunenaDiagnostics
             return self::$queryFunction();
         }
 
-        return false;
+        return '';
     }
 
     /**
@@ -393,7 +393,7 @@ abstract class KunenaDiagnostics
             return '';
         }
 
-        return 'Please fix the alias for category with id(s):' . implode(', ', $ids);
+        return 'Please fix the type of alias in #__kunena_aliases for category with id(s): ' . implode(', ', $ids);
     }
 
     /**

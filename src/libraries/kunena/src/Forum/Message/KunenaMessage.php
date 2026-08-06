@@ -1937,12 +1937,13 @@ class KunenaMessage extends KunenaDatabaseObject
             ->set('message', $this)
             ->set('messageUrl', $url)
             ->set('once', $once);
+        
+        $msg = '';
 
         try {
             $msg = trim($layout->render($subscription ? 'default' : 'moderator'));
         } catch (Exception $e) {
-            $msg = '';
-            // TODO: throw exception here
+            throw new Exception($e->getMessage());
         }
 
         $mail->setBody($msg);

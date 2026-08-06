@@ -1160,7 +1160,7 @@ class UserController extends KunenaController
             $response = (object) $upload->ajaxUpload($options);
 
             if (!empty($response->completed)) {
-                $this->deleteOldAvatars();
+                $this->deleteOldAvatars($user);
 
                 // We have it all, lets update the avatar in user table
                 $uploadFile = $upload->getProtectedFile();
@@ -1199,15 +1199,19 @@ class UserController extends KunenaController
 
     /**
      * Delete previoulsy uploaded avatars from filesystem
+     * 
+     * @param   KunenaUser   $user   KunenaUser object
      *
      * @return  void
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    protected function deleteOldAvatars()
+    protected function deleteOldAvatars(KunenaUser $user)
     {
-        $user = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
+        if (!$user->exists()) {
+            throw new RuntimeException('Delete avatar cannot be done, user not exist');
+        }
 
         if (!empty($user->avatar)) {
             if (preg_match('|^users/|', $user->avatar)) {
@@ -1255,7 +1259,7 @@ class UserController extends KunenaController
             KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin()
             || KunenaUserHelper::getMyself()->isModerator()
         ) {
-            $this->deleteOldAvatars();
+            $this->deleteOldAvatars($kuser);
 
             // Save in the table \Kunena\Forum\Libraries\User\KunenaUser
             $kuser->avatar = '';

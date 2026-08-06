@@ -1250,7 +1250,8 @@ class UserController extends KunenaController
         }
 
         $success = [];
-        $kuser   = KunenaFactory::getUser($this->app->getInput()->getInt('userid', 0));
+        $joomlaUserId = Factory::getApplication()->getIdentity()->id;
+        $kuser        = KunenaFactory::getUser($joomlaUserId);
 
         if (
             KunenaUserHelper::getMyself()->userid == $kuser->userid || KunenaUserHelper::getMyself()->isAdmin()

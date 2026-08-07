@@ -620,12 +620,12 @@ class KunenaMessage extends KunenaDatabaseObject
             // Store the notification in queue
             $columns = array('subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once');
             
-            $values = array($this->_db->quote($subject), $this->id, $this->_db->quote($url), $this->_db->quote(json_encode($emailToList)), $this->_db->quote($this->getCategory()->name), $this->_db->quote($once));
+            $values = array($this->_db->quote($subject), $this->id, $this->_db->quote($url), $this->_db->quote(json_encode($emailToList)), $this->_db->quote($this->getCategory()->name), (int) $once);
             
             $query     = $this->_db->createQuery()
-            ->insert($this->_db->quoteName('#__kunena_notifications_mailsqueue'))
-            ->columns($this->_db->quoteName($columns))
-            ->values(implode(',', $values));
+                ->insert($this->_db->quoteName('#__kunena_notifications_mailsqueue'))
+                ->columns($this->_db->quoteName($columns))
+                ->values(implode(',', $values));
             
             $this->_db->setQuery($query);
             

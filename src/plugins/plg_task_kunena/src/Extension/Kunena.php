@@ -257,6 +257,13 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             
             foreach($mailsToSend as $mail) {
                 $message = KunenaMessageHelper::get($mail->messageId);
+                
+                if (!$message || !$message->exists()) {
+                    // Message no longer exists: mark as processed so it doesn't loop forever
+                    $processedIds[] = $mail->id;
+                    continue;
+                }
+                
                 $emailToList = json_decode($mail->emailListJson);
                 $sentusers = json_decode($mail->sentusers);
                 

@@ -219,11 +219,11 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         if (!$config->email) {
             KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
             
-            return false;
+            return Status::KNOCKOUT;
         } elseif (!MailHelper::isEmailAddress($config->email)) {
             KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
             
-            return false;
+            return Status::KNOCKOUT;
         }
         
         $db    = Factory::getContainer()->get('DatabaseDriver');

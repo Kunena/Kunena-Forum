@@ -612,10 +612,10 @@ class KunenaMessage extends KunenaDatabaseObject
         $topic = $this->getTopic();
         
         $subject     = $this->subject ? $this->subject : $topic->subject;
-        
+
         if ($type) {
             // Send the notification now
-            $this->sendNotificationNow($emailToList, $topic, $subject, $url, $once, $sentusers);
+            $this->sendNotificationNow($emailToList, $subject, $url, $once, $sentusers);
         } else {
             // Store the notification in queue
             $columns = array('subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once');
@@ -722,9 +722,15 @@ class KunenaMessage extends KunenaDatabaseObject
     /**
      * Send the notification mail
      * 
+     * @param   array    $emailToList  Contains a list of users to whom the notification will be sent  
+     * @param   string   $subject  The subject of the notification mail
+     * @param   string   $url  The url of the message of the notification mail
+     * @param   boolean  $once
+     * @param   array    $sentusers
+     * 
      * @since   Kunena 7.1
      */
-    private function sendNotificationNow($emailToList, $topic, $subject, $url, $once, $sentusers)
+    private function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers)
     {        
         $mailnamesender = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
         
@@ -769,12 +775,12 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
                 
                 try {
-                    $mailSubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
+                    $mailSubject = MailHelper::cleanSubject($subject . " (" . $this->getCategory()->name . ")");
                     
                     $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
                     $mail->setSubject($mailSubject);
                     $mail->setSender([$this->_config->email, $mailnamesender]);
-                    
+
                     $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once);
                     KunenaEmail::send($mail, [$emailTo->email]);
                 } finally {
@@ -1937,7 +1943,7 @@ class KunenaMessage extends KunenaDatabaseObject
             ->set('message', $this)
             ->set('messageUrl', $url)
             ->set('once', $once);
-        
+
         $msg = '';
 
         try {

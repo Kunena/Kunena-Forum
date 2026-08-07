@@ -21,7 +21,6 @@ use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailHelper;
-use Joomla\CMS\Mail\MailerFactoryInterface;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Component\Scheduler\Administrator\Event\ExecuteTaskEvent;
@@ -32,11 +31,11 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Administrator\Model\TrashsModel;
-use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\User\KunenaBan;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 
 /**
  * A task plugin.
@@ -248,20 +247,20 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 $mailsToSend = [];
             }
             
-            // Si plus de notifications à traiter, on sort de la boucle
+            // If no more notifications to process, we exit the loop
             if (empty($mailsToSend)) {
                 break;
             }
-            
-            $mailer = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
             
             // Table to store the IDs of the notifications which are processed
             $processedIds = [];
             
             foreach($mailsToSend as $mail) {
-                $receivers = json_decode($mail->emailListJson);
+                $message = KunenaMessageHelper::get($mail->messageId);
+                $emailToList = json_decode($mail->emailListJson);
+                $sentusers = json_decode($mail->sentusers);
                 
-                $sendStatus = $this->sending($config, $mailer, $mail->subject, $mail->url, $mail->once, $mail->categoryName, $mail->id, $receivers);
+                $message->sendNotificationNow($emailToList, $mail->subject, $mail->url, $mail->once, $sentusers);
                 
                 // Add the ID in the list of processed
                 $processedIds[] = $mail->id;
@@ -293,45 +292,5 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         }
         
         return Status::OK;
-    }
-    
-    /**
-     * Method to send the mails by using KunenaEmail send
-     *
-     * @param   KunenaConfig  $config        KunenaConfig object
-     * @param   string        $mailer        Joomla! mailer object
-     * @param   string        $subject       The subject of the post on which the user had subscribed
-     * @param   string        $url           The url of the post on which the user had subscribed
-     * @param   string        $once          The current version number
-     * @param   string        $categoryName  The name of the categoy in which the post subscribed is
-     * @param   int           $idQueue       The current id of the queue subscription item
-     * @param   int           $receivers     The list of users which will receive the subscription mail
-     *
-     * @return  void
-     *
-     * @since   7.1.0
-     */
-    private function sending($config, $mailer, $subject, $url, $once, $categoryName, $idQueue, $receivers)
-    {
-        $mailnamesender  = !empty($config->emailSenderName) ? MailHelper::cleanAddress($config->emailSenderName) : MailHelper::cleanAddress($config->boardTitle);
-        $mailsubject = MailHelper::cleanSubject($subject . " (" . $categoryName . ")");
-        
-        // Create email.
-        $mailer->setSubject($mailsubject);
-        $mailer->setSender([$config->email, $mailnamesender]);
-        
-        // Send email to all subscribers.
-        if (!empty($receivers[1])) {
-            $this->attachEmailBody($mailer, 1, $subject, $url, $once);
-            $successAllSub[$idQueue] = KunenaEmail::send($mailer, $receivers[1]);
-        }
-        
-        // Send email to all moderators.
-        if (!empty($receivers[0])) {
-            $this->attachEmailBody($mailer, 0, $subject, $url, $once);
-            $successMods[$idQueue] = KunenaEmail::send($mailer, $receivers[0]);
-        }
-        
-        return;
     }
 }

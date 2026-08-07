@@ -610,6 +610,12 @@
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;</query>
         </version>
+        <version
+            version="7.1.0-BETA1"
+            versiondate="2026-08-07"
+            versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_notifications_mailsqueue` ADD `sentusers` text NOT NULL AFTER `once`</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

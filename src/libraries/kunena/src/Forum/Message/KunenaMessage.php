@@ -618,9 +618,9 @@ class KunenaMessage extends KunenaDatabaseObject
             $this->sendNotificationNow($emailToList, $subject, $url, $once, $sentusers);
         } else {
             // Store the notification in queue
-            $columns = array('subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once');
+            $columns = array('subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once', 'sentusers');
             
-            $values = array($this->_db->quote($subject), $this->id, $this->_db->quote($url), $this->_db->quote(json_encode($emailToList)), $this->_db->quote($this->getCategory()->name), (int) $once);
+            $values = array($this->_db->quote($subject), $this->id, $this->_db->quote($url), $this->_db->quote(json_encode($emailToList)), $this->_db->quote($this->getCategory()->name), (int) $once, $this->_db->quote(json_encode($sentusers)));
             
             $query     = $this->_db->createQuery()
                 ->insert($this->_db->quoteName('#__kunena_notifications_mailsqueue'))
@@ -730,7 +730,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * 
      * @since   Kunena 7.1
      */
-    private function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers)
+    public function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers)
     {        
         $mailnamesender = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
         

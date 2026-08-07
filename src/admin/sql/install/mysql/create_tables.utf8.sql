@@ -535,6 +535,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_notifications_mailsqueue`
     `emailListJson` text       NOT NULL,
     `categoryName`  text       NOT NULL,
     `once`          text       NOT NULL,
+    `sentusers`     text       NOT NULL,
     `send`          tinyint(4) NOT NULL default '0',
     PRIMARY KEY (`id`)
 )

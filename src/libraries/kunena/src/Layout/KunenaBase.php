@@ -702,8 +702,8 @@ class KunenaBase extends KunenaLayoutBase
 
         $app = Factory::getApplication();
 
-        // Add all paths for the template overrides.
-        if ($app->isClient('administrator')) {
+        // Add all paths for the template overrides. It check if the path contains 'Email' because when it send by he scheduler it should load the path from frontend 
+        if ($app->isClient('administrator') && stripos($paths[0], 'Email/') !== 0) {
             $template = KunenaFactory::getAdminTemplate();
         } else {
             $template = KunenaFactory::getTemplate();

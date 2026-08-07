@@ -642,7 +642,7 @@ class KunenaMessage extends KunenaDatabaseObject
     /**
      * Gather necessary data to be able to send the notification mail
      *
-     * @return  boolean|false
+     * @return  array
      *
      * @throws  Exception
      * @since   Kunena 7.1
@@ -728,6 +728,9 @@ class KunenaMessage extends KunenaDatabaseObject
      * @param   boolean  $once
      * @param   array    $sentusers
      * 
+     * @return  boolean
+     * 
+     * @throws  Exception
      * @since   Kunena 7.1
      */
     public function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers)
@@ -806,9 +809,11 @@ class KunenaMessage extends KunenaDatabaseObject
             try {
                 $this->_db->execute();
             } catch (ExecutionFailureException $e) {
-                KunenaError::displayDatabaseError($e);
+                throw new Exception($e->getMessage());
             }
         }
+        
+        return true;
     }
 
     /**

@@ -72,6 +72,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
     {
         $this->enablePlugin('plg_task_kunena');
         $this->addRemoveExpiredBansTask();
+        $this->addPurgeTrashTask();
         $this->addMailsQueueTask();
     }
 
@@ -103,6 +104,47 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         } catch (ExecutionFailureException $e) {
             return false;
         }
+    }
+    
+    /**
+     * Function to enable the purge trash task
+     *
+     * @return  void
+     * @since   7.1.0
+     */
+    private function addPurgeTrashTask(): void
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+        ->select('COUNT(*)')
+        ->from($db->quoteName('#__scheduler_tasks'))
+        ->where($db->quoteName('type') . ' = ' . $db->quote('purge.trash'));
+        $db->setQuery($query);
+        $result = $db->loadResult();
+        
+        if ($result) {
+            // We are already setup
+            return;
+        }
+        
+        /** @var \Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent $component */
+        $component = Factory::getApplication()->bootComponent('com_scheduler');
+        
+        /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
+        $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
+        $task  = [
+            'title'           => 'Kunena - Trash purge',
+            'type'            => 'purge.trash',
+            'execution_rules' => [
+                'rule-type'      => 'interval-hours',
+                'interval-hours' => 1,
+                'exec-time'      => gmdate('H:i'),
+                'exec-day'       => gmdate('d'),
+            ],
+            'state'  => 1,
+            'params' => [],
+        ];
+        $model->save($task);
     }
 
     /**

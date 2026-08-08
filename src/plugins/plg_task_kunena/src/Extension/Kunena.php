@@ -226,6 +226,8 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             return Status::KNOCKOUT;
         }
         
+        KunenaForum::loadApi();
+        
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $batchSize =  $config->emailBatchSize;
         $processedCount = 0;

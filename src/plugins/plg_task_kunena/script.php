@@ -176,8 +176,8 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             'title'           => 'Kunena - Send the mail nofitications queued',
             'type'            => 'add.mailsqueue',
             'execution_rules' => [
-                'rule-type'      => 'interval-hours',
-                'interval-hours' => 1,
+                'rule-type'      => 'interval-minutes',
+                'interval-hours' => 5,
                 'exec-time'      => gmdate('H:i'),
                 'exec-day'       => gmdate('d'),
             ],

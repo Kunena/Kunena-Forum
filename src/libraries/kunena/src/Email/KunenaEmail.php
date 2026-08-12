@@ -19,8 +19,6 @@ use ErrorException;
 use Exception;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Mail\Mail;
-use Joomla\CMS\Mail\MailHelper;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**
  * Class KunenaEmail
@@ -52,17 +50,7 @@ abstract class KunenaEmail
             return false;
         }
         
-        $config = KunenaFactory::getConfig();
-        
-        if (!empty($config->emailRecipientCount)) {
-            $emailRecipientCount = $config->emailRecipientCount;
-        } else {
-            $emailRecipientCount = 1;
-        }
-        
-        $emailRecipientPrivacy = $config->emailRecipientPrivacy ?: 'cc';
-        
-        $chunks = array_chunk($receivers, $emailRecipientCount);
+        $chunks = array_chunk($receivers, 1);
         
         $success = true;
         
@@ -71,13 +59,8 @@ abstract class KunenaEmail
         }
         
         foreach ($chunks as $emails) {
-            if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to') {
-                $mail->ClearAddresses();
-                $mail->addRecipient($emails);
-            } else {
-                $mail->ClearCCs();
-                $mail->addCC($emails);
-            }
+            $mail->ClearAddresses();
+            $mail->addRecipient($emails);            
             
             try {
                 $mail->Send();

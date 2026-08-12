@@ -848,15 +848,6 @@
                 <option value="1">JYES</option>
             </field>
             <field
-                name="emailRecipientCount"
-                type="integer"
-                first="0"
-                last="100"
-                step="5"
-                default="10"
-                label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT"
-                description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT_DESC" />
-            <field
                 name="emailBatchSize"
                 type="number"
                 min="1"
@@ -865,15 +856,6 @@
                 default="50"
                 label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_BATCH_SIZE"
                 description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_BATCH_SIZE_DESC" />
-            <field
-                name="emailRecipientPrivacy"
-                type="list"
-                default="cc"
-                label="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY"
-                description="COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_DESC">
-                <option value="to">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_TO</option>
-                <option value="cc">COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_CC</option>
-            </field>
             <field
                 name="emailVisibleAddress"
                 type="text"

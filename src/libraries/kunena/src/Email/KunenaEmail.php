@@ -19,8 +19,6 @@ use ErrorException;
 use Exception;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Mail\Mail;
-use Joomla\CMS\Mail\MailHelper;
-use Kunena\Forum\Libraries\Factory\KunenaFactory;
 
 /**
  * Class KunenaEmail
@@ -52,15 +50,7 @@ abstract class KunenaEmail
             return false;
         }
         
-        $config = KunenaFactory::getConfig();
-        
-        if (!empty($config->emailRecipientCount)) {
-            $emailRecipientCount = $config->emailRecipientCount;
-        } else {
-            $emailRecipientCount = 1;
-        }
-        
-        $chunks = array_chunk($receivers, $emailRecipientCount);
+        $chunks = array_chunk($receivers, 1);
         
         $success = true;
         

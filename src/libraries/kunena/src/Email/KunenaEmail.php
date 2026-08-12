@@ -60,8 +60,6 @@ abstract class KunenaEmail
             $emailRecipientCount = 1;
         }
         
-        $emailRecipientPrivacy = $config->emailRecipientPrivacy ?: 'cc';
-        
         $chunks = array_chunk($receivers, $emailRecipientCount);
         
         $success = true;
@@ -71,13 +69,8 @@ abstract class KunenaEmail
         }
         
         foreach ($chunks as $emails) {
-            if ($emailRecipientCount == 1 || $emailRecipientPrivacy == 'to') {
-                $mail->ClearAddresses();
-                $mail->addRecipient($emails);
-            } else {
-                $mail->ClearCCs();
-                $mail->addCC($emails);
-            }
+            $mail->ClearAddresses();
+            $mail->addRecipient($emails);            
             
             try {
                 $mail->Send();

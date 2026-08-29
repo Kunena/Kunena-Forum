@@ -652,11 +652,12 @@ class UserController extends KunenaController
             return;
         }
 
-        $this->user->ordering     = $this->app->getInput()->getInt('messageordering', 0);
-        $this->user->hideEmail    = $this->app->getInput()->getInt('hidemail', 1);
-        $this->user->showOnline   = $this->app->getInput()->getInt('showonline', 1);
-        $this->user->canSubscribe = $this->app->getInput()->getInt('cansubscribe', -1);
-        $this->user->userListtime = $this->app->getInput()->getInt('userlisttime', -2);
+        $this->user->ordering            = $this->app->getInput()->getInt('messageordering', 0);
+        $this->user->hideEmail           = $this->app->getInput()->getInt('hidemail', 1);
+        $this->user->showOnline          = $this->app->getInput()->getInt('showonline', 1);
+        $this->user->canSubscribe        = $this->app->getInput()->getInt('cansubscribe', -1);
+        $this->user->userListtime        = $this->app->getInput()->getInt('userlisttime', -2);
+        $this->user->displayAgeBirthdate = $this->app->getInput()->getInt('displayAgeBirthdate', 1);
     }
 
     /**

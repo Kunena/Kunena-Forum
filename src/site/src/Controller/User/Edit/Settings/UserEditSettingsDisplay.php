@@ -88,6 +88,26 @@ class UserEditSettingsDisplay extends UserEditDisplay
         	$this->escape($this->profile->hideEmail),
         	'khidemail'
         );
+        
+        $this->settings[] = $item;
+        
+        $item             = new StdClass();
+        $item->name       = 'displayagebirthdate';
+        $item->label      = Text::_('COM_KUNENA_USER_DISPLAY_AGE_BIRTHDATE');
+        $options          = [];
+        $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_AGE'));
+        $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_BIRTHDATE'));
+        $item->field      = HTMLHelper::_(
+            'select.genericlist',
+            $options,
+            'displayagebirthdate',
+            'class="kinputbox form-select" size="1"',
+            'value',
+            'text',
+            $this->escape($this->profile->displayAgeBirthdate),
+            'kdisplayagebirthdate'
+            );
+        
         $this->settings[] = $item;
 
         $item             = new StdClass();

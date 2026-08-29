@@ -135,18 +135,19 @@ class UserController extends FormController
                 $birthdate = '1000-01-01';
             }
 
-            $user->birthdate    = $birthdate;
-            $user->location     = trim($this->app->getInput()->getString('location'));
-            $user->gender       = $this->app->getInput()->getInt('gender', '');
-            $user->websitename  = $this->app->getInput()->getString('websitename');
-            $user->websiteurl   = $this->app->getInput()->getString('websiteurl');
-            $user->hideEmail    = $this->app->getInput()->getInt('hidemail');
-            $user->showOnline   = $this->app->getInput()->getInt('showonline');
-            $user->canSubscribe = $this->app->getInput()->getInt('cansubscribe');
-            $user->userListtime = $this->app->getInput()->getInt('userlisttime');
-            $user->view         = $newView;
-            $user->ordering     = $newOrder;
-            $user->rank         = $newRank;
+            $user->birthdate             = $birthdate;
+            $user->location              = trim($this->app->getInput()->getString('location'));
+            $user->gender                = $this->app->getInput()->getInt('gender', '');
+            $user->websitename           = $this->app->getInput()->getString('websitename');
+            $user->websiteurl            = $this->app->getInput()->getString('websiteurl');
+            $user->hideEmail             = $this->app->getInput()->getInt('hidemail');
+            $user->showOnline            = $this->app->getInput()->getInt('showonline');
+            $user->displayAgeBirthdate   = $this->app->getInput()->getInt('displayagebirthdate');
+            $user->canSubscribe          = $this->app->getInput()->getInt('cansubscribe');
+            $user->userListtime          = $this->app->getInput()->getInt('userlisttime');
+            $user->view                  = $newView;
+            $user->ordering              = $newOrder;
+            $user->rank                  = $newRank;
 
             if ($deleteAvatar === 1) {
                 $user->avatar = '';

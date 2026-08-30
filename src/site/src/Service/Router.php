@@ -388,6 +388,18 @@ class Router extends RouterView
                 
                 if ($variables) {
                     $sefcats = false;
+
+                    // A category alias identifies a category, it does not decide which view
+                    // renders it. resolveAlias() reports view=category alongside the catid,
+                    // but that is only a default. When the active menu item already names a
+                    // view (the stock "New Topic" item is view=topic&layout=create), the menu
+                    // item wins and the alias contributes only the catid. Without this the
+                    // union below replaces view=topic with view=category, which combined with
+                    // layout=create resolves to no controller and returns a 404.
+                    if (!empty($vars['view']) && isset($variables['catid']) && isset($variables['view']) && $variables['view'] === 'category') {
+                        unset($variables['view']);
+                    }
+
                     $vars    = $variables + $vars;
                     continue;
                 }

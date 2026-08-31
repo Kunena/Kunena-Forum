@@ -628,6 +628,12 @@
             versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `status` tinyint(4) NOT NULL default '0' AFTER `inline`</query>
         </version>
+        <version
+            version="7.1.0-BETA3"
+            versiondate="2026-09-01"
+            versionname="Internal">
+            <query mode="silenterror">UPDATE `#__kunena_attachments` SET `status` = 1 WHERE `mesid` > 0</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

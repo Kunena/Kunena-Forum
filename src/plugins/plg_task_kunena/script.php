@@ -17,7 +17,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\ComponentAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Joomla\Registry\Registry;
 
 /**
  * Kunena package installer script.
@@ -220,7 +219,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             'type'            => 'add.mailsqueue',
             'execution_rules' => [
                 'rule-type'      => 'interval-minutes',
-                'interval-hours' => 5,
+                'interval-minutes' => 5,
                 'exec-time'      => gmdate('H:i'),
                 'exec-day'       => gmdate('d'),
             ],

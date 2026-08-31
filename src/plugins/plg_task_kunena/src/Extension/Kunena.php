@@ -173,7 +173,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         }
 
         $params      = $event->getArgument('params');
-        $age         = $params->age;
+        $params = (object) $params; 
+        // Define $age to default value else if empty
+        $age    = $params->age ?? 31;
         $app         = Factory::getApplication();
         $trashsModel = new TrashsModel();
 

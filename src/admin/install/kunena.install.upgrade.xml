@@ -626,7 +626,7 @@
             version="7.1.0-BETA2"
             versiondate="2026-08-31"
             versionname="Internal">
-            <query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `status` tinyint(1) NOT NULL default '0' AFTER `inline`</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `status` tinyint(4) NOT NULL default '0' AFTER `inline`</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

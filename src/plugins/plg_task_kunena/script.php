@@ -240,9 +240,9 @@ class plgTaskKunenaInstallerScript extends InstallerScript
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery()
-        ->select('COUNT(*)')
-        ->from($db->quoteName('#__scheduler_tasks'))
-        ->where($db->quoteName('type') . ' = ' . $db->quote('clean.pendingattachments'));
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__scheduler_tasks'))
+            ->where($db->quoteName('type') . ' = ' . $db->quote('clean.pendingattachments'));
         $db->setQuery($query);
         $result = $db->loadResult();
 

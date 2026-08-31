@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_attachments`
         COMMENT 'Filename for downloads',
     `caption`       varchar(191) NOT NULL default '',
     `inline`        tinyint(4)   NOT NULL default '0',
+    `status`        tinyint(4)  NOT NULL default '0',
     PRIMARY KEY (id),
     KEY `mesid` (mesid),
     KEY `userid` (userid),

@@ -59,6 +59,7 @@ use RuntimeException;
  * @property string $caption
  * @property string $comment
  * @property int    $inline
+ * @property int    $status
  * @property string $typeAlias
  * @property int    $width   Image width (0 for non-images).
  * @property int    $height  Image height (0 for non-images).
@@ -167,13 +168,13 @@ class KunenaAttachment extends KunenaDatabaseObject
     public $folder;
 
     /**
-     * @var     string
+     * @var     integer
      * @since   Kunena 6.0
      */
     public $userid;
 
     /**
-     * @var     string
+     * @var     integer
      * @since   Kunena 6.0
      */
     public $mesid;
@@ -227,10 +228,16 @@ class KunenaAttachment extends KunenaDatabaseObject
     public $inline;
 
     /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
+    public $status;
+
+    /**
      * @var     string
      * @since   Kunena 6.0
      */
-    public $typeAlias;
+    public $typeAlias;   
 
     /**
      * @var     string
@@ -367,6 +374,8 @@ class KunenaAttachment extends KunenaDatabaseObject
                 return $this->comment;
             case 'inline':
                 return $this->inline;
+            case 'status':
+                return $this->status;
             case 'typeAlias':
                 return $this->typeAlias;
             case 'caption':
@@ -397,7 +406,8 @@ class KunenaAttachment extends KunenaDatabaseObject
             'filename'      => $this->filename,
             'filename_real' => $this->filename_real,
             'caption'       => $this->caption,
-            'inline'        => $this->inline
+            'inline'        => $this->inline,
+            'status'        => $this->status
         ];
 
         return $properties;

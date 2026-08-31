@@ -856,7 +856,15 @@ class TopicController extends KunenaController
         // Mark attachments being attached to this message as active.
         foreach ($message->getAttachmentsToAdd() as $attachmentToAdd) {
             $attachmentToAdd->status = 1;
-            $attachmentToAdd->save();
+
+            try {
+                $attachmentToAdd->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirectBack();
+
+                return;
+            }
         }
 
         if ($this->config->urlSubjectTopic) {
@@ -1421,7 +1429,15 @@ class TopicController extends KunenaController
         // Mark attachments being attached to this message as active.
         foreach ($message->getAttachmentsToAdd() as $attachmentToAdd) {
             $attachmentToAdd->status = 1;
-            $attachmentToAdd->save();
+
+            try {
+                $attachmentToAdd->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirectBack();
+
+                return;
+            }
         }
 
         $url_subject = $this->checkURLInSubject($message->subject);

@@ -853,6 +853,11 @@ class TopicController extends KunenaController
             }
         }
 
+        // Hold posts/edits with attachments from non-moderators
+        if ($message->getAttachments() && !$this->me->isModerator($category)) {
+            $message->hold = 1;
+        }
+
         if ($this->config->urlSubjectTopic) {
             $url_subject = $this->checkURLInSubject($message->subject);
 
@@ -1400,6 +1405,8 @@ class TopicController extends KunenaController
         $message->removeAttachments($removeList);
 
         // Upload new attachments
+        $newAttachment = (bool) $addList;
+
         foreach ($_FILES as $key => $file) {
             $intkey = 0;
 
@@ -1409,7 +1416,13 @@ class TopicController extends KunenaController
 
             if ($file['error'] != UPLOAD_ERR_NO_FILE) {
                 $message->uploadAttachment($intkey, $key, $this->catid);
+                $newAttachment = true;
             }
+        }
+
+        // Hold posts/edits with attachments from non-moderators
+        if ($newAttachment && !$this->me->isModerator($message->getCategory())) {
+            $message->hold = 1;
         }
 
         $url_subject = $this->checkURLInSubject($message->subject);

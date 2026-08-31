@@ -244,14 +244,14 @@ class KunenaSampleData
         }
 
         // Insert missing users
-        $query = $db->createQuery();
-        $query->insert($db->quoteName('#__kunena_users'))
-            ->columns([$db->quoteName('userid'), $db->quoteName('showOnline')])
-            ->select($db->quoteName('a.id') . ' AS ' . $db->quoteName('userid'))
-            ->select('1 AS ' . $db->quoteName('showOnline'))
-            ->from($db->quoteName('#__users', 'a'))
-            ->join('LEFT', $db->quoteName('#__kunena_users', 'b') . ' ON ' . $db->quoteName('b.userid') . '=' . $db->quoteName('a.id'))
-            ->where($db->quoteName('b.userid') . ' IS NULL');
+        $query = 'INSERT INTO ' . $db->quoteName('#__kunena_users')
+        . ' (' . $db->quoteName('userid') . ', ' . $db->quoteName('showOnline') . ')'
+            . ' SELECT ' . $db->quoteName('a.id') . ' AS ' . $db->quoteName('userid')
+            . ', 1 AS ' . $db->quoteName('showOnline')
+            . ' FROM ' . $db->quoteName('#__users', 'a')
+            . ' LEFT JOIN ' . $db->quoteName('#__kunena_users', 'b')
+            . ' ON ' . $db->quoteName('b.userid') . ' = ' . $db->quoteName('a.id')
+            . ' WHERE ' . $db->quoteName('b.userid') . ' IS NULL';
 
         $db->setQuery($query);
 

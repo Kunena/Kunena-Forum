@@ -622,6 +622,12 @@
             versionname="Internal">
             <query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `displayAgeBirthdate` tinyint(1) NOT NULL default '1' AFTER `showOnline`</query>
         </version>
+        <version
+            version="7.1.0-BETA2"
+            versiondate="2026-08-31"
+            versionname="Internal">
+            <query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD `status` tinyint(1) NOT NULL default '0' AFTER `inline`</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

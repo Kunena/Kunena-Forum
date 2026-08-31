@@ -31,6 +31,7 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Event\SubscriberInterface;
 use Kunena\Forum\Administrator\Model\TrashsModel;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -64,6 +65,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         'sending.notificationskunena' => [
             'langConstPrefix' => 'PLG_TASK_SENDNOTIFICATIONSKUNENA_SENDING',
             'method'          => 'sendNotifications',
+        ],
+        'clean.pendingattachments' => [
+            'langConstPrefix' => 'PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTS',
+            'method'          => 'cleanPendingAttachments',
         ],
     ];
 
@@ -310,6 +315,60 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_PROCESSED', $processedCount));
         }
         
+        return Status::OK;
+    }
+
+    /**
+     * Method to clean up pending (status = 0) attachments which never got attached to a message.
+     *
+     * @param   ExecuteTaskEvent  $event  The `onExecuteTask` event.
+     *
+     * @return integer  The routine exit code.
+     *
+     * @since  7.1.0
+     * @throws \Exception
+     */
+    private function cleanPendingAttachments(ExecuteTaskEvent $event): int
+    {
+        if (
+            !ComponentHelper::isEnabled('com_kunena')
+            || !KunenaForum::isCompatible('7.1')
+            || !KunenaForum::installed()
+        ) {
+            return Status::NO_RUN;
+        }
+
+        try {
+            /** @var DatabaseDriver */
+            $db    = $this->getDatabase();
+            $query = $db->createQuery()
+                ->select('id')
+                ->from($db->quoteName('#__kunena_attachments'))
+                ->where($db->quoteName('status') . ' = 0')
+                ->setLimit(50);
+
+            $db->setQuery($query);
+            $ids = $db->loadColumn();
+
+            $countDeleted = 0;
+
+            foreach ($ids ?? [] as $id) {
+                $attachment = KunenaAttachmentHelper::get($id);
+
+                if ($attachment->delete()) {
+                    $countDeleted++;
+                }
+
+                unset($attachment);
+            }
+
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSSUCCESS', $countDeleted));
+        } catch (\Exception $e) {
+            $this->logTask(Text::sprintf('PLG_TASK_KUNENA_CLEANPENDINGATTACHMENTSERROR', $e->getMessage()));
+
+            return Status::KNOCKOUT;
+        }
+
         return Status::OK;
     }
 }

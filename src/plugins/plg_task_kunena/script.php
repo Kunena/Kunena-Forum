@@ -74,6 +74,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         $this->addRemoveExpiredBansTask();
         $this->addPurgeTrashTask();
         $this->addMailsQueueTask();
+        $this->addCleanPendingAttachmentsTask();
     }
 
     /**
@@ -220,6 +221,47 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             'execution_rules' => [
                 'rule-type'      => 'interval-minutes',
                 'interval-hours' => 5,
+                'exec-time'      => gmdate('H:i'),
+                'exec-day'       => gmdate('d'),
+            ],
+            'state'  => 1,
+            'params' => [],
+        ];
+        $model->save($task);
+    }
+
+    /**
+     * Function to enable the clean pending attachments task
+     *
+     * @return  void
+     * @since   7.1.0
+     */
+    private function addCleanPendingAttachmentsTask(): void
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select('COUNT(*)')
+            ->from($db->quoteName('#__scheduler_tasks'))
+            ->where($db->quoteName('type') . ' = ' . $db->quote('clean.pendingattachments'));
+        $db->setQuery($query);
+        $result = $db->loadResult();
+
+        if ($result) {
+            // We are already setup
+            return;
+        }
+
+        /** @var \Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent $component */
+        $component = Factory::getApplication()->bootComponent('com_scheduler');
+
+        /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
+        $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
+        $task  = [
+            'title'           => 'Kunena - Clean pending attachments',
+            'type'            => 'clean.pendingattachments',
+            'execution_rules' => [
+                'rule-type'      => 'interval-hours',
+                'interval-hours' => 6,
                 'exec-time'      => gmdate('H:i'),
                 'exec-day'       => gmdate('d'),
             ],

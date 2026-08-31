@@ -819,6 +819,7 @@ class KunenaAttachment extends KunenaDatabaseObject
             $this->filename_real = $uploadBasePath . $fileNameWithExt;
             $this->caption       = '';
             $this->inline        = 0;
+            $this->status        = 0;
 
             return true;
         }
@@ -869,6 +870,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         $this->userid = \is_null($this->userid) ? KunenaUserHelper::getMyself() : $this->userid;
         $this->folder = \is_null($this->folder) ? "media/kunena/attachments/{$this->userid}" : $this->folder;
         $this->protected = KunenaConfig::getInstance()->attachmentProtection ? 1 : 0;
+        $this->status = \is_null($this->status) ? 0 : $this->status;
 
         if (!$this->filename_real) {
             $this->filename_real = $this->filename;

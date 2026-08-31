@@ -1327,6 +1327,18 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
+     * Get the list of attachments that have been marked to be added to this message.
+     *
+     * @return  KunenaAttachment[]
+     *
+     * @since   Kunena 7.1
+     */
+    public function getAttachmentsToAdd(): array
+    {
+        return $this->_attachments_add;
+    }
+
+    /**
      * @param   bool  $newTopic  new topic
      *
      * @return  void

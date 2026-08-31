@@ -853,6 +853,20 @@ class TopicController extends KunenaController
             }
         }
 
+        // Mark attachments being attached to this message as active.
+        foreach ($message->getAttachmentsToAdd() as $attachmentToAdd) {
+            $attachmentToAdd->status = 1;
+
+            try {
+                $attachmentToAdd->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirectBack();
+
+                return;
+            }
+        }
+
         if ($this->config->urlSubjectTopic) {
             $url_subject = $this->checkURLInSubject($message->subject);
 
@@ -1409,6 +1423,20 @@ class TopicController extends KunenaController
 
             if ($file['error'] != UPLOAD_ERR_NO_FILE) {
                 $message->uploadAttachment($intkey, $key, $this->catid);
+            }
+        }
+
+        // Mark attachments being attached to this message as active.
+        foreach ($message->getAttachmentsToAdd() as $attachmentToAdd) {
+            $attachmentToAdd->status = 1;
+
+            try {
+                $attachmentToAdd->save();
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $this->setRedirectBack();
+
+                return;
             }
         }
 

@@ -1917,7 +1917,14 @@ class KunenaUser
                 return '<span data-bs-toggle="tooltip" data-placement="right" title="' . Text::_('COM_KUNENA_VIEW_PMS') . '" >' . $pms->showIcon($this->userid) . '</span>';
                 break;
             case 'email':
-                return '<a href="mailto:' . $this->email . '" data-bs-toggle="tooltip" data-placement="right" title="' . $this->escape($this->email) . '">' . KunenaIcons::email() . '</a>';
+    if (empty($this->email)) {
+        return '';
+    }
+
+    return '<a href="mailto:' . $this->email
+        . '" data-bs-toggle="tooltip" data-placement="right" title="'
+        . $this->escape($this->email) . '">'
+        . KunenaIcons::email() . '</a>';
                 break;
             case 'profile':
                 if (!$this->userid) {

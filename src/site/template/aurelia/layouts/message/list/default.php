@@ -43,8 +43,8 @@ $view    = Factory::getApplication()->getInput()->getWord('view');
 
         <?php if ($view != 'user') :
         ?>
-            <div class="filter-sel float-end">
-                <h2 class="filter-time float-end" id="filter-time"></h2>
+            <div class="float-end" id="filter-time">
+                <h2 class="filter-sel float-end"></h2>
                 <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
                     id="timeselect" name="timeselect"
                     method="post" target="_self" class="form-inline d-none d-sm-block">

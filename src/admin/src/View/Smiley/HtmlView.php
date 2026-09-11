@@ -61,6 +61,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_EMOTICON_MANAGER'), 'thumbs-up');
         ToolbarHelper::spacer();
         ToolbarHelper::save('smiley.save');

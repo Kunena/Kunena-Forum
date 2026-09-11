@@ -20,6 +20,7 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 
 /**
@@ -71,6 +72,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         // Get the toolbar object instance
         $toolbar = $this->getDocument()->getToolbar();
 

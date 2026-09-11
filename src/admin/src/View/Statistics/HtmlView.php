@@ -23,6 +23,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use ReflectionClass;
 
 /**
@@ -199,6 +200,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_MENU_STATISTICS'), 'chart');
     }

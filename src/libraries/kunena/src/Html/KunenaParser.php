@@ -289,6 +289,11 @@ abstract class KunenaParser
         if (!$html) {
             $txt = $bbcode->UnHTMLEncode($txt);
         }
+        
+        // Apply final length limit after all processing
+        if ($len > 0 && strlen($txt) > $len) {
+            $txt = substr($txt, 0, $len) . '...';
+        }
 
         return $txt;
     }

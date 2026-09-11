@@ -121,16 +121,16 @@ class HtmlView extends BaseHtmlView
 
         if ($userids && $this->getLayout() == 'move') {
             $this->setToolBarMove();
-            $this->catsList = $this->get('moveCatsList');
-            $this->users    = $this->get('moveUser');
+            $this->catsList = $this->moveCatsList();
+            $this->users    = $this->moveUser();
 
             return parent::display($tpl);
         }
 
-        $this->user         = $this->get('user');
-        $this->sub          = $this->get('subscriptions');
-        $this->subsCatsList = $this->get('catSubscriptions');
-        $this->ipslist      = $this->get('IPlist');
+        $this->user         = $this->user();
+        $this->sub          = $this->subscriptions();
+        $this->subsCatsList = $this->catSubscriptions();
+        $this->ipslist      = $this->IPlist();
 
         $avatarIntegration = KunenaFactory::getAvatarIntegration();
         $this->editavatar  = ($avatarIntegration instanceof KunenaAvatar) && $this->user->avatar;
@@ -232,8 +232,8 @@ class HtmlView extends BaseHtmlView
         $this->settings[] = $item;
 
         $this->selectOrder = HTMLHelper::_('select.genericlist', $yesnoOrder, 'newOrder', 'class="form-select" size="1"', 'value', 'text', $this->user->ordering);
-        $this->modCats     = $this->get('listmodcats');
-        $this->selectRank  = $this->get('listuserranks');
+        $this->modCats     = $this->listmodcats();
+        $this->selectRank  = $this->listuserranks();
 
         $this->config = KunenaConfig::getInstance();
 

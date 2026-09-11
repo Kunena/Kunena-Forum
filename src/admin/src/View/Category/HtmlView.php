@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 
 /**
@@ -86,6 +87,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarEdit()
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         $model          = $this->getModel();
         $this->category = $model->getAdminCategory();
 
@@ -147,6 +150,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         $model          = $this->getModel();
         $this->category = $model->getAdminCategory();
 

@@ -21,6 +21,7 @@ use Joomla\Filesystem\Folder;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
 /**
@@ -134,6 +135,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarChooseCss(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::spacer();
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
         ToolbarHelper::custom('template.editCss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
@@ -150,7 +153,9 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarChooseScss(): void
     {
-        ToolbarHelper::spacer();
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
+        oolbarHelper::spacer();
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
         ToolbarHelper::custom('template.editScss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITSCSS');
         ToolbarHelper::spacer();
@@ -166,6 +171,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarEditScss(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
         ToolbarHelper::spacer();
         ToolbarHelper::apply('template.applyScss');
@@ -184,6 +191,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarEditCss(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
         ToolbarHelper::spacer();
         ToolbarHelper::apply('template.applyCss');
@@ -202,6 +211,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarAddnew(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'), 'color-palette');
         ToolbarHelper::cancel();
         ToolbarHelper::spacer();
@@ -216,6 +227,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_TEMPLATE_MANAGER'), 'color-palette');
         ToolbarHelper::spacer();
         ToolbarHelper::apply('template.applychanges');

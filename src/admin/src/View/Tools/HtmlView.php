@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -189,6 +190,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBar(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA') . ': ' . Text::_('COM_KUNENA_FORUM_TOOLS'), 'tools');
 
         $canDo = ContentHelper::getActions('com_kunena');
@@ -208,6 +211,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarCleanupIP(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
         ToolbarHelper::custom('tools.cleanupip', 'apply.png', 'apply_f2.png', 'COM_KUNENA_TOOLS_LABEL_CLEANUP_IP', false);
@@ -225,6 +230,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarDiagnostics(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
         ToolbarHelper::cancel();
@@ -240,18 +247,19 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarMenu(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
-        ToolbarHelper::spacer();
-
-        // Get the toolbar object instance
-        $bar = $this->getDocument()->getToolbar();
+        ToolbarHelper::spacer();        
 
         if (!empty($this->legacy)) {
             ToolbarHelper::custom('tools.fixLegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
         }
 
         // TODO: check why the modal doesn't open
-        /*
+        // Get the toolbar object instance
+        /*$bar = $this->getDocument()->getToolbar();
+        
         HTMLHelper::_('bootstrap.renderModal', 'trashmenuconfirmationModal');
 
         $title = Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH');
@@ -275,6 +283,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarPrune(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
         ToolbarHelper::custom('tools.prune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
@@ -292,6 +302,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarPurgeReStatements(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
         ToolbarHelper::trash('tools.purgerestatements', 'COM_KUNENA_A_PURGE_RE_MENU_VALIDATE', false);
@@ -309,6 +321,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarRecount(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
         ToolbarHelper::custom('tools.recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_RECOUNT', false);
@@ -326,6 +340,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarReport(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'help');
         ToolbarHelper::spacer();
         ToolbarHelper::cancel();
@@ -341,6 +357,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarSubscriptions(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'help');
         ToolbarHelper::spacer();
         ToolbarHelper::cancel();
@@ -356,6 +374,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarSyncUsers(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
         ToolbarHelper::custom('tools.syncUsers', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
@@ -373,6 +393,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarSetupsocials(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
         ToolbarHelper::custom('tools.setupsocials', 'apply.png', 'apply_f2.png', 'COM_KUNENA_ADMIN_LAUNCH_SETUPSOCIALS', false);

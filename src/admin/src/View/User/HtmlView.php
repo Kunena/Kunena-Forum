@@ -251,6 +251,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
         ToolbarHelper::spacer();
@@ -271,6 +273,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function setToolBarMove(): void
     {
+        KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+        
         // Set the title bar text
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'users');
         ToolbarHelper::spacer();

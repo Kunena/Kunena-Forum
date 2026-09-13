@@ -1432,7 +1432,7 @@ abstract class KunenaDiagnostics
      */
     protected static function fix_channelOrphaned(): QueryInterface
     {
-        return self::query_channelOrphaned()->update('#__kunena_categories')->set("channels='THIS'")->where("channels='none' OR channels=NULL");
+        return self::query_channelOrphaned()->update('#__kunena_categories')->set('channels', 'THIS')->where("channels = 'none' OR channels IS NULL");
     }
 
     /**
@@ -1445,7 +1445,7 @@ abstract class KunenaDiagnostics
         // Query to find user read which do not belong in any existing topic
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
-        $query->from("#__kunena_categories")->where("channels IS NULL OR 'none'");
+        $query->from("#__kunena_categories")->where("channels IS NULL OR channels = 'none'");
 
         return $query;
     }

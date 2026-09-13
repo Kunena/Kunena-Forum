@@ -36,6 +36,27 @@ class CpanelModel extends AdminModel
      */
     public function getForm($data = [], $loadData = true)
     {
-        // TODO: Implement getForm() method.
+        // TODO: Implement getForm() method. 
+    }
+    
+    /**
+     * Get number of mails queues not yet send to be displayed in cpanel
+     * 
+     * @since   Kunena 7.1
+     */
+    public function numberOfMailsqueues() :int
+    {
+        $db    = $this->getDatabase();
+        $query = $db->createQuery();
+        
+        $query->select('COUNT(*)');
+        
+        $query->from($db->quoteName('#__kunena_notifications_mailsqueue', 'a'));
+        
+        $query->where($db->quoteName('a.send') . ' = ' . 1);
+        
+        $result = $db->loadResult();
+        
+        return $result;
     }
 }

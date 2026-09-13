@@ -13,7 +13,6 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -32,23 +31,6 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
     <div class="row">
         <div id="j-main-container" class="col-md-12" role="main">
             <?php
-            function setSampleDataFlag($value = 1)
-            {
-                $db = Factory::getContainer()->get('DatabaseDriver');
-                $query = $db->getQuery(true);
-
-                $query->update($db->quoteName('#__kunena_version'))
-                    ->set($db->quoteName('sampleData') . ' = ' . $db->quote($value));
-
-                $db->setQuery($query);
-
-                try {
-                    return $db->execute();
-                } catch (Exception $e) {
-                    return false;
-                }
-            }
-
             if (!isset($_POST['sample_data_choice']) && !KunenaForum::versionSampleData()) : ?>
                 <div class="row clearfix">
                     <div class="col-xl-3 col-md-3">
@@ -91,7 +73,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                 </div>
                 <?php else :
                 if (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'no') {
-                    setSampleDataFlag(1);
+                    $this->model->setSampleDataFlag(1);
                     echo '<div class="alert alert-success">' . Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_SKIPPED') . '</div>';
                 } elseif (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'yes') {
                     if (!KunenaForum::versionSampleData()) : ?>

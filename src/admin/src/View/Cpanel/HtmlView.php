@@ -51,7 +51,7 @@ class HtmlView extends BaseHtmlView
     {
         $this->addToolbar();
         
-        $model  = $this->getModel();
+        $this->model  = $this->getModel();
 
         $lang = Factory::getApplication()->getLanguage();
         $lang->load('mod_sampledata', JPATH_ADMINISTRATOR);
@@ -97,7 +97,7 @@ class HtmlView extends BaseHtmlView
 
         $this->messagesTopicsInTrashBin = $messagesTrashedCount + $topicTrashedCount;
         
-        $this->numberOfMailsqueues = $model->numberOfMailsqueues();
+        $this->numberOfMailsqueues = $this->model->numberOfMailsqueues();
 
         return parent::display($tpl);
     }

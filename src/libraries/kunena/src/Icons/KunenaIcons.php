@@ -655,7 +655,7 @@ class KunenaIcons
         $topicicontype = $ktemplate->params->get('topicicontype');
 
         if ($topicicontype == 'fa') {
-            return '<i class="fa-solid fa-person"></i>';
+            return '<i class="fa-solid fa-pencil"></i>';
         }
 
         return KunenaSvgIcons::loadsvg('pencil');

@@ -227,8 +227,8 @@ abstract class KunenaFactory
                 $english = true;
             }
 
-            $loaded[$file] = $lang->load($file, $lookup1, null, $english, false)
-                || $lang->load($file, $lookup2, null, $english, false);
+            $loaded[$file] = $lang->load($file, $lookup1, null, $english, true)
+    || $lang->load($file, $lookup2, null, $english, true);
         }
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;

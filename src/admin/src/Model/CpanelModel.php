@@ -15,6 +15,7 @@ namespace Kunena\Forum\Administrator\Model;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 
 /**
@@ -58,5 +59,27 @@ class CpanelModel extends AdminModel
         $result = $db->loadResult();
         
         return $result;
+    }
+    
+    /**
+     * Set value of sample data flag
+     *
+     * @since   Kunena 7.1
+     */
+    function setSampleDataFlag($value = 1)
+    {
+        $db = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->getQuery(true);
+        
+        $query->update($db->quoteName('#__kunena_version'))
+        ->set($db->quoteName('sampleData') . ' = ' . $db->quote($value));
+        
+        $db->setQuery($query);
+        
+        try {
+            return $db->execute();
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

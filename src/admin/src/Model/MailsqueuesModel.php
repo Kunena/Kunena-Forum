@@ -144,7 +144,7 @@ class MailsqueuesModel extends ListModel
 
         if (!empty($search)) {
             if (stripos($search, 'id:') === 0) {
-                $query->where('a.id = ' . (int) substr($search, 3));
+                $query->where($db->quoteName('a.id') . ' = ' . (int) substr($search, 3));
             } else {
                 $search = $db->quote('%' . $db->escape($search, true) . '%');
                 $query->where('(a.subject LIKE ' . $search . ' OR a.categoryName LIKE ' . $search . ' OR a.url LIKE ' . $search . ')');

@@ -496,6 +496,26 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="mb-25">
+                                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=mailsqueues'); ?>" class="stretched-link">
+                                            <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_MAILQUEUES') ?>
+                                        </a>
+                                    </h6>
+                                    <h3 class="fw-700 text-cyan"><?php echo $this->numberOfMailsqueues; ?></h3>
+                                    <p class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_ITEMS'); ?></p>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-tools bg-cyan"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card proj-t-card comp-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="mb-25">
                                         <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools'); ?>" class="stretched-link">
                                             <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_TOOLS') ?>
                                         </a>
@@ -509,7 +529,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
     </div>

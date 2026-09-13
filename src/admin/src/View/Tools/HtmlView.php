@@ -245,10 +245,7 @@ class HtmlView extends BaseHtmlView
     protected function setToolBarMenu(): void
     {
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
-        ToolbarHelper::spacer();
-
-        // Get the toolbar object instance
-        $bar = $this->getDocument()->getToolbar();
+        ToolbarHelper::spacer();        
 
         if (!empty($this->legacy)) {
             ToolbarHelper::custom('tools.fixLegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
@@ -256,6 +253,9 @@ class HtmlView extends BaseHtmlView
 
         // TODO: check why the modal doesn't open
         /*
+        // Get the toolbar object instance
+        $bar = $this->getDocument()->getToolbar();
+        
         HTMLHelper::_('bootstrap.renderModal', 'trashmenuconfirmationModal');
 
         $title = Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH');

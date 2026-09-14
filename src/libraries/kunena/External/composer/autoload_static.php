@@ -6,73 +6,74 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit6b7e8d3091d7c0760780d4fb1aa23391
 {
-    public static $prefixLengthsPsr4 = array(
-        'S' =>
-        array(
-            'KunenaScssPhp\\ScssPhp\\' => 16,
+    public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'Pedrollo\\GravatarLib\\' => 21,
         ),
-        'K' =>
-        array(
-            'Kunena\\Tests\\' => 13,
+        'N' => 
+        array (
+            'Nbbc\\' => 5,
+        ),
+        'K' => 
+        array (
             'Kunena\\Forum\\' => 13,
+            'KunenaScssPhp\\ScssPhp\\' => 22,
         ),
     );
 
-    public static $prefixDirsPsr4 = array(
-        'KunenaScssPhp\\ScssPhp\\' =>
-        array(
+    public static $prefixDirsPsr4 = array (
+        'Pedrollo\\GravatarLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/Emberlabs',
+        ),
+        'Nbbc\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/Nbbc/src',
+        ),
+        'Kunena\\Forum\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
+        'KunenaScssPhp\\ScssPhp\\' => 
+        array (
             0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
         ),
-        'Kunena\\Tests\\' =>
-        array(
-            0 => __DIR__ . '/../../../../..' . '/tests',
-        ),
-        'Kunena\\Forum\\' =>
-        array(
-            0 => __DIR__ . '/../../../../..' . '/src/libraries/kunena',
-        ),
     );
 
-    public static $classMap = array(
+    public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'KunenaScssPhp\\ScssPhp\\Base\\Range' => __DIR__ . '/..' . '/scssphp/scssphp/src/Base/Range.php',
         'KunenaScssPhp\\ScssPhp\\Block' => __DIR__ . '/..' . '/scssphp/scssphp/src/Block.php',
+        'KunenaScssPhp\\ScssPhp\\Block\\AtRootBlock' => __DIR__ . '/..' . '/scssphp/scssphp/src/Block/AtRootBlock.php',
+        'KunenaScssPhp\\ScssPhp\\Block\\MediaBlock' => __DIR__ . '/..' . '/scssphp/scssphp/src/Block/MediaBlock.php',
         'KunenaScssPhp\\ScssPhp\\Cache' => __DIR__ . '/..' . '/scssphp/scssphp/src/Cache.php',
         'KunenaScssPhp\\ScssPhp\\Colors' => __DIR__ . '/..' . '/scssphp/scssphp/src/Colors.php',
         'KunenaScssPhp\\ScssPhp\\CompilationResult' => __DIR__ . '/..' . '/scssphp/scssphp/src/CompilationResult.php',
         'KunenaScssPhp\\ScssPhp\\Compiler' => __DIR__ . '/..' . '/scssphp/scssphp/src/Compiler.php',
-        'KunenaScssPhp\\ScssPhp\\Compiler\\CachedResult' => __DIR__ . '/..' . '/scssphp/scssphp/src/Compiler/CachedResult.php',
         'KunenaScssPhp\\ScssPhp\\Compiler\\Environment' => __DIR__ . '/..' . '/scssphp/scssphp/src/Compiler/Environment.php',
-        'KunenaScssPhp\\ScssPhp\\Exception\\CompilerException' => __DIR__ . '/..' . '/scssphp/scssphp/src/Exception/CompilerException.php',
-        'KunenaScssPhp\\ScssPhp\\Exception\\ParserException' => __DIR__ . '/..' . '/scssphp/scssphp/src/Exception/ParserException.php',
-        'KunenaScssPhp\\ScssPhp\\Exception\\RangeException' => __DIR__ . '/..' . '/scssphp/scssphp/src/Exception/RangeException.php',
-        'KunenaScssPhp\\ScssPhp\\Exception\\SassException' => __DIR__ . '/..' . '/scssphp/scssphp/src/Exception/SassException.php',
-        'KunenaScssPhp\\ScssPhp\\Exception\\SassScriptException' => __DIR__ . '/..' . '/scssphp/scssphp/src/Exception/SassScriptException.php',
-        'KunenaScssPhp\\ScssPhp\\Exception\\ServerException' => __DIR__ . '/..' . '/scssphp/scssphp/src/Exception/ServerException.php',
         'KunenaScssPhp\\ScssPhp\\Formatter' => __DIR__ . '/..' . '/scssphp/scssphp/src/Formatter.php',
-        'KunenaScssPhp\\ScssPhp\\Formatter\\Compact' => __DIR__ . '/..' . '/scssphp/scssphp/src/Formatter/Compact.php',
         'KunenaScssPhp\\ScssPhp\\Formatter\\Compressed' => __DIR__ . '/..' . '/scssphp/scssphp/src/Formatter/Compressed.php',
-        'KunenaScssPhp\\ScssPhp\\Formatter\\Crunched' => __DIR__ . '/..' . '/scssphp/scssphp/src/Formatter/Crunched.php',
-        'KunenaScssPhp\\ScssPhp\\Formatter\\Debug' => __DIR__ . '/..' . '/scssphp/scssphp/src/Formatter/Debug.php',
-        'KunenaScssPhp\\ScssPhp\\Formatter\\Expanded' => __DIR__ . '/..' . '/scssphp/scssphp/src/Formatter/Expanded.php',
-        'KunenaScssPhp\\ScssPhp\\Formatter\\Nested' => __DIR__ . '/..' . '/scssphp/scssphp/src/Formatter/Nested.php',
         'KunenaScssPhp\\ScssPhp\\Formatter\\OutputBlock' => __DIR__ . '/..' . '/scssphp/scssphp/src/Formatter/OutputBlock.php',
         'KunenaScssPhp\\ScssPhp\\Logger\\LoggerInterface' => __DIR__ . '/..' . '/scssphp/scssphp/src/Logger/LoggerInterface.php',
-        'KunenaScssPhp\\ScssPhp\\Logger\\QuietLogger' => __DIR__ . '/..' . '/scssphp/scssphp/src/Logger/QuietLogger.php',
         'KunenaScssPhp\\ScssPhp\\Logger\\StreamLogger' => __DIR__ . '/..' . '/scssphp/scssphp/src/Logger/StreamLogger.php',
         'KunenaScssPhp\\ScssPhp\\Node' => __DIR__ . '/..' . '/scssphp/scssphp/src/Node.php',
         'KunenaScssPhp\\ScssPhp\\Node\\Number' => __DIR__ . '/..' . '/scssphp/scssphp/src/Node/Number.php',
         'KunenaScssPhp\\ScssPhp\\OutputStyle' => __DIR__ . '/..' . '/scssphp/scssphp/src/OutputStyle.php',
         'KunenaScssPhp\\ScssPhp\\Parser' => __DIR__ . '/..' . '/scssphp/scssphp/src/Parser.php',
-        'KunenaScssPhp\\ScssPhp\\SourceMap\\Base64' => __DIR__ . '/..' . '/scssphp/scssphp/src/SourceMap/Base64.php',
-        'KunenaScssPhp\\ScssPhp\\SourceMap\\Base64VLQ' => __DIR__ . '/..' . '/scssphp/scssphp/src/SourceMap/Base64VLQ.php',
-        'KunenaScssPhp\\ScssPhp\\SourceMap\\SourceMapGenerator' => __DIR__ . '/..' . '/scssphp/scssphp/src/SourceMap/SourceMapGenerator.php',
         'KunenaScssPhp\\ScssPhp\\Type' => __DIR__ . '/..' . '/scssphp/scssphp/src/Type.php',
         'KunenaScssPhp\\ScssPhp\\Util' => __DIR__ . '/..' . '/scssphp/scssphp/src/Util.php',
         'KunenaScssPhp\\ScssPhp\\Util\\Path' => __DIR__ . '/..' . '/scssphp/scssphp/src/Util/Path.php',
         'KunenaScssPhp\\ScssPhp\\ValueConverter' => __DIR__ . '/..' . '/scssphp/scssphp/src/ValueConverter.php',
         'KunenaScssPhp\\ScssPhp\\Version' => __DIR__ . '/..' . '/scssphp/scssphp/src/Version.php',
         'KunenaScssPhp\\ScssPhp\\Warn' => __DIR__ . '/..' . '/scssphp/scssphp/src/Warn.php',
+        'Nbbc\\BBCode' => __DIR__ . '/..' . '/Nbbc/src/BBCode.php',
+        'Nbbc\\BBCodeLexer' => __DIR__ . '/..' . '/Nbbc/src/BBCodeLexer.php',
+        'Nbbc\\BBCodeLibrary' => __DIR__ . '/..' . '/Nbbc/src/BBCodeLibrary.php',
+        'Nbbc\\Debugger' => __DIR__ . '/..' . '/Nbbc/src/Debugger.php',
+        'Nbbc\\EmailAddressValidator' => __DIR__ . '/..' . '/Nbbc/src/EmailAddressValidator.php',
+        'Nbbc\\Profiler' => __DIR__ . '/..' . '/Nbbc/src/Profiler.php',
+        'Pedrollo\\GravatarLib\\Gravatar' => __DIR__ . '/..' . '/Emberlabs/Gravatar.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -1,0 +1,18 @@
+{
+    "name": "kunena/kunena-libraries",
+    "description": "Kunena Forum core libraries autoload",
+    "autoload": {
+        "psr-4": {
+            "Kunena\\Forum\\": "src/",
+            "KunenaScssPhp\\ScssPhp\\": "External/scssphp/scssphp/src/",
+            "Nbbc\\": "External/Nbbc/src/",
+            "Pedrollo\\GravatarLib\\": "External/Emberlabs/"
+        },
+        "classmap": [
+            "External/composer/InstalledVersions.php"
+        ]
+    },
+    "config": {
+        "vendor-dir": "External"
+    }
+}

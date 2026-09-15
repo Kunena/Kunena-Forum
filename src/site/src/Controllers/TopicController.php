@@ -731,7 +731,7 @@ class TopicController extends KunenaController
                     $id      = 'kunena_captcha';
                     $captcha = Captcha::getInstance((string) $plugin, ['namespace' => $id]);
 
-                    if (!$captcha->checkAnswer(\null)) {
+                    if (!$captcha->checkAnswer($app->getInput()->post->getString('captcha', ''))) {
                         $this->setRedirectBack();
 
                         return;

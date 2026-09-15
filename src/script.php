@@ -81,6 +81,7 @@ return new class() implements ServiceProviderInterface {
                         '0'   => '9.6.0', // Preferred version
                     ],
                     'mariaDB' => [
+                        '13.0' => '13.0.2',
                         '12.3' => '12.3.2',
                         '12.2' => '12.2.2',
                         '12.1' => '12.1.2',

@@ -740,6 +740,8 @@ class KunenaMessage extends KunenaDatabaseObject
         $app             = Factory::getApplication();
         $lang            = $app->getLanguage();
         $currentLanguage = $lang->getTag();
+        KunenaFactory::loadLanguage('com_kunena', 'site');
+        KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
         
         // Send one email per recipient, in their own language.
         foreach ($emailToList as $emailTo) {
@@ -775,6 +777,7 @@ class KunenaMessage extends KunenaDatabaseObject
                 
                 if ($languageChanged) {
                     $lang->load('com_kunena', JPATH_SITE, $recipientLanguage, true);
+                    $lang->load('com_kunena.libraries', JPATH_ADMINISTRATOR, $recipientLanguage, true);
                 }
                 
                 try {
@@ -790,6 +793,7 @@ class KunenaMessage extends KunenaDatabaseObject
                     // Restore original language regardless of success or failure.
                     if ($languageChanged) {
                         $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
+                        $lang->load('com_kunena.libraries', JPATH_ADMINISTRATOR, $currentLanguage, true);
                     }
                 }
         }
@@ -925,6 +929,8 @@ class KunenaMessage extends KunenaDatabaseObject
             $app             = Factory::getApplication();
             $lang            = $app->getLanguage();
             $currentLanguage = $lang->getTag();
+            KunenaFactory::loadLanguage('com_kunena', 'site');
+            KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
             
             // Send one email per recipient, in their own language.
             foreach ($emailToList as $emailTo) {
@@ -960,6 +966,7 @@ class KunenaMessage extends KunenaDatabaseObject
                     
                     if ($languageChanged) {
                         $lang->load('com_kunena', JPATH_SITE, $recipientLanguage, true);
+                        $lang->load('com_kunena.libraries', JPATH_ADMINISTRATOR, $recipientLanguage, true);
                     }
                     
                     try {
@@ -975,6 +982,7 @@ class KunenaMessage extends KunenaDatabaseObject
                         // Restore original language regardless of success or failure.
                         if ($languageChanged) {
                             $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
+                            $lang->load('com_kunena.libraries', JPATH_ADMINISTRATOR, $currentLanguage, true);
                         }
                     }
             }

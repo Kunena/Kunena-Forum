@@ -647,7 +647,7 @@ jQuery(document).ready(function ($) {
     {
         $list = [];
 
-        if (empty($this->accesstypes[$category->accesstype])) {
+        if (empty($this->accesstypes[$category->accesstype ?? ''])) {
             return $list;
         }
 

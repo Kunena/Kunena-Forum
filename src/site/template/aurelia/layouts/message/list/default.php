@@ -41,18 +41,21 @@ $view    = Factory::getApplication()->getInput()->getWord('view');
             </h1>
         </div>
 
-        <?php if ($view != 'user') :
-        ?>
-            <div class="float-end" id="filter-time">
-                <h2 class="filter-sel float-end"></h2>
-                <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
-                    id="timeselect" name="timeselect"
-                    method="post" target="_self" class="form-inline d-none d-sm-block">
-                    <?php $this->displayTimeFilter('sel'); ?>
-                    <?php echo HTMLHelper::_('form.token'); ?>
-                </form>
-            </div>
-        <?php endif; ?>
+<div class="float-end" id="filter-time">
+    <h2 class="filter-sel float-end"></h2>
+    <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
+        id="timeselect" name="timeselect"
+        method="post" target="_self" class="form-inline d-none d-sm-block">
+        <?php $this->displayTimeFilter('sel'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
+    </form>
+    <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>"
+        id="timeselect-mobile" name="timeselect-mobile"
+        method="post" target="_self" class="timefilter d-block d-sm-none">
+        <?php $this->displayTimeFilter('sel'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
+    </form>
+</div>
     </div>
 </div>
 
@@ -152,13 +155,8 @@ $view    = Factory::getApplication()->getInput()->getWord('view');
         ->set('display', true); ?>
 </div>
 
-<?php if ($view != 'user') :
-?>
-    <form action="<?php echo $this->escape(Uri::getInstance()->toString()); ?>" id="timeselect"
-        name="timeselect"
-        method="post" target="_self" class="timefilter float-end">
-        <?php $this->displayTimeFilter('sel'); ?>
-    </form>
-<?php endif; ?>
+
+<div class="clearfix"></div>
+
 
 <div class="clearfix"></div>

@@ -740,6 +740,8 @@ class KunenaMessage extends KunenaDatabaseObject
         $app             = Factory::getApplication();
         $lang            = $app->getLanguage();
         $currentLanguage = $lang->getTag();
+
+        $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
         
         // Send one email per recipient, in their own language.
         foreach ($emailToList as $emailTo) {
@@ -925,6 +927,8 @@ class KunenaMessage extends KunenaDatabaseObject
             $app             = Factory::getApplication();
             $lang            = $app->getLanguage();
             $currentLanguage = $lang->getTag();
+
+            $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
             
             // Send one email per recipient, in their own language.
             foreach ($emailToList as $emailTo) {

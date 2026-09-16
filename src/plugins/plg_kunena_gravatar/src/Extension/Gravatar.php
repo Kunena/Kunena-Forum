@@ -101,8 +101,6 @@ class Gravatar extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
             return;
         }
 
-        require_once KPATH_FRAMEWORK . '/External/Emberlabs/Gravatar.php';
-
         $event->stopPropagation();
         $event->setAvatar(new KunenaAvatarGravatar($this->params));
     }

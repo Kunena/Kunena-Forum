@@ -49,11 +49,6 @@ use stdClass;
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
 
-require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCode.php';
-require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCodeLibrary.php';
-require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCodeLexer.php';
-require_once KPATH_FRAMEWORK . '/External/Nbbc/src/Debugger.php';
-
 /**
  * @see     \Nbbc\BBCode;
  * Class KunenaBBCode

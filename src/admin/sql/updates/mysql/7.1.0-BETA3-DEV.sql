@@ -1,0 +1,1 @@
+UPDATE `#__kunena_attachments` SET `status` = 1 WHERE `mesid` > 0;

@@ -1,2 +1,2 @@
-ALTER TABLE `#__kunena_users` ADD `displayAgeBirthdate` tinyint(1) NOT NULL default '1' AFTER `showOnline`;s
+ALTER TABLE `#__kunena_users` ADD `displayAgeBirthdate` tinyint(1) NOT NULL default '1' AFTER `showOnline`;
 ALTER TABLE `#__kunena_attachments` ADD `status` tinyint(4) NOT NULL default '0' AFTER `inline`;

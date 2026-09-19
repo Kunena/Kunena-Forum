@@ -741,6 +741,9 @@ class KunenaMessage extends KunenaDatabaseObject
         $lang            = $app->getLanguage();
         $currentLanguage = $lang->getTag();
         
+        KunenaFactory::loadLanguage('com_kunena', 'site');
+        KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
+        
         // Send one email per recipient, in their own language.
         foreach ($emailToList as $emailTo) {
             if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
@@ -774,9 +777,21 @@ class KunenaMessage extends KunenaDatabaseObject
                 $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
                 
                 if ($languageChanged) {
-                    $lang->load('com_kunena', JPATH_SITE, $recipientLanguage, true);
+                    $siteLanguageLoaded = $lang->load(
+                        'com_kunena',
+                        JPATH_SITE,
+                        $recipientLanguage,
+                        true
+                    );
+
+                    $librariesLanguageLoaded = $lang->load(
+                        'com_kunena.libraries',
+                        JPATH_ADMINISTRATOR,
+                        $recipientLanguage,
+                        true
+                    );
                 }
-                
+     
                 try {
                     $mailSubject = MailHelper::cleanSubject($subject . " (" . $this->getCategory()->name . ")");
                     

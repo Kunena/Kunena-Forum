@@ -318,6 +318,12 @@ class KunenaUser
      * @since   Kunena 7.0
      */
     public $language;
+    
+    /**
+     * @var     integer
+     * @since   Kunena 6.0
+     */
+    public $displayAgeBirthdate; 
 
     /**
      * @var     null
@@ -1083,6 +1089,7 @@ class KunenaUser
             'rank'         => $this->rank,
             'hideEmail'    => $this->hideEmail,
             'showOnline'   => $this->showOnline,
+            'displayAgeBirthdate' => $this->displayAgeBirthdate,
             'canSubscribe' => $this->canSubscribe,
             'userListtime' => $this->userListtime,
             'thankyou'     => $this->thankyou,

@@ -56,7 +56,11 @@ class CpanelModel extends AdminModel
         
         $query->where($db->quoteName('a.send') . ' = ' . 1);
         
-        $result = $db->loadResult();
+        try {
+            $result = $db->loadResult();
+        } catch (Exception $e) {
+            return 0;
+        }
         
         return $result;
     }

@@ -46,6 +46,7 @@ use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUser;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -1031,6 +1032,15 @@ class KunenaTopic extends KunenaDatabaseObject
      */
     public function sendNotification($url = null, $approved = false): void
     {
+        // Log the start of notification process from topic
+        KunenaLog::log(
+            KunenaLog::TYPE_ACTION,
+            KunenaLog::LOG_EMAIL_NOTIFICATION_START,
+            ['topic_id' => $this->id, 'message_id' => $this->first_post_id, 'approved' => $approved],
+            $this->getCategory(),
+            $this
+        );
+
         // Reload message just in case if it was published by bulk update.
         KunenaMessageHelper::get($this->first_post_id, true)->sendNotification($url, $approved);
     }

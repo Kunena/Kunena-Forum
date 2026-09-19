@@ -992,6 +992,15 @@ class TopicController extends KunenaController
             return; // -- abort
         }
 
+        // Log notification start from controller
+        KunenaLog::log(
+            KunenaLog::TYPE_ACTION,
+            KunenaLog::LOG_EMAIL_NOTIFICATION_START,
+            ['message_id' => $message->id, 'action' => 'post', 'controller' => 'TopicController'],
+            $message->getCategory(),
+            $message->getTopic()
+        );
+
         $message->sendNotification();
 
         // Now try adding any new subscriptions if asked for by the poster
@@ -1597,6 +1606,15 @@ class TopicController extends KunenaController
         if ($message->hold == 1) {
             // If user cannot approve message by himself, send email to moderators.
             if (!$topic->isAuthorised('approve')) {
+                // Log notification start from controller for moderated message
+                KunenaLog::log(
+                    KunenaLog::TYPE_ACTION,
+                    KunenaLog::LOG_EMAIL_NOTIFICATION_START,
+                    ['message_id' => $message->id, 'action' => 'edit_moderated', 'controller' => 'TopicController'],
+                    $message->getCategory(),
+                    $message->getTopic()
+                );
+
                 $message->sendNotification();
             }
 
@@ -2420,6 +2438,15 @@ class TopicController extends KunenaController
         $modifiedByAuthor = ($message->modified_by == $message->userid);
 
         if (!$modifiedByAuthor) {
+            // Log notification start from controller for approved message
+            KunenaLog::log(
+                KunenaLog::TYPE_ACTION,
+                KunenaLog::LOG_EMAIL_NOTIFICATION_START,
+                ['message_id' => $target->id, 'action' => 'approve', 'controller' => 'TopicController'],
+                $target->getCategory(),
+                $target->getTopic()
+            );
+
             $target->sendNotification(null, true);
         }
 

@@ -583,6 +583,15 @@ class KunenaMessage extends KunenaDatabaseObject
         $config = KunenaFactory::getConfig();
         $db        = Factory::getContainer()->get('DatabaseDriver');
 
+        // Log the start of notification process
+        KunenaLog::log(
+            KunenaLog::TYPE_ACTION,
+            KunenaLog::LOG_EMAIL_NOTIFICATION_START,
+            ['message_id' => $this->id, 'approved' => $approved],
+            $this->getCategory(),
+            $this->getTopic()
+        );
+
         if (!$config->sendEmails) {
             return false;
         }
@@ -749,6 +758,15 @@ class KunenaMessage extends KunenaDatabaseObject
                 }
             }
         }
+
+        // Log the end of notification process
+        KunenaLog::log(
+            KunenaLog::TYPE_ACTION,
+            KunenaLog::LOG_EMAIL_NOTIFICATION_SENT,
+            ['message_id' => $this->id, 'approved' => $approved, 'status' => 'completed'],
+            $this->getCategory(),
+            $this->getTopic()
+        );
 
         return true;
     }

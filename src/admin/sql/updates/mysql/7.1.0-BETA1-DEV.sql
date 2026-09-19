@@ -1,0 +1,1 @@
+ALTER TABLE `#__kunena_notifications_mailsqueue` ADD `sentusers` text NOT NULL AFTER `once`;

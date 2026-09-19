@@ -973,9 +973,17 @@ class KunenaMessage extends KunenaDatabaseObject
                     
                     $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
                     
-                    if ($languageChanged) {
-                        $lang->load('com_kunena', JPATH_SITE, $recipientLanguage, true);
-                    }
+                    $siteLanguageLoaded = KunenaFactory::loadLanguagebis(
+                        'com_kunena',
+                        'site',
+                        $recipientLanguage
+                        );
+                    
+                    $librariesLanguageLoaded = KunenaFactory::loadLanguagebis(
+                        'com_kunena.libraries',
+                        'admin',
+                        $recipientLanguage
+                        );     
                     
                     try {
                         $mailSubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
@@ -986,9 +994,12 @@ class KunenaMessage extends KunenaDatabaseObject
                         
                         $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once);
                         KunenaEmail::send($mail, [$emailTo->email]);
+                    } catch (Exception $e) {
+                        throw new Exception($e->getMessage());
                     } finally {
                         // Restore original language regardless of success or failure.
                         if ($languageChanged) {
+                            $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
                             $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
                         }
                     }

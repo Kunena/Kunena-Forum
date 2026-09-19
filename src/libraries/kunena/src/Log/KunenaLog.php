@@ -337,6 +337,16 @@ class KunenaLog
     const LOG_ERROR_FATAL = 'LOG_ERROR_FATAL';
 
     /**
+     * @since   Kunena 7.0
+     */
+    const LOG_EMAIL_NOTIFICATION_SENT = 'LOG_EMAIL_NOTIFICATION_SENT';
+
+    /**
+     * @since   Kunena 7.0
+     */
+    const LOG_EMAIL_NOTIFICATION_START = 'LOG_EMAIL_NOTIFICATION_START';
+
+    /**
      * @var     array| KunenaEntry[]
      * @since   Kunena 5.0
      */

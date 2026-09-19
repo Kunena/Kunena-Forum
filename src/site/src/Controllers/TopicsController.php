@@ -302,6 +302,16 @@ class TopicsController extends KunenaController
                     $topic->publish(KunenaForum::PUBLISHED);
 
                     $message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
+                    
+                    // Log notification start from controller for topic approval
+                    KunenaLog::log(
+                        KunenaLog::TYPE_ACTION,
+                        KunenaLog::LOG_EMAIL_NOTIFICATION_START,
+                        ['topic_id' => $topic->id, 'action' => 'approve_topic', 'controller' => 'TopicsController'],
+                        $topic->getCategory(),
+                        $topic
+                    );
+
                     $topic->sendNotification();
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -527,6 +537,15 @@ class TopicsController extends KunenaController
                 try {
                     $message->isAuthorised('approve');
                     $message->publish(KunenaForum::PUBLISHED);
+
+                    // Log notification start from controller for message approval
+                    KunenaLog::log(
+                        KunenaLog::TYPE_ACTION,
+                        KunenaLog::LOG_EMAIL_NOTIFICATION_START,
+                        ['message_id' => $message->id, 'action' => 'approve_message', 'controller' => 'TopicsController'],
+                        $message->getCategory(),
+                        $message->getTopic()
+                    );
 
                     $message->sendNotification();
                     $success++;

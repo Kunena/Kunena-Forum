@@ -79,6 +79,8 @@ abstract class KunenaEmail
         $chunks = array_chunk($receivers, $emailRecipientCount);
 
         $success = true;
+        $totalEmails = count($receivers);
+        $emailsSent = 0;
         
         if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
             $mail->SMTPKeepAlive = true;
@@ -98,6 +100,7 @@ abstract class KunenaEmail
 
             try {
                 $mail->Send();
+                $emailsSent += count($emails);
             } catch (Exception $e) {
                 $success = false;
                 Log::add($e->getMessage(), Log::ERROR, 'kunena');
@@ -106,6 +109,29 @@ abstract class KunenaEmail
         
         if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
             $mail->smtpClose();
+        }
+
+        // Log email sending result
+        if ($success && $emailsSent > 0) {
+            Log::add(
+                sprintf(
+                    'Kunena email notification sent successfully. Total emails: %d, Subject: %s',
+                    $emailsSent,
+                    $mail->getSubject()
+                ),
+                Log::INFO,
+                'kunena'
+            );
+        } elseif (!$success) {
+            Log::add(
+                sprintf(
+                    'Kunena email notification failed. Total emails attempted: %d, Subject: %s',
+                    $totalEmails,
+                    $mail->getSubject()
+                ),
+                Log::ERROR,
+                'kunena'
+            );
         }
 
         return $success;

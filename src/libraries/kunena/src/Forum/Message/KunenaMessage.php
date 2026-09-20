@@ -776,21 +776,17 @@ class KunenaMessage extends KunenaDatabaseObject
                 
                 $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
                 
-                if ($languageChanged) {
-                    $siteLanguageLoaded = $lang->load(
-                        'com_kunena',
-                        JPATH_SITE,
-                        $recipientLanguage,
-                        true
+                $siteLanguageLoaded = KunenaFactory::loadLanguagebis(
+                    'com_kunena',
+                    'site',
+                    $recipientLanguage
                     );
-
-                    $librariesLanguageLoaded = $lang->load(
-                        'com_kunena.libraries',
-                        JPATH_ADMINISTRATOR,
-                        $recipientLanguage,
-                        true
-                    );
-                }
+                
+                $librariesLanguageLoaded = KunenaFactory::loadLanguagebis(
+                    'com_kunena.libraries',
+                    'admin',
+                    $recipientLanguage
+                    );    
      
                 try {
                     $mailSubject = MailHelper::cleanSubject($subject . " (" . $this->getCategory()->name . ")");
@@ -801,6 +797,8 @@ class KunenaMessage extends KunenaDatabaseObject
 
                     $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once);
                     KunenaEmail::send($mail, [$emailTo->email]);
+                } catch (Exception $e) {
+                    throw new Exception($e->getMessage());
                 } finally {
                     // Restore original language regardless of success or failure.
                     if ($languageChanged) {
@@ -937,10 +935,6 @@ class KunenaMessage extends KunenaDatabaseObject
             
             $mailnamesender = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
             
-            $app             = Factory::getApplication();
-            $lang            = $app->getLanguage();
-            $currentLanguage = $lang->getTag();
-            
             // Send one email per recipient, in their own language.
             foreach ($emailToList as $emailTo) {
                 if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
@@ -958,24 +952,7 @@ class KunenaMessage extends KunenaDatabaseObject
                     }
                     
                     // Determine subscription type (1 = subscriber, 0 = moderator/admin).
-                    $subscriptionType = $emailTo->subscription ? 1 : 0;
-                    
-                    // Load the recipient's language if it differs from the current one.
-                    $recipientLanguage = null;
-                    
-                    if (!empty($emailTo->id)) {
-                        $kunenaUser = KunenaUserHelper::get((int) $emailTo->id);
-                        
-                        if (!empty($kunenaUser->language)) {
-                            $recipientLanguage = $kunenaUser->language;
-                        }
-                    }
-                    
-                    $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
-                    
-                    if ($languageChanged) {
-                        $lang->load('com_kunena', JPATH_SITE, $recipientLanguage, true);
-                    }
+                    $subscriptionType = $emailTo->subscription ? 1 : 0;  
                     
                     try {
                         $mailSubject = MailHelper::cleanSubject($topic->subject . " (" . $this->getCategory()->name . ")");
@@ -986,12 +963,9 @@ class KunenaMessage extends KunenaDatabaseObject
                         
                         $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once);
                         KunenaEmail::send($mail, [$emailTo->email]);
-                    } finally {
-                        // Restore original language regardless of success or failure.
-                        if ($languageChanged) {
-                            $lang->load('com_kunena', JPATH_SITE, $currentLanguage, true);
-                        }
-                    }
+                    } catch (Exception $e) {
+                        throw new Exception($e->getMessage());
+                    } 
             }
 
             // Update subscriptions.

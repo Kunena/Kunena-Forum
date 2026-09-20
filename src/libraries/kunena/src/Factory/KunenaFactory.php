@@ -235,6 +235,45 @@ abstract class KunenaFactory
 
         return $loaded[$file];
     }
+    
+    /**
+     * Load Kunena language file for notification
+     *
+     * Helper function for external modules and plugins to load the main Kunena language file(s)
+     *
+     * @param   string  $file    file
+     * @param   string  $client  client
+     * @param   string  $langToLoad  lang to load
+     *
+     * @return  mixed
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    public static function loadLanguageMail($file = 'com_kunena', $client = 'site', $langToLoad = 'en-GB'): bool
+    {
+        static $loaded = [];
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+        
+        if ($client == 'site') {
+            $lookup1 = JPATH_SITE;
+            $lookup2 = KPATH_SITE;
+        } else {
+            $client  = 'admin';
+            $lookup1 = JPATH_ADMINISTRATOR;
+            $lookup2 = JPATH_ADMINISTRATOR . '/components/com_kunena';
+        }
+        
+        
+        $lang = Factory::getApplication()->getLanguage();
+        
+        $lang->load($file, $lookup2, $langToLoad, true, false);
+        
+        
+        KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+        
+        return true;
+    }
 
     /**
      * Get a Kunena configuration object

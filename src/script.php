@@ -103,7 +103,7 @@ return new class() implements ServiceProviderInterface {
                         '10.6' => '10.6',
                         '10.5' => '10.5',
                         '10.4' => '10.4',
-                        '0' => '12.2.2', // Preferred version
+                        '0' => '12.2.3', // Preferred version
                     ],
                     'Joomla!' => [
                         '6.2' => '6.2.0-beta1',

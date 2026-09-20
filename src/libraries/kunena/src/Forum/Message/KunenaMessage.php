@@ -110,6 +110,10 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     public $id = null;
 
+    /**
+     * @var     array
+     * @since   Kunena 6.0
+     */
     public $thankyou = [];
 
     public $replynum;

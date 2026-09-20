@@ -19,6 +19,7 @@ use ErrorException;
 use Exception;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Mail\Mail;
+use Kunena\Forum\Libraries\Log\KunenaLog;
 
 /**
  * Class KunenaEmail
@@ -53,6 +54,8 @@ abstract class KunenaEmail
         $chunks = array_chunk($receivers, 1);
         
         $success = true;
+        $totalEmails = count($receivers);
+        $emailsSent = 0;
         
         if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
             $mail->SMTPKeepAlive = true;
@@ -64,6 +67,7 @@ abstract class KunenaEmail
             
             try {
                 $mail->Send();
+                $emailsSent += count($emails);
             } catch (Exception $e) {
                 $success = false;
                 Log::add($e->getMessage(), Log::ERROR, 'kunena');
@@ -72,6 +76,21 @@ abstract class KunenaEmail
         
         if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
             $mail->smtpClose();
+        }
+        
+        // Log email sending result
+        if ($success && $emailsSent > 0) {
+            KunenaLog::log(
+                KunenaLog::TYPE_ACTION,
+                KunenaLog::LOG_EMAIL_NOTIFICATION_SENT,
+                ['mail_subject' => $mail->getSubject(), 'emailsent' => $emailsSent]
+            );
+        } elseif (!$success) {
+            KunenaLog::log(
+                KunenaLog::TYPE_ACTION,
+                KunenaLog::LOG_EMAIL_NOTIFICATION_NOTSENT,
+                ['mail_subject' => $mail->getSubject(), 'totalEmailsAttempted' => $totalEmails]
+            );
         }
         
         return $success;

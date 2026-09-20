@@ -46,6 +46,11 @@ use Nbbc\BBCode;
 use Nbbc\BBCodeLibrary;
 use stdClass;
 
+require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCode.php';
+require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCodeLibrary.php';
+require_once KPATH_FRAMEWORK . '/External/Nbbc/src/BBCodeLexer.php';
+require_once KPATH_FRAMEWORK . '/External/Nbbc/src/Debugger.php';
+
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
 

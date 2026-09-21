@@ -36,7 +36,7 @@ class KunenaGetPrivateEvent extends AbstractImmutableEvent implements ResultAwar
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaPrivate  $value  The value to set
+     * @param   KunenaPrivate  $private  The value to set
      *
      * @return  KunenaPrivate
      * @since   7.0.0

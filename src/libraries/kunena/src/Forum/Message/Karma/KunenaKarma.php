@@ -167,8 +167,6 @@ class KunenaKarma
     /**
      * Perform insert the karma into table
      *
-     * @param   KunenaUser  $user  user
-     *
      * @throws Exception
      * @since    Kunena 2.0
      *
@@ -204,9 +202,6 @@ class KunenaKarma
 
     /**
      * Get the most recent karma in time gived to an user
-     *
-     * @param   int  $start  start
-     * @param   int  $limit  limit
      *
      * @return  void
      *

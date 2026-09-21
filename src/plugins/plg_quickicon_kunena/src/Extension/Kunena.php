@@ -59,7 +59,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
     /**
      * Display Kunena backend icon in Joomla 4.0
      *
-     * @param   QuickIconsEvent  $context  context
+     * @param   QuickIconsEvent  $event  event
      *
      * @return array
      * @since   Kunena 6.0

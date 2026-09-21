@@ -36,7 +36,7 @@ class KunenaGetProfileEvent extends AbstractImmutableEvent implements ResultAwar
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaProfile  $value  The value to set
+     * @param   KunenaProfile  $profile  The value to set
      *
      * @return  KunenaProfile
      * @since   7.0.0

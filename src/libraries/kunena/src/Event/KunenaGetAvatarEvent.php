@@ -36,7 +36,7 @@ class KunenaGetAvatarEvent extends AbstractImmutableEvent implements ResultAware
     /**
      * Setter for the object argument.
      *
-     * @param   KunenaAvatar  $value  The value to set
+     * @param   KunenaAvatar  $avatar  The value to set
      *
      * @return  KunenaAvatar
      * @since   7.0.0

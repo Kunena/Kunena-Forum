@@ -383,7 +383,7 @@ return new class() implements ServiceProviderInterface {
                 /**
                  * Delete the folders from Kunena directories which has been removed in the install package
                  *
-                 * @param   string  $version  version
+                 * @param   string  $installedVersion  version
                  *
                  * @since   7.0.0
                  */

@@ -1154,7 +1154,7 @@ class KunenaTopic extends KunenaDatabaseObject
     /**
      * @param   mixed                       $category  category
      * @param   KunenaMessage|string|null   $action    action
-     * @param   int                         $itemid    itemid
+     * @param   int                         $Itemid    itemid
      *
      * @return \Joomla\CMS\Uri\Uri
      *

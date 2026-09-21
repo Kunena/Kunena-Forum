@@ -536,8 +536,6 @@ class KunenaConfig
     /**
      * Print all properties on screen to create a docblock property list we can use in this class
      *
-     * @param   string  $path  Path to the XML file
-     *
      * @return  never
      * @since   7.0.0
      */

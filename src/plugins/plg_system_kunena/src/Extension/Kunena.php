@@ -84,9 +84,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     /**
      * Method is called before user data is stored in the database
      *
-     * @param   array    $user   Holds the old user data.
-     * @param   boolean  $isNew  True if a new user is stored.
-     * @param   array    $data   Holds the new user data.
+     * @param   BeforeSaveEvent  $event  The event, carrying the old user data, the new user data and whether the user is new.
      *
      * @return  boolean
      *
@@ -199,7 +197,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     /**
      * Get the user language defined in his Joomla! profile 
      * 
-     * @param User $user
+     * @param string $params
      * @return string
      * @since   Kunena 7.0.0
      */

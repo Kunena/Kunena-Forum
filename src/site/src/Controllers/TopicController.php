@@ -1792,10 +1792,8 @@ class TopicController extends KunenaController
 
             $activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
         } else {
-            $userid = $this->app->getInput()->getInt('userid', '0');
-
             try {
-                $thankyou->delete($userid);
+                $thankyou->delete($this->me);
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
                 $this->setRedirectBack();
@@ -1809,14 +1807,14 @@ class TopicController extends KunenaController
                 KunenaLog::log(
                     KunenaLog::TYPE_MODERATION,
                     KunenaLog::LOG_POST_UNTHANKYOU,
-                    ['mesid' => $message->id, 'userid' => $userid],
+                    ['mesid' => $message->id, 'userid' => $message->userid],
                     $category,
                     $message->getTopic(),
                     $message->getAuthor()
                 );
             }
 
-            $activityIntegration->onAfterUnThankyou($this->me->userid, $userid, $message);
+            $activityIntegration->onAfterUnThankyou($this->me->userid, $message->userid, $message);
         }
 
         $this->setRedirect($message->getUrl($category->exists() ? $category->id : $message->catid, false));

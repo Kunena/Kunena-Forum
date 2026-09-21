@@ -169,8 +169,6 @@ class KunenaKarma
      *
      * @throws Exception
      * @since    Kunena 2.0
-     *
-     * @internal param int $userid
      */
     public function save()
     {

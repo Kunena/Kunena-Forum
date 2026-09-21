@@ -128,9 +128,9 @@ class KunenaProfileCommunity extends KunenaProfile
     /**
      * Return username of user
      *
-     * @param   int     $userid       userid
-     * @param   string  $visitorname  name
-     * @param   bool    $escape       escape
+     * @param   KunenaUser  $user         user
+     * @param   string      $visitorname  name
+     * @param   bool        $escape       escape
      *
      * @return string
      *

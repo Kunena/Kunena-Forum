@@ -1014,8 +1014,6 @@ class KunenaModelInstall extends BaseDatabaseModel
     }
 
     /**
-     * @param   string  $prefix  prefix
-     *
      * @return void
      * @throws KunenaInstallerException
      * @since   Kunena 6.0

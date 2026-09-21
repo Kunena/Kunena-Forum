@@ -1009,7 +1009,7 @@ abstract class KunenaRoute
      * @param   bool                  $xhtml     xhtml
      * @param   ?KunenaMessage|string $action    actions
      * @param   ?KunenaCategory       $category  category
-     * @param   int                   $itemid    itemid
+     * @param   int                   $Itemid    itemid
      *
      * @return  boolean
      *

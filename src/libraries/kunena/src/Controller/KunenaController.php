@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactory;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
@@ -162,6 +163,34 @@ class KunenaController extends BaseController
 
         if (class_exists($class)) {
             $instance = new $class();
+
+            /**
+             * BaseController's constructor defaults $this->factory to a plain LegacyFactory()
+             * whenever no factory is injected - and every concrete legacy Kunena site/admin
+             * controller (e.g. TopicController, CategoryController, ...) declares its own
+             * __construct($config = []) that only forwards $config to parent::__construct(),
+             * never a factory. So $factory is *always* null here, regardless of what this
+             * method could pass into "new $class()".
+             *
+             * LegacyFactory::createView()/createModel() build old Joomla-3-style flat class
+             * names (e.g. "sitetopic") and look for a legacy views/<name>/view.<type>.php file
+             * under the controller's base path. Kunena no longer ships that folder structure -
+             * every view now lives in the namespaced Kunena\Forum\{Site|Administrator}\View\...
+             * classes - so that lookup always fails and getView() throws
+             * "View not found [name, type, prefix]: ..." for any request that reaches this
+             * legacy-controller fallback in Dispatcher::dispatch() (i.e. whenever no matching
+             * HMVC "Application" controller class exists for the requested view+layout+task,
+             * which today is the case for most action links: reply, quote, category save, ...).
+             *
+             * $factory is inherited as `protected` from BaseController, and this method lives
+             * in KunenaController (an ancestor of every concrete controller class above), so it
+             * can be reassigned here directly. Swapping in Joomla's standard, namespace-aware
+             * MVCFactory - scoped to Kunena's actual "Kunena\Forum" root namespace - resolves
+             * correctly to the real classes, e.g. createView('topic', 'site', 'html', ...) ->
+             * Kunena\Forum\Site\View\Topic\HtmlView, createModel('topic', 'site', ...) ->
+             * Kunena\Forum\Site\Model\TopicModel - both of which already exist.
+             */
+            $instance->factory = new MVCFactory('Kunena\\Forum');
         } else {
             throw new KunenaException(Text::sprintf('COM_KUNENA_INVALID_CONTROLLER_CLASS', $class), 404);
         }

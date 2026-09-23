@@ -1241,7 +1241,7 @@ class HtmlView extends KunenaView
      * @throws Exception
      * @since   Kunena 4.0
      */
-    public function subRequest($path, Input $input = null, $options = null)
+    public function subRequest($path, ?Input $input = null, $options = null)
     {
         return KunenaRequest::factory($path . '/Display', $input, $options)
             ->setLayout($this->getLayout());

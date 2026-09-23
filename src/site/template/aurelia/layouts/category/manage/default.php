@@ -19,14 +19,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('dropdown.init');
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
-Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\categories\edit.js');
+Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator/components/com_kunena/template/categories/edit.js');
 ?>
 
 <div class="card">
@@ -36,7 +35,24 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
         : <?php echo $this->escape($this->category->name); ?>
     </div>
     <div class="card-body">
-        <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"
+        <?php
+        /**
+         * KunenaRoute::_() is designed to build *site* (frontend) SEF URLs. When called from a
+         * frontend-rendered page (as this template always is) it ignores any "administrator/"
+         * prefix and always returns an "index.php?..." URL scoped to the SITE application - see
+         * KunenaRoute::_() / KunenaRoute::prepare(), where the query string is extracted but the
+         * "administrator/index.php" path is discarded in favour of a hardcoded "index.php".
+         *
+         * Previously this form posted to KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'),
+         * which therefore actually submitted to the SITE endpoint "index.php?option=com_kunena&view=categories&task=save".
+         * There is no "categories" (plural) view/controller on the site side, so
+         * Dispatcher::dispatch() always fails with "Kunena view 'categories' not found" (404),
+         * and the category is never saved. Building a plain absolute URL to the real Joomla
+         * administrator entry point avoids KunenaRoute/Route rewriting and fixes the save.
+         */
+        $categoriesManageActionUrl = Uri::root() . 'administrator/index.php?option=com_kunena&view=categories';
+        ?>
+        <form action="<?php echo $categoriesManageActionUrl; ?>"
               method="post" id="adminForm"
               name="adminForm">
             <input type="hidden" name="task" value="save"/>

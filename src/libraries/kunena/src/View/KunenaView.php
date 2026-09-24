@@ -231,6 +231,7 @@ class KunenaView extends HtmlView
         $layoutName      = ucfirst($layout);
         $layoutFunction  = 'display' . $layoutName;
         $this->_template = $this->ktemplate->getTemplatePaths("/layouts/$view/$layout.php", true);
+        $model           = $this->getModel();
 
         KunenaProfiler::getInstance() ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 
@@ -265,7 +266,7 @@ class KunenaView extends HtmlView
             }
         }
 
-        $this->state = $this->get('State');
+        $this->state = $model->getState();
 
         if (method_exists($this, $layoutFunction)) {
             $contents = $this->$layoutFunction($tpl);

@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Administrator\Controller\CategoriesController;
+use Kunena\Forum\Administrator\Controller\CategoryController as AdminCategoryController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
@@ -45,6 +46,28 @@ class CategoryController extends CategoriesController
         parent::__construct($config);
         $this->baseurl  = 'index.php?option=com_kunena&view=category&layout=manage';
         $this->baseurl2 = 'index.php?option=com_kunena&view=category';
+    }
+
+    /**
+     * Save category from the frontend category manager.
+     * Reuses the backend save logic (token, ACL and field checks).
+     *
+     * @param   null  $key     key
+     * @param   null  $urlVar  url var
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.1
+     */
+    public function save($key = null, $urlVar = null)
+    {
+        $catid = $this->app->getInput()->post->getInt('catid', 0);
+
+        $controller = new AdminCategoryController();
+        $controller->save();
+
+        $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . $catid, false));
     }
 
     /**

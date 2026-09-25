@@ -265,21 +265,7 @@ class KunenaView extends HtmlView
             }
         }
 
-        /**
-             * Joomla core's AbstractView::get($property, $default = null) is itself marked
-             * @deprecated 5.3.0, will be removed in 7.0 - but until then it is still what
-             * Kunena's rendering pipeline calls here. When $default is left null, get() falls
-             * back to using $this->_defaultModel (protected, defaults to null) as the model key
-             * and does isset($this->_models[$model]), which triggers PHP 8.4's "Using null as
-             * an array offset is deprecated" when _defaultModel is still unset. That happens on
-             * the throwaway "$test = new KunenaView($config); $test->displayAll();" instance
-             * that KunenaController::display() creates purely for its side effects (event
-             * dispatch, offline/regOnly checks) - unlike the real $view object, setModel() is
-             * never called on this instance, so _defaultModel stays null. Passing it explicitly
-             * (or '' when unset) preserves the exact same lookup behaviour while avoiding the
-             * null-array-offset deprecation.
-             */
-            $this->state = $this->get('State', $this->_defaultModel !== null ? $this->_defaultModel : '');
+        $this->state = $this->get('State');
 
         if (method_exists($this, $layoutFunction)) {
             $contents = $this->$layoutFunction($tpl);

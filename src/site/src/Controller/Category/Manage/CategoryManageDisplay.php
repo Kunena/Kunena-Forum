@@ -91,7 +91,11 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 	 * @since version
 	 */
 	public $lists;
-
+	 /**
+     * @var     array
+     * @since   Kunena 7.1
+     */
+    public $moderators = [];
 	/**
      * Prepare category display.
      *
@@ -124,7 +128,7 @@ class CategoryManageDisplay extends KunenaControllerDisplay
         if (!$category) {
             return false;
         }
-
+		$this->moderators = $category->getModerators(false);
         $category->params = new Registry($category->params);
 
         // Make a standard yes/no list

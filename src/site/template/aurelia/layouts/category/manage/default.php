@@ -26,7 +26,10 @@ HTMLHelper::_('dropdown.init');
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
-Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\categories\edit.js');
+// Use the site-side copy of the alias-uniqueness check script, not the
+// administrator/ one: the latter is loaded from an admin-only path that some
+// sites block at the webserver level for anyone not logged into the backend.
+Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/js/category-edit.js');
 ?>
 
 <div class="card">
@@ -36,10 +39,18 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
         : <?php echo $this->escape($this->category->name); ?>
     </div>
     <div class="card-body">
-        <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"
+        <?php
+        // Post to the site's own category controller (task=category.save),
+        // never to administrator/index.php: Joomla keeps separate site and
+        // administrator sessions, so a form posted to the backend only works
+        // for a user who also happens to be logged into the backend at that
+        // moment - defeating the point of letting moderators manage
+        // categories from the frontend without backend access.
+        ?>
+        <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>"
               method="post" id="adminForm"
               name="adminForm">
-            <input type="hidden" name="task" value="save"/>
+            <input type="hidden" name="task" value="category.save"/>
             <input type="hidden" name="catid" value="<?php echo \intval($this->category->id); ?>"/>
             <?php echo HTMLHelper::_('form.token'); ?>
 

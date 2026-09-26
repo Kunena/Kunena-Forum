@@ -26,7 +26,7 @@ HTMLHelper::_('dropdown.init');
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
-Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator\components\com_kunena\template\categories\edit.js');
+Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator/components/com_kunena/tmpl/categories/edit.js');
 ?>
 
 <div class="card">
@@ -36,7 +36,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator
         : <?php echo $this->escape($this->category->name); ?>
     </div>
     <div class="card-body">
-        <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"
+        <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . (int) $this->category->id) ?>"
               method="post" id="adminForm"
               name="adminForm">
             <input type="hidden" name="task" value="save"/>

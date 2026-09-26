@@ -244,34 +244,43 @@ class KunenaUserSocials
      */
     public static function getInstance($userid = 0, $useCache = true): ?KunenaUserSocials
     {
-        static $instance = null;
+        static $instances = [];
 
-        if (!$instance && $useCache) {
+        $userid = (int) $userid;
+
+        if ($useCache && isset($instances[$userid])) {
+            return $instances[$userid];
+        }
+
+        $instance = null;
+
+        if ($useCache) {
+            // Cache per user: a single shared entry would hand one user's socials to another
             $options = ['defaultgroup' => 'com_kunena'];
-            $cache = Factory::getContainer()
+            $cache   = Factory::getContainer()
                 ->get(CacheControllerFactoryInterface::class)
                 ->createCacheController('output', $options);
-            $instance = $cache->get('usersocials', 'com_kunena');
+            $cacheId = 'usersocials_' . $userid;
+            $cached  = $cache->get($cacheId, 'com_kunena');
 
-            if (!$instance) {
-                $instance = new KunenaUserSocials();
-                
-                if ($userid > 0) {
-                    $instance->userid = $userid;
-                }
-                
-                $instance->load();
+            if ($cached instanceof KunenaUserSocials && $cached->userid === $userid) {
+                $instance = $cached;
+                $instance->normalize();
             }
+        }
 
-            $cache->store($instance, 'usersocials', 'com_kunena');
-        } else {
-            $instance = new KunenaUserSocials();
-            
-            if ($userid > 0) {
-                $instance->userid = $userid;
-            }
-            
+        if (!$instance) {
+            $instance         = new KunenaUserSocials();
+            $instance->userid = $userid;
             $instance->load();
+
+            if ($useCache) {
+                $cache->store($instance, $cacheId, 'com_kunena');
+            }
+        }
+
+        if ($useCache) {
+            $instances[$userid] = $instance;
         }
 
         return $instance;
@@ -301,23 +310,44 @@ class KunenaUserSocials
         }
         
         if (!empty($socials['socials'])) {
+            $userid = $this->userid;
             $params = json_decode($socials['socials']);
             $this->bind($params);
+
+            // The stored JSON contains a userid too, never let it override the requested one
+            $this->userid = $userid;
         }
 
-        // Make sure every social entry is an object, even if the stored JSON is empty or lacks newer networks
-        $defaults = json_decode(self::getDefaultSocialsJson());
-
-        foreach ($defaults as $key => $default) {
-            if (!\is_object($this->$key ?? null)) {
-                $legacyValue    = \is_string($this->$key ?? null) ? $this->$key : '';
-                $default->value = $legacyValue;
-                $this->$key     = $default;
-            }
-        }
+        $this->normalize();
 
         // Perform custom validation of config data before we let anybody access it.
         $this->check();
+    }
+
+    /**
+     * Make sure every social entry is an object, even if the stored JSON is empty, lacks newer
+     * networks, holds legacy plain string values or contains leftover keys.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.1
+     */
+    protected function normalize(): void
+    {
+        $defaults = json_decode(self::getDefaultSocialsJson());
+
+        foreach (get_object_vars($this) as $key => $value) {
+            if ($key !== 'userid' && !isset($defaults->$key) && !\is_object($value)) {
+                unset($this->$key);
+            }
+        }
+
+        foreach ($defaults as $key => $default) {
+            if (!\is_object($this->$key ?? null)) {
+                $default->value = \is_string($this->$key ?? null) ? $this->$key : '';
+                $this->$key     = $default;
+            }
+        }
     }
 
     /**

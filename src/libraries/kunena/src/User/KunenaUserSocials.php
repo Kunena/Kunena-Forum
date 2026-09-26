@@ -300,9 +300,20 @@ class KunenaUserSocials
             KunenaError::displayDatabaseError($e);
         }
         
-        if ($socials['socials']) {
+        if (!empty($socials['socials'])) {
             $params = json_decode($socials['socials']);
             $this->bind($params);
+        }
+
+        // Make sure every social entry is an object, even if the stored JSON is empty or lacks newer networks
+        $defaults = json_decode(self::getDefaultSocialsJson());
+
+        foreach ($defaults as $key => $default) {
+            if (!\is_object($this->$key ?? null)) {
+                $legacyValue    = \is_string($this->$key ?? null) ? $this->$key : '';
+                $default->value = $legacyValue;
+                $this->$key     = $default;
+            }
         }
 
         // Perform custom validation of config data before we let anybody access it.
@@ -454,20 +465,16 @@ class KunenaUserSocials
     }
     
     /**
-     * Add the JSON content in colum params for the current user if it's empty
+     * Default JSON structure of the socials column
      *
-     * @since   Kunena 6.4
+     * @return  string
+     *
+     * @since   Kunena 7.1
      */
-    public static function addSocialsParams()
+    public static function getDefaultSocialsJson(): string
     {
-        $user = KunenaUserHelper::getMyself(); 
-
-        if ($user->userid > 0 && empty($user->socials)) {
-            $db    = Factory::getContainer()->get('DatabaseDriver');
-            $query = $db->createQuery();
-
-            $fields = array(
-                $db->quoteName('socials') . ' = ' . $db->quote('{
+        return <<<'JSON'
+{
     "x_social": {
         "value": "",
         "url": "https://x.com/##VALUE##",
@@ -671,7 +678,25 @@ class KunenaUserSocials
         "nourl": 0,
         "fa": "fa-brands fa-threads"
     }
-}')
+}
+JSON;
+    }
+
+    /**
+     * Add the JSON content in colum params for the current user if it's empty
+     *
+     * @since   Kunena 6.4
+     */
+    public static function addSocialsParams()
+    {
+        $user = KunenaUserHelper::getMyself(); 
+
+        if ($user->userid > 0 && empty($user->socials)) {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery();
+
+            $fields = array(
+                $db->quoteName('socials') . ' = ' . $db->quote(self::getDefaultSocialsJson())
             );
             
             $conditions = array(

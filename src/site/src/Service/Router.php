@@ -353,6 +353,31 @@ class Router extends RouterView
             $vars['view'] = '';
         }
 
+        /**
+         * The active menu item can itself carry a default "layout" (for example a
+         * "Forum" entry menu item of type "Kunena Layout: List", whose stored query
+         * already contains layout=list). Below, while walking the URL segments, a
+         * bare word (a segment without its own "name:value" pair, e.g. ".../reply/3")
+         * is meant to be picked up as the requested layout whenever no layout has
+         * been assigned yet ("elseif (empty($vars['layout']))"). But if $vars already
+         * has a layout key at this point - inherited from the menu item, before a
+         * single URL segment has even been read - that check is never true, so the
+         * segment falls through to the "Unknown parameter: skip" branch and is
+         * silently discarded instead of overriding the menu's default. The request
+         * then runs with the menu item's default layout (e.g. "list") no matter what
+         * the URL actually asked for (e.g. "reply", "edit", "quote", "moderate", ...),
+         * which is exactly what produces errors such as "Layout 'list' not found" for
+         * actions that have no "list" layout of their own.
+         *
+         * Fix: temporarily remove the menu item's default layout before the loop, so
+         * an explicit URL segment can claim the layout slot the way the loop already
+         * intends. If no segment in the URL provides one, the menu item's default is
+         * restored afterwards, so plain URLs without a layout segment behave exactly
+         * as before.
+         */
+        $menuDefaultLayout = isset($vars['layout']) ? $vars['layout'] : null;
+        unset($vars['layout']);
+
         // Use category SEF feature?
         $sefcats = isset(KunenaRoute::$sefviews[$vars['view']]) && empty($vars['id']);
 
@@ -458,6 +483,12 @@ class Router extends RouterView
 
                 $vars['format'] = 'raw';
             }
+        }
+
+        if (empty($vars['layout']) && $menuDefaultLayout !== null) {
+            // No URL segment claimed the layout - fall back to the menu item's own
+            // default layout, restoring the behaviour this had before the fix above.
+            $vars['layout'] = $menuDefaultLayout;
         }
 
         if (empty($vars['layout'])) {

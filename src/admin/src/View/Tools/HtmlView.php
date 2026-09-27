@@ -148,6 +148,8 @@ class HtmlView extends BaseHtmlView
             $this->setToolBarModifysocials();
             
             $this->socialsIsPresent       = $model->getSocialsIsPresent();
+        } elseif ($layout == 'deletesocials') {
+            $this->setToolBarDeletesocials();
         } elseif ($layout == 'recount') {
             $this->setToolBarRecount();
         } elseif ($layout == 'report') {
@@ -397,6 +399,23 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
         ToolbarHelper::spacer();
         ToolbarHelper::custom('tools.modifysocials', 'apply.png', 'apply_f2.png', 'COM_KUNENA_ADMIN_LAUNCH_MODIFYSOCIALS', false);
+        ToolbarHelper::spacer();
+        ToolbarHelper::cancel();
+        ToolbarHelper::spacer();
+        $helpUrl = 'https://docs.kunena.org/en/manual/backend/tools/modify-socials';
+        ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
+    }
+    
+    /**
+     * @return  void
+     *
+     * @since   Kunena 7.1.0
+     */
+    protected function setToolBarDeletesocials(): Void
+    {
+        ToolbarHelper::title(Text::_('COM_KUNENA'), 'tools');
+        ToolbarHelper::spacer();
+        ToolbarHelper::custom('tools.deletesocials', 'apply.png', 'apply_f2.png', 'COM_KUNENA_ADMIN_SAVE_SOCIALS_DELETED', false);
         ToolbarHelper::spacer();
         ToolbarHelper::cancel();
         ToolbarHelper::spacer();

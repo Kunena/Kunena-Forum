@@ -1689,13 +1689,13 @@ class KunenaUser
             $type = 'blocked';
         } elseif ($this->isBanned()) {
             $type = 'banned';
-        } elseif (!empty($adminCategories[0])) {
+        } elseif (!empty($adminCategories[$this->userid][0])) {
             $type = 'admin';
-        } elseif (!empty($adminCategories[$catid])) {
+        } elseif (!empty($adminCategories[$this->userid][$catid])) {
             $type = 'localadmin';
-        } elseif (!empty($moderatedCategories[0])) {
+        } elseif (!empty($moderatedCategories[$this->userid][0])) {
             $type = 'globalmod';
-        } elseif (!empty($moderatedCategories[$catid])) {
+        } elseif (!empty($moderatedCategories[$this->userid][$catid])) {
             $type = 'moderator';
         } elseif (!$catid && !empty($moderatedCategories)) {
             $type = 'moderator';

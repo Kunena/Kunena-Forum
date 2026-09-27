@@ -26,6 +26,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -880,5 +881,67 @@ class ToolsModel extends AdminModel
         } else {
             return Text::_('COM_KUNENA_ADMIN_SOCIALS_ARE_PRESENT');
         }
+    }
+    
+    /**
+     * Get configured socials keys for a user.
+     *
+     * @param   int  $userId  Joomla user id linked to #__kunena_users.userid
+     *
+     * @return  array
+     *
+     * @since   Kunena 7.1.0
+     */
+    public function getConfiguredSocials(int $userId): array
+    {
+        if ($userId <= 0) {
+            return [];
+        }
+        
+        $db    = $this->getDatabase();
+        $query = $db->createQuery()
+        ->select($db->quoteName('socials'))
+        ->from($db->quoteName('#__kunena_users'))
+        ->where($db->quoteName('userid') . ' = :userid')
+        ->bind(':userid', $userId, ParameterType::INTEGER);
+        $db->setQuery($query);
+        
+        try {
+            $socials = $db->loadResult();
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            
+            return [];
+        }
+        
+        if (!\is_string($socials) || trim($socials) === '') {
+            return [];
+        }
+        
+        $socialsData = json_decode($socials, true);
+        
+        if (!\is_array($socialsData)) {
+            return [];
+        }
+        
+        $configuredSocials = [];
+        
+        foreach ($socialsData as $socialName => $socialData) {
+            if (!\is_string($socialName) || $socialName === '') {
+                continue;
+            }
+            
+            $socialValue = $socialData;
+            
+            if (\is_array($socialData)) {
+                $socialValue = $socialData['value'] ?? null;
+            }
+            
+            if (\is_scalar($socialValue) && trim((string) $socialValue) !== '') {
+                $configuredSocials[] = (string) $socialName;
+            }
+        }
+        
+        return $configuredSocials;
     }
 }

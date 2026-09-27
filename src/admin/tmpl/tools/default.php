@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
         <div id="j-main-container" class="col-md-12" role="main">
             <div class="row clearfix">
 
-                <h1>TOOLS</h1>
+                <h1><?php echo Text::_('COM_KUNENA_ADMIN_TOOLS'); ?></h1>
                 <div class="col-xl-3 col-md-6">
                     <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=report'); ?>">
                         <div class="card proj-t-card comp-card">
@@ -231,7 +231,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
                 <?php if (PluginHelper::isEnabled('system', 'modifysocials')) :
                 ?>
                     <div class="col-xl-3 col-md-6">
-                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=modifysocials'); ?>">
+                        <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=managesocials'); ?>">
                             <div class="card proj-t-card comp-card">
                                 <div class="card-body">
                                     <div class="row align-items-center">

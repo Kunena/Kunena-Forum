@@ -32,10 +32,10 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_ADMIN_TOOlS_MODIFYSOCIALS'); ?>
+                                            <?php echo Text::_('COM_KUNENA_ADMIN_TOOLS_MODIFYSOCIALS'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_ADMIN_TOOlS_MODIFYSOCIALS_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_ADMIN_TOOLS_MODIFYSOCIALS_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">
@@ -48,16 +48,16 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                 </div>
 
                 <div class="col-xl-3 col-md-6">
-                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=createsocials'); ?>">
+                    <a href="<?php echo Route::_('index.php?option=com_kunena&view=tools&layout=deletesocials'); ?>">
                         <div class="card proj-t-card comp-card">
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <h6 class="mb-25">
-                                            <?php echo Text::_('COM_KUNENA_ADMIN_TOOlS_CREATESOCIALS'); ?>
+                                            <?php echo Text::_('COM_KUNENA_ADMIN_TOOLS_DELETESOCIALS'); ?>
                                         </h6>
                                         <h3 class="fw-700 text-cyan">
-                                            <?php echo Text::_('COM_KUNENA_ADMIN_TOOlS_CREATESOCIALS_DESC'); ?>
+                                            <?php echo Text::_('COM_KUNENA_ADMIN_TOOLS_DELETESOCIALS_DESC'); ?>
                                         </h3>
                                     </div>
                                     <div class="col-auto">

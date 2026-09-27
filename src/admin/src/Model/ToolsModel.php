@@ -908,7 +908,7 @@ class ToolsModel extends AdminModel
 
         try {
             $socials = $db->loadResult();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
             return [];

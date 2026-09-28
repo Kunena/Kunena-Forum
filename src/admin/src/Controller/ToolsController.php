@@ -24,6 +24,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
+use Kunena\Forum\Libraries\Event\KunenaBeforeDeleteSocialsEvent;
 use Kunena\Forum\Libraries\Event\KunenaBeforeModifySocialsEvent;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\KunenaDiagnostics;
@@ -1295,6 +1296,43 @@ class ToolsController extends FormController
        $this->app->enqueueMessage($result[0], 'message');
        $this->app->redirect(KunenaRoute::_($this->baseurl, false));
 
+    }
+    
+    /**
+     * Method to call the plugin modifysocials to handle the deletion of socials network selected by the user
+     *
+     * @param   null  $key  key
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.1.0
+     *
+     * @throws  Exception
+     */
+    public function deletesocials()
+    {
+        if (!PluginHelper::isEnabled('system', 'modifysocials')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_PLUGIN_MODIFYSOCIALS_PLUGIN_NOT_ENABLED'), 'message');
+            $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+        }
+        
+        $socialsToDelete = $this->input->get('socials', [], 'array');
+        
+        $socials = ['socials' => $socialsToDelete];
+        
+        $dispatcher = Factory::getApplication()->getDispatcher();
+        PluginHelper::importPlugin('modifysocials');
+        
+        $result = $dispatcher->dispatch(
+            'onKunenaBeforeDeleteSocials',
+            new KunenaBeforeDeleteSocialsEvent(
+                'onKunenaBeforeDeleteSocials', [
+                    'socials' => $socials,
+                ]))->getArgument('result', []);
+
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_SELECTED_HAS_BEEN_DELETED'), 'message');
+        $this->app->enqueueMessage($result[0], 'message');
+        $this->app->redirect(KunenaRoute::_($this->baseurl, false));
     }
 
     /**

@@ -30,30 +30,26 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                       name="adminForm">
                     <input type="hidden" name="task" value=""/>
                     <?php echo HTMLHelper::_('form.token'); ?>
+                    <?php $socials = \is_array($this->listSocialsNetwork ?? null) ? $this->listSocialsNetwork : []; ?>
 
                     <fieldset>
                         <legend><?php echo Text::_('COM_KUNENA_ADMIN_DELETE_SOCIALS'); ?></legend>
                         <table class="table table-bordered table-striped">
                             <tr>
-                                <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_NAME_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
-                                <td colspan="4"><input type="text" name="name" required size="20" /></td>
-                            </tr>                            
-                            <tr>
-                                <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_NOURL_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
+                                <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_DELETE_SOCIALS_SELECT') ?></td>
                                 <td colspan="4">
-                                    <select name="nourl">
-                                    <option value="0"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_NOURL_SELECT_ZERO') ?></option>
-                                    <option value="1"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_NOURL_SELECT_ONE') ?></option>
-                                    </select>
+                                    <?php if ($socials) : ?>
+                                        <label for="kunena-delete-socials" class="visually-hidden"><?php echo Text::_('COM_KUNENA_ADMIN_DELETE_SOCIALS_SELECT'); ?></label>
+                                        <p id="kunena-delete-socials-hint" class="form-text text-muted"><?php echo Text::_('COM_KUNENA_ADMIN_DELETE_SOCIALS_MULTIPLE_HINT'); ?></p>
+                                        <select id="kunena-delete-socials" name="socials[]" multiple required aria-describedby="kunena-delete-socials-hint" size="<?php echo min(10, count($socials)); ?>">
+                                            <?php foreach ($socials as $social) : ?>
+                                                <option value="<?php echo $this->escape($social); ?>"><?php echo $this->escape($social); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    <?php else : ?>
+                                        <span class="text-muted"><?php echo Text::_('COM_KUNENA_ADMIN_DELETE_SOCIALS_NONE_FOUND'); ?></span>
+                                    <?php endif; ?>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_PROFILEURL_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
-                                <td colspan="4"><input type="text" name="profileurl" required size="20" /></td>
-                            </tr>
-                            <tr>
-                                <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_FA_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
-                                <td colspan="4"><input type="text" name="fa" required size="20" /></td>
                             </tr>                            
                         </table>
                     </fieldset>

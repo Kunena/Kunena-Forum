@@ -26,7 +26,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -884,27 +883,20 @@ class ToolsModel extends AdminModel
     }
     
     /**
-     * Get configured socials keys for a user.
-     *
-     * @param   int  $userId  Joomla user id linked to #__kunena_users.userid
+     * Get configured socials keys.
      *
      * @return  array
      *
      * @since   Kunena 7.1.0
      */
-    public function getConfiguredSocials(int $userId): array
+    public function getConfiguredSocials(): array
     {
-        if ($userId <= 0) {
-            return [];
-        }
-        
         $db    = $this->getDatabase();
         $query = $db->createQuery()
-        ->select($db->quoteName('socials'))
-        ->from($db->quoteName('#__kunena_users'))
-        ->where($db->quoteName('userid') . ' = :userid')
-        ->bind(':userid', $userId, ParameterType::INTEGER);
-        $db->setQuery($query);
+            ->select($db->quoteName('socials'))
+            ->from($db->quoteName('#__kunena_users'))
+            ->order($db->quoteName('userid') . ' ASC');
+        $db->setQuery($query, 0, 1);
         
         try {
             $socials = $db->loadResult();
@@ -923,25 +915,12 @@ class ToolsModel extends AdminModel
         if (!\is_array($socialsData)) {
             return [];
         }
-        
-        $configuredSocials = [];
-        
-        foreach ($socialsData as $socialName => $socialData) {
-            if (!\is_string($socialName) || $socialName === '') {
-                continue;
-            }
-            
-            $socialValue = $socialData;
-            
-            if (\is_array($socialData)) {
-                $socialValue = $socialData['value'] ?? null;
-            }
-            
-            if (\is_scalar($socialValue) && trim((string) $socialValue) !== '') {
-                $configuredSocials[] = (string) $socialName;
-            }
-        }
-        
-        return $configuredSocials;
+
+        return array_values(
+            array_filter(
+                array_keys($socialsData),
+                static fn ($socialName): bool => \is_string($socialName) && $socialName !== ''
+            )
+        );
     }
 }

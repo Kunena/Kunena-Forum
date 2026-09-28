@@ -1318,7 +1318,7 @@ class ToolsController extends FormController
         
         $socialsToDelete = $this->input->get('socials', [], 'array');
         
-        $socials = ['socials' => $socialsToDelete];
+        $socials = ['socialsToDelete' => $socialsToDelete];
         
         $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('modifysocials');

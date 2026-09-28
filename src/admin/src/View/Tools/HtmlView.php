@@ -150,6 +150,8 @@ class HtmlView extends BaseHtmlView
             $this->socialsIsPresent       = $model->getSocialsIsPresent();
         } elseif ($layout == 'deletesocials') {
             $this->setToolBarDeletesocials();
+            
+            $this->listSocialsNetwork       = $model->getConfiguredSocials();
         } elseif ($layout == 'recount') {
             $this->setToolBarRecount();
         } elseif ($layout == 'report') {

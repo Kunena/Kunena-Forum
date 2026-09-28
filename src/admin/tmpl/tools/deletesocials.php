@@ -40,7 +40,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                 <td colspan="4">
                                     <?php if ($socials) : ?>
                                         <label for="kunena-delete-socials" class="visually-hidden"><?php echo Text::_('COM_KUNENA_ADMIN_DELETE_SOCIALS_SELECT'); ?></label>
-                                        <select id="kunena-delete-socials" name="socials[]" multiple size="<?php echo min(10, count($socials)); ?>">
+                                        <select id="kunena-delete-socials" name="socials[]" multiple required size="<?php echo min(10, count($socials)); ?>">
                                             <?php foreach ($socials as $social) : ?>
                                                 <option value="<?php echo $this->escape($social); ?>"><?php echo $this->escape($social); ?></option>
                                             <?php endforeach; ?>

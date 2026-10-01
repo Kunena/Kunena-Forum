@@ -110,7 +110,7 @@ return new class() implements ServiceProviderInterface {
                         '6.1' => '6.1.4',
                         '6.0' => '6.0.4',
                         '5.4' => '5.4.9',
-                        '0' => '6.1.0',  // Preferred version
+                        '0' => '6.2.0',  // Preferred version
                     ],
                 ];
 

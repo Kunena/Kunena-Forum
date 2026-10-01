@@ -26,7 +26,7 @@ HTMLHelper::_('dropdown.init');
 
 Text::script('COM_KUNENA_CATEGORIES_ERROR_CHOOSE_ANOTHER_ALIAS');
 
-Factory::getApplication()->getDocument()->addScript(Uri::root() . 'administrator/components/com_kunena/tmpl/categories/edit.js');
+Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/core/js/category-edit.js');
 ?>
 
 <div class="card">

@@ -5,25 +5,19 @@
 
 	@package	Kunena
 	@subpackage	com_kunena
-	@copyright	Copyright (C)
-2008 - @currentyear@ Kunena Team. All rights reserved.
+	@copyright	Copyright (C) 2008 - @currentyear@ Kunena Team. All rights reserved.
 				portions (C) 2007 MjazTools. All rights reserved.
-@license	GNU General Public License <https://www.gnu.org/copyleft/gpl.html>
-	@link
-https://www.kunena.org
+	@license	GNU General Public License <https://www.gnu.org/copyleft/gpl.html>
+	@link		https://www.kunena.org
 
-	The following parameters can be defined inside the PHPSTORM build task as
-Arguments. They
-	allow the build file to be platform independent as not path information resides
-within
+	The following parameters can be defined inside the PHPSTORM build task as Arguments. They
+	allow the build file to be platform independent as not path information resides within
 	any of the build files.
 
-	Parameters: (with default values - adjust the directories in
-PHPSTORM to your individual setup)
+	Parameters: (with default values - adjust the directories in PHPSTORM to your individual setup)
 	-Dproject_dir=..				(= workspace/kunena)
--Dpackage_dir=../../packages	(= workspace/packages)
-	-Dtmp_dir=tmp					(=
-workspace/kunena/build/tmp)
+	-Dpackage_dir=../../packages	(= workspace/packages)
+	-Dtmp_dir=tmp					(= workspace/kunena/build/tmp)
 	-Dbuild_dir=package				(= workspace/kunena/build/package)
 -->
 <project
@@ -840,6 +834,7 @@ workspace/kunena/build/tmp)
 		</phingcall>
 		<!-- Process all packages to zip -->
 
+
 		<!-- Zip the created Zips for packages -->
 		<phingcall target="archive">
 			<property
@@ -850,6 +845,25 @@ workspace/kunena/build/tmp)
 				value="${build_dir}/distribution/" />
 		</phingcall>
 
+		<echo message="Generating SHA-256 checksums for packages..." />
+		<!-- CHECKSUM : generate .sha256 and .sha512 for Kunena package -->
+		<php function="hash_file" returnProperty="dist.sha256">
+			<param value="sha256" />
+			<param value="build/${cfg.prefix}${cfg.name}${str.fileversion}.zip" />
+		</php>
+		<echo
+			file="build/${cfg.prefix}${cfg.name}${str.fileversion}.zip.sha256"
+			message="${dist.sha256}  ${cfg.prefix}${cfg.name}${str.fileversion}.zip&#13;&#10;" />
+		<php function="hash_file" returnProperty="dist.sha512">
+			<param value="sha512" />
+			<param value="build/${cfg.prefix}${cfg.name}${str.fileversion}.zip" />
+		</php>
+		<echo
+			file="build/${cfg.prefix}${cfg.name}${str.fileversion}.zip.sha512"
+			message="${dist.sha512}  ${cfg.prefix}${cfg.name}${str.fileversion}.zip&#13;&#10;" />
+			
+		<echo message="Generating SHA-256 checksums for packages...DONE!" />
+
 		<!-- Process all packages for language pack -->
 		<phingcall target="archive">
 			<property
@@ -859,7 +873,24 @@ workspace/kunena/build/tmp)
 				name="base.directory"
 				value="${tmp_dir}/languages_extra" />
 		</phingcall>
+
+		<!-- CHECKSUM : generate .sha256 and .sha512 for language pack -->
+		<php function="hash_file" returnProperty="languages.sha256">
+			<param value="sha256" />
+			<param value="build/pkg_kunena_languages${str.fileversion}.zip" />
+		</php>
+		<echo
+			file="build/pkg_kunena_languages${str.fileversion}.zip.sha256"
+			message="${languages.sha256}  pkg_kunena_languages${str.fileversion}.zip&#13;&#10;" />
+		<php function="hash_file" returnProperty="languages.sha512">
+			<param value="sha512" />
+			<param value="build/pkg_kunena_languages${str.fileversion}.zip" />
+		</php>
+		<echo
+			file="build/pkg_kunena_languages${str.fileversion}.zip.sha512"
+			message="${languages.sha512}  pkg_kunena_languages${str.fileversion}.zip&#13;&#10;" />
 	</target>
+
 
 	<target name="archive">
 		<zip destfile="${destination.file}.zip">

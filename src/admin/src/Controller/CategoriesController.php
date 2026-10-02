@@ -580,19 +580,25 @@ class CategoriesController extends KunenaController
      */
     public function saveorderajax(): void
     {
-        /*if (!Session::checkToken('post')) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
-            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+        if (!Session::checkToken('post')) {
+            $this->app->close();
+        }
 
-            return;
-        }*/
-
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db          = Factory::getContainer()->get(DatabaseInterface::class);
         $tableObject = new TableKunenaCategories($db);
 
         // Get the arrays from the Request
-        $pks   = $this->input->post->get('cid', null, 'array');
-        $order = $this->input->post->get('order', null, 'array');
+        $pks   = ArrayHelper::toInteger($this->input->post->get('cid', [], 'array'));
+        $order = ArrayHelper::toInteger($this->input->post->get('order', [], 'array'));
+
+        // User needs to be admin in the parent of every category being reordered
+        foreach ($pks as $pk) {
+            $category = KunenaCategoryHelper::get($pk);
+
+            if (!$category->exists() || !$category->getParent()->isAuthorised('admin')) {
+                $this->app->close();
+            }
+        }
 
         // Get the model
         $model = new CategoriesModel();
@@ -607,7 +613,7 @@ class CategoriesController extends KunenaController
         // Close the application
         $this->app->close();
     }
-
+    
     /**
      * Proxy for getModel.
      *
@@ -773,8 +779,31 @@ class CategoriesController extends KunenaController
 
             return false;
         }
+        
+		// User needs to be admin in the target category and in the current parent of every moved category
+        $target = KunenaCategoryHelper::get($catParent);
 
-        if ($task == 'move') {
+        if (!$this->me->isAdmin($target)) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($target->name)), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return false;
+        }
+
+        $cid = ArrayHelper::toInteger($cid);
+
+        foreach ($cid as $cat) {
+            $category = KunenaCategoryHelper::get($cat);
+
+            if (!$category->exists() || !$this->me->isAdmin($category->getParent())) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'error');
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+                return false;
+            }
+        }
+       
+	    if ($task == 'move') {
             foreach ($cid as $cat) {
                 if ($catParent != $cat) {
                     $query = $this->db->createQuery()

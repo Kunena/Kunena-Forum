@@ -564,6 +564,8 @@ jQuery(document).ready(function ($) {
      */
     public function isModerator($user = null, $catid = 0): bool
     {
+        $catid = (int) ($catid ?? 0);
+        
         if (!($user instanceof KunenaUser)) {
             $user = KunenaUserHelper::get($user);
         }
@@ -604,6 +606,8 @@ jQuery(document).ready(function ($) {
      */
     public function isAdmin($user = null, $catid = 0): bool
     {
+        $catid = (int) ($catid ?? 0);
+        
         if (!($user instanceof KunenaUser)) {
             $user = KunenaFactory::getUser($user);
         }

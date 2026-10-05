@@ -13,8 +13,6 @@ body:
 
         BEFORE SUBMITTING YOUR ISSUE, please make sure to read and follow these steps:
 
-        * We do not support community plugins. Contact directly their authors, or use [the community forum](https://forum.glpi-project.org).
-        * We do not track feature requests nor enhancements here. Propose them on the [suggest dedicated site](https://suggest.glpi-project.org).
         * Keep this tracker in ENGLISH. If you want support in your language, the [Kunena forum](https://www.kunena.org/forum/kunena-in-other-languages) is the best place.
         * Always try to reproduce your issue at least on latest stable release.
 
@@ -23,7 +21,7 @@ body:
     id: terms
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow hereinabove rules and [Contribution guide](https://github.com/Kunena/Kunena-Forum/blob/main/CONTRIBUTING.md)
+      description: By submitting this issue, you agree to follow hereinabove rules
       options:
         - label: I agree to follow this project's Code of Conduct
     validations:
@@ -75,7 +73,7 @@ body:
     id: url
     attributes:
       label: Page URL
-      description: If applicable, page URL where the bug happens.
+      description: If applicable, put the URL of the topic on [kunena.org](https://www.kunena.org/forum/recent) where the bug has been reported.
     validations:
       required: false
   - type: textarea

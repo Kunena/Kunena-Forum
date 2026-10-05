@@ -5,7 +5,7 @@ body:
     attributes:
       value: |
 
-        Dear GLPI user.
+        Thanks for taking the time to fill out this bug report!
 
         **⚠️ Please never use standard issues to report security problems. See [security policy](https://github.com/Kunena/Kunena-Forum/security/policy) for more details. ⚠️**
 
@@ -13,7 +13,7 @@ body:
 
         * We do not support community plugins. Contact directly their authors, or use [the community forum](https://forum.glpi-project.org).
         * We do not track feature requests nor enhancements here. Propose them on the [suggest dedicated site](https://suggest.glpi-project.org).
-        * Keep this tracker in ENGLISH. If you want support in your language, the [community forum](https://forum.glpi-project.org) is the best place.
+        * Keep this tracker in ENGLISH. If you want support in your language, the [Kunena forum](https://www.kunena.org/forum/kunena-in-other-languages) is the best place.
         * Always try to reproduce your issue at least on latest stable release.
 
         The Kunena team.

@@ -34,7 +34,7 @@ body:
         - label: I have searched the existing issues
     validations:
       required: true
-  - type: input    
+  - type: dropdown  
     id: version
     attributes:
       label: Version

@@ -46,6 +46,14 @@ body:
       default: 0
     validations:
       required: true
+   - type: checkboxes
+    attributes:
+      label: Do-you tried to reproduce with Aurelia template?
+      description: Please try to reproduce your issue with with Aurelia template.
+      options:
+        - label: I have tried to reproduce the issues with Aurelia template
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Bug description

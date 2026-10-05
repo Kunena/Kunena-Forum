@@ -46,7 +46,7 @@ body:
       default: 0
     validations:
       required: true
-   - type: checkboxes
+  - type: checkboxes
     attributes:
       label: Do-you tried to reproduce with Aurelia template?
       description: Please try to reproduce your issue with with Aurelia template.

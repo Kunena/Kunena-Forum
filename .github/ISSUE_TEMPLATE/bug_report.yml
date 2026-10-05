@@ -1,5 +1,5 @@
 name: Bug Report
-description: Create a report to help us improve GLPI
+description: Create a report to help us improve Kunena
 body:
   - type: markdown
     attributes:
@@ -16,33 +16,14 @@ body:
         * Keep this tracker in ENGLISH. If you want support in your language, the [community forum](https://forum.glpi-project.org) is the best place.
         * Always try to reproduce your issue at least on latest stable release.
 
-        The GLPI team.
-  - type: markdown
-    attributes:
-      value: |
-        ## Professional Support
-
-        We do not guarantee any processing / resolution time for community issues.
-
-        If you need a quick fix or any guarantee, you should consider to buy a GLPI Network Subscription.
-
-        More information here: https://glpi-project.org/subscriptions/
+        The Kunena team.
   - type: checkboxes
     id: terms
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow hereinabove rules and [Contribution guide](https://github.com/glpi-project/glpi/blob/main/CONTRIBUTING.md)
+      description: By submitting this issue, you agree to follow hereinabove rules and [Contribution guide](https://github.com/Kunena/Kunena-Forum/blob/main/CONTRIBUTING.md)
       options:
         - label: I agree to follow this project's Code of Conduct
-    validations:
-      required: true
-  - type: checkboxes
-    id: plugins
-    attributes:
-      label: Disable plugins
-      description: Reproduce the issue with all plugins disabled on your GLPI instance.
-      options:
-        - label: I reproduce the issue with all plugins disabled
     validations:
       required: true
   - type: checkboxes
@@ -57,7 +38,7 @@ body:
     id: version
     attributes:
       label: Version
-      description: What version of our GLPI are you running?
+      description: What version of Kunena are you running?
     validations:
       required: true
   - type: textarea

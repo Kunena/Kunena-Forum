@@ -117,7 +117,7 @@ abstract class KunenaEmail
                 sprintf(
                     'Kunena email notification sent successfully. Total emails: %d, Subject: %s',
                     $emailsSent,
-                    $mail->getSubject()
+                    $mail->Subject
                 ),
                 Log::INFO,
                 'kunena'
@@ -127,7 +127,7 @@ abstract class KunenaEmail
                 sprintf(
                     'Kunena email notification failed. Total emails attempted: %d, Subject: %s',
                     $totalEmails,
-                    $mail->getSubject()
+                    $mail->Subject
                 ),
                 Log::ERROR,
                 'kunena'

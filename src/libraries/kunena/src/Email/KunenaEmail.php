@@ -83,13 +83,13 @@ abstract class KunenaEmail
             KunenaLog::log(
                 KunenaLog::TYPE_ACTION,
                 KunenaLog::LOG_EMAIL_NOTIFICATION_SENT,
-                ['mail_subject' => $mail->getSubject(), 'emailsent' => $emailsSent]
+                ['mail_subject' => $mail->Subject, 'emailsent' => $emailsSent]
             );
         } elseif (!$success) {
             KunenaLog::log(
                 KunenaLog::TYPE_ACTION,
                 KunenaLog::LOG_EMAIL_NOTIFICATION_NOTSENT,
-                ['mail_subject' => $mail->getSubject(), 'totalEmailsAttempted' => $totalEmails]
+                ['mail_subject' => $mail->Subject, 'totalEmailsAttempted' => $totalEmails]
             );
         }
         

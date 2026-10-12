@@ -624,6 +624,46 @@
             versionname="Internal">
             <query mode="silenterror">UPDATE `#__kunena_attachments` SET `status` = 1 WHERE `mesid` > 0</query>
         </version>
+        <version
+            version="7.1.0-RC1"
+            versiondate="2026-10-12"
+            versionname="Internal">
+            <!-- Match the emoticon codes to the images shipped since Kunena 6; only rows still holding the old defaults are changed -->
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '9.png', `emoticonbar` = 1 WHERE `code` = 'B)' AND `location` = '1.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '9.png', `emoticonbar` = 0 WHERE `code` = '8)' AND `location` = '2.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '9.png', `emoticonbar` = 0 WHERE `code` = '8-)' AND `location` = '3.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '22.png', `emoticonbar` = 0 WHERE `code` = ':-(' AND `location` = '4.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '22.png', `emoticonbar` = 1 WHERE `code` = ':(' AND `location` = '5.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '22.png', `emoticonbar` = 0 WHERE `code` = ':sad:' AND `location` = '6.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '19.png', `emoticonbar` = 1 WHERE `code` = ':cry:' AND `location` = '7.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '3.png', `emoticonbar` = 1 WHERE `code` = ':)' AND `location` = '8.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '3.png', `emoticonbar` = 0 WHERE `code` = ':-)' AND `location` = '9.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '2.png', `emoticonbar` = 1 WHERE `code` = ':cheer:' AND `location` = '10.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '24.png', `emoticonbar` = 1 WHERE `code` = ';)' AND `location` = '11.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '24.png', `emoticonbar` = 0 WHERE `code` = ';-)' AND `location` = '12.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '24.png', `emoticonbar` = 0 WHERE `code` = ':wink:' AND `location` = '13.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `code` = ':kiss:', `location` = '12.png', `emoticonbar` = 1 WHERE `code` = ';-)' AND `location` = '14.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '14.png', `emoticonbar` = 1 WHERE `code` = ':P' AND `location` = '15.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '14.png', `emoticonbar` = 0 WHERE `code` = ':p' AND `location` = '16.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '14.png', `emoticonbar` = 0 WHERE `code` = ':-p' AND `location` = '17.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '14.png', `emoticonbar` = 0 WHERE `code` = ':-P' AND `location` = '18.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '4.png', `emoticonbar` = 1 WHERE `code` = ':razz:' AND `location` = '19.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '23.png', `emoticonbar` = 1 WHERE `code` = ':angry:' AND `location` = '20.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '23.png', `emoticonbar` = 0 WHERE `code` = ':mad:' AND `location` = '21.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '18.png', `emoticonbar` = 1 WHERE `code` = ':unsure:' AND `location` = '22.png'</query>
+            <query mode="silenterror">UPDATE `#__kunena_smileys` SET `location` = '6.png', `emoticonbar` = 1 WHERE `code` = ':o' AND `location` = '23.png'</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':D', '1.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':D') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':joy:', '5.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':joy:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':grimace:', '7.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':grimace:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':neutral:', '8.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':neutral:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':angel:', '10.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':angel:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':sweat:', '11.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':sweat:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':upside:', '13.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':upside:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':nerd:', '15.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':nerd:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':kissing:', '16.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':kissing:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':meh:', '17.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':meh:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+            <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':rolleyes:', '20.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':rolleyes:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

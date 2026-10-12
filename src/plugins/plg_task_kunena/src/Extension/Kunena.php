@@ -62,7 +62,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             'form'            => 'trashbin',
             'method'          => 'purgeTrash',
         ],
-        'sending.notificationskunena' => [
+        'add.mailsqueue' => [
             'langConstPrefix' => 'PLG_TASK_SENDNOTIFICATIONSKUNENA_SENDING',
             'method'          => 'sendNotifications',
         ],

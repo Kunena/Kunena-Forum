@@ -211,7 +211,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
      * @since  7.1.0
      * @throws \Exception
      */
-    private function addMailsqueue(ExecuteTaskEvent $event): int
+    private function sendNotifications(ExecuteTaskEvent $event): int
     {
         if (
             !ComponentHelper::isEnabled('com_kunena')

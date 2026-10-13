@@ -780,13 +780,13 @@ class KunenaMessage extends KunenaDatabaseObject
                 
                 $languageChanged = $recipientLanguage && $recipientLanguage !== $currentLanguage;
                 
-                $siteLanguageLoaded = KunenaFactory::loadLanguagebis(
+                $siteLanguageLoaded = KunenaFactory::loadLanguageMail(
                     'com_kunena',
                     'site',
                     $recipientLanguage
                     );
                 
-                $librariesLanguageLoaded = KunenaFactory::loadLanguagebis(
+                $librariesLanguageLoaded = KunenaFactory::loadLanguageMail(
                     'com_kunena.libraries',
                     'admin',
                     $recipientLanguage

@@ -1,4 +1,4 @@
-[![Kunena](https://www.kunena.org/images/logo.png)](https://www.kunena.org)[![GitHub release](https://img.shields.io/github/release/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/Kunena/Kunena-Forum/total.svg)](https://github.com/Kunena/Kunena-Forum/releases)[![GitHub issues](https://img.shields.io/github/issues/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/issues)[![GitHub contributors](https://img.shields.io/github/contributors/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/graphs/contributors)[![Build Status](https://travis-ci.org/Kunena/Kunena-Forum.svg?branch=K5.1)](https://travis-ci.org/Kunena/Kunena-Forum)[![GitHub license](https://img.shields.io/badge/License-GNU-blue.svg)](https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.1/LICENSE.txt)[![X Follow](https://img.shields.io/twitter/follow/bsdatepicker.svg?style=social&label=Follow)](https://x.com/kunena)
+![Kunena](https://www.kunena.org/images/logo.png)](https://www.kunena.org)[![GitHub release](https://img.shields.io/github/release/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/Kunena/Kunena-Forum/total.svg)](https://github.com/Kunena/Kunena-Forum/releases)[![GitHub issues](https://img.shields.io/github/issues/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/issues)[![GitHub contributors](https://img.shields.io/github/contributors/Kunena/Kunena-Forum.svg)](https://github.com/Kunena/Kunena-Forum/graphs/contributors)[![Build Status](https://travis-ci.org/Kunena/Kunena-Forum.svg?branch=K5.1)](https://travis-ci.org/Kunena/Kunena-Forum)[![GitHub license](https://img.shields.io/badge/License-GNU-blue.svg)](https://raw.githubusercontent.com/Kunena/Kunena-Forum/K5.1/LICENSE.txt)[![X Follow](https://img.shields.io/twitter/follow/bsdatepicker.svg?style=social&label=Follow)](https://x.com/kunena)
 
 ## ABOUT
 
@@ -9,7 +9,7 @@
 
 *Kunena* 7.0 requires
 
-    Joomla: version 5.3.4 or greater (>= 5.4.9 recommended)
+    Joomla: version 5.3.4 or greater (>= 5.4.10 recommended)
     PHP: version 8.2.0 or greater (>= 8.3.0 recommended)
     MariaDB: version 10.4 or greater (>= 10.8.6 recommended) or MySQL: version 8.0.16 or greater (>= 8.4.2 recommended)
 

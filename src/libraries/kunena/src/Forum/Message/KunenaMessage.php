@@ -619,7 +619,7 @@ class KunenaMessage extends KunenaDatabaseObject
 
         if ($type) {
             // Send the notification now
-            $this->sendNotificationNow($emailToList, $subject, $url, $once, $sentusers);
+            return $this->sendNotificationNow($emailToList, $subject, $url, $once, $sentusers);
         } else {
             // Store the notification in queue
             $columns = array('subject', 'messageId', 'url', 'emailListJson', 'categoryName', 'once', 'sentusers');
@@ -737,7 +737,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * @throws  Exception
      * @since   Kunena 7.1
      */
-    public function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers)
+    public function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers): bool
     {        
         $mailnamesender = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
         
@@ -749,6 +749,8 @@ class KunenaMessage extends KunenaDatabaseObject
         KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
         
         // Send one email per recipient, in their own language.
+        $success = true;
+
         foreach ($emailToList as $emailTo) {
             if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
                 continue;
@@ -800,7 +802,10 @@ class KunenaMessage extends KunenaDatabaseObject
                     $mail->setSender([$this->_config->email, $mailnamesender]);
 
                     $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once);
-                    KunenaEmail::send($mail, [$emailTo->email]);
+
+                    if (!KunenaEmail::send($mail, [$emailTo->email])) {
+                        $success = false;
+                    }
                 } catch (Exception $e) {
                     throw new Exception($e->getMessage());
                 } finally {
@@ -812,7 +817,7 @@ class KunenaMessage extends KunenaDatabaseObject
         }
         
         // Update subscriptions.
-        if ($once && $sentusers) {
+        if ($success && $once && $sentusers) {
             $sentusers = implode(',', $sentusers);
             $query     = $this->_db->createQuery()
                 ->update('#__kunena_user_topics')
@@ -829,8 +834,8 @@ class KunenaMessage extends KunenaDatabaseObject
                 throw new Exception($e->getMessage());
             }
         }
-        
-        return true;
+
+        return $success;
     }
 
     /**

@@ -263,6 +263,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             
             // Table to store the IDs of the notifications which are processed
             $processedIds = [];
+            $deliveryFailed = false;
             
             foreach($mailsToSend as $mail) {
                 $message = KunenaMessageHelper::get($mail->messageId);
@@ -276,7 +277,10 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 $emailToList = json_decode($mail->emailListJson);
                 $sentusers = json_decode($mail->sentusers);
                 
-                $message->sendNotificationNow($emailToList, $mail->subject, $mail->url, $mail->once, $sentusers);
+                if (!$message->sendNotificationNow($emailToList, $mail->subject, $mail->url, $mail->once, $sentusers)) {
+                    $deliveryFailed = true;
+                    continue;
+                }
                 
                 // Add the ID in the list of processed
                 $processedIds[] = $mail->id;
@@ -298,6 +302,12 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                     // If an error is throwed, teh error is logged and we continue
                     $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_ERROR_UPDATING', $e->getMessage()));
                 }
+            }
+
+            if ($deliveryFailed) {
+                $this->logTask(Text::_('PLG_TASK_SENDNOTIFICATIONSKUNENA_DELIVERY_FAILED'));
+
+                return Status::KNOCKOUT;
             }
             
             // If the batch is full, there may be more notifications left to process.

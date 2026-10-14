@@ -66,8 +66,11 @@ abstract class KunenaEmail
             $mail->addRecipient($emails);            
             
             try {
-                $mail->Send();
-                $emailsSent += count($emails);
+                if ($mail->Send()) {
+                    $emailsSent += count($emails);
+                } else {
+                    $success = false;
+                }
             } catch (Exception $e) {
                 $success = false;
                 Log::add($e->getMessage(), Log::ERROR, 'kunena');

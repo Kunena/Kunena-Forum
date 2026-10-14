@@ -21,6 +21,7 @@ const env = {
 };
 
 export default defineConfig({
+  projectId: 'tr6bkp',
   videosFolder: 'tests/System/output/videos',
   screenshotsFolder: 'tests/System/output/screenshots',
   viewportHeight: 1000,

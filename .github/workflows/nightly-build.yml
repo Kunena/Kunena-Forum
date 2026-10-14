@@ -34,7 +34,7 @@ jobs:
         run: phing
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: nightly-build
           path: build/

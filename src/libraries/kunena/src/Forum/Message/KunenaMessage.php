@@ -731,13 +731,14 @@ class KunenaMessage extends KunenaDatabaseObject
      * @param   string   $url  The url of the message of the notification mail
      * @param   boolean  $once
      * @param   array    $sentusers
+     * @param   callable|null  $onRecipientSent  Callback for each successfully sent recipient
      * 
      * @return  boolean
      * 
      * @throws  Exception
      * @since   Kunena 7.1
      */
-    public function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers): bool
+    public function sendNotificationNow($emailToList, $subject, $url, $once, $sentusers, ?callable $onRecipientSent = null): bool
     {        
         $mailnamesender = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
         
@@ -751,7 +752,7 @@ class KunenaMessage extends KunenaDatabaseObject
         // Send one email per recipient, in their own language.
         $success = true;
 
-        foreach ($emailToList as $emailTo) {
+        foreach ($emailToList as $recipientIndex => $emailTo) {
             if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
                 continue;
             }
@@ -805,6 +806,8 @@ class KunenaMessage extends KunenaDatabaseObject
 
                     if (!KunenaEmail::send($mail, [$emailTo->email])) {
                         $success = false;
+                    } elseif ($onRecipientSent !== null) {
+                        $onRecipientSent($recipientIndex);
                     }
                 } catch (Exception $e) {
                     throw new Exception($e->getMessage());

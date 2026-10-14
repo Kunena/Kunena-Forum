@@ -276,8 +276,30 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 
                 $emailToList = json_decode($mail->emailListJson);
                 $sentusers = json_decode($mail->sentusers);
-                
-                if (!$message->sendNotificationNow($emailToList, $mail->subject, $mail->url, $mail->once, $sentusers)) {
+                $pendingRecipients = $emailToList;
+                $persistRecipientSent = function ($recipientIndex) use (&$pendingRecipients, $db, $mail): void {
+                    unset($pendingRecipients[$recipientIndex]);
+
+                    $updateQuery = $db->createQuery()
+                        ->update($db->quoteName('#__kunena_notifications_mailsqueue'))
+                        ->set(
+                            $db->quoteName('emailListJson') . ' = '
+                            . $db->quote(json_encode(array_values($pendingRecipients)))
+                        )
+                        ->where($db->quoteName('id') . ' = ' . (int) $mail->id);
+
+                    $db->setQuery($updateQuery);
+                    $db->execute();
+                };
+
+                if (!$message->sendNotificationNow(
+                    $emailToList,
+                    $mail->subject,
+                    $mail->url,
+                    $mail->once,
+                    $sentusers,
+                    $persistRecipientSent
+                )) {
                     $deliveryFailed = true;
                     continue;
                 }

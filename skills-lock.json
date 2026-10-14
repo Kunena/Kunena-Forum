@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "skills": {
+    "cypress-author": {
+      "source": "cypress-io/ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/cypress-author/SKILL.md",
+      "computedHash": "20d08e46ec73f40bfdd99486e307f55f51cf273661c713c49ae63eb7bc1b9483"
+    },
+    "cypress-cloud-cli": {
+      "source": "cypress-io/ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/cypress-cloud-cli/SKILL.md",
+      "computedHash": "9962835ac0c3545236ad64dfc1fd45ce8a6b9c344a74160d4ba03b6059affe99"
+    },
+    "cypress-docs": {
+      "source": "cypress-io/ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/cypress-docs/SKILL.md",
+      "computedHash": "ee00ca8822995b19be602f36abc90623dc557529f3804508defdaf0f6e6aa538"
+    },
+    "cypress-explain": {
+      "source": "cypress-io/ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/cypress-explain/SKILL.md",
+      "computedHash": "e1de25014701307c50dc3af6f3019bc8f9fac3be0df61636886d08e18f54208b"
+    },
+    "cypress-tap": {
+      "source": "cypress-io/ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/cypress-tap/SKILL.md",
+      "computedHash": "1ef60a743453d51acf8915e3b3830141a7ee4451dd8e6dc39795fcaeeaf75a1a"
+    }
+  }
+}

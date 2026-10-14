@@ -625,7 +625,7 @@
             <query mode="silenterror">UPDATE `#__kunena_attachments` SET `status` = 1 WHERE `mesid` > 0</query>
         </version>
         <version
-            version="7.1.0-RC1"
+            version="7.1.0-RC2-DEV"
             versiondate="2026-10-12"
             versionname="Internal">
             <!-- Match the emoticon codes to the images shipped since Kunena 6; only rows still holding the old defaults are changed -->

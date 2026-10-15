@@ -518,12 +518,11 @@ abstract class KunenaTopicHelper
         $queries [] = $query;
               
         // TODO: delete attachments
-        // Delete topics
+        // Delete topics last, because the previous queries join on the topics table
         $query = $db->createQuery();
         $query->delete('#__kunena_topics')
               ->where('id IN (' . $idlist . ')');
-        self::executeQuery($db, $query);
-        
+        $queries [] = $query;
         foreach ($queries as $query) {
             $db->setQuery($query);
             

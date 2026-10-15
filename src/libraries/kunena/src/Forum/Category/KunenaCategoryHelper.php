@@ -927,7 +927,7 @@ abstract class KunenaCategoryHelper
     /**
      * Recount categories in batches to avoid SQL errors with large numbers of categories
      *
-     * @param   string  $categories  categories
+     * @param   string|array  $categories  Categories to recount; empty recounts all categories.
      *
      * @return  boolean|integer
      *
@@ -940,6 +940,8 @@ abstract class KunenaCategoryHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
         $categoryIds = [];
         
+        $recountAll = $categories === '' || $categories === null || $categories === [];
+
         if (\is_array($categories)) {
             $categoryIds = $categories;
         } elseif (!empty($categories)) {
@@ -949,7 +951,26 @@ abstract class KunenaCategoryHelper
         $categoryIds = array_values(array_filter(array_map('intval', $categoryIds)));
         
         if (empty($categoryIds)) {
-            return 0;
+            if (!$recountAll) {
+                return 0;
+            }
+
+            $query = $db->createQuery()
+                ->select($db->quoteName('id'))
+                ->from($db->quoteName('#__kunena_categories'));
+            $db->setQuery($query);
+
+            try {
+                $categoryIds = array_map('intval', $db->loadColumn());
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+
+                return false;
+            }
+
+            if (empty($categoryIds)) {
+                return 0;
+            }
         }
         
         $totalRows = 0;

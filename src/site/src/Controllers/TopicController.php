@@ -962,13 +962,18 @@ class TopicController extends KunenaController
         $poll_title   = $fields['poll_title'];
         $poll_options = $fields['poll_options'];
 
-        if (!empty($poll_options) && !empty($poll_title)) {
+        $pollAllowed = !empty($poll_options) && !empty($poll_title);
+
+        if ($pollAllowed) {
             try {
-                $topic->isAuthorised('poll.create', null, false);
+                $topic->tryAuthorise('poll.create');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+                $pollAllowed = false;
             }
+        }
 
+        if ($pollAllowed) {
             $poll        = $topic->getPoll();
             $poll->title = $poll_title;
 

@@ -802,7 +802,7 @@ class KunenaCategory extends KunenaDatabaseObject
         if (KunenaFactory::getConfig()->readOnly) {
             // Special case to ignore authorisation.
             if ($action != 'topic.read' && $action != 'read') {
-                return true;
+                return false;
             }
         }
 

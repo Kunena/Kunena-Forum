@@ -250,7 +250,7 @@ class CategoryController extends KunenaController
             foreach ((array) $post['rmmod'] as $userid => $value) {
                 $user = KunenaFactory::getUser($userid);
 
-                if ($category->tryAuthorise('admin', null, false) && $category->removeModerator($user)) {
+                if ($category->isAuthorised('admin') && $category->removeModerator($user)) {
                     $this->app->enqueueMessage(
                         Text::sprintf(
                             'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED',

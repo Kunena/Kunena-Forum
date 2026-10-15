@@ -606,9 +606,13 @@ abstract class KunenaMessageHelper
         // Update catid in all messages
         $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_messages', 'm'))
-            ->innerJoin($db->quoteName('#__kunena_attachments', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('m.thread'))
-            ->set($db->quoteName('m.catid') . ' = ' . $db->quoteName('tt.category_id'))
-            ->where($where);
+            ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('tt.id') . ' = ' . $db->quoteName('m.thread'))
+            ->set($db->quoteName('m.catid') . ' = ' . $db->quoteName('tt.category_id'));
+
+        if ($where) {
+            $query->where($where);
+        }
+
         $db->setQuery($query);
 
         try {
@@ -668,7 +672,7 @@ abstract class KunenaMessageHelper
      *
      * @throws \Exception
      */
-    public static function getLastUserIP(int $userid): bool
+    public static function getLastUserIP(int $userid): string|false
     {
         if (!$userid) {
             return false;
@@ -680,7 +684,6 @@ abstract class KunenaMessageHelper
         $query->select($db->quoteName('ip'))
             ->from($db->quoteName('#__kunena_messages'))
             ->where($db->quoteName('userid') . ' = ' . $db->quote($userid))
-            ->group($db->quoteName('ip'))
             ->order($db->quoteName('time') . ' DESC');
         $query->setLimit(1);
         $db->setQuery($query);
@@ -689,9 +692,11 @@ abstract class KunenaMessageHelper
             $ip = $db->loadResult();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
+
+            return false;
         }
 
-        return $ip;
+        return $ip ?: false;
     }
 
     /**

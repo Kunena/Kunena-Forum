@@ -607,7 +607,12 @@ class KunenaMessage extends KunenaDatabaseObject
         $this->_approved = $approved;
         
         // Gather data to be able to the handle to send the notification
-        list($emailToList, $once, $sentusers) = $this->gatherNotificationData();        
+        list($emailToList, $once, $sentusers) = $this->gatherNotificationData();
+
+        // Nobody to notify: do not queue or send an empty notification
+        if (empty($emailToList)) {
+            return false;
+        }
         
         if (!$url) {
             $url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl();
@@ -654,7 +659,7 @@ class KunenaMessage extends KunenaDatabaseObject
     private function gatherNotificationData()
     {
         if ($this->hold > 1) {
-            return false;
+            return [[], false, []];
         } elseif ($this->hold == 1) {
             $mailsubs   = 0;
             $mailmods   = $this->_config->mailModerators >= 0;
@@ -697,11 +702,9 @@ class KunenaMessage extends KunenaDatabaseObject
             KunenaUserHelper::getMyself()->userid
         );
         
+        $sentusers = [];
+
         if ($emailToList) {
-            // Make a list from all receivers; split the receivers into two distinct groups.
-            $sentusers = [];
-            $receivers = [0 => [], 1 => []];
-            
             foreach ($emailToList as $emailTo) {
                 if (!$emailTo->email || !MailHelper::isEmailAddress($emailTo->email)) {
                     continue;
@@ -714,8 +717,7 @@ class KunenaMessage extends KunenaDatabaseObject
                         ($emailTo->moderator || $emailTo->subscription)
                         )
                     ) {
-                        $receivers[$emailTo->subscription][] = $emailTo->email;
-                        $sentusers[]                         = $emailTo->id;
+                        $sentusers[] = $emailTo->id;
                     }
             }
         }

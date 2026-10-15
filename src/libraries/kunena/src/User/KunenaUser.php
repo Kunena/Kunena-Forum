@@ -1680,6 +1680,7 @@ class KunenaUser
             'blocked'    => 'COM_KUNENA_VIEW_BLOCKED',
         ];
 
+        $catid               = (int) $catid;
         $adminCategories     = KunenaAccess::getInstance()->getAdminStatus($this);
         $moderatedCategories = KunenaAccess::getInstance()->getModeratorStatus($this);
 
@@ -1689,20 +1690,19 @@ class KunenaUser
             $type = 'blocked';
         } elseif ($this->isBanned()) {
             $type = 'banned';
-        } elseif (!empty($adminCategories[$this->userid][0])) {
+        } elseif (!empty($adminCategories[0])) {
             $type = 'admin';
-        } elseif (!empty($adminCategories[$this->userid][$catid])) {
+        } elseif (!empty($adminCategories[$catid])) {
             $type = 'localadmin';
-        } elseif (!empty($moderatedCategories[$this->userid][0])) {
+        } elseif (!empty($moderatedCategories[0])) {
             $type = 'globalmod';
-        } elseif (!empty($moderatedCategories[$this->userid][$catid])) {
+        } elseif (!empty($moderatedCategories[$catid])) {
             $type = 'moderator';
         } elseif (!$catid && !empty($moderatedCategories)) {
             $type = 'moderator';
         } else {
             $type = 'user';
         }
-
         if ($code === 'class') {
             $userClasses = KunenaFactory::getTemplate()->getUserClasses();
 

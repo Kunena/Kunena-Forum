@@ -843,23 +843,12 @@ abstract class KunenaCategoryHelper
         $categoryIds = array_values(array_filter(array_map('intval', $categoryIds)));
         $categories1 = '';
         $categories2 = '';
-        $binds       = [];
 
         if ($categoryIds) {
-            $placeholders1 = [];
-            $placeholders2 = [];
-
-            foreach ($categoryIds as $i => $id) {
-                $placeholder1    = ':category1_' . $i;
-                $placeholder2    = ':category2_' . $i;
-                $placeholders1[] = $placeholder1;
-                $placeholders2[] = $placeholder2;
-                $binds[]         = [$placeholder1, $id];
-                $binds[]         = [$placeholder2, $id];
-            }
-
-            $categories1 = 'AND t.category_id IN (' . implode(',', $placeholders1) . ')';
-            $categories2 = 'AND t.category_id IN (' . implode(',', $placeholders2) . ')';
+            // IDs are integers (array_map('intval')), safe to inline
+            $categoryList = implode(',', $categoryIds);
+            $categories1  = 'AND t.category_id IN (' . $categoryList . ')';
+            $categories2  = $categories1;
         }
 
         // Update category post count and last post info on categories which have published topics
@@ -889,10 +878,6 @@ abstract class KunenaCategoryHelper
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time";
         $db->setQuery($query);
-
-        foreach ($binds as [$placeholder, $id]) {
-            $db->bind($placeholder, $id, ParameterType::INTEGER);
-        }
 
         try {
             $db->execute();

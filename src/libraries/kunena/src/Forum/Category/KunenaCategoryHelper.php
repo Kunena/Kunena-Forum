@@ -843,23 +843,12 @@ abstract class KunenaCategoryHelper
         $categoryIds = array_values(array_filter(array_map('intval', $categoryIds)));
         $categories1 = '';
         $categories2 = '';
-        $binds       = [];
 
         if ($categoryIds) {
-            $placeholders1 = [];
-            $placeholders2 = [];
-
-            foreach ($categoryIds as $i => $id) {
-                $placeholder1    = ':category1_' . $i;
-                $placeholder2    = ':category2_' . $i;
-                $placeholders1[] = $placeholder1;
-                $placeholders2[] = $placeholder2;
-                $binds[]         = [$placeholder1, $id];
-                $binds[]         = [$placeholder2, $id];
-            }
-
-            $categories1 = 'AND t.category_id IN (' . implode(',', $placeholders1) . ')';
-            $categories2 = 'AND t.category_id IN (' . implode(',', $placeholders2) . ')';
+            // IDs are integers (array_map('intval')), safe to inline
+            $categoryList = implode(',', $categoryIds);
+            $categories1  = 'AND t.category_id IN (' . $categoryList . ')';
+            $categories2  = $categories1;
         }
 
         // Update category post count and last post info on categories which have published topics
@@ -889,10 +878,6 @@ abstract class KunenaCategoryHelper
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time";
         $db->setQuery($query);
-
-        foreach ($binds as [$placeholder, $id]) {
-            $db->bind($placeholder, $id, ParameterType::INTEGER);
-        }
 
         try {
             $db->execute();
@@ -972,22 +957,10 @@ abstract class KunenaCategoryHelper
         
         // Process categories in batches
         foreach (array_chunk($categoryIds, $batchSize) as $batch) {
-            $placeholders1 = [];
-            $placeholders2 = [];
-            $binds       = [];
-            
-            foreach ($batch as $i => $id) {
-                $placeholder1    = ':category1_' . $i;
-                $placeholder2    = ':category2_' . $i;
-                $placeholders1[] = $placeholder1;
-                $placeholders2[] = $placeholder2;
-                $binds[]         = [$placeholder1, $id];
-                $binds[]         = [$placeholder2, $id];
-            }
-            
-            $categories1 = 'AND t.category_id IN (' . implode(',', $placeholders1) . ')';
-            $categories2 = 'AND t.category_id IN (' . implode(',', $placeholders2) . ')';
-            
+            // Batch only contains integers (array_map('intval')), safe to inline
+            $categoryList = implode(',', $batch);
+            $categories   = 'AND t.category_id IN (' . $categoryList . ')';
+
             $subQuerySelect = "SELECT t.category_id AS id, COUNT( * ) AS numTopics, SUM( t.posts ) AS numPosts, t2.id as last_topic_id
 					FROM " . $db->quoteName('#__kunena_topics') . " AS t INNER JOIN (SELECT t.id, t.category_id, t.last_post_time
 											FROM #__kunena_topics AS t,
@@ -997,12 +970,12 @@ abstract class KunenaCategoryHelper
 											AND moved_id =0
 										GROUP BY category_id) AS temp
 										WHERE temp.last_post_time = t.last_post_time
-										{$categories1}
+										{$categories}
 										AND t.category_id=temp.category_id
 										) AS t2 ON t2.category_id=t.category_id
 					WHERE t.hold =0
 					AND t.moved_id =0
-					{$categories2}
+					{$categories}
 					GROUP BY t.category_id";
             
             // Update category post count and last post info on categories which have published topics
@@ -1016,10 +989,6 @@ abstract class KunenaCategoryHelper
 					c.last_post_time = tt.last_post_time";
 				
 				$db->setQuery($query);
-				
-				foreach ($binds as [$placeholder, $id]) {
-				    $db->bind($placeholder, $id, ParameterType::INTEGER);
-				}
 				
 				try {
 				    $db->execute();
@@ -1045,16 +1014,10 @@ abstract class KunenaCategoryHelper
 				->update($db->quoteName('#__kunena_categories', 'c'))
 				->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0')
 				->set($fields)
-				->where($db->quoteName('c.id') . ' IN (' . implode(',', $placeholders1) . ')')
+				->where($db->quoteName('c.id') . ' IN (' . $categoryList . ')')
 				->where($db->quoteName('tt.id') . ' IS NULL');
 				
 				$db->setQuery($query);
-				
-				foreach ($binds as $i => [$placeholder, $id]) {
-				    if ($i % 2 === 0) {
-				        $db->bind($placeholder, $id, ParameterType::INTEGER);
-				    }
-				}
 				
 				try {
 				    $db->execute();

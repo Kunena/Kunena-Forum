@@ -855,7 +855,7 @@ abstract class KunenaCategoryHelper
         $query = "UPDATE " . $db->quoteName('#__kunena_categories') . " AS c
 			INNER JOIN (
 					SELECT t.category_id AS id, COUNT( * ) AS numTopics, SUM( t.posts ) AS numPosts, t2.id as last_topic_id
-					FROM " . $db->quoteName('#__kunena_topics') . " AS t INNER JOIN (SELECT t.id, t.category_id, t.last_post_time
+					FROM " . $db->quoteName('#__kunena_topics') . " AS t INNER JOIN (SELECT MAX(t.id) AS id, t.category_id, t.last_post_time
 															FROM #__kunena_topics AS t,
 																	(SELECT category_id ,  max(last_post_time) as last_post_time
 																	FROM  " . $db->quoteName('#__kunena_topics') . "
@@ -863,8 +863,11 @@ abstract class KunenaCategoryHelper
 																	AND moved_id =0
 															GROUP BY category_id) AS temp
 															WHERE temp.last_post_time = t.last_post_time
+															AND t.hold = 0
+															AND t.moved_id = 0
 															{$categories1}
 															AND t.category_id=temp.category_id
+															GROUP BY t.category_id, t.last_post_time
 															) AS t2 ON t2.category_id=t.category_id
 					WHERE t.hold =0
 					AND t.moved_id =0
@@ -901,7 +904,7 @@ abstract class KunenaCategoryHelper
 
         $query
             ->update($db->quoteName('#__kunena_categories', 'c'))
-            ->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0')
+            ->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0 AND ' . $db->quoteName('tt.moved_id') . ' = 0')
             ->set($fields)
             ->where($db->quoteName('tt.id') . ' IS NULL');
         $db->setQuery($query);
@@ -983,7 +986,7 @@ abstract class KunenaCategoryHelper
             $categories   = 'AND t.category_id IN (' . $categoryList . ')';
 
             $subQuerySelect = "SELECT t.category_id AS id, COUNT( * ) AS numTopics, SUM( t.posts ) AS numPosts, t2.id as last_topic_id
-					FROM " . $db->quoteName('#__kunena_topics') . " AS t INNER JOIN (SELECT t.id, t.category_id, t.last_post_time
+					FROM " . $db->quoteName('#__kunena_topics') . " AS t INNER JOIN (SELECT MAX(t.id) AS id, t.category_id, t.last_post_time
 											FROM #__kunena_topics AS t,
 											(SELECT category_id ,  max(last_post_time) as last_post_time
 											FROM  " . $db->quoteName('#__kunena_topics') . "
@@ -991,8 +994,11 @@ abstract class KunenaCategoryHelper
 											AND moved_id =0
 										GROUP BY category_id) AS temp
 										WHERE temp.last_post_time = t.last_post_time
+										AND t.hold = 0
+										AND t.moved_id = 0
 										{$categories}
 										AND t.category_id=temp.category_id
+										GROUP BY t.category_id, t.last_post_time
 										) AS t2 ON t2.category_id=t.category_id
 					WHERE t.hold =0
 					AND t.moved_id =0
@@ -1033,7 +1039,7 @@ abstract class KunenaCategoryHelper
 				
 				$query
 				->update($db->quoteName('#__kunena_categories', 'c'))
-				->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0')
+				->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0 AND ' . $db->quoteName('tt.moved_id') . ' = 0')
 				->set($fields)
 				->where($db->quoteName('c.id') . ' IN (' . $categoryList . ')')
 				->where($db->quoteName('tt.id') . ' IS NULL');

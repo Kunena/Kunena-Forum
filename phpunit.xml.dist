@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+         failOnEmptyTestSuite="false"
+         failOnWarning="true"
+         failOnRisky="true">
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>src/libraries/kunena/src</directory>
+        </include>
+    </source>
+    <php>
+        <!-- Local test database; override these in phpunit.xml or the environment. -->
+        <env name="KUNENA_TEST_DB_HOST" value="127.0.0.1"/>
+        <env name="KUNENA_TEST_DB_PORT" value="3306"/>
+        <env name="KUNENA_TEST_DB_NAME" value="tests"/>
+        <env name="KUNENA_TEST_DB_USER" value="root"/>
+        <env name="KUNENA_TEST_DB_PASSWORD" value="root"/>
+        <env name="KUNENA_TEST_DB_PREFIX" value="jos_"/>
+    </php>
+</phpunit>

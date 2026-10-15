@@ -80,3 +80,4 @@ selenium.log
 tests/cache
 
 .php-cs-fixer.cache
+.phpunit.cache/

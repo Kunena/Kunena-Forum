@@ -139,6 +139,6 @@ class MailerBrokenException extends ErrorException
      */
     public function errorMessage(): string
     {
-        return "$this->code - $$this->message\n at: $$this->file:$$this->line";
+        return "{$this->code} - {$this->message}\n at: {$this->file}:{$this->line}";
     }
 }

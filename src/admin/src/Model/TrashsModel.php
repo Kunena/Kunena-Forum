@@ -245,10 +245,15 @@ class TrashsModel extends ListModel
      */
     public function purgeTopics(array $cid): bool
     {
-        $app    = Factory::getApplication();
-        $topics = KunenaTopicHelper::getTopics($cid, 'none');
+        $app        = Factory::getApplication();
+        $topics     = KunenaTopicHelper::getTopics($cid, 'none');
+        $topicIds   = [];
+        $categories = [];
 
         foreach ($topics as $topic) {
+            $topicIds[]                      = $topic->id;
+            $categories[$topic->category_id] = $topic->category_id;
+
             try {
                 $topic->delete();
             } catch (Exception $e) {
@@ -257,8 +262,10 @@ class TrashsModel extends ListModel
             }
         }
 
-        KunenaTopicHelper::recount($cid);
-        KunenaCategoryHelper::recount($topic->getCategory()->id);
+        if ($topicIds) {
+            KunenaTopicHelper::recount($topicIds);
+            KunenaCategoryHelper::recount(array_values($categories));
+        }
 
         return \true;
     }
@@ -274,10 +281,12 @@ class TrashsModel extends ListModel
      */
     public function purgeMessages(array $cid, $age = 0): bool
     {
-        $app       = Factory::getApplication();
-        $messages  = KunenaMessageHelper::getMessages($cid, 'none');
-        $date      = (new Date('now - ' . $age . ' days'))->toUnix();
-        $processed = \false;
+        $app        = Factory::getApplication();
+        $messages   = KunenaMessageHelper::getMessages($cid, 'none');
+        $date       = (new Date('now - ' . $age . ' days'))->toUnix();
+        $processed  = \false;
+        $topicIds   = [];
+        $categories = [];
 
         foreach ($messages as $message) {
 
@@ -293,6 +302,9 @@ class TrashsModel extends ListModel
                 $target    = KunenaMessageHelper::get($message->id);
                 $topic     = KunenaTopicHelper::get($target->getTopic());
 
+                $topicIds[$topic->id]            = $topic->id;
+                $categories[$topic->category_id] = $topic->category_id;
+
                 if ($topic->attachments > 0) {
                     $topic->attachments = $topic->attachments - 1;
 
@@ -307,8 +319,8 @@ class TrashsModel extends ListModel
         }
 
         if ($processed) {
-            KunenaTopicHelper::recount($cid);
-            KunenaCategoryHelper::recount($topic->getCategory()->id);
+            KunenaTopicHelper::recount(array_values($topicIds));
+            KunenaCategoryHelper::recount(array_values($categories));
         }
 
         return \true;

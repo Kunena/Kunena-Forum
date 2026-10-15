@@ -81,7 +81,7 @@ class TopicsController extends KunenaController
 
             foreach ($topics as $topic) {
                 try {
-                    $topic->isAuthorised('permdelete');
+                    $topic->tryAuthorise('permdelete');
                     $topic->delete();
 
                     // Activity integration
@@ -182,7 +182,7 @@ class TopicsController extends KunenaController
         } else {
             foreach ($topics as $topic) {
                 try {
-                    $topic->isAuthorised('delete');
+                    $topic->tryAuthorise('delete');
                     $topic->publish(KunenaForum::TOPIC_DELETED);
 
                     $message = Text::_('COM_KUNENA_BULKMSG_DELETED');
@@ -240,7 +240,7 @@ class TopicsController extends KunenaController
         } else {
             foreach ($topics as $topic) {
                 try {
-                    $topic->isAuthorised('undelete');
+                    $topic->tryAuthorise('undelete');
                     $topic->publish(KunenaForum::PUBLISHED);
 
                     $message = Text::_('COM_KUNENA_POST_SUCCESS_UNDELETE');
@@ -298,7 +298,7 @@ class TopicsController extends KunenaController
         } else {
             foreach ($topics as $topic) {
                 try {
-                    $topic->isAuthorised('approve');
+                    $topic->tryAuthorise('approve');
                     $topic->publish(KunenaForum::PUBLISHED);
 
                     $message = Text::_('COM_KUNENA_MODERATE_APPROVE_SUCCESS');
@@ -370,7 +370,7 @@ class TopicsController extends KunenaController
             }
 
             try {
-                $target->isAuthorised('read');
+                $target->tryAuthorise('read');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
@@ -378,7 +378,7 @@ class TopicsController extends KunenaController
             if ($topics) {
                 foreach ($topics as $topic) {
                     try {
-                        $topic->isAuthorised('move');
+                        $topic->tryAuthorise('move');
                         $topic->move($target);
 
                         $message = Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
@@ -391,7 +391,7 @@ class TopicsController extends KunenaController
                     $topic = $message->getTopic();
 
                     try {
-                        $message->isAuthorised('move');
+                        $message->tryAuthorise('move');
                         $topic->move($target, $message->id);
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
@@ -525,7 +525,7 @@ class TopicsController extends KunenaController
         } else {
             foreach ($messages as $message) {
                 try {
-                    $message->isAuthorised('approve');
+                    $message->tryAuthorise('approve');
                     $message->publish(KunenaForum::PUBLISHED);
 
                     $message->processNotification();
@@ -570,7 +570,7 @@ class TopicsController extends KunenaController
         } else {
             foreach ($messages as $message) {
                 try {
-                    $message->isAuthorised('delete');
+                    $message->tryAuthorise('delete');
                     $message->publish(KunenaForum::DELETED);
 
                     $success++;
@@ -614,7 +614,7 @@ class TopicsController extends KunenaController
         } else {
             foreach ($messages as $message) {
                 try {
-                    $message->isAuthorised('undelete');
+                    $message->tryAuthorise('undelete');
                     $message->publish(KunenaForum::PUBLISHED);
 
                     $success++;
@@ -658,7 +658,7 @@ class TopicsController extends KunenaController
         } else {
             foreach ($messages as $message) {
                 try {
-                    $message->isAuthorised('permdelete');
+                    $message->tryAuthorise('permdelete');
                     $message->delete();
 
                     $success++;

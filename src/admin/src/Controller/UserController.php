@@ -257,7 +257,7 @@ class UserController extends FormController
                     $topic = $message->getTopic();
 
                     try {
-                        $message->isAuthorised('move');
+                        $message->tryAuthorise('move');
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
                     }

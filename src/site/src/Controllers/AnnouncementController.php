@@ -95,9 +95,11 @@ class AnnouncementController extends KunenaController
             $announcement->published = 1;
 
             try {
-                $announcement->isAuthorised('edit');
+                $announcement->tryAuthorise('edit');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                continue;
             }
 
             try {
@@ -152,9 +154,11 @@ class AnnouncementController extends KunenaController
             $announcement->published = 0;
 
             try {
-                $announcement->isAuthorised('edit');
+                $announcement->tryAuthorise('edit');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                continue;
             }
 
             try {
@@ -202,9 +206,11 @@ class AnnouncementController extends KunenaController
             $announcement = KunenaAnnouncementHelper::get($id);
 
             try {
-                $announcement->isAuthorised('delete');
+                $announcement->tryAuthorise('delete');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                continue;
             }
 
             try {
@@ -278,7 +284,7 @@ class AnnouncementController extends KunenaController
         $announcement->bind($fields);
 
         try {
-            $announcement->isAuthorised($id ? 'edit' : 'create');
+            $announcement->tryAuthorise($id ? 'edit' : 'create');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();

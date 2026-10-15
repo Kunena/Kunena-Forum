@@ -63,7 +63,7 @@ class CategoryDisplay extends KunenaControllerDisplay
             $category = $model->getCategory();
 
             try {
-                $category->isAuthorised('read');
+                $category->tryAuthorise('read');
             } catch (Exception $response) {
                 // TODO: how to throw or show the exception ?
             }

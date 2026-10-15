@@ -116,7 +116,9 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 ->from($db->quoteName('#__kunena_users_banned', 'b'))
                 ->where($db->quoteName('b.expiration') . ' <= ' . $db->quote($now->toSql()))
                 ->where($db->quoteName('b.blocked') . ' = 1')
-                ->where($db->quoteName('b.expiration') . ' != ' . $db->quote('9999-12-31 23:59:59'));
+                ->where($db->quoteName('b.expiration') . ' != ' . $db->quote('9999-12-31 23:59:59'))
+                // Skip bans already handled: processing stamps modified_time at or after the expiration
+                ->where('(' . $db->quoteName('b.modified_time') . ' IS NULL OR ' . $db->quoteName('b.modified_time') . ' < ' . $db->quoteName('b.expiration') . ')');
 
             $db->setQuery($query);
             $expiredBans      = $db->loadObjectList();

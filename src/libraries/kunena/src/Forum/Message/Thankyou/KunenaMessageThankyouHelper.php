@@ -152,23 +152,19 @@ abstract class KunenaMessageThankyouHelper
      */
     public static function getTotal($starttime = null, $endtime = null): int
     {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $where = [];
-
-        if (!empty($starttime)) {
-            $where [] = $db->quoteName('time') . ' >= UNIX_TIMESTAMP(' . $db->quote(\intval($starttime)) . ')';
-        }
-
-        if (!empty($endtime)) {
-            $where [] = $db->quoteName('time') . ' <= UNIX_TIMESTAMP({' . $db->quote(\intval($endtime)) . ')';
-        }
+        $db      = Factory::getContainer()->get('DatabaseDriver');
+        $results = 0;
 
         $query = $db->createQuery();
         $query->select('COUNT(*)')
             ->from($db->quoteName('#__kunena_thankyou'));
 
-        if (!empty($where)) {
-            $query .= " WHERE " . implode(" AND ", $where);
+        if (!empty($starttime)) {
+            $query->where($db->quoteName('time') . ' >= UNIX_TIMESTAMP(' . $db->quote(\intval($starttime)) . ')');
+        }
+
+        if (!empty($endtime)) {
+            $query->where($db->quoteName('time') . ' <= UNIX_TIMESTAMP(' . $db->quote(\intval($endtime)) . ')');
         }
 
         $db->setQuery($query);
@@ -243,8 +239,8 @@ abstract class KunenaMessageThankyouHelper
         $query      = $db->createQuery();
         $query->select(array($db->quoteName('s.postid'), 'COUNT(*) AS countid', $db->quoteName('m.catid'), $db->quoteName('m.thread'), $db->quoteName('m.id'), $db->quoteName('m.subject')))
             ->from($db->quoteName('#__kunena_thankyou', 's'))
-            ->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON ' . $db->quoteName('s.postid') . ' = ' . $db->quoteName('m.id'))
-            ->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
+            ->innerJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('s.postid') . ' = ' . $db->quoteName('m.id'))
+            ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
             ->where($db->quoteName('m.catid') . ' IN (' . $catlist . ')')
             ->andWhere($db->quoteName('m.hold') . ' = 0')
             ->andWhere($db->quoteName('tt.hold') . ' = 0')
@@ -290,8 +286,8 @@ abstract class KunenaMessageThankyouHelper
         $query      = $db->createQuery();
         $query->select($db->quoteName(array('m.catid', 'm.thread', 'm.id')))
             ->from($db->quoteName('#__kunena_thankyou', 't'))
-            ->innerJoin($db->quoteName('#__kunena_kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.postid'))
-            ->innerJoin($db->quoteName('#__kunena_kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
+            ->innerJoin($db->quoteName('#__kunena_messages', 'm') . ' ON ' . $db->quoteName('m.id') . ' = ' . $db->quoteName('t.postid'))
+            ->innerJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('m.thread') . ' = ' . $db->quoteName('tt.id'))
             ->where($db->quoteName('m.catid') . ' IN (' . $catlist . ')')
             ->where($db->quoteName('m.hold') . ' = 0')
             ->where($db->quoteName('tt.hold') . ' = 0')

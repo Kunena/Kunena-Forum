@@ -286,33 +286,57 @@ class ToolsController extends FormController
         if ($userDelLife) {
             // Lifetime bans are stored with the maximum expiration date; temporary bans must be kept
             $query = $db->createQuery()
-                ->delete($db->quoteName('#__kunena_users'))
+                ->select($db->quoteName('userid'))
+                ->from($db->quoteName('#__kunena_users'))
                 ->where($db->quoteName('banned') . ' = ' . $db->quote('9999-12-31 23:59:59'));
             $db->setQuery($query);
 
             try {
-                $db->execute();
+                $lifeBanned = array_map('intval', (array) $db->loadColumn());
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
                 return;
             }
 
-            $query = $db->createQuery()
-                ->delete($db->quoteName('#__users'))
-                ->where('block=\'1\'');
+            $deleted = 0;
 
-            $db->setQuery($query);
+            if ($lifeBanned) {
+                $idList = implode(',', $lifeBanned);
 
-            try {
-                $db->execute();
-            } catch (RuntimeException $e) {
-                $this->app->enqueueMessage($e->getMessage(), 'error');
+                $query = $db->createQuery()
+                    ->delete($db->quoteName('#__kunena_users'))
+                    ->where($db->quoteName('userid') . ' IN (' . $idList . ')');
+                $db->setQuery($query);
 
-                return;
+                try {
+                    $db->execute();
+                } catch (RuntimeException $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                    return;
+                }
+
+                // Only remove the Joomla accounts of the lifetime banned users, not every blocked account
+                $query = $db->createQuery()
+                    ->delete($db->quoteName('#__users'))
+                    ->where($db->quoteName('id') . ' IN (' . $idList . ')')
+                    ->where($db->quoteName('block') . ' = 1');
+
+                $db->setQuery($query);
+
+                try {
+                    $db->execute();
+                } catch (RuntimeException $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                    return;
+                }
+
+                $deleted = $db->getAffectedRows();
             }
 
-            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $db->getAffectedRows()), 'success');
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE', $deleted), 'success');
         }
 
         if ($userRename) {

@@ -791,8 +791,7 @@ abstract class KunenaTopicHelper
                 ->andWhere($db->quoteName('m.moved') . ' = 0')
                 ->andWhere($db->quoteName('m.thread') . ' IN (' . $idstr . ')')
                 ->andWhere($db->quoteName('m.time') . ' > ' . $db->quote($session->getAllReadTime()))
-                ->andWhere($db->quoteName('ur.time') . ' IS NULL')
-                ->orWhere($db->quoteName('m.time') . ' > ' . $db->quoteName('ur.time'))
+                ->andWhere('(' . $db->quoteName('ur.time') . ' IS NULL OR ' . $db->quoteName('m.time') . ' > ' . $db->quoteName('ur.time') . ')')
                 ->group($db->quoteName('thread'));
             $db->setQuery($query);
 

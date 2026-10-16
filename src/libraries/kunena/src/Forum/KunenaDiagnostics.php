@@ -377,8 +377,7 @@ abstract class KunenaDiagnostics
         $query->select('*')
             ->from($db->quoteName('#__kunena_categories', 'a'))
             ->leftJoin($db->quoteName('#__kunena_aliases', 'c') . ' ON a.alias=c.alias')
-            ->where("c.type!='catid'")
-            ->orWhere("c.item!=a.id");
+            ->where("c.type!='catid' OR c.item!=a.id");
         $db->setQuery((string) $query);
 
         $list = (array) $db->loadObjectList();

@@ -1876,16 +1876,20 @@ class KunenaCategory extends KunenaDatabaseObject
             $query->setLimit(1);
             $db->setQuery($query);
 
+            $lastTopic = null;
+
             try {
-                $topic = $db->loadObject();
+                $lastTopic = $db->loadObject();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
+
+                return false;
             }
 
-            if ($topic) {
-                $this->last_topic_id  = $topic->id;
-                $this->last_post_id   = $topic->last_post_id;
-                $this->last_post_time = $topic->last_post_time;
+            if ($lastTopic) {
+                $this->last_topic_id  = $lastTopic->id;
+                $this->last_post_id   = $lastTopic->last_post_id;
+                $this->last_post_time = $lastTopic->last_post_time;
                 $update               = true;
             } else {
                 $this->numTopics      = 0;

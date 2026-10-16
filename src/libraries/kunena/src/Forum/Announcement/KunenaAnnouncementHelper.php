@@ -141,6 +141,8 @@ abstract class KunenaAnnouncementHelper
         $query->setLimit($limit, $start);
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $db->loadAssocList();
         } catch (ExecutionFailureException $e) {
@@ -179,7 +181,7 @@ abstract class KunenaAnnouncementHelper
     public static function getCount($filter = true): int
     {
         $db       = Factory::getContainer()->get('DatabaseDriver');
-        $nullDate = $db->getNullDate() ? $db->quote($db->getNullDate()) : 'NULL';
+        $nullDate = $db->quote('1000-01-01 00:00:00');
         $nowDate  = $db->quote(Factory::getDate()->toSql());
 
         if ($filter) {
@@ -198,6 +200,8 @@ abstract class KunenaAnnouncementHelper
         }
 
         $db->setQuery($query);
+
+        $total = 0;
 
         try {
             $total = (int) $db->loadResult();

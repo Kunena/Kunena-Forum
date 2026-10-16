@@ -291,6 +291,8 @@ class KunenaRate
         $query->setLimit($limit, $start);
         $this->_db->setQuery($query);
 
+        $users = [];
+
         try {
             $users = (array) $this->_db->loadObjectList();
         } catch (ExecutionFailureException $e) {

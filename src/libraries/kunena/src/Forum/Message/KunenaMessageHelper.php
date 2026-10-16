@@ -652,6 +652,8 @@ abstract class KunenaMessageHelper
             ->andWhere($db->quoteName('m.hold') . ' = 0');
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $db->loadAssocList('id');
         } catch (ExecutionFailureException $e) {
@@ -740,8 +742,10 @@ abstract class KunenaMessageHelper
 
         $db->setQuery($query);
 
+        $threads = [];
+
         try {
-            $threads = $db->loadObjectList();
+            $threads = (array) $db->loadObjectList();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
         }

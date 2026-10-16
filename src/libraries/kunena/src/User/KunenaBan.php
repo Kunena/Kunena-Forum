@@ -486,8 +486,10 @@ class KunenaBan
         $query->setLimit($limit, $start);
         $db->setQuery($query);
 
+        $results = [];
+
         try {
-            $results = $db->loadAssocList();
+            $results = (array) $db->loadAssocList();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
         }
@@ -529,8 +531,10 @@ class KunenaBan
             ->order($db->quoteName('id') . ' DESC');
         $db->setQuery($query);
 
+        $results = [];
+
         try {
-            $results = $db->loadAssocList();
+            $results = (array) $db->loadAssocList();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
         }

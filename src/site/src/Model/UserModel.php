@@ -45,9 +45,10 @@ class UserModel extends KunenaModel
             $db    = $this->getDatabase();
             $where = $this->getQueryWhere();
             $query = $db->createQuery();
-            $query->select('COUNT(*)')->from($db->quoteName('#__users', 'u')->where("{$where}"));
+            $query->select('COUNT(*)')->from($db->quoteName('#__users', 'u'))->where($where);
 
             try {
+                $db->setQuery($query);
                 $total = $db->loadResult();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);

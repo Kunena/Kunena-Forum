@@ -630,7 +630,10 @@ abstract class KunenaUserHelper
         $query = $db->createQuery();
         $query->insert($db->quoteName('#__kunena_users'))
             ->columns([$db->quoteName('userid'), $db->quoteName('posts')])
-            ->values($selectQuery) . ' ON DUPLICATE KEY UPDATE ' . $db->quoteName('posts') . '=VALUES(' . $db->quoteName('posts') . ')';
+            ->values($selectQuery);
+
+        $query = (string) $query . ' ON DUPLICATE KEY UPDATE ' . $db->quoteName('posts') . '=VALUES(' . $db->quoteName('posts') . ')';
+        $db->setQuery($query);
 
         try {
             $db->execute();
@@ -657,7 +660,7 @@ abstract class KunenaUserHelper
         // Update banned state
         $query = $db->createQuery();
         $query->update($db->quoteName('#__kunena_users', 'u'))
-            ->join('INNER', '(' . $db->quoteName('userid') . ', MAX(' . $db->quoteName('expiration') . ') AS ' . $db->quoteName('banned') . ' FROM ' . $db->quoteName('#__kunena_users_banned') . ' GROUP BY ' . $db->quoteName('userid') . ') AS b ON ' . $db->quoteName('u.userid') . '=' . $db->quoteName('b.userid'))
+            ->join('INNER', '(SELECT ' . $db->quoteName('userid') . ', MAX(' . $db->quoteName('expiration') . ') AS ' . $db->quoteName('banned') . ' FROM ' . $db->quoteName('#__kunena_users_banned') . ' GROUP BY ' . $db->quoteName('userid') . ') AS b ON ' . $db->quoteName('u.userid') . '=' . $db->quoteName('b.userid'))
             ->set($db->quoteName('u.banned') . '=' . $db->quoteName('b.banned'));
         $db->setQuery($query);
 

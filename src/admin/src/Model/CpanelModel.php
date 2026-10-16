@@ -57,12 +57,13 @@ class CpanelModel extends AdminModel
         $query->where($db->quoteName('a.send') . ' = ' . 1);
         
         try {
+            $db->setQuery($query);
             $result = $db->loadResult();
         } catch (Exception $e) {
             return 0;
         }
         
-        return $result;
+        return (int) $result;
     }
     
     /**

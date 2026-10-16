@@ -1581,52 +1581,34 @@ class TopicController extends KunenaController
                     // Create a new poll
                     try {
                         $topic->tryAuthorise('poll.create');
-                    } catch (Exception $e) {
-                        $this->app->enqueueMessage($e->getMessage(), 'error');
-                    }
-
-                    try {
                         $poll->save();
+                        $topic->poll_id = $poll->id;
+                        $topic->save();
+                        $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
                     }
-
-                    $topic->poll_id = $poll->id;
-                    $topic->save();
-                    $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
                 } else {
                     if ($this->config->allowUserEditPoll || (!$this->config->allowUserEditPoll && !$poll->getUserCount())) {
                         // Edit existing poll
                         try {
                             $topic->tryAuthorise('poll.edit');
-                        } catch (Exception $e) {
-                            $this->app->enqueueMessage($e->getMessage(), 'error');
-                        }
-
-                        try {
                             $poll->save();
+                            $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_EDITED'), 'success');
                         } catch (Exception $e) {
                             $this->app->enqueueMessage($e->getMessage(), 'error');
                         }
-
-                        $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_EDITED'), 'success');
                     }
                 }
             } elseif ($poll->exists() && $topic->isAuthorised('poll.edit')) {
                 // Delete poll
                 try {
                     $topic->tryAuthorise('poll.delete');
-                } catch (Exception $e) {
-                    $this->app->enqueueMessage($e->getMessage(), 'error');
-                }
-
-                try {
                     $poll->delete();
+                    $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_DELETED'), 'success');
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
-
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_DELETED'), 'success');
             }
         }
 

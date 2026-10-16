@@ -671,9 +671,8 @@ class KunenaStatistics
                 ->group($this->_db->quoteName('t.targetuserid'));
             $query->order($this->_db->quoteName('count') . ' DESC');
 
-            if (KunenaFactory::getConfig()->superAdminUserlist) {
-                $filter = Access::getUsersByGroup(8);
-                $query->where($this->_db->quoteName('u.id') . ' NOT IN (' . implode(',', $filter) . ')');
+            if (KunenaFactory::getConfig()->superAdminUserlist && ($filter = Access::getUsersByGroup(8))) {
+                $query->where($this->_db->quoteName('u.id') . ' NOT IN (' . implode(',', array_map('intval', $filter)) . ')');
             }
 
             $query->setLimit($limit);

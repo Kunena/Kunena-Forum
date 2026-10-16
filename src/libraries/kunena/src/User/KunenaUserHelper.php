@@ -379,9 +379,8 @@ abstract class KunenaUserHelper
             $query->where($db->quoteName('ku.posts') . ' > 0');
             $query->order($db->quoteName('ku.posts') . ' DESC');
 
-            if (KunenaFactory::getConfig()->superAdminUserlist) {
-                $filter = Access::getUsersByGroup(8);
-                $query->where($db->quoteName('u.id') . ' NOT IN (' . implode(',', $filter) . ')');
+            if (KunenaFactory::getConfig()->superAdminUserlist && ($filter = Access::getUsersByGroup(8))) {
+                $query->where($db->quoteName('u.id') . ' NOT IN (' . implode(',', array_map('intval', $filter)) . ')');
             }
 
             $query->setLimit($limit);

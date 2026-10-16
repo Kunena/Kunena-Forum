@@ -324,8 +324,10 @@ class KunenaTopicUser
             $query->setLimit(1);
             $this->_db->setQuery($query);
 
+            $info = null;
+
             try {
-                $info = $this->_db->loadAssocList();
+                $info = $this->_db->loadAssoc();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
 
@@ -334,6 +336,11 @@ class KunenaTopicUser
 
             if ($info) {
                 $this->bind($info);
+            } else {
+                // The user has no visible messages left in this topic.
+                $this->posts        = 0;
+                $this->last_post_id = 0;
+                $this->owner        = 0;
             }
         }
 

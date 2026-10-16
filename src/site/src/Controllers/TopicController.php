@@ -1297,7 +1297,7 @@ class TopicController extends KunenaController
             return;
         }
 
-        $attachIds          = explode(',', $attachIds[0]);
+        $attachIds          = isset($attachIds[0]) && $attachIds[0] !== '' ? explode(',', $attachIds[0]) : [];
         $moderator          = $this->me->isModerator($message->getCategory());
         $parent             = $message->getParent();
         $author             = $message->getAuthor();

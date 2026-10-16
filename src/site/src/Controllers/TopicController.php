@@ -1897,19 +1897,24 @@ class TopicController extends KunenaController
 
         $topic = KunenaTopicHelper::get($this->id);
 
-        if ($topic->isAuthorised('read')) {
-            try {
-                $topic->subscribe(0);
-            } catch (Exception $e) {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC') . ' ' . $e->getMessage(), 'error');
-                $this->setRedirectBack();
-            }
+        try {
+            $topic->tryAuthorise('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+            return; // -- aborts
+        }
+
+        try {
+            $topic->subscribe(0);
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNSUBSCRIBED_TOPIC'), 'success');
 
             // Activity integration
             $activity = KunenaFactory::getActivityIntegration();
             $activity->onAfterSubscribe($topic, 0);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC') . ' ' . $e->getMessage(), 'error');
         }
 
         $this->setRedirectBack();

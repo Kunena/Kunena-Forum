@@ -1747,9 +1747,7 @@ class KunenaUser
         $expiration = new Date($this->banned);
         $now        = new Date();
 
-        if ($expiration->toUnix() > $now->toUnix() && $expiration->toUnix() < '9999-12-31 23:59:59') {
-            return true;
-        }
+        return $expiration->toUnix() > $now->toUnix();
     }
 
     /**

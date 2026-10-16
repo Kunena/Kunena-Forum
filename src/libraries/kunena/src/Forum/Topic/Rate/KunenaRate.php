@@ -229,6 +229,12 @@ class KunenaRate
             return new KunenaResponseJson($exception);
         }
 
+        if ((int) $this->rate < 1 || (int) $this->rate > 5) {
+            $exception = new RuntimeException('Bad Request', 400);
+
+            return new KunenaResponseJson($exception);
+        }
+
         $time  = Factory::getDate();
         $query = $this->_db->createQuery();
         $values = [

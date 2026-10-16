@@ -199,13 +199,13 @@ abstract class KunenaMessageThankyouHelper
             $field = 'userid';
         }
 
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select(array($db->quoteName('s.userid'), 'COUNT(' . $db->quoteName('s.' . $field) . ') AS countid', $db->quoteName('u.username')))
+        $db      = Factory::getContainer()->get('DatabaseDriver');
+        $results = [];
+        $query   = $db->createQuery();
+        $query->select(array($db->quoteName('s.' . $field, 'userid'), 'COUNT(' . $db->quoteName('s.' . $field) . ') AS countid', $db->quoteName('u.username')))
             ->from($db->quoteName('#__kunena_thankyou', 's'))
-            ->innerJoin($db->quoteName('#__users', 'u'))
-            ->where($db->quoteName('s.' . $field) . ' = u.id')
-            ->group($db->quoteName('s.' . $field))
+            ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('s.' . $field) . ' = ' . $db->quoteName('u.id'))
+            ->group($db->quoteName(['s.' . $field, 'u.username']))
             ->order($db->quoteName('countid') . ' DESC');
         $query->setLimit($limit, $limitstart);
         $db->setQuery($query);

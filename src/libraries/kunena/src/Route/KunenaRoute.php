@@ -802,8 +802,10 @@ abstract class KunenaRoute
 
         $db->setQuery($query);
 
+        $aliases = [];
+
         try {
-            $aliases = $db->loadObjectList();
+            $aliases = (array) $db->loadObjectList();
         } catch (\RuntimeException $e) {
             $app->enqueueMessage($e->getMessage(), 'error');
         }

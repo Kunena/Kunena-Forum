@@ -238,11 +238,11 @@ abstract class KunenaTopicUserReadHelper
         // Move all user topics which do not exist in new topic
         $query1 = $db->createQuery();
         $query1->update($db->quoteName('#__kunena_user_read', 'ur'))
-            ->innerJoin($db->quoteName('#__kunena_user_read', 'o') . ' ON ' . $db->quoteName('o.user_id') . ' = ' . $db->quoteName('ur.user_id'))
+            ->leftJoin($db->quoteName('#__kunena_user_read', 'n') . ' ON ' . $db->quoteName('n.user_id') . ' = ' . $db->quoteName('ur.user_id') . ' AND ' . $db->quoteName('n.topic_id') . ' = ' . $db->quote($new->id))
             ->set($db->quoteName('ur.topic_id') . ' = ' . $db->quote($new->id))
             ->set($db->quoteName('ur.category_id') . ' = ' . $db->quote($new->category_id))
-            ->where($db->quoteName('o.topic_id') . ' = ' . $db->quote($old->id))
-            ->where($db->quoteName('ur.topic_id') . ' IS NULL');
+            ->where($db->quoteName('ur.topic_id') . ' = ' . $db->quote($old->id))
+            ->where($db->quoteName('n.user_id') . ' IS NULL');
         $queries[] = $query1;
 
         // Merge user topics information that exists in both topics

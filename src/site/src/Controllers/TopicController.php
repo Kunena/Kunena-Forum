@@ -1849,7 +1849,9 @@ class TopicController extends KunenaController
         }
 
         try {
-            $topic->subscribe(1);
+            if (!$topic->subscribe(1)) {
+                throw new Exception(Text::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC'));
+            }
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUBSCRIBED_TOPIC'), 'success');
 
@@ -1890,7 +1892,9 @@ class TopicController extends KunenaController
         }
 
         try {
-            $topic->subscribe(0);
+            if (!$topic->subscribe(0)) {
+                throw new Exception(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC'));
+            }
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNSUBSCRIBED_TOPIC'), 'success');
 
@@ -1931,7 +1935,9 @@ class TopicController extends KunenaController
         }
 
         try {
-            $topic->favorite(1);
+            if (!$topic->favorite(1)) {
+                throw new Exception(Text::_('COM_KUNENA_POST_NO_FAVORITED_TOPIC'));
+            }
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_FAVORITED_TOPIC'), 'success');
 
@@ -1972,7 +1978,9 @@ class TopicController extends KunenaController
         }
             
         try {
-            $topic->favorite(0);
+            if (!$topic->favorite(0)) {
+                throw new Exception(Text::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC'));
+            }
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_UNFAVORITED_TOPIC'), 'success');
 
@@ -2013,7 +2021,9 @@ class TopicController extends KunenaController
         }
             
         try {
-            $topic->sticky(1);
+            if (!$topic->sticky(1)) {
+                throw new Exception(Text::_('COM_KUNENA_POST_STICKY_NOT_SET'));
+            }
 
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_SET'), 'success');
 

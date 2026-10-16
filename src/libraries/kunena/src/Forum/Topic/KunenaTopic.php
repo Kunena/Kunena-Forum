@@ -464,12 +464,12 @@ class KunenaTopic extends KunenaDatabaseObject
         $usertopic->subscribed = (int) $value;
 
         try {
-            $usertopic->save();
+            $saved = $usertopic->save();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 
-        return true;
+        return $saved;
     }
 
     /**
@@ -502,12 +502,12 @@ class KunenaTopic extends KunenaDatabaseObject
         $usertopic->favorite = (int) $value;
 
         try {
-            $usertopic->save();
+            $saved = $usertopic->save();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 
-        return true;
+        return $saved;
     }
 
     /**

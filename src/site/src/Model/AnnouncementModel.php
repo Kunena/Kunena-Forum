@@ -89,14 +89,14 @@ class AnnouncementModel extends ListModel
         $this->total = KunenaAnnouncementHelper::getCount(!$this->me->isModerator());
 
         // If out of range, use last page
-        if ($limit && $this->total < $start) {
-            $start = \intval($this->total / $limit) * $limit;
+        if ($limit && $this->total <= $start) {
+            $start = max(0, (int) ceil($this->total / $limit) - 1) * $limit;
         }
 
         $announces = KunenaAnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
 
-        if ($this->total < $start) {
-            $this->setState('list.start', \intval($this->total / $limit) * $limit);
+        if ($limit && $this->total <= $start) {
+            $this->setState('list.start', max(0, (int) ceil($this->total / $limit) - 1) * $limit);
         }
 
         return $announces;

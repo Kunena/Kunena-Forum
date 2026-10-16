@@ -420,8 +420,8 @@ abstract class KunenaCategoryHelper
         }
 
         // If out of range, use last page
-        if ($total < $limitstart) {
-            $limitstart = \intval($total / $limit) * $limit;
+        if ($limit && $total <= $limitstart) {
+            $limitstart = max(0, (int) ceil($total / $limit) - 1) * $limit;
         }
 
         $query = $db->createQuery();

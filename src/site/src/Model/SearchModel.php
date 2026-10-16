@@ -130,8 +130,8 @@ class SearchModel extends KunenaModel
         $limit      = $this->getState('list.limit');
         list($this->total, $this->messages) = KunenaMessageHelper::getLatestMessages($this->getState('query.catids'), $limitstart, $limit, $params);
 
-        if ($this->total < $limitstart) {
-            $this->setState('list.start', \intval($this->total / $limit) * $limit);
+        if ($limit && $this->total <= $limitstart) {
+            $this->setState('list.start', max(0, (int) ceil($this->total / $limit) - 1) * $limit);
         }
 
         $topicids = [];

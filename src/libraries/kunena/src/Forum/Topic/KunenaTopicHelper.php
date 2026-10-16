@@ -375,8 +375,8 @@ abstract class KunenaTopicHelper
         }
 
         // If out of range, use last page
-        if ($limit && $total < $limitstart) {
-            $limitstart = \intval($total / $limit) * $limit;
+        if ($limit && $total <= $limitstart) {
+            $limitstart = max(0, (int) ceil($total / $limit) - 1) * $limit;
         }
 
         // Get items

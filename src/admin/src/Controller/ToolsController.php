@@ -284,11 +284,11 @@ class ToolsController extends FormController
         }
 
         if ($userDelLife) {
-            $now = Factory::getDate();
-
-            // TODO: need to find a way to make this query working with DatabaseQuery
-            $db->createQuery();
-            $db->setQuery("DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE banned > " . $db->quote($now->toSql()));
+            // Lifetime bans are stored with the maximum expiration date; temporary bans must be kept
+            $query = $db->createQuery()
+                ->delete($db->quoteName('#__kunena_users'))
+                ->where($db->quoteName('banned') . ' = ' . $db->quote('9999-12-31 23:59:59'));
+            $db->setQuery($query);
 
             try {
                 $db->execute();

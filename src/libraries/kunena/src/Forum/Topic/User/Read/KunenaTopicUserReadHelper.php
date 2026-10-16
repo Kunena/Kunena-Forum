@@ -334,7 +334,7 @@ abstract class KunenaTopicUserReadHelper
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
-        $query->update($db->quoteName('#__user_read', 'ur'))
+        $query->update($db->quoteName('#__kunena_user_read', 'ur'))
             ->innerJoin($db->quoteName('#__kunena_topics', 't') . ' ON ' . $db->quoteName('t.id') . ' = ' . $db->quoteName('ur.topic_id'))
             ->set($db->quoteName('ur.category_id') . ' = ' . $db->quoteName('t.category_id'));
         $db->setQuery($query);

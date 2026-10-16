@@ -1572,6 +1572,8 @@ class KunenaCategory extends KunenaDatabaseObject
         $query->setLimit($limit);
         $db->setQuery($query);
 
+        $ids = [];
+
         try {
             $ids = $db->loadColumn();
         } catch (ExecutionFailureException $e) {
@@ -1620,6 +1622,8 @@ class KunenaCategory extends KunenaDatabaseObject
             ->order($db->quoteName('tt.last_post_time') . ' ASC');
         $query->setLimit($limit);
         $db->setQuery($query);
+
+        $ids = [];
 
         try {
             $ids = $db->loadColumn();

@@ -1095,7 +1095,7 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         if ($user->userid == 0 && !$this->_config->pubWrite) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN'), 401);
         }
 
         $isNew = !$this->_exists;

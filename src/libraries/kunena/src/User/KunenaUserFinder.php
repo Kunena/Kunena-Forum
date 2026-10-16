@@ -73,11 +73,11 @@ class KunenaUserFinder extends KunenaFinder
         $name = $register ? 'registerDate' : 'lastvisitDate';
 
         if ($starting && $ending) {
-            $this->query->where($this->db->quoteName('a.' . $name) . ' BETWEEN ' . $this->db->quote($starting->toUnix()) . ' AND ' . $this->db->quote($ending->toUnix()));
+            $this->query->where($this->db->quoteName('a.' . $name) . ' BETWEEN ' . $this->db->quote($starting->toSql()) . ' AND ' . $this->db->quote($ending->toSql()));
         } elseif ($starting) {
-            $this->query->where($this->db->quoteName('a.' . $name) . ' > ' . $this->db->quote($starting->toUnix()));
+            $this->query->where($this->db->quoteName('a.' . $name) . ' > ' . $this->db->quote($starting->toSql()));
         } elseif ($ending) {
-            $this->query->where($this->db->quoteName('a.' . $name) . ' <= ' . $this->db->quote($ending->toUnix()));
+            $this->query->where($this->db->quoteName('a.' . $name) . ' <= ' . $this->db->quote($ending->toSql()));
         }
 
         return $this;

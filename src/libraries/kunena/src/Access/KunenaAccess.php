@@ -915,6 +915,8 @@ jQuery(document).ready(function ($) {
         $query = implode(' UNION ', $query);
         $db->setQuery($query);
 
+        $userids = [];
+
         try {
             $userids = (array) $db->loadColumn();
         } catch (ExecutionFailureException $e) {

@@ -150,6 +150,8 @@ abstract class KunenaCategoryUserHelper
             ->andWhere($db->quoteName('category_id') . ' IN (' . $idlist . ')');
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $db->loadAssocList('category_id');
         } catch (ExecutionFailureException $e) {

@@ -89,6 +89,8 @@ class raw extends KunenaView
             $kquery->select('*')->from("{$db->quoteName('#__kunena_smileys')}")->where("code LIKE '%{$db->escape($search)}%' AND emoticonbar=1");
             $db->setQuery($kquery);
 
+            $smileys = [];
+
             try {
                 $smileys = $db->loadObjectList();
             } catch (ExecutionFailureException $e) {

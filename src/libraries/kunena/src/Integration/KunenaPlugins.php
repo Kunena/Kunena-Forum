@@ -46,6 +46,8 @@ class KunenaPlugins
             ->where($db->quoteName('folder') . ' = ' . $db->quote('kunena'));
         $db->setQuery($query);
 
+        $total = 0;
+
         try {
             $total = $db->setQuery($query)->loadResult();
         } catch (ExecutionFailureException $e) {

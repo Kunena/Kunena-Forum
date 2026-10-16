@@ -81,6 +81,8 @@ class KunenaProfileCommunity extends KunenaProfile
         $query->setLimit($limit);
         $db->setQuery($query);
 
+        $top = [];
+
         try {
             $top = (array) $db->loadObjectList();
         } catch (\RuntimeException $e) {

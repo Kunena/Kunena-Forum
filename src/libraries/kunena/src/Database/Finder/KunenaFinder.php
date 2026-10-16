@@ -230,6 +230,8 @@ abstract class KunenaFinder
         $query->setLimit($this->limit, $this->start);
         $this->db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $this->db->loadColumn();
         } catch (ExecutionFailureException $e) {
@@ -273,6 +275,8 @@ abstract class KunenaFinder
             $query->clear('select')->select('COUNT(*)');
             $this->db->setQuery($query);
         }
+
+        $count = 0;
 
         try {
             $count = (int) $this->db->loadResult();

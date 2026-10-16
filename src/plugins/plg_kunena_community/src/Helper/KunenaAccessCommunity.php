@@ -229,6 +229,8 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
             ->andWhere($db->quoteName('g.permissions') . ' = ' . $db->quote(COMMUNITY_GROUP_ADMIN));
         $db->setQuery($query);
 
+        $list = [];
+
         try {
             $list = (array) $db->loadObjectList();
         } catch (\RuntimeException $e) {
@@ -268,6 +270,8 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
                 ->andWhere($db->quoteName('g.approved') . '= 1')
                 ->andWhere($db->quoteName('g.memberid') . ' = ' . $db->quote((int) $userid));
             $db->setQuery($query);
+
+            $list = [];
 
             try {
                 $list = (array) $db->loadColumn();
@@ -314,9 +318,11 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
             ->andWhere($db->quoteName('g.memberid') . ' IN (' . $userlist . ')');
         $db->setQuery($query);
 
+        $allow = [];
+        $deny  = [];
+
         try {
             $allow = (array) $db->loadColumn();
-            $deny  = [];
         } catch (\RuntimeException $e) {
             KunenaError::displayDatabaseError($e);
         }

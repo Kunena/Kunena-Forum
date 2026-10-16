@@ -768,6 +768,8 @@ class TopicController extends KunenaController
                 ->where('ip=' . $this->db->quote($ip) . ' AND time > ' . $this->db->quote($timelimit));
             $this->db->setQuery($query);
 
+            $count = 0;
+
             try {
                 $count = $this->db->loadResult();
             } catch (ExecutionFailureException $e) {

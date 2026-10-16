@@ -128,6 +128,8 @@ abstract class KunenaMessageHelper
             ->where($db->quoteName('m.id') . ' IN (' . $idlist . ')');
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $db->loadAssocList('id');
         } catch (ExecutionFailureException $e) {
@@ -219,6 +221,8 @@ abstract class KunenaMessageHelper
             ->order($db->quoteName('m.time') . $ordering);
         $query->setLimit($limit, $start);
         $db->setQuery($query);
+
+        $results = [];
 
         try {
             $results = (array) $db->loadAssocList('id');
@@ -546,6 +550,8 @@ abstract class KunenaMessageHelper
             ->where($db->quoteName('m.id') . ' IN (' . $idlist . ')')
             ->group([$db->quoteName('m.id'), $db->quoteName('mm.hold')]);
         $db->setQuery($query);
+
+        $results = [];
 
         try {
             $results = (array) $db->loadObjectList();

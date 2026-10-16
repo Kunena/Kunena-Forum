@@ -442,6 +442,8 @@ final class Kunena extends Adapter implements SubscriberInterface
         // Get the total number of content items to index.
         $this->db->setQuery($sql);
 
+        $return = 0;
+
         try {
             $return = (int) $this->db->loadResult();
         } catch (\Exception $e) {
@@ -501,6 +503,8 @@ final class Kunena extends Adapter implements SubscriberInterface
 
         // Get the content items to index.
         $this->db->setQuery($sql);
+
+        $ids = [];
 
         try {
             $ids = $this->db->loadColumn();

@@ -55,6 +55,8 @@ class KunenaAttachmentFinder extends KunenaFinder
         $query->setLimit($this->limit, $this->start);
         $this->db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $this->db->loadObjectList('id');
         } catch (RuntimeException $e) {

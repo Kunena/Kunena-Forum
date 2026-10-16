@@ -155,6 +155,8 @@ abstract class KunenaTopicUserHelper
             ->andWhere($db->quoteName('topic_id') . ' IN (' . $idlist . ')');
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $db->loadAssocList('topic_id');
         } catch (ExecutionFailureException $e) {
@@ -362,6 +364,8 @@ abstract class KunenaTopicUserHelper
             ->where($db->quoteName('user_id') . ' IN (' . $idlist . ')')
             ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
         $db->setQuery($query);
+
+        $results = [];
 
         try {
             $results = (array) $db->loadAssocList('user_id');

@@ -121,6 +121,8 @@ class KunenaLogFinder extends KunenaFinder
         $query->select('a.*');
         $this->db->setQuery($query, $this->start, $this->limit);
 
+        $results = [];
+
         try {
             $results = new KunenaCollection((array) $this->db->loadObjectList('id'));
         } catch (ExecutionFailureException $e) {

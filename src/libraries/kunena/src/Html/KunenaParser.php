@@ -72,6 +72,8 @@ abstract class KunenaParser
 
         $db->setQuery($query);
 
+        $smilies = [];
+
         try {
             $smilies = $db->loadObjectList();
         } catch (ExecutionFailureException $e) {

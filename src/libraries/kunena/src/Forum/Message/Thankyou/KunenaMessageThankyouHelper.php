@@ -112,6 +112,8 @@ abstract class KunenaMessageThankyouHelper
             ->where($db->quoteName('postid') . ' IN (' . $idlist . ')');
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $db->loadObjectList();
         } catch (ExecutionFailureException $e) {
@@ -249,6 +251,8 @@ abstract class KunenaMessageThankyouHelper
         $query->setLimit($limit, $limitstart);
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $db->loadObjectList();
         } catch (ExecutionFailureException $e) {
@@ -294,6 +298,8 @@ abstract class KunenaMessageThankyouHelper
             ->where($db->quoteName('t.' . $field) . ' = ' . $db->quote(\intval($userid)));
         $query->setLimit($limit, $limitstart);
         $db->setQuery($query);
+
+        $results = [];
 
         try {
             $results = (array) $db->loadObjectList();

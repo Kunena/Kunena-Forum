@@ -210,6 +210,8 @@ abstract class KunenaTopicHelper
             ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $db->loadAssocList('id');
         } catch (ExecutionFailureException $e) {

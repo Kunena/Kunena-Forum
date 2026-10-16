@@ -475,54 +475,49 @@ abstract class KunenaTopicHelper
         $queries [] = $query;
 
         // Delete thank yous
+        $messageIds = $db->createQuery();
+        $messageIds->select($db->quoteName('mm.id'))
+            ->from($db->quoteName('#__kunena_messages', 'mm'))
+            ->where($db->quoteName('mm.thread') . ' IN (' . $idlist . ')');
+
         $query = $db->createQuery();
-        $query->delete('t')
-              ->from('#__kunena_thankyou AS t')
-              ->join('INNER', '#__kunena_messages AS m ON m.id=t.postid')
-              ->where('m.thread IN (' . $idlist . ')');
+        $query->delete($db->quoteName('#__kunena_thankyou'))
+              ->where($db->quoteName('postid') . ' IN (' . $messageIds . ')');
         $queries [] = $query;
 
-        // Delete poll users (if not shadow)
-        $query = $db->createQuery();
-        $query->delete('p')
-              ->from('#__kunena_polls_users AS p')
-              ->join('INNER', '#__kunena_topics AS tt ON tt.poll_id=p.pollid')
-              ->where('tt.id IN (' . $idlist . ')')
-              ->where('tt.moved_id=0');
-        $queries [] = $query;
+        // Delete poll users, poll options and polls (if not shadow)
+        foreach ([['#__kunena_polls_users', 'pollid'], ['#__kunena_polls_options', 'pollid'], ['#__kunena_polls', 'id']] as [$table, $column]) {
+            $pollIds = $db->createQuery();
+            $pollIds->select($db->quoteName('tt.poll_id'))
+                    ->from($db->quoteName('#__kunena_topics', 'tt'))
+                    ->where($db->quoteName('tt.id') . ' IN (' . $idlist . ')')
+                    ->where($db->quoteName('tt.moved_id') . ' = 0');
 
-        // Delete poll options (if not shadow)
-        $query = $db->createQuery();
-        $query->delete('p')
-              ->from('#__kunena_polls_options AS p')
-              ->join('INNER', '#__kunena_topics AS tt ON tt.poll_id=p.pollid')
-              ->where('tt.id IN (' . $idlist . ')')
-              ->where('tt.moved_id=0');
-        $queries [] = $query;
+            $query = $db->createQuery();
+            $query->delete($db->quoteName($table))
+                  ->where($db->quoteName($column) . ' IN (' . $pollIds . ')');
+            $queries [] = $query;
+        }
 
-        // Delete polls (if not shadow)
+        // Delete message texts
         $query = $db->createQuery();
-        $query->delete('p')
-              ->from('#__kunena_polls AS p')
-              ->join('INNER', '#__kunena_topics AS tt ON tt.poll_id=p.id')
-              ->where('tt.id IN (' . $idlist . ')')
-              ->where('tt.moved_id=0');
+        $query->delete($db->quoteName('#__kunena_messages_text'))
+              ->where($db->quoteName('mesid') . ' IN (' . $messageIds . ')');
         $queries [] = $query;
 
         // Delete messages
         $query = $db->createQuery();
-        $query->delete('m, t')
-              ->from('#__kunena_messages AS m')
-              ->join('INNER', '#__kunena_messages_text AS t ON m.id=t.mesid')
-              ->where('m.thread IN (' . $idlist . ')');
+        $query->delete($db->quoteName('#__kunena_messages'))
+              ->where($db->quoteName('thread') . ' IN (' . $idlist . ')');
         $queries [] = $query;
-              
+
         // TODO: delete attachments
-        // Delete topics last, because the previous queries join on the topics table
+        // Delete topics last, because the previous queries look up data in the topics table
         $query = $db->createQuery();
         $query->delete('#__kunena_topics')
               ->where('id IN (' . $idlist . ')');
         $queries [] = $query;
+
         foreach ($queries as $query) {
             $db->setQuery($query);
             

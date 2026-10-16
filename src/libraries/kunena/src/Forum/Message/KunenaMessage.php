@@ -1278,17 +1278,22 @@ class KunenaMessage extends KunenaDatabaseObject
         }
 
         // Delete thank yous
-        $queries[] = "DELETE FROM #__kunena_thankyou WHERE postid={$this->_db->quote($this->id)}";
+        $query = $this->_db->createQuery();
+        $query->delete($this->_db->quoteName('#__kunena_thankyou'))
+            ->where($this->_db->quoteName('postid') . ' = ' . $this->_db->quote($this->id));
+        $queries[] = $query;
 
         // Delete message
-        $queries[] = "DELETE FROM #__kunena_messages_text WHERE mesid={$this->_db->quote($this->id)}";
+        $query = $this->_db->createQuery();
+        $query->delete($this->_db->quoteName('#__kunena_messages_text'))
+            ->where($this->_db->quoteName('mesid') . ' = ' . $this->_db->quote($this->id));
+        $queries[] = $query;
 
         // Cascade changes into other tables
         $this->update();
 
         foreach ($queries as $query) {
             $this->_db->setQuery($query);
-            $this->_db->execute();
 
             try {
                 $this->_db->execute();

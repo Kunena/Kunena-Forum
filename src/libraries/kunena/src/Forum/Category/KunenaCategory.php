@@ -1660,36 +1660,72 @@ class KunenaCategory extends KunenaDatabaseObject
         $access = KunenaAccess::getInstance();
         $access->clearCache();
 
-        $db        = Factory::getContainer()->get('DatabaseDriver');
-        $queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->quote($this->id)}";
+        $db     = Factory::getContainer()->get('DatabaseDriver');
+        $catid  = $db->quote($this->id);
+        $simple = [
+            // Aliases, user topics, user categories, user read
+            ['#__kunena_aliases', 'item', $db->quoteName('type') . ' = ' . $db->quote('catid')],
+            ['#__kunena_user_topics', 'category_id', null],
+            ['#__kunena_user_categories', 'category_id', null],
+            ['#__kunena_user_read', 'category_id', null],
+        ];
+        $queries = [];
 
-        // Delete user topics
-        $queries[] = "DELETE FROM #__kunena_user_topics WHERE category_id={$db->quote($this->id)}";
+        $messageIds = $db->createQuery();
+        $messageIds->select($db->quoteName('mm.id'))
+            ->from($db->quoteName('#__kunena_messages', 'mm'))
+            ->where($db->quoteName('mm.catid') . ' = ' . $catid);
 
-        // Delete user categories
-        $queries[] = "DELETE FROM #__kunena_user_categories WHERE category_id={$db->quote($this->id)}";
+        foreach ($simple as [$table, $column, $extra]) {
+            $query = $db->createQuery();
+            $query->delete($db->quoteName($table))
+                ->where($db->quoteName($column) . ' = ' . $catid);
 
-        // Delete user read
-        $queries[] = "DELETE FROM #__kunena_user_read WHERE category_id={$db->quote($this->id)}";
+            if ($extra) {
+                $query->where($extra);
+            }
+
+            $queries[] = $query;
+        }
 
         // Delete thank yous
-        $queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.catid={$db->quote($this->id)}";
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_thankyou'))
+            ->where($db->quoteName('postid') . ' IN (' . $messageIds . ')');
+        $queries[] = $query;
 
-        // Delete poll users
-        $queries[] = "DELETE p FROM #__kunena_polls_users AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.category_id={$db->quote($this->id)} AND tt.moved_id=0";
+        // Delete poll users, poll options and polls
+        foreach ([['#__kunena_polls_users', 'pollid'], ['#__kunena_polls_options', 'pollid'], ['#__kunena_polls', 'id']] as [$table, $column]) {
+            $pollIds = $db->createQuery();
+            $pollIds->select($db->quoteName('tt.poll_id'))
+                ->from($db->quoteName('#__kunena_topics', 'tt'))
+                ->where($db->quoteName('tt.category_id') . ' = ' . $catid)
+                ->where($db->quoteName('tt.moved_id') . ' = 0');
 
-        // Delete poll options
-        $queries[] = "DELETE p FROM #__kunena_polls_options AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.category_id={$db->quote($this->id)} AND tt.moved_id=0";
+            $query = $db->createQuery();
+            $query->delete($db->quoteName($table))
+                ->where($db->quoteName($column) . ' IN (' . $pollIds . ')');
+            $queries[] = $query;
+        }
 
-        // Delete polls
-        $queries[] = "DELETE p FROM #__kunena_polls AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.id WHERE tt.category_id={$db->quote($this->id)} AND tt.moved_id=0";
+        // Delete message texts
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_messages_text'))
+            ->where($db->quoteName('mesid') . ' IN (' . $messageIds . ')');
+        $queries[] = $query;
 
         // Delete messages
-        $queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.catid={$db->quote($this->id)}";
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_messages'))
+            ->where($db->quoteName('catid') . ' = ' . $catid);
+        $queries[] = $query;
 
         // TODO: delete attachments
         // Delete topics
-        $queries[] = "DELETE FROM #__kunena_topics WHERE category_id={$db->quote($this->id)}";
+        $query = $db->createQuery();
+        $query->delete($db->quoteName('#__kunena_topics'))
+            ->where($db->quoteName('category_id') . ' = ' . $catid);
+        $queries[] = $query;
 
         foreach ($queries as $query) {
             $db->setQuery($query);

@@ -86,9 +86,15 @@ class AnnouncementController extends KunenaController
 
         foreach ($cid as $id) {
             $announcement = KunenaAnnouncementHelper::get($id);
-            $date_today   = Factory::getDate();
+            $date_today   = Factory::getDate()->toSql();
+            $nullDate     = '1000-01-01 00:00:00';
 
-            if ($announcement->published == 1 && $announcement->publish_up > $date_today && $announcement->publish_down > $date_today) {
+            // Skip announcements that are already published and currently active.
+            if (
+                $announcement->published == 1
+                && ($announcement->publish_up == $nullDate || (string) $announcement->publish_up <= $date_today)
+                && ($announcement->publish_down == $nullDate || (string) $announcement->publish_down > $date_today)
+            ) {
                 continue;
             }
 

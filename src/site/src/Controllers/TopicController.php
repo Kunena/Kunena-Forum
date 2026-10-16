@@ -1700,6 +1700,8 @@ class TopicController extends KunenaController
             } catch (Exception $e) {
                 KunenaError::displayDatabaseError($e);
             }
+
+            return;
         }
 
         try {

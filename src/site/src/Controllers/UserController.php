@@ -1075,13 +1075,15 @@ class UserController extends KunenaController
         $me         = KunenaUserHelper::getMyself();
         $me->status = $status;
 
+        $saved = false;
+
         try {
-            $me->save();
+            $saved = $me->save();
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
         }
 
-        if ($me->save()) {
+        if ($saved) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'), 'success');
         }
 
@@ -1110,13 +1112,15 @@ class UserController extends KunenaController
         $me              = KunenaUserHelper::getMyself();
         $me->status_text = $status_text;
 
+        $saved = false;
+
         try {
-            $me->save();
+            $saved = $me->save();
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
         }
 
-        if ($me->save()) {
+        if ($saved) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_STATUS_SAVED'), 'success');
         }
 

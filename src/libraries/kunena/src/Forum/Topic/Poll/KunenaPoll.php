@@ -429,14 +429,10 @@ class KunenaPoll
                 $votes->votes++;
             }
         } else {
-            $votes      = new StdClass();
-            $votes->new = false;
-            
-            // Change vote: decrease votes in the last option
-            if (!$this->changeOptionVotes($lastVoteId, -1)) {
-                // Add a vote to the user
-                $votes->votes++;
-            }
+            // Additional vote without changing the previous one
+            $votes        = new StdClass();
+            $votes->new   = false;
+            $votes->votes = (int) $myvotes + 1;
         }
         
         $votes->lasttime = KunenaUserHelper::getMyself()->getTime();
@@ -472,20 +468,14 @@ class KunenaPoll
             }
         } else {
             // Already voted
+            // Update the existing vote row
             $query = $this->_db->createQuery();
-            
-            // Insert columns.
-            $columns = ['votes', 'lastvote', 'lasttime'];
-            
-            // Insert values.
-            $values = [$this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime)];
-            
-            // Prepare the insert query.
-            $query
-            ->insert($this->_db->quoteName('#__kunena_polls_users'))
-            ->columns($this->_db->quoteName($columns))
-            ->values(implode(',', $values))
-            ->where('pollid=' . $this->_db->quote($this->id) . ' AND userid=' . $this->_db->quote($votes->userid));
+            $query->update($this->_db->quoteName('#__kunena_polls_users'))
+                ->set($this->_db->quoteName('votes') . ' = ' . $this->_db->quote($votes->votes))
+                ->set($this->_db->quoteName('lastvote') . ' = ' . $this->_db->quote($votes->lastvote))
+                ->set($this->_db->quoteName('lasttime') . ' = ' . $this->_db->quote($votes->lasttime))
+                ->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
+                ->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($votes->userid));
             $this->_db->setQuery($query);
             
             try {

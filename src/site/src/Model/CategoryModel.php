@@ -200,6 +200,8 @@ class CategoryModel extends CategoriesModel
                     ->where('catid IN (' . $catlist . ') AND hold=1');
                 $db->setQuery($query);
 
+                $pending = [];
+
                 try {
                     $pending = $db->loadAssocList();
                 } catch (ExecutionFailureException $e) {

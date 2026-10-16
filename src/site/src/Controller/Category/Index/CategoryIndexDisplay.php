@@ -343,6 +343,8 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
                     ->group('catid');
                 $db->setQuery($query);
 
+                $pending = [];
+
                 try {
                     $pending = $db->loadAssocList();
                 } catch (ExecutionFailureException $e) {

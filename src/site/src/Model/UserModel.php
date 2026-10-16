@@ -158,6 +158,8 @@ class UserModel extends KunenaModel
             $query->setLimit($limit, $limitstart);
             $db->setQuery($query);
 
+            $items = [];
+
             try {
                 $items = $db->loadColumn();
             } catch (ExecutionFailureException $e) {

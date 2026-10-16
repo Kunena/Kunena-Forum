@@ -303,6 +303,8 @@ class KunenaUserSocials
             ->where($db->quoteName('userid') . '=' . $this->userid);
         $db->setQuery($query);
 
+        $socials = null;
+
         try {
             $socials = $db->loadAssoc();
         } catch (ExecutionFailureException $e) {

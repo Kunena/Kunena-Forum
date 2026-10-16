@@ -497,6 +497,8 @@ abstract class KunenaUserHelper
 
             $db->setQuery($query);
 
+            $count = 0;
+
             try {
                 $count = $db->loadResult();
             } catch (ExecutionFailureException $e) {

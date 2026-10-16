@@ -815,6 +815,8 @@ class KunenaTopic extends KunenaDatabaseObject
                 $query->setLimit(1);
                 $db->setQuery($query);
 
+                $first = null;
+
                 try {
                     $first = $db->loadObject();
                 } catch (ExecutionFailureException $e) {
@@ -840,6 +842,8 @@ class KunenaTopic extends KunenaDatabaseObject
                     ->order($this->_db->quoteName('m.time') . ' DESC, ' . $this->_db->quoteName('m.id') . ' DESC');
                 $query->setLimit(1);
                 $db->setQuery($query);
+
+                $last = null;
 
                 try {
                     $last = $db->loadObject();

@@ -769,9 +769,9 @@ class UserController extends KunenaController
                     null,
                     $user
                 );
-
-                KunenaUserHelper::recountBanned();
             }
+
+            KunenaUserHelper::recountBanned();
 
             if ($this->config->sendMailUserBanned) {
                 $this->sendMailWhenUserBannedAndUnbanned($user, $ban);

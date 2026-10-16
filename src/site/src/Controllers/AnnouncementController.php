@@ -103,7 +103,7 @@ class AnnouncementController extends KunenaController
             }
 
             try {
-                $announcement->save();
+                $saved = $announcement->save();
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
                 $this->setRedirectBack();
@@ -111,7 +111,7 @@ class AnnouncementController extends KunenaController
                 return;
             }
 
-            if ($announcement->isAuthorised('edit') || $announcement->save()) {
+            if ($saved) {
                 if ($this->config->logModeration) {
                     KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_PUBLISH, ['id' => $announcement->id]);
                 }
@@ -162,7 +162,7 @@ class AnnouncementController extends KunenaController
             }
 
             try {
-                $announcement->save();
+                $saved = $announcement->save();
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
                 $this->setRedirectBack();
@@ -170,7 +170,7 @@ class AnnouncementController extends KunenaController
                 return;
             }
 
-            if ($announcement->isAuthorised('edit') || !$announcement->save()) {
+            if ($saved) {
                 if ($this->config->logModeration) {
                     KunenaLog::log(KunenaLog::TYPE_MODERATION, KunenaLog::LOG_ANNOUNCEMENT_UNPUBLISH, ['id' => $announcement->id]);
                 }
@@ -214,7 +214,7 @@ class AnnouncementController extends KunenaController
             }
 
             try {
-                $announcement->delete();
+                $deleted = $announcement->delete();
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
                 $this->setRedirectBack();
@@ -222,7 +222,7 @@ class AnnouncementController extends KunenaController
                 return;
             }
 
-            if ($announcement->isAuthorised('delete') || $announcement->delete()) {
+            if ($deleted) {
                 if ($this->config->logModeration) {
                     KunenaLog::log(
                         KunenaLog::TYPE_MODERATION,

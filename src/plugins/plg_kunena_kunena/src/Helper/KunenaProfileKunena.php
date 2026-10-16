@@ -85,9 +85,8 @@ class KunenaProfileKunena extends KunenaProfile
         $query->where($db->quoteName('ku.uhits') . ' > 0');
         $query->order($db->quoteName('ku.uhits') . ' DESC');
 
-        if (KunenaFactory::getConfig()->superAdminUserlist) {
-            $filter = Access::getUsersByGroup(8);
-            $query->where('u.id NOT IN (' . implode(',', $filter) . ')');
+        if (KunenaFactory::getConfig()->superAdminUserlist && ($filter = Access::getUsersByGroup(8))) {
+            $query->where('u.id NOT IN (' . implode(',', array_map('intval', $filter)) . ')');
         }
 
         $query->setLimit($limit);

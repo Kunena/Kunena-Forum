@@ -113,6 +113,8 @@ abstract class KunenaAttachmentHelper
             ->where($db->quoteName('id') . ' IN (' . $idlist . ')');
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = (array) $db->loadObjectList('id');
         } catch (RuntimeException $e) {
@@ -229,6 +231,8 @@ abstract class KunenaAttachmentHelper
             ->from($db->quoteName('#__kunena_attachments'))
             ->where($db->quoteName('mesid') . ' IN (' . $idlist . ')');
         $db->setQuery($query);
+
+        $results = [];
 
         try {
             $results = (array) $db->loadObjectList('id');
@@ -546,7 +550,7 @@ abstract class KunenaAttachmentHelper
         unset($results);
         $query = $db->createQuery();
         $query->delete($db->quoteName('#__kunena_attachments'));
-        $query->where($db->quoteName('id') . 'IN (' . $ids . ')');            
+        $query->where($db->quoteName('id') . ' IN (' . $ids . ')');
         $db->setQuery($query);
 
         try {
@@ -634,6 +638,8 @@ abstract class KunenaAttachmentHelper
         $query->setLimit($params['limit']);
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = $db->loadObjectList('id');
         } catch (RuntimeException $e) {
@@ -683,7 +689,7 @@ abstract class KunenaAttachmentHelper
             KunenaError::displayDatabaseError($e);
         }
 
-        return $attachments;
+        return $attachments !== null ? (int) $attachments : null;
     }
 
     /**

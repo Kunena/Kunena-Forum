@@ -1755,8 +1755,8 @@ class KunenaTopic extends KunenaDatabaseObject
             try {
                 $oldcount = (int) $this->_db->loadResult();
             } catch (RuntimeException $e) {
-                $app = Factory::getApplication();
-                $app->enqueueMessage($e->getMessage(), 'error');
+                // Never fall back to moving the whole topic when the count is unknown
+                throw new Exception($e->getMessage());
             }
 
             // So are we moving the whole topic?
@@ -1880,8 +1880,7 @@ class KunenaTopic extends KunenaDatabaseObject
         try {
             $this->_db->execute();
         } catch (RuntimeException $e) {
-            $app = Factory::getApplication();
-            $app->enqueueMessage($query, 'error');
+            throw new Exception($e->getMessage());
         }
 
         // Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)

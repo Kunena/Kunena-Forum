@@ -216,6 +216,8 @@ abstract class KunenaTopicUserHelper
 
         $db->setQuery($query);
 
+        $results = [];
+
         try {
             $results = $db->loadObjectList();
         } catch (ExecutionFailureException $e) {

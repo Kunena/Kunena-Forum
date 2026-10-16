@@ -247,8 +247,10 @@ abstract class KunenaUserHelper
                 ->where($db->quoteName('u.id') . ' IN (' . $userlist . ')');
             $db->setQuery($query);
 
+            $results = [];
+
             try {
-                $results = $db->loadAssocList();
+                $results = (array) $db->loadAssocList();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
             }

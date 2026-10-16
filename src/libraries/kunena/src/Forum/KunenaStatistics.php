@@ -245,7 +245,7 @@ class KunenaStatistics
             KunenaError::displayDatabaseError($e);
         }
 
-        return $smilies;
+        return $smilies !== null ? (int) $smilies : null;
     }
 
     /**
@@ -385,6 +385,8 @@ class KunenaStatistics
                 );
             $this->_db->setQuery($query);
 
+            $counts = null;
+
             try {
                 $counts = $this->_db->loadObject();
             } catch (ExecutionFailureException $e) {
@@ -500,6 +502,8 @@ class KunenaStatistics
                 ->order($this->_db->quoteName('count') . ' DESC');
             $query->setLimit($limit);
             $this->_db->setQuery($query);
+
+            $polls = [];
 
             try {
                 $polls = (array) $this->_db->loadObjectList('id');

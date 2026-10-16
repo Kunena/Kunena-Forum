@@ -212,7 +212,7 @@ class KunenaUserBans extends KunenaTable
     }
 
     /**
-     * @param   integer  $ip    ip
+     * @param   string   $ip    ip
      * @param   int      $mode  mode
      *
      * @return  boolean
@@ -221,7 +221,7 @@ class KunenaUserBans extends KunenaTable
      *
      * @throws Exception
      */
-    public function loadByIP(int $ip, $mode = self::ACTIVE): bool
+    public function loadByIP(string $ip, $mode = self::ACTIVE): bool
     {
         // Reset the table.
         $k        = $this->_tbl_key;
@@ -229,7 +229,7 @@ class KunenaUserBans extends KunenaTable
         $this->reset();
 
         // Check for a valid id to load.
-        if ($ip === null || !\is_string($ip)) {
+        if ($ip === '') {
             return false;
         }
 

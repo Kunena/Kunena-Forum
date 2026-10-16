@@ -209,7 +209,9 @@ class UserController extends KunenaController
         $userid = $this->app->getInput()->getInt('userid', 0);
 
         $target = KunenaFactory::getUser($userid);
-        $karma = KunenaKarmaHelper::get($userid);
+        $karma = KunenaKarmaHelper::get(0);
+        $karma->userid        = $this->me->userid;
+        $karma->target_userid = $userid;
 
         if (!$this->config->showKarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_KARMA'), 'error');
@@ -220,16 +222,14 @@ class UserController extends KunenaController
 
         $now = Factory::getDate()->toUnix();
 
-        // If the karma already exist check the time with the last karma given
-        if ($karma->target_userid) {
-            $lastKarmaTime = $karma->getLastTimeKarma();
+        // Check the time of the last karma given by this user to the target
+        $lastKarmaTime = $karma->getLastTimeKarma();
 
-            if (!$this->me->isModerator() && $now - $lastKarmaTime < $karma_delay) {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'warning');
-                $this->setRedirectBack();
+        if (!$this->me->isModerator() && $lastKarmaTime && $now - $lastKarmaTime < $karma_delay) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_KARMA_WAIT'), 'warning');
+            $this->setRedirectBack();
 
-                return;
-            }
+            return;
         }
 
         if ($karmaDelta > 0) {

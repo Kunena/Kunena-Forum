@@ -211,8 +211,10 @@ class KunenaKarma
         $query = $this->_db->createQuery();
         $query->select('MAX(time)')
             ->from($this->_db->quoteName('#__kunena_karma'))
-            ->where($this->_db->quoteName('target_userid') . ' = ' . $this->_db->quote($this->target_userid));
+            ->where($this->_db->quoteName('userid') . ' = ' . (int) $this->userid)
+            ->where($this->_db->quoteName('target_userid') . ' = ' . (int) $this->target_userid);
         $this->_db->setQuery($query);
+        $lastkarma = 0;
 
         try {
             $lastkarma = $this->_db->loadResult();

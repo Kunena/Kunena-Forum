@@ -537,12 +537,16 @@ class UserController extends KunenaController
             $user->bind($post);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+
+            return false;
         }
 
         try {
             $user->save(true);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+
+            return false;
         }
 
         // Reload the user.

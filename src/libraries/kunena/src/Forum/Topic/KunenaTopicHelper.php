@@ -279,9 +279,7 @@ abstract class KunenaTopicHelper
         $moved     = isset($params['moved']) ? (string) $params['moved'] : 0;
         $where     = isset($params['where']) ? (string) $params['where'] : '';
 
-        if (strstr('ut.last_', $orderby)) {
-            $post_time_field = $db->quoteName('ut.last_post_time');
-        } elseif (strstr('tt.first_', $orderby)) {
+        if (str_contains($orderby, 'tt.first_post_time')) {
             $post_time_field = $db->quoteName('tt.first_post_time');
         } else {
             $post_time_field = $db->quoteName('tt.last_post_time');

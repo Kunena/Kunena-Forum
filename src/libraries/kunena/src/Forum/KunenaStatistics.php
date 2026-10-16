@@ -445,7 +445,7 @@ class KunenaStatistics
     {
         $limit           = $limit ? $limit : $this->_config->popSubjectCount;
 
-        if ($this->topTopics < $limit) {
+        if ($this->topTopics === null || \count($this->topTopics) < $limit) {
             $params = ['orderby' => 'posts DESC'];
             list($total, $this->topTopics) = KunenaTopicHelper::getLatestTopics(false, 0, $limit, $params);
 
@@ -484,7 +484,7 @@ class KunenaStatistics
     {
         $limit = $limit ? $limit : $this->_config->popPollsCount;
 
-        if ($this->topPolls < $limit) {
+        if ($this->topPolls === null || \count($this->topPolls) < $limit) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
             $query
@@ -583,7 +583,7 @@ class KunenaStatistics
     {
         $limit = $limit ? $limit : $this->_config->popUserCount;
 
-        if ($this->topPosters < $limit) {
+        if ($this->topPosters === null || \count($this->topPosters) < $limit) {
             $this->topPosters = KunenaUserHelper::getTopPosters($limit);
 
             $top = reset($this->topPosters);
@@ -620,7 +620,7 @@ class KunenaStatistics
     {
         $limit = $limit ? $limit : $this->_config->popUserCount;
 
-        if ($this->topProfiles < $limit) {
+        if ($this->topProfiles === null || \count($this->topProfiles) < $limit) {
             $this->topProfiles = KunenaFactory::getProfile()->getTopHits($limit);
 
             $top = reset($this->topProfiles);
@@ -657,7 +657,7 @@ class KunenaStatistics
     {
         $limit = $limit ? $limit : $this->_config->popThanksCount;
 
-        if ($this->topThanks < $limit) {
+        if ($this->topThanks === null || \count($this->topThanks) < $limit) {
             $query = $this->_db->createQuery();
             $query
                 ->select(

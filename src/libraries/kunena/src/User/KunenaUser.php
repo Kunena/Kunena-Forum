@@ -542,9 +542,6 @@ class KunenaUser
             $user = KunenaUserHelper::getMyself();
         }
 
-        $input     = $this->_app->getInput();
-        $method    = $input->getInt('userid');
-        $kuser     = KunenaFactory::getUser($method);
         $config    = KunenaConfig::getInstance();
         $exception = null;
 
@@ -559,7 +556,7 @@ class KunenaUser
                     $exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
                 }
 
-                if ($user->isModerator() && $kuser->isAdmin() && !$user->isAdmin()) {
+                if ($user->isModerator() && $this->isAdmin() && !$user->isAdmin()) {
                     $exception = new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $this->getName()), $user->exists() ? 403 : 401);
                 }
 

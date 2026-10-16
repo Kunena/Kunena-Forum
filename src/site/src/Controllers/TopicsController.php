@@ -119,17 +119,19 @@ class TopicsController extends KunenaController
                     return false;
                 }
 
-                $ids = implode(',', array_keys($list));
+                $orphanIds = array_keys($list);
 
-                $query = $this->db->createQuery()->delete($this->db->quoteName('#__kunena_attachments'))->where('id IN (' . $ids . ')');
-                $this->db->setQuery($query);
+                if ($orphanIds) {
+                    $query = $this->db->createQuery()->delete($this->db->quoteName('#__kunena_attachments'))->where($this->db->quoteName('id') . ' IN (' . implode(',', array_map('intval', $orphanIds)) . ')');
+                    $this->db->setQuery($query);
 
-                try {
-                    $this->db->execute();
-                } catch (ExecutionFailureException $e) {
-                    KunenaError::displayDatabaseError($e);
+                    try {
+                        $this->db->execute();
+                    } catch (ExecutionFailureException $e) {
+                        KunenaError::displayDatabaseError($e);
 
-                    return false;
+                        return false;
+                    }
                 }
             }
         }

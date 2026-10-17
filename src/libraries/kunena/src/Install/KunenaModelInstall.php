@@ -1581,9 +1581,9 @@ class KunenaModelInstall extends BaseDatabaseModel
     }
 
     /**
-     * @param   integer  $version      version
-     * @param   integer  $versiondate  version date
-     * @param   integer  $versionname  version name
+     * @param   string   $version      version
+     * @param   string   $versiondate  version date
+     * @param   string   $versionname  version name
      * @param   string   $state        state
      *
      * @return  void
@@ -1591,7 +1591,7 @@ class KunenaModelInstall extends BaseDatabaseModel
      * @throws KunenaInstallerException
      * @since   Kunena 6.0
      */
-    protected function insertVersionData(int $version, int $versiondate, int $versionname, $state = ''): void
+    protected function insertVersionData(string $version, string $versiondate, string $versionname, $state = ''): void
     {
         $query = $this->db->createQuery();
 

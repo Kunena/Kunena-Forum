@@ -70,7 +70,7 @@ class UserModel extends KunenaModel
         } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
-            return false;
+            return [];
         }
 
         $topicList = [];
@@ -122,7 +122,7 @@ class UserModel extends KunenaModel
         } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
-            return false;
+            return [];
         }
 
         $list = [];
@@ -142,7 +142,7 @@ class UserModel extends KunenaModel
             } catch (RuntimeException $e) {
                 Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
-                return false;
+                return [];
             }
         }
 

@@ -1498,7 +1498,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         $oldtables = $this->listTables($oldprefix);
 
         if ($oldtable == $newtable || !isset($oldtables[$oldtable]) || isset($tables[$newtable])) {
-            return false;
+            return [];
         }
 
         // Make identical copy from the table with new name
@@ -1518,7 +1518,7 @@ class KunenaModelInstall extends BaseDatabaseModel
         }
 
         if (!$create) {
-            return false;
+            return [];
         }
 
         $create = preg_replace('/(DEFAULT )?CHARACTER SET [\w\d]+/', '', $create);

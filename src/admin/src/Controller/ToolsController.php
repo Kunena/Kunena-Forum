@@ -887,6 +887,13 @@ class ToolsController extends FormController
      */
     public function setupcolumnlanguage(): void
     {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $db     = Factory::getContainer()->get('DatabaseDriver');
         
         $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'language';";
@@ -923,6 +930,13 @@ class ToolsController extends FormController
      */
     public function setupsocials(): void
     {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $db     = Factory::getContainer()->get('DatabaseDriver');
         
         $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'socials';";
@@ -931,7 +945,7 @@ class ToolsController extends FormController
         
         if (!$columnSocials) {
             // Create the column socials
-            $query = "ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`";
+            $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`';
             $query = $db->setQuery($query);
             
             try {

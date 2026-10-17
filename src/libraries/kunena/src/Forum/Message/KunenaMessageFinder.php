@@ -77,9 +77,16 @@ class KunenaMessageFinder extends KunenaFinder
      */
     public function filterByUserAccess(KunenaUser $user): KunenaMessageFinder
     {
-        $categories = $user->getAllowedCategories();
-        $list       = implode(',', $categories);
-        $this->query->where($this->db->quoteName('a.catid') . ' IN (' . $list . ')');
+        $categories = array_map('intval', (array) $user->getAllowedCategories());
+
+        // A user without any allowed category sees no message: an empty list must not become "IN ()".
+        if (empty($categories)) {
+            $this->query->where('0');
+
+            return $this;
+        }
+
+        $this->query->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $categories) . ')');
 
         return $this;
     }
@@ -98,24 +105,26 @@ class KunenaMessageFinder extends KunenaFinder
      *
      * @since   Kunena 6.0
      */
-    public function filterByCategories(array $categories)
+    public function filterByCategories(array $categories): KunenaMessageFinder
     {
         $list = [];
 
-        if (!empty($categories)) {
-            foreach ($categories as $category) {
-                if ($category instanceof KunenaCategory) {
-                    $list[] = (int) $category->id;
-                } else {
-                    $list[] = (int) $category;
-                }
+        foreach ($categories as $category) {
+            if ($category instanceof KunenaCategory) {
+                $list[] = (int) $category->id;
+            } else {
+                $list[] = (int) $category;
             }
-
-            $list = implode(',', $list);
-            $this->query->where($this->db->quoteName('a.catid') . ' IN (' . $list . ')');
-
-            return $this;
         }
+
+        // Handle an empty list as an impossible filter value: no category means no message.
+        if (!$list) {
+            $list[] = -1;
+        }
+
+        $this->query->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $list) . ')');
+
+        return $this;
     }
 
     /**
@@ -176,7 +185,7 @@ class KunenaMessageFinder extends KunenaFinder
                 $this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $this->db->quoteName('th.postid') . ' = a.id AND ' . $this->db->quoteName('th.userid') . ' = ' . (int) $user->userid);
                 break;
             case '!thanker':
-                $this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $this->db->quoteName('th.postid') . ' = a.id AND ' . $this->db->quoteName('h.userid') . ' != ' . (int) $user->userid);
+                $this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $this->db->quoteName('th.postid') . ' = a.id AND ' . $this->db->quoteName('th.userid') . ' != ' . (int) $user->userid);
                 break;
             case 'thankee':
                 $this->query->innerJoin($this->db->quoteName('#__kunena_thankyou', 'th') . ' ON ' . $this->db->quoteName('th.postid') . ' = a.id AND ' . $this->db->quoteName('th.targetuserid') . ' = ' . (int) $user->userid);

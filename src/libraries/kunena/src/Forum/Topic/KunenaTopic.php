@@ -1770,6 +1770,7 @@ class KunenaTopic extends KunenaDatabaseObject
         }
 
         $categoryFrom = $this->getCategory();
+        $newTarget    = false;
 
         // Find out where we are moving the messages
         if (!$target || !$target->exists()) {
@@ -1822,6 +1823,7 @@ class KunenaTopic extends KunenaDatabaseObject
             if ($shadow || $ids) {
                 // Create new topic for the moved messages
                 $target = clone $this;
+                $newTarget = true;
                 $target->exists(false);
                 $target->id     = 0;
                 $target->hits   = 0;
@@ -1939,8 +1941,17 @@ class KunenaTopic extends KunenaDatabaseObject
 
             // When moving only first message keep poll only on target topic
             if ($this->poll_id && $target != $this && $ids) {
-                if ($ids && $this->first_post_id) {
+                if ($ids instanceof Date) {
+                    $movesFirstPost = $this->first_post_time >= $ids->toUnix();
+                } else {
+                    $movesFirstPost = \in_array((int) $this->first_post_id, array_map('intval', explode(',', $ids)), true);
+                }
+
+                if ($movesFirstPost) {
                     $this->poll_id = 0;
+                } elseif ($newTarget) {
+                    // The first message stays here, so the poll must stay here as well (the target is a clone of this topic).
+                    $target->poll_id = 0;
                 }
             }
         }

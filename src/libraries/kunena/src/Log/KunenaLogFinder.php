@@ -113,7 +113,7 @@ class KunenaLogFinder extends KunenaFinder
     public function find(): KunenaCollection
     {
         if ($this->skip) {
-            return [];
+            return new KunenaCollection();
         }
 
         $query = clone $this->query;
@@ -121,7 +121,7 @@ class KunenaLogFinder extends KunenaFinder
         $query->select('a.*');
         $this->db->setQuery($query, $this->start, $this->limit);
 
-        $results = [];
+        $results = new KunenaCollection();
 
         try {
             $results = new KunenaCollection((array) $this->db->loadObjectList('id'));

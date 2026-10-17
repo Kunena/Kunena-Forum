@@ -168,7 +168,9 @@ abstract class KunenaParser
      */
     public static function &prepareContent(&$content, $target = 'body')
     {
-        $params       = new Registry(PluginHelper::getPlugin('system', 'kunena')->params);
+        // The system plugin may be disabled or missing: getPlugin() has no object to give then.
+        $plugin       = PluginHelper::getPlugin('system', 'kunena');
+        $params       = new Registry($plugin->params ?? null);
         $events       = (int) $params->get('jcontentevents', false);
         $event_target = (array) $params->get('jcontentevent_target', []);
 

@@ -534,8 +534,23 @@ class TemplateController extends FormController
      */
     public function restore(): void
     {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $template = $this->input->get('templatename');
-        $file     = KPATH_SITE . '/template/' . $template . '/config/params.ini';
+
+        if (!$this->isSafeTemplateName($template)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        $file = KPATH_SITE . '/template/' . $template . '/config/params.ini';
 
         if (file_exists($file)) {
             $result = File::delete($file);
@@ -957,6 +972,13 @@ class TemplateController extends FormController
             return;
         }
 
+        if ($id && !$this->isSafeTemplateName($id)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         if ($id) {
             $this->config->template = $id;
             $this->config->save();
@@ -992,7 +1014,7 @@ class TemplateController extends FormController
         }
 
         // Initialize variables
-        $otemplate = KunenaTemplateHelper::parseXmlFile($id);
+        $otemplate = $this->isSafeTemplateName($id) ? KunenaTemplateHelper::parseXmlFile($id) : false;
 
         if (!$otemplate) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');

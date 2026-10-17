@@ -105,7 +105,7 @@ class KunenaApplication extends WebApplication
      *
      * @since   Kunena 6.0
      */
-    public function __construct(Input $input = null, Registry $config = null, WebClient $client = null)
+    public function __construct(?Input $input = null, ?Registry $config = null, ?WebClient $client = null)
     {
         parent::__construct($input, $config, $client);
 
@@ -141,7 +141,7 @@ class KunenaApplication extends WebApplication
      *
      * @since   Kunena 6.0
      */
-    public function loadSession(Session $session = null)
+    public function loadSession(?Session $session = null)
     {
         if ($session !== null) {
             $this['session'] = $session;

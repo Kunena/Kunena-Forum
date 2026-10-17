@@ -217,7 +217,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
      *
      * @throws  \Exception
      */
-    public function loadCategoryRoles(array $categories = null): array
+    public function loadCategoryRoles(?array $categories = null): array
     {
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();

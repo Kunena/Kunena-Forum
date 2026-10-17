@@ -42,7 +42,7 @@ class DisplayController extends KunenaController
      * @throws \Exception
      * @since   3.0.1
      */
-    public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         $this->input = $this->app->getInput();
 

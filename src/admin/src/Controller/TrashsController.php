@@ -57,7 +57,7 @@ class TrashsController extends AdminController
      * @throws  Exception
      * @since   Kunena 2.0
      */
-    public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
 

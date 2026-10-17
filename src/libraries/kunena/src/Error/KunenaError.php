@@ -209,7 +209,12 @@ abstract class KunenaError
             case E_RECOVERABLE_ERROR:
                 $error = "Fatal Error";
                 break;
-            case E_STRICT:
+            case E_DEPRECATED:
+            case E_USER_DEPRECATED:
+                $error = "Deprecated";
+                break;
+            case 2048:
+                // E_STRICT: the constant itself is deprecated since PHP 8.4, so use its value.
                 return false;
             default:
                 $error = "Unknown Error $errno";

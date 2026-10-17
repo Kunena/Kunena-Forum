@@ -1269,25 +1269,25 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             }
         }
 
-        if (preg_match('/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/im', $content)) {
-            if (!preg_match('#^(/|https?:|ftp:)#ui', $content)) {
-                // Add scheme to raw domain URLs.
-                $url = "https://{$content}";
-            }
+        // The address must start with an Instagram host: a text that only contains "instagram.com/..." somewhere
+        // (for example evil.example/instagram.com/x) must not become the source of the frame.
+        if (preg_match('#^(?:www\.)?(?:instagram\.com|instagr\.am)/[A-Za-z0-9_\-]+(?:/[A-Za-z0-9_\-]+)*/?$#i', $content)) {
+            $url = 'https://' . rtrim($content, '/');
 
-            return '<div class="embed-container"><iframe src="' . rtrim($url, '/') . '/embed/" style="border: 0"></iframe></div>';
+            return '<div class="embed-container"><iframe src="' . htmlspecialchars($url, ENT_COMPAT, 'UTF-8') . '/embed/" style="border: 0"></iframe></div>';
         }
 
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+            return "<a href=\"" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . "\" rel=\"nofollow\" target=\"_blank\">" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . '</a>';
         }
 
-        if (!empty($content)) {
+        // A bare post code
+        if ($content !== '' && preg_match('#^[A-Za-z0-9_\-]+$#', $content)) {
             return '<div class="embed-container"><iframe src="https://www.instagram.com/p/' . $content . '/embed/" style="border: 0"></iframe></div>';
-        } else {
-            return $before;
         }
+
+        return $before;
     }
 
     /**

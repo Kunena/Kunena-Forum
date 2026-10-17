@@ -332,7 +332,7 @@ class HtmlView extends KunenaView
         }
 
         $this->messages = $model->getMessages();
-        $this->total    = model->getTotal();
+        $this->total    = $model->getTotal();
 
         // If page does not exist, redirect to the last page (no redirect in embedded mode).
         if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start')) {

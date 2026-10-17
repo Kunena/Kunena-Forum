@@ -19,7 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Kunena\Forum\Administrator\Helper\UserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -241,7 +241,7 @@ class raw extends KunenaView
         $topicid  = $this->app->getInput()->get('topic_id', 0, 'int');
         $response = [];
         $app      = Factory::getApplication();
-        $user     = UserHelper::getMyself();
+        $user     = KunenaUserHelper::getMyself();
 
         if ($user->exists() || $this->config->ratingEnabled) {
             $rate           = KunenaRateHelper::get($topicid);

@@ -1665,9 +1665,7 @@ class TopicController extends KunenaController
             return;
         }
 
-        if (isset($attachIds[0])) {
-            $attachIds = explode(',', $attachIds[0]);
-        }
+        $attachIds = isset($attachIds[0]) && $attachIds[0] !== '' ? explode(',', $attachIds[0]) : [];
 
         $finder    = new KunenaPrivateMessageFinder();
         $finder

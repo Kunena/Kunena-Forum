@@ -36,6 +36,12 @@ use Joomla\CMS\Document\Feed\FeedItem;
  */
 class TopicsDisplay extends KunenaControllerDisplay
 {
+    /**
+     * @var     mixed
+     * @since   Kunena 6.0
+     */
+    public $messages;
+
     public $topicsModel;
 
     public $me;

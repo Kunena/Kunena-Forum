@@ -30,6 +30,12 @@ use Kunena\Forum\Site\Model\CategoryModel;
 class CategoryDisplay extends KunenaControllerDisplay
 {
     /**
+     * @var     mixed
+     * @since   Kunena 6.0
+     */
+    public $me;
+
+    /**
      * Return true if layout exists.
      *
      * @return  boolean

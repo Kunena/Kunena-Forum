@@ -37,6 +37,12 @@ use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 class CategoryIndexActionsDisplay extends KunenaControllerDisplay
 {
     /**
+     * @var     mixed
+     * @since   Kunena 6.0
+     */
+    public $template;
+
+    /**
      * @var     KunenaTopic
      * @since   Kunena 6.0
      */

@@ -19,7 +19,6 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 use InvalidArgumentException;
-use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -2311,8 +2310,8 @@ class KunenaTopic extends KunenaDatabaseObject
         $votes  = $poll->getMyVotes($user);
 
         if (!$config->pollAllowVoteOne && $votes) {
-            $time_zone   = Factory::getContainer()->get(SiteApplication::class)->get('offset');
-            $objTimeZone = new DateTimeZone($time_zone);
+            // The vote time is stored in UTC
+            $objTimeZone = new DateTimeZone('UTC');
 
             // Check the time between two votes
             $date_a = new DateTime($poll->getMyTime(), $objTimeZone);

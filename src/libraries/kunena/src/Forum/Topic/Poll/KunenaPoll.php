@@ -26,7 +26,6 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Tables\TableKunenaPolls;
 use StdClass;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -435,7 +434,8 @@ class KunenaPoll
             $votes->votes = (int) $myvotes + 1;
         }
         
-        $votes->lasttime = KunenaUserHelper::getMyself()->getTime();
+        // Store the vote time in UTC like the other database dates (the user's own time zone would be stored otherwise).
+        $votes->lasttime = Factory::getDate()->toSql();
         $votes->lastvote = $option;
         $votes->userid   = (int) $user->userid;
         

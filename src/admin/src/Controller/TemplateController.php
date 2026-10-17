@@ -627,9 +627,11 @@ class TemplateController extends FormController
 
         $filename = $this->app->getInput()->get('filename');
 
-        if (File::getExt($filename) !== 'scss') {
+        if (!$this->isSafeTemplateName($templatename) || !$this->isSafeFilename($filename, 'scss')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'warning');
-            $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosescss&id=' . $template, false));
+            $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosescss&id=' . $templatename, false));
+
+            return;
         }
 
         $this->app->setUserState('kunena.templatename', $templatename);
@@ -673,15 +675,49 @@ class TemplateController extends FormController
 
         $filename = $this->app->getInput()->get('filename');
 
-        if (File::getExt($filename) !== 'css') {
+        if (!$this->isSafeTemplateName($templatename) || !$this->isSafeFilename($filename, 'css')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl . '&layout=choosecss&id=' . $templatename, false));
+
+            return;
         }
 
         $this->app->setUserState('kunena.editCss.tmpl', $templatename);
         $this->app->setUserState('kunena.editCss.filename', $filename);
 
         $this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editcss", false));
+    }
+
+    /**
+     * Check that a template folder name cannot point outside of the template folder.
+     *
+     * @param   mixed  $templatename  The template name from the request.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    protected function isSafeTemplateName($templatename): bool
+    {
+        return \is_string($templatename) && preg_match('/^[\w\-]+$/', $templatename) === 1;
+    }
+
+    /**
+     * Check that a file name is a plain file name with the expected extension.
+     *
+     * @param   mixed   $filename   The file name from the request.
+     * @param   string  $extension  The wanted extension, for example scss or css.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    protected function isSafeFilename($filename, string $extension): bool
+    {
+        return \is_string($filename)
+            && $filename !== ''
+            && strpbrk($filename, '/' . chr(92)) === false
+            && strtolower(File::getExt($filename)) === $extension;
     }
 
     /**
@@ -741,6 +777,13 @@ class TemplateController extends FormController
                     . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'),
                 'error'
             );
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        if (!$this->isSafeTemplateName($templatename) || !$this->isSafeFilename($filename, 'scss')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_SCSS'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
@@ -827,6 +870,13 @@ class TemplateController extends FormController
 
         if (!$templatename) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
+        if (!$this->isSafeTemplateName($templatename) || !$this->isSafeFilename($filename, 'css')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;

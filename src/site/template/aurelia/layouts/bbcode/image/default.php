@@ -32,7 +32,6 @@ $attributesLink = $config->lightbox ? ' data-fancybox="gallery"' : '';
 $width          = $size ? (int) $size . "px;" : 'auto ';
 $attributesImg  = ' style="max-height: ' . (int) $config->imageHeight . 'px;' . ' max-width:' . $width . $style . '"';
 $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
-if (stripos(get_headers($url)[0],"200 OK")) {
 ?>
 <div class="kmsgimage<?php echo ($style ? ' float' : ''); ?>">
     <?php if ($canLink) :
@@ -46,7 +45,4 @@ if (stripos(get_headers($url)[0],"200 OK")) {
             ?>
     </a>
         <?php endif; ?>
-</div> 
-<?php }
-    else
-    echo 'image missing '.$url;
+</div>

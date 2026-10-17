@@ -872,7 +872,7 @@ class KunenaMessage extends KunenaDatabaseObject
         } else {
             $mailsubs   = (bool) $this->_config->allowSubscriptions;
             $mailmods   = $this->_config->mailModerators >= 1;
-            $mailadmins = $this->_configs->mailAdministrators >= 1;
+            $mailadmins = $this->_config->mailAdministrators >= 1;
         }
 
         $this->_approved = $approved;

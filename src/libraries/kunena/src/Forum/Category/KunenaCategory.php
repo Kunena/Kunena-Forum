@@ -1281,8 +1281,8 @@ class KunenaCategory extends KunenaDatabaseObject
         $access   = KunenaAccess::getInstance();
         $userlist = [];
 
-        if (!empty($this->catid)) {
-            $userlist = $access->getAdmins($this->catid);
+        if (!empty($this->id)) {
+            $userlist = $access->getAdmins($this->id);
         }
 
         if ($includeGlobal) {

@@ -90,13 +90,13 @@ class TemplatesModel extends AdminModel
      *
      * @param   array  $data      data
      *
-     * @return bool
+     * @return \Joomla\CMS\Form\Form|false
      *
      * @since   Kunena 6.0
      *
      * @throws \Exception
      */
-    public function getForm($data = [], $loadData = true): bool
+    public function getForm($data = [], $loadData = true): \Joomla\CMS\Form\Form|false
     {
         // Load the configuration definition file.
         $template = $this->getState('template');

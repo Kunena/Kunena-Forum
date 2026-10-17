@@ -198,13 +198,13 @@ class KunenaAnnouncement extends KunenaDatabaseObject
      * @param   string  $task   task
      * @param   bool    $xhtml  xhtml
      *
-     * @return  boolean
+     * @return  boolean|string
      *
      * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getTaskUrl($task = null, $xhtml = true): bool
+    public function getTaskUrl($task = null, $xhtml = true): bool|string
     {
         $uri = $this->getTaskUri($task);
 

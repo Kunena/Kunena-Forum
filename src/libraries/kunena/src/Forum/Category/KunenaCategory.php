@@ -1171,12 +1171,12 @@ class KunenaCategory extends KunenaDatabaseObject
     }
 
     /**
-     * @return  boolean
+     * @return  integer
      *
      * @since   Kunena 6.0
      * @throws  Exception
      */
-    public function getPosts(): bool
+    public function getPosts(): int
     {
         $this->buildInfo();
 

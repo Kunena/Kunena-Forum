@@ -304,7 +304,8 @@ class KunenaBBCode extends BBCode
                         $itemid = $path[2];
                     }
 
-                    if (isset($itemid)) {
+                    // $itemid starts as an empty string, so isset() was always true: test for an item number.
+                    if ($itemid !== '') {
                         // Convert ebay item to embedded widget
                         return KunenaBBCodeLibrary::renderEbayLayout($itemid);
                     }
@@ -2081,6 +2082,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         $username = '';
+        $msglink  = '';
+
         if ($userid > 0) {
             $username = KunenaUserHelper::get($userid)->getName();
         }

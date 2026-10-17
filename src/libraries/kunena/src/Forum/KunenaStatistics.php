@@ -239,6 +239,8 @@ class KunenaStatistics
             ->from($db->quoteName('#__kunena_smileys'));
         $db->setQuery($query);
 
+        $smilies = null;
+
         try {
             $smilies = $db->loadResult();
         } catch (RuntimeException $e) {
@@ -681,6 +683,8 @@ class KunenaStatistics
 
             $query->setLimit($limit);
             $this->_db->setQuery($query);
+
+            $this->topThanks = [];
 
             try {
                 $this->topThanks = (array) $this->_db->loadObjectList();

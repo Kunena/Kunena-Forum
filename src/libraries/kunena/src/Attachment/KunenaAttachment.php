@@ -779,7 +779,8 @@ class KunenaAttachment extends KunenaDatabaseObject
                 try {
                     $imageInfo = KunenaImage::getImageFileProperties($uploadBasePath . $fileNameWithExt);
                 } catch (Exception $e) {
-                    echo $e->getMessage();
+                    // $imageInfo is not set: go on and the next lines would read a property of nothing.
+                    return false;
                 }
 
                 if (number_format($file->size / 1024, 2) > $config->imageSize || $imageInfo->width > $config->imageWidth || $imageInfo->height > $config->imageHeight) {
@@ -802,8 +803,6 @@ class KunenaAttachment extends KunenaDatabaseObject
                         $image->toFile($uploadBasePath . $fileNameWithExt, $imageInfo->type, $options);
                         unset($image);
                     } catch (Exception $e) {
-                        echo $e->getMessage();
-
                         return false;
                     }
                 }

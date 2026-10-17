@@ -398,15 +398,7 @@ abstract class KunenaAttachmentHelper
 
         $user   = KunenaUserHelper::get($user);
         $config = KunenaFactory::getConfig();
-        $types  = explode(',', $config->imageTypes);
-
-        foreach ($types as &$type) {
-            $type = trim($type);
-
-            if (empty($type)) {
-                unset($type);
-            }
-        }
+        $types = array_values(array_filter(array_map('trim', explode(',', $config->imageTypes)), 'strlen'));
 
         // Check if attachments are allowed at all
         if (!$config->imageUpload) {
@@ -461,15 +453,7 @@ abstract class KunenaAttachmentHelper
         $category = KunenaCategoryHelper::get($category);
         $user     = KunenaUserHelper::get($user);
         $config   = KunenaFactory::getConfig();
-        $types    = explode(',', $config->fileTypes);
-
-        foreach ($types as &$type) {
-            $type = trim($type);
-
-            if (empty($type)) {
-                unset($type);
-            }
-        }
+        $types = array_values(array_filter(array_map('trim', explode(',', $config->fileTypes)), 'strlen'));
 
         // Check if attachments are allowed at all
         if (!$config->fileUpload) {

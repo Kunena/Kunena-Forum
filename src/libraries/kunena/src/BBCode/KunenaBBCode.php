@@ -3101,8 +3101,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return '';
         }
 
-        $moderator = $this->me->userid && $this->me->isModerator($message ? $message->getCategory() : null);
-
         return '<div class="kmsgtext-confidentialguests">' . Text::_('COM_KUNENA_BBCODE_SECURE_TEXT_GUESTS') . '</div>';
     }
 

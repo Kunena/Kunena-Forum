@@ -547,6 +547,8 @@ abstract class KunenaUserHelper
 
             $db->setQuery($query);
 
+            self::$_online = [];
+
             try {
                 self::$_online = (array) $db->loadObjectList('userid');
             } catch (ExecutionFailureException $e) {

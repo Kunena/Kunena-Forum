@@ -67,7 +67,7 @@ abstract class KunenaMessageThankyouHelper
         $id = \intval($identifier);
 
         if ($id < 1) {
-            return new KunenaMessageThankyou;
+            return new KunenaMessageThankyou(0);
         }
 
         if ($reload || empty(self::$_instances [$id])) {

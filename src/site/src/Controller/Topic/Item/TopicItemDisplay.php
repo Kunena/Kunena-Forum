@@ -251,13 +251,18 @@ class TopicItemDisplay extends KunenaControllerDisplay
                 $registry = new Registry($pm->params);
                 $posts    = $registry->get('receivers.posts');
 
-                foreach ($posts as $post) {
+                foreach ((array) $posts as $post) {
+                    // The private message may be attached to a post on another page.
+                    if (!isset($this->messages[$post])) {
+                        continue;
+                    }
+
                     if (!isset($this->messages[$post]->pm)) {
                         $this->messages[$post]->pm = [];
                     }
-                }
 
-                $this->messages[$post]->pm[$pm->id] = $pm;
+                    $this->messages[$post]->pm[$pm->id] = $pm;
+                }
             }
         }
 

@@ -75,7 +75,7 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
     /**
      * Prepare user attachments list.
      *
-     * @return  KunenaExceptionAuthorise
+     * @return  void
      *
      * @throws  Exception
      * @since   Kunena 6.0
@@ -107,7 +107,7 @@ class UserAttachmentsDisplay extends KunenaControllerDisplay
         $this->pagination = new KunenaPagination($this->total, $start, $limit);
 
         if (!$this->config->showImgFilesManageProfile || !$this->me->exists() && !$this->config->pubProfile) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ATTACHMENT_NO_ACCESS'), 403);
         }
 
         if ($this->moreUri) {

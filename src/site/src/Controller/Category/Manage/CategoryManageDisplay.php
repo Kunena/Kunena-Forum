@@ -99,7 +99,7 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 	/**
      * Prepare category display.
      *
-     * @return  false|KunenaExceptionAuthorise
+     * @return  false|void
      *
      * @throws  Exception
      * @since   Kunena 5.1
@@ -109,7 +109,7 @@ class CategoryManageDisplay extends KunenaControllerDisplay
         $this->me = KunenaUserHelper::getMyself();
 
         if (!$this->me->isAdmin()) {
-            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
         }
 
         parent::before();

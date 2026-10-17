@@ -900,7 +900,7 @@ class KunenaAttachment extends KunenaDatabaseObject
         if ($source != $destination) {
             // Create target directory if it does not exist.
             if (!$overwrite && is_file($destination)) {
-                throw new RuntimeException(Text::sprintf('Attachment %s already exists.'), $this->filename_real);
+                throw new RuntimeException(Text::sprintf('Attachment %s already exists.', $this->filename_real));
             }
 
             if ($unlink) {

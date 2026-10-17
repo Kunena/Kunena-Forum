@@ -948,7 +948,7 @@ class KunenaBan
         }
 
         if (!$user->exists()) {
-            throw new KunenaException(Text::_('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
+            throw new KunenaException(Text::sprintf('COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid));
         }
 
         if ($userid == $me->userid) {

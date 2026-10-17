@@ -25,7 +25,6 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\File\KunenaFile;
-use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\Path\KunenaPath;
 use RuntimeException;
 use StdClass;
@@ -182,7 +181,7 @@ class KunenaUpload
             $stat = fstat($out);
 
             if (!$stat) {
-                throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_STAT', $options['filename']), 500);
+                throw new RuntimeException(Text::sprintf('COM_KUNENA_UPLOAD_ERROR_STAT', $options['filename']), 500);
             }
 
             $size = $stat['size'];
@@ -644,8 +643,6 @@ class KunenaUpload
                 }
             }
         }
-
-        KunenaImage::correctImageOrientation($file->tmp_name);
 
         if (!File::copy($file->tmp_name, $file->destination)) {
             throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_RIGHT_MEDIA_DIR'), 500);

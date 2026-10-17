@@ -119,7 +119,7 @@ $personalText = $user->getPersonalText();
             <li>
                 <strong> <?php echo Text::_('COM_KUNENA_KARMA'); ?>: <?php echo $karmanumber; ?></strong>
                 <span>
-                    <?php $this->subLayout('Widget/Karma')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown') . $this->subLayout('Widget/Karma')->set('topicicontype', KunenaFactory::getTemplate()->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown'); ?> 
+                    <?php echo $this->subLayout('Widget/Karma')->set('topicicontype', $this->ktemplate->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmadown') . $this->subLayout('Widget/Karma')->set('topicicontype', KunenaFactory::getTemplate()->params->get('topicicontype'))->set('userid', $user->userid)->set('karmatype', 'karmaup'); ?> 
                 </span>
             </li>
             <?php endif; ?>

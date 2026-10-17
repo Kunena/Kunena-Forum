@@ -413,16 +413,36 @@ class KunenaBBCode extends BBCode
      */
     public function get_title(string $url): string
     {
-        $str = @file_get_contents($url);
+        $parts = parse_url($url);
 
-        if ($str !== false) {
-            if (\strlen($str) > 0) {
-                // Supports line breaks inside <title>
-                $str = trim(preg_replace('/\s+/', ' ', $str));
+        // Only fetch web pages. Other schemes (file:, php:, ftp: ...) are never read.
+        if (!$parts || empty($parts['host']) || !\in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)) {
+            return '';
+        }
 
-                // Ignore case
-                preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title);
+        // Do not let the server read addresses of its own network (private and reserved ranges).
+        $ips = gethostbynamel($parts['host']);
 
+        if (!$ips) {
+            return '';
+        }
+
+        foreach ($ips as $ip) {
+            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                return '';
+            }
+        }
+
+        // Short timeout, no redirects (they could lead to an internal address), and only the start of the page.
+        $context = stream_context_create(['http' => ['timeout' => 3, 'follow_location' => 0, 'ignore_errors' => true]]);
+        $str     = @file_get_contents($url, false, $context, 0, 262144);
+
+        if ($str !== false && \strlen($str) > 0) {
+            // Supports line breaks inside <title>
+            $str = trim(preg_replace('/\s+/', ' ', $str));
+
+            // Ignore case
+            if (preg_match("/\<title\>(.*?)\<\/title\>/i", $str, $title)) {
                 return $title[1];
             }
         }

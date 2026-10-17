@@ -2999,7 +2999,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
                 if (!empty($tweet_data->extended_entities->media)) {
                     foreach ($tweet_data->extended_entities->media as $media) {
-                        $tweet_data->text = str_replace($tweet_data->extended_entities->media[0]->url, '', $tweet_data->text);
+                        $tweet_data->text = str_replace($media->url, '', $tweet_data->text);
 
                         if ($media->type == 'photo') {
                             if ($uri->isSSL()) {

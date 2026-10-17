@@ -448,15 +448,33 @@ class KunenaUpload
      *
      * @param   string  $value  Value, for example: 1G, 10M, 120k...
      *
-     * @return  float  Value in bytes.
+     * @return  float|integer  Value in bytes. A negative value (like memory_limit = -1) means unlimited.
      *
      * @since   Kunena 6.0
      */
     public static function toBytes(string $value)
     {
-        $base = log((int) $value, 1024);
+        $value = trim($value);
+        $bytes = (float) $value;
+        $unit  = strtolower(substr($value, -1));
 
-        return round(pow(1024, $base - floor($base)));
+        if ($bytes < 0) {
+            return PHP_INT_MAX;
+        }
+
+        // The shorthand units are cumulative: g falls through m and k.
+        switch ($unit) {
+            case 'g':
+                $bytes *= 1024;
+                // no break
+            case 'm':
+                $bytes *= 1024;
+                // no break
+            case 'k':
+                $bytes *= 1024;
+        }
+
+        return $bytes;
     }
 
     /**
@@ -620,7 +638,7 @@ class KunenaUpload
                 }
             }
 
-            if (!$file->isAvatar && stripos($type, 'image/') !== true) {
+            if (!$file->isAvatar && stripos($type, 'image/') === false) {
                 if (!$this->checkFileSizeFileAttachment($file->size)) {
                     throw new RuntimeException(Text::_('COM_KUNENA_UPLOAD_ERROR_FILE_EXCEED_LIMIT_IN_CONFIGURATION'), 500);
                 }

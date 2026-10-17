@@ -298,15 +298,19 @@ class KunenaCategoryUser
         // Create the table object
         $table = $this->getTable();
 
+        $result = false;
+
         try {
             $result = $table->delete(['category_id' => $this->category_id, 'user_id' => $this->user_id]);
         } catch (Exception $e) {
             KunenaError::displayDatabaseError($e);
         }
 
-        $this->_exists = false;
+        if ($result) {
+            $this->_exists = false;
+        }
 
-        return $result;
+        return (bool) $result;
     }
 
     /**

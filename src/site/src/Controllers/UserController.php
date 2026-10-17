@@ -1071,7 +1071,13 @@ class UserController extends KunenaController
             return;
         }
 
-        $status     = $this->app->getInput()->getInt('status', 0);
+        $status = $this->app->getInput()->getInt('status', 0);
+
+        // Only the known states are valid: 0 online, 1 away, 2 busy, 3 invisible.
+        if ($status < 0 || $status > 3) {
+            $status = 0;
+        }
+
         $me         = KunenaUserHelper::getMyself();
         $me->status = $status;
 
@@ -1108,7 +1114,8 @@ class UserController extends KunenaController
             return;
         }
 
-        $status_text     = $this->app->getInput()->post->getString('status_text', '');
+        // The column is varchar(191): cut longer texts instead of failing the save.
+        $status_text     = mb_substr($this->app->getInput()->post->getString('status_text', ''), 0, 191);
         $me              = KunenaUserHelper::getMyself();
         $me->status_text = $status_text;
 

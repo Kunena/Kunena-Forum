@@ -1479,15 +1479,22 @@ class UserController extends KunenaController
      */
     public function getusersmentionssearch()
     {
-        $user = $this->input->getString('usersearch', null);
+        $user = trim($this->input->getString('usersearch', ''));
+        $row  = [];
 
-        $db     = Factory::getContainer()->get('DatabaseDriver');
-        $query  = $db->createQuery();
-        $query->select($db->quoteName(array('name', 'username')))
-            ->from($db->quoteName('#__users'))
-            ->where($db->quoteName('username') . ' LIKE \'%' . $db->escape($user) . '%\'');
-        $db->setQuery($query);
-        $row = $db->loadObjectList();
+        // Guests may search only when they are allowed to see the user list, and an empty search must not list every user.
+        if (($this->me->exists() || $this->config->userlistAllowed) && $user !== '') {
+            $db     = Factory::getContainer()->get('DatabaseDriver');
+            $query  = $db->createQuery();
+            $query->select($db->quoteName(array('name', 'username')))
+                ->from($db->quoteName('#__users'))
+                ->where($db->quoteName('block') . ' = 0')
+                ->where($db->quoteName('username') . ' LIKE ' . $db->quote('%' . $db->escape($user, true) . '%'))
+                ->order($db->quoteName('username') . ' ASC')
+                ->setLimit(10);
+            $db->setQuery($query);
+            $row = $db->loadObjectList();
+        }
 
         header('Content-type: application/json');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

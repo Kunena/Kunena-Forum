@@ -313,17 +313,8 @@ class KunenaBBCode extends BBCode
                     return;
                 }
 
-                parse_str($params['query'], $query);
-
-                if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw'])) {
-                    // Convert ebay search to embedded widget
-                    KunenaBBCodeLibrary::renderEbayLayout($itemid);
-                }
-
-                if (strstr($params['host'], 'myworld.') && !empty($path[1])) {
-                    // Convert seller listing to embedded widget
-                    KunenaBBCodeLibrary::renderEbayLayout($itemid);
-                }
+                // Search and seller (myworld) links have no item number, so they cannot be shown as a widget:
+                // renderEbayLayout() needs an int item id and gets an empty string here. Leave them as plain links.
             }
         }
 

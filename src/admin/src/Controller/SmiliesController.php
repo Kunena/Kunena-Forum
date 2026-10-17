@@ -140,6 +140,8 @@ class SmiliesController extends FormController
         if (empty($smileyCode)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_SMILEY_SMILEY_CODE_CANNOT_BE_EMPTY'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
         }
 
         if (!$smileyId) {

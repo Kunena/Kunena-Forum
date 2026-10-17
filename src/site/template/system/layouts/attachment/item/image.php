@@ -19,7 +19,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 
 $attachment = $this->attachment;
 
-$name = preg_replace('/.html/', '', $attachment->getUrl());
+$name = preg_replace('/\.html/', '', $attachment->getUrl());
 
 if (!$attachment->isImage()) {
     return;

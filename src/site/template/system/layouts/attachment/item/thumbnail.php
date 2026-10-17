@@ -30,7 +30,7 @@ $attributesLink = $attachment->isImage() && $config->lightbox ? ' data-fancybox=
 $attributesImg  = ' style="max-height: ' . (int) $config->thumbHeight . 'px;"';
 
 if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix') && $config->attachmentProtection) {
-    $name = preg_replace('/.html/', '', $attachment->getUrl());
+    $name = preg_replace('/\.html/', '', $attachment->getUrl());
 } else {
     $name = $attachment->getUrl();
 }

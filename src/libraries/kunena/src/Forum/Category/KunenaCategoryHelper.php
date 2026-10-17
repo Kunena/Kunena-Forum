@@ -539,7 +539,7 @@ abstract class KunenaCategoryHelper
     {
         if (\is_array($groupids)) {
             $groupids = array_unique($groupids);
-        } else {
+        } elseif ($groupids !== false) {
             $groupids = [\intval($groupids)];
         }
 

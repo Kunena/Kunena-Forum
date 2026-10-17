@@ -744,7 +744,7 @@ abstract class KunenaUserHelper
      * @param   array   $data  With username, ip, email, api key, evidence
      * @param   string  $type  Add ou just call api
      *
-     * @return  boolean|Response
+     * @return  boolean|Response  The answer of the service (check its code), false if the type is unknown.
      *
      * @since   Kunena 6
      *
@@ -795,10 +795,9 @@ abstract class KunenaUserHelper
                     null
                 );
             }
-
-            return $response;
         }
 
-        return false;
+        // Return the answer also when it is not a success, so the caller can show the reason.
+        return $response;
     }
 }

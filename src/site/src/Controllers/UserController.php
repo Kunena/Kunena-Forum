@@ -949,7 +949,7 @@ class UserController extends KunenaController
                 return false;
             }
 
-            if ($result != false) {
+            if ($result && $result->code == '200') {
                 // Report accepted. There is no need to display the reason
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'), 'success');
 
@@ -957,10 +957,11 @@ class UserController extends KunenaController
             } else {
                 // Report failed or refused
                 $reasons = [];
-                preg_match('/<p>.*<\/p>/', $result->body, $reasons);
+                preg_match('/<p>.*<\/p>/', $result ? (string) $result->body : '', $reasons);
 
                 // Stopforumspam returns only one reason, which is reasons[0], but we need to strip out the html tags before using it
-                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', strip_tags($reasons[0])), 'error');
+                $reason = isset($reasons[0]) ? strip_tags($reasons[0]) : ($result ? 'HTTP ' . $result->code : 'no answer');
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', $reason), 'error');
 
                 return false;
             }

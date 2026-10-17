@@ -399,8 +399,6 @@ class ToolsController extends FormController
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $affectedRows), 'success');
         }
 
-        $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()), 'success');
-
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }
 

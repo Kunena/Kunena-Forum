@@ -90,13 +90,24 @@ class KunenaProfiler extends Profiler
      */
     public function stop(string $name)
     {
-        $item = array_pop($this->_heap);
+        // Find the innermost open item with this name; items above it were left open by code paths which skipped stop().
+        $found = null;
 
-        if (!$item) {
-            trigger_error(__CLASS__ . '::' . __FUNCTION__ . "('$name') is missing start()");
-        } elseif ($item->name != $name) {
-            $item->start(microtime(true));
+        for ($i = count($this->_heap) - 1; $i >= 0; $i--) {
+            if ($this->_heap[$i]->name == $name) {
+                $found = $i;
+                break;
+            }
         }
+
+        if ($found === null) {
+            trigger_error(__CLASS__ . '::' . __FUNCTION__ . "('$name') is missing start()");
+
+            return KunenaProfilerItem::getInstance($name);
+        }
+
+        $item = $this->_heap[$found];
+        array_splice($this->_heap, $found);
 
         $delta = $item->stop(microtime(true));
 

@@ -56,12 +56,14 @@ abstract class KunenaCategoryUserHelper
             $category = $category->id;
         }
 
-        $category = \intval($category);
-        $user     = KunenaUserHelper::get($user);
+        $user = KunenaUserHelper::get($user);
 
+        // Test for null before the conversion: intval(null) is 0 and the test could never be true.
         if ($category === null) {
             return new KunenaCategoryUser(0, $user);
         }
+
+        $category = \intval($category);
 
         if ($reload || empty(self::$_instances [$user->userid][$category])) {
             $user_categories                             = self::getCategories($category, $user);

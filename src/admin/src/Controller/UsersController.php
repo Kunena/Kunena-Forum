@@ -471,7 +471,7 @@ class UsersController extends KunenaController
 
         // Global moderator is a special case
         if (KunenaUserHelper::getMyself()->isAdmin()) {
-            KunenaAccess::getInstance()->setModerator((object) [], $user, \in_array(0, $modCatids, true));
+            KunenaAccess::getInstance()->setModerator(null, $user, \in_array(0, $modCatids, true));
         }
 
         return true;
@@ -506,41 +506,16 @@ class UsersController extends KunenaController
             return;
         }
 
-        $user     = KunenaUserHelper::get($userid);
-        $category = null;
+        $user    = KunenaUserHelper::get($userid);
+        $access  = KunenaAccess::getInstance();
+        $success = true;
 
-        if ($category instanceof KunenaCategory) {
-            $category = $category->id;
-        }
+        // Collect the categories first: every change clears the role cache. Category 0 is the global moderator role.
+        $catids = array_keys($access->getModeratorStatus($user));
 
-        $category = \intval($category);
-
-        $userCategory = KunenaUserHelper::get($category, $user);
-
-        if ($userCategory->role == 1) {
-            $userCategory->role = false;
-
-            if (!$userCategory->params) {
-                $userCategory->params = '';
-            }
-
-            $success = $userCategory->save();
-
-            // Clear role cache
-            KunenaAccess::getInstance()->clearCache();
-
-            // Change user moderator status
-            $moderator = KunenaAccess::getInstance()->getModeratorStatus($user);
-
-            if ($user->moderator != !empty($moderator)) {
-                $user->moderator = \intval(!empty($moderator));
-
-                try {
-                    $success = $user->save();
-                } catch (Exception $e) {
-                    $this->app->enqueueMessage($e->getMessage(), 'error');
-                }
-            }
+        foreach ($catids as $catid) {
+            $category = $catid ? KunenaCategoryHelper::get($catid) : null;
+            $success  = $access->setModerator($category, $user, false) && $success;
         }
 
         $message = Text::_('COM_KUNENA_USER_UNMODERATE_DONE');

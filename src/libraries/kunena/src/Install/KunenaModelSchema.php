@@ -362,7 +362,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      */
-    public function getXmlSchema(string $input): object
+    public function getXmlSchema(string $input = KUNENA_SCHEMA_FILE): object
     {
         if ($this->xmlschema == null) {
             $this->xmlschema = $this->getSchemaFromFile($input);

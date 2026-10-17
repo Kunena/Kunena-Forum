@@ -1527,7 +1527,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         if ($action == BBCode::BBCODE_CHECK) {
-            if (!\is_string($default) || \strlen($default) == "") {
+            if (!\is_string($default) || \strlen($default) === 0) {
                 return true;
             } elseif (isset($list_styles[$default])) {
                 return true;
@@ -1542,7 +1542,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $type = '';
         $elem = 'ul';
 
-        if (!\is_string($default) || \strlen($default) == "") {
+        if (!\is_string($default) || \strlen($default) === 0) {
             $elem = 'ul';
         } elseif ($default == '1') {
             $elem = 'ol';

@@ -875,7 +875,7 @@ abstract class KunenaRoute
         $post = $input->post->getArray([]);
 
         foreach ($post as $key => $value) {
-            if (\in_array($key, ['view', 'layout', 'task']) && !preg_match('/[^a-zA-Z0-9_.]/i', $value)) {
+            if (\in_array($key, ['view', 'layout', 'task']) && \is_string($value) && !preg_match('/[^a-zA-Z0-9_.]/i', $value)) {
                 self::$current->setVar($key, $value);
             }
         }

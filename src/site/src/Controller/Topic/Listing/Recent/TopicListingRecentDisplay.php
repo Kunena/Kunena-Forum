@@ -226,7 +226,9 @@ class TopicListingRecentDisplay extends ListDisplay
 
         $actions = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
 
-        $params      = $this->app->getMenu()->getActive()->getParams();
+        // There is no active menu item when the page is not reached through a menu item.
+        $activeItem  = $this->app->getMenu()->getActive();
+        $params      = $activeItem ? $activeItem->getParams() : new \Joomla\Registry\Registry();
         $title       = $params->get('page_title');
         $pageheading = $params->get('show_page_heading');
 

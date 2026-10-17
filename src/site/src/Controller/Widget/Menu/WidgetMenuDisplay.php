@@ -112,7 +112,7 @@ class WidgetMenuDisplay extends KunenaControllerDisplay
         $this->list      = KunenaMenuHelper::getList($parameters);
         $this->menu      = $this->app->getMenu();
         $this->active    = $this->menu->getActive();
-        $this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;
+        $this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()?->id;
         $this->path      = isset($this->active) ? $this->active->tree : [];
         $this->showAll   = $parameters->get('showAllChildren');
 

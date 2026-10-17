@@ -17,7 +17,6 @@ namespace Kunena\Forum\Libraries\Icons;
 
 use Exception;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -1095,9 +1094,7 @@ class KunenaIcons
                     return KunenaSvgIcons::loadsvg('folder');
                 }
             } else {
-                $svg = @file_get_contents(Uri::root() . 'media/kunena/core/svg/' . $categoryicon . '.svg');
-
-                if ($svg) {
+                if (is_file(JPATH_SITE . '/media/kunena/core/svg/' . $categoryicon . '.svg')) {
                     return KunenaSvgIcons::loadsvg($categoryicon);
                 } else {
                     return '<span class="icon ' . $categoryicon . $bigicon . '" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" aria-hidden="true"></span>';

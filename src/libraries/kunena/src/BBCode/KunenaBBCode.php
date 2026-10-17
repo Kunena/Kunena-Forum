@@ -1213,6 +1213,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                     throw new Exception('Render ebay item ' . $errors[0]->LongMessage);
                 }
             }
+
+            throw new Exception('Render ebay item: the eBay API answered with HTTP status ' . $response->code);
         } else {
             $respOauthError = json_decode($responseOauth->body);
 

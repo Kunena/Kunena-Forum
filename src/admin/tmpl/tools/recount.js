@@ -35,12 +35,12 @@
 					} else {
 						$this.find('.progress').removeClass('active').children('.bar').addClass('bar-warning');
 						if (!('error' in data)) {
-							$this.find('.modal-error').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_ABORT'));
+							$this.find('.modal-error').text(Joomla.Text._('COM_KUNENA_AJAXMODAL_ERROR_ABORT_BODY'));
 						}
 					}
 					$this.find('.recount-close').removeAttr('disabled');
 				})
-				.fail(function () {
+				.fail(function (xhr, status, error) {
 					const $this = $(this);
 					if (status === 'error' && error) {
 						$this.find('.modal-header h3').text(xhr.status + ' ' + error);
@@ -71,7 +71,7 @@
 			const $this = $(this);
 			const href = $this.attr('href');
 			const $target = $($this.attr('data-target'));
-			const data = $this.attr('data-form') ? $($this.attr('data-form')).serializeArray() : null;
+			const data = $this.attr('data-form') ? $($this.attr('data-form')).serializeArray() : [];
 			const option = $target.data('modal') ? 'toggle' : $.extend({}, $target.data(), $this.data());
 
 			e.preventDefault();
@@ -88,7 +88,7 @@
 					$this.is(':visible') && $this.focus()
 				});
 
-			data.format = 'json';
+			data.push({name: 'format', value: 'json'});
 			$target.doRecount(href, data);
 		});
 	})(window.jQuery);

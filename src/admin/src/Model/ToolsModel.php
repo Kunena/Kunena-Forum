@@ -521,7 +521,7 @@ class ToolsModel extends AdminModel
             $ktemplateParams .= '[tr][td][b]' . $param . '[/b][/td][td]' . $value . '[/td][/tr]';
         }
 
-        $ktemplateParams .= '[table]';
+        $ktemplateParams .= '[/table]';
 
         return $ktemplateParams;
     }

@@ -171,6 +171,24 @@ class TableKunenaTopics extends KunenaTable
     public $params = null;
 
     /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $category_id = null;
+
+    /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $label_id = null;
+
+    /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $rating = null;
+
+    /**
      * @param   DatabaseDriver  $db  Database driver
      *
      * @since   Kunena 6.0

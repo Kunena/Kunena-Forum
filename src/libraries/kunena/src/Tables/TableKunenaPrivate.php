@@ -79,6 +79,12 @@ class TableKunenaPrivate extends KunenaTable
     public $params = null;
 
     /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $parent_id = null;
+
+    /**
      * @param   DatabaseDriver  $db  Database driver
      *
      * @since   Kunena 6.0

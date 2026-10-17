@@ -243,6 +243,12 @@ class TableKunenaCategories extends KunenaTable
     public $topictemplate = null;
 
     /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $allowRatings = null;
+
+    /**
      * @param   DatabaseDriver  $db  Database driver
      *
      * @since   Kunena 6.0

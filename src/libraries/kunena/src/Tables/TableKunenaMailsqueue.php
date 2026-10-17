@@ -74,6 +74,12 @@ class TableKunenaMailsqueue extends KunenaTable
     public $send = null;
 
     /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $sentusers = null;
+
+    /**
      * Constructor
      *
      * @param   DatabaseDriver  $db  Database driver

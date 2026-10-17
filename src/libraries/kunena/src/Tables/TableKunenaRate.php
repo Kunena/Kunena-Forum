@@ -50,6 +50,12 @@ class TableKunenaRate extends KunenaTable
     public $time = null;
 
     /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $id = null;
+
+    /**
      * @param   DatabaseDriver  $db  database driver
      *
      * @since   Kunena 6.0

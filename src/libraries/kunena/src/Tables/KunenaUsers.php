@@ -227,6 +227,12 @@ class KunenaUsers extends KunenaTable
     public $showOnline = null;
 
     /**
+     * @var     integer|null
+     * @since   Kunena 7.1
+     */
+    public $displayAgeBirthdate = null;
+
+    /**
      * Thankyou count
      *
      * @var     integer
@@ -281,6 +287,18 @@ class KunenaUsers extends KunenaTable
     * @since   Kunena 7.0
     */
     public $language = null;
+
+    /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $timestamp = null;
+
+    /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $ip = null;
 
     /**
      * Indicates that columns fully support the NULL value in the database

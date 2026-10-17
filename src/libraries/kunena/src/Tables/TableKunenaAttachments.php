@@ -105,6 +105,18 @@ class TableKunenaAttachments extends KunenaTable
     public $inline = null;
 
     /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $caption = null;
+
+    /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $status = null;
+
+    /**
      * @param   DatabaseDriver  $db  Database driver
      *
      * @since   Kunena 6.0

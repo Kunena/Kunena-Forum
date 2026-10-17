@@ -38,6 +38,18 @@ class TableKunenaKarma extends KunenaTable
     public $time = null;
 
     /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $id = null;
+
+    /**
+     * @var     mixed
+     * @since   Kunena 7.2
+     */
+    public $userid = null;
+
+    /**
      * @param   DatabaseDriver  $db  database driver
      *
      * @since   Kunena 6.2

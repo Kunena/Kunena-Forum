@@ -118,7 +118,7 @@ class UserModel extends KunenaModel
         $db->setQuery($query);
 
         try {
-            $ipList = implode("','", (array) $db->loadColumn());
+            $ipList = array_filter((array) $db->loadColumn());
         } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 
@@ -128,7 +128,7 @@ class UserModel extends KunenaModel
         $list = [];
 
         if ($ipList) {
-            $ipList = "'{$ipList}'";
+            $ipList = implode(',', array_map([$db, 'quote'], $ipList));
             $query  = $db->createQuery();
             $query->select('m.ip,m.userid,u.username,COUNT(*) as mescnt')
                 ->from($db->quoteName('#__kunena_messages', 'm'))

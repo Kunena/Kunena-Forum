@@ -348,12 +348,12 @@ class TopicController extends KunenaController
         }
 
         $attach_id = $this->input->getInt('files_id_delete', 0);
-        $userid = $this->input->getInt('userid', 0);
         $success   = [];
         $instance  = KunenaAttachmentHelper::get($attach_id);
 
+        // The owner comes from the attachment itself, never from the request.
         if (
-            $this->me->userid == $userid || $this->me->isAdmin()
+            ($instance->exists() && $this->me->userid == $instance->userid) || $this->me->isAdmin()
             || $this->me->isModerator()
         ) {
             $editor_text = $this->app->getInput()->get->get('editor_text', '', 'raw');

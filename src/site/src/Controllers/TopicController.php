@@ -2789,20 +2789,18 @@ class TopicController extends KunenaController
             try {
                 // Give a new vote
                 $poll->saveVote($vote, $topic);
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'), 'success');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
-
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_SUCCESS'), 'success');
         } elseif (!$this->config->pollAllowVoteOne) {
             try {
                 // Change existing vote
                 $poll->saveVote($vote, $topic, true);
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS'), 'success');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
             }
-
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS'), 'success');
         }
 
         $this->setRedirect($topic->getUrl($this->return, false));
@@ -2825,6 +2823,15 @@ class TopicController extends KunenaController
         }
 
         $topic = KunenaTopicHelper::get($this->id);
+
+        // Only moderators of the category may reset the votes of a poll.
+        if (!$topic->exists() || !$this->me->isModerator($topic->getCategory())) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
         $topic->resetvotes();
 
         if ($this->config->logModeration) {

@@ -615,7 +615,7 @@ class TemplateController extends FormController
         $templatename = array_shift($template['cid']);
 
         if (!$this->isSafeTemplateName($templatename)) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
@@ -678,7 +678,7 @@ class TemplateController extends FormController
         $templatename = array_shift($template['cid']);
 
         if (!$this->isSafeTemplateName($templatename)) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
@@ -804,7 +804,7 @@ class TemplateController extends FormController
         if (!$templatename) {
             $this->app->enqueueMessage(
                 Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-                    . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'),
+                    . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'),
                 'error'
             );
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -831,7 +831,7 @@ class TemplateController extends FormController
         } elseif (!$return && $task == 'applyScss') {
             $this->app->enqueueMessage(
                 Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-                    . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file),
+                    . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE', $file),
                 'error'
             );
             $this->setRedirect(KunenaRoute::_($this->baseurlTemplate . '&layout=choosescss', false));
@@ -841,7 +841,7 @@ class TemplateController extends FormController
         } else {
             $this->app->enqueueMessage(
                 Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': '
-                    . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file),
+                    . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE', $file),
                 'error'
             );
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
@@ -899,7 +899,7 @@ class TemplateController extends FormController
         }
 
         if (!$templatename) {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
             return;
@@ -919,13 +919,13 @@ class TemplateController extends FormController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
             $this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=editcss", false));
         } elseif (!$return && $task == 'applyCss') {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE', $file), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurlTemplate . "&layout=choosecss", false));
         } elseif ($return && $task == 'saveCss') {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'), 'success');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
         } else {
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file), 'error');
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE', $file), 'error');
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
         }
     }

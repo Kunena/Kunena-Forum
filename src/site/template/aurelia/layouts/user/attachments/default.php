@@ -168,7 +168,7 @@ $attachments = $this->attachments;
                         <div class="modal-header">
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"></button>
                             <h4 class="modal-title"
-                                id="myModalLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL ') ?></h4>
+                                id="myModalLabel"><?php echo Text::_('COM_KUNENA_FILES_CONFIRMATION_DELETE_MODAL_LABEL') ?></h4>
                         </div>
                         <div class="modal-body">
                             <p><?php echo Text::_('COM_KUNENA_FILES_DELETE_SELECTED_MODAL_DESCRIPTION'); ?></p>

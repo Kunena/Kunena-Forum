@@ -637,7 +637,12 @@ class UserController extends KunenaController
         // Save avatar from gallery
         $avatar_gallery = $input->$method->get('avatar_gallery', '', 'string');
 
-        if (!empty($avatar_gallery)) {
+        // Only an existing picture of the avatar gallery may be used: no other folders, no parent folder segments.
+        if (
+            !empty($avatar_gallery)
+            && preg_match('#^gallery(?:/(?!\.)[\w .\-]+)?/(?!\.)[\w .\-]+\.(?:png|jpe?g|gif|webp)$#i', $avatar_gallery)
+            && is_file(KPATH_MEDIA . '/avatars/' . $avatar_gallery)
+        ) {
             $user->avatar = $avatar_gallery;
         }
     }

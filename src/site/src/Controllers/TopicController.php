@@ -824,7 +824,7 @@ class TopicController extends KunenaController
         // Check for guest user if the IP, username or email are blacklisted
         if ($category->allowAnonymous && !$this->me->userid) {
             if ($this->checkIfBlacklisted($message)) {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_BALCKLISTED'), 'error');
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_TOPIC_MESSAGES_ERROR_BLACKLISTED'), 'error');
                 $this->setRedirectBack();
 
                 return;

@@ -307,6 +307,11 @@ abstract class KunenaTopicHelper
             } else {
                 $catlist = 'AND ' . $db->quoteName('tt.category_id') . ' IN (' . $catlist . ')';
             }
+        } elseif (!$exclude) {
+            // No readable category: the topics of other categories must not be listed.
+            KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+            return [0, []];
         } else {
             $catlist = '';
         }

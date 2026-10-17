@@ -340,10 +340,11 @@ abstract class KunenaMessageHelper
         }
 
         if (\count($catlist) > 0) {
-            $allowed = implode(',', array_keys($catlist));
+            $allowed = implode(',', array_map('intval', array_keys($catlist)));
             $query->where($db->quoteName('m.catid') . ' IN (' . $allowed . ')');
         } else {
-            $catlist = '';
+            // No readable category: the messages of other categories must not be listed.
+            return [0, []];
         }
 
         $query->where($hold);

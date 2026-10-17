@@ -51,9 +51,9 @@ class KunenaDate extends Date
      */
     public function toTimezone(): string
     {
-        $timezone = $this->getOffsetFromGMT(true);
+        $minutes = (int) round($this->getOffsetFromGMT(true) * 60);
 
-        return sprintf('%+d:%02d', $timezone, ($timezone * 60) % 60);
+        return sprintf('%s%d:%02d', $minutes < 0 ? '-' : '+', intdiv(abs($minutes), 60), abs($minutes) % 60);
     }
 
     /**

@@ -193,6 +193,11 @@ class TopicController extends KunenaController
 
         $instances = KunenaAttachmentHelper::getById($attach_ids_final, 'none');
 
+        // Only the owner of an attachment, or a moderator, may change it.
+        foreach ($instances as $instance) {
+            $this->checkpermissions($instance->userid);
+        }
+
         $this->changeinline($instances, '1');
     }
 

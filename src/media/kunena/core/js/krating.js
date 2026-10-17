@@ -60,7 +60,7 @@ jQuery(document).ready(function ($) {
                         }
                     }
                 ).fail(function (response) {
-                        $('<div class="alert alert-danger alert-dismissible fade show" role="alert"><h4>' + Joomla.Text._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + response + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>').appendTo('#system-message-container');
+                        $('<div class="alert alert-danger alert-dismissible fade show" role="alert"><h4>' + Joomla.Text._('COM_KUNENA_RATING_WARNING_LABEL') + '</h4>' + $('<div>').text(response.statusText || '').html() + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>').appendTo('#system-message-container');
                     }
                 );
             };

@@ -2707,9 +2707,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         // Get the words set on alt params when alt is used like that : alt=my words; see issue #6751
         $matches = array();
         $altText = null;
-        preg_match('/[img(\s*(?!alt)([\w\-\.]+\s*\/?]/', $params['_tag'], $matches);
+        preg_match('/\balt=([^\]=]*?)(?=\s+\w+=|\s*\]|$)/', $params['_tag'], $matches);
         if (\count($matches) > 0) {
-            $altText = rtrim($matches[0], "]");
+            $altText = trim($matches[1]);
         }
 
         $layout = KunenaLayout::factory('BBCode/Image')

@@ -349,60 +349,72 @@ class TopicsController extends KunenaController
             return;
         }
 
-        $topics_ids = array_keys($this->app->getInput()->get('topics', [], 'post', 'array'));
+        $topics_ids   = array_keys($this->app->getInput()->get('topics', [], 'post', 'array'));
         $messages_ids = array_keys($this->app->getInput()->get('posts', [], 'post', 'array'));
+        $topics       = [];
+        $messages     = [];
+        $success      = null;
 
         if (!empty($topics_ids)) {
             $topics_ids = ArrayHelper::toInteger($topics_ids);
-            $topics = KunenaTopicHelper::getTopics($topics_ids);
+            $topics     = KunenaTopicHelper::getTopics($topics_ids);
         } else {
             $messages_ids = ArrayHelper::toInteger($messages_ids);
-            $messages = KunenaMessageHelper::getMessages($messages_ids);
+            $messages     = KunenaMessageHelper::getMessages($messages_ids);
         }
 
         if (!$topics_ids && !$messages_ids) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_MESSAGES_OR_TOPICS_SELECTED'), 'notice');
             $this->setRedirectBack();
-        } else {
-            $target = KunenaCategoryHelper::get($this->app->getInput()->getInt('target', 0));
 
-            if (empty($target->id)) {
-                $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'notice');
-                $this->setRedirectBack();
-            }
+            return;
+        }
 
-            try {
-                $target->tryAuthorise('read');
-            } catch (Exception $e) {
-                $this->app->enqueueMessage($e->getMessage(), 'error');
-            }
+        $target = KunenaCategoryHelper::get($this->app->getInput()->getInt('target', 0));
 
-            if ($topics) {
-                foreach ($topics as $topic) {
-                    try {
-                        $topic->tryAuthorise('move');
-                        $topic->move($target);
+        if (empty($target->id)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'), 'notice');
+            $this->setRedirectBack();
 
-                        $message = Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
-                    } catch (Exception $e) {
-                        $this->app->enqueueMessage($e->getMessage(), 'error');
-                    }
+            return;
+        }
+
+        try {
+            $target->tryAuthorise('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if ($topics) {
+            foreach ($topics as $topic) {
+                try {
+                    $topic->tryAuthorise('move');
+                    $topic->move($target);
+
+                    $success = Text::_('COM_KUNENA_ACTION_TOPIC_SUCCESS_MOVE');
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
-            } else {
-                foreach ($messages as $message) {
-                    $topic = $message->getTopic();
+            }
+        } else {
+            foreach ($messages as $message) {
+                $topic = $message->getTopic();
 
-                    try {
-                        $message->tryAuthorise('move');
-                        $topic->move($target, $message->id);
-                    } catch (Exception $e) {
-                        $this->app->enqueueMessage($e->getMessage(), 'error');
-                    }
+                try {
+                    $message->tryAuthorise('move');
+                    $topic->move($target, $message->id);
+
+                    $success = Text::_('COM_KUNENA_ACTION_POST_SUCCESS_MOVE');
+                } catch (Exception $e) {
+                    $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
             }
         }
 
-        if (!empty($message)) {
+        if ($success !== null) {
             if ($this->config->logModeration) {
                 foreach ($topics as $topic) {
                     KunenaLog::log(
@@ -419,7 +431,7 @@ class TopicsController extends KunenaController
                 }
             }
 
-            $this->app->enqueueMessage($message, 'success');
+            $this->app->enqueueMessage($success, 'success');
         }
 
         $this->setRedirectBack();

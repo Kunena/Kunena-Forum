@@ -1082,7 +1082,7 @@ abstract class KunenaCategoryHelper
         $query->update($db->quoteName('#__kunena_aliases', 'ka'))
             ->join('INNER', $db->quoteName('#__kunena_categories', 'kc') . ' ON ' . $db->quoteName('ka.alias') . ' = ' . $db->quoteName('kc.alias'))
             ->set($db->quoteName('ka.item') . ' = ' . $db->quoteName('kc.id'))
-            ->where($db->quoteName('ka.type') . ' = ' . $db->quote('kc.catid'));
+            ->where($db->quoteName('ka.type') . ' = ' . $db->quote('catid'));
         
         $db->setQuery($query);
 

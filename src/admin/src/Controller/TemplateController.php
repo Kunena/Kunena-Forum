@@ -598,6 +598,14 @@ class TemplateController extends FormController
     {
         $template     = $this->input->getArray(['cid' => '']);
         $templatename = array_shift($template['cid']);
+
+        if (!$this->isSafeTemplateName($templatename)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $this->app->setUserState('kunena.templatename', $templatename);
 
         $tBaseDir = KunenaPath::clean(KPATH_SITE . '/template');
@@ -653,6 +661,13 @@ class TemplateController extends FormController
     {
         $template     = $this->input->getArray(['cid' => '']);
         $templatename = array_shift($template['cid']);
+
+        if (!$this->isSafeTemplateName($templatename)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED') . ': ' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
 
         $this->app->setUserState('kunena.templatename', $templatename);
 

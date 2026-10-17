@@ -134,7 +134,7 @@ class SmiliesModel extends ListModel
                 $query->where('a.id = ' . (int) substr($search, 3));
             } else {
                 $search = $db->quote('%' . $db->escape($search, true) . '%');
-                $query->where('(a.location LIKE ' . $search . ' OR ' . $search . ' OR a.emoticonbar LIKE ' . $search . ' OR a.code LIKE ' . $search . ' OR a.id LIKE ' . $search . ')');
+                $query->where('(a.location LIKE ' . $search . ' OR a.emoticonbar LIKE ' . $search . ' OR a.code LIKE ' . $search . ' OR a.id LIKE ' . $search . ')');
             }
         }
 

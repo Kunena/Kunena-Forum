@@ -13,8 +13,10 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
@@ -47,6 +49,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                 </div>
                                 <div>
                                     <form method="post" id="sampleDataForm">
+                                        <?php echo HTMLHelper::_('form.token'); ?>
                                         <ul id="sample-data-wrapper" class="list-group list-group-flush sample-data">
                                             <li class="list-group-item sampledata-kunena">
                                                 <div class="d-flex flex-column">
@@ -72,7 +75,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                     </div>
                 </div>
                 <?php else :
-                if (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'no') {
+                if (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'no' && Session::checkToken('post')) {
                     $this->model->setSampleDataFlag(1);
                     echo '<div class="alert alert-success">' . Text::_('COM_KUNENA_CPANEL_SAMPLE_DATA_SKIPPED') . '</div>';
                 } elseif (isset($_POST['sample_data_choice']) && $_POST['sample_data_choice'] === 'yes') {

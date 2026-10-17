@@ -312,7 +312,7 @@ class KunenaAccessCommunity extends KunenaAccessAbstract
         $query = $db->createQuery();
         $query->select($db->quoteName('c.id'))
             ->from($db->quoteName('#__kunena_categories', 'c'))
-            ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = ' . $db->quoteName('jomsocial') . ' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
+            ->innerJoin($db->quoteName('#__community_groups_members', 'g') . ' ON ' . $db->quoteName('c.accesstype') . ' = ' . $db->quote('jomsocial') . ' AND ' . $db->quoteName('c.access') . ' = ' . $db->quoteName('g.groupid'))
             ->where($db->quoteName('c.id') . ' = ' . $db->quote((int) $category->id))
             ->andWhere($db->quoteName('g.approved') . '= 1')
             ->andWhere($db->quoteName('g.memberid') . ' IN (' . $userlist . ')');

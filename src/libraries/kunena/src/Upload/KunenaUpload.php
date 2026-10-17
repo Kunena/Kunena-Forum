@@ -722,7 +722,7 @@ class KunenaUpload
 
         // Determine unit to use
         if (($power = array_search((string) $force_unit, $units)) === false) {
-            $power = ($bytes > 0) ? floor(log($bytes, $mod)) : 0;
+            $power = ($bytes > 0) ? min((int) floor(log($bytes, $mod)), \count($units) - 1) : 0;
         }
 
         return sprintf($format, $bytes / pow($mod, $power), $units[$power]);

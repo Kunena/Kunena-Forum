@@ -999,8 +999,8 @@ abstract class KunenaTableObject
     public function isCheckedOut($with = 0, $against = null): bool
     {
         // Handle the non-static case.
-        if (isset($this) && ($this instanceof Table) && \is_null($against)) {
-            $against = $this->get('checked_out');
+        if (isset($this) && \is_null($against) && property_exists($this, 'checked_out')) {
+            $against = $this->checked_out;
         }
 
         // The item is not checked out or is checked out by the same user.

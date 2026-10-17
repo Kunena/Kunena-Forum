@@ -79,12 +79,16 @@ class KunenaTopicFinder extends KunenaFinder
      */
     public function filterByUserAccess(KunenaUser $user): KunenaTopicFinder
     {
-        $categories = $user->getAllowedCategories();
-        $list       = implode(',', $categories);
+        $categories = array_map('intval', (array) $user->getAllowedCategories());
 
-        if (!empty($list)) {
-            $this->query->where('a.category_id  IN (' . $list . ')');
+        // A user without any allowed category sees no topic: an empty list must not remove the filter.
+        if (empty($categories)) {
+            $this->query->where('0');
+
+            return $this;
         }
+
+        $this->query->where('a.category_id  IN (' . implode(',', $categories) . ')');
 
         return $this;
     }
@@ -196,7 +200,7 @@ class KunenaTopicFinder extends KunenaFinder
                 $this->query->where($this->db->quoteName('ut.owner') . ' != 1');
                 break;
             case 'posted':
-                $this->query->where($this->db->quoteName('ut.posts') . ' => 0');
+                $this->query->where($this->db->quoteName('ut.posts') . ' > 0');
                 break;
             case '!posted':
                 $this->query->where($this->db->quoteName('ut.posts') . ' = 0');
@@ -240,7 +244,12 @@ class KunenaTopicFinder extends KunenaFinder
      */
     public function filterTopicNotIn(string $topicsId): KunenaTopicFinder
     {
-        $this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . $topicsId . ')');
+        // Only integer ids are kept, and an empty list excludes nothing (NOT IN () is a syntax error).
+        $ids = array_filter(array_map('intval', explode(',', $topicsId)));
+
+        if ($ids) {
+            $this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . implode(',', $ids) . ')');
+        }
 
         return $this;
     }

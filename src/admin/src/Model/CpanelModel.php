@@ -15,6 +15,7 @@ namespace Kunena\Forum\Administrator\Model;
 
 \defined('_JEXEC') or die();
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 

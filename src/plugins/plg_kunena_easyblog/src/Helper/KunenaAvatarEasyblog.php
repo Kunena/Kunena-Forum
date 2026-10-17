@@ -65,7 +65,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
     {
         if (!$user->userid == 0) {
             $user   = KunenaFactory::getUser($user->userid);
-            $user   = EB::user($user->userid);
+            $user   = \EB::user($user->userid);
             $avatar = $user->getAvatar();
         } else {
             $avatar = Uri::root(true) . '/components/com_easyblog/assets/images/default_blogger.png';

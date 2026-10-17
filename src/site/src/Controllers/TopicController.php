@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site\Controllers;
 \defined('_JEXEC') or die();
 
 use Exception;
+use RuntimeException;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Captcha\Captcha;
 use Joomla\CMS\Date\Date;

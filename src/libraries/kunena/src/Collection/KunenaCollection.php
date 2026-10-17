@@ -125,7 +125,9 @@ class KunenaCollection implements ArrayAccess, Countable, IteratorAggregate
      */
     public function map(Closure $callback): KunenaCollection
     {
-        return new static(array_map($callback, $this->items, array_keys($this->items)));
+        $keys = array_keys($this->items);
+
+        return new static(array_combine($keys, array_map($callback, $this->items, $keys)));
     }
 
     /**

@@ -116,9 +116,15 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
             unset($query['ip']);
         }
 
-        $http     = new Http();
-        $request  = 'https://api.stopforumspam.org/api?' . \http_build_query($query) . '&json';
-        $response = $http->get($request);
+        $http    = new Http();
+        $request = 'https://api.stopforumspam.org/api?' . \http_build_query($query) . '&json';
+
+        try {
+            $response = $http->get($request);
+        } catch (\RuntimeException $e) {
+            // The service cannot be reached: do not block the registration because of it.
+            return;
+        }
 
         if ($response->getStatusCode() == '200') {
             // The query has worked

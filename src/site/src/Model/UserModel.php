@@ -117,8 +117,9 @@ class UserModel extends KunenaModel
             $limit      = $this->getState('list.limit');
             $count      = $this->getCount();
 
-            if ($count < $limitstart) {
-                $limitstart = $count - ($count % $limit);
+            if ($count > 0 && $count <= $limitstart) {
+                // Out of range: use the last page
+                $limitstart = (int) floor(($count - 1) / $limit) * $limit;
                 $this->setState('list.start', $limitstart);
             }
 

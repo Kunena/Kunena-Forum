@@ -372,7 +372,7 @@ abstract class KunenaUserHelper
     {
         $limit = $limit ? $limit : KunenaFactory::getConfig()->popUserCount;
 
-        if (self::$_topposters < $limit) {
+        if (self::$_topposters === null || \count(self::$_topposters) < $limit) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
             $query->select($db->quoteName(['u.id', 'ku.posts'], [null, 'count']));
@@ -387,6 +387,8 @@ abstract class KunenaUserHelper
 
             $query->setLimit($limit);
             $db->setQuery($query);
+
+            self::$_topposters = [];
 
             try {
                 self::$_topposters = (array) $db->loadObjectList();

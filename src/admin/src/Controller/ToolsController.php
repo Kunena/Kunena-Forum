@@ -539,6 +539,22 @@ class ToolsController extends FormController
 
         $state = $this->app->getUserState('com_kunena.admin.recount', null);
 
+        if ($state === null) {
+            // The recount has not been started (or it has already finished): nothing to continue.
+            $this->setResponse(
+                [
+                    'success' => false,
+                    'header'  => Text::_('COM_KUNENA_AJAX_ERROR'),
+                    'message' => Text::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
+                    'error'   => Text::_('COM_KUNENA_AJAX_ERROR'),
+                ],
+                $ajax
+            );
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         try {
             $this->checkTimeout();
 
@@ -556,7 +572,7 @@ class ToolsController extends FormController
                             $state->start += $count;
                             $msg          = Text::sprintf(
                                 'COM_KUNENA_ADMIN_RECOUNT_TOPICS_X',
-                                round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
+                                round(min(100 * $state->start / ($state->maxId + 1), 100)) . '%'
                             );
                         }
                         break;
@@ -567,7 +583,7 @@ class ToolsController extends FormController
                             $state->start += $count;
                             $msg          = Text::sprintf(
                                 'COM_KUNENA_ADMIN_RECOUNT_USERTOPICS_X',
-                                round(min(100 * $state->start / $state->maxId + 1, 100)) . '%'
+                                round(min(100 * $state->start / ($state->maxId + 1), 100)) . '%'
                             );
                         }
                         break;

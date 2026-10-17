@@ -64,6 +64,7 @@ class RankModel extends AdminModel
         foreach ($files1 as $key => &$path) {
             $path = $rankPath . $key;
         }
+        unset($path);
 
         $rankPath = 'media/kunena/ranks/';
         $files2   = (array) Folder::Files(JPATH_SITE . '/' . $rankPath, false, false, false, ['index.php', 'index.html']);
@@ -72,6 +73,7 @@ class RankModel extends AdminModel
         foreach ($files2 as $key => &$path) {
             $path = $rankPath . $key;
         }
+        unset($path);
 
         $rankImages = $files1 + $files2;
         ksort($rankImages);

@@ -157,6 +157,7 @@ class SearchResults extends KunenaLayout
             ]);
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }
+        unset($result);
 
         $userIds           = [];
         $categoryLinkCache = [];

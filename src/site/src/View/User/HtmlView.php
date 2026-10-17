@@ -309,6 +309,7 @@ class HtmlView extends KunenaView
             ]);
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }
+        unset($message);
 
         foreach ($this->messages as $message) {
             $this->position++;

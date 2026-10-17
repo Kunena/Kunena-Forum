@@ -64,6 +64,7 @@ class SmileyModel extends AdminModel
         foreach ($files1 as $key => &$path) {
             $path = $smileyPath . $key;
         }
+        unset($path);
 
         $smileyPath = 'media/kunena/emoticons/';
         $files2     = (array) Folder::Files(JPATH_SITE . '/' . $smileyPath, false, false, false, ['index.php', 'index.html']);
@@ -72,6 +73,7 @@ class SmileyModel extends AdminModel
         foreach ($files2 as $key => &$path) {
             $path = $smileyPath . $key;
         }
+        unset($path);
 
         $smileyImages = $files1 + $files2;
         ksort($smileyImages);

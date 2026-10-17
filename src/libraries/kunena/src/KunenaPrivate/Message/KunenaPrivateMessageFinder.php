@@ -85,7 +85,7 @@ class KunenaPrivateMessageFinder extends KunenaFinder
             $this->skip = true;
         } else {
             $this->query->innerJoin('#__kunena_private_post_map AS pm ON a.id=pm.private_id');
-            $this->query->where("pm.message_id IN (" . implode(',', $ids) . ")");
+            $this->query->where("pm.message_id IN (" . implode(',', array_map('intval', $ids)) . ")");
         }
 
         return $this;
@@ -101,7 +101,7 @@ class KunenaPrivateMessageFinder extends KunenaFinder
     public function firstOrNew(): KunenaPrivateMessage
     {
         $results = $this->find();
-        $first   = array_pop($results);
+        $first   = array_shift($results);
 
         return $first ?: new KunenaPrivateMessage();
     }

@@ -176,7 +176,7 @@ class KunenaTree implements Iterator
     {
         $id = array_shift($this->heap);
 
-        if ($id === false) {
+        if ($id === null || $id === false) {
             return;
         }
 
@@ -228,11 +228,11 @@ class KunenaTree implements Iterator
     /**
      * @param   mixed  $id  id
      *
-     * @return  boolean
+     * @return  integer|boolean
      *
      * @since   Kunena 6.0
      */
-    public function getLevel($id): bool
+    public function getLevel($id): int|false
     {
         return isset($this->_levels [$id]) ? $this->_levels [$id] : false;
     }

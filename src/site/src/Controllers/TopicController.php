@@ -463,15 +463,27 @@ class TopicController extends KunenaController
         if (!Session::checkToken('request')) {
             throw new RuntimeException(Text::_('JINVALID_TOKEN'), 403);
         }
-        $catid  = $this->app->input->get('catid', 0, 'int');
+        $starid  = $this->app->getInput()->get('starid', 0, 'int');
+        $topicid = $this->app->getInput()->get('topic_id', 0, 'int');
+
+        // Use the category of the topic, not the one sent by the client.
+        $ratedTopic = KunenaTopicHelper::get($topicid);
+
+        if (!$ratedTopic->exists()) {
+            throw new RuntimeException(Text::_('Bad Request'), 400);
+        }
+
+        if (!$ratedTopic->isAuthorised('read')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
+        $catid = $ratedTopic->category_id;
 
         // To use rating feature it should be enabled at same time in Kunena configuration and in the category
         if (!$this->config->ratingEnabled || !KunenaCategoryHelper::get($catid)->allowRatings) {
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
 
-        $starid   = $this->app->getInput()->get('starid', 0, 'int');
-        $topicid  = $this->app->getInput()->get('topic_id', 0, 'int');
         $response = [];
 
         if ($this->me->exists()) {

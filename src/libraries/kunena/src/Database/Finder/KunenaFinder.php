@@ -188,8 +188,10 @@ abstract class KunenaFinder
                 $value = (array) $value;
 
                 if (empty($value)) {
-                    // WHERE field IN (nothing).
-                    $this->query->where('0');
+                    // IN (nothing) matches no row, NOT IN (nothing) matches every row.
+                    if ($operation === 'IN') {
+                        $this->query->where('0');
+                    }
                 } else {
                     $db = $this->db;
                     array_walk(
@@ -202,6 +204,9 @@ abstract class KunenaFinder
                     $this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
                 }
                 break;
+            default:
+                // Never drop a filter silently: a typo would return rows that should have been excluded.
+                throw new \InvalidArgumentException(sprintf('Unsupported operation "%s" for the field "%s".', $operation, $field));
         }
 
         return $this;

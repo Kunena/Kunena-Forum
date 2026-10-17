@@ -1836,7 +1836,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 return false;
             }
 
-            return '<a target="_blank" rel="noopener noreferrer" href="https://www.ebay.com/itm/' . $content . '?lang=' . $this->config->ebayLanguageCode . '&campid=' . $this->config->ebayAffiliateId . '">www.ebay.com/itm/' . $content . '</a>';
+            return '<a target="_blank" rel="noopener noreferrer" href="https://www.ebay.com/itm/' . $content . '?lang=' . $this->config->ebayLanguage . '&campid=' . $this->config->ebayAffiliateId . '">www.ebay.com/itm/' . $content . '</a>';
         }
 
         return self::renderEbayLayout($content);
@@ -2196,8 +2196,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return '[tableau]';
         }
 
-        $maxwidth  = (int) $this->config->rteWidth;
-        $maxheight = (int) (isset($params["height"]) && is_numeric($params["height"])) ? $params["height"] : $this->config->rteHeight;
+        // The width is always 100%. A height can be given in the tag, 0 means automatic.
+        $maxwidth  = 0;
+        $maxheight = (isset($params["height"]) && is_numeric($params["height"])) ? (int) $params["height"] : 0;
 
         if (preg_match('/(https:\/\/public.tableau.com\/views)\/(.*)\/(.*)\?.*/', $content, $matches)) {
             $tableauserver = $matches[1];

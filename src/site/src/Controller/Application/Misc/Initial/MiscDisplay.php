@@ -124,7 +124,7 @@ class MiscDisplay extends Display
 
         if (!$Itemid) {
             try {
-                if ($this->config->customId) {
+                if (isset($this->config->customId) && $this->config->customId) {
                     $itemid = $this->config->customId;
                 } else {
                     $menu      = $this->app->getMenu();

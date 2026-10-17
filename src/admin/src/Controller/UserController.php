@@ -247,7 +247,7 @@ class UserController extends FormController
         $catid = $this->app->getInput()->getInt('catid');
         $uids  = (array) $this->app->getUserState('kunena.usermove.userids');
 
-        $error = null;
+        $error = false;
 
         if ($uids) {
             foreach ($uids as $id) {
@@ -260,6 +260,10 @@ class UserController extends FormController
                         $message->tryAuthorise('move');
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
+                        $error = true;
+
+                        // Do not move a topic the user is not allowed to move.
+                        continue;
                     }
 
                     $target = KunenaCategoryHelper::get($catid);
@@ -268,6 +272,7 @@ class UserController extends FormController
                         $topic->move($target, false, false, '', false);
                     } catch (Exception $e) {
                         $this->app->enqueueMessage($e->getMessage(), 'error');
+                        $error = true;
                     }
                 }
             }
@@ -278,7 +283,9 @@ class UserController extends FormController
             return;
         }
 
-        $this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_MOVED_DONE'), 'success');
+        if (!$error) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_A_USERMES_MOVED_DONE'), 'success');
+        }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));
     }

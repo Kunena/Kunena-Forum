@@ -22,7 +22,7 @@ jQuery(document).ready(function ($) {
             }
         }
     };
-        xhr.open("GET", URL + "&usersearch=" + text, true);
+        xhr.open("GET", URL + "&usersearch=" + encodeURIComponent(text), true);
         xhr.send();
     }
 

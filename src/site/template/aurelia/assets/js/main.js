@@ -57,7 +57,7 @@ jQuery(document).ready(function ($) {
 		$.ajax({
 			dataType: "json",
 			url: $('#kunena_url_avatargallery').val(),
-			data: 'gallery_name=' + gallery_selected
+			data: 'gallery_name=' + encodeURIComponent(gallery_selected)
 		}).done(function (response) {
 			$.each(response, function (key, value) {
 				gallery_list.append('<li class="span2"><input id="radio' + gallery_selected + '/' + value.filename + '" type="radio" value="gallery/' + gallery_selected + '/' + value.filename + '" name="avatar_gallery"><label class=" radio thumbnail" for="radio' + gallery_selected + '/' + value.filename + '"><img alt="" src="' + value.url + '"></label></li>');

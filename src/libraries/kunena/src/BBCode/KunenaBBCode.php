@@ -2715,7 +2715,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         }
 
         // Legacy attachments support.
-        if (isset($bbcode->parent->attachments) && strpos($fileurl, '/media/kunena/attachments/legacy/images/')) {
+        if (isset($bbcode->parent->attachments) && strpos($fileurl, '/media/kunena/attachments/legacy/images/') !== false) {
             // Remove attachment from the attachments list and show it if it exists.
             $attachments = &$bbcode->parent->attachments;
 

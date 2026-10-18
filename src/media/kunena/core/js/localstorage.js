@@ -1,4 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // localStorage throws when the browser blocks site data (private mode, blocked cookies): do nothing then.
+    try {
+        localStorage.getItem("kunena-storage-test");
+    } catch (e) {
+        return;
+    }
+
     // Function to clear localStorage based on prefix
     function clearLocalStorageByPrefix(prefix) {
         const keysToRemove = [];
@@ -11,9 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
         keysToRemove.forEach((key) => {
             localStorage.removeItem(key);
         });
-        console.log(
-            `Removed ${keysToRemove.length} localStorage items with prefix "${prefix}".`
-        );
     }
 
     // Check for localstarage clear button and add on click event to it when found

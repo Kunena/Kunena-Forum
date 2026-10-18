@@ -341,7 +341,7 @@ function dataFeed(opts, callback) {
     })
     .fail(function( jqxhr, textStatus, error ) {
 		const err = textStatus + ", " + error;
-        console.log( 'Request Failed: ' + err );
+        console.error( 'Request Failed: ' + err );
     });
 }
 

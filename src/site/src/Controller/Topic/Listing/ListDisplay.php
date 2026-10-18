@@ -116,6 +116,9 @@ abstract class ListDisplay extends KunenaControllerDisplay
         $topicIds = array_keys((array) $this->topics);
         KunenaTopicHelper::getUserTopics($topicIds);
 
+        // The last posts are needed one by one below: load them with one query.
+        KunenaMessageHelper::getMessages($lastIds);
+
         $mesIds += KunenaTopicHelper::fetchNewStatus((array) $this->topics);
 
         // Fetch also last post positions when user can see unapproved or deleted posts.

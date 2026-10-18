@@ -116,9 +116,9 @@ $list = [];
     if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest) || $this->me->exists() && $attachs->inline != count($attachments)) : ?>
         <div class="card mb-3">
             <?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>
-                <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
+                <div class="card-header px-4"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
             <?php endif; ?>
-            <div class="card-body kattach">
+            <div class="card-body kattach p-4">
                 <ul class="thumbnails list-unstyled d-flex flex-wrap gap-3 mb-0">
 
                     <?php foreach ($attachments as $attachment) :

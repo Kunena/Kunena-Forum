@@ -191,7 +191,7 @@ if ($this->config->showUserStats) {
             <?php
             if ($this->candisplaymail) :
                 ?>
-                <a class="btn btn-outline-primary border btn-sm" href="mailto:<?php echo $this->profile->email; ?>"
+                <a class="btn btn-outline-primary border btn-sm" href="mailto:<?php echo $this->escape($this->profile->email); ?>"
                    rel="nofollow"><?php echo KunenaIcons::email(); ?></a>
             <?php endif; ?>
             <?php

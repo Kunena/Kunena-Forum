@@ -114,19 +114,19 @@ $list = [];
 
 <?php if (!empty($attachments)) :
     if (!$this->me->exists() && ($this->config->showImgForGuest || $this->config->showFileForGuest) || $this->me->exists() && $attachs->inline != count($attachments)) : ?>
-        <div class="card pb-3 pd-3 mb-3">
+        <div class="card mb-3">
             <?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>
                 <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
-                <div class="card-body kattach">
-                <?php endif; ?>
-                <ul class="thumbnails" style="list-style:none;">
+            <?php endif; ?>
+            <div class="card-body kattach">
+                <ul class="thumbnails list-unstyled row g-3 mb-0">
 
                     <?php foreach ($attachments as $attachment) :
                         if (!$attachment->protected) : ?>
                             <?php if ($attachment->isAudio()) :
-                                echo $attachment->getLayout()->render('audio'); ?>
+                                echo '<li class="col-12">' . $attachment->getLayout()->render('audio') . '</li>'; ?>
                             <?php elseif ($attachment->isVideo()) :
-                                echo $attachment->getLayout()->render('video'); ?>
+                                echo '<li class="col-12">' . $attachment->getLayout()->render('video') . '</li>'; ?>
                             <?php elseif (!$attachment->inline) : ?>
                                 <li class="col-md-3 text-center">
                                     <div class="thumbnail">
@@ -137,9 +137,9 @@ $list = [];
                             <?php endif; ?>
                         <?php elseif ($attachment->isAuthorised('private')): ?>
                             <?php if ($attachment->isAudio()) :
-                                echo $attachment->getLayout()->render('audio'); ?>
+                                echo '<li class="col-12">' . $attachment->getLayout()->render('audio') . '</li>'; ?>
                             <?php elseif ($attachment->isVideo()) :
-                                echo $attachment->getLayout()->render('video'); ?>
+                                echo '<li class="col-12">' . $attachment->getLayout()->render('video') . '</li>'; ?>
                             <?php elseif (!$attachment->inline) : ?>
                                 <li class="col-md-3 text-center">
                                     <div class="thumbnail">
@@ -158,10 +158,7 @@ $list = [];
                     <?php endif;
                     endforeach; ?>
                 </ul>
-                <?php if ($this->canSeeAttachments($attachments, $attachs, $this->topic)) : ?>
-                </div>
-                <div class="clearfix"></div>
-            <?php endif; ?>
+            </div>
         </div>
     <?php endif; ?>
 <?php endif; ?>

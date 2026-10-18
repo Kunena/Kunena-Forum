@@ -119,8 +119,6 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
             return;
         }
 
-        require_once __DIR__ . "/KunenaAvatarEasyblog.php";
-
         $event->stopPropagation();
         $event->setAvatar(new KunenaAvatarEasyblog($this->params));
     }
@@ -142,8 +140,6 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
         if (!$this->params->get('profile', 1)) {
             return;
         }
-
-        require_once __DIR__ . "/KunenaProfileEasyblog.php";
 
         $event->stopPropagation();
         $event->setProfile(new KunenaProfileEasyblog($this->params));

@@ -48,7 +48,8 @@ class WidgetFooter extends KunenaLayout
         $config = KunenaFactory::getConfig();
 
         if ($config->enableRss) {
-            $mode = $config->rssType;
+            $mode    = $config->rssType;
+            $rssType = 'mode=topics';
 
             switch ($mode) {
                 case 'topic':

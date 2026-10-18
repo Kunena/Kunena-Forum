@@ -547,6 +547,8 @@ class HtmlView extends KunenaView
         if (!empty(KunenaFactory::getConfig()->rssFeedBurnerUrl)) {
             return KunenaFactory::getConfig()->rssFeedBurnerUrl;
         } else {
+            $rssType = 'mode=topics';
+
             switch ($mode) {
                 case 'topic':
                     $rssType = 'mode=topics';
@@ -555,11 +557,11 @@ class HtmlView extends KunenaView
                     $rssType = 'mode=replies';
                     break;
                 case 'post':
-                    $rssType = 'layout=posts';
+                    $rssType = 'mode=posts';
                     break;
             }
 
-            return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}{$params}?format=feed&type=rss", $xhtml);
+            return KunenaRoute::_("index.php?option=com_kunena&view=topics&layout=default&{$rssType}{$params}&format=feed&type=rss", $xhtml);
         }
     }
 

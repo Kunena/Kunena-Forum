@@ -214,7 +214,8 @@ class CategoryController extends CategoriesController
 
         $me = KunenaUserHelper::getMyself();
 
-        $userid = $this->app->getInput()->getInt('userid');
+        // Without a user id the current user is meant (userid 0 would be the guest).
+        $userid = $this->app->getInput()->getInt('userid', 0) ?: $me->userid;
 
         $catid  = $this->app->getInput()->getInt('catid', 0);
         $catids = $catid
@@ -229,6 +230,13 @@ class CategoryController extends CategoriesController
                 $category->tryAuthorise('read');
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                continue;
+            }
+
+            // Only moderators of the category may remove the subscription of another user.
+            if ($userid != $me->userid && !$me->isModerator($category)) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
 
                 continue;
             }

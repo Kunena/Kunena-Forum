@@ -351,7 +351,8 @@ class KunenaPoll
     {
         $user = KunenaFactory::getUser($user);
 
-        if (!isset($this->mytime[$user->userid])) {
+        // A user who never voted has the value null: it is loaded too, so check the key and not the value.
+        if (!\array_key_exists($user->userid, $this->mytime)) {
             $query = $this->_db->createQuery();
             $query->select('MAX(lasttime)')
                 ->from($this->_db->quoteName('#__kunena_polls_users'))
@@ -442,6 +443,7 @@ class KunenaPoll
 
         // The stored number of votes of the user changes below.
         unset($this->myvotes[$votes->userid]);
+        unset($this->mytime[$votes->userid]);
 
         if ($votes->new) {
             // No votes

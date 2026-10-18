@@ -964,9 +964,9 @@ class KunenaCategory extends KunenaDatabaseObject
             $params = '&catid=' . (int) $this->id;
 
             if (Factory::getContainer()->get(SiteApplication::class)->get('sef_suffix')) {
-                return KunenaRoute::_("/index.php?option=com_kunena&view=rss{$params}") . '?format=feed&type=rss';
+                return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&layout=feed{$params}") . '?format=feed&type=rss';
             } else {
-                return KunenaRoute::_("index.php?option=com_kunena&view=rss{$params}?format=feed&type=rss", $xhtml);
+                return KunenaRoute::_("index.php?option=com_kunena&view=category&format=feed&type=rss&layout=feed{$params}", $xhtml);
             }
         }
 

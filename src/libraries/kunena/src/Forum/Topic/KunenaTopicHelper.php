@@ -21,6 +21,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -781,6 +782,9 @@ abstract class KunenaTopicHelper
         }
 
         $session = KunenaFactory::getSession();
+
+        // The categories of the topics are needed one by one below: load the data of the user for all of them with one query.
+        KunenaCategoryUserHelper::getCategories(array_unique(array_map(static fn ($topic) => (int) $topic->category_id, $topics)), $user);
 
         $ids = [];
 

@@ -2543,7 +2543,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                 $hide = $this->config->showFileForGuest == 0 && Factory::getApplication()->getIdentity()->id == 0;
 
                 if (!$hide) {
-                    return "<div class=\"kmsgattach\"><h4>" . Text::_('COM_KUNENA_FILEATTACH') . "</h4>" . Text::_('COM_KUNENA_FILENAME') . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . Text::_('COM_KUNENA_FILESIZE') . ' ' . number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' KB' . "</div>";
+                    return "<div class=\"kmsgattach\"><h4>" . Text::_('COM_KUNENA_FILEATTACH') . "</h4>" . Text::_('COM_KUNENA_FILENAME') . " <a href=\"" . $attachment->getUrl() . "\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">" . $attachment->filename . "</a><br />" . Text::_('COM_KUNENA_FILESIZE') . ' ' . number_format(\intval($attachment->size) / 1024, 0, '', ',') . ' KB' . "</div>";
                 }
             }
         }
@@ -2716,7 +2716,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow\" target=\"_blank\">" . $bbcode->HTMLEncode($filename) . '</a>';
+            return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $bbcode->HTMLEncode($filename) . '</a>';
         }
 
         // Legacy attachments support.
@@ -2766,7 +2766,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                     }
 
                     // TODO: call URL layout instead..
-                    return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow\" target=\"_blank\">" . $bbcode->HTMLEncode($fileurl) . '</a>';
+                    return "<a href=\"" . $bbcode->HTMLEncode($fileurl) . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $bbcode->HTMLEncode($fileurl) . '</a>';
                 } else {
                     return $bbcode->HTMLEncode($fileurl);
                 }

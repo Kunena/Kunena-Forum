@@ -26,6 +26,14 @@ use Kunena\Forum\Libraries\Integration\KunenaPlugins;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
+use Kunena\Forum\Administrator\Controller\CpanelController;
+
+// Is there a newer Kunena release, or are there updates for the Kunena add-ons?
+$updateInfo = CpanelController::getUpdateInfo();
+$newVersion = \is_object($updateInfo) && !empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<') ? $updateInfo->version : null;
+$newAddons  = \is_object($updateInfo) ? (int) $updateInfo->addons : 0;
+$hasUpdate  = $newVersion !== null || $newAddons > 0;
+$updateUrl  = 'index.php?option=com_installer&view=update&filter_search=kunena';
 
 ?>
 
@@ -214,9 +222,20 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                 <div class="col">
                                     <h6 class="mb-0"><?php echo strtoupper(KunenaForum::version()); ?></h6>
                                     <h6 class="mb-0 text-cyan"><?php echo strtoupper(KunenaForum::versionDate()); ?></h6>
+                                    <?php if ($hasUpdate) : ?>
+                                        <a class="small fw-semibold text-warning" href="<?php echo $updateUrl; ?>">
+                                            <?php echo $newVersion !== null ? Text::sprintf('COM_KUNENA_CPANEL_UPDATE_AVAILABLE', $this->escape($newVersion)) : Text::sprintf('COM_KUNENA_CPANEL_UPDATE_ADDONS_AVAILABLE', $newAddons); ?>
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
-                            <h6 class="pt-badge bg-cyan"><i class="fas fa-check text-white f-18"></i></h6>
+                            <?php if ($hasUpdate) : ?>
+                                <h6 class="pt-badge bg-warning">
+                                    <a href="<?php echo $updateUrl; ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CPANEL_UPDATE_NOW')); ?>"><i class="fas fa-arrow-circle-up text-white f-18"></i></a>
+                                </h6>
+                            <?php else : ?>
+                                <h6 class="pt-badge bg-cyan"><i class="fas fa-check text-white f-18"></i></h6>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

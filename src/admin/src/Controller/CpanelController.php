@@ -51,16 +51,15 @@ class CpanelController extends FormController
     }
 
     /**
-     * On get icons
+     * Get the available Kunena updates from the Joomla update table.
      *
-     * Display Kunena updates on dashboard
-     *
-     * @return  string
+     * @return  object|bool|null  Object with the new Kunena version (version) and the number of updated add-ons (addons),
+     *                            true when the update site is disabled, null when the user may not see updates.
      *
      * @throws  Exception
-     * @since   Kunena 2.0.0-BETA2
+     * @since   Kunena 7.2
      */
-    public static function onGetIcons()
+    public static function getUpdateInfo()
     {
         $updateInfo = null;
         $app        = Factory::getApplication();
@@ -99,6 +98,24 @@ class CpanelController extends FormController
                 $updateInfo = !$db->loadResult();
             }
         }
+
+        return $updateInfo;
+    }
+
+    /**
+     * On get icons
+     *
+     * Display Kunena updates on dashboard
+     *
+     * @return  string
+     *
+     * @throws  Exception
+     * @since   Kunena 2.0.0-BETA2
+     */
+    public static function onGetIcons()
+    {
+        $app        = Factory::getApplication();
+        $updateInfo = self::getUpdateInfo();
 
         if (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<')) {
             // Has updates

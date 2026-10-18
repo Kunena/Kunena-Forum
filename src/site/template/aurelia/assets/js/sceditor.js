@@ -685,15 +685,15 @@ jQuery(document).ready(function ($) {
                 });
 
 				$content.find('.button').on('click', function (e) {
-                    var poll_title = '<input type="hidden" name="poll_title" value="' + $content.find('#polltitle').val() + '">';
-                    var poll_lifespan = '<input type="hidden" name="poll_time_to_live" value="' + $content.find('#polllifespan').val() + '">';
+                    var poll_title = jQuery('<input type="hidden" name="poll_title">').val($content.find('#polltitle').val());
+                    var poll_lifespan = jQuery('<input type="hidden" name="poll_time_to_live">').val($content.find('#polllifespan').val());
 
                     if (poll_number_option > 0) {
                         jQuery('#poll_options').append( poll_title );
                         jQuery('#poll_options').append( poll_lifespan );
 
                         for (var i = 1; i <= poll_number_option; i++) {
-                            jQuery('#poll_options').append( '<input type="hidden" name="polloptionsID[' + i + ']" value="' + $content.find('#poll_option' + i).val() + '">' );
+                            jQuery('#poll_options').append( jQuery('<input type="hidden">').attr('name', 'polloptionsID[' + i + ']').val($content.find('#poll_option' + i).val()) );
                         }
 
                     }
@@ -754,7 +754,7 @@ jQuery(document).ready(function ($) {
 		});
 
 		var userlang = Joomla.getOptions('com_kunena.sceditor_userdefaultlanguage');
-		userlang = (typeof userlang == 'undefined') && Joomla.getOptions('com_kunena.sceditor_joomladefaultlanguage');
+		userlang = (typeof userlang == 'undefined') ? Joomla.getOptions('com_kunena.sceditor_joomladefaultlanguage') : userlang;
 
 		sceditor.create(textarea, {
 			plugins: 'undo,autoyoutube',

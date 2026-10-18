@@ -606,6 +606,10 @@ class TopicsModel extends KunenaModel
         $catid = $this->getInt('catid');
         $this->setState('list.categories.exclude', 0);
 
+        // The feed without a category sets neither of them below: do not read undefined variables.
+        $latestCategory   = null;
+        $latestCategoryIn = null;
+
         if ($catid) {
             $latestCategory   = [$catid];
             $latestCategoryIn = true;

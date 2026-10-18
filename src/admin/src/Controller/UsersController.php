@@ -344,6 +344,9 @@ class UsersController extends KunenaController
             $ban->save();
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
         }
 
         $this->app->enqueueMessage($message, 'success');
@@ -395,6 +398,9 @@ class UsersController extends KunenaController
             $ban->save();
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
         }
 
         $this->app->enqueueMessage($message, 'success');
@@ -571,6 +577,9 @@ class UsersController extends KunenaController
             $ban->save();
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
         }
 
         $this->app->enqueueMessage($message, 'success');
@@ -622,6 +631,9 @@ class UsersController extends KunenaController
             $ban->save();
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
         }
 
         $this->app->enqueueMessage($message, 'success');

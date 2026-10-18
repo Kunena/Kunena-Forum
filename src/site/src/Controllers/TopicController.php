@@ -1003,11 +1003,13 @@ class TopicController extends KunenaController
             }
 
             $poll->setOptions($poll_options);
+            $pollCreated = true;
 
             try {
                 $poll->save();
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+                $pollCreated = false;
             }
 
             $topic->poll_id = $poll->id;
@@ -1016,9 +1018,12 @@ class TopicController extends KunenaController
                 $topic->save();
             } catch (Exception $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+                $pollCreated = false;
             }
 
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
+            if ($pollCreated) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_CREATED'), 'success');
+            }
         }
 
         // Removed orphaned attachments (one has added on the form and removed after before to submit)        
@@ -1514,13 +1519,15 @@ class TopicController extends KunenaController
                 // Reload message (we don't want to change it).
                 $message->load();
 
+                $deleted = false;
+
                 try {
-                    $message->publish(KunenaForum::DELETED);
+                    $deleted = $message->publish(KunenaForum::DELETED);
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
                 }
 
-                if ($message->publish(KunenaForum::DELETED)) {
+                if ($deleted) {
                     $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_DELETE'), 'success');
                 }
 

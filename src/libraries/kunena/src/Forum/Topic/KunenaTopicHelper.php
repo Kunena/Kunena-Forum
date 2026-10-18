@@ -340,11 +340,8 @@ abstract class KunenaTopicHelper
         $wheretime = ($starttime ? " AND {$post_time_field}>{$db->quote($starttime)}" : '');
         $whereuser = ($whereuser ? ' AND ' . $db->quoteName('ut.user_id') . ' = ' . $db->quote($user->userid) . ' AND (' . implode(' OR ', $whereuser) . ')' : '');
 
-        if ($exclude) {
-            $where = $db->quoteName('tt.hold') . " IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
-        } else {
-            $where = $db->quoteName('tt.hold') . " IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
-        }
+        // The exclude option is already applied in the category list above.
+        $where = $db->quoteName('tt.hold') . " IN ({$hold}) {$catlist} {$whereuser} {$wheretime} {$where}";
 
         if (!$moved) {
             $where .= ' AND ' . $db->quoteName('tt.moved_id') . ' =0';

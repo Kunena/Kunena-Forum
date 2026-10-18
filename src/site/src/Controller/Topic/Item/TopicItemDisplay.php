@@ -191,6 +191,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
         } else {
             // Note that redirect loops throw RuntimeException because of we added \Kunena\Forum\Libraries\Forum\Topic\Topic::getTopic() call!
             $this->topic   = KunenaTopicHelper::get($id)->getTopic();
+
+            // The first and the last post are both needed: load them with one query.
+            KunenaMessageHelper::getMessages([$this->topic->first_post_id, $this->topic->last_post_id]);
             $this->message = KunenaMessageHelper::get($this->topic->first_post_id);
         }
 

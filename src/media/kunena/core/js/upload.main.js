@@ -15,6 +15,11 @@ jQuery(function ($) {
     let filesedit = null;
     let fileeditinline = 0;
 
+    // Escape a value which is written into an html attribute.
+    const escapeAttr = function (value) {
+        return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    };
+
 	// Add click handler for remove-all button
 	$('#remove-all').on('click', function (e) {
 		e.preventDefault();
@@ -577,7 +582,7 @@ jQuery(function ($) {
             const link = $('<a>').attr('target', '_blank').prop('href', data.result.location);
             data.context.find('span').wrap(link);
             // Add hidden inputs for attachments
-            $('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />' + '<input id="kattach-' + data.result.data.id + '" placeholder="' + data.result.data.filename + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
+            $('#kattach-list').append('<input id="kattachs-' + data.result.data.id + '" type="hidden" name="attachments[' + data.result.data.id + ']" value="1" />' + '<input id="kattach-' + data.result.data.id + '" placeholder="' + escapeAttr(data.result.data.filename) + '" type="hidden" name="attachment[' + data.result.data.id + ']" value="1" />');
             data.uploaded = true;
             // Create button container
             const buttonContainer = $('<div class="btn-group mt-2"/>');
@@ -708,7 +713,7 @@ jQuery(function ($) {
 	                const displayName = isProtected ? file.hash : file.name;
 	                $('#kattach-list').append(
 	                    '<input id="kattachs-' + file.id + '" type="hidden" name="attachments[' + file.id + ']" value="1" />' +
-	                    '<input id="kattach-' + file.id + '" placeholder="' + displayName + '" type="hidden" name="attachment[' + file.id + ']" value="1" />'
+	                    '<input id="kattach-' + file.id + '" placeholder="' + escapeAttr(displayName) + '" type="hidden" name="attachment[' + file.id + ']" value="1" />'
 	                );
 	
 	                if (file.inline) {

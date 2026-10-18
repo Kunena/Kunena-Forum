@@ -167,7 +167,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
             $html['joomla-level']['access'] = [
                 'title' => Text::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_TITLE'),
                 'desc'  => Text::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC') . '<br /><br />' . Text::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC_J25'),
-                'input' => HTMLHelper::_('access.assetgrouplist', 'access', $category->accesstype == 'joomla.level' ? $category->access : 1),
+                'input' => HTMLHelper::_('access.assetgrouplist', 'access', $category->accesstype == 'joomla.level' ? $category->access : 1, ['class' => 'form-select', 'size' => 3]),
             ];
 
             if (!$category->isSection()) {

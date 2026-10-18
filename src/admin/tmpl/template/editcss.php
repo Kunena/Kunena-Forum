@@ -43,7 +43,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                             </tr>
                             <tr>
                                 <td>
-                                    <textarea class="input-xxlarge" cols="110" rows="25"
+                                    <textarea class="form-control w-100 font-monospace" rows="25"
                                               name="filecontent"><?php echo $this->content; ?></textarea>
                                 </td>
                             </tr>

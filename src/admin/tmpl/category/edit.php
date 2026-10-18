@@ -145,28 +145,25 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
                                                         <td>
-                                                            <textarea class="inputbox form-control" cols="50" rows="6"
+                                                            <textarea class="inputbox form-control w-100" rows="6"
                                                                       name="description"
-                                                                      id="description"
-                                                                      style="width: 500px;"><?php echo $this->escape($this->category->description); ?></textarea>
+                                                                      id="description"><?php echo $this->escape($this->category->description); ?></textarea>
                                                             <p><?php echo Text::_('COM_KUNENA_DESCRIPTIONADD_DESC'); ?></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_HEADERADD'); ?></td>
                                                         <td>
-                                                            <textarea class="inputbox form-control" cols="50" rows="6"
+                                                            <textarea class="inputbox form-control w-100" rows="6"
                                                                       name="headerdesc"
-                                                                      id="headerdesc"
-                                                                      style="width: 500px;"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
+                                                                      id="headerdesc"><?php echo $this->escape($this->category->headerdesc); ?></textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_CATEGORY_TOPIC_TEMPLATE'); ?></td>
                                                         <td>
-                                                            <textarea class="inputbox form-control" cols="50" rows="6"
-                                                                      name="topictemplate" id="topictemplate"
-                                                                      style="width: 500px;"><?php echo $this->escape($this->category->topictemplate); ?></textarea>
+                                                            <textarea class="inputbox form-control w-100" rows="6"
+                                                                      name="topictemplate" id="topictemplate"><?php echo $this->escape($this->category->topictemplate); ?></textarea>
                                                         </td>
                                                     </tr>
                                                 </table>

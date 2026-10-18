@@ -10,6 +10,7 @@
 jQuery(document).ready(function ($) {
     const qreply = $('.qreply');
     const editor = $('#editor');
+    const submitButton = $('#form_submit_button');
 
     let pollcategoriesid;
 
@@ -59,14 +60,10 @@ jQuery(document).ready(function ($) {
     }
 
     $('#kshow_attach_form').click(function () {
-        if ($('#kattach_form').is(":visible")) {
-            $('#kattach_form').hide();
-        } else {
-            $('#kattach_form').show();
-        }
+        $('#kattach_form').toggle();
     });
 
-    $('#form_submit_button').click(function () {
+    submitButton.click(function () {
         $("#subject").attr('required', 'required');
         $("#editor").attr('required', 'required');
         localStorage.removeItem('copyKunenaeditor');
@@ -89,7 +86,7 @@ jQuery(document).ready(function ($) {
 
     let category_template_text = null;
     $('#postcatid').change(function () {
-        const catid = $('select#postcatid option').filter(':selected').val();
+        const catid = $('#postcatid').val();
         const kurl_topicons_request = $('#kurl_topicons_request').val();
         const pollcategoriesidOption = Joomla.getOptions('com_kunena.pollcategoriesid');
         const pollcategoriesid = pollcategoriesidOption !== undefined ? jQuery.parseJSON(pollcategoriesidOption) : undefined;
@@ -264,7 +261,7 @@ jQuery(document).ready(function ($) {
 
 					if (event.editor.getData().length > 0)
 					{
-						$('#form_submit_button').removeAttr("disabled");
+						submitButton.removeAttr("disabled");
 					}
 
                     event.editor.on("beforeCommandExec", function (event) {
@@ -283,12 +280,12 @@ jQuery(document).ready(function ($) {
 				change : function (event) {
 					if (event.editor.getData().length > 0)
 					{
-						$('#form_submit_button').removeAttr("disabled");
+						submitButton.removeAttr("disabled");
 					}
 
-					if (event.editor.getData().length == 0 && $('#form_submit_button').disabled === undefined)
+					if (event.editor.getData().length == 0 && submitButton.disabled === undefined)
 					{
-						$('#form_submit_button').prop("disabled", true);
+						submitButton.prop("disabled", true);
 					}
 
 				},
@@ -372,7 +369,7 @@ function dataFeed(opts, callback) {
 
 					if (event.editor.getData().length > 0)
 					{
-						$('#form_submit_button').removeAttr("disabled");
+						submitButton.removeAttr("disabled");
 					}
 
 					event.editor.on("beforeCommandExec", function (event) {
@@ -390,12 +387,12 @@ function dataFeed(opts, callback) {
 				change : function (event) {
 					if (event.editor.getData().length > 0)
 					{
-						$('#form_submit_button').removeAttr("disabled");
+						submitButton.removeAttr("disabled");
 					}
 
-					if (CKEDITOR.instances.message.getData().length == 0 && event.editor.getData().length == 0 && $('#form_submit_button').disabled === undefined)
+					if (CKEDITOR.instances.message.getData().length == 0 && event.editor.getData().length == 0 && submitButton.disabled === undefined)
 					{
-						$('#form_submit_button').prop("disabled", true);
+						submitButton.prop("disabled", true);
 					}
 
 				},

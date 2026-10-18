@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
 
 	/* Allow to make working drop-down choose destination */
 	$('#kchecktask').change(function () {
-		const task = $("select#kchecktask").val();
+		const task = $("#kchecktask").val();
 		if (task === 'move') {
 			$("#kchecktarget").attr('disabled', false).trigger("list:updated");
 		}
@@ -46,7 +46,7 @@ jQuery(document).ready(function ($) {
 	})
 
 	$('#avatar_gallery_select').change(function () {
-		const gallery_selected = $("select#avatar_gallery_select").val();
+		const gallery_selected = $("#avatar_gallery_select").val();
 
 		const gallery_list = $('#gallery_list');
 

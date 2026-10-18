@@ -39,12 +39,14 @@ jQuery(document).ready(function ($) {
 
 	$('[id^="login-link"]').click(function () {
 		$(this).ready(function () {
-			if ($('#userdropdown').is(":visible")) {
+			const userDropdown = $('#userdropdown');
+
+			if (userDropdown.is(":visible")) {
 				$(this).addClass('kdelay');
 			}
 			else {
-				$('#userdropdown').css('display', 'inline-block');
-				$('#userdropdown').css('visibility', 'visible').delay(500).queue(function () {
+				userDropdown.css('display', 'inline-block');
+				userDropdown.css('visibility', 'visible').delay(500).queue(function () {
 					$(this).addClass('kdelay');
 				});
 			}

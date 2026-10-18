@@ -685,14 +685,7 @@ class KunenaUpload
             return false;
         }
 
-        return (int) max(
-        	0,
-        	min(
-            	$this->toBytes(\ini_get('upload_max_fileSize')),
-            	$this->toBytes(\ini_get('post_max_size')),
-            	$this->toBytes(\ini_get('memory_limit'))
-            )
-        );
+        return $this->getPhpUploadLimit();
     }
 
     /**

@@ -23,7 +23,7 @@ use Joomla\CMS\Language\Text;
 ?>
 
 <?php if ($this->me->exists()) : ?>
-    <strong><?php Text::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE'); ?></strong>
+    <strong><?php echo Text::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE'); ?></strong>
     <div class="kmsgtext-hide"><?php echo $this->content; ?></div>
 <?php else : ?>
     <strong><?php echo Text::_('COM_KUNENA_BBCODE_HIDDENTEXT'); ?></strong>

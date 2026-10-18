@@ -580,7 +580,7 @@ class ToolsModel extends AdminModel
         }
 
         if (!$data->author) {
-            Text::_('Unknown');
+            $data->author = Text::_('Unknown');
         }
 
         return $data;

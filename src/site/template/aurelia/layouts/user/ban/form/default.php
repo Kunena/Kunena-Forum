@@ -113,7 +113,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                 <small><?php echo Text::_('COM_KUNENA_BAN_ADDCOMMENT_DESC'); ?></small>
             </td>
             <td>
-                <textarea id="ban-comment comment" class="required" name="comment"></textarea>
+                <textarea id="ban-comment" class="required" name="comment"></textarea>
             </td>
         </tr>
 
@@ -124,7 +124,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                     <label for="ban-remove"><?php echo Text::_('COM_KUNENA_MODERATE_REMOVE_BAN'); ?></label>
                 </td>
                 <td>
-                    <label for="ban-remove ban-delban"></label><input id="ban-remove ban-delban" type="checkbox" name="delban" value="delban" class=""/>
+                    <input id="ban-remove" type="checkbox" name="delban" value="delban" class=""/>
                 </td>
             </tr>
         <?php endif; ?>

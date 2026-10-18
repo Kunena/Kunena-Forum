@@ -103,6 +103,26 @@ class CpanelController extends FormController
     }
 
     /**
+     * Get the time of the last check of the Kunena update servers.
+     *
+     * @return  integer  Unix timestamp, 0 when the update servers were never checked.
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public static function getLastUpdateCheck(): int
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select('MAX(' . $db->quoteName('last_check_timestamp') . ')')
+            ->from($db->quoteName('#__update_sites'))
+            ->where($db->quoteName('location') . ' LIKE ' . $db->quote('https://update.kunena.org/%'));
+        $db->setQuery($query);
+
+        return (int) $db->loadResult();
+    }
+
+    /**
      * On get icons
      *
      * Display Kunena updates on dashboard

@@ -35,6 +35,25 @@ $newAddons  = \is_object($updateInfo) ? (int) $updateInfo->addons : 0;
 $hasUpdate  = $newVersion !== null || $newAddons > 0;
 $updateUrl  = 'index.php?option=com_installer&view=update&filter_search=kunena';
 
+// When did Joomla last ask the Kunena update servers? Shown in the time zone of the user.
+$lastCheck = CpanelController::getLastUpdateCheck();
+
+if (!$lastCheck) {
+    $lastCheckText = Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK_NEVER');
+    $lastCheckFull = '';
+} else {
+    $lastCheckDay  = HTMLHelper::_('date', $lastCheck, 'Y-m-d');
+    $lastCheckFull = HTMLHelper::_('date', $lastCheck, Text::_('DATE_FORMAT_LC6'));
+
+    if ($lastCheckDay === HTMLHelper::_('date', 'now', 'Y-m-d')) {
+        $lastCheckText = Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK_TODAY');
+    } elseif ($lastCheckDay === HTMLHelper::_('date', '-1 day', 'Y-m-d')) {
+        $lastCheckText = Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK_YESTERDAY');
+    } else {
+        $lastCheckText = HTMLHelper::_('date', $lastCheck, Text::_('DATE_FORMAT_LC4'));
+    }
+}
+
 ?>
 
 <div id="kunena" class="container-fluid">
@@ -212,7 +231,7 @@ $updateUrl  = 'index.php?option=com_installer&view=update&filter_search=kunena';
                                 </div>
                                 <div class="col ps-0">
                                     <h6 class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_VERSION_CHECK'); ?></h6>
-                                    <h6 class="mb-0 text-cyan"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK'); ?> <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK_TODAY'); ?></h6>
+                                    <h6 class="mb-0 text-cyan"<?php echo $lastCheckFull ? ' data-bs-toggle="tooltip" title="' . $this->escape($lastCheckFull) . '"' : ''; ?>><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK'); ?> <?php echo $this->escape($lastCheckText); ?></h6>
                                 </div>
                             </div>
                             <div class="row align-items-center">

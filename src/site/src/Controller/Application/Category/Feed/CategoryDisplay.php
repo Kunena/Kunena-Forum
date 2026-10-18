@@ -22,6 +22,7 @@ use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Joomla\CMS\Date\Date;
@@ -90,6 +91,9 @@ class CategoryDisplay extends KunenaControllerDisplay
         }
 
         $this->topics = $model->getTopics();
+
+        // Load all the authors with one query instead of one by one.
+        KunenaUserHelper::loadUsers(array_map(static fn ($topic) => $topic->last_post_userid, (array) $this->topics));
 
         foreach ($this->topics as $topic) {
             if ($this->config->rssType == 'topic') {

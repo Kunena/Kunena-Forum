@@ -145,6 +145,9 @@ class TopicsDisplay extends KunenaControllerDisplay
      */
     public function displayRecentReplies()
     {
+        // Load all the authors with one query instead of one by one.
+        KunenaUserHelper::loadUsers(array_map(static fn ($topic) => $topic->last_post_userid, (array) $this->topics));
+
         foreach ($this->topics as $topic) {
             $id   = $topic->last_post_id;
             $page = 'last';
@@ -178,6 +181,8 @@ class TopicsDisplay extends KunenaControllerDisplay
      */
     public function displayTopicRows()
     {
+        KunenaUserHelper::loadUsers(array_map(static fn ($topic) => $topic->first_post_userid, (array) $this->topics));
+
         foreach ($this->topics as $topic) {
             $page        = 'first';
             $description = $topic->first_post_message;
@@ -229,6 +234,8 @@ class TopicsDisplay extends KunenaControllerDisplay
      */
     public function displayPostRows()
     {
+        KunenaUserHelper::loadUsers(array_map(static fn ($message) => $message->userid, (array) $this->messages));
+
         foreach ($this->messages as $message) {
             if (!isset($this->topics[$message->thread])) {
                 // TODO: INTERNAL ERROR

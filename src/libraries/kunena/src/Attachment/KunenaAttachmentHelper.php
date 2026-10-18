@@ -128,7 +128,10 @@ abstract class KunenaAttachmentHelper
 
         foreach ($ids as $id) {
             if (isset($results[$id])) {
-                $instance                               = self::get($id);
+                // Use the row which was just loaded, get() would read the same attachment again.
+                $instance = new KunenaAttachment((array) $results[$id]);
+                $instance->exists(true);
+
                 self::$_instances[$id]                  = $instance;
                 self::$_messages[$instance->mesid][$id] = $instance;
             } else {

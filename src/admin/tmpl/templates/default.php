@@ -140,7 +140,7 @@ $userId    = $user->id;
                                         <?php echo $row->created; ?>
                                     </td>
                                     <td>
-                                        <a href="mailto:<?php echo $row->authoremail; ?>"><?php echo $row->author; ?></a>
+                                        <a href="mailto:<?php echo $this->escape($row->authoremail); ?>"><?php echo $this->escape($row->author); ?></a>
                                     </td>
                                     <td>
                                         <a href="<?php echo $row->detailsurl; ?>" target="_blank" rel="noopener noreferrer"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>

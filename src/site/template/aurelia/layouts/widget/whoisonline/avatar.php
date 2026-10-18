@@ -26,10 +26,10 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
         <?php
         foreach ($this->onlineList as $user) {
             $avatar       = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
-            $onlinelist[] = $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avatarEdit);
+            $onlinelist[] = '<span class="kwho-member" data-kwho-role="' . $user->getType(0, true) . '">' . ($user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avatarEdit)) . '</span>';
         }
         ?>
-        <?php echo implode(', ', $onlinelist); ?>
+        <?php echo implode('<span class="kwho-comma">, </span>', $onlinelist); ?>
     </div>
 <?php endif; ?>
 
@@ -40,9 +40,9 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
         <?php
         foreach ($this->hiddenList as $user) {
             $avatar       = $user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType') . ' ', 20, 20);
-            $hiddenlist[] = $user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avatarEdit);
+            $hiddenlist[] = '<span class="kwho-member" data-kwho-role="' . $user->getType(0, true) . '">' . ($user->getLink($avatar, null, '', '', null, 0, KunenaConfig::getInstance()->avatarEdit)) . '</span>';
         }
         ?>
-        <?php echo implode(', ', $hiddenlist); ?>
+        <?php echo implode('<span class="kwho-comma">, </span>', $hiddenlist); ?>
     </div>
 <?php endif; ?>

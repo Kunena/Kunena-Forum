@@ -75,39 +75,54 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                             ?>
 
                             <?php if (!empty($this->onlineList)) :
-                            ?>
-                                <li>
+                                // The legend is also a filter: select a role to see only the online users with that role.
+                                $this->addScript('assets/js/whoisonline.js');
+
+                                // Every role in the legend is one chip. Guests are not listed by name, so their chip is not a filter.
+                                $roles = [
+                                    'admin'     => ['label' => 'COM_KUNENA_COLOR_ADMINISTRATOR', 'types' => ['admin', 'localadmin'], 'class' => 'kwho-admin'],
+                                    'globalmod' => ['label' => 'COM_KUNENA_COLOR_GLOBAL_MODERATOR', 'types' => ['globalmod'], 'class' => 'kwho-globalmoderator'],
+                                    'moderator' => ['label' => 'COM_KUNENA_COLOR_MODERATOR', 'types' => ['moderator'], 'class' => 'kwho-moderator'],
+                                    'banned'    => ['label' => 'COM_KUNENA_COLOR_BANNED', 'types' => ['banned', 'blocked'], 'class' => 'kwho-banned'],
+                                    'user'      => ['label' => 'COM_KUNENA_COLOR_USER', 'types' => ['user'], 'class' => 'kwho-user'],
+                                    'guest'     => ['label' => 'COM_KUNENA_COLOR_GUEST', 'types' => [], 'class' => 'kwho-guest'],
+                                ];
+                                $chipClass = 'border rounded-pill bg-body-tertiary text-body px-2 py-0 small';
+
+                                // How many of the listed users have each type.
+                                $typeCounts = [];
+
+                                foreach (array_merge((array) $this->onlineList, (array) $this->hiddenList) as $whoUser) {
+                                    $whoType              = $whoUser->getType(0, true);
+                                    $typeCounts[$whoType] = ($typeCounts[$whoType] ?? 0) + 1;
+                                }
+                                ?>
+                                <li class="mt-2">
                                     <span><?php echo Text::_('COM_KUNENA_LEGEND'); ?>:</span>
-                                    <span class="kwho-admin">
-                                        <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>
+                                    <span class="d-inline-flex flex-wrap align-items-center gap-1" role="group" aria-label="<?php echo Text::_('COM_KUNENA_WHO_FILTER_LABEL'); ?>">
+                                        <button type="button" class="<?php echo $chipClass; ?> kwho-filter active bg-primary-subtle border-primary-subtle" data-kwho-roles="" aria-pressed="true">
+                                            <?php echo Text::_('COM_KUNENA_WHO_FILTER_ALL'); ?>
+                                        </button>
+                                        <?php foreach ($roles as $role) :
+                                            $roleCount = 0;
+
+                                            foreach ($role['types'] as $roleType) {
+                                                $roleCount += $typeCounts[$roleType] ?? 0;
+                                            }
+                                            ?>
+                                            <?php if ($role['types']) : ?>
+                                                <button type="button" class="<?php echo $chipClass; ?> kwho-filter<?php echo $roleCount ? '' : ' opacity-50'; ?>" data-kwho-roles="<?php echo implode(' ', $role['types']); ?>" aria-pressed="false"<?php echo $roleCount ? '' : ' disabled'; ?>>
+                                                    <span class="<?php echo $role['class']; ?>"><?php echo KunenaIcons::user(); ?><?php echo Text::_($role['label']); ?></span>
+                                                    <span class="badge text-bg-secondary ms-1"><?php echo $roleCount; ?></span>
+                                                </button>
+                                            <?php else : ?>
+                                                <span class="<?php echo $chipClass; ?> opacity-50">
+                                                    <span class="<?php echo $role['class']; ?>"><?php echo KunenaIcons::user(); ?><?php echo Text::_($role['label']); ?></span>
+                                                </span>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
                                     </span>
-                                    <span class="kwho-globalmoderator">
-                                        <?php if ($this->linkUserlistAllowedToShow) : ?>
-                                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=globalmod'); ?>" class="kwho-globalmoderator"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></a>
-                                    	<?php else : ?>
-                                    	    <?php echo Text::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>
-                                    	<?php endif; ?>
-                                    </span>
-                                    <span class="kwho-moderator">
-                                        <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_MODERATOR'); ?>
-                                    </span>
-                                    <span class="kwho-banned">
-                                        <?php if ($this->linkUserlistAllowedToShow) : ?>
-                                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=banned'); ?>" class="kwho-banned"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?></a>
-                                    	<?php else : ?>
-                                    	    <?php echo Text::_('COM_KUNENA_COLOR_BANNED'); ?>
-                                    	<?php endif; ?>
-                                    </span>
-                                    <span class="kwho-user">
-                                        <?php if ($this->linkUserlistAllowedToShow) : ?>
-                                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&usertype=user'); ?>" class="kwho-user"><?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_USER'); ?></a>
-                                    	<?php else : ?>
-                                    	    <?php echo Text::_('COM_KUNENA_COLOR_USER'); ?>
-                                    	<?php endif; ?>
-                                    </span>
-                                    <span class="kwho-guest">
-                                        <?php echo KunenaIcons::user(); ?><?php echo Text::_('COM_KUNENA_COLOR_GUEST'); ?>
-                                    </span>
+                                    <div class="kwho-empty text-body-secondary small mt-1" role="status" hidden><?php echo Text::_('COM_KUNENA_WHO_FILTER_NONE'); ?></div>
                                 </li>
                             <?php endif; ?>
                         </ul>

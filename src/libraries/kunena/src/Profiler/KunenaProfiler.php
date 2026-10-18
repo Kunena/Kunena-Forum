@@ -198,6 +198,7 @@ class KunenaProfiler extends Profiler
                     'ms'     => $start !== null ? round(($stop - $start) * 1000, 3) : 0.0,
                     'at'     => $start !== null ? round(($start - $origin) * 1000, 3) : 0.0,
                     'caller' => self::queryCaller($stacks[$i] ?? []),
+                    'stack'  => self::queryStack($stacks[$i] ?? []),
                     'memory' => isset($mem[$i * 2 + 1], $mem[$i * 2]) ? (int) ($mem[$i * 2 + 1] - $mem[$i * 2]) : 0,
                     'norm'   => $norm,
                     'text'   => $text,
@@ -217,6 +218,37 @@ class KunenaProfiler extends Profiler
         }
 
         return $queries;
+    }
+
+    /**
+     * The calls which led to a query, the innermost first (frames of the database package are left out).
+     *
+     * @param   array  $stack  Frames of debug_backtrace().
+     *
+     * @return  array  Lines like "Class::method() File.php:123".
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function queryStack(array $stack): array
+    {
+        $lines = [];
+
+        foreach ($stack as $frame) {
+            $class = (string) ($frame['class'] ?? '');
+
+            if (!isset($frame['function']) || ($class !== '' && (str_starts_with($class, 'Joomla\\Database\\') || str_contains($class, 'DebugMonitor')))) {
+                continue;
+            }
+
+            $where   = isset($frame['file']) ? basename((string) $frame['file']) . ':' . ($frame['line'] ?? '?') : '';
+            $lines[] = ($class !== '' ? substr(strrchr('\\' . $class, '\\'), 1) . ($frame['type'] ?? '::') : '') . $frame['function'] . '()' . ($where !== '' ? ' ' . $where : '');
+
+            if (\count($lines) >= 14) {
+                break;
+            }
+        }
+
+        return $lines;
     }
 
     /**
@@ -362,7 +394,9 @@ class KunenaProfiler extends Profiler
                 . '<td class="kp-sql"><code>' . $esc(mb_strimwidth($query['sql'], 0, 4000, '...')) . '</code>'
                 . ($query['dup'] > 1 ? ' <span class="kp-dup" title="The same statement ran ' . $query['dup'] . ' times">x' . $query['dup'] . '</span>'
                     : ($query['similar'] > 1 ? ' <span class="kp-sim" title="The same statement ran ' . $query['similar'] . ' times with other values: load them with one query?">~' . $query['similar'] . '</span>' : ''))
-                . ($query['caller'] !== '' ? '<div class="kp-caller">' . $esc($query['caller']) . '</div>' : '') . '</td></tr>';
+                . ($query['caller'] !== '' ? '<div class="kp-caller">' . $esc($query['caller']) . '</div>' : '')
+                . ($query['stack'] ? '<ol class="kp-stack">' . implode('', array_map(static fn ($line): string => '<li>' . htmlspecialchars($line, ENT_QUOTES, 'UTF-8') . '</li>', $query['stack'])) . '</ol>' : '')
+                . '</td></tr>';
         }
 
         $chips = '<span class="kp-chip" title="Time of the Kunena code (the Joomla startup is not included)">Kunena <b>' . $fmt($pageTime) . '</b></span>'
@@ -478,6 +512,8 @@ margin:24px 0;border:1px solid var(--kp-line);border-radius:10px;background:var(
 .kprofiler .kp-sql{text-align:left;white-space:normal;width:100%}
 .kprofiler .kp-sql code{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all;color:var(--kp-sql);cursor:pointer}
 .kprofiler .kp-query.kp-open .kp-sql code{display:block;-webkit-line-clamp:unset}
+.kprofiler .kp-stack{display:none;margin:6px 0 0;padding-left:22px;color:var(--kp-muted);font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.kprofiler .kp-query.kp-open .kp-stack{display:block}
 .kprofiler .kp-caller{color:var(--kp-muted);font-size:12px;margin-top:2px}
 .kprofiler .kp-dup{display:inline-block;padding:0 6px;border-radius:999px;background:var(--kp-warn);color:#1b1f24;font-size:11px;font-weight:600}
 .kprofiler .kp-sim{display:inline-block;padding:0 6px;border-radius:999px;border:1px solid var(--kp-line);color:var(--kp-muted);font-size:11px}

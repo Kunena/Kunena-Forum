@@ -131,7 +131,7 @@ if ($this->config->orderingSystem == 'mesid') {
         <?php endif; ?>
     <?php endif; ?>
     <?php if (!empty($attachments) && $displayAttachments && $attachs->readable && $attachs->totalNonProtected > 0) : ?>
-        <div class="card mb-3">
+        <div class="card mx-2 mb-4">
             <div class="card-header px-4"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
             <div class="card-body kattach p-4">
                 <ul class="thumbnails list-unstyled d-flex flex-wrap gap-3 mb-0">
@@ -185,7 +185,7 @@ if ($this->config->orderingSystem == 'mesid') {
             }
         } ?>
     <?php elseif ($attachs->totalProtected > 0 && $this->config->privateMessage && $this->me->isModerator($this->topic->getCategory())) : ?>
-    	<div class="card mb-3">
+    	<div class="card mx-2 mb-4">
     <div class="card-header px-4"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
             <div class="card-body kattach p-4">
                 <ul class="thumbnails list-unstyled d-flex flex-wrap gap-3 mb-0">

@@ -159,8 +159,20 @@ class CategoryController extends KunenaController
             // Nobody can change id or statistics
             $ignore = ['option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliasesAll', 'submit'];
 
+            // A category cannot be moved into itself or into one of its own descendants (the tree would get a cycle).
+            $makesLoop = false;
+
+            if ($category->exists()) {
+                for ($ancestor = $parent, $guard = 0; $ancestor && $ancestor->id && $guard < 100; $ancestor = $ancestor->getParent(), $guard++) {
+                    if ($ancestor->id == $category->id) {
+                        $makesLoop = true;
+                        break;
+                    }
+                }
+            }
+
             // User needs to be admin in parent (both new and old) in order to move category, parentid=0 needs global admin rights
-            if (!$me->isAdmin($parent) || ($category->exists() && !$me->isAdmin($category->getParent()))) {
+            if ($makesLoop || !$me->isAdmin($parent) || ($category->exists() && !$me->isAdmin($category->getParent()))) {
                 $ignore            = array_merge($ignore, ['parentid', 'ordering']);
                 $post['parentid'] = $category->parentid;
             }

@@ -408,7 +408,7 @@ class ToolsModel extends AdminModel
 
         $this->maxExecTime       = \ini_get('max_execution_time');
         $this->maxExecMem        = \ini_get('memory_limit');
-        $this->fileUploads       = \ini_get('upload_max_fileSize');
+        $this->fileUploads       = \ini_get('upload_max_filesize');
         $this->kunenaVersionInfo = KunenaVersion::getVersionHTML();
 
         // Get Kunena default template

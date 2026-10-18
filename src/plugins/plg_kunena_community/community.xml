@@ -31,7 +31,7 @@
                     default="1"
                     label="PLG_KUNENA_COMMUNITY_ACCESS"
                     description="PLG_KUNENA_COMMUNITY_ACCESS_DESC"
-                    class="btn-group">
+                    layout="joomla.form.field.radio.switcher">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
@@ -42,7 +42,7 @@
                     default="1"
                     label="PLG_KUNENA_COMMUNITY_LOGIN"
                     description="PLG_KUNENA_COMMUNITY_LOGIN_DESC"
-                    class="btn-group">
+                    layout="joomla.form.field.radio.switcher">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
@@ -53,7 +53,7 @@
                     default="1"
                     label="PLG_KUNENA_COMMUNITY_ACTIVITY"
                     description="PLG_KUNENA_COMMUNITY_ACTIVITY_DESC"
-                    class="btn-group">
+                    layout="joomla.form.field.radio.switcher">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
@@ -64,7 +64,7 @@
                     default="1"
                     label="PLG_KUNENA_COMMUNITY_AVATAR"
                     description="PLG_KUNENA_COMMUNITY_AVATAR_DESC"
-                    class="btn-group">
+                    layout="joomla.form.field.radio.switcher">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
@@ -75,7 +75,7 @@
                     default="1"
                     label="PLG_KUNENA_COMMUNITY_PROFILE"
                     description="PLG_KUNENA_COMMUNITY_PROFILE_DESC"
-                    class="btn-group">
+                    layout="joomla.form.field.radio.switcher">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
@@ -86,7 +86,7 @@
                     default="1"
                     label="PLG_KUNENA_COMMUNITY_PRIVATE"
                     description="PLG_KUNENA_COMMUNITY_PRIVATE_DESC"
-                    class="btn-group">
+                    layout="joomla.form.field.radio.switcher">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>

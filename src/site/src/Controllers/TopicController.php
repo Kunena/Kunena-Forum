@@ -176,7 +176,7 @@ class TopicController extends KunenaController
         $attachs_id = $this->input->getString('files_id', '');
         $attachs_id = json_decode($attachs_id);
 
-        if ($attachs_id === null) {
+        if (!\is_array($attachs_id)) {
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
 
@@ -220,7 +220,7 @@ class TopicController extends KunenaController
         $attachs_id = $this->input->getString('files_id', '');
         $attachs_id = json_decode($attachs_id);
 
-        if ($attachs_id === null) {
+        if (!\is_array($attachs_id)) {
             throw new RuntimeException(Text::_('Bad Request'), 400);
         }
 

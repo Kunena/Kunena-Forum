@@ -22,8 +22,10 @@ jQuery(document).ready(function ($) {
     // Check is anynomous options can be displayed on newtopic page
     const catiddefault = $('#postcatid').val();
 
+    let arrayanynomousbox = null;
+
     if(Joomla.getOptions('com_kunena.arrayanynomousbox') != undefined){
-		const arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
+		arrayanynomousbox = jQuery.parseJSON(Joomla.getOptions('com_kunena.arrayanynomousbox'));
 
 		if (arrayanynomousbox !== null) {
             if (arrayanynomousbox[catiddefault] == 1) {
@@ -32,9 +34,9 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    $('#reset').onclick = function () {
+    $('#reset').on('click', function () {
         localStorage.removeItem('copyKunenaeditor');
-    };
+    });
 
     /* To enabled emojis in kunena textera feature like on github */
     if ($('#kemojis_allowed').val() == 1) {
@@ -87,7 +89,8 @@ jQuery(document).ready(function ($) {
     $('#postcatid').change(function () {
         const catid = $('select#postcatid option').filter(':selected').val();
         const kurl_topicons_request = $('#kurl_topicons_request').val();
-        const pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+        const pollcategoriesidOption = Joomla.getOptions('com_kunena.pollcategoriesid');
+        const pollcategoriesid = pollcategoriesidOption !== undefined ? jQuery.parseJSON(pollcategoriesidOption) : undefined;
         const pollexist = jQuery('#poll_exist_edit');
         const pollcatid = jQuery('#poll_catid').val();
         const polliconstatus = true;
@@ -120,7 +123,7 @@ jQuery(document).ready(function ($) {
 
         }
 
-        if ($('#kanynomous-check').length > 0) {
+        if ($('#kanynomous-check').length > 0 && arrayanynomousbox !== null) {
             if (arrayanynomousbox[catid] !== undefined) {
                 $('#kanynomous-check').show();
                 $('#kanonymous').prop('checked', true);
@@ -168,7 +171,7 @@ jQuery(document).ready(function ($) {
                 }).append($('<i>', {
                     'class': 'fa glyphicon-topic fa-2x fa-' + value.fa,
                     'border': '0',
-                    'al': ''
+                    'alt': ''
                 }));
             } else if (Joomla.getOptions('com_kunena.kunena_topicicontype') === 'svg') {
                 label = $('<label>', {
@@ -179,7 +182,7 @@ jQuery(document).ready(function ($) {
                 label = $('<label>', {
                     'class': 'radio inline',
                     'for': 'radio' + value.id
-                }).append($('<img>', {'src': value.path, 'border': '0', 'al': ''}));
+                }).append($('<img>', {'src': value.path, 'border': '0', 'alt': ''}));
             }
 
             span_object.append(label);

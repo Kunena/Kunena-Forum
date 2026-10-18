@@ -55,10 +55,8 @@ $wa->useScript('multiselect');
                                 <?php echo Text::_('COM_KUNENA_RANKS'); ?>
                             </td>
                             <td width="80%">
-                                <label>
-                                    <input class="form-control" type="text" name="rankTitle"
+                                <input class="form-control" type="text" name="rankTitle"
                                            value="<?php echo isset($this->rankSelected->rankTitle) ? $this->rankSelected->rankTitle : '' ?>"/>
-                                </label>
                             </td>
                         </tr>
                         <tr>
@@ -86,10 +84,8 @@ $wa->useScript('multiselect');
                                 <?php echo Text::_('COM_KUNENA_RANKSMIN'); ?>
                             </td>
                             <td>
-                                <label>
-                                    <input class="form-control" type="text" name="rankMin"
+                                <input class="form-control" type="text" name="rankMin"
                                            value="<?php echo isset($this->rankSelected) ? $this->rankSelected->rankMin : '1' ?>"/>
-                                </label>
                             </td>
                         </tr>
                         <tr>

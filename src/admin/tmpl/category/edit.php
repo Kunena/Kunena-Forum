@@ -101,19 +101,16 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_NAMEADD'); ?></td>
                                                         <td>
-                                                            <label>
-                                                                <input class="inputbox form-control" type="text" name="name"
-                                                                       size="80"
+                                                            <input class="inputbox form-control w-100" type="text" name="name"
                                                                        value="<?php echo $this->escape($this->category->name); ?>"/>
-                                                            </label>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
                                                         <td>
-                                                            <label for="jform_aliases"></label><input class="inputbox form-control" id="jform_aliases"
+                                                            <label for="jform_aliases"></label><input class="inputbox form-control w-100" id="jform_aliases"
                                                                                                       type="text"
-                                                                                                      name="alias" size="80"
+                                                                                                      name="alias"
                                                                                                       value="<?php echo $this->escape($this->category->alias); ?>"/>
                                                             <span id="aliasinfo"></span>
                                                             <?php
@@ -130,24 +127,18 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_ICON'); ?></td>
                                                         <td>
-                                                            <label>
-                                                                <input class="inputbox form-control" type="text" name="icon"
-                                                                       size="80"
+                                                            <input class="inputbox form-control w-100" type="text" name="icon"
                                                                        value="<?php echo $this->escape($this->category->icon); ?>"/>
-                                                            </label>
                                                             <p><?php echo Text::_('COM_KUNENA_ICON_DESC'); ?></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_CLASS_SFX'); ?></td>
                                                         <td>
-                                                            <label>
-                                                                <input class="inputbox form-control" type="text"
+                                                            <input class="inputbox form-control w-100" type="text"
                                                                        name="class_sfx"
-                                                                       size="20"
                                                                        maxlength="20"
                                                                        value="<?php echo $this->escape($this->category->class_sfx); ?>"/>
-                                                            </label>
                                                             <p><?php echo Text::_('COM_KUNENA_CLASS_SFXDESC'); ?></p>
                                                         </td>
                                                     </tr>
@@ -283,12 +274,12 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                 <table class="table table-striped">
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_PARENT'); ?></td>
-                                                        <td><?php echo $this->options ['display_parent']; ?></td>
+                                                        <td class="w-25"><?php echo $this->options ['display_parent']; ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_PARENT_DESC'); ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_CHILDREN'); ?></td>
-                                                        <td><?php echo $this->options ['display_children']; ?></td>
+                                                        <td class="w-25"><?php echo $this->options ['display_children']; ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_CHILDREN_DESC'); ?></td>
                                                     </tr>
                                                 </table>

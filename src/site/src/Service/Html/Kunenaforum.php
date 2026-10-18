@@ -270,7 +270,7 @@ class Kunenaforum
         }
 
         $html   = [];
-        $html[] = '<ul class="checklist">';
+        $html[] = '<ul class="checklist list-unstyled">';
 
         foreach ($options as $item) {
             // Setup  the variable attributes.
@@ -278,10 +278,10 @@ class Kunenaforum
             $checked = $selected === true || \in_array($item, $selected) ? ' checked="checked"' : '';
 
             // Build the HTML for the item.
-            $html[] = '	<li>';
-            $html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '" class="' . $class_input . '"';
+            $html[] = '	<li class="form-check">';
+            $html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '" class="form-check-input ' . $class_input . '"';
             $html[] = '			' . $checked . ' />';
-            $html[] = '		<label for="' . $eid . '">';
+            $html[] = '		<label class="form-check-label" for="' . $eid . '">';
             $html[] = '			' . $item;
             $html[] = '		</label>';
             $html[] = '	</li>';

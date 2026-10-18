@@ -54,10 +54,8 @@ $wa->useScript('multiselect');
                                 <?php echo Text::_('COM_KUNENA_EMOTICONS_CODE'); ?>
                             </td>
                             <td width="80%">
-                                <label>
-                                    <input class="form-control" type="text" name="smileyCode"
+                                <input class="form-control" type="text" name="smileyCode"
                                            value="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : '' ?>"/>
-                                </label>
                                 <img loading=lazy name="smiley_image"
                                      src="<?php echo isset($this->smileySelected) ? $this->escape(KunenaFactory::getTemplate()->getSmileyPath($this->smileySelected->location, true)) : '' ?>"
                                      border="0"

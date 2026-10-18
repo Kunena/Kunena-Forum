@@ -274,8 +274,6 @@ abstract class KunenaTable extends Table
             $this->_db->transactionRollback();
 
             throw new KunenaException($e->getMessage());
-
-            return false;
         }
 
         return true;
@@ -341,8 +339,6 @@ abstract class KunenaTable extends Table
             $this->_db->transactionRollback();
 
             throw new KunenaException($e->getMessage());
-
-            return false;
         }
 
         if (\count($tbl_keys) == 1 && $id) {
@@ -416,8 +412,6 @@ abstract class KunenaTable extends Table
             $this->_db->transactionRollback();
 
             throw new KunenaException($e->getMessage());
-
-            return false;
         }
 
         // Implement JObservableInterface: Post-processing by observers

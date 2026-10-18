@@ -758,8 +758,6 @@ abstract class KunenaUserHelper
             $transport = new StreamTransport($options);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
-
-            return false;
         }
 
         // Create a 'stream' transport.

@@ -891,8 +891,6 @@ class KunenaBan
             // Change user block also in Joomla
             if (!$user) {
                 throw new KunenaException("User {$this->userid} does not exist!");
-
-                return false;
             }
 
             $banlevel = 0;

@@ -234,8 +234,6 @@ class KunenaCategoryUser
             $result = $table->store();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
-
-            return false;
         }
 
         // Fill up \Kunena\Forum\Libraries\Forum\Category\CategoryUser object in case we created a new category.

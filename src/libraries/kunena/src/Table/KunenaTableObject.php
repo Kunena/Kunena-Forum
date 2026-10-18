@@ -698,8 +698,6 @@ abstract class KunenaTableObject
 
         // Throw exception to empty and return true.
         throw new Exception('');
-
-        return true;
     }
     */
 
@@ -750,16 +748,12 @@ abstract class KunenaTableObject
                 static::$db->updateObject(static::$tbl, $this, static::$tbl_keys, $updateNulls);
             } catch (RuntimeException $e) {
                 throw new RuntimeException(\get_class($this) . '::store failed - ' . $e->getMessage());
-
-                return false;
             }
         } else {
             try {
                 static::$db->insertObject(static::$tbl, $this, static::$tbl_keys);
             } catch (RuntimeException $e) {
                 throw new RuntimeException(\get_class($this) . '::store failed - ' . $e->getMessage());
-
-                return false;
             }
         }
 

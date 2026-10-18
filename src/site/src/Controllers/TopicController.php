@@ -742,7 +742,7 @@ class TopicController extends KunenaController
             $app = Factory::getApplication();
             $plugin = $app->get('captcha', '0');
 
-            if ($plugin !== '0' || $plugin !== '' || $plugin !== null) {
+            if ($plugin !== '0' && $plugin !== '' && $plugin !== null) {
                 if (PluginHelper::isEnabled('captcha', $plugin)) {
                     try {
                         $captcha = Captcha::getInstance((string) $plugin, ['namespace' => 'kunena_captcha']);

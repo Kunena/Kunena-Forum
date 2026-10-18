@@ -258,6 +258,7 @@ class KunenaRate
 
         try {
             $this->_db->execute();
+            KunenaRateHelper::flushCount((int) $this->topic_id);
             $activityIntegration = KunenaFactory::getActivityIntegration();
 
             $topic = KunenaTopicHelper::get($this->topic_id);

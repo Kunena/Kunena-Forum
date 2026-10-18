@@ -21,6 +21,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -228,6 +229,10 @@ abstract class KunenaTopicHelper
         }
 
         unset($results);
+
+        if (KunenaFactory::getConfig()->ratingEnabled) {
+            KunenaRateHelper::loadCounts($ids);
+        }
     }
 
     /**
@@ -426,6 +431,12 @@ abstract class KunenaTopicHelper
         }
 
         unset($results);
+
+        // The list shows the rating of each topic: load the number of ratings with one query, not one for each topic.
+        if ($topics && $config->ratingEnabled) {
+            KunenaRateHelper::loadCounts(array_keys($topics));
+        }
+
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
         return [$total, $topics];

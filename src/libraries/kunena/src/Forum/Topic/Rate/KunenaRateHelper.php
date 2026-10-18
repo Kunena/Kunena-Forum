@@ -32,6 +32,12 @@ abstract class KunenaRateHelper
     protected static $_instances = [];
 
     /**
+     * @var     array  Number of ratings by topic id, loaded before in this request.
+     * @since   Kunena 7.2
+     */
+    protected static $_counts = [];
+
+    /**
      * Returns \Kunena\Forum\Libraries\Forum\Topic\TopicRate object
      *
      * @access    public
@@ -103,6 +109,10 @@ abstract class KunenaRateHelper
      */
     public static function getCount(int $id): float
     {
+        if (isset(self::$_counts[$id])) {
+            return self::$_counts[$id];
+        }
+
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
         $query->select('(COUNT(' . $db->quoteName('rate') . ')) AS ' . $db->quoteName('selected'))
@@ -110,7 +120,55 @@ abstract class KunenaRateHelper
             ->where($db->quoteName('topic_id') . ' = ' . $db->quote($id));
         $db->setQuery($query);
 
-        return round($db->loadResult());
+        return self::$_counts[$id] = (float) round((float) $db->loadResult());
+    }
+
+    /**
+     * Load the number of ratings of many topics with one query (a list of topics shows the rating of each).
+     *
+     * @param   array  $ids  Topic ids.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function loadCounts(array $ids): void
+    {
+        $ids = array_values(array_filter(array_map('intval', $ids), static fn ($id): bool => $id > 0 && !isset(self::$_counts[$id])));
+
+        if (!$ids) {
+            return;
+        }
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery();
+        $query->select([$db->quoteName('topic_id'), 'COUNT(' . $db->quoteName('rate') . ') AS ' . $db->quoteName('selected')])
+            ->from($db->quoteName('#__kunena_rate'))
+            ->where($db->quoteName('topic_id') . ' IN (' . implode(',', $ids) . ')')
+            ->group($db->quoteName('topic_id'));
+        $db->setQuery($query);
+
+        foreach ($ids as $id) {
+            self::$_counts[$id] = 0.0;
+        }
+
+        foreach ((array) $db->loadObjectList() as $row) {
+            self::$_counts[(int) $row->topic_id] = (float) $row->selected;
+        }
+    }
+
+    /**
+     * Forget the loaded number of ratings of a topic (after a new rating).
+     *
+     * @param   int  $id  Topic id.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function flushCount(int $id): void
+    {
+        unset(self::$_counts[$id]);
     }
 
     /**
@@ -133,10 +191,7 @@ abstract class KunenaRateHelper
             ->andWhere($db->quoteName('userid') . ' = ' . $db->quote($userid));
         $db->setQuery($query);
 
-        if (empty($db->loadResult())) {
-            return 0;
-        } else {
-            return $db->loadResult();
-        }
+        // One query: the result was loaded twice.
+        return (int) $db->loadResult();
     }
 }

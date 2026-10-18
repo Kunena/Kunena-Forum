@@ -80,10 +80,10 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/
                                     </li>
                                 <?php endif; ?>
                             </ul>
-                            <div class="tab-content"
+                            <div class="tab-content d-block"
                                  style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
                                 <div class="tab-pane active" id="tab-general">
-                                    <fieldset>
+                                    <fieldset class="table-responsive">
                                         <table class="table table-striped">
                                             <tr>
                                                 <td style="width:20%;"><?php echo Text::_('COM_KUNENA_PARENT'); ?></td>
@@ -176,7 +176,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/
                                 </div>
 
                                 <div class="tab-pane" id="tab-access">
-                                    <fieldset>
+                                    <fieldset class="table-responsive">
                                         <table class="table table-striped">
                                             <thead>
                                             <tr>
@@ -203,7 +203,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/
                                 <?php if (!$this->category->id || !$this->category->isSection()) :
                                     ?>
                                     <div class="tab-pane" id="tab-settings">
-                                        <fieldset>
+                                        <fieldset class="table-responsive">
                                             <table class="table table-striped">
                                                 <tr>
                                                     <td style="width:20%;"><?php echo Text::_('COM_KUNENA_LOCKED1'); ?></td>
@@ -269,7 +269,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/
                                     </div>
                                 <?php endif; ?>
                                 <div class="tab-pane" id="tab-display">
-                                    <fieldset>
+                                    <fieldset class="table-responsive">
                                         <legend><?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_DISPLAY_INDEX_LEGEND'); ?></legend>
                                         <table class="table table-striped">
                                             <tr>
@@ -288,7 +288,7 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/
                                 <?php if (!$this->category->id || !$this->category->isSection()) :
                                     ?>
                                     <div class="tab-pane" id="tab-mods">
-                                        <fieldset>
+                                        <fieldset class="table-responsive">
                                             <legend><?php echo Text::_('COM_KUNENA_MODSASSIGNED'); ?></legend>
 
                                             <table class="table table-bordered table-striped">

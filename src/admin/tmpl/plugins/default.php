@@ -28,6 +28,14 @@ $user          = $this->getCurrentUser();
 $userId        = $user->id;
 $listOrder     = $this->escape($this->state->get('list.ordering'));
 $listDirn      = $this->escape($this->state->get('list.direction'));
+// These integrations only run when the extension they connect to is installed, an enabled plugin can still be inactive.
+$requiredFiles = [
+    'community'   => [JPATH_ROOT . '/components/com_community/libraries/core.php'],
+    'comprofiler' => [JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php', JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'],
+    'easysocial'  => [JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php'],
+    'uddeim'      => [JPATH_SITE . '/components/com_uddeim/uddeim.api.php'],
+];
+
 $joomlaVersion = new Version();
 ?>
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=plugins'); ?>" method="post" name="adminForm" id="adminForm">
@@ -107,6 +115,20 @@ $joomlaVersion = new Version();
                                 </td>
                                 <td class="text-center">
                                     <?php echo HTMLHelper::_('jgrid.published', $item->enabled, $i, 'plugins.', $canChange); ?>
+                                    <?php if ($item->enabled && $item->folder === 'kunena' && !empty($requiredFiles[$item->element])) : ?>
+                                        <?php
+                                        $missingFile = false;
+
+                                        foreach ($requiredFiles[$item->element] as $requiredFile) {
+                                            if (!is_file($requiredFile)) {
+                                                $missingFile = true;
+                                            }
+                                        }
+                                        ?>
+                                        <?php if ($missingFile) : ?>
+                                            <span class="badge text-bg-warning d-block mt-1" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_PLUGIN_INACTIVE_DESC')); ?>"><?php echo Text::_('COM_KUNENA_PLUGIN_INACTIVE'); ?></span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 </td>
                                 <th scope="row">
                                     <?php if ($item->checked_out) : ?>

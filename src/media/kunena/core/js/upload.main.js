@@ -126,15 +126,15 @@ jQuery(function ($) {
 	    child.each(function (i, el) {
 	        const elem = $(el);
 	
-	        if (!elem.attr('id').match("[a-z]{8}")) {
-	            const fileid = elem.attr('id').match("[0-9]{1,8}");
+	        if (!(elem.attr('id') || '').match("[a-z]{8}")) {
+	            const fileid = (elem.attr('id') || '').match("[0-9]{1,8}");
 	            filesidtosetprivate.push(fileid);
 	        }
 	    });
 	
 	    if (filesidtosetprivate.length !== 0) {
 	        $.ajax({
-	            url: Joomla.getOptions('com_kunena.kunena_upload_files_set_private') + '&files_id=' + JSON.stringify(filesidtosetprivate),
+	            url: Joomla.getOptions('com_kunena.kunena_upload_files_set_private') + '&files_id=' + encodeURIComponent(JSON.stringify(filesidtosetprivate)),
 	            type: 'POST'
 	        })
 	        .done(function (data) {
@@ -199,8 +199,8 @@ jQuery(function ($) {
 	    child.each(function (i, el) {
 	        const elem = $(el);
 	
-	        if (!elem.attr('id').match("[a-z]{8}")) {
-	            const attachid = elem.attr('id').match("[0-9]{1,8}");
+	        if (!(elem.attr('id') || '').match("[a-z]{8}")) {
+	            const attachid = (elem.attr('id') || '').match("[0-9]{1,8}");
 	            const filename = elem.attr('placeholder');
 	
 	            content_to_inject += '[attachment=' + attachid + ']' + filename + '[/attachment]';
@@ -264,7 +264,7 @@ jQuery(function ($) {
 	    }
 	
 	    $.ajax({
-	        url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + JSON.stringify(files_id),
+	        url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + encodeURIComponent(JSON.stringify(files_id)),
 	        type: 'POST'
 	    })
 	    .done(function (data) {
@@ -357,7 +357,7 @@ jQuery(function ($) {
         files_id.push(file_id);
 
         $.ajax({
-            url: Joomla.getOptions('com_kunena.kunena_upload_files_set_private') + '&files_id=' + JSON.stringify(files_id),
+            url: Joomla.getOptions('com_kunena.kunena_upload_files_set_private') + '&files_id=' + encodeURIComponent(JSON.stringify(files_id)),
             type: 'POST'
         })
         .done(function (data) {
@@ -447,7 +447,7 @@ jQuery(function ($) {
         if (file_id) {
             const files_id = [file_id];
             $.ajax({
-                url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + JSON.stringify(files_id),
+                url: Joomla.getOptions('com_kunena.kunena_upload_files_set_inline') + '&files_id=' + encodeURIComponent(JSON.stringify(files_id)),
                 type: 'POST'
             });
         }

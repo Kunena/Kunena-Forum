@@ -637,7 +637,7 @@ class ToolsModel extends AdminModel
 
         foreach ($tablesList as $table) {
             if (preg_match('`_kunena_`', $table)) {
-                $kunenaDB->setQuery("SHOW FULL FIELDS FROM " . $table . "");
+                $kunenaDB->setQuery("SHOW FULL FIELDS FROM " . $kunenaDB->quoteName($table));
 
                 try {
                     $fullFields = $kunenaDB->loadObjectList();

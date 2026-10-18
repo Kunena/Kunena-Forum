@@ -595,6 +595,9 @@ class KunenaStatistics
             $top->titleName  = Text::_('COM_KUNENA_USERNAME');
             $top->titleCount = Text::_('COM_KUNENA_USRL_POSTS');
 
+            // Load the users of the list together, not one by one.
+            KunenaUserHelper::loadUsers(array_map('intval', array_column($this->topPosters, 'id')));
+
             foreach ($this->topPosters as &$item) {
                 $item           = clone $item;
                 $item->username = KunenaUserHelper::get($item->id)->getName();
@@ -631,6 +634,9 @@ class KunenaStatistics
             $top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_PROFILES');
             $top->titleName  = Text::_('COM_KUNENA_USERNAME');
             $top->titleCount = Text::_('COM_KUNENA_USRL_HITS');
+
+            // Load the users of the list together, not one by one.
+            KunenaUserHelper::loadUsers(array_map('intval', array_column($this->topProfiles, 'id')));
 
             foreach ($this->topProfiles as &$item) {
                 $item           = clone $item;
@@ -698,6 +704,9 @@ class KunenaStatistics
             $top->title      = Text::_('COM_KUNENA_LIB_STAT_TOP_THANKS');
             $top->titleName  = Text::_('COM_KUNENA_USERNAME');
             $top->titleCount = Text::_('COM_KUNENA_STAT_THANKS_YOU_RECEIVED');
+
+            // Load the users of the list together, not one by one.
+            KunenaUserHelper::loadUsers(array_map('intval', array_column($this->topThanks, 'id')));
 
             foreach ($this->topThanks as &$item) {
                 $item           = clone $item;

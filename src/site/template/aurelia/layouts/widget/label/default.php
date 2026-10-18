@@ -38,5 +38,5 @@ if ($topicicontype == 'fa') {
         ?>
         <?php echo $icons ?>
     <?php endif; ?>
-    <span class="sr-only"></span><?php echo Text::_($icon->name); ?>
+    <span class="visually-hidden"></span><?php echo Text::_($icon->name); ?>
 </span>

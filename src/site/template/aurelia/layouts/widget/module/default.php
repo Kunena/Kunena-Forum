@@ -21,6 +21,6 @@ if (!$modules) {
 
 ?>
 <!-- Module position: <?php echo $this->position; ?> -->
-<div class="well well-small">
+<div class="border rounded p-2 mb-3">
     <?php echo $modules; ?>
 </div>

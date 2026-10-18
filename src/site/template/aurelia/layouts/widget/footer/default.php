@@ -19,7 +19,7 @@ use Joomla\CMS\Language\Text;
 
 if (($this->getRSS()) !== null) :
     ?>
-    <div class="pull-right large-kicon"><?php echo $this->getRSS(); ?></div>
+    <div class="float-end large-kicon"><?php echo $this->getRSS(); ?></div>
     <div class="clearfix"></div>
 <?php endif; ?>
 

@@ -355,7 +355,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
         <h2>
             <?php echo Text::_('COM_KUNENA_EDITING_REASON') ?>
         </h2>
-        <div class="shadow-lg pl-5 pt-3 pb-1 mb-5 rounded">
+        <div class="shadow-lg ps-5 pt-3 pb-1 mb-5 rounded">
             <div class="form-group row" id="modified-reason">
                 <div class="col-md-10">
                     <input class="form-control" name="modified_reason"

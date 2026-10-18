@@ -144,10 +144,10 @@ if (!empty($this->spacing)) : ?>
     <td class="d-none d-md-table-cell">
         <div class="row">
             <?php if ($config->avatarOnCategory) : ?>
-                <div class="col-xs-6 col-md-3">
+                <div class="col-6 col-md-3">
                     <?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avatarEdit); ?>
                 </div>
-                <div class="col-xs-6 col-md-9">
+                <div class="col-6 col-md-9">
                 <?php else : ?>
                     <div class="col-md-12">
                     <?php endif; ?>

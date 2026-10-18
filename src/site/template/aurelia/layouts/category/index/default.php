@@ -57,7 +57,7 @@ foreach ($this->sections as $section) :
 
         <h1 class="card-header">
             <?php echo $this->getCategoryLink($section, $this->escape($section->name), null, $this->ktemplate->tooltips(), true, false); ?>
-            <small class="hidden-xs-down nowrap" id="ksection-count<?php echo $section->id; ?>">
+            <small class="d-none d-sm-inline nowrap" id="ksection-count<?php echo $section->id; ?>">
                 <?php echo KunenaCategory::getInstance()->totalCount($section->getTopics()); ?>
             </small>
         </h1>
@@ -210,10 +210,10 @@ foreach ($this->sections as $section) :
                                 <td colspan="5">
                                     <div class="row">
                                         <?php if ($avatar) : ?>
-                                        <div class="col-xs-6 col-md-3" id="kcat-avatar">
+                                        <div class="col-6 col-md-3" id="kcat-avatar">
                                             <?php echo $author->getLink($avatar, null, '', '', $this->ktemplate->tooltips(), $category->id, $this->config->avatarEdit); ?>
                                         </div>
-                                        <div class="col-xs-6 col-md-9" id="kcat-last">
+                                        <div class="col-6 col-md-9" id="kcat-last">
                                         <?php else : ?>
                                             <div class="col-md-12" id="kcat-last">
                                         <?php endif; ?>

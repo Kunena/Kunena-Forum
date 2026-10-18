@@ -81,7 +81,7 @@ use Joomla\CMS\Language\Text;
 
     </tbody>
 </table>
-<div class="pull-left">
+<div class="float-start">
     <?php echo $this->subLayout('Widget/Pagination/List')
         ->set('pagination', $this->pagination->setDisplayedPages(4))
         ->set('display', true); ?>

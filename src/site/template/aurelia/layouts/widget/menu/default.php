@@ -21,7 +21,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 // Note. It is important to remove spaces between elements.
 ?>
 
-<ul class="navbar-nav mr-auto">
+<ul class="navbar-nav me-auto">
     <?php
 
     $columninx  = 0;

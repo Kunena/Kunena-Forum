@@ -81,7 +81,7 @@ $template = KunenaTemplate::getInstance();
     <div class="tab-pane fade show active" id="message-tab" role="tabpanel" aria-labelledby="home-tab">
         <textarea class="span12" name="message" id="message" rows="12" tabindex="7"
             placeholder="<?php echo Text::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php if (!empty($this->message->getCategory()->topictemplate) && !$this->message->getTopic()->first_post_id && $topictemplate) {
-                                                                                echo $this->message->getCategory()->topictemplate;
+                                                                                echo $this->escape($this->message->getCategory()->topictemplate);
                                                                             }
 
                                                                             if (!empty($this->message->message)) {

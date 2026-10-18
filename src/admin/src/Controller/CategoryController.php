@@ -504,12 +504,19 @@ class CategoryController extends KunenaController
     public function ChkAliases(): void
     {
         $alias = $this->app->getInput()->get('alias', null, 'string');
+        $catid = $this->app->getInput()->getInt('catid', 0);
 
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery()
             ->select('id')
             ->from($db->quoteName('#__kunena_categories'))
             ->where('alias = ' . $db->quote($alias));
+
+        // The category which is being edited may keep its own alias.
+        if ($catid > 0) {
+            $query->where($db->quoteName('id') . ' <> ' . $catid);
+        }
+
         $db->setQuery($query);
         $result = (int) $db->loadResult();
 

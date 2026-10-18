@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
 	input_alias.on('input', function () {
 		$.ajax({
 			dataType: "json",
-			url: "index.php?option=com_kunena&view=category&task=category.chkaliases&alias=" + encodeURIComponent(input_alias.val()) +"&format=json"
+			url: "index.php?option=com_kunena&view=category&task=category.chkaliases&alias=" + encodeURIComponent(input_alias.val()) + "&catid=" + encodeURIComponent($('input[name="catid"]').val() || 0) + "&format=json"
 		}).done(function (response) {
 			if (!response.msg) {
 				input_alias.addClass("inputbox invalid-border");

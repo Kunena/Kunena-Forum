@@ -28,13 +28,12 @@ $actions      = $this->getActions();
 
 <?php if (!empty($actions)) :
     ?>
-    <div>
+    <div class="mb-3">
         <?php echo implode(' ', $actions); ?>
     </div>
-    <br>
 <?php endif; ?>
 
-<div class="shadow-lg rounded">
+<div class="shadow-lg rounded p-4 mb-4">
     <div><?php echo $this->announcement->displayField('sdescription'); ?></div>
     <div><?php echo $this->announcement->displayField('description'); ?></div>
 </div>

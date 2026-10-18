@@ -369,7 +369,7 @@ class TopicListingUserDisplay extends ListDisplay
                 $this->setMetaData('robots', $robots);
             }
 
-            $this->setMetaData('og:type', 'article', 'property');
+            $this->setMetaData('og:type', 'website', 'property');
             $this->setMetaData('og:description', $description, 'property');
             $this->setMetaData('og:title', $title, 'property');
             $this->setMetaData('twitter:card', 'summary', 'name');

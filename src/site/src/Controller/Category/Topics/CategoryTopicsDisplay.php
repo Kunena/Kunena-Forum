@@ -250,7 +250,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         }
 
         $this->setMetaData('og:url', Uri::current(), 'property');
-        $this->setMetaData('og:type', 'article', 'property');
+        $this->setMetaData('og:type', 'website', 'property');
         $this->setMetaData('og:title', $this->category->name, 'property');
         $this->setMetaData('og:description', $this->category->description, 'property');
         if (!empty($image)) {

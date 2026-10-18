@@ -114,6 +114,7 @@ class PluginsController extends AdminController
 
         if (empty($cid)) {
             $this->app->enqueueMessage(Text::_($this->textPrefix . '_NO_ITEM_SELECTED'), 'error');
+            $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList, false));
 
             return;
         } else {
@@ -162,7 +163,7 @@ class PluginsController extends AdminController
 
             if (empty($cids_exist)) {
                 $this->setMessage(Text::_('COM_KUNENA_PLUGINS_NO_THIRD_PARTIES_EXTENSIONS_FOUND'), 'error');
-                $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list . $extensionURL, false));
+                $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->viewList . $extensionURL, false));
 
                 return false;
             }

@@ -171,7 +171,6 @@ jQuery(document).ready(function ($) {
 			tooltip: Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_SOUNDCLOUD'),
 		});
 	
-	
 		// Add bbcode ebay
 		sceditor.formats.bbcode.set('ebay', {
 			format: function (element, content) {
@@ -635,27 +634,6 @@ jQuery(document).ready(function ($) {
 		});
 
 		// Add poll command
-		sceditor.formats.bbcode.set('poll', {
-			allowsEmpty: true,
-			allowedChildren: ['#', '#newline'],
-			tags: {
-				iframe: {
-					'data-kunena-vt': null
-				}
-			},
-			format: function ($element, content) {
-				return '[video=' + $($element).data('kunena-vt') + ']' + $($element).data('kunena-vsrc') + '[/video]';
-			},
-			html: function (token, attrs, content) {
-				var params = kunenaCmd.video[Object.keys(kunenaCmd.video).find(key => key.toLowerCase() === attrs.defaultattr)];
-				var url;
-	
-				if (url) {
-					return params['html'].replace('{url}', url).replace('{src}', content).replace('{type}', attrs.defaultattr);
-				}
-				return sceditor.escapeEntities(token.val + content + (token.closing ? token.closing.val : ''));
-			}
-		});
 	
 		sceditor.command.set('poll', {
 			_dropDown: function (editor, caller) {

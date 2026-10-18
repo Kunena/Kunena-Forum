@@ -97,8 +97,8 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
             <?php echo HTMLHelper::_('uitab.endTab'); ?>
             <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload', Text::_('COM_KUNENA_A_EMOTICONS_UPLOAD')); ?>
             <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" id="uploadForm" method="post" enctype="multipart/form-data">
-                <input type="file" id="file-upload" class="btn btn-outline-primary" name="Filedata" />
-                <input type="submit" id="file-upload-submit" class="btn btn-outline-primary" value="<?php echo Text::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
+                <input type="file" id="file-upload" class="form-control" name="Filedata" />
+                <input type="submit" id="file-upload-submit" class="btn btn-primary" value="<?php echo Text::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
                 <input type="hidden" name="task" value="smilies.smileyUpload" />
                 <input type="hidden" name="boxchecked" value="0" />
                 <?php echo HTMLHelper::_('form.token'); ?>

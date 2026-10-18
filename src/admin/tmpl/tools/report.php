@@ -76,48 +76,34 @@ document.addEventListener("DOMContentLoaded", function() {
                     method="post" id="adminForm" name="adminForm">
                     <input type="hidden" name="task" value="" />
                     <input type="hidden" name="boxchecked" value="1" />
-                    <fieldset>
-                        <legend>
-                            <i class="icon icon-support"></i> <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?>
-                        </legend>
-                        <table class="table table-bordered table-striped">
-                            <tr>
-                                <td>
-                                    <p><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE_DESC'); ?></p>
-                                    <p>
-                                        <a href="#" id="link_sel_all" name="link_sel_all" type="button"
-                                            class="btn btn-sm btn-outline-primary"><i
-                                                class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
-                                        </a>
-                                    </p>
-                                    <textarea id="report_final" class="form-control w-100" name="report_final" cols="80"
-                                        rows="15"><?php echo $this->escape($this->systemReport); ?></textarea>
-                                </td>
-                            </tr>
-                        </table>
-                    </fieldset>
-                    <fieldset>
-                        <legend>
-                            <i class="icon icon-support"></i> <?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS'); ?>
-                        </legend>
-                        <table class="table table-bordered table-striped">
-                            <tr>
-                                <td>
-                                    <p><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS_DESC'); ?></p>
-                                    <p>
-                                        <a href="#" id="link_sel_all_complete" name="link_sel_all_complete"
-                                            type="button"
-                                            class="btn btn-sm btn-outline-primary"><i
-                                                class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
-                                        </a>
-                                    </p>
-                                    <textarea id="report_final_anonymous" class="form-control w-100"
-                                        name="report_final_anonymous" cols="80"
-                                        rows="15"><?php echo $this->escape($this->systemReportAnonymous); ?></textarea>
-                                </td>
-                            </tr>
-                        </table>
-                    </fieldset>
+                    <div class="card mb-4">
+                        <div class="card-header fw-semibold">
+                            <span class="icon-support me-1" aria-hidden="true"></span><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-body-secondary"><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE_DESC'); ?></p>
+                            <button type="button" id="link_sel_all" class="btn btn-sm btn-primary mb-3">
+                                <span class="icon-copy me-1" aria-hidden="true"></span><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
+                            </button>
+                            <label for="report_final" class="visually-hidden"><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE'); ?></label>
+                            <textarea id="report_final" class="form-control w-100 font-monospace small" name="report_final"
+                                rows="15"><?php echo $this->escape($this->systemReport); ?></textarea>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header fw-semibold">
+                            <span class="icon-support me-1" aria-hidden="true"></span><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS'); ?>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-body-secondary"><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS_DESC'); ?></p>
+                            <button type="button" id="link_sel_all_complete" class="btn btn-sm btn-primary mb-3">
+                                <span class="icon-copy me-1" aria-hidden="true"></span><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
+                            </button>
+                            <label for="report_final_anonymous" class="visually-hidden"><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_ANONYMOUS'); ?></label>
+                            <textarea id="report_final_anonymous" class="form-control w-100 font-monospace small" name="report_final_anonymous"
+                                rows="15"><?php echo $this->escape($this->systemReportAnonymous); ?></textarea>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

@@ -498,8 +498,8 @@ abstract class KunenaForum
 
         // Load potentially needed language files
         KunenaFactory::loadLanguage();
-        KunenaFactory::loadLanguage('com_kunena.model');
-        KunenaFactory::loadLanguage('com_kunena.view');
+        KunenaFactory::loadLanguage('com_kunena.models');
+        KunenaFactory::loadLanguage('com_kunena.views');
 
         $view = new $view(['base_path' => KPATH_SITE]);
 

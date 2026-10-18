@@ -414,6 +414,13 @@ abstract class KunenaTopicUserHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         if (\is_array($topicids)) {
+            // An empty list means that there is nothing to recount (not "everything", and not an empty IN () clause).
+            $topicids = array_values(array_filter(array_map('intval', $topicids)));
+
+            if (!$topicids) {
+                return 0;
+            }
+
             $where  = 'AND '. $db->quoteName('m.thread') . ' IN (' . implode(',', $topicids) . ')';
             $where2 = 'AND ' . $db->quoteName('ut.topic_id') . ' IN (' . implode(',', $topicids) . ')';
         } elseif ((int) $topicids) {

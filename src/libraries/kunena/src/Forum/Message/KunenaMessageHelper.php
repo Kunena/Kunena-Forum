@@ -603,6 +603,13 @@ abstract class KunenaMessageHelper
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         if (\is_array($topicids)) {
+            // An empty list means that there is nothing to recount (not "everything", and not an empty IN () clause).
+            $topicids = array_values(array_filter(array_map('intval', $topicids)));
+
+            if (!$topicids) {
+                return 0;
+            }
+
             $where = $db->quoteName('m.thread') . ' IN (' . implode(',', $topicids) . ')';
         } elseif ((int) $topicids) {
             $where = $db->quoteName('m.thread') . ' = ' . $db->quote((int) $topicids);

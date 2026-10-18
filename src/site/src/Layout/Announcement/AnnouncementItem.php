@@ -89,7 +89,7 @@ class AnnouncementItem extends KunenaLayout
      * @param   int     $id      Id of the button.
      * @param   bool    $normal  Define if the button will have the class btn or btn-small
      *
-     * @return  KunenaLayout
+     * @return  string
      *
      * @since   Kunena 6.0
      *

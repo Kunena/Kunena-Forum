@@ -40,7 +40,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
     }
 
     /**
-     * @return boolean
+     * @return string
      * @since Kunena
      * @throws Exception
      * @throws null

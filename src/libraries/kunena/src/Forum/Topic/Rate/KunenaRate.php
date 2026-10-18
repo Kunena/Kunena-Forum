@@ -306,7 +306,7 @@ class KunenaRate
 
     /**
      * @param   integer  $userid  userid
-     * @param   integer  $time    time
+     * @param   string   $time    time
      *
      * @return  void
      *

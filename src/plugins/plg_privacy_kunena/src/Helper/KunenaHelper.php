@@ -94,7 +94,7 @@ abstract class KunenaHelper
      * @param   string  $setField  The Table Field to set the new value for
      * @param   string  $setValue  The new value to set
      *
-     * @return array
+     * @return bool
      *
      * @since   6.1.0
      */
@@ -119,7 +119,7 @@ abstract class KunenaHelper
      * @param   string  $field     The Table Field to match the User ID with
      * @param   int     $userid    The User ID
      *
-     * @return array
+     * @return bool
      *
      * @since   6.1.0
      */

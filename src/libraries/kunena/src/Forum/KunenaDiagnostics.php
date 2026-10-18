@@ -184,7 +184,7 @@ abstract class KunenaDiagnostics
     /**
      * @param   string  $function  function
      *
-     * @return  boolean
+     * @return  string
      *
      * @since   Kunena 6.0
      */

@@ -31,7 +31,7 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
     /**
      * @param   string  $username    username
      * @param   string  $password    password
-     * @param   string  $rememberme  remember me
+     * @param   bool    $rememberme  remember me
      *
      * @return  null|string
      *

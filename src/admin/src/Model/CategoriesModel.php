@@ -406,7 +406,7 @@ class CategoriesModel extends KunenaModel
     /**
      * Get list of categories to be displayed in drop-down select in batch
      *
-     * @return  array
+     * @return  string  The HTML of the drop-down select.
      *
      * @throws  null
      * @throws  Exception

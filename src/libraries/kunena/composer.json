@@ -1,6 +1,8 @@
 {
     "name": "kunena/kunena-libraries",
     "description": "Kunena Forum core libraries autoload",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
     "autoload": {
         "psr-4": {
             "Kunena\\Forum\\": "src/",

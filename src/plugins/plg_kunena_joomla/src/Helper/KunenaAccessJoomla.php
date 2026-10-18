@@ -293,7 +293,7 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
     protected function getAuthorisedUsers(string $action, $asset = null): array
     {
         $action = strtolower(preg_replace('#[\s\-]+#', '.', trim($action)));
-        $asset  = strtolower(preg_replace('#[\s\-]+#', '.', trim($asset)));
+        $asset  = strtolower(preg_replace('#[\s\-]+#', '.', trim((string) $asset)));
 
         // Default to the root asset node.
         if (empty($asset)) {

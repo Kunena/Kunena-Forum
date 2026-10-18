@@ -146,7 +146,7 @@ class TableKunenaAttachments extends KunenaTable
             throw new RuntimeException(Text::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_MESSAGE_INVALID', (int) $message->id));
         }
 
-        $this->folder = trim($this->folder, '/');
+        $this->folder = trim((string) $this->folder, '/');
 
         if (!$this->folder) {
             throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_FOLDER'));

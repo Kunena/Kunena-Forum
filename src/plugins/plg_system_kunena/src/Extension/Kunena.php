@@ -120,7 +120,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         $request = 'https://api.stopforumspam.org/api?' . http_build_query($query) . '&json';
 
         try {
-            $response = $http->get($request);
+            $response = $http->get($request, [], 5);
         } catch (\RuntimeException $e) {
             // The service cannot be reached: do not block the registration because of it.
             return;

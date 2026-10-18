@@ -426,7 +426,10 @@ class KunenaUsers extends KunenaTable
      */
     public function check(): bool
     {
-        $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->userid);
+        $identity = Factory::getApplication()->getIdentity();
+        $user     = $identity && $identity->id == $this->userid
+            ? $identity
+            : Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->userid);
 
         if (!$this->userid || !$user) {
             // FIXME: find a way to throw exception because it prevent guest to post

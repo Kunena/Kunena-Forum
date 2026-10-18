@@ -76,7 +76,10 @@ class UserEditDisplay extends KunenaControllerDisplay
 
         if ($userid > 0) {
             // The layouts need the Joomla user (get('username'), get('email'), ...), not the KunenaUser.
-            $this->user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
+            // The tabs run this controller once each, load the Joomla user only once per request.
+            static $users = [];
+
+            $this->user = $users[$userid] ??= Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
         } else {
             $this->user = $this->app->getIdentity();
         }

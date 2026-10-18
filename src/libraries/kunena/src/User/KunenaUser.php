@@ -945,7 +945,11 @@ class KunenaUser
             $timezone = Factory::getApplication()->get('offset', null);
 
             if ($this->userid) {
-                $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->userid);
+                // The logged in user is already loaded, no need to query the same user again.
+                $identity = Factory::getApplication()->getIdentity();
+                $user     = $identity && $identity->id == $this->userid
+                    ? $identity
+                    : Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->userid);
                 $timezone = $user->getParam('timezone', $timezone);
             }
 

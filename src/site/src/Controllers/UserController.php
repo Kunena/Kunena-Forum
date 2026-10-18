@@ -17,7 +17,6 @@ namespace Kunena\Forum\Site\Controllers;
 
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -622,9 +621,9 @@ class UserController extends KunenaController
             $birthdate = $date->format('Y-m-d');
         }
 
-        if ($birthdate == null) {
-            $now       = new Date();
-            $birthdate = $now->format('Y-m-d');
+        if (!$birthdate) {
+            // No birthdate given: store the value which means "not set" (see the database default and the profile display).
+            $birthdate = '1000-01-01';
         }
 
         $user->birthdate = $birthdate;
@@ -799,12 +798,10 @@ class UserController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted, 'success');
         }
 
-        $now       = new Date();
-        $birthdate = $now->format('Y-m-d');
-
         if (!empty($DelProfileInfo)) {
             $user->personalText = '';
-            $user->birthdate    = $birthdate;
+            // '1000-01-01' is the value for "no birthdate"
+            $user->birthdate    = '1000-01-01';
             $user->location     = '';
             $user->gender       = 0;
 

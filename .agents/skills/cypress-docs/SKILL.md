@@ -69,15 +69,15 @@ If documentation cannot verify a claim:
 
 ### 1. Classify the Query
 
-| Query Type        | Search Location              |
-|------------------|------------------------------|
-| How do I...      | /guides/, /core-concepts/    |
-| What is...       | /core-concepts/              |
-| API / Commands   | /api/commands/               |
-| Assertions       | /api/assertions/             |
-| Config issues    | /configuration/              |
-| CI/CD            | /guides/ci-cd/               |
-| Errors           | /references/error-messages/  |
+| Query Type     | Search Location             |
+| -------------- | --------------------------- |
+| How do I...    | /guides/, /core-concepts/   |
+| What is...     | /core-concepts/             |
+| API / Commands | /api/commands/              |
+| Assertions     | /api/assertions/            |
+| Config issues  | /configuration/             |
+| CI/CD          | /guides/ci-cd/              |
+| Errors         | /references/error-messages/ |
 
 ### 2. Search Flow
 

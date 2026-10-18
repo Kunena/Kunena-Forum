@@ -57,7 +57,7 @@ unknown pid. Get valid pids from `sessions`.
 | Stage                  | Meaning                            | Action                                       |
 | ---------------------- | ---------------------------------- | -------------------------------------------- |
 | `not connected`        | No matching reachable session      | Start Cypress or keep waiting                |
-| `browser not selected` | Session is ready without a browser | `run` a spec; uncommon with `--browser`       |
+| `browser not selected` | Session is ready without a browser | `run` a spec; uncommon with `--browser`      |
 | `spec not selected`    | Browser is ready; nothing has run  | `specs`, then `run`                          |
 | `loading`              | The selected spec is building      | Wait                                         |
 | `running`              | Tests are executing                | Reporter data is readable; app reads are not |

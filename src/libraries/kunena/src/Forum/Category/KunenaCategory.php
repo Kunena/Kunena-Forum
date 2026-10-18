@@ -574,13 +574,15 @@ class KunenaCategory extends KunenaDatabaseObject
             $userCategory->params = '';
         }
 
+        $saved = false;
+
         try {
-            $userCategory->save();
+            $saved = $userCategory->save();
         } catch (Exception $e) {
             KunenaError::displayDatabaseError($e);
         }
 
-        return true;
+        return (bool) $saved;
     }
 
     /**

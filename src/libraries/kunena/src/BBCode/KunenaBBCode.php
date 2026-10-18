@@ -526,11 +526,11 @@ class KunenaBBCode extends BBCode
      * @see     BBCode::IsValidURL()
      * Regular expression taken from https://gist.github.com/729294
      *
-     * @param   bool    $local_too  local
-     *
      * @param   string  $string     string
      *
      * @param   bool    $email_too  email
+     *
+     * @param   bool    $local_too  local
      *
      * @return  boolean
      *

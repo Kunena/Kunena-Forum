@@ -124,9 +124,9 @@ class KunenaTopicUser
     protected $_db = null;
 
     /**
-     * @param   mixed  $user   user
-     *
      * @param   mixed  $topic  topic
+     *
+     * @param   mixed  $user   user
      *
      * @throws  Exception
      * @since   Kunena 6.0

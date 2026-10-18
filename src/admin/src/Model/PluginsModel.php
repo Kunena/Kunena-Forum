@@ -27,8 +27,8 @@ class PluginsModel extends JoomlaPluginsModel
     /**
      * Constructor.
      *
-     * @param   MVCFactoryInterface|null  $factory  mvc
      * @param   array                     $config   An optional associative array of configuration settings.
+     * @param   MVCFactoryInterface|null  $factory  mvc
      *
      * @throws Exception
      * @since   Kunena 1.6

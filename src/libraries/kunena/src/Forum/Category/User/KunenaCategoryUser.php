@@ -88,9 +88,9 @@ class KunenaCategoryUser
     public string $params = '';
 
     /**
-     * @param   mixed  $user      user
-     *
      * @param   int    $category  category
+     *
+     * @param   mixed  $user      user
      *
      * @throws  Exception
      * @since   Kunena 6.0

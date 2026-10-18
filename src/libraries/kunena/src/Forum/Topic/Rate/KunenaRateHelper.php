@@ -38,9 +38,9 @@ abstract class KunenaRateHelper
      *
      * @internal  param The $identifier rate object to load - Can be only an integer.
      *
-     * @param   bool  $reload      reload
-     *
      * @param   null  $identifier  identifier
+     *
+     * @param   bool  $reload      reload
      *
      * @return  KunenaRate The rate object.
      *

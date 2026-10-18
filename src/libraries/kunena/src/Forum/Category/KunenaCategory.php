@@ -1345,9 +1345,9 @@ class KunenaCategory extends KunenaDatabaseObject
      *
      * @example if ($category->isAuthorised('admin')) $category->setModerator($user, true);
      *
-     * @param   bool   $value  value
-     *
      * @param   mixed  $user   KunenaUser object
+     *
+     * @param   bool   $value  value
      *
      * @return  boolean
      *
@@ -1404,11 +1404,11 @@ class KunenaCategory extends KunenaDatabaseObject
     }
 
     /**
-     * @param   bool        $include  include
-     *
      * @param   array|null  $src      src
      *
      * @param   array|null  $fields   fields
+     *
+     * @param   bool        $include  include
      *
      * @return  boolean  True on success.
      * @see     KunenaDatabaseObject::bind()

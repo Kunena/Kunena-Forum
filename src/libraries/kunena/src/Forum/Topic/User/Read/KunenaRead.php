@@ -91,9 +91,9 @@ class KunenaRead
     public $category_id;
 
     /**
-     * @param   mixed  $user   user
-     *
      * @param   mixed  $topic  topic
+     *
+     * @param   mixed  $user   user
      *
      * @throws  Exception
      * @since   Kunena 6.0

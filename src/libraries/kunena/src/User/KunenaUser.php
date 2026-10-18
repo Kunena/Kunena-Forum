@@ -857,10 +857,10 @@ class KunenaUser
     /**
      * Get users type as a string inside the specified category.
      *
-     * @param   string  $class  class
-     *
      * @param   string  $name   name
      * @param   string  $title  title
+     *
+     * @param   string  $class  class
      *
      * @return  string
      *

@@ -86,9 +86,9 @@ class TemplatesModel extends AdminModel
     /**
      * @see     \Joomla\CMS\MVC\Model\FormModel::getForm()
      *
-     * @param   bool   $loadData  loadData
-     *
      * @param   array  $data      data
+     *
+     * @param   bool   $loadData  loadData
      *
      * @return \Joomla\CMS\Form\Form|false
      *

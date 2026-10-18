@@ -61,11 +61,10 @@ class TemplateController extends FormController
     /**
      * Constructor.
      *
+     * @param   array                     $config   An optional associative array of configuration settings.
      * @param   MVCFactoryInterface|null  $factory  The factory.
      * @param   null                      $app      The CMSApplication for the dispatcher
      * @param   null                      $input    Input
-     *
-     * @param   array                     $config   An optional associative array of configuration settings.
      *
      * @throws Exception
      * @since   Kunena 2.0

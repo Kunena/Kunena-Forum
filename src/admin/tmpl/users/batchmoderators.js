@@ -7,7 +7,7 @@
  * @link        https://www.kunena.org
  **/
 
-$(document).ready(function() {
+jQuery(document).ready(function ($) {
 	$('#catidmodslist').on( "change", function() {
 	    $('#catidmodslist option').removeAttr("selected");
 	});

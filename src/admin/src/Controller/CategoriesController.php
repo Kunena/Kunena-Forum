@@ -141,6 +141,8 @@ class CategoriesController extends KunenaController
                         	'error'
                         );
                     }
+
+                    continue;
                 }
 
                 // At this point the category should be saved without errors
@@ -729,7 +731,7 @@ class CategoriesController extends KunenaController
         $cid = $this->input->get('cid', [], 'array');
 
         if (!empty($cid)) {
-            $this->setVariable((int) $cid, 'published', 2);
+            $this->setVariable(ArrayHelper::toInteger($cid), 'published', 2);
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
         }
     }
@@ -748,7 +750,7 @@ class CategoriesController extends KunenaController
         $cid = $this->input->get('cid', [], 'array');
 
         if (!empty($cid)) {
-            $this->setVariable((int) $cid, 'published', -2);
+            $this->setVariable(ArrayHelper::toInteger($cid), 'published', -2);
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
         }
     }

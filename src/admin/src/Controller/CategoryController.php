@@ -473,6 +473,8 @@ class CategoryController extends KunenaController
                         Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
                         'error'
                     );
+
+                    continue;
                 }
 
                 $count++;

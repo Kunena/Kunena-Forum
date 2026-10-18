@@ -1470,10 +1470,32 @@ HTML;
                 $icon = $src->xpath('/kunena-topicicons/icons/icon[@id=0]');
             }
 
-            $icon = $this->getIconsAttributes($icon);
-
-            return $icon;
+            if ($icon) {
+                return $this->getIconsAttributes($icon);
+            }
         }
+
+        // No icon file or no icon with this id: an empty icon.
+        return $this->getEmptyIcon();
+    }
+
+    /**
+     * An icon without any data, returned when the icon definition cannot be found
+     *
+     * @return stdClass
+     * @since Kunena 7.2
+     */
+    private function getEmptyIcon()
+    {
+        $icon       = new stdClass();
+        $icon->id   = 0;
+        $icon->name = '';
+        $icon->svg  = '';
+        $icon->fa   = '';
+        $icon->src  = '';
+        $icon->new  = '';
+
+        return $icon;
     }
 
     /**
@@ -1511,13 +1533,16 @@ HTML;
             $icon = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
 
             if (!$icon) {
-                $icon = $src->xpath('/kunena-systemicons/icons/icon[@id=' . $id . ']');
+                $icon = $src->xpath('/kunena-systemicons/icons/icon[@id=0]');
             }
 
-            $icon = $this->getIconsAttributesSystem($icon);
-
-            return $icon;
+            if ($icon) {
+                return $this->getIconsAttributesSystem($icon);
+            }
         }
+
+        // No icon file or no icon with this id: an empty icon.
+        return $this->getEmptyIcon();
     }
 
     /**

@@ -17,7 +17,7 @@ use Joomla\CMS\Installer\InstallerScript;
 /**
  * Kunena package installer script.
  *
- * @since Kunena
+ * @since Kunena 6.0
  */
 class plgFinderKunenaInstallerScript extends InstallerScript
 {

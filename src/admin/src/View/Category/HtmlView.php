@@ -58,7 +58,7 @@ class HtmlView extends BaseHtmlView
 
     /**
      * @return  void
-     * @since Kunena
+     * @since Kunena 6.0
      *
      *
      * @throws Exception
@@ -82,7 +82,7 @@ class HtmlView extends BaseHtmlView
 
     /**
      * @return  void
-     * @since Kunena
+     * @since Kunena 6.0
      */
     protected function setToolBarEdit()
     {

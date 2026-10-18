@@ -1548,7 +1548,7 @@ abstract class KunenaDiagnostics
 
     //  /**
     //   * @return QueryInterface
-    //   * @since   Kunena
+    //   * @since   Kunena 6.0
     //   */
     //  protected static function query_topicsOwnersOrphaned()
     //  {
@@ -1564,7 +1564,7 @@ abstract class KunenaDiagnostics
     //   * @param   QueryInterface  $query  query
     //   *
     //   * @return  array
-    //   * @since   Kunena
+    //   * @since   Kunena 6.0
     //   */
     //  protected static function fields_topicsOwnersOrphaned(QueryInterface $query = null)
     //  {
@@ -1578,7 +1578,7 @@ abstract class KunenaDiagnostics
     //
     //  /**
     //   * @return QueryInterface
-    //   * @since   Kunena
+    //   * @since   Kunena 6.0
     //   */
     //  protected static function fix_topicsOwnersOrphaned()
     //  {

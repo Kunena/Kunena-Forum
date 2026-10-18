@@ -29,7 +29,7 @@ use Kunena\Forum\Plugin\Kunena\Easyblog\Helper\KunenaProfileEasyblog;
 /**
  * Class plgKunenaEasyblog
  *
- * @since Kunena
+ * @since Kunena 6.0
  */
 class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
@@ -107,7 +107,7 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
      * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return void
-     * @since Kunena
+     * @since Kunena 6.0
      */
     public function onKunenaGetAvatar(KunenaGetAvatarEvent $event): void
     {
@@ -129,7 +129,7 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
      * @param   KunenaGetProfileEvent  $event  The event instance
      *
      * @return void
-     * @since Kunena
+     * @since Kunena 6.0
      */
     public function onKunenaGetProfile(KunenaGetProfileEvent $event)
     {

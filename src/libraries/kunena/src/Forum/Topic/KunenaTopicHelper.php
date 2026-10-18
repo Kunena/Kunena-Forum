@@ -145,7 +145,7 @@ abstract class KunenaTopicHelper
      *
      * @return  KunenaTopic[]
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      *
      * @throws  Exception
      */
@@ -257,7 +257,7 @@ abstract class KunenaTopicHelper
      *
      * @return array
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      *
      * @throws \Exception
      */

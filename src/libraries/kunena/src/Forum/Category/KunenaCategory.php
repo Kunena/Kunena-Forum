@@ -636,7 +636,7 @@ class KunenaCategory extends KunenaDatabaseObject
      *
      * @return  boolean|null
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      * @throws  Exception
      */
     public function getNewTopicUrl($xhtml = true)

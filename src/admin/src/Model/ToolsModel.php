@@ -744,7 +744,7 @@ class ToolsModel extends AdminModel
      *
      * @return  string
      *
-     * @since   Kunena  1.6
+     * @since   Kunena 1.6
      */
     protected function getExtensionVersion(string $extension, string $name): string
     {

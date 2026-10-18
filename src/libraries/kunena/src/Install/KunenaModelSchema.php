@@ -43,7 +43,7 @@ use Joomla\Database\DatabaseDriver;
 /**
  * Install Model for Kunena
  *
- * @since  K1.6
+ * @since  Kunena 1.6
  */
 class KunenaModelSchema extends BaseDatabaseModel
 {
@@ -138,7 +138,7 @@ class KunenaModelSchema extends BaseDatabaseModel
     /**
      * @return  array|null
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
      * @throws \DOMException
      */
@@ -1076,7 +1076,7 @@ class KunenaModelSchema extends BaseDatabaseModel
     /**
      * @return  array
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      * @throws \Kunena\Forum\Libraries\Install\KunenaSchemaException
      * @throws \DOMException
      */

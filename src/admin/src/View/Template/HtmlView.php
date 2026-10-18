@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
 /**
  * Template view for Kunena backend
  *
- * @since  K6.0
+ * @since  Kunena 6.0
  */
 class HtmlView extends BaseHtmlView
 {

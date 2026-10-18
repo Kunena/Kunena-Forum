@@ -1061,7 +1061,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * @return  boolean
      *
      * @throws  Exception
-     * @since   Kunena
+     * @since   Kunena 6.0
      */
     public function publish($value = KunenaForum::PUBLISHED)
     {
@@ -1308,7 +1308,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * @return  KunenaAttachment[]
      *
      * @throws  Exception
-     * @since   Kunena
+     * @since   Kunena 6.0
      */
     public function getAttachments($ids = false, $action = 'read'): array
     {

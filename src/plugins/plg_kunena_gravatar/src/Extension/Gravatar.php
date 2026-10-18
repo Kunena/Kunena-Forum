@@ -27,7 +27,7 @@ use Kunena\Forum\Plugin\Kunena\Gravatar\Helper\KunenaAvatarGravatar;
 /**
  * Class plgKunenaGravatar
  *
- * @since Kunena
+ * @since Kunena 6.0
  */
 class Gravatar extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
@@ -93,7 +93,7 @@ class Gravatar extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
      * @param   KunenaGetAvatarEvent  $event  The event instance
      *
      * @return void
-     * @since Kunena
+     * @since Kunena 6.0
      */
     public function onKunenaGetAvatar(KunenaGetAvatarEvent $event): void
     {

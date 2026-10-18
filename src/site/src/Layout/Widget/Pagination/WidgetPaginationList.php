@@ -19,7 +19,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 /**
  * KunenaLayoutTopicEditEditor
  *
- * @since  K6.1
+ * @since  Kunena 6.1
  */
 class WidgetPaginationList extends KunenaLayout
 {

@@ -36,7 +36,7 @@ class KunenaUsers extends KunenaTable
      * User ID
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $userid = null;
 
@@ -86,7 +86,7 @@ class KunenaUsers extends KunenaTable
      * Signature
      *
      * @var     string
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $signature = null;
 
@@ -94,7 +94,7 @@ class KunenaUsers extends KunenaTable
      * Is moderator?
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $moderator = null;
 
@@ -102,7 +102,7 @@ class KunenaUsers extends KunenaTable
      * Banned until timestamp
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $banned = null;
 
@@ -110,7 +110,7 @@ class KunenaUsers extends KunenaTable
      * Ordering of posts
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $ordering = null;
 
@@ -118,7 +118,7 @@ class KunenaUsers extends KunenaTable
      * User post count
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $posts = null;
 
@@ -126,7 +126,7 @@ class KunenaUsers extends KunenaTable
      * Avatar image file
      *
      * @var     string
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $avatar = null;
 
@@ -134,7 +134,7 @@ class KunenaUsers extends KunenaTable
      * User karma
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $karma = null;
 
@@ -142,7 +142,7 @@ class KunenaUsers extends KunenaTable
      * Kunena Group ID
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $group_id = null;
 
@@ -150,7 +150,7 @@ class KunenaUsers extends KunenaTable
      * Kunena Profile hits
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $uhits = null;
 
@@ -158,7 +158,7 @@ class KunenaUsers extends KunenaTable
      * Personal text
      *
      * @var     string
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $personalText = null;
 
@@ -166,7 +166,7 @@ class KunenaUsers extends KunenaTable
      * Gender
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $gender = null;
 
@@ -174,7 +174,7 @@ class KunenaUsers extends KunenaTable
      * Birthdate
      *
      * @var     string
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $birthdate = null;
 
@@ -182,7 +182,7 @@ class KunenaUsers extends KunenaTable
      * User Location
      *
      * @var     string
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $location = null;
 
@@ -190,7 +190,7 @@ class KunenaUsers extends KunenaTable
      * Name of web site
      *
      * @var     string
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $websitename = null;
 
@@ -198,7 +198,7 @@ class KunenaUsers extends KunenaTable
      * URL to web site
      *
      * @var     string
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $websiteurl = null;
 
@@ -206,7 +206,7 @@ class KunenaUsers extends KunenaTable
      * User rank
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $rank = null;
 
@@ -214,7 +214,7 @@ class KunenaUsers extends KunenaTable
      * Hide Email address
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $hideEmail = null;
 
@@ -222,7 +222,7 @@ class KunenaUsers extends KunenaTable
      * Show online
      *
      * @var     integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      **/
     public $showOnline = null;
 

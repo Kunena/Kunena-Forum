@@ -22,13 +22,13 @@ use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 
 /**
  * Class KunenaPrivateUddeIM
- * @since Kunena
+ * @since Kunena 6.0
  */
 class KunenaPrivateUddeim extends KunenaPrivate
 {
     /**
      * @var null|uddeIMAPI
-     * @since Kunena
+     * @since Kunena 6.0
      */
     protected $uddeim = null;
 
@@ -56,7 +56,7 @@ class KunenaPrivateUddeim extends KunenaPrivate
      * @param $userid
      *
      * @return mixed
-     * @since Kunena
+     * @since Kunena 6.0
      */
     public function getUnreadCount($userid): int
     {
@@ -67,7 +67,7 @@ class KunenaPrivateUddeim extends KunenaPrivate
      * @param $text
      *
      * @return string
-     * @since Kunena
+     * @since Kunena 6.0
      */
     public function getInboxLink($text)
     {
@@ -80,7 +80,7 @@ class KunenaPrivateUddeim extends KunenaPrivate
 
     /**
      * @return string
-     * @since Kunena
+     * @since Kunena 6.0
      */
     public function getInboxURL()
     {
@@ -91,7 +91,7 @@ class KunenaPrivateUddeim extends KunenaPrivate
      * @param $userid
      *
      * @return string
-     * @since Kunena
+     * @since Kunena 6.0
      */
     protected function getURL($userid): string
     {

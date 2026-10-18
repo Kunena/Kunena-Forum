@@ -28,7 +28,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  * @package     Joomla.Administrator
  * @subpackage  com_plugins
  *
- * @since       K1.5
+ * @since       Kunena 1.5
  */
 class HtmlView extends BaseHtmlView
 {
@@ -120,7 +120,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  void The HTML code for the select tag
      *
-     * @since   K1.6
+     * @since   Kunena 1.6
      */
     protected function addToolbar(): void
     {

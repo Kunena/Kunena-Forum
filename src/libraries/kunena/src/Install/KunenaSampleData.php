@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 /**
  * Install Sample Data for Kunena
  *
- * @since  K6.0
+ * @since  Kunena 6.0
  */
 class KunenaSampleData
 {

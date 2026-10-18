@@ -53,7 +53,7 @@ abstract class KunenaMessageHelper
      *
      * @return  KunenaMessage[]
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      *
      * @throws  Exception
      */

@@ -20,7 +20,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 /**
  * KunenaLayoutTopicEditEditor
  *
- * @since  K6.2
+ * @since  Kunena 6.2
  */
 class WidgetSocial extends KunenaLayout
 {

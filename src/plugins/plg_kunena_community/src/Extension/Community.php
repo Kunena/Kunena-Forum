@@ -120,7 +120,7 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
      * 
      * @return  void
      * @todo    Should we remove category ACL integration?
-     * @since   Kunena
+     * @since   Kunena 6.0
      */
     public function onKunenaGetAccessControl(KunenaGetAccessControlEvent $event): void
     {

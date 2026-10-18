@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 /**
  * Kunena package installer script.
  *
- * @since Kunena
+ * @since Kunena 6.0
  */
 class Com_KunenaInstallerScript extends InstallerScript
 {

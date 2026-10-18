@@ -25,7 +25,7 @@ use stdClass;
 /**
  * Kunena Template Helper Class
  *
- * @since  K2.0
+ * @since  Kunena 2.0
  */
 abstract class KunenaTemplateHelper
 {

@@ -472,7 +472,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      *
      * @return  boolean  True if KunenaAttachment is image.
      *
-     * @since  K5.1
+     * @since  Kunena 5.1
      */
     public function isAudio(): bool
     {
@@ -484,7 +484,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      *
      * @return  boolean  True if KunenaAttachment is image.
      *
-     * @since  K5.1
+     * @since  Kunena 5.1
      */
     public function isVideo(): bool
     {
@@ -496,7 +496,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      *
      * @return  boolean  True if KunenaAttachment is inline.
      *
-     * @since  K5.1.9
+     * @since  Kunena 5.1.9
      */
     public function isInline(): bool
     {
@@ -636,7 +636,7 @@ class KunenaAttachment extends KunenaDatabaseObject
      *
      * @return  boolean  True if KunenaAttachment is pdf.
      *
-     * @since  K5.1
+     * @since  Kunena 5.1
      */
     public function isPdf(): bool
     {

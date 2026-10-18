@@ -423,7 +423,7 @@ class KunenaUpload
      *
      * @return boolean
      * @throws Exception
-     * @since Kunena
+     * @since Kunena 6.0
      */
     protected function checkFileSizeAvatar(int $fileSize)
     {
@@ -521,7 +521,7 @@ class KunenaUpload
      *
      * @return boolean
      * @throws Exception
-     * @since Kunena
+     * @since Kunena 6.0
      */
     protected function checkFileSizeImageAttachment($filesize)
     {

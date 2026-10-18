@@ -32,7 +32,7 @@ use Kunena\Forum\Libraries\Tables\KunenaUserRead;
  * @property int $message_id
  * @property int $time
  * @property int $user_id
- * @since   Kunena
+ * @since   Kunena 6.0
  */
 class KunenaRead
 {

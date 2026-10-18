@@ -38,7 +38,7 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
      *
      * @return  boolean|\Exception  True on success, false if failed or silent handling is configured, or a \Exception object on authentication error.
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      *
      * @throws  \Exception
      */
@@ -64,7 +64,7 @@ class KunenaLoginJoomla extends KunenaLoginAbstract
     /**
      * @return  boolean|string
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      *
      * @throws  \Exception
      */

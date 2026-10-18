@@ -24,7 +24,7 @@ use Exception;
 /**
  * KunenaLayoutTopicEditEditor
  *
- * @since  K4.0
+ * @since  Kunena 4.0
  */
 class WidgetEditor extends KunenaLayout
 {

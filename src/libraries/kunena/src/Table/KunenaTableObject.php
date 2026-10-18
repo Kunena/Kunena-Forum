@@ -449,7 +449,7 @@ abstract class KunenaTableObject
      *
      * @return  boolean  True on success.
      *
-     * @since   K4.0
+     * @since   Kunena 4.0
      */
     public static function setDbo(DatabaseDriver $db): bool
     {

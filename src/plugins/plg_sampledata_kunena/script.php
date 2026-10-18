@@ -21,7 +21,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 /**
  * Kunena package installer script.
  *
- * @since Kunena
+ * @since Kunena 6.0
  */
 class plgSampledataKunenaInstallerScript extends InstallerScript
 {

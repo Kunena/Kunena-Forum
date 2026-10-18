@@ -24,7 +24,7 @@ use Joomla\CMS\Helper\ModuleHelper;
 /**
  * KunenaLayoutTopicEditEditor
  *
- * @since  K6.1
+ * @since  Kunena 6.1
  */
 class WidgetLoginLogin extends KunenaLayout
 {
@@ -67,7 +67,7 @@ class WidgetLoginLogin extends KunenaLayout
     /**
     * Load Joomla! module into Kunena login form to have the authentification by Webauthn
     *
-    * @since  K6.2
+    * @since  Kunena 6.2
     */
     public function loadModuleWebauthn() {
         $moduleId = KunenaFactory::getTemplate()->params->get('moduleIdWebauthn');

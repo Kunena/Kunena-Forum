@@ -26,7 +26,7 @@ use Kunena\Forum\Plugin\Kunena\Uddeim\Helper\KunenaPrivateUddeim;
 
 /**
  * Class PlgKunenaUddeIM
- * @since Kunena
+ * @since Kunena 6.0
  */
 class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInterface
 {
@@ -108,7 +108,7 @@ class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      * @param   KunenaGetPrivateEvent  $event The event  instance
      * 
      * @return void
-     * @since Kunena
+     * @since Kunena 6.0
      */
     public function onKunenaGetPrivate(KunenaGetPrivateEvent $event): void
     {

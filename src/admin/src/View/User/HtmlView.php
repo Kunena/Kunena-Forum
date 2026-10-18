@@ -29,7 +29,7 @@ use Joomla\CMS\Factory;
 /**
  * User view for Kunena backend
  *
- * @since  K1.0
+ * @since  Kunena 1.0
  */
 class HtmlView extends BaseHtmlView
 {

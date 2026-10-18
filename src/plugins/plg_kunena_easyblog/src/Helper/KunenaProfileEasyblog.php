@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 /**
  * @package     Kunena
  *
- * @since       Kunena
+ * @since       Kunena 6.0
  */
 class KunenaProfileEasyblog extends KunenaProfile
 {

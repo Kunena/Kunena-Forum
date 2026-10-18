@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
  * @param   string  $parent  parent
  *
  * @return array
- * @since Kunena
+ * @since Kunena 6.0
  * @throws Exception
  */
 function kunena_520_2020_08_20_updaterankstitle($parent)

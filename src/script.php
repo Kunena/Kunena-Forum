@@ -574,7 +574,7 @@ return new class() implements ServiceProviderInterface {
                  *
                  * @return string
                  *
-                 * @since Kunena
+                 * @since Kunena 6.0
                  */
                 protected function getCleanPhpVersion()
                 {

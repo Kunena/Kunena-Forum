@@ -40,7 +40,7 @@ abstract class KunenaEmail
      *
      * @return boolean
      * @throws Exception
-     * @since Kunena
+     * @since Kunena 6.0
      */
     public static function send($mail, array $receivers)
     {

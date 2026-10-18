@@ -21,7 +21,7 @@ use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 /**
  * KunenaLayoutCategoryManage
  *
- * @since  K5.1
+ * @since  Kunena 5.1
  */
 class CategoryManage extends KunenaLayout
 {

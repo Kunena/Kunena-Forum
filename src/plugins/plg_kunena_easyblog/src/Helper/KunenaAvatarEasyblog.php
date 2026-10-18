@@ -25,7 +25,7 @@ use Kunena\Forum\Libraries\User\KunenaUser;
 /**
  * Class KunenaAvatarEasyblog
  *
- * @since Kunena
+ * @since Kunena 6.0
  */
 class KunenaAvatarEasyblog extends KunenaAvatar
 {
@@ -41,7 +41,7 @@ class KunenaAvatarEasyblog extends KunenaAvatar
 
     /**
      * @return string
-     * @since Kunena
+     * @since Kunena 6.0
      * @throws Exception
      */
     public function getEditURL(): string

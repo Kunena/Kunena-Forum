@@ -76,7 +76,7 @@ require_once JPATH_BASE . '/includes/framework.php';
  *
  * @package  Kunena
  *
- * @since    K2.0
+ * @since    Kunena 2.0
  */
 class KunenaApplication extends WebApplication
 {

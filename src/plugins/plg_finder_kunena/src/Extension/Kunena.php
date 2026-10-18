@@ -45,7 +45,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 /**
  * Finder adapter for com_kunena.
  *
- * @since Kunena
+ * @since Kunena 6.0
  */
 final class Kunena extends Adapter implements SubscriberInterface
 {
@@ -359,7 +359,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @return  void
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      * @throws  \Exception on database error.
      */
     protected function index(Result $item): void
@@ -527,7 +527,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @param   KunenaMessage $message  The KunenaMessage object
      *
      * @return  Result
-     * @since   Kunena
+     * @since   Kunena 6.0
      * @throws  \Exception
      */
     protected function createIndexerResult($message): Result
@@ -586,7 +586,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @param   int  $threadId  The id of the thread (head message id).
      *
      * @return  string
-     * @since   Kunena
+     * @since   Kunena 6.0
      */
     protected function getThreadSubject($threadId): string
     {
@@ -646,7 +646,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @param   int $cat_id The id of the category
      *
      * @return  mixed
-     * @since   Kunena
+     * @since   Kunena 6.0
      * @throws  \Exception
      */
     protected function getMessagesByCategory($cat_id)
@@ -674,7 +674,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @param   int $topic_id The id of the topic
      *
      * @return  mixed
-     * @since   Kunena
+     * @since   Kunena 6.0
      * @throws  \Exception
      */
     protected function getMessagesByTopic($topic_id)
@@ -708,7 +708,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @param   int $catid The id of the category
      *
      * @return  integer
-     * @since   Kunena
+     * @since   Kunena 6.0
      * @throws  \Exception
      */
     protected function getAccessLevel($catid): int

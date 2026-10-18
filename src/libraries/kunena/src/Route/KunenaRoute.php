@@ -540,7 +540,7 @@ abstract class KunenaRoute
      *
      * @return  integer
      *
-     * @since   Kunena
+     * @since   Kunena 6.0
      */
     protected static function checkCategory($item, Uri $uri)
     {

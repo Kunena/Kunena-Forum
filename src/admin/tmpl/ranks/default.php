@@ -76,7 +76,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 ?>
                                 <tr>
                                     <td class="text-center">
-                                        <?php echo HTMLHelper::_('grid.id', $i, $item->rankId, false, 'cid', 'cb', $item->rankTitle); ?>
+                                        <?php echo HTMLHelper::_('grid.id', $i, $item->rankId, false, 'cid', 'cb', Text::_($item->rankTitle)); ?>
                                     </td>
                                     <td>
                                         <?php if ($canEdit) : ?>

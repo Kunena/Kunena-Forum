@@ -131,11 +131,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         ?>
                             <div class="clearfix"></div>
                             <div class="control-group">
-                                <div id="mesubscribe">
-                                    <input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1) {
+                                <div class="form-check mesubscribe">
+                                    <input class="form-check-input" type="checkbox" name="subscribeMe" id="subscribeMe<?php echo (int) $message->id; ?>" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1) {
                                                                                                                                                         echo 'checked="checked"';
                                                                                                                                                     } ?> />
-                                    <label class="string optional col-md-12 control-label" style="padding:0;" for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+                                    <label class="form-check-label" for="subscribeMe<?php echo (int) $message->id; ?>"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -180,11 +180,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
     </div>
 <?php elseif ($quick == 0) :
 ?>
-    <div class="modal fade" style="position: relative; top: 10px; right: -10px; z-index: 1; width: 100%;display: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" style="position: relative; top: 10px; right: -10px; z-index: 1; width: 100%;display: none;" id="kreply<?php echo $message->displayField('id'); ?>_form" data-bs-backdrop="false" tabindex="-1" aria-labelledby="staticBackdropLabel<?php echo $message->displayField('id'); ?>" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel"><?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?></h5>
+                    <h5 class="modal-title" id="staticBackdropLabel<?php echo $message->displayField('id'); ?>"><?php echo Text::sprintf('COM_KUNENA_REPLYTO_X', $author->getLink()); ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -249,11 +249,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             ?>
                                 <div class="clearfix"></div>
                                 <div class="control-group">
-                                    <div id="mesubscribe">
-                                        <input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1 || $category->getSubscribed($me->userid)) {
+                                    <div class="form-check mesubscribe">
+                                        <input class="form-check-input" type="checkbox" name="subscribeMe" id="subscribeMe<?php echo (int) $message->id; ?>" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1 || $category->getSubscribed($me->userid)) {
                                                                                                                                                             echo 'checked="checked"';
                                                                                                                                                         } ?> />
-                                        <label class="string optional col-md-12 control-label" style="padding:0;" for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+                                        <label class="form-check-label" for="subscribeMe<?php echo (int) $message->id; ?>"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
                                     </div>
                                 </div>
                             <?php endif; ?>

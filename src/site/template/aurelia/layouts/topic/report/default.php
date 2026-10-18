@@ -19,6 +19,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
+// The form is rendered once per message: the ids must be unique.
+$uid = $this->message ? (int) $this->message->id : 0;
 ?>
 
 <form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena'); ?>" class="form-horizontal">
@@ -36,19 +38,19 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
     <div class="card card-body">
         <div class="control-group">
-            <label class="control-label" for="kreport-reason">
+            <label class="control-label" for="kreport-reason<?php echo $uid; ?>">
                 <?php echo Text::_('COM_KUNENA_REPORT_REASON'); ?>
             </label>
             <div class="controls">
-                <input class="input-xxlarge form-control" type="text" name="reason" size="30" id="kreport-reason"/>
+                <input class="input-xxlarge form-control" type="text" name="reason" size="30" id="kreport-reason<?php echo $uid; ?>"/>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="kreport-msg">
+            <label class="control-label" for="kreport-msg<?php echo $uid; ?>">
                 <?php echo Text::_('COM_KUNENA_REPORT_MESSAGE'); ?>
             </label>
             <div class="controls">
-                <textarea class="input-xxlarge form-control" id="kreport-msg" name="text" cols="40"
+                <textarea class="input-xxlarge form-control" id="kreport-msg<?php echo $uid; ?>" name="text" cols="40"
                           rows="10"></textarea>
             </div>
         </div>

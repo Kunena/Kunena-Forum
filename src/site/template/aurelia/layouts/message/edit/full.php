@@ -126,11 +126,11 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
             ?>
                 <div class="clearfix"></div>
                 <div class="control-group">
-                    <div class="controls">
-                        <input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1 || $category->getSubscribed($me->userid)) {
+                    <div class="controls form-check">
+                        <input class="form-check-input" type="checkbox" name="subscribeMe" id="subscribeMe<?php echo (int) $message->id; ?>" value="1" <?php if ($config->subscriptionsChecked == 1 && $me->canSubscribe != 0 || $config->subscriptionsChecked == 0 && $me->canSubscribe == 1 || $category->getSubscribed($me->userid)) {
                                                                                                                                             echo 'checked="checked"';
                                                                                                                                         } ?> />
-                        <label class="string optional" for="subscribeMe"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
+                        <label class="form-check-label" for="subscribeMe<?php echo (int) $message->id; ?>"><?php echo Text::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
                     </div>
                 </div>
             <?php endif; ?>

@@ -112,11 +112,11 @@ if ($this->config->orderingSystem == 'mesid') {
                 ]); ?>
         </div>
         <?php if ($this->me->isModerator($this->topic->getCategory()) || $this->config->userReport || !$this->config->userReport && $this->me->userid != $this->message->userid) : ?>
-            <div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false" style="display: none;">
+            <div id="report<?php echo $this->message->id; ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel<?php echo $this->message->id; ?>" aria-hidden="true" data-backdrop="false" style="display: none;">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="reportModalLabel">
+                            <h5 class="modal-title" id="reportModalLabel<?php echo $this->message->id; ?>">
                                 <?php echo Text::_('COM_KUNENA_REPORT_TO_MODERATOR'); ?>
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

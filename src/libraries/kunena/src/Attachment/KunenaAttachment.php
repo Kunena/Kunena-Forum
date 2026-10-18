@@ -783,7 +783,7 @@ class KunenaAttachment extends KunenaDatabaseObject
                     return false;
                 }
 
-                if (number_format($file->size / 1024, 2) > $config->imageSize || $imageInfo->width > $config->imageWidth || $imageInfo->height > $config->imageHeight) {
+                if ($file->size / 1024 > (float) $config->imageSize || $imageInfo->width > $config->imageWidth || $imageInfo->height > $config->imageHeight) {
                     // Calculate quality for both JPG and PNG.
                     $quality = $config->imageQuality;
 

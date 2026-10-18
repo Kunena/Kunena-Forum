@@ -21,22 +21,22 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  * @since Kunena 6.3.4
  */
 function kunena_634_2024_08_01_update_configuration_to_x($parent) {
-	$config = KunenaFactory::getConfig();
+    $config = KunenaFactory::getConfig();
 
-	if (isset($config->twitterConsumerKey)) {
-	    $config->XConsumerKey = $config->twitterConsumerKey;
+    if (isset($config->twitterConsumerKey)) {
+        $config->XConsumerKey = $config->twitterConsumerKey;
 
-	    unset($config->twitterConsumerKey);
-	}
+        unset($config->twitterConsumerKey);
+    }
 
-	if (isset($config->twitterConsumerSecret)) {
-	    $config->XConsumerSecret = $config->twitterConsumerSecret;
+    if (isset($config->twitterConsumerSecret)) {
+        $config->XConsumerSecret = $config->twitterConsumerSecret;
 
-	    unset($config->twitterConsumerSecret);
-	}
+        unset($config->twitterConsumerSecret);
+    }
 
-	// Save configuration
-	$config->save();
+    // Save configuration
+    $config->save();
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_634_UPDATE_CONFIGURATION'), 'success' => true);
+    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_634_UPDATE_CONFIGURATION'), 'success' => true);
 }

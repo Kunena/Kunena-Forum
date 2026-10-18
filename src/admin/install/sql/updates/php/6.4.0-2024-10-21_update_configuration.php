@@ -21,12 +21,12 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  * @since Kunena 6.4.0
  */
 function kunena_640_2024_10_21_update_configuration($parent) {
-	$config = KunenaFactory::getConfig();
+    $config = KunenaFactory::getConfig();
 
-	unset($config->social);
+    unset($config->social);
 
-	// Save configuration
-	$config->save();
+    // Save configuration
+    $config->save();
 
-	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_UPDATE_CONFIGURATION'), 'success' => true);
+    return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_UPDATE_CONFIGURATION'), 'success' => true);
 }

@@ -58,7 +58,7 @@ $template = KunenaTemplate::getInstance();
                         <input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="<?php echo $this->config->datePickerFormat; ?>"
                             value="<?php echo $this->profile->birthdate == '1000-01-01' ? '' : $this->profile->birthdate; ?>"
                             data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        <span class="input-group-text"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
                 </div>
             </td>

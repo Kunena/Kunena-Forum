@@ -66,11 +66,11 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                 <?php if ($this->rememberMe) : ?>
                     <div class="form-group row center" id="kform-login-remember">
                         <div class="controls">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="rememberme"
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="rememberme"
                                        id="kmobile-remember"
                                        value="1"/>
-                                <label class="custom-control-label"
+                                <label class="form-check-label"
                                        for="kmobile-remember"><?php echo Text::_('JGLOBAL_REMEMBER_ME'); ?></label>
                             </div>
                         </div>

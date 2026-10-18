@@ -457,11 +457,11 @@ Text::script('COM_KUNENA_POLL_TITLE');
         <div class="shadow-lg p-3 mb-5 rounded">
             <div class="form-group row" id="kanynomous-check">
                 <div class="controls">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="kanonymous" name="anonymous" value="1" <?php if ($this->postAnonymous) {
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="kanonymous" name="anonymous" value="1" <?php if ($this->postAnonymous) {
                                                                                                                             echo 'checked="checked"';
                                                                                                                         } ?> />
-                        <label class="custom-control-label" for="kanonymous"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
+                        <label class="form-check-label" for="kanonymous"><?php echo Text::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
                     </div>
                 </div>
             </div>

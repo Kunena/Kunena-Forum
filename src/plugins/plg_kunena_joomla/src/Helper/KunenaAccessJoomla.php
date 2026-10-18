@@ -19,13 +19,13 @@ use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccessAbstract;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Kunena Access Control for Joomla 4.0
@@ -522,7 +522,8 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
      */
     public function authoriseCategories(int $userid, array $categories): array
     {
-        $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
+        // The logged in user is already loaded by Joomla, other users are loaded once.
+        $user = KunenaUserHelper::getJoomlaUser($userid);
 
         $accesslevels = (array) $user->getAuthorisedViewLevels();
         $groups_r     = (array) Access::getGroupsByUser($user->id, true);

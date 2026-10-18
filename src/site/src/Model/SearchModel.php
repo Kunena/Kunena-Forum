@@ -251,10 +251,18 @@ class SearchModel extends KunenaModel
             $querystrings[] = " m.time > " . $db->quote($time_start_day) . " AND m.time < " . $db->quote($time_end_day->getTimestamp());
         }
 
+        // Search inside one topic: the messages of a topic have its id in the thread column.
         $topic_id = $this->getState('query.topic_id');
 
         if ($topic_id) {
-            $querystrings[] = "m.id = " . $db->quote($topic_id);
+            $querystrings[] = "m.thread = " . $db->quote($topic_id);
+        }
+
+        // The search box of a topic sends the topic id in ids[].
+        $topic_ids = array_filter(ArrayHelper::toInteger((array) $this->getState('query.ids', [])));
+
+        if ($topic_ids) {
+            $querystrings[] = 'm.thread IN (' . implode(',', $topic_ids) . ')';
         }
 
         return implode(' AND ', $querystrings);

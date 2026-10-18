@@ -136,9 +136,19 @@ class UserItemDisplay extends KunenaControllerDisplay
             : null;
 
         // Update profile hits.
-        if (!$this->profile->exists() || !$this->profile->isMyself()) {
+        if (!$this->profile->exists()) {
             $this->profile->uhits++;
             $this->profile->save();
+        } elseif (!$this->profile->isMyself()) {
+            // Only the counter changes: no need to store the whole profile and to clear the access cache.
+            $this->profile->uhits++;
+
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery()
+                ->update($db->quoteName('#__kunena_users'))
+                ->set($db->quoteName('uhits') . ' = ' . $db->quoteName('uhits') . ' + 1')
+                ->where($db->quoteName('userid') . ' = ' . (int) $this->profile->userid);
+            $db->setQuery($query)->execute();
         }
 
         $Itemid = $this->input->getInt('Itemid');

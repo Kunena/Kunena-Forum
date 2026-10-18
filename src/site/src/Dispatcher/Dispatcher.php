@@ -158,6 +158,11 @@ class Dispatcher extends ComponentDispatcher
         if (KUNENA_PROFILER) {
             $kunena_profiler->stop('Total Time');
 
+            // The profiler is html: it would corrupt json, raw and feed responses.
+            if (Factory::getApplication()->getDocument()->getType() !== 'html') {
+                return;
+            }
+
             echo '<div class="kprofiler">';
             echo "<h3>Kunena Profile Information</h3>";
 

@@ -2824,7 +2824,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $tweetid = trim($content);
 
-        if (!is_numeric($tweetid)) {
+        // A tweet id only contains digits; is_numeric() would also accept "1e5", "1.5" or " 12".
+        if (!ctype_digit($tweetid) || \strlen($tweetid) > 18) {
             return false;
         }
 

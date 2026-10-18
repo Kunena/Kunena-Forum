@@ -233,6 +233,10 @@ class TopicItemDisplay extends KunenaControllerDisplay
             ->limit($this->pagination->limit)
             ->find();
 
+        // The links of the messages and the number of replies need the position of these messages: load them together.
+        KunenaMessageHelper::getMessages([$this->topic->last_post_id]);
+        KunenaMessageHelper::loadLocation(array_merge(array_keys($this->messages), [(int) $this->topic->last_post_id]));
+
         $this->prepareMessages($mesid);
         $doc = $this->app->getDocument();
 

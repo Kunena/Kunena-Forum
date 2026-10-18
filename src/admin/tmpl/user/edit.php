@@ -116,17 +116,22 @@ $template = KunenaTemplate::getInstance();
                                             aria-labelledby="tab1-tab">
                                             <fieldset>
                                                 <legend class="fs-6 fw-semibold"><?php echo Text::_('COM_KUNENA_UAVATAR'); ?></legend>
-                                                <div class="kwho-<?php echo $this->user->getType(0, true); ?>">
-                                                    <?php echo $this->avatar; ?>
-                                                </div>
-                                                <?php
-                                                if ($this->editavatar) : ?>
-                                                    <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="checkbox" value="1"
-                                                            name="deleteAvatar" id="deleteAvatar" />
-                                                        <label class="form-check-label" for="deleteAvatar"><?php echo Text::_('COM_KUNENA_DELAV'); ?></label>
+                                                <div class="d-flex align-items-center gap-3 p-3 mb-3 border rounded">
+                                                    <div class="kwho-<?php echo $this->user->getType(0, true); ?> flex-shrink-0">
+                                                        <?php echo preg_replace('/<img(?![^>]*class=)/', '<img class="img-thumbnail"', $this->avatar); ?>
                                                     </div>
-                                                <?php endif; ?>
+                                                    <div>
+                                                        <div class="fw-semibold"><?php echo $this->escape($this->user->username); ?></div>
+                                                        <?php
+                                                        if ($this->editavatar) : ?>
+                                                            <div class="form-check mt-2">
+                                                                <input class="form-check-input" type="checkbox" value="1"
+                                                                    name="deleteAvatar" id="deleteAvatar" />
+                                                                <label class="form-check-label" for="deleteAvatar"><?php echo Text::_('COM_KUNENA_DELAV'); ?></label>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
                                             </fieldset>
                                             <fieldset>
                                                 <legend class="fs-6 fw-semibold"><?php echo Text::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>

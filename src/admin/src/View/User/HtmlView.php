@@ -134,7 +134,7 @@ class HtmlView extends BaseHtmlView
 
         $avatarIntegration = KunenaFactory::getAvatarIntegration();
         $this->editavatar  = ($avatarIntegration instanceof KunenaAvatar) && $this->user->avatar;
-        $this->avatar      = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'thumb');
+        $this->avatar      = $this->user->getAvatarImage(KunenaFactory::getTemplate()->params->get('avatarType'), 'profile');
 
         // Make the select list for the moderator flag
         $yesnoMod [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_YES'));

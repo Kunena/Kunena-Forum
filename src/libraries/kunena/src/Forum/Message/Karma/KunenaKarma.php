@@ -201,7 +201,7 @@ class KunenaKarma
     /**
      * Get the most recent karma in time gived to an user
      *
-     * @return  void
+     * @return  string|integer|null  The time of the last karma (the column value), 0 when the query failed.
      *
      * @throws  Exception
      * @since   Kunena 6.0

@@ -53,7 +53,7 @@ class TopicListingModeratorDisplay extends ListDisplay
     /**
      * Prepare topic list for moderators.
      *
-     * @return  void
+     * @return  mixed
      *
      * @since   Kunena 6.0
      *

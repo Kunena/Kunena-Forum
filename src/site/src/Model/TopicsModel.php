@@ -404,7 +404,7 @@ class TopicsModel extends KunenaModel
     }
 
     /**
-     * @return  void
+     * @return  mixed
      *
      * @since   Kunena 6.0
      *
@@ -483,7 +483,7 @@ class TopicsModel extends KunenaModel
     }
 
     /**
-     * @return  void
+     * @return  mixed
      *
      * @since   Kunena 6.0
      *

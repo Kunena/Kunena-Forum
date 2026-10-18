@@ -56,7 +56,7 @@ class MailsqueuesModel extends ListModel
      * @param   array    $data      data
      * @param   boolean  $loadData  load data
      *
-     * @return void
+     * @return mixed
      *
      * @since  Kunena 7.1
      */

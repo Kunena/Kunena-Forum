@@ -57,7 +57,7 @@ class TopicListingUnreadDisplay extends ListDisplay
     /**
      * Prepare topic list for moderators.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  Exception
      * @throws  null

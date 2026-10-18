@@ -1334,8 +1334,6 @@ class ToolsController extends FormController
     /**
      * Method to call the plugin modifysocials to send to it the data of socials to change
      *
-     * @param   null  $key  key
-     *
      * @return  void
      *
      * @since   Kunena 7.1.0
@@ -1374,8 +1372,6 @@ class ToolsController extends FormController
     
     /**
      * Method to call the plugin modifysocials to handle the deletion of socials network selected by the user
-     *
-     * @param   null  $key  key
      *
      * @return  void
      *

@@ -89,7 +89,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
     /**
      * Prepare category index display.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  null
      * @throws  Exception

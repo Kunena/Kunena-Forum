@@ -1396,7 +1396,7 @@ class KunenaUser
      *
      * @param   KunenaLayout  $layout  layout
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws Exception
      * @since   Kunena 5.0

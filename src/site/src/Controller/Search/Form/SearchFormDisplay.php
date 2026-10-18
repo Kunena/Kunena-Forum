@@ -54,7 +54,7 @@ class SearchFormDisplay extends KunenaControllerDisplay
     /**
      * Prepare search form display.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  null
      * @throws  Exception

@@ -107,7 +107,7 @@ class MiscDisplay extends Display
     /**
      * Prepare custom text output.
      *
-     * @return  void
+     * @return  mixed
      *
      * @since   Kunena 6.0
      *

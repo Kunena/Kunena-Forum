@@ -52,7 +52,7 @@ class TopicListingUserDisplay extends ListDisplay
     /**
      * Prepare user's topic list.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  Exception
      * @throws  null

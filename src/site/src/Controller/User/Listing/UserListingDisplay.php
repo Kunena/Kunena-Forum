@@ -73,7 +73,7 @@ class UserListingDisplay extends KunenaControllerDisplay
     /**
      * Load user list.
      *
-     * @return  void
+     * @return  mixed
      *
      * @since   Kunena 6.0
      *

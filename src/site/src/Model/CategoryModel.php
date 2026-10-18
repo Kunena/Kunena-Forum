@@ -353,7 +353,7 @@ class CategoryModel extends CategoriesModel
     }
 
     /**
-     * @return  void
+     * @return  mixed
      *
      * @since   Kunena 6.0
      *
@@ -446,7 +446,7 @@ class CategoryModel extends CategoriesModel
     }
 
     /**
-     * @return  void
+     * @return  mixed
      *
      * @since   Kunena 6.0
      */

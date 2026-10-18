@@ -46,7 +46,7 @@ class TopicListingRecentDisplay extends ListDisplay
     /**
      * Prepare recent topics list.
      *
-     * @return  void
+     * @return  mixed
      *
      * @since   Kunena 6.0
      *

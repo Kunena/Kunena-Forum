@@ -95,7 +95,7 @@ class UserItemDisplay extends KunenaControllerDisplay
     /**
      * Load user profile.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  null
      * @throws  Exception

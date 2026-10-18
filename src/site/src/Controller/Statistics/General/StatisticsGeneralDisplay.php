@@ -89,7 +89,7 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
     /**
      * Prepare general statistics display.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  Exception
      * @throws  null

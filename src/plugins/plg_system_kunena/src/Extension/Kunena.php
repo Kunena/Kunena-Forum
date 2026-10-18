@@ -86,7 +86,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      *
      * @param   BeforeSaveEvent  $event  The event, carrying the old user data, the new user data and whether the user is new.
      *
-     * @return  boolean
+     * @return  void
      *
      * @since   7.0.0
      * @throws  \Exception when listed on stopforumspam
@@ -176,7 +176,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
      * Save the language of the user in the table users of Kunena
      *
      * @param   AfterLoginEvent  $event  The event instance
-     * @return string
+     * @return  void
      * @since   Kunena 7.0.0
      */
     public function onUserAfterLogin(AfterLoginEvent $event): void

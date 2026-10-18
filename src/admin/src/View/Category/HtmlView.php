@@ -112,7 +112,7 @@ class HtmlView extends BaseHtmlView
     /**
      * @param   null  $tpl  tmpl
      *
-     * @return  void
+     * @return  mixed
      *
      * @since   Kunena 6.0
      *

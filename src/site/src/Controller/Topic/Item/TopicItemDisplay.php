@@ -116,7 +116,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
     /**
      * Prepare topic display.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  null
      * @throws  Exception

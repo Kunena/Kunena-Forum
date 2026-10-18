@@ -63,7 +63,7 @@ class CreditsDisplay extends KunenaControllerDisplay
     /**
      * Prepare credits display.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  Exception
      * @throws  null

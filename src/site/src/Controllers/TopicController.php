@@ -661,7 +661,7 @@ class TopicController extends KunenaController
     }
 
     /**
-     * @return  void
+     * @return  mixed
      *
      * @throws  Exception
      * @throws  null

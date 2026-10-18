@@ -61,7 +61,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
      *
      * @param   QuickIconsEvent  $event  event
      *
-     * @return array
+     * @return  void
      * @since   Kunena 6.0
      *
      * @throws \Exception

@@ -88,7 +88,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
     /**
      * Prepare category display.
      *
-     * @return  void
+     * @return  mixed
      *
      * @throws  null
      * @since   Kunena 6.0

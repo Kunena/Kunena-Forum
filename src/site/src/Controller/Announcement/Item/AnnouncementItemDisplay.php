@@ -44,7 +44,7 @@ class AnnouncementItemDisplay extends KunenaControllerDisplay
     /**
      * Prepare announcement display.
      *
-     * @return  void
+     * @return  mixed
      * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0

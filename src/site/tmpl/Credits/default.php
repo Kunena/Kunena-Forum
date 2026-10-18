@@ -108,9 +108,9 @@ $dispatcher->dispatch(
 );
 
 $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-$dispatcher->dispatch('onKunenaBeforeRender', new KunenaBeforeRenderEvent('onKunenaBeforeRender', ["com_kunena.{$view}", &$contents]));
+$dispatcher->dispatch('onKunenaBeforeRender', new KunenaBeforeRenderEvent('onKunenaBeforeRender', ['context' => "com_kunena.{$view}", 'content' => &$contents]));
 $contents = (string) $contents;
-$dispatcher->dispatch('onKunenaAfterRender', new KunenaAfterRenderEvent('onKunenaAfterRender', ["com_kunena.{$view}", &$contents]));
+$dispatcher->dispatch('onKunenaAfterRender', new KunenaAfterRenderEvent('onKunenaAfterRender', ['context' => "com_kunena.{$view}", 'content' => &$contents]));
 
 echo $contents;
 

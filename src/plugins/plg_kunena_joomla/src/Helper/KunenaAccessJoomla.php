@@ -35,6 +35,12 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 class KunenaAccessJoomla extends KunenaAccessAbstract
 {
     /**
+     * @var     array  User ids by group ("recursive|groupid" => int[]) which were already loaded in this request.
+     * @since   Kunena 7.2
+     */
+    protected $groupUsers = [];
+
+    /**
      * @var     null
      * @since   Kunena 6.0
      */
@@ -269,6 +275,17 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
     {
         $list = [];
 
+        // Load the users of the groups of both actions with one query, instead of one query for each action.
+        $groups = [];
+
+        foreach (['core.admin', 'core.manage'] as $action) {
+            foreach ($this->getActionGroups($action, 'com_kunena') as $ids) {
+                $groups = array_merge($groups, $ids);
+            }
+        }
+
+        $this->loadGroupUsers($groups, true);
+
         // Currently we have only global administrators in Joomla
         $admins = array_merge($this->getAuthorisedUsers('core.admin', 'com_kunena'), $this->getAuthorisedUsers('core.manage', 'com_kunena'));
 
@@ -284,13 +301,16 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
     }
 
     /**
+     * Groups which are allowed or denied to do an action on an asset.
+     *
      * @param   string  $action  action
      * @param   null    $asset   asset
      *
-     * @return  array
-     * @since   Kunena 6.0
+     * @return  array  ['allow' => group ids, 'deny' => group ids]
+     *
+     * @since   Kunena 7.2
      */
-    protected function getAuthorisedUsers(string $action, $asset = null): array
+    protected function getActionGroups(string $action, $asset = null): array
     {
         $action = strtolower(preg_replace('#[\s\-]+#', '.', trim($action)));
         $asset  = strtolower(preg_replace('#[\s\-]+#', '.', trim((string) $asset)));
@@ -322,6 +342,20 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
                 $deny[] = $groupid;
             }
         }
+
+        return ['allow' => $allow, 'deny' => $deny];
+    }
+
+    /**
+     * @param   string  $action  action
+     * @param   null    $asset   asset
+     *
+     * @return  array
+     * @since   Kunena 6.0
+     */
+    protected function getAuthorisedUsers(string $action, $asset = null): array
+    {
+        [$allow, $deny] = array_values($this->getActionGroups($action, $asset));
 
         // Get userids
         if ($allow) {
@@ -366,6 +400,19 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
 
         $inUsers = implode(',', $inUsers);
 
+        if (!$inUsers) {
+            // Without a filter of users: take them from the groups which are loaded once.
+            $ids = array_values(array_unique(array_map('intval', explode(',', $groupId))));
+            $this->loadGroupUsers($ids, (bool) $recursive);
+            $users = [];
+
+            foreach ($ids as $id) {
+                $users = array_merge($users, $this->groupUsers[($recursive ? '1' : '0') . '|' . $id] ?? []);
+            }
+
+            return array_values(array_unique($users));
+        }
+
         // First find the users contained in the group
         $query = $db->createQuery();
         $query->select('DISTINCT(user_id)')
@@ -386,6 +433,52 @@ class KunenaAccessJoomla extends KunenaAccessAbstract
         $result = ArrayHelper::toInteger($result);
 
         return $result;
+    }
+
+    /**
+     * Load the user ids of groups (and of their child groups when recursive) with one query. Groups which were loaded before are not asked again.
+     *
+     * @param   array    $groupIds   Group ids.
+     * @param   boolean  $recursive  Include the users of the child groups.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    protected function loadGroupUsers(array $groupIds, bool $recursive): void
+    {
+        $prefix  = $recursive ? '1|' : '0|';
+        $missing = [];
+
+        foreach (array_unique(array_map('intval', $groupIds)) as $id) {
+            if ($id > 0 && !isset($this->groupUsers[$prefix . $id])) {
+                $missing[] = $id;
+            }
+        }
+
+        if (!$missing) {
+            return;
+        }
+
+        $db  = Factory::getContainer()->get('DatabaseDriver');
+        $rec = $recursive ? '>=' : '=';
+
+        $query = $db->createQuery();
+        $query->select('DISTINCT ug1.id AS gid, m.user_id AS uid')
+            ->from($db->quoteName('#__usergroups', 'ug1'))
+            ->innerJoin($db->quoteName('#__usergroups', 'ug2') . ' ON ug2.lft ' . $rec . ' ug1.lft AND ug1.rgt ' . $rec . ' ug2.rgt')
+            ->innerJoin($db->quoteName('#__user_usergroup_map', 'm') . ' ON ug2.id = m.group_id')
+            ->where('ug1.id IN (' . implode(',', $missing) . ')');
+
+        $db->setQuery($query);
+
+        foreach ($missing as $id) {
+            $this->groupUsers[$prefix . $id] = [];
+        }
+
+        foreach ((array) $db->loadObjectList() as $row) {
+            $this->groupUsers[$prefix . (int) $row->gid][] = (int) $row->uid;
+        }
     }
 
     /**

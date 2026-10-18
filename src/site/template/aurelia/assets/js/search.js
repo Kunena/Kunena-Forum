@@ -10,13 +10,13 @@
 jQuery(document).ready(function ($) {
     /* Provide autocomplete user list in search form and in user list */
     function remoteSearch(text, cb) {
-        var paths = (typeof Joomla !== 'undefined' && Joomla.getOptions) ? Joomla.getOptions('system.paths') : null;
-        var URL = ((paths && paths.root) || '') + '/index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json';
-        var xhr = new XMLHttpRequest();
+        const paths = (typeof Joomla !== 'undefined' && Joomla.getOptions) ? Joomla.getOptions('system.paths') : null;
+        const URL = ((paths && paths.root) || '') + '/index.php?option=com_kunena&view=user&task=getusersmentionssearch&format=json';
+        const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                var data = JSON.parse(xhr.responseText);
+                const data = JSON.parse(xhr.responseText);
                 cb(data);
             } else if (xhr.status === 403) {
                 cb([]);
@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
         xhr.send();
     }
 
-    var tribute = new Tribute({
+    const tribute = new Tribute({
         collection: [],
         //..other config options
         // function retrieving an array of objects

@@ -22,12 +22,15 @@ jQuery(function ($) {
 			const $this = $(this),
 				data = $this.data();
 
+			let userid;
+			let avatar;
+
 			if (data['files'] !== undefined) {
-				var userid = data['files'].userid;
-				var avatar = data['files'].filename;
+				userid = data['files'].userid;
+				avatar = data['files'].filename;
 			} else {
-				var userid = data.userid;
-				var avatar = data.filename;
+				userid = data.userid;
+				avatar = data.filename;
 			}
 
 			fileCount = fileCount - 1;

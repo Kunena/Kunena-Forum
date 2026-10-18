@@ -9,7 +9,7 @@
 
 jQuery(document).ready(function ($) {
 	$('.gotoeditor').click(function () {
-		var texteareaId = $(this).attr('id');
+		const texteareaId = $(this).attr('id');
 		localStorage.setItem("copyKunenaeditor", $("."+texteareaId).val());
 	});
 

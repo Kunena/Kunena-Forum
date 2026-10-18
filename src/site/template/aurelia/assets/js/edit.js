@@ -11,8 +11,10 @@ jQuery(document).ready(function ($) {
     const qreply = $('.qreply');
     const editor = $('#editor');
 
+    let pollcategoriesid;
+
     if(Joomla.getOptions('com_kunena.pollcategoriesid') != undefined){
-		var pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
+		pollcategoriesid = jQuery.parseJSON(Joomla.getOptions('com_kunena.pollcategoriesid'));
     }
 
     const pollexist = $('#poll_exist_edit');
@@ -341,7 +343,7 @@ function dataFeed(opts, callback) {
         callback(JSON.parse(json));
     })
     .fail(function( jqxhr, textStatus, error ) {
-		var err = textStatus + ", " + error;
+		const err = textStatus + ", " + error;
         console.log( 'Request Failed: ' + err );
     });
 }

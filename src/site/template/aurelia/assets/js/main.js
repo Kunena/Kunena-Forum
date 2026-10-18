@@ -9,10 +9,10 @@
 
 /* Function used to ordering the data by clicking on column title */
 function kunenatableOrdering(order, dir, task, form) {
-	var form = document.getElementById(form);
-	form.filter_order.value = order;
-	form.filter_order_Dir.value = dir;
-	form.submit(task);
+	const formElement = document.getElementById(form);
+	formElement.filter_order.value = order;
+	formElement.filter_order_Dir.value = dir;
+	formElement.submit(task);
 }
 
 jQuery(document).ready(function ($) {
@@ -40,8 +40,8 @@ jQuery(document).ready(function ($) {
 		$("input.kcheckallcategory:checkbox").not(this).prop('checked', this.checked);
 	});
 
-	var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-		var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+	const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+	const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
   		return new bootstrap.Popover(popoverTriggerEl)
 	})
 

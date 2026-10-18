@@ -30,7 +30,7 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
             $href = str_replace('##VALUE##', $path, $social->url);
 
             echo '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" ';
-            echo 'target="_blank" rel="nofollow" title="' . Text::_($social->title) . '">';
+            echo 'target="_blank" rel="nofollow noopener noreferrer" title="' . Text::_($social->title) . '">';
             echo '<i class="' . htmlspecialchars($social->fa, ENT_QUOTES, 'UTF-8') . '"></i>';
             echo '</a> ';
         }

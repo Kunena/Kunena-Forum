@@ -479,7 +479,7 @@ class KunenaConfig
      *
      * @param   string  $path  Path to the XML file
      *
-     * @return  SimpleXMLElement|false
+     * @return  \SimpleXMLElement|false
      * @since   7.0.0
      */
     private static function getXml(string $path): \SimpleXMLElement|false

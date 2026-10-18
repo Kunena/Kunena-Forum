@@ -48,7 +48,7 @@ class KunenaActivity
     /**
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws  \Exception
      */
     public function __construct()
     {
@@ -71,7 +71,7 @@ class KunenaActivity
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws  \Exception
      */
     public static function getInstance()
     {

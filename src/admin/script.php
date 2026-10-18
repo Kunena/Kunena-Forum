@@ -49,7 +49,7 @@ class Com_KunenaInstallerScript extends InstallerScript
      * Function called before extension installation/update/removal procedure commences
      *
      * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
-     * @param   InstallerAdapter  $parent  The class calling this method
+     * @param   \Joomla\CMS\Installer\InstallerAdapter  $parent  The class calling this method
      *
      * @return  boolean  True on success
      * @since   Kunena 7.0.0
@@ -98,7 +98,7 @@ class Com_KunenaInstallerScript extends InstallerScript
 
                 try {
                     // Get the configuration settings
-                    /** @var DatabaseDriver  $db */
+                    /** @var \Joomla\Database\DatabaseDriver  $db */
                     $db    = Factory::getContainer()->get('DatabaseDriver');
 
                     $query = $db->createQuery()
@@ -187,7 +187,7 @@ class Com_KunenaInstallerScript extends InstallerScript
      */
     private function getComponentId(): int
     {
-        /** @var DatabaseDriver  $db */
+        /** @var \Joomla\Database\DatabaseDriver  $db */
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $bindValues = ['component', $this->extension];
         $query = $db->createQuery();

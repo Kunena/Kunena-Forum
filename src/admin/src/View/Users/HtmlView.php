@@ -84,7 +84,7 @@ class HtmlView extends BaseHtmlView
         )
             ->listCheck(true);
 
-        /** @var  DropdownButton $dropdown */
+        /** @var  \Joomla\CMS\Toolbar\Button\DropdownButton $dropdown */
         $dropdown = $toolbar->dropdownButton('status-group')
             ->text('JTOOLBAR_CHANGE_STATUS')
             ->toggleSplit(false)

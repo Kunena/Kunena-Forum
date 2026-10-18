@@ -132,7 +132,7 @@ class HtmlView extends BaseHtmlView
         $toolbar->link(Text::_($buttonText), $link)
             ->icon('icon-refresh');
 
-        /** @var  DropdownButton $dropdown */
+        /** @var  \Joomla\CMS\Toolbar\Button\DropdownButton $dropdown */
         $dropdown = $toolbar->dropdownButton('status-group')
             ->text('JTOOLBAR_CHANGE_STATUS')
             ->toggleSplit(false)

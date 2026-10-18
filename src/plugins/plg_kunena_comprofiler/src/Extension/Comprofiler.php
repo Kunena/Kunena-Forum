@@ -149,7 +149,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
      *
      * @return  void
      *
-     * @throws  Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onKunenaDisplay(KunenaDisplayEvent $event): void
@@ -175,7 +175,7 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
      *
      * @return  void
      *
-     * @throws  Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public function onKunenaPrepare(KunenaPrepareEvent $event): void

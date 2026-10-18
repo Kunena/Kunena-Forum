@@ -606,7 +606,7 @@ class CategoriesModel extends KunenaModel
      * @param   array    $data      data
      * @param   boolean  $loadData  load current data
      *
-     * @return  Form|null  The \JForm object or null if the form can't be found
+     * @return  \Joomla\CMS\Form\Form|null  The \JForm object or null if the form can't be found
      *
      * @since   Kunena 6.3.0-BETA3
      */

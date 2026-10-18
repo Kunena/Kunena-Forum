@@ -121,7 +121,7 @@ class HtmlView extends BaseHtmlView
         $toolbar->addNew('categories.add', 'COM_KUNENA_NEW_CATEGORY');
         $toolbar->edit('categories.edit')->listCheck(true);
 
-        /** @var  DropdownButton $dropdown */
+        /** @var  \Joomla\CMS\Toolbar\Button\DropdownButton $dropdown */
         $dropdown = $toolbar->dropdownButton('status-group')
             ->text('JTOOLBAR_CHANGE_STATUS')
             ->toggleSplit(false)

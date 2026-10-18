@@ -33,7 +33,7 @@ class KunenaIntegrationComprofiler
     /**
      * @return  void
      *
-     * @throws  Exception
+     * @throws  \Exception
      * @since   Kunena 6.0
      */
     public static function open()

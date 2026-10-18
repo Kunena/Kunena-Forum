@@ -326,7 +326,7 @@ abstract class KunenaFactory
      *
      * @return  SiteApplication|AdministratorApplication
      *
-     * @throws  RuntimeException
+     * @throws  \RuntimeException
      * @since   Kunena 6.4.3
      */
     public static function getApplication(string $client = ''): SiteApplication|AdministratorApplication

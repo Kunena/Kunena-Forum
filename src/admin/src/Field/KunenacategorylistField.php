@@ -43,7 +43,7 @@ class KunenacategorylistField extends ListField
      *
      * @since   Kunena 6.0
      *
-     * @throws  Exception
+     * @throws  \Exception
      */
     protected function getInput(): string
     {

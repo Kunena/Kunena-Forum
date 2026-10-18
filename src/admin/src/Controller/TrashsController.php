@@ -36,8 +36,8 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
  * Recognized key values include 'name', 'default_task', 'model_path', and
  * 'view_path' (this list is not meant to be comprehensive).
  * @param   MVCFactoryInterface  $factory  The factory.
- * @param   CMSApplication       $app      The Application for the dispatcher
- * @param   Input                $input    Input
+ * @param   \Joomla\CMS\Application\CMSApplication       $app      The Application for the dispatcher
+ * @param   \Joomla\CMS\Input\Input                $input    Input
  *
  * @since   Kunena 6.3.0-BETA3
  */

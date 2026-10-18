@@ -16,7 +16,7 @@
                type="tinyint(4)"
                null="0"
                default="0"/>
-        <key name="alias"
+        <key name="PRIMARY"
              unique="1"
              columns="alias"/>
         <key name="state"
@@ -558,12 +558,14 @@
              columns="pollid"/>
     </table>
     <table name="kunena_polls_users">
-        <field name="pollid"
+        <field primary_key="yes"
+               name="pollid"
                type="int(11)"
-               null="1"/>
-        <field name="userid"
+               null="0"/>
+        <field primary_key="yes"
+               name="userid"
                type="int(11)"
-               null="1"/>
+               null="0"/>
         <field name="votes"
                type="int(11)"
                null="1"/>
@@ -574,7 +576,7 @@
         <field name="lastvote"
                type="int(11)"
                null="1"/>
-        <key name="pollid"
+        <key name="PRIMARY"
              unique="1"
              columns="pollid,userid"/>
     </table>
@@ -788,7 +790,7 @@
         <field name="time"
                type="datetime"
                null="0"/>
-        <key name="postid"
+        <key name="PRIMARY"
              unique="1"
              columns="postid,userid"/>
         <key name="userid"
@@ -846,7 +848,7 @@
         <field name="time"
                type="int(11)"
                null="0"/>
-        <key name="user_topic_id"
+        <key name="PRIMARY"
              unique="1"
              columns="user_id,topic_id"/>
         <key name="category_user_id"
@@ -891,7 +893,7 @@
         <field name="params"
                type="text"
                null="0"/>
-        <key name="user_topic_id"
+        <key name="PRIMARY"
              unique="1"
              columns="user_id,topic_id"/>
         <key name="topic_id"

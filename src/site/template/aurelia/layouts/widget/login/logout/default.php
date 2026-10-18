@@ -51,7 +51,7 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
                     endif; ?>
                 </button>
 
-                <div class="dropdown-menu dropdown-menu-end" id="nav-menu userdropdownlogout" role="menu">
+                <div class="dropdown-menu dropdown-menu-end" id="nav-menu" role="menu">
                     <?php if (KunenaFactory::getTemplate()->params->get('displayDropdownContent')) :
                         ?>
                         <div class="center">

@@ -664,6 +664,18 @@
             <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':meh:', '17.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':meh:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
             <query mode="silenterror">INSERT INTO `#__kunena_smileys` (`code`, `location`, `emoticonbar`) SELECT ':rolleyes:', '20.png', 1 FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ':rolleyes:') AND EXISTS (SELECT 1 FROM `#__kunena_smileys` WHERE `code` = ';)' AND `location` = '24.png')</query>
         </version>
+        <version
+            version="7.2.0-DEV"
+            versiondate="2026-10-18"
+            versionname="Internal">
+            <!-- Real primary keys instead of unique keys: a table without a primary key has a hidden row id in InnoDB -->
+            <query mode="silenterror">ALTER TABLE `#__kunena_aliases` DROP INDEX `alias`, ADD PRIMARY KEY (`alias`)</query>
+            <query mode="silenterror">DELETE FROM `#__kunena_polls_users` WHERE `pollid` IS NULL OR `userid` IS NULL</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_polls_users` MODIFY `pollid` int(11) NOT NULL, MODIFY `userid` int(11) NOT NULL, DROP INDEX `pollid`, ADD PRIMARY KEY (`pollid`, `userid`)</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_thankyou` DROP INDEX `postid`, ADD PRIMARY KEY (`postid`, `userid`)</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_user_read` DROP INDEX `user_topic_id`, ADD PRIMARY KEY (`user_id`, `topic_id`)</query>
+            <query mode="silenterror">ALTER TABLE `#__kunena_user_topics` DROP INDEX `user_topic_id`, ADD PRIMARY KEY (`user_id`, `topic_id`)</query>
+        </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"
                  versionname="@kunenaversionname@">

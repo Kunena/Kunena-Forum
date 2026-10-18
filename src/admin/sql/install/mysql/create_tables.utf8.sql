@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_aliases`
     `type`  varchar(10)  NOT NULL,
     `item`  varchar(32)  NOT NULL,
     `state` tinyint(4)   NOT NULL default '0',
-    UNIQUE KEY `alias` (alias),
+    PRIMARY KEY (`alias`),
     KEY `state` (state),
     KEY `item` (item),
     KEY `type` (type)
@@ -236,12 +236,12 @@ CREATE TABLE IF NOT EXISTS `#__kunena_polls_options`
 
 CREATE TABLE IF NOT EXISTS `#__kunena_polls_users`
 (
-    `pollid`   int(11)   NULL,
-    `userid`   int(11)   NULL,
+    `pollid`   int(11)   NOT NULL,
+    `userid`   int(11)   NOT NULL,
     `votes`    int(11)   NULL,
     `lasttime` datetime  NOT NULL DEFAULT '1000-01-01 00:00:00',
     `lastvote` int(11)   NULL,
-    UNIQUE KEY `pollid` (pollid, userid)
+    PRIMARY KEY (`pollid`, `userid`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
@@ -360,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_thankyou`
     `userid`       int(11)  NOT NULL,
     `targetuserid` int(11)  NOT NULL,
     `time`         datetime NOT NULL,
-    UNIQUE KEY `postid` (postid, userid),
+    PRIMARY KEY (`postid`, `userid`),
     KEY `userid` (userid),
     KEY `targetuserid` (targetuserid)
 )
@@ -391,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_read`
     `category_id` int(11) NOT NULL,
     `message_id`  int(11) NOT NULL,
     `time`        int(11) NOT NULL,
-    UNIQUE KEY `user_topic_id` (user_id, topic_id),
+    PRIMARY KEY (`user_id`, `topic_id`),
     KEY `category_user_id` (category_id, user_id),
     KEY `time` (time)
 )
@@ -410,7 +410,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_topics`
     `favorite`     tinyint(4)   NOT NULL default '0',
     `subscribed`   tinyint(4)   NOT NULL default '0',
     `params`       text         NULL,
-    UNIQUE KEY `user_topic_id` (user_id, topic_id),
+    PRIMARY KEY (`user_id`, `topic_id`),
     KEY `topic_id` (topic_id),
     KEY `posts` (posts),
     KEY `owner` (owner),

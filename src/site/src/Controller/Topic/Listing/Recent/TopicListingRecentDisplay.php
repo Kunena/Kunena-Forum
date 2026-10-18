@@ -339,8 +339,12 @@ class TopicListingRecentDisplay extends ListDisplay
 
         if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {
             $image = Uri::base() . $this->config->emailHeader;
-            $this->setMetaData('og:image', $image, 'property');
-            $this->setMetaData('twitter:image', $image, 'property');
+            if (!empty($image)) {
+                $this->setMetaData('og:image', $image, 'property');
+            }
+            if (!empty($image)) {
+                $this->setMetaData('twitter:image', $image, 'name');
+            }
         }
 
         if ($robots == 'noindex, follow') {
@@ -386,7 +390,9 @@ class TopicListingRecentDisplay extends ListDisplay
             $this->setMetaData('og:title', $title, 'property');
             $this->setMetaData('twitter:card', 'summary', 'name');
             $this->setMetaData('twitter:title', $title, 'name');
-            $this->setMetaData('twitter:image', $image, 'property');
+            if (!empty($image)) {
+                $this->setMetaData('twitter:image', $image, 'name');
+            }
             $this->setMetaData('twitter:description', $description);
         }
     }

@@ -593,12 +593,18 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $item        = [];
 
             foreach ($attachments as $attach) {
+                // Use the first image, not just the last attachment which can be any kind of file.
+                if (!$attach->isImage()) {
+                    continue;
+                }
+
                 $object           = new stdClass();
                 $object->path     = $attach->getUrl();
-                $object->image    = $attach->isImage();
+                $object->image    = true;
                 $object->filename = $attach->filename;
                 $object->folder   = $attach->folder;
                 $item             = $object;
+                break;
             }
 
             $attach = $item;
@@ -625,12 +631,16 @@ class TopicItemDisplay extends KunenaControllerDisplay
         }
 
         $this->setMetaData('og:description', $multispaces_replaced, 'property');
-        $this->setMetaData('og:image', $image, 'property');
+        if (!empty($image)) {
+            $this->setMetaData('og:image', $image, 'property');
+        }
         $this->setMetaData('article:published_time', $this->topic->getFirstPostTime()->toISO8601(), 'property');
         $this->setMetaData('article:section', $this->topic->getCategory()->name, 'property');
         $this->setMetaData('twitter:card', 'summary', 'name');
         $this->setMetaData('twitter:title', $this->topic->displayField('subject'), 'name');
-        $this->setMetaData('twitter:image', $image, 'property');
+        if (!empty($image)) {
+            $this->setMetaData('twitter:image', $image, 'name');
+        }
         $this->setMetaData('twitter:description', $multispaces_replaced);
 
         $robots = $this->app->get('robots');

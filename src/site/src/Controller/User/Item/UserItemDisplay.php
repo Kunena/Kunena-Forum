@@ -216,7 +216,9 @@ class UserItemDisplay extends KunenaControllerDisplay
             $image = $this->profile->getAvatarURL('Profile', '200');
         }
 
-        $this->setMetaData('og:image', $image, 'property');
+        if (!empty($image)) {
+            $this->setMetaData('og:image', $image, 'property');
+        }
 
         $this->setMetaData('robots', 'index, follow');
 

@@ -244,17 +244,23 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
 
         if (is_file(JPATH_SITE . '/' . $this->config->emailHeader)) {
             $image = Uri::base() . $this->config->emailHeader;
-            $this->setMetaData('og:image', $image, 'property');
+            if (!empty($image)) {
+                $this->setMetaData('og:image', $image, 'property');
+            }
         }
 
         $this->setMetaData('og:url', Uri::current(), 'property');
         $this->setMetaData('og:type', 'article', 'property');
         $this->setMetaData('og:title', $this->category->name, 'property');
         $this->setMetaData('og:description', $this->category->description, 'property');
-        $this->setMetaData('og:image', $image, 'property');
+        if (!empty($image)) {
+            $this->setMetaData('og:image', $image, 'property');
+        }
         $this->setMetaData('twitter:card', 'summary', 'name');
         $this->setMetaData('twitter:title', $this->category->name, 'name');
-        $this->setMetaData('twitter:image', $image, 'property');
+        if (!empty($image)) {
+            $this->setMetaData('twitter:image', $image, 'name');
+        }
         $this->setMetaData('twitter:description', $this->category->description);
 
         if ($robots == 'noindex, follow') {

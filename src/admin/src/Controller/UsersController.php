@@ -747,6 +747,8 @@ class UsersController extends KunenaController
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                     return;
                 }
             }
@@ -789,6 +791,8 @@ class UsersController extends KunenaController
                     $this->db->execute();
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
                     return;
                 }

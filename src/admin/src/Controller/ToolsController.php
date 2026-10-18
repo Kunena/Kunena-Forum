@@ -256,6 +256,8 @@ class ToolsController extends FormController
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                 return;
             }
 
@@ -277,6 +279,8 @@ class ToolsController extends FormController
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                 return;
             }
 
@@ -296,6 +300,8 @@ class ToolsController extends FormController
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                 return;
             }
 
@@ -314,6 +320,8 @@ class ToolsController extends FormController
                 } catch (RuntimeException $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                     return;
                 }
 
@@ -329,6 +337,8 @@ class ToolsController extends FormController
                     $db->execute();
                 } catch (RuntimeException $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                    $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
                     return;
                 }
@@ -355,6 +365,8 @@ class ToolsController extends FormController
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                 return;
             }
 
@@ -373,6 +385,8 @@ class ToolsController extends FormController
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                 return;
             }
 
@@ -390,6 +404,8 @@ class ToolsController extends FormController
                 $db->execute();
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
                 return;
             }
@@ -793,6 +809,8 @@ class ToolsController extends FormController
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                 return;
             }
 
@@ -855,6 +873,8 @@ class ToolsController extends FormController
         } catch (RuntimeException $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
 
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
             return;
         }
 
@@ -873,6 +893,8 @@ class ToolsController extends FormController
                 $db->execute();
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
                 return;
             }

@@ -125,6 +125,8 @@ class RanksController extends AdminController
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                 return;
             }
         }

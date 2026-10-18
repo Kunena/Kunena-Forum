@@ -158,6 +158,8 @@ class SmiliesController extends FormController
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                 return;
             }
         } else {
@@ -174,6 +176,8 @@ class SmiliesController extends FormController
                 $db->execute();
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
                 return;
             }
@@ -251,6 +255,8 @@ class SmiliesController extends FormController
                 $db->execute();
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
                 return;
             }

@@ -131,14 +131,11 @@ $template = KunenaTemplate::getInstance();
                                                                 <span class="mx-1">&middot;</span><?php echo $this->escape($this->user->email); ?>
                                                             <?php endif; ?>
                                                         </div>
-                                                        <?php
-                                                        if ($this->editavatar) : ?>
-                                                            <div class="form-check mt-3">
-                                                                <input class="form-check-input" type="checkbox" value="1"
-                                                                    name="deleteAvatar" id="deleteAvatar" />
-                                                                <label class="form-check-label" for="deleteAvatar"><?php echo Text::_('COM_KUNENA_DELAV'); ?></label>
-                                                            </div>
-                                                        <?php endif; ?>
+                                                        <div class="form-check mt-3">
+                                                            <input class="form-check-input" type="checkbox" value="1"
+                                                                name="deleteAvatar" id="deleteAvatar"<?php echo $this->editavatar ? '' : ' disabled'; ?> />
+                                                            <label class="form-check-label<?php echo $this->editavatar ? '' : ' text-body-secondary'; ?>" for="deleteAvatar"><?php echo Text::_('COM_KUNENA_DELAV'); ?></label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </fieldset>

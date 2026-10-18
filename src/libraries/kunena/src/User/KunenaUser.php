@@ -1936,6 +1936,9 @@ class KunenaUser
                 return $this->getLink('<span class="profile" data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_VIEW_PROFILE') . '"></span>');
                 break;
         }
+
+        // Unknown icon, or nothing to show (for example an empty location): the method returns a string.
+        return '';
     }
 
     /**

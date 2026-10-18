@@ -166,7 +166,7 @@ if ($this->config->showUserStats) {
                 </li>
             <?php endif; ?>
 
-            <?php if ($this->profile->birthdate) :
+            <?php if ($this->profile->birthdate && $this->profile->birthdate != '1000-01-01') :
                 ?>
                 <li class="list-group-item">
                     <strong><?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>

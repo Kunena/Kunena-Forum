@@ -147,7 +147,7 @@ if ($user->userid > 1) :
                     </li>
                 <?php endif; ?>
 
-                <?php if ($user->birthdate) :
+                <?php if ($user->birthdate && $user->birthdate != '1000-01-01') :
                 ?>
                     <li>
                         <?php echo $user->profileIcon('birthdate'); ?>

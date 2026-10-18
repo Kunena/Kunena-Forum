@@ -155,7 +155,7 @@ $personalText = $user->getPersonalText();
             </li>
             <li>
                 <strong> <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong>
-                <span> <?php echo !empty($user->birthdate) ? KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc') : ''; ?> </span>
+                <span> <?php echo (!empty($user->birthdate) && $user->birthdate != '1000-01-01') ? KunenaDate::getInstance($user->birthdate)->toSpan('date', 'ago', 'utc') : ''; ?> </span>
             </li>
             <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal'); ?>
             <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_profile_horizontal_' . $user->userid); ?>

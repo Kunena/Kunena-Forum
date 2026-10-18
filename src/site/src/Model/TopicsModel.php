@@ -697,8 +697,17 @@ class TopicsModel extends KunenaModel
                     $latestCategory   = $this->config->rssExcludedCategories;
                     $latestCategoryIn = 0;
                 } else {
-                    $latestCategory   = $this->config->rssIncludedCategories;
-                    $latestCategoryIn = 1;
+                    // The category 0 of the setting means "all categories" (the empty selection of the field).
+                    $included = array_values(array_filter((array) $this->config->rssIncludedCategories, static fn ($id) => (int) $id > 0));
+
+                    if ($included) {
+                        $latestCategory   = $included;
+                        $latestCategoryIn = 1;
+                    } else {
+                        // All the categories which the user may read: an empty list which is not "included".
+                        $latestCategory   = [];
+                        $latestCategoryIn = 0;
+                    }
                 }
             }
         }

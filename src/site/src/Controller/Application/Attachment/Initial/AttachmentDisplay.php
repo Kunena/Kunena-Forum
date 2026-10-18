@@ -153,6 +153,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
         // Set file headers.
         header('ETag: ' . $attachment->hash);
         header('Pragma: public');
+        header('X-Content-Type-Options: nosniff');
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
 
         if (!$download && $attachment->isImage()) {
@@ -163,7 +164,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
             if ($attachment->isAuthorised('read', $guest)) {
                 $maxage = 60 * 60;
                 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxage) . ' GMT');
-                header('Cache-Control: maxage=' . $maxage);
+                header('Cache-Control: public, max-age=' . $maxage);
             }
             // No guest access -- force re-validate.
             else {

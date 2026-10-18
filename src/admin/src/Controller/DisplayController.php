@@ -57,6 +57,9 @@ class DisplayController extends BaseController
             $wa = $document->getWebAssetManager();
             $wa->registerStyle('kunena_theme', Uri::base() . '/components/com_kunena/media/css/theme.min.css', [], [], []);
             $wa->useStyle('kunena_theme');
+
+            // The theme sets a dark text color, which cannot be read in the dark administrator template: follow the template.
+            $wa->addInlineStyle('main #kunena { color: inherit; }', [], [], ['kunena_theme']);
         }
 
         return parent::display($cachable, $urlparams);

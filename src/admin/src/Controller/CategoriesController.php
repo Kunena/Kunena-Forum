@@ -808,6 +808,22 @@ class CategoriesController extends KunenaController
        
 	    if ($task == 'move') {
             foreach ($cid as $cat) {
+                // A category cannot become a child of itself or of one of its own descendants.
+                $isLoop = false;
+
+                for ($ancestor = $target, $guard = 0; $ancestor && $ancestor->id && $guard < 100; $ancestor = $ancestor->getParent(), $guard++) {
+                    if ($ancestor->id == $cat) {
+                        $isLoop = true;
+                        break;
+                    }
+                }
+
+                if ($isLoop) {
+                    $this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORIES_LABEL_BATCH_MOVE_INTO_CHILD'), 'error');
+
+                    continue;
+                }
+
                 if ($catParent != $cat) {
                     $query = $this->db->createQuery()
                         ->update($this->db->quoteName('#__kunena_categories'))

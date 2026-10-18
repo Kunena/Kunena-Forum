@@ -138,6 +138,39 @@ final class Kunena extends Adapter implements SubscriberInterface
             'onBuildIndex'         => 'onBuildIndex',
         ]);
     }
+    
+    /**
+     * Inject the indexer used by the Smart Search debug view.
+     *
+     * Joomla normally aliases Adapter to DebugAdapter for this request.
+     * This explicit method also supports plugins whose Adapter parent class
+     * was loaded before that alias could be established.
+     *
+     * @param   Indexer  $indexer  Debug indexer instance.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.0.12
+     */
+    public function setIndexer(Indexer $indexer): void
+    {
+        $this->indexer = $indexer;
+    }
+    
+    /**
+     * Build one Finder result for the Smart Search debug view.
+     *
+     * @param   mixed  $id  Kunena message ID.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.0.12
+     */
+    public function debug($id): void
+    {
+        $this->setup();
+        $this->index($this->getItem((int) $id));
+    }
 
     /**
      * Method to reindex the link information for an item that has been saved.

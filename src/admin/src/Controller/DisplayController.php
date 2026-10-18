@@ -60,6 +60,8 @@ class DisplayController extends BaseController
 
             // The theme sets a dark text color, which cannot be read in the dark administrator template: follow the template.
             $wa->addInlineStyle('main #kunena { color: inherit; }', [], [], ['kunena_theme']);
+            // Lists (multiple or size > 1) have no arrow image, so the template paints them in its arrow color: use the input background.
+            $wa->addInlineStyle('main #kunena .form-select[multiple], main #kunena .form-select[size]:not([size="1"]) { background: var(--form-control-bg, #fff); }', [], [], ['kunena_theme']);
         }
 
         return parent::display($cachable, $urlparams);

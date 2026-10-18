@@ -47,6 +47,12 @@ abstract class KunenaAttachmentHelper
     protected static $_messages = [];
 
     /**
+     * @var     array  Ids of the messages whose attachments were loaded by loadByMessage(), also those without attachments.
+     * @since   Kunena 7.2
+     */
+    protected static $_messagesLoaded = [];
+
+    /**
      * @param   bool|array|int  $ids        ids
      * @param   string          $authorise  authorise
      *
@@ -210,7 +216,8 @@ abstract class KunenaAttachmentHelper
         foreach ($ids as $i => $id) {
             $id = \intval($id);
 
-            if (!empty(self::$_messages[$id])) {
+            // A message without attachments has an empty list: remember that it was loaded, or its query runs again and again.
+            if (!empty(self::$_messages[$id]) || isset(self::$_messagesLoaded[$id])) {
                 unset($ids[$i]);
             }
 
@@ -240,6 +247,8 @@ abstract class KunenaAttachmentHelper
         }
 
         foreach ($ids as $mesid) {
+            self::$_messagesLoaded[$mesid] = true;
+
             if (!isset(self::$_messages [$mesid])) {
                 self::$_messages [$mesid] = [];
             }

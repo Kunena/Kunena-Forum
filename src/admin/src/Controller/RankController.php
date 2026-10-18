@@ -119,6 +119,8 @@ class RankController extends AdminController
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
                 return;
             }
         } else {
@@ -136,6 +138,8 @@ class RankController extends AdminController
                 $db->execute();
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                $this->setRedirect(KunenaRoute::_($this->baseurl, false));
 
                 return;
             }

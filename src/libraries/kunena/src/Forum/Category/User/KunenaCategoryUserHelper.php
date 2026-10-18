@@ -66,6 +66,9 @@ abstract class KunenaCategoryUserHelper
         $category = \intval($category);
 
         if ($reload || empty(self::$_instances [$user->userid][$category])) {
+            // loadCategories() skips the ids which are already loaded, so forget the old instance to really reload it.
+            unset(self::$_instances [$user->userid][$category]);
+
             $user_categories                             = self::getCategories($category, $user);
             self::$_instances [$user->userid][$category] = array_pop($user_categories);
         }

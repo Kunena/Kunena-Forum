@@ -74,6 +74,9 @@ abstract class KunenaTopicUserHelper
         }
 
         if ($reload || empty(self::$_instances [$user->userid][$topic])) {
+            // loadTopics() skips the ids which are already loaded, so forget the old instance to really reload it.
+            unset(self::$_instances [$user->userid][$topic]);
+
             $topics                                   = self::getTopics($topic, $user);
             self::$_instances [$user->userid][$topic] = self::$_topics [$topic][$user->userid] = array_pop($topics);
         }

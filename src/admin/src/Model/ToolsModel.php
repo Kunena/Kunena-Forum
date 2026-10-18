@@ -163,6 +163,12 @@ class ToolsModel extends AdminModel
     protected $collation = [];
 
     /**
+     * @var     boolean
+     * @since   Kunena 7.2
+     */
+    protected $reportDataLoaded = false;
+
+    /**
      * @var     object
      * @since   Kunena 6.0
      */
@@ -374,6 +380,13 @@ class ToolsModel extends AdminModel
      */
     protected function getReportData(): void
     {
+        // The report and the anonymous report use the same data: collect it once.
+        if ($this->reportDataLoaded) {
+            return;
+        }
+
+        $this->reportDataLoaded = true;
+
         $this->app = Factory::getApplication();
 
         if (!$this->app->get('smtpuser')) {

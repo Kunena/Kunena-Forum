@@ -226,6 +226,7 @@ class Com_KunenaInstallerScript extends InstallerScript
         // The column "state" in kunena_version indicate from which version to update
 
         $modelInstall = new KunenaModelInstall();
+        $status       = [];
 
         foreach ($xml->upgrade[0] as $version) {
             // If we have already upgraded to this version, continue to the next one
@@ -246,9 +247,10 @@ class Com_KunenaInstallerScript extends InstallerScript
             if (isset($git) || version_compare(strtolower($version['version']), strtolower($this->installedVersion), '>')) {
                 foreach ($version as $action) {
                     $modelInstall->processUpgradeXMLNode($action);
-
-                    $app->enqueueMessage(Text::sprintf('COM_KUNENA_INSTALL_VERSION_UPGRADED', $vernum), 'success');
                 }
+
+                // Once per version, not once per action of the version.
+                $app->enqueueMessage(Text::sprintf('COM_KUNENA_INSTALL_VERSION_UPGRADED', $vernum), 'success');
             }
         }
 

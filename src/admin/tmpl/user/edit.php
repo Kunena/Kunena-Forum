@@ -116,15 +116,24 @@ $template = KunenaTemplate::getInstance();
                                             aria-labelledby="tab1-tab">
                                             <fieldset>
                                                 <legend class="fs-6 fw-semibold"><?php echo Text::_('COM_KUNENA_UAVATAR'); ?></legend>
-                                                <div class="d-flex align-items-center gap-3 p-3 mb-3 border rounded">
-                                                    <div class="kwho-<?php echo $this->user->getType(0, true); ?> flex-shrink-0">
-                                                        <?php echo preg_replace('/<img(?![^>]*class=)/', '<img class="img-thumbnail"', $this->avatar); ?>
+                                                <div class="d-flex align-items-center gap-4 p-4 mb-4 border rounded-3 shadow-sm bg-body-tertiary">
+                                                    <div class="flex-shrink-0">
+                                                        <?php echo preg_replace('/<img(?![^>]*class=)/', '<img class="rounded-circle border border-3 shadow-sm" style="width: 96px; height: 96px; object-fit: cover"', $this->avatar); ?>
                                                     </div>
-                                                    <div>
-                                                        <div class="fw-semibold"><?php echo $this->escape($this->user->username); ?></div>
+                                                    <div class="flex-grow-1">
+                                                        <div class="d-flex flex-wrap align-items-center gap-2">
+                                                            <span class="h5 mb-0"><?php echo $this->escape($this->user->username); ?></span>
+                                                            <span class="badge rounded-pill text-bg-primary"><?php echo $this->escape(Text::_($this->user->getType(0))); ?></span>
+                                                        </div>
+                                                        <div class="text-body-secondary small mt-1">
+                                                            ID <?php echo (int) $this->user->userid; ?>
+                                                            <?php if (!empty($this->user->email)) : ?>
+                                                                <span class="mx-1">&middot;</span><?php echo $this->escape($this->user->email); ?>
+                                                            <?php endif; ?>
+                                                        </div>
                                                         <?php
                                                         if ($this->editavatar) : ?>
-                                                            <div class="form-check mt-2">
+                                                            <div class="form-check mt-3">
                                                                 <input class="form-check-input" type="checkbox" value="1"
                                                                     name="deleteAvatar" id="deleteAvatar" />
                                                                 <label class="form-check-label" for="deleteAvatar"><?php echo Text::_('COM_KUNENA_DELAV'); ?></label>

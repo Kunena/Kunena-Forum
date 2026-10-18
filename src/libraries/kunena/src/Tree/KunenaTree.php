@@ -66,7 +66,7 @@ class KunenaTree implements Iterator
     protected $_level = null;
 
     /**
-     * @var     null
+     * @var     array
      * @since   Kunena 6.0
      */
     protected $heap = [];

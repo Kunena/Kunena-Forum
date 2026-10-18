@@ -562,7 +562,7 @@ jQuery(document).ready(function ($) {
 	
 		sceditor.command.set('video', {
 			_dropDown: function (editor, caller) {
-				var $content, videourl, videotype, videoOpts;
+				var $content, videourl, videotype, videoOpts = '';
 	
 				jQuery.each(kunenaCmd.video, function (provider, data) {
 					videoOpts += '<option value="' + provider.toLowerCase() + '">' + editor._(provider) + '</option>';

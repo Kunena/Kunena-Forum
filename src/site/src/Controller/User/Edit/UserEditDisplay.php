@@ -71,12 +71,14 @@ class UserEditDisplay extends KunenaControllerDisplay
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_PROFILE_DISABLED'), 404);
         }
 
-        $userid = $this->input->getInt('userid');
+        // Without a user id in the url the user edits his own profile.
+        $userid = $this->input->getInt('userid') ?: KunenaUserHelper::getMyself()->userid;
 
         if ($userid > 0) {
-            $this->user    = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
+            // The layouts need the Joomla user (get('username'), get('email'), ...), not the KunenaUser.
+            $this->user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
         } else {
-            $this->user = KunenaUserHelper::getMyself();
+            $this->user = $this->app->getIdentity();
         }
 
         $this->profile = KunenaUserHelper::get($userid);

@@ -183,6 +183,9 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
                 KunenaUserHelper::loadUsers($userlist);
             }
 
+            // Load the last posts with one query: the links of the topics need them to find the page of the last post.
+            KunenaMessageHelper::getMessages($lastpostlist);
+
             KunenaTopicHelper::getUserTopics(array_keys($this->topics));
             $lastreadlist = KunenaTopicHelper::fetchNewStatus($this->topics);
 
@@ -191,6 +194,9 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
                 KunenaMessageHelper::loadLocation($lastpostlist + $lastreadlist);
             }
         }
+
+        // The model uses these topics for the actions: it does not load the list a second time.
+        $model->setTopics((int) $this->total, (array) $this->topics);
 
         if (!$this->config->readOnly) {
             $this->topicActions = $model->getTopicActions();

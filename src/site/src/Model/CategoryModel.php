@@ -324,6 +324,9 @@ class CategoryModel extends CategoriesModel
                     KunenaUserHelper::loadUsers($userlist);
                 }
 
+                // Load the last posts with one query: the links of the topics need them to find the page of the last post.
+                KunenaMessageHelper::getMessages($lastpostlist);
+
                 KunenaTopicHelper::getUserTopics(array_keys($this->topics));
                 $lastreadlist = KunenaTopicHelper::fetchNewStatus($this->topics);
 
@@ -335,6 +338,23 @@ class CategoryModel extends CategoriesModel
         }
 
         return $this->topics;
+    }
+
+    /**
+     * Give the model the topics which the controller loaded already (with the same parameters), so that getTopics() and
+     * getTopicActions() do not run the queries of the topic list a second time.
+     *
+     * @param   int    $total   Total number of topics of the list.
+     * @param   array  $topics  The topics of the page.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public function setTopics(int $total, array $topics): void
+    {
+        $this->total  = $total;
+        $this->topics = $topics;
     }
 
     /**

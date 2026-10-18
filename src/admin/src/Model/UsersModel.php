@@ -282,7 +282,8 @@ class UsersModel extends ListModel
             $composedBannedCondition = 'CASE WHEN a.block = 1 THEN "9999-12-31 23:59:59" ELSE ku.banned END';
 
             if ($filter) {
-                $query->where("$composedBannedCondition > {$nullDate}");
+                // Banned = the ban has not expired yet (an expired ban is listed with the users who are not banned).
+                $query->where("$composedBannedCondition >= {$db->quote($now->toSql())}");
             } else {
                 $query->where("( $composedBannedCondition IS NULL OR ( $composedBannedCondition >={$nullDate} AND $composedBannedCondition < {$db->quote($now->toSql())}))");
             }

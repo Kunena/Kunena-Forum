@@ -155,12 +155,10 @@ class KunenaPoll
         // Create the table object
         $table = $this->getTable();
 
-        if (!$id || \is_array($id) || !$table->load($id)) {
+        // Load the KunenaTable object based on id
+        if (!$id || \is_array($id) || !($this->_exists = $table->load($id))) {
             return false;
         }
-
-        // Load the KunenaTable object based on id
-        $this->_exists = $table->load($id);
 
         // Assuming all is well at this point lets bind the data
         $this->bind($table->getProperties());

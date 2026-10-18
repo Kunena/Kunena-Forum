@@ -438,6 +438,8 @@ class CategoriesController extends KunenaController
                     $category->delete();
                 } catch (Exception $e) {
                     $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETE_FAILED', $this->escape($e->getMessage())), 'error');
+
+                    continue;
                 }
 
                 // At this point the category should be deleted without errors

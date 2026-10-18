@@ -151,6 +151,8 @@ class TrashsController extends AdminController
                     $target->publish();
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                    continue;
                 }
 
                 $nbItems++;
@@ -169,6 +171,8 @@ class TrashsController extends AdminController
                     $target->publish($status);
                 } catch (Exception $e) {
                     $this->app->enqueueMessage($e->getMessage(), 'error');
+
+                    continue;
                 }
 
                 $nbItems++;

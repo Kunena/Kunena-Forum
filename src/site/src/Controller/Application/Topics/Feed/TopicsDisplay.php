@@ -98,6 +98,9 @@ class TopicsDisplay extends KunenaControllerDisplay
         // TODO: if start != 0, add information from it into description
         $this->document->setGenerator($this->config->boardTitle);
 
+        // The feed is not rendered through a view, which would load the language file of the title.
+        KunenaFactory::loadLanguage('com_kunena.views');
+
         $this->setTitle(Text::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT'));
 
         if ($mode == 'topics') {

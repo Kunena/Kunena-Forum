@@ -36,7 +36,7 @@ echo HTMLHelper::_(
     'select.genericlist',
     $limits,
     $this->pagination->prefix . 'limit',
-    'class="inputbox input-mini form-control" size="1" onchange="Joomla.submitform();"',
+    'class="inputbox form-select w-auto" size="1" onchange="Joomla.submitform();"',
     'value',
     'text',
     $selected

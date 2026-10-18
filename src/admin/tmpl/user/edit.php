@@ -60,7 +60,7 @@ $template = KunenaTemplate::getInstance();
                     <input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
                     <?php echo HTMLHelper::_('form.token'); ?>
 
-                    <h1 style="text-transform: capitalize;"><?php echo Text::_('COM_KUNENA_USER_TITLE_EDIT_USERNAME'); ?>
+                    <h1 class="h3 text-capitalize mb-3"><?php echo Text::_('COM_KUNENA_USER_TITLE_EDIT_USERNAME'); ?>
                         : <?php echo $this->escape($this->user->username); ?></h1>
 
                     <article class="data-block">
@@ -115,32 +115,33 @@ $template = KunenaTemplate::getInstance();
                                         <div class="tab-pane fade show active" id="tab1" role="tabpanel"
                                             aria-labelledby="tab1-tab">
                                             <fieldset>
-                                                <legend><?php echo Text::_('COM_KUNENA_UAVATAR'); ?></legend>
+                                                <legend class="fs-6 fw-semibold"><?php echo Text::_('COM_KUNENA_UAVATAR'); ?></legend>
                                                 <div class="kwho-<?php echo $this->user->getType(0, true); ?>">
                                                     <?php echo $this->avatar; ?>
                                                 </div>
                                                 <?php
                                                 if ($this->editavatar) : ?>
-                                                    <div>
-                                                        <label><input type="checkbox" value="1"
-                                                                name="deleteAvatar" /> <?php echo Text::_('COM_KUNENA_DELAV'); ?>
-                                                        </label>
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="checkbox" value="1"
+                                                            name="deleteAvatar" id="deleteAvatar" />
+                                                        <label class="form-check-label" for="deleteAvatar"><?php echo Text::_('COM_KUNENA_DELAV'); ?></label>
                                                     </div>
                                                 <?php endif; ?>
                                             </fieldset>
                                             <fieldset>
-                                                <legend><?php echo Text::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
-                                                <div>
-                                                    <textarea id="user-signature" class="inputbox form-control"
+                                                <legend class="fs-6 fw-semibold"><?php echo Text::_('COM_KUNENA_GEN_SIGNATURE'); ?>:</legend>
+                                                <div class="mb-2">
+                                                    <label for="user-signature" class="visually-hidden"><?php echo Text::_('COM_KUNENA_GEN_SIGNATURE'); ?></label>
+                                                    <textarea id="user-signature" class="inputbox form-control w-100"
                                                         name="signature"
-                                                        cols="4" rows="6"><?php echo $this->escape($this->user->signature); ?></textarea>
+                                                        rows="6"><?php echo $this->escape($this->user->signature); ?></textarea>
                                                 </div>
-                                                <div>
-                                                    <label><input type="checkbox" value="1"
-                                                            name="deleteSig" /> <?php echo Text::_('COM_KUNENA_DELSIG'); ?>
-                                                    </label>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" value="1"
+                                                        name="deleteSig" id="deleteSig" />
+                                                    <label class="form-check-label" for="deleteSig"><?php echo Text::_('COM_KUNENA_DELSIG'); ?></label>
                                                 </div>
-                                                <div>
+                                                <div class="text-body-secondary">
                                                     <?php
                                                     if (!empty($this->user->signature)) {
                                                         $valueSignature = (intval($this->config->maxSig) - StringHelper::strlen($this->user->signature));
@@ -150,7 +151,7 @@ $template = KunenaTemplate::getInstance();
                                                     echo Text::sprintf(
                                                         'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
                                                         intval($this->config->maxSig),
-                                                        '<input id="current_count" class="form-control" readonly="readonly" type="text" name="current_count" value="' . $valueSignature . '" />'
+                                                        '<input id="current_count" class="form-control form-control-sm d-inline-block text-center mx-1" style="width: 5rem" readonly="readonly" type="text" name="current_count" value="' . $valueSignature . '" />'
                                                     ); ?>
                                                 </div>
                                             </fieldset>
@@ -161,14 +162,14 @@ $template = KunenaTemplate::getInstance();
                                                 <table class="table table-bordered table-striped table-hover">
                                                     <tbody>
                                                         <tr>
-                                                            <td class="col-md-3">
+                                                            <td class="w-25">
                                                                 <label for="personalText">
                                                                     <?php echo Text::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?>
                                                                 </label>
                                                             </td>
                                                             <td>
                                                                 <input id="personalText" type="text"
-                                                                    class="inputbox form-control"
+                                                                    class="inputbox form-control w-100"
                                                                     maxlength="<?php echo (int) $template->params->get('maxPersonalText', '50'); ?>"
                                                                     name="personalText"
                                                                     value="<?php echo $this->escape($this->user->personalText); ?>" />
@@ -176,19 +177,17 @@ $template = KunenaTemplate::getInstance();
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <label for="birthdate">
+                                                                <label for="birthdate-input">
                                                                     <?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>
                                                                 </label>
                                                             </td>
                                                             <td>
                                                                 <div id="birthdate">
                                                                     <div class="input-group date">
-                                                                        <label>
-                                                                            <input type="text" name="birthdate"
-                                                                                class="inputbox form-control"
-                                                                                data-date-format="<?php echo $this->config->datePickerFormat; ?>"
-                                                                                value="<?php echo $this->user->birthdate == '1000-01-01' || empty($this->user->birthdate)  ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
-                                                                        </label>
+                                                                        <input type="text" name="birthdate" id="birthdate-input"
+                                                                            class="inputbox form-control"
+                                                                            data-date-format="<?php echo $this->config->datePickerFormat; ?>"
+                                                                            value="<?php echo $this->user->birthdate == '1000-01-01' || empty($this->user->birthdate)  ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -201,7 +200,7 @@ $template = KunenaTemplate::getInstance();
                                                             </td>
                                                             <td>
                                                                 <input id="location" type="text" name="location"
-                                                                    class="inputbox form-control"
+                                                                    class="inputbox form-control w-100"
                                                                     value="<?php echo $this->escape($this->user->location); ?>" />
                                                             </td>
                                                         </tr>
@@ -222,7 +221,7 @@ $template = KunenaTemplate::getInstance();
                                                                     'select.genericlist',
                                                                     $gender,
                                                                     'gender',
-                                                                    'class="inputbox form-control" size="1"',
+                                                                    'class="inputbox form-select" size="1"',
                                                                     'value',
                                                                     'text',
                                                                     $this->escape($this->user->gender),
@@ -238,11 +237,11 @@ $template = KunenaTemplate::getInstance();
                                                                 </label>
                                                             </td>
                                                             <td>
-                                                                <span class="hasTooltip"
+                                                                <span class="hasTooltip d-block"
                                                                     title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME')
                                                                                 . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>">
                                                                     <input id="social-site" type="text" name="websitename"
-                                                                        class="inputbox form-control"
+                                                                        class="inputbox form-control w-100"
                                                                         value="<?php echo $this->escape($this->user->websitename); ?>" />
                                                                 </span>
                                                             </td>
@@ -254,10 +253,10 @@ $template = KunenaTemplate::getInstance();
                                                                 </label>
                                                             </td>
                                                             <td>
-                                                                <span class="hasTooltip"
+                                                                <span class="hasTooltip d-block"
                                                                     title="<?php echo Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') . '::' . Text::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>">
                                                                     <input id="social-url" type="text" name="websiteurl"
-                                                                        class="inputbox form-control"
+                                                                        class="inputbox form-control w-100"
                                                                         value="<?php echo $this->escape($this->user->websiteurl); ?>" />
                                                                 </span>
                                                             </td>
@@ -270,10 +269,10 @@ $template = KunenaTemplate::getInstance();
                                         <div class="tab-pane fade show" id="tab3" role="tabpanel"
                                             aria-labelledby="tab3-tab">
                                             <fieldset>
-                                                <legend><?php echo Text::_('COM_KUNENA_MODCHANGE'); ?></legend>
+                                                <legend class="fs-6 fw-semibold"><?php echo Text::_('COM_KUNENA_MODCHANGE'); ?></legend>
                                                 <table class="table table-striped">
                                                     <tr>
-                                                        <td width="20%"><?php echo Text::_('COM_KUNENA_ISMOD'); ?></td>
+                                                        <td class="w-25"><?php echo Text::_('COM_KUNENA_ISMOD'); ?></td>
                                                         <td><?php echo Text::_('COM_KUNENA_MODCATS'); ?></td>
                                                     </tr>
                                                     <tr>
@@ -287,17 +286,17 @@ $template = KunenaTemplate::getInstance();
                                         <div class="tab-pane fade show" id="tab4" role="tabpanel"
                                             aria-labelledby="tab4-tab">
                                             <fieldset>
-                                                <legend><?php echo Text::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
+                                                <legend class="fs-6 fw-semibold"><?php echo Text::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
                                                             <?php /*
-                                                            <th width="1%" class="d-none d-md-table-cell">
+                                                            <th class="d-none d-md-table-cell" style="width: 1%">
                                                                 <input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
                                                             </th>
                                                             */ ?>
                                                             <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
-                                                            <th width="1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
+                                                            <th style="width: 1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
                                                         </tr>
                                                     </thead>
                                                     <?php
@@ -324,17 +323,17 @@ $template = KunenaTemplate::getInstance();
                                         <div class="tab-pane fade show" id="tab5" role="tabpanel"
                                             aria-labelledby="tab5-tab">
                                             <fieldset>
-                                                <legend><?php echo Text::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
+                                                <legend class="fs-6 fw-semibold"><?php echo Text::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></legend>
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
                                                             <?php /*
-                                                            <th width="1%" class="d-none d-md-table-cell">
+                                                            <th class="d-none d-md-table-cell" style="width: 1%">
                                                                 <input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
                                                             </th>
                                                             */ ?>
                                                             <th><?php echo Text::_('JGLOBAL_TITLE'); ?></th>
-                                                            <th width="1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
+                                                            <th style="width: 1%"><?php echo Text::_('JGRID_HEADING_ID'); ?></th>
                                                         </tr>
                                                     </thead>
 
@@ -360,7 +359,7 @@ $template = KunenaTemplate::getInstance();
                                         <div class="tab-pane fade show" id="tab6" role="tabpanel"
                                             aria-labelledby="tab6-tab">
                                             <fieldset>
-                                                <legend><?php echo Text::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
+                                                <legend class="fs-6 fw-semibold"><?php echo Text::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username)); ?></legend>
                                                 <table class="table table-striped">
                                                     <?php
                                                     $i          = 0;
@@ -400,12 +399,12 @@ $template = KunenaTemplate::getInstance();
                                             <fieldset>
                                                 <table class="table table-striped">
                                                     <tr>
-                                                        <td width="20%"><?php echo Text::_('COM_KUNENA_PREFOR'); ?></td>
+                                                        <td class="w-25"><?php echo Text::_('COM_KUNENA_PREFOR'); ?></td>
                                                         <td><?php echo $this->selectOrder; ?></td>
                                                     </tr>
                                                     <?php foreach ($this->settings as $field) : ?>
                                                         <tr>
-                                                            <td class="col-md-3">
+                                                            <td class="w-25">
                                                                 <?php echo $field->label; ?>
                                                             </td>
                                                             <td>

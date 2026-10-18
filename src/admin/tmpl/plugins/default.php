@@ -114,20 +114,23 @@ $joomlaVersion = new Version();
                                     <?php echo HTMLHelper::_('grid.id', $i, $item->extension_id, false, 'cid', 'cb', $item->name); ?>
                                 </td>
                                 <td class="text-center">
-                                    <?php echo HTMLHelper::_('jgrid.published', $item->enabled, $i, 'plugins.', $canChange); ?>
-                                    <?php if ($item->enabled && $item->folder === 'kunena' && !empty($requiredFiles[$item->element])) : ?>
-                                        <?php
-                                        $missingFile = false;
+                                    <?php
+                                    $inactive = false;
 
+                                    if ($item->enabled && $item->folder === 'kunena' && !empty($requiredFiles[$item->element])) {
                                         foreach ($requiredFiles[$item->element] as $requiredFile) {
                                             if (!is_file($requiredFile)) {
-                                                $missingFile = true;
+                                                $inactive = true;
                                             }
                                         }
-                                        ?>
-                                        <?php if ($missingFile) : ?>
-                                            <span class="badge text-bg-warning d-block mt-1" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_PLUGIN_INACTIVE_DESC')); ?>"><?php echo Text::_('COM_KUNENA_PLUGIN_INACTIVE'); ?></span>
-                                        <?php endif; ?>
+                                    }
+                                    ?>
+                                    <?php if ($inactive) : ?>
+                                        <span data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_PLUGIN_INACTIVE_DESC')); ?>">
+                                            <?php echo HTMLHelper::_('jgrid.published', 0, $i, 'plugins.', false); ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <?php echo HTMLHelper::_('jgrid.published', $item->enabled, $i, 'plugins.', $canChange); ?>
                                     <?php endif; ?>
                                 </td>
                                 <th scope="row">

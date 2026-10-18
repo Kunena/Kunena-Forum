@@ -308,7 +308,7 @@ class UserItem extends KunenaLayout
             new KunenaUserTabsEvent(
                 'onKunenaUserTabs',
                 ['tabs' => $tabs]
-                )
+            )
         );
 
         //$tabs = $tabs + $plugins;

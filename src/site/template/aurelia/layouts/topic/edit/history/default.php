@@ -9,12 +9,15 @@
  * @license         https://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link            https://www.kunena.org
  **/
+
 namespace Kunena\Forum\Site;
+
 \defined('_JEXEC') or die();
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
+
 ?>
 <div class="float-end">
     <div class="btn btn-outline-primary border btn-small" data-bs-toggle="collapse" data-bs-target="#history">X</div>
@@ -57,12 +60,12 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
                     <?php
                     $attachments = $this->message->getAttachments();
                     $hasVisibleAttachments = false;
-                    
+
                     // Filter out private attachments
                     $visibleAttachments = array_filter($attachments, function($attachment) {
                         return $attachment->protected != 32; // Exclude private attachments
                     });
-                    
+
                     if (!empty($visibleAttachments)) :
                         foreach ($visibleAttachments as $attachment) {
                             if (!$attachment->inline) {

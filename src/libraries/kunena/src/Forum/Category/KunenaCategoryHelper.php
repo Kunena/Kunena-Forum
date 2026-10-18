@@ -19,7 +19,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Language\Transliterate;
-use Joomla\Database\ParameterType;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
@@ -561,7 +560,6 @@ abstract class KunenaCategoryHelper
      * @return  KunenaCategory[]
      *
      * @since   Kunena 6.0
-     *
      */
     public static function getParents($id = 0, $levels = 100, $params = []): array
     {
@@ -609,7 +607,6 @@ abstract class KunenaCategoryHelper
      * @return  KunenaCategory[]
      *
      * @since   Kunena 6.0
-     *
      */
     public static function getOrphaned($levels = 0, $params = []): array
     {
@@ -941,7 +938,7 @@ abstract class KunenaCategoryHelper
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
         $categoryIds = [];
-        
+
         $recountAll = $categories === '' || $categories === null || $categories === [];
 
         if (\is_array($categories)) {
@@ -949,9 +946,9 @@ abstract class KunenaCategoryHelper
         } elseif (!empty($categories)) {
             $categoryIds = explode(',', (string) $categories);
         }
-        
+
         $categoryIds = array_values(array_filter(array_map('intval', $categoryIds)));
-        
+
         if (empty($categoryIds)) {
             if (!$recountAll) {
                 return 0;
@@ -974,10 +971,10 @@ abstract class KunenaCategoryHelper
                 return 0;
             }
         }
-        
+
         $totalRows = 0;
         $batchSize = max(1, (int) $batchSize);
-        
+
         // Process categories in batches
         foreach (array_chunk($categoryIds, $batchSize) as $batch) {
             // Batch only contains integers (array_map('intval')), safe to inline
@@ -1003,7 +1000,7 @@ abstract class KunenaCategoryHelper
 					AND t.moved_id =0
 					{$categories}
 					GROUP BY t.category_id";
-            
+
             // Update category post count and last post info on categories which have published topics
             $query = "UPDATE " . $db->quoteName('#__kunena_categories') . " AS c
 				INNER JOIN ($subQuerySelect) AS r ON r.id=c.id
@@ -1013,19 +1010,19 @@ abstract class KunenaCategoryHelper
 					c.last_topic_id=r.last_topic_id,
 					c.last_post_id = tt.last_post_id,
 					c.last_post_time = tt.last_post_time";
-				
+
 				$db->setQuery($query);
-				
+
 				try {
 				    $db->execute();
 				} catch (ExecutionFailureException $e) {
 				    KunenaError::displayDatabaseError($e);
-				    
+
 				    return false;
 				}
-				
+
 				$totalRows += $db->getAffectedRows();
-				
+
 				// Update categories which have no published topics
 				$query = $db->createQuery();
 				$fields = array(
@@ -1035,32 +1032,32 @@ abstract class KunenaCategoryHelper
 				    $db->quoteName('c.last_post_id') . ' = 0',
 				    $db->quoteName('c.last_post_time') . ' = 0',
 				);
-				
+
 				$query
 				->update($db->quoteName('#__kunena_categories', 'c'))
 				->leftJoin($db->quoteName('#__kunena_topics', 'tt') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('tt.category_id') . ' AND ' . $db->quoteName('tt.hold') . ' = 0 AND ' . $db->quoteName('tt.moved_id') . ' = 0')
 				->set($fields)
 				->where($db->quoteName('c.id') . ' IN (' . $categoryList . ')')
 				->where($db->quoteName('tt.id') . ' IS NULL');
-				
+
 				$db->setQuery($query);
-				
+
 				try {
 				    $db->execute();
 				} catch (ExecutionFailureException $e) {
 				    KunenaError::displayDatabaseError($e);
-				    
+
 				    return false;
 				}
-				
+
 				$totalRows += $db->getAffectedRows();
         }
-        
+
         if ($totalRows) {
             // If something changed, clean our cache
             KunenaCacheHelper::clearCategories();
         }
-        
+
         return $totalRows;
     }
 
@@ -1082,13 +1079,14 @@ abstract class KunenaCategoryHelper
             ->join('INNER', $db->quoteName('#__kunena_categories', 'kc') . ' ON ' . $db->quoteName('ka.alias') . ' = ' . $db->quoteName('kc.alias'))
             ->set($db->quoteName('ka.item') . ' = ' . $db->quoteName('kc.id'))
             ->where($db->quoteName('ka.type') . ' = ' . $db->quote('catid'));
-        
+
         $db->setQuery($query);
 
         try {
             $db->execute();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
+
             return false;
         }
 
@@ -1103,24 +1101,27 @@ abstract class KunenaCategoryHelper
             $db->execute();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
+
             return false;
         }
 
         $rows += $db->getAffectedRows();
 
         // Add missing category aliases
-        $query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) SELECT alias, 'catid' AS type, id AS item FROM #__kunena_categories WHERE alias!=''";        
-        
+        $query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) SELECT alias, 'catid' AS type, id AS item FROM #__kunena_categories WHERE alias!=''";
+
         $db->setQuery($query);
 
         try {
             $db->execute();
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
+
             return false;
         }
 
         $rows += $db->getAffectedRows();
+
         return $rows;
     }
 

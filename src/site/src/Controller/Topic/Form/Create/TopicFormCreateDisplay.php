@@ -128,7 +128,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
                     'option' => 'com_kunena',
                     'view' => 'topic',
                     'layout' => 'create',
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 if ($catid) {
@@ -191,7 +191,7 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
 
         if (!$this->topic->category_id) {
             throw new KunenaExceptionAuthorise(Text::_(
-            	'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS'
+                'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS'
             ), $this->me->exists() ? 403 : 401);
         }
 
@@ -217,16 +217,16 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
         ];
 
         $this->selectcatlist = HTMLHelper::_(
-        	'kunenaforum.categorylist',
-        	'catid',
-        	$catid,
-        	$options,
-        	$catParams,
-        	'class="form-select inputbox required"',
-        	'value',
-        	'text',
-        	$this->selected,
-        	'postcatid'
+            'kunenaforum.categorylist',
+            'catid',
+            $catid,
+            $options,
+            $catParams,
+            'class="form-select inputbox required"',
+            'value',
+            'text',
+            $this->selected,
+            'postcatid'
         );
 
         $this->action = 'post';

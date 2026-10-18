@@ -21,7 +21,7 @@ $title    = $this->title;
 $url      = $this->url;
 $size     = $this->size;
 $alt      = $this->alt;
-$style    = $this->float ? " float:".$this->float.";" : '';
+$style    = $this->float ? " float:" . $this->float . ";" : '';
 $canLink = isset($this->canLink) ? $this->canLink : true;
 
 echo $this->subLayout('Widget/Lightbox');
@@ -33,7 +33,7 @@ $width          = $size ? (int) $size . "px;" : 'auto ';
 $attributesImg  = ' style="max-height: ' . (int) $config->imageHeight . 'px;' . ' max-width:' . $width . $style . '"';
 $attributesImg  .= $alt ? ' alt="' . htmlspecialchars($alt) . '"' : '';
 ?>
-<div class="kmsgimage<?php echo ($style ? ' float' : ''); ?>">
+<div class="kmsgimage<?php echo($style ? ' float' : ''); ?>">
     <?php if ($canLink) :
         ?>
     <a href="<?php echo $this->escape($url); ?>" data-bs-toggle="tooltip" title="<?php echo $alt; ?>" <?php echo $attributesLink; ?>>

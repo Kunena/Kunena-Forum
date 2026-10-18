@@ -60,14 +60,14 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
                 // Build the html select list
                 echo HTMLHelper::_(
-                	'select.genericlist',
-                	$block,
-                	'banlevel',
-                	'',
-                	'value',
-                	'text',
-                	$this->escape($this->banInfo->blocked),
-                	'ban-level'
+                    'select.genericlist',
+                    $block,
+                    'banlevel',
+                    '',
+                    'value',
+                    'text',
+                    $this->escape($this->banInfo->blocked),
+                    'ban-level'
                 );
                 ?>
             </td>

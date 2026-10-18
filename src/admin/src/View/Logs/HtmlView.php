@@ -88,7 +88,7 @@ class HtmlView extends BaseHtmlView
 
         return parent::display($tpl);
     }
-    
+
     /**
      * Get the log type
      * 
@@ -97,15 +97,13 @@ class HtmlView extends BaseHtmlView
      * @return string
      *
      * @since   Kunena 6.0
-     *
      */
     public function getType(int $id): string
     {
         static $types = [1 => 'MOD', 2 => 'ACT', 3 => 'ERR', 4 => 'REP'];
-        
+
         return isset($types[$id]) ? $types[$id] : '???';
     }
-    
 
     /**
      * Set the toolbar on log manager

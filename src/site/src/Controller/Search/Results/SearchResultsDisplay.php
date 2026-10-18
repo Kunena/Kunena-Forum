@@ -67,7 +67,7 @@ class SearchResultsDisplay extends KunenaControllerDisplay
     public $results;
 
     public $error;
-    
+
     public $ktemplate;
 
     /**
@@ -113,11 +113,11 @@ class SearchResultsDisplay extends KunenaControllerDisplay
         }
 
         $this->pagination = new KunenaPagination(
-        	$this->total,
-        	$this->state->get('list.start'),
-        	$this->state->get('list.limit')
+            $this->total,
+            $this->state->get('list.start'),
+            $this->state->get('list.limit')
         );
-        
+
         $this->ktemplate    = KunenaFactory::getTemplate();
     }
 

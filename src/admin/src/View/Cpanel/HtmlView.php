@@ -50,7 +50,7 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         $this->addToolbar();
-        
+
         $this->model  = $this->getModel();
 
         $lang = Factory::getApplication()->getLanguage();
@@ -96,7 +96,7 @@ class HtmlView extends BaseHtmlView
         $topicTrashedCount = $topicFinder->count();
 
         $this->messagesTopicsInTrashBin = $messagesTrashedCount + $topicTrashedCount;
-        
+
         $this->numberOfMailsqueues = $this->model->numberOfMailsqueues();
 
         return parent::display($tpl);

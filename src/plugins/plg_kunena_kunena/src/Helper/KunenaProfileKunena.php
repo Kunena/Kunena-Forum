@@ -198,7 +198,7 @@ class KunenaProfileKunena extends KunenaProfile
         }
 
         if ($escape) {
-            $name = \htmlspecialchars($name, \ENT_COMPAT, 'UTF-8');
+            $name = htmlspecialchars($name, \ENT_COMPAT, 'UTF-8');
         }
 
         return $name;

@@ -103,7 +103,7 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
     public $thankyou_delete;
 
     public $captchaDisplay;
-    
+
     public $pmHasBody;
 
     /**
@@ -145,15 +145,15 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
         } else {
             $this->captchaEnabled = false;
         }
-        
+
         $this->pmHasBody = false;
-        
+
         if(isset($this->message->pm)) {
           $pmId = array_key_first($this->message->pm);
           $pmBody = $this->message->pm[$pmId]->body;
 
           if (!empty($pmBody)) {
-              $this->pmHasBody = true;  
+              $this->pmHasBody = true;
           }
         }
 
@@ -186,7 +186,7 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
 
                 foreach ($loaded_users as $userid => $user) {
                     if ($this->message->isAuthorised('unthankyou') && $this->me->isModerator($this->message->getCategory())) {
-                        $this->thankyou_delete[$userid] = KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}"));
+                        $this->thankyou_delete[$userid] = KunenaRoute::_(\sprintf($task, "unthankyou&userid={$userid}"));
                     }
 
                     $this->thankyou[$userid] = $loaded_users[$userid]->getLink();
@@ -197,12 +197,12 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
         if ($this->config->reportMsg && $this->me->exists()) {
             if ($this->config->userReport && $this->me->userid == $this->message->userid && !$this->me->isModerator()) {
                 $this->reportMessageLink = HTMLHelper::_(
-                	'link',
-                	'index.php?option=com_kunena&view=topic&layout=report&catid='
+                    'link',
+                    'index.php?option=com_kunena&view=topic&layout=report&catid='
                         . \intval($this->category->id) . '&id=' . \intval($this->message->thread)
                         . '&mesid=' . \intval($this->message->id),
-                	Text::_('COM_KUNENA_REPORT'),
-                	Text::_('COM_KUNENA_REPORT')
+                    Text::_('COM_KUNENA_REPORT'),
+                    Text::_('COM_KUNENA_REPORT')
                 );
             }
         }

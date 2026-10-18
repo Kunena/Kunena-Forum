@@ -102,25 +102,25 @@ class KunenaPoll
      * @since   Kunena 6.0
      */
     protected $mylastvoteId;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $threadid;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $typeAlias;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $title;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
@@ -370,7 +370,7 @@ class KunenaPoll
 
         return $this->mytime[$user->userid];
     }
-    
+
     /**
      * Save the vote on the poll option choose by the user, increase the number of votes of the user
      *
@@ -389,26 +389,26 @@ class KunenaPoll
         if (!$this->exists()) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_DOES_NOT_EXIST'));
         }
-        
+
         $options = $this->getOptions();
-        
+
         if (!isset($options[$option])) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_OPTION_DOES_NOT_EXIST'));
         }
-        
+
         $user = KunenaFactory::getUser($user);
-        
+
         if (!$user->exists()) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_NOT_EXIST'));
         }
-        
+
         if (!$topic->isAuthorised('poll.vote', null, true)) {
             throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_NOT_AUTHORIZED'));
         }
-        
+
         $lastVoteId = $this->getLastVoteId($user);
         $myvotes    = $this->getMyVotes($user);
-        
+
         if (!$myvotes) {
             // First vote
             $votes         = new StdClass();
@@ -421,7 +421,7 @@ class KunenaPoll
             $votes->lasttime = null;
             $votes->lastvote = null;
             $votes->votes    = 1;
-            
+
             // Change vote: decrease votes in the last option
             if (!$this->changeOptionVotes($lastVoteId, -1)) {
                 // Saving option failed, add a vote to the user
@@ -433,37 +433,37 @@ class KunenaPoll
             $votes->new   = false;
             $votes->votes = (int) $myvotes + 1;
         }
-        
+
         // Store the vote time in UTC like the other database dates (the user's own time zone would be stored otherwise).
         $votes->lasttime = Factory::getDate()->toSql();
         $votes->lastvote = $option;
         $votes->userid   = (int) $user->userid;
-        
+
         // Increase vote count from current option
         $this->changeOptionVotes($votes->lastvote, 1);
-        
+
         if ($votes->new) {
             // No votes
             $query = $this->_db->createQuery();
-            
+
             // Insert columns.
             $columns = ['pollid', 'userid', 'votes', 'lastvote', 'lasttime'];
-            
+
             // Insert values.
             $values = [$this->_db->quote($this->id), $this->_db->quote($votes->userid), $this->_db->quote($votes->votes), $this->_db->quote($votes->lastvote), $this->_db->quote($votes->lasttime)];
-            
+
             // Prepare the insert query.
             $query
             ->insert($this->_db->quoteName('#__kunena_polls_users'))
             ->columns($this->_db->quoteName($columns))
             ->values(implode(',', $values));
             $this->_db->setQuery($query);
-            
+
             try {
                 $this->_db->execute();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
-                
+
                 throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_INSERT_FAIL'));
             }
         } else {
@@ -477,16 +477,16 @@ class KunenaPoll
                 ->where($this->_db->quoteName('pollid') . ' = ' . $this->_db->quote($this->id))
                 ->where($this->_db->quoteName('userid') . ' = ' . $this->_db->quote($votes->userid));
             $this->_db->setQuery($query);
-            
+
             try {
                 $this->_db->execute();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
-                
+
                 throw new Exception(Text::_('COM_KUNENA_LIB_POLL_VOTE_ERROR_USER_UPDATE_FAIL'));
             }
         }
-        
+
         return true;
     }
 
@@ -730,7 +730,7 @@ class KunenaPoll
         $properties = [
             'title'          => $this->title,
             'threadid'       => $this->threadid,
-            'polltimetolive' => $this->polltimetolive
+            'polltimetolive' => $this->polltimetolive,
         ];
 
         $table->bind($properties);

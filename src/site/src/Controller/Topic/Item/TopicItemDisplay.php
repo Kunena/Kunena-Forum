@@ -110,7 +110,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
     public $image;
 
     public $params;
-    
+
     public $pmHasBody;
 
     /**
@@ -142,7 +142,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
                     'view' => 'topic',
                     'catid' => $catid,
                     'id' => $id,
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
@@ -296,7 +296,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
             'context' => 'kunena.topic',
             'subject' => $this->topic,
             'params'  => $params,
-            'page'    => 0
+            'page'    => 0,
         ]);
         $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         foreach ($this->messages as &$message) {
@@ -304,7 +304,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
                 'context' => 'kunena.messages',
                 'subject' => $message,
                 'params'  => $params,
-                'page'    => 0
+                'page'    => 0,
             ]);
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }
@@ -409,7 +409,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
                 $message->thankyou = $thankyou_list;
             }
         }
-        
+
         if (!isset($mesid)) {
             $mesidTmp = '';
         } else {

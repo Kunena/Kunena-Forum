@@ -24,7 +24,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
  */
 function kunena_640_2025_02_11_clean_configuration($parent) {
 	$config = KunenaFactory::getConfig();
-	 
+
 	$listNewConfigParams = ['boardTitle', 'boardOffline', 'offlineMessage', 'enableRss', 'threadsPerPage', 'messagesPerPage', 'messagesPerPageSearch', 'showHistory', 'historyLimit', 'showNew', 'disableEmoticons', 'showAnnouncement',
 	    'avatarOnCategory', 'showChildCatIcon', 'rteWidth', 'rteHeight', 'enableForumJump', 'reportMsg', 'askEmail', 'showEmail', 'showUserStats', 'showKarma', 'userEdit', 'userEditTime', 'userEditTimeGrace', 'editMarkup', 'allowSubscriptions',
 	    'subscriptionsChecked', 'allowFavorites', 'maxSig', 'regOnly', 'pubWrite', 'floodProtection', 'mailModerators', 'mailAdministrators', 'mailFull', 'allowAvatarUpload', 'allowAvatarGallery', 'avatarQuality', 'userlistJoinDate',
@@ -40,14 +40,14 @@ function kunena_640_2025_02_11_clean_configuration($parent) {
 	    'autoLink', 'accessComponent', 'statsLinkAllowed', 'superAdminUserlist', 'attachmentProtection', 'categoryIcons', 'avatarCrop', 'userReport', 'searchTime', 'ebayLanguage', 'ebayApiKey', 'ebayCertId', 'XConsumerKey',
 	    'XConsumerSecret', 'allowChangeSubject', 'maxLinks', 'readOnly', 'ratingEnabled', 'urlSubjectTopic', 'logModeration', 'attachStart', 'attachEnd', 'googleMapApiKey', 'attachmentUtf8',
 	    'autoEmbedSoundcloud', 'emailHeader', 'userStatus', 'plainEmail', 'moderatorPermDelete', 'avatarTypes', 'smartLinking', 'defaultAvatar', 'defaultAvatarSmall', 'stopForumSpamKey', 'quickReply', 'avatarEdit',
-	    'activeMenuItem', 'mainMenuId', 'homeId', 'indexId', 'moderatorsId', 'topicListId', 'miscId', 'profileId', 'searchId', 'avatarType', 'sefRedirect', 'allowEditPoll', 'useSystemEmails', 'autoEmbedInstagram', 'disableRe'
+	    'activeMenuItem', 'mainMenuId', 'homeId', 'indexId', 'moderatorsId', 'topicListId', 'miscId', 'profileId', 'searchId', 'avatarType', 'sefRedirect', 'allowEditPoll', 'useSystemEmails', 'autoEmbedInstagram', 'disableRe',
 	];
-	
+
 	$listOldConfigParams = ['board_title', 'board_offline', 'offline_message', 'enablerss', 'threads_per_page', 'messages_per_page', 'messages_per_page_search', 'showhistory', 'historylimit', 'shownew', 'disemoticons', 'showannouncement',
-	    'avataroncat', 'showchildcaticon' ,'rtewidth', 'rteheight', 'enableforumjump', 'reportmsg', 'askemail', 'showemail', 'showuserstats', 'showkarma', 'useredit', 'useredittime', 'useredittimegrace', 'editmarkup', 'allowsubscriptions',
+	    'avataroncat', 'showchildcaticon', 'rtewidth', 'rteheight', 'enableforumjump', 'reportmsg', 'askemail', 'showemail', 'showuserstats', 'showkarma', 'useredit', 'useredittime', 'useredittimegrace', 'editmarkup', 'allowsubscriptions',
 	    'subscriptionschecked', 'allowfavorites', 'maxsig', 'regonly', 'pubwrite', 'floodprotection', 'mailmod', 'mailadmin', 'mailfull', 'allowavatarupload', 'allowavatargallery', 'avatarquality', 'userlist_joindate',
 	    'avatarsize', 'imageheight', 'imagewidth', 'imagesize', 'filetypes', 'filesize', 'showranking', 'rankimages', 'userlist_rows', 'userlist_online', 'userlist_avatar', 'userlist_posts', 'userlist_karma', 'userlist_email', 'showspoilertag',
-	    'userlist_lastvisitdate', 'userlist_userhits', 'latestcategory', 'showstats', 'showwhoisonline', 'showgenstats', 'showpopuserstats', 'popusercount', 'showpopsubjectstats', 'popsubjectcount', 'showvideotag','showebaytag', 'trimlongurls',
+	    'userlist_lastvisitdate', 'userlist_userhits', 'latestcategory', 'showstats', 'showwhoisonline', 'showgenstats', 'showpopuserstats', 'popusercount', 'showpopsubjectstats', 'popsubjectcount', 'showvideotag', 'showebaytag', 'trimlongurls',
 	    'trimlongurlsfront', 'trimlongurlsback', 'autoembedyoutube', 'autoembedebay', 'ebaylanguagecode', 'sessiontimeout', 'highlightcode', 'rss_type', 'rss_timelimit', 'rss_limit', 'rss_included_categories', 'rss_excluded_categories', 'rss_specification',
 	    'rss_allow_html', 'rss_author_format', 'rss_author_in_title', 'rss_word_count', 'rss_old_titles', 'rss_cache', 'defaultpage', 'default_sort', 'showimgforguest', 'showfileforguest', 'pollnboptions', 'pollallowvoteone', 'pollenabled',
 	    'poppollscount', 'showpoppollstats', 'polltimebtvotes', 'pollnbvotesbyuser', 'pollresultsuserslist', 'allow_user_edit_poll', 'maxpersotext', 'ordering_system', 'post_dateformat', 'post_dateformat_hover', 'hide_ip', 'imagetypes', 'checkmimetypes',
@@ -56,11 +56,11 @@ function kunena_640_2025_02_11_clean_configuration($parent) {
 	    'category_subscriptions', 'topic_subscriptions', 'pubprofile', 'thankyou_max', 'email_recipient_count', 'email_recipient_privacy', 'email_visible_address', 'captcha_post_limit', 'image_upload', 'file_upload', 'topic_layout', 'time_to_create_page',
 	    'show_imgfiles_manage_profile', 'hold_newusers_posts', 'hold_guest_posts', 'attachment_limit', 'pickup_category', 'article_display', 'send_emails', 'fallback_english', 'cache_time', 'ebay_affiliate_id', 'iptracking', 'rss_feedburner_url',
 	    'autolink', 'access_component', 'statslink_allowed', 'superadmin_userlist', 'attachment_protection', 'categoryicons', 'avatarcrop', 'user_report', 'searchtime', 'ebay_language', 'ebay_api_key', 'ebay_cert_id', 'twitter_consumer_key',
-	    'twitter_consumer_secret', 'allow_change_subject', 'max_links', 'read_only', 'ratingenabled', 'url_subject_topic', 'log_moderation', 'attach_start', 'attach_end', 'google_map_api_key' ,'attachment_utf8',
+	    'twitter_consumer_secret', 'allow_change_subject', 'max_links', 'read_only', 'ratingenabled', 'url_subject_topic', 'log_moderation', 'attach_start', 'attach_end', 'google_map_api_key', 'attachment_utf8',
 	    'autoembedsoundcloud', 'emailheader', 'user_status', 'plain_email', 'moderator_permdelete', 'avatartypes', 'smartlinking', 'defaultavatar', 'defaultavatarsmall', 'stopforumspam_key', 'quickreply', 'avataredit',
-	    'activemenuitem', 'mainmenu_id' ,'home_id', 'index_id', 'moderators_id', 'topiclist_id', 'misc_id', 'profile_id', 'search_id', 'avatar_type', 'sef_redirect', 'allow_edit_poll', 'use_system_emails', 'autoembedinstagram', 'disable_re'
+	    'activemenuitem', 'mainmenu_id', 'home_id', 'index_id', 'moderators_id', 'topiclist_id', 'misc_id', 'profile_id', 'search_id', 'avatar_type', 'sef_redirect', 'allow_edit_poll', 'use_system_emails', 'autoembedinstagram', 'disable_re',
 	];
-	
+
 	foreach($config as $param => $val) {
 	    if ($param != 'id') {
 	        $keyFound = array_search($param, $listOldConfigParams);
@@ -71,10 +71,10 @@ function kunena_640_2025_02_11_clean_configuration($parent) {
 	        }
 	    }
 	}
-	
+
 	// Save configuration
-	$config->save();	
-	
+	$config->save();
+
 	$listConfigParams = ['boardTitle', 'email', 'boardOffline', 'offlineMessage', 'enableRss', 'threadsPerPage', 'messagesPerPage', 'messagesPerPageSearch', 'showHistory', 'historyLimit', 'showNew', 'disableEmoticons', 'template', 'showAnnouncement',
 	    'avatarOnCategory', 'showChildCatIcon', 'rteWidth', 'rteHeight', 'enableForumJump', 'reportMsg', 'username', 'askEmail', 'showEmail', 'showUserStats', 'showKarma', 'userEdit', 'userEditTime', 'userEditTimeGrace', 'editMarkup', 'allowSubscriptions',
 	    'subscriptionsChecked', 'allowFavorites', 'maxSig', 'regOnly', 'pubWrite', 'floodProtection', 'mailModerators', 'mailAdministrators', 'captcha', 'mailFull', 'allowAvatarUpload', 'allowAvatarGallery', 'avatarQuality', 'userlistJoinDate',
@@ -92,9 +92,9 @@ function kunena_640_2025_02_11_clean_configuration($parent) {
 	    'autoEmbedSoundcloud', 'emailHeader', 'userStatus', 'signature', 'personal', 'plainEmail', 'moderatorPermDelete', 'avatarTypes', 'smartLinking', 'defaultAvatar', 'defaultAvatarSmall', 'stopForumSpamKey', 'quickReply', 'avatarEdit',
 	    'activeMenuItem', 'mainMenuId', 'homeId', 'indexId', 'moderatorsId', 'topicListId', 'miscId', 'profileId', 'searchId', 'custom_id', 'avatarType', 'sefRedirect', 'allowEditPoll', 'useSystemEmails', 'autoEmbedInstagram', 'disableRe',
 	    'email_sender_name', 'display_filename_attachment', 'new_users_prevent_post_url_images', 'minimal_user_posts_add_url_image', 'utmSource', 'plugins', 'emailHeaderSizeY', 'emailHeaderSizeX', 'profiler', 'privateMessage', 'datePickerFormat',
-	    'sendMailUserBanned', 'mailBodyUserBanned', 'mailBodyUserUnBanned'
+	    'sendMailUserBanned', 'mailBodyUserBanned', 'mailBodyUserUnBanned',
 	];
-	
+
 	// We are deleting the remaining config params which have been dropped in previous versions
 	foreach($config as $param => $val) {
 	    if ($param != 'id') {
@@ -103,9 +103,9 @@ function kunena_640_2025_02_11_clean_configuration($parent) {
 	        }
 	    }
 	}
-	
+
 	// Save configuration
-	$config->save();	
+	$config->save();
 
 	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_CLEAN_CONFIGURATION'), 'success' => true);
 }

@@ -38,9 +38,9 @@ class CpanelModel extends AdminModel
      */
     public function getForm($data = [], $loadData = true)
     {
-        // TODO: Implement getForm() method. 
+        // TODO: Implement getForm() method.
     }
-    
+
     /**
      * Get number of mails queues not yet send to be displayed in cpanel
      * 
@@ -50,23 +50,23 @@ class CpanelModel extends AdminModel
     {
         $db    = $this->getDatabase();
         $query = $db->createQuery();
-        
+
         $query->select('COUNT(*)');
-        
+
         $query->from($db->quoteName('#__kunena_notifications_mailsqueue', 'a'));
-        
+
         $query->where($db->quoteName('a.send') . ' = ' . 1);
-        
+
         try {
             $db->setQuery($query);
             $result = $db->loadResult();
         } catch (Exception $e) {
             return 0;
         }
-        
+
         return (int) $result;
     }
-    
+
     /**
      * Set value of sample data flag
      *
@@ -76,12 +76,12 @@ class CpanelModel extends AdminModel
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true);
-        
+
         $query->update($db->quoteName('#__kunena_version'))
         ->set($db->quoteName('sampleData') . ' = ' . $db->quote($value));
-        
+
         $db->setQuery($query);
-        
+
         try {
             return $db->execute();
         } catch (Exception $e) {

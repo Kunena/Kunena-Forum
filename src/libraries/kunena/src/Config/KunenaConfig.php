@@ -390,7 +390,6 @@ class KunenaConfig
         return self::$instance;
     }
 
-
     /**
      * Function to build the configuration values with default values from config.xml
      * 
@@ -466,7 +465,7 @@ class KunenaConfig
         $options = [
             'defaultgroup' => self::COMPONENT . '_configuration',
             'caching'      => \true,                                // Force caching
-            'lifetime'     => 5259600                               // Config cache never expires
+            'lifetime'     => 5259600,                               // Config cache never expires
         ];
 
         /** @var CallbackController $cache */
@@ -485,11 +484,11 @@ class KunenaConfig
      */
     private static function getXml(string $path): \SimpleXMLElement|false
     {
-        if (!\is_file($path)) {
+        if (!is_file($path)) {
             return \false;
         }
 
-        $xml = new \SimpleXMLElement(\file_get_contents($path));
+        $xml = new \SimpleXMLElement(file_get_contents($path));
 
         return $xml;
     }
@@ -522,7 +521,7 @@ class KunenaConfig
 
             if (
                 !empty($name)
-                && !\str_starts_with($name, '@')
+                && !str_starts_with($name, '@')
                 && $type !== 'spacer'
                 && $config !== 'false'
             ) {
@@ -560,7 +559,7 @@ class KunenaConfig
 
             if (
                 !empty($name)
-                && !\str_starts_with($name, '@')
+                && !str_starts_with($name, '@')
                 && $type !== 'spacer'
                 && $config !== 'false'
             ) {
@@ -579,12 +578,12 @@ class KunenaConfig
         }
 
         // Ensure the array is sorted by key
-        \ksort($properties);
+        ksort($properties);
 
         // Step 2: Iterate and pad the property key to align the label
         foreach ($properties as $property => $value) {
             // Pad the property key with spaces on the right side
-            $paddedProperty = \str_pad($property, $maxLength);
+            $paddedProperty = str_pad($property, $maxLength);
             $label          = $value['label'];
             $type           = $value['type'];
             // Output the string, aligning the label
@@ -617,7 +616,7 @@ class KunenaConfig
 
         $query = $db->createQuery()
             ->update($db->quoteName('#__extensions'))
-            ->set($db->quoteName('params') . ' = ' . $db->quote(\json_encode($params)))
+            ->set($db->quoteName('params') . ' = ' . $db->quote(json_encode($params)))
             ->where($db->quoteName('name') . ' = ' . $db->quote(self::COMPONENT));
 
         $db->setQuery($query);

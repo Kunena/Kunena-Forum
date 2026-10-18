@@ -94,12 +94,12 @@ class Easysocial extends CMSPlugin implements SubscriberInterface, DatabaseAware
     public function __construct(array $config = [])
     {
         // Do not load if Kunena version is not supported or Kunena is offline
-        if (!(\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.1') && KunenaForum::enabled())) {
+        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.1') && KunenaForum::enabled())) {
             return;
         }
 
         //parent::__construct($config);
-        
+
         // Call loadApi method to load Kunena constants
         KunenaForum::loadApi();
 
@@ -109,14 +109,14 @@ class Easysocial extends CMSPlugin implements SubscriberInterface, DatabaseAware
     }
 
     public function initEasySocial(&$subject, $config)
-    {        
+    {
         // Do not load if Easyblog is not installed
         $path = JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/plugins.php';
-        
-        if (!\is_file($path)) {
+
+        if (!is_file($path)) {
             return;
         }
-        
+
         parent::__construct($subject, $config);
     }
 

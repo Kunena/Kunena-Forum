@@ -206,21 +206,21 @@ class KunenaImage extends Image
             imagefill($handle, 0, 0, $color);
 
             imagecopyresized(
-            	$handle,
-            	$this->handle,
-            	$offset->x,
-            	$offset->y,
-            	0,
-            	0,
-            	$dimensions->width,
-            	$dimensions->height,
-            	$this->getWidth(),
-            	$this->getHeight()
+                $handle,
+                $this->handle,
+                $offset->x,
+                $offset->y,
+                0,
+                0,
+                $dimensions->width,
+                $dimensions->height,
+                $this->getWidth(),
+                $this->getHeight()
             );
         } else {
             \call_user_func_array(
-            	$resizemethod,
-            	array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
+                $resizemethod,
+                array(&$handle, &$this->handle, $offset->x, $offset->y, 0, 0,
                 $dimensions->width, $dimensions->height, $this->getWidth(), $this->getHeight(), )
             );
         }

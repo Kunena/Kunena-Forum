@@ -191,7 +191,7 @@ abstract class KunenaTableObject
             static::$tbl_fields = static::$db->getTableColumns(static::$tbl, false);
 
             if (empty(static::$tbl_fields)) {
-                throw new UnexpectedValueException(sprintf('No columns found for %s table', static::$tbl));
+                throw new UnexpectedValueException(\sprintf('No columns found for %s table', static::$tbl));
             }
         }
 
@@ -302,7 +302,7 @@ abstract class KunenaTableObject
 
                 // If null primary keys aren't allowed
                 if ($throw && \is_null($keyValue)) {
-                    throw new UnexpectedValueException(sprintf('%s: Null primary key not allowed &#160; %s..', \get_class($this), $keyName), 0);
+                    throw new UnexpectedValueException(\sprintf('%s: Null primary key not allowed &#160; %s..', \get_class($this), $keyName), 0);
                 }
             }
         } else {
@@ -319,7 +319,7 @@ abstract class KunenaTableObject
                 // Check if key in given numeric location exists.
                 if (is_numeric($keyName)) {
                     if (!isset($tableKeys[$keyName])) {
-                        throw new UnexpectedValueException(sprintf('%s: Missing key in index %s.', \get_class($this), $keyName), 1);
+                        throw new UnexpectedValueException(\sprintf('%s: Missing key in index %s.', \get_class($this), $keyName), 1);
                     }
 
                     // Find out key name in given numeric location and use it.
@@ -330,14 +330,14 @@ abstract class KunenaTableObject
 
                 // Verify that the used key exists in the table.
                 if (!\in_array($keyName, $fieldNames)) {
-                    throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', \get_class($this), $keyName), 2);
+                    throw new UnexpectedValueException(\sprintf('%s: Missing field in database: %s.', \get_class($this), $keyName), 2);
                 }
             }
         }
 
         // Make sure user didn't pass empty array.
         if (empty($keys)) {
-            throw new UnexpectedValueException(sprintf('%s: No fields given.', \get_class($this)), 3);
+            throw new UnexpectedValueException(\sprintf('%s: No fields given.', \get_class($this)), 3);
         }
 
         return $keys;
@@ -384,7 +384,7 @@ abstract class KunenaTableObject
     {
         // If the source value is not an array or object return false.
         if (!\is_object($src) && !\is_array($src)) {
-            throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', \get_class($this), \gettype($src)));
+            throw new InvalidArgumentException(\sprintf('%s::bind(*%s*)', \get_class($this), \gettype($src)));
         }
 
         // If the source value is an object, get its accessible properties.
@@ -535,7 +535,7 @@ abstract class KunenaTableObject
             // Check if key in given numeric location exists.
             if (is_numeric($keyName)) {
                 if (!isset(static::$tbl_keys[$keyName])) {
-                    throw new UnexpectedValueException(sprintf('%s: Missing key in index: %s.', \get_called_class(), $keyName), 1);
+                    throw new UnexpectedValueException(\sprintf('%s: Missing key in index: %s.', \get_called_class(), $keyName), 1);
                 }
 
                 // Find out key name in given numeric location and use it.
@@ -546,13 +546,13 @@ abstract class KunenaTableObject
 
             // Verify that the used key exists in the table.
             if (!isset(static::$tbl_fields[$keyName])) {
-                throw new UnexpectedValueException(sprintf('%s: Missing field in database: %s.', \get_called_class(), $keyName), 2);
+                throw new UnexpectedValueException(\sprintf('%s: Missing field in database: %s.', \get_called_class(), $keyName), 2);
             }
         }
 
         // Make sure user didn't pass empty array.
         if (empty($keys)) {
-            throw new UnexpectedValueException(sprintf('%s: No fields given.', \get_called_class()), 3);
+            throw new UnexpectedValueException(\sprintf('%s: No fields given.', \get_called_class()), 3);
         }
 
         return $keys;

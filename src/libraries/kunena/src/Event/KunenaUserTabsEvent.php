@@ -32,7 +32,7 @@ use Joomla\CMS\Event\Result\ResultTypeStringAware;
 class KunenaUserTabsEvent extends GenericEvent implements ResultAwareInterface {
     use ResultAware;
     use ResultTypeStringAware;
-    
+
     /**
      * Getter for the socials argument.
      *

@@ -88,7 +88,7 @@ class TopicListingRecentDisplay extends ListDisplay
                     'option' => 'com_kunena',
                     'view' => 'topics',
                     'mode' => $this->state->get('list.mode'),
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));

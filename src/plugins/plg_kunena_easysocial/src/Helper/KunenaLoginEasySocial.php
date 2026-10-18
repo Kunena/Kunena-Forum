@@ -21,7 +21,6 @@ namespace Kunena\Forum\Plugin\Kunena\Easysocial\Helper;
 \defined('_JEXEC') or die('Unauthorized Access');
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Login\KunenaLoginAbstract;
 
 /**

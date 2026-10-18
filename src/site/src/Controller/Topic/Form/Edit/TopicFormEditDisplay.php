@@ -166,7 +166,7 @@ class TopicFormEditDisplay extends KunenaControllerDisplay
             'context' => 'kunena.topic',
             'subject' => $this->topic,
             'params'  => $params,
-            'page'    => 0
+            'page'    => 0,
         ]);
         $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 

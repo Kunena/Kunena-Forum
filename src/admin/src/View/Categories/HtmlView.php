@@ -147,5 +147,5 @@ class HtmlView extends BaseHtmlView
 
         $helpUrl = 'https://docs.kunena.org/en/setup/sections-categories';
         ToolbarHelper::help('COM_KUNENA', false, $helpUrl);
-    }   
+    }
 }

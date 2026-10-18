@@ -193,7 +193,7 @@ class TemplateModel extends AdminModel
 
         return $newState;
     }
-    
+
     /**
      * @return  boolean
      *

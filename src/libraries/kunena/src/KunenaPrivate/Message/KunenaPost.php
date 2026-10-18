@@ -43,7 +43,7 @@ class KunenaPost extends KunenaDatabaseObject
     {
         $properties = [
             'private_id' => $this->private_id,
-            'message_id' => $this->message_id
+            'message_id' => $this->message_id,
         ];
 
         return $properties;

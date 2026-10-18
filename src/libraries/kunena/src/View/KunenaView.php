@@ -200,7 +200,7 @@ class KunenaView extends HtmlView
     public function displayAll()
     {
         if ($this->inLayout) {
-            throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
         }
 
         $this->displayLayout();
@@ -218,7 +218,7 @@ class KunenaView extends HtmlView
     public function displayLayout($layout = null, $tpl = null)
     {
         if ($this->inLayout) {
-            throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
         }
 
         if ($layout) {
@@ -305,7 +305,7 @@ class KunenaView extends HtmlView
     public function displayError($messages = [], $code = 404): void
     {
         if ($this->inLayout) {
-            throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
         }
 
         $title = Text::_('COM_KUNENA_ACCESS_DENIED');
@@ -352,7 +352,7 @@ class KunenaView extends HtmlView
     public function setTitle(string $title): void
     {
         if ($this->inLayout) {
-            throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
         }
 
         if (!$this->state->get('embedded')) {
@@ -386,7 +386,7 @@ class KunenaView extends HtmlView
     public function displayNoAccess($errors = []): void
     {
         if ($this->inLayout) {
-            throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
         }
 
         // Backward compatibility
@@ -482,7 +482,7 @@ class KunenaView extends HtmlView
     public function render(string $layout, $tpl, array $hmvcParams = []): void
     {
         if ($this->inLayout) {
-            throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
         }
 
         if (isset($tpl) && $tpl == 'default') {

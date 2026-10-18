@@ -289,7 +289,7 @@ class HtmlView extends KunenaView
                 'context' => 'kunena.messages',
                 'subject' => $message,
                 'params'  => $params,
-                'page'    => 0
+                'page'    => 0,
             ]);
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }
@@ -366,7 +366,7 @@ class HtmlView extends KunenaView
             'context' => 'kunena.topics',
             'subject' => $this->topics,
             'params'  => $params,
-            'page'    => 0
+            'page'    => 0,
         ]);
         $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
@@ -446,7 +446,7 @@ class HtmlView extends KunenaView
      */
     protected function getCurrentUserTypeByCategory(int $categoryId): string
     {
-        if (!array_key_exists($categoryId, $this->userTypeCache)) {
+        if (!\array_key_exists($categoryId, $this->userTypeCache)) {
             $this->userTypeCache[$categoryId] = $this->me->getType($categoryId, true);
         }
 
@@ -462,7 +462,7 @@ class HtmlView extends KunenaView
      */
     protected function getAvatarForUser(int $userId): string
     {
-        if (!array_key_exists($userId, $this->avatarCache)) {
+        if (!\array_key_exists($userId, $this->avatarCache)) {
             $this->avatarCache[$userId] = KunenaFactory::getUser($userId)->getAvatarImage('klist-avatar', 'list');
         }
 
@@ -478,7 +478,7 @@ class HtmlView extends KunenaView
     {
         $cacheKey = (int) $category->id;
 
-        if (!array_key_exists($cacheKey, $this->categoryLinkCache)) {
+        if (!\array_key_exists($cacheKey, $this->categoryLinkCache)) {
             $parent = $category->getParent();
 
             if ($parent) {

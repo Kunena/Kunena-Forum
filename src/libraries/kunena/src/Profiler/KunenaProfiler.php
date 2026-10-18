@@ -93,7 +93,7 @@ class KunenaProfiler extends Profiler
         // Find the innermost open item with this name; items above it were left open by code paths which skipped stop().
         $found = null;
 
-        for ($i = count($this->_heap) - 1; $i >= 0; $i--) {
+        for ($i = \count($this->_heap) - 1; $i >= 0; $i--) {
             if ($this->_heap[$i]->name == $name) {
                 $found = $i;
                 break;

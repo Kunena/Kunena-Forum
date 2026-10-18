@@ -72,9 +72,9 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
         $isNew   = $event->getIsNew();
 
         Log::add('onKunenaAfterSave context: ' . $context, Log::INFO);
-        \ob_start();
-        $table_content = \ob_get_contents();
-        \ob_end_clean();
+        ob_start();
+        $table_content = ob_get_contents();
+        ob_end_clean();
         Log::add('onKunenaAfterSave table: ' . $table_content, Log::INFO);
         Log::add('onKunenaAfterSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
 
@@ -107,9 +107,9 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
         $isNew   = $event->getIsNew();
 
         Log::add('onKunenaBeforeSave context: ' . $context, Log::INFO);
-        \ob_start();
-        $table_content = \ob_get_contents();
-        \ob_end_clean();
+        ob_start();
+        $table_content = ob_get_contents();
+        ob_end_clean();
         Log::add('onKunenaBeforeSave table: ' . $table_content, Log::INFO);
         Log::add('onKunenaBeforeSave isNew: ' . ($isNew) ? 'Yes' : 'No', Log::INFO);
 
@@ -140,9 +140,9 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
         $table   = $event->getItem();
 
         Log::add('onKunenaAfterDelete context: ' . $context, Log::INFO);
-        \ob_start();
-        $table_content = \ob_get_contents();
-        \ob_end_clean();
+        ob_start();
+        $table_content = ob_get_contents();
+        ob_end_clean();
         Log::add('onKunenaAfterDelete table: ' . $table_content, Log::INFO);
 
         PluginHelper::importPlugin('finder');
@@ -171,9 +171,9 @@ final class Finder extends CMSPlugin implements SubscriberInterface, DispatcherA
         $table   = $event->getItem();
 
         Log::add('onKunenaBeforeDelete context: ' . $context, Log::INFO);
-        \ob_start();
-        $table_content = \ob_get_contents();
-        \ob_end_clean();
+        ob_start();
+        $table_content = ob_get_contents();
+        ob_end_clean();
         Log::add('onKunenaBeforeDelete table: ' . $table_content, Log::INFO);
 
         PluginHelper::importPlugin('finder');

@@ -26,9 +26,9 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
             // Parse the URL and extract the path
             $parsedUrl = parse_url($social->value);
             $path = ltrim($parsedUrl['path'] ?? $social->value, '/');
-            
+
             $href = str_replace('##VALUE##', $path, $social->url);
-            
+
             echo '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" ';
             echo 'target="_blank" rel="nofollow" title="' . Text::_($social->title) . '">';
             echo '<i class="' . htmlspecialchars($social->fa, ENT_QUOTES, 'UTF-8') . '"></i>';

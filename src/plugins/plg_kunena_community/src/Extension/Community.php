@@ -99,12 +99,12 @@ class Community extends CMSPlugin implements SubscriberInterface, DatabaseAwareI
         // Do not load if JomSocial is not installed
         $path = JPATH_ROOT . '/components/com_community/libraries/core.php';
 
-        if (!\is_file($path)) {
+        if (!is_file($path)) {
             return;
         }
 
         include_once $path;
-        
+
         // Call loadApi method to load Kunena constants
         KunenaForum::loadApi();
 

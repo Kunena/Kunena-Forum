@@ -162,12 +162,12 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                 	$this->loadTemplate('subscribecatsusers')
                 ); ?>
                 <?php echo HTMLHelper::_(
-                	'bootstrap.renderModal',
-                	'joomla-dialog-moderators',
-                	[
+                    'bootstrap.renderModal',
+                    'joomla-dialog-moderators',
+                    [
                         'title'  => Text::_('COM_KUNENA_BATCH_USERS_OPTIONS'),
                     ],
-                	$this->loadTemplate('moderators')
+                    $this->loadTemplate('moderators')
                 ); ?>
 
                 <input type="hidden" name="task" value="">

@@ -279,7 +279,7 @@ class KunenaUsers extends KunenaTable
      * @since   Kunena 6.4
      */
     public $socials = null;
-    
+
     /**
     * social
     *

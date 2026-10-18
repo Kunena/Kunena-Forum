@@ -30,7 +30,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                       name="adminForm">
                     <input type="hidden" name="task" value=""/>
                     <?php echo HTMLHelper::_('form.token'); ?>
-                    <?php $socials = \is_array($this->listSocialsNetwork ?? null) ? $this->listSocialsNetwork : []; ?>
+                    <?php $socials = is_array($this->listSocialsNetwork ?? null) ? $this->listSocialsNetwork : []; ?>
 
                     <fieldset>
                         <legend><?php echo Text::_('COM_KUNENA_ADMIN_DELETE_SOCIALS'); ?></legend>

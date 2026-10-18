@@ -162,7 +162,7 @@ class UserItemDisplay extends KunenaControllerDisplay
                 $params = [
                     'option' => 'com_kunena',
                     'view' => 'user',
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 if ($userid) {
@@ -241,11 +241,11 @@ class UserItemDisplay extends KunenaControllerDisplay
                 $this->setDescription($description);
             } else {
                 $description = Text::sprintf(
-                	'COM_KUNENA_META_PROFILE',
-                	$this->profile->getName(),
-                	$this->config->boardTitle,
-                	$this->profile->getName(),
-                	$this->config->boardTitle
+                    'COM_KUNENA_META_PROFILE',
+                    $this->profile->getName(),
+                    $this->config->boardTitle,
+                    $this->profile->getName(),
+                    $this->config->boardTitle
                 );
                 $this->setDescription($description);
             }

@@ -531,7 +531,7 @@ class KunenaBase extends KunenaLayoutBase
     {
         if (!\array_key_exists($property, $this->closures)) {
             if ($this->debug) {
-                throw new InvalidArgumentException(sprintf('Property "%s" is not defined', $property));
+                throw new InvalidArgumentException(\sprintf('Property "%s" is not defined', $property));
             }
 
             return;
@@ -590,7 +590,7 @@ class KunenaBase extends KunenaLayoutBase
      */
     public function __call(string $name, $arguments)
     {
-        throw new InvalidArgumentException(sprintf('Method %s() is not defined', $name));
+        throw new InvalidArgumentException(\sprintf('Method %s() is not defined', $name));
     }
 
     /**
@@ -702,7 +702,7 @@ class KunenaBase extends KunenaLayoutBase
 
         $app = Factory::getApplication();
 
-        // Add all paths for the template overrides. It check if the path contains 'Email' because when it send by he scheduler it should load the path from frontend 
+        // Add all paths for the template overrides. It check if the path contains 'Email' because when it send by he scheduler it should load the path from frontend
         if ($app->isClient('administrator') && stripos($paths[0], 'Email/') !== 0) {
             $template = KunenaFactory::getAdminTemplate();
         } else {

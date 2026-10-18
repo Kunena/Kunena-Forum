@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Finder\Kunena\Extension;
 
-defined('_JEXEC') or die('');
+\defined('_JEXEC') or die('');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
@@ -130,7 +130,7 @@ final class Kunena extends Adapter implements SubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return \array_merge(parent::getSubscribedEvents(), [
+        return array_merge(parent::getSubscribedEvents(), [
             'onFinderBeforeSave'   => 'onFinderBeforeSave',
             'onFinderAfterSave'    => 'onFinderAfterSave',
             'onFinderBeforeDelete' => 'onFinderBeforeDelete',
@@ -291,12 +291,12 @@ final class Kunena extends Adapter implements SubscriberInterface
         // Get the batch offset and size.
         $offset = (int) $aState['offset'];
         $limit  = (int) ($iState->batchSize - $iState->batchOffset);
-        
+
         // The adapter state offset counts indexed items (like core adapters), while
         // the item query walks message ids. Track the id cursor separately so the
         // progress accounting adds up even when message ids have gaps.
         $lastId = (int) ($aState['last_id'] ?? 0);
-        
+
         // Capture any stray output/warnings so they get logged instead of bubbling
         // up to com_finder, which treats any output as a plugin failure.
         ob_start();
@@ -306,23 +306,23 @@ final class Kunena extends Adapter implements SubscriberInterface
             $items = $this->getItems($lastId, $limit);
         } catch (\Throwable $e) {
             ob_end_clean();
-            Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) threw " . get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
+            Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) threw " . \get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
             throw $e;
-        };
+        }
 
         foreach ($items as $item) {
             ob_start();
-            
+
             try {
                 $this->index($item);
             } catch (\Throwable $e) {
                 ob_end_clean();
-                Log::add("Finder Kunena plugin: index of message {$item->id} threw " . get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
+                Log::add("Finder Kunena plugin: index of message {$item->id} threw " . \get_class($e) . ': ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine(), Log::ERROR);
                 throw $e;
             }
-            
+
             $stray = trim(ob_get_clean());
-            
+
             if ($stray !== '') {
                 Log::add("Finder Kunena plugin: getItems({$lastId}, {$limit}) produced output: " . substr($stray, 0, 3000), Log::ERROR);
             }
@@ -348,7 +348,7 @@ final class Kunena extends Adapter implements SubscriberInterface
         Indexer::setState($iState);
 
         unset($items, $item);
-        
+
         return \true;
     }
 
@@ -406,12 +406,12 @@ final class Kunena extends Adapter implements SubscriberInterface
         // Initialize CLI
         $api = JPATH_ADMINISTRATOR . '/components/com_kunena/api/api.php';
 
-        if (\is_file($api)) {
+        if (is_file($api)) {
             require_once $api;
         }
 
         // Check if Kunena has been installed.
-        if (!\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('7.1') || !KunenaForum::installed()) {
+        if (!class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') || !KunenaForum::isCompatible('7.1') || !KunenaForum::installed()) {
             return \false;
         }
 
@@ -543,7 +543,7 @@ final class Kunena extends Adapter implements SubscriberInterface
         // discussion (thread) so that the indexed record always has a title.
         $subject = $message->subject;
 
-        if ($subject === \null || \trim((string) $subject) === '') {
+        if ($subject === \null || trim((string) $subject) === '') {
             $subject = $this->getThreadSubject($message->thread);
         }
 

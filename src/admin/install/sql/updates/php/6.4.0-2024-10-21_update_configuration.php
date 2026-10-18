@@ -24,9 +24,9 @@ function kunena_640_2024_10_21_update_configuration($parent) {
 	$config = KunenaFactory::getConfig();
 
 	unset($config->social);
-	
+
 	// Save configuration
-	$config->save();	
+	$config->save();
 
 	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_UPDATE_CONFIGURATION'), 'success' => true);
 }

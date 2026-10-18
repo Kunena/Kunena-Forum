@@ -49,7 +49,7 @@ class KunenaUser extends KunenaDatabaseObject
             'user_id'    => $this->user_id,
             'read_at'    => $this->read_at,
             'replied_at' => $this->replied_at,
-            'deleted_at' => $this->deleted_at
+            'deleted_at' => $this->deleted_at,
         ];
 
         return $properties;

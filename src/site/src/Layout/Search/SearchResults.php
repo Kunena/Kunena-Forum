@@ -152,7 +152,7 @@ class SearchResults extends KunenaLayout
                 'context' => 'kunena.messages',
                 'subject' => $result,
                 'params'  => $params,
-                'page'    => 0
+                'page'    => 0,
             ]);
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }
@@ -172,7 +172,7 @@ class SearchResults extends KunenaLayout
             $category = $result->getCategory();
             $cacheKey = (int) $category->id;
 
-            if (!array_key_exists($cacheKey, $categoryLinkCache)) {
+            if (!\array_key_exists($cacheKey, $categoryLinkCache)) {
                 $parent = $category->getParent();
 
                 if ($parent) {
@@ -196,7 +196,7 @@ class SearchResults extends KunenaLayout
 
             $userId = (int) $this->message->userid;
 
-            if (!array_key_exists($userId, $profileCache)) {
+            if (!\array_key_exists($userId, $profileCache)) {
                 $profileCache[$userId] = KunenaFactory::getUser($userId);
             }
 

@@ -50,25 +50,25 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 class KunenaAnnouncement extends KunenaDatabaseObject
 {
     public $typeAlias;
-    
+
     public $title;
-    
+
     public $created_by;
-    
+
     public $sdescription;
-    
+
     public $description;
-    
+
     public $created;
-    
+
     public $publish_up;
-    
+
     public $publish_down;
-    
+
     public $published;
-    
+
     public $ordering;
-    
+
     public $showdate;
 
     /**
@@ -501,7 +501,7 @@ class KunenaAnnouncement extends KunenaDatabaseObject
             'publish_up'   => $this->publish_up,
             'publish_down' => $this->publish_down,
             'ordering'     => $this->ordering,
-            'showdate'     => $this->showdate
+            'showdate'     => $this->showdate,
         ];
 
         return $properties;

@@ -357,8 +357,8 @@ class KunenaUpload
         $this->filename = null;
 
         throw new RuntimeException(
-        	Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
-        	400
+            Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
+            400
         );
     }
 
@@ -619,8 +619,8 @@ class KunenaUpload
 
                 if (!$name) {
                     throw new RuntimeException(
-                    	Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
-                    	400
+                        Text::sprintf('COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', implode(', ', $this->validExtensions)),
+                        400
                     );
                 }
             }
@@ -716,6 +716,6 @@ class KunenaUpload
             $power = ($bytes > 0) ? min((int) floor(log($bytes, $mod)), \count($units) - 1) : 0;
         }
 
-        return sprintf($format, $bytes / pow($mod, $power), $units[$power]);
+        return \sprintf($format, $bytes / pow($mod, $power), $units[$power]);
     }
 }

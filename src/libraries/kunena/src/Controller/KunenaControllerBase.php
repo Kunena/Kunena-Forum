@@ -252,7 +252,7 @@ abstract class KunenaControllerBase implements Serializable
         $this->__unserialize((array) unserialize($input));
 
         if (!($this->input instanceof Input)) {
-            throw new UnexpectedValueException(sprintf('%s::unserialize would not accept a `%s`.', \get_class($this), \gettype($this->input)));
+            throw new UnexpectedValueException(\sprintf('%s::unserialize would not accept a `%s`.', \get_class($this), \gettype($this->input)));
         }
 
         return $this;

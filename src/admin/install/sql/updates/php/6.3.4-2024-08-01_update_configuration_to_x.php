@@ -25,18 +25,18 @@ function kunena_634_2024_08_01_update_configuration_to_x($parent) {
 
 	if (isset($config->twitterConsumerKey)) {
 	    $config->XConsumerKey = $config->twitterConsumerKey;
-	    
+
 	    unset($config->twitterConsumerKey);
 	}
-	
+
 	if (isset($config->twitterConsumerSecret)) {
 	    $config->XConsumerSecret = $config->twitterConsumerSecret;
-	    
+
 	    unset($config->twitterConsumerSecret);
 	}
 
 	// Save configuration
-	$config->save();	
+	$config->save();
 
 	return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_634_UPDATE_CONFIGURATION'), 'success' => true);
 }

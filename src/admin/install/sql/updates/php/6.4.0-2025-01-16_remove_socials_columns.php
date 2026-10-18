@@ -22,21 +22,21 @@ use Joomla\CMS\Language\Text;
  */
 function kunena_640_2025_01_16_remove_socials_columns($parent) {
     $db     = Factory::getContainer()->get('DatabaseDriver');
-    
-    $listOfColumns = ['icq', 'x_social', 'facebook', 'myspace', 'linkedin', 'linkedin_company', 'digg', 'skype', 'yim', 'google', 'friendfeed', 'github', 'microsoft', 'blogspot', 'flickr', 'bebo', 'instagram', 
+
+    $listOfColumns = ['icq', 'x_social', 'facebook', 'myspace', 'linkedin', 'linkedin_company', 'digg', 'skype', 'yim', 'google', 'friendfeed', 'github', 'microsoft', 'blogspot', 'flickr', 'bebo', 'instagram',
         'qqsocial', 'qzone', 'weibo', 'wechat', 'vk', 'telegram', 'apple', 'vimeo', 'whatsapp', 'youtube', 'ok', 'pinterest', 'reddit', 'bluesky_app'];
-    
+
     foreach ($listOfColumns as $column) {
         $query = "SHOW COLUMNS FROM " . $db->quoteName('#__kunena_users') . " LIKE '{$column}';";
         $db->setQuery($query);
         $column = $db->loadResult();
-        
+
         if ($column) {
             $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
             $db->setQuery($query);
             $db->execute();
         }
-    }    
-    
+    }
+
     return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_REMOVE_SOCIALS_COLUMNS'), 'success' => true);
 }

@@ -365,7 +365,7 @@ abstract class KunenaForum
         }
 
         self::$version_major = substr(self::$version, 0, 3);
-        
+
         // Only set version name to 'Git Repository' if the version contains development indicators
         if (strpos(self::$version, 'GIT') !== false) {
             self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
@@ -533,7 +533,7 @@ abstract class KunenaForum
         // Render the view.
         $view->displayLayout($layout, $template);
     }
-    
+
     /**
      * Just load the API to be used in modules and plugins instead of booting component.
      *

@@ -119,14 +119,14 @@ class TopicController extends KunenaController
         }
 
         $mes_id      = $this->input->getInt('mes_id', 0);
-        
+
         // Check if the user is allowed to read the message with the given mes_id
         $message = KunenaMessageHelper::get($mes_id);
-        
+
         if (!$message->isAuthorised('read')) {
             throw new RuntimeException(Text::_('Not allowed'), 403);
         }
-        
+
         $attachments = KunenaAttachmentHelper::getByMessage($mes_id);
         $list        = [];
 
@@ -172,7 +172,7 @@ class TopicController extends KunenaController
         if (!Session::checkToken('request')) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
-        
+
         $attachs_id = $this->input->getString('files_id', '');
         $attachs_id = json_decode($attachs_id);
 
@@ -212,7 +212,7 @@ class TopicController extends KunenaController
         if (!Session::checkToken('request')) {
             throw new RuntimeException(Text::_('JINVALID_TOKEN'), 403);
         }
-        
+
         if (!$this->me->exists()) {
             throw new RuntimeException(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 401);
         }
@@ -256,7 +256,7 @@ class TopicController extends KunenaController
         // Only support JSON requests.
         if ($this->input->getWord('format', 'html') != 'json') {
             throw new RuntimeException(Text::_('Bad Request'), 400);
-        }        
+        }
 
         $response = [];
 
@@ -303,7 +303,7 @@ class TopicController extends KunenaController
         if (!Session::checkToken('request')) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
-        
+
         $attach_id = $this->input->getInt('file_id', 0);
 
         $instance = KunenaAttachmentHelper::get($attach_id);
@@ -321,7 +321,7 @@ class TopicController extends KunenaController
      * @since Kunena 5.1
      */
     protected function checkpermissions($attachment_userid)
-    {        
+    {
         if ($this->me->userid != $attachment_userid && !$this->me->isAdmin() && !$this->me->isModerator()) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
@@ -698,7 +698,7 @@ class TopicController extends KunenaController
 
             return;
         }
-        
+
         $this->app->setUserState('com_kunena.postfields', $fields);
 
         // Need to do to the replacement in case of VBA code is inserted without the bbcode tags [code][/code]
@@ -706,7 +706,6 @@ class TopicController extends KunenaController
         if (strpos($fields['message'], '"",""') !== false) {
             $fields['message'] = str_replace('"",""', '"", ""', $fields['message']);
         }
-
 
         if (!$this->id) {
             // Create topic
@@ -747,14 +746,16 @@ class TopicController extends KunenaController
                 if (PluginHelper::isEnabled('captcha', $plugin)) {
                     try {
                         $captcha = Captcha::getInstance((string) $plugin, ['namespace' => 'kunena_captcha']);
-                        
+
                         if (!$captcha->checkAnswer($app->getInput()->post->getString('captcha', ''))) {
                             $this->setRedirectBack();
+
                             return;
                         }
                     } catch (\RuntimeException $e) {
                         $app->enqueueMessage($e->getMessage(), 'error');
                         $this->setRedirectBack();
+
                         return;
                     }
                 }
@@ -778,7 +779,7 @@ class TopicController extends KunenaController
         }
 
         $dateNowUnix = Factory::getDate()->toUnix();
-        
+
         // Flood protection
         if ($this->config->floodProtection && !$this->me->isModerator($category) && $isNew) {
             $timelimit = $dateNowUnix - $this->config->floodProtection;
@@ -1032,7 +1033,7 @@ class TopicController extends KunenaController
             }
         }
 
-        // Removed orphaned attachments (one has added on the form and removed after before to submit)        
+        // Removed orphaned attachments (one has added on the form and removed after before to submit)
         $this->removeOrphanedAttachments();
 
         // Post Private message
@@ -1041,6 +1042,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- abort
         }
 
@@ -1098,8 +1100,8 @@ class TopicController extends KunenaController
         $attachments = KunenaAttachmentHelper::getByUserid($this->me, $params);
 
         if (!empty($attachments)) {
-            foreach ($attachments as $attachment) {                
-                $attachment->delete();               
+            foreach ($attachments as $attachment) {
+                $attachment->delete();
             }
         }
     }
@@ -1176,7 +1178,7 @@ class TopicController extends KunenaController
 
                 $result = json_decode((string) $response->getBody(), true);
 
-                if (!is_array($result) || empty($result['success'])) {
+                if (!\is_array($result) || empty($result['success'])) {
                     return false;
                 }
 
@@ -1713,7 +1715,7 @@ class TopicController extends KunenaController
 
         $private->subject = $message->subject;
         $attachs = $message->getAttachments();
-       
+
         if ($message->message && trim($body)) {
             $private->body      = $body;
         } else {
@@ -1777,6 +1779,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- abort
         }
 
@@ -1871,6 +1874,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- aborts
         }
 
@@ -1913,6 +1917,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- aborts
         }
 
@@ -1955,6 +1960,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- aborts
         }
 
@@ -1997,9 +2003,10 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- aborts
         }
-            
+
         try {
             if (!$topic->favorite(0)) {
                 throw new Exception(Text::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC'));
@@ -2039,9 +2046,10 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- aborts
         }
-            
+
         try {
             if (!$topic->sticky(1)) {
                 throw new Exception(Text::_('COM_KUNENA_POST_STICKY_NOT_SET'));
@@ -2091,6 +2099,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- abort
         }
 
@@ -2139,6 +2148,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- abort
         }
 
@@ -2187,6 +2197,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- abort
         }
 
@@ -2244,15 +2255,16 @@ class TopicController extends KunenaController
         }
 
         $category = $topic->getCategory();
-        
+
         try {
             $target->tryAuthorise('delete');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- abort
         }
-            
+
         try {
             $target->publish($hold);
 
@@ -2318,9 +2330,10 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- abort
         }
-        
+
         try {
             $target->publish(KunenaForum::PUBLISHED);
 
@@ -2374,16 +2387,17 @@ class TopicController extends KunenaController
         }
 
         $category = $topic->getCategory();
-        
+
         try {
             $topic->tryAuthorise('permdelete');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- abort
         }
 
-        try {            
+        try {
             $target->delete();
 
             if ($this->config->logModeration) {
@@ -2450,9 +2464,10 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirect($target->getUrl($this->return, false));
+
             return; // -- abort
         }
-        
+
         try {
             $target->publish(KunenaForum::PUBLISHED);
         } catch (Exception $e) {
@@ -2527,7 +2542,7 @@ class TopicController extends KunenaController
 
         $error        = null;
         $targetobject = null;
-        
+
         if ($targetobject) {
             $redirect = $targetobject->getUrl($this->return, false, 'last');
         } else {
@@ -2539,6 +2554,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirect($redirect);
+
             return; // -- abort
         }
 
@@ -2547,6 +2563,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirect($redirect);
+
             return; // -- abort
         }
 
@@ -2667,6 +2684,7 @@ class TopicController extends KunenaController
             // Deny access if user cannot read target
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
             return; // -- abort
         }
 
@@ -2787,6 +2805,7 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirect($topic->getUrl($this->return, false));
+
             return; // -- abort, do not vote
         }
 

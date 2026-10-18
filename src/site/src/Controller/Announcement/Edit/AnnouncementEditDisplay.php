@@ -76,7 +76,7 @@ class AnnouncementEditDisplay extends KunenaControllerDisplay
                     'option' => 'com_kunena',
                     'view' => 'announcement',
                     'layout' => $id ? 'edit' : 'create',
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 if ($id) {

@@ -90,6 +90,7 @@ class Kunena extends PrivacyPlugin implements SubscriberInterface, DatabaseAware
 
         if (!$user) {
             $event->addResult($status);
+
             return;
         }
 

@@ -68,7 +68,7 @@ class AnnouncementItemDisplay extends KunenaControllerDisplay
                     'view' => 'announcement',
                     'layout' => 'default',
                     'id' => $id,
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));

@@ -107,7 +107,7 @@ class TopicListingUnreadDisplay extends ListDisplay
                     'option' => 'com_kunena',
                     'view' => 'topics',
                     'layout' => 'unread',
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));

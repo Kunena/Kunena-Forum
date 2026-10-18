@@ -58,19 +58,18 @@ class KunenaSession
      * @since   Kunena 6.0
      */
     public $currvisit;
-    
+
     /**
      * @var     integer|string
      * @since   Kunena 6.4
      */
     public $typeAlias;
-    
+
     /**
      * @var     integer|string
      * @since   Kunena 6.4
      */
     public $allowedcats;
-
 
     /**
      * @var     mixed
@@ -245,8 +244,8 @@ class KunenaSession
     {
         // Perform session timeout check
         $lifetime              = max(
-        	\intval(Factory::getApplication()->get('lifetime')) * 60,
-        	\intval(KunenaFactory::getConfig()->sessionTimeOut)
+            \intval(Factory::getApplication()->get('lifetime')) * 60,
+            \intval(KunenaFactory::getConfig()->sessionTimeOut)
         );
         $this->_sessionTimeOut = ($this->currvisit + $lifetime < Factory::getDate()->toUnix());
 
@@ -280,7 +279,7 @@ class KunenaSession
             'allowed'    => $this->allowed,
             'lasttime'   => $this->lasttime,
             'readtopics' => $this->readtopics,
-            'currvisit'  => $this->currvisit
+            'currvisit'  => $this->currvisit,
         ];
 
         $table->bind($properties);

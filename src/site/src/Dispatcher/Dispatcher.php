@@ -138,8 +138,8 @@ class Dispatcher extends ComponentDispatcher
                 'onKunenaBeforeRender',
                 ['context' => "com_kunena.{$view}",
                 'content' => &$contents]
-                )
-            );
+            )
+        );
         $contents = (string) $contents;
         $dispatcher->dispatch(
             'onKunenaAfterRender',
@@ -147,8 +147,8 @@ class Dispatcher extends ComponentDispatcher
                 'onKunenaAfterRender',
                 ['context' => "com_kunena.{$view}",
                 'content' => &$contents]
-                )
-            );
+            )
+        );
         echo $contents;
 
         // Remove custom error handlers.
@@ -162,7 +162,7 @@ class Dispatcher extends ComponentDispatcher
             echo "<h3>Kunena Profile Information</h3>";
 
             foreach ($kunena_profiler->getAll() as $item) {
-                echo sprintf(
+                echo \sprintf(
                     "Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>",
                     $item->name,
                     $item->getInternalTime(),

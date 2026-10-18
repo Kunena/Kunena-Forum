@@ -47,27 +47,27 @@ abstract class KunenaEmail
         if (isset(static::$mailer_error_status)) {
             // Mailer is broken, so prevent any sending
             Log::add(static::$mailer_error_status->getMessage(), Log::ERROR, 'kunena');
-            
+
             return false;
         }
-        
+
         $chunks = array_chunk($receivers, 1);
-        
+
         $success = true;
-        $totalEmails = count($receivers);
+        $totalEmails = \count($receivers);
         $emailsSent = 0;
-        
+
         if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
             $mail->SMTPKeepAlive = true;
         }
-        
+
         foreach ($chunks as $emails) {
             $mail->ClearAddresses();
-            $mail->addRecipient($emails);            
-            
+            $mail->addRecipient($emails);
+
             try {
                 if ($mail->Send()) {
-                    $emailsSent += count($emails);
+                    $emailsSent += \count($emails);
                 } else {
                     $success = false;
                 }
@@ -76,11 +76,11 @@ abstract class KunenaEmail
                 Log::add($e->getMessage(), Log::ERROR, 'kunena');
             }
         }
-        
+
         if ($mail instanceof \PHPMailer\PHPMailer\PHPMailer) {
             $mail->smtpClose();
         }
-        
+
         // Log email sending result
         if ($success && $emailsSent > 0) {
             KunenaLog::log(
@@ -95,7 +95,7 @@ abstract class KunenaEmail
                 ['mail_subject' => $mail->Subject, 'totalEmailsAttempted' => $totalEmails]
             );
         }
-        
+
         return $success;
     }
 
@@ -113,11 +113,11 @@ abstract class KunenaEmail
     {
         if (strpos($errstr, "mail(): Failed to connect to mail server") !== false) {
             static::$mailer_error_status = new MailerBrokenException(
-            	$errstr,
-            	$errno,
-            	Log::ERROR,
-            	$errfile,
-            	$errline
+                $errstr,
+                $errno,
+                Log::ERROR,
+                $errfile,
+                $errline
             );
 
             Log::add(static::$mailer_error_status->errorMessage(), Log::ERROR, 'kunena');

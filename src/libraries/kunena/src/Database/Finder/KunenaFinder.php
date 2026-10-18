@@ -195,8 +195,8 @@ abstract class KunenaFinder
                 } else {
                     $db = $this->db;
                     array_walk(
-                    	$value,
-                    	function (&$item) use ($db) {
+                        $value,
+                        function (&$item) use ($db) {
                             $item = $db->quote($item);
                         }
                     );
@@ -206,7 +206,7 @@ abstract class KunenaFinder
                 break;
             default:
                 // Never drop a filter silently: a typo would return rows that should have been excluded.
-                throw new \InvalidArgumentException(sprintf('Unsupported operation "%s" for the field "%s".', $operation, $field));
+                throw new \InvalidArgumentException(\sprintf('Unsupported operation "%s" for the field "%s".', $operation, $field));
         }
 
         return $this;

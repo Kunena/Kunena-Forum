@@ -594,7 +594,7 @@ class UserController extends KunenaController
             $user->signature = $signature;
         }
 
-        // Save values entered by user for the social 
+        // Save values entered by user for the social
         $socials = KunenaUserSocials::getInstance($user->userid);
 
         foreach ($socials as $key => $social) {
@@ -1420,17 +1420,17 @@ class UserController extends KunenaController
         if (!Session::checkToken('get')) {
             throw new RuntimeException(Text::_('Forbidden'), 403);
         }
-        
+
         $id = $this->input->getInt('topicid', 0);
-        
+
         // Check if the user requesting it has made a post in the topic
         $user = KunenaFactory::getUser();
         $topic = KunenaTopicHelper::get($id)->getUserTopic($user->userid);
-        
+
         if (!$topic->exists()) {
             throw new RuntimeException(Text::_('Not allowed'), 403);
         }
-        
+
         $userListMentions = [];
 
         if ($id > 0) {

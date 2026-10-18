@@ -23,14 +23,14 @@ use Joomla\Filesystem\File;
  */
 function kunena_706_2026_05_30_add_index_files_in_attachments_directories($parent) {
     $path = JPATH_ROOT . '/media/kunena/attachments/';
-    
+
     $attachmensFolders = Folder::folders($path, '.', false, true);
-    
+
     foreach($attachmensFolders as $folder) {
         // Create index.hml into the user folder
         $content = '<html><body></body></html>';
         File::write($folder . '/index.html', $content);
     }
-    
+
     return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_706_ADD_INDEX_FILES_ATTACHMENTS_DIRECTORIES'), 'success' => true);
 }

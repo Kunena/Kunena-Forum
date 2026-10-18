@@ -117,7 +117,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
 
         $link = 'index.php?option=com_kunena';
 
-        $useIcons = \version_compare(JVERSION, '3.0', '>');
+        $useIcons = version_compare(JVERSION, '3.0', '>');
 
         if (!KunenaForum::installed()) {
             $icon = 'fas fa-exclamation-triangle';
@@ -143,7 +143,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
             $icon  = 'kunena/icons/icon-48-kupdate-alert-white.png';
             $text  = Text::_('COM_KUNENA') . '<br />' . Text::_('PLG_QUICKICON_KUNENA_UPDATE_DISABLED');
             $class = 'pulse error';
-        } elseif (!empty($updateInfo->version) && \version_compare(KunenaForum::version(), $updateInfo->version, '<')) {
+        } elseif (!empty($updateInfo->version) && version_compare(KunenaForum::version(), $updateInfo->version, '<')) {
             // Has updates
             $icon = 'fas fa-download';
 
@@ -171,7 +171,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
         }
 
         // Use one line in J!4.0.
-        $text = \preg_replace('|<br />|', ' - ', $text);
+        $text = preg_replace('|<br />|', ' - ', $text);
 
         $iconDefinition = [
             'link'  => $link,

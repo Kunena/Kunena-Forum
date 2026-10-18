@@ -98,7 +98,6 @@ class plgSampledataKunenaInstallerScript extends InstallerScript
         return true;
     }
 
-
     /**
      * @param $pluginName
      *

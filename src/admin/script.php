@@ -117,7 +117,7 @@ class Com_KunenaInstallerScript extends InstallerScript
                         'email_sender_name'                 => 'emailSenderName',
                         'display_filename_attachment'       => 'displayFilenameAttachment',
                         'new_users_prevent_post_url_images' => 'newUsersPreventPostUrlImages',
-                        'minimal_user_posts_add_url_image'  => 'minimalUserPostsAddUrlImage'
+                        'minimal_user_posts_add_url_image'  => 'minimalUserPostsAddUrlImage',
                     ];
 
                     foreach ($keyConversions as $oldKey => $newKey) {

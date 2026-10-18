@@ -253,48 +253,48 @@ class TemplatesModel extends AdminModel
     protected function loadPremiumTemplatesXml()
     {
         $this->template = [];
-        
+
         $url      = 'https://update.kunena.org/paidTemplatesK6.0.xml';
         $cacheKey = 'kunena_premium_templates_xml';
         $cacheId  = md5($cacheKey);
-        
+
         // Retrieve the Joomla! cache controller to store data in Joomla! cache
         $cache = Factory::getContainer()
             ->get(CacheControllerFactoryInterface::class)
             ->createCacheController('output', ['defaultgroup' => 'com_kunena', 'lifetime' => 60]);
-        
+
         $cached = $cache->get($cacheId, 'com_kunena');
 
         if ($cached !== false) {
             return $cached;
         }
-        
+
         try {
             $transport = new StreamTransport([]);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
-            
+
             return false;
         }
-        
+
         if (!$transport->isSupported()) {
             return false;
         }
-        
+
         $options = ['timeout' => 10];
         $http    = new Http($options, $transport);
-        
+
         try {
             $response = $http->get($url, [], 10);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
-            
+
             return false;
         }
-        
+
         if ($response->getStatusCode() == '200') {
             $xml = simplexml_load_string($response->getBody());
-            
+
             if ($xml) {
                 foreach ($xml->templates as $template) {
                     foreach ($template as $temp) {
@@ -317,7 +317,7 @@ class TemplatesModel extends AdminModel
 
                 // Store the data in the Joomla! cache
                 $stored = $cache->store($this->template, $cacheId, 'com_kunena');
-                
+
                 if (!$stored) {
                     $this->app->enqueueMessage('To avoid timeout in order to use Joomla! cache you need to enable cache into Joomla! configuration', 'notice');
                 }
@@ -325,7 +325,7 @@ class TemplatesModel extends AdminModel
                 return $this->template;
             }
         }
-        
+
         return false;
     }
 

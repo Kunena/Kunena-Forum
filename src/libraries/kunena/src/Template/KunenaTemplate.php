@@ -91,13 +91,13 @@ class KunenaTemplate
      * @since   Kunena 6.0
      */
     public $config = null;
-    
+
     /**
      * @var     SiteApplication
      * @since   Kunena 7.0
      */
     public $app = null;
-    
+
     /**
      * @var     Input
      * @since   Kunena 7.0
@@ -463,7 +463,7 @@ class KunenaTemplate
     {
         $app   = Factory::getApplication();
         $input = $app->getInput();
-        
+
         if (!$name) {
             $name = $input->cookie->getString('kunena_template', KunenaFactory::getConfig()->template);
         }
@@ -2023,7 +2023,7 @@ HTML;
      */
     protected function isFileCached(string $path): bool
     {
-        if (!array_key_exists($path, self::$fileExistsCache)) {
+        if (!\array_key_exists($path, self::$fileExistsCache)) {
             self::$fileExistsCache[$path] = is_file($path);
         }
 

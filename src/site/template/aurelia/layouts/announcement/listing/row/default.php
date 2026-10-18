@@ -49,26 +49,26 @@ $announcement = $this->announcement;
         <td class="center">
             <?php if ($this->canEdit()) {
                 echo HTMLHelper::_(
-                	'kunenagrid.task',
-                	$row,
-                	'tick.png',
-                	Text::_('COM_KUNENA_ANN_EDIT'),
-                	'edit',
-                	'',
-                	true
+                    'kunenagrid.task',
+                    $row,
+                    'tick.png',
+                    Text::_('COM_KUNENA_ANN_EDIT'),
+                    'edit',
+                    '',
+                    true
                 );
             } ?>
         </td>
         <td class="center">
             <?php if ($this->canDelete()) {
                 echo HTMLHelper::_(
-                	'kunenagrid.task',
-                	$row,
-                	'publish_x.png',
-                	Text::_('COM_KUNENA_ANN_DELETE'),
-                	'delete',
-                	'',
-                	true
+                    'kunenagrid.task',
+                    $row,
+                    'publish_x.png',
+                    Text::_('COM_KUNENA_ANN_DELETE'),
+                    'delete',
+                    '',
+                    true
                 );
             } ?>
         </td>

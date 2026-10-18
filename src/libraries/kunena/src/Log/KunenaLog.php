@@ -335,17 +335,17 @@ class KunenaLog
      * @since   Kunena 5.0
      */
     const LOG_ERROR_FATAL = 'LOG_ERROR_FATAL';
-    
+
     /**
      * @since   Kunena 7.0
      */
     const LOG_EMAIL_NOTIFICATION_SENT = 'LOG_EMAIL_NOTIFICATION_SENT';
-    
+
     /**
      * @since   Kunena 7.0
      */
     const LOG_EMAIL_NOTIFICATION_NOTSENT = 'LOG_EMAIL_NOTIFICATION_NOTSENT';
-    
+
     /**
      * @since   Kunena 7.0
      */
@@ -421,12 +421,12 @@ class KunenaLog
      * @throws Exception
      */
     public static function log(
-    	int $type,
-    	string $operation,
-    	$data,
-    	?KunenaCategory $category = null,
-    	?KunenaTopic $topic = null,
-    	?KunenaUser $user = null
+        int $type,
+        string $operation,
+        $data,
+        ?KunenaCategory $category = null,
+        ?KunenaTopic $topic = null,
+        ?KunenaUser $user = null
     ): void {
         static::$entries[] = new KunenaEntry($type, $operation, $data, $category, $topic, $user);
     }

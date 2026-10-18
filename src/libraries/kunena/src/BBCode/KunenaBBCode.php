@@ -742,7 +742,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         'img'          => [
             'mode'          => BBCode::BBCODE_MODE_LIBRARY,
             'method'        => 'DoImage',
-            'allow'         => ['size' => '/^\d*x?\d*$/','alt' => '/^[\w]*$/', 'float' => '/\bleft\b|\bright\b/' ],
+            'allow'         => ['size' => '/^\d*x?\d*$/', 'alt' => '/^[\w]*$/', 'float' => '/\bleft\b|\bright\b/' ],
             'class'         => 'block',
             'allow_in'      => ['listitem', 'block', 'columns', 'link'],
             'content'       => BBCode::BBCODE_VERBATIM,
@@ -1638,7 +1638,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if (!empty($bbcode->parent->forceSecure)) {
             return '';
         }
-        
+
         // Display nothing in subscription mails
         if (!empty($bbcode->context)) {
             return '';
@@ -2029,7 +2029,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
                     new ContentPrepareEvent(
                         'onContentPrepare',
                         ['context' => 'com_kunena.bbcode', 'subject' => &$article, 'params' => &$params, 'page' => 0]
-                        )
+                    )
                 );
                 $article->text       = HTMLHelper::_('string.truncate', $article->text, $bbcode->output_limit - $bbcode->text_length);
                 $bbcode->text_length += \strlen($article->text);

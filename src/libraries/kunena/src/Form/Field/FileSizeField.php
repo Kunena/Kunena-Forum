@@ -45,7 +45,7 @@ class FileSizeField extends NumberField
             $data['description'],
             \ini_get('post_max_size'),
             \ini_get('upload_max_filesize'),
-            \function_exists('php_ini_loaded_file') ? \php_ini_loaded_file() : ''
+            \function_exists('php_ini_loaded_file') ? php_ini_loaded_file() : ''
         );
 
         return $data;

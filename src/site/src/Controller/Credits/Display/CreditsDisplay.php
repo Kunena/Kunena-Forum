@@ -86,7 +86,7 @@ class CreditsDisplay extends KunenaControllerDisplay
                 $params = [
                     'option' => 'com_kunena',
                     'view' => 'credits',
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
@@ -124,11 +124,11 @@ class CreditsDisplay extends KunenaControllerDisplay
                 'title' => Text::_('COM_KUNENA_CREDITS_FOUNDER'), ],
         ];
         $this->thanks     = Text::sprintf(
-        	'COM_KUNENA_CREDITS_THANKS_TO',
-        	'https://www.kunena.org/team#special_thanks',
-        	'https://www.transifex.com/projects/p/Kunena',
-        	'https://www.kunena.org',
-        	'https://github.com/Kunena/Kunena-Forum/graphs/contributors'
+            'COM_KUNENA_CREDITS_THANKS_TO',
+            'https://www.kunena.org/team#special_thanks',
+            'https://www.transifex.com/projects/p/Kunena',
+            'https://www.kunena.org',
+            'https://github.com/Kunena/Kunena-Forum/graphs/contributors'
         );
     }
 

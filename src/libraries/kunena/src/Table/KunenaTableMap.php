@@ -135,7 +135,7 @@ class KunenaTableMap
             $fields = $this->_db->getTableColumns($name, false);
 
             if (empty($fields)) {
-                throw new UnexpectedValueException(sprintf('No columns found for %s table', $name));
+                throw new UnexpectedValueException(\sprintf('No columns found for %s table', $name));
             }
 
             $cache[$name] = $fields;
@@ -313,7 +313,7 @@ class KunenaTableMap
     {
         // If the source value is not an array or object return false.
         if (!\is_object($src) && !\is_array($src)) {
-            throw new InvalidArgumentException(sprintf('%s::bind(*%s*)', \get_class($this), \gettype($src)));
+            throw new InvalidArgumentException(\sprintf('%s::bind(*%s*)', \get_class($this), \gettype($src)));
         }
 
         // If the source value is an object, get its accessible properties.
@@ -438,7 +438,7 @@ class KunenaTableMap
         $m = $this->_tbl_mapped;
 
         if (0 == $this->{$k}) {
-            throw new UnexpectedValueException(sprintf('No key specified: %s.', \get_class($this)));
+            throw new UnexpectedValueException(\sprintf('No key specified: %s.', \get_class($this)));
         }
 
         $id    = $this->{$k};
@@ -540,7 +540,7 @@ class KunenaTableMap
         foreach ($keys as $field => $value) {
             // Check that $field is in the table.
             if (!\in_array($field, $fields)) {
-                throw new UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', \get_class($this), $field));
+                throw new UnexpectedValueException(\sprintf('Missing field in database: %s &#160; %s.', \get_class($this), $field));
             }
 
             // Add the search tuple to the query.

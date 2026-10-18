@@ -41,7 +41,7 @@ class KunenaPrivateUddeim extends KunenaPrivate
     {
         $this->params = $params;
 
-        if (!\class_exists('uddeIMAPI')) {
+        if (!class_exists('uddeIMAPI')) {
             return;
         }
 

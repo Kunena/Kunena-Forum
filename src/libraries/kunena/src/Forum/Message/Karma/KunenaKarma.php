@@ -22,7 +22,6 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\Tables\TableKunenaKarma;
 
 /**
@@ -182,7 +181,7 @@ class KunenaKarma
 
         $query->insert($this->_db->quoteName('#__kunena_karma'))
             ->columns(
-            	[
+                [
                     $this->_db->quoteName('userid'),
                     $this->_db->quoteName('target_userid'),
                     $this->_db->quoteName('time'),

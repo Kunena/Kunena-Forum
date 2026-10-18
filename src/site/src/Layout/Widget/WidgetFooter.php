@@ -97,6 +97,6 @@ class WidgetFooter extends KunenaLayout
         $profiler = KunenaProfiler::instance('Kunena');
         $time     = $profiler->getTime('Total Time');
 
-        return sprintf('%0.3f', $time);
+        return \sprintf('%0.3f', $time);
     }
 }

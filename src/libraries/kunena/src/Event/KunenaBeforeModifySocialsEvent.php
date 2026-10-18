@@ -46,7 +46,7 @@ class KunenaBeforeModifySocialsEvent extends GenericEvent implements ResultAware
     {
         return $value;
     }
-    
+
     /**
      * Getter for the socials argument.
      *

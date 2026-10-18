@@ -76,13 +76,13 @@ class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     public function __construct(array $config = [])
     {
         // Do not load if Kunena version is not supported or Kunena is offline
-        if (!(\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.1') && KunenaForum::enabled())) {
+        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.1') && KunenaForum::enabled())) {
             return;
         }
 
         $path = JPATH_SITE . "/components/com_uddeim/uddeim.api.php";
 
-        if (!\is_file($path)) {
+        if (!is_file($path)) {
             return;
         }
 
@@ -93,7 +93,7 @@ class Uddeim extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         if ($uddeim->version() < 1) {
             return;
         }
-        
+
         // Call loadApi method to load Kunena constants
         KunenaForum::loadApi();
 

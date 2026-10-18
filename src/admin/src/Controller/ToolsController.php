@@ -269,7 +269,7 @@ class ToolsController extends FormController
 				FROM #__kunena_users AS a
 				LEFT JOIN #__users AS b ON a.userid=b.id
 				WHERE b.username IS NULL"
-                );
+            );
 
             try {
                 $db->execute();
@@ -480,7 +480,7 @@ class ToolsController extends FormController
         $this->setResponse(
             [
                 'success' => true,
-                'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
+                'status'  => \sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
                 'header'  => Text::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
                 'message' => $msg,
                 'href'    => $redirect,
@@ -662,7 +662,7 @@ class ToolsController extends FormController
             $this->setResponse(
                 [
                     'success' => false,
-                    'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
+                    'status'  => \sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
                     'header'  => Text::_('COM_KUNENA_AJAX_ERROR'),
                     'message' => Text::_('COM_KUNENA_AJAX_DETAILS_BELOW'),
                     'error'   => $e->getMessage(),
@@ -676,7 +676,7 @@ class ToolsController extends FormController
         $this->setResponse(
             [
                 'success' => true,
-                'status'  => sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
+                'status'  => \sprintf("%2.1f%%", 99 * $state->current / ($state->total + 1)),
                 'header'  => Text::_('COM_KUNENA_AJAX_RECOUNT_WAIT'),
                 'message' => $msg,
                 'href'    => $redirect,
@@ -901,7 +901,7 @@ class ToolsController extends FormController
             $this->setRedirect(KunenaRoute::_($this->baseurl, false));
         }
     }
-    
+
     /**
      * Set up column language in case the updates has failed
      *
@@ -921,29 +921,29 @@ class ToolsController extends FormController
         }
 
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        
+
         $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'language';";
         $db->setQuery($query);
         $columnLanguage = $db->loadResult();
-        
+
         if (!$columnLanguage) {
             $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' ADD `language` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`';
             $db->setQuery($query);
-            
+
             try {
                 $db->execute();
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
-            
+
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_COLUMN_LANGUAGE_HAS_BEEN_CREATED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         }
-        
+
         $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_COLUMN_LANGUAGE_EXIST_ALREADY_NOTHING_TO_DO'), 'message');
         $this->app->redirect(KunenaRoute::_($this->baseurl, false));
     }
-    
+
     /**
      * Set up socials in case the updates has failed
      *
@@ -963,76 +963,76 @@ class ToolsController extends FormController
         }
 
         $db     = Factory::getContainer()->get('DatabaseDriver');
-        
+
         $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . " LIKE 'socials';";
         $db->setQuery($query);
         $columnSocials = $db->loadResult();
-        
+
         if (!$columnSocials) {
             // Create the column socials
             $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' ADD `socials` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL AFTER `ip`';
             $query = $db->setQuery($query);
-            
+
             try {
                 $db->execute();
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
-            
+
             // Move values of old socials columns to the JSON in column socials
             $listOldSocialsColumns = ['userid', 'facebook', 'myspace', 'linkedin', 'linkedin_company', 'digg', 'skype', 'yim', 'google', 'github', 'microsoft', 'blogspot', 'flickr', 'bebo', 'instagram', 'qqsocial', 'qzone', 'weibo', 'wechat',
                 'vk', 'telegram', 'apple', 'vimeo', 'whatsapp', 'youtube', 'ok', 'pinterest', 'reddit'];
-            
+
             // Check if column twitter exist to import value from it just in case
             $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('twitter');
             $db->setQuery($query);
             $columnTwitter = $db->loadResult();
-            
+
             if ($columnTwitter) {
                 $listOldSocialsColumns[] = 'twitter';
             }
-            
+
             // Check if column x_social exist to import value from it just in case
             $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('x_social');
             $db->setQuery($query);
             $columnX_social = $db->loadResult();
-            
+
             if ($columnX_social) {
                 $listOldSocialsColumns[] = 'x_social';
             }
-            
+
             // Check if column bsky_app exist to import value from it just in case
             $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('bsky_app');
             $db->setQuery($query);
             $columnBsky = $db->loadResult();
-            
+
             if ($columnBsky) {
                 $listOldSocialsColumns[] = 'bsky_app';
             }
-            
+
             // Check if column bluesky_app exist to import value from it just in case
             $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('bluesky_app');
             $db->setQuery($query);
             $columnBluesky = $db->loadResult();
-            
+
             if ($columnBluesky) {
                 $listOldSocialsColumns[] = 'bluesky_app';
             }
-            
+
             // Check if column delicious exist to import value from it just in case
             $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('delicious');
             $db->setQuery($query);
             $columnDelicious = $db->loadResult();
-            
+
             if ($columnDelicious) {
                 $listOldSocialsColumns[] = 'delicious';
             }
-            
+
             // Prepare the JSON for each user with putting the old value of each social
             // Set the content in the column socials
             $limit = 100;
             $offset = 0;
-            
+
             do {
                 $query  = $db->createQuery()
                     ->select($db->quoteName($listOldSocialsColumns))
@@ -1041,7 +1041,7 @@ class ToolsController extends FormController
                     ->setLimit($limit, $offset);
                 $db->setQuery($query);
                 $valuesOldColumns = $db->loadObjectList();
-                
+
                 if (!empty($valuesOldColumns)) {
                     foreach ($valuesOldColumns as $value) {
                         $X_social = '';
@@ -1050,14 +1050,14 @@ class ToolsController extends FormController
                         } elseif (isset($value->twitter)) {
                             $X_social = $value->twiter;
                         }
-                        
+
                         $bluesky_app = '';
                         if (isset($value->bsky_app)) {
                             $bluesky_app = $value->bsky_app;
                         } elseif (isset($value->bluesky_app)) {
                             $bluesky_app = $value->bluesky_app;
                         }
-                        
+
                         $fields = array(
                             $db->quoteName('socials') . ' = ' . $db->quote('{
                             "x_social": {
@@ -1263,46 +1263,46 @@ class ToolsController extends FormController
                             "nourl": 0,
                             "fa": "fa-brands fa-threads"
                             }
-                            }')
+                            }'),
                         );
-                        
+
                         $conditions = array(
-                            $db->quoteName('userid') . ' = ' . $value->userid
+                            $db->quoteName('userid') . ' = ' . $value->userid,
                         );
-                        
+
                         $query = $db->getQuery(true);
                         $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
                         $db->setQuery($query);
-                        
+
                         try {
                             $db->execute();
                         } catch (Exception $e) {
                             echo $e->getMessage();
                         }
                     }
-                    
+
                     $offset += $limit;
                 } else {
                     break;
                 }
-            }  while (true);          
-            
+            }  while (true);
+
             // Check if column socialshare exist to remove the column
             $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote('socialshare');
             $db->setQuery($query);
             $columnSocialshare = $db->loadResult();
-            
+
             if ($columnSocialshare) {
                 $listOldSocialsColumns[] = 'socialshare';
             }
-            
-            // Remove old socials columns            
+
+            // Remove old socials columns
             foreach ($listOldSocialsColumns as $column) {
                 if ($column != 'userid') {
                     $query = "SHOW COLUMNS FROM " . $db->quoteName('#__kunena_users') . " LIKE '{$column}';";
                     $db->setQuery($query);
                     $column = $db->loadResult();
-                 
+
                     if ($column) {
                         $query = $db->getQuery(true);
                         $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
@@ -1319,7 +1319,7 @@ class ToolsController extends FormController
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         }
     }
-    
+
     /**
      * Method to call the plugin modifysocials to send to it the data of socials to change
      *
@@ -1335,30 +1335,33 @@ class ToolsController extends FormController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_PLUGIN_MODIFYSOCIALS_PLUGIN_NOT_ENABLED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         }
-        
+
         $name = $this->input->getString('name');
         $profileURL = $this->input->getString('profileurl', '##VALUE##');
         $noURL = $this->input->getInt('nourl', 0);
         $fa = $this->input->getString('fa');
-        
+
         $socials = ['name' => $name, 'profileURL' => $profileURL, 'noURL' => $noURL, 'fa' => $fa];
- 
+
         $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('modifysocials');
-        
+
         $result = $dispatcher->dispatch(
             'onKunenaBeforeModifySocials',
             new KunenaBeforeModifySocialsEvent(
-                'onKunenaBeforeModifySocials', [
+                'onKunenaBeforeModifySocials',
+                [
                     'socials' => $socials,
-                ]))->getArgument('result', []);
+                ]
+            )
+        )->getArgument('result', []);
 
        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CHANGED'), 'message');
        $this->app->enqueueMessage($result[0], 'message');
        $this->app->redirect(KunenaRoute::_($this->baseurl, false));
 
     }
-    
+
     /**
      * Method to call the plugin modifysocials to handle the deletion of socials network selected by the user
      *
@@ -1374,20 +1377,23 @@ class ToolsController extends FormController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_PLUGIN_MODIFYSOCIALS_PLUGIN_NOT_ENABLED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         }
-        
+
         $socialsToDelete = $this->input->get('socials', [], 'array');
-        
+
         $socials = ['socialsToDelete' => $socialsToDelete];
-        
+
         $dispatcher = Factory::getApplication()->getDispatcher();
         PluginHelper::importPlugin('modifysocials');
-        
+
         $result = $dispatcher->dispatch(
             'onKunenaBeforeDeleteSocials',
             new KunenaBeforeDeleteSocialsEvent(
-                'onKunenaBeforeDeleteSocials', [
+                'onKunenaBeforeDeleteSocials',
+                [
                     'socials' => $socials,
-                ]))->getArgument('result', []);
+                ]
+            )
+        )->getArgument('result', []);
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_SELECTED_HAS_BEEN_DELETED'), 'message');
         $this->app->enqueueMessage($result[0], 'message');

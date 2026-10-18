@@ -115,12 +115,12 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
         // Do not load if CommunityBuilder is not installed
         if (
-            (!\file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) ||
-            (!\file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
+            (!file_exists(JPATH_SITE . '/libraries/CBLib/CBLib/Core/CBLib.php')) ||
+            (!file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
         ) {
             return;
         }
-        
+
         // Call loadApi method to load Kunena constants
         KunenaForum::loadApi();
 
@@ -128,14 +128,14 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
         $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR . '/components/com_kunena');
 
-        if (\version_compare($this->minCBVersion, CBLib::version(), '<')) {
+        if (version_compare($this->minCBVersion, CBLib::version(), '<')) {
             if ($app->isClient('administrator')) {
                 $app->enqueueMessage(Text::sprintf('PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion), 'notice');
             }
 
             return;
         }
-        
+
         cbimport('cb.html');
         cbimport('language.front');
 
@@ -143,7 +143,6 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
 
         parent::__construct($config);
     }
-
 
     /**
      * @param   KunenaDisplayEvent  $event  The event instance
@@ -213,7 +212,6 @@ class Comprofiler extends CMSPlugin implements SubscriberInterface, DatabaseAwar
         if (!$this->params->get('access', 1)) {
             return;
         }
-
 
         $event->addResult(new KunenaAccessComprofiler($this->params));
     }

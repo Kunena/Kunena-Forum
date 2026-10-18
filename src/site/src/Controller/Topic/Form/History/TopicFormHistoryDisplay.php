@@ -130,7 +130,7 @@ class TopicFormHistoryDisplay extends KunenaControllerDisplay
                 'context' => 'kunena.messages',
                 'subject' => $result,
                 'params'  => $params,
-                'page'    => 0
+                'page'    => 0,
             ]);
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }

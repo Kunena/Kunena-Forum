@@ -84,7 +84,7 @@ class KunenaAvatarKunena extends KunenaAvatar
             $path     = KPATH_MEDIA . "/avatars";
             $origPath = "{$path}/{$avatar}";
 
-            if (!\is_file($origPath)) {
+            if (!is_file($origPath)) {
                 // If avatar does not exist use default image.
                 if ($sizex <= 90) {
                     $avatar = KunenaConfig::getInstance()->defaultAvatarSmall;
@@ -99,7 +99,7 @@ class KunenaAvatarKunena extends KunenaAvatar
             }
 
             $dir  = \dirname($avatar);
-            $file = \basename($avatar);
+            $file = basename($avatar);
 
             if ($sizex == $sizey) {
                 $resized = "resized/size{$sizex}/{$dir}";

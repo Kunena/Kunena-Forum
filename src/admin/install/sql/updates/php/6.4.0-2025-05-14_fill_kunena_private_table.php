@@ -33,24 +33,24 @@ function kunena_640_2025_05_14_fill_kunena_private_table($parent) {
     ->where($db->quoteName('protected') . ' = 32')
     ->where($db->quoteName('mesid') . ' != 0');
     $db->setQuery($query);
-    
+
     $attachmentsPrivate = (array) $db->loadObjectList('id');
-    
+
     $listMesid = [];
     foreach ($attachmentsPrivate as $attach) {
         $listMesid[] = $attach->mesid;
     }
-    
+
     $messages = KunenaMessageHelper::getMessages($listMesid);
-    
+
     $listAttachByMessage = [];
     foreach($attachmentsPrivate as $attachment) {
         $listAttachByMessage[$attachment->mesid][] = $attachment->id;
     }
-    
+
     foreach($messages as $message) {
         $attachIds = $listAttachByMessage[$message->id];
-        
+
         $parent             = $message->getParent();
         $author             = $message->getAuthor();
         $moderator          = $author->isModerator($message->getCategory());
@@ -59,30 +59,30 @@ function kunena_640_2025_05_14_fill_kunena_private_table($parent) {
         $private->author_id = $author->userid;
         $private->subject   = $message->subject;
         $private->body      = '';
-        
+
         // Attach message.
         $private->posts()->add($message->id);
-        
+
         // Attach author of the message.
         if ($author->exists()) {
             $private->users()->add($author->userid);
         }
-        
+
         if ($pAuthor->exists() && ($moderator || $pAuthor->isModerator($message->getCategory()))) {
             // Attach receiver (but only if moderator either posted or replied parent post).
             if ($pAuthor->exists()) {
                 $private->users()->add($pAuthor->userid);
             }
         }
-        
+
         $private->attachments()->setMapped($attachIds);
-        
+
         try {
             $private->save();
         } catch (Exception $e) {
             KunenaError::displayDatabaseError($e);
         }
     }
-    
+
     return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_640_FILL_KUNENA_PRIVATE_TABLE'), 'success' => true);
 }

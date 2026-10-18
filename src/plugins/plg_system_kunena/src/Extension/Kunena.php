@@ -103,7 +103,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         if (!KunenaConfig::getInstance()->stopForumSpamNewUserCheck) {
             // Checking of new user is disabled
             return;
-        };
+        }
 
         // Check that the terms is checked if required ie only in registration from frontend.
         $data              = $event->getData();
@@ -117,7 +117,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         }
 
         $http    = new Http();
-        $request = 'https://api.stopforumspam.org/api?' . \http_build_query($query) . '&json';
+        $request = 'https://api.stopforumspam.org/api?' . http_build_query($query) . '&json';
 
         try {
             $response = $http->get($request);
@@ -128,7 +128,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
         if ($response->getStatusCode() == '200') {
             // The query has worked
-            $result = \json_decode($response->getBody());
+            $result = json_decode($response->getBody());
 
             if ($result && $result->success) {
                 if (($result->username->appears ?? false) || ($result->email->appears ?? false) || ($result->ip->appears ?? false)) {
@@ -210,8 +210,8 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
     protected function getUserDefaultLanguage($params)
     {
         $userParams = json_decode($params);
-        
-        if (!empty($userParams->language)) {              
+
+        if (!empty($userParams->language)) {
             $language = $userParams->language;
         } else {
             $language = Factory::getApplication()->getLanguage()->getTag();
@@ -219,7 +219,6 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
 
         return $language;
     }
-
 
     /**
      * Method is called when an extension is being saved

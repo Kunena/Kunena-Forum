@@ -33,7 +33,6 @@ class plgTaskKunenaInstallerScript extends InstallerScript
      */
     protected $extension = 'plg_task_kunena';
 
-
     /**
      * Function called before extension installation/update/removal procedure commences
      *
@@ -105,7 +104,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
             return false;
         }
     }
-    
+
     /**
      * Function to enable the purge trash task
      *
@@ -121,15 +120,15 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         ->where($db->quoteName('type') . ' = ' . $db->quote('purge.trash'));
         $db->setQuery($query);
         $result = $db->loadResult();
-        
+
         if ($result) {
             // We are already setup
             return;
         }
-        
+
         /** @var \Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent $component */
         $component = Factory::getApplication()->bootComponent('com_scheduler');
-        
+
         /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
         $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
         $task  = [
@@ -187,7 +186,7 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         ];
         $model->save($task);
     }
-    
+
     /**
      * Function to enable the mails queue task
      *
@@ -203,15 +202,15 @@ class plgTaskKunenaInstallerScript extends InstallerScript
         ->where($db->quoteName('type') . ' = ' . $db->quote('add.mailsqueue'));
         $db->setQuery($query);
         $result = $db->loadResult();
-        
+
         if ($result) {
             // We are already setup
             return;
         }
-        
+
         /** @var \Joomla\Component\Scheduler\Administrator\Extension\SchedulerComponent $component */
         $component = Factory::getApplication()->bootComponent('com_scheduler');
-        
+
         /** @var \Joomla\Component\Scheduler\Administrator\Model\TaskModel $model */
         $model = $component->getMVCFactory()->createModel('Task', 'Administrator', ['ignore_request' => true]);
         $task  = [

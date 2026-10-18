@@ -352,7 +352,7 @@ class HtmlView extends KunenaView
             'context' => 'kunena.topic',
             'subject' => $this->topic,
             'params'  => $params,
-            'page'    => 0
+            'page'    => 0,
         ]);
         $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         foreach ($this->messages as &$message) {
@@ -360,7 +360,7 @@ class HtmlView extends KunenaView
                 'context' => 'kunena.messages',
                 'subject' => $message,
                 'params'  => $params,
-                'page'    => 0
+                'page'    => 0,
             ]);
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         }
@@ -526,7 +526,7 @@ class HtmlView extends KunenaView
     public function setTitle(string $title): void
     {
         if ($this->inLayout) {
-            throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
         }
 
         if (!$this->state->get('embedded')) {
@@ -556,7 +556,7 @@ class HtmlView extends KunenaView
     public function setDescription($description)
     {
         if ($this->inLayout) {
-            throw new LogicException(sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
+            throw new LogicException(\sprintf('HMVC template should not call %s::%s()', __CLASS__, __FUNCTION__));
         }
 
         if (!$this->state->get('embedded')) {
@@ -641,7 +641,7 @@ class HtmlView extends KunenaView
                 'context' => 'kunena.user',
                 'subject' => $this->profile,
                 'params'  => $params,
-                'page'    => 0
+                'page'    => 0,
             ]);
             $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
@@ -703,7 +703,7 @@ class HtmlView extends KunenaView
                 Factory::getApplication()->getDispatcher()->dispatch('onKunenaDisplay', $displayEvent);
                 $result = $displayEvent->getArgument('result', []);
 
-                $contents .= \implode(' ', $result);
+                $contents .= implode(' ', $result);
 
                 // FIXME: enable caching after fixing the issues (also external profile stuff affects this)
                 // if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
@@ -756,25 +756,25 @@ class HtmlView extends KunenaView
         // Reply topic
         if ($this->topic->isAuthorised('reply')) {
             // This user is allowed to reply to this topic
-            $this->topicButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'topic', 'communication'));
+            $this->topicButtons->set('reply', $this->getButton(\sprintf($layout, 'reply'), 'reply', 'topic', 'communication'));
         }
 
         // Subscribe topic
         if ($this->usertopic->subscribed) {
             // This user is allowed to unsubscribe
-            $this->topicButtons->set('subscribe', $this->getButton(sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user'));
+            $this->topicButtons->set('subscribe', $this->getButton(\sprintf($task, 'unsubscribe'), 'unsubscribe', 'topic', 'user'));
         } elseif ($this->topic->isAuthorised('subscribe')) {
             // This user is allowed to subscribe
-            $this->topicButtons->set('subscribe', $this->getButton(sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user'));
+            $this->topicButtons->set('subscribe', $this->getButton(\sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user'));
         }
 
         // Favorite topic
         if ($this->usertopic->favorite) {
             // This user is allowed to unfavorite
-            $this->topicButtons->set('favorite', $this->getButton(sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user'));
+            $this->topicButtons->set('favorite', $this->getButton(\sprintf($task, 'unfavorite'), 'unfavorite', 'topic', 'user'));
         } elseif ($this->topic->isAuthorised('favorite')) {
             // This user is allowed to add a favorite
-            $this->topicButtons->set('favorite', $this->getButton(sprintf($task, 'favorite'), 'favorite', 'topic', 'user'));
+            $this->topicButtons->set('favorite', $this->getButton(\sprintf($task, 'favorite'), 'favorite', 'topic', 'user'));
         }
 
         // Moderator specific buttons
@@ -782,14 +782,14 @@ class HtmlView extends KunenaView
             $sticky = $this->topic->ordering ? 'unsticky' : 'sticky';
             $lock   = $this->topic->locked ? 'unlock' : 'lock';
 
-            $this->topicButtons->set('sticky', $this->getButton(sprintf($task, $sticky), $sticky, 'topic', 'moderation'));
-            $this->topicButtons->set('lock', $this->getButton(sprintf($task, $lock), $lock, 'topic', 'moderation'));
-            $this->topicButtons->set('moderate', $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation'));
+            $this->topicButtons->set('sticky', $this->getButton(\sprintf($task, $sticky), $sticky, 'topic', 'moderation'));
+            $this->topicButtons->set('lock', $this->getButton(\sprintf($task, $lock), $lock, 'topic', 'moderation'));
+            $this->topicButtons->set('moderate', $this->getButton(\sprintf($layout, 'moderate'), 'moderate', 'topic', 'moderation'));
 
             if ($this->topic->hold == 1 || $this->topic->hold == 0) {
-                $this->topicButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'topic', 'moderation'));
+                $this->topicButtons->set('delete', $this->getButton(\sprintf($task, 'delete'), 'delete', 'topic', 'moderation'));
             } elseif ($this->topic->hold == 2 || $this->topic->hold == 3) {
-                $this->topicButtons->set('undelete', $this->getButton(sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation'));
+                $this->topicButtons->set('undelete', $this->getButton(\sprintf($task, 'undelete'), 'undelete', 'topic', 'moderation'));
             }
         }
 
@@ -797,15 +797,15 @@ class HtmlView extends KunenaView
             $url = "index.php?option=com_kunena&view=user&task=change&topicLayout=%s&" . Session::getFormToken() . '=1';
 
             if ($this->layout != 'default') {
-                $this->topicButtons->set('flat', $this->getButton(sprintf($url, 'flat'), 'flat', 'layout', 'user'));
+                $this->topicButtons->set('flat', $this->getButton(\sprintf($url, 'flat'), 'flat', 'layout', 'user'));
             }
 
             if ($this->layout != 'threaded') {
-                $this->topicButtons->set('threaded', $this->getButton(sprintf($url, 'threaded'), 'threaded', 'layout', 'user'));
+                $this->topicButtons->set('threaded', $this->getButton(\sprintf($url, 'threaded'), 'threaded', 'layout', 'user'));
             }
 
             if ($this->layout != 'indented') {
-                $this->topicButtons->set('indented', $this->getButton(sprintf($url, 'indented'), 'indented', 'layout', 'user'));
+                $this->topicButtons->set('indented', $this->getButton(\sprintf($url, 'indented'), 'indented', 'layout', 'user'));
             }
         }
 
@@ -817,7 +817,7 @@ class HtmlView extends KunenaView
             new KunenaGetButtonsEvent(
                 'onKunenaGetButtons',
                 ['context' => 'topic.action', 'buttons' => $this->topicButtons, 'object' => $this]
-                )
+            )
         );
 
         return (string) $this->loadTemplateFile('actions');
@@ -867,11 +867,11 @@ class HtmlView extends KunenaView
         // Reply / Quote
         if ($canReply) {
             if ($this->quickReply) {
-                $this->messageButtons->set('quickReply', $this->getButton(sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}"));
+                $this->messageButtons->set('quickReply', $this->getButton(\sprintf($layout, 'reply'), 'quickReply', 'message', 'communication', "kreply{$mesid}"));
             }
 
-            $this->messageButtons->set('reply', $this->getButton(sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
-            $this->messageButtons->set('quote', $this->getButton(sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication'));
+            $this->messageButtons->set('reply', $this->getButton(\sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
+            $this->messageButtons->set('quote', $this->getButton(\sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication'));
         } elseif (!$isModerator) {
             // User is not allowed to write a post
             $this->message_closed = $this->topic->locked ? Text::_('COM_KUNENA_POST_LOCK_SET') : ($this->me->exists() ? Text::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : Text::_('COM_KUNENA_VIEW_DISABLED'));
@@ -879,47 +879,47 @@ class HtmlView extends KunenaView
 
         // Thank you
         if ($canThankyou && !$hasThanked) {
-            $this->messageButtons->set('thankyou', $this->getButton(sprintf($task, 'thankyou'), 'thankyou', 'message', 'user'));
+            $this->messageButtons->set('thankyou', $this->getButton(\sprintf($task, 'thankyou'), 'thankyou', 'message', 'user'));
         }
 
         // Unthank you
         if ($canUnthankyou && $hasThanked) {
-            $this->messageButtons->set('unthankyou', $this->getButton(sprintf($task, 'unthankyou'), 'unthankyou', 'message', 'moderation'));
+            $this->messageButtons->set('unthankyou', $this->getButton(\sprintf($task, 'unthankyou'), 'unthankyou', 'message', 'moderation'));
         }
 
         // Report this
         if ($this->config->reportMsg && $this->me->exists()) {
-            $this->messageButtons->set('report', $this->getButton(sprintf($layout, 'report'), 'report', 'message', 'user'));
+            $this->messageButtons->set('report', $this->getButton(\sprintf($layout, 'report'), 'report', 'message', 'user'));
         }
 
         // Moderation and own post actions
         if ($canEdit) {
-            $this->messageButtons->set('edit', $this->getButton(sprintf($layout, 'edit'), 'edit', 'message', 'moderation'));
+            $this->messageButtons->set('edit', $this->getButton(\sprintf($layout, 'edit'), 'edit', 'message', 'moderation'));
         }
 
         if ($canMove) {
-            $this->messageButtons->set('moderate', $this->getButton(sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation'));
+            $this->messageButtons->set('moderate', $this->getButton(\sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation'));
         }
 
         if ($this->message->hold == 1) {
             if ($canApprove) {
-                $this->messageButtons->set('publish', $this->getButton(sprintf($task, 'approve'), 'approve', 'message', 'moderation'));
+                $this->messageButtons->set('publish', $this->getButton(\sprintf($task, 'approve'), 'approve', 'message', 'moderation'));
             }
 
             if ($canDelete) {
-                $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation'));
+                $this->messageButtons->set('delete', $this->getButton(\sprintf($task, 'delete'), 'delete', 'message', 'moderation'));
             }
         } elseif ($this->message->hold == 2 || $this->message->hold == 3) {
             if ($canUndelete) {
-                $this->messageButtons->set('undelete', $this->getButton(sprintf($task, 'undelete'), 'undelete', 'message', 'moderation'));
+                $this->messageButtons->set('undelete', $this->getButton(\sprintf($task, 'undelete'), 'undelete', 'message', 'moderation'));
             }
 
             if ($canPermdelete) {
-                $this->messageButtons->set('permdelete', $this->getButton(sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent'));
+                $this->messageButtons->set('permdelete', $this->getButton(\sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent'));
             }
         } else {
             if ($canDelete) {
-                $this->messageButtons->set('delete', $this->getButton(sprintf($task, 'delete'), 'delete', 'message', 'moderation'));
+                $this->messageButtons->set('delete', $this->getButton(\sprintf($task, 'delete'), 'delete', 'message', 'moderation'));
             }
         }
 
@@ -931,7 +931,7 @@ class HtmlView extends KunenaView
             new KunenaGetButtonsEvent(
                 'onKunenaGetButtons',
                 ['context' => 'message.action', 'buttons' => $this->messageButtons, 'object' => $this]
-                )
+            )
         );
 
         return (string) $this->loadTemplateFile("message_actions");
@@ -980,7 +980,7 @@ class HtmlView extends KunenaView
         $messageId = (int) $this->message->id;
         $userId    = (int) $this->me->userid;
 
-        if (!isset($this->messageAuthorisationCache[$messageId][$userId]) || !array_key_exists($action, $this->messageAuthorisationCache[$messageId][$userId])) {
+        if (!isset($this->messageAuthorisationCache[$messageId][$userId]) || !\array_key_exists($action, $this->messageAuthorisationCache[$messageId][$userId])) {
             $this->messageAuthorisationCache[$messageId][$userId][$action] = $this->message->isAuthorised($action);
         }
 
@@ -1000,7 +1000,7 @@ class HtmlView extends KunenaView
         $userId     = (int) $this->me->userid;
         $categoryId = isset($this->category->id) ? (int) $this->category->id : (int) $this->message->catid;
 
-        if (!isset($this->messageModeratorCache[$userId]) || !array_key_exists($categoryId, $this->messageModeratorCache[$userId])) {
+        if (!isset($this->messageModeratorCache[$userId]) || !\array_key_exists($categoryId, $this->messageModeratorCache[$userId])) {
             $category = $this->category ?? $this->message->getCategory();
             $this->messageModeratorCache[$userId][$categoryId] = $this->me->isModerator($category);
         }
@@ -1020,7 +1020,7 @@ class HtmlView extends KunenaView
      */
     protected function getCurrentViewerTypeByCategory(int $categoryId): string
     {
-        if (!array_key_exists($categoryId, $this->messageUserTypeCache)) {
+        if (!\array_key_exists($categoryId, $this->messageUserTypeCache)) {
             $this->messageUserTypeCache[$categoryId] = $this->me->getType($categoryId, true);
         }
 
@@ -1098,7 +1098,7 @@ class HtmlView extends KunenaView
 
                 foreach ($loaded_users as $userid => $user) {
                     $thankyou_delete = $canUnthankyou === true ? ' <a data-bs-toggle="tooltip" title="' . Text::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG') . '" href="'
-                        . KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")) . '"><img loading=lazy src="' . $this->ktemplate->getImagePath('icons/publish_x.png') . '" data-bs-toggle="tooltip" title="" alt="" /></a>' : '';
+                        . KunenaRoute::_(\sprintf($task, "unthankyou&userid={$userid}")) . '"><img loading=lazy src="' . $this->ktemplate->getImagePath('icons/publish_x.png') . '" data-bs-toggle="tooltip" title="" alt="" /></a>' : '';
                     $thankyou[]      = $loaded_users[$userid]->getLink() . $thankyou_delete;
                 }
             }
@@ -1236,7 +1236,7 @@ class HtmlView extends KunenaView
             'context' => 'kunena.messages',
             'subject' => $history,
             'params'  => $params,
-            'page'    => 0
+            'page'    => 0,
         ]);
         $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
@@ -1504,7 +1504,7 @@ class HtmlView extends KunenaView
             'context' => 'kunena.topic',
             'subject' => $this->topic,
             'params'  => $params,
-            'page'    => 0
+            'page'    => 0,
         ]);
         $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
 
@@ -1574,7 +1574,7 @@ class HtmlView extends KunenaView
             'context' => 'kunena.topic',
             'subject' => $this->topic,
             'params'  => $params,
-            'page'    => 0
+            'page'    => 0,
         ]);
         $this->app->getDispatcher()->dispatch('onKunenaPrepare', $prepareEvent);
         $this->_prepareDocument('edit');

@@ -59,13 +59,13 @@ class KunenaRate
      * @since   Kunena 6.0
      */
     public $time = null;
-    
+
     /**
      * @var     null
      * @since   Kunena 7.0
      */
     public $id = 0;
-    
+
     /**
      * @var     null
      * @since   Kunena 7.0
@@ -246,7 +246,7 @@ class KunenaRate
 
         $query->insert($this->_db->quoteName('#__kunena_rate'))
             ->columns(
-            	[
+                [
                     $this->_db->quoteName('topic_id'),
                     $this->_db->quoteName('userid'),
                     $this->_db->quoteName('rate'),

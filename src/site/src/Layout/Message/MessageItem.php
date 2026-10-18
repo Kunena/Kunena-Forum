@@ -77,24 +77,24 @@ class MessageItem extends KunenaLayout
      */
     public function canSeeAttachments($attachments) {
         $attachs = $this->message->getNbAttachments();
-        
+
         if (!$this->me->exists()) {
-            if ($attachs->totalPrivate == count($attachments)) {
+            if ($attachs->totalPrivate == \count($attachments)) {
                 return false;
             }
         } elseif ($this->me->isModerator($this->topic->getCategory())) {
-            if ($attachs->totalPrivate == count($attachments)) {
+            if ($attachs->totalPrivate == \count($attachments)) {
                 return true;
             }
         } else {
-            if ($attachs->inline != count($attachments) && $attachs->totalPrivate != count($attachments)) {
+            if ($attachs->inline != \count($attachments) && $attachs->totalPrivate != \count($attachments)) {
                 return true;
             }
         }
-        
+
         return false;
-    }    
-    
+    }
+
     /**
      * Get the link number of the specific message
      *
@@ -108,7 +108,7 @@ class MessageItem extends KunenaLayout
         } else {
             $numlink = $this->message->replynum;
         }
-        
+
         return $numlink;
     }
 }

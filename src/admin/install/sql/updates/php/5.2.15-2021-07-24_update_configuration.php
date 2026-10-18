@@ -23,25 +23,25 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @throws Exception
  * @since Kunena 5.2.4
  */
-function kunena_5215_2021_07_24_update_configuration($parent) {	
+function kunena_5215_2021_07_24_update_configuration($parent) {
     $db    = Factory::getContainer()->get('DatabaseDriver');
-    
-    $query = $db->createQuery();   
-    
-    $query->select('*') 
+
+    $query = $db->createQuery();
+
+    $query->select('*')
         ->from($db->quoteName('#__kunena_configuration'))
-        ->where($db->quoteName('id') . ' = 1');    
-    
+        ->where($db->quoteName('id') . ' = 1');
+
     $db->setQuery($query);
-    
-    try {        
-        $config = $db->loadAssoc(); 
+
+    try {
+        $config = $db->loadAssoc();
     } catch (ExecutionFailureException $e) {
         KunenaError::displayDatabaseError($e);
     }
-    
+
     $oldParams = json_decode($config['params']);
-    
+
     $listConfigParams = ['boardTitle', 'email', 'boardOffline', 'offlineMessage', 'enableRss', 'threadsPerPage', 'messagesPerPage', 'messagesPerPageSearch', 'showHistory', 'historyLimit', 'showNew', 'disableEmoticons', 'template', 'showAnnouncement',
 	    'avatarOnCategory', 'catimagepath', 'showChildCatIcon', 'rteWidth', 'rteHeight', 'enableForumJump', 'reportMsg', 'username', 'askEmail', 'showEmail', 'showUserStats', 'showKarma', 'userEdit', 'userEditTime', 'userEditTimeGrace', 'editMarkup', 'allowSubscriptions',
 	    'subscriptionsChecked', 'allowFavorites', 'maxsubject', 'maxSig', 'regOnly', 'pubWrite', 'floodProtection', 'mailModerators', 'mailAdministrators', 'captcha', 'mailFull', 'allowAvatarUpload', 'allowAvatarGallery', 'avatarQuality',
@@ -58,46 +58,46 @@ function kunena_5215_2021_07_24_update_configuration($parent) {
 	    'allowChangeSubject', 'maxLinks', 'readOnly', 'ratingEnabled', 'urlSubjectTopic', 'logModeration', 'attachStart', 'attachEnd', 'googleMapApiKey', 'attachmentUtf8', 'autoEmbedSoundcloud', 'emailHeader', 'userStatus', 'signature', 'personal', 'social',
 	    'plainEmail', 'moderatorPermDelete', 'avatarTypes', 'smartLinking', 'defaultAvatar', 'defaultAvatarSmall', 'stopForumSpamKey', 'quickReply', 'avatarEdit', 'activeMenuItem', 'mainMenuId', 'homeId', 'indexId', 'moderatorsId', 'topicListId',
 	    'miscId', 'profileId', 'searchId', 'avatarType', 'sefRedirect', 'allowEditPoll', 'useSystemEmails', 'autoEmbedInstagram', 'disableRe', 'email_sender_name', 'display_filename_attachment', 'new_users_prevent_post_url_images',
-	    'minimal_user_posts_add_url_image', 'plugins'
+	    'minimal_user_posts_add_url_image', 'plugins',
 	];
-	
+
 	$i = 0;
 	foreach ($oldParams as $p => $oldParam) {
-	    
+
 	    if ($p == 'useredittime') {
 	        $p = 'userEdittime';
 	    }
-	    
+
 	    if ($p == 'useredittimegrace') {
 	        $p = 'userEditTimegrace';
 	    }
-	    
+
 	    if ($p == 'trimlongurlsfront') {
 	        $p = 'trimLongUrlsfront';
 	    }
-	    
+
 	    if ($p == 'trimlongurlsback') {
 	        $p = 'trimLongUrlsback';
 	    }
-	    
+
 	    if ($p == 'latestcategory_in') {
 	        $p = 'latestCategory_in';
 	    }
-	    
+
 	    if ($p == 'defaultavatarsmall') {
 	        $p = 'defaultAvatarsmall';
 	    }
-	    
+
 	    if ($p == 'messages_per_page_search') {
 	        $p = 'messagesPerPage_search';
 	    }
-	    
+
 	    $query = $db->createQuery();
 	    $query = "UPDATE `#__kunena_configuration` SET `params` = REPLACE(params, '{$p}', '{$listConfigParams[$i]}');";
-	    
+
 	    $db->setQuery($query);
 	    $db->execute();
-	    
+
 	    $i++;
 	}
 

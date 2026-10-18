@@ -73,10 +73,10 @@ $joomlaVersion = new Version();
                             $link = Route::_('index.php?option=com_plugins&client_id=0&task=plugin.edit&extension_id=' . $item->extension_id . '&tmpl=component&layout=modal', false);
                             if (version_compare($joomlaVersion->getShortVersion(), '5.1', '<')) {
                                 $linkModal = HTMLHelper::_(
-                                	'link',
-                                	'#plugin' . $item->extension_id . 'Modal',
-                                	$item->name,
-                                	'data-bs-toggle="modal" id="title-' . $item->extension_id . '"'
+                                    'link',
+                                    '#plugin' . $item->extension_id . 'Modal',
+                                    $item->name,
+                                    'data-bs-toggle="modal" id="title-' . $item->extension_id . '"'
                                 );
                             } else {
                                 $popupOptions = [
@@ -85,10 +85,10 @@ $joomlaVersion = new Version();
                                     'src'        => $link,
                                 ];
                                 $linkModal = HTMLHelper::_(
-                                	'link',
-                                	'#',
-                                	$item->name,
-                                	[
+                                    'link',
+                                    '#',
+                                    $item->name,
+                                    [
                                         'class'                 => 'alert-link',
                                         'data-joomla-dialog'    => $this->escape(json_encode($popupOptions, JSON_UNESCAPED_SLASHES)),
                                         'data-checkin-url'      => Route::_('index.php?option=com_plugins&task=plugins.checkin&format=json&cid[]=' . $item->extension_id),

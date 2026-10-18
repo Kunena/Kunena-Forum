@@ -45,7 +45,6 @@ class UsersModel extends ListModel
      *
      * @throws  Exception
      * @since   Kunena 6.0
-     *    
      */
     public function __construct($config = [])
     {

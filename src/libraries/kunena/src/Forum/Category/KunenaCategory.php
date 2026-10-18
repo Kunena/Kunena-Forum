@@ -298,103 +298,103 @@ class KunenaCategory extends KunenaDatabaseObject
      * @since Kunena 6.0
      */
     public $moderators;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $params;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $typeAlias;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $pubAccess;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $pubRecurse;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $adminAccess;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $adminRecurse;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $ordering;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $channels;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $checked_out_time;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $hits;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $description;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $headerdesc;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $iconset;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $last_topic_id;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $last_post_id;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $topictemplate;
-    
+
     /**
      * @var     string
      * @since   Kunena 7.0.6
@@ -778,7 +778,7 @@ class KunenaCategory extends KunenaDatabaseObject
             'last_post_id'     => $this->last_post_id,
             'last_post_time'   => $this->last_post_time,
             'params'           => $this->params,
-            'allowRatings'     => $this->allowRatings
+            'allowRatings'     => $this->allowRatings,
         ];
 
         return $properties;

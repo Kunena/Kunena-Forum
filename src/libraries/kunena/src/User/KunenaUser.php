@@ -318,12 +318,12 @@ class KunenaUser
      * @since   Kunena 7.0
      */
     public $language;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.0
      */
-    public $displayAgeBirthdate; 
+    public $displayAgeBirthdate;
 
     /**
      * @var     null
@@ -700,7 +700,7 @@ class KunenaUser
     {
         $data = array_diff_key($data, array_flip($ignore));
 
-        foreach ((array)$data as $property => $value) {
+        foreach ((array) $data as $property => $value) {
             $this->$property = $value;
         }
     }
@@ -1926,6 +1926,7 @@ class KunenaUser
 				 if (empty($this->email)) {
         			return '';
     		}
+
                 return '<a href="mailto:' . $this->email . '" data-bs-toggle="tooltip" data-placement="right" title="' . $this->escape($this->email) . '">' . KunenaIcons::email() . '</a>';
                 break;
             case 'profile':

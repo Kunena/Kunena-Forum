@@ -22,20 +22,20 @@ use Joomla\CMS\Language\Text;
  */
 function kunena_645_2025_07_30_remove_columns_users_table($parent) {
     $db     = Factory::getContainer()->get('DatabaseDriver');
-    
+
     $listOfColumns = ['qq', 'karma_time'];
-    
+
     foreach ($listOfColumns as $column) {
         $query = "SHOW COLUMNS FROM " . $db->quoteName('#__kunena_users') . " LIKE '{$column}';";
         $db->setQuery($query);
         $column = $db->loadResult();
-        
+
         if ($column) {
             $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
             $db->setQuery($query);
             $db->execute();
         }
-    }    
-    
+    }
+
     return array('action' => '', 'name' => Text::_('COM_KUNENA_INSTALL_645_REMOVE_COLUMNS_USERS_TABLE'), 'success' => true);
 }

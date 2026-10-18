@@ -67,7 +67,6 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
      */
     private $menuItemModel;
 
-
     /**
      * Returns an array of events this subscriber will listen to.
      *
@@ -136,6 +135,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwa
             $response['message'] = Text::_('PLG_SYSTEM_KUNENA_NOT_ENABLED');
 
             $event->addResult($response);
+
             return;
         }
 

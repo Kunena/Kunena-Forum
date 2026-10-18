@@ -235,7 +235,7 @@ abstract class KunenaFactory
 
         return $loaded[$file];
     }
-    
+
     /**
      * Load Kunena language file for notification
      *
@@ -254,7 +254,7 @@ abstract class KunenaFactory
     {
         static $loaded = [];
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->start('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        
+
         if ($client == 'site') {
             $lookup1 = JPATH_SITE;
             $lookup2 = KPATH_SITE;
@@ -263,15 +263,13 @@ abstract class KunenaFactory
             $lookup1 = JPATH_ADMINISTRATOR;
             $lookup2 = JPATH_ADMINISTRATOR . '/components/com_kunena';
         }
-        
-        
+
         $lang = Factory::getApplication()->getLanguage();
-        
+
         $lang->load($file, $lookup2, $langToLoad, true, false);
-        
-        
+
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
-        
+
         return true;
     }
 
@@ -348,7 +346,7 @@ abstract class KunenaFactory
                     break;
 
                 default:
-                    $applicationClass = '\\Joomla\\CMS\\Application\\' . \ucfirst($client) . 'Application';
+                    $applicationClass = '\\Joomla\\CMS\\Application\\' . ucfirst($client) . 'Application';
 
                     if (!class_exists($applicationClass)) {
                         throw new \RuntimeException('Joomla Application class not found: ' . $applicationClass);

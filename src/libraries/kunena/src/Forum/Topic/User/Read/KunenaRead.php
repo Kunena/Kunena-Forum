@@ -71,19 +71,19 @@ class KunenaRead
      * @since   Kunena 6.4
      */
     public $time = null;
-    
+
     /**
      * @var     string
      * @since   Kunena 6.4
      */
     public $typeAlias;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
      */
     public $categoryId;
-    
+
     /**
      * @var     integer
      * @since   Kunena 6.4
@@ -258,7 +258,7 @@ class KunenaRead
             'topic_id'    => $this->topic_id,
             'category_id' => $this->category_id,
             'message_id'  => $this->message_id,
-            'time'        => $this->time
+            'time'        => $this->time,
         ];
 
         $table->bind($properties);

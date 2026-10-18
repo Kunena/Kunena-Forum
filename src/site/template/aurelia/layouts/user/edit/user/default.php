@@ -103,4 +103,3 @@ use Joomla\CMS\Language\Text;
         </tbody>
     </table>
 <?php endif;
-

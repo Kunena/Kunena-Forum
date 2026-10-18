@@ -195,7 +195,7 @@ class Router extends RouterView
             if ($catid) {
                 $numeric = true;
 
-                if (!array_key_exists($catid, $categoryAliasCache)) {
+                if (!\array_key_exists($catid, $categoryAliasCache)) {
                     $categoryAliasCache[$catid] = (string) KunenaCategoryHelper::get($catid)->alias;
                 }
 
@@ -225,7 +225,7 @@ class Router extends RouterView
             $id = (int) $query['id'];
 
             if ($id) {
-                if (!array_key_exists($id, $topicSubjectCache)) {
+                if (!\array_key_exists($id, $topicSubjectCache)) {
                     $topicSubjectCache[$id] = KunenaRoute::stringURLSafe((string) KunenaTopicHelper::get($id)->subject);
                 }
 
@@ -233,7 +233,7 @@ class Router extends RouterView
 
                 if (empty($subject)) {
                     $segments[] = $id;
-                } else {                    
+                } else {
                     $segments[] = "{$id}-{$subject}";
                 }
 
@@ -308,7 +308,7 @@ class Router extends RouterView
             } else {
                 $userid = (int) $query['userid'];
 
-                if (!array_key_exists($userid, $userSlugCache)) {
+                if (!\array_key_exists($userid, $userSlugCache)) {
                     $userSlugCache[$userid] = KunenaRoute::stringURLSafe((string) KunenaUserHelper::get($userid)->getName());
                 }
 
@@ -385,7 +385,7 @@ class Router extends RouterView
                 // Find out if we have SEF alias (category, view or layout)
                 $alias     = strtr($segment, ':', '-');
                 $variables = KunenaRoute::resolveAlias($alias);
-                
+
                 if ($variables) {
                     $sefcats = false;
 

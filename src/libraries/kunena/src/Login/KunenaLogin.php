@@ -225,7 +225,6 @@ class KunenaLogin
         return false;
     }
 
-
     /**
      * Return the parameters of the plugin
      *

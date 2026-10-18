@@ -147,7 +147,7 @@ if ($saveOrder) {
                                 <th class="">
                                     <div class="break-word">
                                        <?php
-                                       
+
 echo str_repeat('<span class="gi">&mdash;</span>', $item->level);
 if ($item->checked_out) {
     $canCheckin = $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkin');

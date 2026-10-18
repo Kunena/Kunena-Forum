@@ -47,7 +47,7 @@ class CategoryListField extends ListField
         $params    = [
             'sections'       => (bool) $sections,
             'action'         => $action,
-            'return_options' => 1
+            'return_options' => 1,
         ];
 
         if (!empty($select)) {

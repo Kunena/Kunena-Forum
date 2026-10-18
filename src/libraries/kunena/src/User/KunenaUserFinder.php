@@ -128,8 +128,8 @@ class KunenaUserFinder extends KunenaFinder
         }
 
         return $this;
-    }    
-    
+    }
+
     /**
      * Filter the users by type (banned, admin, moderator...)
      * 
@@ -142,9 +142,9 @@ class KunenaUserFinder extends KunenaFinder
     public function filterByUserType(string $usertype): KunenaFinder
     {
         $dateNow = Factory::getDate()->toSql();
-        
+
         // Select users banned
-        if ($usertype == 'banned') {            
+        if ($usertype == 'banned') {
             $this->query->where($this->db->quoteName('ku.banned') . ' != ' . $this->db->quote('1000-01-01 00:00:00') . ' OR ' . $this->db->quoteName('ku.banned') . '>=' . $this->db->quote($dateNow));
         } elseif ($usertype == 'globalmod') {
             $this->query->where($this->db->quoteName('ku.moderator') . ' =1 ');

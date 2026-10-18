@@ -177,7 +177,7 @@ class TopicListingUserDisplay extends ListDisplay
                 $params = [
                     'option' => 'com_kunena',
                     'view' => 'user',
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 if ($view == 'user' && $layout == 'default') {
@@ -186,13 +186,15 @@ class TopicListingUserDisplay extends ListDisplay
                     $params['view'] = 'topics';
                     $params = [
                         'layout' => 'user',
-                        'mode' => $this->state->get('list.mode')
+                        'mode' => $this->state->get('list.mode'),
                     ];
+
                     return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
                 } else {
                     $params = [
-                        'mode' => $this->state->get('list.mode')
+                        'mode' => $this->state->get('list.mode'),
                     ];
+
                     return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
                 }
             } catch (Exception $e) {

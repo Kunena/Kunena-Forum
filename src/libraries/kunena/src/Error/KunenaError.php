@@ -231,7 +231,7 @@ abstract class KunenaError
         }
 
         if (\ini_get('log_errors')) {
-            error_log(sprintf("PHP %s:  %s in %s on line %d", $error, $errstr, $errfile, $errline));
+            error_log(\sprintf("PHP %s:  %s in %s on line %d", $error, $errstr, $errfile, $errline));
         }
 
         return true;
@@ -260,7 +260,7 @@ abstract class KunenaError
                 $file     = strtr($error['file'], '\\', '/');
                 $file     = preg_replace('%' . strtr(JPATH_ROOT, '\\', '/') . '/%', '\\1', $file);
                 $file     = preg_replace('%^.*?/((administrator/)?(components|modules|plugins|templates)/)%', '\\1', $file);
-                $errorMsg = sprintf(
+                $errorMsg = \sprintf(
                     "<p><b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b></p>",
                     $error['message'],
                     $file,

@@ -119,8 +119,8 @@ class CategoriesController extends KunenaController
 
             if (!$category->isAuthorised('admin')) {
                 $this->app->enqueueMessage(
-                	Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
-                	'notice'
+                    Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)),
+                    'notice'
                 );
             } elseif (!$category->isCheckedOut($this->me->userid)) {
                 $category->$variable = $value;
@@ -130,13 +130,13 @@ class CategoriesController extends KunenaController
                 } catch (Exception $e) {
                     if (!empty($e->getMessage())) {
                         $this->app->enqueueMessage(
-                        	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
-                        	'error'
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
+                            'error'
                         );
                     } else {
                         $this->app->enqueueMessage(
-                        	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
-                        	'error'
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
+                            'error'
                         );
                     }
 
@@ -148,8 +148,8 @@ class CategoriesController extends KunenaController
                 $name = $category->name;
             } else {
                 $this->app->enqueueMessage(
-                	Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
-                	'notice'
+                    Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
+                    'notice'
                 );
             }
         }
@@ -535,20 +535,20 @@ class CategoriesController extends KunenaController
                 } catch (Exception $e) {
                     if (!empty($e->getMessage())) {
                         $this->app->enqueueMessage(
-                        	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
-                        	'error'
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape($e->getMessage())),
+                            'error'
                         );
                     } else {
                         $this->app->enqueueMessage(
-                        	Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
-                        	'error'
+                            Text::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED_WITH_NO_ERROR_REPORTED', $category->id),
+                            'error'
                         );
                     }
                 }
             } else {
                 $this->app->enqueueMessage(
-                	Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
-                	'notice'
+                    Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape($category->name)),
+                    'notice'
                 );
             }
         }
@@ -603,7 +603,7 @@ class CategoriesController extends KunenaController
         // Close the application
         $this->app->close();
     }
-    
+
     /**
      * Proxy for getModel.
      *
@@ -764,7 +764,7 @@ class CategoriesController extends KunenaController
 
             return false;
         }
-        
+
 		// User needs to be admin in the target category and in the current parent of every moved category
         $target = KunenaCategoryHelper::get($catParent);
 
@@ -787,7 +787,7 @@ class CategoriesController extends KunenaController
                 return false;
             }
         }
-       
+
 	    if ($task == 'move') {
             foreach ($cid as $cat) {
                 // A category cannot become a child of itself or of one of its own descendants.

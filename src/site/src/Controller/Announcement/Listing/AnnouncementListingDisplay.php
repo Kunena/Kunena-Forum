@@ -73,7 +73,7 @@ class AnnouncementListingDisplay extends KunenaControllerDisplay
                     'option' => 'com_kunena',
                     'view' => 'announcement',
                     'layout' => 'listing',
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
@@ -97,9 +97,9 @@ class AnnouncementListingDisplay extends KunenaControllerDisplay
         $moderator           = KunenaUserHelper::getMyself()->isModerator();
         $this->pagination    = new KunenaPagination(KunenaAnnouncementHelper::getCount(!$moderator), $limitstart, $limit);
         $this->announcements = KunenaAnnouncementHelper::getAnnouncements(
-        	$this->pagination->limitstart,
-        	$this->pagination->limit,
-        	!$moderator
+            $this->pagination->limitstart,
+            $this->pagination->limit,
+            !$moderator
         );
     }
 

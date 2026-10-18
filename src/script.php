@@ -27,7 +27,7 @@ use Kunena\Forum\Libraries\Install\KunenaModelInstall;
 use Kunena\Forum\Libraries\Menu\KunenaMenuFix;
 
 // phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 return new class() implements ServiceProviderInterface {
@@ -65,7 +65,7 @@ return new class() implements ServiceProviderInterface {
                     ],
                     'MySQL'   => [
                         '26.7'=> '26.7.0',
-                        '9.7' => '9.7.0',        
+                        '9.7' => '9.7.0',
                         '9.6' => '9.6.0',
                         '9.5' => '9.5.0',
                         '9.4' => '9.4.0',
@@ -131,7 +131,6 @@ return new class() implements ServiceProviderInterface {
                 protected string $installedVersion;
 
                 /**
-                 *
                  * @since Kunena 7.0.0
                  */
                 public function __construct(AdministratorApplication $app, DatabaseInterface $db)
@@ -142,7 +141,6 @@ return new class() implements ServiceProviderInterface {
                 }
 
                 /**
-                 *
                  * @since Kunena 7.0.0
                  */
                 public function install(InstallerAdapter $parent): bool
@@ -153,7 +151,6 @@ return new class() implements ServiceProviderInterface {
                 }
 
                 /**
-                 *
                  * @since Kunena 7.0.0
                  */
                 public function update(InstallerAdapter $parent): bool
@@ -164,7 +161,6 @@ return new class() implements ServiceProviderInterface {
                 }
 
                 /**
-                 *
                  * @since Kunena 7.0.0
                  */
                 public function uninstall(InstallerAdapter $parent): bool
@@ -175,7 +171,6 @@ return new class() implements ServiceProviderInterface {
                 }
 
                 /**
-                 *
                  * @since Kunena 7.0.0
                  */
                 public function preflight(string $type, InstallerAdapter $parent): bool
@@ -192,7 +187,6 @@ return new class() implements ServiceProviderInterface {
 
                         return true;
                     }
-
 
                     $manifest = $parent->manifest;
 
@@ -211,7 +205,6 @@ return new class() implements ServiceProviderInterface {
                 }
 
                 /**
-                 *
                  * @since Kunena 7.0.0
                  */
                 public function postflight(string $type, InstallerAdapter $parent): bool
@@ -224,7 +217,6 @@ return new class() implements ServiceProviderInterface {
                     if (function_exists('apcu_clear_cache')) {
                         apcu_clear_cache();
                     }
-
 
                     $db = Factory::getContainer()->get(DatabaseInterface::class);
 
@@ -467,7 +459,7 @@ return new class() implements ServiceProviderInterface {
                     $result = $db->loadResult();
 
                     if ($result) {
-                        $return = \json_decode($result);
+                        $return = json_decode($result);
 
                         if ($return) {
                             return $return->version;
@@ -544,9 +536,9 @@ return new class() implements ServiceProviderInterface {
                                 $minor,
                                 $name,
                                 $recommended
-                                ),
+                            ),
                             'notice'
-                            );
+                        );
                     } else {
                         $app->enqueueMessage(
                             sprintf(
@@ -555,9 +547,9 @@ return new class() implements ServiceProviderInterface {
                                 $version,
                                 $name,
                                 $minor
-                                ),
+                            ),
                             'notice'
-                            );
+                        );
                     }
 
                     return false;

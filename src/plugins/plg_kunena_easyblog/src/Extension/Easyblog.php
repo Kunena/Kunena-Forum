@@ -13,7 +13,7 @@
 
 namespace Kunena\Forum\Plugin\Kunena\Easyblog\Extension;
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -80,19 +80,19 @@ class Easyblog extends CMSPlugin implements SubscriberInterface, DatabaseAwareIn
     public function __construct(array $config = [])
     {
         // Do not load if Kunena version is not supported or Kunena is offline
-        if (!(\class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.1') && KunenaForum::enabled())) {
+        if (!(class_exists('Kunena\Forum\Libraries\Forum\KunenaForum') && KunenaForum::isCompatible('7.1') && KunenaForum::enabled())) {
             return;
         }
 
         // Do not load if Easyblog is not installed
         $path = JPATH_ADMINISTRATOR . '/components/com_easyblog/includes/easyblog.php';
 
-        if (!\is_file($path)) {
+        if (!is_file($path)) {
             return;
         }
 
         include_once $path;
-        
+
         // Call loadApi method to load Kunena constants
         KunenaForum::loadApi();
 

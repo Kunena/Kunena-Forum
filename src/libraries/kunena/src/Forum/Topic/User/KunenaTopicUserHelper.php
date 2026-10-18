@@ -424,7 +424,7 @@ abstract class KunenaTopicUserHelper
                 return 0;
             }
 
-            $where  = 'AND '. $db->quoteName('m.thread') . ' IN (' . implode(',', $topicids) . ')';
+            $where  = 'AND ' . $db->quoteName('m.thread') . ' IN (' . implode(',', $topicids) . ')';
             $where2 = 'AND ' . $db->quoteName('ut.topic_id') . ' IN (' . implode(',', $topicids) . ')';
         } elseif ((int) $topicids) {
             $where  = 'AND ' . $db->quoteName('m.thread') . '=' . (int) $topicids;
@@ -458,7 +458,7 @@ abstract class KunenaTopicUserHelper
         $query->insert($db->quoteName('#__kunena_user_topics'))
             ->columns($db->quoteName(array('user_id', 'topic_id', 'category_id', 'posts', 'last_post_id', 'owner')))
             ->values($subQuery);
-        
+
         // Add ON DUPLICATE KEY UPDATE clause manually
         $query .= ' ON DUPLICATE KEY UPDATE ' .
                   $db->quoteName('category_id') . ' = VALUES(' . $db->quoteName('category_id') . '), ' .

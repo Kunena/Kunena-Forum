@@ -107,7 +107,7 @@ class UserListingDisplay extends KunenaControllerDisplay
                     'option' => 'com_kunena',
                     'view' => 'user',
                     'layout' => 'list',
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));

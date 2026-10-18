@@ -24,7 +24,6 @@ use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
-use Text;
 
 /**
  * Trash Model for Kunena
@@ -258,6 +257,7 @@ class TrashsModel extends ListModel
                 $topic->delete();
             } catch (Exception $e) {
                 $app->enqueueMessage($e->getMessage(), 'error');
+
                 return \false;
             }
         }
@@ -295,6 +295,7 @@ class TrashsModel extends ListModel
                     $message->delete();
                 } catch (Exception $e) {
                     $app->enqueueMessage($e->getMessage(), 'error');
+
                     return \false;
                 }
 
@@ -312,6 +313,7 @@ class TrashsModel extends ListModel
                         $topic->save(\false);
                     } catch (Exception $e) {
                         $app->enqueueMessage($e->getMessage(), 'error');
+
                         return \false;
                     }
                 }

@@ -110,7 +110,7 @@ class UserEdit extends KunenaLayout
             new KunenaUserTabsEditEvent(
                 'onKunenaUserTabsEdit',
                 ['tabs' => $tabs]
-                )
+            )
         );
 
         //$tabs = $tabs + $plugins;

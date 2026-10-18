@@ -20,7 +20,6 @@ use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\QueryInterface;
 use Kunena\Forum\Libraries\Error\KunenaError;
-use stdClass;
 
 /**
  * Class KunenaForumDiagnostics
@@ -387,7 +386,7 @@ abstract class KunenaDiagnostics
         foreach ($list as $item) {
             $ids[] = $item->id;
         }
-        
+
         if (empty($ids)) {
             return '';
         }

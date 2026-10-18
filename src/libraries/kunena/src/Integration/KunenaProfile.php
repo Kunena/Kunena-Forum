@@ -175,7 +175,7 @@ class KunenaProfile
     {
         return '';
     }
-    
+
     /**
      * Function to get the User Profile Name
      *

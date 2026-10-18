@@ -135,14 +135,14 @@ $template = KunenaTemplate::getInstance();
             <tr>
                 <td class="col-md-3">
                     <label for="personalText">
-                        <?php echo Text::_('COM_KUNENA_MYPROFILE_' . \strtoupper($key)); ?>
+                        <?php echo Text::_('COM_KUNENA_MYPROFILE_' . strtoupper($key)); ?>
                     </label>
                 </td>
                 <td>
                     <input class="form-control hasTooltip" id="social<?php echo $key; ?>" type="text"
                         maxlength="100"
                         name="social<?php echo $key; ?>" value="<?php echo $this->escape($social->value); ?>"
-                        data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_' . \strtoupper($key) . '_DESC') ?>" />
+                        data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_' . strtoupper($key) . '_DESC') ?>" />
                 </td>
             </tr>
         <?php endforeach; ?>

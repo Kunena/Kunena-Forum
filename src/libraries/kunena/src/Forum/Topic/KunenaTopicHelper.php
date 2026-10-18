@@ -463,7 +463,7 @@ abstract class KunenaTopicHelper
         } else {
             $idlist = (int) $ids;
         }
-        
+
         $queries = [];
 
         // Delete user topics
@@ -524,12 +524,12 @@ abstract class KunenaTopicHelper
 
         foreach ($queries as $query) {
             $db->setQuery($query);
-            
+
             try {
                 $db->execute();
             } catch (ExecutionFailureException $e) {
                 KunenaError::displayDatabaseError($e);
-                
+
                 return false;
             }
         }
@@ -561,14 +561,14 @@ abstract class KunenaTopicHelper
         }
 
         $db        = Factory::getContainer()->get('DatabaseDriver');
-        
+
         // Create prepared query for messages
         $query1 = $db->createQuery();
         $query1->update($db->quoteName('#__kunena_messages'))
                ->set($db->quoteName('hold') . ' = ' . $db->quote('2'))
                ->where($db->quoteName('thread') . ' IN (' . $idlist . ')');
         $queries[] = $query1;
-        
+
         // Create prepared query for topics
         $query2 = $db->createQuery();
         $query2->update($db->quoteName('#__kunena_topics'))

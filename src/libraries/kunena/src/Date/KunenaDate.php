@@ -53,7 +53,7 @@ class KunenaDate extends Date
     {
         $minutes = (int) round($this->getOffsetFromGMT(true) * 60);
 
-        return sprintf('%s%d:%02d', $minutes < 0 ? '-' : '+', intdiv(abs($minutes), 60), abs($minutes) % 60);
+        return \sprintf('%s%d:%02d', $minutes < 0 ? '-' : '+', intdiv(abs($minutes), 60), abs($minutes) % 60);
     }
 
     /**

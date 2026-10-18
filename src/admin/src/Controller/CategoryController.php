@@ -143,7 +143,7 @@ class CategoryController extends KunenaController
 
         $category = KunenaCategoryHelper::get(\intval($post['catid']));
         $parent   = KunenaCategoryHelper::get(\intval($post['parentid']));
-        
+
         unset($post['params-joomla-level']);
         unset($post['params-joomla-group']);
         array_splice($post, 2, 1);

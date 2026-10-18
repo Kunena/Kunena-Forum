@@ -226,14 +226,14 @@ class KunenaUserSocials
      * @var    string  Bluesky_app
      * @since  Kunena 6.4.0
      */
-    public $bluesky_app = ''; 
-    
+    public $bluesky_app = '';
+
     /**
      * @var    string  Threads
      * @since  Kunena 6.4.0
      */
-    public $threads = ''; 
-    
+    public $threads = '';
+
     protected $userid = 0;
 
     /**
@@ -310,7 +310,7 @@ class KunenaUserSocials
         } catch (ExecutionFailureException $e) {
             KunenaError::displayDatabaseError($e);
         }
-        
+
         if (!empty($socials['socials'])) {
             $userid = $this->userid;
             $params = json_decode($socials['socials']);
@@ -392,15 +392,15 @@ class KunenaUserSocials
         // Get current configuration
         $params = get_object_vars($this);
         unset($params['id']);
-        
+
         $fields = array(
-            $db->quoteName('socials') . ' = ' . $db->quote(json_encode($params))
+            $db->quoteName('socials') . ' = ' . $db->quote(json_encode($params)),
         );
-        
+
         $conditions = array(
-            $db->quoteName('userid') . ' = ' . $this->userid
+            $db->quoteName('userid') . ' = ' . $this->userid,
         );
-        
+
         $query = $db->createQuery()
             ->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
 
@@ -495,7 +495,7 @@ class KunenaUserSocials
 
         return false;
     }
-    
+
     /**
      * Default JSON structure of the socials column
      *
@@ -721,18 +721,18 @@ JSON;
      */
     public static function addSocialsParams()
     {
-        $user = KunenaUserHelper::getMyself(); 
+        $user = KunenaUserHelper::getMyself();
 
         if ($user->userid > 0 && empty($user->socials)) {
             $db    = Factory::getContainer()->get('DatabaseDriver');
             $query = $db->createQuery();
 
             $fields = array(
-                $db->quoteName('socials') . ' = ' . $db->quote(self::getDefaultSocialsJson())
+                $db->quoteName('socials') . ' = ' . $db->quote(self::getDefaultSocialsJson()),
             );
-            
+
             $conditions = array(
-                $db->quoteName('userid')  . ' = ' . $user->userid
+                $db->quoteName('userid') . ' = ' . $user->userid,
             );
 
             $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);

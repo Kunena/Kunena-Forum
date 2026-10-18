@@ -47,6 +47,6 @@ class MessageItemBottom extends KunenaLayout
     public $reportMessageLink;
 
     public $profile;
-    
+
     public $pmHasBody;
 }

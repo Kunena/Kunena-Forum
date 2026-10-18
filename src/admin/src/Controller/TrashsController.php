@@ -103,11 +103,11 @@ class TrashsController extends AdminController
         if ($type == 'topics') {
             if ($model->purgeTopics($cid)) {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'), 'success');
-            };
+            }
         } elseif ($type == 'messages') {
             if ($model->purgeMessages($cid, age: 0)) {
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'), 'success');
-            };
+            }
         }
 
         $this->setRedirect(KunenaRoute::_($this->baseurl, false));

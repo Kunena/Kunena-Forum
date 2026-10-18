@@ -324,161 +324,161 @@ class TemplateController extends FormController
     {
         // The parameters set into the $editorButtons array should be all in lowercase
         $editorButtons = [];
-        
+
         if (!$params['Cut']) {             // not selectable
             $editorButtons[] = 'cut';
         }
-        
+
         if (!$params['Copy']) {             // not selectable
             $editorButtons[] = 'copy';
         }
-        
+
         if (!$params['Paste']) {             // not selectable
             $editorButtons[] = 'pastetext';
         }
-        
+
         if (!$params['Source']) {             // not selectable
             $editorButtons[] = 'source';
         }
-        
+
         if (!$params['Undo']) {             // not selectable
             $editorButtons[] = 'undo,redo';
         }
-        
+
         if ($params['Quote']) {
             $editorButtons[] = 'quote';
         }
-        
+
         if ($params['Bold']) {
             $editorButtons[] = 'bold';
         }
-        
+
         if ($params['Italic']) {
             $editorButtons[] = 'italic';
         }
-        
+
         if ($params['Underline']) {
             $editorButtons[] = 'underline';
         }
-        
+
         if ($params['Strike']) {
             $editorButtons[] = 'strike';
         }
-        
+
         if ($params['Superscript']) {
             $editorButtons[] = 'superscript';
         }
-        
+
         if ($params['Subscript']) {
             $editorButtons[] = 'subscript';
         }
-        
+
         if ($params['JustifyRight']) {
             $editorButtons[] = 'right';
         }
-        
+
         if ($params['JustifyLeft']) {
             $editorButtons[] = 'left';
         }
-        
+
         if ($params['JustifyBlock']) {
             $editorButtons[] = 'justify';
         }
-        
+
         if ($params['JustifyCenter']) {
             $editorButtons[] = 'center';
         }
-        
+
         if ($params['RemoveFormat']) {
             $editorButtons[] = 'removeformat';
         }
-        
+
         if ($params['Confidential']) {
             $editorButtons[] = 'confidential';
         }
-        
+
         if ($params['Hidetext']) {
             $editorButtons[] = 'hidetext';
         }
-        
+
         if ($params['Spoiler']) {
             $editorButtons[] = 'spoiler';
         }
-        
+
         if ($params['Smiley']) {
             $editorButtons[] = 'emoticon';
         }
-        
+
         if ($params['Ebay']) {
             $editorButtons[] = 'ebay';
         }
-        
+
         if ($params['X_Social']) {
             $editorButtons[] = 'x_social';
         }
-        
+
         if ($params['Instagram']) {
             $editorButtons[] = 'instagram';
         }
-        
+
         if ($params['Soundcloud']) {
             $editorButtons[] = 'soundcloud';
         }
-        
+
         if ($params['Map']) {
             $editorButtons[] = 'map';
         }
-        
+
         if ($params['FontSize']) {
             $editorButtons[] = 'font,size';
         }
-        
+
         if ($params['TextColor']) {
             $editorButtons[] = 'color';
         }
-        
+
         if ($params['Image']) {
             $editorButtons[] = 'image';
         }
-        
+
         if ($params['Video']) {
             $editorButtons[] = 'video';
         }
-        
+
         if ($params['Link_Unlink']) {
             $editorButtons[] = 'link,unlink';
         }
-        
+
         if ($params['BulletedList']) {
             $editorButtons[] = 'bulletlist';
         }
-        
+
         if ($params['NumberedList']) {
             $editorButtons[] = 'orderedlist';
         }
-        
+
         if ($params['Table']) {
             $editorButtons[] = 'table';
         }
-        
+
         if ($params['Horizontalrule']) {
             $editorButtons[] = 'horizontalrule';
         }
-        
+
         if ($params['Blockquote']) {
             $editorButtons[] = 'quote';
         }
-        
+
         if ($params['Code']) {
             $editorButtons[] = 'code';
         }
-        
+
         if ($params['Maximize']) {
             $editorButtons[] = 'maximize';
         }
-        
+
         return $editorButtons;
-    }    
+    }
 
     /**
      * Apply
@@ -737,7 +737,7 @@ class TemplateController extends FormController
     {
         return \is_string($filename)
             && $filename !== ''
-            && strpbrk($filename, '/' . chr(92)) === false
+            && strpbrk($filename, '/' . \chr(92)) === false
             && strtolower(File::getExt($filename)) === $extension;
     }
 

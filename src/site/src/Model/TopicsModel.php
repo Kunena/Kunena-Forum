@@ -652,7 +652,7 @@ class TopicsModel extends KunenaModel
                     if ($klatestCategorySel == 1) {
                         // Show categories in the category list selected
                         $latestCategory = $klatestCategory;
-                    } else if ($klatestCategorySel == 2) {
+                    } elseif ($klatestCategorySel == 2) {
                         // Hide categories in the category list selected
                         $latestCategory = $klatestCategory;
                         $latestCategoryIn = 0;

@@ -104,7 +104,7 @@ $dispatcher->dispatch(
     new ContentPrepareEvent(
         'onContentPrepare',
         ['context' => "com_kunena.{$view}", 'subject' => &$topics, 'params' => &$params, 'page' => 0]
-        )
+    )
 );
 
 $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
@@ -129,7 +129,7 @@ if (KUNENA_PROFILER) {
     echo "<h3>Kunena Profile Information</h3>";
 
     foreach ($kunena_profiler->getAll() as $item) {
-        echo sprintf(
+        echo \sprintf(
             "Kunena %s: %0.3f / %0.3f seconds (%d calls)<br/>",
             $item->name,
             $item->getInternalTime(),

@@ -75,7 +75,7 @@ class KunenaAttachmentFinder extends KunenaFinder
 
         return $instances;
     }
-    
+
     /**
      * Filter by attachment private.
      *
@@ -86,7 +86,7 @@ class KunenaAttachmentFinder extends KunenaFinder
     public function filterByPrivate()
     {
         $this->query->where($this->db->quoteName('protected') . ' = 32');
-        
+
         return $this;
     }
 }

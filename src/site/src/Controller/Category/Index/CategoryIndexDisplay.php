@@ -133,7 +133,7 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
                     'option' => 'com_kunena',
                     'view' => 'category',
                     'layout' => 'list',
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 if ($view == 'home') {

@@ -588,35 +588,35 @@ abstract class KunenaAttachmentHelper
         if (empty($params['orderby'])) {
             $params['orderby'] = 'desc';
         }
-        
+
         if (empty($params['limit'])) {
             $params['limit'] = '';
         }
-        
+
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
-        
+
         if ($params['mesid'] == '0') {
             $query->where($db->quoteName('mesid') . '=' . $db->quote('0'));
         }
-        
+
         if ($params['file'] == '1' && $params['image'] != '1') {
             $query->where($db->quoteName('filetype') . '=' . $db->quote(''));
         } elseif ($params['image'] == '1' && $params['file'] != '1') {
             $query->where($db->quoteName('filetype') . '!=' . $db->quote(''));
         } else {
-            
-        } 
+
+        }
 
         if ($params['orderby'] == 'desc') {
             $orderby = ' DESC';
         } else {
             $orderby = ' ASC';
         }
-        
+
         $query->select('*')
             ->from($db->quoteName('#__kunena_attachments'))
-            ->where($db->quoteName('userid') . ' = ' . $db->quote($user->userid))            
+            ->where($db->quoteName('userid') . ' = ' . $db->quote($user->userid))
             ->order($db->quoteName('id') . $orderby);
         $query->setLimit($params['limit']);
         $db->setQuery($query);
@@ -641,7 +641,7 @@ abstract class KunenaAttachmentHelper
                 $list[] = self::$_instances[$result->id];
             }
         }
-        
+
         unset($results);
 
         return $list;

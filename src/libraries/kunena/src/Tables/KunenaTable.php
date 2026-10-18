@@ -48,8 +48,8 @@ abstract class KunenaTable extends Table
     {
         // Pre-processing by observers
         $event = AbstractEvent::create(
-        	'onTableBeforeLoad',
-        	[
+            'onTableBeforeLoad',
+            [
                 'subject' => $this,
                 'keys'    => $keys,
                 'reset'   => $reset,
@@ -99,7 +99,7 @@ abstract class KunenaTable extends Table
         foreach ($keys as $field => $value) {
             // Check that $field is in the table.
             if (!\in_array($field, $fields)) {
-                throw new \UnexpectedValueException(sprintf('Missing field in database: %s &#160; %s.', \get_class($this), $field));
+                throw new \UnexpectedValueException(\sprintf('Missing field in database: %s &#160; %s.', \get_class($this), $field));
             }
 
             // Add the search tuple to the query.
@@ -120,8 +120,8 @@ abstract class KunenaTable extends Table
 
         // Post-processing by observers
         $event = AbstractEvent::create(
-        	'onTableAfterLoad',
-        	[
+            'onTableAfterLoad',
+            [
                 'subject' => $this,
                 'result'  => &$result,
                 'row'     => $row,
@@ -264,7 +264,7 @@ abstract class KunenaTable extends Table
             $this->_db->transactionStart();
 
             // Set the query and execute the update.
-            $this->_db->setQuery(sprintf($statement, implode(",", $fields), implode(' AND ', $where)));
+            $this->_db->setQuery(\sprintf($statement, implode(",", $fields), implode(' AND ', $where)));
 
             $this->_db->execute();
 

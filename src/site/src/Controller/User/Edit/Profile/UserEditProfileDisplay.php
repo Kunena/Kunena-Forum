@@ -37,7 +37,7 @@ class UserEditProfileDisplay extends UserEditDisplay
     public $genders;
 
     public $birthdate;
-    
+
     public $socials;
 
     /**

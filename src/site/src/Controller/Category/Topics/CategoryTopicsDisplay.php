@@ -114,7 +114,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
                     'option' => 'com_kunena',
                     'view' => 'category',
                     'catid' => $catid,
-                    'Itemid' => $itemid
+                    'Itemid' => $itemid,
                 ];
 
                 return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));

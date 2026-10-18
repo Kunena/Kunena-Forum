@@ -175,7 +175,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         }
 
         $params      = $event->getArgument('params');
-        $params = (object) $params; 
+        $params = (object) $params;
         // Define $age to default value else if empty
         $age    = $params->age ?? 31;
         $app         = Factory::getApplication();
@@ -186,7 +186,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
         $cid       = [];
 
         if (!empty($messages)) {
-            $cid    = \array_column($messages, 'id');
+            $cid    = array_column($messages, 'id');
             $result = $trashsModel->purgeMessages($cid, $age);
 
             if (!$result) {
@@ -202,7 +202,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
 
         return Status::OK;
     }
-    
+
     /**
      * Method to retrieve the list of mails to send from the table and send them.
      *
@@ -222,25 +222,25 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
             ) {
                 return Status::NO_RUN;
             }
-        
+
         $config = KunenaFactory::getConfig();
-        
+
         if (!$config->email) {
             KunenaError::warning(Text::_('COM_KUNENA_EMAIL_DISABLED'));
-            
+
             return Status::KNOCKOUT;
         } elseif (!MailHelper::isEmailAddress($config->email)) {
             KunenaError::warning(Text::_('COM_KUNENA_EMAIL_INVALID'));
-            
+
             return Status::KNOCKOUT;
         }
-        
+
         KunenaForum::loadApi();
-        
+
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $batchSize =  $config->emailBatchSize;
         $processedCount = 0;
-        
+
         // Process the notifications by batch
         do {
             $query = $db->createQuery()
@@ -249,33 +249,33 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                 ->where($db->quoteName('send') . ' = ' . $db->quote('0'))
                 ->order($db->quoteName('id') . ' ASC')
                 ->setLimit($batchSize);
-            
+
             $db->setQuery($query);
-            
+
             try {
                 $mailsToSend = $db->loadObjectList();
             } catch (ExecutionFailureException $e) {
                 $mailsToSend = [];
             }
-            
+
             // If no more notifications to process, we exit the loop
             if (empty($mailsToSend)) {
                 break;
             }
-            
+
             // Table to store the IDs of the notifications which are processed
             $processedIds = [];
             $deliveryFailed = false;
-            
+
             foreach($mailsToSend as $mail) {
                 $message = KunenaMessageHelper::get($mail->messageId);
-                
+
                 if (!$message || !$message->exists()) {
                     // Message no longer exists: mark as processed so it doesn't loop forever
                     $processedIds[] = $mail->id;
                     continue;
                 }
-                
+
                 $emailToList = json_decode($mail->emailListJson);
                 $sentusers = json_decode($mail->sentusers);
                 $pendingRecipients = $emailToList;
@@ -305,23 +305,23 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
                     $deliveryFailed = true;
                     continue;
                 }
-                
+
                 // Add the ID in the list of processed
                 $processedIds[] = $mail->id;
             }
-            
+
             // Mark the notifications as send
             if (!empty($processedIds)) {
                 $updateQuery = $db->createQuery()
                     ->update($db->quoteName('#__kunena_notifications_mailsqueue'))
                     ->set($db->quoteName('send') . ' = ' . $db->quote('1'))
                     ->where($db->quoteName('id') . ' IN (' . implode(',', $processedIds) . ')');
-                
+
                 $db->setQuery($updateQuery);
-                
+
                 try {
                     $db->execute();
-                    $processedCount += count($processedIds);
+                    $processedCount += \count($processedIds);
                 } catch (ExecutionFailureException $e) {
                     // If an error is throwed, teh error is logged and we continue
                     $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_ERROR_UPDATING', $e->getMessage()));
@@ -333,7 +333,7 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
 
                 return Status::KNOCKOUT;
             }
-            
+
             // If the batch is full, there may be more notifications left to process.
             // Exit now and let the task be resumed on the next run instead of looping forever.
             if (\count($mailsToSend) >= $batchSize) {
@@ -343,14 +343,14 @@ final class Kunena extends CMSPlugin implements SubscriberInterface
 
                 return Status::WILL_RESUME;
             }
-            
+
         } while (!empty($mailsToSend));
-        
+
         // Log the number of notifications processed
         if ($processedCount > 0) {
             $this->logTask(Text::sprintf('PLG_TASK_SENDNOTIFICATIONSKUNENA_PROCESSED', $processedCount));
         }
-        
+
         return Status::OK;
     }
 

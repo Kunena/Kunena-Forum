@@ -47,7 +47,6 @@ class Kunenaforum
      * @return  string|boolean
      *
      * @since   Kunena 6.0
-     *
      */
     public static function categorylist($name, $parent, $options = [], $params = [], $attribs = null, $key = 'value', $text = 'text', $selected = [], $idtag = false, $translate = false)
     {
@@ -350,7 +349,7 @@ class Kunenaforum
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
         $i = 0;
 
-        while ($bytes >= 1024 && $i < count($units) - 1) {
+        while ($bytes >= 1024 && $i < \count($units) - 1) {
             $bytes /= 1024;
             $i++;
         }

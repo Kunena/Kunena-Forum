@@ -26,7 +26,7 @@ use Kunena\Forum\Libraries\User\KunenaUserHelper;
 HTMLHelper::_('bootstrap.framework');
 
 $this->addScriptDeclaration(
-	"// <![CDATA[
+    "// <![CDATA[
 kunena_url_ajax= '" . KunenaRoute::_("/index.php?option=com_kunena&view=category&type=raw&format=json&layout=raw") . "';
 // ]]>"
 );
@@ -104,11 +104,11 @@ $labels          = $this->ktemplate->params->get('labels');
                    <?php echo !empty($icon->checked) ? ' checked="checked" ' : ''; ?> 
             />
             
-            <?php 
+            <?php
             if (!$this->category->iconset) {
                 $this->category->iconset = 'default';
             }
-            
+
             $topicicontype = $this->ktemplate->params->get('topicicontype');
             ?>
             

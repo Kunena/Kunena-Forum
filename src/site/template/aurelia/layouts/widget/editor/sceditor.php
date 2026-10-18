@@ -40,12 +40,12 @@ if($this->config->debug && file_exists('media/kunena/core/js/dev/sceditor/scedit
 $jlang = substr($joomlaLanguage[2], 0, 2);
 if ($userLanguage != 'default' && $userLanguage != 'active') {
     $ulang = substr($userLanguage, 0, 2);
-    if (is_file('media/kunena/core/js/sceditor/languages/'.$ulang.'.js')) {
-        $this->wa->registerAndUseScript('sceditor/sclang', 'media/kunena/core/js/sceditor/languages/'.$ulang.'.js');
+    if (is_file('media/kunena/core/js/sceditor/languages/' . $ulang . '.js')) {
+        $this->wa->registerAndUseScript('sceditor/sclang', 'media/kunena/core/js/sceditor/languages/' . $ulang . '.js');
         $this->doc->addScriptOptions('com_kunena.sceditor_userdefaultlanguage', $ulang);
     }
-} elseif (is_file('media/kunena/core/js/sceditor/languages/'.$jlang.'.js')) {
-    $this->wa->registerAndUseScript('sceditor/sclang', 'media/kunena/core/js/sceditor/languages/'.$jlang.'.js');
+} elseif (is_file('media/kunena/core/js/sceditor/languages/' . $jlang . '.js')) {
+    $this->wa->registerAndUseScript('sceditor/sclang', 'media/kunena/core/js/sceditor/languages/' . $jlang . '.js');
     $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', $jlang);
 } else
     $this->doc->addScriptOptions('com_kunena.sceditor_joomladefaultlanguage', '');

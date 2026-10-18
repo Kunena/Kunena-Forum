@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\KunenaStatistics;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -307,6 +308,16 @@ class CategoryIndexDisplay extends KunenaControllerDisplay
         foreach ($topics as $topic) {
             $userIds[$topic->last_post_userid] = $topic->last_post_userid;
             $postIds[$topic->id]               = $topic->last_post_id;
+        }
+
+        // The statistics widget of the page links to the latest member: load that user with the authors, not with an own query.
+        if ($this->config->showStats) {
+            $statistics = KunenaStatistics::getInstance();
+            $statistics->loadLastUserId();
+
+            if ($statistics->lastUserId) {
+                $userIds[$statistics->lastUserId] = $statistics->lastUserId;
+            }
         }
 
         KunenaUserHelper::loadUsers($userIds);

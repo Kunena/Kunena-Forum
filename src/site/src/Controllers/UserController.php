@@ -442,16 +442,18 @@ class UserController extends KunenaController
             // Load language file of com_users component
             $this->app->getLanguage()->load('com_users');
 
+            // Set a variable to check if any errors are made in password
+            $validPassword = true;
+
             // We set a maximum length to prevent abuse since it is unfiltered.
             if ($valueLength > 4096) {
                 $this->app->enqueueMessage(Text::_('COM_USERS_MSG_PASSWORD_TOO_LONG'), 'error');
+
+                $validPassword = false;
             }
 
             // We don't allow white space inside passwords
             $valueTrim = trim($value);
-
-            // Set a variable to check if any errors are made in password
-            $validPassword = true;
 
             if (\strlen($valueTrim) != $valueLength) {
                 $this->app->enqueueMessage(

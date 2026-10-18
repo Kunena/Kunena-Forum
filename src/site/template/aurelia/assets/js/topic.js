@@ -63,7 +63,7 @@ jQuery(document).ready(function ($) {
 	$('#kmod_topics').change(function () {
 		const id_item_selected = $(this).val();
 
-		if (id_item_selected === 0) {
+		if (id_item_selected == 0) {
 			$('#kmod_subject').hide();
 		}
 		else {
@@ -82,8 +82,8 @@ jQuery(document).ready(function ($) {
 		$.getJSON(
 			kunena_url_ajax, {catid: $(this).val()}
 		).done(function (json) {
-			const first_item = $('#kmod_topics option:nth-child(0)').clone();
-			const second_item = $('#kmod_topics option:nth-child(1)').clone();
+			const first_item = $('#kmod_topics option:nth-child(1)').clone();
+			const second_item = $('#kmod_topics option:nth-child(2)').clone();
 
 			$('#kmod_topics').empty();
 			first_item.appendTo('#kmod_topics');
@@ -91,7 +91,7 @@ jQuery(document).ready(function ($) {
 
 			$.each(json, function (index, object) {
 				$.each(object, function (key, element) {
-					$('#kmod_topics').append('<option value="' + element['id'] + '">' + element['subject'] + '</option>');
+					$('#kmod_topics').append($('<option>').val(element['id']).text(element['subject']));
 				});
 			});
 		})

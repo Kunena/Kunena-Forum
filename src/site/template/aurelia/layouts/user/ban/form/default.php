@@ -176,7 +176,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                 </label>
             </td>
             <td>
-                <input type="checkbox" id="ban-delposts" name="bandelpostsperm" value="bandelpostsperm"/>
+                <input type="checkbox" id="ban-delpostsperm" name="bandelpostsperm" value="bandelpostsperm"/>
             </td>
         </tr>
         <tr>

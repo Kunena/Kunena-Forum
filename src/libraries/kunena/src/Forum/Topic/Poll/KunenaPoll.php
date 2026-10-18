@@ -440,6 +440,9 @@ class KunenaPoll
         // Increase vote count from current option
         $this->changeOptionVotes($votes->lastvote, 1);
 
+        // The stored number of votes of the user changes below.
+        unset($this->myvotes[$votes->userid]);
+
         if ($votes->new) {
             // No votes
             $query = $this->_db->createQuery();
@@ -545,7 +548,8 @@ class KunenaPoll
     {
         $user = KunenaFactory::getUser($user);
 
-        if (!isset($this->myvotes[$user->userid])) {
+        // A user without votes has the value null: it is loaded too, so check the key and not the value.
+        if (!\array_key_exists($user->userid, $this->myvotes)) {
             $query = $this->_db->createQuery();
             $query->select('SUM(' . $this->_db->quoteName('votes') . ')')
                 ->from($this->_db->quoteName('#__kunena_polls_users'))

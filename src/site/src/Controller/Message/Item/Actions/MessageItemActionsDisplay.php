@@ -225,7 +225,7 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                 $register = '';
             }
 
-            echo '<p>' . Text::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register) . '</p>';
+            echo '<p class="p-3 mb-0">' . Text::sprintf('COM_KUNENA_LOGIN_PLEASE', $logintext, $register) . '</p>';
         }
 
         // Thank you.

@@ -641,7 +641,7 @@ abstract class KunenaRoute
     }
 
     /**
-     * @param   null  $uri    uri
+     * @param   string|\Joomla\CMS\Uri\Uri|null  $uri    uri
      * @param   bool  $xhtml  xhtml
      * @param   int   $ssl    ssl
      *

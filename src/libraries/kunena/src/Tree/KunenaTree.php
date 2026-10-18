@@ -69,7 +69,7 @@ class KunenaTree implements Iterator
      * @var     null
      * @since   Kunena 6.0
      */
-    protected $heap = null;
+    protected $heap = [];
 
     /**
      * @var     null

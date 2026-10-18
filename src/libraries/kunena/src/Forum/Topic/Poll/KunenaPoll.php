@@ -344,7 +344,7 @@ class KunenaPoll
     /**
      * @param   mixed  $user  user
      *
-     * @return  integer
+     * @return  string|null  Date and time (UTC) of the last vote of the user.
      *
      * @throws  Exception
      * @since   Kunena 6.0

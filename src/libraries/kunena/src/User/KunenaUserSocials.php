@@ -451,7 +451,7 @@ class KunenaUserSocials
      */
     public function getEmail(): string
     {
-        $email = $this->email;
+        $email = $this->email ?? '';
 
         return !empty($email) ? $email : Factory::getApplication()->get('mailfrom', '');
     }

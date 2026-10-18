@@ -351,12 +351,12 @@ class KunenaModelInstall extends BaseDatabaseModel
      * @param   string  $property  Optional parameter name.
      * @param   mixed   $default   The default value to use if no state property exists by name.
      *
-     * @return    object    The property where specified, the state object where omitted.
+     * @return    mixed    The property where specified, the state object where omitted.
      *
      * @throws  Exception
      * @since    1.6
      */
-    public function getState($property = null, $default = null): object
+    public function getState($property = null, $default = null): mixed
     {
         // If the model state is uninitialized lets set some values we will need from the request.
         if ($this->__state_set === false) {
@@ -962,12 +962,12 @@ class KunenaModelInstall extends BaseDatabaseModel
     /**
      * Get Action
      *
-     * @return  object
+     * @return  string|null
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getAction(): object
+    public function getAction(): ?string
     {
         return $this->getState('action', null);
     }
@@ -2285,9 +2285,9 @@ class KunenaModelInstall extends BaseDatabaseModel
      */
     public function installSampleData(): bool
     {
-        require_once KUNENA_INSTALLER_PATH . '/sql/install/php/sampleData.php';
-
-        if (installSampleData()) {
+        // The sample data is only wanted on a new installation, it would be duplicated by an upgrade.
+        if ($this->getAction() == 'install') {
+            KunenaSampleData::installSampleData();
             $this->addStatus(Text::_('COM_KUNENA_INSTALL_SAMPLEDATA'), true);
         }
 

@@ -964,6 +964,8 @@ class TopicController extends KunenaController
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
+
+            return;
         }
 
         // Save IP address of user

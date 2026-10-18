@@ -64,47 +64,44 @@ foreach ($this->sections as $section) :
 
         <div class="<?php if (!empty($section->class)) :
                     ?>section<?php echo $this->escape($section->class_sfx); ?><?php
-                                                                            endif; ?> collapse show shadow-lg rounded" id="section<?php echo $section->id; ?>">
-            <table class="table<?php echo $this->ktemplate->borderless(); ?> table-responsive w-100 d-block d-md-table">
-                <?php if (!empty($section->description)) : ?>
+                                                                            endif; ?> collapse show shadow-lg rounded table-responsive" id="section<?php echo $section->id; ?>">
+            <table class="table<?php echo $this->ktemplate->borderless(); ?> align-middle mb-0">
+                <?php if (!empty($section->description) || !empty($this->categories[$section->id])) : ?>
                     <thead>
-                        <tr>
-                            <td colspan="12">
-                                <div class="bg-faded p-2"><?php echo $section->displayField('description'); ?></div>
-                            </td>
-                        </tr>
+                        <?php if (!empty($section->description)) : ?>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="bg-faded p-2"><?php echo $section->displayField('description'); ?></div>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if (!empty($this->categories[$section->id])) : ?>
+                            <tr>
+                                <th scope="col" class="d-none d-md-table-cell" style="width: 64px"><span class="visually-hidden"><?php echo Text::_('COM_KUNENA_GEN_CATEGORY'); ?></span></th>
+                                <th scope="col" class="p-3 fw-normal"><?php echo Text::_('COM_KUNENA_GEN_CATEGORY'); ?></th>
+                                <th scope="col" class="p-3 fw-normal" style="width: 36%"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
+                            </tr>
+                        <?php endif; ?>
                     </thead>
                 <?php endif; ?>
 
+                <tbody>
                 <?php if ($section->isSection() && empty($this->categories[$section->id]) && empty($this->more[$section->id])) : ?>
                     <tr>
-                        <td>
+                        <td colspan="3">
                             <h4>
                                 <?php echo Text::_('COM_KUNENA_GEN_NOFORUMS'); ?>
                             </h4>
                         </td>
                     </tr>
                 <?php else : ?>
-                    <?php if (!empty($this->categories[$section->id])) : ?>
-                        <tr>
-                            <td colspan="1" class="d-none d-md-table-cell">
-                                <div class="p-2"></div>
-                            </td>
-                            <td colspan="7">
-                                <div class="p-2"><?php echo Text::_('COM_KUNENA_GEN_CATEGORY'); ?></div>
-                            </td>
-                            <td colspan="4">
-                                <div class="p-2"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></div>
-                            </td>
-                        </tr>
-                    <?php endif; ?>
                     <?php
-                    foreach ($this->categories[$section->id] as $category) : ?>
+                    foreach ((array) ($this->categories[$section->id] ?? []) as $category) : ?>
                         <tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
-                            <td colspan="1" id="kcat-icon" class="d-none d-md-table-cell">
+                            <td id="kcat-icon" class="d-none d-md-table-cell">
                                 <?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '', null, true, false); ?>
                             </td>
-                            <td colspan="6">
+                            <td>
                                 <div>
                                     <h3>
                                         <?php echo $this->getCategoryLink($category, $category->name, null, $this->ktemplate->tooltips(), true, false); ?>
@@ -207,27 +204,22 @@ foreach ($this->sections as $section) :
                                 $avatar = $this->config->avatarOnCategory ? $author->getAvatarImage($this->ktemplate->params->get('avatarType'), 'thumb') : null;
                                 ?>
 
-                                <td colspan="5">
-                                    <div class="row">
+                                <td>
+                                    <div class="d-flex align-items-start">
                                         <?php if ($avatar) : ?>
-                                        <div class="col-6 col-md-3" id="kcat-avatar">
-                                            <?php echo $author->getLink($avatar, null, '', '', $this->ktemplate->tooltips(), $category->id, $this->config->avatarEdit); ?>
-                                        </div>
-                                        <div class="col-6 col-md-9" id="kcat-last">
-                                        <?php else : ?>
-                                            <div class="col-md-12" id="kcat-last">
-                                        <?php endif; ?>
-                                                <span class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, $this->ktemplate->tooltips(), 30, false, true) ?></span>
-                                                <br>
-                                                <span class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', $this->ktemplate->tooltips(), $category->id)); ?></span>
-                                                <br>
-                                                <span class="datepost"><?php echo $time->toKunena('config_postDateFormat'); ?></span>
-                                                </div>
+                                            <div class="flex-shrink-0 me-3" id="kcat-avatar">
+                                                <?php echo $author->getLink($avatar, null, '', '', $this->ktemplate->tooltips(), $category->id, $this->config->avatarEdit); ?>
                                             </div>
+                                        <?php endif; ?>
+                                        <div class="flex-grow-1" style="min-width: 0" id="kcat-last">
+                                            <div class="lastpostlink"><?php echo $this->getLastPostLink($category, null, null, $this->ktemplate->tooltips(), 30, false, true) ?></div>
+                                            <div class="lastpostby"><?php echo Text::sprintf('COM_KUNENA_BY_X', $author->getLink(null, null, '', '', $this->ktemplate->tooltips(), $category->id)); ?></div>
+                                            <div class="datepost"><?php echo $time->toKunena('config_postDateFormat'); ?></div>
+                                        </div>
                                     </div>
                                 </td>
                             <?php else : ?>
-                                <td colspan="5">
+                                <td>
                                     <div class="last-post-message">
                                         <?php echo Text::_('COM_KUNENA_X_TOPICS_0'); ?>
                                     </div>
@@ -239,7 +231,7 @@ foreach ($this->sections as $section) :
 
                 <?php if (!empty($this->more[$section->id])) : ?>
                     <tr>
-                        <td colspan="7">
+                        <td colspan="3">
                             <h4>
                                 <?php echo $this->getCategoryLink($section, Text::sprintf('COM_KUNENA_SEE_ALL_SUBJECTS')); ?>
                                 <small>
@@ -250,7 +242,7 @@ foreach ($this->sections as $section) :
                         </td>
                     </tr>
                 <?php endif; ?>
-
+                </tbody>
             </table>
         </div>
     </div>

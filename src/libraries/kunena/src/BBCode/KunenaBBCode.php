@@ -366,7 +366,7 @@ class KunenaBBCode extends BBCode
             $url = htmlspecialchars($url, ENT_COMPAT, 'UTF-8');
 
             if (strpos($url, '/index.php') !== 0) {
-                return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+                return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">{$text}</a>";
             } else {
                 return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\">{$text}</a>";
             }
@@ -1288,7 +1288,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+            return "<a href=\"" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . htmlspecialchars($content, ENT_COMPAT, 'UTF-8') . '</a>';
         }
 
         if (!empty($content)) {
@@ -2845,7 +2845,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display tag in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal)) {
-            return "<a href=\"https://x.com/kunena/status/" . $tweetid . "\" rel=\"nofollow\" target=\"_blank\">" . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
+            return "<a href=\"https://x.com/kunena/status/" . $tweetid . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . Text::_('COM_KUNENA_LIB_BBCODE_TWEET_STATUS_LINK') . "</a>";
         }
 
         return $this->renderTweet($tweetid);
@@ -3073,7 +3073,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         if (!empty($content)) {
             // Display tag in activity streams etc..
             if (!empty($bbcode->parent->forceMinimal)) {
-                return "<a href=\"" . $content . "\" rel=\"nofollow\" target=\"_blank\">" . $content . '</a>';
+                return "<a href=\"" . $content . "\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">" . $content . '</a>';
             }
 
             $content = strip_tags($content);

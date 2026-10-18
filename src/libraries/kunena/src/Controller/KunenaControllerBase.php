@@ -196,15 +196,15 @@ abstract class KunenaControllerBase implements Serializable
     }
 
     /**
-     * Needed since PHP 8.1.0 else give drepreciation warning
+     * Data which PHP serializes (PHP 7.4+: __serialize() must return an array).
      *
      * @since   Kunena 6.0
      *
-     * @return string
+     * @return array
      */
-    public function __serialize()
+    public function __serialize(): array
     {
-        return serialize([$this->input, $this->options]);
+        return ['input' => $this->input, 'options' => $this->options];
     }
 
     /**
@@ -216,21 +216,20 @@ abstract class KunenaControllerBase implements Serializable
      */
     public function serialize(): string
     {
-        return $this->__serialize();
+        return serialize($this->__serialize());
     }
 
     /**
-     * Needed since PHP 8.1.0 else give drepreciation warning
+     * Restore the data given by __serialize() (PHP 7.4+: __unserialize() receives that array).
      *
      * @since  Kunena 6.0
-     * @param   Input  $input  The input object
-     * @return \Joomla\Input\Input
+     * @param   array  $data  The data returned by __serialize()
+     * @return  void
      */
-    public function __unserialize($input)
+    public function __unserialize(array $data): void
     {
-        list($this->input, $this->options) = unserialize($input);
-
-        return $this->input;
+        $this->input   = $data['input'] ?? null;
+        $this->options = $data['options'] ?? null;
     }
 
     /**
@@ -250,7 +249,7 @@ abstract class KunenaControllerBase implements Serializable
         $this->app = $this->loadApplication();
 
         // Unserialize the input and options.
-        $this->input = $this->__unserialize($input);
+        $this->__unserialize((array) unserialize($input));
 
         if (!($this->input instanceof Input)) {
             throw new UnexpectedValueException(sprintf('%s::unserialize would not accept a `%s`.', \get_class($this), \gettype($this->input)));

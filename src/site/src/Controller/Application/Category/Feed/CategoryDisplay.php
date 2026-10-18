@@ -93,7 +93,7 @@ class CategoryDisplay extends KunenaControllerDisplay
         $this->topics = $model->getTopics();
 
         // Load all the authors with one query instead of one by one.
-        KunenaUserHelper::loadUsers(array_map(static fn ($topic) => $topic->last_post_userid, (array) $this->topics));
+        KunenaUserHelper::loadUsers(array_map(static fn ($topic) => \is_object($topic) ? $topic->last_post_userid : 0, (array) $this->topics));
 
         foreach ($this->topics as $topic) {
             if ($this->config->rssType == 'topic') {

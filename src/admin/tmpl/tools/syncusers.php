@@ -35,22 +35,30 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <td><?php echo Text::_('COM_KUNENA_SYNC_USERS_ADD'); ?></td>
-                                <td><input type="checkbox" checked="checked" name="userAdd" value="1"/></td>
+                                <td><label>
+                                        <input type="checkbox" checked="checked" name="userAdd" value="1"/>
+                                    </label></td>
                                 <td><?php echo Text::_('COM_KUNENA_SYNC_USERS_ADD_DESC'); ?></td>
                             </tr>
                             <tr>
                                 <td><?php echo Text::_('COM_KUNENA_SYNC_USERS_DEL'); ?></td>
-                                <td><input type="checkbox" name="userDel" value="1"/></td>
+                                <td><label>
+                                        <input type="checkbox" name="userDel" value="1"/>
+                                    </label></td>
                                 <td><?php echo Text::_('COM_KUNENA_SYNC_USERS_DEL_DESC'); ?></td>
                             </tr>
                             <tr>
                                 <td><?php echo Text::_('COM_KUNENA_SYNC_USERS_RENAME'); ?></td>
-                                <td><input type="checkbox" name="userRename" value="1"/></td>
+                                <td><label>
+                                        <input type="checkbox" name="userRename" value="1"/>
+                                    </label></td>
                                 <td><?php echo Text::_('COM_KUNENA_SYNC_USERS_RENAME_DESC'); ?></td>
                             </tr>
                             <tr>
                                 <td><?php echo Text::_('COM_KUNENA_SYNC_USERS_DELLIFE'); ?></td>
-                                <td><input type="checkbox" name="userDelLife" value="1"/></td>
+                                <td><label>
+                                        <input type="checkbox" name="userDelLife" value="1"/>
+                                    </label></td>
                                 <td><?php echo Text::_('COM_KUNENA_SYNC_USERS_DELLIFE_DESC'); ?></td>
                             </tr>
                         </table>

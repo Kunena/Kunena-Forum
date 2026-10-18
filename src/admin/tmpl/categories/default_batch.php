@@ -29,7 +29,9 @@ use Joomla\CMS\Language\Text;
                     <?php echo $this->batchCategories; ?>
                     <div id="batch-move-copy" class="control-group radio">
                         <div class="controls">
-                            <input type="radio" name="move_copy" value="move" />
+                            <label>
+                                <input type="radio" name="move_copy" value="move" />
+                            </label>
                             <label>
                                 <?php echo Text::_('COM_KUNENA_BATCH_CATEGORY_MOVE') ?>
                             </label>

@@ -136,10 +136,10 @@ $labels          = $this->ktemplate->params->get('labels');
     <br />
     <div class="kmoderate-topicIcons">
         <?php foreach ($this->topicIcons as $icon): ?>
-            <input type="radio" 
-                   id="radio<?php echo $icon->id ?>" 
-                   name="topic_emoticon"
-                   value="<?php echo $icon->id ?>" 
+            <label for="radio<?php echo $icon->id ?>"></label><input type="radio"
+                                                                     id="radio<?php echo $icon->id ?>"
+                                                                     name="topic_emoticon"
+                                                                     value="<?php echo $icon->id ?>"
                    <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> 
             />
             <label class="radio inline" for="radio<?php echo $icon->id; ?>" title="<?php echo Text::_($icon->title); ?>">
@@ -213,7 +213,9 @@ $labels          = $this->ktemplate->params->get('labels');
                                 for="modtopicslist"> <?php echo Text::_('COM_KUNENA_MODERATION_TARGET_TOPIC_ID'); ?> </label>
 
                             <div class="controls">
-                                <input type="text" size="7" class="form-control" name="targetid" value="" />
+                                <label>
+                                    <input type="text" size="7" class="form-control" name="targetid" value="" />
+                                </label>
                             </div>
                         </div>
                         <div class="control-group" id="kmod_subject">
@@ -221,11 +223,11 @@ $labels          = $this->ktemplate->params->get('labels');
                                 for="kmod_subject"> <?php echo Text::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT'); ?> </label>
 
                             <div class="controls">
-                                <input type="text" class="form-control" name="subject" id="ktitle_moderate_subject"
-                                    value="<?php echo !isset($this->message)
+                                <label for="ktitle_moderate_subject"></label><input type="text" class="form-control" name="subject" id="ktitle_moderate_subject"
+                                                                                    value="<?php echo !isset($this->message)
                                                 ? $this->topic->displayField('subject')
                                                 : $this->message->displayField('subject'); ?>"
-                                    maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" />
+                                                                                    maxlength="<?php echo $this->escape($this->ktemplate->params->get('SubjectLengthMessage')); ?>" />
                             </div>
                         </div>
                         <?php if (!empty($this->replies)) :

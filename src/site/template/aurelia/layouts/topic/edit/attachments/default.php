@@ -25,9 +25,11 @@ use Joomla\CMS\Language\Text;
             <div class="thumbnail">
                 <input type="hidden" name="attachments[<?php echo $attachment->id ?>]"
                        value="<?php echo $attachment->getFilename() ?>"/>
-                <input type="checkbox" name="attachment[<?php echo $attachment->id ?>]" checked="checked"
-                       value="<?php echo $attachment->id ?>"/>
-                <?php echo $attachment->getLayout()->render('thumbnail'); ?>
+                <label>
+                    <input type="checkbox" name="attachment[<?php echo $attachment->id ?>]" checked="checked"
+                           value="<?php echo $attachment->id ?>"/>
+                </label>
+	            <?php echo $attachment->getLayout()->render('thumbnail'); ?>
                 <span>
                 <?php echo $attachment->getFilename(); ?>
                 <?php echo '(' . number_format(\intval($attachment->size) / 1024, 0, '', ',') . 'KB)'; ?>

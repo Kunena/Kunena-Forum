@@ -82,7 +82,9 @@ HTMLHelper::_('behavior.core');
             <?php if ($options) :
                 ?>
                 <th class="col-md-1 center">
-                    <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
+                    <label>
+                        <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);"/>
+                    </label>
                 </th>
             <?php endif; ?>
 

@@ -314,7 +314,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
                     <div id="iconset_inject" class="controls controls-select">
                         <div id="iconset_topicList">
                             <?php foreach ($this->topicIcons as $icon) : ?>
-                                <input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
+                            <label for="radio<?php echo $icon->id ?>"></label><input type="radio" id="radio<?php echo $icon->id ?>" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ' : '' ?> />
                                 <?php if ($this->config->topicIcons && $topicicontype == 'svg') : ?>
                                     <label class="radio inline" for="radio<?php echo $icon->id; ?>">
                                         <?php if (!$this->category->iconset) :

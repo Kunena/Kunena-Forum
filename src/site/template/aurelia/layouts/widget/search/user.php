@@ -32,7 +32,7 @@ $state = $this->state;
         <?php endif; ?>
         <?php echo HTMLHelper::_('form.token'); ?>
         <div class="input-group search">
-            <input id="kusersearch" class="form-control input-sm search-query" type="text" name="search" value="<?php echo !empty($state) ? $this->escape($state) : ''; ?>" placeholder="<?php echo Text::_('COM_KUNENA_USRL_SEARCH'); ?>" />
+            <label for="kusersearch"></label><input id="kusersearch" class="form-control input-sm search-query" type="text" name="search" value="<?php echo !empty($state) ? $this->escape($state) : ''; ?>" placeholder="<?php echo Text::_('COM_KUNENA_USRL_SEARCH'); ?>" />
             <button class="btn btn-outline-primary" type="submit">
                 <?php echo KunenaIcons::search(); ?>
             </button>

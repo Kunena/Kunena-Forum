@@ -84,7 +84,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                     <label class="col-md-12 control-label">
                         <?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>:
                     </label>
-                    <input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
+                    <label>
+                        <input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
+                    </label>
                 </div>
             <?php endif; ?>
 
@@ -92,7 +94,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
             ?>
                 <div class="form-group">
                     <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-                    <input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="35" value="" required />
+                    <label for="email"></label><input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="35" value="" required />
                 </div>
             <?php endif; ?>
 
@@ -100,10 +102,10 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                 <label for="kanonymous<?php echo \intval($message->id); ?>">
                     <?php echo Text::_('COM_KUNENA_GEN_SUBJECT'); ?>:
                 </label>
-                <input type="text" id="subject" name="subject" class="form-control" maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>" <?php
+                <label for="subject"></label><input type="text" id="subject" name="subject" class="form-control" maxlength="<?php echo $template->params->get('SubjectLengthMessage'); ?>" <?php
                                                                                                                                                                 if (!$config->allowChangeSubject && !$me->isModerator()) :
                                                                                                                                                                 ?>disabled<?php
-                                                                                                                                                                        endif; ?> value="<?php echo $message->displayField('subject'); ?>" />
+                                                                                                                                                                        endif; ?>value="<?php echo $message->displayField('subject'); ?>" />
             </div>
             <div class="form-group">
                 <label class="col-md-12 control-label">
@@ -137,7 +139,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
             ?>
                 <div class="control-group">
                     <div class="controls">
-                        <input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous" value="1" class="kinputbox postinput form-control" <?php
+                        <label for="kanonymous<?php echo $message->displayField('id'); ?>"></label><input type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous" value="1" class="kinputbox postinput form-control" <?php
                                                                                                                                                                                 if ($category->postAnonymous) {
                                                                                                                                                                                     echo 'checked="checked"';
                                                                                                                                                                                 } ?> />

@@ -92,7 +92,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                 <label class="col-md-12 control-label" style="padding:0;">
                                     <?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>:
                                 </label>
-                                <input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
+                                <label>
+                                    <input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
+                                </label>
                             </div>
                         <?php endif; ?>
 
@@ -100,7 +102,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         ?>
                             <div class="form-group">
                                 <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-                                <input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
+                                <label for="email"></label><input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
                             </div>
                         <?php endif; ?>
 
@@ -142,7 +144,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                         ?>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input style="float: left; margin-right: 10px;" type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous" value="1" <?php if ($category->postAnonymous) {
+                                    <label for="kanonymous<?php echo $message->displayField('id'); ?>"></label><input style="float: left; margin-right: 10px;" type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous" value="1" <?php if ($category->postAnonymous) {
                                                                                                                                                                                                 echo 'checked="checked"';
                                                                                                                                                                                             } ?> />
                                     <label for="kanonymous<?php echo \intval($message->id); ?>">
@@ -209,7 +211,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                                     <label class="col-md-12 control-label" style="padding:0;">
                                         <?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>:
                                     </label>
-                                    <input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
+                                    <label>
+                                        <input type="text" name="authorname" class="form-control" maxlength="35" placeholder="<?php echo Text::_('COM_KUNENA_GEN_NAME'); ?>" value="" required />
+                                    </label>
                                 </div>
                             <?php endif; ?>
 
@@ -217,7 +221,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             ?>
                                 <div class="form-group">
                                     <?php echo $config->showEmail == '0' ? Text::_('COM_KUNENA_POST_EMAIL_NEVER') : Text::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
-                                    <input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
+                                    <label for="email"></label><input type="text" id="email" name="email" placeholder="<?php echo Text::_('COM_KUNENA_TOPIC_EDIT_PLACEHOLDER_EMAIL') ?>" class="inputbox col-md-12 form-control" maxlength="45" value="" required />
                                 </div>
                             <?php endif; ?>
 
@@ -258,7 +262,7 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             ?>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input style="float: left; margin-right: 10px;" type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous" value="1" <?php if ($category->postAnonymous) {
+                                        <label for="kanonymous<?php echo $message->displayField('id'); ?>"></label><input style="float: left; margin-right: 10px;" type="checkbox" id="kanonymous<?php echo $message->displayField('id'); ?>" name="anonymous" value="1" <?php if ($category->postAnonymous) {
                                                                                                                                                                                                     echo 'checked="checked"';
                                                                                                                                                                                                 } ?> />
                                         <label for="kanonymous<?php echo \intval($message->id); ?>">

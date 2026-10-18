@@ -39,8 +39,8 @@ $login = KunenaLogin::getInstance();
                             <?php echo Text::_('JGLOBAL_USERNAME'); ?>
                         </label>
                     </span>
-                    <input id="klogin-username-full" type="text" name="username" class="input-small" tabindex="1"
-                           size="18" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
+                    <label for="klogin-username-full"></label><input id="klogin-username-full" type="text" name="username" class="input-small" tabindex="1"
+                                                                     size="18" autocomplete="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>"/>
                 </div>
             </div>
         </div>
@@ -54,9 +54,9 @@ $login = KunenaLogin::getInstance();
                             <?php echo Text::_('JGLOBAL_PASSWORD'); ?>
                         </label>
                     </span>
-                    <input id="klogin-passwd-full" type="password" name="password" class="input-small" tabindex="2"
-                           size="18" autocomplete="current-password"
-                           placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
+                    <label for="klogin-passwd-full"></label><input id="klogin-passwd-full" type="password" name="password" class="input-small" tabindex="2"
+                                                                   size="18" autocomplete="current-password"
+                                                                   placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"/>
                 </div>
             </div>
         </div>

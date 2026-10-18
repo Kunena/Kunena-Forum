@@ -40,9 +40,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                             ?>
                             <tr>
                                 <td class="d-none d-md-table-cell center">
-                                    <input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
-                                           value="<?php echo $this->escape($user->id); ?>"
-                                           onclick="Joomla.isChecked(this.checked);"/>
+                                    <label for="cb<?php echo $user->id; ?>"></label><input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
+                                                                                           value="<?php echo $this->escape($user->id); ?>"
+                                                                                           onclick="Joomla.isChecked(this.checked);"/>
                                 </td>
                                 <td><?php echo $user->id ?></td>
                                 <td><?php echo $this->escape($user->username) ?></td>
@@ -57,9 +57,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                             ?>
                             <tr>
                                 <td class="d-none d-md-table-cell center">
-                                    <input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
-                                           value="<?php echo $this->escape($user->id); ?>"
-                                           onclick="Joomla.isChecked(this.checked);"/>
+                                    <label for="cb<?php echo $user->id; ?>"></label><input type="checkbox" id="cb<?php echo $user->id; ?>" name="cid[]"
+                                                                                           value="<?php echo $this->escape($user->id); ?>"
+                                                                                           onclick="Joomla.isChecked(this.checked);"/>
                                 </td>
                                 <td><?php echo $user->id ?></td>
                                 <td><?php echo $this->escape($user->username) ?></td>
@@ -74,9 +74,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                             ?>
                             <tr>
                                 <td class="d-none d-md-table-cell center">
-                                    <input type="checkbox" id="cb<?php echo $sub->id; ?>" name="cid[]"
-                                           value="<?php echo $this->escape($sub->id); ?>"
-                                           onclick="Joomla.isChecked(this.checked);"/>
+                                    <label for="cb<?php echo $sub->id; ?>"></label><input type="checkbox" id="cb<?php echo $sub->id; ?>" name="cid[]"
+                                                                                          value="<?php echo $this->escape($sub->id); ?>"
+                                                                                          onclick="Joomla.isChecked(this.checked);"/>
                                 </td>
                                 <td><?php echo $sub->id ?></td>
                                 <td><?php echo $this->escape($sub->username) ?></td>

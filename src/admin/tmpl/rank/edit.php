@@ -55,8 +55,10 @@ $wa->useScript('multiselect');
                                 <?php echo Text::_('COM_KUNENA_RANKS'); ?>
                             </td>
                             <td width="80%">
-                                <input class="post" type="text" name="rankTitle"
-                                       value="<?php echo isset($this->rankSelected->rankTitle) ? $this->rankSelected->rankTitle : '' ?>"/>
+                                <label>
+                                    <input class="post" type="text" name="rankTitle"
+                                           value="<?php echo isset($this->rankSelected->rankTitle) ? $this->rankSelected->rankTitle : '' ?>"/>
+                                </label>
                             </td>
                         </tr>
                         <tr>
@@ -84,8 +86,10 @@ $wa->useScript('multiselect');
                                 <?php echo Text::_('COM_KUNENA_RANKSMIN'); ?>
                             </td>
                             <td>
-                                <input class="post" type="text" name="rankMin"
-                                       value="<?php echo isset($this->rankSelected) ? $this->rankSelected->rankMin : '1' ?>"/>
+                                <label>
+                                    <input class="post" type="text" name="rankMin"
+                                           value="<?php echo isset($this->rankSelected) ? $this->rankSelected->rankMin : '1' ?>"/>
+                                </label>
                             </td>
                         </tr>
                         <tr>
@@ -93,9 +97,11 @@ $wa->useScript('multiselect');
                                 <?php echo Text::_('COM_KUNENA_RANKS_SPECIAL'); ?>
                             </td>
                             <td>
-                                <input
-                                        type="checkbox" <?php echo isset($this->rankSelected) && $this->rankSelected->rankSpecial ? 'checked="checked"' : '' ?>
-                                        name="rankSpecial" value="1"/>
+                                <label>
+                                    <input
+                                            type="checkbox" <?php echo isset($this->rankSelected) && $this->rankSelected->rankSpecial ? 'checked="checked"' : '' ?>
+                                            name="rankSpecial" value="1"/>
+                                </label>
                             </td>
                         </tr>
                     </table>

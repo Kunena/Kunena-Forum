@@ -124,7 +124,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                     <label for="ban-remove"><?php echo Text::_('COM_KUNENA_MODERATE_REMOVE_BAN'); ?></label>
                 </td>
                 <td>
-                    <input id="ban-remove ban-delban" type="checkbox" name="delban" value="delban" class=""/>
+                    <label for="ban-remove ban-delban"></label><input id="ban-remove ban-delban" type="checkbox" name="delban" value="delban" class=""/>
                 </td>
             </tr>
         <?php endif; ?>

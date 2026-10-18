@@ -94,7 +94,9 @@ $view    = Factory::getApplication()->getInput()->getWord('view');
                 <th scope="col" class="d-none d-md-table-cell"><?php echo Text::_('COM_KUNENA_GEN_LAST_POST'); ?></th>
 
                 <?php if (!empty($this->actions)) : ?>
-                    <th scope="col" class="center"><input class="kcheckall" type="checkbox" name="toggle" value="" /></th>
+                    <th scope="col" class="center"><label>
+                            <input class="kcheckall" type="checkbox" name="toggle" value="" />
+                        </label></th>
                 <?php endif; ?>
             <?php endif; ?>
         </thead>

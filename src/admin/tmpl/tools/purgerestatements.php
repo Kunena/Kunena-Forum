@@ -36,7 +36,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                             <tr>
                                 <td>
                                     <p><?php echo Text::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?></p>
-                                    <input type="text" name="reString" value=""/>
+                                    <label>
+                                        <input type="text" name="reString" value=""/>
+                                    </label>
                                 </td>
                             </tr>
                         </table>

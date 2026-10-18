@@ -50,22 +50,30 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\te
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <td><?php echo Text::_('COM_KUNENA_A_RECOUNT_TOPICS'); ?></td>
-                                <td><input type="checkbox" checked="checked" name="topics" value="1"/></td>
+                                <td><label>
+                                        <input type="checkbox" checked="checked" name="topics" value="1"/>
+                                    </label></td>
                                 <td><?php echo Text::_('COM_KUNENA_A_RECOUNT_TOPICS_DESC'); ?></td>
                             </tr>
                             <tr>
                                 <td><?php echo Text::_('COM_KUNENA_A_RECOUNT_USERTOPICS'); ?></td>
-                                <td><input type="checkbox" checked="checked" name="usertopics" value="1"/></td>
+                                <td><label>
+                                        <input type="checkbox" checked="checked" name="usertopics" value="1"/>
+                                    </label></td>
                                 <td><?php echo Text::_('COM_KUNENA_A_RECOUNT_USERTOPICS_DESC'); ?></td>
                             </tr>
                             <tr>
                                 <td><?php echo Text::_('COM_KUNENA_A_RECOUNT_CATEGORIES'); ?></td>
-                                <td><input type="checkbox" checked="checked" name="categories" value="1"/></td>
+                                <td><label>
+                                        <input type="checkbox" checked="checked" name="categories" value="1"/>
+                                    </label></td>
                                 <td><?php echo Text::_('COM_KUNENA_A_RECOUNT_CATEGORIES_DESC'); ?></td>
                             </tr>
                             <tr>
                                 <td><?php echo Text::_('COM_KUNENA_A_RECOUNT_USERS'); ?></td>
-                                <td><input type="checkbox" checked="checked" name="users" value="1"/></td>
+                                <td><label>
+                                        <input type="checkbox" checked="checked" name="users" value="1"/>
+                                    </label></td>
                                 <td><?php echo Text::_('COM_KUNENA_A_RECOUNT_USERS_DESC'); ?></td>
                             </tr>
                         </table>

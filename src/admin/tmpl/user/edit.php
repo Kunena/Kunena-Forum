@@ -183,10 +183,12 @@ $template = KunenaTemplate::getInstance();
                                                             <td>
                                                                 <div id="birthdate">
                                                                     <div class="input-append date">
-                                                                        <input type="text" name="birthdate"
-                                                                            class="inputbox form-control"
-                                                                            data-date-format="<?php echo $this->config->datePickerFormat; ?>"
-                                                                            value="<?php echo $this->user->birthdate == '1000-01-01' || empty($this->user->birthdate)  ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
+                                                                        <label>
+                                                                            <input type="text" name="birthdate"
+                                                                                class="inputbox form-control"
+                                                                                data-date-format="<?php echo $this->config->datePickerFormat; ?>"
+                                                                                value="<?php echo $this->user->birthdate == '1000-01-01' || empty($this->user->birthdate)  ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
+                                                                        </label>
                                                                     </div>
                                                                 </div>
                                                             </td>

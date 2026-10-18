@@ -49,9 +49,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                                 ?>
                                 <tr>
                                     <td>
-                                        <input type="radio" id="cb<?php echo $id; ?>" name="filename"
-                                               value="<?php echo $this->escape($file); ?>"
-                                               onclick="Joomla.isChecked(this.checked);"/>
+                                        <label for="cb<?php echo $id; ?>"></label><input type="radio" id="cb<?php echo $id; ?>" name="filename"
+                                                                                         value="<?php echo $this->escape($file); ?>"
+                                                                                         onclick="Joomla.isChecked(this.checked);"/>
                                     </td>
                                     <td>
                                         <?php echo $this->escape($file); ?>

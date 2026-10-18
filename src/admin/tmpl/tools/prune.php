@@ -41,7 +41,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                                 <td width="20%"><?php echo Text::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
                                 <td>
                                     <div class="input-append">
-                                        <input class="col-md-3" type="text" name="pruneDays" value="30"/>
+                                        <label>
+                                            <input class="col-md-3" type="text" name="pruneDays" value="30"/>
+                                        </label>
                                         <span class="add-on"><?php echo Text::_('COM_KUNENA_A_PRUNE_DAYS') ?></span>
                                     </div>
                                 </td>

@@ -137,7 +137,9 @@ if ($saveOrder) {
                                         <span class="icon-ellipsis-v"></span>
                                     </span>
                                     <?php if ($canChange && $saveOrder) : ?>
-                                        <input type="text" class="hidden" name="order[]" size="5" value="<?php echo $orderkey; ?>">
+                                        <label>
+                                            <input type="text" class="hidden" name="order[]" size="5" value="<?php echo $orderkey; ?>">
+                                        </label>
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center">

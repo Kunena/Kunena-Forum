@@ -59,7 +59,9 @@ $this->addScript('assets/js/search.js');
                             <legend><?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="query" class="form-control" value="<?php echo $this->escape($this->state->get('searchwords')); ?>" placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>" />
+                                    <label>
+                                        <input type="text" name="query" class="form-control" value="<?php echo $this->escape($this->state->get('searchwords')); ?>" placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>" />
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -74,7 +76,7 @@ $this->addScript('assets/js/search.js');
                                 <legend><?php echo Text::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input id="kusersearch" type="text" name="searchuser" class="form-control" value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>" />
+                                        <label for="kusersearch"></label><input id="kusersearch" type="text" name="searchuser" class="form-control" value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" placeholder="<?php echo Text::_('COM_KUNENA_SEARCH_UNAME'); ?>" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -145,7 +147,9 @@ $this->addScript('assets/js/search.js');
                                                 <?php echo Text::_('COM_KUNENA_SEARCH_START'); ?>
                                             </legend>
                                             <div class="col-md-6">
-                                                <input type="text" name="limitstart" class="form-control" value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5" />
+                                                <label>
+                                                    <input type="text" name="limitstart" class="form-control" value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5" />
+                                                </label>
                                             </div>
                                             <div class="col-md-6">
                                                 <?php $this->displayLimitList('limit'); ?>

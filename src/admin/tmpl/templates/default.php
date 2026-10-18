@@ -73,7 +73,7 @@ $userId    = $user->id;
                         ?>
                             <tr>
                                 <td class="text-center">
-                                    <input type="radio" id="cb<?php echo $i; ?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);" />
+                                    <label for="cb<?php echo $i; ?>"></label><input type="radio" id="cb<?php echo $i; ?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);" />
                                 </td>
                                 <th>
                                     <?php $img_path = Uri::root(true) . '/components/com_kunena/template/' . $row->directory . '/assets/images/template_thumbnail.png'; ?>

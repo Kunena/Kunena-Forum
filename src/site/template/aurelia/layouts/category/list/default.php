@@ -69,7 +69,9 @@ use Kunena\Forum\Libraries\Template\KunenaTemplate;
                     <tr>
                         <th colspan="3"></th>
                         <th class="center">
-                            <input class="kcheckallcategories" type="checkbox" name="toggle" value=""/>
+                            <label>
+                                <input class="kcheckallcategories" type="checkbox" name="toggle" value=""/>
+                            </label>
                         </th>
                     </tr>
                     </thead>

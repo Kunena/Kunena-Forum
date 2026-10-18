@@ -101,18 +101,20 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_NAMEADD'); ?></td>
                                                         <td>
-                                                            <input class="inputbox form-control" type="text" name="name"
-                                                                   size="80"
-                                                                   value="<?php echo $this->escape($this->category->name); ?>"/>
+                                                            <label>
+                                                                <input class="inputbox form-control" type="text" name="name"
+                                                                       size="80"
+                                                                       value="<?php echo $this->escape($this->category->name); ?>"/>
+                                                            </label>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
                                                         <td>
-                                                            <input class="inputbox form-control" id="jform_aliases"
-                                                                   type="text"
-                                                                   name="alias" size="80"
-                                                                   value="<?php echo $this->escape($this->category->alias); ?>"/>
+                                                            <label for="jform_aliases"></label><input class="inputbox form-control" id="jform_aliases"
+                                                                                                      type="text"
+                                                                                                      name="alias" size="80"
+                                                                                                      value="<?php echo $this->escape($this->category->alias); ?>"/>
                                                             <span id="aliasinfo"></span>
                                                             <?php
                                                             if ($this->options ['aliases']) :
@@ -128,20 +130,24 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_ICON'); ?></td>
                                                         <td>
-                                                            <input class="inputbox form-control" type="text" name="icon"
-                                                                   size="80"
-                                                                   value="<?php echo $this->escape($this->category->icon); ?>"/>
+                                                            <label>
+                                                                <input class="inputbox form-control" type="text" name="icon"
+                                                                       size="80"
+                                                                       value="<?php echo $this->escape($this->category->icon); ?>"/>
+                                                            </label>
                                                             <p><?php echo Text::_('COM_KUNENA_ICON_DESC'); ?></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_CLASS_SFX'); ?></td>
                                                         <td>
-                                                            <input class="inputbox form-control" type="text"
-                                                                   name="class_sfx"
-                                                                   size="20"
-                                                                   maxlength="20"
-                                                                   value="<?php echo $this->escape($this->category->class_sfx); ?>"/>
+                                                            <label>
+                                                                <input class="inputbox form-control" type="text"
+                                                                       name="class_sfx"
+                                                                       size="20"
+                                                                       maxlength="20"
+                                                                       value="<?php echo $this->escape($this->category->class_sfx); ?>"/>
+                                                            </label>
                                                             <p><?php echo Text::_('COM_KUNENA_CLASS_SFXDESC'); ?></p>
                                                         </td>
                                                     </tr>

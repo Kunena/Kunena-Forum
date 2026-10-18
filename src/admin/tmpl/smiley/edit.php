@@ -54,8 +54,10 @@ $wa->useScript('multiselect');
                                 <?php echo Text::_('COM_KUNENA_EMOTICONS_CODE'); ?>
                             </td>
                             <td width="80%">
-                                <input class="col-md-2" type="text" name="smileyCode"
-                                       value="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : '' ?>"/>
+                                <label>
+                                    <input class="col-md-2" type="text" name="smileyCode"
+                                           value="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : '' ?>"/>
+                                </label>
                                 <img loading=lazy name="smiley_image"
                                      src="<?php echo isset($this->smileySelected) ? $this->escape(KunenaFactory::getTemplate()->getSmileyPath($this->smileySelected->location, true)) : '' ?>"
                                      border="0"
@@ -75,8 +77,10 @@ $wa->useScript('multiselect');
                                 <?php echo Text::_('COM_KUNENA_EMOTICONS_EMOTICONBAR'); ?>
                             </td>
                             <td>
-                                <input type="checkbox" name="smileyEmoticonBar" value="1"
-                                        <?php echo $this->state->get('item.id') && $this->smileySelected->emoticonbar == 1 ? 'checked="checked"' : ''; ?> />
+                                <label>
+                                    <input type="checkbox" name="smileyEmoticonBar" value="1"
+                                            <?php echo $this->state->get('item.id') && $this->smileySelected->emoticonbar == 1 ? 'checked="checked"' : ''; ?> />
+                                </label>
                             </td>
                         </tr>
                     </table>

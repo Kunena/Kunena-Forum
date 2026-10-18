@@ -36,7 +36,9 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_NAME_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
-                                <td colspan="4"><input type="text" name="name" required size="20" /></td>
+                                <td colspan="4"><label>
+                                        <input type="text" name="name" required size="20" />
+                                    </label></td>
                             </tr>                            
                             <tr>
                                 <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_NOURL_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
@@ -49,11 +51,15 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                             </tr>
                             <tr>
                                 <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_PROFILEURL_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
-                                <td colspan="4"><input type="text" name="profileurl" required size="20" /></td>
+                                <td colspan="4"><label>
+                                        <input type="text" name="profileurl" required size="20" />
+                                    </label></td>
                             </tr>
                             <tr>
                                 <td colspan="4"><?php echo Text::_('COM_KUNENA_ADMIN_SETUP_SOCIALS_FA_OF_SOCIAL_NETWORK_TO_ADD') ?></td>
-                                <td colspan="4"><input type="text" name="fa" required size="20" /></td>
+                                <td colspan="4"><label>
+                                        <input type="text" name="fa" required size="20" />
+                                    </label></td>
                             </tr>                            
                         </table>
                     </fieldset>

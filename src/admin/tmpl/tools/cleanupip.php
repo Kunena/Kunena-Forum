@@ -37,14 +37,18 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                                 <td width="20%"><?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_FROMDAYS') ?></td>
                                 <td>
                                     <div class="input-append">
-                                        <input class="col-md-3" type="text" name="cleanup_ip_days" value="30"/>
+                                        <label>
+                                            <input class="col-md-3" type="text" name="cleanup_ip_days" value="30"/>
+                                        </label>
                                         <span class="add-on"><?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_DAYS') ?></span>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="20%"><?php echo Text::_('COM_KUNENA_DELETE_USERS_IP') ?></td>
-                                <td width="10%"><input type="checkbox" name="deleteIpUsers" value="1"/></td>
+                                <td width="10%"><label>
+                                        <input type="checkbox" name="deleteIpUsers" value="1"/>
+                                    </label></td>
                                 <td width="79%"><?php echo Text::_('COM_KUNENA_DELETE_USERS_IP_DESC'); ?></td>
                             </tr>
                         </table>

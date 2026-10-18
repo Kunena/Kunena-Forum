@@ -31,13 +31,13 @@ class HtmlView extends BaseHtmlView
 {
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 1.X
      */
     protected $pagination;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 1.X
      */
     protected $state;
 

@@ -41,13 +41,13 @@ class KunenaBBCodeEditor
 
     /**
      * @var KunenaTemplate
-     * @since version
+     * @since Kunena 2.0
      */
     private $template;
 
     /**
      * @var array
-     * @since version
+     * @since Kunena 2.0
      */
     private $config;
 

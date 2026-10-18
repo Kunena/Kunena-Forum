@@ -212,7 +212,7 @@ class ToolsModel extends AdminModel
 
     /**
      * @var CMSApplicationInterface|null
-     * @since version
+     * @since Kunena 2.0
      */
     private $app;
 

@@ -31,49 +31,49 @@ class HtmlView extends BaseHtmlView
 {
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     public $templates = [];
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     private $ftp;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     private $content;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     private $app;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     private $filename;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     private $templatename;
 
     /**
      * @var array|false
-     * @since version
+     * @since Kunena 6.0
      */
     private $files;
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     private $dir;
 

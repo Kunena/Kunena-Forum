@@ -41,19 +41,19 @@ class PluginsController extends AdminController
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 2.0
      */
     private $baseurl2;
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 2.0
      */
     private $textPrefix = 'COM_PLUGINS';
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 2.0
      */
     private $viewList = 'plugins';
 

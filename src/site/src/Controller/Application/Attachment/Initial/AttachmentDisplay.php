@@ -37,7 +37,7 @@ class AttachmentDisplay extends KunenaControllerDisplay
 {
     /**
      * @var KunenaUser|null
-     * @since version
+     * @since Kunena 4.0
      */
     private $me;
 

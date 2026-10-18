@@ -88,7 +88,7 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 
 	/**
 	 * @var array
-	 * @since version
+	 * @since Kunena 4.0
 	 */
 	public $lists;
 	 /**

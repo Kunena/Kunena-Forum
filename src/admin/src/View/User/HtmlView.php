@@ -35,73 +35,73 @@ class HtmlView extends BaseHtmlView
 {
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $config;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $avatar;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $editavatar;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $maxSig = '';
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $maxPersonalText = '';
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $selectMod;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $sub;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $ipslist;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $selectOrder;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $settings;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $selectRank;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $modCats;
 

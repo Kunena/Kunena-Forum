@@ -31,7 +31,7 @@ class HtmlView extends BaseHtmlView
 {
     /**
      * @var \stdClass
-     * @since version
+     * @since Kunena 1.X
      */
     public $config;
 

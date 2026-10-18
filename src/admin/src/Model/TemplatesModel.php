@@ -41,31 +41,31 @@ class TemplatesModel extends AdminModel
 {
     /**
      * @var CMSApplicationInterface|null
-     * @since version
+     * @since Kunena 2.0
      */
     private $app;
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 2.0
      */
     private $context;
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 2.0
      */
     private $cache;
 
     /**
      * @var KunenaConfig
-     * @since version
+     * @since Kunena 2.0
      */
     private $config;
 
     /**
      * @var KunenaUser|null
-     * @since version
+     * @since Kunena 2.0
      */
     private $me;
 

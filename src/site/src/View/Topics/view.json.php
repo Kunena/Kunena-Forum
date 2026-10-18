@@ -25,7 +25,7 @@ use stdClass;
 /**
  * @package     ${NAMESPACE}
  *
- * @since       version
+ * @since       Kunena 6.0
  */
 class json extends KunenaView
 {

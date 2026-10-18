@@ -34,7 +34,7 @@ class UsersModel extends ListModel
 {
     /**
      * @var KunenaUser|null
-     * @since version
+     * @since Kunena 2.0
      */
     private $me;
 

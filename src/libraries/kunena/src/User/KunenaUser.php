@@ -387,13 +387,13 @@ class KunenaUser
 
     /**
      * @var KunenaConfig
-     * @since version
+     * @since Kunena 6.0
      */
     private $_config;
 
     /**
      * @var \Joomla\CMS\Application\CMSApplicationInterface|null
-     * @since version
+     * @since Kunena 6.0
      */
     private $_app;
 

@@ -88,37 +88,37 @@ class KunenaView extends HtmlView
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $common;
 
     /**
      * @var KunenaTemplate
-     * @since version
+     * @since Kunena 6.0
      */
     public $ktemplate;
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $logo;
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $intro;
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $memberList;
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $thanks;
 
@@ -136,13 +136,13 @@ class KunenaView extends HtmlView
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     protected $state;
 
     /**
      * @var KunenaProfiler
-     * @since version
+     * @since Kunena 6.0
      */
     private $profiler;
 

@@ -47,13 +47,13 @@ class HtmlView extends KunenaView
 
     /**
      * @var false|float
-     * @since version
+     * @since Kunena 6.0
      */
     public $pages;
 
     /**
      * @var integer
-     * @since version
+     * @since Kunena 6.0
      */
     public $message_position;
 
@@ -67,13 +67,13 @@ class HtmlView extends KunenaView
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $categoryLink;
 
     /**
      * @var boolean
-     * @since version
+     * @since Kunena 6.0
      */
     public $cache;
 
@@ -87,13 +87,13 @@ class HtmlView extends KunenaView
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $moreUri;
 
     /**
      * @var boolean|string
-     * @since version
+     * @since Kunena 6.0
      */
     public $URL;
 
@@ -101,13 +101,13 @@ class HtmlView extends KunenaView
 
     /**
      * @var false
-     * @since version
+     * @since Kunena 6.0
      */
     public $actionMove;
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     public $total;
 

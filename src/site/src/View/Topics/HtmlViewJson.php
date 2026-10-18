@@ -21,7 +21,7 @@ defined('_JEXEC') or die;
 /**
  * @package     ${NAMESPACE}
  *
- * @since       version
+ * @since       Kunena 6.0
  */
 class KunenaViewTopics extends KunenaView
 {

@@ -283,19 +283,19 @@ class KunenaCategory extends KunenaDatabaseObject
 
     /**
      * @var boolean|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $parent;
 
     /**
      * @var boolean|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $rssURL;
 
     /**
      * @var array
-     * @since version
+     * @since Kunena 6.0
      */
     public $moderators;
     

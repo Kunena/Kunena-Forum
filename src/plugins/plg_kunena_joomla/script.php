@@ -80,7 +80,7 @@ class plgKunenaJoomlaInstallerScript extends InstallerScript
      * @param $pluginName
      *
      * @return boolean|false
-     * @since  version
+     * @since  Kunena 6.0
      */
     public function enablePlugin(string $pluginName): bool
     {

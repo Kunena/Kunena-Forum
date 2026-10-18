@@ -81,7 +81,7 @@ class plgPrivacyKunenaInstallerScript extends InstallerScript
      * @param   string  $pluginName  The name of plugin to enable
      *
      * @return boolean|false
-     * @since version
+     * @since Kunena 6.0
      */
     public function enablePlugin($pluginName)
     {

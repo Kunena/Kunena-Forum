@@ -35,7 +35,7 @@ class AjaxDisplay extends KunenaControllerDisplay
 {
     /**
      * @var \Kunena\Forum\Libraries\User\KunenaUser|null
-     * @since version
+     * @since Kunena 4.0
      */
     private $me;
 

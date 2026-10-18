@@ -59,7 +59,7 @@ class HtmlView extends BaseHtmlView
 
     /**
      * @var mixed
-     * @since version
+     * @since Kunena 6.0
      */
     protected $pagination;
 

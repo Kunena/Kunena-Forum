@@ -172,22 +172,22 @@ class KunenaProfilerItem
     public $start = [];
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $name;
     /**
      * @var float
-     * @since version
+     * @since Kunena 6.0
      */
     public $total;
     /**
      * @var int
-     * @since version
+     * @since Kunena 6.0
      */
     public $calls;
     /**
      * @var float
-     * @since version
+     * @since Kunena 6.0
      */
     private $external;
 

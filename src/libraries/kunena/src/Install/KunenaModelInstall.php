@@ -128,25 +128,25 @@ class KunenaModelInstall extends BaseDatabaseModel
 
     /**
      * @var DatabaseDriver|null
-     * @since version
+     * @since Kunena 6.0
      */
     private $db;
 
     /**
      * @var array
-     * @since version
+     * @since Kunena 6.0
      */
     private $_sbVersions;
 
     /**
      * @var array
-     * @since version
+     * @since Kunena 6.0
      */
     private $_fbVersions;
 
     /**
      * @var \null[][]
-     * @since version
+     * @since Kunena 6.0
      */
     private $_kVersions;
 

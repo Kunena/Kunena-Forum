@@ -486,7 +486,7 @@ return new class() implements ServiceProviderInterface {
                  *
                  * @return boolean|integer
                  *
-                 * @since version
+                 * @since Kunena 2.0
                  */
                 public function checkRequirements($version)
                 {
@@ -508,7 +508,7 @@ return new class() implements ServiceProviderInterface {
                  * @return boolean
                  *
                  * @throws Exception
-                 * @since version
+                 * @since Kunena 2.0
                  */
                 protected function checkVersion($name, $version)
                 {

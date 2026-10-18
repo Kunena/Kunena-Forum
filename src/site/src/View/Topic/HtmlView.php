@@ -113,25 +113,25 @@ class HtmlView extends KunenaView
 
     /**
      * @var boolean|mixed
-     * @since version
+     * @since Kunena 6.0
      */
     public $subscriptionsChecked;
 
     /**
      * @var boolean|mixed
-     * @since version
+     * @since Kunena 6.0
      */
     public $postAnonymous;
 
     /**
      * @var array|boolean
-     * @since version
+     * @since Kunena 6.0
      */
     public $allowedExtensions;
 
     /**
      * @var \Kunena\Forum\Libraries\Attachment\KunenaAttachment[]
-     * @since version
+     * @since Kunena 6.0
      */
     public $attachments;
 
@@ -169,7 +169,7 @@ class HtmlView extends KunenaView
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $action;
 
@@ -177,13 +177,13 @@ class HtmlView extends KunenaView
 
     /**
      * @var \Kunena\Forum\Libraries\Forum\Category\KunenaCategory
-     * @since version
+     * @since Kunena 6.0
      */
     public $category;
 
     /**
      * @var KunenaMessage
-     * @since version
+     * @since Kunena 6.0
      */
     public $message;
 
@@ -191,7 +191,7 @@ class HtmlView extends KunenaView
 
     /**
      * @var string
-     * @since version
+     * @since Kunena 6.0
      */
     public $numLink;
 
@@ -201,7 +201,7 @@ class HtmlView extends KunenaView
 
     /**
      * @var \Kunena\Forum\Libraries\User\KunenaUser
-     * @since version
+     * @since Kunena 6.0
      */
     public $profile;
 

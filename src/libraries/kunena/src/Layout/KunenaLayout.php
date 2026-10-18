@@ -41,115 +41,115 @@ class KunenaLayout extends KunenaBase
 {
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $userkarma_plus;
 
     /**
      * @var false|mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $personalText;
 
     /**
      * @var mixed|void|null
-     * @since version
+     * @since Kunena 6.0
      */
     public $usermedals;
 
     /**
      * @var mixed|void|null
-     * @since version
+     * @since Kunena 6.0
      */
     public $userpoints;
 
     /**
      * @var integer|mixed|void|null
-     * @since version
+     * @since Kunena 6.0
      */
     public $userthankyou;
 
     /**
      * @var integer|mixed|void|null
-     * @since version
+     * @since Kunena 6.0
      */
     public $userposts;
 
     /**
      * @var false|mixed|stdClass|string|void|null
-     * @since version
+     * @since Kunena 6.0
      */
     public $userranktitle;
 
     /**
      * @var false|mixed|stdClass|string|void|null
-     * @since version
+     * @since Kunena 6.0
      */
     public $userrankimage;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $userkarma;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $userkarma_minus;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $userkarma_title;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $usersUrl;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $membersOnline;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $onlineList;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $hiddenList;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $target;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $url;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $internal;
 
     /**
      * @var mixed|string|void
-     * @since version
+     * @since Kunena 6.0
      */
     public $ktemplate;
 

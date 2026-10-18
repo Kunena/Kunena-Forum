@@ -72,7 +72,7 @@ class HtmlView extends KunenaView
 
     /**
      * @var array
-     * @since version
+     * @since Kunena 6.0
      */
     public $pathway;
 

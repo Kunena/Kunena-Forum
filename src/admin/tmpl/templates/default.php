@@ -120,6 +120,7 @@ $userId    = $user->id;
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $safeUrl = static fn ($url) => preg_match('#^https?://#i', (string) $url) ? $url : '#'; ?>
                             <?php foreach ($this->templatesxml as $row) : ?>
                                 <tr>
                                     <td>
@@ -133,7 +134,7 @@ $userId    = $user->id;
                                     </td>
                                     <th>
                                         <span class="editlinktip hasTip" title="<?php echo $this->escape($row->name) . $this->escape('::<img loading=lazy border="1" src="' . $row->thumbnail . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-                                            <a href="<?php echo $this->escape($row->detailsurl); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->name); ?></a>
+                                            <a href="<?php echo $this->escape($safeUrl($row->detailsurl)); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->name); ?></a>
                                         </span>
                                     </th>
                                     <td>
@@ -143,10 +144,10 @@ $userId    = $user->id;
                                         <a href="mailto:<?php echo $this->escape($row->authoremail); ?>"><?php echo $this->escape($row->author); ?></a>
                                     </td>
                                     <td>
-                                        <a href="<?php echo $this->escape($row->detailsurl); ?>" target="_blank" rel="noopener noreferrer"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
+                                        <a href="<?php echo $this->escape($safeUrl($row->detailsurl)); ?>" target="_blank" rel="noopener noreferrer"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
                                     </td>
                                     <td>
-                                        <a href="<?php echo $this->escape($row->authorurl); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->authorurl); ?></a>
+                                        <a href="<?php echo $this->escape($safeUrl($row->authorurl)); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->authorurl); ?></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

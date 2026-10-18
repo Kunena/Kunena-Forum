@@ -20,7 +20,7 @@ if (empty($this->results)) {
 }
 
 ?>
-<h2>
+<h2 class="mt-4 mb-3">
     <?php echo Text::_('COM_KUNENA_SEARCH_RESULTS'); ?>
     <small>
         (<?php echo Text::sprintf('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords'))); ?>)
@@ -29,7 +29,7 @@ if (empty($this->results)) {
 
 <?php if ($this->error) :
 ?>
-    <div class="alert alert-error">
+    <div class="alert alert-danger">
         <?php echo $this->error; ?>
     </div>
 <?php endif; ?>
@@ -40,10 +40,12 @@ foreach ($this->results as $message) {
 }
 ?>
 
+<div class="mt-3">
 <?php
 $start = $this->pagination->limitstart + 1;
 $stop  = $this->pagination->limitstart + count($this->results);
 $range = $start . ' - ' . $stop;
 echo Text::sprintf('COM_KUNENA_FORUM_SEARCHRESULTS', $range, $this->pagination->total);
 ?>
-<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination);
+<?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
+</div>

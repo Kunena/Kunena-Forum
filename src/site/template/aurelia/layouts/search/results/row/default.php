@@ -27,7 +27,7 @@ $me                   = isset($this->me) ? $this->me : KunenaUserHelper::getMyse
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);
 
 ?>
-<div id="kunena_search_results" class="row">
+<div class="kunena-search-result row mb-4">
     <div class="col-md-2 text-center">
         <ul class="list-unstyled text-center profilebox">
             <li>
@@ -37,7 +37,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
         </ul>
     </div>
     <div class="col-md-10">
-        <small class="text-muted float-end d-none d-sm-inline-block" style="margin-top:-5px;"> <?php echo KunenaIcons::clock(); ?> <?php echo $message->getTime()->toSpan(); ?><?php if ($message->modified_time) : ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan(); ?>
+        <small class="text-muted float-end d-none d-sm-inline-block mb-1"> <?php echo KunenaIcons::clock(); ?> <?php echo $message->getTime()->toSpan(); ?><?php if ($message->modified_time) : ?> - <?php echo KunenaIcons::edit() . ' ' . $message->getModifiedTime()->toSpan(); ?>
         <?php endif; ?></small>
         <div class="badger-left badger-info <?php if ($message->getAuthor()->isModerator()) : ?> badger-moderator <?php endif; ?> message-<?php echo $message->getState(); ?> khistory">
             <div class="mykmsg-header alert alert-secondary">

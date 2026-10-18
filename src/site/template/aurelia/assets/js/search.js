@@ -41,7 +41,7 @@ jQuery(document).ready(function ($) {
     tribute.attach(document.getElementById("kusersearch"));
 
 	/* Hide search form when there are search results found */
-	if ($('#kunena_search_results').is(':visible')) {
+	if ($('.kunena-search-result').first().is(':visible')) {
 		$('#search').collapse("hide");
 	}
 

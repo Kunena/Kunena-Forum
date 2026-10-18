@@ -93,7 +93,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                 <small><?php echo Text::_('COM_KUNENA_BAN_PUBLICREASON_DESC'); ?></small>
             </td>
             <td>
-                        <textarea id="ban-public" class="required" name="reason_public" id="reason_public"
+                        <textarea id="ban-public" class="required" name="reason_public"
                         ><?php echo $this->escape($this->banInfo->reason_public) ?></textarea>
             </td>
         </tr>
@@ -103,7 +103,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                 <small><?php echo Text::_('COM_KUNENA_BAN_PRIVATEREASON_DESC'); ?></small>
             </td>
             <td>
-                        <textarea id="ban-private" class="required" name="reason_private" id="reason_private"
+                        <textarea id="ban-private" class="required" name="reason_private"
                         ><?php echo $this->escape($this->banInfo->reason_private) ?></textarea>
             </td>
         </tr>

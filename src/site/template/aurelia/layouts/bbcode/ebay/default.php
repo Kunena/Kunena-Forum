@@ -29,10 +29,10 @@ use Joomla\CMS\Language\Text;
 <div style="text-align: center;"><a href="<?php echo $this->escape($this->naturalurl); ?>" target="_blank"
                                         rel="noopener noreferrer"> <img alt="" loading=lazy src="<?php echo $this->escape($this->pictureurl); ?>"/></a>
 </div>
-    <div style="margin:10px 0;"/></div>
+    <div style="margin:10px 0;"></div>
     <a href="<?php echo $this->escape($this->naturalurl); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($this->title); ?></a>
-    <div style="margin:10px 0;"/></div>
-    <div style="margin:10px 0;"/></div>
+    <div style="margin:10px 0;"></div>
+    <div style="margin:10px 0;"></div>
     <?php if ($this->status == "Active") :
         ?>
         <a class="btn btn-outline-primary border" href="<?php echo $this->escape($this->naturalurl); ?>"

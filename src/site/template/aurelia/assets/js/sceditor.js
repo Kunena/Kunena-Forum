@@ -141,7 +141,7 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="height">Soundcloud id:</label> ' +
+					'<label for="soundcloud_id">Soundcloud id:</label> ' +
 					'<input type="text" id="soundcloud_id" size="10" />' +
 					'</div>' +
 					'<div>' +
@@ -227,7 +227,7 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY_ITEM_ID') + '</label> ' +
+					'<label for="ebay_id">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_EBAY_ITEM_ID') + '</label> ' +
 					'<input type="text" id="ebay_id" size="10" />' +
 					'</div>' +
 					'<div>' +
@@ -312,7 +312,7 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_INSTAGRAM_ID') + '</label> ' +
+					'<label for="instagram_id">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_INSTAGRAM_ID') + '</label> ' +
 					'<input type="text" id="instagram_id" size="10" />' +
 					'</div>' +
 					'<div>' +
@@ -397,7 +397,7 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="height">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_X_SOCIAL') + '</label> ' +
+					'<label for="tweet_id">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_X_SOCIAL') + '</label> ' +
 					'<input type="text" id="tweet_id" size="10" />' +
 					'</div>' +
 					'<div>' +
@@ -480,7 +480,7 @@ jQuery(document).ready(function ($) {
 				$content = jQuery(
 					'<div>' +
 					'<div>' +
-					'<label for="type">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE') + '</label> ' +
+					'<label for="type-select">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE') + '</label> ' +
 					'<select name="type" id="type-select">' +
 					'<option value="hybrid">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_HYBRID') + '</option>' +
 					'<option value="roadmap">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_TYPE_ROADMAP') + '</option>' +
@@ -489,7 +489,7 @@ jQuery(document).ready(function ($) {
 					'</select>' +
 					'</div>' +
 					'<div>' +
-					'<label for="zoom">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_ZOOM_LEVEL') + '</label> ' +
+					'<label for="zoom-select">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_MAP_ZOOM_LEVEL') + '</label> ' +
 					'<select name="zoom" id="zoom-select">' +
 					'<option value="2">2</option>' +
 					'<option value="4">4</option>' +
@@ -574,20 +574,20 @@ jQuery(document).ready(function ($) {
 					'<select id="videotype">' + videoOpts + '</select>' +
 					'</div>' +
 					'<div>' +
-					'<label for="link">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_URL') + '</label> ' +
+					'<label for="videourl">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_URL') + '</label> ' +
 					'<input type="text" id="videourl" placeholder="https://" />' +
 					'</div>' +
 					'<div>' +
-					'<label for="link">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_SIZE') + '</label> ' +
+					'<label for="videosize">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_SIZE') + '</label> ' +
 					'<input type="text" id="videosize" />' +
 					'</div>' +
 					'<div>' +
-					'<label for="link">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_HEIGHT') + '</label> ' +
+					'<label for="videoheight">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_HEIGHT') + '</label> ' +
 					'<input type="text" id="videoheight" />' +
 					'</div>' +
 					'<div>' +
-					'<label for="link">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_WIDTH') + '</label> ' +
-					'<input type="text" id="videowifth" />' +
+					'<label for="videowidth">' + Joomla.Text._('COM_KUNENA_SCEDITOR_COMMAND_INSERT_VIDEO_WIDTH') + '</label> ' +
+					'<input type="text" id="videowidth" />' +
 					'</div>' +
 					'<div><input type="button" class="button" value="' + Joomla.Text._('COM_KUNENA_SCEDITOR_BUTTON_INSERT_LABEL') + '" /></div>' +
 					'</div>'
@@ -669,7 +669,7 @@ jQuery(document).ready(function ($) {
 				$content.find('.addpolloption').on('click', function (e) {
                     poll_number_option++;
 
-                    var poll_option_label = '<label for="poll_option" id="poll_option_label'+poll_number_option+'" >Poll option '+poll_number_option+'</label>';
+                    var poll_option_label = '<label for="poll_option'+poll_number_option+'" id="poll_option_label'+poll_number_option+'" >Poll option '+poll_number_option+'</label>';
                     var poll_option = '<input type="text" id="poll_option'+poll_number_option+'" />';
 
                     jQuery('#sceditor_poll_options').append( poll_option_label );

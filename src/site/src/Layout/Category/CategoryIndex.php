@@ -172,7 +172,6 @@ class CategoryIndex extends KunenaLayout
      * @return  string|void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getMarkReadButtonURL($categoryId, $numTopics)
@@ -196,7 +195,6 @@ class CategoryIndex extends KunenaLayout
      * @return  boolean|string
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getCategoryRSSURL($catid, $xhtml = true)

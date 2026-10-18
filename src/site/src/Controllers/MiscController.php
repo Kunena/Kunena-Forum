@@ -46,7 +46,6 @@ class MiscController extends KunenaController
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function template()
     {

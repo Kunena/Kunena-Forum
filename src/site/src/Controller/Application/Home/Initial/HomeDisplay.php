@@ -56,7 +56,6 @@ class HomeDisplay extends KunenaControllerDisplay
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function execute()
     {

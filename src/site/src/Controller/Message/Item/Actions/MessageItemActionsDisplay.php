@@ -80,7 +80,6 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
      *
      * @return  boolean|false|void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -576,7 +575,6 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
      * @return  KunenaLayout
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getButton($url, $name, $scope, $type, $id = null, $normal = true, $icon = '')

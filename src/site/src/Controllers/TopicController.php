@@ -105,7 +105,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function loadattachments()
@@ -526,7 +525,6 @@ class TopicController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function upload()
@@ -664,7 +662,6 @@ class TopicController extends KunenaController
      * @return  mixed
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function post()
@@ -1382,7 +1379,6 @@ class TopicController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1748,7 +1744,6 @@ class TopicController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1763,7 +1758,6 @@ class TopicController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1846,7 +1840,6 @@ class TopicController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1860,7 +1853,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function subscribe()
@@ -1903,7 +1895,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function unsubscribe()
@@ -1946,7 +1937,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function favorite()
@@ -1989,7 +1979,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function unfavorite()
@@ -2032,7 +2021,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function sticky()
@@ -2085,7 +2073,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function unsticky()
@@ -2134,7 +2121,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function lock()
@@ -2183,7 +2169,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function unlock()
@@ -2232,7 +2217,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function delete()
@@ -2303,7 +2287,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function undelete()
@@ -2363,7 +2346,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function permdelete()
@@ -2434,7 +2416,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function approve()
@@ -2510,7 +2491,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function move()
@@ -2635,7 +2615,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function report()
@@ -2785,7 +2764,6 @@ class TopicController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -2837,7 +2815,6 @@ class TopicController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function resetvotes()
@@ -2882,7 +2859,6 @@ class TopicController extends KunenaController
      @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.3
      */
     public function topicicons()

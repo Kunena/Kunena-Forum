@@ -257,7 +257,6 @@ class KunenaStatistics
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function loadAll($force = false): void
@@ -414,7 +413,6 @@ class KunenaStatistics
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function loadTopicStats($override = false): void
     {
@@ -480,7 +478,6 @@ class KunenaStatistics
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function loadTopPolls($limit = 0): array
     {

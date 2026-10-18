@@ -130,7 +130,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws Exception
-     * @throws null
      * @since   Kunena 3.0
      */
     protected function internalSaveParamFile(string $template): void
@@ -186,7 +185,6 @@ class TemplateController extends FormController
      *
      * @since   Kunena 2.0
      *@throws  Exception
-     * @throws  null
      */
     protected function SaveCKeditorParamFile(array $params)
     {
@@ -322,7 +320,6 @@ class TemplateController extends FormController
      *
      * @since   Kunena 2.0
      *@throws  Exception
-     * @throws  null
      */
     protected function SaveSCeditorParamFile(array $params)
     {
@@ -489,7 +486,6 @@ class TemplateController extends FormController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0
      */
@@ -606,7 +602,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function chooseScss(): void
@@ -640,7 +635,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function editscss(): void
@@ -669,7 +663,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function chooseCss(): void
@@ -695,7 +688,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function editCss(): void
@@ -756,7 +748,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function applyScss(): void
@@ -770,7 +761,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function saveScss(): void
@@ -854,7 +844,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function applyCss(): void
@@ -868,7 +857,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function saveCss(): void
@@ -936,7 +924,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function addnew()
@@ -957,7 +944,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function publish(): void
@@ -997,7 +983,6 @@ class TemplateController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function uninstall(): void

@@ -240,7 +240,6 @@ class KunenaApplication extends WebApplication
     /**
      * @return  void
      *
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function doExecute()

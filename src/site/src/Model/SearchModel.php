@@ -59,7 +59,6 @@ class SearchModel extends KunenaModel
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function getTotal()
@@ -89,7 +88,6 @@ class SearchModel extends KunenaModel
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function getResults()
@@ -386,7 +384,6 @@ class SearchModel extends KunenaModel
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function getSearchURL($view, $searchword = '', $limitstart = 0, $limit = 0, $params = '', $xhtml = true)
     {

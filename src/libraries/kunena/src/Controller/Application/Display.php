@@ -91,7 +91,6 @@ class Display extends KunenaControllerDisplay
      * @return  BaseLayout
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function execute(): BaseLayout
@@ -218,7 +217,6 @@ class Display extends KunenaControllerDisplay
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */

@@ -196,7 +196,6 @@ class KunenaController extends BaseController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function execute($task)
@@ -333,7 +332,6 @@ class KunenaController extends BaseController
      *
      * @return  BaseController  A Joomla\CMS\MVC\Controller\BaseController object to
      *                                                     support chaining.
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -482,7 +480,6 @@ class KunenaController extends BaseController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */

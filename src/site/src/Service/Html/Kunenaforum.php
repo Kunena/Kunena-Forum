@@ -48,7 +48,6 @@ class Kunenaforum
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      */
     public static function categorylist($name, $parent, $options = [], $params = [], $attribs = null, $key = 'value', $text = 'text', $selected = [], $idtag = false, $translate = false)
     {
@@ -210,7 +209,6 @@ class Kunenaforum
      * @since   Kunena 6.0
      *
      * @throws Exception
-     * @throws null
      */
     public static function link($uri, string $content, $title = '', $class = '', $rel = '', $attributes = ''): string
     {

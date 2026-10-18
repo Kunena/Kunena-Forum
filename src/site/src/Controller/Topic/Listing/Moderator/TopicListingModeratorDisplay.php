@@ -58,7 +58,6 @@ class TopicListingModeratorDisplay extends ListDisplay
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     protected function before()
     {

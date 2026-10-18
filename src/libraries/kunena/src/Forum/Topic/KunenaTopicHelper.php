@@ -148,7 +148,6 @@ abstract class KunenaTopicHelper
      * @since   Kunena
      *
      * @throws  Exception
-     * @throws  null
      */
     public static function getTopics($ids = false, $authorise = 'read'): array
     {

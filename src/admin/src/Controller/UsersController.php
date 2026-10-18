@@ -92,7 +92,6 @@ class UsersController extends KunenaController
      * @return  boolean|void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function edit()
@@ -126,7 +125,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function trashusermessages(): void
@@ -166,7 +164,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function move(): void
@@ -199,7 +196,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function logout(): void
@@ -235,7 +231,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function remove(): void
@@ -306,7 +301,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function ban(): void
@@ -360,7 +354,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function unban(): void
@@ -413,7 +406,6 @@ class UsersController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @since   Kunena 5.1
      */
     public function moderate(): void
@@ -489,7 +481,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 5.1
      */
     public function unmoderate(): void
@@ -539,7 +530,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function block()
@@ -593,7 +583,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function unblock(): void
@@ -647,7 +636,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function batchmoderators(): void
@@ -705,7 +693,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 4.0
      */
     public function cancel(): void
@@ -719,7 +706,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function removecatsubscriptions(): void
@@ -764,7 +750,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function removetopicsubscriptions(): void
@@ -809,7 +794,6 @@ class UsersController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function subscribeuserstocategories(): void

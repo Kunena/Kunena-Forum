@@ -158,7 +158,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
      * @return  boolean
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getUrl($layout = 'default', $xhtml = true)
@@ -200,7 +199,6 @@ class KunenaAnnouncement extends KunenaDatabaseObject
      *
      * @return  boolean|string
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */

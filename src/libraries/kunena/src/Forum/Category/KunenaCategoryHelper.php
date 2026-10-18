@@ -460,7 +460,6 @@ abstract class KunenaCategoryHelper
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public static function getNewTopics($catids): void
@@ -563,7 +562,6 @@ abstract class KunenaCategoryHelper
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      */
     public static function getParents($id = 0, $levels = 100, $params = []): array
     {
@@ -612,7 +610,6 @@ abstract class KunenaCategoryHelper
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      */
     public static function getOrphaned($levels = 0, $params = []): array
     {

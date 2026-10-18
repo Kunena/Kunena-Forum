@@ -93,7 +93,6 @@ class RanksController extends AdminController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function remove(): void

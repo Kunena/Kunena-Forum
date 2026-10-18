@@ -66,7 +66,6 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function before()
@@ -143,7 +142,6 @@ class CategoryIndexActionsDisplay extends KunenaControllerDisplay
      * @return  KunenaLayout
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getButton($url, $name, $scope, $type, $id = null)

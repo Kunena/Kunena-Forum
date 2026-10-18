@@ -37,7 +37,6 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
      *
      * @since   Kunena 6.0
      *
-     * @throws null
      * @throws \Exception
      */
     public function loginUser(string $username, string $password, bool $rememberme = false, $secretkey = null)
@@ -63,7 +62,6 @@ class KunenaLoginComprofiler extends KunenaLoginAbstract
      * @since   Kunena 6.0
      *
      * @throws  \Exception
-     * @throws  null
      */
     public function logoutUser($return = null)
     {

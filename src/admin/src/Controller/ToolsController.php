@@ -76,7 +76,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function diagnostics(): void
@@ -115,7 +114,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function prune(): void
@@ -216,7 +214,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function syncUsers(): void
@@ -425,7 +422,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function recount(): void
@@ -531,7 +527,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function doRecount(): void
@@ -729,7 +724,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function trashMenu(): void
@@ -749,7 +743,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function fixLegacy(): void
@@ -780,7 +773,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function purgeReStatements(): void
@@ -836,7 +828,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function cleanupIP(): void
@@ -918,7 +909,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 7.0.2
      *
-     * @throws  null
      * @throws  Exception
      */
     public function setupcolumnlanguage(): void
@@ -961,7 +951,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 7.0.2
      *
-     * @throws  null
      * @throws  Exception
      */
     public function setupsocials(): void
@@ -1428,7 +1417,6 @@ class ToolsController extends FormController
      *
      * @since   Kunena 2.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function systemReport(): void

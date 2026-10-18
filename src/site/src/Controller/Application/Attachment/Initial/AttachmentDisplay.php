@@ -62,7 +62,6 @@ class AttachmentDisplay extends KunenaControllerDisplay
      *
      * @throws  KunenaExceptionAuthorise
      * @throws  RuntimeException
-     * @throws  null
      */
     public function execute()
     {
@@ -88,7 +87,6 @@ class AttachmentDisplay extends KunenaControllerDisplay
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function display()

@@ -532,7 +532,6 @@ class KunenaCategory extends KunenaDatabaseObject
      * @return  array    List of \Kunena\Forum\Libraries\Forum\Category\Category objects.
      *
      * @since   Kunena 6.0
-     * @throws  null
      */
     public function getChildren($levels = 0): array
     {
@@ -638,7 +637,6 @@ class KunenaCategory extends KunenaDatabaseObject
      * @return  boolean|null
      *
      * @since   Kunena
-     * @throws  null
      * @throws  Exception
      */
     public function getNewTopicUrl($xhtml = true)
@@ -658,7 +656,6 @@ class KunenaCategory extends KunenaDatabaseObject
      * @return  KunenaCategory
      *
      * @since   Kunena 6.0
-     * @throws  null
      */
     public function getNewTopicCategory($user = null): KunenaCategory
     {
@@ -687,7 +684,6 @@ class KunenaCategory extends KunenaDatabaseObject
      * @return  KunenaCategory|KunenaCategory[]
      *
      * @since   Kunena 6.0
-     * @throws  null
      * @throws  Exception
      */
     public function getChannels($action = 'read')
@@ -955,7 +951,6 @@ class KunenaCategory extends KunenaDatabaseObject
      * @return  boolean|void
      *
      * @since   Kunena 6.0
-     * @throws  null
      * @throws  Exception
      */
     public function getRSSUrl($xhtml = true)
@@ -2228,7 +2223,6 @@ class KunenaCategory extends KunenaDatabaseObject
      * @return  KunenaExceptionAuthorise
      *
      * @since   Kunena 6.0
-     * @throws  null
      * @throws  Exception
      */
     protected function authoriseChannel(KunenaUser $user)

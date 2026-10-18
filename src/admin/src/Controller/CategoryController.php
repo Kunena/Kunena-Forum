@@ -101,7 +101,6 @@ class CategoryController extends KunenaController
      *
      * @since   Kunena 2.0.0-BETA2
      *@throws  Exception
-     * @throws  null
      */
     protected function internalSave()
     {
@@ -310,7 +309,6 @@ class CategoryController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -357,7 +355,6 @@ class CategoryController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -372,7 +369,6 @@ class CategoryController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0.0
      */
@@ -388,7 +384,6 @@ class CategoryController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -406,7 +401,6 @@ class CategoryController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -428,7 +422,6 @@ class CategoryController extends KunenaController
      *
      * @return  void
      *
-     * @throws null
      * @throws Exception
      * @since   Kunena 3.0
      */

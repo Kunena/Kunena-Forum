@@ -197,7 +197,6 @@ class CategoryItem extends KunenaLayout
      * @return  string
      *
      * @throws Exception
-     * @throws null
      * @see     KunenaLayout::getLastPostLink()
      *
      * @since   Kunena 6.0

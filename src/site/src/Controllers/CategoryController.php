@@ -76,7 +76,6 @@ class CategoryController extends CategoriesController
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function jump()
     {
@@ -94,7 +93,6 @@ class CategoryController extends CategoriesController
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function markread()
@@ -161,7 +159,6 @@ class CategoryController extends CategoriesController
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function subscribe()
@@ -200,7 +197,6 @@ class CategoryController extends CategoriesController
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function unsubscribe()

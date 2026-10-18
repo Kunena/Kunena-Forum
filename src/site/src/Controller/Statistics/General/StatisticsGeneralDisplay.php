@@ -92,7 +92,6 @@ class StatisticsGeneralDisplay extends KunenaControllerDisplay
      * @return  mixed
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function before()

@@ -56,7 +56,6 @@ abstract class KunenaMessageHelper
      * @since   Kunena
      *
      * @throws  Exception
-     * @throws  null
      */
     public static function getMessages($ids = false, $authorise = 'read'): array
     {
@@ -260,7 +259,6 @@ abstract class KunenaMessageHelper
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public static function getLatestMessages($categories = false, $limitstart = 0, $limit = 0, $params = []): array
     {

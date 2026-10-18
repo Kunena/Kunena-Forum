@@ -75,7 +75,6 @@ class SearchResultsDisplay extends KunenaControllerDisplay
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */

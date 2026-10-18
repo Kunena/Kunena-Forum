@@ -1425,7 +1425,6 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @return  boolean
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1442,7 +1441,6 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @return  boolean
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1486,7 +1484,6 @@ class KunenaTopic extends KunenaDatabaseObject
      *
      * @return  KunenaMessage
      *
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function newReply($fields = [], $user = null, $safefields = null): KunenaMessage

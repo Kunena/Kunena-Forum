@@ -722,7 +722,6 @@ class KunenaView extends HtmlView
      * @return  mixed
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getTopicLink(KunenaTopic $topic, $action = null, $content = null, $title = null, $class = null, ?KunenaCategory $category = null)

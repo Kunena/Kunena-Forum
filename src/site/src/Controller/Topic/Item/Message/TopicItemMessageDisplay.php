@@ -113,7 +113,6 @@ class TopicItemMessageDisplay extends KunenaControllerDisplay
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     protected function before()

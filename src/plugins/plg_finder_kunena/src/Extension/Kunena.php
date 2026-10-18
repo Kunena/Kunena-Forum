@@ -175,7 +175,6 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @since   2.5
      * @throws  \Exception on database error.
-     * @throws  null
      */
     public function onFinderAfterSave(AfterSaveEvent $event): void
     {
@@ -222,7 +221,6 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @since   2.5
      * @throws  \Exception on database error.
-     * @throws  null
      */
     public function onFinderBeforeDelete(KunenaBeforeDeleteEvent $event): void
     {
@@ -276,7 +274,6 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @since   2.5
      * @throws  \Exception on error.
-     * @throws  null
      */
     public function onBuildIndex(): bool
     {
@@ -462,7 +459,6 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @since   2.5
      * @throws  \Exception on database error.
-     * @throws  null
      */
     protected function getItem($id): Result
     {
@@ -490,7 +486,6 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return  array  An array of Result objects.
      *
      * @since   2.5
-     * @throws  null
      * @throws  \Exception on database error.
      */
     protected function getItems($offset, $limit, $sql = \null): array
@@ -534,7 +529,6 @@ final class Kunena extends Adapter implements SubscriberInterface
      * @return  Result
      * @since   Kunena
      * @throws  \Exception
-     * @throws  null
      */
     protected function createIndexerResult($message): Result
     {
@@ -653,7 +647,6 @@ final class Kunena extends Adapter implements SubscriberInterface
      *
      * @return  mixed
      * @since   Kunena
-     * @throws  null
      * @throws  \Exception
      */
     protected function getMessagesByCategory($cat_id)

@@ -97,7 +97,6 @@ class TopicFormCreateDisplay extends KunenaControllerDisplay
      *
      * @return  boolean
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */

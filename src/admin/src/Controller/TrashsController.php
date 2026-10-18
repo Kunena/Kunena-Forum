@@ -70,7 +70,6 @@ class TrashsController extends AdminController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0
      */
@@ -116,7 +115,6 @@ class TrashsController extends AdminController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0
      */

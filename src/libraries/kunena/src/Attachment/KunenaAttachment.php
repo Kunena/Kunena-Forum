@@ -590,7 +590,6 @@ class KunenaAttachment extends KunenaDatabaseObject
      * @return  string
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 4.0
      */
     public function getUrl($thumb = false, $inline = true, $escape = true): string

@@ -232,7 +232,6 @@ class UserController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function moveMessages(): void

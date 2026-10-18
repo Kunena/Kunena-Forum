@@ -100,7 +100,6 @@ class KunenaUpload
      *
      * @return  array Updated options.
      *
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function ajaxUpload(array $options): array

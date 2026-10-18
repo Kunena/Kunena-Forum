@@ -137,7 +137,6 @@ class SearchResults extends KunenaLayout
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function displayRows()
     {

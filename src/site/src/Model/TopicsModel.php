@@ -72,7 +72,6 @@ class TopicsModel extends KunenaModel
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function getMessages()
@@ -90,7 +89,6 @@ class TopicsModel extends KunenaModel
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     protected function getPosts()
     {
@@ -191,7 +189,6 @@ class TopicsModel extends KunenaModel
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function getTotal()
     {
@@ -207,7 +204,6 @@ class TopicsModel extends KunenaModel
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function getTopics()
@@ -255,7 +251,6 @@ class TopicsModel extends KunenaModel
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     protected function getUserTopics()
     {
@@ -317,7 +312,6 @@ class TopicsModel extends KunenaModel
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     protected function getRecentTopics()
     {
@@ -409,7 +403,6 @@ class TopicsModel extends KunenaModel
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function getTopicActions()
     {
@@ -487,7 +480,6 @@ class TopicsModel extends KunenaModel
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function getPostActions()

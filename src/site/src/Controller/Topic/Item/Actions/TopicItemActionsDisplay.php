@@ -60,7 +60,6 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -295,7 +294,6 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
      * @return  KunenaLayout
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getButton($url, $name, $scope, $type, $primary = false, $normal = true, $icon = '')

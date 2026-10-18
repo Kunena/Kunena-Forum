@@ -60,7 +60,6 @@ class SmiliesController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function add(): void
@@ -193,7 +192,6 @@ class SmiliesController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function smileyUpload(): void
@@ -225,7 +223,6 @@ class SmiliesController extends FormController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function remove(): void

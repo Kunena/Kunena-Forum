@@ -112,7 +112,6 @@ class MiscDisplay extends Display
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     protected function before()
     {

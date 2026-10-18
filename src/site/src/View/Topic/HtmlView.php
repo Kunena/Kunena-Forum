@@ -243,7 +243,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function displayFlat($tpl = null)
@@ -259,7 +258,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function displayDefault($tpl = null)
@@ -389,7 +387,6 @@ class HtmlView extends KunenaView
      * @return  string
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getPagination($maxpages)
@@ -403,7 +400,6 @@ class HtmlView extends KunenaView
      * @return  KunenaPagination
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getPaginationObject($maxpages)
@@ -583,7 +579,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function displayThreaded($tpl = null)
@@ -599,7 +594,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function displayIndented($tpl = null)
@@ -1039,7 +1033,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function displayMessages($template = null)
@@ -1059,7 +1052,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function displayMessage($id, $message, $template = null)
@@ -1381,7 +1373,6 @@ class HtmlView extends KunenaView
      *
      * @return  boolean|false
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1473,7 +1464,6 @@ class HtmlView extends KunenaView
      *
      * @return  boolean|false
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1545,7 +1535,6 @@ class HtmlView extends KunenaView
      *
      * @return  boolean|false
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1628,7 +1617,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function redirectBack($anchor = '')

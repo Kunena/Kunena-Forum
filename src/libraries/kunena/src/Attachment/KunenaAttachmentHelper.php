@@ -53,7 +53,6 @@ abstract class KunenaAttachmentHelper
      * @return  KunenaAttachment[]
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public static function getById($ids = false, $authorise = 'read'): array

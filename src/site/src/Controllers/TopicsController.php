@@ -40,7 +40,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -53,7 +52,6 @@ class TopicsController extends KunenaController
     /**
      * @return  boolean|void
      *
-     * @throws  null
      * @throws  void
      * @throws  Exception
      * @since   Kunena 6.0
@@ -159,7 +157,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -217,7 +214,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -275,7 +271,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -336,7 +331,6 @@ class TopicsController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -440,7 +434,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -483,7 +476,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -515,7 +507,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -560,7 +551,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -604,7 +594,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -648,7 +637,6 @@ class TopicsController extends KunenaController
     /**
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */

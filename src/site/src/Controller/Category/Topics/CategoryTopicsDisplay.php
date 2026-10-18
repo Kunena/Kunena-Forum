@@ -90,7 +90,6 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
      *
      * @return  mixed
      *
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function before()
@@ -226,7 +225,6 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function prepareDocument()

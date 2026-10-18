@@ -38,7 +38,6 @@ class CategoryDescriptionDisplay extends KunenaControllerDisplay
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      */
     protected function before()
     {

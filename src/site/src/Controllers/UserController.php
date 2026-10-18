@@ -127,7 +127,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function search()
@@ -155,7 +154,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function change()
@@ -176,7 +174,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function karmaup()
@@ -190,7 +187,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function karma($karmaDelta)
@@ -280,7 +276,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function karmadown()
@@ -674,7 +669,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function ban()
@@ -985,7 +979,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function login()
@@ -1025,7 +1018,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function logout()
@@ -1064,7 +1056,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function status()
@@ -1107,7 +1098,6 @@ class UserController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function statusText()
@@ -1144,7 +1134,6 @@ class UserController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @since   Kunena 5.1
      */
     public function upload()

@@ -58,7 +58,6 @@ class AnnouncementItem extends KunenaLayout
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function getActions()
     {
@@ -94,7 +93,6 @@ class AnnouncementItem extends KunenaLayout
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function getButton($url, $name, $scope, $type, $id = null, $normal = true): string
     {

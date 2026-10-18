@@ -2473,7 +2473,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      *
      * @since   Kunena 6.0
      * @throws  Exception
-     * @throws  null
      */
     public function DoAttachment($bbcode, $action, $name, $default, $params, $content)
     {
@@ -2560,7 +2559,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      * @return  string|void
      *
      * @since   Kunena 6.0
-     * @throws null
      * @throws Exception
      */
     protected function renderAttachment(KunenaAttachment $attachment, object $bbcode, $displayImage = true)
@@ -2606,7 +2604,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      *
      * @since   Kunena 6.0
      * @throws  Exception
-     * @throws  null
      */
     public function DoFile($bbcode, $action, $name, $default, $params, $content)
     {
@@ -2686,7 +2683,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
      *
      * @since   Kunena 6.0
      * @throws  Exception
-     * @throws  null
      */
     public function DoImage($bbcode, $action, $name, $default, $params, $content)
     {

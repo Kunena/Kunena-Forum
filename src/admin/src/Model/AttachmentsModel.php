@@ -146,7 +146,6 @@ class AttachmentsModel extends ListModel
      *
      * @return  KunenaAttachment[]
      *
-     * @throws null
      * @throws Exception
      * @since   Kunena 6.0
      */

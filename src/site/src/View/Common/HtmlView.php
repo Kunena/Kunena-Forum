@@ -216,7 +216,6 @@ class HtmlView extends KunenaView
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function displayBreadcrumb($tpl = null)
@@ -400,7 +399,6 @@ class HtmlView extends KunenaView
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function displayStatistics($tpl = null)
     {
@@ -441,7 +439,6 @@ class HtmlView extends KunenaView
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function getStatsLink($name, $class = '', $rel = 'follow')
     {
@@ -495,7 +492,6 @@ class HtmlView extends KunenaView
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function displayFooter($tpl = null)
     {
@@ -538,7 +534,6 @@ class HtmlView extends KunenaView
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     private function getRSSURL($params = '', $xhtml = true)
     {
@@ -575,7 +570,6 @@ class HtmlView extends KunenaView
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function getRSSLink($name, $rel = 'follow', $params = '')
     {
@@ -590,7 +584,6 @@ class HtmlView extends KunenaView
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function displayMenu($tpl = null)
     {
@@ -637,7 +630,6 @@ class HtmlView extends KunenaView
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function displayLoginBox($tpl = null)
     {

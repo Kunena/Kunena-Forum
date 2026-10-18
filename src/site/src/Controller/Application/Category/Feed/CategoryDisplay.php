@@ -66,7 +66,6 @@ class CategoryDisplay extends KunenaControllerDisplay
      *
      * @return  void
      *
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function before()

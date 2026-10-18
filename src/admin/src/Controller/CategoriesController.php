@@ -68,7 +68,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0.0-BETA2
      */
     public function lock(): void
@@ -89,7 +88,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws null
      * @throws Exception
      * @since   Kunena 3.0
      */
@@ -170,7 +168,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -188,7 +185,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -206,7 +202,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -224,7 +219,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -243,7 +237,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -262,7 +255,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -281,7 +273,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -300,7 +291,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -318,7 +308,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -336,7 +325,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 2.0.0-BETA2
      */
@@ -401,7 +389,6 @@ class CategoriesController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 3.0
      */
     public function delete()
@@ -503,7 +490,6 @@ class CategoriesController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 3.0
      */
     public function saveOrder()
@@ -579,7 +565,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 3.0
      */
@@ -641,7 +626,6 @@ class CategoriesController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 3.0
      */
     public function orderup(): void
@@ -661,7 +645,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws null
      * @since   Kunena 3.0
      */
     protected function orderUpDown(int $id, int $direction): void
@@ -707,7 +690,6 @@ class CategoriesController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 3.0
      */
     public function orderdown(): void
@@ -725,7 +707,6 @@ class CategoriesController extends KunenaController
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 2.0
      */
     public function archive(): void
@@ -743,7 +724,6 @@ class CategoriesController extends KunenaController
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 4.0
      */

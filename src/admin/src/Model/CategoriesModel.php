@@ -408,7 +408,6 @@ class CategoriesModel extends KunenaModel
      *
      * @return  string  The HTML of the drop-down select.
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 5.1
      */
@@ -431,7 +430,6 @@ class CategoriesModel extends KunenaModel
      * @return  array|KunenaCategory[]
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function getAdminCategories()

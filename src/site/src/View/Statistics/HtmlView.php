@@ -149,7 +149,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function displayDefault($tpl = null)
@@ -192,7 +191,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function displayUser($tpl = null)
@@ -227,7 +225,6 @@ class HtmlView extends KunenaView
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function displayPosts($tpl = null)
@@ -438,7 +435,6 @@ class HtmlView extends KunenaView
      * @return  mixed|string|void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function fillTopicInfo($matches)

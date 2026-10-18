@@ -56,7 +56,6 @@ class SearchFormDisplay extends KunenaControllerDisplay
      *
      * @return  mixed
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */

@@ -97,7 +97,6 @@ class CategoryModel extends CategoriesModel
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function getCategories()
@@ -250,7 +249,6 @@ class CategoryModel extends CategoriesModel
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function getTotal()
     {
@@ -266,7 +264,6 @@ class CategoryModel extends CategoriesModel
      *
      * @since   Kunena 6.0
      *
-     * @throws  null
      * @throws  Exception
      */
     public function getTopics()
@@ -358,7 +355,6 @@ class CategoryModel extends CategoriesModel
      * @since   Kunena 6.0
      *
      * @throws  Exception
-     * @throws  null
      */
     public function getTopicActions()
     {

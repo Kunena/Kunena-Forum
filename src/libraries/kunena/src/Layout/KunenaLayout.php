@@ -248,7 +248,6 @@ class KunenaLayout extends KunenaBase
      *
      * @return  string
      *
-     * @throws null
      * @throws Exception
      * @since   Kunena 6.0
      */
@@ -317,7 +316,6 @@ class KunenaLayout extends KunenaBase
      * @return  mixed
      *
      * @throws Exception
-     * @throws null
      * @since   Kunena 6.0
      */
     public function getCategoryLink(KunenaCategory $category, $content = null, $title = null, $class = null, bool $follow = true, $canonical = null)
@@ -460,7 +458,6 @@ class KunenaLayout extends KunenaBase
      * @return  string
      *
      * @throws Exception
-     * @throws null
      * @since   Kunena 6.0
      */
     public function getLastPostLink(KunenaCategory $category, $content, $title, $class, $length = 30, $follow = true, $canonical = false)

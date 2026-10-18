@@ -498,7 +498,6 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  Uri
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -851,7 +850,6 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  boolean|false
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      * 
@@ -1016,7 +1014,6 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  string
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1064,7 +1061,6 @@ class KunenaMessage extends KunenaDatabaseObject
      * @return  boolean
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena
      */
     public function publish($value = KunenaForum::PUBLISHED)
@@ -1166,7 +1162,6 @@ class KunenaMessage extends KunenaDatabaseObject
     /**
      * @return  boolean
      *
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function updateAttachments(): bool
@@ -1248,7 +1243,6 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  boolean  True on success
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -1314,7 +1308,6 @@ class KunenaMessage extends KunenaDatabaseObject
      * @return  KunenaAttachment[]
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena
      */
     public function getAttachments($ids = false, $action = 'read'): array
@@ -1613,7 +1606,6 @@ class KunenaMessage extends KunenaDatabaseObject
      *
      * @return  void
      *
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function edit($fields = [], $user = null): void
@@ -1690,7 +1682,6 @@ class KunenaMessage extends KunenaDatabaseObject
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 4.0
      */
     public function addAttachments(array $ids): void
@@ -1790,7 +1781,6 @@ class KunenaMessage extends KunenaDatabaseObject
      * @return  boolean
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     public function check(): bool

@@ -43,7 +43,6 @@ class KunenaAvatarEasyblog extends KunenaAvatar
      * @return string
      * @since Kunena
      * @throws Exception
-     * @throws null
      */
     public function getEditURL(): string
     {

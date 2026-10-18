@@ -118,7 +118,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
      *
      * @return  mixed
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -521,7 +520,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
      * @return  string
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function docImage()
@@ -546,7 +544,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
      *
      * @return  void
      *
-     * @throws  null
      * @throws  Exception
      * @since   Kunena 6.0
      */
@@ -571,7 +568,6 @@ class TopicItemDisplay extends KunenaControllerDisplay
      * @return  void
      *
      * @throws  Exception
-     * @throws  null
      * @since   Kunena 6.0
      */
     protected function prepareDocument()

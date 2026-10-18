@@ -136,7 +136,7 @@ class Com_KunenaInstallerScript extends InstallerScript
                         }
                     }
 
-                    $componentId = $this->getComponentId();
+                    $componentId = $processConfig ? $this->getComponentId() : 0;
 
                     if ($componentId) {
                         $paramsString = json_encode($processConfig);

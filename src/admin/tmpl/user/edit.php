@@ -150,7 +150,7 @@ $template = KunenaTemplate::getInstance();
                                                     echo Text::sprintf(
                                                         'COM_KUNENA_SIGNATURE_LENGTH_COUNTER',
                                                         intval($this->config->maxSig),
-                                                        '<input id="current_count" class="col-md-1" readonly="readonly" type="text" name="current_count" value="' . $valueSignature . '" />'
+                                                        '<input id="current_count" class="form-control" readonly="readonly" type="text" name="current_count" value="' . $valueSignature . '" />'
                                                     ); ?>
                                                 </div>
                                             </fieldset>
@@ -182,7 +182,7 @@ $template = KunenaTemplate::getInstance();
                                                             </td>
                                                             <td>
                                                                 <div id="birthdate">
-                                                                    <div class="input-append date">
+                                                                    <div class="input-group date">
                                                                         <label>
                                                                             <input type="text" name="birthdate"
                                                                                 class="inputbox form-control"
@@ -430,7 +430,7 @@ $template = KunenaTemplate::getInstance();
             </div>
         </div>
     </div>
-    <div class="pull-right small">
+    <div class="float-end small">
         <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

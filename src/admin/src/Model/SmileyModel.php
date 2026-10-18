@@ -84,7 +84,7 @@ class SmileyModel extends AdminModel
             $smileyList[] = HTMLHelper::_('select.option', $path, $file);
         }
 
-        return HTMLHelper::_('select.genericlist', $smileyList, 'smiley_url', 'class="inputbox form-control" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected->location) ? $smileyImages[$selected->location] : '');
+        return HTMLHelper::_('select.genericlist', $smileyList, 'smiley_url', 'class="inputbox form-select" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected->location) ? $smileyImages[$selected->location] : '');
     }
 
     /**

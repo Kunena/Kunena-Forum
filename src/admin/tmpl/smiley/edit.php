@@ -55,7 +55,7 @@ $wa->useScript('multiselect');
                             </td>
                             <td width="80%">
                                 <label>
-                                    <input class="col-md-2" type="text" name="smileyCode"
+                                    <input class="form-control" type="text" name="smileyCode"
                                            value="<?php echo isset($this->smileySelected) ? $this->smileySelected->code : '' ?>"/>
                                 </label>
                                 <img loading=lazy name="smiley_image"
@@ -88,7 +88,7 @@ $wa->useScript('multiselect');
             </form>
         </div>
     </div>
-    <div class="pull-right small">
+    <div class="float-end small">
         <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

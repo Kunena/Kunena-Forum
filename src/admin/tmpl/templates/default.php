@@ -35,7 +35,7 @@ $userId    = $user->id;
     <div class="row">
         <div class="col-md-12">
             <div id="j-main-container" class="j-main-container">
-                <div class="btn-group pull-right d-none d-md-block">
+                <div class="btn-group float-end d-none d-md-block">
                     <label for="limit" class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
                 </div>
                 <table class="table">

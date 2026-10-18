@@ -82,17 +82,17 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\te
             </div>
         </div>
     </div>
-    <div class="pull-right small">
+    <div class="float-end small">
         <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>
 
 <!-- Modal -->
-<div id="recountModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="recountModalLabel"
+<div id="recountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="recountModalLabel"
      aria-hidden="true"
      data-backdrop="static" data-keyboard="false">
     <div class="modal-header">
-        <button type="button" class="close recount-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+        <button type="button" class="btn-close recount-close" data-bs-dismiss="modal" aria-label="Close"></button>
         <h3></h3>
     </div>
     <div class="modal-body">

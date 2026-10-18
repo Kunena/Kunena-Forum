@@ -36,11 +36,9 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
                             <tr>
                                 <td width="20%"><?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_FROMDAYS') ?></td>
                                 <td>
-                                    <div class="input-append">
-                                        <label>
-                                            <input class="col-md-3" type="text" name="cleanup_ip_days" value="30"/>
-                                        </label>
-                                        <span class="add-on"><?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_DAYS') ?></span>
+                                    <div class="input-group w-auto">
+                                        <input class="form-control" type="text" name="cleanup_ip_days" value="30" aria-label="<?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_DAYS') ?>"/>
+                                        <span class="input-group-text"><?php echo Text::_('COM_KUNENA_CLEANUP_IP_LEGEND_DAYS') ?></span>
                                     </div>
                                 </td>
                             </tr>
@@ -57,7 +55,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
             </div>
         </div>
     </div>
-    <div class="pull-right small">
+    <div class="float-end small">
         <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

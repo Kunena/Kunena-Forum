@@ -42,7 +42,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                     <div class="col-auto">
                                         <i class="fas fa-database text-white f-30"></i>
                                     </div>
-                                    <div class="col pl-0">
+                                    <div class="col ps-0">
                                         <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
                                         <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></h6>
                                     </div>
@@ -88,7 +88,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                             <div class="col-auto">
                                                 <i class="fas fa-database text-white f-30"></i>
                                             </div>
-                                            <div class="col pl-0">
+                                            <div class="col ps-0">
                                                 <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
                                                 <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_SAMPLE_DATA'); ?></h6>
                                             </div>
@@ -138,7 +138,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                     <div class="col-auto">
                                         <i class="fas fa-database text-white f-30"></i>
                                     </div>
-                                    <div class="col pl-0">
+                                    <div class="col ps-0">
                                         <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_INSTALL'); ?></h6>
                                         <h6 class="mb-0 text-white"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_MENU'); ?></h6>
                                     </div>
@@ -179,7 +179,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                 <!--                                <div class="col-auto">-->
                 <!--                                    <i class="fas fa-eye text-cyan f-30"></i>-->
                 <!--                                </div>-->
-                <!--                                <div class="col pl-0">-->
+                <!--                                <div class="col ps-0">-->
                 <!--                                    <h6 class="mb-0">Ticket Answered</h6>-->
                 <!--                                    <h6 class="mb-0 text-cyan">Live Update</h6>-->
                 <!--                                </div>-->
@@ -202,13 +202,13 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                                 <div class="col-auto">
                                     <i class="fas fa-cloud-download-alt text-cyan f-30"></i>
                                 </div>
-                                <div class="col pl-0">
+                                <div class="col ps-0">
                                     <h6 class="mb-0"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_KUNENA_VERSION_CHECK'); ?></h6>
                                     <h6 class="mb-0 text-cyan"><?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK'); ?> <?php echo Text::_('COM_KUNENA_CPANEL_LABEL_LAST_UPDATE_CHECK_TODAY'); ?></h6>
                                 </div>
                             </div>
                             <div class="row align-items-center">
-                                <div class="col pl-5">
+                                <div class="col ps-5">
                                     <?php echo KunenaSvgIcons::loadsvg('kunenalogo'); ?>
                                 </div>
                                 <div class="col">
@@ -227,7 +227,7 @@ use Kunena\Forum\Libraries\Version\KunenaVersion;
                 <!--                                <div class="col-auto">-->
                 <!--                                    <i class="fas fa-lightbulb text-cyan f-30"></i>-->
                 <!--                                </div>-->
-                <!--                                <div class="col pl-0">-->
+                <!--                                <div class="col ps-0">-->
                 <!--                                    <h6 class="mb-0">Unique Innovation</h6>-->
                 <!--                                    <h6 class="mb-0 text-cyan">Last Check</h6>-->
                 <!--                                </div>-->

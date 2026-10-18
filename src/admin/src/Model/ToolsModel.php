@@ -260,7 +260,7 @@ class ToolsModel extends AdminModel
         $trashDelete [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_TRASH_USERMESSAGES'));
         $trashDelete [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_DELETE_PERMANENTLY'));
 
-        return HTMLHelper::_('select.genericlist', $trashDelete, 'trashDelete', 'class="inputbox form-control" size="1"', 'value', 'text', 0);
+        return HTMLHelper::_('select.genericlist', $trashDelete, 'trashDelete', 'class="inputbox form-select" size="1"', 'value', 'text', 0);
     }
 
     /**
@@ -280,7 +280,7 @@ class ToolsModel extends AdminModel
         $controlOptions [] = HTMLHelper::_('select.option', 'deleted', Text::_('COM_KUNENA_A_PRUNE_DELETED'));
         $controlOptions [] = HTMLHelper::_('select.option', 'shadow', Text::_('COM_KUNENA_A_PRUNE_SHADOW'));
 
-        return HTMLHelper::_('select.genericlist', $controlOptions, 'controlOptions', 'class="inputbox form-control" size="1"', 'value', 'text', 'normal');
+        return HTMLHelper::_('select.genericlist', $controlOptions, 'controlOptions', 'class="inputbox form-select" size="1"', 'value', 'text', 'normal');
     }
 
     /**
@@ -294,7 +294,7 @@ class ToolsModel extends AdminModel
         $optionSticky [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
         $optionSticky [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
-        return HTMLHelper::_('select.genericlist', $optionSticky, 'keepsticky', 'class="inputbox form-control" size="1"', 'value', 'text', 1);
+        return HTMLHelper::_('select.genericlist', $optionSticky, 'keepsticky', 'class="inputbox form-select" size="1"', 'value', 'text', 1);
     }
 
     /**

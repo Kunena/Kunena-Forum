@@ -263,7 +263,7 @@ class HtmlView extends BaseHtmlView
         HTMLHelper::_('bootstrap.renderModal', 'trashmenuconfirmationModal');
 
         $title = Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH');
-        $dhtml = "<button data-bs-toggle=\"modal\" data-bs-target=\"#trashmenuconfirmationModal\" class=\"btn btn-small\">
+        $dhtml = "<button data-bs-toggle=\"modal\" data-bs-target=\"#trashmenuconfirmationModal\" class=\"btn btn-sm\">
                     <i class=\"icon-apply\" title=\"$title\"> </i>
                         $title</button>";
                         $bar->appendButton('Custom', $dhtml, 'batch');*/

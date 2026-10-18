@@ -86,11 +86,11 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <p><?php echo Text::_('COM_KUNENA_REPORT_SYSTEM_COMPLETE_DESC'); ?></p>
                                     <p>
                                         <a href="#" id="link_sel_all" name="link_sel_all" type="button"
-                                            class="btn btn-small btn-outline-primary"><i
+                                            class="btn btn-sm btn-outline-primary"><i
                                                 class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
                                         </a>
                                     </p>
-                                    <textarea id="report_final" class="input-block-level" name="report_final" cols="80"
+                                    <textarea id="report_final" class="form-control w-100" name="report_final" cols="80"
                                         rows="15"><?php echo $this->escape($this->systemReport); ?></textarea>
                                 </td>
                             </tr>
@@ -107,11 +107,11 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <p>
                                         <a href="#" id="link_sel_all_complete" name="link_sel_all_complete"
                                             type="button"
-                                            class="btn btn-small btn-outline-primary"><i
+                                            class="btn btn-sm btn-outline-primary"><i
                                                 class="icon icon-signup"></i><?php echo Text::_('COM_KUNENA_REPORT_SELECT_ALL'); ?>
                                         </a>
                                     </p>
-                                    <textarea id="report_final_anonymous" class="input-block-level"
+                                    <textarea id="report_final_anonymous" class="form-control w-100"
                                         name="report_final_anonymous" cols="80"
                                         rows="15"><?php echo $this->escape($this->systemReportAnonymous); ?></textarea>
                                 </td>
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         </div>
     </div>
-    <div class="pull-right small">
+    <div class="float-end small">
         <?php echo KunenaVersion::getLongVersionHTML(); ?>
     </div>
 </div>

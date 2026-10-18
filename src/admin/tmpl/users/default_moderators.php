@@ -19,8 +19,8 @@ use Joomla\CMS\Language\Text;
 <div class="p-3">
     <div class="row">
         <p><?php echo Text::_('COM_KUNENA_BATCH_USERS_TIP'); ?></p>
-        <div class="control-group">
-            <div class="controls">
+        <div class="mb-3">
+            <div>
                 <?php echo $this->modCatList; ?>
             </div>
         </div>

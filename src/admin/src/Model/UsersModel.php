@@ -156,7 +156,7 @@ class UsersModel extends ListModel
             $options[] = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_GLOBAL_MODERATOR'));
         }
 
-        return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $options, ['action' => 'admin', 'preselect' => false], 'class="input-block-level w-100" multiple="multiple" size="5"', 'value', 'text', [], 'catidmodslist');
+        return HTMLHelper::_('kunenaforum.categorylist', 'catid[]', 0, $options, ['action' => 'admin', 'preselect' => false], 'class="form-select w-100" multiple="multiple" size="5"', 'value', 'text', [], 'catidmodslist');
     }
 
     /**

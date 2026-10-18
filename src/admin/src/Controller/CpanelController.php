@@ -105,7 +105,7 @@ class CpanelController extends FormController
             $app->enqueueMessage(
                 Text::_(
                     'Kunena Update Found.
-                <a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">
+                <a class="btn btn-sm btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">
                  Update Now</a><br/> Please backup before updating.'
                 ),
                 'Notice'
@@ -118,7 +118,7 @@ class CpanelController extends FormController
             $app->enqueueMessage(
                 Text::_(
                     'Kunena Update Found.
-                <a class="btn btn-small btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">
+                <a class="btn btn-sm btn-outline-danger" href="index.php?option=com_installer&view=update&filter_search=kunena">
                  Update Now</a><br/> Please backup before updating.'
                 ),
                 'Notice'

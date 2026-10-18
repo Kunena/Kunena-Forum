@@ -20,15 +20,15 @@ use Joomla\CMS\Language\Text;
 <div class="p-3">
     <div class="row">
         <p><?php echo Text::_('COM_KUNENA_BATCH_TIP'); ?></p>
-        <div class="control-group">
-            <div class="controls">
+        <div class="mb-3">
+            <div>
                 <label id="batch-choose-action-lbl" for="batch-category-id">
                     <?php echo Text::_('COM_KUNENA_BATCH_CATEGORY_LABEL'); ?>
                 </label>
                 <fieldset id="batch-choose-action" class="combo">
                     <?php echo $this->batchCategories; ?>
-                    <div id="batch-move-copy" class="control-group radio">
-                        <div class="controls">
+                    <div id="batch-move-copy" class="mb-3">
+                        <div>
                             <label>
                                 <input type="radio" name="move_copy" value="move" />
                             </label>

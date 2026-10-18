@@ -84,7 +84,7 @@ class RankModel extends AdminModel
             $rankList[] = HTMLHelper::_('select.option', $path, $file);
         }
 
-        return HTMLHelper::_('select.genericlist', $rankList, 'rankImage', 'class="inputbox form-control" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected->rankImage) ? $rankImages[$selected->rankImage] : '');
+        return HTMLHelper::_('select.genericlist', $rankList, 'rankImage', 'class="inputbox form-select" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected->rankImage) ? $rankImages[$selected->rankImage] : '');
     }
 
     /**

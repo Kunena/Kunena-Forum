@@ -141,7 +141,7 @@ $wa->useScript('multiselect');
                         </div>
                 </form>
             </div>
-            <div class="pull-right small">
+            <div class="float-end small">
                 <?php echo KunenaVersion::getLongVersionHTML(); ?>
             </div>
         </div>

@@ -15,17 +15,17 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 ?>
-<div class="modal hide fade" id="trashmenuconfirmationModal">
+<div class="modal fade" id="trashmenuconfirmationModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" role="button" class="close" data-bs-dismiss="modal">x</button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <h3><?php echo Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH_MODAL_TITLE'); ?></h3>
             </div>
-            <div class="modal-body span11">
+            <div class="modal-body">
                 <p><?php echo Text::_('COM_KUNENA_VIEW_TOOLS_RESTOREMENU_CONFIRMATION_TRASH_TIP'); ?></p>
-                <div class="control-group">
-                    <div class="controls">
+                <div class="mb-3">
+                    <div>
 
                     </div>
                 </div>

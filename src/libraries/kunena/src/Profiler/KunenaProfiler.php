@@ -161,7 +161,7 @@ class KunenaProfiler extends Profiler
     /**
      * Collect the database queries which were recorded by the query monitor.
      *
-     * @return  array  List of arrays: sql, ms (duration), at (ms since the start of the request), caller, memory (bytes), dup (times the same query ran).
+     * @return  array  List of arrays: sql, ms (duration), at (ms since the start of the request), caller, memory (bytes), dup (times the same statement ran), similar (times the statement ran with any values).
      *
      * @since   Kunena 7.2
      */
@@ -183,12 +183,15 @@ class KunenaProfiler extends Profiler
             $mem     = method_exists($monitor, 'getMemoryLogs') ? $monitor->getMemoryLogs() : [];
             $origin  = (float) ($_SERVER['REQUEST_TIME_FLOAT'] ?? microtime(true));
             $seen    = [];
+            $exact   = [];
 
             foreach ($logs as $i => $sql) {
                 $start = $timings[$i * 2] ?? null;
                 $stop  = $timings[$i * 2 + 1] ?? $start;
                 $norm  = trim((string) preg_replace('/\s+/', ' ', (string) preg_replace(["/'(?:[^'\\\\]|\\\\.)*'/", '/\b\d+\b/'], '?', (string) $sql)));
                 $seen[$norm] = ($seen[$norm] ?? 0) + 1;
+                $text        = trim((string) preg_replace('/\s+/', ' ', (string) $sql));
+                $exact[$text] = ($exact[$text] ?? 0) + 1;
 
                 $queries[] = [
                     'sql'    => trim((string) preg_replace('/\s+/', ' ', (string) $sql)),
@@ -197,12 +200,15 @@ class KunenaProfiler extends Profiler
                     'caller' => self::queryCaller($stacks[$i] ?? []),
                     'memory' => isset($mem[$i * 2 + 1], $mem[$i * 2]) ? (int) ($mem[$i * 2 + 1] - $mem[$i * 2]) : 0,
                     'norm'   => $norm,
+                    'text'   => $text,
                 ];
             }
 
             foreach ($queries as &$query) {
-                $query['dup'] = $seen[$query['norm']];
-                unset($query['norm']);
+                // dup: the same statement ran more than once; similar: the same statement with other values.
+                $query['dup']     = $exact[$query['text']];
+                $query['similar'] = $seen[$query['norm']];
+                unset($query['norm'], $query['text']);
             }
 
             unset($query);
@@ -298,6 +304,7 @@ class KunenaProfiler extends Profiler
         $queries  = $this->collectQueries();
         $sqlTime  = array_sum(array_column($queries, 'ms'));
         $repeated = \count(array_filter($queries, static fn ($q): bool => $q['dup'] > 1));
+        $similar  = \count(array_filter($queries, static fn ($q): bool => $q['dup'] <= 1 && $q['similar'] > 1));
 
         $assets = '';
 
@@ -349,11 +356,12 @@ class KunenaProfiler extends Profiler
 
         foreach ($queries as $i => $query) {
             $cls = $query['ms'] > 20 ? ' kp-bad' : ($query['ms'] > 5 ? ' kp-warn' : '');
-            $queryRows .= '<tr class="kp-query" data-ms="' . $query['ms'] . '" data-at="' . $query['at'] . '" data-order="' . $i . '" data-dup="' . $query['dup'] . '">'
+            $queryRows .= '<tr class="kp-query" data-ms="' . $query['ms'] . '" data-at="' . $query['at'] . '" data-order="' . $i . '" data-dup="' . $query['dup'] . '" data-similar="' . $query['similar'] . '">'
                 . '<td>' . ($i + 1) . '</td><td>' . number_format($query['at'], 1) . ' ms</td>'
                 . '<td class="' . trim($cls) . '">' . number_format($query['ms'], 2) . ' ms</td>'
                 . '<td class="kp-sql"><code>' . $esc(mb_strimwidth($query['sql'], 0, 4000, '...')) . '</code>'
-                . ($query['dup'] > 1 ? ' <span class="kp-dup" title="The same query (with other values) ran ' . $query['dup'] . ' times">x' . $query['dup'] . '</span>' : '')
+                . ($query['dup'] > 1 ? ' <span class="kp-dup" title="The same statement ran ' . $query['dup'] . ' times">x' . $query['dup'] . '</span>'
+                    : ($query['similar'] > 1 ? ' <span class="kp-sim" title="The same statement ran ' . $query['similar'] . ' times with other values: load them with one query?">~' . $query['similar'] . '</span>' : ''))
                 . ($query['caller'] !== '' ? '<div class="kp-caller">' . $esc($query['caller']) . '</div>' : '') . '</td></tr>';
         }
 
@@ -361,7 +369,8 @@ class KunenaProfiler extends Profiler
             . '<span class="kp-chip">Items <b>' . \count($items) . '</b></span>'
             . '<span class="kp-chip">Calls <b>' . $calls . '</b></span>'
             . '<span class="kp-chip">Queries <b>' . \count($queries) . '</b> &middot; ' . number_format($sqlTime, 1) . ' ms</span>'
-            . ($repeated ? '<span class="kp-chip kp-chip-warn">Repeated <b>' . $repeated . '</b></span>' : '')
+            . ($repeated ? '<span class="kp-chip kp-chip-warn" title="The same statement ran more than once">Repeated <b>' . $repeated . '</b></span>' : '')
+            . ($similar ? '<span class="kp-chip" title="The same statement ran with other values (one query for each value)">Similar <b>' . $similar . '</b></span>' : '')
             . '<span class="kp-chip">Peak memory <b>' . $esc($mem((float) memory_get_peak_usage(true))) . '</b></span>';
 
         $head = static function (string $key, string $label, bool $left = false): string {
@@ -392,7 +401,8 @@ class KunenaProfiler extends Profiler
             . '<section class="kp-pane" data-pane="queries" hidden><div class="kp-tools">'
             . '<input type="search" class="kp-qfilter" placeholder="Filter queries" aria-label="Filter queries">'
             . '<button type="button" class="kp-qtoggle" data-q="slow">Slow &gt; 5 ms</button>'
-            . '<button type="button" class="kp-qtoggle" data-q="dup">Repeated</button>'
+            . '<button type="button" class="kp-qtoggle" data-q="dup" title="The same statement ran more than once">Repeated</button>'
+            . '<button type="button" class="kp-qtoggle" data-q="similar" title="The same statement with other values">Similar</button>'
             . '<span class="kp-qcount"></span>'
             . '<button type="button" class="kp-copy-sql">Copy SQL</button></div>'
             . ($queries ? '<div class="kp-scroll"><table class="kp-queries"><thead><tr>'
@@ -470,6 +480,7 @@ margin:24px 0;border:1px solid var(--kp-line);border-radius:10px;background:var(
 .kprofiler .kp-query.kp-open .kp-sql code{display:block;-webkit-line-clamp:unset}
 .kprofiler .kp-caller{color:var(--kp-muted);font-size:12px;margin-top:2px}
 .kprofiler .kp-dup{display:inline-block;padding:0 6px;border-radius:999px;background:var(--kp-warn);color:#1b1f24;font-size:11px;font-weight:600}
+.kprofiler .kp-sim{display:inline-block;padding:0 6px;border-radius:999px;border:1px solid var(--kp-line);color:var(--kp-muted);font-size:11px}
 .kprofiler .kp-empty{padding:18px;color:var(--kp-muted)}
 .kprofiler .kp-tl{max-height:460px;overflow:auto;padding:8px 12px}
 .kprofiler .kp-tl-row{display:flex;align-items:center;gap:10px;padding:2px 0}
@@ -508,7 +519,7 @@ CSS;
     function init(el) {
         var data = JSON.parse(el.querySelector(".kp-data").textContent), st = load();
         st.tab = st.tab || "items"; st.sort = st.sort || "total"; st.dir = st.dir || -1; st.types = st.types || {func: 1, layout: 1, other: 1};
-        st.text = st.text || ""; st.qtext = st.qtext || ""; st.qsort = st.qsort || "order"; st.qdir = st.qdir || 1; st.qslow = !!st.qslow; st.qdup = !!st.qdup;
+        st.text = st.text || ""; st.qtext = st.qtext || ""; st.qsort = st.qsort || "order"; st.qdir = st.qdir || 1; st.qslow = !!st.qslow; st.qdup = !!st.qdup; st.qsim = !!st.qsim;
         if (st.open) { el.open = true; }
         function persist() { st.open = el.open; save(st); }
         el.addEventListener("toggle", persist);
@@ -578,15 +589,15 @@ CSS;
             var shown = 0, text = st.qtext.toLowerCase(), time = 0;
             qrows.forEach(function (r) {
                 qbody.appendChild(r);
-                var ok = (!text || r.textContent.toLowerCase().indexOf(text) > -1) && (!st.qslow || parseFloat(r.dataset.ms) > 5) && (!st.qdup || parseInt(r.dataset.dup, 10) > 1);
+                var ok = (!text || r.textContent.toLowerCase().indexOf(text) > -1) && (!st.qslow || parseFloat(r.dataset.ms) > 5) && (!st.qdup || parseInt(r.dataset.dup, 10) > 1) && (!st.qsim || parseInt(r.dataset.similar, 10) > 1);
                 r.hidden = !ok; if (ok) { shown++; time += parseFloat(r.dataset.ms) || 0; }
             });
             qcount.textContent = shown + " / " + qrows.length + " queries, " + time.toFixed(1) + " ms";
             qheads.forEach(function (h) { h.classList.toggle("kp-asc", h.dataset.qsort === st.qsort && st.qdir > 0); h.classList.toggle("kp-desc", h.dataset.qsort === st.qsort && st.qdir < 0); });
-            qtoggles.forEach(function (t) { t.classList.toggle("kp-on", t.dataset.q === "slow" ? st.qslow : st.qdup); });
+            qtoggles.forEach(function (t) { t.classList.toggle("kp-on", t.dataset.q === "slow" ? st.qslow : (t.dataset.q === "dup" ? st.qdup : st.qsim)); });
         }
         qheads.forEach(function (h) { h.addEventListener("click", function () { var k = h.dataset.qsort; if (st.qsort === k) { st.qdir = -st.qdir; } else { st.qsort = k; st.qdir = k === "ms" ? -1 : 1; } qapply(); persist(); }); });
-        qtoggles.forEach(function (t) { t.addEventListener("click", function () { if (t.dataset.q === "slow") { st.qslow = !st.qslow; } else { st.qdup = !st.qdup; } qapply(); persist(); }); });
+        qtoggles.forEach(function (t) { t.addEventListener("click", function () { if (t.dataset.q === "slow") { st.qslow = !st.qslow; } else if (t.dataset.q === "dup") { st.qdup = !st.qdup; } else { st.qsim = !st.qsim; } qapply(); persist(); }); });
         qfilter.addEventListener("input", function () { st.qtext = qfilter.value; qapply(); persist(); });
         if (qbody) { qbody.addEventListener("click", function (e) { var c = e.target.closest("code"); if (c) { c.closest("tr").classList.toggle("kp-open"); } }); }
         el.querySelector(".kp-copy-sql").addEventListener("click", function () {

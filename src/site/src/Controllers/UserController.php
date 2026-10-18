@@ -145,7 +145,7 @@ class UserController extends KunenaController
         }
 
         if ($limitstart) {
-            $uri->setVar('limitstart', $search);
+            $uri->setVar('limitstart', $limitstart);
         }
 
         $this->setRedirect(KunenaRoute::_($uri, false));

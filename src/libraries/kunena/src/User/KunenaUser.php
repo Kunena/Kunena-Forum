@@ -28,7 +28,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
-use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -945,11 +944,7 @@ class KunenaUser
             $timezone = Factory::getApplication()->get('offset', null);
 
             if ($this->userid) {
-                // The logged in user is already loaded, no need to query the same user again.
-                $identity = Factory::getApplication()->getIdentity();
-                $user     = $identity && $identity->id == $this->userid
-                    ? $identity
-                    : Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->userid);
+                $user     = KunenaUserHelper::getJoomlaUser((int) $this->userid);
                 $timezone = $user->getParam('timezone', $timezone);
             }
 

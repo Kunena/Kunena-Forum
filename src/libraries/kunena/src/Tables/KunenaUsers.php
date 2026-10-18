@@ -18,10 +18,10 @@ namespace Kunena\Forum\Libraries\Tables;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use UnexpectedValueException;
 
 /**
@@ -426,10 +426,7 @@ class KunenaUsers extends KunenaTable
      */
     public function check(): bool
     {
-        $identity = Factory::getApplication()->getIdentity();
-        $user     = $identity && $identity->id == $this->userid
-            ? $identity
-            : Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($this->userid);
+        $user = KunenaUserHelper::getJoomlaUser((int) $this->userid);
 
         if (!$this->userid || !$user) {
             // FIXME: find a way to throw exception because it prevent guest to post

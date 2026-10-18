@@ -22,6 +22,7 @@ use Exception;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 use Joomla\CMS\User\UserHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Http\Http;
@@ -602,6 +603,30 @@ abstract class KunenaUserHelper
         }
 
         return $user->status;
+    }
+
+    /**
+     * Get the Joomla user, loaded only once per request. The logged in user is reused as it is.
+     *
+     * Only for reading: a user which is going to be changed should be loaded with the UserFactory.
+     *
+     * @param   int  $id  Joomla user id.
+     *
+     * @return  User
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getJoomlaUser(int $id): User
+    {
+        static $users = [];
+
+        $identity = Factory::getApplication()->getIdentity();
+
+        if ($identity && $id && $identity->id == $id) {
+            return $identity;
+        }
+
+        return $users[$id] ??= Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($id);
     }
 
     /**

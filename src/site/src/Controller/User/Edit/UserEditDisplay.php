@@ -19,7 +19,6 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\User\User;
-use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -76,10 +75,7 @@ class UserEditDisplay extends KunenaControllerDisplay
 
         if ($userid > 0) {
             // The layouts need the Joomla user (get('username'), get('email'), ...), not the KunenaUser.
-            // The tabs run this controller once each, load the Joomla user only once per request.
-            static $users = [];
-
-            $this->user = $users[$userid] ??= Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
+            $this->user = KunenaUserHelper::getJoomlaUser($userid);
         } else {
             $this->user = $this->app->getIdentity();
         }

@@ -20,7 +20,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
-use Joomla\CMS\User\UserFactoryInterface;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -119,11 +118,7 @@ class UserItemDisplay extends KunenaControllerDisplay
 
         $this->me      = KunenaUserHelper::getMyself();
         // Need to pass directly the $this->input->getInt('userid',0) to the loadUserById() to set 0 when userid is not set else it fails
-        // The tabs run this controller once each, load the Joomla user only once per request.
-        static $users = [];
-
-        $joomlaId   = $this->input->getInt('userid', 0);
-        $this->user = $users[$joomlaId] ??= Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($joomlaId);
+        $this->user    = KunenaUserHelper::getJoomlaUser($this->input->getInt('userid', 0));
         $this->profile = KunenaUserHelper::get($userid);
         $this->profile->tryAuthorise('read');
         $this->candisplaymail = $this->me->canDisplayEmail($this->profile);

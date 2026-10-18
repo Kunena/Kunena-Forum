@@ -119,16 +119,16 @@ $list = [];
                 <div class="card-header"><?php echo Text::_('COM_KUNENA_ATTACHMENTS'); ?></div>
             <?php endif; ?>
             <div class="card-body kattach">
-                <ul class="thumbnails list-unstyled row g-3 mb-0">
+                <ul class="thumbnails list-unstyled d-flex flex-wrap gap-3 mb-0">
 
                     <?php foreach ($attachments as $attachment) :
                         if (!$attachment->protected) : ?>
                             <?php if ($attachment->isAudio()) :
-                                echo '<li class="col-12">' . $attachment->getLayout()->render('audio') . '</li>'; ?>
+                                echo '<li class="w-100">' . $attachment->getLayout()->render('audio') . '</li>'; ?>
                             <?php elseif ($attachment->isVideo()) :
-                                echo '<li class="col-12">' . $attachment->getLayout()->render('video') . '</li>'; ?>
+                                echo '<li class="w-100">' . $attachment->getLayout()->render('video') . '</li>'; ?>
                             <?php elseif (!$attachment->inline) : ?>
-                                <li class="col-md-3 text-center">
+                                <li class="text-center">
                                     <div class="thumbnail">
                                         <?php echo $attachment->getLayout()->render('thumbnail'); ?>
                                         <?php echo $attachment->getLayout()->render('textlink'); ?>
@@ -137,11 +137,11 @@ $list = [];
                             <?php endif; ?>
                         <?php elseif ($attachment->isAuthorised('private')): ?>
                             <?php if ($attachment->isAudio()) :
-                                echo '<li class="col-12">' . $attachment->getLayout()->render('audio') . '</li>'; ?>
+                                echo '<li class="w-100">' . $attachment->getLayout()->render('audio') . '</li>'; ?>
                             <?php elseif ($attachment->isVideo()) :
-                                echo '<li class="col-12">' . $attachment->getLayout()->render('video') . '</li>'; ?>
+                                echo '<li class="w-100">' . $attachment->getLayout()->render('video') . '</li>'; ?>
                             <?php elseif (!$attachment->inline) : ?>
-                                <li class="col-md-3 text-center">
+                                <li class="text-center">
                                     <div class="thumbnail">
                                         <?php echo $attachment->getLayout()->render('thumbnail'); ?>
                                         <?php echo $attachment->getLayout()->render('textlink'); ?>
@@ -149,7 +149,7 @@ $list = [];
                                 </li>
                             <?php endif; ?>
                         <?php elseif ($attachment->protected < 32 && !$attachment->inline) : ?>
-                            <li class="col-md-3 text-center">
+                            <li class="text-center">
                                 <div class="thumbnail">
                                     <?php echo $attachment->getLayout()->render('thumbnail'); ?>
                                     <?php echo $attachment->getLayout()->render('textlink'); ?>

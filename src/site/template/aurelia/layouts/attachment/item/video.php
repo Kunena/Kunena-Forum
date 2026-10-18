@@ -24,7 +24,7 @@ if (!$attachment->isVideo()) {
 ?>
 <div class="clearfix"></div>
 <?php if (!$attachment->inline) { ?>
-<video class="w-100" style="max-width: 20rem" src="<?php echo $location; ?>" controls>
+<video class="mw-100" style="width: 20rem" src="<?php echo $location; ?>" controls>
     Your browser does not support the <code>video</code> element.
 </video>
 <p><?php echo $attachment->getShortName(); ?> <a href="<?php echo $location; ?>" data-bs-toggle="tooltip" title="Download" download> <i

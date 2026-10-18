@@ -694,6 +694,7 @@ abstract class KunenaCategoryHelper
      * @param   int    $levels    levels
      * @param   array  $params    params
      * @param   bool   $optimize  optimize
+     * @param   array  $authoriseCache  authorise cache, filled by reference
      *
      * @return array
      *
@@ -928,6 +929,7 @@ abstract class KunenaCategoryHelper
      * Recount categories in batches to avoid SQL errors with large numbers of categories
      *
      * @param   string|array  $categories  Categories to recount; empty recounts all categories.
+     * @param   integer       $batchSize   Number of categories to recount per query.
      *
      * @return  boolean|integer
      *

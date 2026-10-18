@@ -52,7 +52,10 @@ class TrashsController extends AdminController
     /**
      * Construct
      *
-     * @param   array  $config  config
+     * @param   array                     $config   config
+     * @param   MVCFactoryInterface|null  $factory  The factory.
+     * @param   null                      $app      The CMSApplication for the dispatcher
+     * @param   null                      $input    Input
      *
      * @throws  Exception
      * @since   Kunena 2.0

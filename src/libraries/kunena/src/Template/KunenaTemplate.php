@@ -1455,7 +1455,9 @@ HTML;
     /**
      * Return the icon attributes from the XML file given
      *
-     * @param   mixed  $src  src
+     * @param   mixed   $src    src
+     * @param   int     $id     Icon id
+     * @param   string  $style  Icon style, e.g. src
      *
      * @return  stdClass
      *

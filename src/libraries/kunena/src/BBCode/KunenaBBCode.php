@@ -1241,6 +1241,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
     /**
      * Method to render the instagram content
      *
+     * @param   object  $bbcode   The bbcode tag being rendered
      * @param   string  $content
      *
      * @return string

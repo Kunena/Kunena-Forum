@@ -99,7 +99,8 @@ class CategoriesModel extends KunenaModel
     /**
      * Constructor.
      *
-     * @param   array  $config  An optional associative array of configuration settings.
+     * @param   array                     $config   An optional associative array of configuration settings.
+     * @param   MVCFactoryInterface|null  $factory  The factory.
      *
      * @throws  Exception
      * @since   Kunena 6.3.0-BETA3

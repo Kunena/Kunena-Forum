@@ -768,7 +768,14 @@ class TopicController extends KunenaController
 
         // Redirect to full reply instead.
         if ($this->app->getInput()->getString('fullreply')) {
-            $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=reply&catid={$fields->catid}&id={$parent->getTopic()->id}&mesid={$parent->id}", false));
+            if (isset($parent)) {
+                $fullUrl = "index.php?option=com_kunena&view=topic&layout=reply&catid={$this->catid}&id={$parent->getTopic()->id}&mesid={$parent->id}";
+            } else {
+                // There is no topic to reply to: open the form for a new topic.
+                $fullUrl = "index.php?option=com_kunena&view=topic&layout=create&catid={$this->catid}";
+            }
+
+            $this->setRedirect(KunenaRoute::_($fullUrl, false));
 
             return;
         }

@@ -1688,8 +1688,9 @@ HTML;
      */
     public function getCategoryIconPath($filename = '', $url = true, $categoryIconset = 'default'): string
     {
+        $set = '';
+
         if (!$this->isHmvc()) {
-            $set             = '';
             $categoryIconset = 'default';
         }
 

@@ -268,13 +268,13 @@ class TableKunenaMessages extends KunenaTable
         }
 
         $this->catid   = $category->id;
-        $this->subject = trim($this->subject);
+        $this->subject = trim((string) $this->subject);
 
         if (!$this->subject) {
             throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT'));
         }
 
-        $this->message = trim($this->message);
+        $this->message = trim((string) $this->message);
 
         if (!$this->message) {
             throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE'));
@@ -285,7 +285,7 @@ class TableKunenaMessages extends KunenaTable
         }
 
         if (isset($this->modified_reason)) {
-            $this->modified_reason = trim($this->modified_reason);
+            $this->modified_reason = trim((string) $this->modified_reason);
         }
 
         return true;

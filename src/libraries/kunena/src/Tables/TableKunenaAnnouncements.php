@@ -138,14 +138,14 @@ class TableKunenaAnnouncements extends KunenaTable
             $this->publish_down = '';
         }
 
-        $this->title = trim($this->title);
+        $this->title = trim((string) $this->title);
 
         if (!$this->title) {
             throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_TITLE'));
         }
 
-        $this->sdescription = trim($this->sdescription);
-        $this->description  = trim($this->description);
+        $this->sdescription = trim((string) $this->sdescription);
+        $this->description  = trim((string) $this->description);
 
         if (!$this->sdescription) {
             throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_DESCRIPTION'));

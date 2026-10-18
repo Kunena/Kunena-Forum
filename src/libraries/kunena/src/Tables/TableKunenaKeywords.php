@@ -67,7 +67,7 @@ class TableKunenaKeywords extends KunenaTable
      */
     public function check(): bool
     {
-        $this->name = trim($this->name);
+        $this->name = trim((string) $this->name);
 
         if (!$this->name) {
             throw new UnexpectedValueException();

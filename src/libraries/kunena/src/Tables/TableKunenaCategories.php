@@ -368,7 +368,7 @@ class TableKunenaCategories extends KunenaTable
             }
         }
 
-        $this->name = trim($this->name);
+        $this->name = trim((string) $this->name);
 
         if (!$this->name) {
             throw new UnexpectedValueException(Text::_('COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME'));

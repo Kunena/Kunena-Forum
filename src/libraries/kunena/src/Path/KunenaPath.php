@@ -106,7 +106,7 @@ class KunenaPath extends Path
     {
         if (!self::$owner) {
             $dir = Factory::getApplication()->get('tmp_path');
-            $tmp = 'jj' . md5(mt_rand());
+            $tmp = 'jj' . bin2hex(random_bytes(16));
 
             $test = $dir . '/' . $tmp;
 

@@ -330,7 +330,7 @@ abstract class KunenaAttachmentHelper
         if ($protected) {
             // Ignore proposed filename and return totally random and unique name without file extension.
             do {
-                $name = md5(rand());
+                $name = bin2hex(random_bytes(16));
             } while (file_exists(JPATH_ROOT . "/$folder/$name"));
 
             return $name;
@@ -341,7 +341,7 @@ abstract class KunenaAttachmentHelper
         $extension = trim($extension, '.');
 
         if (empty($basename)) {
-            $basename = 'file_' . substr(md5(rand()), 2, 7);
+            $basename = 'file_' . bin2hex(random_bytes(4));
         }
 
         $newName = "{$basename}.{$extension}";

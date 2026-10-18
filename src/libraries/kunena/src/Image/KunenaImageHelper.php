@@ -88,7 +88,7 @@ class KunenaImageHelper
                     $image = $image->resize($maxWidth, $maxHeight, false, $scale);
                 }
 
-                $temp = KunenaPath::tmpdir() . '/kunena_' . md5(rand());
+                $temp = KunenaPath::tmpdir() . '/kunena_' . bin2hex(random_bytes(16));
                 $image->toFile($temp, $info->type, $options);
                 unset($image);
             } catch (Exception $e) {

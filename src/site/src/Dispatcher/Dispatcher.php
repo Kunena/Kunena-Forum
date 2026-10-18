@@ -65,6 +65,7 @@ class Dispatcher extends ComponentDispatcher
         $kunena_profiler = KunenaProfiler::instance('Kunena');
         $kunena_profiler->start('Total Time');
         KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
+        KUNENA_PROFILER ? $kunena_profiler->watchQueries() : null;
 
         $this->checkAccess();
 

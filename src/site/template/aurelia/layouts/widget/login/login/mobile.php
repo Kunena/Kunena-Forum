@@ -22,7 +22,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 ?>
     <div class="btn-group">
-        <button class="btn btn-light dropdown-toggle" id="klogin-mobile" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+        <button class="btn btn-light dropdown-toggle" id="klogin-mobile" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" aria-label="<?php echo Text::_('COM_KUNENA_LOGIN_NOTIFICATION'); ?>">
             <?php echo KunenaIcons::user(); ?>
         </button>
         <div class="dropdown-menu dropdown-menu-end" id="kmobile-userdropdown">

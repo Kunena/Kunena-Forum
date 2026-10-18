@@ -54,7 +54,7 @@ $this->addScript('assets/js/search.js');
         <tr>
             <th class="col-md-1 center d-none d-md-table-cell">
                 <a id="forumtop"> </a>
-                <a href="#forumbottom" rel="nofollow">
+                <a href="#forumbottom" rel="nofollow" aria-label="<?php echo Text::_('COM_KUNENA_GEN_GOTOBOTTOM'); ?>">
                     <?php echo KunenaIcons::arrowdown(); ?>
                 </a>
             </th>
@@ -323,7 +323,7 @@ $this->addScript('assets/js/search.js');
         <tr>
             <td class="col-md-1 center d-none d-md-table-cell">
                 <a id="forumbottom"> </a>
-                <a href="#forumtop" rel="nofollow">
+                <a href="#forumtop" rel="nofollow" aria-label="<?php echo Text::_('COM_KUNENA_GEN_GOTOTOP'); ?>">
                     <?php echo KunenaIcons::arrowup(); ?>
                 </a>
             </td>

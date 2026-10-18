@@ -72,7 +72,7 @@ $this->addStyleSheet('rating.css');
                     <tr>
                         <th scope="col" class="center d-none d-md-table-cell">
                             <a id="forumtop"> </a>
-                            <a href="#forumbottom" rel="nofollow">
+                            <a href="#forumbottom" rel="nofollow" aria-label="<?php echo Text::_('COM_KUNENA_GEN_GOTOBOTTOM'); ?>">
                                 <?php echo KunenaIcons::arrowdown(); ?>
                             </a>
                         </th>

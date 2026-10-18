@@ -550,11 +550,30 @@ jQuery(document).ready(function ($) {
 				return '[video=' + $($element).data('kunena-vt') + ']' + $($element).data('kunena-vsrc') + '[/video]';
 			},
 			html: function (token, attrs, content) {
-				var params = kunenaCmd.video[Object.keys(kunenaCmd.video).find(key => key.toLowerCase() === attrs.defaultattr)];
+				var provider = Object.keys(kunenaCmd.video).find(key => key.toLowerCase() === attrs.defaultattr);
+				var params = provider ? kunenaCmd.video[provider] : undefined;
 				var url;
-	
+
+				// Build the embed url from the id which the provider pattern finds in the given address.
+				if (params) {
+					var found = params.match ? content.match(params.match) : null;
+
+					if (found) {
+						// The id is the last capture group which holds a value (some patterns end with an optional separator group).
+						for (var g = found.length - 1; g > 0; g--) {
+							if (found[g] && found[g] !== '/') {
+								url = params.url + encodeURIComponent(found[g]);
+								break;
+							}
+						}
+					}
+				}
+
 				if (url) {
-					return params['html'].replace('{url}', url).replace('{src}', content).replace('{type}', attrs.defaultattr);
+					return params['html']
+						.replace('{url}', sceditor.escapeEntities(url, true))
+						.replace('{src}', sceditor.escapeEntities(content, true))
+						.replace('{type}', sceditor.escapeEntities(attrs.defaultattr, true));
 				}
 				return sceditor.escapeEntities(token.val + content + (token.closing ? token.closing.val : ''));
 			}

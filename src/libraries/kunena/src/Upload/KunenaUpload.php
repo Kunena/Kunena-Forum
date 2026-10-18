@@ -432,14 +432,30 @@ class KunenaUpload
             return false;
         }
 
-        return (int) max(
-        	0,
-        	min(
-            	$this->toBytes(\ini_get('upload_max_filesize')),
-            	$this->toBytes(\ini_get('post_max_size')),
-            	$this->toBytes(\ini_get('memory_limit'))
-            )
-        );
+        return $this->getPhpUploadLimit();
+    }
+
+    /**
+     * Get the largest file which PHP accepts: the smallest of the upload, post and memory limits.
+     * PHP treats 0 (post_max_size) and -1 (memory_limit) as "no limit".
+     *
+     * @return  integer  Size in bytes, at least 1.
+     *
+     * @since   Kunena 7.2
+     */
+    protected function getPhpUploadLimit(): int
+    {
+        $limits = [];
+
+        foreach (['upload_max_filesize', 'post_max_size', 'memory_limit'] as $name) {
+            $bytes = self::toBytes((string) \ini_get($name));
+
+            if ($bytes > 0) {
+                $limits[] = $bytes;
+            }
+        }
+
+        return $limits ? (int) min($limits) : PHP_INT_MAX;
     }
 
     /**
@@ -495,14 +511,7 @@ class KunenaUpload
             return false;
         }
 
-        return (int) max(
-        	0,
-        	min(
-            	$this->toBytes(\ini_get('upload_max_filesize')),
-            	$this->toBytes(\ini_get('post_max_size')),
-            	$this->toBytes(\ini_get('memory_limit'))
-            )
-        );
+        return $this->getPhpUploadLimit();
     }
 
     /**
@@ -523,14 +532,7 @@ class KunenaUpload
             return false;
         }
 
-        return (int) max(
-        	0,
-        	min(
-            	$this->toBytes(\ini_get('upload_max_filesize')),
-            	$this->toBytes(\ini_get('post_max_size')),
-            	$this->toBytes(\ini_get('memory_limit'))
-            )
-        );
+        return $this->getPhpUploadLimit();
     }
 
     /**

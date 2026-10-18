@@ -124,30 +124,30 @@ $userId    = $user->id;
                             <?php foreach ($this->templatesxml as $row) : ?>
                                 <tr>
                                     <td>
-                                        <?php echo $row->price; ?>
+                                        <?php echo $this->escape($row->price); ?>
                                     </td>
                                     <td>
                                         <?php echo $row->type == 'paid-template' ? Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_PAID') : Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_FREE'); ?>
                                     </td>
                                     <td>
-                                        <?php echo $row->version; ?>
+                                        <?php echo $this->escape($row->version); ?>
                                     </td>
                                     <th>
                                         <span class="editlinktip hasTip" title="<?php echo $this->escape($row->name) . $this->escape('::<img loading=lazy border="1" src="' . $row->thumbnail . '" name="imagelib" alt="' . Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW') . '" width="200" height="145" />'); ?>">
-                                            <a href="<?php echo $this->escape($safeUrl($row->detailsurl)); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->name); ?></a>
+                                            <a href="<?php echo $this->escape($row->detailsurl); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->name); ?></a>
                                         </span>
                                     </th>
                                     <td>
-                                        <?php echo $row->created; ?>
+                                        <?php echo $this->escape($row->created); ?>
                                     </td>
                                     <td>
                                         <a href="mailto:<?php echo $row->authoremail; ?>"><?php echo $row->author; ?></a>
                                     </td>
                                     <td>
-                                        <a href="<?php echo $this->escape($safeUrl($row->detailsurl)); ?>" target="_blank" rel="noopener noreferrer"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
+                                        <a href="<?php echo $this->escape($row->detailsurl); ?>" target="_blank" rel="noopener noreferrer"><?php echo Text::_('COM_KUNENA_A_TEMPLATE_MANAGER_DOWNLOAD'); ?></a>
                                     </td>
                                     <td>
-                                        <a href="<?php echo $this->escape($safeUrl($row->authorurl)); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->authorurl); ?></a>
+                                        <a href="<?php echo $this->escape($row->authorurl); ?>" target="_blank" rel="noopener noreferrer"><?php echo $this->escape($row->authorurl); ?></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

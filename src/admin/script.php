@@ -109,7 +109,8 @@ class Com_KunenaInstallerScript extends InstallerScript
 
                     $config = $db->loadResult() ?? '{}';
 
-                    $processConfig    = json_decode($config, true);
+                    // A missing or damaged value must not stop the update (json_decode() gives null then).
+                    $processConfig    = json_decode($config, true) ?: [];
 
                     // Not all old config settings where converted to camel case, lets do that here
                     $keyConversions = [
@@ -160,7 +161,7 @@ class Com_KunenaInstallerScript extends InstallerScript
                         // We have not been able to convert the configuration to component parameters
                         Factory::getApplication()->enqueueMessage('We are sorry to inform you that we were not able to convert you Kunena configuration settings to the new version. You need to do this manually after installation completes.', 'error');
                     }
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     // Do nothing
                 }
             }

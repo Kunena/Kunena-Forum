@@ -2476,6 +2476,9 @@ class TopicController extends KunenaController
             $target->publish(KunenaForum::PUBLISHED);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($target->getUrl($this->return, false));
+
+            return;
         }
 
         if ($this->config->logModeration) {
@@ -2593,6 +2596,14 @@ class TopicController extends KunenaController
             $targetobject = $topic->move($target, $ids, $shadow, $subject, $changesubject, $topic_emoticon, $keep_poll);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect($redirect);
+
+            return;
+        }
+
+        // Show the moved topic (or the topic which received the posts) instead of the place where they came from.
+        if ($targetobject) {
+            $redirect = $targetobject->getUrl($this->return, false, 'last');
         }
 
         if ($this->config->logModeration) {

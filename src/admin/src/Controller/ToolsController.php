@@ -1089,112 +1089,112 @@ class ToolsController extends FormController
                             "fa": "fa-brands fa-flickr"
                             },
                             "instagram": {
-                            "value": "' . $value->bebo . '",
+                            "value": "' . $value->instagram . '",
                             "url": "https://www.instagram.com/##VALUE##/",
                             "title": "COM_KUNENA_MYPROFILE_INSTAGRAM",
                             "nourl": 0,
                             "fa": "fa-brands fa-instagram"
                             },
                             "qqsocial": {
-                            "value": "' . $value->instagram . '",
+                            "value": "' . $value->qqsocial . '",
                             "url": "##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_QQSOCIAL",
                             "nourl": 1,
                             "fa": "fa-solid fa-square-share-nodes"
                             },
                             "qzone": {
-                            "value": "' . $value->qqsocial . '",
+                            "value": "' . $value->qzone . '",
                             "url": "##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_QZONE",
                             "nourl": 1,
                             "fa": "fa-solid fa-square-share-nodes"
                             },
                             "weibo": {
-                            "value": "' . $value->qzone . '",
+                            "value": "' . $value->weibo . '",
                             "url": "##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_WEIBO",
                             "nourl": 1,
                             "fa": "fa-brands fa-weibo"
                             },
                             "wechat": {
-                            "value": "' . $value->weibo . '",
+                            "value": "' . $value->wechat . '",
                             "url": "##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_WECHAT",
                             "nourl": 1,
                             "fa": "fa-solid fa-square-share-nodes"
                             },
                             "vk": {
-                            "value": "' . $value->wechat . '",
+                            "value": "' . $value->vk . '",
                             "url": "https://vk.com/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_VK",
                             "nourl": 0,
                             "fa": "fa-brands fa-vk"
                             },
                             "telegram": {
-                            "value": "' . $value->vk . '",
+                            "value": "' . $value->telegram . '",
                             "url": "https://t.me/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_TELEGRAM",
                             "nourl": 0,
                             "fa": "fa-brands fa-telegram"
                             },
                             "apple": {
-                            "value": "' . $value->telegram . '",
+                            "value": "' . $value->apple . '",
                             "url": "##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_APPLE",
                             "nourl": 1,
                             "fa": "fa-brands fa-apple"
                             },
                             "vimeo": {
-                            "value": "' . $value->apple . '",
+                            "value": "' . $value->vimeo . '",
                             "url": "https://vimeo.com/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_VIMEO",
                             "nourl": 0,
                             "fa": "fa-brands fa-vimeo"
                             },
                             "whatsapp": {
-                            "value": "' . $value->vimeo . '",
+                            "value": "' . $value->whatsapp . '",
                             "url": "https://wa.me/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_WHATSAPP",
                             "nourl": 0,
                             "fa": "fa-brands fa-whatsapp"
                             },
                             "youtube": {
-                            "value": "' . $value->whatsapp . '",
+                            "value": "' . $value->youtube . '",
                             "url": "https://www.youtube.com/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_YOUTUBE",
                             "nourl": 0,
                             "fa": "fa-brands fa-youtube"
                             },
                             "ok": {
-                            "value": "' . $value->youtube . '",
+                            "value": "' . $value->ok . '",
                             "url": "https://ok.ru/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_OK",
                             "nourl": 0,
                             "fa": "fa-solid fa-square-share-nodes"
                             },
                             "pinterest": {
-                            "value": "' . $value->ok . '",
+                            "value": "' . $value->pinterest . '",
                             "url": "https://pinterest.com/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_PINTEREST",
                             "nourl": 0,
                             "fa": "fa-brands fa-pinterest"
                             },
                             "reddit": {
-                            "value": "' . $value->pinterest . '",
+                            "value": "' . $value->reddit . '",
                             "url": "https://www.reddit.com/user/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_REDDIT",
                             "nourl": 0,
                             "fa": "fa-brands fa-reddit"
                             },
                             "bluesky_app": {
-                            "value": "' . $value->reddit . '",
+                            "value": "' . $bluesky_app . '",
                             "url": "https://bsky.app/##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_BLUESKY_APP",
                             "nourl": 0,
                             "fa": "fa-brands fa-bluesky"
                             },
                             "threads": {
-                            "value": "' . $bluesky_app . '",
+                            "value": "",
                             "url": "https://www.threads.net/@##VALUE##",
                             "title": "COM_KUNENA_MYPROFILE_THREADS_APP",
                             "nourl": 0,

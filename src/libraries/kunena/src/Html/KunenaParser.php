@@ -16,10 +16,12 @@ namespace Kunena\Forum\Libraries\Html;
 \defined('_JEXEC') or die();
 
 use Exception;
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Event\Dispatcher;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\BBCode\KunenaBBCode;
@@ -175,10 +177,57 @@ abstract class KunenaParser
         $event_target = (array) $params->get('jcontentevent_target', []);
 
         if ($content && $events && \in_array($target, $event_target)) {
-            $content = HTMLHelper::_('content.prepare', $content, $params, 'kunena.contentprepare.' . $target);
+            // The Joomla content plugins which were chosen: an empty list means all the enabled content plugins.
+            $chosen = array_values(array_filter((array) $params->get('jcontentevent_plugins', [])));
+
+            if ($chosen) {
+                $content = self::prepareContentWithPlugins($content, $params, 'kunena.contentprepare.' . $target, $chosen);
+            } else {
+                $content = HTMLHelper::_('content.prepare', $content, $params, 'kunena.contentprepare.' . $target);
+            }
         }
 
         return $content;
+    }
+
+    /**
+     * Run only the chosen Joomla content plugins on the text. They are loaded in a dispatcher of their own (once for
+     * the request), so the other content plugins which may be loaded in the one of the application do not run.
+     *
+     * @param   string    $text     The text.
+     * @param   Registry  $params   The parameters for the plugins.
+     * @param   string    $context  The context of the event.
+     * @param   string[]  $plugins  The names (elements) of the content plugins to run.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function prepareContentWithPlugins(string $text, Registry $params, string $context, array $plugins): string
+    {
+        static $dispatchers = [];
+
+        $key = implode(',', $plugins);
+
+        if (!isset($dispatchers[$key])) {
+            $dispatchers[$key] = new Dispatcher();
+
+            foreach ($plugins as $name) {
+                PluginHelper::importPlugin('content', $name, true, $dispatchers[$key]);
+            }
+        }
+
+        $article       = new stdClass();
+        $article->text = $text;
+
+        $dispatchers[$key]->dispatch('onContentPrepare', new ContentPrepareEvent('onContentPrepare', [
+            'context' => $context,
+            'subject' => $article,
+            'params'  => $params,
+            'page'    => 0,
+        ]));
+
+        return (string) $article->text;
     }
 
     /**

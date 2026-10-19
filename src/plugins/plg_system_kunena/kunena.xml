@@ -55,6 +55,16 @@
                     <option value="message">messages</option>
                 </field>
                 <field
+                    name="jcontentevent_plugins"
+                    type="plugins"
+                    folder="content"
+                    multiple="true"
+                    default=""
+                    label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_SELECTED"
+                    description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_SELECTED_DESC"
+                    showon="jcontentevents:1"
+                    class="inputbox" />
+                <field
                     name="ban_check_last"
                     type="hidden"
                     default="0" />

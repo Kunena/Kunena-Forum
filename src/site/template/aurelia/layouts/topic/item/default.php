@@ -99,6 +99,18 @@ if ($this->topic->locked) {
     }
 
     $count = 1;
+
+    // The template option "Show the first post on every page": the first message of the topic on top of the pages which
+    // do not have it themselves.
+    if ($this->stickyFirst) {
+        echo '<div class="kunena-sticky-first border border-2 border-primary-subtle rounded p-2 mb-4">';
+        echo '<div class="small text-muted mb-2">' . Text::_('COM_KUNENA_STICKY_FIRST_POST') . '</div>';
+        echo $this->subRequest('Topic/Item/Message')
+            ->set('mesid', $this->stickyFirst->id)
+            ->set('location', $this->stickyFirst->id);
+        echo '</div>';
+    }
+
     if ($this->messages) {
         echo '<div class="topic-item-messages">';
 

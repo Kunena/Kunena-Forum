@@ -162,6 +162,11 @@
             <option value="asc">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_ASC</option>
             <option value="desc">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_DESC</option>
         </field>
+        <field name="stickyFirstPost" type="list" default="0" label="COM_KUNENA_TEMPLATE_STICKY_FIRST_POST"
+               description="COM_KUNENA_TEMPLATE_STICKY_FIRST_POST_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_COLORS">

@@ -209,6 +209,8 @@ class KunenaLayout extends KunenaBase
 
     public $isAdmin;
 
+    public $stickyFirst;
+
     public $filters;
 
     public $filterBar;

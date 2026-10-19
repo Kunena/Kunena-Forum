@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageFinder;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
@@ -100,6 +101,15 @@ class TopicItemDisplay extends KunenaControllerDisplay
     public $message;
 
     public $messages;
+
+    /**
+     * The first message of the topic when it is shown on top of a page which does not have it (the template option
+     * "Show the first post on every page"), else null.
+     *
+     * @var     KunenaMessage|null
+     * @since   Kunena 7.2
+     */
+    public $stickyFirst;
 
     public $threaded;
 
@@ -440,6 +450,42 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
         // Prefetch attachments.
         KunenaAttachmentHelper::getByMessage($this->messages);
+
+        $this->prepareStickyFirst();
+    }
+
+    /**
+     * Prepare the first message of the topic to be shown on top of the pages which do not have it themselves.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    protected function prepareStickyFirst(): void
+    {
+        $this->stickyFirst = null;
+        $firstId           = (int) $this->topic->first_post_id;
+
+        if (!$firstId || !KunenaFactory::getTemplate()->params->get('stickyFirstPost', 0) || isset($this->messages[$firstId])) {
+            return;
+        }
+
+        $first = KunenaMessageHelper::get($firstId);
+
+        if (!$first->exists() || !$first->isAuthorised('read')) {
+            return;
+        }
+
+        // What a message of the page gets in prepareMessages().
+        $first->replynum = 1;
+        $thankyous       = KunenaMessageThankyouHelper::getByMessage([$firstId => $first]);
+        $first->thankyou = isset($thankyous[$firstId]) ? (array) $thankyous[$firstId]->getList() : [];
+
+        KunenaUserHelper::loadUsers([(int) $first->userid, (int) $first->modified_by]);
+        KunenaAttachmentHelper::getByMessage([$firstId => $first]);
+
+        $this->stickyFirst = $first;
     }
 
     /**

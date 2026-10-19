@@ -1461,6 +1461,26 @@
             name="bbcode_settings"
             label="COM_KUNENA_A_BBCODE_SETTINGS">
             <field
+                name="enableMarkdown"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_ENABLE_MARKDOWN"
+                description="COM_KUNENA_A_ENABLE_MARKDOWN_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="enableHtml"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_ENABLE_HTML"
+                description="COM_KUNENA_A_ENABLE_HTML_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
                 name="trimLongUrls"
                 type="radio"
                 default="1"

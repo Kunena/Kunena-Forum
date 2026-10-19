@@ -223,6 +223,8 @@ use Joomla\Database\DatabaseInterface;
  * @property string $topicLayout                           Default topic layout
  * @property string $topicListId                           Topiclist ID
  * @property string $topicSubscriptions                    Topic Subscriptions
+ * @property string $enableMarkdown                       Enable Markdown in messages
+ * @property string $enableHtml                           Enable safe HTML in messages
  * @property string $trimLongUrls                          Trim Long URLs
  * @property string $trimLongUrlsBack                      Back Portion of Trimmed URLs
  * @property string $trimLongUrlsFront                     Front Portion of Trimmed URLs

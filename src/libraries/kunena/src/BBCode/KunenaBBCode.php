@@ -176,6 +176,27 @@ class KunenaBBCode extends BBCode
     }
 
     /**
+     * Parse a message. When Markdown or HTML is enabled in the configuration, the message is converted to BBCode first.
+     *
+     * @param   string  $string  The message.
+     *
+     * @return  string  The message as HTML.
+     *
+     * @since   Kunena 7.2
+     */
+    public function parse($string)
+    {
+        $markdown = isset($this->config->enableMarkdown) && $this->config->enableMarkdown;
+        $html     = isset($this->config->enableHtml) && $this->config->enableHtml;
+
+        if ($markdown || $html) {
+            $string = KunenaMarkup::toBBCode((string) $string, (bool) $markdown, (bool) $html);
+        }
+
+        return parent::parse($string);
+    }
+
+    /**
      * Get global instance from BBCode parser.
      *
      * @param   bool  $relative  relative

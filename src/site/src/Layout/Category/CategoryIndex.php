@@ -21,6 +21,7 @@ use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryIcon;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
@@ -111,6 +112,13 @@ class CategoryIndex extends KunenaLayout
      */
     public function getCategoryIcon($category)
     {
+        // An image which was uploaded for the category goes before the icon class.
+        $image = KunenaCategoryIcon::getImage((int) $category->id, 48);
+
+        if ($image !== '') {
+            return $image;
+        }
+
         $template    = KunenaFactory::getTemplate();
         $caticonpath = $template->params->get('DefaultCategoryicon');
 
@@ -145,6 +153,12 @@ class CategoryIndex extends KunenaLayout
      */
     public function getSmallCategoryIcon($subcategory)
     {
+        $image = KunenaCategoryIcon::getImage((int) $subcategory->id, 20);
+
+        if ($image !== '') {
+            return $image;
+        }
+
         $this->ktemplate     = KunenaFactory::getTemplate();
         $defaultcategoryicon = $this->ktemplate->params->get('DefaultCategoryicon');
 

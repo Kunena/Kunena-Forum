@@ -17,6 +17,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\WebAsset\WebAssetManager;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryIcon;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryTranslation;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -40,7 +41,7 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
         <div id="j-main-container" class="col-md-12" role="main">
             <div class="card card-block bg-faded p-2">
                 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=category') ?>"
-                      method="post" id="adminForm"
+                      method="post" id="adminForm" enctype="multipart/form-data"
                       name="adminForm">
                     <input type="hidden" name="task" value=""/>
                     <input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>"/>
@@ -154,6 +155,23 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                             <input class="inputbox form-control w-100" type="text" name="icon"
                                                                        value="<?php echo $this->escape($this->category->icon); ?>"/>
                                                             <p><?php echo Text::_('COM_KUNENA_ICON_DESC'); ?></p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><?php echo Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE'); ?></td>
+                                                        <td>
+                                                            <?php $iconImage = $this->category->exists() ? KunenaCategoryIcon::getUrl((int) $this->category->id) : null; ?>
+                                                            <?php if ($iconImage) : ?>
+                                                                <p>
+                                                                    <img src="<?php echo $this->escape($iconImage); ?>" alt="" style="max-width:64px;max-height:64px"/>
+                                                                    <label class="ms-3">
+                                                                        <input type="checkbox" name="icon_image_remove" value="1"/>
+                                                                        <?php echo Text::_('COM_KUNENA_CATEGORY_ICON_IMAGE_REMOVE'); ?>
+                                                                    </label>
+                                                                </p>
+                                                            <?php endif; ?>
+                                                            <input class="form-control w-100" type="file" name="icon_image" accept="image/png,image/jpeg,image/gif,image/webp"/>
+                                                            <p><?php echo Text::sprintf('COM_KUNENA_CATEGORY_ICON_IMAGE_DESC', (int) (KunenaCategoryIcon::MAX_SIZE / 1024)); ?></p>
                                                         </td>
                                                     </tr>
                                                     <tr>

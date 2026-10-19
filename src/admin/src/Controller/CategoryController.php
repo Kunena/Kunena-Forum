@@ -25,6 +25,7 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryIcon;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryTranslation;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
@@ -222,6 +223,23 @@ class CategoryController extends KunenaController
 
                 if ($success && $category->exists() && $translations) {
                     KunenaCategoryTranslation::save((int) $category->id, $translations, array_keys(KunenaMultilanguage::getLanguages()));
+                }
+
+                // The own icon image of the category: a new image, or the removal of the image.
+                if ($success && $category->exists() && $this->app->isClient('administrator')) {
+                    try {
+                        if ($this->input->post->getInt('icon_image_remove', 0)) {
+                            KunenaCategoryIcon::delete((int) $category->id);
+                        }
+
+                        $iconFile = $this->input->files->get('icon_image', [], 'raw');
+
+                        if (\is_array($iconFile) && !empty($iconFile)) {
+                            KunenaCategoryIcon::save((int) $category->id, $iconFile);
+                        }
+                    } catch (\RuntimeException $e) {
+                        $this->app->enqueueMessage($e->getMessage(), 'warning');
+                    }
                 }
             } catch (KunenaException $e) {
                 if (!empty($e->getMessage())) {

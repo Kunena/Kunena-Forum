@@ -263,7 +263,6 @@ $this->addScript('assets/js/search.js');
 
                 <td class="col-md-2">
                     <?php echo $user->getLink(null, null, ''); ?>
-                    <?php echo \Kunena\Forum\Libraries\User\KunenaUserBadges::render($user, 'ms-1'); ?>
                 </td>
 
                 <?php if ($config->userlistPosts) :

@@ -2838,9 +2838,57 @@ class KunenaModelInstall extends BaseDatabaseModel
             throw new KunenaInstallerException($e->getMessage(), $e->getCode());
         }
 
+        // The menu items are made for every published content language of a multilingual site, else only for the
+        // default language.
+        $contentLanguages = array_keys(LanguageHelper::getContentLanguages([1], false));
+        $multilingual     = \count($contentLanguages) > 1;
+        $codes            = $multilingual ? $contentLanguages : [$langCode];
+        $currentTag       = Factory::getApplication()->getLanguage()->getTag();
+
+        foreach ($codes as $code) {
+            $this->buildMenuForLanguage($menu, $component_id, $code, $multilingual ? $code : '*', $multilingual);
+        }
+
+        // Back to the strings of the language of the page.
+        Factory::getApplication()->getLanguage()->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', $currentTag, true);
+
+        return true;
+    }
+
+    /**
+     * Build the Kunena menu items of one language: the forum item (for all languages on a single language site, else
+     * for the language), its sub items with the titles and aliases of the language, the default page of the forum
+     * and the alias in the default menu.
+     *
+     * @param   array   $menu            The forum item (link, access and params).
+     * @param   int     $component_id    The id of the component Kunena.
+     * @param   string  $langCode        The language of the sub items, like en-GB.
+     * @param   string  $parentLanguage  The language of the forum item: * on a single language site, else the language.
+     * @param   bool    $multilingual    Are the items made for several languages.
+     *
+     * @return  boolean
+     *
+     * @throws  KunenaInstallerException
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    protected function buildMenuForLanguage(array $menu, int $component_id, string $langCode, string $parentLanguage, bool $multilingual): bool
+    {
+        $config = KunenaFactory::getConfig();
+
+        // The strings of the language (the English ones first, for what a language does not have yet).
+        $lang = Factory::getApplication()->getLanguage();
+        $lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB', true);
+        $lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', $langCode, true);
+
+        if ($multilingual) {
+            $menu['name']  = Text::_('COM_KUNENA_MENU_ITEM_FORUM');
+            $menu['alias'] = KunenaRoute::stringURLSafe(Text::_('COM_KUNENA_MENU_FORUM_ALIAS'), 'forum');
+        }
+
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new Menu($db);
-        $table->load(['menutype' => 'kunenamenu', 'link' => $menu['link']]);
+        $table->load(['menutype' => 'kunenamenu', 'link' => $menu['link'], 'language' => $parentLanguage]);
         $paramdata = [
             'menu-anchor_title'     => '',
             'menu-anchor_css'       => '',
@@ -2871,7 +2919,7 @@ class KunenaModelInstall extends BaseDatabaseModel
             'access'       => $menu['access'],
             'params'       => (string) $params,
             'home'         => 0,
-            'language'     => '*',
+            'language'     => $parentLanguage,
             'client_id'    => 0,
         ];
         $table->setLocation(1, 'last-child');
@@ -2887,11 +2935,6 @@ class KunenaModelInstall extends BaseDatabaseModel
 
         $parent      = $table;
         $defaultmenu = 0;
-
-        /*foreach ($languages as $langCode => $language)
-        {*/
-        $lang = Factory::getApplication()->getLanguage();
-        $lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', $langCode);
 
         $submenu = [
             'index'     => [
@@ -2993,7 +3036,6 @@ class KunenaModelInstall extends BaseDatabaseModel
                 $defaultmenu = $table->id;
             }
         }
-        //}
 
         // Update forum menuitem to point into default page
         $parent->link .= "&defaultmenu={$defaultmenu}";
@@ -3003,25 +3045,30 @@ class KunenaModelInstall extends BaseDatabaseModel
         }
 
         // Finally create alias
-        $defaultmenu = AbstractMenu::getInstance('site')->getDefault();
+        // On a multilingual site every language has its own home item.
+        $siteMenu    = AbstractMenu::getInstance('site');
+        $defaultmenu = ($multilingual ? $siteMenu->getDefault($parentLanguage) : null) ?: $siteMenu->getDefault();
 
         if (!$defaultmenu) {
             return true;
         }
 
+        // The alias of an item of one language can not be the alias of an item for all languages.
+        $aliasName = 'kunena-' . Factory::getDate()->format('Y-m-d') . ($multilingual ? '-' . strtolower($langCode) : '');
+
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new Menu($db);
-        $table->load(['menutype' => $defaultmenu->menutype, 'type' => 'alias', 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'language' => $langCode]);
+        $table->load(['menutype' => $defaultmenu->menutype, 'type' => 'alias', 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'), 'language' => $parentLanguage]);
 
         if (!$table->id) {
             $data = [
                 'menutype' => $defaultmenu->menutype,
                 'title' => Text::_('COM_KUNENA_MENU_ITEM_FORUM'),
-                'alias' => 'kunena-' . Factory::getDate()->format('Y-m-d'),
+                'alias' => $aliasName,
                 'note' => '',
                 'link' => 'index.php?Itemid=' . $parent->id,
                 'type' => 'alias',
-                'published' => 0,
+                'published' => 1,
                 'parent_id' => 1,
                 'component_id' => 0,
                 'checked_out' => null,
@@ -3032,14 +3079,14 @@ class KunenaModelInstall extends BaseDatabaseModel
                 'template_style_id' => 0,
                 'params' => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
                 'home' => 0,
-                'language' => '*',
+                'language' => $parentLanguage,
                 'client_id' => 0,
             ];
 
             $table->setLocation(1, 'last-child');
         } else {
             $data = [
-                'alias'  => 'kunena-' . Factory::getDate()->format('Y-m-d'),
+                'alias'  => $aliasName,
                 'link'   => 'index.php?Itemid=' . $parent->id,
                 'params' => '{"aliasoptions":"' . (int) $parent->id . '","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
             ];
@@ -3055,6 +3102,8 @@ class KunenaModelInstall extends BaseDatabaseModel
             // Menu already exists, do nothing
             return true;
         }
+
+        return true;
     }
 
     /**

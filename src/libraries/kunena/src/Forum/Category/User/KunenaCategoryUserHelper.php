@@ -38,6 +38,14 @@ abstract class KunenaCategoryUserHelper
     protected static $_instances = [];
 
     /**
+     * The users which have all their category rows loaded: a category without an instance has no row.
+     *
+     * @var     array
+     * @since   Kunena 7.2
+     */
+    protected static $_allLoaded = [];
+
+    /**
      * Get an instance of \Kunena\Forum\Libraries\Forum\Category\CategoryUser object.
      *
      * @param   null|int  $category  The category id to load.
@@ -67,7 +75,7 @@ abstract class KunenaCategoryUserHelper
 
         if ($reload || empty(self::$_instances [$user->userid][$category])) {
             // loadCategories() skips the ids which are already loaded, so forget the old instance to really reload it.
-            unset(self::$_instances [$user->userid][$category]);
+            unset(self::$_instances [$user->userid][$category], self::$_allLoaded [$user->userid]);
 
             $user_categories                             = self::getCategories($category, $user);
             self::$_instances [$user->userid][$category] = array_pop($user_categories);
@@ -146,13 +154,22 @@ abstract class KunenaCategoryUserHelper
             return;
         }
 
-        $idlist = implode(',', $ids);
+        // All the rows of the user were loaded before: a category without an instance has no row.
+        if (!empty(self::$_allLoaded [$user->userid])) {
+            foreach ($ids as $id) {
+                self::$_instances [$user->userid][$id] = new KunenaCategoryUser($id, $user);
+            }
+
+            return;
+        }
+
+        // Load all the rows of the user with one query, there is one row at most for each category. The
+        // alternative is one query for each list of categories which a page asks for.
         $db     = Factory::getContainer()->get('DatabaseDriver');
         $query  = $db->createQuery();
         $query->select('*')
             ->from($db->quoteName('#__kunena_user_categories'))
-            ->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid))
-            ->andWhere($db->quoteName('category_id') . ' IN (' . $idlist . ')');
+            ->where($db->quoteName('user_id') . ' = ' . $db->quote($user->userid));
         $db->setQuery($query);
 
         $results = [];
@@ -163,16 +180,24 @@ abstract class KunenaCategoryUserHelper
             KunenaError::displayDatabaseError($e);
         }
 
+        foreach ($results as $categoryId => $row) {
+            if (isset(self::$_instances [$user->userid][$categoryId])) {
+                continue;
+            }
+
+            $instance = new KunenaCategoryUser();
+            $instance->bind($row);
+            $instance->exists(true);
+            self::$_instances [$user->userid][$categoryId] = $instance;
+        }
+
         foreach ($ids as $id) {
-            if (isset($results[$id])) {
-                $instance = new KunenaCategoryUser();
-                $instance->bind($results[$id]);
-                $instance->exists(true);
-                self::$_instances [$user->userid][$id] = $instance;
-            } else {
+            if (!isset(self::$_instances [$user->userid][$id])) {
                 self::$_instances [$user->userid][$id] = new KunenaCategoryUser($id, $user);
             }
         }
+
+        self::$_allLoaded [$user->userid] = true;
 
         unset($results);
     }

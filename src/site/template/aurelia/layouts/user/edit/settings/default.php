@@ -15,7 +15,9 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 Text::script('COM_KUNENA_CLEARED');
 ?>
@@ -43,5 +45,19 @@ Text::script('COM_KUNENA_CLEARED');
                     data-loading-text="Loading..."><?php echo Text::_('COM_KUNENA_USER_SETTINGS_CLEAR'); ?></button>
             </td>
         </tr>
+        <?php
+        // Everybody can ask to delete his own account: the privacy request of Joomla (request type "Remove my information").
+        if ($this->profile->isMyself() && ComponentHelper::isEnabled('com_privacy')) :
+            ?>
+            <tr>
+                <td class="col-md-7"><?php echo Text::_('COM_KUNENA_USER_REQUEST_DELETION_DESC'); ?></td>
+                <td class="col-md-5">
+                    <a class="btn btn-outline-danger border btn-small" rel="nofollow"
+                       href="<?php echo Route::_('index.php?option=com_privacy&view=request'); ?>">
+                        <?php echo Text::_('COM_KUNENA_USER_REQUEST_DELETION'); ?>
+                    </a>
+                </td>
+            </tr>
+        <?php endif; ?>
     </tbody>
 </table>

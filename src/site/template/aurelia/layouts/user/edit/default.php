@@ -15,8 +15,10 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -95,6 +97,18 @@ $avatar        = KunenaFactory::getAvatarIntegration();
                 data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>">
                 <?php echo KunenaIcons::cancel(); ?><?php echo Text::_('COM_KUNENA_CANCEL'); ?>
             </button>
+            <?php
+            // Deleting a user is done in Joomla: open the user list of the Joomla backend with this user.
+            // (Users ask to delete their own account on the forum settings tab.)
+            $joomlaUser = Factory::getApplication()->getIdentity();
+
+            if ($this->profile->userid && $this->profile->userid != $joomlaUser->id && $joomlaUser->authorise('core.delete', 'com_users')) :
+                ?>
+                <a class="btn btn-outline-danger border" rel="nofollow"
+                   href="<?php echo Uri::root() . 'administrator/index.php?option=com_users&view=users&filter[search]=id:' . (int) $this->profile->userid; ?>">
+                    <?php echo KunenaIcons::delete(); ?><?php echo Text::_('COM_KUNENA_USER_DELETE_IN_JOOMLA'); ?>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </form>

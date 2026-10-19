@@ -13,6 +13,7 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -33,6 +34,15 @@ $me              = KunenaUserHelper::getMyself();
 
 if (KunenaConfig::getInstance()->ratingEnabled) {
     $this->addStyleSheet('rating.css');
+}
+
+// Reload the list in the background and make new topics blink.
+if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
+    Factory::getApplication()->getDocument()->addScriptOptions(
+        'com_kunena.topiclist',
+        ['interval' => (int) $this->ktemplate->params->get('ajaxTopicListInterval', 30)]
+    );
+    $this->addScript('assets/js/topiclist.js');
 }
 ?>
 <div class="row">

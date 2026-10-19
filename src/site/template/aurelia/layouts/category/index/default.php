@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -33,6 +34,15 @@ if ($this->config->enableForumJump) {
 }
 
 $mmm             = 0;
+
+// Reload the categories in the background and make a category with a new message blink.
+if ($this->templateParams->get('ajaxTopicList', 1)) {
+    Factory::getApplication()->getDocument()->addScriptOptions(
+        'com_kunena.categorylist',
+        ['interval' => (int) $this->templateParams->get('ajaxTopicListInterval', 30)]
+    );
+    $this->addScript('assets/js/categorylist.js');
+}
 
 if ($this->templateParams->get('displayModule')) {
     echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
@@ -97,7 +107,11 @@ foreach ($this->sections as $section) :
                 <?php else : ?>
                     <?php
                     foreach ((array) ($this->categories[$section->id] ?? []) as $category) : ?>
-                        <tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>">
+                        <?php $lastTopic = $category->getLastTopic(); ?>
+                        <tr class="category<?php echo $this->escape($category->class_sfx); ?>" id="category<?php echo $category->id; ?>"
+                            data-category-id="<?php echo (int) $category->id; ?>"
+                            data-last-post="<?php echo (int) $lastTopic->last_post_id; ?>"
+                            data-sig="<?php echo (int) $lastTopic->last_post_id . '-' . (int) $category->numTopics . '-' . (int) $category->numPosts . '-' . (int) $category->getNewCount(); ?>">
                             <td id="kcat-icon" class="d-none d-md-table-cell">
                                 <?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '', null, true, false); ?>
                             </td>

@@ -57,7 +57,7 @@ if (!empty($this->spacing)) : ?>
     </tr>
 <?php endif; ?>
 
-<tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>">
+<tr class="category<?php echo $this->escape($category->class_sfx) . $txt; ?>" data-topic-id="<?php echo (int) $topic->id; ?>" data-last-post="<?php echo (int) $topic->last_post_id; ?>">
     <?php if ($topic->unread) : ?>
         <th scope="row" class="d-none d-md-table-cell center topic-item-unread">
             <?php echo $this->getTopicLink($topic, 'unread', KunenaTemplate::getInstance()->getTopicIcon($topic), '', null, $category, true, true); ?>

@@ -142,6 +142,13 @@
         <field name="moduleIdWebauthn" type="text" default="0"
                label="COM_KUNENA_TEMPLATE_MODULE_ID_WEBAUTHN"
                description="COM_KUNENA_TEMPLATE_MODULE_ID_WEBAUTHN_DESC"/>
+        <field name="ajaxTopicList" type="list" default="1" label="COM_KUNENA_TEMPLATE_AJAX_TOPIC_LIST"
+               description="COM_KUNENA_TEMPLATE_AJAX_TOPIC_LIST_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="ajaxTopicListInterval" type="text" default="30" label="COM_KUNENA_TEMPLATE_AJAX_TOPIC_LIST_INTERVAL"
+               description="COM_KUNENA_TEMPLATE_AJAX_TOPIC_LIST_INTERVAL_DESC"/>
         <field name="attachmentsOrderBy" type="list" default="id" label="COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY"
                description="COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY_DESC">
             <option value="id">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY_ID</option>

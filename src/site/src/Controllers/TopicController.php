@@ -819,7 +819,16 @@ class TopicController extends KunenaController
             // On a multilingual site a topic has a language: that of its category when the category has one, else the
             // chosen one (or all languages).
             if (KunenaMultilanguage::isEnabled()) {
-                $chosen = $this->app->getInput()->post->getString('topic_language', KunenaMultilanguage::ALL);
+                // The template decides if the language is chosen (pick), the one of the page (hide) or the one of the category.
+                $mode = KunenaFactory::getTemplate()->params->get('topicLanguage', 'pick');
+
+                if ($mode === 'hide') {
+                    $chosen = KunenaMultilanguage::getCurrent();
+                } elseif ($mode === 'category') {
+                    $chosen = $category->language ?: KunenaMultilanguage::ALL;
+                } else {
+                    $chosen = $this->app->getInput()->post->getString('topic_language', KunenaMultilanguage::ALL);
+                }
 
                 if ($category->language && $category->language !== KunenaMultilanguage::ALL) {
                     $chosen = $category->language;

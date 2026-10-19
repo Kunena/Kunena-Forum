@@ -167,6 +167,12 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+        <field name="topicLanguage" type="list" default="pick" label="COM_KUNENA_TEMPLATE_TOPIC_LANGUAGE"
+               description="COM_KUNENA_TEMPLATE_TOPIC_LANGUAGE_DESC">
+            <option value="pick">COM_KUNENA_TEMPLATE_TOPIC_LANGUAGE_PICK</option>
+            <option value="hide">COM_KUNENA_TEMPLATE_TOPIC_LANGUAGE_HIDE</option>
+            <option value="category">COM_KUNENA_TEMPLATE_TOPIC_LANGUAGE_CATEGORY</option>
+        </field>
         <field name="similarTopics" type="list" default="0" label="COM_KUNENA_TEMPLATE_SIMILAR_TOPICS"
                description="COM_KUNENA_TEMPLATE_SIMILAR_TOPICS_DESC">
             <option value="0">COM_KUNENA_NO</option>

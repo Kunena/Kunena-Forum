@@ -331,7 +331,7 @@ Text::script('COM_KUNENA_POLL_TITLE');
             ?>
         <?php endif; ?>
 
-        <?php if (!$this->topic->exists() && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::hasLanguages() && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::isEnabled()) : ?>
+        <?php if (!$this->topic->exists() && $this->ktemplate->params->get('topicLanguage', 'pick') === 'pick' && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::hasLanguages() && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::isEnabled()) : ?>
             <?php // On a multilingual site the language of a new topic is chosen: the language of the page is the default. ?>
             <div class="form-group row">
                 <label for="topic-language" class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_TOPIC_LANGUAGE'); ?></label>

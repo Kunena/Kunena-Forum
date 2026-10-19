@@ -22,6 +22,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicRedirect;
 use Kunena\Forum\Libraries\Layout\KunenaBase;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -203,6 +204,11 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
      */
     public function setResponseStatus($code = 404): void
     {
+        // A topic which was deleted is gone for the search engines (a redirect with the status 410 Gone), not just missing.
+        if (\in_array((int) $code, [401, 403, 404], true) && KunenaTopicRedirect::isGone()) {
+            $code = 410;
+        }
+
         switch ((int) $code) {
             case 400:
                 Factory::getApplication()->setHeader('Status', '400 Bad Request', true);

@@ -692,7 +692,18 @@ class KunenaTopic extends KunenaDatabaseObject
 
         $date = new Date();
 
+        $wasDeleted = $this->_hold >= 2;
+
         $this->hold = (int) $value;
+
+        // A deleted topic is gone for the search engines, a restored topic is there again.
+        if ($this->exists() && $this->moved_id == 0) {
+            if ($this->hold >= 2 && !$wasDeleted) {
+                KunenaTopicRedirect::add(KunenaTopicRedirect::getOldUrl($this));
+            } elseif ($this->hold < 2 && $wasDeleted) {
+                KunenaTopicRedirect::remove(KunenaTopicRedirect::getOldUrl($this));
+            }
+        }
 
         if ($this->hold === 3) {
             $deletedTime = $date->toUnix();
@@ -972,8 +983,15 @@ class KunenaTopic extends KunenaDatabaseObject
             return true;
         }
 
+        // The address has to be made while the topic still exists: the search engines get a 410 Gone for it.
+        $goneUrl = $this->moved_id == 0 ? KunenaTopicRedirect::getOldUrl($this) : '';
+
         if (!parent::delete()) {
             return false;
+        }
+
+        if ($goneUrl !== '') {
+            KunenaTopicRedirect::add($goneUrl);
         }
 
         // Clear authentication cache

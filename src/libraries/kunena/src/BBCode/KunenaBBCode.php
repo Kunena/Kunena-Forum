@@ -449,10 +449,10 @@ class KunenaBBCode extends BBCode
 			(?:
 				[^\s()<>]+
 				|
-				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
+				\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)
 			)+
 			(?:
-				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
+				\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)
 				|
 				[^\s`!()\[\]{};:\'"\.,<>?Â«Â»â€œâ€�â€˜â€™â„¢]
 			)
@@ -462,7 +462,8 @@ class KunenaBBCode extends BBCode
 
         if ($search !== false) {
             foreach ($search as $index => $token) {
-                if ($index && 1) {
+                // The tokens alternate: text, address, text, address. Text is escaped later, so it must stay a text token.
+                if ($index & 1) {
                     if (preg_match("/^(https?|ftp|mailto):/ui", $token)) {
                         // Protocol has been provided, so just use it as-is.
                         $url = $token;

@@ -311,6 +311,26 @@ Text::script('COM_KUNENA_POLL_TITLE');
             </div>
         </div>
 
+        <?php if (!$this->topic->exists() && $this->ktemplate->params->get('similarTopics', 0)) : ?>
+            <?php // The topics with a similar subject are suggested while a new topic is written (similartopics.js). ?>
+            <div class="form-group row d-none" id="similar-topics">
+                <div class="col-md-10 offset-sm-2">
+                    <div class="alert alert-info mb-0">
+                        <strong><?php echo Text::_('COM_KUNENA_SIMILAR_TOPICS'); ?></strong>
+                        <ul class="list-unstyled mb-0 mt-1" id="similar-topics-list"></ul>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $this->doc->addScriptOptions('com_kunena.similartopics', [
+                'url'      => KunenaRoute::_('index.php?option=com_kunena&view=topic&task=similar&format=json&' . Session::getFormToken() . '=1', false),
+                'replies'  => Text::_('COM_KUNENA_SIMILAR_TOPICS_REPLIES'),
+                'reply'    => Text::_('COM_KUNENA_SIMILAR_TOPICS_REPLIES_1'),
+            ]);
+            $this->wa->registerAndUseScript('similartopics', 'components/com_kunena/template/aurelia/assets/js/similartopics.js');
+            ?>
+        <?php endif; ?>
+
         <?php if (!$this->topic->exists() && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::hasLanguages() && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::isEnabled()) : ?>
             <?php // On a multilingual site the language of a new topic is chosen: the language of the page is the default. ?>
             <div class="form-group row">

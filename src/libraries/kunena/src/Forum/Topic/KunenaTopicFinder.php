@@ -361,6 +361,29 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
+     * Filter topics which have at least one of the words in the subject (to find similar topics).
+     *
+     * @param   string[]  $words  The words to look for.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterBySimilarSubject(array $words): KunenaTopicFinder
+    {
+        $conditions = [];
+
+        foreach ($words as $word) {
+            $conditions[] = $this->db->quoteName('a.subject') . ' LIKE ' . $this->db->quote('%' . $this->db->escape($word, true) . '%', false);
+        }
+
+        // Without words nothing is similar.
+        $this->query->where($conditions ? '(' . implode(' OR ', $conditions) . ')' : '0');
+
+        return $this;
+    }
+
+    /**
      * Filter topics which were started by a user whose username or name has the text (or by a guest with that name).
      *
      * @param   string  $text  Text to look for.

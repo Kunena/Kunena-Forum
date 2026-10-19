@@ -418,6 +418,90 @@ class TopicController extends KunenaController
     }
 
     /**
+     * Find the topics with a similar subject while a new topic is written (JSON).
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function similar()
+    {
+        if (!Session::checkToken('get')) {
+            throw new RuntimeException(Text::_('Forbidden'), 403);
+        }
+
+        $topics = [];
+        $params = KunenaFactory::getTemplate()->params;
+
+        if ($params->get('similarTopics', 0)) {
+            $subject = $this->app->getInput()->getString('subject', '');
+
+            // The words of the subject, without the very short ones (the, a, is, ...).
+            $words = array_unique(array_filter(
+                preg_split('/[\s\p{P}]+/u', mb_strtolower($subject), -1, PREG_SPLIT_NO_EMPTY),
+                static fn ($word) => mb_strlen($word) >= 3
+            ));
+            $words = \array_slice($words, 0, 6);
+
+            if ($words) {
+                $finder = new \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder();
+                $finder->filterByUserAccess($this->me)
+                    ->filterByHold([0])
+                    ->filterByMoved(false)
+                    ->filterBySimilarSubject($words)
+                    ->order('last_post_time', -1)
+                    ->limit(30);
+
+                if (KunenaMultilanguage::isEnabled()) {
+                    $finder->filterByLanguage(KunenaMultilanguage::getCurrent());
+                }
+
+                $found = [];
+
+                foreach ($finder->find() as $topic) {
+                    $subjectLower = mb_strtolower($topic->subject);
+                    $matches      = 0;
+
+                    foreach ($words as $word) {
+                        if (mb_strpos($subjectLower, $word) !== false) {
+                            $matches++;
+                        }
+                    }
+
+                    $found[] = ['matches' => $matches, 'time' => $topic->last_post_time, 'topic' => $topic];
+                }
+
+                // The most similar first, the most recent first when they are equal.
+                usort($found, static fn ($a, $b) => [$b['matches'], $b['time']] <=> [$a['matches'], $a['time']]);
+
+                foreach (\array_slice($found, 0, (int) $params->get('similarTopicsLimit', 5)) as $item) {
+                    $topic    = $item['topic'];
+                    $topics[] = [
+                        'id'       => (int) $topic->id,
+                        'subject'  => $topic->subject,
+                        'url'      => $topic->getUrl(),
+                        'category' => $topic->getCategory()->name,
+                        'replies'  => max(0, (int) $topic->posts - 1),
+                    ];
+                }
+            }
+        }
+
+        // Set the MIME type and header for JSON output.
+        header('Content-type: application/json');
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Pragma: no-cache");
+
+        while (@ob_end_clean()) {
+        }
+
+        echo new KunenaResponseJson($topics);
+
+        jexit();
+    }
+
+    /**
      * Load global rate for the topic
      *
      * @return  void

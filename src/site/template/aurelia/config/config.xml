@@ -167,6 +167,13 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+        <field name="similarTopics" type="list" default="0" label="COM_KUNENA_TEMPLATE_SIMILAR_TOPICS"
+               description="COM_KUNENA_TEMPLATE_SIMILAR_TOPICS_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
+        <field name="similarTopicsLimit" type="number" default="5" min="1" max="10" label="COM_KUNENA_TEMPLATE_SIMILAR_TOPICS_LIMIT"
+               description="COM_KUNENA_TEMPLATE_SIMILAR_TOPICS_LIMIT_DESC" showon="similarTopics:1"/>
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_COLORS">

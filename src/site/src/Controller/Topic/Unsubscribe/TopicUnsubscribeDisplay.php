@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Class TopicUnsubscribeDisplay: asks to confirm the unsubscribe link of a notification email.
@@ -65,7 +66,13 @@ class TopicUnsubscribeDisplay extends KunenaControllerDisplay
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_INVALID'), 403);
         }
 
-        $item = $type === KunenaEmailUnsubscribe::TOPIC ? KunenaTopicHelper::get($id) : KunenaCategoryHelper::get($id);
+        if ($type === KunenaEmailUnsubscribe::TOPIC) {
+            $item = KunenaTopicHelper::get($id);
+        } elseif ($type === KunenaEmailUnsubscribe::FOLLOW) {
+            $item = KunenaUserHelper::get($id);
+        } else {
+            $item = KunenaCategoryHelper::get($id);
+        }
 
         if (!$item->exists()) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_INVALID'), 404);
@@ -76,7 +83,7 @@ class TopicUnsubscribeDisplay extends KunenaControllerDisplay
             'id'   => $id,
             'uid'  => $uid,
             'sig'  => $sig,
-            'name' => $type === KunenaEmailUnsubscribe::TOPIC ? $item->subject : $item->name,
+            'name' => $type === KunenaEmailUnsubscribe::TOPIC ? $item->subject : ($type === KunenaEmailUnsubscribe::FOLLOW ? $item->getName() : $item->name),
         ];
     }
 

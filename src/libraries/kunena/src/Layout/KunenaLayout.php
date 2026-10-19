@@ -191,6 +191,12 @@ class KunenaLayout extends KunenaBase
 
     public $ignored;
 
+    public $following;
+
+    public $followers;
+
+    public $feed;
+
     public $filters;
 
     public $filterBar;

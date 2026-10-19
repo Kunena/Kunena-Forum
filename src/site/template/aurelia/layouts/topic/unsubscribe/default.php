@@ -20,7 +20,11 @@ use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 $item   = $this->unsubscribe;
-$prompt = $item->type === KunenaEmailUnsubscribe::TOPIC ? 'COM_KUNENA_EMAIL_UNSUBSCRIBE_TOPIC' : 'COM_KUNENA_EMAIL_UNSUBSCRIBE_CATEGORY';
+$prompts = [
+    KunenaEmailUnsubscribe::TOPIC  => 'COM_KUNENA_EMAIL_UNSUBSCRIBE_TOPIC',
+    KunenaEmailUnsubscribe::FOLLOW => 'COM_KUNENA_EMAIL_UNSUBSCRIBE_FOLLOW',
+];
+$prompt = $prompts[$item->type] ?? 'COM_KUNENA_EMAIL_UNSUBSCRIBE_CATEGORY';
 ?>
 
 <h1><?php echo Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE'); ?></h1>

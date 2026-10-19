@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 
 $bootstrap = $this->ktemplate->params->get('bootstrap');
@@ -36,6 +37,19 @@ $tabs = $this->getTabs();
 </h1>
 
 <h2 class="float-end">
+    <?php if (KunenaUserFollow::isEnabled() && $this->profile->exists()) :
+        $followers = KunenaUserFollow::countFollowers($this->profile->userid);
+        ?>
+        <small class="text-muted me-2"><?php echo $followers === 1 ? Text::_('COM_KUNENA_FOLLOWERS_COUNT_1') : Text::sprintf('COM_KUNENA_FOLLOWERS_COUNT', $followers); ?></small>
+    <?php endif; ?>
+    <?php if (KunenaUserFollow::canFollow($this->me, $this->profile)) :
+        $following = KunenaUserFollow::isFollowing($this->me->userid, $this->profile->userid);
+        ?>
+        <a class="btn" rel="nofollow"
+           href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=' . ($following ? 'unfollow' : 'follow') . '&userid=' . (int) $this->profile->userid . '&' . Session::getFormToken() . '=1'); ?>">
+            <?php echo KunenaIcons::star() . ' ' . Text::_($following ? 'COM_KUNENA_UNFOLLOW' : 'COM_KUNENA_FOLLOW'); ?>
+        </a>
+    <?php endif; ?>
     <?php if (KunenaUserIgnore::canIgnore($this->me, $this->profile)) :
         $ignored = KunenaUserIgnore::isIgnoring($this->me->userid, $this->profile->userid);
         ?>

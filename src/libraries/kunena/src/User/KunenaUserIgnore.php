@@ -195,6 +195,9 @@ abstract class KunenaUserIgnore
             $db->setQuery($query)->execute();
         }
 
+        // Somebody whom a user ignores is not followed anymore.
+        KunenaUserFollow::unfollow((int) $user->userid, (int) $target->userid);
+
         unset(self::$lists[(int) $user->userid]);
 
         return true;

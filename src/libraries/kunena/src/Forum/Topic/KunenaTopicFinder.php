@@ -287,6 +287,24 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
+     * Only the topics which were started by one of the users (the follow list of a user). No users: no topics.
+     *
+     * @param   int[]  $userids  Ids of the users.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterByAuthors(array $userids): KunenaTopicFinder
+    {
+        $userids = array_filter(ArrayHelper::toInteger($userids));
+
+        $this->query->where($this->db->quoteName('a.first_post_userid') . ' IN (' . ($userids ? implode(',', $userids) : '-1') . ')');
+
+        return $this;
+    }
+
+    /**
      * Leave out the topics which were started by one of the users (the ignore list of a user).
      *
      * @param   int[]  $userids  Ids of the users.

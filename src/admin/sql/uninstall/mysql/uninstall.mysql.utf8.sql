@@ -21,6 +21,7 @@ DROP TABLE IF EXISTS `#__kunena_smileys`;
 DROP TABLE IF EXISTS `#__kunena_thankyou`;
 DROP TABLE IF EXISTS `#__kunena_user_categories`;
 DROP TABLE IF EXISTS `#__kunena_drafts`;
+DROP TABLE IF EXISTS `#__kunena_user_follow`;
 DROP TABLE IF EXISTS `#__kunena_user_ignore`;
 DROP TABLE IF EXISTS `#__kunena_user_read`;
 DROP TABLE IF EXISTS `#__kunena_user_topics`;

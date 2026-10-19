@@ -226,6 +226,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $enableMarkdown                       Enable Markdown in messages
  * @property string $enableDrafts                       Enable saving messages as draft
  * @property string $enableIgnore                       Enable the ignore list of users
+ * @property string $enableFollow                       Enable following users
  * @property string $enableHtml                           Enable safe HTML in messages
  * @property string $trimLongUrls                          Trim Long URLs
  * @property string $trimLongUrlsBack                      Back Portion of Trimmed URLs

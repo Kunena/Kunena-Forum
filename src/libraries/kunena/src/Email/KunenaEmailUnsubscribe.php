@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -35,6 +36,8 @@ abstract class KunenaEmailUnsubscribe
     public const TOPIC = 'topic';
 
     public const CATEGORY = 'category';
+
+    public const FOLLOW = 'follow';
 
     /**
      * Signature of an unsubscribe link.
@@ -68,7 +71,7 @@ abstract class KunenaEmailUnsubscribe
      */
     public static function verify(string $type, int $id, int $userid, string $signature): bool
     {
-        if (!\in_array($type, [self::TOPIC, self::CATEGORY], true) || $id < 1 || $userid < 1 || $signature === '') {
+        if (!\in_array($type, [self::TOPIC, self::CATEGORY, self::FOLLOW], true) || $id < 1 || $userid < 1 || $signature === '') {
             return false;
         }
 
@@ -131,6 +134,11 @@ abstract class KunenaEmailUnsubscribe
             $topic = KunenaTopicHelper::get($id);
 
             return $topic->exists() && $topic->subscribe(0, $user);
+        }
+
+        if ($type === self::FOLLOW) {
+            // The id is the user whom the subscriber follows.
+            return KunenaUserFollow::unfollow($userid, $id);
         }
 
         $category = KunenaCategoryHelper::get($id);

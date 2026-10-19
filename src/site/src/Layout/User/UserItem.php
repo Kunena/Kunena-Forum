@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use stdClass;
 
@@ -205,6 +206,40 @@ class UserItem extends KunenaLayout
             $tab->content      = $this->subRequest('Topic/Listing/User', new Input($params), $params);
             $tab->active       = false;
             $tabs['favorites'] = $tab;
+        }
+
+        if ($myProfile && KunenaUserFollow::isEnabled()) {
+            // The users whom the user follows, and the latest topics which they started.
+            $following = KunenaUserFollow::getFollowingList($this->profile->userid);
+            $feed      = '';
+
+            if ($following) {
+                $params = [
+                    'embedded'            => 1,
+                    'topics_categories'   => 0,
+                    'topics_catselection' => 1,
+                    'userid'              => $this->profile->userid,
+                    'mode'                => 'following',
+                    'sel'                 => -1,
+                    'limit'               => 10,
+                    'filter_order'        => 'time',
+                    'limitstart'          => 0,
+                    'filter_order_Dir'    => 'desc',
+                ];
+                $feed = $this->subRequest('Topic/Listing/User', new Input($params), $params);
+            }
+
+            $tab              = new stdClass();
+            $tab->title       = Text::_('COM_KUNENA_FOLLOWING_TAB');
+            $tab->content     = $this->subLayout('User/Item/Following')->set('following', $following)->set('feed', $feed);
+            $tab->active      = false;
+            $tabs['following'] = $tab;
+
+            $tab               = new stdClass();
+            $tab->title        = Text::_('COM_KUNENA_FOLLOWERS_TAB');
+            $tab->content      = $this->subLayout('User/Item/Followers')->set('followers', KunenaUserFollow::getFollowersList($this->profile->userid));
+            $tab->active       = false;
+            $tabs['followers'] = $tab;
         }
 
         if ($myProfile && KunenaUserIgnore::isEnabled()) {

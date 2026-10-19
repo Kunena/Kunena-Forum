@@ -50,6 +50,7 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
@@ -1579,6 +1580,70 @@ class UserController extends KunenaController
         try {
             if ($me->exists() && KunenaUserIgnore::unignore($me->userid, $target->userid)) {
                 $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_IGNORE_REMOVED', $target->getName()), 'success');
+            }
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        $this->setRedirectBack();
+    }
+
+    /**
+     * Follow a user: the logged in user gets an e-mail when that user starts a new topic.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function follow()
+    {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $me     = KunenaUserHelper::getMyself();
+        $target = KunenaUserHelper::get($this->app->getInput()->getInt('userid', 0));
+
+        try {
+            if (!KunenaUserFollow::canFollow($me, $target)) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_FOLLOW_NOT_ALLOWED'), 'error');
+            } elseif (KunenaUserFollow::follow($me, $target)) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_FOLLOW_DONE', $target->getName()), 'success');
+            }
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        $this->setRedirectBack();
+    }
+
+    /**
+     * Stop following a user.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function unfollow()
+    {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $me     = KunenaUserHelper::getMyself();
+        $target = KunenaUserHelper::get($this->app->getInput()->getInt('userid', 0));
+
+        try {
+            if ($me->exists() && KunenaUserFollow::unfollow($me->userid, $target->userid)) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_FOLLOW_REMOVED', $target->getName()), 'success');
             }
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');

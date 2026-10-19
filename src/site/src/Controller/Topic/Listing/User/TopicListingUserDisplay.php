@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Site\Controller\Topic\Listing\ListDisplay;
 use Kunena\Forum\Site\Model\TopicsModel;
@@ -127,6 +128,11 @@ class TopicListingUserDisplay extends ListDisplay
 
             case 'favorites':
                 $finder->filterByUser($this->user, 'favorited');
+                break;
+
+            case 'following':
+                // The topics which the users whom the user follows started.
+                $finder->filterByAuthors(KunenaUserFollow::getFollowing((int) $this->user->userid));
                 break;
 
             case 'subscriptions':
@@ -236,6 +242,10 @@ class TopicListingUserDisplay extends ListDisplay
             case 'started':
                 $this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
                 $canonicalUrl     = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=started');
+                break;
+            case 'following':
+                $this->headerText = Text::_('COM_KUNENA_FOLLOWING_LATEST');
+                $canonicalUrl     = KunenaRoute::_('index.php?option=com_kunena&view=topics&layout=user&mode=following');
                 break;
             case 'favorites':
                 $this->headerText = Text::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');

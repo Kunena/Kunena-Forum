@@ -53,6 +53,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use StdClass;
 
@@ -703,6 +704,31 @@ class KunenaMessage extends KunenaDatabaseObject
             KunenaUserHelper::getMyself()->userid
         );
 
+        // The followers of the author get an e-mail about a new topic of him (if they may read the category and do not
+        // get the e-mail already as subscribers of the category).
+        if (!$this->parent && !$this->hold && KunenaUserFollow::isEnabled()) {
+            $known    = array_map(static fn ($recipient) => (int) $recipient->id, (array) $emailToList);
+            $category = $this->getCategory();
+
+            foreach (KunenaUserFollow::getRecipients((int) $this->userid) as $follower) {
+                $followerId = (int) $follower->id;
+
+                if (
+                    $followerId === (int) $this->userid || \in_array($followerId, $known, true)
+                    || !$category->isAuthorised('read', KunenaUserHelper::get($followerId))
+                ) {
+                    continue;
+                }
+
+                $follower->subscription = 1;
+                $follower->moderator    = 0;
+                $follower->admin        = 0;
+                $follower->follower     = 1;
+                $emailToList[]          = $follower;
+                $known[]                = $followerId;
+            }
+        }
+
         // Nobody gets subscription e-mails about the posts of a user whom he ignores (moderators and administrators
         // still get the e-mails they get because of their task).
         $ignoredBy = $emailToList ? KunenaUserIgnore::getIgnoredBy((int) $this->userid) : [];
@@ -825,7 +851,7 @@ class KunenaMessage extends KunenaDatabaseObject
                     $mail->setSubject($mailSubject);
                     $mail->setSender([$this->_config->email, $mailnamesender]);
 
-                    $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0));
+                    $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower));
 
                     if (!KunenaEmail::send($mail, [$emailTo->email])) {
                         $success = false;
@@ -995,7 +1021,7 @@ class KunenaMessage extends KunenaDatabaseObject
                         $mail->setSubject($mailSubject);
                         $mail->setSender([$this->_config->email, $mailnamesender]);
 
-                        $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0));
+                        $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower));
                         KunenaEmail::send($mail, [$emailTo->email]);
                     } catch (Exception $e) {
                         throw new Exception($e->getMessage());
@@ -1973,7 +1999,7 @@ class KunenaMessage extends KunenaDatabaseObject
      * @throws Exception
      * @since   Kunena 6.0
      */
-    protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId = 0): void
+    protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId = 0, bool $follower = false): void
     {
         // Subscribers can unsubscribe from the email itself: a reply is a topic subscription, a new topic a category subscription.
         $unsubscribeUrl = '';
@@ -1981,6 +2007,12 @@ class KunenaMessage extends KunenaDatabaseObject
         if ($subscription && $recipientId > 0) {
             $type = $this->parent ? KunenaEmailUnsubscribe::TOPIC : KunenaEmailUnsubscribe::CATEGORY;
             $id   = $this->parent ? (int) $this->thread : (int) $this->catid;
+
+            if ($follower) {
+                // The recipient gets this e-mail because he follows the author.
+                $type = KunenaEmailUnsubscribe::FOLLOW;
+                $id   = (int) $this->userid;
+            }
 
             $unsubscribeUrl = KunenaEmailUnsubscribe::getUrl($type, $id, $recipientId);
 

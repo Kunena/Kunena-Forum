@@ -34,3 +34,14 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_ignore`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS `#__kunena_user_follow`
+(
+    `user_id`      int(11) NOT NULL,
+    `followed_id`  int(11) NOT NULL,
+    `created_time` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`user_id`, `followed_id`),
+    KEY `followed_id` (`followed_id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;

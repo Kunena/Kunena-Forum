@@ -46,6 +46,37 @@ Text::script('COM_KUNENA_CLEARED');
             </td>
         </tr>
         <?php
+        // The users whom the user ignores, with a link to stop ignoring them.
+        if ($this->profile->isMyself() && \Kunena\Forum\Libraries\User\KunenaUserIgnore::isEnabled()) :
+            $ignoredUsers = \Kunena\Forum\Libraries\User\KunenaUserHelper::loadUsers(
+                \Kunena\Forum\Libraries\User\KunenaUserIgnore::getIgnored($this->profile->userid)
+            );
+            ?>
+            <tr>
+                <td class="col-md-7">
+                    <?php echo Text::_('COM_KUNENA_IGNORE_LIST'); ?><br/>
+                    <small class="text-muted"><?php echo Text::_('COM_KUNENA_IGNORE_LIST_DESC'); ?></small>
+                </td>
+                <td class="col-md-5">
+                    <?php if (!$ignoredUsers) : ?>
+                        <?php echo Text::_('COM_KUNENA_IGNORE_LIST_EMPTY'); ?>
+                    <?php else : ?>
+                        <ul class="list-unstyled mb-0">
+                            <?php foreach ($ignoredUsers as $ignoredUser) : ?>
+                                <li class="mb-1">
+                                    <?php echo $ignoredUser->getLink(); ?>
+                                    <a class="btn btn-outline-secondary btn-sm ms-2" rel="nofollow"
+                                       href="<?php echo Route::_('index.php?option=com_kunena&view=user&task=unignore&userid=' . (int) $ignoredUser->userid . '&' . \Joomla\CMS\Session\Session::getFormToken() . '=1'); ?>">
+                                        <?php echo Text::_('COM_KUNENA_UNIGNORE'); ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endif; ?>
+        <?php
         // Everybody can ask to delete his own account: the privacy request of Joomla (request type "Remove my information").
         if ($this->profile->isMyself() && ComponentHelper::isEnabled('com_privacy')) :
             ?>

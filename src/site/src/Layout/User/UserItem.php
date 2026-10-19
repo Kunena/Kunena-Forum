@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use stdClass;
 
 /**
@@ -204,6 +205,14 @@ class UserItem extends KunenaLayout
             $tab->content      = $this->subRequest('Topic/Listing/User', new Input($params), $params);
             $tab->active       = false;
             $tabs['favorites'] = $tab;
+        }
+
+        if ($myProfile && KunenaUserIgnore::isEnabled()) {
+            $tab              = new stdClass();
+            $tab->title       = Text::_('COM_KUNENA_IGNORE_TAB');
+            $tab->content     = $this->subLayout('User/Item/Ignored')->set('ignored', KunenaUserIgnore::getIgnoredList($this->profile->userid));
+            $tab->active      = false;
+            $tabs['ignored']  = $tab;
         }
 
         if ($showThankYou) {

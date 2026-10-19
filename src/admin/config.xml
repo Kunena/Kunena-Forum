@@ -340,6 +340,16 @@
                 <option value="1">JYES</option>
             </field>
             <field
+                name="enableIgnore"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_ENABLE_IGNORE"
+                description="COM_KUNENA_A_ENABLE_IGNORE_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
                 name="orderingSystem"
                 type="list"
                 default="mesid"

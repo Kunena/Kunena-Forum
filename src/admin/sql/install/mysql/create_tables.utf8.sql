@@ -404,6 +404,18 @@ CREATE TABLE IF NOT EXISTS `#__kunena_drafts`
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `#__kunena_user_ignore`
+(
+    `user_id`      int(11) NOT NULL,
+    `ignored_id`   int(11) NOT NULL,
+    `created_time` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`user_id`, `ignored_id`),
+    KEY `ignored_id` (`ignored_id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `#__kunena_user_read`
 (
     `user_id`     int(11) NOT NULL,

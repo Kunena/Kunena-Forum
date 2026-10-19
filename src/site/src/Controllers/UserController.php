@@ -51,6 +51,7 @@ use Kunena\Forum\Libraries\Upload\KunenaUpload;
 use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 use Kunena\Forum\Plugin\Kunena\Kunena\Helper\KunenaProfileKunena;
 use RuntimeException;
@@ -1433,6 +1434,9 @@ class UserController extends KunenaController
 
         $userListMentions = [];
 
+        // Users who ignore the user can not be mentioned by him.
+        $ignoredBy = KunenaUserIgnore::getIgnoredBy((int) $user->userid);
+
         if ($id > 0) {
             $topicId = [0 => $id];
 
@@ -1441,6 +1445,10 @@ class UserController extends KunenaController
             $usersList = KunenaUserHelper::loadUsers($userIdsList);
 
             foreach ($usersList as $key => $user) {
+                if (\in_array((int) $user->userid, $ignoredBy, true)) {
+                    continue;
+                }
+
                 $obj = new stdClass();
                 $obj->id = $key;
                 $obj->userid = $user->userid;
@@ -1513,5 +1521,69 @@ class UserController extends KunenaController
         echo json_encode($row);
 
         jexit();
+    }
+
+    /**
+     * Put a user on the ignore list of the logged in user.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function ignore()
+    {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $me     = KunenaUserHelper::getMyself();
+        $target = KunenaUserHelper::get($this->app->getInput()->getInt('userid', 0));
+
+        try {
+            if (!KunenaUserIgnore::canIgnore($me, $target)) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_IGNORE_NOT_ALLOWED'), 'error');
+            } elseif (KunenaUserIgnore::ignore($me, $target)) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_IGNORE_DONE', $target->getName()), 'success');
+            }
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        $this->setRedirectBack();
+    }
+
+    /**
+     * Take a user off the ignore list of the logged in user.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function unignore()
+    {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $me     = KunenaUserHelper::getMyself();
+        $target = KunenaUserHelper::get($this->app->getInput()->getInt('userid', 0));
+
+        try {
+            if ($me->exists() && KunenaUserIgnore::unignore($me->userid, $target->userid)) {
+                $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_IGNORE_REMOVED', $target->getName()), 'success');
+            }
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        $this->setRedirectBack();
     }
 }

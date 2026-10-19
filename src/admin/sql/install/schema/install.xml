@@ -879,6 +879,25 @@
         <key name="user_modified"
              columns="user_id,modified_time"/>
     </table>
+    <table name="kunena_user_ignore">
+        <field primary_key="yes"
+               name="user_id"
+               type="int(11)"
+               null="0"/>
+        <field primary_key="yes"
+               name="ignored_id"
+               type="int(11)"
+               null="0"/>
+        <field name="created_time"
+               type="int(11)"
+               null="0"
+               default="0"/>
+        <key name="PRIMARY"
+             unique="1"
+             columns="user_id,ignored_id"/>
+        <key name="ignored_id"
+             columns="ignored_id"/>
+    </table>
     <table name="kunena_user_read">
         <field primary_key="yes"
                name="user_id"

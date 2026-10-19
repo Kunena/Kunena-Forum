@@ -287,6 +287,26 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
+     * Leave out the topics which were started by one of the users (the ignore list of a user).
+     *
+     * @param   int[]  $userids  Ids of the users.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterOutAuthors(array $userids): KunenaTopicFinder
+    {
+        $userids = array_filter(ArrayHelper::toInteger($userids));
+
+        if ($userids) {
+            $this->query->where($this->db->quoteName('a.first_post_userid') . ' NOT IN (' . implode(',', $userids) . ')');
+        }
+
+        return $this;
+    }
+
+    /**
      * Filter topics which have the text in the subject.
      *
      * @param   string  $text  Text to look for.

@@ -189,6 +189,8 @@ class KunenaLayout extends KunenaBase
 
     public $unsubscribe;
 
+    public $ignored;
+
     public $filters;
 
     public $filterBar;

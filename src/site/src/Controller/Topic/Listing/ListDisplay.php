@@ -34,6 +34,7 @@ use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 
 /**
  * Class ComponentTopicControllerListDisplay
@@ -113,6 +114,9 @@ abstract class ListDisplay extends KunenaControllerDisplay
      */
     protected function applyFilters(KunenaTopicFinder $finder, bool $category = false): void
     {
+        // The topics of the users whom the logged in user ignores are left out.
+        $finder->filterOutAuthors(KunenaUserIgnore::getIgnored(KunenaUserHelper::getMyself()->userid));
+
         // The filters need the reload in the background of the template: without it there is no filter bar, and the
         // filters in an old address do nothing.
         if (!KunenaFactory::getTemplate()->params->get('ajaxTopicList', 1)) {

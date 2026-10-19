@@ -53,6 +53,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use StdClass;
 
 /**
@@ -701,6 +702,26 @@ class KunenaMessage extends KunenaDatabaseObject
             $mailadmins,
             KunenaUserHelper::getMyself()->userid
         );
+
+        // Nobody gets subscription e-mails about the posts of a user whom he ignores (moderators and administrators
+        // still get the e-mails they get because of their task).
+        $ignoredBy = $emailToList ? KunenaUserIgnore::getIgnoredBy((int) $this->userid) : [];
+
+        if ($ignoredBy) {
+            foreach ($emailToList as $key => $emailTo) {
+                if (!\in_array((int) $emailTo->id, $ignoredBy, true)) {
+                    continue;
+                }
+
+                if ($emailTo->moderator || $emailTo->admin) {
+                    $emailTo->subscription = 0;
+                } else {
+                    unset($emailToList[$key]);
+                }
+            }
+
+            $emailToList = array_values($emailToList);
+        }
 
         $sentusers = [];
 

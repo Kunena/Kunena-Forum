@@ -13,6 +13,14 @@
 
 defined('_JEXEC') or die();
 
+// A message of a user whom the logged in user ignores is collapsed: a click shows it.
+$ignoredAuthor = $this->me->exists() && $this->message->userid != $this->me->userid
+    && \Kunena\Forum\Libraries\User\KunenaUserIgnore::isIgnoring($this->me->userid, $this->message->userid);
+
+if ($ignoredAuthor) {
+    ob_start();
+}
+
 $topicStarter = $this->topic->first_post_userid == $this->message->userid;
 $direction    = $this->ktemplate->params->get('avatarPosition');
 $sideProfile  = $this->profile->getSideProfile($this);
@@ -90,6 +98,19 @@ if ($direction === "left") : ?>
         </div>
     </div>
 
+<?php endif; ?>
+
+<?php
+if ($ignoredAuthor) :
+    $messageHtml = ob_get_clean();
+    ?>
+    <details class="kignored-message mb-3">
+        <summary class="p-2 border rounded text-muted">
+            <?php echo \Joomla\CMS\Language\Text::sprintf('COM_KUNENA_IGNORE_HIDDEN_MESSAGE', $this->escape($this->profile->getName())); ?>
+            &mdash; <span class="link-primary"><?php echo \Joomla\CMS\Language\Text::_('COM_KUNENA_IGNORE_SHOW'); ?></span>
+        </summary>
+        <?php echo $messageHtml; ?>
+    </details>
 <?php endif; ?>
 
 <?php echo $this->subLayout('Widget/Module')->set('position', 'kunena_msg_' . $this->message->replynum);

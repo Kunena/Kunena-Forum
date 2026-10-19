@@ -183,6 +183,8 @@ class KunenaLayout extends KunenaBase
 
     public $linkUserlistAllowedToShow;
 
+    public $drafts;
+
     /**
      * Append HTML after the layout content.
      *

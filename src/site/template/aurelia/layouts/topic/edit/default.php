@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -201,6 +202,10 @@ Text::script('COM_KUNENA_POLL_TITLE');
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form-validate" role="form" id="postform" name="postform" enctype="multipart/form-data" data-page-identifier="1">
     <input type="hidden" name="view" value="topic" />
+    <?php $draftId = Factory::getApplication()->getInput()->getInt('draftid', 0); ?>
+    <?php if ($draftId) : ?>
+        <input type="hidden" name="draftid" value="<?php echo $draftId; ?>" />
+    <?php endif; ?>
     <input id="kurl_topicons_request" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=topicicons&format=json&' . Session::getFormToken() . '=1', false); ?>" />
     <input id="kurl_category_template_text" type="hidden" value="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&task=categorytemplate&format=json&catid' . $this->message->id . '&' . Session::getFormToken() . '=1', false); ?>" />
     <input id="kcategory_poll" type="hidden" name="kcategory_poll" value="<?php echo $this->message->catid; ?>" />
@@ -472,6 +477,12 @@ Text::script('COM_KUNENA_POLL_TITLE');
             <button id="form_submit_button" type="submit" class="btn btn-outline-success btn-md form-validate" disabled tabindex="8">
                 <?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_SUBMIT'); ?>
             </button>
+
+            <?php if (!empty($this->config->enableDrafts) && $this->me->exists()) : ?>
+                <button id="form_draft_button" type="submit" name="savedraft" value="1" formnovalidate class="btn btn-outline-secondary btn-md" tabindex="9">
+                    <?php echo KunenaIcons::save() . ' ' . Text::_('COM_KUNENA_DRAFT_SAVE'); ?>
+                </button>
+            <?php endif; ?>
 
             <button type="reset" class="btn btn-outline-primary btn-md" onclick="window.history.back();" tabindex="10">
                 <?php echo KunenaIcons::delete(); ?>

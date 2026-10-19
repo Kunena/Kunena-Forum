@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
@@ -666,6 +667,13 @@ class TopicController extends KunenaController
      */
     public function post()
     {
+        // The editor has a second submit button which keeps the message as a draft instead of posting it.
+        if ($this->app->getInput()->post->getInt('savedraft', 0)) {
+            $this->savedraft();
+
+            return;
+        }
+
         $this->id = $this->app->getInput()->getInt('parentid', 0);
         $fields   = [
             'catid'             => $this->catid,
@@ -1071,6 +1079,11 @@ class TopicController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_POSTED'), 'success');
         }
 
+        // A message which was posted from a draft is not a draft anymore.
+        if ($draftId = $this->app->getInput()->post->getInt('draftid', 0)) {
+            KunenaDraftHelper::delete($draftId, $this->me->userid);
+        }
+
         $category = KunenaCategoryHelper::get($this->return);
 
         if ($message->isAuthorised('read', null, false) && $this->id) {
@@ -1386,6 +1399,13 @@ class TopicController extends KunenaController
      */
     public function edit()
     {
+        // The editor has a second submit button which keeps the changes as a draft instead of saving them.
+        if ($this->app->getInput()->post->getInt('savedraft', 0)) {
+            $this->savedraft();
+
+            return;
+        }
+
         $this->id = $this->app->getInput()->getInt('mesid', 0);
 
         $message = KunenaMessageHelper::get($this->id);
@@ -1655,6 +1675,11 @@ class TopicController extends KunenaController
         $activity->onAfterEdit($message);
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_SUCCESS_EDIT'), 'success');
+
+        // A message which was saved from a draft is not a draft anymore.
+        if ($draftId = $this->app->getInput()->post->getInt('draftid', 0)) {
+            KunenaDraftHelper::delete($draftId, $this->me->userid);
+        }
 
         if ($message->hold == 1) {
             // If user cannot approve message by himself, send email to moderators.
@@ -2950,5 +2975,191 @@ class TopicController extends KunenaController
         echo json_encode($topicIcons);
 
         jexit();
+    }
+
+    /**
+     * Save the posted message as a draft, to finish and post it later.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function savedraft()
+    {
+        if (empty($this->config->enableDrafts)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if (!$this->me->exists()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $input     = $this->app->getInput();
+        $parentId  = $input->getInt('parentid', 0);
+        $messageId = $input->getInt('mesid', 0);
+        $topicId   = 0;
+        $catid     = $this->catid;
+
+        try {
+            if ($messageId) {
+                // Edit: the draft holds the changes to an existing message.
+                $edited = KunenaMessageHelper::get($messageId);
+                $edited->tryAuthorise('edit');
+                $topicId = (int) $edited->thread;
+                $catid   = (int) $edited->catid;
+            } elseif ($parentId) {
+                // Reply: the draft belongs to the topic of the message which is replied to.
+                $parent = KunenaMessageHelper::get($parentId);
+                $parent->tryAuthorise('reply');
+                $topicId = (int) $parent->thread;
+                $catid   = (int) $parent->catid;
+            } else {
+                if (!$catid) {
+                    throw new Exception(Text::_('COM_KUNENA_ACTION_NO_CATEGORY_SELECTED'));
+                }
+
+                KunenaCategoryHelper::get($catid)->tryAuthorise('topic.create');
+            }
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $fields = [
+            'catid'             => $catid,
+            'name'              => $input->getString('authorname', $this->me->getName()),
+            'email'             => $input->getString('email', null),
+            'subject'           => $input->post->get('subject', '', 'raw'),
+            'message'           => $input->post->get('message', '', 'raw'),
+            'modified_reason'   => $input->getString('modified_reason', ''),
+            'icon_id'           => $input->getInt('topic_emoticon', null),
+            'anonymous'         => $input->getInt('anonymous', 0),
+            'poll_title'        => $input->getString('poll_title', ''),
+            'poll_options'      => $input->post->get('polloptionsID', [], 'array'),
+            'poll_time_to_live' => $input->getString('poll_time_to_live', 0),
+            'subscribe'         => $input->getInt('subscribeMe', 0),
+            'private'           => (string) ($input->getRaw('message_private') ?: $input->getRaw('private_message')),
+            'rating'            => 0,
+            'params'            => '',
+            'quote'             => 0,
+        ];
+
+        if (trim((string) $fields['subject']) === '' && trim(strip_tags((string) $fields['message'])) === '') {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_DRAFT_EMPTY'), 'warning');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        try {
+            $draftId = KunenaDraftHelper::save($this->me->userid, $fields, $parentId, $topicId, $input->getInt('draftid', 0), $messageId);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if (!$draftId) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_DRAFT_LIMIT', KunenaDraftHelper::MAX_DRAFTS), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        // Do not keep the posted fields in the session: the draft holds them now.
+        $this->app->setUserState('com_kunena.postfields', null);
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_DRAFT_SAVED'), 'success');
+        $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=drafts', false));
+    }
+
+    /**
+     * Open a draft in the editor.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function loaddraft()
+    {
+        if (empty($this->config->enableDrafts)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if (!Session::checkToken('get')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $draftId = $this->app->getInput()->getInt('draftid', 0);
+        $draft   = KunenaDraftHelper::get($draftId, $this->me->userid);
+
+        if (!$draft) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_DRAFT_NOT_FOUND'), 'error');
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=drafts', false));
+
+            return;
+        }
+
+        // The editor takes its values from the fields of the last post.
+        $this->app->setUserState('com_kunena.postfields', $draft->fields);
+
+        if ($draft->message_id) {
+            $url = "index.php?option=com_kunena&view=topic&layout=edit&catid={$draft->catid}&id={$draft->topic_id}&mesid={$draft->message_id}&draftid={$draft->id}";
+        } elseif ($draft->parent_id) {
+            $url = "index.php?option=com_kunena&view=topic&layout=reply&catid={$draft->catid}&id={$draft->topic_id}&mesid={$draft->parent_id}&draftid={$draft->id}";
+        } else {
+            $url = "index.php?option=com_kunena&view=topic&layout=create&catid={$draft->catid}&draftid={$draft->id}";
+        }
+
+        $this->setRedirect(KunenaRoute::_($url, false));
+    }
+
+    /**
+     * Delete a draft.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function deletedraft()
+    {
+        if (!Session::checkToken('post') && !Session::checkToken('get')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if (KunenaDraftHelper::delete($this->app->getInput()->getInt('draftid', 0), $this->me->userid)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_DRAFT_DELETED'), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_DRAFT_NOT_FOUND'), 'error');
+        }
+
+        $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=drafts', false));
     }
 }

@@ -126,6 +126,15 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
                         </div>
                         <?php endif; ?>
 
+                        <?php if (!empty($this->config->enableDrafts)) : ?>
+                        <div id="drafts">
+                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=drafts'); ?>" class="btn btn-link">
+                                <?php echo KunenaIcons::save(); ?>
+                                <?php echo Text::_('COM_KUNENA_DRAFTS'); ?>
+                            </a>
+                        </div>
+                        <?php endif; ?>
+
                         <div id="settings">
                             <a href="<?php echo $this->me->getUrl(false, 'edit'); ?>" class="btn btn-link">
                                 <?php echo KunenaIcons::cog(); ?>

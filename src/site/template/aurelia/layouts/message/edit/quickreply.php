@@ -167,6 +167,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
                             <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit" value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
                                                                                                                                                                                                         ?>" />
+                            <?php if (!empty($config->enableDrafts) && $me->exists()) : ?>
+                                <button type="submit" class="btn btn-outline-secondary border" name="savedraft" value="1" formnovalidate><?php echo Text::_('COM_KUNENA_DRAFT_SAVE'); ?></button>
+                            <?php endif; ?>
                             <?php // TODO: remove data on cancel.
                             ?>
                             <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />
@@ -284,6 +287,9 @@ if ($me->canDoCaptcha() && KunenaConfig::getInstance()->quickReply) {
                             <small><?php echo Text::_('COM_KUNENA_QMESSAGE_NOTE'); ?></small>
                             <input type="submit" class="btn btn-outline-primary border kreply-submit" name="submit" value="<?php echo Text::_('COM_KUNENA_SUBMIT'); ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');
                                                                                                                                                                                                         ?>" />
+                            <?php if (!empty($config->enableDrafts) && $me->exists()) : ?>
+                                <button type="submit" class="btn btn-outline-secondary border" name="savedraft" value="1" formnovalidate><?php echo Text::_('COM_KUNENA_DRAFT_SAVE'); ?></button>
+                            <?php endif; ?>
                             <?php // TODO: remove data on cancel.
                             ?>
                             <input type="reset" name="reset" class="btn btn-outline-primary border kreply-cancel" value="<?php echo ' ' . Text::_('COM_KUNENA_CANCEL') . ' '; ?>" data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'); ?>" data-bs-dismiss="modal" aria-hidden="true" />

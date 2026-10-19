@@ -384,6 +384,26 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_categories`
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `#__kunena_drafts`
+(
+    `id`            int(11)      NOT NULL AUTO_INCREMENT,
+    `user_id`       int(11)      NOT NULL,
+    `catid`         int(11)      NOT NULL DEFAULT 0,
+    `parent_id`     int(11)      NOT NULL DEFAULT 0,
+    `topic_id`      int(11)      NOT NULL DEFAULT 0,
+    `message_id`    int(11)      NOT NULL DEFAULT 0,
+    `subject`       varchar(255) NOT NULL DEFAULT '',
+    `message`       mediumtext   NOT NULL,
+    `fields`        mediumtext   NOT NULL,
+    `created_time`  int(11)      NOT NULL DEFAULT 0,
+    `modified_time` int(11)      NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    KEY `user_modified` (`user_id`, `modified_time`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `#__kunena_user_read`
 (
     `user_id`     int(11) NOT NULL,

@@ -135,6 +135,15 @@ $tmpParams      = KunenaFactory::getTemplate()->params;
                         </div>
                         <?php endif; ?>
 
+                        <?php if ($this->me->isModerator()) : ?>
+                        <div id="modlog">
+                            <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=modlog'); ?>" class="btn btn-link">
+                                <?php echo KunenaIcons::shield(); ?>
+                                <?php echo Text::_('COM_KUNENA_MODLOG'); ?>
+                            </a>
+                        </div>
+                        <?php endif; ?>
+
                         <div id="settings">
                             <a href="<?php echo $this->me->getUrl(false, 'edit'); ?>" class="btn btn-link">
                                 <?php echo KunenaIcons::cog(); ?>

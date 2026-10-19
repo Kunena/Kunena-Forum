@@ -197,6 +197,18 @@ class KunenaLayout extends KunenaBase
 
     public $feed;
 
+    public $entries;
+
+    public $logFilters;
+
+    public $operations;
+
+    public $logCategories;
+
+    public $collecting;
+
+    public $isAdmin;
+
     public $filters;
 
     public $filterBar;

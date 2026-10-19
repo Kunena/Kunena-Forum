@@ -31,6 +31,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -142,6 +143,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
         // Not in a list which is shown inside another page (a module, the profile of a user).
         $this->filterBar = !$this->getOptions()->get('embedded', false);
         $this->filters   = [
+            'tag'    => KunenaTopicTags::isEnabled() ? $this->input->getInt('ftag', 0) : 0,
             'status' => $this->input->getCmd('fstatus', ''),
             'q'      => trim($this->input->getString('fq', '')),
             'author' => trim($this->input->getString('fauthor', '')),
@@ -149,6 +151,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
         ];
 
         $finder
+            ->filterByTag($this->filters['tag'])
             ->filterByStatus($this->filters['status'])
             ->filterBySubject($this->filters['q'])
             ->filterByAuthorName($this->filters['author']);
@@ -194,6 +197,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
 
         $topicIds = array_keys((array) $this->topics);
         KunenaTopicHelper::getUserTopics($topicIds);
+        KunenaTopicTags::preload($topicIds);
 
         // The last posts are needed one by one below: load them with one query.
         KunenaMessageHelper::getMessages($lastIds);

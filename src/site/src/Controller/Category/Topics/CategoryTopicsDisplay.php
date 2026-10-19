@@ -25,6 +25,7 @@ use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -190,6 +191,7 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
             KunenaMessageHelper::getMessages($lastpostlist);
 
             KunenaTopicHelper::getUserTopics(array_keys($this->topics));
+            KunenaTopicTags::preload(array_keys($this->topics));
             $lastreadlist = KunenaTopicHelper::fetchNewStatus($this->topics);
 
             // Fetch last / new post positions when user can see unapproved or deleted posts.

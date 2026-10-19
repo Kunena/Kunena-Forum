@@ -96,7 +96,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
     // The address without the filters: the other parameters (non SEF addresses, userid, ...) stay.
     $filterBase     = Uri::getInstance()->toString(['scheme', 'host', 'port', 'path']);
     $filterKeep     = array_filter(
-        array_diff_key(Uri::getInstance()->getQuery(true), array_flip(['fq', 'fauthor', 'fstatus', 'catid', 'start', 'limitstart'])),
+        array_diff_key(Uri::getInstance()->getQuery(true), array_flip(['fq', 'fauthor', 'fstatus', 'ftag', 'catid', 'start', 'limitstart'])),
         'is_scalar'
     );
     $filterResetUrl = $filterBase . ($filterKeep ? '?' . http_build_query($filterKeep) : '');
@@ -124,6 +124,17 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
                 <?php endforeach; ?>
             </select>
         </div>
+        <?php $filterTags = \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::isEnabled() ? \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::getAvailable() : []; ?>
+        <?php if ($filterTags) : ?>
+            <div class="col-6 col-md-2">
+                <select name="ftag" class="form-select form-select-sm" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_TAG'); ?>">
+                    <option value="0"><?php echo Text::_('COM_KUNENA_FILTER_ALL_TAGS'); ?></option>
+                    <?php foreach ($filterTags as $filterTag) : ?>
+                        <option value="<?php echo (int) $filterTag->id; ?>"<?php echo (int) $this->filters['tag'] === (int) $filterTag->id ? ' selected' : ''; ?>><?php echo $this->escape($filterTag->title); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <?php endif; ?>
         <div class="col-6 col-md-3">
             <input type="search" name="fq" value="<?php echo $this->escape($this->filters['q']); ?>" class="form-control form-control-sm"
                    placeholder="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" autocomplete="off"/>

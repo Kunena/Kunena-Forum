@@ -994,6 +994,10 @@ class KunenaTopic extends KunenaDatabaseObject
             KunenaTopicRedirect::add($goneUrl);
         }
 
+        if ($this->moved_id == 0) {
+            KunenaTopicTags::delete((int) $this->id);
+        }
+
         // Clear authentication cache
         $this->_authfcache = $this->_authccache = $this->_authcache = [];
 

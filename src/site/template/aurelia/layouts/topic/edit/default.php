@@ -311,6 +311,30 @@ Text::script('COM_KUNENA_POLL_TITLE');
             </div>
         </div>
 
+        <?php
+        // The tags (Joomla Tags) of a new topic, or of an existing topic when its first message is edited by its author or a moderator.
+        $topicTagsAllowed = \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::isEnabled()
+            && (!$this->topic->exists()
+                || ($this->topic->first_post_id == $this->message->id
+                    && (KunenaUserHelper::getMyself()->userid == $this->topic->first_post_userid || KunenaUserHelper::getMyself()->isModerator($this->message->getCategory()))));
+        $topicTagsList    = $topicTagsAllowed ? \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::getAvailable() : [];
+        ?>
+        <?php if ($topicTagsList) : ?>
+            <?php $topicTagsChosen = $this->topic->exists() ? array_keys(\Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::get((int) $this->topic->id)) : []; ?>
+            <div class="form-group row">
+                <label for="topic-tags" class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_TAGS'); ?></label>
+                <div class="col-md-10">
+                    <input type="hidden" name="topic_tags_present" value="1" />
+                    <select class="form-select" name="topic_tags[]" id="topic-tags" multiple size="<?php echo min(6, max(3, \count($topicTagsList))); ?>">
+                        <?php foreach ($topicTagsList as $tag) : ?>
+                            <option value="<?php echo (int) $tag->id; ?>"<?php echo \in_array((int) $tag->id, $topicTagsChosen, true) ? ' selected' : ''; ?>><?php echo $this->escape($tag->title); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <small class="text-muted"><?php echo Text::_('COM_KUNENA_TAGS_DESC'); ?></small>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <?php if (!$this->topic->exists() && $this->ktemplate->params->get('similarTopics', 0)) : ?>
             <?php // The topics with a similar subject are suggested while a new topic is written (similartopics.js). ?>
             <div class="form-group row d-none" id="similar-topics">

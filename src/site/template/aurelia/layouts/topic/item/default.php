@@ -87,6 +87,11 @@ if ($this->topic->locked) {
 
     <div class="clearfix"></div>
 
+    <?php $topicTagsHtml = \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::render((int) $this->topic->id, 'mb-2 d-block'); ?>
+    <?php if ($topicTagsHtml !== '') : ?>
+        <?php echo $topicTagsHtml; ?>
+    <?php endif; ?>
+
     <?php
     if ($this->ktemplate->params->get('displayModule')) {
         echo $this->subLayout('Widget/Module')->set('position', 'kunena_topictitle');

@@ -48,6 +48,7 @@ use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
@@ -1083,6 +1084,11 @@ class TopicController extends KunenaController
             return;
         }
 
+        // The tags of a new topic.
+        if ($isNew && KunenaTopicTags::isEnabled()) {
+            KunenaTopicTags::save((int) $topic->id, $this->app->getInput()->post->get('topic_tags', [], 'array'));
+        }
+
         // Save IP address of user
         if ($this->config->ipTracking) {
             $this->me->ip = $message->ip;
@@ -1698,6 +1704,15 @@ class TopicController extends KunenaController
         }
 
         $isMine = $this->me->userid == $message->userid;
+
+        // The tags of the topic are changed with its first message, by the author of the topic or a moderator.
+        if (
+            KunenaTopicTags::isEnabled() && $topic->first_post_id == $message->id
+            && $this->app->getInput()->post->getInt('topic_tags_present', 0)
+            && ($this->me->userid == $topic->first_post_userid || $this->me->isModerator($topic->getCategory()))
+        ) {
+            KunenaTopicTags::save((int) $topic->id, $this->app->getInput()->post->get('topic_tags', [], 'array'));
+        }
 
         if ($this->config->logModeration) {
             KunenaLog::log(

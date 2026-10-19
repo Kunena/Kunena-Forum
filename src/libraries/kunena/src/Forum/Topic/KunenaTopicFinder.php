@@ -361,6 +361,28 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
+     * Filter topics which have the Joomla tag.
+     *
+     * @param   int  $tagId  The id of the tag (0 does not filter).
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterByTag(int $tagId): KunenaTopicFinder
+    {
+        if ($tagId > 0) {
+            $this->query->where(
+                $this->db->quoteName('a.id') . ' IN (SELECT ' . $this->db->quoteName('content_item_id') . ' FROM '
+                . $this->db->quoteName('#__contentitem_tag_map') . ' WHERE ' . $this->db->quoteName('type_alias') . ' = '
+                . $this->db->quote(KunenaTopicTags::TYPE_ALIAS) . ' AND ' . $this->db->quoteName('tag_id') . ' = ' . $tagId . ')'
+            );
+        }
+
+        return $this;
+    }
+
+    /**
      * Filter topics which have at least one of the words in the subject (to find similar topics).
      *
      * @param   string[]  $words  The words to look for.

@@ -147,6 +147,9 @@ class TopicListingUserDisplay extends ListDisplay
                 break;
         }
 
+        // Filters of the filter bar.
+        $this->applyFilters($finder);
+
         $Itemid = Factory::getApplication()->getInput()->getCmd('Itemid');
         $view   = $this->input->getCmd('view');
         $layout = $this->input->getCmd('layout');

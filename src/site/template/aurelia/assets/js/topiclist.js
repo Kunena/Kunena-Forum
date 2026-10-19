@@ -44,10 +44,15 @@
 		// Do not replace the list while somebody is using it.
 		const inUse = () => {
 			const form = document.getElementById('ktopicsform');
+			const bar = document.getElementById('ktopicsfilter');
+			const typing = /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName);
 
 			return !!(form && (form.querySelector('input.kcheck:checked, input[type=checkbox]:checked:not(.kcheckall)')
-				|| form.contains(document.activeElement) && /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)));
+				|| form.contains(document.activeElement) && typing))
+				|| !!(bar && bar.contains(document.activeElement) && typing);
 		};
+
+		let loadNumber = 0;
 
 		const refresh = async () => {
 			if (busy || document.hidden || inUse()) {
@@ -55,6 +60,8 @@
 			}
 
 			busy = true;
+
+			const asked = loadNumber;
 
 			try {
 				const response = await fetch(window.location.href, {
@@ -69,7 +76,7 @@
 				const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
 				const fresh = doc.querySelector('tbody.topic-list');
 
-				if (!fresh || inUse()) {
+				if (!fresh || inUse() || asked !== loadNumber) {
 					return;
 				}
 
@@ -125,6 +132,152 @@
 				busy = false;
 			}
 		};
+
+		// The filter bar: category, status, subject and author. The server does the filtering, the page only asks for the
+		// list again with the filters in the address (so a filtered list can be shared or reloaded).
+		const filterForm = document.getElementById('ktopicsfilter');
+
+		const replaceList = (doc) => {
+			const fresh = doc.querySelector('tbody.topic-list');
+
+			if (!fresh) {
+				return false;
+			}
+
+			list.replaceChildren(...[...fresh.childNodes].map((node) => document.importNode(node, true)));
+
+			if (window.bootstrap && bootstrap.Tooltip) {
+				list.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((el) => new bootstrap.Tooltip(el));
+			}
+
+			// The pagination (above and under the list) and the number of topics.
+			const pagination = document.querySelectorAll('[data-ktopics-pagination]');
+
+			doc.querySelectorAll('[data-ktopics-pagination]').forEach((block, index) => {
+				if (pagination[index]) {
+					pagination[index].replaceChildren(...[...block.childNodes].map((node) => document.importNode(node, true)));
+				}
+			});
+
+			const count = document.querySelector('[data-ktopics-count]');
+			const freshCount = doc.querySelector('[data-ktopics-count]');
+
+			if (count && freshCount) {
+				count.textContent = freshCount.textContent;
+			}
+
+			return true;
+		};
+
+		const load = async (url, push) => {
+			const number = ++loadNumber;
+
+			busy = true;
+			list.style.opacity = '.5';
+
+			try {
+				const response = await fetch(url, {
+					credentials: 'same-origin',
+					headers: {'X-Requested-With': 'XMLHttpRequest'},
+				});
+
+				if (number !== loadNumber) {
+					// A newer filter was asked for meanwhile.
+					return;
+				}
+
+				if (!response.ok || !replaceList(new DOMParser().parseFromString(await response.text(), 'text/html'))) {
+					// Let the browser show what is wrong.
+					window.location.href = url;
+
+					return;
+				}
+
+				if (push) {
+					window.history.pushState({}, '', url);
+				}
+			} catch (e) {
+				window.location.href = url;
+			} finally {
+				if (number === loadNumber) {
+					list.style.opacity = '';
+					busy = false;
+				}
+			}
+		};
+
+		if (filterForm) {
+			const filterUrl = () => {
+				const url = new URL(filterForm.action, window.location.href);
+
+				url.search = '';
+
+				new FormData(filterForm).forEach((value, key) => {
+					value = String(value).trim();
+
+					if (value !== '' && !(key === 'catid' && value === '0')) {
+						url.searchParams.append(key, value);
+					}
+				});
+
+				return url.toString();
+			};
+
+			let timer = null;
+
+			filterForm.addEventListener('submit', (event) => {
+				event.preventDefault();
+				window.clearTimeout(timer);
+				load(filterUrl(), true);
+			});
+
+			filterForm.addEventListener('change', (event) => {
+				if (event.target.tagName === 'SELECT') {
+					load(filterUrl(), true);
+				}
+			});
+
+			filterForm.addEventListener('input', (event) => {
+				if (event.target.tagName === 'INPUT') {
+					window.clearTimeout(timer);
+					timer = window.setTimeout(() => load(filterUrl(), true), 400);
+				}
+			});
+
+			filterForm.querySelector('[data-ktopics-reset]')?.addEventListener('click', (event) => {
+				event.preventDefault();
+				window.clearTimeout(timer);
+				filterForm.reset();
+				filterForm.querySelectorAll('input[type=search]').forEach((input) => {
+					input.value = '';
+				});
+				filterForm.querySelectorAll('select').forEach((select) => {
+					select.selectedIndex = 0;
+				});
+				load(event.currentTarget.href, true);
+			});
+
+			// The pages of a filtered list.
+			document.addEventListener('click', (event) => {
+				const link = event.target.closest('[data-ktopics-pagination] a[href]');
+
+				if (link && !event.ctrlKey && !event.metaKey && !event.shiftKey && link.getAttribute('href').charAt(0) !== '#') {
+					event.preventDefault();
+					load(link.href, true);
+				}
+			});
+
+			// Back and forward: show the list of that address and the filters in the bar.
+			window.addEventListener('popstate', () => {
+				const params = new URL(window.location.href).searchParams;
+
+				filterForm.querySelectorAll('[name]').forEach((field) => {
+					field.value = params.get(field.name) || (field.tagName === 'SELECT' ? field.options[0].value : '');
+				});
+
+				load(window.location.href, false);
+			});
+		}
 
 		window.setInterval(refresh, interval);
 		document.addEventListener('visibilitychange', () => {

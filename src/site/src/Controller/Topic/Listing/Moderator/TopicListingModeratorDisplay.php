@@ -131,6 +131,10 @@ class TopicListingModeratorDisplay extends ListDisplay
         $threadSearch = implode(',', $threadSearch);
 
         $finder = new KunenaTopicFinder();
+
+        // Filters of the filter bar.
+        $this->applyFilters($finder);
+
         $this->topics = $finder
             ->filterByCategories($categories)
             ->filterByMoved(false)

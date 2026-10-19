@@ -24,7 +24,10 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -76,10 +79,67 @@ abstract class ListDisplay extends KunenaControllerDisplay
     public $input;
 
     /**
+     * Values of the filter bar: status, q (subject) and author.
+     *
+     * @var     array
+     * @since   Kunena 7.2
+     */
+    public $filters = ['status' => '', 'q' => '', 'author' => ''];
+
+    /**
+     * Show the filter bar above the list.
+     *
+     * @var     boolean
+     * @since   Kunena 7.2
+     */
+    public $filterBar = false;
+
+    /**
      * @var     string
      * @since   Kunena 6.0
      */
     protected $name = 'Topic/List';
+
+    /**
+     * Read the filters of the filter bar (status, subject, author, and the category when the list has none) and
+     * apply them to the finder. Shows the filter bar above the list.
+     *
+     * @param   KunenaTopicFinder  $finder    The finder of the list.
+     * @param   boolean            $category  True if the list does not filter on the category itself.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    protected function applyFilters(KunenaTopicFinder $finder, bool $category = false): void
+    {
+        // The filters need the reload in the background of the template: without it there is no filter bar, and the
+        // filters in an old address do nothing.
+        if (!KunenaFactory::getTemplate()->params->get('ajaxTopicList', 1)) {
+            $this->filterBar = false;
+
+            return;
+        }
+
+        // Not in a list which is shown inside another page (a module, the profile of a user).
+        $this->filterBar = !$this->getOptions()->get('embedded', false);
+        $this->filters   = [
+            'status' => $this->input->getCmd('fstatus', ''),
+            'q'      => trim($this->input->getString('fq', '')),
+            'author' => trim($this->input->getString('fauthor', '')),
+        ];
+
+        $finder
+            ->filterByStatus($this->filters['status'])
+            ->filterBySubject($this->filters['q'])
+            ->filterByAuthorName($this->filters['author']);
+
+        $catid = $this->input->getInt('catid', 0);
+
+        if ($category && $catid) {
+            $finder->filterByCategories(KunenaCategoryHelper::getCategories([$catid], false, 'read'));
+        }
+    }
 
     /**
      * Prepare topics by pre-loading needed information.

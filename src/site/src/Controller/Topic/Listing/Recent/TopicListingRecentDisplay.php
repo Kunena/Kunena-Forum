@@ -174,6 +174,9 @@ class TopicListingRecentDisplay extends ListDisplay
                 break;
         }
 
+        // Filters of the filter bar.
+        $this->applyFilters($finder);
+
         $categories = KunenaCategoryHelper::getCategories($categoryIds, $reverse, $authorise);
         $finder->filterByCategories($categories);
 

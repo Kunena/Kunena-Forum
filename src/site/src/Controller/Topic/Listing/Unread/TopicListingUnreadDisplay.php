@@ -120,6 +120,9 @@ class TopicListingUnreadDisplay extends ListDisplay
 
         $finder = new KunenaTopicFinder();
 
+        // Filters of the filter bar (the list has no category of its own).
+        $this->applyFilters($finder, true);
+
         $this->topics = $finder
             ->start($start)
             ->limit($limit)

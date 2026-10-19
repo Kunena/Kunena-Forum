@@ -287,6 +287,93 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
+     * Filter topics which have the text in the subject.
+     *
+     * @param   string  $text  Text to look for.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterBySubject(string $text): KunenaTopicFinder
+    {
+        $text = trim($text);
+
+        if ($text !== '') {
+            $this->query->where($this->db->quoteName('a.subject') . ' LIKE ' . $this->db->quote('%' . $this->db->escape($text, true) . '%', false));
+        }
+
+        return $this;
+    }
+
+    /**
+     * Filter topics which were started by a user whose username or name has the text (or by a guest with that name).
+     *
+     * @param   string  $text  Text to look for.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterByAuthorName(string $text): KunenaTopicFinder
+    {
+        $text = trim($text);
+
+        if ($text === '') {
+            return $this;
+        }
+
+        $like  = $this->db->quote('%' . $this->db->escape($text, true) . '%', false);
+        $query = $this->db->createQuery()
+            ->select($this->db->quoteName('id'))
+            ->from($this->db->quoteName('#__users'))
+            ->where('(' . $this->db->quoteName('username') . ' LIKE ' . $like . ' OR ' . $this->db->quoteName('name') . ' LIKE ' . $like . ')');
+
+        $ids = ArrayHelper::toInteger((array) $this->db->setQuery($query, 0, 200)->loadColumn());
+        $or  = [$this->db->quoteName('a.first_post_guest_name') . ' LIKE ' . $like];
+
+        if ($ids) {
+            $or[] = $this->db->quoteName('a.first_post_userid') . ' IN (' . implode(',', $ids) . ')';
+        }
+
+        $this->query->where('(' . implode(' OR ', $or) . ')');
+
+        return $this;
+    }
+
+    /**
+     * Filter topics by status.
+     *
+     * @param   string  $status  noreplies, replied, sticky, locked or poll (anything else does not filter).
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterByStatus(string $status): KunenaTopicFinder
+    {
+        switch ($status) {
+            case 'noreplies':
+                $this->query->where($this->db->quoteName('a.posts') . ' = 1');
+                break;
+            case 'replied':
+                $this->query->where($this->db->quoteName('a.posts') . ' > 1');
+                break;
+            case 'sticky':
+                $this->query->where($this->db->quoteName('a.ordering') . ' > 0');
+                break;
+            case 'locked':
+                $this->query->where($this->db->quoteName('a.locked') . ' > 0');
+                break;
+            case 'poll':
+                $this->query->where($this->db->quoteName('a.poll_id') . ' > 0');
+                break;
+        }
+
+        return $this;
+    }
+
+    /**
      * Get topics.
      *
      * @param   string  $access  Kunena action access control check.

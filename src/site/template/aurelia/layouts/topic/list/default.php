@@ -52,7 +52,7 @@ if ($this->ktemplate->params->get('ajaxTopicList', 1)) {
                 <?php echo $this->escape($this->headerText); ?>
 
                 <?php if ($layout != 'unread') : ?>
-                    <small class="d-none d-sm-block">
+                    <small class="d-none d-sm-block" data-ktopics-count>
                         (<?php echo KunenaCategory::getInstance()->totalCount($this->pagination->total); ?>)
                     </small>
                 <?php endif; ?>
@@ -79,13 +79,73 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
     echo $this->subLayout('Widget/Forumjump')->set('categorylist', $this->categorylist);
 } ?>
 
+<?php if (!empty($this->filterBar)) : ?>
+    <?php
+    $filterCategories = HTMLHelper::_(
+        'kunenaforum.categorylist',
+        'catid',
+        0,
+        [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_FILTER_ALL_CATEGORIES'))],
+        [],
+        'class="form-select form-select-sm" aria-label="' . Text::_('COM_KUNENA_CATEGORY') . '"',
+        'value',
+        'text',
+        $this->input->getInt('catid', 0),
+        'kfilter-catid'
+    );
+    // The address without the filters: the other parameters (non SEF addresses, userid, ...) stay.
+    $filterBase     = Uri::getInstance()->toString(['scheme', 'host', 'port', 'path']);
+    $filterKeep     = array_filter(
+        array_diff_key(Uri::getInstance()->getQuery(true), array_flip(['fq', 'fauthor', 'fstatus', 'catid', 'start', 'limitstart'])),
+        'is_scalar'
+    );
+    $filterResetUrl = $filterBase . ($filterKeep ? '?' . http_build_query($filterKeep) : '');
+    $statusOptions = [
+        ''          => 'COM_KUNENA_FILTER_STATUS_ALL',
+        'noreplies' => 'COM_KUNENA_FILTER_STATUS_NOREPLIES',
+        'replied'   => 'COM_KUNENA_FILTER_STATUS_REPLIED',
+        'sticky'    => 'COM_KUNENA_FILTER_STATUS_STICKY',
+        'locked'    => 'COM_KUNENA_FILTER_STATUS_LOCKED',
+        'poll'      => 'COM_KUNENA_FILTER_STATUS_POLL',
+    ];
+    ?>
+    <form action="<?php echo $this->escape($filterBase); ?>" method="get"
+          id="ktopicsfilter" class="row g-2 align-items-center mt-2 mb-3" role="search">
+        <?php foreach ($filterKeep as $keepKey => $keepValue) : ?>
+            <input type="hidden" name="<?php echo $this->escape($keepKey); ?>" value="<?php echo $this->escape($keepValue); ?>"/>
+        <?php endforeach; ?>
+        <div class="col-12 col-md-3">
+            <?php echo $filterCategories; ?>
+        </div>
+        <div class="col-6 col-md-2">
+            <select name="fstatus" class="form-select form-select-sm" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_STATUS'); ?>">
+                <?php foreach ($statusOptions as $value => $label) : ?>
+                    <option value="<?php echo $value; ?>"<?php echo $this->filters['status'] === $value ? ' selected' : ''; ?>><?php echo Text::_($label); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-6 col-md-3">
+            <input type="search" name="fq" value="<?php echo $this->escape($this->filters['q']); ?>" class="form-control form-control-sm"
+                   placeholder="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" autocomplete="off"/>
+        </div>
+        <div class="col-6 col-md-2">
+            <input type="search" name="fauthor" value="<?php echo $this->escape($this->filters['author']); ?>" class="form-control form-control-sm"
+                   placeholder="<?php echo Text::_('COM_KUNENA_FILTER_AUTHOR'); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_AUTHOR'); ?>" autocomplete="off"/>
+        </div>
+        <div class="col-6 col-md-2 text-end">
+            <button type="submit" class="btn btn-sm btn-outline-primary"><?php echo Text::_('COM_KUNENA_FILTER_APPLY'); ?></button>
+            <a href="<?php echo $this->escape($filterResetUrl); ?>" class="btn btn-sm btn-outline-secondary" data-ktopics-reset><?php echo Text::_('COM_KUNENA_FILTER_RESET'); ?></a>
+        </div>
+    </form>
+<?php endif; ?>
+
 <div class="float-end">
     <?php echo $this->subLayout('Widget/Search')
         ->set('catid', 'all')
         ->setLayout('topic'); ?>
 </div>
 
-<div class="float-start">
+<div class="float-start" data-ktopics-pagination>
     <?php echo $this->subLayout('Widget/Pagination/List')
         ->set('pagination', $this->pagination->setDisplayedPages(4))
         ->set('display', true); ?>
@@ -183,7 +243,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
     </form>
 </div>
 
-<div class="float-start">
+<div class="float-start" data-ktopics-pagination>
     <?php echo $this->subLayout('Widget/Pagination/List')
         ->set('pagination', $this->pagination->setDisplayedPages(4))
         ->set('display', true); ?>

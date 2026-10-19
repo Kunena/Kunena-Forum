@@ -142,6 +142,19 @@
         <field name="moduleIdWebauthn" type="text" default="0"
                label="COM_KUNENA_TEMPLATE_MODULE_ID_WEBAUTHN"
                description="COM_KUNENA_TEMPLATE_MODULE_ID_WEBAUTHN_DESC"/>
+        <field name="attachmentsOrderBy" type="list" default="id" label="COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY"
+               description="COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY_DESC">
+            <option value="id">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY_ID</option>
+            <option value="date">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY_DATE</option>
+            <option value="name">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY_NAME</option>
+            <option value="size">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY_SIZE</option>
+            <option value="type">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_BY_TYPE</option>
+        </field>
+        <field name="attachmentsOrderDir" type="list" default="asc" label="COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_DIR"
+               description="COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_DIR_DESC">
+            <option value="asc">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_ASC</option>
+            <option value="desc">COM_KUNENA_TEMPLATE_ATTACHMENTS_ORDER_DESC</option>
+        </field>
     </fieldset>
 
     <fieldset name="COM_KUNENA_TEMPLATE_TAB_COLORS">

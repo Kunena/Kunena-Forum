@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
@@ -25,7 +26,11 @@ $message              = $this->message;
 $category             = $message->getCategory();
 $isReply              = $this->message->id != $this->topic->first_post_id;
 $signature            = $this->profile->getSignature();
-$attachments          = $message->getAttachments();
+$attachments          = KunenaAttachmentHelper::sort(
+    $message->getAttachments(),
+    $this->ktemplate->params->get('attachmentsOrderBy', 'id'),
+    $this->ktemplate->params->get('attachmentsOrderDir', 'asc')
+);
 $attachs              = $message->getNbAttachments();
 $topicStarter         = $this->topic->first_post_userid == $this->message->userid;
 $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20);

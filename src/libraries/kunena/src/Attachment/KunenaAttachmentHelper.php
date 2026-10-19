@@ -700,4 +700,60 @@ abstract class KunenaAttachmentHelper
     {
         return stripos($mime, 'image/') !== false;
     }
+
+    /**
+     * Sort the attachments of a message, the array keys (attachment ids) are kept.
+     *
+     * @param   KunenaAttachment[]  $attachments  The attachments.
+     * @param   string              $by           Order by id (order of uploading), date (last change of the file), name, size or type.
+     * @param   string              $direction    asc or desc.
+     *
+     * @return  KunenaAttachment[]
+     *
+     * @since   Kunena 7.2
+     */
+    public static function sort(array $attachments, string $by = 'id', string $direction = 'asc'): array
+    {
+        if (\count($attachments) < 2) {
+            return $attachments;
+        }
+
+        $dates = [];
+
+        if ($by === 'date') {
+            foreach ($attachments as $id => $attachment) {
+                $path        = $attachment->getPath();
+                $dates[$id] = $path ? (int) filemtime($path) : 0;
+            }
+        }
+
+        uasort(
+            $attachments,
+            static function ($a, $b) use ($by, $dates): int {
+                switch ($by) {
+                    case 'date':
+                        $result = ($dates[$a->id] ?? 0) <=> ($dates[$b->id] ?? 0);
+                        break;
+                    case 'name':
+                        $result = strnatcasecmp($a->getFilename(false), $b->getFilename(false));
+                        break;
+                    case 'size':
+                        $result = (int) $a->size <=> (int) $b->size;
+                        break;
+                    case 'type':
+                        // Group by file type (image/png, application/pdf, ...) and sort by name inside a type.
+                        $result = strcasecmp((string) $a->filetype, (string) $b->filetype)
+                            ?: strnatcasecmp($a->getFilename(false), $b->getFilename(false));
+                        break;
+                    default:
+                        $result = 0;
+                }
+
+                // The id keeps equal attachments in the order they were uploaded.
+                return $result ?: ((int) $a->id <=> (int) $b->id);
+            }
+        );
+
+        return strtolower($direction) === 'desc' ? array_reverse($attachments, true) : $attachments;
+    }
 }

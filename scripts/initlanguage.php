@@ -21,6 +21,7 @@ $files = [
     'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.models.ini',
     'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.sys.ini',
     'components/com_kunena/admin/language/en-GB/en-GB.com_kunena.views.ini',
+    'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_acl.sys.ini',
     'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_altauserpoints.sys.ini',
     'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_community.sys.ini',
     'components/com_kunena/admin/language/en-GB/en-GB.plg_kunena_comprofiler.sys.ini',

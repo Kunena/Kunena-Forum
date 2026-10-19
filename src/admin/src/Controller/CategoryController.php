@@ -146,6 +146,14 @@ class CategoryController extends KunenaController
 
         unset($post['params-joomla-level']);
         unset($post['params-joomla-group']);
+
+        // Access plugins post their options as access-<type> and params-<type>, they are not category properties
+        foreach (array_keys($post) as $key) {
+            if (preg_match('/^(access|params)-/', (string) $key)) {
+                unset($post[$key]);
+            }
+        }
+
         array_splice($post, 2, 1);
 
         if ($category->exists() && !$category->isAuthorised('admin')) {

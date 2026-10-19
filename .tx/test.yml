@@ -163,6 +163,12 @@ filters:
 
   - filter_type: file
     file_format: INI
+    source_file: src/plugins/plg_kunena_acl/language/en-GB/en-GB.plg_kunena_acl.sys.ini
+    source_language: en_GB
+    translation_files_expression: src/plugins/plg_kunena_acl/language/<lang>/<lang>.plg_kunena_acl.sys.ini
+
+  - filter_type: file
+    file_format: INI
     source_file: src/plugins/plg_kunena_altauserpoints/language/en-GB/en-GB.plg_kunena_altauserpoints.sys.ini
     source_language: en_GB
     translation_files_expression: src/plugins/plg_kunena_altauserpoints/language/<lang>/<lang>.plg_kunena_altauserpoints.sys.ini

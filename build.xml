@@ -439,6 +439,12 @@
 			<fileset dir="${kunena.plugins}/plg_kunena_kunena" />
 		</copy>
 		<copy
+			todir="${tmp_dir}/packages/plg_kunena_acl"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${kunena.plugins}/plg_kunena_acl" />
+		</copy>
+		<copy
 			todir="${tmp_dir}/packages/plg_kunena_joomla"
 			overwrite="true">
 			<filterchain refid="filter" />
@@ -535,6 +541,14 @@
 			overwrite="true">
 			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_gravatar">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_acl"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${project_dir}/plugins/plg_kunena_acl">
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
@@ -766,6 +780,14 @@
 			<property
 				name="base.directory"
 				value="${tmp_dir}/packages/plg_kunena_gravatar" />
+		</phingcall>
+		<phingcall target="archive">
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_acl_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_acl" />
 		</phingcall>
 		<phingcall target="archive">
 			<property

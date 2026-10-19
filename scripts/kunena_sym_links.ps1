@@ -204,6 +204,11 @@ function delete-ExistingKunenaDir {
     if (Test-Path -Path $path20) {
         Remove-Item -LiteralPath $path20 -Force -Recurse
     }
+
+    $path21 = $joomlaInstallDir + "\plugins\kunena\acl"
+    if (Test-Path -Path $path21) {
+        Remove-Item -LiteralPath $path21 -Force -Recurse
+    }
 }
 
 # Create the symlinks only for Kunena component
@@ -263,6 +268,9 @@ function make-SymLinksKunena {
     $path20 = $joomlaInstallDir + "\plugins\task\kunena"
     $target20 = $kunenaGitDir + "\src\plugins\plg_task_kunena"
     New-Item -ItemType SymbolicLink -Path $path20 -Target $target20
+    $path21 = $joomlaInstallDir + "\plugins\kunena\acl"
+    $target21 = $kunenaGitDir + "\src\plugins\plg_kunena_acl"
+    New-Item -ItemType SymbolicLink -Path $path21 -Target $target21
 
     # Modify pkg_kunena.xml to set versionname to GIT
     $pkgKunenaPath = $joomlaInstallDir + "\administrator\manifests\packages\pkg_kunena.xml"

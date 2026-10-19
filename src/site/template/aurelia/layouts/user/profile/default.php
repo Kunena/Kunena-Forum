@@ -74,6 +74,13 @@ $personalText = $user->getPersonalText();
         </li>
     <?php endif; ?>
 
+    <?php $userBadges = \Kunena\Forum\Libraries\User\KunenaUserBadges::render($user); ?>
+    <?php if ($userBadges !== '') : ?>
+        <li>
+            <?php echo $userBadges; ?>
+        </li>
+    <?php endif; ?>
+
     <?php if (!empty($rankImage)) :
     ?>
         <li>

@@ -17,6 +17,7 @@ namespace Kunena\Forum\Plugin\System\Kunena\Extension;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Model\AfterSaveEvent as ModelAfterSaveEvent;
+use Joomla\CMS\Event\Model\BeforeSaveEvent as ModelBeforeSaveEvent;
 use Joomla\CMS\Event\User\AfterLoginEvent;
 use Joomla\CMS\Event\User\AfterSaveEvent;
 use Joomla\CMS\Event\User\BeforeSaveEvent;
@@ -30,6 +31,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Joomla\CMS\User\User;
 use Joomla\Http\Http;
+use Joomla\Registry\Registry;
 use Joomla\Utilities\IpHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 
@@ -74,6 +76,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
                 $mapping['onUserBeforeSave'] = 'onUserBeforeSave';
             } elseif ($app->isClient('administrator')) {
                 // Only allowed in the backend
+                $mapping['onExtensionBeforeSave'] = 'onExtensionBeforeSave';
                 $mapping['onExtensionAfterSave'] = 'onExtensionAfterSave';
             }
         }
@@ -218,6 +221,35 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         }
 
         return $language;
+    }
+
+    /**
+     * The configuration form saves only its own fields: the badges (they have their own view) are kept.
+     *
+     * @param   ModelBeforeSaveEvent  $event  The event, carrying the table of the extension.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public function onExtensionBeforeSave(ModelBeforeSaveEvent $event): void
+    {
+        $table = $event->getItem();
+
+        if ($event->getContext() !== 'com_config.component' || !isset($table->element, $table->type) || $table->element !== 'com_kunena' || $table->type !== 'component') {
+            return;
+        }
+
+        $params = new Registry($table->params);
+
+        if (!$params->exists('badges')) {
+            $badges = ComponentHelper::getParams('com_kunena')->get('badges');
+
+            if ($badges) {
+                $params->set('badges', $badges);
+                $table->params = $params->toString();
+            }
+        }
     }
 
     /**

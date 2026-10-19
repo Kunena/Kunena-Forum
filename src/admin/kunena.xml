@@ -50,6 +50,7 @@
             <menu view="attachments">COM_KUNENA_FILE_MANAGER</menu>
             <menu view="smilies">COM_KUNENA_EMOTICON_MANAGER</menu>
             <menu view="ranks">COM_KUNENA_RANK_MANAGER</menu>
+            <menu view="badges">COM_KUNENA_BADGES_MANAGER</menu>
             <menu view="templates">COM_KUNENA_TEMPLATE_MANAGER</menu>
             <menu link="option=com_config&amp;view=component&amp;component=com_kunena">COM_KUNENA_CONFIGURATION</menu>
             <menu view="stats">COM_KUNENA_MENU_STATISTICS</menu>

@@ -53,6 +53,13 @@ if ($this->config->showUserStats) {
                 </li>
             <?php endif ?>
 
+            <?php $userBadges = \Kunena\Forum\Libraries\User\KunenaUserBadges::render($this->profile); ?>
+            <?php if ($userBadges !== '') : ?>
+                <li class="list-group-item">
+                    <?php echo $userBadges; ?>
+                </li>
+            <?php endif; ?>
+
             <?php if ($this->config->showUserStats && $this->config->showRanking) :
                 ?>
                 <li class="list-group-item">

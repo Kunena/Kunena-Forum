@@ -167,6 +167,11 @@
             <option value="0">COM_KUNENA_NO</option>
             <option value="1">COM_KUNENA_YES</option>
         </field>
+        <field name="showBadges" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_BADGES"
+               description="COM_KUNENA_TEMPLATE_SHOW_BADGES_DESC">
+            <option value="0">COM_KUNENA_NO</option>
+            <option value="1">COM_KUNENA_YES</option>
+        </field>
         <field name="topicLanguage" type="list" default="pick" label="COM_KUNENA_TEMPLATE_TOPIC_LANGUAGE"
                description="COM_KUNENA_TEMPLATE_TOPIC_LANGUAGE_DESC">
             <option value="pick">COM_KUNENA_TEMPLATE_TOPIC_LANGUAGE_PICK</option>

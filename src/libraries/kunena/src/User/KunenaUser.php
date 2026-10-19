@@ -1599,6 +1599,10 @@ class KunenaUser
             return;
         }
 
+        if ($type == 'id') {
+            return (int) $rank->rankId;
+        }
+
         if ($type == 'title') {
             return Text::_($rank->rankTitle);
         }

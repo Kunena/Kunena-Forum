@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fieldset name="badges" label="COM_KUNENA_A_BADGES">
+        <field
+            name="badges"
+            type="subform"
+            multiple="true"
+            label="COM_KUNENA_A_BADGES"
+            description="COM_KUNENA_A_BADGES_DESC"
+            layout="joomla.form.field.subform.repeatable-table"
+            buttons="add,remove,move">
+            <form>
+                <field
+                    name="title"
+                    type="text"
+                    label="COM_KUNENA_A_BADGE_TITLE"
+                    required="true"/>
+                <field
+                    name="color"
+                    type="color"
+                    default="#0d6efd"
+                    label="COM_KUNENA_A_BADGE_COLOR"/>
+                <field
+                    name="usergroup"
+                    type="usergrouplist"
+                    label="COM_KUNENA_A_BADGE_USERGROUP">
+                    <option value="">COM_KUNENA_A_BADGE_NONE</option>
+                </field>
+                <field
+                    name="rank"
+                    type="sql"
+                    label="COM_KUNENA_A_BADGE_RANK"
+                    query="SELECT rankId AS value, rankTitle AS text FROM #__kunena_ranks ORDER BY rankMin, rankId"
+                    key_field="value"
+                    value_field="text"
+                    translate="true">
+                    <option value="">COM_KUNENA_A_BADGE_NONE</option>
+                </field>
+            </form>
+        </field>
+    </fieldset>
+</form>

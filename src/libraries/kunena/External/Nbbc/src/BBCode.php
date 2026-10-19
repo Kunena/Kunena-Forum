@@ -1251,6 +1251,8 @@ REGEX;
         {
             return \call_user_func($template, $insert_array);
         }
+        // A tag in plain mode can have no start or end text (null): that is an empty template.
+        $template = (string) $template;
         /*< END HACK BY KUNENA*/
         
         $pieces = preg_split('/(\{\$[a-zA-Z0-9_.:\/-]+\})/', $template, -1, PREG_SPLIT_DELIM_CAPTURE);

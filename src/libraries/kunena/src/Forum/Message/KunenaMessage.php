@@ -1988,6 +1988,98 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
+     * The address part of the Message-ID of the e-mails of the forum: the domain of the site.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected function getMessageIdDomain(): string
+    {
+        $host = (string) parse_url(Uri::root(), PHP_URL_HOST);
+        $host = strtolower(preg_replace('/[^a-z0-9.-]/i', '', $host));
+
+        // The Message-ID needs a domain with a dot.
+        return $host !== '' && strpos($host, '.') !== false ? $host : ($host ?: 'localhost') . '.localdomain';
+    }
+
+    /**
+     * The Message-ID of the e-mail of a message: the first message of a topic has the id of the topic, the other messages
+     * have the id of the message, so the e-mail of a reply can point to the e-mail of the message it answers.
+     *
+     * @param   int   $messageId    The message id.
+     * @param   int   $topicId      The topic id.
+     * @param   int   $firstPostId  The id of the first message of the topic.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected function getEmailMessageId(int $messageId, int $topicId, int $firstPostId): string
+    {
+        $local = $messageId === $firstPostId || !$firstPostId ? 'kunena-topic-' . $topicId : 'kunena-post-' . $messageId;
+
+        return '<' . $local . '@' . $this->getMessageIdDomain() . '>';
+    }
+
+    /**
+     * Add the headers which describe the message (X-Forum-*) and the ones which let the mail program thread the e-mails
+     * of a topic (Message-ID, In-Reply-To and References), so filters and threads can be made.
+     *
+     * @param   Mail  $mail  The mail.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    protected function addForumHeaders(Mail $mail): void
+    {
+        // On by default: the option is not in the stored configuration until it has been saved once.
+        if (isset($this->_config->emailForumHeaders) && !$this->_config->emailForumHeaders) {
+            return;
+        }
+
+        $topic    = $this->getTopic();
+        $category = $this->getCategory();
+
+        // A header is one line, and a value with other characters than ASCII is encoded.
+        $clean = static function ($value) use ($mail): string {
+            $value = trim(preg_replace('/\s+/', ' ', strip_tags((string) $value)));
+
+            return $mail->encodeHeader(MailHelper::cleanLine($value));
+        };
+
+        $headers = [
+            'X-Forum'          => 'kunena',
+            'X-Forum-URL'      => Uri::root(),
+            'X-Forum-Name'     => $this->_config->boardTitle,
+            'X-Forum-Category' => $category->name,
+            'X-Forum-Category-Id' => (int) $category->id,
+            'X-Forum-Topic'    => $topic->subject,
+            'X-Forum-Topic-Id' => (int) $topic->id,
+            'X-Forum-Post-Id'  => (int) $this->id,
+            'X-Forum-Type'     => $this->parent ? 'reply' : 'new-topic',
+            'X-Forum-Who'      => $this->getAuthor()->getName($this->name),
+        ];
+
+        foreach ($headers as $name => $value) {
+            $mail->addCustomHeader($name, $clean($value));
+        }
+
+        // The threading: the first message of a topic starts the thread, a reply points to the message it answers and to the start.
+        $firstPostId = (int) $topic->first_post_id;
+        $mail->MessageID = $this->getEmailMessageId((int) $this->id, (int) $topic->id, $firstPostId);
+
+        if ($this->parent && $firstPostId && (int) $this->id !== $firstPostId) {
+            $start  = $this->getEmailMessageId($firstPostId, (int) $topic->id, $firstPostId);
+            $parent = $this->getEmailMessageId((int) $this->parent, (int) $topic->id, $firstPostId);
+
+            $mail->addCustomHeader('In-Reply-To', $parent);
+            $mail->addCustomHeader('References', $parent === $start ? $start : $start . ' ' . $parent);
+        }
+    }
+
+    /**
      * @param   Mail    $mail          mail
      * @param   int     $subscription  subscription
      * @param   string  $subject       subject
@@ -2020,6 +2112,8 @@ class KunenaMessage extends KunenaDatabaseObject
             $mail->addCustomHeader('List-Unsubscribe', '<' . KunenaEmailUnsubscribe::getPostUrl($type, $id, $recipientId) . '>');
             $mail->addCustomHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
         }
+
+        $this->addForumHeaders($mail);
 
         $layout = KunenaLayout::factory('Email/Subscription')->debug(false)
             ->set('mail', $mail)

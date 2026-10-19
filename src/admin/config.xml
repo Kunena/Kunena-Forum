@@ -197,6 +197,20 @@
                 <option value="3600">COM_KUNENA_CFG_OPTION_60_MINUTES</option>
             </field>
         </fieldset>
+        <fieldset
+            name="mail"
+            label="COM_KUNENA_A_MAIL_SETTINGS">
+            <field
+                name="emailForumHeaders"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_EMAIL_FORUM_HEADERS"
+                description="COM_KUNENA_A_EMAIL_FORUM_HEADERS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+        </fieldset>
     </fieldset>
     <fieldset
         name="frontend"

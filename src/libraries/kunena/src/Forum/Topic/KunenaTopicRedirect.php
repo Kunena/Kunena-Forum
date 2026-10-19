@@ -53,7 +53,7 @@ abstract class KunenaTopicRedirect
     {
         $config = KunenaConfig::getInstance();
 
-        return isset($config->redirectDeletedTopics) ? (bool) $config->redirectDeletedTopics : true;
+        return isset($config->redirectDeletedTopics) ? (bool) $config->redirectDeletedTopics : false;
     }
 
     /**

@@ -22,6 +22,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -271,6 +272,13 @@ abstract class KunenaMessageHelper
         $user        = isset($params['user']) ? $params['user'] : false;
         $where       = isset($params['where']) ? (string) $params['where'] : '';
         $childforums = isset($params['childforums']) ? (bool) $params['childforums'] : false;
+
+        // On a multilingual site the messages of the topics of another language are left out.
+        if (KunenaMultilanguage::isEnabled() && ($params['language'] ?? '') !== 'all') {
+            $language = isset(KunenaMultilanguage::getLanguages()[$params['language'] ?? '']) ? $params['language'] : KunenaMultilanguage::getCurrent();
+            $where    = ($where ? $where . ' AND ' : '') . $db->quoteName('m.thread') . ' NOT IN (SELECT ' . $db->quoteName('id') . ' FROM ' . $db->quoteName('#__kunena_topics')
+                . ' WHERE ' . $db->quoteName('language') . ' NOT IN (' . $db->quote('*') . ', ' . $db->quote($language) . '))';
+        }
         $view        = Factory::getApplication()->getInput()->getCmd('view');
 
         if ($limit < 1 && empty($params['nolimit'])) {

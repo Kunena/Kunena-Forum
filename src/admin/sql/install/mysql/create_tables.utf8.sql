@@ -97,10 +97,24 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories`
     `last_post_time`   int(11)      NOT NULL default '0',
     `params`           text         NOT NULL,
     `allowRatings`     tinyint		NOT NULL DEFAULT '0',
+    `language`         varchar(7)   NOT NULL DEFAULT '*',
     PRIMARY KEY (id),
     KEY `parentid` (parentid),
     KEY `category_access` (accesstype, access),
     KEY `published_pubaccess_id` (published, pubAccess, id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__kunena_categories_translations`
+(
+    `category_id` int(11)      NOT NULL,
+    `language`    varchar(7)   NOT NULL,
+    `name`        tinytext     NULL,
+    `description` text         NULL,
+    `headerdesc`  text         NULL,
+    PRIMARY KEY (`category_id`, `language`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
@@ -145,8 +159,10 @@ CREATE TABLE IF NOT EXISTS `#__kunena_topics`
     `last_post_guest_name`  tinytext   NULL,
     `rating`                tinyint(6) NOT NULL default '0',
     `params`                text       CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `language`              varchar(7) NOT NULL DEFAULT '*',
     PRIMARY KEY (id),
     KEY `category_id` (category_id),
+    KEY `language` (language),
     KEY `locked` (locked),
     KEY `hold` (hold),
     KEY `posts` (posts),

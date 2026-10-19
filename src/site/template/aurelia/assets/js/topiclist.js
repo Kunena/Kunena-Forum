@@ -252,7 +252,8 @@
 					input.value = '';
 				});
 				filterForm.querySelectorAll('select').forEach((select) => {
-					select.selectedIndex = 0;
+					// A select with a default (the language of the page) goes back to it, the others to their first option.
+					select.value = select.dataset.default || select.options[0].value;
 				});
 				load(event.currentTarget.href, true);
 			});
@@ -272,7 +273,7 @@
 				const params = new URL(window.location.href).searchParams;
 
 				filterForm.querySelectorAll('[name]').forEach((field) => {
-					field.value = params.get(field.name) || (field.tagName === 'SELECT' ? field.options[0].value : '');
+					field.value = params.get(field.name) || (field.tagName === 'SELECT' ? (field.dataset.default || field.options[0].value) : '');
 				});
 
 				load(window.location.href, false);

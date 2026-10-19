@@ -24,6 +24,7 @@ use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
@@ -111,9 +112,17 @@ abstract class KunenaCategoryHelper
 
         $cat_instances = [];
 
+        // On a multilingual site the names and descriptions are shown in the language of the page, where a translation exists.
+        $translations = KunenaMultilanguage::isEnabled() ? KunenaCategoryTranslation::loadLanguage(KunenaMultilanguage::getCurrent()) : [];
+
         foreach ($instances as $id => $instance) {
             $kunenacategory = new KunenaCategory((array) $instance);
             $kunenacategory->exists(true);
+
+            if (isset($translations[$id])) {
+                $kunenacategory->applyTranslation($translations[$id]);
+            }
+
             self::$_instances[$id] = $kunenacategory;
             $cat_instances[$id]    = $kunenacategory;
         }

@@ -311,6 +311,21 @@ Text::script('COM_KUNENA_POLL_TITLE');
             </div>
         </div>
 
+        <?php if (!$this->topic->exists() && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::hasLanguages() && \Kunena\Forum\Libraries\Language\KunenaMultilanguage::isEnabled()) : ?>
+            <?php // On a multilingual site the language of a new topic is chosen: the language of the page is the default. ?>
+            <div class="form-group row">
+                <label for="topic-language" class="col-sm-2 col-form-label"><?php echo Text::_('COM_KUNENA_TOPIC_LANGUAGE'); ?></label>
+                <div class="col-md-4">
+                    <select class="form-select" name="topic_language" id="topic-language">
+                        <option value="*"><?php echo Text::_('COM_KUNENA_TOPIC_LANGUAGE_ALL'); ?></option>
+                        <?php foreach (\Kunena\Forum\Libraries\Language\KunenaMultilanguage::getLanguages() as $languageCode => $languageTitle) : ?>
+                            <option value="<?php echo $this->escape($languageCode); ?>"<?php echo $languageCode === \Kunena\Forum\Libraries\Language\KunenaMultilanguage::getCurrent() ? ' selected' : ''; ?>><?php echo $this->escape($languageTitle); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <?php if (!empty($this->topicIcons)) : ?>
             <div class="form-group row" id="kpost-topicIcons">
                 <!-- Material input -->

@@ -165,6 +165,9 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
                 $params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . $direction;
         }
 
+        // On a multilingual site: the topics of the language of the page, or the language chosen in the address (flang).
+        $params['language'] = $this->input->getString('flang', '');
+
         list($this->total, $this->topics) = KunenaTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 
         if ($this->total > 0) {

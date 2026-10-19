@@ -25,6 +25,8 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Exception\KunenaException;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryTranslation;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -147,6 +149,15 @@ class CategoryController extends KunenaController
         unset($post['params-joomla-level']);
         unset($post['params-joomla-group']);
 
+        // The translations of the name and the descriptions are saved after the category, they are no property of it.
+        $translations = (array) ($post['translations'] ?? []);
+        unset($post['translations']);
+
+        // The language is "all" or a content language of Joomla.
+        if (isset($post['language']) && !\in_array($post['language'], array_merge([KunenaMultilanguage::ALL], array_keys(KunenaMultilanguage::getLanguages())), true)) {
+            $post['language'] = KunenaMultilanguage::ALL;
+        }
+
         // Access plugins post their options as access-<type> and params-<type>, they are not category properties
         foreach (array_keys($post) as $key) {
             if (preg_match('/^(access|params)-/', (string) $key)) {
@@ -208,6 +219,10 @@ class CategoryController extends KunenaController
 
             try {
                 $success = $category->save();
+
+                if ($success && $category->exists() && $translations) {
+                    KunenaCategoryTranslation::save((int) $category->id, $translations, array_keys(KunenaMultilanguage::getLanguages()));
+                }
             } catch (KunenaException $e) {
                 if (!empty($e->getMessage())) {
                     $this->app->enqueueMessage(

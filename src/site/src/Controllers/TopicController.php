@@ -43,6 +43,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
@@ -730,6 +731,20 @@ class TopicController extends KunenaController
             }
 
             list($topic, $message) = $category->newTopic($fields);
+
+            // On a multilingual site a topic has a language: that of its category when the category has one, else the
+            // chosen one (or all languages).
+            if (KunenaMultilanguage::isEnabled()) {
+                $chosen = $this->app->getInput()->post->getString('topic_language', KunenaMultilanguage::ALL);
+
+                if ($category->language && $category->language !== KunenaMultilanguage::ALL) {
+                    $chosen = $category->language;
+                } elseif (!\in_array($chosen, array_keys(KunenaMultilanguage::getLanguages()), true)) {
+                    $chosen = KunenaMultilanguage::ALL;
+                }
+
+                $topic->language = $chosen;
+            }
         } else {
             // Reply topic
             $parent = KunenaMessageHelper::get($this->id);

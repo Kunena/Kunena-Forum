@@ -269,6 +269,10 @@
                type="tinyint(4)"
                null="0"
                default="0"/>
+        <field name="language"
+               type="varchar(7)"
+               null="0"
+               default="*"/>
 
         <key name="PRIMARY"
              unique="1"
@@ -387,6 +391,10 @@
         <field name="params"
                type="text"
                null="0"/>
+        <field name="language"
+               type="varchar(7)"
+               null="0"
+               default="*"/>
         <key name="PRIMARY"
              unique="1"
              columns="id"/>
@@ -398,6 +406,8 @@
              columns="hold"/>
         <key name="posts"
              columns="posts"/>
+        <key name="language"
+             columns="language"/>
         <key name="hits"
              columns="hits"/>
         <key name="first_post_userid"
@@ -878,6 +888,28 @@
              columns="id"/>
         <key name="user_modified"
              columns="user_id,modified_time"/>
+    </table>
+    <table name="kunena_categories_translations">
+        <field primary_key="yes"
+               name="category_id"
+               type="int(11)"
+               null="0"/>
+        <field primary_key="yes"
+               name="language"
+               type="varchar(7)"
+               null="0"/>
+        <field name="name"
+               type="tinytext"
+               null="1"/>
+        <field name="description"
+               type="text"
+               null="1"/>
+        <field name="headerdesc"
+               type="text"
+               null="1"/>
+        <key name="PRIMARY"
+             unique="1"
+             columns="category_id,language"/>
     </table>
     <table name="kunena_user_follow">
         <field primary_key="yes"

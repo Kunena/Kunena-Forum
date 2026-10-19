@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -80,12 +81,12 @@ abstract class ListDisplay extends KunenaControllerDisplay
     public $input;
 
     /**
-     * Values of the filter bar: status, q (subject) and author.
+     * Values of the filter bar: status, q (subject), author and language.
      *
      * @var     array
      * @since   Kunena 7.2
      */
-    public $filters = ['status' => '', 'q' => '', 'author' => ''];
+    public $filters = ['status' => '', 'q' => '', 'author' => '', 'language' => ''];
 
     /**
      * Show the filter bar above the list.
@@ -117,6 +118,19 @@ abstract class ListDisplay extends KunenaControllerDisplay
         // The topics of the users whom the logged in user ignores are left out.
         $finder->filterOutAuthors(KunenaUserIgnore::getIgnored(KunenaUserHelper::getMyself()->userid));
 
+        // On a multilingual site the topics are of the language of the page (and of all languages) unless another language, or all
+        // languages, was chosen.
+        $language = '';
+
+        if (KunenaMultilanguage::isEnabled()) {
+            $choice   = $this->input->getString('flang', '');
+            $language = $choice === 'all' ? 'all' : (isset(KunenaMultilanguage::getLanguages()[$choice]) ? $choice : KunenaMultilanguage::getCurrent());
+
+            if ($language !== 'all') {
+                $finder->filterByLanguage($language);
+            }
+        }
+
         // The filters need the reload in the background of the template: without it there is no filter bar, and the
         // filters in an old address do nothing.
         if (!KunenaFactory::getTemplate()->params->get('ajaxTopicList', 1)) {
@@ -131,6 +145,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
             'status' => $this->input->getCmd('fstatus', ''),
             'q'      => trim($this->input->getString('fq', '')),
             'author' => trim($this->input->getString('fauthor', '')),
+            'language' => $language,
         ];
 
         $finder

@@ -17,6 +17,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\WebAsset\WebAssetManager;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryTranslation;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
@@ -76,6 +78,14 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                     aria-controls="tab-display"
                                                     aria-selected="true"><?php echo Text::_('COM_KUNENA_A_CATEGORY_CFG_TAB_DISPLAY'); ?></button>
                                         </li>
+                                        <?php if (KunenaMultilanguage::hasLanguages()) : ?>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="tab-translations-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#tab-translations" type="button" role="tab"
+                                                        aria-controls="tab-translations"
+                                                        aria-selected="false"><?php echo Text::_('COM_KUNENA_CATEGORY_TRANSLATIONS'); ?></button>
+                                            </li>
+                                        <?php endif; ?>
                                         <?php if (!$this->category->id || !$this->category->isSection()) :
                                             ?>
                                             <li class="nav-item" role="presentation">
@@ -124,6 +134,20 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                         <td><?php echo Text::_('COM_KUNENA_PUBLISHED'); ?>:</td>
                                                         <td><?php echo $this->options ['published']; ?></td>
                                                     </tr>
+                                                    <?php if (KunenaMultilanguage::hasLanguages()) : ?>
+                                                        <tr>
+                                                            <td><?php echo Text::_('COM_KUNENA_CATEGORY_LANGUAGE'); ?></td>
+                                                            <td>
+                                                                <select name="language" class="form-select w-100">
+                                                                    <option value="*"<?php echo ($this->category->language ?: '*') === '*' ? ' selected' : ''; ?>><?php echo Text::_('JALL'); ?></option>
+                                                                    <?php foreach (KunenaMultilanguage::getLanguages() as $code => $title) : ?>
+                                                                        <option value="<?php echo $this->escape($code); ?>"<?php echo $this->category->language === $code ? ' selected' : ''; ?>><?php echo $this->escape($title); ?></option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
+                                                                <p><?php echo Text::_('COM_KUNENA_CATEGORY_LANGUAGE_DESC'); ?></p>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endif; ?>
                                                     <tr>
                                                         <td><?php echo Text::_('COM_KUNENA_ICON'); ?></td>
                                                         <td>
@@ -282,6 +306,38 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                 </table>
                                             </fieldset>
                                         </div>
+                                        <?php if (KunenaMultilanguage::hasLanguages()) :
+                                            $translations = $this->category->id ? KunenaCategoryTranslation::getAll((int) $this->category->id) : [];
+                                            ?>
+                                            <div class="tab-pane fade" id="tab-translations" role="tabpanel"
+                                                 aria-labelledby="tab-translations-tab">
+                                                <p class="text-muted"><?php echo Text::_('COM_KUNENA_CATEGORY_TRANSLATIONS_DESC'); ?></p>
+                                                <?php foreach (KunenaMultilanguage::getLanguages() as $code => $title) :
+                                                    $row = $translations[$code] ?? null;
+                                                    ?>
+                                                    <fieldset class="mb-4">
+                                                        <legend class="fs-6 fw-semibold"><?php echo $this->escape($title); ?> <small class="text-muted">(<?php echo $this->escape($code); ?>)</small></legend>
+                                                        <table class="table table-striped">
+                                                            <tr>
+                                                                <td class="w-25"><?php echo Text::_('COM_KUNENA_NAMEADD'); ?></td>
+                                                                <td><input class="inputbox form-control w-100" type="text" name="translations[<?php echo $this->escape($code); ?>][name]"
+                                                                           value="<?php echo $this->escape($row->name ?? ''); ?>"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><?php echo Text::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
+                                                                <td><textarea class="inputbox form-control w-100" rows="4"
+                                                                              name="translations[<?php echo $this->escape($code); ?>][description]"><?php echo $this->escape($row->description ?? ''); ?></textarea></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><?php echo Text::_('COM_KUNENA_HEADERADD'); ?></td>
+                                                                <td><textarea class="inputbox form-control w-100" rows="4"
+                                                                              name="translations[<?php echo $this->escape($code); ?>][headerdesc]"><?php echo $this->escape($row->headerdesc ?? ''); ?></textarea></td>
+                                                            </tr>
+                                                        </table>
+                                                    </fieldset>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
                                         <?php if (!$this->category->id || !$this->category->isSection()) :
                                             ?>
                                             <div class="tab-pane fade" id="tab-mods" role="tabpanel"

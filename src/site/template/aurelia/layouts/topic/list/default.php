@@ -128,6 +128,16 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
             <input type="search" name="fq" value="<?php echo $this->escape($this->filters['q']); ?>" class="form-control form-control-sm"
                    placeholder="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_SUBJECT'); ?>" autocomplete="off"/>
         </div>
+        <?php if (\Kunena\Forum\Libraries\Language\KunenaMultilanguage::isEnabled()) : ?>
+            <div class="col-6 col-md-2">
+                <select name="flang" class="form-select form-select-sm" data-default="<?php echo $this->escape(\Kunena\Forum\Libraries\Language\KunenaMultilanguage::getCurrent()); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_LANGUAGE'); ?>">
+                    <option value="all"<?php echo $this->filters['language'] === 'all' ? ' selected' : ''; ?>><?php echo Text::_('COM_KUNENA_FILTER_ALL_LANGUAGES'); ?></option>
+                    <?php foreach (\Kunena\Forum\Libraries\Language\KunenaMultilanguage::getLanguages() as $languageCode => $languageTitle) : ?>
+                        <option value="<?php echo $this->escape($languageCode); ?>"<?php echo $this->filters['language'] === $languageCode ? ' selected' : ''; ?>><?php echo $this->escape($languageTitle); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <?php endif; ?>
         <div class="col-6 col-md-2">
             <input type="search" name="fauthor" value="<?php echo $this->escape($this->filters['author']); ?>" class="form-control form-control-sm"
                    placeholder="<?php echo Text::_('COM_KUNENA_FILTER_AUTHOR'); ?>" aria-label="<?php echo Text::_('COM_KUNENA_FILTER_AUTHOR'); ?>" autocomplete="off"/>

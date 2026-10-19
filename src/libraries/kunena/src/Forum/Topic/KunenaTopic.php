@@ -248,6 +248,14 @@ class KunenaTopic extends KunenaDatabaseObject
     public $first_post_guest_name;
 
     /**
+     * The language of the topic: all (*) or the code of a content language of Joomla.
+     *
+     * @var     string
+     * @since   Kunena 7.2
+     */
+    public $language = '*';
+
+    /**
      * @var     integer
      * @since   Kunena 6.4
      */
@@ -2442,6 +2450,7 @@ class KunenaTopic extends KunenaDatabaseObject
             'last_post_guest_name'  => $this->last_post_guest_name,
             'rating'                => $this->rating,
             'params'                => $this->params,
+            'language'              => $this->language ?: '*',
         ];
 
         return $properties;

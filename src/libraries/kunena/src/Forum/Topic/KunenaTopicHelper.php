@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
@@ -285,6 +286,13 @@ abstract class KunenaTopicHelper
         $hold      = isset($params['hold']) ? (string) $params['hold'] : 0;
         $moved     = isset($params['moved']) ? (string) $params['moved'] : 0;
         $where     = isset($params['where']) ? (string) $params['where'] : '';
+
+        // On a multilingual site only the topics of the language of the page and of all languages are listed, unless the
+        // language of the list is "all" or another language.
+        if (KunenaMultilanguage::isEnabled() && ($params['language'] ?? '') !== 'all') {
+            $language = isset(KunenaMultilanguage::getLanguages()[$params['language'] ?? '']) ? $params['language'] : KunenaMultilanguage::getCurrent();
+            $where   .= ' AND ' . $db->quoteName('tt.language') . ' IN (' . $db->quote('*') . ', ' . $db->quote($language) . ')';
+        }
 
         if (str_contains($orderby, 'tt.first_post_time')) {
             $post_time_field = $db->quoteName('tt.first_post_time');

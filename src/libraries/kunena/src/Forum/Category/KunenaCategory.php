@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUser;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
@@ -280,6 +281,23 @@ class KunenaCategory extends KunenaDatabaseObject
      * @since   Kunena 6.0
      */
     public $allowRatings;
+
+    /**
+     * The language of the category: all (*) or the code of a content language of Joomla.
+     *
+     * @var     string
+     * @since   Kunena 7.2
+     */
+    public $language = '*';
+
+    /**
+     * The original values of the fields which got a translation for the language of the page (name, description and
+     * headerdesc). Those are saved, not the translated ones.
+     *
+     * @var     array
+     * @since   Kunena 7.2
+     */
+    protected $_translated = [];
 
     /**
      * @var boolean|string|void
@@ -779,7 +797,13 @@ class KunenaCategory extends KunenaDatabaseObject
             'last_post_time'   => $this->last_post_time,
             'params'           => $this->params,
             'allowRatings'     => $this->allowRatings,
+            'language'         => $this->language ?: '*',
         ];
+
+        // The translation of the page is only for showing: save the real values.
+        foreach ($this->_translated as $field => $original) {
+            $properties[$field] = $original;
+        }
 
         return $properties;
     }
@@ -912,6 +936,11 @@ class KunenaCategory extends KunenaDatabaseObject
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
         }
 
+        // On a multilingual site a category of another language is not shown.
+        if (!KunenaMultilanguage::isVisible($this->language)) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
+
         if (empty($catids[$this->id])) {
             if ($user->exists()) {
                 return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
@@ -992,6 +1021,33 @@ class KunenaCategory extends KunenaDatabaseObject
         }
 
         return $uri;
+    }
+
+    /**
+     * Show the translation of the name and the descriptions: the values of the category are replaced for this request,
+     * the originals are kept to be saved.
+     *
+     * @param   object|null  $translation  Row with name, description and headerdesc, null for no translation.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public function applyTranslation(?object $translation): void
+    {
+        foreach (KunenaCategoryTranslation::FIELDS as $field) {
+            $value = trim((string) ($translation->$field ?? ''));
+
+            if ($value === '') {
+                continue;
+            }
+
+            if (!\array_key_exists($field, $this->_translated)) {
+                $this->_translated[$field] = $this->$field;
+            }
+
+            $this->$field = $value;
+        }
     }
 
     /**

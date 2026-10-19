@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
@@ -549,6 +550,23 @@ jQuery(document).ready(function ($) {
         }
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
+
+        // On a multilingual site the categories of another language are left out (the list in the user state keeps them,
+        // as it is kept for all languages).
+        if (KunenaMultilanguage::isEnabled()) {
+            static $byLanguage = [];
+
+            $key = KunenaMultilanguage::getCurrent() . '|' . $user->userid;
+
+            if (!isset($byLanguage[$key])) {
+                $byLanguage[$key] = array_filter(
+                    $read[$user->userid],
+                    static fn ($categoryId) => KunenaMultilanguage::isVisible(KunenaCategoryHelper::get((int) $categoryId)->language)
+                );
+            }
+
+            return $byLanguage[$key];
+        }
 
         return $read[$user->userid];
     }

@@ -45,3 +45,15 @@ CREATE TABLE IF NOT EXISTS `#__kunena_user_follow`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS `#__kunena_categories_translations`
+(
+    `category_id` int(11)      NOT NULL,
+    `language`    varchar(7)   NOT NULL,
+    `name`        tinytext     NULL,
+    `description` text         NULL,
+    `headerdesc`  text         NULL,
+    PRIMARY KEY (`category_id`, `language`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;

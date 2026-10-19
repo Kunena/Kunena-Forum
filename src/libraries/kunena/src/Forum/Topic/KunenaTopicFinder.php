@@ -287,6 +287,22 @@ class KunenaTopicFinder extends KunenaFinder
     }
 
     /**
+     * Only the topics which are for all languages or for the language.
+     *
+     * @param   string  $language  The language code, like en-GB.
+     *
+     * @return  $this
+     *
+     * @since   Kunena 7.2
+     */
+    public function filterByLanguage(string $language): KunenaTopicFinder
+    {
+        $this->query->where($this->db->quoteName('a.language') . ' IN (' . $this->db->quote('*') . ', ' . $this->db->quote($language) . ')');
+
+        return $this;
+    }
+
+    /**
      * Only the topics which were started by one of the users (the follow list of a user). No users: no topics.
      *
      * @param   int[]  $userids  Ids of the users.

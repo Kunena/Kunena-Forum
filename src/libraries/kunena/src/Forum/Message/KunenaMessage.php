@@ -35,6 +35,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
+use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Event\KunenaDeleteEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
@@ -803,7 +804,7 @@ class KunenaMessage extends KunenaDatabaseObject
                     $mail->setSubject($mailSubject);
                     $mail->setSender([$this->_config->email, $mailnamesender]);
 
-                    $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once);
+                    $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0));
 
                     if (!KunenaEmail::send($mail, [$emailTo->email])) {
                         $success = false;
@@ -973,7 +974,7 @@ class KunenaMessage extends KunenaDatabaseObject
                         $mail->setSubject($mailSubject);
                         $mail->setSender([$this->_config->email, $mailnamesender]);
 
-                        $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once);
+                        $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0));
                         KunenaEmail::send($mail, [$emailTo->email]);
                     } catch (Exception $e) {
                         throw new Exception($e->getMessage());
@@ -1951,13 +1952,28 @@ class KunenaMessage extends KunenaDatabaseObject
      * @throws Exception
      * @since   Kunena 6.0
      */
-    protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once): void
+    protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId = 0): void
     {
+        // Subscribers can unsubscribe from the email itself: a reply is a topic subscription, a new topic a category subscription.
+        $unsubscribeUrl = '';
+
+        if ($subscription && $recipientId > 0) {
+            $type = $this->parent ? KunenaEmailUnsubscribe::TOPIC : KunenaEmailUnsubscribe::CATEGORY;
+            $id   = $this->parent ? (int) $this->thread : (int) $this->catid;
+
+            $unsubscribeUrl = KunenaEmailUnsubscribe::getUrl($type, $id, $recipientId);
+
+            // One-click unsubscribe of mail programs (RFC 8058).
+            $mail->addCustomHeader('List-Unsubscribe', '<' . KunenaEmailUnsubscribe::getPostUrl($type, $id, $recipientId) . '>');
+            $mail->addCustomHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
+        }
+
         $layout = KunenaLayout::factory('Email/Subscription')->debug(false)
             ->set('mail', $mail)
             ->set('message', $this)
             ->set('messageUrl', $url)
-            ->set('once', $once);
+            ->set('once', $once)
+            ->set('unsubscribeUrl', $unsubscribeUrl);
 
         $msg = '';
 

@@ -185,6 +185,10 @@ class KunenaLayout extends KunenaBase
 
     public $drafts;
 
+    public $unsubscribeUrl;
+
+    public $unsubscribe;
+
     /**
      * Append HTML after the layout content.
      *

@@ -233,6 +233,11 @@ if (!$config->plainEmail) :
             padding: 20px 6.25%;color: #999999;font-family: sans-serif;" class="footer">
                             <?php echo Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3'); ?><br/>
                             <?php echo $msg2; ?>
+                            <?php if (!empty($this->unsubscribeUrl)) : ?>
+                                <br/><br/>
+                                <?php echo Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC'); ?>
+                                <a href="<?php echo htmlspecialchars($this->unsubscribeUrl, ENT_QUOTES, 'UTF-8'); ?>" style="color: #999999;"><?php echo Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE'); ?></a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 </table>
@@ -254,6 +259,15 @@ if (!$config->plainEmail) :
         $full = '';
     }
 
+    $unsubscribe = '';
+
+    if (!empty($this->unsubscribeUrl)) {
+        $unsubscribe = "
+
+" . Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC') . "
+" . $this->unsubscribeUrl;
+    }
+
     $alt = <<<EOS
 {$msg1}
 
@@ -268,7 +282,7 @@ if (!$config->plainEmail) :
 
 {$msg2}{$more}
 
-{$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}
+{$this->text('COM_KUNENA_POST_EMAIL_NOTIFICATION3')}{$unsubscribe}
 EOS;
     echo $alt;
 endif; ?>

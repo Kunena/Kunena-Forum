@@ -37,6 +37,7 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachment;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
+use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -3161,5 +3162,56 @@ class TopicController extends KunenaController
         }
 
         $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=drafts', false));
+    }
+
+    /**
+     * Unsubscribe from a topic or category with the link of a notification email.
+     *
+     * The link is signed, so the user does not need to log in. A request which only reads the link (GET) shows
+     * the confirmation page, only a post (the confirmation form or the one-click unsubscribe of mail programs) changes anything.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function unsubscribemail()
+    {
+        $input = $this->app->getInput();
+        $type  = $input->getCmd('type', '');
+        $id    = $input->getInt('id', 0);
+        $uid   = $input->getInt('uid', 0);
+        $sig   = $input->getString('sig', '');
+
+        if (!KunenaEmailUnsubscribe::verify($type, $id, $uid, $sig)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_INVALID'), 'error');
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));
+
+            return;
+        }
+
+        if (strtoupper($input->getMethod()) !== 'POST') {
+            $query = http_build_query(['type' => $type, 'id' => $id, 'uid' => $uid, 'sig' => $sig]);
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=unsubscribe&' . $query, false));
+
+            return;
+        }
+
+        try {
+            $done = KunenaEmailUnsubscribe::unsubscribe($type, $id, $uid);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));
+
+            return;
+        }
+
+        if ($done) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DONE'), 'success');
+        } else {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_INVALID'), 'error');
+        }
+
+        $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));
     }
 }

@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site\Controller\User\Edit\Settings;
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 use StdClass;
 
@@ -172,6 +173,33 @@ class UserEditSettingsDisplay extends UserEditDisplay
             'kuserlisttime'
         );
         $this->settings[] = $item;
+
+        // The name which others see: the choice of the user, when the forum lets the users choose.
+        if (KunenaUserName::userCanChoose()) {
+            $item             = new StdClass();
+            $item->name       = 'namechoice';
+            $item->label      = Text::_('COM_KUNENA_USER_NAME_SHOWN');
+            $options          = [];
+            $options[]        = HTMLHelper::_('select.option', -1, Text::_('COM_KUNENA_USER_NAME_DEFAULT'));
+            $options[]        = HTMLHelper::_('select.option', KunenaUserName::USERNAME, Text::_('COM_KUNENA_USER_NAME_USERNAME'));
+            $options[]        = HTMLHelper::_('select.option', KunenaUserName::REALNAME, Text::_('COM_KUNENA_USER_NAME_REALNAME'));
+
+            if (KunenaUserName::getDisplayNameField()) {
+                $options[] = HTMLHelper::_('select.option', KunenaUserName::DISPLAYNAME, Text::_('COM_KUNENA_USER_NAME_DISPLAYNAME'));
+            }
+
+            $item->field      = HTMLHelper::_(
+                'select.genericlist',
+                $options,
+                'namechoice',
+                'class="kinputbox form-select" size="1"',
+                'value',
+                'text',
+                KunenaUserName::getChoice((int) $this->profile->userid) ?? -1,
+                'knamechoice'
+            );
+            $this->settings[] = $item;
+        }
 
         $this->headerText = Text::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE');
     }

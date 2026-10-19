@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 
 /**
  * Class KunenaProfile
@@ -189,12 +190,11 @@ class KunenaProfileKunena extends KunenaProfile
      */
     public function getProfileName(KunenaUser $user, string $visitorname = '', bool $escape = true): string
     {
-        $config = KunenaFactory::getConfig();
-
         if (!$user->userid && !$user->name) {
             $name = $visitorname;
         } else {
-            $name = $config->username ? $user->username : $user->name;
+            // The username, the real name or the display name: the configuration, or the choice of the user.
+            $name = KunenaUserName::get($user);
         }
 
         if ($escape) {

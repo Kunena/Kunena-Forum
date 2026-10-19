@@ -612,11 +612,32 @@
             label="COM_KUNENA_A_USER_RELATED">
             <field
                 name="username"
-                type="radio"
+                type="list"
                 default="1"
-                layout="joomla.form.field.radio.switcher"
                 label="COM_KUNENA_A_DISPLAY_NAME"
                 description="COM_KUNENA_A_USERNAME_DESC">
+                <option value="1">COM_KUNENA_A_NAME_USERNAME</option>
+                <option value="0">COM_KUNENA_A_NAME_REALNAME</option>
+                <option value="2">COM_KUNENA_A_NAME_DISPLAYNAME</option>
+            </field>
+            <field
+                name="displayNameField"
+                type="sql"
+                default="0"
+                label="COM_KUNENA_A_DISPLAYNAME_FIELD"
+                description="COM_KUNENA_A_DISPLAYNAME_FIELD_DESC"
+                query="SELECT id AS value, title AS text FROM #__fields WHERE context = 'com_users.user' AND state = 1 ORDER BY title"
+                key_field="value"
+                value_field="text">
+                <option value="0">COM_KUNENA_A_BADGE_NONE</option>
+            </field>
+            <field
+                name="nameUserChoice"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_NAME_USER_CHOICE"
+                description="COM_KUNENA_A_NAME_USER_CHOICE_DESC">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
             </field>

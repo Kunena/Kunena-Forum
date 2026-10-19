@@ -674,7 +674,8 @@ class KunenaUser
             if (!$this->userid && !$this->name) {
                 $name = $visitorname;
             } else {
-                $name = $this->_config->username ? $this->username : $this->name;
+                // The username, the real name or the display name: the configuration, or the choice of the user.
+                $name = KunenaUserName::get($this);
             }
 
             if ($escape) {

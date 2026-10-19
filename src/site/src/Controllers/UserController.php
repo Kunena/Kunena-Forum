@@ -52,6 +52,7 @@ use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserFollow;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 use Kunena\Forum\Libraries\User\KunenaUserSocials;
 use Kunena\Forum\Plugin\Kunena\Kunena\Helper\KunenaProfileKunena;
@@ -665,6 +666,13 @@ class UserController extends KunenaController
         $this->user->canSubscribe        = $this->app->getInput()->getInt('cansubscribe', -1);
         $this->user->userListtime        = $this->app->getInput()->getInt('userlisttime', -2);
         $this->user->displayAgeBirthdate = $this->app->getInput()->getInt('displayAgeBirthdate', 1);
+
+        // The name which others see (when the users may choose it): -1 is the choice of the forum.
+        if (KunenaUserName::userCanChoose() && $this->app->getInput()->get('namechoice', null) !== null) {
+            $choice = $this->app->getInput()->getInt('namechoice', -1);
+
+            KunenaUserName::setChoice((int) $this->user->userid, \in_array($choice, [0, 1, 2], true) ? $choice : null);
+        }
     }
 
     /**
@@ -1454,11 +1462,8 @@ class UserController extends KunenaController
                 $obj->id = $key;
                 $obj->userid = $user->userid;
                 $obj->avatar = $user->getAvatarURL();
-                if ($this->config->username) {
-                    $obj->username = $this->escape($user->username);
-                } else {
-                    $obj->username = $this->escape($user->name);
-                }
+                // The name which is shown of the user (username, real name or display name).
+                $obj->username = $this->escape($user->getName('', false));
 
                 $userListMentions[] = $obj;
             }

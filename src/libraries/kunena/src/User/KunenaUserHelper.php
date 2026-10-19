@@ -270,6 +270,9 @@ abstract class KunenaUserHelper
             // Preload avatars if configured
             $avatars = KunenaFactory::getAvatarIntegration();
             $avatars->load($e_userids);
+
+            // The display names (a custom field of the Joomla users) come with one query.
+            KunenaUserName::preload($e_userids);
         }
 
         $list = [];
@@ -616,6 +619,81 @@ abstract class KunenaUserHelper
      * @since   Kunena 7.2
      */
     protected static $joomlaParams = [];
+
+    /**
+     * A value of the Joomla parameters of a user (read like the timezone: with the users or with a small query).
+     *
+     * @param   int     $id       The user.
+     * @param   string  $key      The key of the parameter.
+     * @param   mixed   $default  The value when the user has none.
+     *
+     * @return  mixed
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getJoomlaParam(int $id, string $key, $default = null)
+    {
+        $identity = Factory::getApplication()->getIdentity();
+
+        if ($identity && $id && $identity->id == $id) {
+            return $identity->getParam($key, $default);
+        }
+
+        if (!\array_key_exists($id, self::$joomlaParams)) {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery()
+                ->select($db->quoteName('params'))
+                ->from($db->quoteName('#__users'))
+                ->where($db->quoteName('id') . ' = :id')
+                ->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
+
+            self::$joomlaParams[$id] = $db->setQuery($query)->loadResult();
+        }
+
+        $params = json_decode((string) self::$joomlaParams[$id], true);
+
+        return \is_array($params) && isset($params[$key]) ? $params[$key] : $default;
+    }
+
+    /**
+     * Save a value in the Joomla parameters of a user (null removes it).
+     *
+     * @param   int     $id     The user.
+     * @param   string  $key    The key of the parameter.
+     * @param   mixed   $value  The value.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function setJoomlaParam(int $id, string $key, $value): void
+    {
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select($db->quoteName('params'))
+            ->from($db->quoteName('#__users'))
+            ->where($db->quoteName('id') . ' = :id')
+            ->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
+        $params = json_decode((string) $db->setQuery($query)->loadResult(), true);
+        $params = \is_array($params) ? $params : [];
+
+        if ($value === null) {
+            unset($params[$key]);
+        } else {
+            $params[$key] = $value;
+        }
+
+        $json   = json_encode($params);
+        $update = $db->createQuery()
+            ->update($db->quoteName('#__users'))
+            ->set($db->quoteName('params') . ' = :params')
+            ->where($db->quoteName('id') . ' = :id')
+            ->bind(':params', $json)
+            ->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
+        $db->setQuery($update)->execute();
+
+        self::$joomlaParams[$id] = $json;
+    }
 
     /**
      * The timezone which a user has chosen in his Joomla account. Loading the whole Joomla user for it would take

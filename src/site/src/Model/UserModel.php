@@ -22,6 +22,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Model\KunenaModel;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
+use Kunena\Forum\Libraries\User\KunenaUserName;
 
 /**
  * User Model for Kunena
@@ -221,11 +222,8 @@ class UserModel extends KunenaModel
         if ($search) {
             $db = $this->getDatabase();
 
-            if ($this->config->username) {
-                $where[] = "u.username LIKE '%{$db->escape($search)}%'";
-            } else {
-                $where[] = "u.name LIKE '%{$db->escape($search)}%'";
-            }
+            // The user is found by the username, the real name or the display name.
+            $where[] = KunenaUserName::getSearchCondition((string) $search, 'u');
 
             $where = 'AND (' . implode(' OR ', $where) . ')';
         } else {

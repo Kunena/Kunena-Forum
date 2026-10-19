@@ -120,11 +120,8 @@ class KunenaUserFinder extends KunenaFinder
         $search = '%' . $search . '%';
 
         if ($search) {
-            if ($this->config->username) {
-                $this->query->where($this->db->quoteName('a.username') . ' LIKE ' . $this->db->quote($search));
-            } else {
-                $this->query->where($this->db->quoteName('a.name') . ' LIKE ' . $this->db->quote($search));
-            }
+            // The user is found by the username, the real name or the display name.
+            $this->query->where(KunenaUserName::getSearchCondition(trim($search, '%')));
         }
 
         return $this;

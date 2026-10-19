@@ -46,6 +46,17 @@ use Joomla\CMS\Language\Text;
                        value="<?php echo $this->escape($this->user->get('name')); ?>" size="40"/>
             </td>
         </tr>
+        <?php if (\Kunena\Forum\Libraries\User\KunenaUserName::getDisplayNameField()) : ?>
+            <tr>
+                <td>
+                    <label for="nickname"><?php echo Text::_('COM_KUNENA_NICKNAME'); ?></label>
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="nickname" name="nickname" maxlength="100"
+                           value="<?php echo $this->escape(\Kunena\Forum\Libraries\User\KunenaUserName::getDisplayName((int) $this->user->get('id'))); ?>" size="40"/>
+                </td>
+            </tr>
+        <?php endif; ?>
         <tr>
             <td>
                 <label for="email"><?php echo Text::_('COM_KUNENA_USRL_EMAIL'); ?></label>

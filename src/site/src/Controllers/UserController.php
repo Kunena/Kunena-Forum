@@ -328,6 +328,9 @@ class UserController extends KunenaController
         if (!$success) {
             $errors++;
             $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_ACCOUNT_NOT_SAVED'), 'error');
+        } elseif ($this->app->getInput()->post->get('nickname', null, 'raw') !== null && $this->user->id) {
+            // The nickname is a custom field of the Joomla users: it is saved with the account.
+            KunenaUserName::setDisplayName((int) $this->user->id, (string) $this->app->getInput()->post->get('nickname', '', 'raw'));
         }
 
         // Save Kunena user.

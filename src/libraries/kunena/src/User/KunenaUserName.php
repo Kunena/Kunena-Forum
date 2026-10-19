@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\User;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 
 /**
@@ -250,6 +251,56 @@ abstract class KunenaUserName
             }
         } catch (Exception $e) {
             // The names fall back to the real name.
+        }
+    }
+
+    /**
+     * Save the nickname of a user in the Joomla custom field (an empty nickname removes the value).
+     *
+     * @param   int     $userid    The user id.
+     * @param   string  $nickname  The nickname.
+     *
+     * @return  bool  False when there is no field for the nickname or the value could not be saved.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function setDisplayName(int $userid, string $nickname): bool
+    {
+        $field = self::getDisplayNameField();
+
+        if (!$userid || !$field) {
+            return false;
+        }
+
+        $nickname = trim(preg_replace('/\s+/', ' ', strip_tags($nickname)));
+        $nickname = function_exists('mb_substr') ? mb_substr($nickname, 0, 100) : substr($nickname, 0, 100);
+
+        try {
+            $db     = Factory::getContainer()->get(DatabaseInterface::class);
+            $itemId = (string) $userid;
+            $delete = $db->createQuery()
+                ->delete($db->quoteName('#__fields_values'))
+                ->where($db->quoteName('field_id') . ' = ' . $field)
+                ->where($db->quoteName('item_id') . ' = :item')
+                ->bind(':item', $itemId);
+            $db->setQuery($delete)->execute();
+
+            if ($nickname !== '') {
+                $insert = $db->createQuery()
+                    ->insert($db->quoteName('#__fields_values'))
+                    ->columns($db->quoteName(['field_id', 'item_id', 'value']))
+                    ->values(':field, :item, :value')
+                    ->bind(':field', $field, ParameterType::INTEGER)
+                    ->bind(':item', $itemId)
+                    ->bind(':value', $nickname);
+                $db->setQuery($insert)->execute();
+            }
+
+            self::$displayNames[$userid] = $nickname;
+
+            return true;
+        } catch (Exception $e) {
+            return false;
         }
     }
 

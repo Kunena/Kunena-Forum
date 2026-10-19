@@ -138,22 +138,19 @@ if (!empty($this->spacing)) : ?>
     </td>
 
     <td class="d-none d-md-table-cell">
-        <div class="row">
+        <div class="d-flex align-items-start">
             <?php if ($config->avatarOnCategory) : ?>
-                <div class="col-6 col-md-3">
+                <div class="flex-shrink-0 me-3 klast-avatar">
                     <?php echo $author->getLink($avatar, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id, $config->avatarEdit); ?>
                 </div>
-                <div class="col-6 col-md-9">
-                <?php else : ?>
-                    <div class="col-md-12">
-                    <?php endif; ?>
-                    <span class="lastpostlink"><?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $category, false, true); ?>
-                        <?php echo ' ' . Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
-                    </span>
-                    <br>
-                    <span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_postDateFormat'); ?></span>
-                    </div>
-                </div>
+            <?php endif; ?>
+            <div class="flex-grow-1" style="min-width: 0">
+                <span class="lastpostlink"><?php echo $this->getTopicLink($this->topic, 'last', Text::_('COM_KUNENA_GEN_LAST_POST'), null, KunenaTemplate::getInstance()->tooltips(), $category, false, true); ?>
+                    <?php echo ' ' . Text::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink(null, Text::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->topic->getLastPostAuthor()->getName()), '', '', KunenaTemplate::getInstance()->tooltips(), $category->id); ?>
+                </span>
+                <br>
+                <span class="datepost"><?php echo $topic->getLastPostTime()->toKunena('config_postDateFormat'); ?></span>
+            </div>
         </div>
     </td>
 

@@ -221,7 +221,7 @@ foreach ($this->sections as $section) :
                                 <td>
                                     <div class="d-flex align-items-start">
                                         <?php if ($avatar) : ?>
-                                            <div class="flex-shrink-0 me-3" id="kcat-avatar">
+                                            <div class="flex-shrink-0 me-3 klast-avatar" id="kcat-avatar">
                                                 <?php echo $author->getLink($avatar, null, '', '', $this->ktemplate->tooltips(), $category->id, $this->config->avatarEdit); ?>
                                             </div>
                                         <?php endif; ?>

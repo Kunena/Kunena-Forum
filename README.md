@@ -36,7 +36,7 @@ If you are looking for examples on how *Kunena* works or can be installed, we re
 
 ## TRANSLATIONS
 
-Kunena is on Crowdin - Help us to translate : https://crowdin.com/editor/kunena-forum-71
+Kunena is on Crowdin - Help us to translate : https://crowdin.com/project/kunena-forum-7-1
 
 ## INSTALLATION
 

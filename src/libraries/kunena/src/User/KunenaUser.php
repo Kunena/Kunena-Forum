@@ -944,8 +944,7 @@ class KunenaUser
             $timezone = Factory::getApplication()->get('offset', null);
 
             if ($this->userid) {
-                $user     = KunenaUserHelper::getJoomlaUser((int) $this->userid);
-                $timezone = $user->getParam('timezone', $timezone);
+                $timezone = KunenaUserHelper::getTimezone((int) $this->userid, $timezone);
             }
 
             $this->_time = new KunenaDate('now', $timezone);
@@ -2180,7 +2179,8 @@ class KunenaUser
      */
     public function getSocialInfoUserProfile()
     {
-        $socials = KunenaUserSocials::getInstance($this->userid);
+        // The socials come with the user, no need to ask the database again.
+        $socials = KunenaUserSocials::getInstance($this->userid, true, $this->exists() ? (string) $this->socials : null);
 
         return $socials;
     }

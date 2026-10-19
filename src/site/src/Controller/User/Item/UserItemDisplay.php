@@ -117,9 +117,18 @@ class UserItemDisplay extends KunenaControllerDisplay
         $this->state = $model->getState();
 
         $this->me      = KunenaUserHelper::getMyself();
-        // Need to pass directly the $this->input->getInt('userid',0) to the loadUserById() to set 0 when userid is not set else it fails
-        $this->user    = KunenaUserHelper::getJoomlaUser($this->input->getInt('userid', 0));
+        // Load the viewed user with the loader for several users (the same query as for the users of a topic or a list,
+        // it brings the timezone along): the single user load is what the logged in user was loaded with already.
+        if ($userid > 0) {
+            KunenaUserHelper::loadUsers([$userid]);
+        }
+
         $this->profile = KunenaUserHelper::get($userid);
+
+        // The layouts only need the id of the user, which the Kunena user has too: loading the same user as a Joomla user
+        // would take two more queries (the user and its groups). Need to pass directly the userid to the loadUserById() to
+        // set 0 when userid is not set else it fails.
+        $this->user    = $userid > 0 ? $this->profile : KunenaUserHelper::getJoomlaUser($this->input->getInt('userid', 0));
         $this->profile->tryAuthorise('read');
         $this->candisplaymail = $this->me->canDisplayEmail($this->profile);
         $this->ktemplate = KunenaFactory::getTemplate();

@@ -242,7 +242,7 @@ abstract class KunenaUserHelper
             $db = Factory::getContainer()->get('DatabaseDriver');
 
             $query = $db->createQuery();
-            $query->select('u.name, u.username, u.email, u.block AS blocked, u.registerDate, u.lastvisitDate, ku.*, u.id AS userid')
+            $query->select('u.name, u.username, u.email, u.block AS blocked, u.registerDate, u.lastvisitDate, u.params AS joomlaParams, ku.*, u.id AS userid')
                 ->from($db->quoteName('#__users', 'u'))
                 ->leftJoin($db->quoteName('#__kunena_users') . ' AS ' . $db->quoteName('ku') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))
                 ->where($db->quoteName('u.id') . ' IN (' . $userlist . ')');
@@ -257,6 +257,10 @@ abstract class KunenaUserHelper
             }
 
             foreach ($results as $user) {
+                // The Joomla parameters (timezone) are kept apart, they are no part of the Kunena user.
+                self::$joomlaParams[(int) $user['userid']] = $user['joomlaParams'];
+                unset($user['joomlaParams']);
+
                 $instance = new KunenaUser(false);
                 $instance->bind($user);
                 $instance->exists(isset($user['posts']));
@@ -603,6 +607,50 @@ abstract class KunenaUserHelper
         }
 
         return $user->status;
+    }
+
+    /**
+     * The Joomla parameters (JSON) of the users, as far as they were loaded together with the users.
+     *
+     * @var     array
+     * @since   Kunena 7.2
+     */
+    protected static $joomlaParams = [];
+
+    /**
+     * The timezone which a user has chosen in his Joomla account. Loading the whole Joomla user for it would take
+     * two queries (the user and its groups): the parameters come with the users which were loaded in one query, or are
+     * read with a small query of their own.
+     *
+     * @param   int          $id       The user.
+     * @param   string|null  $default  The timezone if the user has not chosen one.
+     *
+     * @return  string|null
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getTimezone(int $id, ?string $default = null): ?string
+    {
+        $identity = Factory::getApplication()->getIdentity();
+
+        if ($identity && $id && $identity->id == $id) {
+            return $identity->getParam('timezone', $default);
+        }
+
+        if (!\array_key_exists($id, self::$joomlaParams)) {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery()
+                ->select($db->quoteName('params'))
+                ->from($db->quoteName('#__users'))
+                ->where($db->quoteName('id') . ' = :id')
+                ->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
+
+            self::$joomlaParams[$id] = $db->setQuery($query)->loadResult();
+        }
+
+        $params = json_decode((string) self::$joomlaParams[$id], true);
+
+        return \is_array($params) && !empty($params['timezone']) ? (string) $params['timezone'] : $default;
     }
 
     /**

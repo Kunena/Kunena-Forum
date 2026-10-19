@@ -237,12 +237,17 @@ class KunenaUserSocials
     protected $userid = 0;
 
     /**
+     * @param   mixed        $userid    The user.
+     * @param   boolean      $useCache  Use the cache.
+     * @param   string|null  $json      The socials of the user as the Kunena user already has them (loaded in its own
+     *                                  query): no query is needed then. Null reads them from the database.
+     *
      * @return  KunenaUserSocials|mixed
      *
      * @throws  Exception
      * @since   Kunena 6.4
      */
-    public static function getInstance($userid = 0, $useCache = true): ?KunenaUserSocials
+    public static function getInstance($userid = 0, $useCache = true, ?string $json = null): ?KunenaUserSocials
     {
         static $instances = [];
 
@@ -272,7 +277,7 @@ class KunenaUserSocials
         if (!$instance) {
             $instance         = new KunenaUserSocials();
             $instance->userid = $userid;
-            $instance->load();
+            $instance->load($json);
 
             if ($useCache) {
                 $cache->store($instance, $cacheId, 'com_kunena');
@@ -289,26 +294,33 @@ class KunenaUserSocials
     /**
      * Load the socials values from database table.
      *
+     * @param   string|null  $json  The socials as JSON when they are known already, null to read them from the database.
+     *
      * @return  void
      *
      * @throws  Exception
      * @since   Kunena 6.4
      */
-    public function load(): void
+    public function load(?string $json = null): void
     {
-        $db    = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->createQuery();
-        $query->select('socials')
-            ->from($db->quoteName('#__kunena_users'))
-            ->where($db->quoteName('userid') . '=' . $this->userid);
-        $db->setQuery($query);
+        if ($json !== null) {
+            // The Kunena user has the socials already.
+            $socials = ['socials' => $json];
+        } else {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $query = $db->createQuery();
+            $query->select('socials')
+                ->from($db->quoteName('#__kunena_users'))
+                ->where($db->quoteName('userid') . '=' . $this->userid);
+            $db->setQuery($query);
 
-        $socials = null;
+            $socials = null;
 
-        try {
-            $socials = $db->loadAssoc();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
+            try {
+                $socials = $db->loadAssoc();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
         }
 
         if (!empty($socials['socials'])) {

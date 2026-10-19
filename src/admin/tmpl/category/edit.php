@@ -296,6 +296,16 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                             <td><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
                                                         </tr>
                                                         <tr>
+                                                            <td><?php echo Text::_('COM_KUNENA_CATEGORY_INACTIVE_LOCK_DAYS'); ?>
+                                                                :
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" type="number" min="0" step="1" name="params[inactiveLockDays]"
+                                                                       value="<?php echo $this->escape((string) $this->category->params->get('inactiveLockDays', '')); ?>"/>
+                                                            </td>
+                                                            <td><?php echo Text::_('COM_KUNENA_CATEGORY_INACTIVE_LOCK_DAYS_DESC'); ?></td>
+                                                        </tr>
+                                                        <tr>
                                                             <td><?php echo Text::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED'); ?>
                                                                 :
                                                             </td>

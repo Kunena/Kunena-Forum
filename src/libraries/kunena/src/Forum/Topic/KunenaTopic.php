@@ -27,6 +27,7 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Exception\ExecutionFailureException;
 use \Joomla\Database\ParameterType;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Error\KunenaError;
@@ -92,7 +93,7 @@ class KunenaTopic extends KunenaDatabaseObject
         'none'                        => [],
         'read'                        => ['Read'],
         'create'                      => ['NotExists', 'GuestWrite'],
-        'reply'                       => ['Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked'],
+        'reply'                       => ['Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked', 'NotInactive'],
         'edit'                        => ['Read', 'NotMoved', 'Unlocked', 'Own'],
         'move'                        => ['Read'],
         'approve'                     => ['Read', 'NotMoved'],
@@ -112,7 +113,7 @@ class KunenaTopic extends KunenaDatabaseObject
         'post.read'                   => ['Read'],
         'post.thankyou'               => ['Read', 'NotMoved', 'Unlocked'],
         'post.unthankyou'             => ['Read', 'Unlocked'],
-        'post.reply'                  => ['Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked'],
+        'post.reply'                  => ['Read', 'NotHold', 'GuestWrite', 'NotMoved', 'Unlocked', 'NotInactive'],
         'post.edit'                   => ['Read', 'Unlocked'],
         'post.move'                   => ['Read'],
         'post.approve'                => ['Read'],
@@ -2235,6 +2236,61 @@ class KunenaTopic extends KunenaDatabaseObject
         // Check that topic is not locked or user is a moderator
         if ($this->locked && !$user->isModerator($this->getCategory())) {
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_POST_ERROR_TOPIC_LOCKED'), 403);
+        }
+
+        return;
+    }
+
+    /**
+     * The number of days without a new message after which the topic gets closed for replies: the setting of the
+     * category, else the global one (0 is never).
+     *
+     * @return  int
+     *
+     * @since   Kunena 7.2
+     */
+    public function getInactiveLockDays(): int
+    {
+        $days = $this->getCategory()->params->get('inactiveLockDays', '');
+
+        // An empty setting of the category uses the global one.
+        if ($days === '' || $days === null) {
+            // The option is not in the stored configuration until it has been saved once.
+            $config = KunenaConfig::getInstance();
+            $days   = isset($config->inactiveLockDays) ? $config->inactiveLockDays : 0;
+        }
+
+        return max(0, (int) $days);
+    }
+
+    /**
+     * Is the last message of the topic older than the days after which a topic is closed for replies.
+     *
+     * @return  bool
+     *
+     * @since   Kunena 7.2
+     */
+    public function isInactive(): bool
+    {
+        $days = $this->getInactiveLockDays();
+
+        return $days > 0 && $this->exists() && $this->last_post_time && $this->last_post_time < (time() - $days * 86400);
+    }
+
+    /**
+     * A topic without a new message for a long time can not get a reply (moderators can): old topics are not raised.
+     *
+     * @param   KunenaUser  $user  user
+     *
+     * @return  KunenaExceptionAuthorise|void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    protected function authoriseNotInactive(KunenaUser $user)
+    {
+        if ($this->isInactive() && !$user->isModerator($this->getCategory())) {
+            return new KunenaExceptionAuthorise(Text::sprintf('COM_KUNENA_POST_ERROR_TOPIC_INACTIVE', $this->getInactiveLockDays()), 403);
         }
 
         return;

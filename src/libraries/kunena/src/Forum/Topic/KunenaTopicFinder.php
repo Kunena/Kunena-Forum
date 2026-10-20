@@ -545,5 +545,12 @@ class KunenaTopicFinder extends KunenaFinder
             $hold       = implode(',', $this->hold);
             $query->where($this->db->quoteName('a.hold') . ' IN (' . $hold . ')');
         }
+
+        // Categories where the users only see their own topics: for every list and count, whatever filter was used.
+        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere(null, $this->db->quoteName('a.category_id'), $this->db->quoteName('a.first_post_userid'));
+
+        if ($own) {
+            $query->where($own);
+        }
     }
 }

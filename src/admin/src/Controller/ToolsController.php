@@ -1254,6 +1254,16 @@ class ToolsController extends FormController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CREATED_AND_SOCIAL_DATA_IMPORTED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         } else {
+            // Socials already set up: still remove leftover legacy columns which are never imported
+            foreach (['icq'] as $column) {           
+                $query = 'SHOW COLUMNS FROM ' . $db->quoteName('#__kunena_users') . ' LIKE ' . $db->quote($column);
+                $db->setQuery($query);
+
+                if ($db->loadResult()) {
+                    $db->setQuery('ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $db->quoteName($column));
+                    $db->execute();
+                }
+            }
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_ALREADY_EXISTS_NOTHING_TO_DO'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
         }

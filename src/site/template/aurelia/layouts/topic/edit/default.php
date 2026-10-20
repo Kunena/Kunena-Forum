@@ -95,6 +95,8 @@ $this->doc->addScriptOptions(
     'com_kunena.kunena_url_topic_get_mentions',
     KunenaRoute::_('index.php?option=com_kunena&view=user&task=getusersmentions&topicid=' . $this->topic->id . '&' . Session::getFormToken() . '=1', false)
 );
+// A new topic has no users to mention yet: the editor searches the users while the name is typed.
+$this->doc->addScriptOptions('com_kunena.mentions_search', !$this->topic->exists());
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_maxfiles', $this->config->attachmentLimit);
 $this->doc->addScriptOptions('com_kunena.kunena_upload_files_action', $this->action);
 $this->doc->addScriptOptions('com_kunena.icons.upload', KunenaIcons::upload());

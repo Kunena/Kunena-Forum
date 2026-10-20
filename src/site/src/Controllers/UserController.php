@@ -58,6 +58,7 @@ use Kunena\Forum\Libraries\User\KunenaUserSocials;
 use Kunena\Forum\Plugin\Kunena\Kunena\Helper\KunenaProfileKunena;
 use RuntimeException;
 use stdClass;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 
 /**
@@ -1429,6 +1430,58 @@ class UserController extends KunenaController
     }
 
     /**
+     * The users to mention in a new topic: the users whose name starts or contains the typed text (q), who may read the category.
+     *
+     * @param   KunenaUser  $me         The user who writes the topic.
+     * @param   int[]       $ignoredBy  The users who ignore him.
+     *
+     * @return  array
+     *
+     * @since   Kunena 7.2
+     */
+    protected function searchUsersToMention($me, array $ignoredBy): array
+    {
+        $text = trim($this->input->getString('q', ''));
+        $list = [];
+
+        if ($text === '') {
+            return $list;
+        }
+
+        $category = KunenaCategoryHelper::get($this->input->getInt('catid', 0));
+
+        $db    = Factory::getContainer()->get('DatabaseDriver');
+        $query = $db->createQuery()
+            ->select($db->quoteName('a.id'))
+            ->from($db->quoteName('#__users', 'a'))
+            ->where($db->quoteName('a.block') . ' = 0')
+            ->where($db->quoteName('a.id') . ' <> ' . (int) $me->userid)
+            ->where(KunenaUserName::getSearchCondition($text, 'a'))
+            ->order($db->quoteName('a.username') . ' ASC')
+            ->setLimit(30);
+        $ids = array_map('intval', $db->setQuery($query)->loadColumn());
+
+        foreach (KunenaUserHelper::loadUsers($ids) as $found) {
+            if (\count($list) >= 8) {
+                break;
+            }
+
+            if (\in_array((int) $found->userid, $ignoredBy, true) || ($category->exists() && !$category->isAuthorised('read', $found))) {
+                continue;
+            }
+
+            $obj           = new stdClass();
+            $obj->id       = $found->userid;
+            $obj->userid   = $found->userid;
+            $obj->avatar   = $found->getAvatarURL();
+            $obj->username = $this->escape($found->getName('', false));
+            $list[]        = $obj;
+        }
+
+        return $list;
+    }
+
+    /**
      * Get the list of users to mentions in the topic by the given topicid
      * 
      * @since   Kunena 6.3
@@ -1441,11 +1494,11 @@ class UserController extends KunenaController
 
         $id = $this->input->getInt('topicid', 0);
 
-        // Check if the user requesting it has made a post in the topic
+        // Check if the user requesting it has made a post in the topic (a new topic has no users yet: the users are searched)
         $user = KunenaFactory::getUser();
         $topic = KunenaTopicHelper::get($id)->getUserTopic($user->userid);
 
-        if (!$topic->exists()) {
+        if ($id > 0 ? !$topic->exists() : !$user->exists()) {
             throw new RuntimeException(Text::_('Not allowed'), 403);
         }
 
@@ -1475,6 +1528,8 @@ class UserController extends KunenaController
 
                 $userListMentions[] = $obj;
             }
+        } else {
+            $userListMentions = $this->searchUsersToMention($user, $ignoredBy);
         }
 
         header('Content-type: application/json');

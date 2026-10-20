@@ -929,6 +929,34 @@ jQuery(document).ready(function ($) {
 		if (Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions')) {
 			var kunenaMentionUsers = null;
 
+			var kunenaMentionRequest = 0;
+
+			// A new topic has no users yet: the users are searched with the typed text, for the category.
+			var kunenaMentionSearch = function (query, cb) {
+				var request = ++kunenaMentionRequest;
+				var catid = jQuery('#postcatid').val() || jQuery('#poll_catid').val() || '';
+				var url = Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions') + '&catid=' + encodeURIComponent(catid) + '&q=' + encodeURIComponent(query);
+
+				jQuery.getJSON(url).done(function (json) {
+					var users = [];
+
+					try {
+						users = typeof json === 'string' ? JSON.parse(json) : json;
+					} catch (e) {
+						users = [];
+					}
+
+					// Only the answer to the last typed text counts.
+					if (request === kunenaMentionRequest) {
+						cb(users);
+					}
+				}).fail(function () {
+					if (request === kunenaMentionRequest) {
+						cb([]);
+					}
+				});
+			};
+
 			var kunenaMentionLoad = function (cb) {
 				if (kunenaMentionUsers !== null) {
 					cb(kunenaMentionUsers);
@@ -1036,8 +1064,9 @@ jQuery(document).ready(function ($) {
 
 					var query = found[2].toLowerCase();
 
-					kunenaMentionLoad(function (users) {
-						var items = jQuery.grep(users, function (user) {
+					var kunenaMentionDone = function (users) {
+						// The users of a new topic were searched by the server (on any of the names of the user).
+						var items = Joomla.getOptions('com_kunena.mentions_search') ? users.slice(0, 8) : jQuery.grep(users, function (user) {
 							return user.username.toLowerCase().indexOf(query) !== -1;
 						}).slice(0, 8);
 
@@ -1062,7 +1091,13 @@ jQuery(document).ready(function ($) {
 							left: Math.round(frameRect.left + window.pageXOffset + rect.left),
 							top: Math.round(frameRect.top + window.pageYOffset + rect.bottom + 4)
 						}).show();
-					});
+					};
+
+					if (Joomla.getOptions('com_kunena.mentions_search')) {
+						kunenaMentionSearch(query, kunenaMentionDone);
+					} else {
+						kunenaMentionLoad(kunenaMentionDone);
+					}
 				};
 
 				jQuery(kunenaMentionBody).on('keydown', function (e) {

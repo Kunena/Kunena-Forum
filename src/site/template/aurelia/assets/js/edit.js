@@ -335,7 +335,16 @@ jQuery(document).ready(function ($) {
 
 // Get the data for the mentions list
 function dataFeed(opts, callback) {
-    $.getJSON( Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions'))
+    let url = Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions');
+
+    // A new topic has no users yet: the users are searched with the typed text, for the category.
+    if (Joomla.getOptions('com_kunena.mentions_search')) {
+        const catid = jQuery('#postcatid').val() || jQuery('#poll_catid').val() || '';
+
+        url += '&catid=' + encodeURIComponent(catid) + '&q=' + encodeURIComponent(opts.query || '');
+    }
+
+    $.getJSON(url)
     .done(function( json ) {
         callback(JSON.parse(json));
     })

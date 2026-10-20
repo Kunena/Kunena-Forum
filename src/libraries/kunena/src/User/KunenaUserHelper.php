@@ -927,7 +927,7 @@ abstract class KunenaUserHelper
             return false;
         }
 
-        if ($response->code == '200') {
+        if ($response->getStatusCode() == 200) {
             if (KunenaFactory::getConfig()->logModeration) {
                 $log = KunenaLog::LOG_USER_REPORT_STOPFORUMSPAM;
 

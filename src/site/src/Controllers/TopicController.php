@@ -503,6 +503,91 @@ class TopicController extends KunenaController
     }
 
     /**
+     * Report the author of a message to stopforumspam.com (admins and moderators): the user name, the e-mail address and the IP
+     * address of the author, with the address and the start of the message as evidence.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function reportspam()
+    {
+        if (!Session::checkToken('get')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $message  = KunenaMessageHelper::get($this->mesid);
+        $category = $message->exists() ? $message->getCategory() : null;
+        $author   = $message->userid ? KunenaUserHelper::get($message->userid) : null;
+
+        // Only admins and moderators, only for the message of another user who is no admin or moderator, and only with the key.
+        if (
+            !$category || empty($this->config->stopForumSpamKey) || !$this->me->exists() || !$this->me->isModerator($category)
+            || $message->userid == $this->me->userid || ($author && $author->isModerator())
+        ) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORTSPAM_NOT_ALLOWED'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $ip = (string) $message->ip;
+
+        if ($ip === '') {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_NO_IP_GIVEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        // A private or reserved address is of no use for the service.
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) && !$this->config->debug) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_REPORTSPAM_PRIVATE_IP'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        // The evidence: where the message is, and the start of it.
+        $url      = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $message->getPermaUrl(null, false);
+        $text     = trim(preg_replace('/\s+/', ' ', strip_tags(KunenaParser::stripBBCode((string) $message->message, 0, false))));
+        $evidence = $url . ' - ' . (function_exists('mb_substr') ? mb_substr($text, 0, 800) : substr($text, 0, 800));
+
+        $data = [
+            'username'         => $author ? $author->username : (string) $message->name,
+            'ip'               => $ip,
+            'email'            => $author ? $author->email : (string) $message->email,
+            'stopForumSpamKey' => $this->config->stopForumSpamKey,
+            'evidence'         => $evidence,
+        ];
+
+        try {
+            $result = KunenaUserHelper::storeCheckStopforumspam($data, 'add');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if ($result && $result->getStatusCode() == 200) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_STOPFORUMSPAM_REPORT_SUCCESS'), 'success');
+        } else {
+            // The reason of a refusal is in the answer of the service.
+            $reasons = [];
+            preg_match('/<p>.*<\/p>/', $result ? (string) $result->getBody() : '', $reasons);
+            $reason = isset($reasons[0]) ? strip_tags($reasons[0]) : ($result ? 'HTTP ' . $result->getStatusCode() : 'no answer');
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_STOPFORUMSPAM_REPORT_FAILED', $reason), 'error');
+        }
+
+        $this->setRedirectBack();
+    }
+
+    /**
      * Load global rate for the topic
      *
      * @return  void

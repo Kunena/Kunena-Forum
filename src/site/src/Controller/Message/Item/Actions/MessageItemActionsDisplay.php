@@ -535,6 +535,28 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
             );
         }
 
+        // Report the author to stopforumspam.com (admins and moderators; the message of another user who is no admin or moderator).
+        if (
+            !empty($this->config->stopForumSpamKey) && $me->exists() && $me->isModerator($this->category)
+            && $this->message->userid != $me->userid && !empty($this->message->ip)
+            && !($this->message->userid && KunenaUserHelper::get($this->message->userid)->isModerator())
+        ) {
+            foreach (['spam' => false, 'spam_dropdown' => true] as $key => $dropdown) {
+                $this->messageButtons->set(
+                    $key,
+                    $this->getButton(
+                        \sprintf($task, 'reportspam'),
+                        'reportspam',
+                        'message',
+                        'moderation',
+                        $key,
+                        $dropdown,
+                        KunenaIcons::report()
+                    )->set('confirm', Text::_('COM_KUNENA_REPORTSPAM_CONFIRM'))
+                );
+            }
+        }
+
         // Show admins the IP address of the user.
         if (
             $this->category->isAuthorised('admin')

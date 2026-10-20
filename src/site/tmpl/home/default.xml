@@ -17,4 +17,18 @@
             />
         </fieldset>
     </fields>
+
+    <fields name="params">
+        <fieldset name="basic" label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL" addfieldprefix="Kunena\Forum\Administrator\Field">
+            <field name="catids"
+                   type="kunenacategorylist"
+                   default="0"
+                   label="COM_KUNENA_MENU_HOME_CATIDS"
+                   description="COM_KUNENA_MENU_HOME_CATIDS_DESC"
+                   multiple="true"
+                   size="10">
+                <option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
+            </field>
+        </fieldset>
+    </fields>
 </metadata>

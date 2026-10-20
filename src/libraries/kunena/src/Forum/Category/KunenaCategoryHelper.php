@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
 use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -276,6 +277,133 @@ abstract class KunenaCategoryHelper
         }
 
         return self::getCategories($subscribed);
+    }
+
+    /**
+     * The categories of the forum which the visitor is in: a menu item of the type Forum Home can have a list of categories, and
+     * then the pages below that menu item show only those categories and their subcategories. This allows several forums
+     * on one site.
+     *
+     * @return  array|null  Category ids (id => id), null when the forum is not limited.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getForumScope(): ?array
+    {
+        static $scope = false;
+
+        if ($scope !== false) {
+            return $scope;
+        }
+
+        $scope = null;
+
+        try {
+            $app = Factory::getApplication();
+
+            if (!$app->isClient('site')) {
+                return $scope;
+            }
+
+            $menu = $app->getMenu();
+            $item = $menu->getActive();
+            $seen = 0;
+
+            // Go up to the Forum Home menu item.
+            while ($item && $seen++ < 20) {
+                if ($item->component == 'com_kunena' && isset($item->query['view']) && $item->query['view'] == 'home') {
+                    break;
+                }
+
+                $item = $item->parent_id ? $menu->getItem($item->parent_id) : null;
+            }
+
+            if (!$item) {
+                return $scope;
+            }
+
+            $roots = $item->getParams()->get('catids', []);
+            $roots = array_filter(array_map('intval', \is_array($roots) ? $roots : explode(',', (string) $roots)));
+
+            if (!$roots) {
+                return $scope;
+            }
+
+            $scope = self::getCategoriesWithChildren($roots);
+        } catch (Exception $e) {
+            $scope = null;
+        }
+
+        return $scope;
+    }
+
+    /**
+     * The categories and all their subcategories, read without the access check.
+     *
+     * @param   int[]  $roots  category ids
+     *
+     * @return  array  id => id
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function getCategoriesWithChildren(array $roots): array
+    {
+        $children = [];
+
+        foreach (self::getCategories(false, false, 'none') as $category) {
+            $children[(int) $category->parentid][] = (int) $category->id;
+        }
+
+        $list = [];
+        $todo = $roots;
+
+        while ($todo) {
+            $id = array_pop($todo);
+
+            if (!isset($list[$id])) {
+                $list[$id] = $id;
+                $todo      = array_merge($todo, $children[$id] ?? []);
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * A page of a category which is in another forum of the site (another Forum Home menu item has it in its list of
+     * categories) goes to that forum.
+     *
+     * @param   int     $catid  category id of the page
+     * @param   string  $uri    the Kunena address of the page, without Itemid
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function redirectToForum(int $catid, string $uri): void
+    {
+        $scope = self::getForumScope();
+
+        if ($catid < 1 || $scope === null || isset($scope[$catid])) {
+            return;
+        }
+
+        $app  = Factory::getApplication();
+        $menu = $app->getMenu();
+        $lang = $app->getLanguage()->getTag();
+
+        foreach ($menu->getItems('component', 'com_kunena') as $item) {
+            if (empty($item->query['view']) || $item->query['view'] != 'home' || !\in_array($item->language, ['*', '', $lang]) || !$menu->authorise($item->id)) {
+                continue;
+            }
+
+            $roots = $item->getParams()->get('catids', []);
+            $roots = array_filter(array_map('intval', \is_array($roots) ? $roots : explode(',', (string) $roots)));
+
+            if ($roots && isset(self::getCategoriesWithChildren($roots)[$catid])) {
+                $app->redirect(KunenaRoute::_($uri . '&Itemid=' . (int) $item->id, false), 301);
+            }
+        }
     }
 
     /**

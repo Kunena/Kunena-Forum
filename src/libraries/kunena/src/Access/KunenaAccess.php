@@ -551,6 +551,8 @@ jQuery(document).ready(function ($) {
 
         KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 
+        $allowed = $read[$user->userid];
+
         // On a multilingual site the categories of another language are left out (the list in the user state keeps them,
         // as it is kept for all languages).
         if (KunenaMultilanguage::isEnabled()) {
@@ -565,10 +567,19 @@ jQuery(document).ready(function ($) {
                 );
             }
 
-            return $byLanguage[$key];
+            $allowed = $byLanguage[$key];
         }
 
-        return $read[$user->userid];
+        // The visitor sees only the categories of the forum he is in (several forums on one site).
+        if ($user->userid == KunenaUserHelper::getMyself()->userid) {
+            $scope = KunenaCategoryHelper::getForumScope();
+
+            if ($scope !== null) {
+                $allowed = array_intersect_key($allowed, $scope);
+            }
+        }
+
+        return $allowed;
     }
 
     /**

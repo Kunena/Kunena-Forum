@@ -941,6 +941,13 @@ class KunenaCategory extends KunenaDatabaseObject
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
         }
 
+        // A category of another forum of the site is not shown.
+        $scope = KunenaCategoryHelper::getForumScope();
+
+        if ($scope !== null && !isset($scope[$this->id])) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
+        }
+
         if (empty($catids[$this->id])) {
             if ($user->exists()) {
                 return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);

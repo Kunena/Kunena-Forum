@@ -107,6 +107,9 @@ class CategoryTopicsDisplay extends KunenaControllerDisplay
         $Itemid     = $this->input->getInt('Itemid');
         $format     = $this->input->getCmd('format');
 
+        // A category of another forum of the site goes to that forum.
+        KunenaCategoryHelper::redirectToForum((int) $catid, 'index.php?option=com_kunena&view=category&catid=' . (int) $catid);
+
         if (!$Itemid && $format != 'feed' && $this->config->sefRedirect) {
             try {
                 $itemid = KunenaRoute::fixMissingItemID();

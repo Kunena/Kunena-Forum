@@ -24,6 +24,7 @@ use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -97,6 +98,9 @@ class HomeDisplay extends KunenaControllerDisplay
 
             // Remove query variables coming from the home menu item.
             $this->input->set('defaultmenu', null);
+
+            // The forum of the home menu item stays the forum of the page which it shows (read before the active item changes).
+            KunenaCategoryHelper::getForumScope();
 
             // Set active menu item to point the real page.
             $this->input->set('Itemid', $default->id);

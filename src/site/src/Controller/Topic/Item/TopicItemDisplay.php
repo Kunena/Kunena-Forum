@@ -165,6 +165,9 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $limit = $this->config->messagesPerPage;
         }
 
+        // A topic of another forum of the site goes to that forum.
+        KunenaCategoryHelper::redirectToForum($catid, 'index.php?option=com_kunena&view=topic&catid=' . $catid . '&id=' . $id . ($mesid ? '&mesid=' . $mesid : ''));
+
         $this->me = KunenaUserHelper::getMyself();
 
         $this->allowed = md5(serialize(KunenaAccess::getInstance()->getAllowedCategories()));

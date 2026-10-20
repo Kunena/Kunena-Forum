@@ -243,7 +243,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         $params = new Registry($table->params);
 
         // The badges and the social websites have their own view: the configuration form does not have them.
-        foreach (['badges', 'socials'] as $own) {
+        foreach (['badges', 'socials', 'rankgroups'] as $own) {
             if (!$params->exists($own)) {
                 $value = ComponentHelper::getParams('com_kunena')->get($own);
 

@@ -1501,9 +1501,16 @@ class KunenaUser
 
         $userType = $special !== false ? $this->getType($catid, true) : 'count';
 
+        // The rank of a Joomla user group of the user (it goes before the ranks of the administrators and the moderators, but after
+        // a rank which was given to the user himself).
+        $groupRankId = !\in_array($userType, ['guest', 'blocked', 'banned', 'count']) && $this->userid ? KunenaRankGroups::getRankIdForUser((int) $this->userid) : 0;
+
         if (isset(self::$_ranks[$this->rank]) && !\in_array($userType, ['guest', 'blocked', 'banned', 'count'])) {
             // Use rank specified to the user.
             $rank = self::$_ranks[$this->rank];
+        } elseif ($groupRankId && isset(self::$_ranks[$groupRankId])) {
+            // Use the rank of the group of the user.
+            $rank = self::$_ranks[$groupRankId];
         } else {
             // Generate user rank.
             $rank              = new stdClass();

@@ -14,10 +14,12 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\UserGroupsHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\User\KunenaRankGroups;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 
 /** @var \Joomla\CMS\WebAsset\WebAssetManager $wa */
@@ -64,6 +66,9 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 <th scope="col" class="w-10">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'COM_KUNENA_RANKSMIN', 'rankMin', $listDirn, $listOrder); ?>
                                 </th>
+                                <th scope="col" class="w-10 d-none d-md-table-cell">
+                                    <?php echo Text::_('COM_KUNENA_RANKS_USERGROUP'); ?>
+                                </th>
                                 <th scope="col" class="w-1">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'rankId', $listDirn, $listOrder); ?>
                                 </th>
@@ -100,6 +105,10 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                     </td>
                                     <td class="d-none d-md-table-cell">
                                         <?php echo $this->escape($item->rankMin); ?>
+                                    </td>
+                                    <td class="d-none d-md-table-cell">
+                                        <?php $linkedGroup = KunenaRankGroups::getGroup((int) $item->rankId); ?>
+                                        <?php echo $linkedGroup ? $this->escape(UserGroupsHelper::getInstance()->get($linkedGroup)->title ?? $linkedGroup) : ''; ?>
                                     </td>
                                     <td class="d-none d-md-table-cell">
                                         <?php echo $this->escape($item->rankId); ?>

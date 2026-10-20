@@ -14,12 +14,14 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Helper\UserGroupsHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\WebAsset\WebAssetManager;
 use Kunena\Forum\Libraries\Version\KunenaVersion;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaRankGroups;
 
 $iconPath = json_encode(Uri::root(true) . '/');
 $this->document->addScriptDeclaration(
@@ -86,6 +88,23 @@ $wa->useScript('multiselect');
                             <td>
                                 <input class="form-control" type="text" name="rankMin"
                                            value="<?php echo isset($this->rankSelected) ? $this->rankSelected->rankMin : '1' ?>"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php echo Text::_('COM_KUNENA_RANKS_USERGROUP'); ?>
+                            </td>
+                            <td>
+                                <?php $rankGroup = isset($this->rankSelected->rankId) ? KunenaRankGroups::getGroup((int) $this->rankSelected->rankId) : 0; ?>
+                                <select class="form-select" name="rankGroup">
+                                    <option value="0"><?php echo Text::_('COM_KUNENA_RANKS_USERGROUP_NONE'); ?></option>
+                                    <?php foreach (UserGroupsHelper::getInstance()->getAll() as $group) : ?>
+                                        <option value="<?php echo (int) $group->id; ?>"<?php echo $rankGroup === (int) $group->id ? ' selected' : ''; ?>>
+                                            <?php echo str_repeat('- ', (int) $group->level) . $this->escape($group->title); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="form-text"><?php echo Text::_('COM_KUNENA_RANKS_USERGROUP_DESC'); ?></div>
                             </td>
                         </tr>
                         <tr>

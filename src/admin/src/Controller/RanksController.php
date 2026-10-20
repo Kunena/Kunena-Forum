@@ -24,6 +24,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaRankGroups;
 
 /**
  * Kunena Ranks Controller
@@ -121,6 +122,11 @@ class RanksController extends AdminController
 
             try {
                 $db->execute();
+
+                // The ranks which are deleted have no group any more.
+                foreach ($cid as $rankId) {
+                    KunenaRankGroups::setGroup((int) $rankId, 0);
+                }
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 

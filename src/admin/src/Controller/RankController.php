@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaRankGroups;
 use RuntimeException;
 
 /**
@@ -96,6 +97,7 @@ class RankController extends AdminController
         $rankSpecial = $this->app->getInput()->getInt('rankSpecial', 0);
         $rankMin     = $this->app->getInput()->getInt('rankMin');
         $rankid      = $this->app->getInput()->getInt('rankid', 0);
+        $rankGroup   = $this->app->getInput()->getInt('rankGroup', 0);
 
         if (!$rankid) {
             $query = $db->createQuery();
@@ -116,6 +118,7 @@ class RankController extends AdminController
 
             try {
                 $db->execute();
+                $rankid = (int) $db->insertid();
             } catch (RuntimeException $e) {
                 $this->app->enqueueMessage($e->getMessage(), 'error');
 
@@ -143,6 +146,13 @@ class RankController extends AdminController
 
                 return;
             }
+        }
+
+        // The user group which gets the rank (no group: the link is removed).
+        try {
+            KunenaRankGroups::setGroup((int) $rankid, $rankGroup);
+        } catch (RuntimeException $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
         }
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_RANK_SAVED'), 'success');

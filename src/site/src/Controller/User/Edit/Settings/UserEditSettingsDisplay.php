@@ -18,6 +18,7 @@ namespace Kunena\Forum\Site\Controller\User\Edit\Settings;
 use Exception;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\User\KunenaUserName;
 use Kunena\Forum\Site\Controller\User\Edit\UserEditDisplay;
 use StdClass;
@@ -173,6 +174,27 @@ class UserEditSettingsDisplay extends UserEditDisplay
             'kuserlisttime'
         );
         $this->settings[] = $item;
+
+        // The e-mail when the user is mentioned in a post (when the forum sends it).
+        if (!empty($this->config->mentionEmail)) {
+            $item             = new StdClass();
+            $item->name       = 'mentionemail';
+            $item->label      = Text::_('COM_KUNENA_USER_MENTION_EMAIL');
+            $options          = [];
+            $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
+            $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+            $item->field      = HTMLHelper::_(
+                'select.genericlist',
+                $options,
+                'mentionemail',
+                'class="kinputbox form-select" size="1"',
+                'value',
+                'text',
+                (int) KunenaUserHelper::getJoomlaParam((int) $this->profile->userid, 'kunena_mention_email', 1),
+                'kmentionemail'
+            );
+            $this->settings[] = $item;
+        }
 
         // The name which others see: the choice of the user, when the forum lets the users choose.
         if (KunenaUserName::userCanChoose()) {

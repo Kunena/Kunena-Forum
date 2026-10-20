@@ -201,6 +201,16 @@
             name="mail"
             label="COM_KUNENA_A_MAIL_SETTINGS">
             <field
+                name="mentionEmail"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_MENTION_EMAIL"
+                description="COM_KUNENA_A_MENTION_EMAIL_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
                 name="emailForumHeaders"
                 type="radio"
                 default="1"

@@ -670,6 +670,11 @@ class UserController extends KunenaController
         $this->user->userListtime        = $this->app->getInput()->getInt('userlisttime', -2);
         $this->user->displayAgeBirthdate = $this->app->getInput()->getInt('displayAgeBirthdate', 1);
 
+        // The e-mail when the user is mentioned in a post: 1 (the default) is stored as no value.
+        if ($this->app->getInput()->get('mentionemail', null) !== null) {
+            KunenaUserHelper::setJoomlaParam((int) $this->user->userid, 'kunena_mention_email', $this->app->getInput()->getInt('mentionemail', 1) ? null : 0);
+        }
+
         // The name which others see (when the users may choose it): -1 is the choice of the forum.
         if (KunenaUserName::userCanChoose() && $this->app->getInput()->get('namechoice', null) !== null) {
             $choice = $this->app->getInput()->getInt('namechoice', -1);

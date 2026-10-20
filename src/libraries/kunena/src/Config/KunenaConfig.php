@@ -227,6 +227,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $enableDrafts                       Enable saving messages as draft
  * @property string $enableIgnore                       Enable the ignore list of users
  * @property string $enableFollow                       Enable following users
+ * @property int    $mentionEmail                       Send an e-mail to the users who are mentioned in a post
  * @property int    $emailForumHeaders                  Add the headers X-Forum-* and the threading headers to the e-mails
  * @property int    $enableTags                         Tag topics with the tags of the Joomla component Tags
  * @property int    $redirectDeletedTopics              Make a redirect with the status 410 Gone for a deleted topic

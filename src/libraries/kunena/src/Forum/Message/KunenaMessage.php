@@ -1988,6 +1988,117 @@ class KunenaMessage extends KunenaDatabaseObject
     }
 
     /**
+     * The ids of the users which are mentioned in a text: [mention userid=1]name[/mention].
+     *
+     * @param   string  $text  The text of a message.
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getMentionedUserIds(string $text): array
+    {
+        if (!preg_match_all('/\[mention userid=(\d+)\]/i', $text, $matches)) {
+            return [];
+        }
+
+        return array_values(array_unique(array_map('intval', $matches[1])));
+    }
+
+    /**
+     * Send an e-mail to the users who are mentioned in the message: the ones who are not mentioned in the old text (an edit
+     * does not send the e-mail again), are not the author, may read the message and want the e-mail.
+     *
+     * @param   string  $oldText  The text of the message before an edit (empty for a new message).
+     * @param   bool    $isNew    Is it a new message: the users who get the notification of the message anyway do not get a second e-mail.
+     *
+     * @return  int  The number of e-mails which were sent.
+     *
+     * @since   Kunena 7.2
+     */
+    public function sendMentionNotifications(string $oldText = '', bool $isNew = true): int
+    {
+        if (empty($this->_config->mentionEmail) || !$this->_config->sendEmails || $this->hold != 0) {
+            return 0;
+        }
+
+        $joomlaConfig = Factory::getApplication()->getConfig();
+
+        if (!$joomlaConfig->get('mailonline')) {
+            return 0;
+        }
+
+        $userids = array_diff(self::getMentionedUserIds((string) $this->message), self::getMentionedUserIds($oldText));
+        $userids = array_slice($userids, 0, 10);
+
+        if (!$userids) {
+            return 0;
+        }
+
+        // The users who get the e-mail of the new message (subscribers, moderators) do not need a second one.
+        $skip = [(int) $this->userid => true];
+
+        foreach (KunenaUserIgnore::getIgnoredBy((int) $this->userid) as $ignoring) {
+            $skip[(int) $ignoring] = true;
+        }
+
+        if ($isNew) {
+            list($emailToList) = $this->gatherNotificationData();
+
+            foreach ((array) $emailToList as $emailTo) {
+                if (!empty($emailTo->id)) {
+                    $skip[(int) $emailTo->id] = true;
+                }
+            }
+        }
+
+        $topic      = $this->getTopic();
+        $authorName = $this->getAuthor()->getName($this->name, false);
+        $url        = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl(null, false);
+        $sender     = !empty($this->_config->emailSenderName) ? MailHelper::cleanAddress($this->_config->emailSenderName) : MailHelper::cleanAddress($this->_config->boardTitle);
+        $sent       = 0;
+
+        KunenaFactory::loadLanguage('com_kunena', 'site');
+
+        foreach ($userids as $userid) {
+            if (isset($skip[$userid])) {
+                continue;
+            }
+
+            $recipient = KunenaUserHelper::get($userid);
+
+            // A user who is blocked, has no valid address, may not read the message or has switched the e-mail off gets none.
+            if (
+                !$recipient->exists() || $recipient->blocked || !MailHelper::isEmailAddress((string) $recipient->email)
+                || KunenaUserHelper::getJoomlaParam($userid, 'kunena_mention_email', 1) == 0
+                || !$this->isAuthorised('read', $recipient)
+            ) {
+                continue;
+            }
+
+            try {
+                $subject = MailHelper::cleanSubject(Text::sprintf('COM_KUNENA_MENTION_EMAIL_SUBJECT', $authorName, $topic->subject));
+                $body    = '<p>' . Text::sprintf('COM_KUNENA_MENTION_EMAIL_BODY', htmlspecialchars($authorName, ENT_QUOTES, 'UTF-8'), htmlspecialchars($topic->subject, ENT_QUOTES, 'UTF-8')) . '</p>'
+                    . '<p><a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '">' . Text::_('COM_KUNENA_MENTION_EMAIL_LINK') . '</a></p>';
+
+                $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+                $mail->setSubject($subject);
+                $mail->setSender([$this->_config->email, $sender]);
+                $mail->isHtml(true);
+                $mail->setBody($body);
+
+                if (KunenaEmail::send($mail, [$recipient->email])) {
+                    $sent++;
+                }
+            } catch (Exception $e) {
+                // A mention e-mail which fails must not stop the post.
+            }
+        }
+
+        return $sent;
+    }
+
+    /**
      * The address part of the Message-ID of the e-mails of the forum: the domain of the site.
      *
      * @return  string

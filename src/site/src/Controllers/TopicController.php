@@ -1171,6 +1171,9 @@ class TopicController extends KunenaController
 
         $message->processNotification();
 
+        // The users who are mentioned in the message get an e-mail.
+        $message->sendMentionNotifications();
+
         // Now try adding any new subscriptions if asked for by the poster
         $usertopic = $topic->getUserTopic();
 
@@ -1562,8 +1565,10 @@ class TopicController extends KunenaController
         // Load language file from the template.
         KunenaFactory::getTemplate()->loadLanguage();
 
-        // Update message contents
+        // Update message contents (the old text: a user who was mentioned before does not get a second e-mail)
+        $oldMessageText = (string) $message->message;
         $message->edit($fields);
+        $message->sendMentionNotifications($oldMessageText, false);
 
         // If requested: Make message to be anonymous
         if ($fields['anonymous'] && $message->getCategory()->allowAnonymous) {

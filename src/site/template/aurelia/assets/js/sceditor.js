@@ -713,7 +713,8 @@ jQuery(document).ready(function ($) {
 		var textarea = document.getElementById('message');
 		var textarea_private = document.getElementById('message_private');
 
-		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined)
+		// The buttons are not configured (the option is empty): the basic toolbar is used.
+		if(Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== undefined && Joomla.getOptions('com_kunena.template_editor_buttons_configuration') !== null)
 		{
 			var toolbar_buttons_config = Joomla.getOptions('com_kunena.template_editor_buttons_configuration');
 
@@ -742,6 +743,13 @@ jQuery(document).ready(function ($) {
 		var toolbar_buttons_private = '';
 		toolbar_buttons_private = toolbar_buttons.replace('emoticon','email|emoticon');
 
+		// The poll button: when polls are possible (a category which allows polls, or a topic which has a poll). It is enabled
+		// or disabled while the category is chosen.
+		if (Joomla.getOptions('com_kunena.pollcategoriesid') !== undefined || jQuery('#poll_exist_edit').length > 0)
+		{
+			toolbar_buttons += '|poll';
+		}
+
 		var emoticons = Joomla.getOptions('com_kunena.ckeditor_emoticons');
 		var obj = jQuery.parseJSON( emoticons );
 		var list_emoticons = [];
@@ -753,8 +761,40 @@ jQuery(document).ready(function ($) {
 		var userlang = Joomla.getOptions('com_kunena.sceditor_userdefaultlanguage');
 		userlang = (typeof userlang == 'undefined') ? Joomla.getOptions('com_kunena.sceditor_joomladefaultlanguage') : userlang;
 
+		// The mention of a user: [mention userid=1]name[/mention] (the same bbcode as of the CKEditor).
+		sceditor.formats.bbcode.set('mention', {
+			tags: {
+				span: {
+					'data-kmention-userid': null
+				}
+			},
+			isInline: true,
+			format: function (element, content) {
+				return '[mention userid=' + element.getAttribute('data-kmention-userid') + ']' + content + '[/mention]';
+			},
+			html: function (token, attrs, content) {
+				return '<span class="kmention" data-kmention-userid="' + attrs.userid + '">' + content + '</span>';
+			}
+		});
+
+		// No images pasted into the editor (like the blockimagepaste plugin of the CKEditor): the pasted images are removed.
+		sceditor.plugins.kunenapaste = function () {
+			this.signalPasteRaw = function (data) {
+				if (data.html && /<img[\s>/]/i.test(data.html)) {
+					data.html = data.html.replace(/<img[^>]*>/gi, '');
+
+					if (!data.html.replace(/<[^>]*>/g, '').trim()) {
+						data.html = '';
+						data.text = '';
+					}
+
+					alert(Joomla.Text._('COM_KUNENA_EDITOR_PASTE_IMAGE_BLOCKED') || 'Pasting images directly into the editor is not allowed.');
+				}
+			};
+		};
+
 		sceditor.create(textarea, {
-			plugins: 'undo,autoyoutube',
+			plugins: 'undo,autoyoutube,kunenapaste',
 			format: 'bbcode',
 			toolbar: toolbar_buttons,
 			locale: userlang,
@@ -804,7 +844,7 @@ jQuery(document).ready(function ($) {
 		});
 
 		sceditor.create(textarea_private, {
-			plugins: 'undo,autoyoutube',
+			plugins: 'undo,autoyoutube,kunenapaste',
 			format: 'bbcode',
 			toolbar: toolbar_buttons_private,
 			locale: userlang,
@@ -843,5 +883,215 @@ jQuery(document).ready(function ($) {
 				$('#form_submit_button').prop("disabled", true);
 			}
 		});
+
+		// ---- The features of the CKEditor which the SCEditor did not have: mentions, the poll button only where a poll is
+		// ---- allowed and no images pasted into the editor.
+
+		// Is a poll allowed: in a category which allows polls (when the topic has no poll yet) or when the topic has a poll.
+		var kunenaPollAllowed = function () {
+			var pollcategoriesidOption = Joomla.getOptions('com_kunena.pollcategoriesid');
+			var pollcategoriesid = pollcategoriesidOption !== undefined ? jQuery.parseJSON(pollcategoriesidOption) : undefined;
+			var pollexist = jQuery('#poll_exist_edit');
+			var catid = jQuery('#postcatid').val() || jQuery('#poll_catid').val();
+
+			if (pollexist.length > 0) {
+				return true;
+			}
+
+			return !!(pollcategoriesid && pollcategoriesid[catid] !== undefined);
+		};
+
+		var kunenaPollButtonUpdate = function () {
+			jQuery('.sceditor-button-poll').toggleClass('disabled', !kunenaPollAllowed());
+		};
+
+		// The poll command works only where a poll is allowed.
+		var kunenaPollCommand = sceditor.command.get('poll');
+		var kunenaPollExec = kunenaPollCommand.exec;
+		var kunenaPollTxtExec = kunenaPollCommand.txtExec;
+
+		kunenaPollCommand.exec = function (caller) {
+			if (kunenaPollAllowed()) {
+				kunenaPollExec.call(this, caller);
+			}
+		};
+		kunenaPollCommand.txtExec = function (caller) {
+			if (kunenaPollAllowed()) {
+				kunenaPollTxtExec.call(this, caller);
+			}
+		};
+
+		kunenaPollButtonUpdate();
+		jQuery('#postcatid').on('change', kunenaPollButtonUpdate);
+
+		// The mentions: typing @ shows the users of the topic (the same list as of the CKEditor). The list is made here and
+		// not with a library, because the editor is an iframe.
+		if (Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions')) {
+			var kunenaMentionUsers = null;
+
+			var kunenaMentionLoad = function (cb) {
+				if (kunenaMentionUsers !== null) {
+					cb(kunenaMentionUsers);
+
+					return;
+				}
+
+				jQuery.getJSON(Joomla.getOptions('com_kunena.kunena_url_topic_get_mentions')).done(function (json) {
+					try {
+						kunenaMentionUsers = typeof json === 'string' ? JSON.parse(json) : json;
+					} catch (e) {
+						kunenaMentionUsers = [];
+					}
+
+					cb(kunenaMentionUsers);
+				}).fail(function () {
+					// New topic: there are no users to mention yet.
+					kunenaMentionUsers = [];
+					cb(kunenaMentionUsers);
+				});
+			};
+
+			var kunenaMentionEditor = sceditor.instance(textarea);
+			var kunenaMentionFrame = kunenaMentionEditor.getContentAreaContainer();
+			var kunenaMentionBody = kunenaMentionEditor.getBody();
+
+			if (kunenaMentionFrame && kunenaMentionBody) {
+				var kunenaMentionWin = kunenaMentionFrame.contentWindow;
+				var kunenaMentionMenu = jQuery('<ul class="kmention-menu list-group shadow"></ul>').css({
+					position: 'absolute', zIndex: 2000, display: 'none', maxHeight: '240px', overflowY: 'auto', minWidth: '180px'
+				}).appendTo(document.body);
+				var kunenaMention = {items: [], index: 0, node: null, start: 0, end: 0};
+
+				var kunenaMentionHide = function () {
+					kunenaMentionMenu.hide();
+					kunenaMention.items = [];
+				};
+
+				var kunenaMentionDraw = function () {
+					kunenaMentionMenu.empty();
+
+					jQuery.each(kunenaMention.items, function (i, user) {
+						var item = jQuery('<li class="list-group-item list-group-item-action py-1" style="cursor:pointer"></li>')
+							.toggleClass('active', i === kunenaMention.index);
+
+						if (user.avatar) {
+							jQuery('<img width="24" height="24" alt="" class="me-2 rounded-circle">').attr('src', user.avatar).appendTo(item);
+						}
+
+						jQuery('<strong></strong>').text(user.username).appendTo(item);
+
+						// mousedown: the editor keeps the focus.
+						item.on('mousedown', function (e) {
+							e.preventDefault();
+							kunenaMentionSelect(i);
+						});
+
+						kunenaMentionMenu.append(item);
+					});
+				};
+
+				var kunenaMentionSelect = function (index) {
+					var user = kunenaMention.items[index];
+
+					if (!user || !kunenaMention.node) {
+						return;
+					}
+
+					var range = kunenaMentionFrame.contentDocument.createRange();
+					range.setStart(kunenaMention.node, kunenaMention.start);
+					range.setEnd(kunenaMention.node, kunenaMention.end);
+
+					var selection = kunenaMentionWin.getSelection();
+					selection.removeAllRanges();
+					selection.addRange(range);
+					range.deleteContents();
+
+					kunenaMentionEditor.wysiwygEditorInsertHtml(
+						'<span class="kmention" data-kmention-userid="' + parseInt(user.userid, 10) + '">'
+						+ jQuery('<div>').text(user.username).html() + '</span>&nbsp;'
+					);
+
+					kunenaMentionHide();
+				};
+
+				// Look for an @ and the letters after it, before the cursor.
+				var kunenaMentionCheck = function () {
+					var selection = kunenaMentionWin.getSelection();
+
+					if (!selection || !selection.rangeCount || !selection.isCollapsed || !selection.anchorNode || selection.anchorNode.nodeType !== 3) {
+						kunenaMentionHide();
+
+						return;
+					}
+
+					var node = selection.anchorNode;
+					var text = node.textContent.slice(0, selection.anchorOffset);
+					var found = /(^|[\s\u00a0])@([^\s\u00a0@]{0,30})$/.exec(text);
+
+					if (!found) {
+						kunenaMentionHide();
+
+						return;
+					}
+
+					var query = found[2].toLowerCase();
+
+					kunenaMentionLoad(function (users) {
+						var items = jQuery.grep(users, function (user) {
+							return user.username.toLowerCase().indexOf(query) !== -1;
+						}).slice(0, 8);
+
+						if (!items.length) {
+							kunenaMentionHide();
+
+							return;
+						}
+
+						kunenaMention.items = items;
+						kunenaMention.index = 0;
+						kunenaMention.node = node;
+						kunenaMention.end = selection.anchorOffset;
+						kunenaMention.start = selection.anchorOffset - query.length - 1;
+						kunenaMentionDraw();
+
+						// Under the cursor: the position of the cursor in the iframe, on the page.
+						var rect = selection.getRangeAt(0).getClientRects()[0] || kunenaMentionBody.getBoundingClientRect();
+						var frameRect = kunenaMentionFrame.getBoundingClientRect();
+
+						kunenaMentionMenu.css({
+							left: Math.round(frameRect.left + window.pageXOffset + rect.left),
+							top: Math.round(frameRect.top + window.pageYOffset + rect.bottom + 4)
+						}).show();
+					});
+				};
+
+				jQuery(kunenaMentionBody).on('keydown', function (e) {
+					if (!kunenaMention.items.length) {
+						return;
+					}
+
+					if (e.which === 40 || e.which === 38) {
+						kunenaMention.index = (kunenaMention.index + (e.which === 40 ? 1 : kunenaMention.items.length - 1)) % kunenaMention.items.length;
+						kunenaMentionDraw();
+						e.preventDefault();
+					} else if (e.which === 13 || e.which === 9) {
+						kunenaMentionSelect(kunenaMention.index);
+						e.preventDefault();
+					} else if (e.which === 27) {
+						kunenaMentionHide();
+						e.preventDefault();
+					}
+				}).on('keyup click input', function (e) {
+					// The keys of the list do not start a new search.
+					if (e.type === 'keyup' && jQuery.inArray(e.which, [13, 9, 27, 38, 40]) !== -1) {
+						return;
+					}
+
+					kunenaMentionCheck();
+				}).on('blur', function () {
+					window.setTimeout(kunenaMentionHide, 150);
+				});
+			}
+		}
 	}
 });

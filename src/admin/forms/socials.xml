@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fieldset name="socials" label="COM_KUNENA_A_SOCIALS">
+        <field
+            name="socials"
+            type="subform"
+            multiple="true"
+            label="COM_KUNENA_A_SOCIALS"
+            description="COM_KUNENA_A_SOCIALS_DESC"
+            layout="joomla.form.field.subform.repeatable-table"
+            buttons="add,remove,move">
+            <form>
+                <field
+                    name="key"
+                    type="text"
+                    label="COM_KUNENA_A_SOCIAL_KEY"
+                    pattern="[a-z0-9_]{1,30}"
+                    maxlength="30"
+                    required="true"/>
+                <field
+                    name="title"
+                    type="text"
+                    label="COM_KUNENA_A_SOCIAL_TITLE"
+                    maxlength="60"
+                    required="true"/>
+                <field
+                    name="url"
+                    type="text"
+                    label="COM_KUNENA_A_SOCIAL_URL"
+                    default="https://example.com/##VALUE##"
+                    maxlength="255"/>
+                <field
+                    name="fa"
+                    type="text"
+                    label="COM_KUNENA_A_SOCIAL_ICON"
+                    default="fa-solid fa-globe"
+                    maxlength="60"/>
+                <field
+                    name="nourl"
+                    type="radio"
+                    default="0"
+                    layout="joomla.form.field.radio.switcher"
+                    label="COM_KUNENA_A_SOCIAL_NOURL">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </form>
+        </field>
+    </fieldset>
+</form>

@@ -15,6 +15,7 @@ namespace Kunena\Forum\Site;
 
 \defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
@@ -138,14 +139,14 @@ $template = KunenaTemplate::getInstance();
             <tr>
                 <td class="col-md-3">
                     <label for="personalText">
-                        <?php echo Text::_('COM_KUNENA_MYPROFILE_' . strtoupper($key)); ?>
+                        <?php echo Text::_($social->title); ?>
                     </label>
                 </td>
                 <td>
                     <input class="form-control hasTooltip" id="social<?php echo $key; ?>" type="text"
                         maxlength="100"
                         name="social<?php echo $key; ?>" value="<?php echo $this->escape($social->value); ?>"
-                        data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_' . strtoupper($key) . '_DESC') ?>" />
+                        data-bs-toggle="tooltip" title="<?php echo $this->escape(Factory::getApplication()->getLanguage()->hasKey($social->title . '_DESC') ? Text::_($social->title . '_DESC') : ''); ?>" />
                 </td>
             </tr>
         <?php endforeach; ?>

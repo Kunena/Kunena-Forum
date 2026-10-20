@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\User;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Cache\CacheControllerFactoryInterface;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
@@ -58,6 +59,7 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  *
  * @since   Kunena 6.4
  */
+#[\AllowDynamicProperties]
 class KunenaUserSocials
 {
     /**
@@ -348,10 +350,13 @@ class KunenaUserSocials
      */
     protected function normalize(): void
     {
-        $defaults = json_decode(self::getDefaultSocialsJson());
+        $defaults = self::getProviders();
+
+        // When the admin made the list of providers, only these providers are shown: the other values are left out.
+        $custom = self::hasCustomProviders();
 
         foreach (get_object_vars($this) as $key => $value) {
-            if ($key !== 'userid' && !isset($defaults->$key) && !\is_object($value)) {
+            if ($key !== 'userid' && !isset($defaults->$key) && ($custom || !\is_object($value))) {
                 unset($this->$key);
             }
         }
@@ -360,6 +365,12 @@ class KunenaUserSocials
             if (!\is_object($this->$key ?? null)) {
                 $default->value = \is_string($this->$key ?? null) ? $this->$key : '';
                 $this->$key     = $default;
+            } else {
+                // The address, the title and the icon come from the list of the providers, the value is the one of the user.
+                $this->$key->url   = $default->url;
+                $this->$key->title = $default->title;
+                $this->$key->nourl = $default->nourl;
+                $this->$key->fa    = $default->fa;
             }
         }
     }
@@ -509,6 +520,76 @@ class KunenaUserSocials
     }
 
     /**
+     * The rows of the providers which the admin made (view Socials of the backend), empty when the admin made none.
+     *
+     * @return  array
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getCustomProviderRows(): array
+    {
+        $rows = ComponentHelper::getParams('com_kunena')->get('socials', []);
+
+        return \is_object($rows) || \is_array($rows) ? array_values(array_map(static fn ($row) => (array) $row, (array) $rows)) : [];
+    }
+
+    /**
+     * Did the admin make the list of the providers.
+     *
+     * @return  bool
+     *
+     * @since   Kunena 7.2
+     */
+    public static function hasCustomProviders(): bool
+    {
+        return (bool) self::getCustomProviderRows();
+    }
+
+    /**
+     * The providers (social websites): the ones of the admin when there are, else the default ones. Each provider has an empty
+     * value, the address (##VALUE## is the value of the user), the title (a language key or a text), nourl and the icon.
+     *
+     * @return  object  The providers by key.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getProviders(): object
+    {
+        static $providers = null;
+
+        if ($providers !== null) {
+            return unserialize(serialize($providers));
+        }
+
+        $rows = self::getCustomProviderRows();
+
+        if (!$rows) {
+            $providers = json_decode(self::getDefaultSocialsJson());
+        } else {
+            $providers = new \stdClass();
+
+            foreach ($rows as $row) {
+                $key = (string) ($row['key'] ?? '');
+
+                if (!preg_match('/^[a-z0-9_]{1,30}$/', $key) || $key === 'userid') {
+                    continue;
+                }
+
+                $providers->$key = (object) [
+                    'value' => '',
+                    'url'   => (string) ($row['url'] ?? '##VALUE##'),
+                    'title' => (string) ($row['title'] ?? $key),
+                    'nourl' => (int) !empty($row['nourl']),
+                    'fa'    => (string) ($row['fa'] ?? ''),
+                ];
+            }
+        }
+
+        // A copy: the callers put the value of the user in the objects.
+        return unserialize(serialize($providers));
+    }
+
+    /**
      * Default JSON structure of the socials column
      *
      * @return  string
@@ -550,7 +631,7 @@ class KunenaUserSocials
     "linkedin_company": {
         "value": "",
         "url": "https://www.linkedin.com/company/##VALUE##",
-        "title": "COM_KUNENA_MYPROFILE_LINKEDIN",
+        "title": "COM_KUNENA_MYPROFILE_LINKEDIN_COMPANY",
         "nourl": 0,
         "fa": "fa-brands fa-linkedin"
     },
@@ -718,7 +799,7 @@ class KunenaUserSocials
     "threads": {
         "value": "",
         "url": "https://www.threads.net/@##VALUE##",
-        "title": "COM_KUNENA_MYPROFILE_THREADS_APP",
+        "title": "COM_KUNENA_MYPROFILE_THREADS",
         "nourl": 0,
         "fa": "fa-brands fa-threads"
     }
@@ -740,7 +821,7 @@ JSON;
             $query = $db->createQuery();
 
             $fields = array(
-                $db->quoteName('socials') . ' = ' . $db->quote(self::getDefaultSocialsJson()),
+                $db->quoteName('socials') . ' = ' . $db->quote(json_encode(self::getProviders())),
             );
 
             $conditions = array(

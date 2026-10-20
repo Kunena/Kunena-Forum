@@ -57,3 +57,6 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories_translations`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
+
+-- The social websites which are shut down (Skype, Yahoo Messenger, Google+) are not in the default list any more.
+UPDATE `#__kunena_users` SET `socials` = JSON_REMOVE(`socials`, '$.skype', '$.yim', '$.google') WHERE `socials` IS NOT NULL AND JSON_VALID(`socials`);

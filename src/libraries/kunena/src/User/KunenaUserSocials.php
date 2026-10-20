@@ -33,9 +33,6 @@ use Kunena\Forum\Libraries\Error\KunenaError;
  * @property string  $linkedin
  * @property string  $linkedin_company
  * @property string  $digg
- * @property string  $skype
- * @property string  $yim
- * @property string  $google
  * @property string  $github
  * @property string  $microsoft
  * @property string  $blogspot
@@ -62,6 +59,13 @@ use Kunena\Forum\Libraries\Error\KunenaError;
 #[\AllowDynamicProperties]
 class KunenaUserSocials
 {
+    /**
+     * The providers which are shut down: they are not in the default list any more.
+     *
+     * @since   Kunena 7.2
+     */
+    public const RETIRED = ['skype', 'yim', 'google'];
+
     /**
      * @var    string  x_social
      * @since  Kunena 6.4.0
@@ -97,24 +101,6 @@ class KunenaUserSocials
      * @since  Kunena 6.4.0
      */
     public $digg = '';
-
-    /**
-     * @var    string  Skype
-     * @since  Kunena 6.4.0
-     */
-    public $skype = '';
-
-    /**
-     * @var    string  Yim
-     * @since  Kunena 6.4.0
-     */
-    public $yim = '';
-
-    /**
-     * @var    string  Google
-     * @since  Kunena 6.4.0
-     */
-    public $google = '';
 
     /**
      * @var    string  Github
@@ -352,11 +338,12 @@ class KunenaUserSocials
     {
         $defaults = self::getProviders();
 
-        // When the admin made the list of providers, only these providers are shown: the other values are left out.
+        // When the admin made the list of providers, only these providers are shown: the other values are left out. The
+        // providers which are shut down (Skype, Yahoo Messenger, Google+) are never shown, also not with the values of the users.
         $custom = self::hasCustomProviders();
 
         foreach (get_object_vars($this) as $key => $value) {
-            if ($key !== 'userid' && !isset($defaults->$key) && ($custom || !\is_object($value))) {
+            if ($key !== 'userid' && !isset($defaults->$key) && ($custom || !\is_object($value) || \in_array($key, self::RETIRED, true))) {
                 unset($this->$key);
             }
         }
@@ -641,27 +628,6 @@ class KunenaUserSocials
         "title": "COM_KUNENA_MYPROFILE_DIGG",
         "nourl": 0,
         "fa": "fa-brands fa-digg"
-    },
-    "skype": {
-        "value": "",
-        "url": "skype:##VALUE##",
-        "title": "COM_KUNENA_MYPROFILE_SKYPE",
-        "nourl": 0,
-        "fa": "fa-brands fa-skype"
-    },
-    "yim": {
-        "value": "",
-        "url": "##VALUE##",
-        "title": "COM_KUNENA_MYPROFILE_YIM",
-        "nourl": 1,
-        "fa": "fa-brands fa-yahoo"
-    },
-    "google": {
-        "value": "",
-        "url": "##VALUE##",
-        "title": "COM_KUNENA_MYPROFILE_GOOGLE",
-        "nourl": 1,
-        "fa": "fa-brands fa-google"
     },
     "github": {
         "value": "",

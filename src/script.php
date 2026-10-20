@@ -64,6 +64,7 @@ return new class() implements ServiceProviderInterface {
                         '0'   => '8.5.0', // Preferred version
                     ],
                     'MySQL'   => [
+                        '26.10'=> '26.10.0',        
                         '26.7'=> '26.7.0',
                         '9.7' => '9.7.0',        
                         '9.6' => '9.6.0',

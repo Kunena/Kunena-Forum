@@ -2194,6 +2194,12 @@ class KunenaTopic extends KunenaDatabaseObject
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
         }
 
+        // In a category where the users only see their own topics, only the starter of the topic and the moderators can read it.
+        if ($this->getCategory()->params->get('ownTopicsOnly') && !$user->isModerator($this->getCategory())
+            && (!$user->exists() || $this->first_post_userid != $user->userid)) {
+            return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $user->exists() ? 403 : 401);
+        }
+
         // TODO: Allow owner to see his posts.
         if ($this->hold) {
             if (!$user->exists()) {

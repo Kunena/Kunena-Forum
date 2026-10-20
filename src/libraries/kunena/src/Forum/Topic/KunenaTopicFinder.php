@@ -20,6 +20,7 @@ use Joomla\CMS\Date\Date;
 use Joomla\Database\QueryInterface;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -89,6 +90,13 @@ class KunenaTopicFinder extends KunenaFinder
         }
 
         $this->query->where('a.category_id  IN (' . implode(',', $categories) . ')');
+
+        // Categories where the users only see their own topics.
+        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere($user, 'a.category_id', 'a.first_post_userid');
+
+        if ($own) {
+            $this->query->where($own);
+        }
 
         return $this;
     }

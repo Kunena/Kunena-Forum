@@ -351,6 +351,13 @@ abstract class KunenaTopicHelper
             $whereuser[] = $db->quoteName('ut.subscribed') . '=1';
         }
 
+        // Categories where the users only see their own topics.
+        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere($user, $db->quoteName('tt.category_id'), $db->quoteName('tt.first_post_userid'));
+
+        if ($own) {
+            $where .= ' AND ' . $own;
+        }
+
         $wheretime = ($starttime ? " AND {$post_time_field}>{$db->quote($starttime)}" : '');
         $whereuser = ($whereuser ? ' AND ' . $db->quoteName('ut.user_id') . ' = ' . $db->quote($user->userid) . ' AND (' . implode(' OR ', $whereuser) . ')' : '');
 

@@ -296,6 +296,18 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                             <td><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
                                                         </tr>
                                                         <tr>
+                                                            <td><?php echo Text::_('COM_KUNENA_CATEGORY_OWN_TOPICS_ONLY'); ?>
+                                                                :
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-select" name="params[ownTopicsOnly]">
+                                                                    <option value="0"><?php echo Text::_('JNO'); ?></option>
+                                                                    <option value="1"<?php echo $this->category->params->get('ownTopicsOnly') ? ' selected="selected"' : ''; ?>><?php echo Text::_('JYES'); ?></option>
+                                                                </select>
+                                                            </td>
+                                                            <td><?php echo Text::_('COM_KUNENA_CATEGORY_OWN_TOPICS_ONLY_DESC'); ?></td>
+                                                        </tr>
+                                                        <tr>
                                                             <td><?php echo Text::_('COM_KUNENA_CATEGORY_INACTIVE_LOCK_DAYS'); ?>
                                                                 :
                                                             </td>

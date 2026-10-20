@@ -29,6 +29,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 use Kunena\Forum\Libraries\Tree\KunenaTree;
+use Kunena\Forum\Libraries\User\KunenaUser;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use RuntimeException;
 
@@ -275,6 +276,65 @@ abstract class KunenaCategoryHelper
         }
 
         return self::getCategories($subscribed);
+    }
+
+    /**
+     * Get the ids of the categories where the user only sees his own topics (moderators of the category see all).
+     *
+     * @param   KunenaUser|null  $user  user
+     *
+     * @return  int[]
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getOwnTopicsOnlyIds(?KunenaUser $user = null): array
+    {
+        $user = $user ?: KunenaUserHelper::getMyself();
+        $ids  = [];
+
+        foreach (self::getCategories(false, false, 'none') as $category) {
+            if ($category->id && $category->params->get('ownTopicsOnly') && !$user->isModerator($category)) {
+                $ids[] = (int) $category->id;
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Get the SQL condition which removes the topics of other users from the categories where users only see their own topics.
+     *
+     * @param   KunenaUser|null  $user        user
+     * @param   string           $catField    quoted name of the category column
+     * @param   string           $ownerField  quoted name of the column with the user who started the topic, or of the
+     *                                        topic id (messages) when $byTopic is set
+     * @param   bool             $byTopic     the owner column is the id of the topic: look up who started the topic
+     *
+     * @return  string  Empty when nothing has to be removed.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function getOwnTopicsOnlyWhere(?KunenaUser $user, string $catField, string $ownerField, bool $byTopic = false): string
+    {
+        $user = $user ?: KunenaUserHelper::getMyself();
+        $ids  = self::getOwnTopicsOnlyIds($user);
+
+        if (!$ids) {
+            return '';
+        }
+
+        // A guest has no topics of his own.
+        if (!$user->exists()) {
+            $owner = '0';
+        } elseif ($byTopic) {
+            $db    = Factory::getContainer()->get('DatabaseDriver');
+            $owner = $ownerField . ' IN (SELECT ' . $db->quoteName('id') . ' FROM ' . $db->quoteName('#__kunena_topics')
+                . ' WHERE ' . $db->quoteName('first_post_userid') . ' = ' . (int) $user->userid . ')';
+        } else {
+            $owner = $ownerField . ' = ' . (int) $user->userid;
+        }
+
+        return '(' . $catField . ' NOT IN (' . implode(',', $ids) . ') OR ' . $owner . ')';
     }
 
     /**

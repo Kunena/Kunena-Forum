@@ -22,6 +22,7 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Database\Finder\KunenaFinder;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\User\KunenaUser;
 
 /**
@@ -87,6 +88,13 @@ class KunenaMessageFinder extends KunenaFinder
         }
 
         $this->query->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $categories) . ')');
+
+        // Categories where the users only see their own topics.
+        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere($user, $this->db->quoteName('a.catid'), $this->db->quoteName('a.thread'), true);
+
+        if ($own) {
+            $this->query->where($own);
+        }
 
         return $this;
     }

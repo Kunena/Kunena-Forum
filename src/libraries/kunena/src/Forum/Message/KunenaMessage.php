@@ -2254,6 +2254,15 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     protected function authoriseRead(KunenaUser $user)
     {
+        // A message of a topic the user can not read, in a category where the users only see their own topics.
+        if ($this->getCategory()->params->get('ownTopicsOnly')) {
+            $topic = $this->getTopic();
+
+            if ($topic && $topic->exists() && !$topic->isAuthorised('read', $user)) {
+                return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $user->exists() ? 403 : 401);
+            }
+        }
+
         if ($this->hold && !$user->exists()) {
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
         }

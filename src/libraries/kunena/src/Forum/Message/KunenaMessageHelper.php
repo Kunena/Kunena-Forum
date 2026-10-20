@@ -355,6 +355,13 @@ abstract class KunenaMessageHelper
 
         $query->where($hold);
 
+        // Categories where the users only see their own topics.
+        $own = KunenaCategoryHelper::getOwnTopicsOnlyWhere(null, $db->quoteName('m.catid'), $db->quoteName('m.thread'), true);
+
+        if ($own) {
+            $query->where($own);
+        }
+
         if ($user) {
             $query->where($db->quoteName($userfield) . ' = ' . $db->quote($user));
         }

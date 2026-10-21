@@ -45,6 +45,7 @@ use Kunena\Forum\Libraries\Forum\Topic\User\KunenaTopicUserHelper;
 use Kunena\Forum\Libraries\Log\KunenaLog;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Path\KunenaPath;
+use Kunena\Forum\Libraries\Notification\KunenaPopupNotification;
 use Kunena\Forum\Libraries\Response\KunenaResponseJson;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\Upload\KunenaUpload;
@@ -674,6 +675,11 @@ class UserController extends KunenaController
         // The e-mail when the user is mentioned in a post: 1 (the default) is stored as no value.
         if ($this->app->getInput()->get('mentionemail', null) !== null) {
             KunenaUserHelper::setJoomlaParam((int) $this->user->userid, 'kunena_mention_email', $this->app->getInput()->getInt('mentionemail', 1) ? null : 0);
+        }
+
+        // The popups for mentions and replies: 1 (the default) is stored as no value.
+        if ($this->app->getInput()->get('popupnotifications', null) !== null) {
+            KunenaUserHelper::setJoomlaParam((int) $this->user->userid, 'kunena_popup_notifications', $this->app->getInput()->getInt('popupnotifications', 1) ? null : 0);
         }
 
         // The name which others see (when the users may choose it): -1 is the choice of the forum.
@@ -1561,6 +1567,34 @@ class UserController extends KunenaController
         }
 
         echo json_encode($response);
+
+        jexit();
+    }
+
+    /**
+     * The popups for the user: the messages after the last one the browser has seen (see assets/js/notifications.js).
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public function notifications()
+    {
+        $answer = ['enabled' => false, 'cursor' => 0, 'items' => [], 'more' => 0];
+
+        if ($this->me->exists() && KunenaPopupNotification::isEnabledFor((int) $this->me->userid)) {
+            $answer = ['enabled' => true] + KunenaPopupNotification::get((int) $this->me->userid, $this->input->getInt('after', 0));
+        }
+
+        header('Content-type: application/json');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Pragma: no-cache');
+
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
+
+        echo json_encode($answer);
 
         jexit();
     }

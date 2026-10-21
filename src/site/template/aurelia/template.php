@@ -16,8 +16,12 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Notification\KunenaPopupNotification;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Aurelia template.
@@ -124,6 +128,23 @@ class KunenaTemplateAurelia extends KunenaTemplate
 
         $this->addScript('assets/js/main.js');
         $this->addScript('assets/js/tooltips.js');
+
+        // The popups for mentions and replies.
+        $me = KunenaUserHelper::getMyself();
+
+        if (KunenaPopupNotification::isEnabledFor((int) $me->userid)) {
+            $doc->addScriptOptions('com_kunena.notifications', [
+                'url'      => Route::_('index.php?option=com_kunena&view=user&task=notifications&format=json', false),
+                'interval' => (int) KunenaConfig::getInstance()->popupNotificationsInterval,
+                'userid'   => (int) $me->userid,
+                'labels'   => [
+                    'open'  => Text::_('COM_KUNENA_POPUP_OPEN'),
+                    'close' => Text::_('COM_KUNENA_POPUP_CLOSE'),
+                    'more'  => Text::_('COM_KUNENA_POPUP_MORE'),
+                ],
+            ]);
+            $this->addScript('assets/js/notifications.js');
+        }
 
         // Recompile here SCSS and create cache dir only if doesnt exist
         if (!file_exists(JPATH_SITE . '/media/kunena/cache/')) {

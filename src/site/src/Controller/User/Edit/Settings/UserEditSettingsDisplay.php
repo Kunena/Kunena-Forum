@@ -196,6 +196,27 @@ class UserEditSettingsDisplay extends UserEditDisplay
             $this->settings[] = $item;
         }
 
+        // The popups for mentions and replies (when the forum shows them).
+        if (!empty($this->config->popupNotifications)) {
+            $item             = new StdClass();
+            $item->name       = 'popupnotifications';
+            $item->label      = Text::_('COM_KUNENA_USER_POPUP_NOTIFICATIONS');
+            $options          = [];
+            $options[]        = HTMLHelper::_('select.option', 1, Text::_('COM_KUNENA_YES'));
+            $options[]        = HTMLHelper::_('select.option', 0, Text::_('COM_KUNENA_NO'));
+            $item->field      = HTMLHelper::_(
+                'select.genericlist',
+                $options,
+                'popupnotifications',
+                'class="kinputbox form-select" size="1"',
+                'value',
+                'text',
+                (int) KunenaUserHelper::getJoomlaParam((int) $this->profile->userid, 'kunena_popup_notifications', 1),
+                'kpopupnotifications'
+            );
+            $this->settings[] = $item;
+        }
+
         // The name which others see: the choice of the user, when the forum lets the users choose.
         if (KunenaUserName::userCanChoose()) {
             $item             = new StdClass();

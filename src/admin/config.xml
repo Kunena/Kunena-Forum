@@ -231,6 +231,26 @@
                 <option value="1">JYES</option>
             </field>
             <field
+                name="popupNotifications"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_POPUP_NOTIFICATIONS"
+                description="COM_KUNENA_A_POPUP_NOTIFICATIONS_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="popupNotificationsInterval"
+                type="number"
+                default="30"
+                min="10"
+                max="300"
+                step="5"
+                label="COM_KUNENA_A_POPUP_NOTIFICATIONS_INTERVAL"
+                description="COM_KUNENA_A_POPUP_NOTIFICATIONS_INTERVAL_DESC"
+                showon="popupNotifications:1" />
+            <field
                 name="emailForumHeaders"
                 type="radio"
                 default="1"

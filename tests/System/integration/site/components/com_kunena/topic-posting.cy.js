@@ -15,6 +15,17 @@ describe('Kunena topic posting', () => {
     cy.get('#form_submit_button').should('not.be.disabled');
   };
 
+  after(() => {
+    // The topic of the test is removed again (the task of the database removes only the rows which it made itself).
+    cy.task('queryDB', `SELECT id FROM #__kunena_topics WHERE subject = '${subject}'`).then((topics) => {
+      topics.forEach(({ id }) => {
+        cy.task('queryDB', `DELETE x FROM #__kunena_messages_text AS x INNER JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.thread = ${id}`);
+        cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE thread = ${id}`);
+        cy.task('queryDB', `DELETE FROM #__kunena_topics WHERE id = ${id}`);
+      });
+    });
+  });
+
   it('writes a topic', () => {
     cy.doFrontendLogin();
 

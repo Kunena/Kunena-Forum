@@ -163,7 +163,11 @@ abstract class KunenaLinkPreview
             }
         }
 
-        $context = stream_context_create(['http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true]]);
+        // Many sites refuse a request which does not say who asks.
+        $agent   = 'Mozilla/5.0 (compatible; KunenaLinkPreview/7.2; +' . Uri::root() . ')';
+        $context = stream_context_create(['http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "User-Agent: $agent
+Accept: text/html,application/xhtml+xml
+"]]);
         $body    = @file_get_contents($url, false, $context, 0, 262144);
 
         if ($body === false || $body === '') {

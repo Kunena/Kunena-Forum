@@ -217,7 +217,9 @@ abstract class KunenaPopupNotification
             $type  = self::reason($row);
             $title = Text::sprintf(self::TITLES[$type], $name);
 
-            $text    = (string) KunenaParser::stripBBCode((string) $message->message, 0, false);
+            // The name in a mention is part of the text: [mention userid=1]Anna[/mention] reads @Anna.
+            $raw     = (string) preg_replace('/\[mention[^\]]*\](.*?)\[\/mention\]/is', '@$1', (string) $message->message);
+            $text    = (string) KunenaParser::stripBBCode($raw, 0, false);
             $excerpt = trim((string) preg_replace('/\s+/u', ' ', strip_tags(html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8'))));
 
             $items[] = [

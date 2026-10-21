@@ -433,7 +433,7 @@ class KunenaLayout extends KunenaBase
                         break;
                     case 'unread':
                     case 'last':
-                        if (!KunenaUserHelper::getMyself()->userid && KunenaConfig::getInstance()->teaser) {
+                        if (!KunenaUserHelper::getMyself()->userid && $topic->getCategory()->hidesRepliesForGuests()) {
                             $title = $titleFirstPostCleaned;
                         } else {
                             if (!empty($topic->first_post_message)) {

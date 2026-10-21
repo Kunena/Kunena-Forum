@@ -50,7 +50,7 @@ $subjectlengthmessage = $this->ktemplate->params->get('SubjectLengthMessage', 20
                 <?php if (!$isReply) :
                     echo $message->displayField('message');
                 else :
-                    echo (!$me->userid && $this->config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+                    echo (!$me->userid && $category->hidesRepliesForGuests()) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
                 endif; ?>
             </div>
         </div>

@@ -306,6 +306,18 @@ Factory::getApplication()->getDocument()->addScript(Uri::root() . 'media/kunena/
                                                     <td style="width:50%;"><?php echo Text::_('COM_KUNENA_RATING_CATEGORIES_ALLOWED_DESC'); ?></td>
                                                 </tr>
                                                 <tr>
+                                                    <td style="width:20%;"><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER'); ?>:</td>
+                                                    <td style="width:30%;">
+                                                        <?php $teaser = (string) $this->category->params->get('teaser', ''); ?>
+                                                        <select class="form-select" name="params[teaser]">
+                                                            <option value=""<?php echo $teaser === '' ? ' selected="selected"' : ''; ?>><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER_GLOBAL'); ?></option>
+                                                            <option value="1"<?php echo $teaser === '1' ? ' selected="selected"' : ''; ?>><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER_HIDE'); ?></option>
+                                                            <option value="0"<?php echo $teaser === '0' ? ' selected="selected"' : ''; ?>><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER_SHOW'); ?></option>
+                                                        </select>
+                                                    </td>
+                                                    <td style="width:50%;"><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER_DESC'); ?></td>
+                                                </tr>
+                                                <tr>
                                                     <td style="width:20%;"><?php echo Text::_('COM_KUNENA_CATEGORY_OWN_TOPICS_ONLY'); ?>:</td>
                                                     <td style="width:30%;">
                                                         <select class="form-select" name="params[ownTopicsOnly]">

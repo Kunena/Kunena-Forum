@@ -296,6 +296,20 @@ $this->document->addScript(Uri::root() . 'administrator\components\com_kunena\tm
                                                             <td><?php echo Text::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
                                                         </tr>
                                                         <tr>
+                                                            <td><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER'); ?>
+                                                                :
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-select" name="params[teaser]">
+                                                                    <?php $teaser = (string) $this->category->params->get('teaser', ''); ?>
+                                                                    <option value=""<?php echo $teaser === '' ? ' selected="selected"' : ''; ?>><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER_GLOBAL'); ?></option>
+                                                                    <option value="1"<?php echo $teaser === '1' ? ' selected="selected"' : ''; ?>><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER_HIDE'); ?></option>
+                                                                    <option value="0"<?php echo $teaser === '0' ? ' selected="selected"' : ''; ?>><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER_SHOW'); ?></option>
+                                                                </select>
+                                                            </td>
+                                                            <td><?php echo Text::_('COM_KUNENA_CATEGORY_TEASER_DESC'); ?></td>
+                                                        </tr>
+                                                        <tr>
                                                             <td><?php echo Text::_('COM_KUNENA_CATEGORY_OWN_TOPICS_ONLY'); ?>
                                                                 :
                                                             </td>

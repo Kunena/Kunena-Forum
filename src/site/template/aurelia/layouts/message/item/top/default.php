@@ -100,7 +100,7 @@ if ($this->config->orderingSystem == 'mesid') {
                     <?php if (!$this->me->userid && !$isReply) :
                         echo $message->displayField('message');
                     else :
-                        echo (!$this->me->userid && $this->config->teaser) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
+                        echo (!$this->me->userid && $this->message->getCategory()->hidesRepliesForGuests()) ? Text::_('COM_KUNENA_TEASER_TEXT') : $this->message->displayField('message');
                     endif; ?>
                 </div>
             </div>

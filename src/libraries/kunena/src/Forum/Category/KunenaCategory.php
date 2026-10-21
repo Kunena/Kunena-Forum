@@ -26,6 +26,7 @@ use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Cache\KunenaCacheHelper;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
@@ -1254,6 +1255,25 @@ class KunenaCategory extends KunenaDatabaseObject
         $this->buildInfo();
 
         return max($this->_posts - $this->_topics, 0);
+    }
+
+    /**
+     * Are the replies hidden for guests (Please login to view the answers): the setting of the category, or when the category
+     * has none (empty), the global setting of the forum.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    public function hidesRepliesForGuests(): bool
+    {
+        $value = $this->params instanceof Registry ? $this->params->get('teaser', '') : '';
+
+        if ($value === '' || $value === null) {
+            return (bool) KunenaConfig::getInstance()->teaser;
+        }
+
+        return (bool) (int) $value;
     }
 
     /**

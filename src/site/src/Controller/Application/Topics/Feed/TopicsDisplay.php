@@ -155,7 +155,7 @@ class TopicsDisplay extends KunenaControllerDisplay
             $id   = $topic->last_post_id;
             $page = 'last';
 
-            if (!$this->me->userid && $this->config->teaser && $id != $topic->first_post_id) {
+            if (!$this->me->userid && $topic->getCategory()->hidesRepliesForGuests() && $id != $topic->first_post_id) {
                 $description = Text::_('COM_KUNENA_TEASER_TEXT');
             } else {
                 $description = $topic->last_post_message;
@@ -250,7 +250,7 @@ class TopicsDisplay extends KunenaControllerDisplay
             $category = $topic->getCategory();
             $url      = $message->getUrl($category);
 
-            if (!$this->me->userid && $this->config->teaser && $message->id != $topic->first_post_id) {
+            if (!$this->me->userid && $topic->getCategory()->hidesRepliesForGuests() && $message->id != $topic->first_post_id) {
                 $description = Text::_('COM_KUNENA_TEASER_TEXT');
             } else {
                 $description = $message->message;

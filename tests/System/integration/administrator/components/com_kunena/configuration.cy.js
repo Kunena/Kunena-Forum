@@ -34,14 +34,14 @@ describe('Kunena configuration', () => {
     cy.visit('/administrator/index.php?option=com_config&view=component&component=com_kunena');
 
     cy.get('label[for="jform_categoryAliasId1"]').click({ force: true });
-    cy.window().then((win) => win.Joomla.submitbutton('component.apply'));
+    cy.get('#toolbar-apply button').click();
 
     cy.get('joomla-alert').should('contain.text', 'Configuration saved');
     cy.get('#jform_categoryAliasId1').should('be.checked');
 
     // The start value is back for the other tests.
     cy.get('label[for="jform_categoryAliasId0"]').click({ force: true });
-    cy.window().then((win) => win.Joomla.submitbutton('component.apply'));
+    cy.get('#toolbar-apply button').click();
     cy.get('joomla-alert').should('contain.text', 'Configuration saved');
   });
 

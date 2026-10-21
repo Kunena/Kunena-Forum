@@ -16,7 +16,8 @@ const env = {
   db_prefix: 'jos_',
   smtp_host: 'localhost',
   smtp_port: '1025',
-  cmsPath: '.',
+  // The folder of the Joomla site of the tests (a site of its own: KUNENA_CMS_PATH=E:/www/apache/htdocs/tests).
+  cmsPath: process.env.KUNENA_CMS_PATH || '.',
   logFile: '',
 };
 

@@ -49,7 +49,7 @@ describe('Kunena pages for a guest', () => {
     'the page to manage a category': ['view=category&layout=manage&catid=2', [401, 403]],
     'the form of a new topic': ['view=topic&layout=create&catid=2', [401, 403]],
     'the form of a reply': ['view=topic&layout=reply&catid=2&id=1', [401, 403]],
-    'the drafts': ['view=topic&layout=drafts', [401, 403]],
+    'the drafts': ['view=topic&layout=drafts', [401, 403, 404]],
     'the page to edit the profile': ['view=user&layout=edit', [401, 403]],
     'the form of a new announcement': ['view=announcement&layout=create', [401, 403]],
   };

@@ -837,7 +837,8 @@ jQuery(document).ready(function ($) {
 				$('#form_submit_button').removeAttr("disabled");
 			}
 
-			if (sceditor.instance(textarea).val().length == 0 && $('#form_submit_button').disabled === undefined)
+			// Only when the other editor (the text for a private message) is empty too: it can send the message by itself.
+			if (sceditor.instance(textarea).val().length == 0 && sceditor.instance(textarea_private).val().length == 0)
 			{
 				$('#form_submit_button').prop("disabled", true);
 			}
@@ -878,7 +879,7 @@ jQuery(document).ready(function ($) {
 				$('#form_submit_button').removeAttr("disabled");
 			}
 
-			if (sceditor.instance(textarea_private).val().length == 0 && $('#form_submit_button').disabled === undefined)
+			if (sceditor.instance(textarea_private).val().length == 0 && sceditor.instance(textarea).val().length == 0)
 			{
 				$('#form_submit_button').prop("disabled", true);
 			}

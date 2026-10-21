@@ -3,18 +3,15 @@ describe('Kunena topic posting', () => {
   const stamp = Date.now();
   const subject = `Cypress topic ${stamp}`;
 
-  // The editor of the form keeps the text in its own frame: the text is set through the editor.
+  // The editor of the form keeps the text in its own frame: the text is typed into the frame, as a user does.
   const writeMessage = (text) => {
     cy.get('#postform textarea[name="message"]').should('exist');
     cy.window().should('have.property', 'sceditor');
-    cy.window().then((win) => {
-      const textarea = win.document.querySelector('#postform textarea[name="message"]');
-      const editor = win.sceditor.instance(textarea);
-
-      editor.val(text);
-      editor.focus();
-      editor.insertText(' ');
-    });
+    cy.get('#postform .sceditor-container iframe')
+      .first()
+      .its('0.contentDocument.body')
+      .should('not.be.empty')
+      .then(($body) => cy.wrap($body).click().type(text, { parseSpecialCharSequences: false }));
     cy.get('#form_submit_button').should('not.be.disabled');
   };
 
@@ -23,7 +20,7 @@ describe('Kunena topic posting', () => {
 
     cy.task(
       'queryDB',
-      'SELECT c.id FROM #__kunena_categories AS c WHERE c.published = 1 AND c.pubAccess = 1 AND c.locked = 0 AND c.parent_id > 0 ORDER BY c.id ASC LIMIT 1',
+      'SELECT c.id FROM #__kunena_categories AS c WHERE c.published = 1 AND c.pubAccess = 1 AND c.locked = 0 AND c.parentid > 0 ORDER BY c.id ASC LIMIT 1',
     ).then((categories) => {
       expect(categories, 'a published forum category is available').not.to.be.empty;
 

@@ -2,6 +2,11 @@
 describe('Kunena announcements', () => {
   const listing = '/index.php?option=com_kunena&view=announcement&layout=listing';
 
+  // A new installation has no announcement: the test makes one (it is removed again after the test).
+  beforeEach(() => {
+    cy.kunena_createAnnouncement();
+  });
+
   it('shows the list of the announcements', () => {
     cy.visit(listing);
 

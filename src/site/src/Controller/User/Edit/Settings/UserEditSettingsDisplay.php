@@ -258,7 +258,7 @@ class UserEditSettingsDisplay extends UserEditDisplay
      */
     protected function escape($string)
     {
-        return htmlentities($string, ENT_COMPAT, 'UTF-8');
+        return htmlentities((string) $string, ENT_COMPAT, 'UTF-8');
     }
 
     /**

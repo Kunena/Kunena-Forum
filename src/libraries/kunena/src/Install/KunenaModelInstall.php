@@ -381,14 +381,14 @@ class KunenaModelInstall extends BaseDatabaseModel
     }
 
     /**
-     * @return  object
+     * @return  integer
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getStep(): object
+    public function getStep(): int
     {
-        return $this->getState('step', 0);
+        return (int) $this->getState('step', 0);
     }
 
     /**
@@ -1774,14 +1774,14 @@ class KunenaModelInstall extends BaseDatabaseModel
     // TODO: move to migration
 
     /**
-     * @return  object
+     * @return  integer
      *
      * @throws  Exception
      * @since   Kunena 6.0
      */
-    public function getTask(): object
+    public function getTask(): int
     {
-        return $this->getState('task', 0);
+        return (int) $this->getState('task', 0);
     }
 
     // TODO: move to migration

@@ -82,3 +82,6 @@ tests/cache
 .php-cs-fixer.cache
 .phpunit.cache/
 src/input
+
+# Cypress screenshots and videos
+tests/System/output/

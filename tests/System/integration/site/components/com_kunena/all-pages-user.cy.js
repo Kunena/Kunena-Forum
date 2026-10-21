@@ -1,7 +1,20 @@
 // Every page of the forum for a logged-in user (no moderator, no administrator). It needs the login of the test site
-// (cy.doFrontendLogin). Cypress fails a test by itself when a page has an error in its JavaScript, so a visit of a page is also
+// (cy.doFrontendLogin with the user ci-user, which the spec makes). Cypress fails a test by itself when a page has an error in its JavaScript, so a visit of a page is also
 // a check of the scripts of that page. The pages of the moderators and the administrators are in all-pages-admin.cy.js.
 describe('Kunena pages for a user', () => {
+
+  // The drafts are off in a new installation (the page of the drafts gives a 404): they are switched on for the test and back after.
+  let draftsBefore;
+
+  before(() => {
+    cy.kunena_setOption('enableDrafts', '1').then((old) => {
+      draftsBefore = old;
+    });
+  });
+
+  after(() => {
+    cy.kunena_setOption('enableDrafts', draftsBefore ?? '0');
+  });
   const base = '/index.php?option=com_kunena';
 
   const phpErrors = ['Fatal error', 'Parse error', 'Warning:', 'Notice:', 'Deprecated:', 'Call to undefined', 'Uncaught ', 'Array to string'];
@@ -19,7 +32,17 @@ describe('Kunena pages for a user', () => {
   let topic;
   let ownMessage;
 
+  // A user of the group Registered (the user of the test site is an administrator). The administrator makes him once; he stays.
+  const user = { name: 'CI User', username: 'ci-user', password: 'ci-user-17082005-x', email: 'ci-user@example.com' };
+
   before(() => {
+    cy.task('queryDB', `SELECT id FROM #__users WHERE username = '${user.username}'`).then((rows) => {
+      if (!rows.length) {
+        cy.doAdministratorLogin();
+        cy.createUser(user.name, user.username, user.password, user.email, 'Registered');
+      }
+    });
+
     cy.task(
       'queryDB',
       'SELECT t.id, t.category_id FROM #__kunena_topics AS t INNER JOIN #__kunena_categories AS c ON c.id = t.category_id WHERE t.hold = 0 AND t.locked = 0 AND c.published = 1 AND c.pubAccess = 1 AND c.locked = 0 ORDER BY t.id ASC LIMIT 1',
@@ -30,7 +53,7 @@ describe('Kunena pages for a user', () => {
   });
 
   beforeEach(() => {
-    cy.doFrontendLogin();
+    cy.doFrontendLogin(user.username, user.password);
   });
 
   // The pages which have no id in their address.
@@ -91,10 +114,10 @@ describe('Kunena pages for a user', () => {
   });
 
   it('opens the edit form of a message of the user', () => {
-    cy.doFrontendLogin();
+    cy.doFrontendLogin(user.username, user.password);
 
     // The user of the test site is the author of a message: the form to edit it opens.
-    cy.task('queryDB', "SELECT m.id, m.thread, m.catid FROM #__kunena_messages AS m INNER JOIN #__users AS u ON u.id = m.userid WHERE u.username = '" + Cypress.env('username') + "' AND m.hold = 0 ORDER BY m.id DESC LIMIT 1").then((messages) => {
+    cy.task('queryDB', "SELECT m.id, m.thread, m.catid FROM #__kunena_messages AS m INNER JOIN #__users AS u ON u.id = m.userid WHERE u.username = '" + user.username + "' AND m.hold = 0 ORDER BY m.id DESC LIMIT 1").then((messages) => {
       if (!messages.length) {
         cy.log('The user of the test site has no message: nothing to edit.');
 
@@ -124,8 +147,14 @@ describe('Kunena pages for a user', () => {
 
   it('opens the page of a user and the profile of the user himself', () => {
     cy.visit(`${base}&view=user&layout=list`);
-    cy.get('a').filter((index, link) => /\/user\/\d+|userid=\d+/.test(link.getAttribute('href') || '')).first().click();
     cy.get('body').should('contain.html', 'kunena');
+
+    // The profile of another user (the address of the profile in the list depends on the routing of the site).
+    cy.task('queryDB', `SELECT id FROM #__users WHERE username <> '${user.username}' ORDER BY id ASC LIMIT 1`).then((users) => {
+      cy.visit(`${base}&view=user&layout=default&userid=${users[0].id}`);
+      cy.get('body').should('contain.html', 'kunena');
+      cy.document().then((doc) => assertNoPhpError(doc.body.innerText));
+    });
 
     cy.visit(`${base}&view=user`);
     cy.get('body').should('contain.html', 'kunena');

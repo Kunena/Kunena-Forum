@@ -710,7 +710,7 @@ class KunenaModelSchema extends BaseDatabaseModel
      *
      * @since   Kunena 6.0
      */
-    public function getSchemaNodeDiff(object $schema, string $tag, string $name, object $loc)
+    public function getSchemaNodeDiff(object $schema, string $tag, string $name, array $loc)
     {
         $node = null;
 
@@ -954,14 +954,14 @@ class KunenaModelSchema extends BaseDatabaseModel
     }
 
     /**
-     * @param   string  $field  field
+     * @param   DOMNode $field  field
      * @param   string  $after  after
      *
      * @return  string
      *
      * @since   Kunena 6.0
      */
-    protected function getSchemaSQLField(string $field, $after = ''): string
+    protected function getSchemaSQLField(DOMNode $field, string $after = ''): string
     {
         if (!($field instanceof DOMElement)) {
             return '';

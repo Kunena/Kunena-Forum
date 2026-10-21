@@ -2,6 +2,19 @@
 // the test site: the administrator logs in on the site itself (cy.doFrontendLogin with his username and password). Cypress fails a
 // test by itself when a page has an error in its JavaScript, so a visit of a page is also a check of the scripts of that page.
 describe('Kunena pages for an administrator', () => {
+
+  // The drafts are off in a new installation (the page of the drafts gives a 404): they are switched on for the test and back after.
+  let draftsBefore;
+
+  before(() => {
+    cy.kunena_setOption('enableDrafts', '1').then((old) => {
+      draftsBefore = old;
+    });
+  });
+
+  after(() => {
+    cy.kunena_setOption('enableDrafts', draftsBefore ?? '0');
+  });
   const base = '/index.php?option=com_kunena';
 
   const phpErrors = ['Fatal error', 'Parse error', 'Warning:', 'Notice:', 'Deprecated:', 'Call to undefined', 'Uncaught ', 'Array to string'];
@@ -38,7 +51,9 @@ describe('Kunena pages for an administrator', () => {
   });
 
   beforeEach(() => {
-    cy.doFrontendLogin(Cypress.env('username'), Cypress.env('password'));
+    // A new installation has no announcement: one is made for the test.
+    cy.kunena_createAnnouncement();
+    cy.doFrontendLogin(Cypress.expose('username'), Cypress.expose('password'));
   });
 
   // page => [address, something which is on the page]

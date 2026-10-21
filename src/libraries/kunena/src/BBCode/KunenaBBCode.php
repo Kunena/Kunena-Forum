@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Html\KunenaLinkPreview;
 use Kunena\Forum\Libraries\Html\KunenaMap;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -126,6 +127,14 @@ class KunenaBBCode extends BBCode
     public $context;
 
     /**
+     * The link cards of the message which is parsed now.
+     *
+     * @var     integer
+     * @since   Kunena 7.2
+     */
+    protected $linkCards = 0;
+
+    /**
      * Use KunenaBbcode::getInstance() instead.
      *
      * @internal
@@ -187,6 +196,8 @@ class KunenaBBCode extends BBCode
      */
     public function parse($string)
     {
+        $this->linkCards = 0;
+
         $markdown = isset($this->config->enableMarkdown) && $this->config->enableMarkdown;
         $html     = isset($this->config->enableHtml) && $this->config->enableHtml;
 
@@ -271,6 +282,24 @@ class KunenaBBCode extends BBCode
             $params['path'] = '';
         }
 
+        if ($this->config->autoEmbedSpotify && empty($this->parent->forceMinimal) && isset($params['host']) && $params['host'] === 'open.spotify.com'
+            && preg_match('#^/(?:intl-[\w-]+/)?(track|album|playlist|artist|episode|show)/([A-Za-z0-9]+)#', $params['path'], $spotify)
+        ) {
+            $height = \in_array($spotify[1], ['track', 'episode'], true) ? 152 : 352;
+
+            return '<iframe style="border-radius: 12px; border: 0" width="100%" height="' . $height . '" src="https://open.spotify.com/embed/' . $spotify[1] . '/' . $spotify[2]
+                . '" allow="encrypted-media" loading="lazy"></iframe><br />';
+        }
+
+        if ($this->config->autoEmbedDeezer && empty($this->parent->forceMinimal) && isset($params['host']) && \in_array($params['host'], ['deezer.com', 'www.deezer.com'], true)
+            && preg_match('#^/(?:[a-z]{2}(?:-[a-z]{2})?/)?(track|album|playlist|episode|show)/(\d+)#', $params['path'], $deezer)
+        ) {
+            $height = $deezer[1] === 'track' || $deezer[1] === 'episode' ? 150 : 300;
+
+            return '<iframe style="border: 0" width="100%" height="' . $height . '" src="https://widget.deezer.com/widget/auto/' . $deezer[1] . '/' . $deezer[2]
+                . '" allow="encrypted-media; clipboard-write" loading="lazy"></iframe><br />';
+        }
+
         if ($this->config->autoEmbedSoundcloud && empty($this->parent->forceMinimal) && isset($params['host'])) {
             parse_str($params['query'], $query);
             $path = explode('/', $params['path']);
@@ -345,6 +374,25 @@ class KunenaBBCode extends BBCode
 
             if (isset($path[3])) {
                 // TODO : add render for bluesky
+            }
+        }
+
+        // A pasted link (not the url tag) gets a card with the title, the description and the picture of the page.
+        if ($this->config->autoLink && $this->config->linkPreview && empty($this->parent->forceMinimal) && $this->linkCards < (int) $this->config->linkPreviewMax
+            && preg_match('#^https?://#i', $url) && !preg_match('#^mailto:#i', $url)
+        ) {
+            $card   = KunenaLinkPreview::get($url);
+            $layout = KunenaLayout::factory('BBCode/LinkCard');
+
+            if ($card && $layout->getPath()) {
+                $this->linkCards++;
+
+                return (string) $layout
+                    ->set('url', $url)
+                    ->set('title', $card['title'])
+                    ->set('description', $card['description'])
+                    ->set('image', $card['image'])
+                    ->set('site', $card['site']);
             }
         }
 
@@ -432,31 +480,10 @@ class KunenaBBCode extends BBCode
      */
     public function get_title(string $url): string
     {
-        $parts = parse_url($url);
+        // Short timeout, no redirects, only web pages, never the own network, and only the start of the page.
+        $str = KunenaLinkPreview::fetchPage($url);
 
-        // Only fetch web pages. Other schemes (file:, php:, ftp: ...) are never read.
-        if (!$parts || empty($parts['host']) || !\in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)) {
-            return '';
-        }
-
-        // Do not let the server read addresses of its own network (private and reserved ranges).
-        $ips = gethostbynamel($parts['host']);
-
-        if (!$ips) {
-            return '';
-        }
-
-        foreach ($ips as $ip) {
-            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-                return '';
-            }
-        }
-
-        // Short timeout, no redirects (they could lead to an internal address), and only the start of the page.
-        $context = stream_context_create(['http' => ['timeout' => 3, 'follow_location' => 0, 'ignore_errors' => true]]);
-        $str     = @file_get_contents($url, false, $context, 0, 262144);
-
-        if ($str !== false && \strlen($str) > 0) {
+        if ($str !== null) {
             // Supports line breaks inside <title>
             $str = trim(preg_replace('/\s+/', ' ', $str));
 

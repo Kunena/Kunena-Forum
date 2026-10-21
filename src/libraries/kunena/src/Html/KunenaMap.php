@@ -163,7 +163,7 @@ abstract class KunenaMap
 
         $hash  = sha1(mb_strtolower($address));
         $cache = self::cache();
-        $row   = $cache ? $cache->get($hash) : false;
+        $row   = $cache ? json_decode((string) $cache->get($hash), true) : false;
 
         if (\is_array($row) && \array_key_exists('coords', $row)) {
             if ($row['coords'] !== null) {
@@ -190,7 +190,8 @@ abstract class KunenaMap
         }
 
         if ($cache) {
-            $cache->store(['coords' => $found, 'time' => time()], $hash);
+            // The cache keeps text.
+            $cache->store(json_encode(['coords' => $found, 'time' => time()]), $hash);
         }
 
         return $found;

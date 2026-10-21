@@ -48,6 +48,11 @@ use Joomla\Database\DatabaseInterface;
  * @property string $autoEmbedEbay                         Auto Embed eBay Items
  * @property string $autoEmbedInstagram                    Auto Embed Instagram Items
  * @property string $autoEmbedSoundcloud                   Auto Embed Soundcloud items
+ * @property int    $autoEmbedSpotify                   Auto Embed Spotify items
+ * @property int    $autoEmbedDeezer                    Auto Embed Deezer items
+ * @property int    $linkPreview                        Show a card (title, description, picture) for the links in messages
+ * @property int    $linkPreviewMax                     Most cards in one message
+ * @property string $linkPreviewBlock                   Sites (domains) which get no card
  * @property string $autoEmbedYoutube                      Auto Embed YouTube Videos
  * @property string $autoLink                              Auto-Link URLs
  * @property string $avatarCrop                            Avatar Cropping

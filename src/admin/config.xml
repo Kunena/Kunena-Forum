@@ -1726,6 +1726,54 @@
                 <option value="1">JYES</option>
             </field>
             <field
+                name="autoEmbedSpotify"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIGURATION_AUTOEMBEDSPOTIFY"
+                description="COM_KUNENA_CONFIGURATION_AUTOEMBEDSPOTIFY_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="autoEmbedDeezer"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIGURATION_AUTOEMBEDDEEZER"
+                description="COM_KUNENA_CONFIGURATION_AUTOEMBEDDEEZER_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="linkPreview"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_CONFIGURATION_LINKPREVIEW"
+                description="COM_KUNENA_CONFIGURATION_LINKPREVIEW_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="linkPreviewMax"
+                type="number"
+                default="3"
+                min="1"
+                max="20"
+                step="1"
+                label="COM_KUNENA_CONFIGURATION_LINKPREVIEW_MAX"
+                description="COM_KUNENA_CONFIGURATION_LINKPREVIEW_MAX_DESC"
+                showon="linkPreview:1" />
+            <field
+                name="linkPreviewBlock"
+                type="textarea"
+                rows="3"
+                default=""
+                label="COM_KUNENA_CONFIGURATION_LINKPREVIEW_BLOCK"
+                description="COM_KUNENA_CONFIGURATION_LINKPREVIEW_BLOCK_DESC"
+                showon="linkPreview:1" />
+            <field
                 name="highlightCode"
                 type="radio"
                 default="0"

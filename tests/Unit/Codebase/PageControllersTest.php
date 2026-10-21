@@ -36,10 +36,11 @@ class PageControllersTest extends UnitTestCase
 
     /**
      * Requests whose controller is in a folder and a file with another case than the class name which KunenaRequest makes (it
-     * writes every word with a capital and the rest small: Topic/ModLog is Topic, Modlog, TopicModlogDisplay). That works on Windows
-     * and macOS, but a server with a case sensitive file system does not find the controller.
+     * writes every word with a capital and the rest small: Topic/Modlog is Topic, Modlog, TopicModlogDisplay). That works on Windows
+     * and macOS, but a server with a case sensitive file system does not find the controller. There is none now (the moderation log
+     * was one): a new one fails the test.
      */
-    private const KNOWN_CASE = ['Topic/ModLog'];
+    private const KNOWN_CASE = [];
 
     /**
      * The pages of the forum: view/layout of pages/<view>/<layout>/default.php. A new page is added here (and gets its tests).

@@ -26,6 +26,12 @@ describe('Kunena pages for an administrator', () => {
     phpErrors.forEach((error) => {
       expect(text, `the page shows "${error}"`).not.to.include(error);
     });
+
+    // A language key which is shown as it is: its string is missing from the language files (the scripts are left out: they hold the keys of
+    // the strings which they ask for).
+    const shown = String(body).replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').match(/COM_KUNENA_[A-Z0-9_]{3,}/g);
+
+    expect(shown, 'language keys shown as text').to.equal(null);
   };
 
   let topic;

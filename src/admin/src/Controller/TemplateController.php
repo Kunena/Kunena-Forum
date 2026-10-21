@@ -325,155 +325,155 @@ class TemplateController extends FormController
         // The parameters set into the $editorButtons array should be all in lowercase
         $editorButtons = [];
 
-        if (!$params['Cut']) {             // not selectable
+        if (!($params['Cut'] ?? 0)) {             // not selectable
             $editorButtons[] = 'cut';
         }
 
-        if (!$params['Copy']) {             // not selectable
+        if (!($params['Copy'] ?? 0)) {             // not selectable
             $editorButtons[] = 'copy';
         }
 
-        if (!$params['Paste']) {             // not selectable
+        if (!($params['Paste'] ?? 0)) {             // not selectable
             $editorButtons[] = 'pastetext';
         }
 
-        if (!$params['Source']) {             // not selectable
+        if (!($params['Source'] ?? 0)) {             // not selectable
             $editorButtons[] = 'source';
         }
 
-        if (!$params['Undo']) {             // not selectable
+        if (!($params['Undo'] ?? 0)) {             // not selectable
             $editorButtons[] = 'undo,redo';
         }
 
-        if ($params['Quote']) {
+        if (($params['Quote'] ?? 0)) {
             $editorButtons[] = 'quote';
         }
 
-        if ($params['Bold']) {
+        if (($params['Bold'] ?? 0)) {
             $editorButtons[] = 'bold';
         }
 
-        if ($params['Italic']) {
+        if (($params['Italic'] ?? 0)) {
             $editorButtons[] = 'italic';
         }
 
-        if ($params['Underline']) {
+        if (($params['Underline'] ?? 0)) {
             $editorButtons[] = 'underline';
         }
 
-        if ($params['Strike']) {
+        if (($params['Strike'] ?? 0)) {
             $editorButtons[] = 'strike';
         }
 
-        if ($params['Superscript']) {
+        if (($params['Superscript'] ?? 0)) {
             $editorButtons[] = 'superscript';
         }
 
-        if ($params['Subscript']) {
+        if (($params['Subscript'] ?? 0)) {
             $editorButtons[] = 'subscript';
         }
 
-        if ($params['JustifyRight']) {
+        if (($params['JustifyRight'] ?? 0)) {
             $editorButtons[] = 'right';
         }
 
-        if ($params['JustifyLeft']) {
+        if (($params['JustifyLeft'] ?? 0)) {
             $editorButtons[] = 'left';
         }
 
-        if ($params['JustifyBlock']) {
+        if (($params['JustifyBlock'] ?? 0)) {
             $editorButtons[] = 'justify';
         }
 
-        if ($params['JustifyCenter']) {
+        if (($params['JustifyCenter'] ?? 0)) {
             $editorButtons[] = 'center';
         }
 
-        if ($params['RemoveFormat']) {
+        if (($params['RemoveFormat'] ?? 0)) {
             $editorButtons[] = 'removeformat';
         }
 
-        if ($params['Confidential']) {
+        if (($params['Confidential'] ?? 0)) {
             $editorButtons[] = 'confidential';
         }
 
-        if ($params['Hidetext']) {
+        if (($params['Hidetext'] ?? 0)) {
             $editorButtons[] = 'hidetext';
         }
 
-        if ($params['Spoiler']) {
+        if (($params['Spoiler'] ?? 0)) {
             $editorButtons[] = 'spoiler';
         }
 
-        if ($params['Smiley']) {
+        if (($params['Smiley'] ?? 0)) {
             $editorButtons[] = 'emoticon';
         }
 
-        if ($params['Ebay']) {
+        if (($params['Ebay'] ?? 0)) {
             $editorButtons[] = 'ebay';
         }
 
-        if ($params['X_Social']) {
+        if (($params['X_Social'] ?? 0)) {
             $editorButtons[] = 'x_social';
         }
 
-        if ($params['Instagram']) {
+        if (($params['Instagram'] ?? 0)) {
             $editorButtons[] = 'instagram';
         }
 
-        if ($params['Soundcloud']) {
+        if (($params['Soundcloud'] ?? 0)) {
             $editorButtons[] = 'soundcloud';
         }
 
-        if ($params['Map']) {
+        if (($params['Map'] ?? 0)) {
             $editorButtons[] = 'map';
         }
 
-        if ($params['FontSize']) {
+        if (($params['FontSize'] ?? 0)) {
             $editorButtons[] = 'font,size';
         }
 
-        if ($params['TextColor']) {
+        if (($params['TextColor'] ?? 0)) {
             $editorButtons[] = 'color';
         }
 
-        if ($params['Image']) {
+        if (($params['Image'] ?? 0)) {
             $editorButtons[] = 'image';
         }
 
-        if ($params['Video']) {
+        if (($params['Video'] ?? 0)) {
             $editorButtons[] = 'video';
         }
 
-        if ($params['Link_Unlink']) {
+        if (($params['Link_Unlink'] ?? 0)) {
             $editorButtons[] = 'link,unlink';
         }
 
-        if ($params['BulletedList']) {
+        if (($params['BulletedList'] ?? 0)) {
             $editorButtons[] = 'bulletlist';
         }
 
-        if ($params['NumberedList']) {
+        if (($params['NumberedList'] ?? 0)) {
             $editorButtons[] = 'orderedlist';
         }
 
-        if ($params['Table']) {
+        if (($params['Table'] ?? 0)) {
             $editorButtons[] = 'table';
         }
 
-        if ($params['Horizontalrule']) {
+        if (($params['Horizontalrule'] ?? 0)) {
             $editorButtons[] = 'horizontalrule';
         }
 
-        if ($params['Blockquote']) {
+        if (($params['Blockquote'] ?? 0)) {
             $editorButtons[] = 'quote';
         }
 
-        if ($params['Code']) {
+        if (($params['Code'] ?? 0)) {
             $editorButtons[] = 'code';
         }
 
-        if ($params['Maximize']) {
+        if (($params['Maximize'] ?? 0)) {
             $editorButtons[] = 'maximize';
         }
 

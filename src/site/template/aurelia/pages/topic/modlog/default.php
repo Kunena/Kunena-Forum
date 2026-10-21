@@ -17,7 +17,7 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Language\Text;
 
-$content = $this->execute('Topic/ModLog');
+$content = $this->execute('Topic/Modlog');
 
 $this->addBreadcrumb(
     Text::_('COM_KUNENA_MODLOG'),

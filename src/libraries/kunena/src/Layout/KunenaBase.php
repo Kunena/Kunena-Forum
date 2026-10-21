@@ -55,8 +55,12 @@ use Throwable;
  *
  * @see     KunenaRequest
  *
+ * The data of a layout is set with set(): every key becomes a property, so the class (and the layouts which extend it) allow dynamic
+ * properties, which PHP 8.2 would report as deprecated.
+ *
  * @since   Kunena 6.0
  */
+#[\AllowDynamicProperties]
 class KunenaBase extends KunenaLayoutBase
 {
     /**

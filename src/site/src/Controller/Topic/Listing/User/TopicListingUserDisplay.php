@@ -192,17 +192,13 @@ class TopicListingUserDisplay extends ListDisplay
                 if ($view == 'user' && $layout == 'default') {
                     return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
                 } elseif ($view == 'topics' && $layout == 'user') {
-                    $params['view'] = 'topics';
-                    $params = [
-                        'layout' => 'user',
-                        'mode' => $this->state->get('list.mode'),
-                    ];
+                    $params['view']   = 'topics';
+                    $params['layout'] = 'user';
+                    $params['mode']   = $this->state->get('list.mode');
 
                     return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
                 } else {
-                    $params = [
-                        'mode' => $this->state->get('list.mode'),
-                    ];
+                    $params['mode'] = $this->state->get('list.mode');
 
                     return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
                 }

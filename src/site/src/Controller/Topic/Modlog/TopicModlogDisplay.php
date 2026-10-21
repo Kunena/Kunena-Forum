@@ -11,7 +11,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Site\Controller\Topic\ModLog;
+namespace Kunena\Forum\Site\Controller\Topic\Modlog;
 
 \defined('_JEXEC') or die();
 
@@ -29,13 +29,13 @@ use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
- * Class TopicModLogDisplay: the log of the moderation actions, for the moderators and the administrators.
+ * Class TopicModlogDisplay: the log of the moderation actions, for the moderators and the administrators.
  *
  * Administrators see everything, a moderator sees the actions in the categories which he moderates.
  *
  * @since   Kunena 7.2
  */
-class TopicModLogDisplay extends KunenaControllerDisplay
+class TopicModlogDisplay extends KunenaControllerDisplay
 {
     /**
      * Entries per page.
@@ -106,7 +106,7 @@ class TopicModLogDisplay extends KunenaControllerDisplay
      * @var     string
      * @since   Kunena 7.2
      */
-    protected $name = 'Topic/ModLog';
+    protected $name = 'Topic/Modlog';
 
     /**
      * Load the log entries the user may see.

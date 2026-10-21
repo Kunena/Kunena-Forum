@@ -440,6 +440,14 @@ class KunenaCategory extends KunenaDatabaseObject
     protected $_alias = null;
 
     /**
+     * Is the alias made from the name (the alias was empty when the category was saved)?
+     *
+     * @var     boolean
+     * @since   Kunena 7.2
+     */
+    protected $autoAlias = false;
+
+    /**
      * @var     false|array
      * @since   Kunena 6.0
      */
@@ -1576,12 +1584,24 @@ class KunenaCategory extends KunenaDatabaseObject
     {
         $this->alias = trim($this->alias);
 
+        // An alias which is made from the name can start with the id of the category (the setting of the SEF).
+        $this->autoAlias = empty($this->alias);
+
         if (empty($this->alias)) {
             $this->alias = $this->name;
         }
 
         if ($this->alias != $this->_alias) {
             $this->alias = KunenaRoute::stringURLSafe($this->alias);
+
+            // The id makes the alias of a new category unique: it is added after the first save (see saveInternal).
+            if ($this->autoAlias && KunenaConfig::getInstance()->categoryAliasId) {
+                if ($this->exists()) {
+                    $this->alias = $this->withId($this->alias);
+                } else {
+                    return true;
+                }
+            }
 
             try {
                 $this->checkAlias($this->alias);
@@ -1593,6 +1613,26 @@ class KunenaCategory extends KunenaDatabaseObject
         }
 
         return true;
+    }
+
+    /**
+     * The alias with the id of the category in front of it (12-general); the alias made of the id only when the name gives none.
+     *
+     * @param   string  $alias  The alias, made from the name.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected function withId(string $alias): string
+    {
+        $prefix = $this->id . '-';
+
+        if ($alias === '' || $alias === (string) $this->id) {
+            return (string) $this->id;
+        }
+
+        return str_starts_with($alias, $prefix) ? $alias : $prefix . $alias;
     }
 
     /**
@@ -2095,6 +2135,22 @@ class KunenaCategory extends KunenaDatabaseObject
         $table = $this->getTable();
         $table->bind($this->getTableProperties());
         $table->exists($this->_exists);
+
+        // The alias made from the name of a new category gets its id now: the id exists after the first save.
+        if ($this->autoAlias && KunenaConfig::getInstance()->categoryAliasId && $this->exists()) {
+            $withId = $this->withId($this->alias);
+
+            if ($withId !== $this->alias) {
+                $this->alias = $withId;
+
+                $db    = Factory::getContainer()->get('DatabaseDriver');
+                $query = $db->createQuery()
+                    ->update($db->quoteName('#__kunena_categories'))
+                    ->set($db->quoteName('alias') . ' = ' . $db->quote($withId))
+                    ->where($db->quoteName('id') . ' = ' . (int) $this->id);
+                $db->setQuery($query)->execute();
+            }
+        }
 
         // Update alias
         $success = $this->addAlias($this->alias);

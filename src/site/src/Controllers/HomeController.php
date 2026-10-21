@@ -54,6 +54,16 @@ class HomeController extends KunenaController
      */
     public function display($cachable = false, $urlparams = false): KunenaController
     {
+        // The page of the home menu item shows another page by running its controller: when that is this controller again
+        // (view=home&layout=x), it would run for ever.
+        static $depth = 0;
+
+        if ($depth > 2) {
+            throw new \Exception(Text::_('JERROR_LAYOUT_REQUESTED_RESOURCE_WAS_NOT_FOUND'), 404);
+        }
+
+        $depth++;
+
         $menu = $this->app->getMenu();
         $home = $menu->getActive();
 
@@ -106,6 +116,8 @@ class HomeController extends KunenaController
         // Run display task from our new controller
         $controller = KunenaController::getInstance();
         $controller->execute('display');
+
+        $depth--;
 
         // Set redirect and message
         $this->setRedirect($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());

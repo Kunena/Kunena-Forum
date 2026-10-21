@@ -50,6 +50,14 @@ class Dispatcher extends ComponentDispatcher
     public $option = 'com_kunena';
 
     /**
+     * The parameters of the request which have one value (never a list).
+     *
+     * @var    string[]
+     * @since  Kunena 7.2
+     */
+    protected static $singleValues = ['view', 'layout', 'task', 'func', 'mode', 'catid', 'id', 'mesid', 'userid', 'topic_id', 'parentid', 'draftid', 'return', 'limit', 'limitstart', 'start', 'sel', 'search', 'query', 'type', 'sig', 'uid'];
+
+    /**
      * Dispatch a controller task. Redirecting the user if appropriate.
      *
      * @return  void
@@ -96,6 +104,16 @@ class Dispatcher extends ComponentDispatcher
 
         $app   = Factory::getApplication();
         $input = $app->getInput();
+
+        // A list in the request (id[]=1) is no value for a parameter of one value: models and controllers get the default.
+        foreach ([$input, $input->get, $input->post] as $source) {
+            foreach (static::$singleValues as $name) {
+                if (\is_array($source->get($name, null, 'raw'))) {
+                    $source->set($name, null);
+                }
+            }
+        }
+
         $input->set('limitstart', $input->getInt('limitstart', $input->getInt('start')));
         $view    = $input->getWord('func', $input->getWord('view', 'home'));
         $subview = $input->getWord('layout', 'default');

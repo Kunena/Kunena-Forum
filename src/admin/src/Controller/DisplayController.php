@@ -53,6 +53,36 @@ class DisplayController extends BaseController
         $document = $this->app->getDocument();
         $view = Factory::getApplication()->getInput()->getCmd('view', '');
 
+        // The views of Kunena in the menu on the left get an icon: the manifest of a component can not give icons to the
+        // items below the main one.
+        $document->getWebAssetManager()->addInlineScript(
+            <<<'JS'
+document.addEventListener('DOMContentLoaded', function () {
+    var icons = {
+        cpanel: 'gauge-high', attachments: 'paperclip', badges: 'award', categories: 'sitemap', config: 'gear',
+        smilies: 'face-smile', stats: 'chart-column', logs: 'clipboard-list', mailsqueues: 'envelope', plugins: 'plug',
+        ranks: 'ranking-star', socials: 'share-nodes', templates: 'palette', tools: 'wrench', trashs: 'trash', users: 'users'
+    };
+
+    document.querySelectorAll('#sidebarmenu a.no-dropdown').forEach(function (link) {
+        var href = link.getAttribute('href') || '';
+        var found = href.match(/[?&]view=(\w+)/);
+        var key = href.indexOf('component=com_kunena') > -1 ? 'config' : (href.indexOf('option=com_kunena') > -1 && found ? found[1] : '');
+
+        if (!icons[key] || link.querySelector('.kunena-menu-icon')) {
+            return;
+        }
+
+        var icon = document.createElement('span');
+        icon.className = 'kunena-menu-icon fa-solid fa-fw fa-' + icons[key];
+        icon.setAttribute('aria-hidden', 'true');
+        icon.style.marginRight = '0.5rem';
+        link.insertBefore(icon, link.firstChild);
+    });
+});
+JS
+        );
+
         if ($view !== 'ranks') {
             $wa = $document->getWebAssetManager();
             $wa->registerStyle('kunena_theme', Uri::base() . '/components/com_kunena/media/css/theme.min.css', [], [], []);

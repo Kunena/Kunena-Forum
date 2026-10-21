@@ -1190,6 +1190,25 @@ HTML;
     }
 
     /**
+     * The published topic icons (the statuses of a topic) of the icon set which is in use, also when no category has chosen
+     * the icon set yet (the default one).
+     *
+     * @return  array  The icons, by id.
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function getUserTopicIcons(): array
+    {
+        if ($this->categoryIconset === '') {
+            $this->categoryIconset = '/default';
+            $this->topicIcons      = [];
+        }
+
+        return $this->getTopicIcons(false);
+    }
+
+    /**
      * @param   bool  $all      all
      * @param   int   $checked  checked
      *

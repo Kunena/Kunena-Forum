@@ -27,6 +27,7 @@ use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -124,6 +125,24 @@ class TopicItemActionsDisplay extends KunenaControllerDisplay
             $this->topicButtons->set(
                 'subscribe_dropdown',
                 $this->getButton(\sprintf($task, 'subscribe'), 'subscribe', 'topic', 'user', false, true, KunenaIcons::email())
+            );
+        }
+
+        // Mark as solved: the author of the topic (when it is not locked) and the moderators.
+        $moderator = KunenaUserHelper::getMyself()->isModerator($this->topic->getCategory());
+        $owner     = KunenaUserHelper::getMyself()->exists() && (int) $this->topic->first_post_userid === (int) KunenaUserHelper::getMyself()->userid && !$this->topic->locked;
+
+        if ($this->config->topicIcons && ($moderator || $owner) && isset($template->getUserTopicIcons()[KunenaTopic::ICON_SOLVED])) {
+            $solvedName = (int) $this->topic->icon_id === KunenaTopic::ICON_SOLVED ? 'unsolved' : 'solved';
+
+            $this->topicButtons->set(
+                'solved',
+                $this->getButton(\sprintf($task, 'solved'), $solvedName, 'topic', 'user', false, $button, KunenaIcons::check())
+            );
+            // Dropdown Item version
+            $this->topicButtons->set(
+                'solved_dropdown',
+                $this->getButton(\sprintf($task, 'solved'), $solvedName, 'topic', 'user', false, true, KunenaIcons::check())
             );
         }
 

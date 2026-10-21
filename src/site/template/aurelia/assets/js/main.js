@@ -30,6 +30,9 @@ jQuery(document).ready(function ($) {
 		else {
 			$("#kchecktarget").attr('disabled', true);
 		}
+
+		/* The status (topic icon) which the selected topics get */
+		$("#kcheckstatus").attr('disabled', task !== 'status');
 	});
 
 	$("input.kcatcheckall").click(function () {

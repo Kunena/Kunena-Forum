@@ -48,6 +48,7 @@ use Kunena\Forum\Libraries\Language\KunenaMultilanguage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Message\Thankyou\KunenaMessageThankyouHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
@@ -2369,6 +2370,73 @@ class TopicController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_STICKY_NOT_UNSET'), 'error');
         }
 
+        $this->setRedirectBack();
+    }
+
+    /**
+     * Mark the topic as solved (the topic icon solved), or back to not solved: for the author of the topic and the moderators.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function solved()
+    {
+        if (!Session::checkToken('get')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $topic    = KunenaTopicHelper::get($this->id);
+        $category = $topic->getCategory();
+
+        try {
+            $topic->tryAuthorise('read');
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return; // -- abort
+        }
+
+        // The author of the topic (when it is not locked) and the moderators of the category.
+        $moderator = $this->me->isModerator($category);
+        $owner     = $this->me->exists() && (int) $topic->first_post_userid === (int) $this->me->userid && !$topic->locked;
+        $icons     = KunenaFactory::getTemplate()->getUserTopicIcons();
+
+        if (!$this->config->topicIcons || !isset($icons[KunenaTopic::ICON_SOLVED]) || (!$moderator && !$owner)) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $solved         = (int) $topic->icon_id === KunenaTopic::ICON_SOLVED;
+        $topic->icon_id = $solved ? 0 : KunenaTopic::ICON_SOLVED;
+
+        try {
+            $topic->save();
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if ($this->config->logModeration) {
+            KunenaLog::log(
+                $moderator ? KunenaLog::TYPE_MODERATION : KunenaLog::TYPE_ACTION,
+                KunenaLog::LOG_TOPIC_ICON,
+                ['icon_id' => (int) $topic->icon_id],
+                $category,
+                $topic
+            );
+        }
+
+        $this->app->enqueueMessage(Text::_($solved ? 'COM_KUNENA_TOPIC_MARKED_NOT_SOLVED' : 'COM_KUNENA_TOPIC_MARKED_SOLVED'), 'success');
         $this->setRedirectBack();
     }
 

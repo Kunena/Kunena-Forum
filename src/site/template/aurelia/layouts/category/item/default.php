@@ -16,6 +16,7 @@ namespace Kunena\Forum\Site;
 \defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
@@ -141,6 +142,25 @@ $this->addStyleSheet('rating.css');
                                                 'kchecktask'
                                             ); ?>
 
+                                            <?php
+                                            $statusAction = false;
+
+                                            foreach ((array) $this->topicActions as $topicAction) {
+                                                if (($topicAction->value ?? '') === 'status') {
+                                                    $statusAction = true;
+                                                }
+                                            }
+
+                                            if ($statusAction) {
+                                                $statusOptions = [HTMLHelper::_('select.option', '-1', Text::_('COM_KUNENA_BULK_CHOOSE_STATUS'))];
+
+                                                foreach (KunenaFactory::getTemplate()->getUserTopicIcons() as $statusIcon) {
+                                                    $statusOptions[] = HTMLHelper::_('select.option', (string) $statusIcon->id, Text::_($statusIcon->title));
+                                                }
+
+                                                echo HTMLHelper::_('select.genericlist', $statusOptions, 'status_icon', 'class="form-select" disabled="disabled"', 'value', 'text', '-1', 'kcheckstatus');
+                                            }
+                                            ?>
                                             <?php if ($this->actionMove) : ?>
                                                 <?php
                                                 $options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];

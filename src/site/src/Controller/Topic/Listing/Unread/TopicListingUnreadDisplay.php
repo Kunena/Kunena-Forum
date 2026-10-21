@@ -158,7 +158,7 @@ class TopicListingUnreadDisplay extends ListDisplay
             $this->prepareTopics();
         }
 
-        $actions          = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
+        $actions          = ['delete', 'approve', 'undelete', 'move', 'status', 'permdelete'];
         $this->actions    = $this->getTopicActions($this->topics, $actions);
         $this->headerText = Text::_('COM_KUNENA_UNREAD');
     }

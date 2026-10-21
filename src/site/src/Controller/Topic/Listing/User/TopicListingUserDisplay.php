@@ -232,7 +232,7 @@ class TopicListingUserDisplay extends ListDisplay
             $this->prepareTopics();
         }
 
-        $actions = ['delete', 'approve', 'undelete', 'move', 'permdelete'];
+        $actions = ['delete', 'approve', 'undelete', 'move', 'status', 'permdelete'];
 
         switch ($this->state->get('list.mode')) {
             case 'posted':

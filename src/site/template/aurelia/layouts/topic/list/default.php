@@ -224,6 +224,15 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
                                         $options = [HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'))];
                                         echo HTMLHelper::_('kunenaforum.categorylist', 'target', 0, $options, [], 'class="form-select fbs" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
                                     endif; ?>
+<?php if (isset($this->actions['status'])) :
+    $statusOptions = [HTMLHelper::_('select.option', '-1', Text::_('COM_KUNENA_BULK_CHOOSE_STATUS'))];
+
+    foreach (KunenaFactory::getTemplate()->getUserTopicIcons() as $statusIcon) {
+        $statusOptions[] = HTMLHelper::_('select.option', (string) $statusIcon->id, Text::_($statusIcon->title));
+    }
+
+    echo HTMLHelper::_('select.genericlist', $statusOptions, 'status_icon', 'class="form-select" disabled="disabled"', 'value', 'text', '-1', 'kcheckstatus');
+endif; ?>
                                     <button type="submit" name="kcheckgo"
                                             class="btn btn-outline-primary border"><?php echo Text::_('COM_KUNENA_GO') ?>
                                     </button>

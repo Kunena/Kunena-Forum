@@ -28,10 +28,12 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
         $this->topicButtons->get('reply')
             || $this->topicButtons->get('subscribe')
             || $this->topicButtons->get('favorite')
+            || $this->topicButtons->get('solved')
 ) : ?>
             <?php echo $this->topicButtons->get('reply') ?>
             <?php echo $this->topicButtons->get('subscribe') ?>
             <?php echo $this->topicButtons->get('favorite') ?>
+            <?php echo $this->topicButtons->get('solved') ?>
         <?php endif ?>
 
         <?php if (
@@ -70,6 +72,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
             $this->topicButtons->get('reply')
                 || $this->topicButtons->get('subscribe')
                 || $this->topicButtons->get('favorite')
+                || $this->topicButtons->get('solved')
 ) : ?>
                 <div class="btn-group">
                     <a class="btn border" data-bs-toggle="dropdown">
@@ -82,6 +85,7 @@ $fullactions     = $this->ktemplate->params->get('fullactions');
                         <li><?php echo $this->topicButtons->get('reply_dropdown') ?></li>
                         <li><?php echo $this->topicButtons->get('subscribe_dropdown') ?></li>
                         <li><?php echo $this->topicButtons->get('favorite_dropdown') ?></li>
+                        <li><?php echo $this->topicButtons->get('solved_dropdown') ?></li>
                     </ul>
                 </div>
             <?php endif ?>

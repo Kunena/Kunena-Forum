@@ -86,6 +86,13 @@ use RuntimeException;
 class KunenaTopic extends KunenaDatabaseObject
 {
     /**
+     * The id of the topic icon "solved" of the topic icons of Kunena.
+     *
+     * @since   Kunena 7.2
+     */
+    public const ICON_SOLVED = 8;
+
+    /**
      * @var     array
      * @since   Kunena 6.0
      */
@@ -104,6 +111,7 @@ class KunenaTopic extends KunenaDatabaseObject
         'subscribe'                   => ['Read'],
         'sticky'                      => ['Read'],
         'lock'                        => ['Read'],
+        'status'                      => ['Read', 'NotMoved'],
         'rate'                        => ['Read', 'Unlocked'],
         'poll.read'                   => ['Read', 'Poll'],
         'poll.create'                 => ['Own'],

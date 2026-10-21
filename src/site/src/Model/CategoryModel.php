@@ -382,7 +382,7 @@ class CategoryModel extends CategoriesModel
             $this->getTopics();
         }
 
-        $delete = $approve = $undelete = $move = $permdelete = false;
+        $delete = $approve = $undelete = $move = $permdelete = $status = false;
 
         foreach ($this->topics as $topic) {
             if (!$delete && $topic->isAuthorised('delete')) {
@@ -405,7 +405,11 @@ class CategoryModel extends CategoriesModel
                 $permdelete = true;
             }
 
-            if ($delete && $approve && $undelete && $move && $permdelete) {
+            if (!$status && $topic->isAuthorised('status')) {
+                $status = true;
+            }
+
+            if ($delete && $approve && $undelete && $move && $permdelete && $status) {
                 break;
             }
         }
@@ -414,6 +418,10 @@ class CategoryModel extends CategoriesModel
 
         if ($move) {
             $actionDropdown[] = HTMLHelper::_('select.option', 'move', Text::_('COM_KUNENA_MOVE_SELECTED'));
+        }
+
+        if ($status) {
+            $actionDropdown[] = HTMLHelper::_('select.option', 'status', Text::_('COM_KUNENA_BULK_SET_STATUS'));
         }
 
         if ($approve) {

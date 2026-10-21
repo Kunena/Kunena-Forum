@@ -321,7 +321,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
      *
      * @throws  Exception
      */
-    protected function getTopicActions(array $topics, $actions = ['delete', 'approve', 'undelete', 'move', 'permdelete'])
+    protected function getTopicActions(array $topics, $actions = ['delete', 'approve', 'undelete', 'move', 'status', 'permdelete'])
     {
         if (!$actions) {
             return;
@@ -336,6 +336,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
         $options['delete']      = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA_DELETE_SELECTED'));
         $options['permdelete']  = HTMLHelper::_('select.option', 'permdel', Text::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
         $options['undelete']    = HTMLHelper::_('select.option', 'restore', Text::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+        $options['status']      = HTMLHelper::_('select.option', 'status', Text::_('COM_KUNENA_BULK_SET_STATUS'));
 
         // Only display actions that are available to user.
         $actions = array_combine($actions, array_fill(0, \count($actions), false));

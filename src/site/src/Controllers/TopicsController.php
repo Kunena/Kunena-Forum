@@ -327,6 +327,73 @@ class TopicsController extends KunenaController
     }
 
     /**
+     * Set the status (the topic icon) of the selected topics: for the moderators of the category of the topic.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function status()
+    {
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $ids   = ArrayHelper::toInteger(array_keys($this->app->getInput()->get('topics', [], 'post', 'array')));
+        $icons = KunenaFactory::getTemplate()->getUserTopicIcons();
+        $iconId = $this->app->getInput()->post->getInt('status_icon', -1);
+
+        if (!isset($icons[$iconId])) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_BULK_CHOOSE_STATUS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $topics = KunenaTopicHelper::getTopics($ids);
+
+        if (!$topics) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_TOPICS_SELECTED'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $count = 0;
+
+        foreach ($topics as $topic) {
+            try {
+                $topic->tryAuthorise('status');
+                $topic->icon_id = $iconId;
+                $topic->save();
+                $count++;
+
+                if ($this->config->logModeration) {
+                    KunenaLog::log(
+                        KunenaLog::TYPE_MODERATION,
+                        KunenaLog::LOG_TOPIC_ICON,
+                        ['icon_id' => $iconId],
+                        $topic->getCategory(),
+                        $topic
+                    );
+                }
+            } catch (Exception $e) {
+                $this->app->enqueueMessage($e->getMessage(), 'error');
+            }
+        }
+
+        if ($count) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_BULK_STATUS_CHANGED', $count), 'success');
+        }
+
+        $this->setRedirectBack();
+    }
+
+    /**
      * Move posts or messages
      *
      * @return  void

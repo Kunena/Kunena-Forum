@@ -392,6 +392,9 @@ Text::script('COM_KUNENA_POLL_TITLE');
                                         <?php else : ?>
                                             <label class="radio inline" for="radio<?php echo $icon->id; ?>"><img loading=lazy src="<?php echo $icon->relpath; ?>" alt="<?php echo $icon->name; ?>" style="border:0;" />
                                             <?php endif; ?>
+                                            <?php if ($this->ktemplate->params->get('topicIconLabels', 1)) : ?>
+                                                <span class="d-block small text-center"><?php echo Text::_($icon->title); ?></span>
+                                            <?php endif; ?>
                                             </label>
                                         <?php endforeach; ?>
                         </div>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension
+    type="plugin"
+    group="kunena"
+    method="upgrade">
+    <name>plg_kunena_geoip</name>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <author>Kunena Team</author>
+    <authorEmail>Kunena@kunena.org</authorEmail>
+    <authorUrl>https://www.kunena.org</authorUrl>
+    <copyright>www.kunena.org</copyright>
+    <license>GNU/GPLv3 or later</license>
+    <description>PLG_KUNENA_GEOIP_DESCRIPTION</description>
+    <namespace path="src">Kunena\Forum\Plugin\Kunena\Geoip</namespace>
+    <changelogurl>@kunenachangelog@</changelogurl>
+    <files>
+        <folder>language</folder>
+        <folder plugin="geoip">src</folder>
+        <folder>services</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="detail"
+                    type="list"
+                    default="city"
+                    label="PLG_KUNENA_GEOIP_DETAIL"
+                    description="PLG_KUNENA_GEOIP_DETAIL_DESC"
+                    class="form-select">
+                    <option value="country">PLG_KUNENA_GEOIP_DETAIL_COUNTRY</option>
+                    <option value="region">PLG_KUNENA_GEOIP_DETAIL_REGION</option>
+                    <option value="city">PLG_KUNENA_GEOIP_DETAIL_CITY</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

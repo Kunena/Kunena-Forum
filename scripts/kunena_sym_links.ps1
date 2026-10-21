@@ -189,6 +189,11 @@ function delete-ExistingKunenaDir {
     if (Test-Path -Path $pathReports) {
         Remove-Item -LiteralPath $pathReports -Force -Recurse
     }
+
+    $pathGeoip = $joomlaInstallDir + "\plugins\kunena\geoip"
+    if (Test-Path -Path $pathGeoip) {
+        Remove-Item -LiteralPath $pathGeoip -Force -Recurse
+    }
     
     $path16 = $joomlaInstallDir + "\plugins\privacy\kunena"
     if (Test-Path -Path $path16) {
@@ -266,6 +271,9 @@ function make-SymLinksKunena {
     $pathReports = $joomlaInstallDir + "\plugins\kunena\reports"
     $targetReports = $kunenaGitDir + "\src\plugins\plg_kunena_reports"
     New-Item -ItemType SymbolicLink -Path $pathReports -Target $targetReports
+    $pathGeoip = $joomlaInstallDir + "\plugins\kunena\geoip"
+    $targetGeoip = $kunenaGitDir + "\src\plugins\plg_kunena_geoip"
+    New-Item -ItemType SymbolicLink -Path $pathGeoip -Target $targetGeoip
     $path15 = $joomlaInstallDir + "\plugins\kunena\joomla"
     $target15 = $kunenaGitDir + "\src\plugins\plg_kunena_joomla"
     New-Item -ItemType SymbolicLink -Path $path15 -Target $target15

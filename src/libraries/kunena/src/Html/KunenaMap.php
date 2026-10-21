@@ -88,6 +88,25 @@ abstract class KunenaMap
     }
 
     /**
+     * The address of a page with the coordinates on a map.
+     *
+     * @param   float  $latitude   The latitude.
+     * @param   float  $longitude  The longitude.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    public static function coordinatesUrl(float $latitude, float $longitude): string
+    {
+        if (self::provider() === 'google') {
+            return 'https://maps.google.com/?q=' . $latitude . ',' . $longitude;
+        }
+
+        return self::osmPageUrl($latitude, $longitude, 10);
+    }
+
+    /**
      * The address of the embedded map of OpenStreetMap for a location.
      *
      * @param   float  $latitude   The latitude.

@@ -28,6 +28,7 @@ use Kunena\Forum\Libraries\Event\KunenaGetButtonsEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
+use Kunena\Forum\Libraries\Html\KunenaIpLocation;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
@@ -585,8 +586,8 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
             || ($this->category->isAuthorised('moderate') && !$this->config->hideIp)
         ) {
             if (!empty($this->message->ip)) {
-                $this->ipLink = '<a href="https://search.dnslytics.com/ip/' . $this->message->ip
-                    . '" target="_blank" rel="nofollow noopener noreferrer"> IP: ' . $this->message->ip . '</a>';
+                // The address with its place (when a plugin gives it).
+                $this->ipLink = KunenaIpLocation::html((string) $this->message->ip);
             } else {
                 $this->ipLink = '&nbsp;';
             }

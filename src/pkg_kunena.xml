@@ -66,6 +66,10 @@
         <file
             type="plugin"
             group="kunena"
+            id="geoip">plg_kunena_geoip_v@kunenaversion@.zip</file>
+        <file
+            type="plugin"
+            group="kunena"
             id="acl">plg_kunena_acl_v@kunenaversion@.zip</file>
         <file
             type="plugin"

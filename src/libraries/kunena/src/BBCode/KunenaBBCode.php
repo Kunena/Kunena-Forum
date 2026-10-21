@@ -1734,7 +1734,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $me        = KunenaUserHelper::getMyself();
 
-        if ($bbcode->parent->message instanceof KunenaMessage) {
+        if (($bbcode->parent->message ?? null) instanceof KunenaMessage) {
             $message_userid = $bbcode->parent->message->userid;
             $KunenaForumMessage = $bbcode->parent->message;
         } elseif ($bbcode->parent instanceof KunenaMessage) {
@@ -2821,13 +2821,20 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         $layout = KunenaLayout::factory('BBCode/Terminal');
 
-        // Check if value entered by user for the colortext params is right in hexadecimal
-        if (ctype_xdigit($params['colortext'])) {
-            if ($layout->getPath()) {
-                return (string) $layout
-                    ->set('content', $content)
-                    ->set('params', $params);
-            }
+        // The colour of the text is a hexadecimal colour, with or without #, like [terminal colortext="#00ff00"]. Without it, or with a
+        // colour which is no colour, the start colour is used: the text of the user is never dropped.
+        $color = ltrim(trim((string) ($params['colortext'] ?? '')), '#');
+
+        if (!preg_match('/^(?:[0-9a-f]{3}|[0-9a-f]{6})$/i', $color)) {
+            $color = 'ffffff';
+        }
+
+        $params['colortext'] = '#' . $color;
+
+        if ($layout->getPath()) {
+            return (string) $layout
+                ->set('content', $content)
+                ->set('params', $params);
         }
 
         return false;
@@ -3112,7 +3119,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
             $url_parsed = parse_url($url);
 
-            if ($url_parsed['host'] == 'soundcloud.com') {
+            if (\is_array($url_parsed) && ($url_parsed['host'] ?? '') == 'soundcloud.com') {
                 return '<iframe allowtransparency="true" width="100%" height="350" style="border: 0" src="https://w.soundcloud.com/player/?url=' . $content . '&amp;auto_play=false&amp;visual=true"></iframe><br />';
             }
         }
@@ -3179,7 +3186,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
             return true;
         }
 
-        $user = KunenaUserHelper::get($params['userid']);
+        // A mention which has no user (no id, or an id which is not a user) is the text of the mention.
+        $userid = (int) ($params['userid'] ?? 0);
+        $user   = $userid > 0 ? KunenaUserHelper::get($userid) : null;
+
+        if (!$user || !$user->exists()) {
+            return '@' . $content;
+        }
+
         $urlUserProfile = $user->getURL();
 
         return '<a href="' . $urlUserProfile . '" data-bs-toggle="tooltip" title="' . $content . '">@' . $content . '</a>';

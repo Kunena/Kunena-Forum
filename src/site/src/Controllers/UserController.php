@@ -713,6 +713,18 @@ class UserController extends KunenaController
         $ip             = $this->app->getInput()->getString('ip', '');
         $banlevel       = $this->app->getInput()->getInt('banlevel', 0);
         $expiration     = $this->app->getInput()->getString('expiration', '');
+
+        // The ban box of a message: a number of days (0 is permanent) instead of a date.
+        $banDays = $this->app->getInput()->getInt('ban_days', -1);
+
+        if ($expiration === '' && $banDays > 0) {
+            $expiration = Factory::getDate('+' . min($banDays, 36500) . ' days')->toSql();
+        }
+
+        // Only administrators block the user from the whole site with the ban box of a message.
+        if ($this->app->getInput()->getInt('quick', 0) && $banlevel && !$this->me->isAdmin()) {
+            $banlevel = 0;
+        }
         $reason_private = $this->app->getInput()->getString('reason_private', '');
         $reason_public  = $this->app->getInput()->getString('reason_public', '');
         $comment        = $this->app->getInput()->getString('comment', '');
@@ -879,7 +891,10 @@ class UserController extends KunenaController
             $this->app->enqueueMessage(Text::_('COM_KUNENA_MODERATE_DELETED_PERM_BAD_MESSAGES'), 'success');
         }
 
-        $this->setRedirect($user->getUrl(false));
+        // The ban box of a message goes back to the page (of the same site) where it was opened.
+        $return = $this->app->getInput()->getString('return', '');
+
+        $this->setRedirect($return !== '' && Uri::isInternal($return) ? $return : $user->getUrl(false));
     }
 
     // Internal functions:

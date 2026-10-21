@@ -781,6 +781,46 @@
                 <option value="1">JYES</option>
             </field>
             <field
+                name="quickBan"
+                type="radio"
+                default="1"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_QUICK_BAN"
+                description="COM_KUNENA_A_QUICK_BAN_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
+                name="quickBanLevel"
+                type="list"
+                default="0"
+                label="COM_KUNENA_A_QUICK_BAN_LEVEL"
+                description="COM_KUNENA_A_QUICK_BAN_LEVEL_DESC"
+                showon="quickBan:1">
+                <option value="0">COM_KUNENA_BAN_BANLEVEL_KUNENA</option>
+                <option value="1">COM_KUNENA_BAN_BANLEVEL_JOOMLA</option>
+            </field>
+            <field
+                name="quickBanDays"
+                type="number"
+                default="7"
+                min="0"
+                step="1"
+                label="COM_KUNENA_A_QUICK_BAN_DAYS"
+                description="COM_KUNENA_A_QUICK_BAN_DAYS_DESC"
+                showon="quickBan:1" />
+            <field
+                name="quickBanDeletePosts"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_QUICK_BAN_DELETE_POSTS"
+                description="COM_KUNENA_A_QUICK_BAN_DELETE_POSTS_DESC"
+                showon="quickBan:1">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
                 name="showBannedReason"
                 type="radio"
                 default="0"

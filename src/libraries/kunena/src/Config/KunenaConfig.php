@@ -229,6 +229,10 @@ use Joomla\Database\DatabaseInterface;
  * @property string $enableDrafts                       Enable saving messages as draft
  * @property string $enableIgnore                       Enable the ignore list of users
  * @property string $enableFollow                       Enable following users
+ * @property int    $quickBan                           Ban button on the messages for moderators (a box with the reason)
+ * @property int    $quickBanLevel                      Default ban level of the quick ban: 0 forum, 1 site
+ * @property int    $quickBanDays                       Default duration of the quick ban in days (0 permanent)
+ * @property int    $quickBanDeletePosts                Delete the posts of the user by default with the quick ban
  * @property int    $reportMail                         Send an e-mail to the moderators when a user reports a post
  * @property int    $mentionEmail                       Send an e-mail to the users who are mentioned in a post
  * @property int    $emailForumHeaders                  Add the headers X-Forum-* and the threading headers to the e-mails

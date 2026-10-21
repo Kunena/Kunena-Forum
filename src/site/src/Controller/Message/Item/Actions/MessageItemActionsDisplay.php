@@ -32,6 +32,7 @@ use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Login\KunenaLogin;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
+use Kunena\Forum\Libraries\User\KunenaBan;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
@@ -533,6 +534,27 @@ class MessageItemActionsDisplay extends KunenaControllerDisplay
                     KunenaIcons::delete()
                 )
             );
+        }
+
+        // Ban the author in one step (a box with the reason): a moderator, for a user who is no admin or moderator and is not banned.
+        if (!empty($this->config->quickBan) && $me->exists() && $me->isModerator($this->category) && $this->message->userid && $this->message->userid != $me->userid) {
+            $quickBan = KunenaBan::getInstanceByUserid((int) $this->message->userid, true);
+            $canBan   = false;
+
+            try {
+                $canBan = $quickBan->canBan();
+            } catch (Exception $e) {
+                // The author can not be banned by this user.
+            }
+
+            if ($canBan && !$quickBan->isEnabled()) {
+                foreach (['ban' => false, 'ban_dropdown' => true] as $key => $dropdown) {
+                    $this->messageButtons->set(
+                        $key,
+                        $this->getButton('#ban' . (int) $this->message->id, 'ban', 'message', 'moderation', $key, $dropdown, KunenaIcons::shield())->set('modal', 'modal')
+                    );
+                }
+            }
         }
 
         // Report the author to stopforumspam.com (admins and moderators; the message of another user who is no admin or moderator).

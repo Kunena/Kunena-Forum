@@ -472,23 +472,11 @@ class KunenaBBCode extends BBCode
      */
     public function get_title(string $url): string
     {
-        // Short timeout, no redirects, only web pages, never the own network, and only the start of the page.
-        $str = KunenaLinkPreview::fetchPage($url);
+        // The title comes from the cache of the link cards: the other site is asked once for a week, not at every view of the topic
+        // (and at most a few times for a page). It is plain text, so it is only encoded for our html.
+        $card = KunenaLinkPreview::get($url);
 
-        if ($str !== null) {
-            // Supports line breaks inside <title>
-            $str = trim(preg_replace('/\s+/', ' ', $str));
-
-            // Ignore case
-            if (preg_match("/\<title[^>]*\>(.*?)\<\/title\>/i", $str, $title)) {
-                // The title belongs to a foreign page: decode its entities, drop any markup, and encode it again for our html.
-                $text = trim(strip_tags(html_entity_decode($title[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')));
-
-                return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
-            }
-        }
-
-        return '';
+        return $card ? htmlspecialchars((string) $card['title'], ENT_QUOTES, 'UTF-8') : '';
     }
 
     /**

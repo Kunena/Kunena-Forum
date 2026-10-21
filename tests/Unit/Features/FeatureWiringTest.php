@@ -71,7 +71,9 @@ class FeatureWiringTest extends UnitTestCase
 
         $this->assertStringContainsString("KunenaLayout::factory('BBCode/LinkCard')", $parser);
         // Only a pasted link (parseUrl) gets a card: the url tag (DoURL) stays a normal link.
-        $this->assertSame(1, substr_count($parser, 'KunenaLinkPreview::get('));
+        $this->assertSame(1, substr_count($parser, "KunenaLayout::factory('BBCode/LinkCard')"));
+        // The other use of the cache of the cards is the title of a link (get_title(), for the smart linking): no card.
+        $this->assertSame(2, substr_count($parser, 'KunenaLinkPreview::get('));
         $this->assertStringContainsString('linkCards', $parser);
         $this->assertStringContainsString('KunenaMediaEmbed::spotify(', $parser);
         $this->assertStringContainsString('KunenaMediaEmbed::deezer(', $parser);

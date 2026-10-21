@@ -675,6 +675,8 @@
             <query mode="silenterror">ALTER TABLE `#__kunena_thankyou` DROP INDEX `postid`, ADD PRIMARY KEY (`postid`, `userid`)</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_user_read` DROP INDEX `user_topic_id`, ADD PRIMARY KEY (`user_id`, `topic_id`)</query>
             <query mode="silenterror">ALTER TABLE `#__kunena_user_topics` DROP INDEX `user_topic_id`, ADD PRIMARY KEY (`user_id`, `topic_id`)</query>
+            <!-- The social websites which are shut down (Skype, Yahoo Messenger, Google+) are removed from the stored profiles -->
+            <query mode="silenterror">UPDATE `#__kunena_users` SET `socials` = JSON_REMOVE(`socials`, '$.skype', '$.yim', '$.google') WHERE `socials` IS NOT NULL AND JSON_VALID(`socials`)</query>
         </version>
         <version version="@kunenaversion@"
                  versiondate="@kunenaversiondate@"

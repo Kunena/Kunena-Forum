@@ -45,21 +45,21 @@
         </menu>
         <submenu>
             <menu view="cpanel">COM_KUNENA_DASHBOARD</menu>
-            <menu view="categories">COM_KUNENA_CATEGORY_MANAGER</menu>
-            <menu view="users">COM_KUNENA_USER_MANAGER</menu>
             <menu view="attachments">COM_KUNENA_FILE_MANAGER</menu>
-            <menu view="smilies">COM_KUNENA_EMOTICON_MANAGER</menu>
-            <menu view="ranks">COM_KUNENA_RANK_MANAGER</menu>
             <menu view="badges">COM_KUNENA_BADGES_MANAGER</menu>
-            <menu view="socials">COM_KUNENA_SOCIALS_MANAGER</menu>
-            <menu view="templates">COM_KUNENA_TEMPLATE_MANAGER</menu>
+            <menu view="categories">COM_KUNENA_CATEGORY_MANAGER</menu>
             <menu link="option=com_config&amp;view=component&amp;component=com_kunena">COM_KUNENA_CONFIGURATION</menu>
+            <menu view="smilies">COM_KUNENA_EMOTICON_MANAGER</menu>
             <menu view="stats">COM_KUNENA_MENU_STATISTICS</menu>
-            <menu view="plugins">COM_KUNENA_PLUGIN_MANAGER</menu>
             <menu view="logs">COM_KUNENA_LOG_MANAGER</menu>
             <menu view="mailsqueues">COM_KUNENA_ADMIN_MAILSQUEUE_MANAGER</menu>
+            <menu view="plugins">COM_KUNENA_PLUGIN_MANAGER</menu>
+            <menu view="ranks">COM_KUNENA_RANK_MANAGER</menu>
+            <menu view="socials">COM_KUNENA_SOCIALS_MANAGER</menu>
+            <menu view="templates">COM_KUNENA_TEMPLATE_MANAGER</menu>
             <menu view="tools">COM_KUNENA_FORUM_TOOLS</menu>
             <menu view="trashs">COM_KUNENA_TRASH_MANAGER</menu>
+            <menu view="users">COM_KUNENA_USER_MANAGER</menu>
         </submenu>
         <files>
             <folder>api</folder>

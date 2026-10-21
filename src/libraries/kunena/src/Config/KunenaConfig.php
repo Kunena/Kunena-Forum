@@ -50,6 +50,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $autoEmbedSoundcloud                   Auto Embed Soundcloud items
  * @property int    $autoEmbedSpotify                   Auto Embed Spotify items
  * @property int    $autoEmbedDeezer                    Auto Embed Deezer items
+ * @property int    $displayNameField                   Field with the nickname (the name which others see)
  * @property int    $linkPreview                        Show a card (title, description, picture) for the links in messages
  * @property int    $linkPreviewMax                     Most cards in one message
  * @property string $linkPreviewBlock                   Sites (domains) which get no card
@@ -139,6 +140,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $modSeeDeleted                         Show Deleted Messages
  * @property string $moderatorPermDelete                   Allow moderators to permdelete
  * @property string $moderatorsId                          Moderators ID
+ * @property int    $nameUserChoice                     Users choose the name which others see
  * @property string $newUsersPreventPostUrlImages          Prevent that new users are able to add url and image in his messages or profile
  * @property string $offlineMessage                        Forum Offline Message
  * @property string $orderingSystem                        Reply Numbering Inside Topic

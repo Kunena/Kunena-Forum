@@ -282,22 +282,14 @@ class KunenaBBCode extends BBCode
             $params['path'] = '';
         }
 
-        if ($this->config->autoEmbedSpotify && empty($this->parent->forceMinimal) && isset($params['host']) && $params['host'] === 'open.spotify.com'
-            && preg_match('#^/(?:intl-[\w-]+/)?(track|album|playlist|artist|episode|show)/([A-Za-z0-9]+)#', $params['path'], $spotify)
-        ) {
-            $height = \in_array($spotify[1], ['track', 'episode'], true) ? 152 : 352;
+        if (empty($this->parent->forceMinimal) && isset($params['host'])) {
+            // The players of Spotify and Deezer.
+            $embed = ($this->config->autoEmbedSpotify ? KunenaMediaEmbed::spotify($params['host'], $params['path']) : null)
+                ?? ($this->config->autoEmbedDeezer ? KunenaMediaEmbed::deezer($params['host'], $params['path']) : null);
 
-            return '<iframe style="border-radius: 12px; border: 0" width="100%" height="' . $height . '" src="https://open.spotify.com/embed/' . $spotify[1] . '/' . $spotify[2]
-                . '" allow="encrypted-media" loading="lazy"></iframe><br />';
-        }
-
-        if ($this->config->autoEmbedDeezer && empty($this->parent->forceMinimal) && isset($params['host']) && \in_array($params['host'], ['deezer.com', 'www.deezer.com'], true)
-            && preg_match('#^/(?:[a-z]{2}(?:-[a-z]{2})?/)?(track|album|playlist|episode|show)/(\d+)#', $params['path'], $deezer)
-        ) {
-            $height = $deezer[1] === 'track' || $deezer[1] === 'episode' ? 150 : 300;
-
-            return '<iframe style="border: 0" width="100%" height="' . $height . '" src="https://widget.deezer.com/widget/auto/' . $deezer[1] . '/' . $deezer[2]
-                . '" allow="encrypted-media; clipboard-write" loading="lazy"></iframe><br />';
+            if ($embed !== null) {
+                return $embed;
+            }
         }
 
         if ($this->config->autoEmbedSoundcloud && empty($this->parent->forceMinimal) && isset($params['host'])) {

@@ -23,7 +23,8 @@
 		"allow-plugins" : true
 	},
 	"scripts" : {
-		"install-codestandards" : "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+		"install-codestandards" : "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
+		"test" : "phpunit"
 	},
 	"minimum-stability" : "dev",
 	"prefer-stable" : true

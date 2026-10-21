@@ -26,6 +26,7 @@ use Joomla\Http\HttpFactory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Mail\MailHelper;
 use Joomla\CMS\Mail\MailerFactoryInterface;
+use Joomla\CMS\Event\GenericEvent;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
@@ -2896,22 +2897,6 @@ class TopicController extends KunenaController
             return;
         }
 
-        if (!$this->config->sendEmails) {
-            // Emails have been disabled
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_DISABLED'), 'warning');
-            $this->setRedirectBack();
-
-            return;
-        }
-
-        if (!$this->config->email || !MailHelper::isEmailAddress($this->config->email)) {
-            // Error: email address is invalid
-            $this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_INVALID'), 'error');
-            $this->setRedirectBack();
-
-            return;
-        }
-
         // Get target object for the report
         if ($this->mesid) {
             $message = $target = KunenaMessageHelper::get($this->mesid);
@@ -2954,8 +2939,43 @@ class TopicController extends KunenaController
         } else {
             $acl         = KunenaAccess::getInstance();
             $emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false);
+            $msglink     = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);
 
-            if (!empty($emailToList)) {
+            // A plugin can handle the report (a topic in a category of the moderators, a message to them, ...).
+            PluginHelper::importPlugin('kunena');
+
+            $reportEvent = new GenericEvent(
+                'onKunenaReportMessage',
+                ['message' => $message, 'topic' => $topic, 'target' => $target, 'reporter' => $this->me, 'reason' => (string) $reason, 'text' => (string) $text, 'url' => $msglink, 'handled' => false]
+            );
+            $this->app->getDispatcher()->dispatch('onKunenaReportMessage', $reportEvent);
+            $handled = (bool) $reportEvent->getArgument('handled', false);
+
+            // An inbox stores the report for the moderators, and tells which of them do not want the e-mail as well.
+            $moderatorIds = array_values(array_filter(array_map(static fn ($moderator) => (int) ($moderator->id ?? 0), (array) $emailToList)));
+
+            if ($moderatorIds) {
+                $noMail = KunenaPrivate::getInstance()->notify($message, 'report', $moderatorIds, (int) $this->me->userid);
+
+                if ($noMail) {
+                    $emailToList = array_values(array_filter((array) $emailToList, static fn ($moderator) => !\in_array((int) ($moderator->id ?? 0), $noMail, true)));
+                }
+            }
+
+            // The e-mail to the moderators (it is an option) needs working mail settings.
+            $mailWanted = !empty($this->config->reportMail);
+            $canMail    = $mailWanted && $this->config->sendEmails && $this->config->email && MailHelper::isEmailAddress($this->config->email);
+
+            if (!$handled && !$canMail) {
+                $this->app->enqueueMessage(Text::_(!$this->config->sendEmails ? 'COM_KUNENA_EMAIL_DISABLED' : 'COM_KUNENA_EMAIL_INVALID'), 'warning');
+                $this->setRedirectBack();
+
+                return;
+            }
+
+            $mailSent = false;
+
+            if ($canMail && !empty($emailToList)) {
                 $mailnamesender = !empty($this->config->emailSenderName) ? MailHelper::cleanAddress($this->config->emailSenderName) : MailHelper::cleanAddress($this->config->boardTitle . ': ' . $this->me->getName());
                 $mailsubject    = "[" . $this->config->boardTitle . " " . Text::_('COM_KUNENA_FORUM') . "] " . Text::_('COM_KUNENA_REPORT_MSG') . ": ";
 
@@ -2964,8 +2984,6 @@ class TopicController extends KunenaController
                 } else {
                     $mailsubject .= $topic->subject;
                 }
-
-                $msglink = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $target->getPermaUrl(null, false);
 
                 $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
                 $mail->setSender([$this->config->email, $mailnamesender]);
@@ -2999,7 +3017,10 @@ class TopicController extends KunenaController
                 }
 
                 KunenaEmail::send($mail, $receivers);
+                $mailSent = true;
+            }
 
+            if ($handled || $mailSent) {
                 if ($this->config->logModeration) {
                     KunenaLog::log(
                         KunenaLog::TYPE_REPORT,

@@ -201,6 +201,16 @@
             name="mail"
             label="COM_KUNENA_A_MAIL_SETTINGS">
             <field
+                name="reportMail"
+                type="radio"
+                default="0"
+                layout="joomla.form.field.radio.switcher"
+                label="COM_KUNENA_A_REPORT_MAIL"
+                description="COM_KUNENA_A_REPORT_MAIL_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+            <field
                 name="mentionEmail"
                 type="radio"
                 default="0"

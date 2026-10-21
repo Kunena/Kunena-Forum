@@ -115,14 +115,23 @@ $strings = [
     var el = function (role) { return root.querySelector('[data-role="' + role + '"]'); };
     var state = {filter: 'all', start: 0, selected: {}, reply: 0};
 
+    // The text is also put in attributes (the link of a message, data-url): the quotes are escaped too, or a quote in the text ends the
+    // attribute and what follows is an attribute of the attacker.
     function esc(text) {
-        var div = document.createElement('div');
-        div.textContent = text == null ? '' : String(text);
-        return div.innerHTML;
+        return String(text == null ? '' : text)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
     }
 
     function html(text) {
-        return esc(text).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" rel="nofollow noopener" target="_blank">$1</a>').replace(/\n/g, '<br>');
+        // The attribute is written in two parts: the SEF plugin of Joomla rewrites every href="..." in the page, also in a string of this
+        // script, and the address would get the path of the site in front of it.
+        return esc(text).replace(/(https?:\/\/[^\s<]+)/g, function (url) {
+            return '<a rel="nofollow noopener" target="_blank" href' + '="' + url + '">' + url + '</a>';
+        }).replace(/\n/g, '<br>');
     }
 
     function call(task, data, post) {

@@ -1331,6 +1331,13 @@ class ToolsController extends FormController
      */
     public function modifysocials()
     {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         if (!PluginHelper::isEnabled('system', 'modifysocials')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_PLUGIN_MODIFYSOCIALS_PLUGIN_NOT_ENABLED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
@@ -1357,7 +1364,9 @@ class ToolsController extends FormController
         )->getArgument('result', []);
 
        $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_HAS_BEEN_CHANGED'), 'message');
-       $this->app->enqueueMessage($result[0], 'message');
+       if (!empty($result[0])) {
+            $this->app->enqueueMessage($result[0], 'message');
+        }
        $this->app->redirect(KunenaRoute::_($this->baseurl, false));
 
     }
@@ -1373,6 +1382,13 @@ class ToolsController extends FormController
      */
     public function deletesocials()
     {
+        if (!Session::checkToken('request')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->app->redirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         if (!PluginHelper::isEnabled('system', 'modifysocials')) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_PLUGIN_MODIFYSOCIALS_PLUGIN_NOT_ENABLED'), 'message');
             $this->app->redirect(KunenaRoute::_($this->baseurl, false));
@@ -1396,7 +1412,9 @@ class ToolsController extends FormController
         )->getArgument('result', []);
 
         $this->app->enqueueMessage(Text::_('COM_KUNENA_TOOLS_SOCIALS_SELECTED_HAS_BEEN_DELETED'), 'message');
-        $this->app->enqueueMessage($result[0], 'message');
+        if (!empty($result[0])) {
+            $this->app->enqueueMessage($result[0], 'message');
+        }
         $this->app->redirect(KunenaRoute::_($this->baseurl, false));
     }
 

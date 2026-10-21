@@ -457,6 +457,11 @@ class InboxHelper
         }
 
         if ($row->type !== 'message') {
+            // A notification belongs to the user who gets it: the user who caused it (the sender) has no business in it.
+            if ($row->user_id != $userid) {
+                throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
+            }
+
             self::markRead($userid, [$id]);
 
             return self::withFiles([self::toArray(self::getRow($id), $userid, false)]);

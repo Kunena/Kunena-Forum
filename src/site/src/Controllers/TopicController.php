@@ -1311,7 +1311,7 @@ class TopicController extends KunenaController
      * 
      * @since   Kunena 6.4    
      */
-    public function removeOrphanedAttachments()
+    protected function removeOrphanedAttachments()
     {
         $params['file'] = '1';
         $params['image'] = '1';

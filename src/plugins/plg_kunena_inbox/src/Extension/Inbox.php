@@ -242,6 +242,11 @@ class Inbox extends CMSPlugin implements SubscriberInterface, DatabaseAwareInter
                     throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR'));
                 }
 
+                // A user who is banned from the forum can not write to others, like he can not post.
+                if ($me->isBanned()) {
+                    throw new \RuntimeException(Text::_('PLG_KUNENA_INBOX_ERROR_BANNED'), 403);
+                }
+
                 $replyTo  = $input->getInt('reply', 0);
                 $username = trim($input->getString('to', ''));
                 $toId     = 0;

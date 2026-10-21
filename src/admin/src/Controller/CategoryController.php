@@ -105,6 +105,19 @@ class CategoryController extends KunenaController
      * @since   Kunena 2.0.0-BETA2
      *@throws  Exception
      */
+    /**
+     * Save the category of the form and give it back (false when nothing was saved), for the form on the site.
+     *
+     * @return  KunenaCategory|false
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function saveCategory()
+    {
+        return $this->internalSave();
+    }
+
     protected function internalSave()
     {
         KunenaFactory::loadLanguage('com_kunena', 'admin');
@@ -173,7 +186,8 @@ class CategoryController extends KunenaController
             $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($category->name)), 'error');
         } elseif (!$category->exists() && !$me->isAdmin($parent)) {
             // Category doesn't exist and user is not admin in parent, parentid=0 needs global admin rights
-            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape($parent->name)), 'error');
+            // The top level has no name.
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape((string) ($parent->name ?: Text::_('COM_KUNENA_TOPLEVEL')))), 'error');
         } elseif (!$category->isCheckedOut($me->userid)) {
             // Nobody can change id or statistics
             $ignore = ['option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliasesAll', 'submit'];
@@ -226,7 +240,7 @@ class CategoryController extends KunenaController
                 }
 
                 // The own icon image of the category: a new image, or the removal of the image.
-                if ($success && $category->exists() && $this->app->isClient('administrator')) {
+                if ($success && $category->exists()) {
                     try {
                         if ($this->input->post->getInt('icon_image_remove', 0)) {
                             KunenaCategoryIcon::delete((int) $category->id);

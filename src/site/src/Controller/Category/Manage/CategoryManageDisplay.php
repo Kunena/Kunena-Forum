@@ -114,14 +114,31 @@ class CategoryManageDisplay extends KunenaControllerDisplay
 
         parent::before();
 
-        $catid = $this->input->getInt('catid');
+        $catid  = $this->input->getInt('catid');
+        $create = $this->input->getWord('layout') === 'create' || !$catid;
 
         KunenaFactory::loadLanguage('com_kunena.models', 'admin');
         KunenaFactory::loadLanguage('com_kunena.views', 'admin');
+        KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
         KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-        $this->category = KunenaCategoryHelper::get($catid);
-        $this->category->tryAuthorise();
+        if ($create) {
+            // A new category (below the category of the parentid, 0 is a new section).
+            // The same start values as a new category of the backend: not published, public.
+            $this->category               = new KunenaCategory();
+            $this->category->parentid     = $this->input->getInt('parentid', 0);
+            $this->category->published    = 0;
+            $this->category->ordering     = 9999;
+            $this->category->pubRecurse   = 1;
+            $this->category->adminRecurse = 1;
+            $this->category->accesstype   = 'joomla.level';
+            $this->category->access       = 1;
+            $this->category->pubAccess    = 1;
+            $this->category->adminAccess  = 8;
+        } else {
+            $this->category = KunenaCategoryHelper::get($catid);
+            $this->category->tryAuthorise();
+        }
 
         $category = $this->category;
 
@@ -177,7 +194,8 @@ class CategoryManageDisplay extends KunenaControllerDisplay
         $yesno [] = HTMLHelper::_('select.option', '0', Text::_('COM_KUNENA_A_NO'));
         $yesno [] = HTMLHelper::_('select.option', '1', Text::_('COM_KUNENA_A_YES'));
 
-        $catParams = ['sections' => 1, 'catid' => 0];
+        // The unpublished categories are possible parents too (a new section is not published yet).
+        $catParams = ['sections' => 1, 'catid' => 0, 'unpublished' => 1];
 
         $lists                 = [];
         $lists ['accesstypes'] = KunenaAccess::getInstance()->getAccessTypesList($category);

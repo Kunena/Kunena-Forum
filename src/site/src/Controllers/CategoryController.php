@@ -22,6 +22,7 @@ use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Administrator\Controller\CategoriesController;
 use Kunena\Forum\Administrator\Controller\CategoryController as AdminCategoryController;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Category\User\KunenaCategoryUserHelper;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
@@ -65,9 +66,92 @@ class CategoryController extends CategoriesController
         $catid = $this->app->getInput()->post->getInt('catid', 0);
 
         $controller = new AdminCategoryController();
-        $controller->save();
+        $category   = $controller->saveCategory();
+
+        if ($category instanceof KunenaCategory && $category->exists()) {
+            // A new category: the page of the category.
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . (int) $category->id, false));
+
+            return;
+        }
+
+        if (!$catid) {
+            // A new category which was not saved: back to the form.
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=create&parentid=' . $this->app->getInput()->post->getInt('parentid', 0), false));
+
+            return;
+        }
 
         $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . $catid, false));
+    }
+
+    /**
+     * Delete a category with all its topics and posts (admins of the category; a category with subcategories is kept).
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public function delete()
+    {
+        KunenaFactory::loadLanguage('com_kunena', 'admin');
+        KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+
+        $list = KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list', false);
+
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect($list);
+
+            return;
+        }
+
+        $category = KunenaCategoryHelper::get($this->app->getInput()->post->getInt('catid', 0));
+
+        if (!$category->exists()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirect($list);
+
+            return;
+        }
+
+        if (!$category->isAuthorised('admin')) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_NO_ADMIN', htmlspecialchars($category->name, ENT_QUOTES, 'UTF-8')), 'error');
+            $this->setRedirect($list);
+
+            return;
+        }
+
+        if ($category->isCheckedOut($this->me->userid)) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', htmlspecialchars($category->name, ENT_QUOTES, 'UTF-8')), 'notice');
+            $this->setRedirect($list);
+
+            return;
+        }
+
+        // The subcategories are removed first, one by one: a delete on the front would take too much with it.
+        if (KunenaCategoryHelper::getChildren($category->id, 0, ['unpublished' => 1, 'action' => 'none'])) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_CATEGORY_DELETE_HAS_CHILDREN'), 'error');
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . (int) $category->id . '&layout=manage', false));
+
+            return;
+        }
+
+        $name   = $category->name;
+        $parent = (int) $category->parentid;
+
+        try {
+            $category->delete();
+        } catch (Exception $e) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETE_FAILED', htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8')), 'error');
+            $this->setRedirect($list);
+
+            return;
+        }
+
+        $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_A_CATEGORY_DELETED', htmlspecialchars($name, ENT_QUOTES, 'UTF-8')), 'success');
+        $this->setRedirect($parent ? KunenaRoute::_('index.php?option=com_kunena&view=category&catid=' . $parent, false) : $list);
     }
 
     /**

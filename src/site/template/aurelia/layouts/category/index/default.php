@@ -48,6 +48,26 @@ if ($this->templateParams->get('displayModule')) {
     echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
 }
 
+$isAdmin  = $this->me->isAdmin();
+$activeId = (int) (Factory::getApplication()->getMenu()->getActive()->id ?? 0);
+
+// The menu item of the sections: a menu item of the index itself keeps the layout of the list.
+$firstSection = !empty($this->sections) ? reset($this->sections) : null;
+$newItemid    = $firstSection ? (int) KunenaRoute::getCategoryItemid($firstSection) : $activeId;
+
+if ($isAdmin) : ?>
+    <style>
+        /* The button for a new category shows when the row is hovered (or has the focus); a touch screen has no hover: always. */
+        .kcat-new-top { min-height: 2rem; }
+        .kcat-new-top .btn { opacity: 0; transition: opacity .15s; }
+        .kcat-new-top:hover .btn, .kcat-new-top:focus-within .btn { opacity: 1; }
+        @media (hover: none) { .kcat-new-top .btn { opacity: 1; } }
+    </style>
+    <div class="mb-2 text-end kcat-new-top">
+        <a class="btn btn-outline-primary btn-sm <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SECTION')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SECTION')); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=create&parentid=0&Itemid=' . $newItemid); ?>"><?php echo KunenaIcons::plus(); ?></a>
+    </div>
+<?php endif;
+
 foreach ($this->sections as $section) :
     $Itemid      = KunenaRoute::getCategoryItemid($section);
 
@@ -58,6 +78,7 @@ foreach ($this->sections as $section) :
         <h2 class="btn-toolbar float-end">
             <?php if (\count($this->sections) > 0) : ?>
                 <?php if ($this->me->isAdmin()) : ?>
+                    <a class="btn btn-outline-primary btn-sm <?php echo $this->ktemplate->tooltips(); ?>" data-bs-toggle="tooltip" title="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SUB')); ?>" aria-label="<?php echo $this->escape(Text::_('COM_KUNENA_CATEGORY_NEW_SUB')); ?>" href="<?php echo Route::_('index.php?option=com_kunena&view=category&layout=create&parentid=' . (int) $section->id . '&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::plus(); ?></a>
                     <a class="btn btn-outline-primary btn-sm" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $section->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
                 <?php endif; ?>
 
@@ -119,6 +140,9 @@ foreach ($this->sections as $section) :
                                 <div>
                                     <h3>
                                         <?php echo $this->getCategoryLink($category, $category->name, null, $this->ktemplate->tooltips(), true, false); ?>
+                                        <?php if ($isAdmin) : ?>
+                                            <a class="btn btn-link btn-sm p-0" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $category->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
+                                        <?php endif; ?>
                                         <small class="nowrap">
                                             <span id="kcatcount"><?php echo KunenaCategory::getInstance()->totalCount($category->getTopics()); ?></span>
                                             <span>
@@ -168,6 +192,10 @@ foreach ($this->sections as $section) :
 
                                                     if (($new = $subcategory->getNewCount()) > 0) {
                                                         echo '<sup class="knewchar">(' . $new . ' ' . Text::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>';
+                                                    }
+
+                                                    if ($isAdmin) {
+                                                        echo ' <a class="btn btn-link btn-sm p-0" href="' . Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $subcategory->id . '&layout=manage&Itemid=' . $Itemid) . '">' . KunenaIcons::pencil() . '</a>';
                                                     }
                                                     ?>
                                                 </li>

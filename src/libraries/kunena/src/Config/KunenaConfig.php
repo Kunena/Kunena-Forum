@@ -185,6 +185,7 @@ use Joomla\Database\DatabaseInterface;
  * @property string $sendMailUserBanned                    Send a mail to the user when he is banned and unbanned
  * @property string $sessionTimeOut                        Session Lifetime
  * @property string $showAnnouncement                      Show Announcement
+ * @property int    $bannerAnnouncement                 Id of the announcement in the banner (0 is the newest), chosen in the list of the announcements
  * @property string $showBannedReason                      Show Banned Reason
  * @property string $showChildCatIcon                      Show Sub-Category Image
  * @property string $showEmail                             Show E-mail
@@ -626,6 +627,13 @@ class KunenaConfig
             }
 
             $params->set($key, $this->config[$key]);
+        }
+
+        // An option which was never saved yet (a new one) is not in the stored params.
+        foreach ($this->config as $key => $value) {
+            if (!$params->exists($key)) {
+                $params->set($key, $value);
+            }
         }
 
         /** @var DatabaseDriver $db */

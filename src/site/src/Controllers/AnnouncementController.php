@@ -185,6 +185,60 @@ class AnnouncementController extends KunenaController
     }
 
     /**
+     * The announcement of the banner: an administrator chooses it in the list (the chosen one again goes back to the newest).
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     *
+     * @throws  Exception
+     */
+    public function banner()
+    {
+        if (!Session::checkToken('post')) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        if (!$this->me->isAdmin()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_NO_ACCESS'), 'error');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $cid          = ArrayHelper::toInteger($this->input->get('cid', [], 'array'), []);
+        $announcement = KunenaAnnouncementHelper::get(array_pop($cid));
+
+        if (!$announcement->exists()) {
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $same = (int) $this->config->bannerAnnouncement === (int) $announcement->id;
+
+        // Only an announcement which is published (and in its dates) can be the one of the banner.
+        if (!$same && !KunenaAnnouncementHelper::isVisible((int) $announcement->id)) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_ANN_BANNER_NOT_VISIBLE', $this->escape($announcement->title)), 'warning');
+            $this->setRedirectBack();
+
+            return;
+        }
+
+        $this->config->bannerAnnouncement = $same ? 0 : (int) $announcement->id;
+        $this->config->save();
+
+        $this->app->enqueueMessage(
+            $same ? Text::_('COM_KUNENA_ANN_BANNER_NEWEST') : Text::sprintf('COM_KUNENA_ANN_BANNER_SET', $this->escape($announcement->title)),
+            'success'
+        );
+        $this->setRedirectBack();
+    }
+
+    /**
      * @return  void
      *
      * @since   Kunena 6.0

@@ -17,6 +17,9 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Kunena\Forum\Libraries\Forum\Announcement\KunenaAnnouncementHelper;
+use Kunena\Forum\Libraries\Icons\KunenaIcons;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 $row          = $this->row;
 $announcement = $this->announcement;
@@ -41,6 +44,17 @@ $announcement = $this->announcement;
 
     <?php if ($this->checkbox) :
     ?>
+        <td class="center">
+            <?php $isBanner = (int) KunenaAnnouncementHelper::getBanner()?->id === (int) $announcement->id; ?>
+            <?php if (KunenaUserHelper::getMyself()->isAdmin()) : ?>
+                <a href="#" onclick="Joomla.listItemTask('cb<?php echo (int) $row; ?>', 'banner'); return false;"
+                    title="<?php echo Text::_($isBanner ? 'COM_KUNENA_ANN_BANNER_NEWEST_ACTION' : 'COM_KUNENA_ANN_BANNER_ACTION'); ?>">
+                    <?php echo $isBanner ? '<span class="text-warning">' . KunenaIcons::star() . '</span>' : KunenaIcons::starOpen(); ?>
+                </a>
+            <?php elseif ($isBanner) : ?>
+                <span class="text-warning"><?php echo KunenaIcons::star(); ?></span>
+            <?php endif; ?>
+        </td>
         <td class="center">
             <?php if ($this->canPublish()) {
                 echo HTMLHelper::_('kunenagrid.published', $row, $announcement->published, '', true);

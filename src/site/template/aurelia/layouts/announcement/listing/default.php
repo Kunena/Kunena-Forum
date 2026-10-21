@@ -63,6 +63,9 @@ HTMLHelper::_('behavior.core');
                 <?php if ($options) :
                     ?>
                     <th class="col-md-1 center">
+                        <?php echo Text::_('COM_KUNENA_ANN_BANNER'); ?>
+                    </th>
+                    <th class="col-md-1 center">
                         <?php echo Text::_('COM_KUNENA_ANN_PUBLISH'); ?>
                     </th>
                     <th class="col-md-1 center">
@@ -96,7 +99,7 @@ HTMLHelper::_('behavior.core');
                 ?>
                 <tfoot>
                 <tr>
-                    <td colspan="<?php echo $options ? 8 : 3; ?>">
+                    <td colspan="<?php echo $options ? 9 : 3; ?>">
                         <div class="float-end">
                             <?php echo $this->subLayout('Widget/Pagination/List')->set('pagination', $this->pagination); ?>
                         </div>

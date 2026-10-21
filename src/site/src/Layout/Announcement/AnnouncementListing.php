@@ -62,6 +62,10 @@ class AnnouncementListing extends KunenaLayout
             $options[] = HTMLHelper::_('select.option', 'publish', Text::_('COM_KUNENA_PUBLISH'));
             $options[] = HTMLHelper::_('select.option', 'edit', Text::_('COM_KUNENA_EDIT'));
             $options[] = HTMLHelper::_('select.option', 'delete', Text::_('COM_KUNENA_DELETE'));
+
+            if (KunenaUserHelper::getMyself()->isAdmin()) {
+                $options[] = HTMLHelper::_('select.option', 'banner', Text::_('COM_KUNENA_ANN_BANNER_ACTION'));
+            }
         }
 
         return $options;

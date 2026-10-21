@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 
@@ -112,6 +113,53 @@ abstract class KunenaAnnouncementHelper
         }
 
         return $uri;
+    }
+
+    /**
+     * The announcement of the banner: the one the admin chose in the list, when it can be seen, else the newest.
+     *
+     * @return  KunenaAnnouncement|null
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public static function getBanner(): ?KunenaAnnouncement
+    {
+        $chosen = (int) KunenaConfig::getInstance()->bannerAnnouncement;
+        $items  = self::getAnnouncements(0, $chosen ? 100 : 1);
+
+        if (!$items) {
+            return null;
+        }
+
+        foreach ($chosen ? $items : [] as $item) {
+            if ((int) $item->id === $chosen) {
+                return $item;
+            }
+        }
+
+        return reset($items);
+    }
+
+    /**
+     * Can the announcement be seen now (it is published and inside its dates)?
+     *
+     * @param   int  $id  The id of the announcement.
+     *
+     * @return  boolean
+     *
+     * @throws  Exception
+     * @since   Kunena 7.2
+     */
+    public static function isVisible(int $id): bool
+    {
+        foreach (self::getAnnouncements(0, 100) as $item) {
+            if ((int) $item->id === $id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

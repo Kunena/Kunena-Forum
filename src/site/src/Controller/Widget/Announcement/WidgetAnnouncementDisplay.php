@@ -66,8 +66,7 @@ class WidgetAnnouncementDisplay extends KunenaControllerDisplay
             return false;
         }
 
-        $items              = KunenaAnnouncementHelper::getAnnouncements();
-        $this->announcement = array_pop($items);
+        $this->announcement = KunenaAnnouncementHelper::getBanner();
 
         if (!$this->announcement || !$this->announcement->isAuthorised('read')) {
             return false;

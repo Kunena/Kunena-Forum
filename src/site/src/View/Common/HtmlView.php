@@ -143,8 +143,7 @@ class HtmlView extends KunenaView
         }
 
         if ($this->config->showAnnouncement > 0) {
-            $items        = KunenaAnnouncementHelper::getAnnouncements();
-            $announcement = array_pop($items);
+            $announcement = KunenaAnnouncementHelper::getBanner();
 
             if (!$announcement) {
                 echo ' ';

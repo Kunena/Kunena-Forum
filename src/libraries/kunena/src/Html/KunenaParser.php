@@ -62,6 +62,15 @@ abstract class KunenaParser
      */
     public static function getEmoticons($grayscale = false, $emoticonbar = false, $addPath = true): array
     {
+        // The editors of a page (and the options of the scripts) ask for the same list: it is read once.
+        static $cache = [];
+
+        $cacheKey = (int) (bool) $grayscale . '-' . (int) (bool) $emoticonbar . '-' . (int) (bool) $addPath;
+
+        if (isset($cache[$cacheKey])) {
+            return $cache[$cacheKey];
+        }
+
         $db = Factory::getContainer()->get('DatabaseDriver');
 
         $query = $db->createQuery()
@@ -117,7 +126,7 @@ abstract class KunenaParser
             reset($smileyArray);
         }
 
-        return $smileyArray;
+        return $cache[$cacheKey] = $smileyArray;
     }
 
     /**

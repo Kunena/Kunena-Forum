@@ -36,6 +36,14 @@ abstract class KunenaAnnouncementHelper
     public static $_instances = null;
 
     /**
+     * The rows of the last query, by the filter: the start and the rows.
+     *
+     * @var     array
+     * @since   Kunena 7.2
+     */
+    protected static $rows = [];
+
+    /**
      * Returns the global Announcement object, only creating it if it doesn't already exist.
      *
      * @param   int   $identifier  Announcement to load - Can be only an integer.
@@ -138,15 +146,25 @@ abstract class KunenaAnnouncementHelper
                 ->order($db->quoteName('id') . ' DESC');
         }
 
-        $query->setLimit($limit, $start);
-        $db->setQuery($query);
+        $key = (int) $filter;
 
-        $results = [];
+        // The rows of an earlier query of this request can answer a smaller one (the list of the announcements and the one
+        // of the banner), so the table is not asked twice.
+        if (isset(self::$rows[$key]) && $start >= self::$rows[$key]['start'] && $start + $limit <= self::$rows[$key]['start'] + \count(self::$rows[$key]['rows'])) {
+            $results = \array_slice(self::$rows[$key]['rows'], $start - self::$rows[$key]['start'], $limit);
+        } else {
+            $query->setLimit($limit, $start);
+            $db->setQuery($query);
 
-        try {
-            $results = (array) $db->loadAssocList();
-        } catch (ExecutionFailureException $e) {
-            KunenaError::displayDatabaseError($e);
+            $results = [];
+
+            try {
+                $results = (array) $db->loadAssocList();
+            } catch (ExecutionFailureException $e) {
+                KunenaError::displayDatabaseError($e);
+            }
+
+            self::$rows[$key] = ['start' => $start, 'rows' => $results];
         }
 
         self::$_instances = [];

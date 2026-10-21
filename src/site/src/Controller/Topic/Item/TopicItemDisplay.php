@@ -398,8 +398,12 @@ class TopicItemDisplay extends KunenaControllerDisplay
      */
     protected function prepareMessages($mesid)
     {
+        // The first message of the topic, when it is shown on top of the page: it is loaded with the messages of the page.
+        $first = $this->getStickyFirst();
+        $batch = $first ? $this->messages + [(int) $first->id => $first] : $this->messages;
+
         // Get thank yous for all messages in the page
-        $thankyous = KunenaMessageThankyouHelper::getByMessage($this->messages);
+        $thankyous = KunenaMessageThankyouHelper::getByMessage($batch);
 
         // First collect ids and users.
         $threaded       = ($this->layout == 'indented' || $this->layout == 'threaded');
@@ -421,6 +425,11 @@ class TopicItemDisplay extends KunenaControllerDisplay
 
             $userlist[(int) $message->userid]      = (int) $message->userid;
             $userlist[(int) $message->modified_by] = (int) $message->modified_by;
+
+            // The users who are mentioned are loaded with the others, not one by one while the message is shown.
+            foreach ($message::getMentionedUserIds((string) $message->message) as $mentionedId) {
+                $userlist[$mentionedId] = $mentionedId;
+            }
 
             $thankyou_list     = $thankyous[$message->id]->getList();
             $message->thankyou = [];
@@ -448,47 +457,42 @@ class TopicItemDisplay extends KunenaControllerDisplay
             }
         }
 
+        if ($first) {
+            $firstId           = (int) $first->id;
+            $first->replynum   = 1;
+            $first->thankyou   = isset($thankyous[$firstId]) ? (array) $thankyous[$firstId]->getList() : [];
+            $userlist[(int) $first->userid]      = (int) $first->userid;
+            $userlist[(int) $first->modified_by] = (int) $first->modified_by;
+        }
+
         // Prefetch all users/avatars to avoid user by user queries during template iterations
         KunenaUserHelper::loadUsers($userlist);
 
         // Prefetch attachments.
-        KunenaAttachmentHelper::getByMessage($this->messages);
+        KunenaAttachmentHelper::getByMessage($batch);
 
-        $this->prepareStickyFirst();
+        $this->stickyFirst = $first;
     }
 
     /**
-     * Prepare the first message of the topic to be shown on top of the pages which do not have it themselves.
+     * The first message of the topic, to be shown on top of the pages which do not have it themselves.
      *
-     * @return  void
+     * @return  KunenaMessage|null
      *
      * @throws  Exception
      * @since   Kunena 7.2
      */
-    protected function prepareStickyFirst(): void
+    protected function getStickyFirst(): ?KunenaMessage
     {
-        $this->stickyFirst = null;
-        $firstId           = (int) $this->topic->first_post_id;
+        $firstId = (int) $this->topic->first_post_id;
 
         if (!$firstId || !KunenaFactory::getTemplate()->params->get('stickyFirstPost', 0) || isset($this->messages[$firstId])) {
-            return;
+            return null;
         }
 
         $first = KunenaMessageHelper::get($firstId);
 
-        if (!$first->exists() || !$first->isAuthorised('read')) {
-            return;
-        }
-
-        // What a message of the page gets in prepareMessages().
-        $first->replynum = 1;
-        $thankyous       = KunenaMessageThankyouHelper::getByMessage([$firstId => $first]);
-        $first->thankyou = isset($thankyous[$firstId]) ? (array) $thankyous[$firstId]->getList() : [];
-
-        KunenaUserHelper::loadUsers([(int) $first->userid, (int) $first->modified_by]);
-        KunenaAttachmentHelper::getByMessage([$firstId => $first]);
-
-        $this->stickyFirst = $first;
+        return $first->exists() && $first->isAuthorised('read') ? $first : null;
     }
 
     /**

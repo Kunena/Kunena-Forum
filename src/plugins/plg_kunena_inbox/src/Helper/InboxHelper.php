@@ -34,6 +34,14 @@ use Kunena\Forum\Libraries\User\KunenaUserIgnore;
 class InboxHelper
 {
     /**
+     * The number of unread entries, by user: it is asked for several times on a page.
+     *
+     * @var     int[]
+     * @since   Kunena 7.2
+     */
+    protected static array $unread = [];
+
+    /**
      * @return  DatabaseInterface
      *
      * @since   Kunena 7.2
@@ -73,16 +81,20 @@ class InboxHelper
             return 0;
         }
 
-        $db    = self::db();
-        $query = $db->createQuery()
-            ->select('COUNT(*)')
-            ->from($db->quoteName('#__kunena_inbox'))
-            ->where($db->quoteName('user_id') . ' = :user')
-            ->where($db->quoteName('read_time') . ' = 0')
-            ->where($db->quoteName('deleted_recipient') . ' = 0')
-            ->bind(':user', $userid, ParameterType::INTEGER);
+        if (!isset(self::$unread[$userid])) {
+            $db    = self::db();
+            $query = $db->createQuery()
+                ->select('COUNT(*)')
+                ->from($db->quoteName('#__kunena_inbox'))
+                ->where($db->quoteName('user_id') . ' = :user')
+                ->where($db->quoteName('read_time') . ' = 0')
+                ->where($db->quoteName('deleted_recipient') . ' = 0')
+                ->bind(':user', $userid, ParameterType::INTEGER);
 
-        return (int) $db->setQuery($query)->loadResult();
+            self::$unread[$userid] = (int) $db->setQuery($query)->loadResult();
+        }
+
+        return self::$unread[$userid];
     }
 
     /**
@@ -100,6 +112,8 @@ class InboxHelper
      */
     public static function addNotification(KunenaMessage $message, string $type, array $userids, Registry $params, int $senderId = 0): void
     {
+        self::$unread = [];
+
         $db       = self::db();
         $now      = time();
         $subject  = (string) $message->getTopic()->subject;
@@ -182,6 +196,8 @@ class InboxHelper
      */
     public static function send(int $from, int $to, string $subject, string $body, int $replyTo = 0): int
     {
+        self::$unread = [];
+
         $db           = self::db();
         $conversation = 0;
         $subject      = trim(mb_substr($subject, 0, 150));
@@ -480,6 +496,8 @@ class InboxHelper
      */
     public static function markRead(int $userid, array $ids = []): void
     {
+        self::$unread = [];
+
         $db    = self::db();
         $now   = time();
         $query = $db->createQuery()
@@ -515,6 +533,8 @@ class InboxHelper
         if (!$ids) {
             return;
         }
+
+        self::$unread = [];
 
         $db = self::db();
 

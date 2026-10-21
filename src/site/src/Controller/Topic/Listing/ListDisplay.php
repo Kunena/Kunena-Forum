@@ -195,7 +195,7 @@ abstract class ListDisplay extends KunenaControllerDisplay
             KunenaUserHelper::loadUsers($userIds);
         }
 
-        $topicIds = array_keys((array) $this->topics);
+        $topicIds = array_values(array_map(static fn ($topic) => (int) $topic->id, (array) $this->topics));
         KunenaTopicHelper::getUserTopics($topicIds);
         KunenaTopicTags::preload($topicIds);
 

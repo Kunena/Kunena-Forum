@@ -656,6 +656,23 @@ abstract class KunenaUserHelper
     }
 
     /**
+     * Keep the Joomla parameters of a user which are loaded with the user, so they are not read again.
+     *
+     * @param   int          $id      The user.
+     * @param   string|null  $params  The parameters (json).
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public static function cacheJoomlaParams(int $id, ?string $params): void
+    {
+        if ($id > 0 && !\array_key_exists($id, self::$joomlaParams)) {
+            self::$joomlaParams[$id] = $params;
+        }
+    }
+
+    /**
      * Save a value in the Joomla parameters of a user (null removes it).
      *
      * @param   int     $id     The user.

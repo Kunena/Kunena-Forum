@@ -58,17 +58,18 @@ class WidgetAnnouncementDisplay extends KunenaControllerDisplay
             return false;
         }
 
+        $view   = $this->input->getWord('view', 'default');
+        $layout = $this->input->getWord('layout', 'default');
+
+        // The pages which do not show the announcement need no query for it.
+        if ($view == 'topic' && $layout != 'default' || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default') {
+            return false;
+        }
+
         $items              = KunenaAnnouncementHelper::getAnnouncements();
         $this->announcement = array_pop($items);
 
         if (!$this->announcement || !$this->announcement->isAuthorised('read')) {
-            return false;
-        }
-
-        $view   = $this->input->getWord('view', 'default');
-        $layout = $this->input->getWord('layout', 'default');
-
-        if ($view == 'topic' && $layout != 'default' || $view == 'user' || $view == 'search' || $view == 'announcement' && $layout == 'default') {
             return false;
         }
 

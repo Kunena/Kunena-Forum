@@ -353,7 +353,7 @@ class KunenaUsers extends KunenaTable
         // Load the user data.
         $db    = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->createQuery();
-        $query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*')
+        $query->select('u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, u.params AS joomlaParams, ku.*')
             ->from($db->quoteName('#__users', 'u'))
             ->leftJoin($db->quoteName($this->_tbl, 'ku') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('ku.userid'))
             ->where($db->quoteName('u.id') . ' = ' . $db->quote($this->$k));
@@ -373,6 +373,10 @@ class KunenaUsers extends KunenaTable
 
             return false;
         }
+
+        // The Joomla parameters are kept apart, they are no part of the Kunena user (and are not asked for again).
+        KunenaUserHelper::cacheJoomlaParams((int) $data['userid'], $data['joomlaParams'] ?? null);
+        unset($data['joomlaParams']);
 
         if ($data['posts'] !== null) {
             $this->_exists = true;

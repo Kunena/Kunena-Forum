@@ -33,6 +33,18 @@ class KunenaKarma
 {
     /**
      * @var     null
+     * @since   Kunena 7.2
+     */
+    public $id = null;
+
+    /**
+     * @var     null
+     * @since   Kunena 7.2
+     */
+    public $typeAlias = null;
+
+    /**
+     * @var     null
      * @since   Kunena 6.2
      */
     public $userid = null;

@@ -146,7 +146,7 @@ class CategoryController extends KunenaController
             return false;
         }
 
-        if ($post['task'] === 'category.save2copycategory') {
+        if (($post['task'] ?? '') === 'category.save2copycategory') {
             $post['name'] = $this->app->getUserState('com_kunena.category_title');
             $post['alias'] = $this->app->getUserState('com_kunena.category_alias');
             $post['catid'] = $this->app->getUserState('com_kunena.category_catid');
@@ -157,8 +157,8 @@ class CategoryController extends KunenaController
         $post['params'] += $this->input->get("params", [], 'array');
         $success        = false;
 
-        $category = KunenaCategoryHelper::get(\intval($post['catid']));
-        $parent   = KunenaCategoryHelper::get(\intval($post['parentid']));
+        $category = KunenaCategoryHelper::get(\intval($post['catid'] ?? 0));
+        $parent   = KunenaCategoryHelper::get(\intval($post['parentid'] ?? 0));
 
         unset($post['params-joomla-level']);
         unset($post['params-joomla-group']);

@@ -212,7 +212,7 @@ if ($this->config->enableForumJump && !$this->embedded && $this->topics) {
                     </a>
                 </th>
                 <?php if (!empty($this->actions) || !empty($this->moreUri)) : ?>
-                    <th scope="col" class="d-none d-md-table-cell">
+                    <th scope="col" colspan="5" class="d-none d-md-table-cell">
                         <div class="form-group">
                             <div class="input-group" role="group">
                                 <?php if (!empty($this->topics) && !empty($this->moreUri)) {

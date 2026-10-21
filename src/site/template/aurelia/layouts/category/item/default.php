@@ -116,7 +116,7 @@ $this->addStyleSheet('rating.css');
                                     <?php echo KunenaIcons::arrowup(); ?>
                                 </a>
                             </th>
-                            <th scope="col" class="d-none d-md-table-cell">
+                            <th scope="col" colspan="5" class="d-none d-md-table-cell">
                                 <div class="form-group">
                                     <div class="input-group" role="group">
                                         <?php if (!empty($this->moreUri)) {

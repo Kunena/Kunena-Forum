@@ -55,7 +55,7 @@ if ($this->topic->getCategory()->published == 0) {
 
 if (!empty($this->spacing)) : ?>
     <tr class="kcontenttablespacer">
-        <th scope="row">&nbsp;</th>
+        <td colspan="6" class="p-0" style="height: .75rem"></td>
     </tr>
 <?php endif; ?>
 

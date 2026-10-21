@@ -49,7 +49,7 @@ if ($this->topic->moved_id > 0) {
 
 if (!empty($this->spacing)) : ?>
     <tr class="kcontenttablespacer">
-        <th scope="row">&nbsp;</th>
+        <td colspan="6" class="p-0" style="height: .75rem"></td>
     </tr>
 <?php endif; ?>
 
@@ -78,7 +78,7 @@ if (!empty($this->spacing)) : ?>
             }
 
             echo $this->subLayout('Widget/Rating')->set('config', $config)->set('category', $category)->set('topic', $this->topic)->setLayout('default');
-            echo \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::render((int) $topic->id, 'ms-1'); ?>
+            echo ' ' . \Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags::render((int) $topic->id, 'd-inline-block mt-1'); ?>
             <?php if (\Kunena\Forum\Libraries\User\KunenaUserFollow::isFollowing(\Kunena\Forum\Libraries\User\KunenaUserHelper::getMyself()->userid, (int) $topic->first_post_userid)) : ?>
                 <span class="kfollowed" <?php echo KunenaTemplate::getInstance()->tooltips(true); ?> data-bs-toggle="tooltip" title="<?php echo Text::sprintf('COM_KUNENA_FOLLOW_MARKER', $this->escape($topic->getAuthor()->getName())); ?>"><?php echo KunenaIcons::bookmark(); ?></span>
             <?php endif; ?>

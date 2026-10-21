@@ -44,6 +44,9 @@ if ($this->templateParams->get('ajaxTopicList', 1)) {
     $this->addScript('assets/js/categorylist.js');
 }
 
+// A link like forum#123 goes to the category.
+$this->addScript('assets/js/categoryanchor.js');
+
 if ($this->templateParams->get('displayModule')) {
     echo $this->subLayout('Widget/Module')->set('position', 'kunena_index_top');
 }
@@ -55,7 +58,8 @@ $activeId = (int) (Factory::getApplication()->getMenu()->getActive()->id ?? 0);
 $firstSection = !empty($this->sections) ? reset($this->sections) : null;
 $newItemid    = $firstSection ? (int) KunenaRoute::getCategoryItemid($firstSection) : $activeId;
 
-if ($isAdmin) : ?>
+// The button for a new section belongs to the index of the forum, not to the page of a category.
+if ($isAdmin && !Factory::getApplication()->getInput()->getInt('catid', 0)) : ?>
     <style>
         /* The button for a new category shows when the row is hovered (or has the focus); a touch screen has no hover: always. */
         .kcat-new-top { min-height: 2rem; }
@@ -86,7 +90,7 @@ foreach ($this->sections as $section) :
             <?php endif; ?>
         </h2>
 
-        <h1 class="card-header">
+        <h1 class="card-header" id="category-header<?php echo (int) $section->id; ?>">
             <?php echo $this->getCategoryLink($section, $this->escape($section->name), null, $this->ktemplate->tooltips(), true, false); ?>
             <small class="d-none d-sm-inline nowrap" id="ksection-count<?php echo $section->id; ?>">
                 <?php echo KunenaCategory::getInstance()->totalCount($section->getTopics()); ?>

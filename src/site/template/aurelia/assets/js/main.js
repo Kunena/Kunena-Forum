@@ -22,18 +22,22 @@ jQuery(document).ready(function ($) {
 	});
 
 	/* Allow to make working drop-down choose destination */
-	$('#kchecktask').change(function () {
+	const bulkOptions = function () {
 		const task = $("#kchecktask").val();
-		if (task === 'move') {
-			$("#kchecktarget").attr('disabled', false).trigger("list:updated");
-		}
-		else {
-			$("#kchecktarget").attr('disabled', true);
+		const move = task === 'move';
+
+		/* The destination and the status (topic icon) are only shown for their action */
+		$("#kchecktarget").attr('disabled', !move).toggleClass('d-none', !move);
+
+		if (move) {
+			$("#kchecktarget").trigger("list:updated");
 		}
 
-		/* The status (topic icon) which the selected topics get */
-		$("#kcheckstatus").attr('disabled', task !== 'status');
-	});
+		$("#kcheckstatus").attr('disabled', task !== 'status').toggleClass('d-none', task !== 'status');
+	};
+
+	$('#kchecktask').change(bulkOptions);
+	bulkOptions();
 
 	$("input.kcatcheckall").click(function () {
 		$("input.kcatcheckall:checkbox").not(this).prop('checked', this.checked);

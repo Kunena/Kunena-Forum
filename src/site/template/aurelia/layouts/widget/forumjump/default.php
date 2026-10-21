@@ -23,5 +23,5 @@ use Kunena\Forum\Libraries\Route\KunenaRoute;
       target="_self">
     <input type="hidden" name="view" value="category"/>
     <input type="hidden" name="task" value="jump"/>
-    <div class="selector col-3"><?php echo $this->categorylist; ?></div>
+    <div class="selector col-12 col-sm-6 col-lg-4 mb-3"><?php echo $this->categorylist; ?></div>
 </form>

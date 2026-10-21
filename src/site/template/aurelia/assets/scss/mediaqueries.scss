@@ -18,10 +18,10 @@
 /* Smartphones */
 @media (max-width: 480px) {
   .table th, .table td {
-	display: grid;
+    display: grid;
 }
   #editUser .form-control, #editUser .custom-select, #editprofile .form-control, #editprofile .custom-select, #editavatar .form-control, #editavatar .custom-select, #editsettings .form-control, #editsettings .custom-select {
-	width: 100%!important;
+    width: 100% !important;
 }
   .knav-collapse {
     transform: translate3d(0, 0, 0);

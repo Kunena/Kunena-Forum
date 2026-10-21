@@ -81,7 +81,7 @@
   background-color: #ededed;
 }
 
-/*All wells in tables should not have margin*/
+/* All wells in tables should not have margin */
 #kunena.admin.override table .well {
   margin-bottom: 0;
 }

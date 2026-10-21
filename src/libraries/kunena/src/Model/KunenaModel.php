@@ -236,7 +236,10 @@ class KunenaModel extends BaseDatabaseModel
      */
     protected function getCmd(string $name, $default = '', $hash = 'request')
     {
-        return $this->getVar($name, $default, $hash, 'cmd');
+        $value = $this->getVar($name, $default, $hash, 'cmd');
+
+        // A list in the request (id[]=1) is no value: the default is used.
+        return \is_array($value) ? $default : $value;
     }
 
     /**
@@ -264,7 +267,10 @@ class KunenaModel extends BaseDatabaseModel
      */
     protected function getInt(string $name, $default = 0, $hash = 'request')
     {
-        return $this->getVar($name, $default, $hash, 'int');
+        $value = $this->getVar($name, $default, $hash, 'int');
+
+        // A list in the request (id[]=1) is no value: the default is used.
+        return \is_array($value) ? $default : $value;
     }
 
     /**
@@ -278,7 +284,10 @@ class KunenaModel extends BaseDatabaseModel
      */
     protected function getString(string $name, $default = '', $hash = 'request')
     {
-        return $this->getVar($name, $default, $hash, 'string');
+        $value = $this->getVar($name, $default, $hash, 'string');
+
+        // A list in the request (id[]=1) is no value: the default is used.
+        return \is_array($value) ? $default : $value;
     }
 
     /**
@@ -292,6 +301,9 @@ class KunenaModel extends BaseDatabaseModel
      */
     protected function getWord(string $name, $default = '', $hash = 'request')
     {
-        return $this->getVar($name, $default, $hash, 'word');
+        $value = $this->getVar($name, $default, $hash, 'word');
+
+        // A list in the request (id[]=1) is no value: the default is used.
+        return \is_array($value) ? $default : $value;
     }
 }

@@ -65,6 +65,11 @@ class CategoryController extends CategoriesController
     {
         $catid = $this->app->getInput()->post->getInt('catid', 0);
 
+        // A list in the request is no category.
+        if (\is_array($catid)) {
+            $catid = 0;
+        }
+
         $controller = new AdminCategoryController();
         $category   = $controller->saveCategory();
 
@@ -77,7 +82,9 @@ class CategoryController extends CategoriesController
 
         if (!$catid) {
             // A new category which was not saved: back to the form.
-            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=create&parentid=' . $this->app->getInput()->post->getInt('parentid', 0), false));
+            $parentId = $this->app->getInput()->post->getInt('parentid', 0);
+
+            $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=create&parentid=' . (\is_array($parentId) ? 0 : $parentId), false));
 
             return;
         }
@@ -164,6 +171,11 @@ class CategoryController extends CategoriesController
     public function jump()
     {
         $catid = $this->app->getInput()->getInt('catid', 0);
+
+        // A list in the request is no category.
+        if (\is_array($catid)) {
+            $catid = 0;
+        }
 
         if (!$catid) {
             $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list', false));

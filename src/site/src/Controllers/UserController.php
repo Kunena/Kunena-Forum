@@ -136,13 +136,10 @@ class UserController extends KunenaController
      */
     public function search()
     {
-        $model = $this->getModel('user');
-
         $uri = new Uri('index.php?option=com_kunena&view=user&layout=list');
 
-        $state      = $model->getState();
-        $search     = $state->get('list.search');
-        $limitstart = $state->get('list.start');
+        $search     = $this->app->getInput()->getString('search', '');
+        $limitstart = $this->app->getInput()->getInt('limitstart', 0);
 
         if ($search) {
             $uri->setVar('search', $search);
@@ -299,6 +296,11 @@ class UserController extends KunenaController
         $return = null;
         $errors = 0;
         $userid = $this->app->getInput()->getInt('userid');
+
+        // A list in the request (userid[]=1) is no user.
+        if (\is_array($userid)) {
+            $userid = 0;
+        }
 
         if (!Session::checkToken('post')) {
             throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_ERROR_TOKEN'), 403);

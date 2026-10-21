@@ -103,6 +103,10 @@ class TopicController extends KunenaController
         parent::__construct($config);
         $this->catid  = $this->app->getInput()->getInt('catid', 0);
         $this->return = $this->app->getInput()->getInt('return', $this->catid);
+
+        // A list in the request (catid[]=1) is no category.
+        $this->catid  = \is_array($this->catid) ? 0 : $this->catid;
+        $this->return = \is_array($this->return) ? 0 : $this->return;
         $this->id     = $this->app->getInput()->getInt('id', 0);
         $this->mesid  = $this->app->getInput()->getInt('mesid', 0);
     }
@@ -855,8 +859,8 @@ class TopicController extends KunenaController
             'catid'             => $this->catid,
             'name'              => $this->app->getInput()->getString('authorname', $this->me->getName()),
             'email'             => $this->app->getInput()->getString('email', null),
-            'subject'           => $this->app->getInput()->post->get('subject', '', 'raw'),
-            'message'           => $this->app->getInput()->post->get('message', '', 'raw'),
+            'subject'           => $this->postedText('subject'),
+            'message'           => $this->postedText('message'),
             'icon_id'           => $this->app->getInput()->getInt('topic_emoticon', null),
             'anonymous'         => $this->app->getInput()->getInt('anonymous', 0),
             'poll_title'        => $this->app->getInput()->getString('poll_title', ''),
@@ -1620,8 +1624,8 @@ class TopicController extends KunenaController
         $fields  = [
             'name'              => $this->app->getInput()->getString('authorname', $message->name),
             'email'             => $this->app->getInput()->getString('email', $message->email),
-            'subject'           => $this->app->getInput()->post->get('subject', '', 'raw'),
-            'message'           => $this->app->getInput()->post->get('message', '', 'raw'),
+            'subject'           => $this->postedText('subject'),
+            'message'           => $this->postedText('message'),
             'modified_reason'   => $this->app->getInput()->getString('modified_reason', $message->modified_reason),
             'icon_id'           => $this->app->getInput()->getInt('topic_emoticon', $topic->icon_id),
             'anonymous'         => $this->app->getInput()->getInt('anonymous', 0),
@@ -3238,6 +3242,22 @@ class TopicController extends KunenaController
     }
 
     /**
+     * The text of a field of the form as it was posted (a list in the request, subject[]=x, is no text).
+     *
+     * @param   string  $name  Name of the field.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected function postedText(string $name): string
+    {
+        $value = $this->app->getInput()->post->get($name, '', 'raw');
+
+        return \is_array($value) ? '' : (string) $value;
+    }
+
+    /**
      * Returns the topic icons set corresponding at the category selected 
      *
      @return  void
@@ -3255,17 +3275,16 @@ class TopicController extends KunenaController
 
         $category        = KunenaCategoryHelper::get($catid);
         $categoryIconset = $category->iconset;
-        $app             = Factory::getApplication();
 
         if (empty($categoryIconset)) {
-            $response = [];
+            // A category without a set of icons has no icons: an empty list, and nothing more to do.
+            if (ob_get_length()) {
+                ob_end_clean();
+            }
 
-            // Set the MIME type and header for JSON output.
-            $this->document->setMimeEncoding('application/json');
-            $app->setHeader('Content-Disposition', 'attachment; filename="' . $this->getName() . '.' . $this->getLayout() . '.json"');
-            Factory::getApplication()->sendHeaders();
+            echo json_encode([]);
 
-            echo json_encode($response);
+            jexit();
         }
 
         $topicIcons = [];
@@ -3351,8 +3370,14 @@ class TopicController extends KunenaController
         $input     = $this->app->getInput();
         $parentId  = $input->getInt('parentid', 0);
         $messageId = $input->getInt('mesid', 0);
+        $draftId   = $input->getInt('draftid', 0);
         $topicId   = 0;
         $catid     = $this->catid;
+
+        // A list in the request (mesid[]=1) is no id.
+        $parentId  = \is_array($parentId) ? 0 : $parentId;
+        $messageId = \is_array($messageId) ? 0 : $messageId;
+        $draftId   = \is_array($draftId) ? 0 : $draftId;
 
         try {
             if ($messageId) {
@@ -3385,8 +3410,8 @@ class TopicController extends KunenaController
             'catid'             => $catid,
             'name'              => $input->getString('authorname', $this->me->getName()),
             'email'             => $input->getString('email', null),
-            'subject'           => $input->post->get('subject', '', 'raw'),
-            'message'           => $input->post->get('message', '', 'raw'),
+            'subject'           => $this->postedText('subject'),
+            'message'           => $this->postedText('message'),
             'modified_reason'   => $input->getString('modified_reason', ''),
             'icon_id'           => $input->getInt('topic_emoticon', null),
             'anonymous'         => $input->getInt('anonymous', 0),
@@ -3408,7 +3433,7 @@ class TopicController extends KunenaController
         }
 
         try {
-            $draftId = KunenaDraftHelper::save($this->me->userid, $fields, $parentId, $topicId, $input->getInt('draftid', 0), $messageId);
+            $draftId = KunenaDraftHelper::save($this->me->userid, $fields, $parentId, $topicId, $draftId, $messageId);
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -3494,7 +3519,10 @@ class TopicController extends KunenaController
             return;
         }
 
-        if (KunenaDraftHelper::delete($this->app->getInput()->getInt('draftid', 0), $this->me->userid)) {
+        $draftId = $this->app->getInput()->getInt('draftid', 0);
+
+        // A list in the request (draftid[]=1) is no draft.
+        if (KunenaDraftHelper::delete(\is_array($draftId) ? 0 : $draftId, $this->me->userid)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_DRAFT_DELETED'), 'success');
         } else {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_DRAFT_NOT_FOUND'), 'error');
@@ -3522,7 +3550,8 @@ class TopicController extends KunenaController
         $uid   = $input->getInt('uid', 0);
         $sig   = $input->getString('sig', '');
 
-        if (!KunenaEmailUnsubscribe::verify($type, $id, $uid, $sig)) {
+        // A list in the request (id[]=1) is no id, no type and no signature.
+        if (\in_array(true, array_map('is_array', [$type, $id, $uid, $sig]), true) || !KunenaEmailUnsubscribe::verify($type, $id, $uid, $sig)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_INVALID'), 'error');
             $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena', false));
 

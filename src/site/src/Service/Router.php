@@ -322,7 +322,8 @@ class Router extends RouterView
 
         // Rest of the known parameters are in var-value form
         foreach (KunenaRoute::$parsevars as $var => $dummy) {
-            if (isset($query[$var])) {
+            // A list (id[]=1) cannot be a part of the path: it stays in the query.
+            if (isset($query[$var]) && !\is_array($query[$var])) {
                 $segments[] = "{$var}-{$query[$var]}";
                 unset($query[$var]);
             }

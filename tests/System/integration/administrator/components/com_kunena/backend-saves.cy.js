@@ -35,6 +35,10 @@ describe('Kunena backend: saving a form without a change', () => {
     rowOf('SELECT id FROM #__kunena_categories WHERE parentid > 0 ORDER BY id LIMIT 1').then(({ id }) => {
       const sql = `SELECT name, alias, icon, icon_id, description, headerdesc, topictemplate, class_sfx, published, ordering, locked, review, allowAnonymous, postAnonymous, allowPolls, allowRatings, topicOrdering, iconset, channels, pubAccess, pubRecurse, adminAccess, adminRecurse, params, accesstype, access, checked_out FROM #__kunena_categories WHERE id = ${id}`;
 
+      // A category which was never saved with the form gets the complete params with the first save: that save is done first.
+      cy.visit(`${admin}&view=category&layout=edit&catid=${id}`);
+      apply();
+
       rowOf(sql).then((before) => {
         cy.visit(`${admin}&view=category&layout=edit&catid=${id}`);
         apply();

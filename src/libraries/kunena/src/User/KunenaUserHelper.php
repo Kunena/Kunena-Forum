@@ -175,6 +175,11 @@ abstract class KunenaUserHelper
             return self::$_me;
         }
 
+        // A list is no user: an array in the request is the anonymous user.
+        if (\is_array($identifier)) {
+            $identifier = 0;
+        }
+
         if ($identifier instanceof KunenaUser) {
             KunenaProfiler::getInstance() ? KunenaProfiler::instance()->stop('function ' . __CLASS__ . '::' . __FUNCTION__ . '()') : null;
 

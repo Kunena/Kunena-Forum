@@ -363,6 +363,11 @@ class SearchModel extends KunenaModel
                 $value = implode(' ', $value);
             }
 
+            // A list in the request (searchdate[]=x) is no value for the address.
+            if (!\is_scalar($value)) {
+                continue;
+            }
+
             if ($value != $defaults[$param]) {
                 $url_params .= "&$param=" . urlencode($value);
             }

@@ -347,17 +347,18 @@ class UserItem extends KunenaLayout
         PluginHelper::importPlugin('kunena');
 
         $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
-        $plugins =  $dispatcher->dispatch(
+        $event = $dispatcher->dispatch(
             'onKunenaUserTabs',
             new KunenaUserTabsEvent(
                 'onKunenaUserTabs',
-                ['tabs' => $tabs]
+                ['tabs' => $tabs, 'profile' => $this->profile, 'me' => $this->me]
             )
         );
 
-        //$tabs = $tabs + $plugins;
+        // A plugin can add tabs (and change the active tab): it sets the argument tabs of the event.
+        $pluginTabs = $event->getArgument('tabs', $tabs);
 
-        return $tabs;
+        return \is_array($pluginTabs) ? $pluginTabs : $tabs;
     }
 
     /**

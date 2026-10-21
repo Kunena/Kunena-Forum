@@ -49,6 +49,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopic;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\User\Read\KunenaTopicUserReadHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaUser;
@@ -595,21 +596,36 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     public function processNotification($url = null, $approved = false, $type = false)
     {
-        // No need to go further if mail settings are not configured
-        $joomlaConfig = Factory::getApplication()->getConfig();
-
-        if (!$joomlaConfig->get('mailonline')) {
-            return false;
-        }
-
-        if (!$this->_config->sendEmails) {
-            return false;
-        }
-
         $this->_approved = $approved;
 
         // Gather data to be able to the handle to send the notification
         list($emailToList, $once, $sentusers) = $this->gatherNotificationData();
+
+        // An inbox stores the notification for the users, and tells which of them do not want the e-mail as well.
+        if (!empty($emailToList)) {
+            $inboxUsers = [];
+
+            foreach ($emailToList as $emailTo) {
+                if (!empty($emailTo->id)) {
+                    $inboxUsers[(int) $emailTo->id] = !empty($emailTo->follower) ? 'follow' : ($emailTo->subscription ? 'subscription' : 'moderation');
+                }
+            }
+
+            foreach (array_unique($inboxUsers) as $inboxType) {
+                $noMail = KunenaPrivate::getInstance()->notify($this, $inboxType, array_keys(array_filter($inboxUsers, static fn ($type) => $type === $inboxType)));
+
+                if ($noMail) {
+                    $emailToList = array_values(array_filter($emailToList, static fn ($emailTo) => !\in_array((int) ($emailTo->id ?? 0), $noMail, true)));
+                }
+            }
+        }
+
+        // No need to go further if mail settings are not configured
+        $joomlaConfig = Factory::getApplication()->getConfig();
+
+        if (!$joomlaConfig->get('mailonline') || !$this->_config->sendEmails) {
+            return false;
+        }
 
         // Nobody to notify: do not queue or send an empty notification
         if (empty($emailToList)) {
@@ -2018,13 +2034,7 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     public function sendMentionNotifications(string $oldText = '', bool $isNew = true): int
     {
-        if (empty($this->_config->mentionEmail) || !$this->_config->sendEmails || $this->hold != 0) {
-            return 0;
-        }
-
-        $joomlaConfig = Factory::getApplication()->getConfig();
-
-        if (!$joomlaConfig->get('mailonline')) {
+        if ($this->hold != 0) {
             return 0;
         }
 
@@ -2052,6 +2062,24 @@ class KunenaMessage extends KunenaDatabaseObject
             }
         }
 
+        // The users who are mentioned and may read the message.
+        $recipients = [];
+
+        foreach ($userids as $userid) {
+            $recipient = KunenaUserHelper::get($userid);
+
+            if (!isset($skip[$userid]) && $recipient->exists() && !$recipient->blocked && $this->isAuthorised('read', $recipient)) {
+                $recipients[] = (int) $userid;
+            }
+        }
+
+        // An inbox stores the notification for them, and tells which of them do not want the e-mail as well.
+        $noMail = $recipients ? KunenaPrivate::getInstance()->notify($this, 'mention', $recipients) : [];
+
+        if (empty($this->_config->mentionEmail) || !$this->_config->sendEmails || !Factory::getApplication()->getConfig()->get('mailonline')) {
+            return 0;
+        }
+
         $topic      = $this->getTopic();
         $authorName = $this->getAuthor()->getName($this->name, false);
         $url        = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $this->getPermaUrl(null, false);
@@ -2061,7 +2089,7 @@ class KunenaMessage extends KunenaDatabaseObject
         KunenaFactory::loadLanguage('com_kunena', 'site');
 
         foreach ($userids as $userid) {
-            if (isset($skip[$userid])) {
+            if (isset($skip[$userid]) || \in_array((int) $userid, $noMail, true)) {
                 continue;
             }
 

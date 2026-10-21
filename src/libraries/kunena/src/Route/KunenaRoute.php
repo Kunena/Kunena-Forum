@@ -54,6 +54,7 @@ abstract class KunenaRoute
         'common'       => ['layout' => 'default'],
         'credits'      => ['layout' => 'default'],
         'home'         => [],
+        'inbox'        => ['layout' => 'default'],
         'misc'         => ['layout' => 'default'],
         'search'       => ['layout' => 'default'],
         'statistics'   => ['layout' => 'default'],

@@ -51,6 +51,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicTags;
 use Kunena\Forum\Libraries\Forum\Topic\Rate\KunenaRateHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
+use Kunena\Forum\Libraries\Integration\KunenaPrivate;
 use Kunena\Forum\Libraries\Icons\KunenaSvgIcons;
 use Kunena\Forum\Libraries\Image\KunenaImage;
 use Kunena\Forum\Libraries\KunenaPrivate\KunenaPrivateMessage;
@@ -2050,6 +2051,11 @@ class TopicController extends KunenaController
             }
 
             $activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
+
+            // The author finds the thanks in his inbox (when an inbox is installed).
+            if ($message->userid && $message->userid != $this->me->userid) {
+                KunenaPrivate::getInstance()->notify($message, 'thanks', [(int) $message->userid], (int) $this->me->userid);
+            }
         } else {
             try {
                 $thankyou->delete($this->me);

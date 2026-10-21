@@ -22,6 +22,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 use Kunena\Forum\Libraries\Event\KunenaGetPrivateEvent;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 
 /**
@@ -112,7 +113,7 @@ class KunenaPrivate
         }
 
         // We should offer the user a PM link
-        return '<a class="' . $class . '" href="' . $url . '""' . $onclick . '">' . KunenaIcons::pm() . '</a>';
+        return '<a class="' . $class . '" href="' . $url . '"' . $onclick . '>' . KunenaIcons::pm() . '</a>';
     }
 
     /**
@@ -202,6 +203,24 @@ class KunenaPrivate
     public function getUnreadCount(int $userid): int
     {
         return 0;
+    }
+
+    /**
+     * A message of the forum gives users a notification (subscription, moderation, follow, mention). An inbox can store it for
+     * the users, and tell which of them do not want the e-mail as well.
+     *
+     * @param   KunenaMessage  $message  The message which causes the notification.
+     * @param   string         $type     subscription, moderation, follow, mention or thanks.
+     * @param   int[]          $userids  The users who get the notification.
+     * @param   int            $senderId The user who causes it (the author of the message by default, the user who says thanks for thanks).
+     *
+     * @return  int[]  The users who must not get the e-mail (all get it by default).
+     *
+     * @since   Kunena 7.2
+     */
+    public function notify(KunenaMessage $message, string $type, array $userids, int $senderId = 0): array
+    {
+        return [];
     }
 
     /**

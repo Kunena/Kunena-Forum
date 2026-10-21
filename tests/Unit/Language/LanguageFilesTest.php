@@ -10,17 +10,17 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Tests\Unit\Language;
+namespace Kunena\Tests\Unit\Language;
 
-use Kunena\Forum\Tests\Unit\Support\Files;
+use Kunena\Tests\Unit\Support\Files;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use Kunena\Tests\Unit\UnitTestCase;
 
 /**
  * The English language files: every line is valid (a wrong quote breaks the file for Joomla), and the texts of the features of
  * 7.2 are there.
  */
-class LanguageFilesTest extends TestCase
+class LanguageFilesTest extends UnitTestCase
 {
     public static function files(): array
     {

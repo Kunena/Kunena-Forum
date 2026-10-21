@@ -18,6 +18,7 @@ namespace Kunena\Forum\Libraries\Notification;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseInterface;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Html\KunenaParser;
@@ -43,6 +44,16 @@ abstract class KunenaPopupNotification
     protected const MAX_ITEMS = 3;
 
     /**
+     * The text (language string) of the title of the popup for each reason.
+     */
+    protected const TITLES = [
+        'mention'    => 'COM_KUNENA_POPUP_MENTION',
+        'reply'      => 'COM_KUNENA_POPUP_REPLY_OWN',
+        'subscribed' => 'COM_KUNENA_POPUP_REPLY_SUBSCRIBED',
+        'topic'      => 'COM_KUNENA_POPUP_NEW_TOPIC',
+    ];
+
+    /**
      * Are the popups on for the user (the forum setting, and the choice of the user)?
      *
      * @param   integer  $userid  The user.
@@ -59,32 +70,41 @@ abstract class KunenaPopupNotification
     }
 
     /**
-     * The new messages for the user.
+     * The id of the last message: the cursor of a browser which has seen all.
      *
-     * @param   integer  $userid  The user.
-     * @param   integer  $after   The last message the browser has seen (0 when it has seen none: only the cursor is given).
+     * @param   DatabaseInterface  $db  The database.
      *
-     * @return  array  cursor (the last message now), items (type, id, title, topic, excerpt, url) and more (not shown).
+     * @return  integer
      *
      * @since   Kunena 7.2
      */
-    public static function get(int $userid, int $after): array
+    public static function cursor(DatabaseInterface $db): int
     {
-        $db = Factory::getContainer()->get('DatabaseDriver');
-
-        // The cursor is taken before the question, so a message which comes in between is shown the next time.
         $query = $db->createQuery()
             ->select('MAX(' . $db->quoteName('id') . ')')
             ->from($db->quoteName('#__kunena_messages'));
         $db->setQuery($query);
 
-        $cursor = (int) $db->loadResult();
-        $result = ['cursor' => $cursor, 'items' => [], 'more' => 0];
+        return (int) $db->loadResult();
+    }
 
-        if ($after <= 0 || $after >= $cursor) {
-            return $result;
-        }
-
+    /**
+     * The messages after the cursor of the browser which are of interest for the user: he is mentioned in them, they are in a
+     * topic of his or a topic he follows, or they start a topic in a category he follows. His own messages, the messages which
+     * wait for approval and the messages of more than a day ago are not in it.
+     *
+     * @param   DatabaseInterface  $db      The database.
+     * @param   integer            $userid  The user.
+     * @param   integer            $after   The last message the browser has seen.
+     * @param   integer            $cursor  The last message now.
+     * @param   integer|null       $now     The time now (seconds), for the tests.
+     *
+     * @return  object[]  id, parent, mentioned, own and topicsub of each message, the oldest first.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function candidates(DatabaseInterface $db, int $userid, int $after, int $cursor, ?int $now = null): array
+    {
         $mention = '%[mention userid=' . $userid . ']%';
         $query   = $db->createQuery()
             ->select([
@@ -111,7 +131,7 @@ abstract class KunenaPopupNotification
             ->where($db->quoteName('m.id') . ' <= ' . $cursor)
             ->where($db->quoteName('m.hold') . ' = 0')
             ->where($db->quoteName('m.userid') . ' <> ' . $userid)
-            ->where($db->quoteName('m.time') . ' > ' . (time() - self::MAX_AGE))
+            ->where($db->quoteName('m.time') . ' > ' . (($now ?? time()) - self::MAX_AGE))
             ->where(
                 '(' . $db->quoteName('t.first_post_userid') . ' = ' . $userid
                 . ' OR ' . $db->quoteName('ut.subscribed') . ' > 0'
@@ -122,8 +142,56 @@ abstract class KunenaPopupNotification
         $query->setLimit(100);
         $db->setQuery($query);
 
+        return (array) $db->loadObjectList();
+    }
+
+    /**
+     * The reason of the popup of a message: one popup for a message, with the strongest reason.
+     *
+     * @param   object  $row  A row of candidates().
+     *
+     * @return  string  mention, reply (in a topic of the user), subscribed (in a topic he follows) or topic (a new topic in a
+     *                  category he follows).
+     *
+     * @since   Kunena 7.2
+     */
+    public static function reason(object $row): string
+    {
+        if ($row->mentioned) {
+            return 'mention';
+        }
+
+        if ($row->own) {
+            return 'reply';
+        }
+
+        return $row->topicsub > 0 ? 'subscribed' : 'topic';
+    }
+
+    /**
+     * The new messages for the user.
+     *
+     * @param   integer  $userid  The user.
+     * @param   integer  $after   The last message the browser has seen (0 when it has seen none: only the cursor is given).
+     *
+     * @return  array  cursor (the last message now), items (type, id, title, topic, excerpt, url) and more (not shown).
+     *
+     * @since   Kunena 7.2
+     */
+    public static function get(int $userid, int $after): array
+    {
+        $db = Factory::getContainer()->get('DatabaseDriver');
+
+        // The cursor is taken before the question, so a message which comes in between is shown the next time.
+        $cursor = self::cursor($db);
+        $result = ['cursor' => $cursor, 'items' => [], 'more' => 0];
+
+        if ($after <= 0 || $after >= $cursor) {
+            return $result;
+        }
+
         try {
-            $rows = (array) $db->loadObjectList();
+            $rows = self::candidates($db, $userid, $after, $cursor);
         } catch (Exception $e) {
             return $result;
         }
@@ -146,19 +214,8 @@ abstract class KunenaPopupNotification
             $name = $message->getAuthor()->getName('', false);
 
             // One popup for a message, with the strongest reason.
-            if ($row->mentioned) {
-                $type  = 'mention';
-                $title = Text::sprintf('COM_KUNENA_POPUP_MENTION', $name);
-            } elseif ($row->own) {
-                $type  = 'reply';
-                $title = Text::sprintf('COM_KUNENA_POPUP_REPLY_OWN', $name);
-            } elseif ($row->topicsub > 0) {
-                $type  = 'subscribed';
-                $title = Text::sprintf('COM_KUNENA_POPUP_REPLY_SUBSCRIBED', $name);
-            } else {
-                $type  = 'topic';
-                $title = Text::sprintf('COM_KUNENA_POPUP_NEW_TOPIC', $name);
-            }
+            $type  = self::reason($row);
+            $title = Text::sprintf(self::TITLES[$type], $name);
 
             $text    = (string) KunenaParser::stripBBCode((string) $message->message, 0, false);
             $excerpt = trim((string) preg_replace('/\s+/u', ' ', strip_tags(html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8'))));

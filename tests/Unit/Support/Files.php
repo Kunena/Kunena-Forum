@@ -10,7 +10,7 @@
  * @link            https://www.kunena.org
  **/
 
-namespace Kunena\Forum\Tests\Unit\Support;
+namespace Kunena\Tests\Unit\Support;
 
 /**
  * The files of the source which the tests of the definitions read.

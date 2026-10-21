@@ -9,7 +9,10 @@
          failOnRisky="true">
     <testsuites>
         <testsuite name="Unit">
-            <directory>tests/Unit</directory>
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Integration</directory>
         </testsuite>
     </testsuites>
     <source>
@@ -17,13 +20,21 @@
             <directory>src/libraries/kunena/src</directory>
         </include>
     </source>
+    <!--
+        Without any setting the unit tests run without Joomla and the integration tests are skipped. To run everything copy this file to
+        phpunit.xml (it is not in git) and fill in what you have, or set the same values as environment variables:
+
+        - KTEST_JOOMLA_ROOT / KUNENA_TEST_JOOMLA : the folder of a Joomla installation (its framework is loaded, and its server and
+          user are used for the database of the integration tests, with the database <name>_phpunit).
+        - KTEST_DB_HOST, KTEST_DB_NAME, KTEST_DB_USER, KTEST_DB_PASSWORD / KUNENA_TEST_DB_HOST, ..._NAME, ..._USER, ..._PASSWORD,
+          ..._PORT : a MySQL database of its own for the integration tests (it is made when it is not there; it is never the database
+          of a Joomla site).
     <php>
-        <!-- Local test database; override these in phpunit.xml or the environment. -->
-        <env name="KUNENA_TEST_DB_HOST" value="127.0.0.1"/>
-        <env name="KUNENA_TEST_DB_PORT" value="3306"/>
-        <env name="KUNENA_TEST_DB_NAME" value="tests"/>
-        <env name="KUNENA_TEST_DB_USER" value="root"/>
-        <env name="KUNENA_TEST_DB_PASSWORD" value="root"/>
-        <env name="KUNENA_TEST_DB_PREFIX" value="jos_"/>
+        <const name="KTEST_JOOMLA_ROOT" value="/var/www/html" />
+        <const name="KTEST_DB_HOST" value="127.0.0.1" />
+        <const name="KTEST_DB_NAME" value="kunena_phpunit" />
+        <const name="KTEST_DB_USER" value="root" />
+        <const name="KTEST_DB_PASSWORD" value="" />
     </php>
+    -->
 </phpunit>

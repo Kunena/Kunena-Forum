@@ -53,3 +53,8 @@ site `localhost/tests`, database `tests`, the administrator `ci-admin`). Keep th
 ```bash
 KUNENA_CMS_PATH=E:/www/apache/htdocs/tests npx cypress run --config-file cypress.config.js --spec "tests/System/integration/**/com_kunena/**"
 ```
+
+## The pictures of the documentation
+
+The pictures in `docs/7.2/images` are made by Cypress specs too (`tests/System/docs`, run with `cypress.docs.config.js`): see
+[docs/7.2/screenshots.md](../docs/7.2/screenshots.md). They use the same test site as the specs above, and put back what they change.

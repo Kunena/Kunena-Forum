@@ -26,15 +26,20 @@ Cypress.Commands.add('kunena_getOption', (name) => cy.task('queryDB', paramsQuer
  * Sets an option of Kunena and gives the value it had (so a test can put it back).
  *
  * @param {string} name  The name of the option, for example enableDrafts
- * @param {string} value The new value (the options are strings, '1' or '0' for a switch)
+ * @param {string|Object|null} value The new value (the options are strings, '1' or '0' for a switch; null removes the option)
  *
- * @returns string|undefined The old value
+ * @returns string|Object|undefined The old value
  */
 Cypress.Commands.add('kunena_setOption', (name, value) => cy.task('queryDB', paramsQuery).then((rows) => {
   const params = JSON.parse(rows[0].params || '{}');
   const old = params[name];
 
-  params[name] = String(value);
+  if (value === null) {
+    delete params[name];
+  } else {
+    // The options are strings ('1', '0'); a few (the badges) are a list of rows.
+    params[name] = typeof value === 'object' ? value : String(value);
+  }
 
   return cy.task(
     'queryDB',

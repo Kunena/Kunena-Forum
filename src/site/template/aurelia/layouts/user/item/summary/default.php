@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Language\Text;
 use Kunena\Forum\Libraries\Date\KunenaDate;
+use Kunena\Forum\Libraries\Html\KunenaMap;
 use Kunena\Forum\Libraries\Icons\KunenaIcons;
 use Kunena\Forum\Libraries\Template\KunenaTemplate;
 
@@ -154,7 +155,7 @@ if ($this->config->showUserStats) {
                     <span>
                         <?php if ($this->profile->location) :
                             ?>
-                            <a href="https://maps.google.com?q=<?php echo $this->escape($this->profile->location); ?>"
+                            <a href="<?php echo $this->escape(KunenaMap::linkUrl((string) $this->profile->location)); ?>"
                                target="_blank"
                                rel="nofollow noopener noreferrer"><?php echo $this->escape($this->profile->location); ?></a>
                         <?php else :

@@ -17,6 +17,7 @@ namespace Kunena\Forum\Site;
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Kunena\Forum\Libraries\Html\KunenaMap;
 
 // [map type=roadmap zoom=10 control=0]London, UK[/map]
 
@@ -25,21 +26,44 @@ use Joomla\CMS\Uri\Uri;
 static $id;
 $params = $this->params;
 
-// Set google map API key if it filled in Kunena configuration
-$map_key = '';
+// OpenStreetMap: the embedded map of openstreetmap.org, no key and no script of a third party.
+if (KunenaMap::provider() === 'osm') {
+    $place  = trim(htmlspecialchars_decode((string) $this->content, ENT_QUOTES));
+    $zoom   = isset($params['zoom']) ? max(1, min(18, (int) $params['zoom'])) : 10;
+    $coords = KunenaMap::geocode($place);
 
-if (!empty($this->config->googleMapApiKey)) {
-    $map_key = '&key=' . $this->config->googleMapApiKey;
+    if ($coords) {
+        ?>
+        <div class="kosmmap">
+            <iframe width="100%" height="350" style="border:1px solid #ccc;max-width:100%" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade" title="<?php echo $this->escape($place); ?>"
+                    src="<?php echo $this->escape(KunenaMap::osmEmbedUrl($coords[0], $coords[1], $zoom)); ?>"></iframe>
+            <br/>
+            <small>
+                <a href="<?php echo $this->escape(KunenaMap::osmPageUrl($coords[0], $coords[1], $zoom)); ?>" target="_blank"
+                   rel="nofollow noopener noreferrer"><?php echo Text::_('COM_KUNENA_MAP_VIEW_LARGER'); ?></a>
+                &middot; &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
+            </small>
+        </div>
+        <?php
+    } else {
+        // The place is not known (yet): a link to the search of OpenStreetMap.
+        ?>
+        <a href="<?php echo $this->escape(KunenaMap::linkUrl($place)); ?>" target="_blank"
+           rel="nofollow noopener noreferrer"><?php echo $this->escape($place); ?></a>
+        <?php
+    }
+
+    return;
 }
 
-// Load JavaScript API.
-if (!isset($id)) {
-    $uri = Uri::getInstance();
+// Google Maps needs the API key which is filled in the Kunena configuration.
+$map_key = (string) $this->config->googleMapApiKey;
 
-    if ($uri->isSSL()) {
-        $this->addScript('https://maps.google.com/maps/api/js?v=quarterly&key=' . $map_key);
-    } else {
-        $this->addScript('http://maps.google.com/maps/api/js?v=quarterly&key=' . $map_key);
+// Load JavaScript API (once, and only with a key: without it the map can not be shown).
+if (!isset($id)) {
+    if ($map_key !== '') {
+        $this->addScript('https://maps.google.com/maps/api/js?v=quarterly&key=' . rawurlencode($map_key));
     }
 
     $id = 0;

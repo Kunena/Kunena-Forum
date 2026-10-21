@@ -1751,11 +1751,27 @@
                 label="COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_LABEL"
                 description="COM_KUNENA_CONFIGURATION_X_SOCIAL_API_CONSUMER_SECRET_DESC" />
             <field
+                name="mapProvider"
+                type="list"
+                default="auto"
+                label="COM_KUNENA_CONFIGURATION_MAP_PROVIDER"
+                description="COM_KUNENA_CONFIGURATION_MAP_PROVIDER_DESC">
+                <option value="auto">COM_KUNENA_CONFIGURATION_MAP_PROVIDER_AUTO</option>
+                <option value="google">COM_KUNENA_CONFIGURATION_MAP_PROVIDER_GOOGLE</option>
+                <option value="osm">COM_KUNENA_CONFIGURATION_MAP_PROVIDER_OSM</option>
+            </field>
+            <field
                 name="googleMapApiKey"
                 type="text"
                 default=""
                 label="COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY"
                 description="COM_KUNENA_CONFIGURATION_GOOGLE_MAPS_API_KEY_DESC" />
+            <field
+                name="geocoderUrl"
+                type="text"
+                default="https://nominatim.openstreetmap.org/search"
+                label="COM_KUNENA_CONFIGURATION_GEOCODER_URL"
+                description="COM_KUNENA_CONFIGURATION_GEOCODER_URL_DESC" />
         </fieldset>
     </fieldset>
 

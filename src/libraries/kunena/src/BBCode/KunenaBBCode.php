@@ -40,6 +40,7 @@ use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessage;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
+use Kunena\Forum\Libraries\Html\KunenaMap;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
 use Nbbc\BBCode;
@@ -1805,7 +1806,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         // Display only link in activity streams etc..
         if (!empty($bbcode->parent->forceMinimal) || !($document instanceof HtmlDocument) || KunenaFactory::getTemplate()->isHmvc() && !$this->templateParams->get('Map')) {
-            $url = 'https://maps.google.com/?q=' . urlencode($bbcode->UnHTMLEncode($content));
+            $url = KunenaMap::linkUrl($bbcode->UnHTMLEncode($content));
 
             return '<a href="' . $url . '" rel="nofollow noopener noreferrer" target="_blank">' . $content . '</a>';
         }

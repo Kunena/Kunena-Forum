@@ -97,6 +97,8 @@ use Joomla\Database\DatabaseInterface;
  * @property string $fileUpload                            Allow File Uploads
  * @property string $floodProtection                       Flood Protection
  * @property string $googleMapApiKey                       Google maps API key to get better stats usage of google API
+ * @property string $mapProvider                           The maps of the [map] bbcode: auto, google or osm (OpenStreetMap)
+ * @property string $geocoderUrl                           The address of the search service (Nominatim) which turns an address into coordinates
  * @property string $hideIp                                Hide IP Addresses From Moderators
  * @property string $highlightCode                         Enable Code Highlighting
  * @property string $historyLimit                          History Limit

@@ -25,6 +25,9 @@ $config = $this->config;
 
 $cols = 1;
 
+// Load tribute script and css to have autocomplete on the user field (search.js needs it)
+$this->addScript('tribute.js');
+$this->addStyleSheet('tribute.css');
 $this->addScript('assets/js/search.js');
 ?>
 <h1>

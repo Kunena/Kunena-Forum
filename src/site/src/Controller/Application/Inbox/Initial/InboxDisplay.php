@@ -19,8 +19,9 @@ use Exception;
 use Joomla\CMS\Event\GenericEvent;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\Application\Display;
-use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Layout\KunenaPage;
 use Kunena\Forum\Libraries\User\KunenaUserHelper;
@@ -85,9 +86,12 @@ class InboxDisplay extends Display
 
         $me = KunenaUserHelper::getMyself();
 
-        // The inbox is for logged in users.
+        // The inbox is for logged in users: a guest goes to the login, and comes back to the inbox.
         if (!$me->exists()) {
-            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 401);
+            $this->app->enqueueMessage(Text::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'), 'notice');
+            $this->app->redirect(
+                Route::_('index.php?option=com_users&view=login&return=' . base64_encode(Uri::getInstance()->toString(['path', 'query'])), false)
+            );
         }
 
         PluginHelper::importPlugin('kunena');

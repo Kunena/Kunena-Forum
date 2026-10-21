@@ -243,6 +243,7 @@ use Joomla\Database\DatabaseInterface;
  * @property int    $reportMail                         Send an e-mail to the moderators when a user reports a post
  * @property int    $popupNotifications                 Show a popup when the user is mentioned, or gets a reply or a new topic he follows
  * @property int    $popupNotificationsInterval         Seconds between two questions of the browser for new popups
+ * @property int    $useMailTemplates                   Make the e-mails of the forum from the mail templates of Joomla (Users, Mail Templates)
  * @property int    $mentionEmail                       Send an e-mail to the users who are mentioned in a post
  * @property int    $emailForumHeaders                  Add the headers X-Forum-* and the threading headers to the e-mails
  * @property int    $enableTags                         Tag topics with the tags of the Joomla component Tags

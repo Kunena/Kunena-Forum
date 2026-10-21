@@ -35,6 +35,7 @@ use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Database\KunenaDatabaseObject;
 use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
+use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Event\KunenaDeleteEvent;
@@ -867,9 +868,7 @@ class KunenaMessage extends KunenaDatabaseObject
                     $mail->setSubject($mailSubject);
                     $mail->setSender([$this->_config->email, $mailnamesender]);
 
-                    $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower));
-
-                    if (!KunenaEmail::send($mail, [$emailTo->email])) {
+                    if (!$this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, (string) $recipientLanguage)) {
                         $success = false;
                     } elseif ($onRecipientSent !== null) {
                         $onRecipientSent($recipientIndex);
@@ -1037,8 +1036,7 @@ class KunenaMessage extends KunenaDatabaseObject
                         $mail->setSubject($mailSubject);
                         $mail->setSender([$this->_config->email, $mailnamesender]);
 
-                        $this->attachEmailBody($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower));
-                        KunenaEmail::send($mail, [$emailTo->email]);
+                        $this->deliverNotification($mail, $subscriptionType, $mailSubject, $url, $once, (int) ($emailTo->id ?? 0), !empty($emailTo->follower), (string) $emailTo->email, '');
                     } catch (Exception $e) {
                         throw new Exception($e->getMessage());
                     }
@@ -2112,6 +2110,23 @@ class KunenaMessage extends KunenaDatabaseObject
                 $mail = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
                 $mail->setSubject($subject);
                 $mail->setSender([$this->_config->email, $sender]);
+
+                if (KunenaMailTemplate::isUsed('com_kunena.mention')) {
+                    // The mail template of Joomla (Users, Mail Templates).
+                    $values = [
+                        'sitename' => Factory::getApplication()->get('sitename'),
+                        'author'   => $authorName,
+                        'topic'    => $topic->subject,
+                        'url'      => $url,
+                    ];
+
+                    if (KunenaMailTemplate::send('com_kunena.mention', (string) ($recipient->language ?? ''), $mail, $values, [], ['sitename', 'author', 'topic', 'url'], (string) $recipient->email)) {
+                        $sent++;
+                    }
+
+                    continue;
+                }
+
                 $mail->isHtml(true);
                 $mail->setBody($body);
 
@@ -2232,6 +2247,40 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     protected function attachEmailBody(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId = 0, bool $follower = false): void
     {
+        $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
+
+        $layout = KunenaLayout::factory('Email/Subscription')->debug(false)
+            ->set('mail', $mail)
+            ->set('message', $this)
+            ->set('messageUrl', $url)
+            ->set('once', $once)
+            ->set('unsubscribeUrl', $unsubscribeUrl);
+
+        $msg = '';
+
+        try {
+            $msg = trim($layout->render($subscription ? 'default' : 'moderator'));
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        $mail->setBody($msg);
+    }
+
+    /**
+     * The headers of the e-mail of a notification (the unsubscribe headers and the headers of the forum).
+     *
+     * @param   Mail   $mail         The mail.
+     * @param   int    $subscription 1 for a subscriber, 0 for a moderator.
+     * @param   int    $recipientId  The user who gets the mail.
+     * @param   bool   $follower     The recipient follows the author.
+     *
+     * @return  string  The address to unsubscribe (empty when the mail has none).
+     *
+     * @since   Kunena 7.2
+     */
+    protected function addNotificationHeaders(Mail $mail, int $subscription, int $recipientId, bool $follower): string
+    {
         // Subscribers can unsubscribe from the email itself: a reply is a topic subscription, a new topic a category subscription.
         $unsubscribeUrl = '';
 
@@ -2254,22 +2303,102 @@ class KunenaMessage extends KunenaDatabaseObject
 
         $this->addForumHeaders($mail);
 
-        $layout = KunenaLayout::factory('Email/Subscription')->debug(false)
-            ->set('mail', $mail)
-            ->set('message', $this)
-            ->set('messageUrl', $url)
-            ->set('once', $once)
-            ->set('unsubscribeUrl', $unsubscribeUrl);
+        return $unsubscribeUrl;
+    }
 
-        $msg = '';
+    /**
+     * Send the e-mail of a notification to one address: from the mail template of Joomla (the setting of the forum), or from the
+     * layout of the template of the forum.
+     *
+     * @param   Mail    $mail          The mail (the sender is set).
+     * @param   int     $subscription  1 for a subscriber, 0 for a moderator.
+     * @param   string  $subject       The subject (for the layout).
+     * @param   string  $url           The address of the message.
+     * @param   bool    $once          Only the first message is mailed.
+     * @param   int     $recipientId   The user who gets the mail.
+     * @param   bool    $follower      The recipient follows the author.
+     * @param   string  $email         The address.
+     * @param   string  $language      The language of the recipient.
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    protected function deliverNotification(Mail $mail, int $subscription, string $subject, string $url, bool $once, int $recipientId, bool $follower, string $email, string $language): bool
+    {
+        $templateId = $subscription ? 'com_kunena.subscription' : 'com_kunena.moderator';
 
-        try {
-            $msg = trim($layout->render($subscription ? 'default' : 'moderator'));
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if (KunenaMailTemplate::isUsed($templateId)) {
+            $unsubscribeUrl = $this->addNotificationHeaders($mail, $subscription, $recipientId, $follower);
+            $data           = $this->getMailTemplateData($subscription, $url, $once, $unsubscribeUrl);
+
+            return KunenaMailTemplate::send($templateId, $language, $mail, $data['html'], $data['plain'], ['sitename', 'boardtitle', 'heading', 'subject', 'topic', 'category', 'author', 'url'], $email);
         }
 
-        $mail->setBody($msg);
+        $this->attachEmailBody($mail, $subscription, $subject, $url, $once, $recipientId, $follower);
+
+        return KunenaEmail::send($mail, [$email]);
+    }
+
+    /**
+     * The values of the tags of the mail template of a notification: for the html body and for the plain text body.
+     *
+     * @param   int     $subscription    1 for a subscriber, 0 for a moderator.
+     * @param   string  $url             The address of the message.
+     * @param   bool    $once            Only the first message is mailed.
+     * @param   string  $unsubscribeUrl  The address to unsubscribe (empty when there is none).
+     *
+     * @return  array  html and plain.
+     *
+     * @since   Kunena 7.2
+     */
+    protected function getMailTemplateData(int $subscription, string $url, bool $once, string $unsubscribeUrl): array
+    {
+        $topic   = $this->getTopic();
+        $subject = $this->subject ?: $topic->subject;
+
+        if ($subscription) {
+            $heading = $this->_approved
+                ? Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION_APPROVED_MESSAGE')
+                : Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT') . ' ' . $this->_config->boardTitle;
+            $note    = Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT');
+        } else {
+            $heading = Text::_(empty($this->modified_time) ? 'COM_KUNENA_POST_EMAIL_MOD1' : 'COM_KUNENA_POST_EMAIL_MOD3') . ' ' . $this->_config->boardTitle;
+            $note    = Text::_('COM_KUNENA_POST_EMAIL_MOD2');
+        }
+
+        $more   = $once ? Text::_($this->parent ? 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' : 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE') : '';
+        $footer = Text::_('COM_KUNENA_POST_EMAIL_NOTIFICATION3');
+        $esc    = static fn (string $text): string => htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+
+        $common = [
+            'sitename'   => Factory::getApplication()->get('sitename'),
+            'boardtitle' => $this->_config->boardTitle,
+            'heading'    => $heading,
+            'subject'    => $subject,
+            'topic'      => $topic->subject,
+            'category'   => $this->getCategory()->name,
+            'author'     => $this->getAuthor()->getName('???', false),
+            'url'        => $url,
+        ];
+
+        $html = $common + [
+            'message'     => $this->_config->mailFull ? '<p style="margin:18px 0 4px;color:#888888">' . $esc(Text::_('COM_KUNENA_MESSAGE')) . ':</p><div style="border-left:3px solid #dddddd;padding:4px 14px;margin:0 0 6px">' . $this->displayField('message', true, 'subscription') . '</div>' : '',
+            'more'        => $more ? '<p style="font-size:14px">' . $esc($more) . '</p>' : '',
+            'footer'      => $esc($footer) . '<br>' . $esc($note),
+            'unsubscribe' => $unsubscribeUrl
+                ? '<p style="font-size:12px;color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC')) . ' <a href="' . $esc($unsubscribeUrl) . '" style="color:#999999">' . $esc(Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE')) . '</a></p>'
+                : '',
+        ];
+
+        $plain = $common + [
+            'message'     => $this->_config->mailFull ? Text::_('COM_KUNENA_MESSAGE') . ":\n" . $this->displayField('message', false) . "\n" : '',
+            'more'        => $more ? $more . "\n" : '',
+            'footer'      => $footer . "\n" . $note,
+            'unsubscribe' => $unsubscribeUrl ? Text::_('COM_KUNENA_EMAIL_UNSUBSCRIBE_DESC') . "\n" . $unsubscribeUrl : '',
+        ];
+
+        return ['html' => $html, 'plain' => $plain];
     }
 
     /**

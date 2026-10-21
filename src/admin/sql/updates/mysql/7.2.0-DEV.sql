@@ -60,3 +60,11 @@ CREATE TABLE IF NOT EXISTS `#__kunena_categories_translations`
 
 -- The social websites which are shut down (Skype, Yahoo Messenger, Google+) are not in the default list any more.
 UPDATE `#__kunena_users` SET `socials` = JSON_REMOVE(`socials`, '$.skype', '$.yim', '$.google') WHERE `socials` IS NOT NULL AND JSON_VALID(`socials`);
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.subscription', 'com_kunena', '', 'COM_KUNENA_MAILTPL_NOTIFICATION_SUBJECT', 'COM_KUNENA_MAILTPL_NOTIFICATION_BODY', 'COM_KUNENA_MAILTPL_NOTIFICATION_HTMLBODY', '', '{"tags":["sitename","boardtitle","heading","subject","topic","category","author","url","message","more","footer","unsubscribe"]}');
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.moderator', 'com_kunena', '', 'COM_KUNENA_MAILTPL_NOTIFICATION_SUBJECT', 'COM_KUNENA_MAILTPL_NOTIFICATION_BODY', 'COM_KUNENA_MAILTPL_NOTIFICATION_HTMLBODY', '', '{"tags":["sitename","boardtitle","heading","subject","topic","category","author","url","message","more","footer","unsubscribe"]}');
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.mention', 'com_kunena', '', 'COM_KUNENA_MAILTPL_MENTION_SUBJECT', 'COM_KUNENA_MAILTPL_MENTION_BODY', 'COM_KUNENA_MAILTPL_MENTION_HTMLBODY', '', '{"tags":["sitename","author","topic","url"]}');
+INSERT IGNORE INTO `#__mail_templates` (`template_id`, `extension`, `language`, `subject`, `body`, `htmlbody`, `attachments`, `params`)
+VALUES ('com_kunena.reportmessage', 'com_kunena', '', 'COM_KUNENA_MAILTPL_REPORT_SUBJECT', 'COM_KUNENA_MAILTPL_REPORT_BODY', 'COM_KUNENA_MAILTPL_REPORT_HTMLBODY', '', '{"tags":["sitename","boardtitle","title","sender","reason","report","poster","subject","message","url"]}');

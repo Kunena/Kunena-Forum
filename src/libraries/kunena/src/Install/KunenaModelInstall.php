@@ -1070,6 +1070,19 @@ class KunenaModelInstall extends BaseDatabaseModel
         } catch (Exception $e) {
             throw new KunenaInstallerException($e->getMessage(), $e->getCode());
         }
+
+        // The mail templates of the forum which are made now (subscription, moderator, mention and reportmessage).
+        $query = $this->db->createQuery()
+            ->delete($this->db->quoteName('#__mail_templates'))
+            ->where($this->db->quoteName('extension') . ' = ' . $this->db->quote('com_kunena'));
+
+        $this->db->setQuery($query);
+
+        try {
+            $this->db->execute();
+        } catch (Exception $e) {
+            throw new KunenaInstallerException($e->getMessage(), $e->getCode());
+        }
     }
 
     /**

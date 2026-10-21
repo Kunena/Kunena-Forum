@@ -39,6 +39,7 @@ use Kunena\Forum\Libraries\Attachment\KunenaAttachmentHelper;
 use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
+use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -3058,34 +3059,64 @@ class TopicController extends KunenaController
                 $mail->setSubject($mailsubject);
                 $mail->addReplyTo($this->me->email, $this->me->username);
 
-                // Render the email.
-                $layout = KunenaLayout::factory('Email/Report')->debug(false)
-                    ->set('mail', $mail)
-                    ->set('message', $message)
-                    ->set('me', $this->me)
-                    ->set('title', $reason)
-                    ->set('content', $text)
-                    ->set('messageLink', $msglink);
+                if (KunenaMailTemplate::isUsed('com_kunena.reportmessage')) {
+                    // The mail template of Joomla (Users, Mail Templates): one mail for each moderator.
+                    $poster = $message->getAuthor();
+                    $common = [
+                        'sitename'   => $this->app->get('sitename'),
+                        'boardtitle' => $this->config->boardTitle,
+                        'title'      => $reason ?: $topic->subject,
+                        'sender'     => $this->me->username . ' (' . $this->me->name . ')',
+                        'reason'     => (string) $reason,
+                        'report'     => (string) $text,
+                        'poster'     => $poster->username . ' (' . $poster->name . ')',
+                        'subject'    => $topic->subject,
+                        'url'        => $msglink,
+                    ];
+                    $html   = $common + ['message' => '<div style="border-left:3px solid #dddddd;padding:4px 14px;margin:14px 0">' . $message->displayField('message') . '</div>'];
+                    $plain  = $common + ['message' => $message->displayField('message', false)];
 
-                try {
-                    $body = trim($layout->render());
-                    $mail->setBody($body);
-                } catch (Exception $e) {
-                    // TODO: display exception
-                }
+                    foreach ($emailToList as $emailTo) {
+                        if (!MailHelper::isEmailAddress($emailTo->email)) {
+                            continue;
+                        }
 
-                $receivers = [];
+                        $language = !empty($emailTo->id) ? (string) KunenaUserHelper::get((int) $emailTo->id)->language : '';
 
-                foreach ($emailToList as $emailTo) {
-                    if (!MailHelper::isEmailAddress($emailTo->email)) {
-                        continue;
-                    } else {
-                        $receivers[] = $emailTo->email;
+                        if (KunenaMailTemplate::send('com_kunena.reportmessage', $language, $mail, $html, $plain, ['sitename', 'boardtitle', 'title', 'sender', 'reason', 'report', 'poster', 'subject', 'url'], (string) $emailTo->email)) {
+                            $mailSent = true;
+                        }
                     }
-                }
+                } else {
+                    // Render the email.
+                    $layout = KunenaLayout::factory('Email/Report')->debug(false)
+                        ->set('mail', $mail)
+                        ->set('message', $message)
+                        ->set('me', $this->me)
+                        ->set('title', $reason)
+                        ->set('content', $text)
+                        ->set('messageLink', $msglink);
 
-                KunenaEmail::send($mail, $receivers);
-                $mailSent = true;
+                    try {
+                        $body = trim($layout->render());
+                        $mail->setBody($body);
+                    } catch (Exception $e) {
+                        // TODO: display exception
+                    }
+
+                    $receivers = [];
+
+                    foreach ($emailToList as $emailTo) {
+                        if (!MailHelper::isEmailAddress($emailTo->email)) {
+                            continue;
+                        } else {
+                            $receivers[] = $emailTo->email;
+                        }
+                    }
+
+                    KunenaEmail::send($mail, $receivers);
+                    $mailSent = true;
+                }
             }
 
             if ($handled || $mailSent) {

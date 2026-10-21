@@ -85,7 +85,7 @@ abstract class KunenaUserFollow
 
         if (!isset(self::$lists[$userid])) {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select($db->quoteName('followed_id'))
                 ->from($db->quoteName('#__kunena_user_follow'))
                 ->where($db->quoteName('user_id') . ' = :userid')
@@ -114,7 +114,7 @@ abstract class KunenaUserFollow
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName(['followed_id', 'created_time']))
             ->from($db->quoteName('#__kunena_user_follow'))
             ->where($db->quoteName('user_id') . ' = :userid')
@@ -140,7 +140,7 @@ abstract class KunenaUserFollow
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName(['user_id', 'created_time']))
             ->from($db->quoteName('#__kunena_user_follow'))
             ->where($db->quoteName('followed_id') . ' = :followedid')
@@ -166,7 +166,7 @@ abstract class KunenaUserFollow
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select('COUNT(*)')
             ->from($db->quoteName('#__kunena_user_follow'))
             ->where($db->quoteName('followed_id') . ' = :followedid')
@@ -207,7 +207,7 @@ abstract class KunenaUserFollow
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName(['u.id', 'u.name', 'u.username', 'u.email']))
             ->from($db->quoteName('#__kunena_user_follow', 'f'))
             ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('f.user_id'))
@@ -243,7 +243,7 @@ abstract class KunenaUserFollow
             $now   = time();
             $uid   = (int) $user->userid;
             $tid   = (int) $target->userid;
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->insert($db->quoteName('#__kunena_user_follow'))
                 ->columns($db->quoteName(['user_id', 'followed_id', 'created_time']))
                 ->values(':userid, :followedid, :created')
@@ -275,7 +275,7 @@ abstract class KunenaUserFollow
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->delete($db->quoteName('#__kunena_user_follow'))
             ->where($db->quoteName('user_id') . ' = :userid')
             ->where($db->quoteName('followed_id') . ' = :followedid')

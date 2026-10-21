@@ -85,7 +85,7 @@ abstract class KunenaUserIgnore
 
         if (!isset(self::$lists[$userid])) {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select($db->quoteName('ignored_id'))
                 ->from($db->quoteName('#__kunena_user_ignore'))
                 ->where($db->quoteName('user_id') . ' = :userid')
@@ -114,7 +114,7 @@ abstract class KunenaUserIgnore
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName(['ignored_id', 'created_time']))
             ->from($db->quoteName('#__kunena_user_ignore'))
             ->where($db->quoteName('user_id') . ' = :userid')
@@ -155,7 +155,7 @@ abstract class KunenaUserIgnore
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName('user_id'))
             ->from($db->quoteName('#__kunena_user_ignore'))
             ->where($db->quoteName('ignored_id') . ' = :targetid')
@@ -185,7 +185,7 @@ abstract class KunenaUserIgnore
             $now   = time();
             $uid   = (int) $user->userid;
             $tid   = (int) $target->userid;
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->insert($db->quoteName('#__kunena_user_ignore'))
                 ->columns($db->quoteName(['user_id', 'ignored_id', 'created_time']))
                 ->values(':userid, :targetid, :created')
@@ -220,7 +220,7 @@ abstract class KunenaUserIgnore
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->delete($db->quoteName('#__kunena_user_ignore'))
             ->where($db->quoteName('user_id') . ' = :userid')
             ->where($db->quoteName('ignored_id') . ' = :targetid')

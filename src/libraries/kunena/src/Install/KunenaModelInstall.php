@@ -1220,7 +1220,8 @@ class KunenaModelInstall extends BaseDatabaseModel
                 ->from($this->db->quoteName($this->db->getPrefix() . $versionprefix . 'version'))
                 ->where($state ? $this->db->quoteName('state') . '=\'' . '' . '\'' : '1=1')
                 ->order($this->db->quoteName('id') . ' DESC');
-            $this->db->setQuery($query, 0, 1);
+            $query->setLimit(1);
+            $this->db->setQuery($query);
 
             try {
                 $version = $this->db->loadObject();

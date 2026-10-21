@@ -162,7 +162,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
         $where = array_merge([$db->quoteName('l.type') . ' = ' . KunenaLog::TYPE_MODERATION], $scope);
 
         // The operations which are in the log (for the filter).
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select('DISTINCT ' . $db->quoteName('l.operation'))
             ->from($db->quoteName('#__kunena_logs', 'l'))
             ->where($where);
@@ -197,7 +197,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
             $where[] = '(' . $db->quoteName('u.username') . ' LIKE ' . $like . ' OR ' . $db->quoteName('u.name') . ' LIKE ' . $like . ')';
         }
 
-        $count = $db->getQuery(true)
+        $count = $db->createQuery()
             ->select('COUNT(*)')
             ->from($db->quoteName('#__kunena_logs', 'l'))
             ->leftJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('l.user_id'))
@@ -207,7 +207,7 @@ class TopicModlogDisplay extends KunenaControllerDisplay
         $start            = max(0, $this->input->getInt('start', 0));
         $this->pagination = new KunenaPagination($total, $start, self::LIMIT);
 
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select([
                 $db->quoteName('l.id'), $db->quoteName('l.user_id'), $db->quoteName('l.category_id'), $db->quoteName('l.topic_id'),
                 $db->quoteName('l.target_user'), $db->quoteName('l.time'), $db->quoteName('l.operation'),
@@ -220,7 +220,8 @@ class TopicModlogDisplay extends KunenaControllerDisplay
             ->where($where)
             ->order($db->quoteName('l.id') . ' DESC');
 
-        $this->entries = (array) $db->setQuery($query, $this->pagination->limitstart, self::LIMIT)->loadObjectList();
+        $query->setLimit(self::LIMIT, $this->pagination->limitstart);
+        $this->entries = (array) $db->setQuery($query)->loadObjectList();
 
         // Load the users and the topics of the entries in one go.
         $userIds  = [];

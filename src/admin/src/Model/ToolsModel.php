@@ -909,7 +909,8 @@ class ToolsModel extends AdminModel
             ->select($db->quoteName('socials'))
             ->from($db->quoteName('#__kunena_users'))
             ->order($db->quoteName('userid') . ' ASC');
-        $db->setQuery($query, 0, 1);
+        $query->setLimit(1);
+        $db->setQuery($query);
 
         try {
             $socials = $db->loadResult();

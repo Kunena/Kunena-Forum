@@ -433,7 +433,8 @@ class InboxHelper
         $total = (int) $db->setQuery($count)->loadResult();
 
         $query->select('*')->order($db->quoteName('id') . ' DESC');
-        $rows = $db->setQuery($query, $start, $limit)->loadObjectList();
+        $query->setLimit($limit, $start);
+        $rows = $db->setQuery($query)->loadObjectList();
 
         return [$total, self::withFiles(array_map(static fn ($row) => self::toArray($row, $userid, $filter === 'sent'), $rows))];
     }

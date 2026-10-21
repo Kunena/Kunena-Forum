@@ -90,7 +90,7 @@ abstract class KunenaDraftHelper
         $db      = Factory::getContainer()->get(DatabaseInterface::class);
 
         if ($draftId && static::get($draftId, $userid)) {
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->update($db->quoteName('#__kunena_drafts'))
                 ->set($db->quoteName('catid') . ' = :catid')
                 ->set($db->quoteName('parent_id') . ' = :parent')
@@ -121,7 +121,7 @@ abstract class KunenaDraftHelper
             return 0;
         }
 
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->insert($db->quoteName('#__kunena_drafts'))
             ->columns($db->quoteName(['user_id', 'catid', 'parent_id', 'topic_id', 'message_id', 'subject', 'message', 'fields', 'created_time', 'modified_time']))
             ->values(':userid, :catid, :parent, :topic, :mesid, :subject, :message, :fields, :created, :modified')
@@ -157,7 +157,7 @@ abstract class KunenaDraftHelper
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select('*')
             ->from($db->quoteName('#__kunena_drafts'))
             ->where($db->quoteName('id') . ' = :id')
@@ -192,14 +192,15 @@ abstract class KunenaDraftHelper
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName(['id', 'catid', 'parent_id', 'topic_id', 'message_id', 'subject', 'message', 'created_time', 'modified_time']))
             ->from($db->quoteName('#__kunena_drafts'))
             ->where($db->quoteName('user_id') . ' = :userid')
             ->order($db->quoteName('modified_time') . ' DESC')
             ->bind(':userid', $userid, ParameterType::INTEGER);
 
-        return (array) $db->setQuery($query, 0, static::MAX_DRAFTS)->loadObjectList();
+        $query->setLimit(static::MAX_DRAFTS, 0);
+        return (array) $db->setQuery($query)->loadObjectList();
     }
 
     /**
@@ -218,7 +219,7 @@ abstract class KunenaDraftHelper
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select('COUNT(*)')
             ->from($db->quoteName('#__kunena_drafts'))
             ->where($db->quoteName('user_id') . ' = :userid')
@@ -244,7 +245,7 @@ abstract class KunenaDraftHelper
         }
 
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->delete($db->quoteName('#__kunena_drafts'))
             ->where($db->quoteName('id') . ' = :id')
             ->where($db->quoteName('user_id') . ' = :userid')

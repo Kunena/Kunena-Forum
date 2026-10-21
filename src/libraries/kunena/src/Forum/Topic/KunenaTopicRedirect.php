@@ -189,7 +189,8 @@ abstract class KunenaTopicRedirect
                 ->where($db->quoteName('header') . ' = :header')
                 ->where($db->quoteName('published') . ' = 1')
                 ->bind(':header', $header, ParameterType::INTEGER);
-            $db->setQuery($query, 0, 1);
+            $query->setLimit(1);
+            $db->setQuery($query);
 
             $id = (int) $db->loadResult();
 

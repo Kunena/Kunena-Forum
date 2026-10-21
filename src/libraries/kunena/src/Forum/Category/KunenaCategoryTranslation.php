@@ -45,7 +45,7 @@ abstract class KunenaCategoryTranslation
     public static function loadLanguage(string $language): array
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName(['category_id', 'name', 'description', 'headerdesc']))
             ->from($db->quoteName('#__kunena_categories_translations'))
             ->where($db->quoteName('language') . ' = :language')
@@ -71,7 +71,7 @@ abstract class KunenaCategoryTranslation
     public static function getAll(int $categoryId): array
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName(['language', 'name', 'description', 'headerdesc']))
             ->from($db->quoteName('#__kunena_categories_translations'))
             ->where($db->quoteName('category_id') . ' = :id')
@@ -108,7 +108,7 @@ abstract class KunenaCategoryTranslation
                 $values[$field] = trim((string) ($row[$field] ?? ''));
             }
 
-            $delete = $db->getQuery(true)
+            $delete = $db->createQuery()
                 ->delete($db->quoteName('#__kunena_categories_translations'))
                 ->where($db->quoteName('category_id') . ' = :id')
                 ->where($db->quoteName('language') . ' = :language')
@@ -120,7 +120,7 @@ abstract class KunenaCategoryTranslation
                 continue;
             }
 
-            $insert = $db->getQuery(true)
+            $insert = $db->createQuery()
                 ->insert($db->quoteName('#__kunena_categories_translations'))
                 ->columns($db->quoteName(['category_id', 'language', 'name', 'description', 'headerdesc']))
                 ->values(':id, :language, :name, :description, :headerdesc')
@@ -145,7 +145,7 @@ abstract class KunenaCategoryTranslation
     public static function delete(int $categoryId): void
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->delete($db->quoteName('#__kunena_categories_translations'))
             ->where($db->quoteName('category_id') . ' = :id')
             ->bind(':id', $categoryId, ParameterType::INTEGER);

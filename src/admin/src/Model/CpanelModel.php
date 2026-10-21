@@ -75,7 +75,7 @@ class CpanelModel extends AdminModel
     function setSampleDataFlag($value = 1)
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         $query->update($db->quoteName('#__kunena_version'))
         ->set($db->quoteName('sampleData') . ' = ' . $db->quote($value));

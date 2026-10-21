@@ -1270,7 +1270,7 @@ class ToolsController extends FormController
                             $db->quoteName('userid') . ' = ' . $value->userid,
                         );
 
-                        $query = $db->getQuery(true);
+                        $query = $db->createQuery();
                         $query->update($db->quoteName('#__kunena_users'))->set($fields)->where($conditions);
                         $db->setQuery($query);
 
@@ -1304,7 +1304,7 @@ class ToolsController extends FormController
                     $column = $db->loadResult();
 
                     if ($column) {
-                        $query = $db->getQuery(true);
+                        $query = $db->createQuery();
                         $query = 'ALTER TABLE ' . $db->quoteName('#__kunena_users') . ' DROP ' . $column . ';';
                         $db->setQuery($query);
                         $db->execute();

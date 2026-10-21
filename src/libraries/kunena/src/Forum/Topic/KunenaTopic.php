@@ -1935,7 +1935,7 @@ class KunenaTopic extends KunenaDatabaseObject
             $app->enqueueMessage($e->getMessage(), 'error');
         }
 
-        $query = $this->_db->getQuery(true)
+        $query = $this->_db->createQuery()
             ->update($this->_db->quoteName('#__kunena_messages'))
             ->set($this->_db->quoteName('time') . ' = IF(time <= @ktime, @ktime:=@ktime+1, @ktime:=time)')
             ->where($this->_db->quoteName('thread') . ' = :thread')
@@ -2088,13 +2088,13 @@ class KunenaTopic extends KunenaDatabaseObject
         $this->_authfcache = $this->_authccache = $this->_authcache = [];
 
         $db        = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->update($db->quoteName('#__kunena_messages'))
             ->set($db->quoteName('hold') . ' = 2')
             ->where($db->quoteName('thread') . ' = :thread')
             ->bind(':thread', $this->id, \Joomla\Database\ParameterType::INTEGER);
         $queries[] = $query;
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->update($db->quoteName('#__kunena_topics'))
             ->set($db->quoteName('hold') . ' = 2')
             ->where($db->quoteName('id') . ' = :id')

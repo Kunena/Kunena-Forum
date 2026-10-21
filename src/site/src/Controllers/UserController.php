@@ -963,7 +963,8 @@ class UserController extends KunenaController
             ->group($this->db->quoteName('ip'))
             ->order('time DESC');
 
-        $this->db->setQuery($query, 0, 1);
+        $query->setLimit(1);
+        $this->db->setQuery($query);
         $ip = $this->db->loadResult();
 
         if (!empty($ip)) {

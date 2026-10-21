@@ -240,7 +240,8 @@ class KunenaSampleData
             // Only insert sample/default data if table is empty
             $checkQuery = $db->createQuery();
             $checkQuery->select('*')->from($db->quoteName($db->getPrefix() . $query[0]));
-            $db->setQuery($checkQuery, 0, 1);
+            $checkQuery->setLimit(1);
+            $db->setQuery($checkQuery);
             $filled = $db->loadObject();
 
             if (!$filled) {

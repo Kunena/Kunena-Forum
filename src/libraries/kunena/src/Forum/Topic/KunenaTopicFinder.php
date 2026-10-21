@@ -436,7 +436,8 @@ class KunenaTopicFinder extends KunenaFinder
             ->from($this->db->quoteName('#__users'))
             ->where('(' . $this->db->quoteName('username') . ' LIKE ' . $like . ' OR ' . $this->db->quoteName('name') . ' LIKE ' . $like . ')');
 
-        $ids = ArrayHelper::toInteger((array) $this->db->setQuery($query, 0, 200)->loadColumn());
+        $query->setLimit(200);
+        $ids = ArrayHelper::toInteger((array) $this->db->setQuery($query)->loadColumn());
         $or  = [$this->db->quoteName('a.first_post_guest_name') . ' LIKE ' . $like];
 
         if ($ids) {

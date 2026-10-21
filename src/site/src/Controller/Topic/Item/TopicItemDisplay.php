@@ -166,7 +166,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
         }
 
         // A topic of another forum of the site goes to that forum.
-        KunenaCategoryHelper::redirectToForum($catid, 'index.php?option=com_kunena&view=topic&catid=' . $catid . '&id=' . $id . ($mesid ? '&mesid=' . $mesid : ''));
+        KunenaCategoryHelper::redirectToForum((int) $catid, 'index.php?option=com_kunena&view=topic&catid=' . (int) $catid . '&id=' . (int) $id . ($mesid ? '&mesid=' . $mesid : ''));
 
         $this->me = KunenaUserHelper::getMyself();
 

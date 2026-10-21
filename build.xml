@@ -403,6 +403,12 @@
 			<fileset dir="${kunena.plugins}/plg_kunena_inbox" />
 		</copy>
 		<copy
+			todir="${tmp_dir}/packages/plg_kunena_reports"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${kunena.plugins}/plg_kunena_reports" />
+		</copy>
+		<copy
 			todir="${tmp_dir}/packages/plg_kunena_community"
 			overwrite="true">
 			<filterchain refid="filter" />
@@ -507,6 +513,14 @@
 			overwrite="true">
 			<filterchain refid="filter" />
 			<fileset dir="${project_dir}/plugins/plg_kunena_inbox">
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
+		<copy
+			todir="${tmp_dir}/packages/plg_kunena_reports"
+			overwrite="true">
+			<filterchain refid="filter" />
+			<fileset dir="${project_dir}/plugins/plg_kunena_reports">
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
@@ -786,6 +800,14 @@
 			<property
 				name="base.directory"
 				value="${tmp_dir}/packages/plg_kunena_inbox" />
+		</phingcall>
+		<phingcall target="archive">
+			<property
+				name="destination.file"
+				value="dist/package/distribution/packages/plg_kunena_reports_v${xml.version}" />
+			<property
+				name="base.directory"
+				value="${tmp_dir}/packages/plg_kunena_reports" />
 		</phingcall>
 		<phingcall target="archive">
 			<property

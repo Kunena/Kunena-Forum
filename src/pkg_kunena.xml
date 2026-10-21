@@ -62,6 +62,10 @@
         <file
             type="plugin"
             group="kunena"
+            id="reports">plg_kunena_reports_v@kunenaversion@.zip</file>
+        <file
+            type="plugin"
+            group="kunena"
             id="acl">plg_kunena_acl_v@kunenaversion@.zip</file>
         <file
             type="plugin"

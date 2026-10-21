@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension
+    type="plugin"
+    group="kunena"
+    method="upgrade">
+    <name>plg_kunena_reports</name>
+    <version>@kunenaversion@</version>
+    <creationDate>@kunenaversiondate@</creationDate>
+    <author>Kunena Team</author>
+    <authorEmail>Kunena@kunena.org</authorEmail>
+    <authorUrl>https://www.kunena.org</authorUrl>
+    <copyright>www.kunena.org</copyright>
+    <license>GNU/GPLv3 or later</license>
+    <description>PLG_KUNENA_REPORTS_DESCRIPTION</description>
+    <namespace path="src">Kunena\Forum\Plugin\Kunena\Reports</namespace>
+    <changelogurl>@kunenachangelog@</changelogurl>
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <files>
+        <folder>language</folder>
+        <folder plugin="reports">src</folder>
+        <folder>services</folder>
+        <folder>sql</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic" addfieldprefix="Kunena\Forum\Administrator\Field">
+                <field
+                    name="category"
+                    type="kunenacategorylist"
+                    default="0"
+                    label="PLG_KUNENA_REPORTS_CATEGORY"
+                    description="PLG_KUNENA_REPORTS_CATEGORY_DESC"
+                    class="form-select">
+                    <option value="0">PLG_KUNENA_REPORTS_NO_CATEGORY</option>
+                </field>
+                <field
+                    name="holdThreshold"
+                    type="number"
+                    default="0"
+                    min="0"
+                    step="1"
+                    label="PLG_KUNENA_REPORTS_HOLD"
+                    description="PLG_KUNENA_REPORTS_HOLD_DESC"
+                    class="form-control"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

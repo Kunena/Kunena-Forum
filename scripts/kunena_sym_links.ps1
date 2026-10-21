@@ -179,6 +179,11 @@ function delete-ExistingKunenaDir {
     if (Test-Path -Path $path15) {
         Remove-Item -LiteralPath $path15 -Force -Recurse
     }
+
+    $pathInbox = $joomlaInstallDir + "\plugins\kunena\inbox"
+    if (Test-Path -Path $pathInbox) {
+        Remove-Item -LiteralPath $pathInbox -Force -Recurse
+    }
     
     $path16 = $joomlaInstallDir + "\plugins\privacy\kunena"
     if (Test-Path -Path $path16) {
@@ -250,6 +255,9 @@ function make-SymLinksKunena {
     $path14 = $joomlaInstallDir + "\plugins\kunena\uddeim"
     $target14 = $kunenaGitDir + "\src\plugins\plg_kunena_uddeim"
     New-Item -ItemType SymbolicLink -Path $path14 -Target $target14
+    $pathInbox = $joomlaInstallDir + "\plugins\kunena\inbox"
+    $targetInbox = $kunenaGitDir + "\src\plugins\plg_kunena_inbox"
+    New-Item -ItemType SymbolicLink -Path $pathInbox -Target $targetInbox
     $path15 = $joomlaInstallDir + "\plugins\kunena\joomla"
     $target15 = $kunenaGitDir + "\src\plugins\plg_kunena_joomla"
     New-Item -ItemType SymbolicLink -Path $path15 -Target $target15

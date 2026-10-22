@@ -383,7 +383,7 @@ class TopicItemDisplay extends KunenaControllerDisplay
             $data->aggregateRating  = $tmp3;
         }
 
-        KunenaTemplate::getInstance()->addScriptDeclaration(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), 'application/ld+json');
+        KunenaTemplate::getInstance()->addScriptDeclaration(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP), 'application/ld+json');
     }
 
     /**

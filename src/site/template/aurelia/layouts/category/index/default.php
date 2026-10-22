@@ -143,7 +143,7 @@ foreach ($this->sections as $section) :
                             <td>
                                 <div>
                                     <h3>
-                                        <?php echo $this->getCategoryLink($category, $category->name, null, $this->ktemplate->tooltips(), true, false); ?>
+                                        <?php echo $this->getCategoryLink($category, $this->escape($category->name), null, $this->ktemplate->tooltips(), true, false); ?>
                                         <?php if ($isAdmin) : ?>
                                             <a class="btn btn-link btn-sm p-0" href="<?php echo Route::_('index.php?option=com_kunena&view=category&catid=' . (int) $category->id . '&layout=manage&Itemid=' . $Itemid); ?>"><?php echo KunenaIcons::pencil(); ?></a>
                                         <?php endif; ?>

@@ -874,6 +874,13 @@ class KunenaAttachment extends KunenaDatabaseObject
             $this->filename_real = $this->filename;
         }
 
+        // The column of the real name has 190 characters: a longer name keeps its start and its extension.
+        if (mb_strlen((string) $this->filename_real) > 190) {
+            $realExtension       = pathinfo((string) $this->filename_real, PATHINFO_EXTENSION);
+            $realExtension       = mb_strlen($realExtension) < 20 ? '.' . $realExtension : '';
+            $this->filename_real = mb_substr((string) $this->filename_real, 0, 190 - mb_strlen($realExtension)) . $realExtension;
+        }
+
         if (!$this->filename || $this->filename == $this->filename_real) {
             if (!$basename || !$extension) {
                 throw new InvalidArgumentException(__CLASS__ . '::' . __METHOD__ . '(): Parameters $basename or $extension not provided.');

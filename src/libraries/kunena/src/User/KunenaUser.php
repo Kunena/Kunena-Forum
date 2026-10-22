@@ -1639,7 +1639,7 @@ class KunenaUser
                 $location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage;
                 $imageProperties = Image::getImageFileProperties($location);
 
-                return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rankTitle) . '" />';
+                return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . htmlspecialchars(Text::_($rank->rankTitle), ENT_QUOTES, 'UTF-8') . '" />';
             }
 
             if ($this->_config->rankImages == 2) {
@@ -1651,7 +1651,7 @@ class KunenaUser
                 $location        = JPATH_SITE . '/media/kunena/ranks/' . $rank->rankImage;
                 $imageProperties = Image::getImageFileProperties($location);
 
-                return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . Text::_($rank->rankTitle) . '" /><br>
+                return '<img loading=lazy src="' . $url . '" height="' . $imageProperties->height . '" width="' . $imageProperties->width . '" alt="' . htmlspecialchars(Text::_($rank->rankTitle), ENT_QUOTES, 'UTF-8') . '" /><br>
 				<span class="ranksusergroups">' . self::getUserGroup($this->userid) . '</span>';
             }
 

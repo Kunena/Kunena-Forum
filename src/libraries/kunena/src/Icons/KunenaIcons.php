@@ -1036,6 +1036,9 @@ class KunenaIcons
             $categoryicon = $caticon;
         }
 
+        // The name is put in a class and in the name of a file: only the characters of a class (or an icon) are kept.
+        $categoryicon = preg_replace('/[^A-Za-z0-9 _-]/', '', (string) $categoryicon);
+
         if ($new) {
             $newchar = 'knewchar';
         } else {

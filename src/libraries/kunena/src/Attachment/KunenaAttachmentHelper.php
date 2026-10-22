@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
 use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\String\StringHelper;
 use Kunena\Forum\Libraries\Config\KunenaConfig;
 use Kunena\Forum\Libraries\Error\KunenaError;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
@@ -351,6 +352,12 @@ abstract class KunenaAttachmentHelper
         // Lets find out if we need to rename the filename.
         $basename  = preg_replace('/[[:space:]]/', '', File::makeSafe($basename));
         $extension = trim($extension, '.');
+
+        // Only the last dot starts the extension: a name as x.php.txt is run as a script by some web servers.
+        $basename = str_replace('.', '_', $basename);
+
+        // A name of more than 255 characters (with the date and the extension) can not be written.
+        $basename = StringHelper::substr($basename, 0, 100);
 
         if (empty($basename)) {
             $basename = 'file_' . bin2hex(random_bytes(4));

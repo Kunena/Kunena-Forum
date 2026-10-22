@@ -935,11 +935,8 @@ class KunenaCategory extends KunenaDatabaseObject
      */
     protected function authoriseRead(KunenaUser $user)
     {
-        static $catids = false;
-
-        if ($catids === false) {
-            $catids = KunenaAccess::getInstance()->getAllowedCategories($user);
-        }
+        // The categories are those of this user (a notification asks for a subscriber, not for the user who is logged in).
+        $catids = KunenaAccess::getInstance()->getAllowedCategories($user);
 
         // Checks if user can read category
         if (!$this->exists()) {
@@ -1521,6 +1518,11 @@ class KunenaCategory extends KunenaDatabaseObject
         }
 
         $result = parent::bind($src, $fields, $include);
+
+        // A category without a set of topic icons (the column is empty) uses the default set: the pages and the icons need a name.
+        if (empty($this->iconset)) {
+            $this->iconset = 'default';
+        }
 
         if (!($this->params instanceof Registry)) {
             $registry = new Registry();

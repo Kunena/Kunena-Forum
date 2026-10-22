@@ -132,7 +132,7 @@ class SmiliesController extends FormController
         }
 
         $smileyCode        = $this->input->getString('smileyCode');
-        $smileyLocation    = basename($this->input->getString('smiley_url'));
+        $smileyLocation    = basename((string) $this->input->getString('smiley_url'));
         $smileyEmoticonBar = $this->input->getInt('smileyEmoticonBar', 0);
         $smileyId          = $this->input->getInt('smileyId', 0);
 

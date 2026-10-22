@@ -57,6 +57,8 @@ class CategoryDisplay extends KunenaControllerDisplay
      */
     protected function before()
     {
+        $this->checkForumIsOpen();
+
         $response              = [];
         $response['topiclist'] = [];
 

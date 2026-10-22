@@ -217,6 +217,14 @@ class UsersController extends KunenaController
             return;
         }
 
+        // The user has to be there: the logout of a number which is no user is an error of the actions log of Joomla.
+        if (!Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById((int) $id)->id) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_NO_USER'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $options = ['clientid' => 0];
         $this->app->logout((int) $id, $options);
 

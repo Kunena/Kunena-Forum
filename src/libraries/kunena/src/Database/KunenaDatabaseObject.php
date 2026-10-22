@@ -120,6 +120,14 @@ abstract class KunenaDatabaseObject
             $src = $include ? array_intersect_key($src, array_flip($fields)) : array_diff_key($src, array_flip($fields));
         }
 
+        // Only the properties of the object are bound: a field of a form which is no property (a token, a button, a name which a request
+        // invents) is not a new property of the object, and the internal ones (their names start with _) are not for a request.
+        $src = array_filter(
+            $src,
+            fn ($key) => \is_string($key) && $key !== '' && $key[0] !== '_' && property_exists($this, $key),
+            ARRAY_FILTER_USE_KEY
+        );
+
         $this->setProperties($src);
 
         return true;

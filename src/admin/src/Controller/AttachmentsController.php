@@ -78,8 +78,22 @@ class AttachmentsController extends FormController
         }
 
         foreach ($cid as $id) {
-            $attachment  = KunenaAttachmentHelper::get($id);
-            $message     = $attachment->getMessage();
+            $attachment = KunenaAttachmentHelper::get($id);
+
+            // An attachment which is not there is nothing to delete.
+            if (!$attachment->exists()) {
+                continue;
+            }
+
+            $message = $attachment->getMessage();
+
+            // An attachment which was uploaded and belongs to no message: only the attachment goes.
+            if (!$message->exists()) {
+                $attachment->delete();
+
+                continue;
+            }
+
             $attachments = [$attachment->id, 1];
             $attach      = [];
             $removeList  = array_keys(array_diff_key($attachments, $attach));

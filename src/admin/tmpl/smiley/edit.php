@@ -77,7 +77,7 @@ $wa->useScript('multiselect');
                             <td>
                                 <label>
                                     <input type="checkbox" name="smileyEmoticonBar" value="1"
-                                            <?php echo $this->state->get('item.id') && $this->smileySelected->emoticonbar == 1 ? 'checked="checked"' : ''; ?> />
+                                            <?php echo $this->state->get('item.id') && ($this->smileySelected->emoticonbar ?? 0) == 1 ? 'checked="checked"' : ''; ?> />
                                 </label>
                             </td>
                         </tr>

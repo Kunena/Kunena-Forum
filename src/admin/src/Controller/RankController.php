@@ -93,7 +93,7 @@ class RankController extends AdminController
         }
 
         $rankTitle   = $this->app->getInput()->getString('rankTitle');
-        $rankImage   = basename($this->app->getInput()->getString('rankImage'));
+        $rankImage   = basename((string) $this->app->getInput()->getString('rankImage'));
         $rankSpecial = $this->app->getInput()->getInt('rankSpecial', 0);
         $rankMin     = $this->app->getInput()->getInt('rankMin');
         $rankid      = $this->app->getInput()->getInt('rankid', 0);

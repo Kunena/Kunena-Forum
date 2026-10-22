@@ -19,9 +19,9 @@ describe('Kunena BBCode: text for some readers', () => {
   const lists = () => [
     `${base}&view=category&catid=3`,
     `${base}&view=category&layout=list`,
-    `${base}&view=category&catid=3&format=feed`,
+    `${base}&view=category&catid=3&format=feed&layout=feed&type=rss`,
     `${base}&view=topics`,
-    `${base}&view=topics&format=feed`,
+    `${base}&view=topics&format=feed&layout=feed&type=rss`,
     `${base}&view=topics&format=json`,
     `${base}&view=topics&mode=replies`,
     `${base}&view=topics&layout=user&mode=topics&userid=797`,

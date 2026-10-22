@@ -22,6 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Event\DispatcherInterface;
 use Kunena\Forum\Libraries\Event\KunenaGetUserTopicsEvent;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicFinder;
@@ -115,6 +116,10 @@ class TopicListingUserDisplay extends ListDisplay
             ->filterByHold([$hold])
             ->filterByTime($time);
 
+        // What a user favorites and subscribes to is for him (and the moderators): it shows who wrote an anonymous topic, because the
+        // author is subscribed to it. The others see the topics where the user wrote.
+        $private = $this->user->userid && $this->user->userid != $this->me->userid && !$this->me->isModerator();
+
         switch ($this->state->get('list.mode')) {
             case 'posted':
                 $finder
@@ -127,6 +132,10 @@ class TopicListingUserDisplay extends ListDisplay
                 break;
 
             case 'favorites':
+                if ($private) {
+                    throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $this->me->exists() ? 403 : 401);
+                }
+
                 $finder->filterByUser($this->user, 'favorited');
                 break;
 
@@ -136,6 +145,10 @@ class TopicListingUserDisplay extends ListDisplay
                 break;
 
             case 'subscriptions':
+                if ($private) {
+                    throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $this->me->exists() ? 403 : 401);
+                }
+
                 $finder->filterByUser($this->user, 'subscribed');
                 break;
 
@@ -148,7 +161,7 @@ class TopicListingUserDisplay extends ListDisplay
 
             default:
                 $finder
-                    ->filterByUser($this->user, 'involved')
+                    ->filterByUser($this->user, $private ? 'posted' : 'involved')
                     ->order('favorite', -1, 'ut');
                 break;
         }

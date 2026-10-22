@@ -57,7 +57,7 @@ class UserModel extends KunenaModel
     public function getSubscriptions(): array
     {
         $db     = $this->getDatabase();
-        $userid = $this->getState($this->getName() . '.id');
+        $userid = (int) $this->getState($this->getName() . '.id');
 
         $query = $db->createQuery();
         $query->select($db->quoteName('topic_id') . ' AS thread')
@@ -94,7 +94,7 @@ class UserModel extends KunenaModel
      */
     public function getCatSubscriptions(): array
     {
-        $userid = $this->getState($this->getName() . '.id');
+        $userid = (int) $this->getState($this->getName() . '.id');
 
         return KunenaCategoryHelper::getSubscriptions($userid);
     }
@@ -108,7 +108,7 @@ class UserModel extends KunenaModel
     public function getIPlist(): array
     {
         $db     = $this->getDatabase();
-        $userid = $this->getState($this->getName() . '.id');
+        $userid = (int) $this->getState($this->getName() . '.id');
 
         $query = $db->createQuery();
         $query->select('ip')
@@ -194,7 +194,7 @@ class UserModel extends KunenaModel
      */
     public function getUser(): KunenaUser
     {
-        $userid = $this->getState($this->getName() . '.id');
+        $userid = (int) $this->getState($this->getName() . '.id');
 
         return KunenaUserHelper::get($userid);
     }

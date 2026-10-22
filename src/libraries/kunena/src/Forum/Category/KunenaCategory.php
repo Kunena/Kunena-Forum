@@ -1584,7 +1584,7 @@ class KunenaCategory extends KunenaDatabaseObject
      */
     public function check(): bool
     {
-        $this->alias = trim($this->alias);
+        $this->alias = trim((string) $this->alias);
 
         // An alias which is made from the name can start with the id of the category (the setting of the SEF).
         $this->autoAlias = empty($this->alias);

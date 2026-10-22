@@ -108,6 +108,12 @@ class HtmlView extends BaseHtmlView
             $this->form         = $model->getForm();
             $this->details      = $model->getTemplatedetails();
             $this->templatename = Factory::getApplication()->getUserState('kunena.edit.templatename');
+
+            // A template has to be chosen in the list first: without a template there is nothing to edit.
+            if (!$this->details || empty($this->templatename)) {
+                Factory::getApplication()->redirect('index.php?option=com_kunena&view=templates');
+            }
+
             $template           = KunenaTemplate::getInstance($this->templatename);
             $template->initializeBackend();
 

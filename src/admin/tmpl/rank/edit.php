@@ -75,7 +75,7 @@ $wa->useScript('multiselect');
                                 <?php else :
                                     ?>
                                     <img loading=lazy name="rankImage"
-                                         src="<?php echo $this->escape(KunenaFactory::getTemplate()->getRankPath($this->rankSelected->rankImage, true)); ?>"
+                                         src="<?php echo $this->escape(KunenaFactory::getTemplate()->getRankPath($this->rankSelected->rankImage ?? '', true)); ?>"
                                          border="0"
                                          alt="<?php echo isset($this->rankSelected->rankTitle) ? $this->rankSelected->rankTitle : 'rank' ?>"/>
                                 <?php endif; ?>

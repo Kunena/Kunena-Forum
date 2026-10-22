@@ -71,6 +71,7 @@ class TopicsDisplay extends KunenaControllerDisplay
     protected function before()
     {
         $this->config = KunenaFactory::getConfig();
+        $this->checkForumIsOpen();
         $this->document = Factory::getApplication()->getDocument();
         $this->topicsModel = new TopicsModel();
         $mode = $this->getInput()->getWord('mode', 'topics');

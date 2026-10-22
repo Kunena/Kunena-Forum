@@ -136,6 +136,13 @@ class CategoryController extends KunenaController
         }
 
         $post       = $this->input->post->getArray();
+
+        // The fields of one value are no lists (name[]=x): a list is no name, and it can not be a text of the table.
+        foreach (['catid', 'parentid', 'name', 'alias', 'icon', 'description', 'headerdesc', 'class_sfx', 'topictemplate', 'accesstype', 'language', 'iconset'] as $field) {
+            if (isset($post[$field]) && \is_array($post[$field])) {
+                unset($post[$field]);
+            }
+        }
         $accesstype = strtr($this->input->getCmd('accesstype', 'joomla.level'), '.', '-');
 
         if (empty($post['name'])) {
@@ -152,13 +159,15 @@ class CategoryController extends KunenaController
             $post['catid'] = $this->app->getUserState('com_kunena.category_catid');
         }
 
-        $post['access'] = $this->input->getInt("access-{$accesstype}", $this->input->getInt('access'));
         $post['params'] = $this->input->get("params-{$accesstype}", [], 'array');
         $post['params'] += $this->input->get("params", [], 'array');
         $success        = false;
 
         $category = KunenaCategoryHelper::get(\intval($post['catid'] ?? 0));
         $parent   = KunenaCategoryHelper::get(\intval($post['parentid'] ?? 0));
+
+        // A request without an access level keeps the level of the category (a new category is for everybody).
+        $post['access'] = $this->input->getInt("access-{$accesstype}", $this->input->getInt('access', $category->exists() ? (int) $category->access : 1));
 
         unset($post['params-joomla-level']);
         unset($post['params-joomla-group']);
@@ -331,6 +340,13 @@ class CategoryController extends KunenaController
     public function apply(): void
     {
         $category = $this->internalSave();
+
+        // Nothing was saved (the token is not right, for example): back to the form.
+        if (!$category instanceof KunenaCategory) {
+            $this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=create", false));
+
+            return;
+        }
 
         if ($category->exists()) {
             $this->setRedirect(KunenaRoute::_($this->basecategoryurl . "&layout=edit&catid={$category->id}", false));

@@ -633,7 +633,8 @@ class KunenaConfig
         $params  = ComponentHelper::getParams(self::COMPONENT);
 
         foreach ($params as $key => $value) {
-            if ($this->config[$key] === $value) {
+            // The params of the component also keep what is not an option of the forum (the badges, the socials, the groups of ranks).
+            if (!\array_key_exists($key, $this->config) || $this->config[$key] === $value) {
                 continue;
             }
 

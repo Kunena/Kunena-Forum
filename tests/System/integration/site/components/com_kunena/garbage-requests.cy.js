@@ -17,7 +17,7 @@ describe('Kunena requests with parameters which no form sends', () => {
     empty: {},
     text: { catid: 'abc', id: 'abc', mesid: 'abc', userid: 'abc', topic_id: 'abc' },
     'no row': { catid: 99999999, id: 99999999, mesid: 99999999, userid: 99999999, topic_id: 99999999 },
-    list: { catid: ['x'], id: ['x'], mesid: ['x'], userid: ['x'], topic_id: ['x'], q: ['x'], search: ['x'], subject: ['x'], type: ['x'], sig: ['x'], draftid: ['x'], parentid: ['x'] },
+    list: { catid: ['x'], id: ['x'], mesid: ['x'], userid: ['x'], topic_id: ['x'], q: ['x'], search: ['x'], subject: ['x'], type: ['x'], sig: ['x'], draftid: ['x'], parentid: ['x'], name: ['x'], authorname: ['x'], message: ['x'], reason_public: ['x'], comment: ['x'] },
   };
 
   const views = {
@@ -75,6 +75,17 @@ describe('Kunena requests with parameters which no form sends', () => {
     });
     cy.then(() => expect(failed, `${who}: the requests with a server error`).to.deep.eq([]));
   };
+
+  // A list in a field of text must never become the text "Array" in a row of the forum.
+  afterEach(() => {
+    [
+      "SELECT COUNT(*) AS found FROM #__kunena_topics WHERE subject = 'Array' OR first_post_message = 'Array' OR last_post_message = 'Array'",
+      "SELECT COUNT(*) AS found FROM #__kunena_messages WHERE subject = 'Array' OR name = 'Array'",
+      "SELECT COUNT(*) AS found FROM #__kunena_messages_text WHERE message = 'Array'",
+      "SELECT COUNT(*) AS found FROM #__kunena_categories WHERE name = 'Array' OR alias = 'Array'",
+      "SELECT COUNT(*) AS found FROM #__kunena_users_banned WHERE reason_public = 'Array' OR comments = 'Array'",
+    ].forEach((sql) => cy.task('queryDB', sql).then((rows) => expect(Number(rows[0].found), sql).to.eq(0)));
+  });
 
   it('as a guest', () => {
     run('guest');

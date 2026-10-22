@@ -26,6 +26,7 @@ use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicRedirect;
 use Kunena\Forum\Libraries\Layout\KunenaBase;
 use Kunena\Forum\Libraries\Layout\KunenaLayout;
 use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
+use Kunena\Forum\Libraries\User\KunenaUserHelper;
 
 /**
  * Class KunenaControllerDisplay
@@ -444,5 +445,28 @@ abstract class KunenaControllerDisplay extends KunenaControllerBase
     protected function setMetaData(string $name, $content, $attribute = 'name'): void
     {
         $this->document->setMetaData($name, $content, $attribute);
+    }
+
+    /**
+     * The pages which come out of the forum as a whole (the feeds) have to follow the options which close the forum: the forum is
+     * offline, or it is only for registered users. The pages of the forum have this check in the layout of the page.
+     *
+     * @return  void
+     *
+     * @throws  KunenaExceptionAuthorise
+     * @since   Kunena 7.2
+     */
+    protected function checkForumIsOpen(): void
+    {
+        $config = KunenaConfig::getInstance();
+        $me     = KunenaUserHelper::getMyself();
+
+        if ($config->boardOffline && !$me->isAdmin()) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_FORUM_IS_OFFLINE'), 503);
+        }
+
+        if ($config->regOnly && !$me->exists()) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_LOGIN_NOTIFICATION'), 403);
+        }
     }
 }

@@ -72,6 +72,7 @@ class CategoryDisplay extends KunenaControllerDisplay
     protected function before()
     {
         $this->config = KunenaFactory::getConfig();
+        $this->checkForumIsOpen();
         $catid = $this->input->getInt('catid', 0);
         $model = new CategoryModel();
         $this->document = $this->app->getDocument();

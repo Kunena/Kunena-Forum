@@ -133,7 +133,7 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 16px; font-weight: bold; line-height: 130%;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;" class="header">
-                            <?php echo Text::_('COM_KUNENA_REPORT_RSENDER') . " {$this->me->username} ({$this->me->name})"; ?>
+                            <?php echo Text::_('COM_KUNENA_REPORT_RSENDER') . ' ' . $this->escape($this->me->username . ' (' . $this->me->name . ')'); ?>
                         </td>
                     </tr>
 
@@ -157,11 +157,11 @@ if (!$config->plainEmail) :
                     <tr>
                         <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; width: 87.5%; font-size: 17px;
             padding: 25px 6.25% 0;color: #999999;font-family: sans-serif;text-align:left;" class="paragraph">
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_RREASON') . " " . $this->title; ?></div>
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_RMESSAGE') . " " . $this->content; ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_RREASON') . ' ' . $this->escape($this->title); ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_RMESSAGE') . ' ' . $this->escape($this->content); ?></div>
 
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_POSTER') . " {$user->username} ({$user->name})"; ?></div>
-                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_SUBJECT') . ": " . $this->message->getTopic()->subject; ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_POSTER') . ' ' . $this->escape($user->username . ' (' . $user->name . ')'); ?></div>
+                            <div><?php echo Text::_('COM_KUNENA_REPORT_POST_SUBJECT') . ': ' . $this->escape($this->message->getTopic()->subject); ?></div>
                             <br/>
                             <div><?php echo Text::_('COM_KUNENA_REPORT_POST_MESSAGE'); ?></div>
                             <hr/>

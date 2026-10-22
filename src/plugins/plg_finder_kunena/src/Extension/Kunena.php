@@ -556,7 +556,9 @@ final class Kunena extends Adapter implements SubscriberInterface
         $item->alias = KunenaRoute::stringURLSafe($subject);
 
         // Set body context.
-        $item->body    = KunenaParser::stripBBCode($message->message);
+        // The text for some readers only ([hide], [confidential]) is not for the index of the site: the search shows the text.
+        $text = preg_replace('/\[(confidential|hide)\](.*?)\[\/\1\]/su', '', (string) $message->message);
+        $item->body    = KunenaParser::stripBBCode($text);
         $item->summary = $item->body;
 
         // Set other information.
@@ -716,15 +718,13 @@ final class Kunena extends Adapter implements SubscriberInterface
         $category = KunenaCategoryHelper::get($catid);
         $user     = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById(0);
 
-        $accesslevels = (array) $user->getAuthorisedViewLevels();
         $groups_r     = (array) Access::getGroupsByUser($user->id, \true);
         $groups       = (array) Access::getGroupsByUser($user->id, \false);
 
-        // Check against Joomla access level
+        // Check against Joomla access level: the level of the category is the level of the item (0 is a level which nobody has,
+        // it would hide the topics of a category for everybody, also for the users who may read it).
         if ($category->accesstype == 'joomla.level') {
-            if (\in_array($category->access, $accesslevels)) {
-                return 1;
-            }
+            return (int) $category->access ?: 1;
         }
         // Check against Joomla user group
         elseif ($category->accesstype == 'joomla.group') {

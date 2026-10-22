@@ -159,6 +159,39 @@ class SearchModel extends KunenaModel
     }
 
     /**
+     * The text of a message in which the words are looked for: without the parts which the searcher may not see. A word in
+     * [hide] (for the logged-in users) or in [confidential] (for the author and the moderators) must not give a hit to anybody
+     * else: the hit would tell him that the word is in the message.
+     *
+     * @param   \Joomla\Database\DatabaseInterface  $db  The database.
+     *
+     * @return  string  An SQL expression.
+     *
+     * @since   Kunena 7.2
+     */
+    protected function searchedText($db): string
+    {
+        // A global moderator sees every part.
+        if ($this->me->isModerator()) {
+            return 't.message';
+        }
+
+        $tags     = $this->me->exists() ? 'confidential' : 'hide|confidential';
+        $pattern  = $db->quote('(?is)\[(' . $tags . ')\].*?\[/\1\]');
+        $stripped = 'REGEXP_REPLACE(t.message, ' . $pattern . ", '')";
+
+        // The regular expression runs for the messages with such a part only.
+        $text = "CASE WHEN t.message LIKE '%[/hide]%' OR t.message LIKE '%[/confidential]%' THEN {$stripped} ELSE t.message END";
+
+        // The author sees his own confidential parts.
+        if ($this->me->exists()) {
+            $text = 'CASE WHEN m.userid = ' . (int) $this->me->userid . " THEN t.message ELSE {$text} END";
+        }
+
+        return $text;
+    }
+
+    /**
      * @return  string
      *
      * @since   Kunena 6.0
@@ -169,6 +202,7 @@ class SearchModel extends KunenaModel
     {
         $db           = $this->getDatabase();
         $querystrings = [];
+        $text         = $this->searchedText($db);
 
         foreach ($this->getSearchWords() as $searchword) {
             $searchword = StringHelper::trim($searchword);
@@ -190,7 +224,7 @@ class SearchModel extends KunenaModel
             $escapedSearchword = $db->escape($searchword, true);
 
             if (!$this->getState('query.titleonly')) {
-                $querystrings[] = "(t.message {$not} LIKE '%{$escapedSearchword}%' {$operator} m.subject {$not} LIKE '%{$escapedSearchword}%')";
+                $querystrings[] = "({$text} {$not} LIKE '%{$escapedSearchword}%' {$operator} m.subject {$not} LIKE '%{$escapedSearchword}%')";
             } else {
                 $querystrings[] = "(m.subject {$not} LIKE '%{$escapedSearchword}%')";
             }

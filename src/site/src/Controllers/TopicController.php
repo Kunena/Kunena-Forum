@@ -696,7 +696,8 @@ class TopicController extends KunenaController
         while (@ob_end_clean()) {
         }
 
-        echo $response;
+        // The answer is JSON: the object of the rating, or the list (empty for a guest).
+        echo \is_array($response) ? json_encode($response) : $response;
 
         jexit();
     }

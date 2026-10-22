@@ -327,7 +327,12 @@ class UserController extends KunenaController
             $this->user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
         }
 
-        $success = $this->saveUser();
+        // The same rule as the form: a moderator does not change the profile of an administrator.
+        KunenaUserHelper::get((int) $this->user->id)->tryAuthorise('edit');
+
+        // The account of Joomla (the name, the e-mail address, the password) is changed by the user himself or an administrator;
+        // a moderator changes the profile of the forum only.
+        $success = ($this->user->id == $my->id || $this->me->isAdmin()) ? $this->saveUser() : true;
 
         if (!$success) {
             $errors++;
@@ -1520,9 +1525,10 @@ class UserController extends KunenaController
 
         // Check if the user requesting it has made a post in the topic (a new topic has no users yet: the users are searched)
         $user = KunenaFactory::getUser();
-        $topic = KunenaTopicHelper::get($id)->getUserTopic($user->userid);
+        // The users of a topic are for the users who may read it (not only for those who wrote in it): a reply mentions them.
+        $topic = KunenaTopicHelper::get($id);
 
-        if ($id > 0 ? !$topic->exists() : !$user->exists()) {
+        if (!$user->exists() || ($id > 0 && (!$topic->exists() || !$topic->isAuthorised('read', $user)))) {
             throw new RuntimeException(Text::_('Not allowed'), 403);
         }
 

@@ -414,6 +414,29 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     }
 
     /**
+     * Is the announcement inside its dates (the date to start and the date to end, which can be empty)?
+     *
+     * @return  boolean
+     *
+     * @since   Kunena 7.2
+     */
+    public function isPublishedNow(): bool
+    {
+        $nullDate = '1000-01-01 00:00:00';
+        $now      = Factory::getDate()->toSql();
+
+        if (!empty($this->publish_up) && $this->publish_up !== $nullDate && $this->publish_up > $now) {
+            return false;
+        }
+
+        if (!empty($this->publish_down) && $this->publish_down !== $nullDate && $this->publish_down < $now) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param   KunenaUser  $user  user
      *
      * @return  KunenaExceptionAuthorise
@@ -427,7 +450,8 @@ class KunenaAnnouncement extends KunenaDatabaseObject
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 404);
         }
 
-        if ($this->published != 1 && !$user->isModerator()) {
+        // An announcement which is not published, which starts later or which has ended is for the moderators only.
+        if (!$user->isModerator() && ($this->published != 1 || !$this->isPublishedNow())) {
             return new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), 403);
         }
 

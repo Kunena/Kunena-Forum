@@ -44,6 +44,8 @@ describe('Kunena posting: the limits', () => {
 
   it('stops a second topic of a user within the time of the flood protection, but not of a moderator', () => {
     cy.kunena_setOption('floodProtection', '300');
+    // The flood protection goes by the IP address: the posts of the earlier tests (all from this machine) are moved out of its time.
+    cy.task('queryDB', "UPDATE #__kunena_messages SET time = time - 600 WHERE ip = '127.0.0.1' AND time > UNIX_TIMESTAMP() - 600");
 
     cy.doFrontendLogin(user.name, user.password, false);
     postTopic(`Cypress limit flood one ${stamp}`);

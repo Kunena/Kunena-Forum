@@ -2537,6 +2537,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
 
         if (!empty($default)) {
             $attachment = KunenaAttachmentHelper::get($default);
+
+            // Only an attachment of this message (or one which the user has just uploaded for it) is shown: a number in the text
+            // must not show the file of another message, which the reader may not see.
+            $mine = !$attachment->mesid && $attachment->userid && (int) $attachment->userid === (int) KunenaUserHelper::getMyself()->userid;
+
+            if (!$attachment->exists() || (!isset($attachments[$attachment->id]) && !$mine)) {
+                return $bbcode->HTMLEncode($content);
+            }
+
             unset($attachments[$attachment->id]);
         } elseif (empty($content) && !empty($attachments)) {
             $attachment = array_shift($attachments);

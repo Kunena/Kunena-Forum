@@ -555,14 +555,19 @@ class TopicsController extends KunenaController
             return;
         }
 
-        $userid = $this->app->getInput()->getInt('userid');
+        // Without a user id the current user is meant; the subscriptions of another user are removed by the moderators only.
+        $userid = $this->app->getInput()->getInt('userid') ?: (int) $this->me->userid;
 
         $ids = array_keys($this->app->getInput()->get('topics', [], 'post', 'array'));
         $ids = ArrayHelper::toInteger($ids);
 
         $topics = KunenaTopicHelper::getTopics($ids);
 
-        if (KunenaTopicHelper::subscribe(array_keys($topics), 0, $userid)) {
+        if ($userid != $this->me->userid) {
+            $topics = array_filter($topics, fn ($topic) => $this->me->isModerator($topic->getCategory()));
+        }
+
+        if ($this->me->exists() && $topics && KunenaTopicHelper::subscribe(array_keys($topics), 0, $userid)) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_UNSUBSCRIBE_YES'), 'success');
         } else {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC'), 'notice');

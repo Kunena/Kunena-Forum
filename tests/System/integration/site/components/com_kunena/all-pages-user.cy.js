@@ -83,7 +83,6 @@ describe('Kunena pages for a user', () => {
     'the list of the users': 'view=user&layout=list',
     'the page to edit the profile': 'view=user&layout=edit',
     'the attachments of the user': 'view=user&layout=attachments',
-    'the list of the banned users': 'view=user&layout=banmanager',
     'the inbox': 'view=inbox',
     'the list of the announcements': 'view=announcement&layout=listing',
   };
@@ -173,6 +172,7 @@ describe('Kunena pages for a user', () => {
     'the moderation of a topic': 'view=topic&layout=moderate&catid=%catid%&id=%id%',
     'the log of the moderators': 'view=topic&layout=modlog',
     'the moderation of a user': 'view=user&layout=moderate&userid=1',
+    'the list of the banned users': 'view=user&layout=banmanager',
     'the form of a new announcement': 'view=announcement&layout=create',
     'the form to edit an announcement': 'view=announcement&layout=edit&id=1',
   };

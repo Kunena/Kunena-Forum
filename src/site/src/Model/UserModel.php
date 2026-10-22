@@ -277,7 +277,21 @@ class UserModel extends KunenaModel
         $value -= $value % $limit;
         $this->setState('list.start', $value);
 
+        // The field of the order is one of the fields of the list: another word gave an SQL error (which stayed in the session,
+        // so the list was broken until the end of it), and a word like "email" ordered the list by a column which it does not show.
+        $fields = ['id', 'username', 'name', 'registerDate', 'lastvisitDate', 'posts', 'karma', 'uhits'];
+
+        if ($this->config->userlistEmail) {
+            $fields[] = 'email';
+        }
+
         $value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_ordering", 'filter_order', 'id', 'cmd');
+
+        if (!\in_array($value, $fields, true)) {
+            $value = 'id';
+            $this->app->setUserState("com_kunena.users_{$active}_list_ordering", $value);
+        }
+
         $this->setState('list.ordering', $value);
 
         $value = $this->getUserStateFromRequest("com_kunena.users_{$active}_list_direction", 'filter_order_Dir', 'asc', 'word');

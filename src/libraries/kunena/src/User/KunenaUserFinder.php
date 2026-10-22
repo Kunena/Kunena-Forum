@@ -142,7 +142,9 @@ class KunenaUserFinder extends KunenaFinder
 
         // Select users banned
         if ($usertype == 'banned') {
-            $this->query->where($this->db->quoteName('ku.banned') . ' != ' . $this->db->quote('1000-01-01 00:00:00') . ' OR ' . $this->db->quoteName('ku.banned') . '>=' . $this->db->quote($dateNow));
+            // A ban which is running (the opposite of the condition of a user below). Without the brackets the OR undid the
+            // other conditions of the query: the name which is searched, the users which the list hides.
+            $this->query->where('(' . $this->db->quoteName('ku.banned') . ' != ' . $this->db->quote('1000-01-01 00:00:00') . ' AND ' . $this->db->quoteName('ku.banned') . ' > ' . $this->db->quote($dateNow) . ')');
         } elseif ($usertype == 'globalmod') {
             $this->query->where($this->db->quoteName('ku.moderator') . ' =1 ');
         } elseif ($usertype == 'user') {

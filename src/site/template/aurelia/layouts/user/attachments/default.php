@@ -89,7 +89,11 @@ $attachments = $this->attachments;
                         $message = $attachment->getMessage();
                         $canDelete = $attachment->isAuthorised('delete');
 
-                        if ($attachment->isAuthorised('read', $this->me)) :
+                        // The file of a message which the reader may not see stays out of the list (its name, its picture
+                        // and the topic): without "Protect Attachments" the right of the file alone does not look at the message.
+                        $readable = $message->exists() ? $message->isAuthorised('read', $this->me) : $attachment->userid == $this->me->userid;
+
+                        if ($readable && $attachment->isAuthorised('read', $this->me)) :
                     ?>
                             <tr>
                                 <td class="center"><?php echo ++$i; ?></td>

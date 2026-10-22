@@ -19,6 +19,7 @@ use Exception;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Kunena\Forum\Libraries\Controller\KunenaControllerDisplay;
+use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
 use Kunena\Forum\Libraries\Pagination\KunenaPagination;
 use Kunena\Forum\Libraries\Route\KunenaRoute;
 use Kunena\Forum\Libraries\User\KunenaBan;
@@ -91,7 +92,11 @@ class UserBanManagerDisplay extends KunenaControllerDisplay
             $this->moreUri->setVar('Itemid', KunenaRoute::getItemID($this->moreUri));
         }
 
-        // TODO: add authorisation
+        // The list of the banned users (names, levels, dates) is for the moderators.
+        if (!$this->me->isModerator()) {
+            throw new KunenaExceptionAuthorise(Text::_('COM_KUNENA_NO_ACCESS'), $this->me->exists() ? 403 : 401);
+        }
+
         $userBanspre = KunenaBan::getBannedUsers(0, 100);
         $count       = \count($userBanspre);
 

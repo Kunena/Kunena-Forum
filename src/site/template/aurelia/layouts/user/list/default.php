@@ -292,7 +292,8 @@ $this->addScript('assets/js/search.js');
                 <?php if ($config->userlistEmail) :
                     ?>
                     <td class="col-md-1 d-none d-md-table-cell">
-                        <?php echo $user->email ? HTMLHelper::_('email.cloak', $user->email) : '' ?>
+                        <?php // The same rule as on the profile page: the address of a user who hides it is not shown (to the moderators it is). ?>
+                        <?php echo $user->email && $this->me->canDisplayEmail($user) ? HTMLHelper::_('email.cloak', $user->email) : '' ?>
                     </td>
                 <?php endif; ?>
 

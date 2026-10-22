@@ -1111,6 +1111,21 @@ class KunenaUser
             return true;
         }
 
+        // A row of the forum is for a user of Joomla: a save for a number which is no user (a request of the backend with such a
+        // number) must not leave a row behind.
+        if ($isnew) {
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->createQuery()
+                ->select($db->quoteName('id'))
+                ->from($db->quoteName('#__users'))
+                ->where($db->quoteName('id') . ' = ' . (int) $this->userid);
+            $db->setQuery($query);
+
+            if (!$db->loadResult()) {
+                return false;
+            }
+        }
+
         // Store the user data in the database
         try {
             $result = $table->store();

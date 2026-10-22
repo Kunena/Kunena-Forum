@@ -50,6 +50,8 @@ describe('Kunena backend: requests with ids which are no rows', () => {
       }));
     });
     cy.then(() => expect(failed, 'the requests with a server error').to.deep.eq([]));
+    // A number which is no user must not get a row of the forum (the tasks of the users saved one before).
+    cy.task('queryDB', 'SELECT userid FROM #__kunena_users WHERE userid = 99999999').then((rows) => expect(rows, 'a row of the forum for a user who does not exist').to.have.length(0));
   });
 
   it('answers the views with ids which are no rows without a server error', () => {

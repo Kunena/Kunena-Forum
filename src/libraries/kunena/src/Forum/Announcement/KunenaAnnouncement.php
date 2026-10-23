@@ -516,7 +516,8 @@ class KunenaAnnouncement extends KunenaDatabaseObject
     {
         $properties = [
             'id'           => $this->id,
-            'title'        => $this->title,
+            // TINYTEXT: 255 bytes (a longer title was an error of a strict database, the announcement was not saved).
+            'title'        => mb_strcut((string) $this->title, 0, 255, 'UTF-8'),
             'created_by'   => $this->created_by,
             'sdescription' => $this->sdescription,
             'description'  => $this->description,

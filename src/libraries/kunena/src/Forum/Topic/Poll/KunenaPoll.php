@@ -274,7 +274,7 @@ class KunenaPoll
         $newOptions = [];
 
         foreach ($options as $key => &$value) {
-            $value = trim($filter->clean($value, 'html'));
+            $value = mb_substr(trim($filter->clean($value, 'html')), 0, 100);
 
             if (!empty($value)) {
                 $newOptions[$key] = $value;
@@ -730,6 +730,10 @@ class KunenaPoll
 
         // Create the topics table object
         $table = $this->getTable();
+
+        // The columns have 150 (title) and 100 (option) characters: a longer text was an error of a strict database and the poll
+        // was not saved.
+        $this->title = mb_substr(trim((string) $this->title), 0, 150);
 
         $properties = [
             'title'          => $this->title,

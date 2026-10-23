@@ -34,6 +34,26 @@ describe('Kunena announcements for an administrator', () => {
     cy.contains('tr', title).should('exist');
   });
 
+  it('saves an announcement with a title which is longer than its column, shortened', () => {
+    // The title is TINYTEXT (255 bytes): a longer one was an error of the database and the announcement was not saved.
+    cy.request('/index.php?option=com_kunena&view=announcement&layout=create').then((page) => {
+      const token = /name="([0-9a-f]{32})" value="1"/.exec(page.body)[1];
+
+      return cy.request({
+        method: 'POST',
+        url: '/index.php?option=com_kunena&view=announcement&task=save',
+        form: true,
+        body: { title: `${title} long ${'x'.repeat(300)}`, sdescription: 'A short text.', description: '', published: 1, showdate: 1, [token]: '1' },
+        failOnStatusCode: false,
+        followRedirect: false,
+      }).its('status').should('be.lessThan', 500);
+    });
+    cy.task('queryDB', `SELECT title FROM #__kunena_announcement WHERE title LIKE '${title} long%'`).then((rows) => {
+      expect(rows, 'the announcement').to.have.length(1);
+      expect(rows[0].title.length, 'the length of the title').to.be.at.most(255);
+    });
+  });
+
   it('chooses an older announcement as the default one, with the star', () => {
     cy.kunena_createAnnouncement({ title: 'Cypress announcement older' });
     cy.kunena_createAnnouncement({ title: 'Cypress announcement newer' });

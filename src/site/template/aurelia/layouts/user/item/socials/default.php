@@ -22,7 +22,13 @@ $showAll = isset($this->showAll) ? $this->showAll : false;
 <div class="inline float-end">
     <?php foreach ($this->socials as $key => $social) {
         // Only show icons for networks that have values and that have Font Awesome icons
-        if (isset($social->fa) && !empty($social->value)) {
+        if (isset($social->fa) && !empty($social->value) && !empty($social->nourl)) {
+            // A network without an address (an account name or number: WeChat, QQ, Microsoft...): the icon with the name, no
+            // link (the address would be the bare value, a link into the forum).
+            echo '<span title="' . htmlspecialchars(Text::_($social->title) . ': ' . $social->value, ENT_QUOTES, 'UTF-8') . '">';
+            echo '<i class="' . htmlspecialchars($social->fa, ENT_QUOTES, 'UTF-8') . '"></i>';
+            echo '</span> ';
+        } elseif (isset($social->fa) && !empty($social->value)) {
             // Parse the URL and extract the path
             $parsedUrl = parse_url($social->value);
             $path = ltrim($parsedUrl['path'] ?? $social->value, '/');

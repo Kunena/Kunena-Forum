@@ -405,7 +405,8 @@ class KunenaAttachment extends KunenaDatabaseObject
             'filetype'      => $this->filetype,
             'filename'      => $this->filename,
             'filename_real' => $this->filename_real,
-            'caption'       => $this->caption,
+            // 191 characters in the database (a longer caption was an error of the upload).
+            'caption'       => mb_substr((string) $this->caption, 0, 191),
             'inline'        => $this->inline,
             'status'        => $this->status,
         ];

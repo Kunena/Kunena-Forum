@@ -728,7 +728,8 @@ class KunenaBan
     public function ban($userid = null, $ip = null, $banlevel = 0, $expiration = null, $reason_private = '', $reason_public = '', $comment = ''): void
     {
         $this->userid  = \intval($userid) > 0 ? (int) $userid : null;
-        $this->ip      = $ip ? (string) $ip : '';
+        // VARCHAR(128): an address is shorter, a longer text was an error of the database.
+        $this->ip      = $ip ? mb_substr(trim((string) $ip), 0, 128) : '';
         $this->blocked = (int) $banlevel;
         $this->setExpiration($expiration);
         $this->reason_private = (string) $reason_private;

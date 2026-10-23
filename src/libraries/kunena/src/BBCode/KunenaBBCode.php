@@ -415,14 +415,6 @@ class KunenaBBCode extends BBCode
     {
         $str = @file_get_contents($url);
 
-        if ($str !== false) {
-            if (\strlen($str) > 0) {
-                // Supports line breaks inside <title>
-                $str = trim(preg_replace('/\s+/', ' ', $str));
-
-                // Ignore case
-                preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title);
-
         if (!$ips) {
             return '';
         }

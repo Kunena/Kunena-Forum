@@ -288,6 +288,14 @@ class TableKunenaMessages extends KunenaTable
             $this->modified_reason = trim((string) $this->modified_reason);
         }
 
+        // TINYTEXT columns: 255 bytes. A longer text (also a short one in letters of more bytes) was an error of a strict
+        // database, and the post was lost: it is cut at a character.
+        foreach (['subject', 'name', 'email', 'modified_reason'] as $field) {
+            if (\is_string($this->$field) && \strlen($this->$field) > 255) {
+                $this->$field = mb_strcut($this->$field, 0, 255, 'UTF-8');
+            }
+        }
+
         return true;
     }
 

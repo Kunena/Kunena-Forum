@@ -355,13 +355,28 @@ abstract class KunenaMessageThankyouHelper
     {
         $db = Factory::getContainer()->get('DatabaseDriver');
 
-        // Update user thankyou count
+        // Update user thankyou count. A user who has no thanks any more (the last ones were on a message which is removed) gets 0:
+        // the count below only sets the users who still have thanks. Only users of Joomla get a row of the forum.
+        $reset = $db->createQuery()
+            ->update($db->quoteName('#__kunena_users'))
+            ->set($db->quoteName('thankyou') . ' = 0')
+            ->where($db->quoteName('thankyou') . ' <> 0');
+
+        try {
+            $db->setQuery($reset)->execute();
+        } catch (ExecutionFailureException $e) {
+            KunenaError::displayDatabaseError($e);
+
+            return false;
+        }
+
         $query    = $db->createQuery();
         $subquery = $db->createQuery();
 
-        $subquery->select($db->quoteName('targetuserid') . ' AS userid, COUNT(*) AS thankyou')
-            ->from($db->quoteName('#__kunena_thankyou'))
-            ->group($db->quoteName('targetuserid'));
+        $subquery->select($db->quoteName('t.targetuserid') . ' AS userid, COUNT(*) AS thankyou')
+            ->from($db->quoteName('#__kunena_thankyou', 't'))
+            ->innerJoin($db->quoteName('#__users', 'u') . ' ON ' . $db->quoteName('u.id') . ' = ' . $db->quoteName('t.targetuserid'))
+            ->group($db->quoteName('t.targetuserid'));
 
         $query->insert($db->quoteName('#__kunena_users') . ' (userid, thankyou) ' . $subquery . ' ON DUPLICATE KEY UPDATE thankyou = VALUES(thankyou)');
         $db->setQuery($query);

@@ -1093,6 +1093,24 @@ class KunenaUser
             'language'     => $this->language,
         ];
 
+        // The texts of the profile fit their columns: with a strict database one long text (a place, the name of a website) was
+        // an error and nothing of the profile was saved. A website address which does not fit is no address (a part of it
+        // would be a wrong link).
+        foreach (['location' => 50, 'websitename' => 50, 'status_text' => 191, 'avatar' => 191] as $field => $length) {
+            if (\is_string($properties[$field]) && mb_strlen($properties[$field]) > $length) {
+                $properties[$field] = mb_substr($properties[$field], 0, $length);
+            }
+        }
+
+        if (\is_string($properties['websiteurl']) && mb_strlen($properties['websiteurl']) > 50) {
+            $properties['websiteurl'] = '';
+        }
+
+        // TINYTEXT: 255 bytes.
+        if (\is_string($properties['personalText']) && \strlen($properties['personalText']) > 255) {
+            $properties['personalText'] = mb_strcut($properties['personalText'], 0, 255, 'UTF-8');
+        }
+
         $table->bind($properties);
         $table->exists($this->_exists);
 

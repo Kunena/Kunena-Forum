@@ -100,10 +100,14 @@ describe('Kunena date fields: the format of the date picker', () => {
 
   it('keeps the birthdate with a save without a change of the user form of the backend', () => {
     cy.task('queryDB', `UPDATE #__kunena_users SET birthdate = '1990-06-05' WHERE userid = ${user.id}`);
+    // The cookies of the logins of the site go first: with them the backend lost its session after the save.
+    cy.clearAllCookies();
     cy.doAdministratorLogin();
     cy.visit(`/administrator/index.php?option=com_kunena&view=user&layout=edit&userid=${user.id}`);
     cy.get('input[name="birthdate"]').should('have.value', '05/06/1990');
-    cy.get('#toolbar-apply button', { timeout: 15000 }).should('be.visible').click();
+    cy.get('#toolbar-apply button', { timeout: 15000 }).should('be.visible');
+    // A new query for the click: the page of the configuration can draw its toolbar again after it is shown.
+    cy.get('#toolbar-apply button').click();
     cy.get('joomla-alert, #system-message-container', { timeout: 15000 }).should('contain.text', 'ed');
     cy.task('queryDB', `SELECT CAST(birthdate AS CHAR) AS birthdate FROM #__kunena_users WHERE userid = ${user.id}`).then((rows) => {
       expect(rows[0].birthdate, 'the birthdate after the save of the backend').to.eq('1990-06-05');

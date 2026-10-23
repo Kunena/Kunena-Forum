@@ -608,6 +608,13 @@ class UserController extends KunenaController
                 $this->app->enqueueMessage(Text::_('COM_KUNENA_PROFILE_SAVED_WITHOUT_LINKS_IMAGES'), 'success');
             }
 
+            // The maximum length of the option (the form only stops typing, a request can send more).
+            $maxSig = (int) $this->config->maxSig;
+
+            if ($maxSig > 0 && mb_strlen($signature) > $maxSig) {
+                $signature = mb_substr($signature, 0, $maxSig);
+            }
+
             $user->signature = $signature;
         }
 
@@ -645,7 +652,14 @@ class UserController extends KunenaController
         $user->gender    = $input->$method->get('gender', 0, 'int');
 
         $user->websitename = $input->$method->get('websitename', '', 'string');
-        $user->websiteurl  = $input->$method->get('websiteurl', '', 'string');
+        $websiteurl        = trim((string) $input->$method->get('websiteurl', '', 'string'));
+
+        // The address has 50 characters in the database: a longer one is not saved (a part of it would be a wrong link).
+        if (mb_strlen($websiteurl) > 50) {
+            $this->app->enqueueMessage(Text::sprintf('COM_KUNENA_PROFILE_WEBSITE_TOO_LONG', 50), 'warning');
+        } else {
+            $user->websiteurl = $websiteurl;
+        }
 
         // Save avatar from gallery
         $avatar_gallery = $input->$method->get('avatar_gallery', '', 'string');

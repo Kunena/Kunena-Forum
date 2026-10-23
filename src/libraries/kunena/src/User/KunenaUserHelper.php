@@ -823,7 +823,12 @@ abstract class KunenaUserHelper
             return false;
         }
 
-        return $db->getAffectedRows();
+        $affected = $db->getAffectedRows();
+
+        // A user who has no topics any more (his last topic was removed for ever) is not in the count above: his posts are 0.
+        self::recountPostsNull();
+
+        return $affected;
     }
 
     /**

@@ -6,7 +6,9 @@ describe('Kunena backend: saving a form without a change', () => {
   const userId = 798;
   const rowOf = (sql) => cy.task('queryDB', sql).then((rows) => JSON.parse(JSON.stringify(rows[0])));
   const apply = () => {
-    cy.get('#toolbar-apply button', { timeout: 15000 }).should('be.visible').click();
+    cy.get('#toolbar-apply button', { timeout: 15000 }).should('be.visible');
+    // A new query for the click: the page of the configuration can draw its toolbar again after it is shown.
+    cy.get('#toolbar-apply button').click();
     cy.get('joomla-alert, #system-message-container', { timeout: 15000 }).should('contain.text', 'ed');
   };
 

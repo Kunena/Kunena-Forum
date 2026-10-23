@@ -18,6 +18,7 @@ namespace Kunena\Forum\Plugin\System\Kunena\Extension;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Model\AfterSaveEvent as ModelAfterSaveEvent;
 use Joomla\CMS\Event\Model\BeforeSaveEvent as ModelBeforeSaveEvent;
+use Joomla\CMS\Event\User\AfterDeleteEvent;
 use Joomla\CMS\Event\User\AfterLoginEvent;
 use Joomla\CMS\Event\User\AfterSaveEvent;
 use Joomla\CMS\Event\User\BeforeSaveEvent;
@@ -70,6 +71,7 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         if ($app->isClient('site') || $app->isClient('administrator')) {
             $mapping['onUserAfterSave'] = 'onUserAfterSave';
             $mapping['onUserAfterLogin'] = 'onUserAfterLogin';
+            $mapping['onUserAfterDelete'] = 'onUserAfterDelete';
 
             if ($app->isClient('site')) {
                 // Only allowed in the frontend
@@ -201,6 +203,70 @@ class Kunena extends CMSPlugin implements SubscriberInterface, DatabaseAwareInte
         $kuser->language = $this->getUserDefaultLanguage($options['user']->params);
 
         $kuser->save();
+    }
+
+    /**
+     * A user who is deleted in Joomla loses his data of the forum too: the profile row (signature, personal text, location,
+     * birthdate, website), the avatar files and his subscriptions, follows, ignores, read marks and bans. Without this the data
+     * stayed behind (only a deletion through the users page of Kunena removed the profile row).
+     *
+     * @param   AfterDeleteEvent  $event  The event.
+     *
+     * @return  void
+     *
+     * @since   Kunena 7.2
+     */
+    public function onUserAfterDelete(AfterDeleteEvent $event): void
+    {
+        if (
+            !$event->getDeletingResult()
+            || !ComponentHelper::isEnabled('com_kunena')
+            || !KunenaForum::isCompatible('7.1')
+            || !KunenaForum::installed()
+        ) {
+            return;
+        }
+
+        $userid = (int) ($event->getUser()['id'] ?? 0);
+
+        if ($userid < 1) {
+            return;
+        }
+
+        $db = $this->getDatabase();
+
+        foreach (
+            [
+                '#__kunena_users'           => ['userid'],
+                '#__kunena_user_categories' => ['user_id'],
+                '#__kunena_user_topics'     => ['user_id'],
+                '#__kunena_user_read'       => ['user_id'],
+                '#__kunena_user_follow'     => ['user_id', 'followed_id'],
+                '#__kunena_user_ignore'     => ['user_id', 'ignored_id'],
+                '#__kunena_users_banned'    => ['userid'],
+                '#__kunena_rate'            => ['userid'],
+            ] as $table => $fields
+        ) {
+            foreach ($fields as $field) {
+                try {
+                    $query = $db->createQuery()
+                        ->delete($db->quoteName($table))
+                        ->where($db->quoteName($field) . ' = ' . $userid);
+                    $db->setQuery($query)->execute();
+                } catch (\Exception $e) {
+                    // A table of a plugin which is not installed: nothing to delete there.
+                }
+            }
+        }
+
+        // The avatar files of the user.
+        foreach (glob(JPATH_ROOT . '/media/kunena/avatars/users/avatar' . $userid . '.*') ?: [] as $file) {
+            @unlink($file);
+        }
+
+        foreach (glob(JPATH_ROOT . '/media/kunena/avatars/resized/size*/users/avatar' . $userid . '.*') ?: [] as $file) {
+            @unlink($file);
+        }
     }
 
     /**

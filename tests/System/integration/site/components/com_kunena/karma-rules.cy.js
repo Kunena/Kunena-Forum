@@ -32,6 +32,7 @@ describe('Kunena karma: the rules', () => {
   });
 
   afterEach(() => {
+    cy.task('queryDB', `UPDATE #__kunena_users SET banned = '1000-01-01 00:00:00' WHERE userid = ${user.id}`);
     cy.task('queryDB', `DELETE FROM #__kunena_karma WHERE userid IN (${user.id}, ${admin.id})`);
     [797, 798].forEach((id) => cy.then(() => cy.task('queryDB', `UPDATE #__kunena_users SET karma = ${old.karma[id]} WHERE userid = ${id}`)));
   });
@@ -58,6 +59,14 @@ describe('Kunena karma: the rules', () => {
     cy.doFrontendLogin(user.name, user.password, false);
     give('karmaup', user.id);
     karmaOf(user.id).should('eq', old.karma[798] - 10);
+  });
+
+  it('gives no karma from a banned user (like he may not post)', () => {
+    cy.task('queryDB', `INSERT INTO #__kunena_users_banned (userid, ip, blocked, expiration, created_by, created_time, reason_private, reason_public, modified_by, modified_time, comments, params) VALUES (${user.id}, '', 0, DATE_ADD(NOW(), INTERVAL 1 HOUR), 797, NOW(), '', '', 0, '1000-01-01 00:00:00', '', '')`);
+    cy.task('queryDB', `UPDATE #__kunena_users SET banned = DATE_ADD(UTC_TIMESTAMP(), INTERVAL 1 HOUR) WHERE userid = ${user.id}`);
+    cy.doFrontendLogin(user.name, user.password, false);
+    give('karmadown', admin.id);
+    karmaOf(admin.id).should('eq', old.karma[797]);
   });
 
   it('does not stop a moderator with the delay', () => {

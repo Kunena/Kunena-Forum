@@ -728,6 +728,15 @@ class ToolsController extends FormController
      */
     public function trashMenu(): void
     {
+        // The menu of the forum is deleted and made new: not for a request without the token of the form (a link or a picture
+        // with this address which an administrator opens).
+        if (!Session::checkToken()) {
+            $this->app->enqueueMessage(Text::_('COM_KUNENA_ERROR_TOKEN'), 'error');
+            $this->setRedirect(KunenaRoute::_($this->baseurl, false));
+
+            return;
+        }
+
         $installer = new KunenaModelInstall();
         $installer->deleteMenu();
         $installer->createMenu();

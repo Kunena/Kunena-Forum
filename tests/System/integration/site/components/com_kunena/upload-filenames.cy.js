@@ -6,13 +6,13 @@ describe('Kunena upload: the names of the files', () => {
   const folder = 'media/kunena/attachments/798';
   let token;
 
-  const upload = (filename, mime, content) => {
+  const upload = (filename, mime, content, extra = {}) => {
     const size = Buffer.byteLength(content);
 
     return cy.request({
       method: 'POST',
       url: `${base}&view=topic&task=upload&format=json&${token}=1`,
-      qs: { catid: 3, filename, size, mime, hash: 'abc', chunkStart: 0, chunkEnd: size },
+      qs: { catid: 3, filename, size, mime, hash: 'abc', chunkStart: 0, chunkEnd: size, ...extra },
       headers: { 'Content-Type': 'application/octet-stream' },
       body: content,
       failOnStatusCode: false,
@@ -31,6 +31,12 @@ describe('Kunena upload: the names of the files', () => {
   afterEach(() => {
     cy.task('queryDB', 'DELETE FROM #__kunena_attachments WHERE userid = 798 AND mesid = 0');
     cy.task('deleteRelativePath', folder);
+  });
+
+  it('takes an upload with the number of a message (the upload while a message is edited)', () => {
+    // Message 10 is a message of the user in the topic 9 of the test site. The check of the rights used an action which
+    // does not exist, and every upload with a message gave a server error.
+    upload('edited.txt', 'text/plain', 'x', { mesid: 10 }).its('success').should('eq', true);
   });
 
   it('keeps a name with directories in the folder of the user', () => {

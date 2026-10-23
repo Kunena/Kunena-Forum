@@ -22,6 +22,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
 use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
@@ -248,7 +249,7 @@ class SearchModel extends KunenaModel
         $time         = 0;
         $searchatdate = $this->getState('query.searchatdate');
 
-        if (empty($searchatdate) || $searchatdate == Factory::getDate()->format('m/d/Y')) {
+        if (empty($searchatdate) || $searchatdate == Factory::getDate()->format('Y-m-d')) {
             switch ($this->getState('query.searchdate')) {
                 case 'lastvisit':
                     $time = KunenaFactory::GetSession()->lasttime;
@@ -493,6 +494,19 @@ class SearchModel extends KunenaModel
         $this->setState('query.searchdate', $value);
 
         $value = Factory::getApplication()->getInput()->getString('searchatdate', null);
+
+        // The date field writes the date in the format of the date picker: it is read here, and a text which is no date is not
+        // used (it was the error of the date parser on the page).
+        if ($value !== null && trim($value) !== '') {
+            $date = KunenaDate::fromPicker($value);
+
+            if ($date === null) {
+                $this->app->enqueueMessage(Text::_('COM_KUNENA_SEARCH_ERR_DATE'), 'warning');
+            }
+
+            $value = $date;
+        }
+
         $this->setState('query.searchatdate', $value);
 
         $value = Factory::getApplication()->getInput()->getWord('beforeafter', 'after');

@@ -63,6 +63,8 @@ describe('Kunena counters: the posts of a user', () => {
     cy.task('queryDB', 'DELETE x FROM #__kunena_messages_text AS x LEFT JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.id IS NULL');
     // The number of posts as it was (the counter is not part of the data which the task removes).
     cy.task('queryDB', `UPDATE #__kunena_users SET posts = ${ids.start} WHERE userid = ${user.id}`);
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   it('counts a reply, a delete, an undelete and a removal for ever', () => {

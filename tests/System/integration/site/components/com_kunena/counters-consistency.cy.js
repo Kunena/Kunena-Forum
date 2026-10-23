@@ -114,6 +114,8 @@ describe('Kunena counters: the numbers of topics and categories', () => {
     cy.task('queryDB', 'DELETE x FROM #__kunena_messages_text AS x LEFT JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.id IS NULL');
     cy.task('queryDB', `DELETE FROM #__kunena_user_categories WHERE category_id IN (${ids.category}, ${ids.other})`);
     cy.task('queryDB', `DELETE FROM #__kunena_categories WHERE id IN (${ids.category}, ${ids.other})`);
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   it('keeps the numbers right when topics and replies are written', () => {

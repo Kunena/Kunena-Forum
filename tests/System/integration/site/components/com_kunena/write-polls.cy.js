@@ -63,6 +63,8 @@ describe('Kunena writing: polls', () => {
         }
       });
     });
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   beforeEach(() => {

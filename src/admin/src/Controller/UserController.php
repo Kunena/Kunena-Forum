@@ -24,6 +24,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Access\KunenaAccess;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Message\KunenaMessageHelper;
@@ -126,13 +127,9 @@ class UserController extends FormController
             $user->personalText = $this->app->getInput()->getString('personalText');
             $birthdate          = $this->app->getInput()->getString('birthdate');
 
-            if ($birthdate) {
-                $date = Factory::getDate($birthdate);
-
-                $birthdate = $date->format('Y-m-d');
-            } else {
-                $birthdate = '1000-01-01';
-            }
+            // The field writes the date in the format of the date picker (dd/mm/yyyy was an error of the date parser): a text which
+            // is no date is no birthdate.
+            $birthdate = $birthdate ? (KunenaDate::fromPicker($birthdate) ?? '1000-01-01') : '1000-01-01';
 
             $user->birthdate             = $birthdate;
             $user->location              = trim($this->app->getInput()->getString('location'));

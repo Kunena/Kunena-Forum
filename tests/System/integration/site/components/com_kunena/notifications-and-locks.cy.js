@@ -96,6 +96,8 @@ describe('Kunena notifications, old topics and private parts', () => {
     cy.task('queryDB', `DELETE FROM #__kunena_messages WHERE catid IN (SELECT id FROM #__kunena_categories WHERE name LIKE 'Cypress notify % ${stamp}')`);
     cy.task('queryDB', `DELETE FROM #__kunena_categories WHERE name LIKE 'Cypress notify % ${stamp}'`);
     cy.task('queryDB', 'DELETE x FROM #__kunena_messages_text AS x LEFT JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.id IS NULL');
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   it('tells a follower about a new topic, but not about one in a category which he may not read', () => {

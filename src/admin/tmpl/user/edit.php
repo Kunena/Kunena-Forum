@@ -198,7 +198,7 @@ $template = KunenaTemplate::getInstance();
                                                                         <input type="text" name="birthdate" id="birthdate-input"
                                                                             class="inputbox form-control"
                                                                             data-date-format="<?php echo $this->config->datePickerFormat; ?>"
-                                                                            value="<?php echo $this->user->birthdate == '1000-01-01' || empty($this->user->birthdate)  ? '' : KunenaDate::getInstance($this->user->birthdate)->format('m/d/Y'); ?>">
+                                                                            value="<?php echo htmlspecialchars(KunenaDate::toPicker((string) $this->user->birthdate), ENT_QUOTES, 'UTF-8'); ?>">
                                                                     </div>
                                                                 </div>
                                                             </td>

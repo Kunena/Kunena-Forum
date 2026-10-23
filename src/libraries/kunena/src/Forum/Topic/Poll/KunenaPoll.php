@@ -737,6 +737,12 @@ class KunenaPoll
             'polltimetolive' => $this->polltimetolive,
         ];
 
+        // The table object is new: without the number the update of an existing poll changed no row (a new title or end date
+        // of the poll was lost while the options were saved).
+        if (!$isnew) {
+            $properties['id'] = (int) $this->id;
+        }
+
         $table->bind($properties);
         $table->exists($this->_exists);
 

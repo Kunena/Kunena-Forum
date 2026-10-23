@@ -91,7 +91,7 @@ describe('Kunena output: stored texts with markup', () => {
     `${base}&view=user&layout=default&userid=${user.id}`,
     `${base}&view=user&layout=list`,
     `${base}&view=user&layout=list&search=cypress`,
-    `${base}&view=announcement&layout=list`,
+    `${base}&view=announcement&layout=listing`,
     `${base}&view=statistics`,
     `${base}&view=search&task=results&query=img`,
     `${base}&view=search&task=results&query=${encodeURIComponent(payload)}`,

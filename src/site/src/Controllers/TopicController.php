@@ -41,6 +41,7 @@ use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Email\KunenaEmailUnsubscribe;
 use Kunena\Forum\Libraries\Email\KunenaMailTemplate;
 use Kunena\Forum\Libraries\Error\KunenaError;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
 use Kunena\Forum\Libraries\Forum\Draft\KunenaDraftHelper;
@@ -410,6 +411,10 @@ class TopicController extends KunenaController
 
         $category = KunenaCategoryHelper::get($catid);
 
+        // The template is the start of a new topic: only for a category in which the user may write one (not of a category
+        // which he may not even see).
+        $template = $category->exists() && $category->isAuthorised('topic.create') ? (string) $category->topictemplate : '';
+
         // Set the MIME type and header for JSON output.
         header('Content-type: application/json');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -421,7 +426,7 @@ class TopicController extends KunenaController
         while (@ob_end_clean()) {
         }
 
-        echo new KunenaResponseJson($category->topictemplate);
+        echo new KunenaResponseJson($template);
 
         jexit();
     }
@@ -729,7 +734,9 @@ class TopicController extends KunenaController
 
             if ($mesid) {
                 $message = KunenaMessageHelper::get($mesid);
-                $message->tryAuthorise('attachment.create');
+                // The actions of a message are attachment.createimage and attachment.createfile ("attachment.create" is no
+                // action: it gave an error 500 for every upload with the number of a message).
+                $message->tryAuthorise(stripos($this->input->getString('mime'), 'image/') !== false ? 'attachment.createimage' : 'attachment.createfile');
                 $category = $message->getCategory();
             } else {
                 $category = KunenaCategoryHelper::get($catid);
@@ -1222,8 +1229,7 @@ class TopicController extends KunenaController
             $poll->title = $poll_title;
 
             if (!empty($fields['poll_time_to_live'])) {
-                $polltimetolive       = new Date($fields['poll_time_to_live']);
-                $poll->polltimetolive = $polltimetolive->toSql();
+                $poll->polltimetolive = $this->pollEndDate((string) $fields['poll_time_to_live']) ?? $poll->polltimetolive;
             }
 
             $poll->setOptions($poll_options);
@@ -1556,6 +1562,7 @@ class TopicController extends KunenaController
         }
 
         $attachIds          = isset($attachIds[0]) && $attachIds[0] !== '' ? explode(',', $attachIds[0]) : [];
+        $attachIds          = $this->ownPrivateAttachments($attachIds, $message);
         $moderator          = $this->me->isModerator($message->getCategory());
         $parent             = $message->getParent();
         $author             = $message->getAuthor();
@@ -1848,8 +1855,7 @@ class TopicController extends KunenaController
                 $poll->title = $poll_title;
 
                 if (!empty($fields['poll_time_to_live'])) {
-                    $polltimetolive       = new Date($fields['poll_time_to_live']);
-                    $poll->polltimetolive = $polltimetolive->toSql();
+                    $poll->polltimetolive = $this->pollEndDate((string) $fields['poll_time_to_live']) ?? $poll->polltimetolive;
                 }
 
                 $poll->setOptions($poll_options);
@@ -1931,6 +1937,71 @@ class TopicController extends KunenaController
      * @throws  Exception
      * @since   Kunena 6.0
      */
+    /**
+     * The end of a poll, from the free text field of the poll dialog: a date and time which PHP reads, or a date in the format of
+     * the date picker (the end of that day). A text which is no date is no end (and a message says so): it was an error of the
+     * date parser, after the topic was saved already.
+     *
+     * @param   string  $value  The text of the field.
+     *
+     * @return  string|null  The end as SQL date, null for a text which is no date.
+     *
+     * @since   Kunena 7.2
+     */
+    protected function pollEndDate(string $value): ?string
+    {
+        $value = trim($value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        try {
+            return (new Date($value))->toSql();
+        } catch (Exception $e) {
+            $date = KunenaDate::fromPicker($value);
+
+            if ($date !== null) {
+                return (new Date($date . ' 23:59:59'))->toSql();
+            }
+        }
+
+        $this->app->enqueueMessage(Text::_('COM_KUNENA_POLL_ERROR_END_DATE'), 'warning');
+
+        return null;
+    }
+
+    /**
+     * The files which may go into the private part of a message: the files of the message itself, and the files which the user
+     * has just uploaded (not yet in a message). The numbers come from the form: a file of somebody else would become a private
+     * file of this message (gone for the readers of its own message, readable for the users of this private part).
+     *
+     * @param   array          $ids      The numbers of the files from the form.
+     * @param   KunenaMessage  $message  The message.
+     *
+     * @return  array
+     *
+     * @since   Kunena 7.2
+     */
+    protected function ownPrivateAttachments(array $ids, KunenaMessage $message): array
+    {
+        $ids = array_filter(array_map('intval', $ids));
+
+        if (!$ids) {
+            return [];
+        }
+
+        $own = [];
+
+        foreach (KunenaAttachmentHelper::getById($ids, 'none') as $attachment) {
+            if ((int) $attachment->mesid === (int) $message->id || (!$attachment->mesid && (int) $attachment->userid === (int) $this->me->userid)) {
+                $own[] = (int) $attachment->id;
+            }
+        }
+
+        return $own;
+    }
+
     protected function editPrivate(KunenaMessage $message)
     {
         if (!$this->me->userid) {
@@ -1945,6 +2016,7 @@ class TopicController extends KunenaController
         }
 
         $attachIds = isset($attachIds[0]) && $attachIds[0] !== '' ? explode(',', $attachIds[0]) : [];
+        $attachIds = $this->ownPrivateAttachments($attachIds, $message);
 
         $finder    = new KunenaPrivateMessageFinder();
         $finder
@@ -2123,7 +2195,8 @@ class TopicController extends KunenaController
         $topic = KunenaTopicHelper::get($this->id);
 
         try {
-            $topic->tryAuthorise('read');
+            // The rules of the action (switched off, banned), not only the right to read the topic.
+            $topic->tryAuthorise('subscribe');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();
@@ -2209,7 +2282,8 @@ class TopicController extends KunenaController
         $topic = KunenaTopicHelper::get($this->id);
 
         try {
-            $topic->tryAuthorise('read');
+            // The rules of the action (switched off, banned), not only the right to read the topic.
+            $topic->tryAuthorise('favorite');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();

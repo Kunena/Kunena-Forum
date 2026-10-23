@@ -45,6 +45,8 @@ describe('Kunena permissions: a banned user', () => {
     cy.task('queryDB', `UPDATE #__kunena_user_topics SET subscribed = 0 WHERE user_id = ${user.id} AND topic_id = 9`);
     cy.then(() => ban(oldBan));
     cy.task('deleteRelativePath', `media/kunena/attachments/${user.id}`);
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   const writeTopic = (token) => cy.request({

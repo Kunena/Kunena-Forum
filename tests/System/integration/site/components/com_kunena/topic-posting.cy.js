@@ -24,6 +24,8 @@ describe('Kunena topic posting', () => {
         cy.task('queryDB', `DELETE FROM #__kunena_topics WHERE id = ${id}`);
       });
     });
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   it('writes a topic', () => {

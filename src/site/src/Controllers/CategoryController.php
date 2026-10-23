@@ -269,7 +269,8 @@ class CategoryController extends CategoriesController
         $category = KunenaCategoryHelper::get($this->app->getInput()->getInt('catid', 0));
 
         try {
-            $category->tryAuthorise('read');
+            // The rules of the action (category subscriptions switched off, banned, a section), not only the right to read.
+            $category->tryAuthorise('subscribe');
         } catch (Exception $e) {
             $this->app->enqueueMessage($e->getMessage(), 'error');
             $this->setRedirectBack();

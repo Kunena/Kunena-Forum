@@ -58,7 +58,7 @@ $template = KunenaTemplate::getInstance();
                 <div id="birthdate">
                     <div class="input-group date">
                         <input class="form-control hasTooltip" type="text" name="birthdate" data-date-format="<?php echo $this->config->datePickerFormat; ?>"
-                            value="<?php echo $this->profile->birthdate == '1000-01-01' ? '' : $this->profile->birthdate; ?>"
+                            value="<?php echo $this->escape(\Kunena\Forum\Libraries\Date\KunenaDate::toPicker((string) $this->profile->birthdate)); ?>"
                             data-bs-toggle="tooltip" title="<?php echo Text::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC') ?>">
                         <button class="btn btn-outline-secondary" type="button" aria-label="<?php echo Text::_('COM_KUNENA_SEARCH_LABEL_SELECT_DATE'); ?>">
                             <?php echo KunenaIcons::calendar(); ?>

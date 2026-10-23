@@ -30,6 +30,108 @@ use Kunena\Forum\Libraries\Profiler\KunenaProfiler;
 class KunenaDate extends Date
 {
     /**
+     * The format of the date picker (bootstrap-datepicker: dd/mm/yyyy) as a format of PHP (d/m/Y).
+     *
+     * @param   string  $format  The format of the date picker.
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    protected static function pickerToPhp(string $format): string
+    {
+        // The longest token first.
+        $php    = '';
+        $tokens = ['yyyy' => 'Y', 'yy' => 'y', 'MM' => 'F', 'M' => 'M', 'mm' => 'm', 'm' => 'n', 'DD' => 'l', 'D' => 'D', 'dd' => 'd', 'd' => 'j'];
+
+        for ($pos = 0, $length = \strlen($format); $pos < $length;) {
+            foreach ($tokens as $token => $replacement) {
+                if (substr($format, $pos, \strlen($token)) === $token) {
+                    $php .= $replacement;
+                    $pos += \strlen($token);
+                    continue 2;
+                }
+            }
+
+            $php .= '\\' . $format[$pos];
+            $pos++;
+        }
+
+        return $php;
+    }
+
+    /**
+     * Writes a date (Y-m-d) for a date field in the format of the date picker, so that the field gives back the same date when the
+     * form is saved without a change (the value of the field is read with fromPicker()).
+     *
+     * @param   string  $date    The date as Y-m-d (the value which means "no date" gives an empty text).
+     * @param   string  $format  The format of the date picker (empty: the option of the forum).
+     *
+     * @return  string
+     *
+     * @since   Kunena 7.2
+     */
+    public static function toPicker(string $date, string $format = ''): string
+    {
+        if ($date === '' || str_starts_with($date, '1000-01-01') || str_starts_with($date, '0000-00-00')) {
+            return '';
+        }
+
+        if ($format === '') {
+            $format = (string) KunenaFactory::getConfig()->datePickerFormat;
+        }
+
+        $value = \DateTime::createFromFormat('!Y-m-d', substr($date, 0, 10));
+
+        if (!$value) {
+            return '';
+        }
+
+        return $format === '' ? $value->format('Y-m-d') : $value->format(self::pickerToPhp($format));
+    }
+
+    /**
+     * Reads a date which a user typed or chose in a date field of the forum (the search at a date, the birthdate). The field
+     * writes the date in the format of the option "Date format for datepicker" (for example dd/mm/yyyy), which the parser of
+     * PHP does not know: "23/10/2026" was an error. The format of the option is tried first, then the formats which PHP knows.
+     *
+     * @param   string  $value   The date of the field.
+     * @param   string  $format  The format of the date picker (empty: the option of the forum).
+     *
+     * @return  string|null  The date as Y-m-d, null for a text which is no date.
+     *
+     * @since   Kunena 7.2
+     */
+    public static function fromPicker(string $value, string $format = ''): ?string
+    {
+        $value = trim($value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        if ($format === '') {
+            $format = (string) KunenaFactory::getConfig()->datePickerFormat;
+        }
+
+        if ($format !== '') {
+            $php  = self::pickerToPhp($format);
+            $date = \DateTime::createFromFormat('!' . $php, $value);
+            $errors = \DateTime::getLastErrors();
+
+            if ($date && (!$errors || (!$errors['warning_count'] && !$errors['error_count']))) {
+                return $date->format('Y-m-d');
+            }
+        }
+
+        try {
+            return (new \DateTime($value))->format('Y-m-d');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
      * Return an instance of KunenaDate object
      *
      * @param   string  $date  String in a format accepted by strtotime(), defaults to "now".

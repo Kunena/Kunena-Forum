@@ -1748,7 +1748,19 @@ class KunenaMessage extends KunenaDatabaseObject
      */
     public function addAttachments(array $ids): void
     {
-        $this->_attachments_add += $this->getAttachments($ids, 'none');
+        $attachments = $this->getAttachments($ids, 'none');
+
+        // A file which is in no message yet is the upload of a user: only his own uploads go into his message (the numbers come
+        // from the form, and an upload of somebody else would be taken away from him).
+        $me = KunenaUserHelper::getMyself();
+
+        foreach ($attachments as $id => $attachment) {
+            if (!$attachment->mesid && (int) $attachment->userid !== (int) $me->userid) {
+                unset($attachments[$id]);
+            }
+        }
+
+        $this->_attachments_add += $attachments;
     }
 
     /**
@@ -1853,8 +1865,18 @@ class KunenaMessage extends KunenaDatabaseObject
         if (!$this->userid) {
             $this->name = trim($this->name);
 
-            // Unregistered or anonymous users: Do not allow existing username
+            // Unregistered or anonymous users: Do not allow existing username, nor the real name of a user (the forum can show
+            // the real names instead of the usernames, and the post of a guest would look like a post of that user).
             $nicktaken = UserHelper::getUserId($this->name);
+
+            if (!$nicktaken && $this->name !== '') {
+                $query = $this->_db->createQuery()
+                    ->select($this->_db->quoteName('id'))
+                    ->from($this->_db->quoteName('#__users'))
+                    ->where('LOWER(' . $this->_db->quoteName('name') . ') = LOWER(' . $this->_db->quote($this->name) . ')');
+                $this->_db->setQuery($query, 0, 1);
+                $nicktaken = (int) $this->_db->loadResult();
+            }
 
             if (empty($this->name) || $nicktaken) {
                 $this->name = Text::_('COM_KUNENA_USERNAME_ANONYMOUS');

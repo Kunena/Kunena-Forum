@@ -40,6 +40,8 @@ describe('Kunena posting: the limits', () => {
       });
     });
     cy.task('queryDB', 'DELETE x FROM #__kunena_messages_text AS x LEFT JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.id IS NULL');
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   it('stops a second topic of a user within the time of the flood protection, but not of a moderator', () => {

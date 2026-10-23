@@ -53,6 +53,8 @@ describe('Kunena permissions: a mention', () => {
     cy.task('queryDB', `DELETE FROM #__kunena_aliases WHERE alias = 'cypress-mention-${stamp}'`);
     cy.task('queryDB', `DELETE FROM #__kunena_categories WHERE name = 'Cypress mention ${stamp}'`);
     cy.task('queryDB', 'DELETE x FROM #__kunena_messages_text AS x LEFT JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.id IS NULL');
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   it('tells the user who is mentioned in a category which he may read', () => {

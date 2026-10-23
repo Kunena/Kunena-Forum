@@ -37,6 +37,7 @@ use Kunena\Forum\Libraries\Controller\KunenaController;
 use Kunena\Forum\Libraries\Email\KunenaEmail;
 use Kunena\Forum\Libraries\Event\KunenaAfterProfileUpdateEvent;
 use Kunena\Forum\Libraries\Exception\KunenaExceptionAuthorise;
+use Kunena\Forum\Libraries\Date\KunenaDate;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\KunenaForum;
 use Kunena\Forum\Libraries\Forum\Message\Karma\KunenaKarmaHelper;
@@ -210,7 +211,8 @@ class UserController extends KunenaController
         $karma->userid        = $this->me->userid;
         $karma->target_userid = $userid;
 
-        if (!$this->config->showKarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0) {
+        // A banned user gives no karma (like he may not post).
+        if (!$this->config->showKarma || !$this->me->exists() || $this->me->isBanned() || !$target->exists() || $karmaDelta == 0) {
             $this->app->enqueueMessage(Text::_('COM_KUNENA_USER_ERROR_KARMA'), 'error');
             $this->setRedirectBack();
 
@@ -628,9 +630,9 @@ class UserController extends KunenaController
                 $birthdate = '1901/01/01';
             }
 
-            $date = Factory::getDate($birthdate);
-
-            $birthdate = $date->format('Y-m-d');
+            // The field writes the date in the format of the date picker (dd/mm/yyyy was an error of the date parser and the
+            // profile was not saved): a text which is no date is no birthdate.
+            $birthdate = KunenaDate::fromPicker($birthdate) ?? '';
         }
 
         if (!$birthdate) {

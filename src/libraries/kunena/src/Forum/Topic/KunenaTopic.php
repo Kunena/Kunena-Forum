@@ -115,7 +115,7 @@ class KunenaTopic extends KunenaDatabaseObject
         'rate'                        => ['Read', 'Unlocked'],
         'poll.read'                   => ['Read', 'Poll'],
         'poll.create'                 => ['Own'],
-        'poll.edit'                   => ['Read', 'NoVotes'],
+        'poll.edit'                   => ['Read', 'Own', 'NoVotes'],
         'poll.delete'                 => ['Read', 'Own', 'Poll'],
         'poll.vote'                   => ['Read', 'Poll', 'Vote'],
         'post.read'                   => ['Read'],

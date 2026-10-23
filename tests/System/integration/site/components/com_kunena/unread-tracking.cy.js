@@ -45,6 +45,8 @@ describe('Kunena unread: the topics a user has not read', () => {
     cy.task('queryDB', `DELETE FROM #__kunena_aliases WHERE alias = 'cypress-unread-${stamp}'`);
     cy.task('queryDB', 'DELETE x FROM #__kunena_messages_text AS x LEFT JOIN #__kunena_messages AS m ON m.id = x.mesid WHERE m.id IS NULL');
     cy.task('queryDB', `DELETE FROM #__kunena_categories WHERE id = ${ids.category}`);
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   it('is unread for another user, read after he opened it, unread after a reply, and read after mark as read', () => {

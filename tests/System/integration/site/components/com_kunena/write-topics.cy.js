@@ -46,6 +46,8 @@ describe('Kunena writing: the life of a topic', () => {
       });
     });
     cy.task('queryDB', 'DELETE t FROM #__kunena_thankyou AS t LEFT JOIN #__kunena_messages AS m ON m.id = t.postid WHERE m.id IS NULL');
+    // The counters of the users and the rows of the topics which are gone.
+    cy.kunena_fixUserCounters();
   });
 
   describe('as the administrator', () => {

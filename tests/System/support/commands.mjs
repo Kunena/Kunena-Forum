@@ -24,3 +24,12 @@ Cypress.Commands.add('clickDialogConfirm', (isOkay) => {
   }
   return cy.get(selector, { timeout: 1000 }).click();
 });
+
+/**
+ * Puts the rows and counters of the users of the test site right after a test which wrote through the forms and removes its
+ * topics and messages with SQL: the rows of #__kunena_user_topics and #__kunena_user_read of topics which are gone, and the
+ * number of posts of every user (his published messages). Without it the next tests start with counters which are off.
+ */
+Cypress.Commands.add('kunena_fixUserCounters', () => cy.task('queryDB', 'DELETE ut FROM #__kunena_user_topics AS ut LEFT JOIN #__kunena_topics AS t ON t.id = ut.topic_id WHERE t.id IS NULL')
+  .then(() => cy.task('queryDB', 'DELETE ur FROM #__kunena_user_read AS ur LEFT JOIN #__kunena_topics AS t ON t.id = ur.topic_id WHERE t.id IS NULL'))
+  .then(() => cy.task('queryDB', 'UPDATE #__kunena_users AS u SET u.posts = (SELECT COUNT(*) FROM #__kunena_messages AS m WHERE m.userid = u.userid AND m.hold = 0)')));

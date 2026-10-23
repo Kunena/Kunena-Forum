@@ -112,7 +112,7 @@ class TopicListingUnreadDisplay extends ListDisplay
                     'Itemid' => $itemid
                 ];
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
             }
 
             catch (Exception $e) {

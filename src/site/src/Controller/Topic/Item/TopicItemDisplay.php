@@ -144,10 +144,8 @@ class TopicItemDisplay extends KunenaControllerDisplay
                     'Itemid' => $itemid
                 ];
 
-                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
-            }
-
-            catch (Exception $e) {
+                return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
+            } catch (Exception $e) {
                 throw new RuntimeException('Failed to create controller: ' . $e->getMessage());
             }
         }

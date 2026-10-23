@@ -188,6 +188,9 @@ class SearchModel extends KunenaModel
                 $searchword = StringHelper::substr($searchword, 1);
             }
 
+            // Escape the searchword for use in SQL (a % or an _ in the word is that character, not a wildcard of LIKE)
+            $escapedSearchword = $db->escape($searchword, true);
+
             if (!$this->getState('query.titleonly')) {
                 $querystrings [] = "(t.message {$not} LIKE '%{$searchword}%' {$operator} m.subject {$not} LIKE '%{$searchword}%')";
             } else {
@@ -200,6 +203,8 @@ class SearchModel extends KunenaModel
             $username = $this->getState('query.searchuser');
 
             if ($username) {
+                // Escape the username for use in SQL
+                $escapedUsername = $db->escape($username, true);
                 if ($this->getState('query.exactname') == '1') {
                     $querystrings [] = "m.name LIKE '" . $db->escape($username) . "'";
                 } else {

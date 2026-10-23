@@ -587,6 +587,35 @@ abstract class KunenaRoute
     }
 
     /**
+     * Adds the parameters of the request which choose the part of the page (the page of a list, a message, a search, a filter) to the
+     * parameters of a redirect to the address with an Itemid: the redirect is made from a few parameters, and a link to page 2 or to a
+     * message must still open that page after it.
+     *
+     * @param   array  $params  The parameters of the new address.
+     *
+     * @return  array
+     *
+     * @since   Kunena 7.2
+     * @throws  Exception
+     */
+    public static function keepQuery(array $params): array
+    {
+        static $names = ['limitstart', 'start', 'limit', 'mesid', 'mode', 'sel', 'search', 'userid', 'layout', 'filter_order', 'filter_order_Dir',
+            'usertype', 'query', 'topic_id', 'titleonly', 'searchuser', 'searchdate', 'order', 'sortby'];
+
+        // The input has the parameters of the query and those which the router read from the path (a message number, for example).
+        $get = Factory::getApplication()->getInput()->getArray();
+
+        foreach ($names as $name) {
+            if (!isset($params[$name]) && isset($get[$name]) && \is_scalar($get[$name]) && $get[$name] !== '') {
+                $params[$name] = $get[$name];
+            }
+        }
+
+        return $params;
+    }
+
+    /**
      * Get the referrer page.
      *
      * If there's no referrer or it's external, Kunena will return default page.

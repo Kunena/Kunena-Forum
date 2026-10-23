@@ -180,19 +180,17 @@ class TopicListingUserDisplay extends ListDisplay
                 ];
 
                 if ($view == 'user' && $layout == 'default') {
-                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
                 } elseif ($view == 'topics' && $layout == 'user') {
-                    $params['view'] = 'topics';
-					$params = [
-                        'layout' => 'user',
-                        'mode' => $this->state->get('list.mode')
-                    ];
-                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+                    $params['view']   = 'topics';
+                    $params['layout'] = 'user';
+                    $params['mode']   = $this->state->get('list.mode');
+
+                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
                 } else {
-	                $params = [
-                        'mode' => $this->state->get('list.mode')
-                    ];
-                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query($params), false));
+                    $params['mode'] = $this->state->get('list.mode');
+
+                    return $this->app->redirect(KunenaRoute::_('index.php?' . http_build_query(KunenaRoute::keepQuery($params)), false));
                 }
             }
 

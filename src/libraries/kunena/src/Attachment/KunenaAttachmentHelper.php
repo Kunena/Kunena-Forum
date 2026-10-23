@@ -96,7 +96,7 @@ abstract class KunenaAttachmentHelper
     protected static function loadById(array $ids): void
     {
         foreach ($ids as $i => $id) {
-            if (isset(self::$_instances [$id])) {
+            if (!\is_scalar($id) || isset(self::$_instances [$id])) {
                 unset($ids[$i]);
             }
         }
@@ -105,7 +105,13 @@ abstract class KunenaAttachmentHelper
             return;
         }
 
-        $idlist = implode(',', $ids);
+        // The ids come from a request or from a list of messages: only whole numbers go into the query.
+        $idlist = implode(',', array_unique(array_map('intval', array_filter($ids, 'is_scalar'))));
+
+        if ($idlist === '') {
+            return;
+        }
+
         $db     = Factory::getContainer()->get('DatabaseDriver');
         $query  = $db->createQuery();
         $query->select('*')
@@ -222,7 +228,13 @@ abstract class KunenaAttachmentHelper
             return;
         }
 
-        $idlist = implode(',', $ids);
+        // The ids come from a request or from a list of messages: only whole numbers go into the query.
+        $idlist = implode(',', array_unique(array_map('intval', array_filter($ids, 'is_scalar'))));
+
+        if ($idlist === '') {
+            return;
+        }
+
         $db     = Factory::getContainer()->get('DatabaseDriver');
         $query  = $db->createQuery();
         $query->select('*')

@@ -538,7 +538,12 @@ class KunenaTopic extends KunenaDatabaseObject
     public function save($cascade = true): bool
     {
         $topicDelta = $this->delta();
-        $postDelta  = $this->posts - $this->_posts;
+
+        // The posts of a topic are the messages in the state of the topic (a deleted topic has its deleted messages as posts), but the
+        // category counts the posts of the topics which are published only: before the change and after it.
+        $countedBefore = $this->_hold == 0 ? (int) $this->_posts : 0;
+        $countedAfter  = $this->hold == 0 ? (int) $this->posts : 0;
+        $postDelta     = $countedAfter - $countedBefore;
 
         if (!parent::save()) {
             return false;
@@ -1816,10 +1821,21 @@ class KunenaTopic extends KunenaDatabaseObject
 
         // We will soon need target topic id, so save if it doesn't exist
         if (!$target->exists()) {
+            // A topic for some of the messages (a split) has no posts yet: the clone has the number of the old topic, and the recount below
+            // would take posts from the category which were never added.
+            if ($newTarget && $ids) {
+                $target->posts = 0;
+            }
+
             try {
                 $target->save(false);
             } catch (Exception $e) {
                 throw new Exception($e->getMessage());
+            }
+
+            // The category counts the new topic (its posts are counted by the recount of the topics).
+            if ($newTarget && $ids) {
+                $target->getCategory()->update($target, 1, 0);
             }
         }
 

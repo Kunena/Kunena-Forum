@@ -334,7 +334,12 @@ class KunenaBBCode extends BBCode
             $layout   = KunenaLayout::factory('BBCode/URL');
 
             if ($this->config->smartLinking) {
-                $text = $this->get_title($url);
+                $title = $this->get_title($url);
+
+                // Keep the link text when the page title can not be read.
+                if ($title !== '') {
+                    $text = $title;
+                }
             }
 
             $uri  = Uri::getInstance($url);
@@ -420,7 +425,30 @@ class KunenaBBCode extends BBCode
                 // Ignore case
                 preg_match("/\<title\>(.*)\<\/title\>/i", $str, $title);
 
-                return $title[1];
+        if (!$ips) {
+            return '';
+        }
+
+        foreach ($ips as $ip) {
+            if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                return '';
+            }
+        }
+
+        // Short timeout, no redirects (they could lead to an internal address), and only the start of the page.
+        $context = stream_context_create(['http' => ['timeout' => 3, 'follow_location' => 0, 'ignore_errors' => true]]);
+        $str     = @file_get_contents($url, false, $context, 0, 262144);
+
+        if ($str !== false && \strlen($str) > 0) {
+            // Supports line breaks inside <title>
+            $str = trim(preg_replace('/\s+/', ' ', $str));
+
+            // Ignore case
+            if (preg_match("/\<title[^>]*\>(.*?)\<\/title\>/i", $str, $title)) {
+                // The title belongs to a foreign page: decode its entities, drop any markup, and encode it again for our html.
+                $text = trim(strip_tags(html_entity_decode($title[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')));
+
+                return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
             }
         }
 
@@ -1392,10 +1420,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary
         $smart = $this->config->smartLinking;
 
         if ($smart) {
-            $content = $bbcode->get_title($url);
+            $title = $bbcode->get_title($url);
 
-            if (!isset($content)) {
-                $content = $url;
+            // Keep the given text when the page title can not be read.
+            if ($title !== '') {
+                $content = $title;
             }
         }
 
